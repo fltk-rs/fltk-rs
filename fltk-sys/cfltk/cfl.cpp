@@ -1,6 +1,6 @@
 #include <FL/Fl.H>
 #include "cfl.h"
 
-int cfl_run() {
+int Fl_run(void) {
     return Fl::run();
 }

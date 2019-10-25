@@ -1,5 +1,7 @@
 pub mod fl;
 pub mod window;
+pub mod button;
+pub mod widget;
 
 #[cfg(test)]
 mod tests {

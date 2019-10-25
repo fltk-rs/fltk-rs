@@ -4,7 +4,7 @@
 extern "C" {
 #endif
 
-int cfl_run();
+int Fl_run(void);
 
 #ifdef __cplusplus
 }

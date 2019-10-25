@@ -4,11 +4,12 @@
 extern "C" {
 #endif
 
-typedef void cfl_window;
+typedef struct Fl_Window Fl_Window;
 
-cfl_window *cfl_window_new(int width, int height, const char *title);
-void cfl_window_end(cfl_window*);
-void cfl_window_show(cfl_window*);
+Fl_Window *Fl_Window_new(int x, int y, int width, int height, const char *title);
+void Fl_Window_begin(Fl_Window *self);
+void Fl_Window_end(Fl_Window *self);
+void Fl_Window_show(Fl_Window *self);
 
 
 #ifdef __cplusplus

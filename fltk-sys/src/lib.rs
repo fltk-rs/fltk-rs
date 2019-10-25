@@ -1,9 +1,10 @@
  #![allow(non_camel_case_types)]
  #![allow(dead_code)]
 
-include!(concat!("fl.rs"));
-
-include!(concat!("window.rs"));
+pub mod fl;
+pub mod window;
+pub mod button;
+pub mod widget;
 
 #[cfg(test)]
 mod tests {

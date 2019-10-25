@@ -16,7 +16,9 @@ fn main() {
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=cfltk/cfl.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_window.h");
-    
+    println!("cargo:rerun-if-changed=cfltk/cfl_button.h");
+    println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
+
     Command::new("git").args(&["submodule", "update", "--init"])
                       .current_dir(manifest_dir.clone())
                       .status().unwrap();
@@ -73,3 +75,4 @@ fn main() {
         }
     }
 }
+

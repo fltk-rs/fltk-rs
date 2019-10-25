@@ -1,14 +1,18 @@
 #include <FL/Fl_Window.H>
 #include "cfl_window.h"
 
-cfl_window *cfl_window_new(int width, int height, const char *title) {
-    return (cfl_window *)new Fl_Window(width, height, title);
+Fl_Window *Fl_Window_new(int x, int y, int width, int height, const char *title) {
+    return new Fl_Window(x, y, width, height, title);
 }
 
-void cfl_window_end(cfl_window *self) {
-    static_cast<Fl_Window *>(self)->end();
+void Fl_Window_begin(Fl_Window *self) {
+    self->begin();
 }
 
-void cfl_window_show(cfl_window *self) {
-    static_cast<Fl_Window *>(self)->show();
+void Fl_Window_end(Fl_Window *self) {
+    self->end();
+}
+
+void Fl_Window_show(Fl_Window *self) {
+    self->show();
 }
