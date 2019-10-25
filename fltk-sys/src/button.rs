@@ -16,10 +16,19 @@ extern "C" {
     title: *const raw::c_char,
     ) -> *mut Fl_Button;
 
-    pub fn Fl_Button_add_callback(
+    pub fn Fl_Button_callback(
         arg1: *mut Fl_Button,
         cb: widget::Fl_Callback,
         data: *mut raw::c_void,
+    );
+
+    pub fn Fl_Button_set_label(
+        arg1: *mut Fl_Button,
+        title: *const raw::c_char,
+    );
+
+    pub fn Fl_Button_redraw(
+        arg1: *mut Fl_Button,
     );
 
 }

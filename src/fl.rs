@@ -1,3 +1,3 @@
-pub fn run() -> i32 {
-    unsafe { fltk_sys::fl::Fl_run() }
+pub fn run() {
+    unsafe { fltk_sys::fl::Fl_run(); }
 }

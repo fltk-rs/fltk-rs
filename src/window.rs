@@ -3,7 +3,7 @@ pub struct Window {
 }
 
 impl Window {
-    pub fn new(x: i32, y: i32, width: i32, height: i32, title: &'static str) -> Window {
+    pub fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Window {
         unsafe {
             Window {
                 _window: fltk_sys::window::Fl_Window_new(x, y, width, height, title.as_ptr() as *const i8),
