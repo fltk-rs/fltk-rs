@@ -39,6 +39,7 @@ fn main() {
         .expect("Couldn't write bindings!");
 
     let dst = cmake::Config::new("cfltk")
+                 .generator("Ninja")
                  .define("OPTION_BUILD_EXAMPLES","OFF")
                  .define("OPTION_ABI_VERSION:STRING", "10305")
                  .build();
