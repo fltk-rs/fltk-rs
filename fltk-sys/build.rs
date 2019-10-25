@@ -4,6 +4,7 @@ extern crate cmake;
 
 use std::env;
 use std::path::{Path, PathBuf};
+use std::process::Command;
 
 
 fn main() {
@@ -21,14 +22,16 @@ fn main() {
                       .status().unwrap();
 
     let dst = cmake::Config::new("cfltk")
-                 .generator("Ninja")
                  .define("OPTION_BUILD_EXAMPLES","OFF")
                  .build();
     println!("cargo:rustc-link-search=native={}", dst.join("build").display());
     println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
     println!("cargo:rustc-link-lib=static=cfltk");
-    println!("cargo:rustc-link-lib=static=fltkd");
-    println!("cargo:rustc-link-lib=static=fltk");
+    if cfg!(debug_assertions) && cfg!(target_env = "msvc") {
+        println!("cargo:rustc-link-lib=static=fltkd");
+    } else {
+        println!("cargo:rustc-link-lib=static=fltk");
+    }
     
     match target_os.unwrap().as_str() {
         "macos" => {
