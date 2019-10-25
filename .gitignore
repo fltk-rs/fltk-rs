@@ -1,3 +1,5 @@
 /target
 **/*.rs.bk
 Cargo.lock
+fltk-sys/.build.rs.un~
+fltk-sys/build.rs~
