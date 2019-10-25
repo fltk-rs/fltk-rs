@@ -1,4 +1,3 @@
 [submodule "fltk-sys/cflt/fltk"]
 	path = fltk-sys/cfltk/fltk
-	url = https://github.com/fltk/fltk
-	tag = release-1.3.5
+	url = https://github.com/moalyousef/fltk
