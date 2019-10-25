@@ -41,7 +41,6 @@ fn main() {
     let dst = cmake::Config::new("cfltk")
                  .generator("Ninja")
                  .define("OPTION_BUILD_EXAMPLES","OFF")
-                 .define("OPTION_ABI_VERSION:STRING", "10305")
                  .build();
     println!("cargo:rustc-link-search=native={}", dst.join("build").display());
     println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
