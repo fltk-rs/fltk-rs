@@ -7,10 +7,9 @@ extern "C" {
 #endif
 
 typedef struct Fl_Button Fl_Button;
-typedef void (*Fl_button_cb)(struct Fl_Widget *widget);
 
 Fl_Button *Fl_Button_new(int x, int y, int width, int height, const char *title);
-
+void Fl_Button_callback(Fl_Button *, Fl_Callback* cb, void* data);
 
 #ifdef __cplusplus
 }

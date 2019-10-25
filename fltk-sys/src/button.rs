@@ -1,4 +1,4 @@
-use crate::widget::Fl_Widget;
+use crate::widget;
 use std::os::raw;
 
 #[repr(C)]
@@ -6,8 +6,6 @@ use std::os::raw;
 pub struct Fl_Button {
     _unused: [u8; 0],
 }
-
-pub type Fl_Button_cb = extern "C" fn(widget: *mut Fl_Widget);
 
 extern "C" {
     pub fn Fl_Button_new(
@@ -17,5 +15,11 @@ extern "C" {
     height: raw::c_int,
     title: *const raw::c_char,
     ) -> *mut Fl_Button;
+
+    pub fn Fl_Button_add_callback(
+        arg1: *mut Fl_Button,
+        cb: widget::Fl_Callback,
+        data: *mut raw::c_void,
+    );
 
 }
