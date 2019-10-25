@@ -18,8 +18,12 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_window.h");
     
     Command::new("git").args(&["submodule", "update", "--init"])
-                      .current_dir(manifest_dir)
+                      .current_dir(manifest_dir.clone())
                       .status().unwrap();
+
+    Command::new("git").args(&["checkout", "master"])
+                    .current_dir(manifest_dir.join("cfltk").join("fltk"))
+                    .status().unwrap();
 
     let dst = cmake::Config::new("cfltk")
                  .generator("Ninja")
