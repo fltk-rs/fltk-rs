@@ -1,6 +1,3 @@
-use crate::widget;
-use std::os::raw;
-
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Button {
@@ -9,22 +6,16 @@ pub struct Fl_Button {
 
 extern "C" {
     pub fn Fl_Button_new(
-    x: raw::c_int,
-    y: raw::c_int,
-    width: raw::c_int,
-    height: raw::c_int,
-    title: *const raw::c_char,
+    x: libc::c_int,
+    y: libc::c_int,
+    width: libc::c_int,
+    height: libc::c_int,
+    title: *const libc::c_char,
     ) -> *mut Fl_Button;
-
-    pub fn Fl_Button_callback(
-        arg1: *mut Fl_Button,
-        cb: widget::Fl_Callback,
-        data: *mut raw::c_void,
-    );
 
     pub fn Fl_Button_set_label(
         arg1: *mut Fl_Button,
-        title: *const raw::c_char,
+        title: *const libc::c_char,
     );
 
     pub fn Fl_Button_redraw(

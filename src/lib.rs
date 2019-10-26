@@ -1,10 +1,7 @@
-pub mod fl;
-pub mod window;
 pub mod button;
-
-use std::ffi;
-
-pub type VoidPtr = *mut ffi::c_void;
+pub mod fl;
+pub mod widget;
+pub mod window;
 
 #[cfg(test)]
 mod tests {

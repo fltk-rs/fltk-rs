@@ -12,6 +12,9 @@ edition = "2018"
 name = "fltk_sys"
 path = "src/lib.rs"
 
+[dependencies]
+libc = "^0.2"
+
 [build-dependencies]
 cmake = "^0.1"
 
