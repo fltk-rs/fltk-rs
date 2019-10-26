@@ -32,4 +32,32 @@ impl widget::Widget for Window {
             }
         }
     }
+
+    fn set_label(&mut self, title: &str) {
+        let title = ffi::CString::new(title).unwrap();
+        unsafe {
+            fltk_sys::window::Fl_Window_set_label(
+                self._window,
+                title.as_ptr() as *const libc::c_char,
+            )
+        }
+    }
+
+    fn redraw(&mut self) {
+        unsafe {
+            fltk_sys::window::Fl_Window_redraw(self._window);
+        }
+    }
+
+    fn callback<W>(&mut self, cb: fn(&mut W))
+    where
+        W: widget::Widget,
+    {
+        unsafe {
+            let widget: *mut fltk_sys::widget::Fl_Widget = std::mem::transmute(self._window);
+            let callback: unsafe extern "C" fn(*mut fltk_sys::widget::Fl_Widget) =
+                std::mem::transmute(cb);
+            fltk_sys::widget::Fl_Widget_callback(widget, Option::from(callback));
+        }
+    }
 }

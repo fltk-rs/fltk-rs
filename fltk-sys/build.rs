@@ -72,6 +72,8 @@ fn main() {
             println!("cargo:rustc-link-lib=dylib=Xcursor");
             println!("cargo:rustc-link-lib=dylib=Xrender");
             println!("cargo:rustc-link-lib=dylib=Xfixes");
+            // println!("cargo:rustc-link-lib=dylib=xft");
+            // println!("cargo:rustc-link-lib=dylib=fontconfig");
         }
     }
 }

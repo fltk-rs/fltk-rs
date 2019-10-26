@@ -18,4 +18,13 @@ extern "C" {
     pub fn Fl_Window_end(arg1: *mut Fl_Window);
 
     pub fn Fl_Window_show(arg1: *mut Fl_Window);
+
+    pub fn Fl_Window_set_label(
+        arg1: *mut Fl_Window,
+        title: *const libc::c_char,
+    );
+
+    pub fn Fl_Window_redraw(
+        arg1: *mut Fl_Window,
+    );
 }

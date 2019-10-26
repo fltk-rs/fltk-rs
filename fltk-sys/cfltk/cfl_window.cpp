@@ -16,3 +16,11 @@ void Fl_Window_end(Fl_Window *self) {
 void Fl_Window_show(Fl_Window *self) {
     self->show();
 }
+
+void Fl_Window_set_label(Fl_Window *self, const char *title) {
+    self->label(title);
+}
+
+void Fl_Window_redraw(Fl_Window *self) {
+    self->redraw();
+}
