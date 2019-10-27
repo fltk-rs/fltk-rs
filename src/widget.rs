@@ -1,7 +1,6 @@
 pub use crate::button;
 pub use crate::window;
-use std::ffi;
-use std::mem;
+use std::{ffi, mem};
 
 pub struct Widget {
     _widget: *mut fltk_sys::widget::Fl_Widget,
@@ -28,10 +27,8 @@ pub trait WidgetTrait {
     fn width(&self) -> i32;
     fn height(&self) -> i32;
     fn label(&self) -> ffi::CString;
-    fn callback<W>(&mut self, cb: fn(&mut W))
-    where
-        W: WidgetTrait;
     fn add_callback(&mut self, cb: fn());
+    fn add_callback_with_captures(&mut self, cb: &mut fn());
 }
 
 impl From<button::Button> for Widget {

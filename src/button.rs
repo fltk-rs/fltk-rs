@@ -1,6 +1,6 @@
 pub use crate::widget;
 use fltk_sys;
-use std::ffi;
+use std::{ffi, mem, ptr};
 
 pub struct Button {
     _button: *mut fltk_sys::button::Fl_Button,
@@ -26,7 +26,7 @@ impl Button {
 impl widget::WidgetTrait for Button {
     fn new() -> Button {
         Button {
-            _button: std::ptr::null_mut(),
+            _button: ptr::null_mut(),
             _x: 0,
             _y: 0,
             _width: 0,
@@ -90,23 +90,20 @@ impl widget::WidgetTrait for Button {
         self._title.clone()
     }
 
-    fn callback<W>(&mut self, cb: fn(&mut W))
-    where
-        W: widget::WidgetTrait,
-    {
+    fn add_callback(&mut self, cb: fn()) {
         unsafe {
-            let widget: *mut fltk_sys::widget::Fl_Widget = std::mem::transmute(self._button);
+            let widget: *mut fltk_sys::widget::Fl_Widget = mem::transmute(self._button);
             let callback: unsafe extern "C" fn(*mut fltk_sys::widget::Fl_Widget) =
-                std::mem::transmute(cb);
+                mem::transmute(cb);
             fltk_sys::widget::Fl_Widget_callback(widget, Option::from(callback));
         }
     }
 
-    fn add_callback(&mut self, cb: fn()) {
+    fn add_callback_with_captures(&mut self, cb: &mut fn()) {
         unsafe {
-            let widget: *mut fltk_sys::widget::Fl_Widget = std::mem::transmute(self._button);
+            let widget: *mut fltk_sys::widget::Fl_Widget = mem::transmute(self._button);
             let callback: unsafe extern "C" fn(*mut fltk_sys::widget::Fl_Widget) =
-                std::mem::transmute(cb);
+                mem::transmute(cb);
             fltk_sys::widget::Fl_Widget_callback(widget, Option::from(callback));
         }
     }

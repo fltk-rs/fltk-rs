@@ -4,7 +4,7 @@ use std::mem;
 pub enum Event {
     NoEvent = 0,
     Push,
-    Release,
+    Clicked,
     Enter,
     Leave,
     Drag,
