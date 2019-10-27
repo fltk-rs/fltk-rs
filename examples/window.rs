@@ -1,12 +1,13 @@
 use fltk::button::Button;
 use fltk::fl;
-use fltk::widget::Widget;
 use fltk::window::Window;
+use fltk::widget::WidgetTrait;
 
 fn main() {
-    let mut wind = Window::new(100, 100, 400, 300, "hello from rust");
+    let mut wind = Window::new().set(100, 100, 400, 300, "Hello from rust");
     wind.begin();
-    let _but = Button::new(150, 100, 80, 60, "click!");
+    let mut but = Button::new().set(150, 100, 80, 60, "Click me!");
+    but.add_callback(|| println!("Works"));
     wind.end();
     wind.show();
     fl::run();
