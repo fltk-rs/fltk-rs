@@ -36,7 +36,7 @@ pub trait WidgetTrait {
 
 impl From<button::Button> for Widget {
     fn from(but: button::Button) -> Self {
-        let widg: *mut fltk_sys::widget::Fl_Widget = unsafe {mem::transmute(but.as_ptr())};
+        let widg: *mut fltk_sys::widget::Fl_Widget = unsafe { mem::transmute(but.as_ptr()) };
         Widget {
             _widget: widg,
             _x: but.x(),

@@ -22,4 +22,9 @@ extern "C" {
         arg1: *mut Fl_Button,
     );
 
+    pub fn Fl_Button_handle (
+        arg1: *mut Fl_Button,
+        event: libc::c_int,
+    ) -> libc::c_int;
+
 }

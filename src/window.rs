@@ -46,13 +46,13 @@ impl widget::WidgetTrait for Window {
         self._height = height;
         self._title = ffi::CString::new(title).unwrap();
         self._window = unsafe {
-                 fltk_sys::window::Fl_Window_new(
-                    self._x,
-                    self._y,
-                    self._width,
-                    self._height,
-                    self._title.as_ptr() as *const libc::c_char,
-                )
+            fltk_sys::window::Fl_Window_new(
+                self._x,
+                self._y,
+                self._width,
+                self._height,
+                self._title.as_ptr() as *const libc::c_char,
+            )
         };
         self
     }

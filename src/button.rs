@@ -15,6 +15,12 @@ impl Button {
     pub fn as_ptr(&self) -> *mut fltk_sys::button::Fl_Button {
         self._button
     }
+
+    pub fn handle(&self, event: i32) {
+        unsafe {
+            fltk_sys::button::Fl_Button_handle(self._button, event);
+        }
+    }
 }
 
 impl widget::WidgetTrait for Button {
@@ -37,13 +43,13 @@ impl widget::WidgetTrait for Button {
         self._height = height;
         self._title = ffi::CString::new(title).unwrap();
         self._button = unsafe {
-                    fltk_sys::button::Fl_Button_new(
-                    self._x,
-                    self._y,
-                    self._width,
-                    self._height,
-                    self._title.as_ptr() as *const libc::c_char,
-                )
+            fltk_sys::button::Fl_Button_new(
+                self._x,
+                self._y,
+                self._width,
+                self._height,
+                self._title.as_ptr() as *const libc::c_char,
+            )
         };
         self
     }
