@@ -9,7 +9,7 @@ fn main() {
         _ => unimplemented!(),
     });
     // but.add_callback_with_captures(&mut || match fl::event() {
-    //     fl::Event::Release => but.set_label("Doesn't work!"),
+    //     fl::Event::Clicked => but.set_label("Doesn't work!"),
     //     _ => unimplemented!(), 
     // });
     wind.end();
