@@ -33,8 +33,6 @@ fn main() {
                  .define("OPTION_USE_SYSTEM_LIBJPEG","ON")
                  .build();
     println!("cargo:rustc-link-search=native={}", dst.join("build").display());
-    // println!("cargo:rustc-link-lib=dylib=cfltk");
-    
     println!("cargo:rustc-link-lib=static=cfltk");
     println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
     if cfg!(debug_assertions) && cfg!(target_env = "msvc") {

@@ -7,3 +7,4 @@ add_library(cfltk STATIC cfl.cpp cfl_window.cpp cfl_button.cpp cfl_widget.cpp)
 target_include_directories(cfltk PUBLIC fltk)
 target_link_libraries(cfltk PUBLIC fltk)
 
+
