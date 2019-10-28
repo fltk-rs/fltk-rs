@@ -33,47 +33,48 @@ fn main() {
                  .define("OPTION_USE_SYSTEM_LIBJPEG","ON")
                  .build();
     println!("cargo:rustc-link-search=native={}", dst.join("build").display());
-    println!("cargo:rustc-link-lib=dylib=cfltk");
+    // println!("cargo:rustc-link-lib=dylib=cfltk");
     
-    // println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
-    // if cfg!(debug_assertions) && cfg!(target_env = "msvc") {
-    //     println!("cargo:rustc-link-lib=static=fltkd");
-    // } else {
-    //     println!("cargo:rustc-link-lib=static=fltk");
-    // }
+    println!("cargo:rustc-link-lib=static=cfltk");
+    println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
+    if cfg!(debug_assertions) && cfg!(target_env = "msvc") {
+        println!("cargo:rustc-link-lib=static=fltkd");
+    } else {
+        println!("cargo:rustc-link-lib=static=fltk");
+    }
     
-    // match target_os.unwrap().as_str() {
-    //     "macos" => {
-    //         println!("cargo:rustc-link-lib=dylib=c++");
-    //         println!("cargo:rustc-link-lib=framework=Carbon");
-    //         println!("cargo:rustc-link-lib=framework=Cocoa");
-    //         println!("cargo:rustc-link-lib=framework=ApplicationServices");
-    //         println!("cargo:rustc-link-lib=dylib=z");
-    //     },
-    //     "windows" => {
-    //         println!("cargo:rustc-link-lib=dylib=wsock32");
-    //         println!("cargo:rustc-link-lib=dylib=comctl32");
-    //         println!("cargo:rustc-link-lib=dylib=gdi32");
-    //         println!("cargo:rustc-link-lib=dylib=oleaut32");
-    //         println!("cargo:rustc-link-lib=dylib=ole32");
-    //         println!("cargo:rustc-link-lib=dylib=shell32");
-    //         println!("cargo:rustc-link-lib=dylib=advapi32");
-    //         println!("cargo:rustc-link-lib=dylib=comdlg32");
-    //         println!("cargo:rustc-link-lib=dylib=winspool");
-    //         println!("cargo:rustc-link-lib=dylib=user32");
-    //         println!("cargo:rustc-link-lib=dylib=kernel32");
-    //     },
-    //     _ => {
-    //         println!("cargo:rustc-link-lib=dylib=stdc++");
-    //         println!("cargo:rustc-link-lib=dylib=X11");
-    //         println!("cargo:rustc-link-lib=dylib=Xext");
-    //         println!("cargo:rustc-link-lib=dylib=Xinerama");
-    //         println!("cargo:rustc-link-lib=dylib=Xcursor");
-    //         println!("cargo:rustc-link-lib=dylib=Xrender");
-    //         println!("cargo:rustc-link-lib=dylib=Xfixes");
-    //         // println!("cargo:rustc-link-lib=dylib=xft");
-    //         // println!("cargo:rustc-link-lib=dylib=fontconfig");
-    //     }
-    // }
+    match target_os.unwrap().as_str() {
+        "macos" => {
+            println!("cargo:rustc-link-lib=dylib=c++");
+            println!("cargo:rustc-link-lib=framework=Carbon");
+            println!("cargo:rustc-link-lib=framework=Cocoa");
+            println!("cargo:rustc-link-lib=framework=ApplicationServices");
+            println!("cargo:rustc-link-lib=dylib=z");
+        },
+        "windows" => {
+            println!("cargo:rustc-link-lib=dylib=wsock32");
+            println!("cargo:rustc-link-lib=dylib=comctl32");
+            println!("cargo:rustc-link-lib=dylib=gdi32");
+            println!("cargo:rustc-link-lib=dylib=oleaut32");
+            println!("cargo:rustc-link-lib=dylib=ole32");
+            println!("cargo:rustc-link-lib=dylib=shell32");
+            println!("cargo:rustc-link-lib=dylib=advapi32");
+            println!("cargo:rustc-link-lib=dylib=comdlg32");
+            println!("cargo:rustc-link-lib=dylib=winspool");
+            println!("cargo:rustc-link-lib=dylib=user32");
+            println!("cargo:rustc-link-lib=dylib=kernel32");
+        },
+        _ => {
+            println!("cargo:rustc-link-lib=dylib=stdc++");
+            println!("cargo:rustc-link-lib=dylib=X11");
+            println!("cargo:rustc-link-lib=dylib=Xext");
+            println!("cargo:rustc-link-lib=dylib=Xinerama");
+            println!("cargo:rustc-link-lib=dylib=Xcursor");
+            println!("cargo:rustc-link-lib=dylib=Xrender");
+            println!("cargo:rustc-link-lib=dylib=Xfixes");
+            println!("cargo:rustc-link-lib=dylib=Xft");
+            println!("cargo:rustc-link-lib=dylib=fontconfig");
+        }
+    }
 }
 
