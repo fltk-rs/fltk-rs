@@ -1,8 +1,9 @@
 pub use crate::widget;
 use std::{ffi, mem, ptr};
 
+#[derive(Debug, Clone)]
 pub struct Window {
-    _window: *mut fltk_sys::window::Fl_Window,
+    _inner: *mut fltk_sys::window::Fl_Window,
     _x: i32,
     _y: i32,
     _width: i32,
@@ -12,24 +13,24 @@ pub struct Window {
 
 impl Window {
     pub fn begin(&mut self) {
-        unsafe { fltk_sys::window::Fl_Window_begin(self._window) }
+        unsafe { fltk_sys::window::Fl_Window_begin(self._inner) }
     }
     pub fn end(&mut self) {
-        unsafe { fltk_sys::window::Fl_Window_end(self._window) }
+        unsafe { fltk_sys::window::Fl_Window_end(self._inner) }
     }
     pub fn show(&mut self) {
-        unsafe { fltk_sys::window::Fl_Window_show(self._window) }
+        unsafe { fltk_sys::window::Fl_Window_show(self._inner) }
     }
 
     pub fn as_ptr(&self) -> *mut fltk_sys::window::Fl_Window {
-        self._window
+        self._inner
     }
 }
 
 impl widget::WidgetTrait for Window {
     fn new() -> Window {
         Window {
-            _window: ptr::null_mut(),
+            _inner: ptr::null_mut(),
             _x: 0,
             _y: 0,
             _width: 0,
@@ -45,7 +46,7 @@ impl widget::WidgetTrait for Window {
         self._width = width;
         self._height = height;
         self._title = ffi::CString::new(title).unwrap();
-        self._window = unsafe {
+        self._inner = unsafe {
             fltk_sys::window::Fl_Window_new(
                 self._x,
                 self._y,
@@ -61,7 +62,7 @@ impl widget::WidgetTrait for Window {
         self._title = ffi::CString::new(title).unwrap();
         unsafe {
             fltk_sys::window::Fl_Window_set_label(
-                self._window,
+                self._inner,
                 self._title.as_ptr() as *const libc::c_char,
             )
         }
@@ -69,7 +70,7 @@ impl widget::WidgetTrait for Window {
 
     fn redraw(&mut self) {
         unsafe {
-            fltk_sys::window::Fl_Window_redraw(self._window);
+            fltk_sys::window::Fl_Window_redraw(self._inner);
         }
     }
 
@@ -93,20 +94,17 @@ impl widget::WidgetTrait for Window {
         self._title.clone()
     }
 
-    fn add_callback(&mut self, cb: fn()) {
-        unsafe {
-            let widget: *mut fltk_sys::widget::Fl_Widget = mem::transmute(self._window);
-            let callback: unsafe extern "C" fn(*mut fltk_sys::widget::Fl_Widget) =
-                mem::transmute(cb);
-            fltk_sys::widget::Fl_Widget_callback(widget, Option::from(callback));
-        }
+    fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
+        unsafe { mem::transmute(self._inner) }
     }
 
-    fn add_callback_with_captures(&mut self, cb: &mut fn()) {
+    fn add_callback(&self, cb: fn()) {
         unsafe {
-            let widget: *mut fltk_sys::widget::Fl_Widget = mem::transmute(self._window);
-            let callback: unsafe extern "C" fn(*mut fltk_sys::widget::Fl_Widget) =
-                mem::transmute(cb);
+            let widget: *mut fltk_sys::widget::Fl_Widget = mem::transmute(self._inner);
+            let callback: unsafe extern "C" fn(
+                *mut fltk_sys::widget::Fl_Widget,
+                *mut libc::c_void,
+            ) = mem::transmute(cb);
             fltk_sys::widget::Fl_Widget_callback(widget, Option::from(callback));
         }
     }

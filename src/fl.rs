@@ -1,10 +1,11 @@
 use std::mem;
 
 #[repr(i32)]
+#[derive(Debug, Copy, Clone)]
 pub enum Event {
     NoEvent = 0,
     Push,
-    Clicked,
+    Released,
     Enter,
     Leave,
     Drag,
