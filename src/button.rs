@@ -11,6 +11,21 @@ pub struct Button {
     _title: ffi::CString,
 }
 
+#[repr(i32)]
+#[derive(Debug, Copy, Clone)]
+pub enum ButtonType {
+    NormalButton = 0,
+    ToggleButton = 1,
+    RadioButton = 102,
+    HiddenButton = 3
+}
+
+impl WidgetType for ButtonType {
+    fn to_int(self) -> i32 {
+        self as i32
+    }
+}
+
 impl Button {
     pub fn as_ptr(&self) -> *mut fltk_sys::button::Fl_Button {
         self._inner
@@ -119,6 +134,12 @@ impl WidgetTrait for Button {
                 self._inner,
                 txt.as_ptr() as *const libc::c_char,
             )
+        }
+    }
+  
+    fn set_type<T: WidgetType>(&mut self, typ: T) {
+        unsafe {
+            fltk_sys::button::Fl_Button_set_type(self._inner, typ.to_int());
         }
     }
 }

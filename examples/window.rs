@@ -1,12 +1,15 @@
-use fltk::{prelude::*, button::Button, window::Window};
+use fltk::{prelude::*, button::*, window::*};
 
 fn main() {
     let mut wind = Window::new().set(100, 100, 400, 300, "Hello from rust");
     wind.begin();
 
-    let mut but1 = Button::new().set(80, 100, 80, 60, "Click me!");
-    let mut but2 = Button::new().set(240, 100, 80, 60, "Click me!");
-    let mut but3 = Button::new().set(160, 180, 80, 60, "Click me!");
+    let mut but1 = Button::new().set(80, 80, 80, 60, "Click me!");
+    let mut but2 = Button::new().set(240, 80, 80, 60, "Click me!");
+    let mut but3 = Button::new().set(80, 160, 80, 60, "Click me!");
+    but3.set_type(ButtonType::RadioButton);
+        let mut but4 = Button::new().set(240, 160, 80, 60, "Click me!");
+    but4.set_type(ButtonType::RadioButton);
 
     fl::register_callback(&but1.clone(), &mut || match fl::event() {
         fl::Event::Released => {
@@ -14,7 +17,6 @@ fn main() {
             wind.set_label("Clicked button 1!");
             but1.set_label("Works");
             but2.set_label("No!");
-            but3.activate();
         }
         _ => println!("{:?}", fl::event()),
     });
@@ -25,7 +27,6 @@ fn main() {
             wind.set_label("Clicked button 2!");
             but1.set_label("No!");
             but2.set_label("Works");
-            but3.deactivate();
         }
         _ => println!("{:?}", fl::event()),
     });

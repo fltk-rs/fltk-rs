@@ -19,9 +19,14 @@ pub trait WidgetTrait {
     fn redraw_label(&mut self);
     fn resize(&mut self, x: i32, y: i32, width: i32, height: i32);
     fn set_tooltip(&mut self, txt: &str);
+    fn set_type<T: WidgetType>(&mut self, typ: T);
 }
 
 pub trait GroupTrait {
     fn begin(&self);
     fn end(&self);
+}
+
+pub trait WidgetType {
+    fn to_int(self) -> i32;
 }

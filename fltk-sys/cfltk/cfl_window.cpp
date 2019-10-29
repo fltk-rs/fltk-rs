@@ -50,6 +50,10 @@ void Fl_Window_set_tooltip(Fl_Window *self, const char* txt) {
     self->tooltip(txt);
 }
 
+void Fl_Window_set_type(Fl_Window *self, int typ) {
+    self->type(typ);
+}
+
 void Fl_Window_make_modal(Fl_Window *self, unsigned int boolean) {
     if (boolean) {
         self->set_modal();

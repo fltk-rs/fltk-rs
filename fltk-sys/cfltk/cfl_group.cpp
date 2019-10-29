@@ -49,3 +49,7 @@ void Fl_Group_resize(Fl_Group *self, int x, int y, int width, int height) {
 void Fl_Group_set_tooltip(Fl_Group *self, const char* txt) {
     self->tooltip(txt);
 }
+
+void Fl_Group_set_type(Fl_Group *self, int typ) {
+    self->type(typ);
+}

@@ -11,6 +11,17 @@ pub struct Window {
     _title: ffi::CString,
 }
 
+pub enum WindowType {
+    NormalWindow = 240,
+    DoubleWindow = 241,
+}
+
+impl WidgetType for WindowType {
+    fn to_int(self) -> i32 {
+        self as i32
+    }
+}
+
 impl Window {
     pub fn as_ptr(&self) -> *mut fltk_sys::window::Fl_Window {
         self._inner
@@ -141,6 +152,12 @@ impl WidgetTrait for Window {
                 self._inner,
                 txt.as_ptr() as *const libc::c_char,
             )
+        }
+    }
+
+    fn set_type<T: WidgetType>(&mut self, typ: T) {
+        unsafe {
+            fltk_sys::window::Fl_Window_set_type(self._inner, typ.to_int());
         }
     }
 }

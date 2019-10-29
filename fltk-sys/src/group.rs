@@ -49,4 +49,6 @@ extern "C" {
     );
 
     pub fn Fl_Group_set_tooltip(arg1: *mut Fl_Group, txt: *const libc::c_char);
+
+    pub fn Fl_Group_set_type(arg1: *mut Fl_Group, typ: libc::c_int); 
 }

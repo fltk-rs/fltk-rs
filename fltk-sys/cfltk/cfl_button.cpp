@@ -40,3 +40,7 @@ void Fl_Button_resize(Fl_Button *self, int x, int y, int width, int height) {
 void Fl_Button_set_tooltip(Fl_Button *self, const char* txt) {
     self->tooltip(txt);
 }
+
+void Fl_Button_set_type(Fl_Button *self, int typ) {
+    self->type(typ);
+}

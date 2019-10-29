@@ -46,4 +46,6 @@ extern "C" {
 
     pub fn Fl_Button_set_tooltip(arg1: *mut Fl_Button, txt: *const libc::c_char);
 
+    pub fn Fl_Button_set_type(arg1: *mut Fl_Button, typ: libc::c_int); 
+
 }

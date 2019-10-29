@@ -49,7 +49,11 @@ extern "C" {
 
     pub fn Fl_Window_set_tooltip(arg1: *mut Fl_Window, txt: *const libc::c_char);
 
+    pub fn Fl_Window_set_type(arg1: *mut Fl_Window, typ: libc::c_int); 
+    
     pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: u32);
+    
     pub fn Fl_Window_fullscreen(arg1: *mut Fl_Window, boolean: u32);
+    
     pub fn Fl_Window_make_current(arg1: *mut Fl_Window);
 }

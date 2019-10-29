@@ -18,6 +18,7 @@ void Fl_Group_deactivate(Fl_Group *);
 void Fl_Group_redraw_label(Fl_Group *);
 void Fl_Group_resize(Fl_Group *, int x, int y, int width, int height);
 void Fl_Group_set_tooltip(Fl_Group *, const char* txt);
+void Fl_Group_set_type(Fl_Group *, int typ);
 
 #ifdef __cplusplus
 }

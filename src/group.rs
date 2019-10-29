@@ -11,6 +11,16 @@ pub struct Group {
     _title: ffi::CString,
 }
 
+pub enum GroupType {
+    NormalGroup = 0,
+}
+
+impl WidgetType for GroupType {
+    fn to_int(self) -> i32 {
+        self as i32
+    }
+}
+
 impl Group {
     pub fn as_ptr(&self) -> *mut fltk_sys::group::Fl_Group {
         self._inner
@@ -126,6 +136,12 @@ impl WidgetTrait for Group {
         let txt = ffi::CString::new(txt).unwrap();
         unsafe {
             fltk_sys::group::Fl_Group_set_tooltip(self._inner, txt.as_ptr() as *const libc::c_char)
+        }
+    }
+
+    fn set_type<T: WidgetType>(&mut self, typ: T) {
+        unsafe {
+            fltk_sys::group::Fl_Group_set_type(self._inner, typ.to_int());
         }
     }
 }
