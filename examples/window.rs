@@ -1,4 +1,4 @@
-use fltk::{button::Button, fl, group::*, widget::*, window::Window};
+use fltk::{prelude::*, button::Button, window::Window};
 
 fn main() {
     let mut wind = Window::new().set(100, 100, 400, 300, "Hello from rust");
@@ -8,7 +8,7 @@ fn main() {
     let mut but2 = Button::new().set(240, 100, 80, 60, "Click me!");
     let mut but3 = Button::new().set(160, 180, 80, 60, "Click me!");
 
-    register_callback(&but1.clone(), &mut || match fl::event() {
+    fl::register_callback(&but1.clone(), &mut || match fl::event() {
         fl::Event::Released => {
             println!("{:?}", fl::event());
             wind.set_label("Clicked button 1!");
@@ -19,7 +19,7 @@ fn main() {
         _ => println!("{:?}", fl::event()),
     });
 
-    register_callback(&but2.clone(), &mut || match fl::event() {
+    fl::register_callback(&but2.clone(), &mut || match fl::event() {
         fl::Event::Released => {
             println!("{:?}", fl::event());
             wind.set_label("Clicked button 2!");
@@ -29,6 +29,8 @@ fn main() {
         }
         _ => println!("{:?}", fl::event()),
     });
+
+    fl::register_callback(&but3, &mut || println!("You've clicked button 3"));
 
     wind.end();
     wind.show();

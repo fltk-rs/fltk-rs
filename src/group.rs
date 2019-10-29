@@ -1,4 +1,4 @@
-use crate::widget::WidgetTrait;
+pub use crate::prelude::*;
 use std::{ffi, mem, ptr};
 
 #[derive(Debug, Clone)]
@@ -15,11 +15,6 @@ impl Group {
     pub fn as_ptr(&self) -> *mut fltk_sys::group::Fl_Group {
         self._inner
     }
-}
-
-pub trait GroupTrait {
-    fn begin(&self);
-    fn end(&self);
 }
 
 impl GroupTrait for Group {

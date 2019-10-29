@@ -1,5 +1,4 @@
-use crate::group::GroupTrait;
-use crate::widget::WidgetTrait;
+pub use crate::prelude::*;
 use std::{ffi, mem, ptr};
 
 #[derive(Debug, Clone)]

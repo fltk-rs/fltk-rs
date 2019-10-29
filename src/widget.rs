@@ -1,6 +1,7 @@
 pub use crate::button;
 pub use crate::window;
-use std::{ffi, mem};
+pub use crate::prelude::*;
+use std::ffi;
 
 #[derive(Debug, Clone)]
 pub struct Widget {
@@ -18,79 +19,16 @@ impl Widget {
     }
 }
 
-pub trait WidgetTrait {
-    fn new() -> Self;
-    fn set(self, x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
-    fn set_label(&mut self, title: &str);
-    fn redraw(&mut self);
-    fn show(&mut self);
-    fn hide(&mut self);
-    fn x(&self) -> i32;
-    fn y(&self) -> i32;
-    fn width(&self) -> i32;
-    fn height(&self) -> i32;
-    fn label(&self) -> ffi::CString;
-    fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
-    fn activate(&mut self);
-    fn deactivate(&mut self);
-    fn redraw_label(&mut self);
-    fn resize(&mut self, x: i32, y: i32, width: i32, height: i32);
-    fn set_tooltip(&mut self, txt: &str);
-}
-
-impl From<button::Button> for Widget {
-    fn from(but: button::Button) -> Self {
-        let widg: *mut fltk_sys::widget::Fl_Widget = unsafe { mem::transmute(but.as_ptr()) };
+impl<W: WidgetTrait> From<W> for Widget {
+    fn from(s: W) -> Self {
+        let widg: *mut fltk_sys::widget::Fl_Widget = s.as_widget_ptr();
         Widget {
             _inner: widg,
-            _x: but.x(),
-            _y: but.y(),
-            _width: but.width(),
-            _height: but.height(),
-            _title: but.label(),
+            _x: s.x(),
+            _y: s.y(),
+            _width: s.width(),
+            _height: s.height(),
+            _title: s.label(),
         }
-    }
-}
-
-impl From<window::Window> for Widget {
-    fn from(but: window::Window) -> Self {
-        let widg: *mut fltk_sys::widget::Fl_Widget = unsafe { mem::transmute(but.as_ptr()) };
-        Widget {
-            _inner: widg,
-            _x: but.x(),
-            _y: but.y(),
-            _width: but.width(),
-            _height: but.height(),
-            _title: but.label(),
-        }
-    }
-}
-
-pub fn register_callback<W, F>(widget: &W, cb: F)
-where
-    W: WidgetTrait,
-    F: FnMut(),
-{
-    unsafe {
-        unsafe extern "C" fn shim<F>(
-            _wid: *mut fltk_sys::widget::Fl_Widget,
-            data: *mut libc::c_void,
-        ) where
-            F: FnMut(),
-        {
-            use std::panic::{catch_unwind, AssertUnwindSafe};
-            use std::process::abort;
-            // let a: *mut &mut dyn FnMut() = mem::transmute(data);
-            let a: *mut F = mem::transmute(data);
-            let f = &mut *a;
-            catch_unwind(AssertUnwindSafe(|| {
-                f();
-            }))
-            .unwrap_or_else(|_| abort())
-        }
-        let a: *mut F = Box::into_raw(Box::new(cb));
-        let data: *mut libc::c_void = mem::transmute(a);
-        let callback: fltk_sys::widget::Fl_Callback = Some(shim::<F>);
-        fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
     }
 }
