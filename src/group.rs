@@ -2,8 +2,8 @@ use crate::widget::WidgetTrait;
 use std::{ffi, mem, ptr};
 
 #[derive(Debug, Clone)]
-pub struct Button {
-    _inner: *mut fltk_sys::button::Fl_Button,
+pub struct Group {
+    _inner: *mut fltk_sys::group::Fl_Group,
     _x: i32,
     _y: i32,
     _width: i32,
@@ -11,15 +11,30 @@ pub struct Button {
     _title: ffi::CString,
 }
 
-impl Button {
-    pub fn as_ptr(&self) -> *mut fltk_sys::button::Fl_Button {
+impl Group {
+    pub fn as_ptr(&self) -> *mut fltk_sys::group::Fl_Group {
         self._inner
     }
 }
 
-impl WidgetTrait for Button {
-    fn new() -> Button {
-        Button {
+pub trait GroupTrait {
+    fn begin(&self);
+    fn end(&self);
+}
+
+impl GroupTrait for Group {
+    fn begin(&self) {
+        unsafe { fltk_sys::group::Fl_Group_begin(self._inner) }
+    }
+
+    fn end(&self) {
+        unsafe { fltk_sys::group::Fl_Group_end(self._inner) }
+    }
+}
+
+impl WidgetTrait for Group {
+    fn new() -> Group {
+        Group {
             _inner: ptr::null_mut(),
             _x: 0,
             _y: 0,
@@ -29,7 +44,7 @@ impl WidgetTrait for Button {
         }
     }
 
-    fn set(mut self, x: i32, y: i32, width: i32, height: i32, title: &str) -> Button {
+    fn set(mut self, x: i32, y: i32, width: i32, height: i32, title: &str) -> Group {
         // let title = ffi::CString::new(title).unwrap();
         self._x = x;
         self._y = y;
@@ -37,7 +52,7 @@ impl WidgetTrait for Button {
         self._height = height;
         self._title = ffi::CString::new(title).unwrap();
         self._inner = unsafe {
-            fltk_sys::button::Fl_Button_new(
+            fltk_sys::group::Fl_Group_new(
                 self._x,
                 self._y,
                 self._width,
@@ -51,7 +66,7 @@ impl WidgetTrait for Button {
     fn set_label(&mut self, title: &str) {
         self._title = ffi::CString::new(title).unwrap();
         unsafe {
-            fltk_sys::button::Fl_Button_set_label(
+            fltk_sys::group::Fl_Group_set_label(
                 self._inner,
                 self._title.as_ptr() as *const libc::c_char,
             )
@@ -60,16 +75,16 @@ impl WidgetTrait for Button {
 
     fn redraw(&mut self) {
         unsafe {
-            fltk_sys::button::Fl_Button_redraw(self._inner);
+            fltk_sys::group::Fl_Group_redraw(self._inner);
         }
     }
 
     fn show(&mut self) {
-        unsafe { fltk_sys::button::Fl_Button_show(self._inner) }
+        unsafe { fltk_sys::group::Fl_Group_show(self._inner) }
     }
 
     fn hide(&mut self) {
-        unsafe { fltk_sys::button::Fl_Button_hide(self._inner) }
+        unsafe { fltk_sys::group::Fl_Group_hide(self._inner) }
     }
 
     fn x(&self) -> i32 {
@@ -97,28 +112,25 @@ impl WidgetTrait for Button {
     }
 
     fn activate(&mut self) {
-        unsafe { fltk_sys::button::Fl_Button_activate(self._inner) }
+        unsafe { fltk_sys::group::Fl_Group_activate(self._inner) }
     }
 
     fn deactivate(&mut self) {
-        unsafe { fltk_sys::button::Fl_Button_deactivate(self._inner) }
+        unsafe { fltk_sys::group::Fl_Group_deactivate(self._inner) }
     }
 
     fn redraw_label(&mut self) {
-        unsafe { fltk_sys::button::Fl_Button_redraw_label(self._inner) }
+        unsafe { fltk_sys::group::Fl_Group_redraw_label(self._inner) }
     }
 
     fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
-        unsafe { fltk_sys::button::Fl_Button_resize(self._inner, x, y, width, height) }
+        unsafe { fltk_sys::group::Fl_Group_resize(self._inner, x, y, width, height) }
     }
 
     fn set_tooltip(&mut self, txt: &str) {
         let txt = ffi::CString::new(txt).unwrap();
         unsafe {
-            fltk_sys::button::Fl_Button_set_tooltip(
-                self._inner,
-                txt.as_ptr() as *const libc::c_char,
-            )
+            fltk_sys::group::Fl_Group_set_tooltip(self._inner, txt.as_ptr() as *const libc::c_char)
         }
     }
 }

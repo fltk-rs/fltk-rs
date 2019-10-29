@@ -1,4 +1,5 @@
-pub use crate::widget;
+use crate::group::GroupTrait;
+use crate::widget::WidgetTrait;
 use std::{ffi, mem, ptr};
 
 #[derive(Debug, Clone)]
@@ -12,22 +13,34 @@ pub struct Window {
 }
 
 impl Window {
-    pub fn begin(&mut self) {
-        unsafe { fltk_sys::window::Fl_Window_begin(self._inner) }
-    }
-    pub fn end(&mut self) {
-        unsafe { fltk_sys::window::Fl_Window_end(self._inner) }
-    }
-    pub fn show(&mut self) {
-        unsafe { fltk_sys::window::Fl_Window_show(self._inner) }
-    }
-
     pub fn as_ptr(&self) -> *mut fltk_sys::window::Fl_Window {
         self._inner
     }
+
+    pub fn make_modal(&self, val: bool) {
+        unsafe { fltk_sys::window::Fl_Window_make_modal(self._inner, val as u32) }
+    }
+
+    pub fn fullscreen(&self, val: bool) {
+        unsafe { fltk_sys::window::Fl_Window_fullscreen(self._inner, val as u32) }
+    }
+
+    pub fn make_current(&self) {
+        unsafe { fltk_sys::window::Fl_Window_make_current(self._inner) }
+    }
 }
 
-impl widget::WidgetTrait for Window {
+impl GroupTrait for Window {
+    fn begin(&self) {
+        unsafe { fltk_sys::window::Fl_Window_begin(self._inner) }
+    }
+
+    fn end(&self) {
+        unsafe { fltk_sys::window::Fl_Window_end(self._inner) }
+    }
+}
+
+impl WidgetTrait for Window {
     fn new() -> Window {
         Window {
             _inner: ptr::null_mut(),
@@ -74,6 +87,14 @@ impl widget::WidgetTrait for Window {
         }
     }
 
+    fn show(&mut self) {
+        unsafe { fltk_sys::window::Fl_Window_show(self._inner) }
+    }
+
+    fn hide(&mut self) {
+        unsafe { fltk_sys::window::Fl_Window_hide(self._inner) }
+    }
+
     fn x(&self) -> i32 {
         self._x
     }
@@ -98,14 +119,29 @@ impl widget::WidgetTrait for Window {
         unsafe { mem::transmute(self._inner) }
     }
 
-    fn add_callback(&self, cb: fn()) {
+    fn activate(&mut self) {
+        unsafe { fltk_sys::window::Fl_Window_activate(self._inner) }
+    }
+
+    fn deactivate(&mut self) {
+        unsafe { fltk_sys::window::Fl_Window_deactivate(self._inner) }
+    }
+
+    fn redraw_label(&mut self) {
+        unsafe { fltk_sys::window::Fl_Window_redraw_label(self._inner) }
+    }
+
+    fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
+        unsafe { fltk_sys::window::Fl_Window_resize(self._inner, x, y, width, height) }
+    }
+
+    fn set_tooltip(&mut self, txt: &str) {
+        let txt = ffi::CString::new(txt).unwrap();
         unsafe {
-            let widget: *mut fltk_sys::widget::Fl_Widget = mem::transmute(self._inner);
-            let callback: unsafe extern "C" fn(
-                *mut fltk_sys::widget::Fl_Widget,
-                *mut libc::c_void,
-            ) = mem::transmute(cb);
-            fltk_sys::widget::Fl_Widget_callback(widget, Option::from(callback));
+            fltk_sys::window::Fl_Window_set_tooltip(
+                self._inner,
+                txt.as_ptr() as *const libc::c_char,
+            )
         }
     }
 }

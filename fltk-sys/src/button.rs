@@ -13,6 +13,10 @@ extern "C" {
     title: *const libc::c_char,
     ) -> *mut Fl_Button;
 
+    pub fn Fl_Button_show(arg1: *mut Fl_Button);
+
+    pub fn Fl_Button_hide(arg1: *mut Fl_Button);
+
     pub fn Fl_Button_set_label(
         arg1: *mut Fl_Button,
         title: *const libc::c_char,
@@ -22,9 +26,24 @@ extern "C" {
         arg1: *mut Fl_Button,
     );
 
-    pub fn Fl_Button_handle (
+
+    pub fn Fl_Button_activate(arg1: *mut Fl_Button);
+
+
+    pub fn Fl_Button_deactivate(arg1: *mut Fl_Button);
+
+
+    pub fn Fl_Button_redraw_label(arg1: *mut Fl_Button);
+
+
+    pub fn Fl_Button_resize(
         arg1: *mut Fl_Button,
-        event: libc::c_int,
-    ) -> libc::c_int;
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+
+    pub fn Fl_Button_set_tooltip(arg1: *mut Fl_Button, txt: *const libc::c_char);
 
 }
