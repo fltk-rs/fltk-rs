@@ -51,11 +51,15 @@ fn main() {
             println!("cargo:rustc-link-lib=dylib=z");
         },
         "windows" => {
+            if cfg!(target_env = "gnu") {
+                println!("cargo:rustc-link-lib=dylib=stdc++");
+            }
             println!("cargo:rustc-link-lib=dylib=wsock32");
             println!("cargo:rustc-link-lib=dylib=comctl32");
             println!("cargo:rustc-link-lib=dylib=gdi32");
             println!("cargo:rustc-link-lib=dylib=oleaut32");
             println!("cargo:rustc-link-lib=dylib=ole32");
+            println!("cargo:rustc-link-lib=dylib=uuid");
             println!("cargo:rustc-link-lib=dylib=shell32");
             println!("cargo:rustc-link-lib=dylib=advapi32");
             println!("cargo:rustc-link-lib=dylib=comdlg32");

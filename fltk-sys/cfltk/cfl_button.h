@@ -17,6 +17,8 @@ void Fl_Button_redraw_label(Fl_Button *);
 void Fl_Button_resize(Fl_Button *, int x, int y, int width, int height);
 void Fl_Button_set_tooltip(Fl_Button *, const char* txt);
 void Fl_Button_set_type(Fl_Button *, int typ);
+int Fl_Button_get_type(Fl_Button *);
+
 
 
 #ifdef __cplusplus

@@ -44,3 +44,7 @@ void Fl_Button_set_tooltip(Fl_Button *self, const char* txt) {
 void Fl_Button_set_type(Fl_Button *self, int typ) {
     self->type(typ);
 }
+
+int Fl_Button_get_type(Fl_Button *self) {
+    return self->type();
+}
