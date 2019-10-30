@@ -1,4 +1,4 @@
-use fltk::{prelude::*, button::*, window::*};
+use fltk::{button::*, window::*};
 
 fn main() {
     let mut wind = Window::new().set(100, 100, 400, 300, "Hello from rust");
@@ -8,8 +8,9 @@ fn main() {
     let mut but2 = Button::new().set(240, 80, 80, 60, "Click me!");
     let mut but3 = Button::new().set(80, 160, 80, 60, "Click me!");
     but3.set_type(ButtonType::RadioButton);
-        let mut but4 = Button::new().set(240, 160, 80, 60, "Click me!");
+    let mut but4 = Button::new().set(240, 160, 80, 60, "Click me!");
     but4.set_type(ButtonType::RadioButton);
+    but1.set_color(Color::Red);
 
     fl::register_callback(&but1.clone(), &mut || match fl::event() {
         fl::Event::Released => {

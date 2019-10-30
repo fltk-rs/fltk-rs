@@ -1,6 +1,6 @@
 pub use crate::button;
-pub use crate::window;
 pub use crate::prelude::*;
+pub use crate::window;
 use std::ffi;
 
 #[derive(Debug, Clone)]

@@ -23,7 +23,7 @@ impl WidgetType for GroupType {
     }
 
     fn from_i32(val: i32) -> GroupType {
-        unsafe {mem::transmute(val)}
+        unsafe { mem::transmute(val) }
     }
 }
 
@@ -140,7 +140,9 @@ impl WidgetTrait for Group {
 
     fn tooltip(&self) -> ffi::CString {
         unsafe {
-            ffi::CString::from_raw(fltk_sys::group::Fl_Group_tooltip(self._inner) as *mut libc::c_char)
+            ffi::CString::from_raw(
+                fltk_sys::group::Fl_Group_tooltip(self._inner) as *mut libc::c_char
+            )
         }
     }
 
@@ -152,9 +154,7 @@ impl WidgetTrait for Group {
     }
 
     fn get_type<T: WidgetType>(&self) -> T {
-        unsafe {
-            T::from_i32(fltk_sys::group::Fl_Group_get_type(self._inner))
-        }
+        unsafe { T::from_i32(fltk_sys::group::Fl_Group_get_type(self._inner)) }
     }
 
     fn set_type<T: WidgetType>(&mut self, typ: T) {
@@ -164,62 +164,54 @@ impl WidgetTrait for Group {
     }
 
     fn color(&self) -> Color {
-        unsafe {
-            mem::transmute(fltk_sys::group::Fl_Group_color(self._inner))
-        }
+        unsafe { mem::transmute(fltk_sys::group::Fl_Group_color(self._inner)) }
     }
 
     fn set_color(&mut self, color: Color) {
-        unsafe {
-            fltk_sys::group::Fl_Group_set_color(self._inner, color as i32)
-        }
+        unsafe { fltk_sys::group::Fl_Group_set_color(self._inner, color as i32) }
     }
 
     fn label_color(&self) -> Color {
-        unsafe {
-            mem::transmute(fltk_sys::group::Fl_Group_label_color(self._inner))
-        }
+        unsafe { mem::transmute(fltk_sys::group::Fl_Group_label_color(self._inner)) }
     }
 
     fn set_label_color(&mut self, color: Color) {
-        unsafe {
-            fltk_sys::group::Fl_Group_set_label_color(self._inner, color as i32)
-        }
+        unsafe { fltk_sys::group::Fl_Group_set_label_color(self._inner, color as i32) }
     }
 
     fn label_font(&self) -> Font {
-        unsafe {
-            mem::transmute(fltk_sys::group::Fl_Group_label_font(self._inner))
-        }
+        unsafe { mem::transmute(fltk_sys::group::Fl_Group_label_font(self._inner)) }
     }
 
     fn set_label_font(&mut self, font: Font) {
-        unsafe {
-            fltk_sys::group::Fl_Group_set_label_color(self._inner, font as i32)
-        }
+        unsafe { fltk_sys::group::Fl_Group_set_label_color(self._inner, font as i32) }
     }
 
     fn label_size(&self) -> usize {
-        unsafe {
-            fltk_sys::group::Fl_Group_label_size(self._inner) as usize
-        }
+        unsafe { fltk_sys::group::Fl_Group_label_size(self._inner) as usize }
     }
 
     fn set_label_size(&mut self, sz: usize) {
-        unsafe {
-            fltk_sys::group::Fl_Group_set_label_size(self._inner, sz as i32)
-        }
+        unsafe { fltk_sys::group::Fl_Group_set_label_size(self._inner, sz as i32) }
     }
 
     fn label_type<T: WidgetType>(&self) -> T {
-        unsafe {
-            T::from_i32(fltk_sys::group::Fl_Group_label_type(self._inner))
-        }
+        unsafe { T::from_i32(fltk_sys::group::Fl_Group_label_type(self._inner)) }
     }
 
     fn set_label_type<T: WidgetType>(&mut self, typ: T) {
         unsafe {
             fltk_sys::group::Fl_Group_set_label_type(self._inner, typ.to_int());
+        }
+    }
+
+    fn get_box<T: WidgetType>(&self) -> T {
+        unsafe { T::from_i32(fltk_sys::group::Fl_Group_box(self._inner)) }
+    }
+
+    fn set_box<T: WidgetType>(&mut self, typ: T) {
+        unsafe {
+            fltk_sys::group::Fl_Group_set_box(self._inner, typ.to_int());
         }
     }
 }

@@ -17,7 +17,7 @@ pub enum ButtonType {
     NormalButton = 0,
     ToggleButton = 1,
     RadioButton = 102,
-    HiddenButton = 3
+    HiddenButton = 3,
 }
 
 impl WidgetType for ButtonType {
@@ -26,7 +26,7 @@ impl WidgetType for ButtonType {
     }
 
     fn from_i32(val: i32) -> ButtonType {
-        unsafe {mem::transmute(val)}
+        unsafe { mem::transmute(val) }
     }
 }
 
@@ -49,7 +49,6 @@ impl WidgetTrait for Button {
     }
 
     fn set(mut self, x: i32, y: i32, width: i32, height: i32, title: &str) -> Button {
-        // let title = ffi::CString::new(title).unwrap();
         self._x = x;
         self._y = y;
         self._width = width;
@@ -133,7 +132,9 @@ impl WidgetTrait for Button {
 
     fn tooltip(&self) -> ffi::CString {
         unsafe {
-            ffi::CString::from_raw(fltk_sys::button::Fl_Button_tooltip(self._inner) as *mut libc::c_char)
+            ffi::CString::from_raw(
+                fltk_sys::button::Fl_Button_tooltip(self._inner) as *mut libc::c_char
+            )
         }
     }
 
@@ -148,11 +149,9 @@ impl WidgetTrait for Button {
     }
 
     fn get_type<T: WidgetType>(&self) -> T {
-        unsafe {
-            T::from_i32(fltk_sys::button::Fl_Button_get_type(self._inner))
-        }
+        unsafe { T::from_i32(fltk_sys::button::Fl_Button_get_type(self._inner)) }
     }
-  
+
     fn set_type<T: WidgetType>(&mut self, typ: T) {
         unsafe {
             fltk_sys::button::Fl_Button_set_type(self._inner, typ.to_int());
@@ -160,62 +159,54 @@ impl WidgetTrait for Button {
     }
 
     fn color(&self) -> Color {
-        unsafe {
-            mem::transmute(fltk_sys::button::Fl_Button_color(self._inner))
-        }
+        unsafe { mem::transmute(fltk_sys::button::Fl_Button_color(self._inner)) }
     }
 
     fn set_color(&mut self, color: Color) {
-        unsafe {
-            fltk_sys::button::Fl_Button_set_color(self._inner, color as i32)
-        }
+        unsafe { fltk_sys::button::Fl_Button_set_color(self._inner, color as i32) }
     }
 
     fn label_color(&self) -> Color {
-        unsafe {
-            mem::transmute(fltk_sys::button::Fl_Button_label_color(self._inner))
-        }
+        unsafe { mem::transmute(fltk_sys::button::Fl_Button_label_color(self._inner)) }
     }
 
     fn set_label_color(&mut self, color: Color) {
-        unsafe {
-            fltk_sys::button::Fl_Button_set_label_color(self._inner, color as i32)
-        }
+        unsafe { fltk_sys::button::Fl_Button_set_label_color(self._inner, color as i32) }
     }
 
     fn label_font(&self) -> Font {
-        unsafe {
-            mem::transmute(fltk_sys::button::Fl_Button_label_font(self._inner))
-        }
+        unsafe { mem::transmute(fltk_sys::button::Fl_Button_label_font(self._inner)) }
     }
 
     fn set_label_font(&mut self, font: Font) {
-        unsafe {
-            fltk_sys::button::Fl_Button_set_label_color(self._inner, font as i32)
-        }
+        unsafe { fltk_sys::button::Fl_Button_set_label_color(self._inner, font as i32) }
     }
 
     fn label_size(&self) -> usize {
-        unsafe {
-            fltk_sys::button::Fl_Button_label_size(self._inner) as usize
-        }
+        unsafe { fltk_sys::button::Fl_Button_label_size(self._inner) as usize }
     }
 
     fn set_label_size(&mut self, sz: usize) {
-        unsafe {
-            fltk_sys::button::Fl_Button_set_label_size(self._inner, sz as i32)
-        }
+        unsafe { fltk_sys::button::Fl_Button_set_label_size(self._inner, sz as i32) }
     }
 
     fn label_type<T: WidgetType>(&self) -> T {
-        unsafe {
-            T::from_i32(fltk_sys::button::Fl_Button_label_type(self._inner))
-        }
+        unsafe { T::from_i32(fltk_sys::button::Fl_Button_label_type(self._inner)) }
     }
 
     fn set_label_type<T: WidgetType>(&mut self, typ: T) {
         unsafe {
             fltk_sys::button::Fl_Button_set_label_type(self._inner, typ.to_int());
+        }
+    }
+
+    fn get_box<T: WidgetType>(&self) -> T {
+        unsafe { T::from_i32(fltk_sys::button::Fl_Button_box(self._inner)) }
+    }
+
+    fn set_box<T: WidgetType>(&mut self, typ: T) {
+        unsafe {
+            fltk_sys::button::Fl_Button_set_box(self._inner, typ.to_int());
         }
     }
 }

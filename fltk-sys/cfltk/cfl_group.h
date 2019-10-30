@@ -31,6 +31,8 @@ int Fl_Group_label_size(Fl_Group *);
 void Fl_Group_set_label_size(Fl_Group *, int sz);
 int Fl_Group_label_type(Fl_Group *);
 void Fl_Group_set_label_type(Fl_Group *, int typ);
+int Fl_Group_box(Fl_Group *);
+void Fl_Group_set_box(Fl_Group *, int typ);
 
 #ifdef __cplusplus
 }

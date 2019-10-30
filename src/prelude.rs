@@ -1,5 +1,5 @@
-pub use crate::fl;
 pub use crate::color::Color;
+pub use crate::fl;
 pub use crate::font::Font;
 use std::ffi;
 
@@ -34,6 +34,8 @@ pub trait WidgetTrait {
     fn set_label_size(&mut self, sz: usize);
     fn label_type<T: WidgetType>(&self) -> T;
     fn set_label_type<T: WidgetType>(&mut self, typ: T);
+    fn get_box<T: WidgetType>(&self) -> T;
+    fn set_box<T: WidgetType>(&mut self, typ: T);
 }
 
 pub trait GroupTrait {

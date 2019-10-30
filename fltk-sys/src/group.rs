@@ -75,4 +75,8 @@ extern "C" {
     pub fn Fl_Group_label_type(arg1: *mut Fl_Group) -> libc::c_int;
     
     pub fn Fl_Group_set_label_type(arg1: *mut Fl_Group, typ: libc::c_int);
+
+    pub fn Fl_Group_box(arg1: *mut Fl_Group) -> libc::c_int;
+    
+    pub fn Fl_Group_set_box(arg1: *mut Fl_Group, typ: libc::c_int);
 }

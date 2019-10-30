@@ -101,3 +101,11 @@ int Fl_Group_label_type(Fl_Group *self) {
 void Fl_Group_set_label_type(Fl_Group *self, int sz) {
     self->labelsize(sz);
 }
+
+int Fl_Group_box(Fl_Group *self) {
+    return self->box();
+}
+
+void Fl_Group_set_box(Fl_Group *self, int typ) {
+    self->box(static_cast<Fl_Boxtype>(typ));
+}

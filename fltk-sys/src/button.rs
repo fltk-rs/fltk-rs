@@ -72,4 +72,8 @@ extern "C" {
     
     pub fn Fl_Button_set_label_type(arg1: *mut Fl_Button, typ: libc::c_int);
 
+    pub fn Fl_Button_box(arg1: *mut Fl_Button) -> libc::c_int;
+    
+    pub fn Fl_Button_set_box(arg1: *mut Fl_Button, typ: libc::c_int);
+
 }

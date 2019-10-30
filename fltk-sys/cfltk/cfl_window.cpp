@@ -103,6 +103,14 @@ void Fl_Window_set_label_type(Fl_Window *self, int sz) {
     self->labelsize(sz);
 }
 
+int Fl_Window_box(Fl_Window *self) {
+    return self->box();
+}
+
+void Fl_Window_set_box(Fl_Window *self, int typ) {
+    self->box(static_cast<Fl_Boxtype>(typ));
+}
+
 void Fl_Window_make_modal(Fl_Window *self, unsigned int boolean) {
     if (boolean) {
         self->set_modal();

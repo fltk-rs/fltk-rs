@@ -40,7 +40,6 @@ pub fn event() -> Event {
     }
 }
 
-
 pub fn register_callback<W, F>(widget: &W, cb: F)
 where
     W: WidgetTrait,

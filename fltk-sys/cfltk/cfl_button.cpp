@@ -92,3 +92,11 @@ int Fl_Button_label_type(Fl_Button *self) {
 void Fl_Button_set_label_type(Fl_Button *self, int sz) {
     self->labelsize(sz);
 }
+
+int Fl_Button_box(Fl_Button *self) {
+    return self->box();
+}
+
+void Fl_Button_set_box(Fl_Button *self, int typ) {
+    self->box(static_cast<Fl_Boxtype>(typ));
+}

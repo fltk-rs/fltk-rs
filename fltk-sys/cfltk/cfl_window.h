@@ -29,6 +29,8 @@ int Fl_Window_label_size(Fl_Window *);
 void Fl_Window_set_label_size(Fl_Window *, int sz);
 int Fl_Window_label_type(Fl_Window *);
 void Fl_Window_set_label_type(Fl_Window *, int typ);
+int Fl_Window_box(Fl_Window *);
+void Fl_Window_set_box(Fl_Window *, int typ);
 void Fl_Window_begin(Fl_Window *self);
 void Fl_Window_end(Fl_Window *self);
 void Fl_Window_make_modal(Fl_Window *self, unsigned int boolean);

@@ -29,6 +29,8 @@ int Fl_Button_label_size(Fl_Button *);
 void Fl_Button_set_label_size(Fl_Button *, int sz);
 int Fl_Button_label_type(Fl_Button *);
 void Fl_Button_set_label_type(Fl_Button *, int typ);
+int Fl_Button_box(Fl_Button *);
+void Fl_Button_set_box(Fl_Button *, int typ);
 
 
 #ifdef __cplusplus

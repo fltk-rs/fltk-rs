@@ -7,6 +7,7 @@ pub mod widget;
 pub mod group;
 pub mod window;
 pub mod button;
+pub mod frame;
 
 
 #[cfg(test)]

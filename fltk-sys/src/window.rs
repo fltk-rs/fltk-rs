@@ -74,6 +74,10 @@ extern "C" {
     pub fn Fl_Window_label_type(arg1: *mut Fl_Window) -> libc::c_int;
     
     pub fn Fl_Window_set_label_type(arg1: *mut Fl_Window, typ: libc::c_int);
+
+    pub fn Fl_Window_box(arg1: *mut Fl_Window) -> libc::c_int;
+    
+    pub fn Fl_Window_set_box(arg1: *mut Fl_Window, typ: libc::c_int);
     
     pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: u32);
     
