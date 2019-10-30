@@ -8,6 +8,7 @@ pub mod group;
 pub mod window;
 pub mod button;
 pub mod frame;
+pub mod input;
 
 
 #[cfg(test)]

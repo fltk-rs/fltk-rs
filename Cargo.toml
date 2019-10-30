@@ -15,4 +15,10 @@ fltk-sys = { path = "fltk-sys", version = "0.1.0" }
 libc = "^0.2"
 
 [[example]]
-name = "window"
+name = "hello"
+
+[[example]]
+name = "button"
+
+[[example]]
+name = "input"
