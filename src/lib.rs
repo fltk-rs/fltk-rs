@@ -4,6 +4,8 @@ pub mod widget;
 pub mod window;
 pub mod button;
 pub mod prelude;
+pub mod color;
+pub mod font;
 
 #[cfg(test)]
 mod tests {

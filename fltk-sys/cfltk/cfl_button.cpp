@@ -37,14 +37,58 @@ void Fl_Button_resize(Fl_Button *self, int x, int y, int width, int height) {
     self->resize(x, y, width, height);
 }
 
+const char* Fl_Button_tooltip(Fl_Button *self) {
+    return self->tooltip();
+}
+
 void Fl_Button_set_tooltip(Fl_Button *self, const char* txt) {
     self->tooltip(txt);
+}
+
+int Fl_Button_get_type(Fl_Button *self) {
+    return self->type();
 }
 
 void Fl_Button_set_type(Fl_Button *self, int typ) {
     self->type(typ);
 }
 
-int Fl_Button_get_type(Fl_Button *self) {
-    return self->type();
+int Fl_Button_color(Fl_Button *self) {
+    return self->color();
+}
+
+void Fl_Button_set_color(Fl_Button *self, int color) {
+    self->color(color);
+}
+
+int Fl_Button_label_color(Fl_Button *self) {
+    return self->labelcolor();
+}
+
+void Fl_Button_set_label_color(Fl_Button *self, int color) {
+    self->labelcolor(color);
+}
+
+int Fl_Button_label_font(Fl_Button *self) {
+    return self->labelfont();
+}
+
+void Fl_Button_set_label_font(Fl_Button *self, int font) {
+    self->labelfont(font);
+}
+
+int Fl_Button_label_size(Fl_Button *self) {
+    return self->labelsize();
+}
+
+void Fl_Button_set_label_size(Fl_Button *self, int sz) {
+    self->labelsize(sz);
+}
+
+int Fl_Button_label_type(Fl_Button *self) {
+    return self->labelsize();
+}
+
+void Fl_Button_set_label_type(Fl_Button *self, int sz) {
+    self->labelsize(sz);
 }

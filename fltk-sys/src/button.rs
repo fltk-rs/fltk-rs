@@ -44,8 +44,32 @@ extern "C" {
         height: libc::c_int,
     );
 
+    pub fn Fl_Button_tooltip(arg1: *mut Fl_Button) -> *const libc::c_char;
+
     pub fn Fl_Button_set_tooltip(arg1: *mut Fl_Button, txt: *const libc::c_char);
 
+    pub fn Fl_Button_get_type(arg1: *mut Fl_Button) -> libc::c_int;
+
     pub fn Fl_Button_set_type(arg1: *mut Fl_Button, typ: libc::c_int); 
+
+    pub fn Fl_Button_color(arg1: *mut Fl_Button) -> libc::c_int;
+
+    pub fn Fl_Button_set_color(arg1: *mut Fl_Button, color: libc::c_int);
+
+    pub fn Fl_Button_label_color(arg1: *mut Fl_Button) -> libc::c_int;
+
+    pub fn Fl_Button_set_label_color(arg1: *mut Fl_Button, color: libc::c_int);
+
+    pub fn Fl_Button_label_font(arg1: *mut Fl_Button) -> libc::c_int;
+
+    pub fn Fl_Button_set_label_font(arg1: *mut Fl_Button, font: libc::c_int);
+
+    pub fn Fl_Button_label_size(arg1: *mut Fl_Button) -> libc::c_int;
+
+    pub fn Fl_Button_set_label_size(arg1: *mut Fl_Button, sz: libc::c_int);
+
+    pub fn Fl_Button_label_type(arg1: *mut Fl_Button) -> libc::c_int;
+    
+    pub fn Fl_Button_set_label_type(arg1: *mut Fl_Button, typ: libc::c_int);
 
 }

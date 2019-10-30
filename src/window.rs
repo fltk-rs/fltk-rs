@@ -11,6 +11,8 @@ pub struct Window {
     _title: ffi::CString,
 }
 
+#[repr(i32)]
+#[derive(Debug, Copy, Clone)]
 pub enum WindowType {
     NormalWindow = 240,
     DoubleWindow = 241,
@@ -19,6 +21,10 @@ pub enum WindowType {
 impl WidgetType for WindowType {
     fn to_int(self) -> i32 {
         self as i32
+    }
+
+    fn from_i32(val: i32) -> WindowType {
+        unsafe {mem::transmute(val)}
     }
 }
 
@@ -145,6 +151,12 @@ impl WidgetTrait for Window {
         unsafe { fltk_sys::window::Fl_Window_resize(self._inner, x, y, width, height) }
     }
 
+    fn tooltip(&self) -> ffi::CString {
+        unsafe {
+            ffi::CString::from_raw(fltk_sys::window::Fl_Window_tooltip(self._inner) as *mut libc::c_char)
+        }
+    }
+
     fn set_tooltip(&mut self, txt: &str) {
         let txt = ffi::CString::new(txt).unwrap();
         unsafe {
@@ -155,9 +167,75 @@ impl WidgetTrait for Window {
         }
     }
 
+    fn get_type<T: WidgetType>(&self) -> T {
+        unsafe {
+            T::from_i32(fltk_sys::window::Fl_Window_get_type(self._inner))
+        }
+    }
+
     fn set_type<T: WidgetType>(&mut self, typ: T) {
         unsafe {
             fltk_sys::window::Fl_Window_set_type(self._inner, typ.to_int());
+        }
+    }
+
+    fn color(&self) -> Color {
+        unsafe {
+            mem::transmute(fltk_sys::window::Fl_Window_color(self._inner))
+        }
+    }
+
+    fn set_color(&mut self, color: Color) {
+        unsafe {
+            fltk_sys::window::Fl_Window_set_color(self._inner, color as i32)
+        }
+    }
+
+    fn label_color(&self) -> Color {
+        unsafe {
+            mem::transmute(fltk_sys::window::Fl_Window_label_color(self._inner))
+        }
+    }
+
+    fn set_label_color(&mut self, color: Color) {
+        unsafe {
+            fltk_sys::window::Fl_Window_set_label_color(self._inner, color as i32)
+        }
+    }
+
+    fn label_font(&self) -> Font {
+        unsafe {
+            mem::transmute(fltk_sys::window::Fl_Window_label_font(self._inner))
+        }
+    }
+
+    fn set_label_font(&mut self, font: Font) {
+        unsafe {
+            fltk_sys::window::Fl_Window_set_label_color(self._inner, font as i32)
+        }
+    }
+
+    fn label_size(&self) -> usize {
+        unsafe {
+            fltk_sys::window::Fl_Window_label_size(self._inner) as usize
+        }
+    }
+
+    fn set_label_size(&mut self, sz: usize) {
+        unsafe {
+            fltk_sys::window::Fl_Window_set_label_size(self._inner, sz as i32)
+        }
+    }
+
+    fn label_type<T: WidgetType>(&self) -> T {
+        unsafe {
+            T::from_i32(fltk_sys::window::Fl_Window_label_type(self._inner))
+        }
+    }
+
+    fn set_label_type<T: WidgetType>(&mut self, typ: T) {
+        unsafe {
+            fltk_sys::window::Fl_Window_set_label_type(self._inner, typ.to_int());
         }
     }
 }

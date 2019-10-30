@@ -47,9 +47,33 @@ extern "C" {
         height: libc::c_int,
     );
 
+    pub fn Fl_Window_tooltip(arg1: *mut Fl_Window) -> *const libc::c_char;
+
     pub fn Fl_Window_set_tooltip(arg1: *mut Fl_Window, txt: *const libc::c_char);
 
-    pub fn Fl_Window_set_type(arg1: *mut Fl_Window, typ: libc::c_int); 
+    pub fn Fl_Window_get_type(arg1: *mut Fl_Window) -> libc::c_int;
+
+    pub fn Fl_Window_set_type(arg1: *mut Fl_Window, typ: libc::c_int);
+    
+    pub fn Fl_Window_color(arg1: *mut Fl_Window) -> libc::c_int;
+
+    pub fn Fl_Window_set_color(arg1: *mut Fl_Window, color: libc::c_int);
+
+    pub fn Fl_Window_label_color(arg1: *mut Fl_Window) -> libc::c_int;
+
+    pub fn Fl_Window_set_label_color(arg1: *mut Fl_Window, color: libc::c_int);
+
+    pub fn Fl_Window_label_font(arg1: *mut Fl_Window) -> libc::c_int;
+
+    pub fn Fl_Window_set_label_font(arg1: *mut Fl_Window, font: libc::c_int);
+
+    pub fn Fl_Window_label_size(arg1: *mut Fl_Window) -> libc::c_int;
+
+    pub fn Fl_Window_set_label_size(arg1: *mut Fl_Window, sz: libc::c_int);
+
+    pub fn Fl_Window_label_type(arg1: *mut Fl_Window) -> libc::c_int;
+    
+    pub fn Fl_Window_set_label_type(arg1: *mut Fl_Window, typ: libc::c_int);
     
     pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: u32);
     

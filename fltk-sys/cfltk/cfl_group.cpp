@@ -46,10 +46,58 @@ void Fl_Group_resize(Fl_Group *self, int x, int y, int width, int height) {
     self->resize(x, y, width, height);
 }
 
+const char* Fl_Group_tooltip(Fl_Group *self) {
+    return self->tooltip();
+}
+
 void Fl_Group_set_tooltip(Fl_Group *self, const char* txt) {
     self->tooltip(txt);
 }
 
+int Fl_Group_get_type(Fl_Group *self) {
+    return self->type();
+}
+
 void Fl_Group_set_type(Fl_Group *self, int typ) {
     self->type(typ);
+}
+
+int Fl_Group_color(Fl_Group *self) {
+    return self->color();
+}
+
+void Fl_Group_set_color(Fl_Group *self, int color) {
+    self->color(color);
+}
+
+int Fl_Group_label_color(Fl_Group *self) {
+    return self->labelcolor();
+}
+
+void Fl_Group_set_label_color(Fl_Group *self, int color) {
+    self->labelcolor(color);
+}
+
+int Fl_Group_label_font(Fl_Group *self) {
+    return self->labelfont();
+}
+
+void Fl_Group_set_label_font(Fl_Group *self, int font) {
+    self->labelfont(font);
+}
+
+int Fl_Group_label_size(Fl_Group *self) {
+    return self->labelsize();
+}
+
+void Fl_Group_set_label_size(Fl_Group *self, int sz) {
+    self->labelsize(sz);
+}
+
+int Fl_Group_label_type(Fl_Group *self) {
+    return self->labelsize();
+}
+
+void Fl_Group_set_label_type(Fl_Group *self, int sz) {
+    self->labelsize(sz);
 }
