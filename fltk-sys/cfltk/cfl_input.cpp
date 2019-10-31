@@ -1,5 +1,5 @@
 #include <FL/Fl_Input.H>
-#include "cFl_Input.h"
+#include "cfl_input.h"
 
 WIDGET_DEFINE(Fl_Input)
 

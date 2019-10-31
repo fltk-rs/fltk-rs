@@ -173,10 +173,10 @@ void widget## _make_current(widget *self) {\
 }\
 
 #define INPUT_DEFINE(widget) \
-int widget## _value(widget *self, const char* t, int val) {\
-    self->static_value(t, val);\
+int widget## _set_value(widget *self, const char* t) {\
+    self->static_value(t);\
 }\
-const char* widget## _get_value(widget *self) {\
+const char* widget## _value(widget *self) {\
     return self->value();\
 }\
 int widget## _maximum_size(widget *self) {\
