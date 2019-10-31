@@ -20,7 +20,7 @@ fn impl_widget_derive(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         impl WidgetDerive for #name {
             fn widget_derive() {
-                println!("Hello, Macro! My name is {}", stringify!(#name);
+                println!("Hello, Macro! My name is {}", stringify!(#name));
             }
         }
     };
