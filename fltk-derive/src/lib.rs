@@ -135,8 +135,8 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 self._height
             }
 
-            fn label(&self) -> ffi::CString {
-                self._title.clone()
+            fn label(&self) -> String {
+                self._title.clone().into_string().unwrap()
             }
 
             fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
@@ -159,11 +159,11 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { fltk_sys::#name_lower::#resize(self._inner, x, y, width, height) }
             }
 
-            fn tooltip(&self) -> ffi::CString {
+            fn tooltip(&self) -> String {
                 unsafe {
                     ffi::CString::from_raw(
                         fltk_sys::#name_lower::#tooltip(self._inner) as *mut libc::c_char
-                    )
+                    ).into_string().unwrap()
                 }
             }
 

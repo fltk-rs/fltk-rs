@@ -28,7 +28,7 @@ impl<W: WidgetTrait> From<W> for Widget {
             _y: s.y(),
             _width: s.width(),
             _height: s.height(),
-            _title: s.label(),
+            _title: ffi::CString::new(s.label().as_str()).unwrap(),
         }
     }
 }

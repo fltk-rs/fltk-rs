@@ -1,7 +1,6 @@
 pub use crate::color::Color;
 pub use crate::fl;
 pub use crate::font::Font;
-use std::ffi;
 
 pub trait WidgetTrait {
     fn new() -> Self;
@@ -14,13 +13,13 @@ pub trait WidgetTrait {
     fn y(&self) -> i32;
     fn width(&self) -> i32;
     fn height(&self) -> i32;
-    fn label(&self) -> ffi::CString;
+    fn label(&self) -> String;
     fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
     fn activate(&mut self);
     fn deactivate(&mut self);
     fn redraw_label(&mut self);
     fn resize(&mut self, x: i32, y: i32, width: i32, height: i32);
-    fn tooltip(&self) -> ffi::CString;
+    fn tooltip(&self) -> String;
     fn set_tooltip(&mut self, txt: &str);
     fn get_type<T: WidgetType>(&self) -> T;
     fn set_type<T: WidgetType>(&mut self, typ: T);
