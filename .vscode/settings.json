@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "optional": "cpp",
+        "system_error": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "*.ipp": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "random": "cpp"
+    }
+}

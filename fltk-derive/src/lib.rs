@@ -30,6 +30,18 @@ pub fn group_trait_macro(input: TokenStream) -> TokenStream {
     impl_group_trait(&ast)
 }
 
+#[proc_macro_derive(WindowTrait)]
+pub fn window_trait_macro(input: TokenStream) -> TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_window_trait(&ast)
+}
+
+#[proc_macro_derive(InputTrait)]
+pub fn input_trait_macro(input: TokenStream) -> TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_input_trait(&ast)
+}
+
 fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let mut name_str = name.to_string();
@@ -275,6 +287,196 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn end(&self) {
                 unsafe { fltk_sys::#name_lower::#end(self._inner) }
+            }
+        }
+    };
+    gen.into()
+}
+
+fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let name_str = name.to_string();
+    let name_lower = Ident::new(name.to_string().to_lowercase().as_str(), name.span());
+    let make_modal = Ident::new(format!("Fl_{}_{}", name_str, "make_modal").as_str(), name.span());
+    let fullscreen = Ident::new(format!("Fl_{}_{}", name_str, "fullscreen").as_str(), name.span());
+    let make_current = Ident::new(format!("Fl_{}_{}", name_str, "make_current").as_str(), name.span());
+
+    let gen = quote! {
+        impl WindowTrait for #name {
+            fn make_modal(&mut self, val: bool) {
+                unsafe { fltk_sys::#name_lower::#make_modal(self._inner, val as u32) }
+            }
+
+            fn fullscreen(&mut self, val: bool) {
+                unsafe { fltk_sys::#name_lower::#fullscreen(self._inner, val as u32) }
+            }
+
+            fn make_current(&mut self) {
+                unsafe { fltk_sys::#name_lower::#make_current(self._inner) }
+            }
+        }
+    };
+    gen.into()
+}
+
+fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let name_str = name.to_string();
+    let name_lower = Ident::new(name.to_string().to_lowercase().as_str(), name.span());
+    
+    let value = Ident::new(format!("Fl_{}_{}", name_str, "value").as_str(), name.span());
+    let set_value = Ident::new(format!("Fl_{}_{}", name_str, "set_value").as_str(), name.span());
+    let maximum_size = Ident::new(format!("Fl_{}_{}", name_str, "maximum_size").as_str(), name.span());
+    let set_maximum_size = Ident::new(format!("Fl_{}_{}", name_str, "set_maximum_size").as_str(), name.span());
+    let position = Ident::new(format!("Fl_{}_{}", name_str, "position").as_str(), name.span());
+    let set_position = Ident::new(format!("Fl_{}_{}", name_str, "set_position").as_str(), name.span());
+    let mark = Ident::new(format!("Fl_{}_{}", name_str, "mark").as_str(), name.span());
+    let set_mark = Ident::new(format!("Fl_{}_{}", name_str, "set_mark").as_str(), name.span());
+    let replace = Ident::new(format!("Fl_{}_{}", name_str, "replace").as_str(), name.span());
+    let insert = Ident::new(format!("Fl_{}_{}", name_str, "insert").as_str(), name.span());
+    let append = Ident::new(format!("Fl_{}_{}", name_str, "append").as_str(), name.span());
+    let copy = Ident::new(format!("Fl_{}_{}", name_str, "copy").as_str(), name.span());
+    let undo = Ident::new(format!("Fl_{}_{}", name_str, "undo").as_str(), name.span());
+    let copy_cuts = Ident::new(format!("Fl_{}_{}", name_str, "copy_cuts").as_str(), name.span());
+    let text_font = Ident::new(format!("Fl_{}_{}", name_str, "text_font").as_str(), name.span());
+    let set_text_font = Ident::new(format!("Fl_{}_{}", name_str, "set_text_font").as_str(), name.span());
+    let text_color = Ident::new(format!("Fl_{}_{}", name_str, "text_color").as_str(), name.span());
+    let set_text_color = Ident::new(format!("Fl_{}_{}", name_str, "set_text_color").as_str(), name.span());
+    let text_size = Ident::new(format!("Fl_{}_{}", name_str, "text_size").as_str(), name.span());
+    let set_text_size = Ident::new(format!("Fl_{}_{}", name_str, "set_text_size").as_str(), name.span());
+    let readonly = Ident::new(format!("Fl_{}_{}", name_str, "readonly").as_str(), name.span());
+    let set_readonly = Ident::new(format!("Fl_{}_{}", name_str, "set_readonly").as_str(), name.span());
+    let wrap = Ident::new(format!("Fl_{}_{}", name_str, "wrap").as_str(), name.span());
+    let set_wrap = Ident::new(format!("Fl_{}_{}", name_str, "set_wrap").as_str(), name.span());
+
+
+    let gen = quote! {
+        impl InputTrait for #name {
+            fn value(&self) -> String {
+                unsafe {
+                    ffi::CString::from_raw(fltk_sys::#name_lower::#value(self._inner) as *mut libc::c_char).into_string().unwrap()
+                }
+            }
+            fn set_value(&mut self, val: &str) {
+                unsafe {
+                    fltk_sys::#name_lower::#set_value(self._inner, val.as_ptr() as *const libc::c_char);
+                }
+            }
+            fn maximum_size(&self) -> usize {
+                unsafe {
+                    fltk_sys::#name_lower::#maximum_size(self._inner) as usize
+                }
+            }
+            fn set_maximum_size(&mut self, val: usize) {
+                unsafe {
+                    fltk_sys::#name_lower::#set_maximum_size(self._inner, val as i32)
+                }
+            }
+            fn position(&self) -> i32 {
+                unsafe {
+                    fltk_sys::#name_lower::#position(self._inner)
+                }
+            }
+            fn set_position(&mut self, val: i32) {
+                unsafe {
+                    fltk_sys::#name_lower::#set_position(self._inner, val);
+                }
+            }
+            fn mark(&self) -> i32 {
+                unsafe {
+                    fltk_sys::#name_lower::#mark(self._inner) as i32
+                }
+            }
+            fn set_mark(&mut self, val: i32) {
+                unsafe {
+                    fltk_sys::#name_lower::#set_mark(self._inner, val);
+                }
+            }
+            fn replace(&mut self, beg: usize, end: usize, val: &str) {
+                unsafe {
+                    fltk_sys::#name_lower::#replace(self._inner, beg as i32, end as i32, val.as_ptr() as *const libc::c_char, 0);
+                }
+            }
+            fn insert(&mut self, txt: &str) {
+                unsafe {
+                    fltk_sys::#name_lower::#insert(self._inner, txt.as_ptr() as *const libc::c_char, 0);
+                }
+            }
+            fn append(&mut self, txt: &str) {
+                unsafe {
+                    fltk_sys::#name_lower::#append(self._inner,  txt.as_ptr() as *const libc::c_char, 0, 0);
+                }
+            }
+            fn copy(&mut self) {
+                unsafe {
+                    fltk_sys::#name_lower::#copy(self._inner, 1);
+                }
+            }
+            fn undo(&mut self) {
+                unsafe {
+                    fltk_sys::#name_lower::#undo(self._inner);
+                }
+            }
+            fn cut(&mut self) {
+                unsafe {
+                    fltk_sys::#name_lower::#copy_cuts(self._inner);
+                }
+            }
+            fn text_font(&self) -> Font {
+                unsafe {
+                    mem::transmute(fltk_sys::#name_lower::#text_font(self._inner))
+                }
+            }
+            fn set_text_font(&mut self, font: Font) {
+                unsafe {
+                    fltk_sys::#name_lower::#set_text_font(self._inner, font as i32)
+                }
+            }
+            fn text_color(&self) -> Color {
+                unsafe {
+                    mem::transmute(fltk_sys::#name_lower::#text_color(self._inner))
+                }
+            }
+            fn set_text_color(&mut self, color: Color) {
+                unsafe {
+                    fltk_sys::#name_lower::#set_text_color(self._inner, color as i32)
+                }
+            }
+            fn text_size(&self) -> usize {
+                unsafe {
+                    fltk_sys::#name_lower::#text_size(self._inner) as usize
+                }
+            }
+            fn set_text_size(&mut self, sz: usize) {
+                unsafe {
+                    fltk_sys::#name_lower::#set_text_size(self._inner, sz as i32)
+                }
+            }
+            fn readonly(&self) -> bool {
+                unsafe {
+                    match fltk_sys::#name_lower::#readonly(self._inner) {
+                        0 => false,
+                        _ => true,
+                    }
+                }
+            }
+            fn set_readonly(&mut self, val: bool) {
+                unsafe {
+                    fltk_sys::#name_lower::#set_readonly(self._inner, val as i32)
+                }
+            }
+            fn wrap(&self) -> bool {
+                unsafe {
+                    match fltk_sys::#name_lower::#wrap(self._inner) {
+                        0 => false,
+                        _ => true,
+                    }
+                }
+            }
+            fn set_wrap(&mut self, val: bool) {
+                unsafe {
+                    fltk_sys::#name_lower::#set_wrap(self._inner, val as i32)
+                }
             }
         }
     };

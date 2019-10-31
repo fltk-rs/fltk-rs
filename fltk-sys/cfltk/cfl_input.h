@@ -8,6 +8,9 @@ extern "C" {
 
 WIDGET_DECLARE(Fl_Input)
 
+INPUT_DECLARE(Fl_Input)
+
+
 #ifdef __cplusplus
 }
 #endif

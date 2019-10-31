@@ -46,3 +46,36 @@ pub trait WidgetType {
     fn to_int(self) -> i32;
     fn from_i32(val: i32) -> Self;
 }
+
+pub trait WindowTrait {
+    fn make_modal(&mut self, val: bool);
+    fn fullscreen(&mut self, val: bool);
+    fn make_current(&mut self);
+}
+
+pub trait InputTrait {
+    fn value(&self) -> String;
+    fn set_value(&mut self, val: &str);
+    fn maximum_size(&self) -> usize;
+    fn set_maximum_size(&mut self, val: usize);
+    fn position(&self) -> i32;
+    fn set_position(&mut self, val: i32);
+    fn mark(&self) -> i32;
+    fn set_mark(&mut self, val: i32);
+    fn replace(&mut self, beg: usize, end: usize, val: &str);
+    fn insert(&mut self, txt: &str);
+    fn append(&mut self, txt: &str);
+    fn copy(&mut self);
+    fn undo(&mut self);
+    fn cut(&mut self);
+    fn text_font(&self) -> Font;
+    fn set_text_font(&mut self, font: Font);
+    fn text_color(&self) -> Color;
+    fn set_text_color(&mut self, color: Color);
+    fn text_size(&self) -> usize;
+    fn set_text_size(&mut self, sz: usize);
+    fn readonly(&self) -> bool;
+    fn set_readonly(&mut self, val: bool);
+    fn wrap(&self) -> bool;
+    fn set_wrap(&mut self, val: bool);
+}

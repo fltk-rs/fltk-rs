@@ -52,14 +52,15 @@ where
         ) where
             F: FnMut(),
         {
-            use std::panic::{catch_unwind, AssertUnwindSafe};
-            use std::process::abort;
+            // use std::panic::{catch_unwind, AssertUnwindSafe};
+            // use std::process::abort;
             let a: *mut F = mem::transmute(data);
             let f = &mut *a;
-            catch_unwind(AssertUnwindSafe(|| {
-                f();
-            }))
-            .unwrap_or_else(|_| abort())
+            // catch_unwind(AssertUnwindSafe(|| {
+            //     f();
+            // }))
+            // .unwrap_or_else(|_| abort())
+            f();
         }
         let a: *mut F = Box::into_raw(Box::new(cb));
         let data: *mut libc::c_void = mem::transmute(a);

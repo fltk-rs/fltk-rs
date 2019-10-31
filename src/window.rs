@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 use std::{ffi, mem, ptr};
 
-#[derive(WidgetTrait, GroupTrait, Debug, Clone)]
+#[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
 pub struct Window {
     _inner: *mut fltk_sys::window::Fl_Window,
     _x: i32,
@@ -21,17 +21,5 @@ pub enum WindowType {
 impl Window {
     pub fn as_ptr(&self) -> *mut fltk_sys::window::Fl_Window {
         self._inner
-    }
-
-    pub fn make_modal(&self, val: bool) {
-        unsafe { fltk_sys::window::Fl_Window_make_modal(self._inner, val as u32) }
-    }
-
-    pub fn fullscreen(&self, val: bool) {
-        unsafe { fltk_sys::window::Fl_Window_fullscreen(self._inner, val as u32) }
-    }
-
-    pub fn make_current(&self) {
-        unsafe { fltk_sys::window::Fl_Window_make_current(self._inner) }
     }
 }

@@ -36,6 +36,37 @@ void widget## _set_box(widget *, int typ); \
 void widget## _begin(widget *self); \
 void widget## _end(widget *self); \
 
+#define WINDOW_DECLARE(widget)\
+void widget## _make_modal(widget *, unsigned int boolean);\
+void widget## _fullscreen(widget *, unsigned int boolean);\
+void widget## _make_current(widget *);\
+
+#define INPUT_DECLARE(widget) \
+int widget## _set_value(widget *, const char*);\
+const char* widget## _value(widget *);\
+int widget## _maximum_size(widget *);\
+void widget## _set_maximum_size(widget *, int m);\
+int widget## _position(widget *);\
+int widget## _set_position(widget *, int p);\
+int widget## _set_mark(widget *, int m);\
+int widget## _mark(widget *);\
+int widget## _replace(widget *, int b, int e, const char *text, int ilen);\
+int widget## _insert(widget *, const char* t, int l);\
+int widget## _append(widget *, const char* t, int l, char keep_selection);\
+int widget## _copy(widget *, int clipboard);\
+int widget## _undo(widget *);\
+int widget## _copy_cuts(widget *);\
+int widget## _text_font(widget *);\
+void widget## _set_text_font(widget *, int s);\
+int widget## _text_color(widget *);\
+void widget## _set_text_color(widget *, int s);\
+int widget## _text_size(widget *);\
+void widget## _set_text_size(widget *, int s);\
+int widget## _readonly(widget *);\
+void widget## _set_readonly(widget *, int boolean);\
+int widget## _wrap(widget *);\
+void widget## _set_wrap(widget *, int boolean);\
+
 #define WIDGET_DEFINE(widget) \
 widget* widget## _new(int x, int y, int width, int height, const char *title) {\
     return new widget(x, y, width, height, title);\
@@ -119,6 +150,100 @@ void widget## _begin(widget *self) {\
 }\
 void widget## _end(widget *self) {\
     self->end();\
+}\
+
+
+#define WINDOW_DEFINE(widget)\
+void widget## _make_modal(widget *self, unsigned int boolean) {\
+    if (boolean) {\
+        self->set_modal();\
+    } else {\
+        self->set_non_modal();\
+    }\
+}\
+void widget## _fullscreen(widget *self, unsigned int boolean) {\
+    if (boolean) {\
+        self->fullscreen();\
+    } else {\
+        self->fullscreen_off();\
+    }\
+}\
+void widget## _make_current(widget *self) {\
+    self->make_current();\
+}\
+
+#define INPUT_DEFINE(widget) \
+int widget## _value(widget *self, const char* t, int val) {\
+    self->static_value(t, val);\
+}\
+const char* widget## _get_value(widget *self) {\
+    return self->value();\
+}\
+int widget## _maximum_size(widget *self) {\
+    return self->maximum_size();\
+}\
+void widget## _set_maximum_size(widget *self, int m) {\
+    self->maximum_size(m);\
+}\
+int widget## _position(widget *self) {\
+    self->position();\
+}\
+int widget## _set_position(widget *self, int p) {\
+    self->position(p);\
+}\
+int widget## _mark(widget *self, int m) {\
+    self->mark(m);\
+}\
+int widget## _get_mark(widget *self) {\
+    return self->mark();\
+}\
+int widget## _replace(widget *self, int b, int e, const char *text, int ilen) {\
+    return self->replace(b, e, text, ilen);\
+}\
+int widget## _insert(widget *self, const char* t, int l) {\
+    return self->insert(t, l);\
+}\
+int widget## _append(widget *self, const char* t, int l, char keep_selection) {\
+    return self->append(t, l, keep_selection);\
+}\
+int widget## _copy(widget *self, int clipboard) {\
+    return self->copy(clipboard);\
+}\
+int widget## _undo(widget *self) {\
+    return self->undo();\
+}\
+int widget## _copy_cuts(widget *self) {\
+    return self->copy_cuts();\
+}\
+int widget## _text_font(widget *self) {\
+    return self->textfont();\
+}\
+void widget## _set_text_font(widget *self, int s) {\
+    self->textfont(s);\
+}\
+int widget## _text_color(widget *self) {\
+    return self->textcolor();\
+}\
+void widget## _set_text_color(widget *self, int s) {\
+    self->textcolor(s);\
+}\
+int widget## _text_size(widget *self) {\
+    return self->textsize();\
+}\
+void widget## _set_text_size(widget *self, int s) {\
+    self->textsize(s);\
+}\
+int widget## _readonly(widget *self) {\
+    return self->readonly();\
+}\
+void widget## _set_readonly(widget *self, int boolean) {\
+    self->readonly(boolean);\
+}\
+int widget## _wrap(widget *self) {\
+    return self->wrap();\
+}\
+void widget## _set_wrap(widget *self, int boolean) {\
+    self->wrap(boolean);\
 }\
 
 #ifdef __cplusplus

@@ -1,7 +1,7 @@
 pub use crate::prelude::*;
 use std::{ffi, mem, ptr};
 
-#[derive(WidgetTrait, Debug, Clone)]
+#[derive(WidgetTrait, InputTrait, Debug, Clone)]
 pub struct Input {
     _inner: *mut fltk_sys::input::Fl_Input,
     _x: i32,
