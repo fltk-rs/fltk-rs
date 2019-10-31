@@ -6,10 +6,11 @@ edition = "2018"
 
 [lib]
 name = "fltk_derive"
+path = "src/lib.rs"
 proc-macro = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-syn = "0.14.4"
-quote = "0.6.3"
+syn = "^1.0.7"
+quote = "^1.0.2"

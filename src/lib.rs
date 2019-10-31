@@ -9,6 +9,9 @@ pub mod prelude;
 pub mod widget;
 pub mod window;
 
+#[macro_use]
+extern crate fltk_derive;
+
 #[cfg(test)]
 mod tests {
     #[test]

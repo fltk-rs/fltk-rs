@@ -38,7 +38,7 @@ pub trait WidgetTrait {
     fn set_box<T: WidgetType>(&mut self, typ: T);
 }
 
-pub trait GroupTrait {
+pub trait GroupTrait: WidgetTrait {
     fn begin(&self);
     fn end(&self);
 }
