@@ -1,4 +1,4 @@
-use fltk::{button::Button, frame::Frame, output::*, window::*};
+use fltk::{prelude::*, button::Button, output::Output, window::Window};
 
 fn main() {
     let mut txt = String::from("0");
@@ -7,32 +7,54 @@ fn main() {
     let mut op = '_';
 
     let mut wind = Window::new().set(200, 200, 400, 500, "FLTK-RS Calculator");
-    let _lbl = Frame::new().set(20, 20, 360, 20, "");
-    let mut out = Output::new().set(20, 60, 360, 100, "");
+    wind.set_color(Color::Light2);
+
+    let mut out = Output::new().set(20, 20, 360, 140, "");
     out.set_align(Align::AlignRight);
     out.set_text_size(30);
     out.set_value(txt.as_str());
 
-    let but_ce = Button::new().set(20, 180, 90, 60, "CE");
-    let but_c = Button::new().set(110, 180, 90, 60, "C");
-    let but_back = Button::new().set(200, 180, 90, 60, "@<-");
-    let but_div = Button::new().set(290, 180, 90, 60, "/");
-    let but_mul = Button::new().set(290, 240, 90, 60, "x");
-    let but_sub = Button::new().set(290, 300, 90, 60, "-");
-    let but_add = Button::new().set(290, 360, 90, 60, "+");
-    let but_eq = Button::new().set(290, 420, 90, 60, "=");
+    let mut but_ce = Button::new().set(20, 180, 90, 60, "CE");
+    let mut but_c = Button::new().set(110, 180, 90, 60, "C");
+    let mut but_back = Button::new().set(200, 180, 90, 60, "@<-");
+    let mut but_div = Button::new().set(290, 180, 90, 60, "/");
+    let mut but_mul = Button::new().set(290, 240, 90, 60, "x");
+    let mut but_sub = Button::new().set(290, 300, 90, 60, "-");
+    let mut but_add = Button::new().set(290, 360, 90, 60, "+");
+    let mut but_eq = Button::new().set(290, 420, 90, 60, "=");
 
-    let but7 = Button::new().set(20, 240, 90, 60, "7");
-    let but8 = Button::new().set(110, 240, 90, 60, "8");
-    let but9 = Button::new().set(200, 240, 90, 60, "9");
-    let but4 = Button::new().set(20, 300, 90, 60, "4");
-    let but5 = Button::new().set(110, 300, 90, 60, "5");
-    let but6 = Button::new().set(200, 300, 90, 60, "6");
-    let but1 = Button::new().set(20, 360, 90, 60, "1");
-    let but2 = Button::new().set(110, 360, 90, 60, "2");
-    let but3 = Button::new().set(200, 360, 90, 60, "3");
-    let but_dot = Button::new().set(20, 420, 90, 60, ".");
-    let but0 = Button::new().set(110, 420, 180, 60, "0");
+    but_ce.set_color(Color::Red);
+    but_c.set_color(Color::Yellow);
+    but_back.set_color(Color::Yellow);
+    but_div.set_color(Color::Yellow);
+    but_mul.set_color(Color::Yellow);
+    but_sub.set_color(Color::Yellow);
+    but_add.set_color(Color::Yellow);
+    but_eq.set_color(Color::Yellow);
+
+    let mut but7 = Button::new().set(20, 240, 90, 60, "7");
+    let mut but8 = Button::new().set(110, 240, 90, 60, "8");
+    let mut but9 = Button::new().set(200, 240, 90, 60, "9");
+    let mut but4 = Button::new().set(20, 300, 90, 60, "4");
+    let mut but5 = Button::new().set(110, 300, 90, 60, "5");
+    let mut but6 = Button::new().set(200, 300, 90, 60, "6");
+    let mut but1 = Button::new().set(20, 360, 90, 60, "1");
+    let mut but2 = Button::new().set(110, 360, 90, 60, "2");
+    let mut but3 = Button::new().set(200, 360, 90, 60, "3");
+    let mut but_dot = Button::new().set(20, 420, 90, 60, ".");
+    let mut but0 = Button::new().set(110, 420, 180, 60, "0");
+
+    but7.set_color(Color::White);
+    but8.set_color(Color::White);
+    but9.set_color(Color::White);
+    but4.set_color(Color::White);
+    but5.set_color(Color::White);
+    but6.set_color(Color::White);
+    but1.set_color(Color::White);
+    but2.set_color(Color::White);
+    but3.set_color(Color::White);
+    but_dot.set_color(Color::White);
+    but0.set_color(Color::White);
 
     fl::register_callback(&but_ce, &mut || {
         txt.clear();
@@ -95,7 +117,7 @@ fn main() {
             '-' => old - new,
             _ => new,
         };
-        op = '_';
+        op = '=';
         txt.clear();
         txt.push_str(val.to_string().as_str());
         out.set_value(txt.as_str());
@@ -105,6 +127,11 @@ fn main() {
         if out.value() == "0" {
             //
         } else {
+            if op == '=' {
+                txt.clear();
+                out.set_value("");
+                op = '_';
+            }
             txt.push_str(but0.label().as_str());
             out.set_value(txt.as_str());
         }
@@ -114,6 +141,10 @@ fn main() {
         if out.value() == "0" {
             txt.clear();
         }
+        if op == '=' {
+            txt.clear();
+            op = '_';
+        }
         txt.push_str(but1.label().as_str());
         out.set_value(txt.as_str());
     });
@@ -121,6 +152,10 @@ fn main() {
     fl::register_callback(&but2, &mut || {
         if out.value() == "0" {
             txt.clear();
+        } 
+        if op == '=' {
+            txt.clear();
+            op = '_';
         }
         txt.push_str(but2.label().as_str());
         out.set_value(txt.as_str());
@@ -130,6 +165,10 @@ fn main() {
         if out.value() == "0" {
             txt.clear();
         }
+        if op == '=' {
+            txt.clear();
+            op = '_';
+        }
         txt.push_str(but3.label().as_str());
         out.set_value(txt.as_str());
     });
@@ -137,6 +176,10 @@ fn main() {
     fl::register_callback(&but4, &mut || {
         if out.value() == "0" {
             txt.clear();
+        }
+        if op == '=' {
+            txt.clear();
+            op = '_';
         }
         txt.push_str(but4.label().as_str());
         out.set_value(txt.as_str());
@@ -146,6 +189,10 @@ fn main() {
         if out.value() == "0" {
             txt.clear();
         }
+        if op == '=' {
+            txt.clear();
+            op = '_';
+        }
         txt.push_str(but5.label().as_str());
         out.set_value(txt.as_str());
     });
@@ -153,6 +200,10 @@ fn main() {
     fl::register_callback(&but6, &mut || {
         if out.value() == "0" {
             txt.clear();
+        }
+        if op == '=' {
+            txt.clear();
+            op = '_';
         }
         txt.push_str(but6.label().as_str());
         out.set_value(txt.as_str());
@@ -162,6 +213,10 @@ fn main() {
         if out.value() == "0" {
             txt.clear();
         }
+        if op == '=' {
+            txt.clear();
+            op = '_';
+        }
         txt.push_str(but7.label().as_str());
         out.set_value(txt.as_str());
     });
@@ -169,6 +224,10 @@ fn main() {
     fl::register_callback(&but8, &mut || {
         if out.value() == "0" {
             txt.clear();
+        }
+        if op == '=' {
+            txt.clear();
+            op = '_';
         }
         txt.push_str(but8.label().as_str());
         out.set_value(txt.as_str());
@@ -178,12 +237,22 @@ fn main() {
         if out.value() == "0" {
             txt.clear();
         }
+        if op == '=' {
+            txt.clear();
+            op = '_';
+        }
         txt.push_str(but9.label().as_str());
         out.set_value(txt.as_str());
     });
 
     fl::register_callback(&but_dot, &mut || {
-        if !out.value().contains(".") {
+        if op == '=' {
+            txt.clear();
+            op = '_';
+            out.set_value("0.");
+            txt.push_str("0.");
+        }
+        if !out.value().contains(".") && !txt.contains(".") {
             txt.push_str(but_dot.label().as_str());
             out.set_value(txt.as_str());
         }
