@@ -44,17 +44,17 @@ fn main() {
     let mut but_dot = Button::new().set(20, 420, 90, 60, ".");
     let mut but0 = Button::new().set(110, 420, 180, 60, "0");
 
-    but7.set_color(Color::White);
-    but8.set_color(Color::White);
-    but9.set_color(Color::White);
-    but4.set_color(Color::White);
-    but5.set_color(Color::White);
-    but6.set_color(Color::White);
-    but1.set_color(Color::White);
-    but2.set_color(Color::White);
-    but3.set_color(Color::White);
-    but_dot.set_color(Color::White);
-    but0.set_color(Color::White);
+    but7.set_color(Color::Light2);
+    but8.set_color(Color::Light2);
+    but9.set_color(Color::Light2);
+    but4.set_color(Color::Light2);
+    but5.set_color(Color::Light2);
+    but6.set_color(Color::Light2);
+    but1.set_color(Color::Light2);
+    but2.set_color(Color::Light2);
+    but3.set_color(Color::Light2);
+    but_dot.set_color(Color::Light2);
+    but0.set_color(Color::Light2);
 
     fl::register_callback(&but_ce, &mut || {
         txt.clear();
