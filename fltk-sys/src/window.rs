@@ -102,6 +102,12 @@ extern "C" {
     pub fn Fl_Window_clear_changed(arg1: *mut Fl_Window);
 }
 extern "C" {
+    pub fn Fl_Window_align(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_set_align(arg1: *mut Fl_Window, typ: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
 }
 extern "C" {
@@ -228,6 +234,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_clear_changed(arg1: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_align(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_align(arg1: *mut Fl_Double_Window, typ: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);

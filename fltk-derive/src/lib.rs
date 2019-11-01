@@ -89,6 +89,11 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let set_label_type = Ident::new(format!("{}_{}", name_str, "set_label_type").as_str(), name.span());
     let frame = Ident::new(format!("{}_{}", name_str, "box").as_str(), name.span());
     let set_frame = Ident::new(format!("{}_{}", name_str, "set_box").as_str(), name.span());
+    let changed = Ident::new(format!("{}_{}", name_str, "changed").as_str(), name.span());
+    let set_changed = Ident::new(format!("{}_{}", name_str, "set_changed").as_str(), name.span());
+    let clear_changed = Ident::new(format!("{}_{}", name_str, "clear_changed").as_str(), name.span());
+    let align = Ident::new(format!("{}_{}", name_str, "align").as_str(), name.span());
+    let set_align = Ident::new(format!("{}_{}", name_str, "set_align").as_str(), name.span());
 
     let gen = quote! {
         impl WidgetTrait for #name {
@@ -109,15 +114,28 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 self._width = width;
                 self._height = height;
                 self._title = ffi::CString::new(title).unwrap();
-                self._inner = unsafe {
-                    #new(
-                        self._x,
-                        self._y,
-                        self._width,
-                        self._height,
-                        self._title.as_ptr() as *const libc::c_char,
-                    )
-                };
+                if !#name_str.contains("put") {
+                    self._inner = unsafe {
+                        #new(
+                            self._x,
+                            self._y,
+                            self._width,
+                            self._height,
+                            self._title.as_ptr() as *const libc::c_char,
+                        )
+                    };
+                } else {
+                    self._inner = unsafe {
+                        #new(
+                            self._x,
+                            self._y,
+                            self._width,
+                            self._height,
+                            ptr::null_mut() as *const libc::c_char,
+                        )
+                    };
+                    // #set_value(self._inner, self._title.as_ptr() as *const libc::c_char);
+                }
                 self
             }
 
@@ -264,6 +282,32 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_frame(self._inner, typ.to_int());
                 }
             }
+
+            fn changed(&self) -> bool {
+                unsafe {
+                    let x = #changed(self._inner);
+                    match x {
+                        0 => false,
+                        _ => true,
+                    }
+                }
+            }
+
+            fn set_changed(&mut self) {
+                unsafe { #set_changed(self._inner) }
+            }
+
+            fn clear_changed(&mut self) {
+                unsafe {#clear_changed(self._inner) }
+            }
+
+            fn align(&self) -> Align {
+                unsafe { mem::transmute(#align(self._inner)) }
+            }
+
+            fn set_align(&mut self, align: Align) {
+                unsafe { #set_align(self._inner, align as i32) }
+            }
         }
     };
     gen.into()
@@ -366,14 +410,12 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         impl InputTrait for #name {
             fn value(&self) -> String {
-                unsafe {
-                    ffi::CString::from_raw(#value(self._inner) as *mut libc::c_char).into_string().unwrap()
-                }
+                self._title.clone().into_string().unwrap()
             }
             fn set_value(&mut self, val: &str) {
-                let val = ffi::CString::new(val).unwrap();
+                self._title = ffi::CString::new(val).unwrap();
                 unsafe {
-                    #set_value(self._inner, val.as_ptr() as *const libc::c_char);
+                    #set_value(self._inner, self._title.as_ptr() as *const libc::c_char);
                 }
             }
             fn maximum_size(&self) -> usize {

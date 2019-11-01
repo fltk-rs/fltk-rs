@@ -32,9 +32,9 @@ fn main() {
     let dst = cmake::Config::new("cfltk")
                  .generator("Ninja")
                  .define("OPTION_BUILD_EXAMPLES","OFF")
-                 .define("OPTION_USE_SYSTEM_ZLIB","ON")
+                 .define("OPTION_USE_SYSTEM_ZLIB","OFF")
                  .define("OPTION_USE_SYSTEM_LIBPNG","OFF")
-                 .define("OPTION_USE_SYSTEM_LIBJPEG","ON")
+                 .define("OPTION_USE_SYSTEM_LIBJPEG","OFF")
                  .build();
     println!("cargo:rustc-link-search=native={}", dst.join("build").display());
     println!("cargo:rustc-link-lib=static=cfltk");

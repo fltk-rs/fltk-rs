@@ -101,6 +101,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Button_clear_changed(arg1: *mut Fl_Button);
 }
+extern "C" {
+    pub fn Fl_Button_align(arg1: *mut Fl_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_set_align(arg1: *mut Fl_Button, typ: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Check_Button {
@@ -211,6 +217,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_clear_changed(arg1: *mut Fl_Check_Button);
 }
+extern "C" {
+    pub fn Fl_Check_Button_align(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_set_align(arg1: *mut Fl_Check_Button, typ: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Radio_Button {
@@ -320,6 +332,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_clear_changed(arg1: *mut Fl_Radio_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_align(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_set_align(arg1: *mut Fl_Radio_Button, typ: ::std::os::raw::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -434,6 +452,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Toggle_Button_clear_changed(arg1: *mut Fl_Toggle_Button);
 }
+extern "C" {
+    pub fn Fl_Toggle_Button_align(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_set_align(arg1: *mut Fl_Toggle_Button, typ: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Round_Button {
@@ -544,6 +568,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Round_Button_clear_changed(arg1: *mut Fl_Round_Button);
 }
+extern "C" {
+    pub fn Fl_Round_Button_align(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_set_align(arg1: *mut Fl_Round_Button, typ: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Light_Button {
@@ -653,6 +683,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Light_Button_clear_changed(arg1: *mut Fl_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Light_Button_align(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Light_Button_set_align(arg1: *mut Fl_Light_Button, typ: ::std::os::raw::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -767,6 +803,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Repeat_Button_clear_changed(arg1: *mut Fl_Repeat_Button);
 }
+extern "C" {
+    pub fn Fl_Repeat_Button_align(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_set_align(arg1: *mut Fl_Repeat_Button, typ: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Return_Button {
@@ -879,4 +921,10 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_clear_changed(arg1: *mut Fl_Return_Button);
+}
+extern "C" {
+    pub fn Fl_Return_Button_align(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_set_align(arg1: *mut Fl_Return_Button, typ: ::std::os::raw::c_int);
 }

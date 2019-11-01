@@ -34,6 +34,8 @@ void widget## _set_box(widget *, int typ); \
 int widget## _changed(widget *); \
 void widget## _set_changed(widget *); \
 void widget## _clear_changed(widget *); \
+int widget## _align(widget *); \
+void widget## _set_align(widget *, int typ); \
 
 #define GROUP_DECLARE(widget) \
 void widget## _begin(widget *self); \
@@ -155,6 +157,12 @@ void widget## _set_changed(widget *self) {\
 void widget## _clear_changed(widget *self) {\
     self->clear_changed();\
 }\
+int widget## _align(widget *self) {\
+    return self->align();\
+}\
+void widget## _set_align(widget *self, int typ) {\
+    self->align(typ);\
+}\
 
 #define GROUP_DEFINE(widget)\
 void widget## _begin(widget *self) {\
@@ -186,7 +194,7 @@ void widget## _make_current(widget *self) {\
 
 #define INPUT_DEFINE(widget) \
 int widget## _set_value(widget *self, const char* t) {\
-    self->value(t);\
+    self->static_value(t);\
 }\
 const char* widget## _value(widget *self) {\
     return self->value();\

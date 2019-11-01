@@ -23,3 +23,6 @@ name = "button"
 
 [[example]]
 name = "input"
+
+[[example]]
+name = "calculator"

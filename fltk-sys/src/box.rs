@@ -101,3 +101,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Box_clear_changed(arg1: *mut Fl_Box);
 }
+extern "C" {
+    pub fn Fl_Box_align(arg1: *mut Fl_Box) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Box_set_align(arg1: *mut Fl_Box, typ: ::std::os::raw::c_int);
+}

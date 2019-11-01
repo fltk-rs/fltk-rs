@@ -1,4 +1,4 @@
-bindgen fltk-sys/cfltk/cfl_box.h -o fltk-sys/src/box.rs
+bindgen fltk-sys/cfltk/cfl_box.h -o fltk-sys/src/frame.rs
 bindgen fltk-sys/cfltk/cfl_button.h -o fltk-sys/src/button.rs
 bindgen fltk-sys/cfltk/cfl_group.h -o fltk-sys/src/group.rs 
 bindgen fltk-sys/cfltk/cfl_input.h -o fltk-sys/src/input.rs

@@ -1,3 +1,4 @@
+pub use crate::align::Align;
 pub use crate::color::Color;
 pub use crate::fl;
 pub use crate::font::Font;
@@ -36,6 +37,11 @@ pub trait WidgetTrait {
     fn set_label_type<T: WidgetType>(&mut self, typ: T);
     fn frame<T: WidgetType>(&self) -> T;
     fn set_frame<T: WidgetType>(&mut self, typ: T);
+    fn changed(&self) -> bool;
+    fn set_changed(&mut self);
+    fn clear_changed(&mut self);
+    fn align(&self) -> Align;
+    fn set_align(&mut self, align: Align);
 }
 
 pub trait GroupTrait: WidgetTrait {
