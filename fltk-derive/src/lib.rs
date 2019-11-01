@@ -12,6 +12,23 @@ use syn::*;
 use proc_macro::TokenStream;
 use std::{mem, ptr, ffi};
 
+fn get_fl_name(txt: String) -> String {
+    if txt == "Frame" {
+        return String::from("Fl_Box");
+    }
+
+    let mut fl_name = String::from("Fl");
+    for c in txt.chars() {
+        if c.is_uppercase() {
+            fl_name.push('_');
+            fl_name.push(c);
+        } else {
+            fl_name.push(c);
+        }
+    }
+    fl_name
+}
+
 #[proc_macro_derive(WidgetTrait)]
 pub fn widget_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
@@ -44,37 +61,34 @@ pub fn input_trait_macro(input: TokenStream) -> TokenStream {
 
 fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
-    let mut name_str = name.to_string();
-    if name_str == "Frame" {
-        name_str = String::from("Box");
-    }
-    let name_lower = Ident::new(name.to_string().to_lowercase().as_str(), name.span());
 
-    let new = Ident::new(format!("Fl_{}_{}", name_str, "new").as_str(), name.span());
-    let set_label = Ident::new(format!("Fl_{}_{}", name_str, "set_label").as_str(), name.span());
-    let redraw = Ident::new(format!("Fl_{}_{}", name_str, "redraw").as_str(), name.span());
-    let show = Ident::new(format!("Fl_{}_{}", name_str, "show").as_str(), name.span());
-    let hide = Ident::new(format!("Fl_{}_{}", name_str, "hide").as_str(), name.span());
-    let activate = Ident::new(format!("Fl_{}_{}", name_str, "activate").as_str(), name.span());
-    let deactivate = Ident::new(format!("Fl_{}_{}", name_str, "deactivate").as_str(), name.span());
-    let redraw_label = Ident::new(format!("Fl_{}_{}", name_str, "redraw_label").as_str(), name.span());
-    let resize = Ident::new(format!("Fl_{}_{}", name_str, "resize").as_str(), name.span());
-    let tooltip = Ident::new(format!("Fl_{}_{}", name_str, "tooltip").as_str(), name.span());
-    let set_tooltip = Ident::new(format!("Fl_{}_{}", name_str, "set_tooltip").as_str(), name.span());
-    let get_type = Ident::new(format!("Fl_{}_{}", name_str, "get_type").as_str(), name.span());
-    let set_type = Ident::new(format!("Fl_{}_{}", name_str, "set_type").as_str(), name.span());
-    let color = Ident::new(format!("Fl_{}_{}", name_str, "color").as_str(), name.span());
-    let set_color = Ident::new(format!("Fl_{}_{}", name_str, "set_color").as_str(), name.span());
-    let label_color = Ident::new(format!("Fl_{}_{}", name_str, "label_color").as_str(), name.span());
-    let set_label_color = Ident::new(format!("Fl_{}_{}", name_str, "set_label_color").as_str(), name.span());
-    let label_font = Ident::new(format!("Fl_{}_{}", name_str, "label_font").as_str(), name.span());
-    let set_label_font = Ident::new(format!("Fl_{}_{}", name_str, "set_label_font").as_str(), name.span());
-    let label_size = Ident::new(format!("Fl_{}_{}", name_str, "label_size").as_str(), name.span());
-    let set_label_size = Ident::new(format!("Fl_{}_{}", name_str, "set_label_size").as_str(), name.span());
-    let label_type = Ident::new(format!("Fl_{}_{}", name_str, "label_type").as_str(), name.span());
-    let set_label_type = Ident::new(format!("Fl_{}_{}", name_str, "set_label_type").as_str(), name.span());
-    let get_box = Ident::new(format!("Fl_{}_{}", name_str, "box").as_str(), name.span());
-    let set_box = Ident::new(format!("Fl_{}_{}", name_str, "set_box").as_str(), name.span());
+    let name_str = get_fl_name(name.to_string());
+
+    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
+    let set_label = Ident::new(format!("{}_{}", name_str, "set_label").as_str(), name.span());
+    let redraw = Ident::new(format!("{}_{}", name_str, "redraw").as_str(), name.span());
+    let show = Ident::new(format!("{}_{}", name_str, "show").as_str(), name.span());
+    let hide = Ident::new(format!("{}_{}", name_str, "hide").as_str(), name.span());
+    let activate = Ident::new(format!("{}_{}", name_str, "activate").as_str(), name.span());
+    let deactivate = Ident::new(format!("{}_{}", name_str, "deactivate").as_str(), name.span());
+    let redraw_label = Ident::new(format!("{}_{}", name_str, "redraw_label").as_str(), name.span());
+    let resize = Ident::new(format!("{}_{}", name_str, "resize").as_str(), name.span());
+    let tooltip = Ident::new(format!("{}_{}", name_str, "tooltip").as_str(), name.span());
+    let set_tooltip = Ident::new(format!("{}_{}", name_str, "set_tooltip").as_str(), name.span());
+    let get_type = Ident::new(format!("{}_{}", name_str, "get_type").as_str(), name.span());
+    let set_type = Ident::new(format!("{}_{}", name_str, "set_type").as_str(), name.span());
+    let color = Ident::new(format!("{}_{}", name_str, "color").as_str(), name.span());
+    let set_color = Ident::new(format!("{}_{}", name_str, "set_color").as_str(), name.span());
+    let label_color = Ident::new(format!("{}_{}", name_str, "label_color").as_str(), name.span());
+    let set_label_color = Ident::new(format!("{}_{}", name_str, "set_label_color").as_str(), name.span());
+    let label_font = Ident::new(format!("{}_{}", name_str, "label_font").as_str(), name.span());
+    let set_label_font = Ident::new(format!("{}_{}", name_str, "set_label_font").as_str(), name.span());
+    let label_size = Ident::new(format!("{}_{}", name_str, "label_size").as_str(), name.span());
+    let set_label_size = Ident::new(format!("{}_{}", name_str, "set_label_size").as_str(), name.span());
+    let label_type = Ident::new(format!("{}_{}", name_str, "label_type").as_str(), name.span());
+    let set_label_type = Ident::new(format!("{}_{}", name_str, "set_label_type").as_str(), name.span());
+    let frame = Ident::new(format!("{}_{}", name_str, "box").as_str(), name.span());
+    let set_frame = Ident::new(format!("{}_{}", name_str, "set_box").as_str(), name.span());
 
     let gen = quote! {
         impl WidgetTrait for #name {
@@ -96,7 +110,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 self._height = height;
                 self._title = ffi::CString::new(title).unwrap();
                 self._inner = unsafe {
-                    fltk_sys::#name_lower::#new(
+                    #new(
                         self._x,
                         self._y,
                         self._width,
@@ -110,7 +124,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_label(&mut self, title: &str) {
                 self._title = ffi::CString::new(title).unwrap();
                 unsafe {
-                    fltk_sys::#name_lower::#set_label(
+                    #set_label(
                         self._inner,
                         self._title.as_ptr() as *const libc::c_char,
                     )
@@ -119,16 +133,16 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn redraw(&mut self) {
                 unsafe {
-                    fltk_sys::#name_lower::#redraw(self._inner);
+                    #redraw(self._inner);
                 }
             }
 
             fn show(&mut self) {
-                unsafe { fltk_sys::#name_lower::#show(self._inner) }
+                unsafe { #show(self._inner) }
             }
 
             fn hide(&mut self) {
-                unsafe { fltk_sys::#name_lower::#hide(self._inner) }
+                unsafe { #hide(self._inner) }
             }
 
             fn x(&self) -> i32 {
@@ -156,25 +170,25 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn activate(&mut self) {
-                unsafe { fltk_sys::#name_lower::#activate(self._inner) }
+                unsafe { #activate(self._inner) }
             }
 
             fn deactivate(&mut self) {
-                unsafe { fltk_sys::#name_lower::#deactivate(self._inner) }
+                unsafe { #deactivate(self._inner) }
             }
 
             fn redraw_label(&mut self) {
-                unsafe { fltk_sys::#name_lower::#redraw_label(self._inner) }
+                unsafe { #redraw_label(self._inner) }
             }
 
             fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
-                unsafe { fltk_sys::#name_lower::#resize(self._inner, x, y, width, height) }
+                unsafe { #resize(self._inner, x, y, width, height) }
             }
 
             fn tooltip(&self) -> String {
                 unsafe {
                     ffi::CString::from_raw(
-                        fltk_sys::#name_lower::#tooltip(self._inner) as *mut libc::c_char
+                        #tooltip(self._inner) as *mut libc::c_char
                     ).into_string().unwrap()
                 }
             }
@@ -182,7 +196,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_tooltip(&mut self, txt: &str) {
                 let txt = ffi::CString::new(txt).unwrap();
                 unsafe {
-                    fltk_sys::#name_lower::#set_tooltip(
+                    #set_tooltip(
                         self._inner,
                         txt.as_ptr() as *const libc::c_char,
                     )
@@ -190,64 +204,64 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn get_type<T: WidgetType>(&self) -> T {
-                unsafe { T::from_i32(fltk_sys::#name_lower::#get_type(self._inner)) }
+                unsafe { T::from_i32(#get_type(self._inner)) }
             }
 
             fn set_type<T: WidgetType>(&mut self, typ: T) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_type(self._inner, typ.to_int());
+                    #set_type(self._inner, typ.to_int());
                 }
             }
 
             fn color(&self) -> Color {
-                unsafe { mem::transmute(fltk_sys::#name_lower::#color(self._inner)) }
+                unsafe { mem::transmute(#color(self._inner)) }
             }
 
             fn set_color(&mut self, color: Color) {
-                unsafe { fltk_sys::#name_lower::#set_color(self._inner, color as i32) }
+                unsafe { #set_color(self._inner, color as i32) }
             }
 
             fn label_color(&self) -> Color {
-                unsafe { mem::transmute(fltk_sys::#name_lower::#label_color(self._inner)) }
+                unsafe { mem::transmute(#label_color(self._inner)) }
             }
 
             fn set_label_color(&mut self, color: Color) {
-                unsafe { fltk_sys::#name_lower::#set_label_color(self._inner, color as i32) }
+                unsafe { #set_label_color(self._inner, color as i32) }
             }
 
             fn label_font(&self) -> Font {
-                unsafe { mem::transmute(fltk_sys::#name_lower::#label_font(self._inner)) }
+                unsafe { mem::transmute(#label_font(self._inner)) }
             }
 
             fn set_label_font(&mut self, font: Font) {
-                unsafe { fltk_sys::#name_lower::#set_label_color(self._inner, font as i32) }
+                unsafe { #set_label_color(self._inner, font as i32) }
             }
 
             fn label_size(&self) -> usize {
-                unsafe { fltk_sys::#name_lower::#label_size(self._inner) as usize }
+                unsafe { #label_size(self._inner) as usize }
             }
 
             fn set_label_size(&mut self, sz: usize) {
-                unsafe { fltk_sys::#name_lower::#set_label_size(self._inner, sz as i32) }
+                unsafe { #set_label_size(self._inner, sz as i32) }
             }
 
             fn label_type<T: WidgetType>(&self) -> T {
-                unsafe { T::from_i32(fltk_sys::#name_lower::#label_type(self._inner)) }
+                unsafe { T::from_i32(#label_type(self._inner)) }
             }
 
             fn set_label_type<T: WidgetType>(&mut self, typ: T) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_label_type(self._inner, typ.to_int());
+                    #set_label_type(self._inner, typ.to_int());
                 }
             }
 
-            fn get_box<T: WidgetType>(&self) -> T {
-                unsafe { T::from_i32(fltk_sys::#name_lower::#get_box(self._inner)) }
+            fn frame<T: WidgetType>(&self) -> T {
+                unsafe { T::from_i32(#frame(self._inner)) }
             }
 
-            fn set_box<T: WidgetType>(&mut self, typ: T) {
+            fn set_frame<T: WidgetType>(&mut self, typ: T) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_box(self._inner, typ.to_int());
+                    #set_frame(self._inner, typ.to_int());
                 }
             }
         }
@@ -274,19 +288,19 @@ fn impl_widget_type(ast: &syn::DeriveInput) -> TokenStream {
 
 fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
-    let name_str = name.to_string();
-    let name_lower = Ident::new(name.to_string().to_lowercase().as_str(), name.span());
-    let begin = Ident::new(format!("Fl_{}_{}", name_str, "begin").as_str(), name.span());
-    let end = Ident::new(format!("Fl_{}_{}", name_str, "end").as_str(), name.span());
+    let name_str = get_fl_name(name.to_string());
+
+    let begin = Ident::new(format!("{}_{}", name_str, "begin").as_str(), name.span());
+    let end = Ident::new(format!("{}_{}", name_str, "end").as_str(), name.span());
 
     let gen = quote! {
         impl GroupTrait for #name {
             fn begin(&self) {
-                unsafe { fltk_sys::#name_lower::#begin(self._inner) }
+                unsafe { #begin(self._inner) }
             }
 
             fn end(&self) {
-                unsafe { fltk_sys::#name_lower::#end(self._inner) }
+                unsafe { #end(self._inner) }
             }
         }
     };
@@ -295,24 +309,24 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
 
 fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
-    let name_str = name.to_string();
-    let name_lower = Ident::new(name.to_string().to_lowercase().as_str(), name.span());
-    let make_modal = Ident::new(format!("Fl_{}_{}", name_str, "make_modal").as_str(), name.span());
-    let fullscreen = Ident::new(format!("Fl_{}_{}", name_str, "fullscreen").as_str(), name.span());
-    let make_current = Ident::new(format!("Fl_{}_{}", name_str, "make_current").as_str(), name.span());
+    let name_str = get_fl_name(name.to_string());
+    
+    let make_modal = Ident::new(format!("{}_{}", name_str, "make_modal").as_str(), name.span());
+    let fullscreen = Ident::new(format!("{}_{}", name_str, "fullscreen").as_str(), name.span());
+    let make_current = Ident::new(format!("{}_{}", name_str, "make_current").as_str(), name.span());
 
     let gen = quote! {
         impl WindowTrait for #name {
             fn make_modal(&mut self, val: bool) {
-                unsafe { fltk_sys::#name_lower::#make_modal(self._inner, val as u32) }
+                unsafe { #make_modal(self._inner, val as u32) }
             }
 
             fn fullscreen(&mut self, val: bool) {
-                unsafe { fltk_sys::#name_lower::#fullscreen(self._inner, val as u32) }
+                unsafe { #fullscreen(self._inner, val as u32) }
             }
 
             fn make_current(&mut self) {
-                unsafe { fltk_sys::#name_lower::#make_current(self._inner) }
+                unsafe { #make_current(self._inner) }
             }
         }
     };
@@ -321,140 +335,143 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
 
 fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
-    let name_str = name.to_string();
-    let name_lower = Ident::new(name.to_string().to_lowercase().as_str(), name.span());
+    let name_str = get_fl_name(name.to_string());
     
-    let value = Ident::new(format!("Fl_{}_{}", name_str, "value").as_str(), name.span());
-    let set_value = Ident::new(format!("Fl_{}_{}", name_str, "set_value").as_str(), name.span());
-    let maximum_size = Ident::new(format!("Fl_{}_{}", name_str, "maximum_size").as_str(), name.span());
-    let set_maximum_size = Ident::new(format!("Fl_{}_{}", name_str, "set_maximum_size").as_str(), name.span());
-    let position = Ident::new(format!("Fl_{}_{}", name_str, "position").as_str(), name.span());
-    let set_position = Ident::new(format!("Fl_{}_{}", name_str, "set_position").as_str(), name.span());
-    let mark = Ident::new(format!("Fl_{}_{}", name_str, "mark").as_str(), name.span());
-    let set_mark = Ident::new(format!("Fl_{}_{}", name_str, "set_mark").as_str(), name.span());
-    let replace = Ident::new(format!("Fl_{}_{}", name_str, "replace").as_str(), name.span());
-    let insert = Ident::new(format!("Fl_{}_{}", name_str, "insert").as_str(), name.span());
-    let append = Ident::new(format!("Fl_{}_{}", name_str, "append").as_str(), name.span());
-    let copy = Ident::new(format!("Fl_{}_{}", name_str, "copy").as_str(), name.span());
-    let undo = Ident::new(format!("Fl_{}_{}", name_str, "undo").as_str(), name.span());
-    let copy_cuts = Ident::new(format!("Fl_{}_{}", name_str, "copy_cuts").as_str(), name.span());
-    let text_font = Ident::new(format!("Fl_{}_{}", name_str, "text_font").as_str(), name.span());
-    let set_text_font = Ident::new(format!("Fl_{}_{}", name_str, "set_text_font").as_str(), name.span());
-    let text_color = Ident::new(format!("Fl_{}_{}", name_str, "text_color").as_str(), name.span());
-    let set_text_color = Ident::new(format!("Fl_{}_{}", name_str, "set_text_color").as_str(), name.span());
-    let text_size = Ident::new(format!("Fl_{}_{}", name_str, "text_size").as_str(), name.span());
-    let set_text_size = Ident::new(format!("Fl_{}_{}", name_str, "set_text_size").as_str(), name.span());
-    let readonly = Ident::new(format!("Fl_{}_{}", name_str, "readonly").as_str(), name.span());
-    let set_readonly = Ident::new(format!("Fl_{}_{}", name_str, "set_readonly").as_str(), name.span());
-    let wrap = Ident::new(format!("Fl_{}_{}", name_str, "wrap").as_str(), name.span());
-    let set_wrap = Ident::new(format!("Fl_{}_{}", name_str, "set_wrap").as_str(), name.span());
+    let value = Ident::new(format!("{}_{}", name_str, "value").as_str(), name.span());
+    let set_value = Ident::new(format!("{}_{}", name_str, "set_value").as_str(), name.span());
+    let maximum_size = Ident::new(format!("{}_{}", name_str, "maximum_size").as_str(), name.span());
+    let set_maximum_size = Ident::new(format!("{}_{}", name_str, "set_maximum_size").as_str(), name.span());
+    let position = Ident::new(format!("{}_{}", name_str, "position").as_str(), name.span());
+    let set_position = Ident::new(format!("{}_{}", name_str, "set_position").as_str(), name.span());
+    let mark = Ident::new(format!("{}_{}", name_str, "mark").as_str(), name.span());
+    let set_mark = Ident::new(format!("{}_{}", name_str, "set_mark").as_str(), name.span());
+    let replace = Ident::new(format!("{}_{}", name_str, "replace").as_str(), name.span());
+    let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
+    let append = Ident::new(format!("{}_{}", name_str, "append").as_str(), name.span());
+    let copy = Ident::new(format!("{}_{}", name_str, "copy").as_str(), name.span());
+    let undo = Ident::new(format!("{}_{}", name_str, "undo").as_str(), name.span());
+    let copy_cuts = Ident::new(format!("{}_{}", name_str, "copy_cuts").as_str(), name.span());
+    let text_font = Ident::new(format!("{}_{}", name_str, "text_font").as_str(), name.span());
+    let set_text_font = Ident::new(format!("{}_{}", name_str, "set_text_font").as_str(), name.span());
+    let text_color = Ident::new(format!("{}_{}", name_str, "text_color").as_str(), name.span());
+    let set_text_color = Ident::new(format!("{}_{}", name_str, "set_text_color").as_str(), name.span());
+    let text_size = Ident::new(format!("{}_{}", name_str, "text_size").as_str(), name.span());
+    let set_text_size = Ident::new(format!("{}_{}", name_str, "set_text_size").as_str(), name.span());
+    let readonly = Ident::new(format!("{}_{}", name_str, "readonly").as_str(), name.span());
+    let set_readonly = Ident::new(format!("{}_{}", name_str, "set_readonly").as_str(), name.span());
+    let wrap = Ident::new(format!("{}_{}", name_str, "wrap").as_str(), name.span());
+    let set_wrap = Ident::new(format!("{}_{}", name_str, "set_wrap").as_str(), name.span());
 
 
     let gen = quote! {
         impl InputTrait for #name {
             fn value(&self) -> String {
                 unsafe {
-                    ffi::CString::from_raw(fltk_sys::#name_lower::#value(self._inner) as *mut libc::c_char).into_string().unwrap()
+                    ffi::CString::from_raw(#value(self._inner) as *mut libc::c_char).into_string().unwrap()
                 }
             }
             fn set_value(&mut self, val: &str) {
+                let val = ffi::CString::new(val).unwrap();
                 unsafe {
-                    fltk_sys::#name_lower::#set_value(self._inner, val.as_ptr() as *const libc::c_char);
+                    #set_value(self._inner, val.as_ptr() as *const libc::c_char);
                 }
             }
             fn maximum_size(&self) -> usize {
                 unsafe {
-                    fltk_sys::#name_lower::#maximum_size(self._inner) as usize
+                    #maximum_size(self._inner) as usize
                 }
             }
             fn set_maximum_size(&mut self, val: usize) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_maximum_size(self._inner, val as i32)
+                    #set_maximum_size(self._inner, val as i32)
                 }
             }
             fn position(&self) -> i32 {
                 unsafe {
-                    fltk_sys::#name_lower::#position(self._inner)
+                    #position(self._inner)
                 }
             }
             fn set_position(&mut self, val: i32) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_position(self._inner, val);
+                    #set_position(self._inner, val);
                 }
             }
             fn mark(&self) -> i32 {
                 unsafe {
-                    fltk_sys::#name_lower::#mark(self._inner) as i32
+                    #mark(self._inner) as i32
                 }
             }
             fn set_mark(&mut self, val: i32) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_mark(self._inner, val);
+                    #set_mark(self._inner, val);
                 }
             }
             fn replace(&mut self, beg: usize, end: usize, val: &str) {
+                let val = ffi::CString::new(val).unwrap();
                 unsafe {
-                    fltk_sys::#name_lower::#replace(self._inner, beg as i32, end as i32, val.as_ptr() as *const libc::c_char, 0);
+                    #replace(self._inner, beg as i32, end as i32, val.as_ptr() as *const libc::c_char, 0);
                 }
             }
             fn insert(&mut self, txt: &str) {
+                let txt = ffi::CString::new(txt).unwrap();
                 unsafe {
-                    fltk_sys::#name_lower::#insert(self._inner, txt.as_ptr() as *const libc::c_char, 0);
+                    #insert(self._inner, txt.as_ptr() as *const libc::c_char, 0);
                 }
             }
             fn append(&mut self, txt: &str) {
+                let txt = ffi::CString::new(txt).unwrap();
                 unsafe {
-                    fltk_sys::#name_lower::#append(self._inner,  txt.as_ptr() as *const libc::c_char, 0, 0);
+                    #append(self._inner,  txt.as_ptr() as *const libc::c_char, 0, 0);
                 }
             }
             fn copy(&mut self) {
                 unsafe {
-                    fltk_sys::#name_lower::#copy(self._inner, 1);
+                    #copy(self._inner, 1);
                 }
             }
             fn undo(&mut self) {
                 unsafe {
-                    fltk_sys::#name_lower::#undo(self._inner);
+                    #undo(self._inner);
                 }
             }
             fn cut(&mut self) {
                 unsafe {
-                    fltk_sys::#name_lower::#copy_cuts(self._inner);
+                    #copy_cuts(self._inner);
                 }
             }
             fn text_font(&self) -> Font {
                 unsafe {
-                    mem::transmute(fltk_sys::#name_lower::#text_font(self._inner))
+                    mem::transmute(#text_font(self._inner))
                 }
             }
             fn set_text_font(&mut self, font: Font) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_text_font(self._inner, font as i32)
+                    #set_text_font(self._inner, font as i32)
                 }
             }
             fn text_color(&self) -> Color {
                 unsafe {
-                    mem::transmute(fltk_sys::#name_lower::#text_color(self._inner))
+                    mem::transmute(#text_color(self._inner))
                 }
             }
             fn set_text_color(&mut self, color: Color) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_text_color(self._inner, color as i32)
+                    #set_text_color(self._inner, color as i32)
                 }
             }
             fn text_size(&self) -> usize {
                 unsafe {
-                    fltk_sys::#name_lower::#text_size(self._inner) as usize
+                    #text_size(self._inner) as usize
                 }
             }
             fn set_text_size(&mut self, sz: usize) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_text_size(self._inner, sz as i32)
+                    #set_text_size(self._inner, sz as i32)
                 }
             }
             fn readonly(&self) -> bool {
                 unsafe {
-                    match fltk_sys::#name_lower::#readonly(self._inner) {
+                    match #readonly(self._inner) {
                         0 => false,
                         _ => true,
                     }
@@ -462,12 +479,12 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn set_readonly(&mut self, val: bool) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_readonly(self._inner, val as i32)
+                    #set_readonly(self._inner, val as i32)
                 }
             }
             fn wrap(&self) -> bool {
                 unsafe {
-                    match fltk_sys::#name_lower::#wrap(self._inner) {
+                    match #wrap(self._inner) {
                         0 => false,
                         _ => true,
                     }
@@ -475,7 +492,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn set_wrap(&mut self, val: bool) {
                 unsafe {
-                    fltk_sys::#name_lower::#set_wrap(self._inner, val as i32)
+                    #set_wrap(self._inner, val as i32)
                 }
             }
         }

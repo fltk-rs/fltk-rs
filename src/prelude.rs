@@ -1,6 +1,7 @@
 pub use crate::color::Color;
 pub use crate::fl;
 pub use crate::font::Font;
+use fltk_sys::widget::*;
 
 pub trait WidgetTrait {
     fn new() -> Self;
@@ -14,7 +15,7 @@ pub trait WidgetTrait {
     fn width(&self) -> i32;
     fn height(&self) -> i32;
     fn label(&self) -> String;
-    fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
+    fn as_widget_ptr(&self) -> *mut Fl_Widget;
     fn activate(&mut self);
     fn deactivate(&mut self);
     fn redraw_label(&mut self);
@@ -33,8 +34,8 @@ pub trait WidgetTrait {
     fn set_label_size(&mut self, sz: usize);
     fn label_type<T: WidgetType>(&self) -> T;
     fn set_label_type<T: WidgetType>(&mut self, typ: T);
-    fn get_box<T: WidgetType>(&self) -> T;
-    fn set_box<T: WidgetType>(&mut self, typ: T);
+    fn frame<T: WidgetType>(&self) -> T;
+    fn set_frame<T: WidgetType>(&mut self, typ: T);
 }
 
 pub trait GroupTrait: WidgetTrait {

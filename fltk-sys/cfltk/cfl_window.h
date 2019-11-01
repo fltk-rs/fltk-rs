@@ -12,6 +12,12 @@ GROUP_DECLARE(Fl_Window)
 
 WINDOW_DECLARE(Fl_Window)
 
+WIDGET_DECLARE(Fl_Double_Window)
+
+GROUP_DECLARE(Fl_Double_Window)
+
+WINDOW_DECLARE(Fl_Double_Window)
+
 
 #ifdef __cplusplus
 }

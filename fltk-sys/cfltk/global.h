@@ -31,6 +31,9 @@ int widget## _label_type(widget *); \
 void widget## _set_label_type(widget *, int typ); \
 int widget## _box(widget *); \
 void widget## _set_box(widget *, int typ); \
+int widget## _changed(widget *); \
+void widget## _set_changed(widget *); \
+void widget## _clear_changed(widget *); \
 
 #define GROUP_DECLARE(widget) \
 void widget## _begin(widget *self); \
@@ -143,6 +146,15 @@ int widget## _box(widget *self) {\
 void widget## _set_box(widget *self, int typ) {\
     self->box(static_cast<Fl_Boxtype>(typ));\
 }\
+int widget## _changed(widget *self) {\
+    return self->changed();\
+}\
+void widget## _set_changed(widget *self) {\
+    self->set_changed();\
+}\
+void widget## _clear_changed(widget *self) {\
+    self->clear_changed();\
+}\
 
 #define GROUP_DEFINE(widget)\
 void widget## _begin(widget *self) {\
@@ -174,7 +186,7 @@ void widget## _make_current(widget *self) {\
 
 #define INPUT_DEFINE(widget) \
 int widget## _set_value(widget *self, const char* t) {\
-    self->static_value(t);\
+    self->value(t);\
 }\
 const char* widget## _value(widget *self) {\
     return self->value();\

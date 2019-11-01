@@ -5,7 +5,7 @@ fn main() {
     wind.begin();
 
     let mut but1 = Button::new().set(80, 80, 80, 60, "Click me!");
-    let mut but2 = Button::new().set(240, 80, 80, 60, "Click me!");
+    let mut but2 = RoundButton::new().set(240, 80, 80, 60, "Click me!");
     let mut but3 = Button::new().set(80, 160, 80, 60, "Click me!");
     but3.set_type(ButtonType::RadioButton);
     let mut but4 = Button::new().set(240, 160, 80, 60, "Click me!");

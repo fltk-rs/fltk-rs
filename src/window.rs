@@ -1,9 +1,10 @@
 pub use crate::prelude::*;
+use fltk_sys::window::*;
 use std::{ffi, mem, ptr};
 
 #[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
 pub struct Window {
-    _inner: *mut fltk_sys::window::Fl_Window,
+    _inner: *mut Fl_Window,
     _x: i32,
     _y: i32,
     _width: i32,
@@ -18,8 +19,12 @@ pub enum WindowType {
     DoubleWindow = 241,
 }
 
-impl Window {
-    pub fn as_ptr(&self) -> *mut fltk_sys::window::Fl_Window {
-        self._inner
-    }
+#[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
+pub struct DoubleWindow {
+    _inner: *mut Fl_Double_Window,
+    _x: i32,
+    _y: i32,
+    _width: i32,
+    _height: i32,
+    _title: ffi::CString,
 }

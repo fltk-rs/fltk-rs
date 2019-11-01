@@ -1,9 +1,10 @@
 pub use crate::prelude::*;
+use fltk_sys::frame::*;
 use std::{ffi, mem, ptr};
 
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct Frame {
-    _inner: *mut fltk_sys::frame::Fl_Box,
+    _inner: *mut Fl_Box,
     _x: i32,
     _y: i32,
     _width: i32,
@@ -71,10 +72,4 @@ pub enum FrameType {
     GleamRoundUpBox,
     GleamRoundDownBox,
     FreeBoxType,
-}
-
-impl Frame {
-    pub fn as_ptr(&self) -> *mut fltk_sys::frame::Fl_Box {
-        self._inner
-    }
 }

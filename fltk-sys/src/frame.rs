@@ -75,5 +75,11 @@ extern "C" {
     pub fn Fl_Box_box(arg1: *mut Fl_Box) -> libc::c_int;
     
     pub fn Fl_Box_set_box(arg1: *mut Fl_Box, typ: libc::c_int);
+    
+    pub fn Fl_Box_changed(arg1: *mut Fl_Box) -> libc::c_int;
+    
+    pub fn Fl_Box_set_changed(arg1: *mut Fl_Box);
+
+    pub fn Fl_Box_clear_changed(arg1: *mut Fl_Box);
 
 }

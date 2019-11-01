@@ -1,9 +1,10 @@
 pub use crate::prelude::*;
+use fltk_sys::group::*;
 use std::{ffi, mem, ptr};
 
 #[derive(WidgetTrait, GroupTrait, Debug, Clone)]
 pub struct Group {
-    _inner: *mut fltk_sys::group::Fl_Group,
+    _inner: *mut Fl_Group,
     _x: i32,
     _y: i32,
     _width: i32,
@@ -11,14 +12,42 @@ pub struct Group {
     _title: ffi::CString,
 }
 
-#[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
-pub enum GroupType {
-    NormalGroup = 0,
+#[derive(WidgetTrait, GroupTrait, Debug, Clone)]
+pub struct Pack {
+    _inner: *mut Fl_Pack,
+    _x: i32,
+    _y: i32,
+    _width: i32,
+    _height: i32,
+    _title: ffi::CString,
 }
 
-impl Group {
-    pub fn as_ptr(&self) -> *mut fltk_sys::group::Fl_Group {
-        self._inner
-    }
+#[derive(WidgetTrait, GroupTrait, Debug, Clone)]
+pub struct Scroll {
+    _inner: *mut Fl_Scroll,
+    _x: i32,
+    _y: i32,
+    _width: i32,
+    _height: i32,
+    _title: ffi::CString,
+}
+
+#[derive(WidgetTrait, GroupTrait, Debug, Clone)]
+pub struct Tabs {
+    _inner: *mut Fl_Tabs,
+    _x: i32,
+    _y: i32,
+    _width: i32,
+    _height: i32,
+    _title: ffi::CString,
+}
+
+#[derive(WidgetTrait, GroupTrait, Debug, Clone)]
+pub struct Tile {
+    _inner: *mut Fl_Tile,
+    _x: i32,
+    _y: i32,
+    _width: i32,
+    _height: i32,
+    _title: ffi::CString,
 }
