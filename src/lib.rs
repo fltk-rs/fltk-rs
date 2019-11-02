@@ -8,6 +8,7 @@ pub mod prelude;
 pub mod widget;
 pub mod window;
 pub mod enums;
+pub mod menu;
 
 #[macro_use]
 extern crate fltk_derive;

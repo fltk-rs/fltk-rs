@@ -84,3 +84,7 @@ pub trait InputTrait {
     fn wrap(&self) -> bool;
     fn set_wrap(&mut self, val: bool);
 }
+
+pub trait MenuTrait {
+    fn add<F>(&mut self, name: &str, shortcut: i32, cb: F, flag: i32) where F: FnMut();
+}

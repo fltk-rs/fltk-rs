@@ -22,3 +22,6 @@ name = "button"
 
 [[example]]
 name = "calculator"
+
+[[example]]
+name = "menubar"
