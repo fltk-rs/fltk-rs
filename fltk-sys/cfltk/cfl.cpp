@@ -18,10 +18,18 @@ int Fl_event_dx(void) { return Fl::event_dx(); }
 
 int Fl_event_dy(void) { return Fl::event_dy(); }
 
-int Fl_event_inside(void* widget) { return Fl::event_inside((const Fl_Widget*)widget); }
+int Fl_event_inside(void *widget) {
+  return Fl::event_inside((const Fl_Widget *)widget);
+}
 
 int Fl_event_is_click(void) { return Fl::event_is_click(); }
 
 int Fl_event_length(void) { return Fl::event_length(); }
 
 int Fl_event_state(void) { return Fl::event_state(); }
+
+int Fl_screen_h(void) { return Fl::h(); }
+
+int Fl_screen_w(void) { return Fl::w(); }
+
+void *Fl_belowmouse(void) { return Fl::belowmouse(); }

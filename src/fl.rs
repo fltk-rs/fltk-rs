@@ -1,5 +1,5 @@
 pub use crate::prelude::*;
-use std::{ffi, mem};
+use std::{ffi, mem, os::raw};
 
 #[repr(i32)]
 #[derive(Debug, Copy, Clone)]
@@ -49,7 +49,7 @@ pub fn event_key() -> i32 {
 
 pub fn event_text() -> String {
     unsafe {
-        ffi::CString::from_raw(fltk_sys::fl::Fl_event_text() as *mut libc::c_char)
+        ffi::CString::from_raw(fltk_sys::fl::Fl_event_text() as *mut raw::c_char)
             .into_string()
             .unwrap()
     }
@@ -74,7 +74,7 @@ pub fn event_coords() -> (i32, i32) {
 
 pub fn event_inside(arg1: *const fltk_sys::widget::Fl_Widget) -> bool {
     unsafe {
-        match fltk_sys::fl::Fl_event_inside(arg1 as *mut libc::c_void) {
+        match fltk_sys::fl::Fl_event_inside(arg1 as *mut raw::c_void) {
             0 => false,
             _ => true,
         }
@@ -98,16 +98,27 @@ pub fn event_state() -> i32 {
     unsafe { fltk_sys::fl::Fl_event_state() }
 }
 
+pub fn belowmouse() -> *mut fltk_sys::widget::Fl_Widget {
+    unsafe { mem::transmute(fltk_sys::fl::Fl_belowmouse()) }
+}
+
+pub fn screen_size() -> (f64, f64) {
+    unsafe {
+        (
+            (fltk_sys::fl::Fl_screen_w() as f64 / 0.96).into(),
+            (fltk_sys::fl::Fl_screen_h() as f64 / 0.96).into(),
+        )
+    }
+}
+
 pub fn register_callback<W, F>(widget: &W, cb: F)
 where
     W: WidgetTrait,
     F: FnMut(),
 {
     unsafe {
-        unsafe extern "C" fn shim<F>(
-            _wid: *mut fltk_sys::widget::Fl_Widget,
-            data: *mut libc::c_void,
-        ) where
+        unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)
+        where
             F: FnMut(),
         {
             // use std::panic::{catch_unwind, AssertUnwindSafe};
@@ -121,7 +132,7 @@ where
             f();
         }
         let a: *mut F = Box::into_raw(Box::new(cb));
-        let data: *mut libc::c_void = mem::transmute(a);
+        let data: *mut raw::c_void = mem::transmute(a);
         let callback: fltk_sys::widget::Fl_Callback = Some(shim::<F>);
         fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
     }

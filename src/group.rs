@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::group::*;
-use std::{ffi, mem, ptr};
+use std::{ffi, mem, os::raw, ptr};
 
 #[derive(WidgetTrait, GroupTrait, Debug, Clone)]
 pub struct Group {

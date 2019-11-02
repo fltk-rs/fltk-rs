@@ -10,7 +10,7 @@ extern crate quote;
 use quote::*;
 use syn::*;
 use proc_macro::TokenStream;
-use std::{mem, ptr, ffi};
+use std::{mem, ptr, ffi, os::raw};
 
 fn get_fl_name(txt: String) -> String {
     if txt == "Frame" {
@@ -121,7 +121,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                             self._y,
                             self._width,
                             self._height,
-                            self._title.as_ptr() as *const libc::c_char,
+                            self._title.as_ptr() as *const raw::c_char,
                         )
                     };
                 } else {
@@ -131,10 +131,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                             self._y,
                             self._width,
                             self._height,
-                            ptr::null_mut() as *const libc::c_char,
+                            ptr::null_mut() as *const raw::c_char,
                         )
                     };
-                    // #set_value(self._inner, self._title.as_ptr() as *const libc::c_char);
+                    // #set_value(self._inner, self._title.as_ptr() as *const raw::c_char);
                 }
                 self
             }
@@ -144,7 +144,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     #set_label(
                         self._inner,
-                        self._title.as_ptr() as *const libc::c_char,
+                        self._title.as_ptr() as *const raw::c_char,
                     )
                 }
             }
@@ -206,7 +206,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn tooltip(&self) -> String {
                 unsafe {
                     ffi::CString::from_raw(
-                        #tooltip(self._inner) as *mut libc::c_char
+                        #tooltip(self._inner) as *mut raw::c_char
                     ).into_string().unwrap()
                 }
             }
@@ -216,7 +216,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     #set_tooltip(
                         self._inner,
-                        txt.as_ptr() as *const libc::c_char,
+                        txt.as_ptr() as *const raw::c_char,
                     )
                 }
             }
@@ -415,7 +415,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_value(&mut self, val: &str) {
                 self._title = ffi::CString::new(val).unwrap();
                 unsafe {
-                    #set_value(self._inner, self._title.as_ptr() as *const libc::c_char);
+                    #set_value(self._inner, self._title.as_ptr() as *const raw::c_char);
                 }
             }
             fn maximum_size(&self) -> usize {
@@ -451,19 +451,19 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn replace(&mut self, beg: usize, end: usize, val: &str) {
                 let val = ffi::CString::new(val).unwrap();
                 unsafe {
-                    #replace(self._inner, beg as i32, end as i32, val.as_ptr() as *const libc::c_char, 0);
+                    #replace(self._inner, beg as i32, end as i32, val.as_ptr() as *const raw::c_char, 0);
                 }
             }
             fn insert(&mut self, txt: &str) {
                 let txt = ffi::CString::new(txt).unwrap();
                 unsafe {
-                    #insert(self._inner, txt.as_ptr() as *const libc::c_char, 0);
+                    #insert(self._inner, txt.as_ptr() as *const raw::c_char, 0);
                 }
             }
             fn append(&mut self, txt: &str) {
                 let txt = ffi::CString::new(txt).unwrap();
                 unsafe {
-                    #append(self._inner,  txt.as_ptr() as *const libc::c_char, 0, 0);
+                    #append(self._inner,  txt.as_ptr() as *const raw::c_char, 0, 0);
                 }
             }
             fn copy(&mut self) {

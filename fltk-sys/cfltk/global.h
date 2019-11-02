@@ -194,7 +194,7 @@ void widget## _make_current(widget *self) {\
 
 #define INPUT_DEFINE(widget) \
 int widget## _set_value(widget *self, const char* t) {\
-    self->static_value(t);\
+    self->value(t);\
 }\
 const char* widget## _value(widget *self) {\
     return self->value();\

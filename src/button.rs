@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::button::*;
-use std::{ffi, mem, ptr};
+use std::{ffi, mem, os::raw, ptr};
 
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct Button {

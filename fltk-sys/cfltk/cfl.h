@@ -16,6 +16,9 @@ int Fl_event_inside(void*);
 int Fl_event_is_click(void);
 int Fl_event_length(void);
 int Fl_event_state(void);
+int Fl_screen_h(void);
+int Fl_screen_w(void);
+void* Fl_belowmouse(void);
 
 #ifdef __cplusplus
 }

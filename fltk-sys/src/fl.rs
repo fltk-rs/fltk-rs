@@ -36,3 +36,13 @@ extern "C" {
 extern "C" {
     pub fn Fl_event_state() -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_screen_h() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_screen_w() -> ::std::os::raw::c_int;
+}
+
+extern "C" {
+    pub fn Fl_belowmouse() -> *mut ::std::os::raw::c_void;
+}
