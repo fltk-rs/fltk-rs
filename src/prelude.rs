@@ -1,7 +1,5 @@
-pub use crate::align::Align;
-pub use crate::color::Color;
+pub use crate::enums::*;
 pub use crate::fl;
-pub use crate::font::Font;
 use fltk_sys::widget::*;
 
 pub trait WidgetTrait {

@@ -134,7 +134,6 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                             ptr::null_mut() as *const raw::c_char,
                         )
                     };
-                    // #set_value(self._inner, self._title.as_ptr() as *const raw::c_char);
                 }
                 self
             }

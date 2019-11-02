@@ -137,10 +137,10 @@ void widget## _set_label_size(widget *self, int sz) {\
     self->labelsize(sz);\
 }\
 int widget## _label_type(widget *self) {\
-    return self->labelsize();\
+    return self->labeltype();\
 }\
-void widget## _set_label_type(widget *self, int sz) {\
-    self->labelsize(sz);\
+void widget## _set_label_type(widget *self, int typ) {\
+    self->labeltype(static_cast<Fl_Labeltype>(typ));\
 }\
 int widget## _box(widget *self) {\
     return self->box();\
