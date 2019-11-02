@@ -86,5 +86,5 @@ pub trait InputTrait {
 }
 
 pub trait MenuTrait {
-    fn add<F>(&mut self, name: &str, shortcut: i32, cb: F, flag: i32) where F: FnMut();
+    fn add<F>(&mut self, name: &str, shortcut: i32, flag: i32, cb: F) where F: FnMut();
 }

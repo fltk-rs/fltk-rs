@@ -10,6 +10,7 @@ pub mod frame;
 pub mod input;
 pub mod output;
 pub mod menu;
+pub mod dialog;
 
 
 #[cfg(test)]

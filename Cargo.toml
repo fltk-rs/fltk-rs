@@ -24,4 +24,4 @@ name = "button"
 name = "calculator"
 
 [[example]]
-name = "menubar"
+name = "editor"

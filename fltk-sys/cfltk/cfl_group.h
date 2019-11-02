@@ -26,6 +26,14 @@ WIDGET_DECLARE(Fl_Tile)
 
 GROUP_DECLARE(Fl_Tile)
 
+WIDGET_DECLARE(Fl_Text_Display)
+
+GROUP_DECLARE(Fl_Text_Display)
+
+WIDGET_DECLARE(Fl_Text_Editor)
+
+GROUP_DECLARE(Fl_Text_Editor)
+
 #ifdef __cplusplus
 }
 #endif

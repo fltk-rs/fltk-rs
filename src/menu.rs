@@ -33,7 +33,7 @@ pub struct Choice {
 }
 
 impl MenuTrait for MenuBar {
-    fn add<F>(&mut self, name: &str, shortcut: i32, cb: F, flag: i32) where F: FnMut() {
+    fn add<F>(&mut self, name: &str, shortcut: i32, flag:i32 , cb: F) where F: FnMut() {
         let temp = ffi::CString::new(name).unwrap();
         unsafe {
             unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void)

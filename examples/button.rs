@@ -1,7 +1,7 @@
 use fltk::{button::*, window::*};
 
 fn main() {
-    let mut wind = Window::new().set(0, 0, 1500, 800, "Hello from rust");
+    let mut wind = Window::new().set(0, 0, 400, 300, "Hello from rust");
 
     let mut but1 = Button::new().set(80, 80, 80, 60, "Click me!");
     let mut but2 = Button::new().set(240, 80, 80, 60, "Click me!");

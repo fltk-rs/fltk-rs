@@ -51,3 +51,23 @@ pub struct Tile {
     _height: i32,
     _title: ffi::CString,
 }
+
+#[derive(WidgetTrait, GroupTrait, Debug, Clone)]
+pub struct TextDisplay {
+    _inner: *mut Fl_Text_Display,
+    _x: i32,
+    _y: i32,
+    _width: i32,
+    _height: i32,
+    _title: ffi::CString,
+}
+
+#[derive(WidgetTrait, GroupTrait, Debug, Clone)]
+pub struct TextEditor {
+    _inner: *mut Fl_Text_Editor,
+    _x: i32,
+    _y: i32,
+    _width: i32,
+    _height: i32,
+    _title: ffi::CString,
+}
