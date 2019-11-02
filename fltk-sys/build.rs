@@ -37,7 +37,14 @@ fn main() {
                  .define("OPTION_USE_SYSTEM_LIBJPEG","OFF")
                  .build();
     println!("cargo:rustc-link-search=native={}", dst.join("build").display());
+
+    // Change static to dylib to link dynamically, also change CMakeLists STATIC to SHARED
+
     println!("cargo:rustc-link-lib=static=cfltk");
+
+    // Comment out all following code to link dynamically
+
+
     println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
     if cfg!(debug_assertions) && cfg!(target_env = "msvc") {
         println!("cargo:rustc-link-lib=static=fltkd");

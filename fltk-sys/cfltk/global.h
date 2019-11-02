@@ -211,10 +211,10 @@ int widget## _position(widget *self) {\
 int widget## _set_position(widget *self, int p) {\
     self->position(p);\
 }\
-int widget## _mark(widget *self, int m) {\
+int widget## _set_mark(widget *self, int m) {\
     self->mark(m);\
 }\
-int widget## _get_mark(widget *self) {\
+int widget## _mark(widget *self) {\
     return self->mark();\
 }\
 int widget## _replace(widget *self, int b, int e, const char *text, int ilen) {\
