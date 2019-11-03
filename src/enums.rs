@@ -92,13 +92,29 @@ pub enum Event {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone)]
 pub enum LabelType {
-    NormalLabel = 0, 
-    NoLabel,         
-    ShadowLabel,    
-    EngravedLabel,  
-    EmbossedLabel,  
-    MultiLabel,     
-    IconLabel,      
-    ImageLabel,     
-    FreeLabelType, 
+    NormalLabel = 0,
+    NoLabel,
+    ShadowLabel,
+    EngravedLabel,
+    EmbossedLabel,
+    MultiLabel,
+    IconLabel,
+    ImageLabel,
+    FreeLabelType,
+}
+
+#[repr(i32)]
+#[derive(Debug, Copy, Clone)]
+pub enum Shortcut {
+    Shift = 0x00010000,
+    CapsLock = 0x00020000,
+    Ctrl = 0x00040000,
+    Alt = 0x00080000,
+}
+
+impl std::ops::Add<char> for Shortcut {
+    type Output = i32;
+    fn add(self, other: char) -> i32 {
+        self as i32 + other as i32
+    }
 }

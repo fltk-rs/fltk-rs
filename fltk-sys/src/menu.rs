@@ -355,3 +355,13 @@ extern "C" {
         arg4: ::std::os::raw::c_int,
     );
 }
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Menu_Item {
+    _unused: [u8; 0],
+}
+
+extern "C" {
+    pub fn Fl_Menu_Bar_get_item(arg1: *mut Fl_Menu_Bar, name: *const ::std::os::raw::c_char) -> *mut Fl_Menu_Item;
+}
