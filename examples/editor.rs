@@ -2,10 +2,19 @@ use fltk::{dialog::*, input::*, menu::*, window::*};
 use std::{fs, path};
 
 fn main() {
+    let (screen_width, screen_height) = fl::screen_size();
     let mut filename = String::from("");
-    let mut wind = Window::new().set(100, 100, 800, 600, "RustyEd");
+    let mut wind = Window::new().set(
+        (screen_width / 2.0 - 400.0) as i32,
+        (screen_height / 2.0 - 300.0) as i32,
+        800,
+        600,
+        "RustyEd",
+    );
+    wind.set_color(Color::Light2);
     let mut editor = MultilineInput::new().set(5, 40, 790, 555, "");
     let mut menu = MenuBar::new().set(0, 0, 800, 40, "");
+    menu.set_color(Color::Light2);
     menu.add(
         "File/New...",
         Shortcut::Ctrl + 'n',
