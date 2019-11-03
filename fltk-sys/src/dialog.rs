@@ -20,8 +20,71 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Native_File_Chooser_directory(arg1: *mut Fl_Native_File_Chooser) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Native_File_Chooser_directory(
+        arg1: *mut Fl_Native_File_Chooser,
+    ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Native_File_Chooser_show(arg1: *mut Fl_Native_File_Chooser) -> *const ::std::os::raw::c_int;
+    pub fn Fl_Native_File_Chooser_show(arg1: *mut Fl_Native_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Native_File_Chooser_set_option(
+        arg1: *mut Fl_Native_File_Chooser,
+        opt: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Native_File_Chooser_set_type(
+        arg1: *mut Fl_Native_File_Chooser,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Native_File_Chooser_set_title(
+        arg1: *mut Fl_Native_File_Chooser,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Native_File_Chooser_set_filter(
+        arg1: *mut Fl_Native_File_Chooser,
+        f: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Native_File_Chooser_set_preset_file(
+        arg1: *mut Fl_Native_File_Chooser,
+        f: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Native_File_Chooser_errmsg(
+        arg1: *mut Fl_Native_File_Chooser,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn cfl_message(txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn cfl_alert(txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn cfl_choice(
+        txt: *const ::std::os::raw::c_char,
+        b0: *const ::std::os::raw::c_char,
+        b1: *const ::std::os::raw::c_char,
+        b2: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn cfl_input(
+        txt: *const ::std::os::raw::c_char,
+        deflt: *const ::std::os::raw::c_char,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn cfl_password(
+        txt: *const ::std::os::raw::c_char,
+        deflt: *const ::std::os::raw::c_char,
+    ) -> *const ::std::os::raw::c_char;
 }

@@ -33,3 +33,7 @@ int Fl_screen_h(void) { return Fl::h(); }
 int Fl_screen_w(void) { return Fl::w(); }
 
 void *Fl_belowmouse(void) { return Fl::belowmouse(); }
+
+void Fl_paste(void *widget) {
+  Fl::paste((Fl_Widget&)widget);
+}

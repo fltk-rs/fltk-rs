@@ -15,6 +15,7 @@ add_library(cfltk STATIC
     cfl_menu.cpp
     cfl_dialog.cpp
     )
+    
 target_include_directories(cfltk PUBLIC fltk)
 target_link_libraries(cfltk PUBLIC fltk)
 

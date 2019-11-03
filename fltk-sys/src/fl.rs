@@ -45,3 +45,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_belowmouse() -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_paste(arg1: *mut ::std::os::raw::c_void);
+}

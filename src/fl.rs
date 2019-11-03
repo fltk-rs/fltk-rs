@@ -24,9 +24,8 @@ pub fn event_key() -> i32 {
 
 pub fn event_text() -> String {
     unsafe {
-        ffi::CString::from_raw(fltk_sys::fl::Fl_event_text() as *mut raw::c_char)
-            .into_string()
-            .unwrap()
+        String::from(ffi::CStr::from_ptr(fltk_sys::fl::Fl_event_text())
+            .to_string_lossy())
     }
 }
 
@@ -83,6 +82,12 @@ pub fn screen_size() -> (f64, f64) {
             (fltk_sys::fl::Fl_screen_w() as f64 / 0.96).into(),
             (fltk_sys::fl::Fl_screen_h() as f64 / 0.96).into(),
         )
+    }
+}
+
+pub fn paste<T>(widget: T) where T: WidgetTrait + InputTrait {
+    unsafe {
+        fltk_sys::fl::Fl_paste(widget.as_widget_ptr() as *mut raw::c_void);
     }
 }
 

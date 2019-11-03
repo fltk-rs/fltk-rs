@@ -114,7 +114,6 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 self._width = width;
                 self._height = height;
                 self._title = ffi::CString::new(title).unwrap();
-                if !#name_str.contains("put") {
                     self._inner = unsafe {
                         #new(
                             self._x,
@@ -124,20 +123,8 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                             self._title.as_ptr() as *const raw::c_char,
                         )
                     };
-                } else {
-                    self._inner = unsafe {
-                        #new(
-                            self._x,
-                            self._y,
-                            self._width,
-                            self._height,
-                            ptr::null_mut() as *const raw::c_char,
-                        )
-                    };
-                }
                 self
             }
-
             fn set_label(&mut self, title: &str) {
                 self._title = ffi::CString::new(title).unwrap();
                 unsafe {
@@ -204,9 +191,9 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn tooltip(&self) -> String {
                 unsafe {
-                    ffi::CString::from_raw(
-                        #tooltip(self._inner) as *mut raw::c_char
-                    ).into_string().unwrap()
+                    String::from(ffi::CStr::from_ptr(
+                        #tooltip(self._inner)
+                    ).to_string_lossy())
                 }
             }
 
@@ -409,12 +396,19 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         impl InputTrait for #name {
             fn value(&self) -> String {
-                self._title.clone().into_string().unwrap()
-            }
-            fn set_value(&mut self, val: &str) {
-                self._title = ffi::CString::new(val).unwrap();
                 unsafe {
-                    #set_value(self._inner, self._title.as_ptr() as *const raw::c_char);
+                    let p = #value(self._inner);
+                    if *p == 0 {
+                        String::from("")
+                    } else {
+                        String::from(ffi::CStr::from_ptr(p).to_string_lossy())
+                    }
+                }       
+            }          
+            fn set_value(&mut self, val: &str) {
+                let x = ffi::CString::new(val).unwrap();
+                unsafe {
+                    #set_value(self._inner, x.as_ptr() as *const raw::c_char);
                 }
             }
             fn maximum_size(&self) -> usize {

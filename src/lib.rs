@@ -18,6 +18,8 @@ extern crate fltk_derive;
 mod tests {
     #[test]
     fn it_works() {
-        assert_eq!(2 + 2, 4);
+        let x = std::ffi::CString::new("hello").unwrap();
+        let x = x.to_string_lossy();
+        let x = String::from(x); 
     }
 }
