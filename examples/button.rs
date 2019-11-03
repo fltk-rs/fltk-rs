@@ -1,6 +1,10 @@
 use fltk::{button::*, window::*};
 
 fn main() {
+    draw_elements();
+}
+
+fn draw_elements() {
     let mut wind = Window::new().set(0, 0, 400, 300, "Hello from rust");
 
     let mut but1 = Button::new().set(80, 80, 80, 60, "Click me!");
@@ -9,7 +13,7 @@ fn main() {
     fl::register_callback(&but1.clone(), &mut || match fl::event() {
         fl::Event::Released => {
             println!("{:?}", fl::event());
-            wind.set_label("Clicked button 1!");
+            // wind.set_label("Clicked button 1!");
             but1.set_label("Works");
             but2.set_label("No!");
         }
@@ -19,7 +23,7 @@ fn main() {
     fl::register_callback(&but2.clone(), &mut || match fl::event() {
         fl::Event::Released => {
             println!("{:?}", fl::event());
-            wind.set_label("Clicked button 2!");
+            // wind.set_label("Clicked button 2!");
             but1.set_label("No!");
             but2.set_label("Works");
         }
