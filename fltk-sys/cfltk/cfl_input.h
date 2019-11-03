@@ -22,7 +22,6 @@ WIDGET_DECLARE(Fl_Multiline_Input)
 
 INPUT_DECLARE(Fl_Multiline_Input)
 
-
 #ifdef __cplusplus
 }
 #endif

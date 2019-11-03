@@ -1,12 +1,12 @@
+#include "cfl_button.h"
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Check_Button.H>
-#include <Fl/Fl_Radio_Button.H>
-#include <Fl/Fl_Toggle_Button.H>
-#include <Fl/Fl_Round_Button.H>
 #include <Fl/Fl_Light_Button.H>
+#include <Fl/Fl_Radio_Button.H>
 #include <Fl/Fl_Repeat_Button.H>
 #include <Fl/Fl_Return_Button.H>
-#include "cfl_button.h"
+#include <Fl/Fl_Round_Button.H>
+#include <Fl/Fl_Toggle_Button.H>
 
 WIDGET_DEFINE(Fl_Button)
 

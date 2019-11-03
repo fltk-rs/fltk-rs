@@ -17,7 +17,7 @@ fn main() {
                 if x == 0 {
                     editor.set_value("");
                 }
-            } 
+            }
         },
     );
     menu.add(
@@ -37,14 +37,12 @@ fn main() {
     );
     menu.add(
         "File/Save",
-        Shortcut::Ctrl+ 's',
+        Shortcut::Ctrl + 's',
         MenuFlag::Normal,
-        &mut || {
-            match path::Path::new(&filename).exists() {
-                true => fs::write(&filename, editor.value()).unwrap(),
-                false => alert("Please specify a file!"),
-            }
-        }
+        &mut || match path::Path::new(&filename).exists() {
+            true => fs::write(&filename, editor.value()).unwrap(),
+            false => alert("Please specify a file!"),
+        },
     );
     menu.add("File/Save as...", 0, MenuFlag::MenuDivider, &mut || {
         let mut dlg = FileDialog::new(FileDialogType::BrowseSaveFile);
@@ -71,7 +69,7 @@ fn main() {
         MenuFlag::Normal,
         &mut || {
             editor.copy();
-        }
+        },
     );
     menu.add(
         "Edit/Paste",
@@ -79,7 +77,9 @@ fn main() {
         MenuFlag::Normal,
         &mut || fl::paste(editor.clone()),
     );
-    menu.add("Help/About", 0, MenuFlag::Normal, &mut || message("This is an example application written in Rust and using the FLTK Gui library."));
+    menu.add("Help/About", 0, MenuFlag::Normal, &mut || {
+        message("This is an example application written in Rust and using the FLTK Gui library.")
+    });
     wind.end();
     wind.show();
     fl::run();

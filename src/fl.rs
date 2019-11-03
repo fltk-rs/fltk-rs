@@ -23,10 +23,7 @@ pub fn event_key() -> i32 {
 }
 
 pub fn event_text() -> String {
-    unsafe {
-        String::from(ffi::CStr::from_ptr(fltk_sys::fl::Fl_event_text())
-            .to_string_lossy())
-    }
+    unsafe { String::from(ffi::CStr::from_ptr(fltk_sys::fl::Fl_event_text()).to_string_lossy()) }
 }
 
 pub fn event_button() -> i32 {
@@ -85,7 +82,10 @@ pub fn screen_size() -> (f64, f64) {
     }
 }
 
-pub fn paste<T>(widget: T) where T: WidgetTrait + InputTrait {
+pub fn paste<T>(widget: T)
+where
+    T: WidgetTrait + InputTrait,
+{
     unsafe {
         fltk_sys::fl::Fl_paste(widget.as_widget_ptr() as *mut raw::c_void);
     }

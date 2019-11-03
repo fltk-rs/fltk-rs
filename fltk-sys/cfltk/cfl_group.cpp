@@ -1,11 +1,11 @@
+#include "cfl_group.h"
 #include <FL/Fl_Group.H>
-#include <FL/Fl_Tabs.H>
 #include <FL/Fl_Pack.H>
 #include <FL/Fl_Scroll.H>
+#include <FL/Fl_Tabs.H>
 #include <FL/Fl_Tile.H>
 #include <Fl/Fl_Text_Display.H>
 #include <Fl/Fl_Text_Editor.H>
-#include "cfl_group.h"
 
 WIDGET_DEFINE(Fl_Group)
 

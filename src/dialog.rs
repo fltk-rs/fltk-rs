@@ -36,17 +36,25 @@ impl FileDialog {
     }
     pub fn filename(&self) -> String {
         unsafe {
-            String::from(ffi::CStr::from_ptr(Fl_Native_File_Chooser_filename(self._inner)).to_string_lossy())
+            String::from(
+                ffi::CStr::from_ptr(Fl_Native_File_Chooser_filename(self._inner)).to_string_lossy(),
+            )
         }
     }
     pub fn directory(&self) -> String {
         unsafe {
-            String::from(ffi::CStr::from_ptr(Fl_Native_File_Chooser_directory(self._inner)).to_string_lossy())
+            String::from(
+                ffi::CStr::from_ptr(Fl_Native_File_Chooser_directory(self._inner))
+                    .to_string_lossy(),
+            )
         }
     }
     pub fn set_directory(&mut self, dir: &str) {
         unsafe {
-            Fl_Native_File_Chooser_set_directory(self._inner, ffi::CString::new(dir).unwrap().as_ptr())
+            Fl_Native_File_Chooser_set_directory(
+                self._inner,
+                ffi::CString::new(dir).unwrap().as_ptr(),
+            )
         }
     }
     pub fn show(&mut self) {
@@ -55,14 +63,10 @@ impl FileDialog {
         }
     }
     pub fn set_option(&mut self, opt: FileDialogOptions) {
-        unsafe {
-            Fl_Native_File_Chooser_set_option(self._inner, opt as i32)
-        }
+        unsafe { Fl_Native_File_Chooser_set_option(self._inner, opt as i32) }
     }
     pub fn set_type(&mut self, op: FileDialogType) {
-        unsafe {
-            Fl_Native_File_Chooser_set_type(self._inner, op as i32)
-        }
+        unsafe { Fl_Native_File_Chooser_set_type(self._inner, op as i32) }
     }
     pub fn set_title(&mut self, title: &str) {
         unsafe {
@@ -70,9 +74,7 @@ impl FileDialog {
         }
     }
     pub fn set_filter(&mut self, f: &str) {
-        unsafe {
-            Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr() as *const raw::c_char)
-        }
+        unsafe { Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr() as *const raw::c_char) }
     }
     pub fn set_preset_file(&mut self, f: &str) {
         unsafe {
@@ -81,7 +83,9 @@ impl FileDialog {
     }
     pub fn errmsg(&self) -> String {
         unsafe {
-            String::from(ffi::CStr::from_ptr(Fl_Native_File_Chooser_errmsg(self._inner)).to_string_lossy())
+            String::from(
+                ffi::CStr::from_ptr(Fl_Native_File_Chooser_errmsg(self._inner)).to_string_lossy(),
+            )
         }
     }
 }
@@ -100,41 +104,45 @@ pub fn alert(txt: &str) {
     }
 }
 
-pub fn choice(
-        txt: &str,
-        b0: &str,
-        b1: &str,
-        b2: &str,
-    ) -> usize {
-        unsafe {
-            let txt = ffi::CString::new(txt).unwrap();
-            let b0 = ffi::CString::new(b0).unwrap();
-            let b1 = ffi::CString::new(b1).unwrap();
-            let b2 = ffi::CString::new(b2).unwrap();
-            cfl_choice(txt.as_ptr() as *const raw::c_char, b0.as_ptr() as *const raw::c_char, b1.as_ptr() as *const raw::c_char, b2.as_ptr() as *const raw::c_char) as usize
-        }
+pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> usize {
+    unsafe {
+        let txt = ffi::CString::new(txt).unwrap();
+        let b0 = ffi::CString::new(b0).unwrap();
+        let b1 = ffi::CString::new(b1).unwrap();
+        let b2 = ffi::CString::new(b2).unwrap();
+        cfl_choice(
+            txt.as_ptr() as *const raw::c_char,
+            b0.as_ptr() as *const raw::c_char,
+            b1.as_ptr() as *const raw::c_char,
+            b2.as_ptr() as *const raw::c_char,
+        ) as usize
     }
+}
 
-pub fn input(
-        txt: &str,
-        deflt: &str,
-    ) -> String {
-        unsafe {
+pub fn input(txt: &str, deflt: &str) -> String {
+    unsafe {
         let txt = ffi::CString::new(txt).unwrap();
         let deflt = ffi::CString::new(deflt).unwrap();
-        String::from(ffi::CStr::from_ptr(cfl_input(txt.as_ptr() as *const raw::c_char, deflt.as_ptr() as *const raw::c_char)).to_string_lossy())
-        }
+        String::from(
+            ffi::CStr::from_ptr(cfl_input(
+                txt.as_ptr() as *const raw::c_char,
+                deflt.as_ptr() as *const raw::c_char,
+            ))
+            .to_string_lossy(),
+        )
     }
+}
 
-pub fn password(
-        txt: &str,
-        deflt: &str,
-    ) -> String {
-        unsafe {
+pub fn password(txt: &str, deflt: &str) -> String {
+    unsafe {
         let txt = ffi::CString::new(txt).unwrap();
         let deflt = ffi::CString::new(deflt).unwrap();
-            String::from(ffi::CStr::from_ptr(cfl_password(txt.as_ptr() as *const raw::c_char, deflt.as_ptr() as *const raw::c_char)).to_string_lossy())
-        }
+        String::from(
+            ffi::CStr::from_ptr(cfl_password(
+                txt.as_ptr() as *const raw::c_char,
+                deflt.as_ptr() as *const raw::c_char,
+            ))
+            .to_string_lossy(),
+        )
     }
-
-
+}
