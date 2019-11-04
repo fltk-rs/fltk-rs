@@ -20,6 +20,11 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct Fl_Menu_Item {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Bar {
     _unused: [u8; 0],
 }
@@ -124,6 +129,40 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_align(arg1: *mut Fl_Menu_Bar, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_add(
+        arg1: *mut Fl_Menu_Bar,
+        name: *const ::std::os::raw::c_char,
+        shortcut: ::std::os::raw::c_int,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_get_item(
+        arg1: *mut Fl_Menu_Bar,
+        name: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_text_font(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_text_font(arg1: *mut Fl_Menu_Bar, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_text_size(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_text_size(arg1: *mut Fl_Menu_Bar, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_text_color(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_text_color(arg1: *mut Fl_Menu_Bar, c: ::std::os::raw::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -238,6 +277,40 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_set_align(arg1: *mut Fl_Menu_Button, typ: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Menu_Button_add(
+        arg1: *mut Fl_Menu_Button,
+        name: *const ::std::os::raw::c_char,
+        shortcut: ::std::os::raw::c_int,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Button_get_item(
+        arg1: *mut Fl_Menu_Button,
+        name: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_text_font(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_text_font(arg1: *mut Fl_Menu_Button, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Button_text_size(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_text_size(arg1: *mut Fl_Menu_Button, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Button_text_color(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_text_color(arg1: *mut Fl_Menu_Button, c: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Choice {
@@ -346,8 +419,8 @@ extern "C" {
     pub fn Fl_Choice_set_align(arg1: *mut Fl_Choice, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_add(
-        arg1: *mut Fl_Menu_Bar,
+    pub fn Fl_Choice_add(
+        arg1: *mut Fl_Choice,
         name: *const ::std::os::raw::c_char,
         shortcut: ::std::os::raw::c_int,
         arg2: Fl_Callback,
@@ -355,14 +428,84 @@ extern "C" {
         arg4: ::std::os::raw::c_int,
     );
 }
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct Fl_Menu_Item {
-    _unused: [u8; 0],
-}
 extern "C" {
-    pub fn Fl_Menu_Bar_get_item(
-        arg1: *mut Fl_Menu_Bar,
+    pub fn Fl_Choice_get_item(
+        arg1: *mut Fl_Choice,
         name: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Choice_text_font(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_set_text_font(arg1: *mut Fl_Choice, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Choice_text_size(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_set_text_size(arg1: *mut Fl_Choice, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Choice_text_color(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_set_text_color(arg1: *mut Fl_Choice, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_label(arg1: *mut Fl_Menu_Item) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_set_label(arg1: *mut Fl_Menu_Item, a: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_label_type(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_set_label_type(arg1: *mut Fl_Menu_Item, a: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_label_color(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_set_label_color(arg1: *mut Fl_Menu_Item, a: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_label_font(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_set_label_font(arg1: *mut Fl_Menu_Item, a: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_label_size(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_set_label_size(arg1: *mut Fl_Menu_Item, a: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_value(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_set(arg1: *mut Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_clear(arg1: *mut Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_visible(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_show(arg1: *mut Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_hide(arg1: *mut Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_active(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_activate(arg1: *mut Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_deactivate(arg1: *mut Fl_Menu_Item);
 }

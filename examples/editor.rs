@@ -1,4 +1,4 @@
-use fltk::{dialog::*, input::*, menu::*, window::*};
+use fltk::{dialog::*, input::MultilineInput, menu::*, window::Window};
 use std::{fs, path};
 
 fn main() {
@@ -20,7 +20,6 @@ fn main() {
         Shortcut::Ctrl + 'n',
         MenuFlag::Normal,
         &mut || {
-            println!("{}", editor.value());
             if editor.value() != "" {
                 let x = choice("File unsaved, Do you wish to continue?", "Yes", "No!", "");
                 if x == 0 {
@@ -89,6 +88,9 @@ fn main() {
     menu.add("Help/About", 0, MenuFlag::Normal, &mut || {
         message("This is an example application written in Rust and using the FLTK Gui library.")
     });
+    let mut x = menu.get_item("Help/About");
+    x.set_label_color(Color::Red);
+
     wind.end();
     wind.show();
     fl::run();

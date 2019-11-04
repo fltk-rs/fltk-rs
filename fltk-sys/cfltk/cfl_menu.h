@@ -7,18 +7,57 @@
 extern "C" {
 #endif
 
+typedef struct Fl_Menu_Item Fl_Menu_Item;
+
 WIDGET_DECLARE(Fl_Menu_Bar)
+
+MENU_DECLARE(Fl_Menu_Bar)
 
 WIDGET_DECLARE(Fl_Menu_Button)
 
+MENU_DECLARE(Fl_Menu_Button)
+
 WIDGET_DECLARE(Fl_Choice)
 
-void Fl_Menu_Bar_add(Fl_Menu_Bar *, const char *name, int shortcut,
-                     Fl_Callback *, void *, int);
+MENU_DECLARE(Fl_Choice)
 
-typedef struct Fl_Menu_Item Fl_Menu_Item;
+const char *Fl_Menu_Item_label(Fl_Menu_Item *);
 
-Fl_Menu_Item *Fl_Menu_Bar_get_item(Fl_Menu_Bar *, const char *name);
+void Fl_Menu_Item_set_label(Fl_Menu_Item *, const char *a);
+
+int Fl_Menu_Item_label_type(Fl_Menu_Item *);
+
+void Fl_Menu_Item_set_label_type(Fl_Menu_Item *, int a);
+
+int Fl_Menu_Item_label_color(Fl_Menu_Item *);
+
+void Fl_Menu_Item_set_label_color(Fl_Menu_Item *, int a);
+
+int Fl_Menu_Item_label_font(Fl_Menu_Item *);
+
+void Fl_Menu_Item_set_label_font(Fl_Menu_Item *, int a);
+
+int Fl_Menu_Item_label_size(Fl_Menu_Item *);
+
+void Fl_Menu_Item_set_label_size(Fl_Menu_Item *, int a);
+
+int Fl_Menu_Item_value(Fl_Menu_Item *);
+
+void Fl_Menu_Item_set(Fl_Menu_Item *);
+
+void Fl_Menu_Item_clear(Fl_Menu_Item *);
+
+int Fl_Menu_Item_visible(Fl_Menu_Item *);
+
+void Fl_Menu_Item_show(Fl_Menu_Item *);
+
+void Fl_Menu_Item_hide(Fl_Menu_Item *);
+
+int Fl_Menu_Item_active(Fl_Menu_Item *);
+
+void Fl_Menu_Item_activate(Fl_Menu_Item *);
+
+void Fl_Menu_Item_deactivate(Fl_Menu_Item *);
 
 #ifdef __cplusplus
 }

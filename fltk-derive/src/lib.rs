@@ -59,6 +59,12 @@ pub fn input_trait_macro(input: TokenStream) -> TokenStream {
     impl_input_trait(&ast)
 }
 
+#[proc_macro_derive(MenuTrait)]
+pub fn menu_trait_macro(input: TokenStream) -> TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_menu_trait(&ast)
+}
+
 fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
@@ -528,6 +534,111 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_wrap(&mut self, val: bool) {
                 unsafe {
                     #set_wrap(self._inner, val as i32)
+                }
+            }
+        }
+    };
+    gen.into()
+}
+
+fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let name_str = get_fl_name(name.to_string());
+    
+    let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
+    let get_item = Ident::new(format!("{}_{}", name_str, "get_item").as_str(), name.span());
+    let text_font = Ident::new(format!("{}_{}", name_str, "text_font").as_str(), name.span());
+    let set_text_font = Ident::new(format!("{}_{}", name_str, "set_text_font").as_str(), name.span());
+    let text_color = Ident::new(format!("{}_{}", name_str, "text_color").as_str(), name.span());
+    let set_text_color = Ident::new(format!("{}_{}", name_str, "set_text_color").as_str(), name.span());
+    let text_size = Ident::new(format!("{}_{}", name_str, "text_size").as_str(), name.span());
+    let set_text_size = Ident::new(format!("{}_{}", name_str, "set_text_size").as_str(), name.span());
+
+
+    let gen = quote! {
+        impl MenuTrait for #name {
+            fn add<F>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F)
+            where
+                F: FnMut(),
+            {
+                let temp = ffi::CString::new(name).unwrap();
+                unsafe {
+                    unsafe extern "C" fn shim<F>(
+                        _wid: *mut fltk_sys::menu::Fl_Widget,
+                        data: *mut raw::c_void,
+                    ) where
+                        F: FnMut(),
+                    {
+                        // use std::panic::{catch_unwind, AssertUnwindSafe};
+                        // use std::process::abort;
+                        let a: *mut F = mem::transmute(data);
+                        let f = &mut *a;
+                        // catch_unwind(AssertUnwindSafe(|| {
+                        //     f();
+                        // }))
+                        // .unwrap_or_else(|_| abort())
+                        f();
+                    }
+                    let a: *mut F = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = mem::transmute(a);
+                    let callback: fltk_sys::menu::Fl_Callback = Some(shim::<F>);
+                    #add(
+                        self._inner,
+                        temp.as_ptr() as *const raw::c_char,
+                        shortcut,
+                        callback,
+                        data,
+                        flag as i32,
+                    )
+                }
+            }
+
+            fn get_item(&self, name: &str) -> MenuItem {
+                let name = ffi::CString::new(name).unwrap().clone();
+                MenuItem {
+                    _title: name.clone(),
+                    _inner: unsafe {
+                        #get_item(
+                            self._inner,
+                            name.as_ptr() as *const raw::c_char,
+                        )
+                    },
+                }
+            }
+
+            fn text_font(&self) -> Font {
+                unsafe {
+                    mem::transmute(#text_font(self._inner))
+                }
+            }
+
+            fn set_text_font(&mut self, c: Font) {
+                unsafe {
+                    #set_text_font(self._inner, c as i32)
+                }
+            }
+
+            fn text_size(&self) -> usize {
+                unsafe {
+                    #text_size(self._inner) as usize
+                }
+            }
+
+            fn set_text_size(&mut self, c: usize) {
+                unsafe {
+                    #set_text_size(self._inner, c as i32)
+                }
+            }
+
+            fn text_color(&self) -> Color {
+                unsafe {
+                    mem::transmute(#text_color(self._inner))
+                }
+            }
+
+            fn set_text_color(&mut self, c: Color) {
+                unsafe {
+                    #set_text_color(self._inner, c as i32)
                 }
             }
         }

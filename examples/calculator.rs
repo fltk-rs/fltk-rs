@@ -64,17 +64,23 @@ fn main() {
     let mut but_dot = Button::new().set(column1, row5, but_width, but_height, ".");
     let mut but0 = Button::new().set(column2, row5, but_width * 2, but_height, "0");
 
-    but7.set_color(Color::Light2);
-    but8.set_color(Color::Light2);
-    but9.set_color(Color::Light2);
-    but4.set_color(Color::Light2);
-    but5.set_color(Color::Light2);
-    but6.set_color(Color::Light2);
-    but1.set_color(Color::Light2);
-    but2.set_color(Color::Light2);
-    but3.set_color(Color::Light2);
-    but_dot.set_color(Color::Light2);
-    but0.set_color(Color::Light2);
+    let but_vec = vec![
+        &mut but1,
+        &mut but2,
+        &mut but3,
+        &mut but4,
+        &mut but5,
+        &mut but6,
+        &mut but7,
+        &mut but8,
+        &mut but9,
+        &mut but0,
+        &mut but_dot,
+    ];
+
+    for but in but_vec.into_iter() {
+        but.set_color(Color::Light2);
+    }
 
     fl::register_callback(&but_ce, &mut || {
         txt.clear();

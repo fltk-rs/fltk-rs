@@ -90,4 +90,10 @@ pub trait MenuTrait {
     where
         F: FnMut();
     fn get_item(&self, name: &str) -> crate::menu::MenuItem;
+    fn text_font(&self) -> Font;
+    fn set_text_font(&mut self, c: Font);
+    fn text_size(&self) -> usize;
+    fn set_text_size(&mut self, c: usize);
+    fn text_color(&self) -> Color;
+    fn set_text_color(&mut self, c: Color);
 }

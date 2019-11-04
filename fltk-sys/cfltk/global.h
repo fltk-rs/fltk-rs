@@ -73,6 +73,17 @@ extern "C" {
   int widget##_wrap(widget *);                                                 \
   void widget##_set_wrap(widget *, int boolean);
 
+#define MENU_DECLARE(widget)                                                   \
+  void widget##_add(widget *, const char *name, int shortcut, Fl_Callback *,   \
+                    void *, int);                                              \
+  Fl_Menu_Item *widget##_get_item(widget *, const char *name);                 \
+  int widget##_text_font(widget *);                                            \
+  void widget##_set_text_font(widget *, int c);                                \
+  int widget##_text_size(widget *);                                            \
+  void widget##_set_text_size(widget *, int c);                                \
+  int widget##_text_color(widget *);                                           \
+  void widget##_set_text_color(widget *, int c);
+
 #define WIDGET_DEFINE(widget)                                                  \
   widget *widget##_new(int x, int y, int width, int height,                    \
                        const char *title) {                                    \
@@ -182,6 +193,21 @@ extern "C" {
   }                                                                            \
   int widget##_wrap(widget *self) { return self->wrap(); }                     \
   void widget##_set_wrap(widget *self, int boolean) { self->wrap(boolean); }
+
+#define MENU_DEFINE(widget)                                                    \
+  void widget##_add(widget *self, const char *name, int shortcut,              \
+                    Fl_Callback *cb, void *data, int flag) {                   \
+    self->add(name, shortcut, cb, data, flag);                                 \
+  }                                                                            \
+  Fl_Menu_Item *widget##_get_item(widget *self, const char *name) {            \
+    return (Fl_Menu_Item *)self->find_item(name);                              \
+  }                                                                            \
+  int widget##_text_font(widget *self) { return self->textfont(); }            \
+  void widget##_set_text_font(widget *self, int c) { self->textfont(c); }      \
+  int widget##_text_size(widget *self) { return self->textsize(); }            \
+  void widget##_set_text_size(widget *self, int c) { self->textsize(c); }      \
+  int widget##_text_color(widget *self) { return self->textcolor(); }          \
+  void widget##_set_text_color(widget *self, int c) { self->textcolor(c); }
 
 #ifdef __cplusplus
 }

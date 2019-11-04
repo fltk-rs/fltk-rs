@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 use fltk_sys::menu::*;
 use std::{ffi, mem, os::raw, ptr};
 
-#[derive(WidgetTrait, Debug, Clone)]
+#[derive(WidgetTrait, MenuTrait, Debug, Clone)]
 pub struct MenuBar {
     _inner: *mut Fl_Menu_Bar,
     _x: i32,
@@ -12,7 +12,7 @@ pub struct MenuBar {
     _title: ffi::CString,
 }
 
-#[derive(WidgetTrait, Debug, Clone)]
+#[derive(WidgetTrait, MenuTrait, Debug, Clone)]
 pub struct MenuButton {
     _inner: *mut Fl_Menu_Button,
     _x: i32,
@@ -22,7 +22,7 @@ pub struct MenuButton {
     _title: ffi::CString,
 }
 
-#[derive(WidgetTrait, Debug, Clone)]
+#[derive(WidgetTrait, MenuTrait, Debug, Clone)]
 pub struct Choice {
     _inner: *mut Fl_Choice,
     _x: i32,
@@ -53,55 +53,92 @@ pub enum MenuFlag {
     MenuHorizontal = 0x100,
 }
 
-impl MenuTrait for MenuBar {
-    fn add<F>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F)
-    where
-        F: FnMut(),
-    {
-        let temp = ffi::CString::new(name).unwrap();
+impl MenuItem {
+    pub fn label(&self) -> String {
         unsafe {
-            unsafe extern "C" fn shim<F>(
-                _wid: *mut fltk_sys::menu::Fl_Widget,
-                data: *mut raw::c_void,
-            ) where
-                F: FnMut(),
-            {
-                // use std::panic::{catch_unwind, AssertUnwindSafe};
-                // use std::process::abort;
-                let a: *mut F = mem::transmute(data);
-                let f = &mut *a;
-                // catch_unwind(AssertUnwindSafe(|| {
-                //     f();
-                // }))
-                // .unwrap_or_else(|_| abort())
-                f();
+            String::from(ffi::CStr::from_ptr(Fl_Menu_Item_label(self._inner)).to_string_lossy())
+        }
+    }
+    pub fn set_label(&mut self, txt: &str) {
+        unsafe {
+            let txt = ffi::CString::new(txt).unwrap();
+            Fl_Menu_Item_set_label(self._inner, txt.as_ptr() as *const raw::c_char);
+        }
+    }
+    pub fn label_type<T: WidgetType>(&self) -> T {
+        unsafe { T::from_i32(Fl_Menu_Item_label_type(self._inner)) }
+    }
+    pub fn set_label_type<T: WidgetType>(&mut self, typ: T) {
+        unsafe {
+            Fl_Menu_Item_set_label_type(self._inner, typ.to_int());
+        }
+    }
+    pub fn label_color(&self) -> Color {
+        unsafe { mem::transmute(Fl_Menu_Item_label_color(self._inner)) }
+    }
+
+    pub fn set_label_color(&mut self, color: Color) {
+        unsafe { Fl_Menu_Item_set_label_color(self._inner, color as i32) }
+    }
+
+    pub fn label_font(&self) -> Font {
+        unsafe { mem::transmute(Fl_Menu_Item_label_font(self._inner)) }
+    }
+
+    pub fn set_label_font(&mut self, font: Font) {
+        unsafe { Fl_Menu_Item_set_label_color(self._inner, font as i32) }
+    }
+
+    pub fn label_size(&self) -> usize {
+        unsafe { Fl_Menu_Item_label_size(self._inner) as usize }
+    }
+
+    pub fn set_label_size(&mut self, sz: usize) {
+        unsafe { Fl_Menu_Item_set_label_size(self._inner, sz as i32) }
+    }
+
+    pub fn value(&self) -> bool {
+        unsafe {
+            match Fl_Menu_Item_value(self._inner) {
+                0 => false,
+                _ => true,
             }
-            let a: *mut F = Box::into_raw(Box::new(cb));
-            let data: *mut raw::c_void = mem::transmute(a);
-            let callback: fltk_sys::menu::Fl_Callback = Some(shim::<F>);
-            fltk_sys::menu::Fl_Menu_Bar_add(
-                self._inner,
-                temp.as_ptr() as *const raw::c_char,
-                shortcut,
-                callback,
-                data,
-                flag as i32,
-            )
         }
     }
 
-    fn get_item(&self, name: &str) -> MenuItem {
-        let name = ffi::CString::new(name).unwrap().clone();
-        MenuItem {
-            _title: name.clone(),
-            _inner: unsafe {
-                fltk_sys::menu::Fl_Menu_Bar_get_item(
-                    self._inner,
-                    name.as_ptr() as *const raw::c_char,
-                )
-            },
+    pub fn set(&mut self) {
+        unsafe { Fl_Menu_Item_set(self._inner) }
+    }
+
+    pub fn clear(&mut self) {
+        unsafe { Fl_Menu_Item_clear(self._inner) }
+    }
+
+    pub fn visible(&self) -> bool {
+        unsafe {
+            match Fl_Menu_Item_visible(self._inner) {
+                0 => false,
+                _ => true,
+            }
         }
+    }
+
+    pub fn active(&mut self) {
+        unsafe { Fl_Menu_Item_activate(self._inner) }
+    }
+
+    pub fn activate(&mut self) {
+        unsafe { Fl_Menu_Item_activate(self._inner) }
+    }
+
+    pub fn deactivate(&mut self) {
+        unsafe { Fl_Menu_Item_deactivate(self._inner) }
+    }
+    pub fn show(&mut self) {
+        unsafe { Fl_Menu_Item_show(self._inner) }
+    }
+
+    pub fn hide(&mut self) {
+        unsafe { Fl_Menu_Item_hide(self._inner) }
     }
 }
-
-impl MenuItem {}
