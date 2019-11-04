@@ -97,36 +97,36 @@ where
 {
     unsafe {
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
-                use std::panic::{catch_unwind, AssertUnwindSafe};
-                use std::process::abort;
-                let a: *mut &mut dyn FnMut() = mem::transmute(data);
-                let f = AssertUnwindSafe(a.read());
-                catch_unwind(f).unwrap_or_else(|_| abort());
-            }
-            let a: *mut &mut dyn FnMut() = Box::into_raw(Box::new(cb));
-            let data: *mut raw::c_void = mem::transmute(a);
-            let callback: fltk_sys::widget::Fl_Callback = Some(shim);
-            fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
+            use std::panic::{catch_unwind, AssertUnwindSafe};
+            use std::process::abort;
+            let a: *mut &mut dyn FnMut() = mem::transmute(data);
+            let f = AssertUnwindSafe(a.read());
+            catch_unwind(f).unwrap_or_else(|_| abort());
+        }
+        let a: *mut &mut dyn FnMut() = Box::into_raw(Box::new(cb));
+        let data: *mut raw::c_void = mem::transmute(a);
+        let callback: fltk_sys::widget::Fl_Callback = Some(shim);
+        fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
     }
 }
 
 // unsafe {
-    //     unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)
-    //     where
-    //         F: FnMut(),
-    //     {
-    //         // use std::panic::{catch_unwind, AssertUnwindSafe};
-    //         // use std::process::abort;
-    //         let a: *mut F = mem::transmute(data);
-    //         let f = &mut *a;
-    //         // catch_unwind(AssertUnwindSafe(|| {
-    //         //     f();
-    //         // }))
-    //         // .unwrap_or_else(|_| abort())
-    //         f();
-    //     }
-    //     let a: *mut F = Box::into_raw(Box::new(cb));
-    //     let data: *mut raw::c_void = mem::transmute(a);
-    //     let callback: fltk_sys::widget::Fl_Callback = Some(shim::<F>);
-    //     fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
-    // }
+//     unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)
+//     where
+//         F: FnMut(),
+//     {
+//         // use std::panic::{catch_unwind, AssertUnwindSafe};
+//         // use std::process::abort;
+//         let a: *mut F = mem::transmute(data);
+//         let f = &mut *a;
+//         // catch_unwind(AssertUnwindSafe(|| {
+//         //     f();
+//         // }))
+//         // .unwrap_or_else(|_| abort())
+//         f();
+//     }
+//     let a: *mut F = Box::into_raw(Box::new(cb));
+//     let data: *mut raw::c_void = mem::transmute(a);
+//     let callback: fltk_sys::widget::Fl_Callback = Some(shim::<F>);
+//     fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
+// }

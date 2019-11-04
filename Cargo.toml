@@ -25,3 +25,6 @@ name = "calculator"
 
 [[example]]
 name = "editor"
+
+[[example]]
+name = "gallery"

@@ -74,9 +74,7 @@ pub struct TextEditor {
 
 impl TextEditor {
     pub fn init(&mut self) {
-        unsafe {
-            Fl_Text_Editor_init(self._inner)
-        }
+        unsafe { Fl_Text_Editor_init(self._inner) }
     }
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
@@ -105,7 +103,7 @@ impl TextDisplay {
     }
     pub fn init(&mut self) {
         unsafe {
-            Fl_Text_Display_init(self._inner) 
+            Fl_Text_Display_init(self._inner)
             // Fl_Text_Display_init(self._inner)
         }
     }

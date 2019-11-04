@@ -97,3 +97,21 @@ pub trait MenuTrait {
     fn text_color(&self) -> Color;
     fn set_text_color(&mut self, c: Color);
 }
+
+pub trait ValuatorTrait {
+    fn set_bounds(&mut self, a: f64, b: f64);
+    fn minimum(&self) -> f64;
+    fn set_minimum(&mut self, a: f64);
+    fn maximum(&self) -> f64;
+    fn set_maximum(&mut self, a: f64);
+    fn set_range(&mut self, a: f64, b: f64);
+    fn set_step(&mut self, a: f64, b: i32);
+    fn step(&self) -> f64;
+    fn set_precision(&mut self, digits: i32);
+    fn value(&self) -> f64;
+    fn set_value(&mut self, arg2: f64);
+    fn format(&mut self, arg2: &str);
+    fn round(&self, arg2: f64) -> f64;
+    fn clamp(&self, arg2: f64) -> f64;
+    fn increment(&mut self, arg2: f64, arg3: i32) -> f64;
+}

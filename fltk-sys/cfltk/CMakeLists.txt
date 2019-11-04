@@ -14,6 +14,7 @@ add_library(cfltk STATIC
     cfl_output.cpp
     cfl_menu.cpp
     cfl_dialog.cpp
+    cfl_valuator.cpp
     )
 
 target_include_directories(cfltk PUBLIC fltk)

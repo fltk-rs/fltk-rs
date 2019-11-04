@@ -8,6 +8,7 @@ pub mod input;
 pub mod menu;
 pub mod output;
 pub mod prelude;
+pub mod valuator;
 pub mod widget;
 pub mod window;
 

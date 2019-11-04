@@ -84,6 +84,23 @@ extern "C" {
   int widget##_text_color(widget *);                                           \
   void widget##_set_text_color(widget *, int c);
 
+#define VALUATOR_DECLARE(widget)                                               \
+  void widget##_set_bounds(widget *, double a, double b);                      \
+  double widget##_minimum(widget *);                                           \
+  void widget##_set_minimum(widget *, double a);                               \
+  double widget##_maximum(widget *);                                           \
+  void widget##_set_maximum(widget *, double a);                               \
+  void widget##_set_range(widget *, double a, double b);                       \
+  void widget##_set_step(widget *, double a, int b);                           \
+  double widget##_step(widget *);                                              \
+  void widget##_set_precision(widget *, int digits);                           \
+  double widget##_value(widget *);                                             \
+  int widget##_set_value(widget *, double);                                    \
+  int widget##_format(widget *, char *);                                       \
+  double widget##_round(widget *, double);                                     \
+  double widget##_clamp(widget *, double);                                     \
+  double widget##_increment(widget *, double, int);
+
 #define WIDGET_DEFINE(widget)                                                  \
   widget *widget##_new(int x, int y, int width, int height,                    \
                        const char *title) {                                    \
@@ -208,6 +225,33 @@ extern "C" {
   void widget##_set_text_size(widget *self, int c) { self->textsize(c); }      \
   int widget##_text_color(widget *self) { return self->textcolor(); }          \
   void widget##_set_text_color(widget *self, int c) { self->textcolor(c); }
+
+#define VALUATOR_DEFINE(widget)                                                \
+  void widget##_set_bounds(widget *self, double a, double b) {                 \
+    self->bounds(a, b);                                                        \
+  }                                                                            \
+  double widget##_minimum(widget *self) { return self->minimum(); }            \
+  void widget##_set_minimum(widget *self, double a) { self->minimum(a); }      \
+  double widget##_maximum(widget *self) { return self->maximum(); }            \
+  void widget##_set_maximum(widget *self, double a) { self->maximum(a); }      \
+  void widget##_set_range(widget *self, double a, double b) {                  \
+    self->range(a, b);                                                         \
+  }                                                                            \
+  void widget##_set_step(widget *self, double a, int b) { self->step(a, b); }  \
+  double widget##_step(widget *self) { return self->step(); }                  \
+  void widget##_set_precision(widget *self, int digits) {                      \
+    self->precision(digits);                                                   \
+  }                                                                            \
+  double widget##_value(widget *self) { return self->value(); }                \
+  int widget##_set_value(widget *self, double val) {                           \
+    return self->value(val);                                                   \
+  }                                                                            \
+  int widget##_format(widget *self, char *chr) { return self->format(chr); }   \
+  double widget##_round(widget *self, double val) { return self->round(val); } \
+  double widget##_clamp(widget *self, double val) { return self->clamp(val); } \
+  double widget##_increment(widget *self, double a, int b) {                   \
+    return self->increment(a, b);                                              \
+  }
 
 #ifdef __cplusplus
 }

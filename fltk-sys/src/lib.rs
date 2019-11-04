@@ -11,6 +11,7 @@ pub mod input;
 pub mod output;
 pub mod menu;
 pub mod dialog;
+pub mod valuator;
 
 
 #[cfg(test)]

@@ -19,6 +19,7 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_box.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_menu.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_dialog.h");
+    println!("cargo:rerun-if-changed=cfltk/cfl_valuator.h");
     println!("cargo:rerun-if-changed=cfltk/global.h");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
     
