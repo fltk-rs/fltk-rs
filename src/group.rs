@@ -71,3 +71,42 @@ pub struct TextEditor {
     _height: i32,
     _title: ffi::CString,
 }
+
+impl TextEditor {
+    pub fn init(&mut self) {
+        unsafe {
+            Fl_Text_Editor_init(self._inner)
+        }
+    }
+    pub fn set_text(&mut self, txt: &str) {
+        unsafe {
+            let txt = ffi::CString::new(txt).unwrap();
+            Fl_Text_Editor_set_text(self._inner, txt.as_ptr() as *const raw::c_char)
+        }
+    }
+    pub fn text(&self) -> String {
+        unsafe {
+            String::from(ffi::CStr::from_ptr(Fl_Text_Editor_text(self._inner)).to_string_lossy())
+        }
+    }
+}
+
+impl TextDisplay {
+    pub fn set_text(&mut self, txt: &str) {
+        unsafe {
+            let txt = ffi::CString::new(txt).unwrap();
+            Fl_Text_Display_set_text(self._inner, txt.as_ptr() as *const raw::c_char)
+        }
+    }
+    pub fn text(&self) -> String {
+        unsafe {
+            String::from(ffi::CStr::from_ptr(Fl_Text_Display_text(self._inner)).to_string_lossy())
+        }
+    }
+    pub fn init(&mut self) {
+        unsafe {
+            Fl_Text_Display_init(self._inner) 
+            // Fl_Text_Display_init(self._inner)
+        }
+    }
+}

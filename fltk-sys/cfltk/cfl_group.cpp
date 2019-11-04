@@ -31,6 +31,34 @@ WIDGET_DEFINE(Fl_Text_Display)
 
 GROUP_DEFINE(Fl_Text_Display)
 
+
+const char *Fl_Text_Display_text(Fl_Text_Editor *self) {
+  return self->buffer()->text();
+}
+
+void Fl_Text_Display_set_text(Fl_Text_Editor *self, const char *txt) {
+  self->buffer()->text(txt);
+}
+
+void Fl_Text_Display_init(Fl_Text_Editor *self) {
+  Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+  self->buffer(buff);
+}
+
 WIDGET_DEFINE(Fl_Text_Editor)
 
 GROUP_DEFINE(Fl_Text_Editor)
+
+
+void Fl_Text_Editor_init(Fl_Text_Editor *self) {
+  Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+  self->buffer(buff);
+}
+
+const char *Fl_Text_Editor_text(Fl_Text_Editor *self) {
+  return self->buffer()->text();
+}
+
+void Fl_Text_Editor_set_text(Fl_Text_Editor *self, const char *txt) {
+  self->buffer()->text(txt);
+}

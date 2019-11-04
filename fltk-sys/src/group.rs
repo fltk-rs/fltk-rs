@@ -806,3 +806,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_end(self_: *mut Fl_Text_Editor);
 }
+extern "C" {
+    pub fn Fl_Text_Display_text(arg1: *mut Fl_Text_Display) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_text(
+        arg1: *mut Fl_Text_Display,
+        arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_text(arg1: *mut Fl_Text_Editor) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_text(arg1: *mut Fl_Text_Editor, arg2: *const ::std::os::raw::c_char);
+}
