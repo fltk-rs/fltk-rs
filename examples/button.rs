@@ -11,20 +11,18 @@ fn draw_elements() {
     let mut but2 = Button::new().set(240, 80, 80, 60, "Click me!");
     let mut but3 = Button::new().set(160, 160, 80, 60, "Click me!");
 
-    fl::register_callback(&but1.clone(), &mut || match fl::event() {
+    fl::set_callback(&but1.clone(), &mut || match fl::event() {
         fl::Event::Released => {
             println!("{:?}", fl::event());
-            // wind.set_label("Clicked button 1!");
             but1.set_label("Works");
             but2.set_label("No!");
         }
         _ => println!("{:?}", fl::event()),
     });
 
-    fl::register_callback(&but2.clone(), &mut || match fl::event() {
+    fl::set_callback(&but2.clone(), &mut || match fl::event() {
         fl::Event::Released => {
             println!("{:?}", fl::event());
-            // wind.set_label("Clicked button 2!");
             but1.set_label("No!");
             but2.set_label("Works");
         }

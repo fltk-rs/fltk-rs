@@ -78,29 +78,29 @@ fn main() {
         &mut but_dot,
     ];
 
-    for but in but_vec.into_iter() {
+    for but in but_vec {
         but.set_color(Color::Light2);
     }
 
-    fl::register_callback(&but_ce, &mut || {
+    fl::set_callback(&but_ce, &mut || {
         txt.clear();
         old_val.clear();
         txt.push('0');
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but_c, &mut || {
+    fl::set_callback(&but_c, &mut || {
         txt.clear();
         txt.push('0');
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but_back, &mut || {
+    fl::set_callback(&but_back, &mut || {
         txt.pop();
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but_div, &mut || {
+    fl::set_callback(&but_div, &mut || {
         old_val = out.value();
         op = '/';
         txt.clear();
@@ -108,7 +108,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but_mul, &mut || {
+    fl::set_callback(&but_mul, &mut || {
         old_val = out.value();
         op = 'x';
         txt.clear();
@@ -116,7 +116,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but_sub, &mut || {
+    fl::set_callback(&but_sub, &mut || {
         old_val = out.value();
         op = '-';
         txt.clear();
@@ -124,7 +124,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but_add, &mut || {
+    fl::set_callback(&but_add, &mut || {
         old_val = out.value();
         op = '+';
         txt.clear();
@@ -132,7 +132,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but_eq, &mut || {
+    fl::set_callback(&but_eq, &mut || {
         new_val = out.value();
         let old: f64 = old_val.parse().unwrap();
         let new: f64 = new_val.parse().unwrap();
@@ -149,7 +149,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but0, &mut || {
+    fl::set_callback(&but0, &mut || {
         if out.value() == "0" {
             //
         } else {
@@ -163,7 +163,7 @@ fn main() {
         }
     });
 
-    fl::register_callback(&but1, &mut || {
+    fl::set_callback(&but1, &mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -175,7 +175,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but2, &mut || {
+    fl::set_callback(&but2, &mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -187,7 +187,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but3, &mut || {
+    fl::set_callback(&but3, &mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -199,7 +199,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but4, &mut || {
+    fl::set_callback(&but4, &mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -211,7 +211,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but5, &mut || {
+    fl::set_callback(&but5, &mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -223,7 +223,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but6, &mut || {
+    fl::set_callback(&but6, &mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -235,7 +235,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but7, &mut || {
+    fl::set_callback(&but7, &mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -247,7 +247,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but8, &mut || {
+    fl::set_callback(&but8, &mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -259,7 +259,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but9, &mut || {
+    fl::set_callback(&but9, &mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -271,7 +271,7 @@ fn main() {
         out.set_value(txt.as_str());
     });
 
-    fl::register_callback(&but_dot, &mut || {
+    fl::set_callback(&but_dot, &mut || {
         if op == '=' {
             txt.clear();
             op = '_';

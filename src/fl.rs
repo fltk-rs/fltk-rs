@@ -91,7 +91,7 @@ where
     }
 }
 
-pub fn register_callback<W>(widget: &W, cb: &mut dyn FnMut())
+pub fn set_callback<W>(widget: &W, cb: &mut dyn FnMut())
 where
     W: WidgetTrait,
 {
