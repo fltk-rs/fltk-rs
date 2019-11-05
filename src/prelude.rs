@@ -1,6 +1,7 @@
 pub use crate::enums::*;
 pub use crate::fl;
 use fltk_sys::widget::*;
+pub use crate::menu::*;
 
 pub trait WidgetTrait {
     fn new() -> Self;
@@ -88,6 +89,7 @@ pub trait InputTrait {
 
 pub trait MenuTrait {
     fn add(&mut self, name: &str, shortcut: i32, flag: crate::menu::MenuFlag, cb: &mut dyn FnMut());
+    // fn add<F>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F) where F: FnMut();
     fn get_item(&self, name: &str) -> crate::menu::MenuItem;
     fn text_font(&self) -> Font;
     fn set_text_font(&mut self, c: Font);

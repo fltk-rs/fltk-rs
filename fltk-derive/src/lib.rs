@@ -580,6 +580,29 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl MenuTrait for #name {
+            // fn add<F>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F) where F: FnMut() {
+            //     let temp = ffi::CString::new(name).unwrap();
+            //     unsafe {
+            //         unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void)
+            //         where
+            //             F: FnMut(),
+            //         {
+            //             // use std::panic::{catch_unwind, AssertUnwindSafe};
+            //             // use std::process::abort;
+            //             let a: *mut F = mem::transmute(data);
+            //             let f = &mut *a;
+            //             // catch_unwind(AssertUnwindSafe(|| {
+            //             //     f();
+            //             // }))
+            //             // .unwrap_or_else(|_| abort())
+            //             f();
+            //         }
+            //         let a: *mut F = Box::into_raw(Box::new(cb));
+            //         let data: *mut raw::c_void = mem::transmute(a);
+            //         let callback: fltk_sys::menu::Fl_Callback = Some(shim::<F>);
+            //         #add(self._inner, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
+            //     }
+            // }
             fn add(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: &mut dyn FnMut()) {
                 let temp = ffi::CString::new(name).unwrap();
                 unsafe {

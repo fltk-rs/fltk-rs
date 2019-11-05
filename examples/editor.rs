@@ -1,4 +1,4 @@
-use fltk::{dialog::*, input::MultilineInput, menu::*, window::Window};
+use fltk::{dialog::*, input::MultilineInput, window::Window};
 use std::{fs, path};
 
 fn main() {
