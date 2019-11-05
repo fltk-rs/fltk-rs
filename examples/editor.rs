@@ -15,6 +15,7 @@ fn main() {
     let mut editor = MultilineInput::new().set(5, 40, 790, 555, "");
     let mut menu = MenuBar::new().set(0, 0, 800, 40, "");
     menu.set_color(Color::Light2);
+    
     menu.add(
         "File/New...",
         Shortcut::Ctrl + 'n',
@@ -28,6 +29,7 @@ fn main() {
             }
         },
     );
+
     menu.add(
         "File/Open...",
         Shortcut::Ctrl + 'o',
@@ -43,6 +45,7 @@ fn main() {
             }
         },
     );
+
     menu.add(
         "File/Save",
         Shortcut::Ctrl + 's',
@@ -52,6 +55,7 @@ fn main() {
             false => alert("Please specify a file!"),
         },
     );
+
     menu.add("File/Save as...", 0, MenuFlag::MenuDivider, &mut || {
         let mut dlg = FileDialog::new(FileDialogType::BrowseSaveFile);
         dlg.set_option(FileDialogOptions::SaveAsConfirm);
@@ -62,15 +66,18 @@ fn main() {
             false => alert("Please specify a file!"),
         }
     });
+
     menu.add("File/Quit", 0, MenuFlag::Normal, &mut || {
         std::process::exit(0);
     });
+
     menu.add(
         "Edit/Cut",
         Shortcut::Ctrl + 'x',
         MenuFlag::Normal,
         &mut || editor.cut(),
     );
+
     menu.add(
         "Edit/Copy",
         Shortcut::Ctrl + 'c',
@@ -79,17 +86,20 @@ fn main() {
             editor.copy();
         },
     );
+
     menu.add(
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
         &mut || fl::paste(editor.clone()),
     );
+
     menu.add("Help/About", 0, MenuFlag::Normal, &mut || {
         message("This is an example application written in Rust and using the FLTK Gui library.")
     });
-    let mut x = menu.get_item("Help/About");
-    x.set_label_color(Color::Red);
+
+    // let mut x = menu.get_item("Help/About");
+    // x.set_label_color(Color::Red);
 
     wind.end();
     wind.show();
