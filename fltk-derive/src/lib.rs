@@ -590,7 +590,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn add<F>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F) where F: FnMut() {
                 let temp = ffi::CString::new(name).unwrap();
                 unsafe {
-                    unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)
+                    unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void)
                     where
                         F: FnMut(),
                     {
@@ -606,8 +606,8 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                     let a: *mut F = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
-                    let callback: fltk_sys::widget::Fl_Callback = Some(shim::<F>);
-                    fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+                    let callback: fltk_sys::menu::Fl_Callback = Some(shim::<F>);
+                    #add(self._inner, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }
 

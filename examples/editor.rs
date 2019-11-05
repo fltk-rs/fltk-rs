@@ -15,7 +15,7 @@ fn main() {
     let mut editor = MultilineInput::new().set(5, 40, 790, 555, "");
     let mut menu = MenuBar::new().set(0, 0, 800, 40, "");
     menu.set_color(Color::Light2);
-    
+
     menu.add(
         "File/New...",
         Shortcut::Ctrl + 'n',
@@ -98,8 +98,8 @@ fn main() {
         message("This is an example application written in Rust and using the FLTK Gui library.")
     });
 
-    // let mut x = menu.get_item("Help/About");
-    // x.set_label_color(Color::Red);
+    let mut x = menu.get_item("Help/About");
+    x.set_label_color(Color::Red);
 
     wind.end();
     wind.show();
