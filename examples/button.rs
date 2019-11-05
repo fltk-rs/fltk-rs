@@ -29,7 +29,12 @@ fn draw_elements() {
         _ => println!("{:?}", fl::event()),
     });
 
-    but3.set_callback(&mut || println!("{:?}", fl::event()));
+    but3.set_callback(&mut || {
+        println!("event: {:?}", fl::event());
+        println!("event_button: {:?}", fl::event_button());
+        println!("event_clicks: {:?}", fl::event_clicks());
+        println!("event_is_click: {:?}", fl::event_is_click());
+    });
 
     wind.end();
     wind.show();
