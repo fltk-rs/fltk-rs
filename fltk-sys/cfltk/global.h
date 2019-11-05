@@ -4,6 +4,11 @@
 extern "C" {
 #endif
 
+typedef struct Fl_Widget Fl_Widget;
+typedef void(Fl_Callback)(Fl_Widget *, void *);
+
+void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
+
 #define WIDGET_DECLARE(widget)                                                 \
   typedef struct widget widget;                                                \
   widget *widget##_new(int x, int y, int width, int height,                    \

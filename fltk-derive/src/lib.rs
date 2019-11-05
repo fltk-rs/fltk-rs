@@ -308,27 +308,20 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { #set_align(self._inner, align as i32) }
             }
 
-            fn set_callback<F>(&mut self, cb: F) where F: FnMut() {
-            unsafe {
-                unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)
-                where
-                    F: FnMut(),
-                {
-                    // use std::panic::{catch_unwind, AssertUnwindSafe};
-                    // use std::process::abort;
-                    let a: *mut F = mem::transmute(data);
-                    let f = &mut *a;
-                    // catch_unwind(AssertUnwindSafe(|| {
-                    //     f();
-                    // }))
-                    // .unwrap_or_else(|_| abort())
-                    f();
+            fn set_callback(&mut self, cb: &mut dyn FnMut()) {
+                unsafe {
+                    unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+                        use std::panic::{catch_unwind, AssertUnwindSafe};
+                        use std::process::abort;
+                        let a: *mut &mut dyn FnMut() = mem::transmute(data);
+                        let f = AssertUnwindSafe(a.read());
+                        catch_unwind(f).unwrap_or_else(|_| abort());
+                    }
+                    let a: *mut &mut dyn FnMut() = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = mem::transmute(a);
+                    let callback: fltk_sys::widget::Fl_Callback = Some(shim);
+                    fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
                 }
-                let a: *mut F = Box::into_raw(Box::new(cb));
-                let data: *mut raw::c_void = mem::transmute(a);
-                let callback: fltk_sys::widget::Fl_Callback = Some(shim::<F>);
-                fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
-            }
             }
         }
     };
@@ -587,26 +580,19 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl MenuTrait for #name {
-            fn add<F>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F) where F: FnMut() {
+            fn add(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: &mut dyn FnMut()) {
                 let temp = ffi::CString::new(name).unwrap();
                 unsafe {
-                    unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void)
-                    where
-                        F: FnMut(),
-                    {
-                        // use std::panic::{catch_unwind, AssertUnwindSafe};
-                        // use std::process::abort;
-                        let a: *mut F = mem::transmute(data);
-                        let f = &mut *a;
-                        // catch_unwind(AssertUnwindSafe(|| {
-                        //     f();
-                        // }))
-                        // .unwrap_or_else(|_| abort())
-                        f();
+                    unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        use std::panic::{catch_unwind, AssertUnwindSafe};
+                        use std::process::abort;
+                        let a: *mut &mut dyn FnMut() = mem::transmute(data);
+                        let f = AssertUnwindSafe(a.read());
+                        catch_unwind(f).unwrap_or_else(|_| abort());
                     }
-                    let a: *mut F = Box::into_raw(Box::new(cb));
+                    let a: *mut &mut dyn FnMut() = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
-                    let callback: fltk_sys::menu::Fl_Callback = Some(shim::<F>);
+                    let callback: Fl_Callback = Some(shim);
                     #add(self._inner, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }

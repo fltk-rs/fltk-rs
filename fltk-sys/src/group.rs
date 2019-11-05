@@ -2,6 +2,21 @@
 
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct Fl_Widget {
+    _unused: [u8; 0],
+}
+pub type Fl_Callback = ::std::option::Option<
+    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+>;
+extern "C" {
+    pub fn Fl_Widget_callback_with_captures(
+        arg1: *mut Fl_Widget,
+        cb: Fl_Callback,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
     _unused: [u8; 0],
 }
@@ -807,6 +822,9 @@ extern "C" {
     pub fn Fl_Text_Editor_end(self_: *mut Fl_Text_Editor);
 }
 extern "C" {
+    pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
+}
+extern "C" {
     pub fn Fl_Text_Display_text(arg1: *mut Fl_Text_Display) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
@@ -814,9 +832,6 @@ extern "C" {
         arg1: *mut Fl_Text_Display,
         arg2: *const ::std::os::raw::c_char,
     );
-}
-extern "C" {
-    pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
