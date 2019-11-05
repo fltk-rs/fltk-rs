@@ -9,6 +9,7 @@ fn draw_elements() {
 
     let mut but1 = Button::new().set(80, 80, 80, 60, "Click me!");
     let mut but2 = Button::new().set(240, 80, 80, 60, "Click me!");
+    let mut but3 = Button::new().set(160, 160, 80, 60, "Click me!");
 
     fl::register_callback(&but1.clone(), &mut || match fl::event() {
         fl::Event::Released => {
@@ -29,6 +30,8 @@ fn draw_elements() {
         }
         _ => println!("{:?}", fl::event()),
     });
+
+    but3.set_callback(&mut || println!("{:?}", fl::event()));
 
     wind.end();
     wind.show();

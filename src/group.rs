@@ -104,7 +104,6 @@ impl TextDisplay {
     pub fn init(&mut self) {
         unsafe {
             Fl_Text_Display_init(self._inner)
-            // Fl_Text_Display_init(self._inner)
         }
     }
 }

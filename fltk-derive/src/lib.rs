@@ -106,6 +106,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let clear_changed = Ident::new(format!("{}_{}", name_str, "clear_changed").as_str(), name.span());
     let align = Ident::new(format!("{}_{}", name_str, "align").as_str(), name.span());
     let set_align = Ident::new(format!("{}_{}", name_str, "set_align").as_str(), name.span());
+    let set_callback = Ident::new(format!("{}_{}", name_str, "set_callback").as_str(), name.span());
 
     let gen = quote! {
         impl WidgetTrait for #name {
@@ -305,6 +306,22 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn set_align(&mut self, align: Align) {
                 unsafe { #set_align(self._inner, align as i32) }
+            }
+
+            fn set_callback(&mut self, cb: &mut dyn FnMut()) {
+                unsafe {
+                    unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+                        use std::panic::{catch_unwind, AssertUnwindSafe};
+                        use std::process::abort;
+                        let a: *mut &mut dyn FnMut() = mem::transmute(data);
+                        let f = AssertUnwindSafe(a.read());
+                        catch_unwind(f).unwrap_or_else(|_| abort());
+                    }
+                    let a: *mut &mut dyn FnMut() = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = mem::transmute(a);
+                    let callback: fltk_sys::widget::Fl_Callback = Some(shim);
+                    fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+                }
             }
         }
     };
@@ -563,34 +580,21 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl MenuTrait for #name {
-            fn add<F>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F)
-            where
-                F: FnMut(),
-            {
+            fn add(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: &mut dyn FnMut()) {
                 let temp = ffi::CString::new(name).unwrap();
-                unsafe {
-                    unsafe extern "C" fn shim<F>(
-                        _wid: *mut fltk_sys::menu::Fl_Widget,
-                        data: *mut raw::c_void,
-                    ) where
-                        F: FnMut(),
-                    {
-                        let a: *mut F = mem::transmute(data);
-                        let f = &mut *a;
-                        f();
-                    }
-                    let a: *mut F = Box::into_raw(Box::new(cb));
-                    let data: *mut raw::c_void = mem::transmute(a);
-                    let callback: fltk_sys::menu::Fl_Callback = Some(shim::<F>);
-                    #add(
-                        self._inner,
-                        temp.as_ptr() as *const raw::c_char,
-                        shortcut,
-                        callback,
-                        data,
-                        flag as i32,
-                    )
-                }
+                    unsafe {
+        unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+            use std::panic::{catch_unwind, AssertUnwindSafe};
+            use std::process::abort;
+            let a: *mut &mut dyn FnMut() = mem::transmute(data);
+            let f = AssertUnwindSafe(a.read());
+            catch_unwind(f).unwrap_or_else(|_| abort());
+        }
+        let a: *mut &mut dyn FnMut() = Box::into_raw(Box::new(cb));
+        let data: *mut raw::c_void = mem::transmute(a);
+        let callback: fltk_sys::widget::Fl_Callback = Some(shim);
+        fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+    }
             }
 
             fn get_item(&self, name: &str) -> MenuItem {
