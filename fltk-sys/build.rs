@@ -23,7 +23,6 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/global.h");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
     
-    
     Command::new("git").args(&["submodule", "update", "--init"])
                       .current_dir(manifest_dir.clone())
                       .status().unwrap();

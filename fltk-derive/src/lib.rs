@@ -427,17 +427,13 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn value(&self) -> String {
                 unsafe {
                     let p = #value(self._inner);
-                    if *p == 0 {
-                        String::from("")
-                    } else {
-                        String::from(ffi::CStr::from_ptr(p).to_string_lossy())
-                    }
+                    String::from(ffi::CStr::from_ptr(p).to_string_lossy())
                 }       
             }          
             fn set_value(&mut self, val: &str) {
-                let x = ffi::CString::new(val).unwrap();
+                let temp = ffi::CString::new(val).unwrap();
                 unsafe {
-                    #set_value(self._inner, x.as_ptr() as *const raw::c_char);
+                    #set_value(self._inner, temp.as_ptr());
                 }
             }
             fn maximum_size(&self) -> usize {
@@ -587,15 +583,14 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             //         where
             //             F: FnMut(),
             //         {
-            //             // use std::panic::{catch_unwind, AssertUnwindSafe};
-            //             // use std::process::abort;
+            //             use std::panic::{catch_unwind, AssertUnwindSafe};
+            //             use std::process::abort;
             //             let a: *mut F = mem::transmute(data);
             //             let f = &mut *a;
-            //             // catch_unwind(AssertUnwindSafe(|| {
-            //             //     f();
-            //             // }))
-            //             // .unwrap_or_else(|_| abort())
-            //             f();
+            //             catch_unwind(AssertUnwindSafe(|| {
+            //                  f();
+            //              }))
+            //              .unwrap_or_else(|_| abort())
             //         }
             //         let a: *mut F = Box::into_raw(Box::new(cb));
             //         let data: *mut raw::c_void = mem::transmute(a);
@@ -603,7 +598,28 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             //         #add(self._inner, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
             //     }
             // }
-            fn add(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: &mut dyn FnMut()) {
+
+            // fn add<F: FnMut() + 'static>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F) {
+            //     let temp = ffi::CString::new(name).unwrap();
+            //     unsafe {
+            //         unsafe extern "C" fn shim<F: FnMut() + 'static>(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
+            //             use std::panic::{catch_unwind, AssertUnwindSafe};
+            //             use std::process::abort;
+            //             let a: *mut F = mem::transmute(data);
+            //             let f = &mut *a;
+            //             catch_unwind(AssertUnwindSafe(|| {
+            //                 f();
+            //             }))
+            //             .unwrap_or_else(|_| abort())
+            //         }
+            //         let a: *mut F = Box::into_raw(Box::new(cb));
+            //         let data: *mut raw::c_void = mem::transmute(a);
+            //         let callback: fltk_sys::menu::Fl_Callback = Some(shim::<F>);
+            //         #add(self._inner, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
+            //     }
+            // }
+
+            fn add(&mut self, name: &str, shortcut: i32, flag: MenuFlag, mut cb: &mut dyn FnMut()) {
                 let temp = ffi::CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -619,6 +635,24 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #add(self._inner, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }
+
+            // fn add(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: Box<dyn FnMut() + 'static>) {
+            //     let temp = ffi::CString::new(name).unwrap();
+            //     unsafe {
+            //         unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
+            //             use std::panic::{catch_unwind, AssertUnwindSafe};
+            //             use std::process::abort;
+            //             let a: *mut Box<dyn FnMut() + 'static> = mem::transmute(data);
+            //             let f: &mut dyn FnMut() = &mut **a;
+            //             let f = AssertUnwindSafe(a.read());
+            //             catch_unwind(f).unwrap_or_else(|_| abort());
+            //         }
+            //         let a: *mut Box<dyn FnMut() + 'static> = Box::into_raw(Box::new(cb));
+            //         let data: *mut raw::c_void = mem::transmute(a);
+            //         let callback: Fl_Callback = Some(shim);
+            //         #add(self._inner, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
+            //     }
+            // }
 
             fn get_item(&self, name: &str) -> MenuItem {
                 let name = ffi::CString::new(name).unwrap().clone();
