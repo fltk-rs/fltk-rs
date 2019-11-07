@@ -128,6 +128,9 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_align(arg1: *mut Fl_Menu_Bar, typ: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_delete(arg1: *mut Fl_Menu_Bar);
+}
+extern "C" {
     pub fn Fl_Menu_Bar_add(
         arg1: *mut Fl_Menu_Bar,
         name: *const ::std::os::raw::c_char,
@@ -275,6 +278,9 @@ extern "C" {
     pub fn Fl_Menu_Button_set_align(arg1: *mut Fl_Menu_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Menu_Button_delete(arg1: *mut Fl_Menu_Button);
+}
+extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
         name: *const ::std::os::raw::c_char,
@@ -414,6 +420,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_set_align(arg1: *mut Fl_Choice, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Choice_delete(arg1: *mut Fl_Choice);
 }
 extern "C" {
     pub fn Fl_Choice_add(

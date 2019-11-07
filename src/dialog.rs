@@ -36,17 +36,18 @@ impl FileDialog {
     }
     pub fn filename(&self) -> String {
         unsafe {
-            String::from(
-                ffi::CStr::from_ptr(Fl_Native_File_Chooser_filename(self._inner)).to_string_lossy(),
-            )
+            ffi::CStr::from_ptr(Fl_Native_File_Chooser_filename(self._inner))
+                .to_str()
+                .unwrap()
+                .to_owned()
         }
     }
     pub fn directory(&self) -> String {
         unsafe {
-            String::from(
-                ffi::CStr::from_ptr(Fl_Native_File_Chooser_directory(self._inner))
-                    .to_string_lossy(),
-            )
+            ffi::CStr::from_ptr(Fl_Native_File_Chooser_directory(self._inner))
+                .to_str()
+                .unwrap()
+                .to_owned()
         }
     }
     pub fn set_directory(&mut self, dir: &str) {
@@ -83,9 +84,10 @@ impl FileDialog {
     }
     pub fn errmsg(&self) -> String {
         unsafe {
-            String::from(
-                ffi::CStr::from_ptr(Fl_Native_File_Chooser_errmsg(self._inner)).to_string_lossy(),
-            )
+            ffi::CStr::from_ptr(Fl_Native_File_Chooser_errmsg(self._inner))
+                .to_str()
+                .unwrap()
+                .to_owned()
         }
     }
 }
@@ -123,13 +125,13 @@ pub fn input(txt: &str, deflt: &str) -> String {
     unsafe {
         let txt = ffi::CString::new(txt).unwrap();
         let deflt = ffi::CString::new(deflt).unwrap();
-        String::from(
-            ffi::CStr::from_ptr(cfl_input(
-                txt.as_ptr() as *const raw::c_char,
-                deflt.as_ptr() as *const raw::c_char,
-            ))
-            .to_string_lossy(),
-        )
+        ffi::CStr::from_ptr(cfl_input(
+            txt.as_ptr() as *const raw::c_char,
+            deflt.as_ptr() as *const raw::c_char,
+        ))
+        .to_str()
+        .unwrap()
+        .to_owned()
     }
 }
 
@@ -137,12 +139,12 @@ pub fn password(txt: &str, deflt: &str) -> String {
     unsafe {
         let txt = ffi::CString::new(txt).unwrap();
         let deflt = ffi::CString::new(deflt).unwrap();
-        String::from(
-            ffi::CStr::from_ptr(cfl_password(
-                txt.as_ptr() as *const raw::c_char,
-                deflt.as_ptr() as *const raw::c_char,
-            ))
-            .to_string_lossy(),
-        )
+        ffi::CStr::from_ptr(cfl_password(
+            txt.as_ptr() as *const raw::c_char,
+            deflt.as_ptr() as *const raw::c_char,
+        ))
+        .to_str()
+        .unwrap()
+        .to_owned()
     }
 }

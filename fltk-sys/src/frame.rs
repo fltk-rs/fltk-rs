@@ -122,3 +122,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Box_set_align(arg1: *mut Fl_Box, typ: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Box_delete(arg1: *mut Fl_Box);
+}

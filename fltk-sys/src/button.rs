@@ -122,6 +122,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Button_set_align(arg1: *mut Fl_Button, typ: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Button_delete(arg1: *mut Fl_Button);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Check_Button {
@@ -238,6 +241,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_set_align(arg1: *mut Fl_Check_Button, typ: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Check_Button_delete(arg1: *mut Fl_Check_Button);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Radio_Button {
@@ -353,6 +359,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_align(arg1: *mut Fl_Radio_Button, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_delete(arg1: *mut Fl_Radio_Button);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -473,6 +482,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Toggle_Button_set_align(arg1: *mut Fl_Toggle_Button, typ: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Toggle_Button_delete(arg1: *mut Fl_Toggle_Button);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Round_Button {
@@ -589,6 +601,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Round_Button_set_align(arg1: *mut Fl_Round_Button, typ: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Round_Button_delete(arg1: *mut Fl_Round_Button);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Light_Button {
@@ -704,6 +719,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Light_Button_set_align(arg1: *mut Fl_Light_Button, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Light_Button_delete(arg1: *mut Fl_Light_Button);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -824,6 +842,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Repeat_Button_set_align(arg1: *mut Fl_Repeat_Button, typ: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Repeat_Button_delete(arg1: *mut Fl_Repeat_Button);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Return_Button {
@@ -942,4 +963,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_set_align(arg1: *mut Fl_Return_Button, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Return_Button_delete(arg1: *mut Fl_Return_Button);
 }

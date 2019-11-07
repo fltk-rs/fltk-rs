@@ -84,7 +84,10 @@ impl TextEditor {
     }
     pub fn text(&self) -> String {
         unsafe {
-            String::from(ffi::CStr::from_ptr(Fl_Text_Editor_text(self._inner)).to_string_lossy())
+            ffi::CStr::from_ptr(Fl_Text_Editor_text(self._inner))
+                .to_str()
+                .unwrap()
+                .to_owned()
         }
     }
 }
@@ -98,7 +101,10 @@ impl TextDisplay {
     }
     pub fn text(&self) -> String {
         unsafe {
-            String::from(ffi::CStr::from_ptr(Fl_Text_Display_text(self._inner)).to_string_lossy())
+            ffi::CStr::from_ptr(Fl_Text_Display_text(self._inner))
+                .to_str()
+                .unwrap()
+                .to_owned()
         }
     }
     pub fn init(&mut self) {

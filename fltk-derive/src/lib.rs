@@ -108,7 +108,16 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let set_align = Ident::new(format!("{}_{}", name_str, "set_align").as_str(), name.span());
     let set_callback = Ident::new(format!("{}_{}", name_str, "set_callback").as_str(), name.span());
 
+    let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
+
     let gen = quote! {
+        // impl Drop for #name {
+        //     fn drop(&mut self) {
+        //         unsafe {
+        //             #delete(self._inner)
+        //         }
+        //     }
+        // }
         impl WidgetTrait for #name {
             fn new() -> #name {
                     #name {
@@ -204,9 +213,8 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn tooltip(&self) -> String {
                 unsafe {
-                    String::from(ffi::CStr::from_ptr(
-                        #tooltip(self._inner)
-                    ).to_string_lossy())
+                    ffi::CStr::from_ptr(
+                        #tooltip(self._inner)).to_str().unwrap().to_owned()
                 }
             }
 
@@ -427,7 +435,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn value(&self) -> String {
                 unsafe {
                     let p = #value(self._inner);
-                    String::from(ffi::CStr::from_ptr(p).to_string_lossy())
+                    ffi::CStr::from_ptr(p).to_str().unwrap().to_owned()
                 }       
             }          
             fn set_value(&mut self, val: &str) {

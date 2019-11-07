@@ -1,7 +1,7 @@
 pub use crate::enums::*;
 pub use crate::fl;
-use fltk_sys::widget::*;
 pub use crate::menu::*;
+use fltk_sys::widget::*;
 
 pub trait WidgetTrait {
     fn new() -> Self;

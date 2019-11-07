@@ -23,7 +23,12 @@ pub fn event_key() -> i32 {
 }
 
 pub fn event_text() -> String {
-    unsafe { String::from(ffi::CStr::from_ptr(fltk_sys::fl::Fl_event_text()).to_string_lossy()) }
+    unsafe {
+        ffi::CStr::from_ptr(fltk_sys::fl::Fl_event_text())
+            .to_str()
+            .unwrap()
+            .to_owned()
+    }
 }
 
 pub fn event_button() -> i32 {

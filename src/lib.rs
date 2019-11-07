@@ -20,7 +20,6 @@ mod tests {
     #[test]
     fn it_works() {
         let x = std::ffi::CString::new("hello").unwrap();
-        let x = x.to_string_lossy();
-        let x = String::from(x);
+        let x = x.to_str().unwrap().to_owned();
     }
 }

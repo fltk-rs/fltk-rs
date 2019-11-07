@@ -56,7 +56,10 @@ pub enum MenuFlag {
 impl MenuItem {
     pub fn label(&self) -> String {
         unsafe {
-            String::from(ffi::CStr::from_ptr(Fl_Menu_Item_label(self._inner)).to_string_lossy())
+            ffi::CStr::from_ptr(Fl_Menu_Item_label(self._inner))
+                .to_str()
+                .unwrap()
+                .to_owned()
         }
     }
     pub fn set_label(&mut self, txt: &str) {
