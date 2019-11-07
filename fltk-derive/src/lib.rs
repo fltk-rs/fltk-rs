@@ -188,7 +188,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn label(&self) -> String {
-                self._title.clone().into_string().unwrap()
+                self._title.to_str().unwrap().to_owned()
             }
 
             fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {

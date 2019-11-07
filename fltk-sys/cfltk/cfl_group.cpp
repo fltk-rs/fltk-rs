@@ -6,6 +6,7 @@
 #include <FL/Fl_Tile.H>
 #include <Fl/Fl_Text_Display.H>
 #include <Fl/Fl_Text_Editor.H>
+#include <cstring>
 
 WIDGET_DEFINE(Fl_Group)
 

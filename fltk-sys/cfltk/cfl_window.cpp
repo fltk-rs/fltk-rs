@@ -1,6 +1,7 @@
 #include "cfl_window.h"
 #include <FL/Fl_Window.H>
 #include <Fl/Fl_Double_Window.H>
+#include <cstring>
 
 WIDGET_DEFINE(Fl_Window)
 

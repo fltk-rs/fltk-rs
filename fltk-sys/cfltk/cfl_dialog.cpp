@@ -2,7 +2,7 @@
 #include <Fl/Fl_Help_Dialog.H>
 #include <Fl/Fl_Native_File_Chooser.H>
 #include <Fl/fl_ask.H>
-#include <string.h>
+#include <cstring>
 
 Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
   return new Fl_Native_File_Chooser(val);

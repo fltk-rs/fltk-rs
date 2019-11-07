@@ -113,7 +113,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     return new widget(x, y, width, height, title);                             \
   }                                                                            \
   void widget##_set_label(widget *self, const char *title) {                   \
-    self->label(title);                                                        \
+    self->copy_label(title);                                                   \
   }                                                                            \
   void widget##_redraw(widget *self) { self->redraw(); }                       \
   void widget##_show(widget *self) { self->show(); }                           \
@@ -126,7 +126,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   const char *widget##_tooltip(widget *self) { return self->tooltip(); }       \
   void widget##_set_tooltip(widget *self, const char *txt) {                   \
-    self->tooltip(txt);                                                        \
+    self->copy_tooltip(txt);                                                   \
   }                                                                            \
   int widget##_get_type(widget *self) { return self->type(); }                 \
   void widget##_set_type(widget *self, int typ) { self->type(typ); }           \
@@ -180,7 +180,12 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define INPUT_DEFINE(widget)                                                   \
   int widget##_set_value(widget *self, const char *t) { self->value(t); }      \
-  const char *widget##_value(widget *self) { return self->value(); }           \
+  const char *widget##_value(widget *self) {                                   \
+    const char *val = self->value();                                           \
+    char *temp = new char[strlen(val) + 10];                                   \
+    strncpy(temp, val, strlen(val) + 1);                                       \
+    return val;                                                                \
+  }                                                                            \
   int widget##_maximum_size(widget *self) { return self->maximum_size(); }     \
   void widget##_set_maximum_size(widget *self, int m) {                        \
     self->maximum_size(m);                                                     \
