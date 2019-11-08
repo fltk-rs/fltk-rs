@@ -152,7 +152,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     #set_label(
                         self._inner,
-                        self._title.as_ptr() as *const raw::c_char,
+                        self._title.clone().as_ptr() as *const raw::c_char,
                     )
                 }
             }
@@ -188,7 +188,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn label(&self) -> String {
-                self._title.to_str().unwrap().to_owned()
+                self._title.clone().to_str().unwrap().to_owned()
             }
 
             fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
@@ -223,7 +223,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     #set_tooltip(
                         self._inner,
-                        txt.as_ptr() as *const raw::c_char,
+                        txt.as_ptr(),
                     )
                 }
             }

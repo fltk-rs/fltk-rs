@@ -180,12 +180,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define INPUT_DEFINE(widget)                                                   \
   int widget##_set_value(widget *self, const char *t) { self->value(t); }      \
-  const char *widget##_value(widget *self) {                                   \
-    const char *val = self->value();                                           \
-    char *temp = new char[strlen(val) + 10];                                   \
-    strncpy(temp, val, strlen(val) + 1);                                       \
-    return val;                                                                \
-  }                                                                            \
+  const char *widget##_value(widget *self) { return self->value(); }           \
   int widget##_maximum_size(widget *self) { return self->maximum_size(); }     \
   void widget##_set_maximum_size(widget *self, int m) {                        \
     self->maximum_size(m);                                                     \
