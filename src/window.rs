@@ -1,15 +1,10 @@
 pub use crate::prelude::*;
 use fltk_sys::window::*;
-use std::{ffi, mem, os::raw, ptr};
+use std::{ffi, mem, os::raw};
 
 #[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
 pub struct Window {
     _inner: *mut Fl_Window,
-    _x: i32,
-    _y: i32,
-    _width: i32,
-    _height: i32,
-    _title: ffi::CString,
 }
 
 #[repr(i32)]
@@ -22,9 +17,4 @@ pub enum WindowType {
 #[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
 pub struct DoubleWindow {
     _inner: *mut Fl_Double_Window,
-    _x: i32,
-    _y: i32,
-    _width: i32,
-    _height: i32,
-    _title: ffi::CString,
 }

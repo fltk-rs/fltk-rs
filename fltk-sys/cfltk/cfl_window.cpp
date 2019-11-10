@@ -2,6 +2,7 @@
 #include <FL/Fl_Window.H>
 #include <Fl/Fl_Double_Window.H>
 #include <cstring>
+#include <string>
 
 WIDGET_DEFINE(Fl_Window)
 

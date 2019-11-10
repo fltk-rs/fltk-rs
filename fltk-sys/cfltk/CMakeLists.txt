@@ -21,5 +21,9 @@ target_include_directories(cfltk PUBLIC fltk)
 
 target_link_libraries(cfltk PUBLIC fltk)
 
+# if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+#   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wreturn-type")
+# endif()
+
 
 

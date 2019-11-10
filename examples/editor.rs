@@ -4,7 +4,7 @@ use std::{fs, path};
 fn main() {
     let (screen_width, screen_height) = fl::screen_size();
     let mut filename = String::from("");
-    let mut wind = Window::new().set(
+    let mut wind = Window::new(
         (screen_width / 2.0 - 400.0) as i32,
         (screen_height / 2.0 - 300.0) as i32,
         800,
@@ -12,8 +12,8 @@ fn main() {
         "RustyEd",
     );
     wind.set_color(Color::Light2);
-    let mut editor = MultilineInput::new().set(5, 40, 790, 555, "");
-    let mut menu = MenuBar::new().set(0, 0, 800, 40, "");
+    let mut editor = MultilineInput::new(5, 40, 790, 555, "");
+    let mut menu = MenuBar::new(0, 0, 800, 40, "");
     menu.set_color(Color::Light2);
 
     menu.add(
@@ -91,7 +91,7 @@ fn main() {
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
-        &mut || fl::paste(editor.clone()),
+        &mut || println!(" "),
     );
 
     menu.add("Help/About", 0, MenuFlag::Normal, &mut || {

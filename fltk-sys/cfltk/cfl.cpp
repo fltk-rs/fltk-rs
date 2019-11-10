@@ -1,7 +1,6 @@
 #include "cfl.h"
 #include "cfl_widget.h"
 #include <FL/Fl.H>
-#include <cstring>
 
 int Fl_run(void) { return Fl::run(); }
 

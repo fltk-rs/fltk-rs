@@ -1,15 +1,10 @@
 pub use crate::prelude::*;
 use fltk_sys::frame::*;
-use std::{ffi, mem, os::raw, ptr};
+use std::{ffi, mem, os::raw};
 
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct Frame {
     _inner: *mut Fl_Box,
-    _x: i32,
-    _y: i32,
-    _width: i32,
-    _height: i32,
-    _title: ffi::CString,
 }
 
 #[repr(i32)]

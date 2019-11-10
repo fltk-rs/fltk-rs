@@ -2,7 +2,6 @@
 #include <Fl/Fl_Help_Dialog.H>
 #include <Fl/Fl_Native_File_Chooser.H>
 #include <Fl/fl_ask.H>
-#include <cstring>
 
 Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
   return new Fl_Native_File_Chooser(val);
@@ -49,7 +48,7 @@ void Fl_Native_File_Chooser_set_preset_file(Fl_Native_File_Chooser *self,
 }
 
 const char *Fl_Native_File_Chooser_errmsg(Fl_Native_File_Chooser *self) {
-  self->errmsg();
+  return self->errmsg();
 }
 
 void cfl_message(const char *txt) { fl_message(txt); }
@@ -60,13 +59,13 @@ int cfl_choice(const char *txt, const char *b0, const char *b1,
                const char *b2) {
   if (strlen(b2) == 0)
     b2 = NULL;
-  fl_choice(txt, b0, b1, b2);
+  return fl_choice(txt, b0, b1, b2);
 }
 
 const char *cfl_input(const char *txt, const char *deflt) {
-  fl_input(txt, deflt);
+  return fl_input(txt, deflt);
 }
 
 const char *cfl_password(const char *txt, const char *deflt) {
-  fl_password(txt, deflt);
+  return fl_password(txt, deflt);
 }

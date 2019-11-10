@@ -119,40 +119,27 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         //     }
         // }
         impl WidgetTrait for #name {
-            fn new() -> #name {
+            fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
+                let temp = ffi::CString::new(title).unwrap();
+                unsafe {
                     #name {
-                        _inner: ptr::null_mut(),
-                        _x: 0,
-                        _y: 0,
-                        _width: 0,
-                        _height: 0,
-                        _title: ffi::CString::new("").unwrap(),
+                        _inner: #new(
+                            x,
+                            y,
+                            width,
+                            height,
+                            temp.into_raw() as *const raw::c_char,
+                        ),
                     }
-                }
 
-            fn set(mut self, x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                self._x = x;
-                self._y = y;
-                self._width = width;
-                self._height = height;
-                self._title = ffi::CString::new(title).unwrap();
-                    self._inner = unsafe {
-                        #new(
-                            self._x,
-                            self._y,
-                            self._width,
-                            self._height,
-                            self._title.as_ptr() as *const raw::c_char,
-                        )
-                    };
-                self
+                }
             }
             fn set_label(&mut self, title: &str) {
-                self._title = ffi::CString::new(title).unwrap();
+                let temp = ffi::CString::new(title).unwrap();
                 unsafe {
                     #set_label(
                         self._inner,
-                        self._title.clone().as_ptr() as *const raw::c_char,
+                        temp.into_raw() as *const raw::c_char,
                     )
                 }
             }
@@ -171,25 +158,25 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { #hide(self._inner) }
             }
 
-            fn x(&self) -> i32 {
-                self._x
-            }
+            // fn x(&self) -> i32 {
+            //     self._x
+            // }
 
-            fn y(&self) -> i32 {
-                self._y
-            }
+            // fn y(&self) -> i32 {
+            //     self._y
+            // }
 
-            fn width(&self) -> i32 {
-                self._width
-            }
+            // fn width(&self) -> i32 {
+            //     self._width
+            // }
 
-            fn height(&self) -> i32 {
-                self._height
-            }
+            // fn height(&self) -> i32 {
+            //     self._height
+            // }
 
-            fn label(&self) -> String {
-                self._title.clone().to_str().unwrap().to_owned()
-            }
+            // fn label(&self) -> String {
+            //     self._title.clone().to_str().unwrap().to_owned()
+            // }
 
             fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
                 unsafe { mem::transmute(self._inner) }
@@ -331,6 +318,39 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
                 }
             }
+
+            // fn set_callback(&mut self, cb: Box<dyn FnMut()>) { 
+            //     unsafe {
+            //         unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+            //             use std::panic::{catch_unwind, AssertUnwindSafe};
+            //             use std::process::abort;
+            //             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            //             let f: &mut dyn FnMut() = &mut **a;
+            //             let f = AssertUnwindSafe(a.read());
+            //             catch_unwind(f).unwrap_or_else(|_| abort());
+            //         }
+            //         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+            //         let data: *mut raw::c_void = mem::transmute(a);
+            //         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
+            //         fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+            //     }
+            // }
+
+        //     fn set_callback<F>(&mut self, cb: &mut F) where F: FnMut() { 
+        //         unsafe {
+        //             unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)
+        //             where
+        //                 F: FnMut(),
+        //             {
+        //                 let closure: &mut F = &mut *(data as *mut F);
+        //                 (*closure)();
+        //             }
+        //             let a: *mut F = mem::transmute(cb);
+        //             let data: *mut raw::c_void = mem::transmute(a);
+        //             let callback: fltk_sys::widget::Fl_Callback = Some(shim::<F>);
+        //             fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+        //         }
+        //     }
         }
     };
     gen.into()
@@ -435,13 +455,13 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn value(&self) -> String {
                 unsafe {
                     let p = #value(self._inner);
-                    ffi::CStr::from_ptr(p).to_str().unwrap().to_owned()
+                    ffi::CString::from_raw(p as *mut raw::c_char).to_str().unwrap().to_owned()
                 }       
             }          
-            fn set_value(&mut self, val: &str) {
+            fn set_value(&self, val: &str) {
                 let temp = ffi::CString::new(val).unwrap();
                 unsafe {
-                    #set_value(self._inner, temp.as_ptr());
+                    #set_value(self._inner, temp.into_raw() as *const raw::c_char);
                 }
             }
             fn maximum_size(&self) -> usize {

@@ -4,6 +4,7 @@
 #include <Fl/Fl_Text_Display.H>
 #include <Fl/Fl_Value_Output.H>
 #include <cstring>
+#include <string>
 
 WIDGET_DEFINE(Fl_Output)
 

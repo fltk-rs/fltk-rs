@@ -48,14 +48,14 @@ pub fn event_coords() -> (i32, i32) {
     unsafe { (fltk_sys::fl::Fl_event_dx(), fltk_sys::fl::Fl_event_dy()) }
 }
 
-pub fn event_inside(arg1: *const fltk_sys::widget::Fl_Widget) -> bool {
-    unsafe {
-        match fltk_sys::fl::Fl_event_inside(arg1 as *mut raw::c_void) {
-            0 => false,
-            _ => true,
-        }
-    }
-}
+// pub fn event_inside(arg1: *const fltk_sys::widget::Fl_Widget) -> bool {
+//     unsafe {
+//         match fltk_sys::fl::Fl_event_inside(arg1 as *mut raw::c_void) {
+//             0 => false,
+//             _ => true,
+//         }
+//     }
+// }
 
 pub fn event_is_click() -> bool {
     unsafe {
@@ -74,9 +74,9 @@ pub fn event_state() -> i32 {
     unsafe { fltk_sys::fl::Fl_event_state() }
 }
 
-pub fn belowmouse() -> *mut fltk_sys::widget::Fl_Widget {
-    unsafe { mem::transmute(fltk_sys::fl::Fl_belowmouse()) }
-}
+// pub fn belowmouse() -> *mut fltk_sys::widget::Fl_Widget {
+//     unsafe { mem::transmute(fltk_sys::fl::Fl_belowmouse()) }
+// }
 
 pub fn screen_size() -> (f64, f64) {
     unsafe {
@@ -87,14 +87,14 @@ pub fn screen_size() -> (f64, f64) {
     }
 }
 
-pub fn paste<T>(widget: T)
-where
-    T: WidgetTrait + InputTrait,
-{
-    unsafe {
-        fltk_sys::fl::Fl_paste(widget.as_widget_ptr() as *mut raw::c_void);
-    }
-}
+// pub fn paste<T>(widget: T)
+// where
+//     T: WidgetTrait + InputTrait,
+// {
+//     unsafe {
+//         fltk_sys::fl::Fl_paste(widget.as_widget_ptr() as *mut raw::c_void);
+//     }
+// }
 
 pub fn set_callback<W>(widget: &W, cb: &mut dyn FnMut())
 where

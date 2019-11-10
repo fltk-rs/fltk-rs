@@ -4,17 +4,17 @@ pub use crate::menu::*;
 use fltk_sys::widget::*;
 
 pub trait WidgetTrait {
-    fn new() -> Self;
-    fn set(self, x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
+    // fn new() -> Self;
+    fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
     fn set_label(&mut self, title: &str);
     fn redraw(&mut self);
     fn show(&mut self);
     fn hide(&mut self);
-    fn x(&self) -> i32;
-    fn y(&self) -> i32;
-    fn width(&self) -> i32;
-    fn height(&self) -> i32;
-    fn label(&self) -> String;
+    // fn x(&self) -> i32;
+    // fn y(&self) -> i32;
+    // fn width(&self) -> i32;
+    // fn height(&self) -> i32;
+    // fn label(&self) -> String;
     fn as_widget_ptr(&self) -> *mut Fl_Widget;
     fn activate(&mut self);
     fn deactivate(&mut self);
@@ -42,6 +42,8 @@ pub trait WidgetTrait {
     fn align(&self) -> Align;
     fn set_align(&mut self, align: Align);
     fn set_callback(&mut self, cb: &mut dyn FnMut());
+    // fn set_callback(&mut self, cb: Box<dyn FnMut()>);
+    // fn set_callback<F>(&mut self, cb: &mut F) where F: FnMut();
 }
 
 pub trait GroupTrait: WidgetTrait {
@@ -62,7 +64,7 @@ pub trait WindowTrait {
 
 pub trait InputTrait {
     fn value(&self) -> String;
-    fn set_value(&mut self, val: &str);
+    fn set_value(&self, val: &str);
     fn maximum_size(&self) -> usize;
     fn set_maximum_size(&mut self, val: usize);
     fn position(&self) -> i32;

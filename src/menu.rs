@@ -1,35 +1,20 @@
 pub use crate::prelude::*;
 use fltk_sys::menu::*;
-use std::{ffi, mem, os::raw, ptr};
+use std::{ffi, mem, os::raw};
 
 #[derive(WidgetTrait, MenuTrait, Debug, Clone)]
 pub struct MenuBar {
     _inner: *mut Fl_Menu_Bar,
-    _x: i32,
-    _y: i32,
-    _width: i32,
-    _height: i32,
-    _title: ffi::CString,
 }
 
 #[derive(WidgetTrait, MenuTrait, Debug, Clone)]
 pub struct MenuButton {
     _inner: *mut Fl_Menu_Button,
-    _x: i32,
-    _y: i32,
-    _width: i32,
-    _height: i32,
-    _title: ffi::CString,
 }
 
 #[derive(WidgetTrait, MenuTrait, Debug, Clone)]
 pub struct Choice {
     _inner: *mut Fl_Choice,
-    _x: i32,
-    _y: i32,
-    _width: i32,
-    _height: i32,
-    _title: ffi::CString,
 }
 
 #[derive(Debug, Clone)]

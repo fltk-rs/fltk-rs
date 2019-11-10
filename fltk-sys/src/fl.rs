@@ -25,9 +25,6 @@ extern "C" {
     pub fn Fl_event_dy() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_inside(arg1: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int;
-}
-extern "C" {
     pub fn Fl_event_is_click() -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -41,10 +38,4 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_screen_w() -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_belowmouse() -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_paste(arg1: *mut ::std::os::raw::c_void);
 }

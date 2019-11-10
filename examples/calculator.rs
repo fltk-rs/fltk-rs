@@ -1,3 +1,6 @@
+#![allow(unused_variables)]
+#![allow(unused_mut)]
+
 use fltk::{button::Button, output::Output, prelude::*, window::Window};
 
 fn main() {
@@ -20,7 +23,7 @@ fn main() {
     let mut new_val = String::from("0");
     let mut op = '_';
 
-    let mut wind = Window::new().set(
+    let mut wind = Window::new(
         (screen_width / 2.0 - 200.0) as i32,
         (screen_height / 2.0 - 250.0) as i32,
         400,
@@ -29,18 +32,18 @@ fn main() {
     );
     wind.set_color(Color::Light2);
 
-    let mut out = Output::new().set(border, border, 360, 140, "");
+    let mut out = Output::new(border, border, 360, 140, "");
     out.set_text_size(30);
     out.set_value("0");
 
-    let mut but_ce = Button::new().set(column1, row1, but_width, but_height, "CE");
-    let mut but_c = Button::new().set(column2, row1, but_width, but_height, "C");
-    let mut but_back = Button::new().set(column3, row1, but_width, but_height, "@<-");
-    let mut but_div = Button::new().set(column4, row1, but_width, but_height, "/");
-    let mut but_mul = Button::new().set(column4, row2, but_width, but_height, "x");
-    let mut but_sub = Button::new().set(column4, row3, but_width, but_height, "-");
-    let mut but_add = Button::new().set(column4, row4, but_width, but_height, "+");
-    let mut but_eq = Button::new().set(column4, row5, but_width, but_height, "=");
+    let mut but_ce = Button::new(column1, row1, but_width, but_height, "CE");
+    let mut but_c = Button::new(column2, row1, but_width, but_height, "C");
+    let mut but_back = Button::new(column3, row1, but_width, but_height, "@<-");
+    let mut but_div = Button::new(column4, row1, but_width, but_height, "/");
+    let mut but_mul = Button::new(column4, row2, but_width, but_height, "x");
+    let mut but_sub = Button::new(column4, row3, but_width, but_height, "-");
+    let mut but_add = Button::new(column4, row4, but_width, but_height, "+");
+    let mut but_eq = Button::new(column4, row5, but_width, but_height, "=");
 
     but_ce.set_color(Color::Red);
     but_c.set_color(Color::Yellow);
@@ -51,17 +54,17 @@ fn main() {
     but_add.set_color(Color::Yellow);
     but_eq.set_color(Color::Yellow);
 
-    let mut but7 = Button::new().set(column1, row2, but_width, but_height, "7");
-    let mut but8 = Button::new().set(column2, row2, but_width, but_height, "8");
-    let mut but9 = Button::new().set(column3, row2, but_width, but_height, "9");
-    let mut but4 = Button::new().set(column1, row3, but_width, but_height, "4");
-    let mut but5 = Button::new().set(column2, row3, but_width, but_height, "5");
-    let mut but6 = Button::new().set(column3, row3, but_width, but_height, "6");
-    let mut but1 = Button::new().set(column1, row4, but_width, but_height, "1");
-    let mut but2 = Button::new().set(column2, row4, but_width, but_height, "2");
-    let mut but3 = Button::new().set(column3, row4, but_width, but_height, "3");
-    let mut but_dot = Button::new().set(column1, row5, but_width, but_height, ".");
-    let mut but0 = Button::new().set(column2, row5, but_width * 2, but_height, "0");
+    let mut but7 = Button::new(column1, row2, but_width, but_height, "7");
+    let mut but8 = Button::new(column2, row2, but_width, but_height, "8");
+    let mut but9 = Button::new(column3, row2, but_width, but_height, "9");
+    let mut but4 = Button::new(column1, row3, but_width, but_height, "4");
+    let mut but5 = Button::new(column2, row3, but_width, but_height, "5");
+    let mut but6 = Button::new(column3, row3, but_width, but_height, "6");
+    let mut but1 = Button::new(column1, row4, but_width, but_height, "1");
+    let mut but2 = Button::new(column2, row4, but_width, but_height, "2");
+    let mut but3 = Button::new(column3, row4, but_width, but_height, "3");
+    let mut but_dot = Button::new(column1, row5, but_width, but_height, ".");
+    let mut but0 = Button::new(column2, row5, but_width * 2, but_height, "0");
 
     let but_vec = vec![
         &mut but1,
@@ -127,7 +130,7 @@ fn main() {
         old_val = out.value();
         op = '+';
         txt.clear();
-        txt.push('0');
+        txt.clone().push('0');
         out.set_value(txt.as_str());
     });
 
@@ -157,7 +160,7 @@ fn main() {
                 out.set_value("");
                 op = '_';
             }
-            txt.push_str(but0.label().as_str());
+            txt.push_str("0");
             out.set_value(txt.as_str());
         }
     });
@@ -170,11 +173,11 @@ fn main() {
             txt.clear();
             op = '_';
         }
-        txt.push_str(but1.label().as_str());
+        txt.push_str("1");
         out.set_value(txt.as_str());
     });
 
-    but2.clone().set_callback(&mut || {
+    but2.set_callback(&mut || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -182,7 +185,7 @@ fn main() {
             txt.clear();
             op = '_';
         }
-        txt.push_str(but2.label().as_str());
+        txt.push_str("2");
         out.set_value(txt.as_str());
     });
 
@@ -194,7 +197,7 @@ fn main() {
             txt.clear();
             op = '_';
         }
-        txt.push_str(but3.label().as_str());
+        txt.push_str("3");
         out.set_value(txt.as_str());
     });
 
@@ -206,7 +209,7 @@ fn main() {
             txt.clear();
             op = '_';
         }
-        txt.push_str(but4.label().as_str());
+        txt.push_str("4");
         out.set_value(txt.as_str());
     });
 
@@ -218,7 +221,7 @@ fn main() {
             txt.clear();
             op = '_';
         }
-        txt.push_str(but5.label().as_str());
+        txt.push_str("5");
         out.set_value(txt.as_str());
     });
 
@@ -230,7 +233,7 @@ fn main() {
             txt.clear();
             op = '_';
         }
-        txt.push_str(but6.label().as_str());
+        txt.push_str("6");
         out.set_value(txt.as_str());
     });
 
@@ -242,7 +245,7 @@ fn main() {
             txt.clear();
             op = '_';
         }
-        txt.push_str(but7.label().as_str());
+        txt.push_str("7");
         out.set_value(txt.as_str());
     });
 
@@ -254,7 +257,7 @@ fn main() {
             txt.clear();
             op = '_';
         }
-        txt.push_str(but8.label().as_str());
+        txt.push_str("8");
         out.set_value(txt.as_str());
     });
 
@@ -266,7 +269,7 @@ fn main() {
             txt.clear();
             op = '_';
         }
-        txt.push_str(but9.label().as_str());
+        txt.push_str("9");
         out.set_value(txt.as_str());
     });
 
@@ -278,7 +281,7 @@ fn main() {
             txt.push_str("0.");
         }
         if !out.value().contains(".") && !txt.contains(".") {
-            txt.push_str(but_dot.label().as_str());
+            txt.push_str(".");
             out.set_value(txt.as_str());
         }
     });

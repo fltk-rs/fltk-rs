@@ -179,15 +179,22 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_make_current(widget *self) { self->make_current(); }
 
 #define INPUT_DEFINE(widget)                                                   \
-  int widget##_set_value(widget *self, const char *t) { self->value(t); }      \
-  const char *widget##_value(widget *self) { return self->value(); }           \
+  int widget##_set_value(widget *self, const char *t) {                        \
+    return self->value(t);                                                     \
+  }                                                                            \
+  const char *widget##_value(widget *self) {                                   \
+    std::string temp = self->value();                                          \
+    char *ptr = new char[temp.size() + 1];                                     \
+    strcpy(ptr, temp.c_str());                                                 \
+    return ptr;                                                                \
+  }                                                                            \
   int widget##_maximum_size(widget *self) { return self->maximum_size(); }     \
   void widget##_set_maximum_size(widget *self, int m) {                        \
     self->maximum_size(m);                                                     \
   }                                                                            \
-  int widget##_position(widget *self) { self->position(); }                    \
-  int widget##_set_position(widget *self, int p) { self->position(p); }        \
-  int widget##_set_mark(widget *self, int m) { self->mark(m); }                \
+  int widget##_position(widget *self) { return self->position(); }             \
+  int widget##_set_position(widget *self, int p) { return self->position(p); } \
+  int widget##_set_mark(widget *self, int m) { return self->mark(m); }         \
   int widget##_mark(widget *self) { return self->mark(); }                     \
   int widget##_replace(widget *self, int b, int e, const char *text,           \
                        int ilen) {                                             \

@@ -4,6 +4,7 @@
 #include <Fl/Fl_Menu_Button.H>
 #include <Fl/Fl_Menu_Item.H>
 #include <cstring>
+#include <string>
 
 WIDGET_DEFINE(Fl_Menu_Bar)
 

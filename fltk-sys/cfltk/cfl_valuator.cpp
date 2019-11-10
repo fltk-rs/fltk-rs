@@ -6,6 +6,7 @@
 #include <Fl/Fl_Scrollbar.H>
 #include <Fl/Fl_Value_Slider.H>
 #include <cstring>
+#include <string>
 
 WIDGET_DEFINE(Fl_Slider)
 
