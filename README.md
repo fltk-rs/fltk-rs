@@ -13,7 +13,7 @@ $ cargo build
 
 ## Dependencies
 
-On Windows and Mac OS X, normally no external dependencies are needed. For Linux, X11 development headers need to be installed. For Debian-based distrobution, that means running:
+CMake and Ninja need to be installed and in your PATH for a crossplatform build. After that on Windows and Mac OS X, normally no external dependencies are needed. For Linux, X11 development headers need to be installed. For Debian-based distrobution, that means running:
 ```
 $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
 ```
