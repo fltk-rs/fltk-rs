@@ -8,6 +8,8 @@ pub struct Fl_Widget {
 pub type Fl_Callback = ::std::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
+
+
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,

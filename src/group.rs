@@ -44,15 +44,16 @@ impl TextEditor {
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
             let txt = ffi::CString::new(txt).unwrap();
-            Fl_Text_Editor_set_text(self._inner, txt.as_ptr() as *const raw::c_char)
+            Fl_Text_Editor_set_text(self._inner, txt.into_raw() as *const raw::c_char)
         }
     }
     pub fn text(&self) -> String {
         unsafe {
-            ffi::CStr::from_ptr(Fl_Text_Editor_text(self._inner))
-                .to_str()
-                .unwrap()
-                .to_owned()
+//            ffi::CStr::from_ptr(Fl_Text_Editor_text(self._inner))
+//                .to_str()
+//                .unwrap()
+//                .to_owned()
+            ffi::CString::from_raw(Fl_Text_Editor_text(self._inner) as *mut raw::c_char).to_str().unwrap().to_owned()
         }
     }
 }

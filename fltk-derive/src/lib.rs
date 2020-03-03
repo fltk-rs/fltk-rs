@@ -118,6 +118,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         //         }
         //     }
         // }
+
+        unsafe impl Send for #name {}
+        unsafe impl Sync for #name {}
+
         impl WidgetTrait for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = ffi::CString::new(title).unwrap();
@@ -455,7 +459,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn value(&self) -> String {
                 unsafe {
                     let p = #value(self._inner);
-                    ffi::CString::from_raw(p as *mut raw::c_char).to_str().unwrap().to_owned()
+                    ffi::CStr::from_ptr(p as *mut raw::c_char).to_str().unwrap().to_owned()
                 }       
             }          
             fn set_value(&self, val: &str) {
