@@ -30,6 +30,21 @@ extern "C" {
     ) -> *mut Fl_Button;
 }
 extern "C" {
+    pub fn Fl_Button_x(arg1: *mut Fl_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_y(arg1: *mut Fl_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_width(arg1: *mut Fl_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_height(arg1: *mut Fl_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_label(arg1: *mut Fl_Button) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Button_set_label(arg1: *mut Fl_Button, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -138,6 +153,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Check_Button;
+}
+extern "C" {
+    pub fn Fl_Check_Button_x(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_y(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_width(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_height(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_label(arg1: *mut Fl_Check_Button) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Check_Button_set_label(
@@ -259,6 +289,21 @@ extern "C" {
     ) -> *mut Fl_Radio_Button;
 }
 extern "C" {
+    pub fn Fl_Radio_Button_x(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_y(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_width(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_height(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_label(arg1: *mut Fl_Radio_Button) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Radio_Button_set_label(
         arg1: *mut Fl_Radio_Button,
         title: *const ::std::os::raw::c_char,
@@ -376,6 +421,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Toggle_Button;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_x(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_y(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_width(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_height(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_label(arg1: *mut Fl_Toggle_Button) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_label(
@@ -500,6 +560,21 @@ extern "C" {
     ) -> *mut Fl_Round_Button;
 }
 extern "C" {
+    pub fn Fl_Round_Button_x(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_y(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_width(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_height(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_label(arg1: *mut Fl_Round_Button) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Round_Button_set_label(
         arg1: *mut Fl_Round_Button,
         title: *const ::std::os::raw::c_char,
@@ -619,6 +694,21 @@ extern "C" {
     ) -> *mut Fl_Light_Button;
 }
 extern "C" {
+    pub fn Fl_Light_Button_x(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Light_Button_y(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Light_Button_width(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Light_Button_height(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Light_Button_label(arg1: *mut Fl_Light_Button) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Light_Button_set_label(
         arg1: *mut Fl_Light_Button,
         title: *const ::std::os::raw::c_char,
@@ -736,6 +826,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Repeat_Button;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_x(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_y(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_width(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_height(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_label(arg1: *mut Fl_Repeat_Button) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Repeat_Button_set_label(
@@ -858,6 +963,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Return_Button;
+}
+extern "C" {
+    pub fn Fl_Return_Button_x(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_y(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_width(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_height(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_label(arg1: *mut Fl_Return_Button) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Return_Button_set_label(

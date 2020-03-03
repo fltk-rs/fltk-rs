@@ -1,4 +1,4 @@
-#![recursion_limit="256"]
+#![recursion_limit = "256"]
 #![allow(unused_imports)]
 #![allow(unused_variables)]
 
@@ -7,10 +7,10 @@ extern crate syn;
 #[macro_use]
 extern crate quote;
 
-use quote::*;
-use syn::*;
 use proc_macro::TokenStream;
-use std::{mem, ptr, ffi, os::raw};
+use quote::*;
+use std::{ffi, mem, os::raw, ptr};
+use syn::*;
 
 fn get_fl_name(txt: String) -> String {
     if txt == "Frame" {
@@ -77,36 +77,92 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name_str = get_fl_name(name.to_string());
 
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
-    let set_label = Ident::new(format!("{}_{}", name_str, "set_label").as_str(), name.span());
+    let x = Ident::new(format!("{}_{}", name_str, "x").as_str(), name.span());
+    let y = Ident::new(format!("{}_{}", name_str, "y").as_str(), name.span());
+    let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
+    let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
+    let label = Ident::new(format!("{}_{}", name_str, "label").as_str(), name.span());
+    let set_label = Ident::new(
+        format!("{}_{}", name_str, "set_label").as_str(),
+        name.span(),
+    );
     let redraw = Ident::new(format!("{}_{}", name_str, "redraw").as_str(), name.span());
     let show = Ident::new(format!("{}_{}", name_str, "show").as_str(), name.span());
     let hide = Ident::new(format!("{}_{}", name_str, "hide").as_str(), name.span());
     let activate = Ident::new(format!("{}_{}", name_str, "activate").as_str(), name.span());
-    let deactivate = Ident::new(format!("{}_{}", name_str, "deactivate").as_str(), name.span());
-    let redraw_label = Ident::new(format!("{}_{}", name_str, "redraw_label").as_str(), name.span());
+    let deactivate = Ident::new(
+        format!("{}_{}", name_str, "deactivate").as_str(),
+        name.span(),
+    );
+    let redraw_label = Ident::new(
+        format!("{}_{}", name_str, "redraw_label").as_str(),
+        name.span(),
+    );
     let resize = Ident::new(format!("{}_{}", name_str, "resize").as_str(), name.span());
     let tooltip = Ident::new(format!("{}_{}", name_str, "tooltip").as_str(), name.span());
-    let set_tooltip = Ident::new(format!("{}_{}", name_str, "set_tooltip").as_str(), name.span());
+    let set_tooltip = Ident::new(
+        format!("{}_{}", name_str, "set_tooltip").as_str(),
+        name.span(),
+    );
     let get_type = Ident::new(format!("{}_{}", name_str, "get_type").as_str(), name.span());
     let set_type = Ident::new(format!("{}_{}", name_str, "set_type").as_str(), name.span());
     let color = Ident::new(format!("{}_{}", name_str, "color").as_str(), name.span());
-    let set_color = Ident::new(format!("{}_{}", name_str, "set_color").as_str(), name.span());
-    let label_color = Ident::new(format!("{}_{}", name_str, "label_color").as_str(), name.span());
-    let set_label_color = Ident::new(format!("{}_{}", name_str, "set_label_color").as_str(), name.span());
-    let label_font = Ident::new(format!("{}_{}", name_str, "label_font").as_str(), name.span());
-    let set_label_font = Ident::new(format!("{}_{}", name_str, "set_label_font").as_str(), name.span());
-    let label_size = Ident::new(format!("{}_{}", name_str, "label_size").as_str(), name.span());
-    let set_label_size = Ident::new(format!("{}_{}", name_str, "set_label_size").as_str(), name.span());
-    let label_type = Ident::new(format!("{}_{}", name_str, "label_type").as_str(), name.span());
-    let set_label_type = Ident::new(format!("{}_{}", name_str, "set_label_type").as_str(), name.span());
+    let set_color = Ident::new(
+        format!("{}_{}", name_str, "set_color").as_str(),
+        name.span(),
+    );
+    let label_color = Ident::new(
+        format!("{}_{}", name_str, "label_color").as_str(),
+        name.span(),
+    );
+    let set_label_color = Ident::new(
+        format!("{}_{}", name_str, "set_label_color").as_str(),
+        name.span(),
+    );
+    let label_font = Ident::new(
+        format!("{}_{}", name_str, "label_font").as_str(),
+        name.span(),
+    );
+    let set_label_font = Ident::new(
+        format!("{}_{}", name_str, "set_label_font").as_str(),
+        name.span(),
+    );
+    let label_size = Ident::new(
+        format!("{}_{}", name_str, "label_size").as_str(),
+        name.span(),
+    );
+    let set_label_size = Ident::new(
+        format!("{}_{}", name_str, "set_label_size").as_str(),
+        name.span(),
+    );
+    let label_type = Ident::new(
+        format!("{}_{}", name_str, "label_type").as_str(),
+        name.span(),
+    );
+    let set_label_type = Ident::new(
+        format!("{}_{}", name_str, "set_label_type").as_str(),
+        name.span(),
+    );
     let frame = Ident::new(format!("{}_{}", name_str, "box").as_str(), name.span());
     let set_frame = Ident::new(format!("{}_{}", name_str, "set_box").as_str(), name.span());
     let changed = Ident::new(format!("{}_{}", name_str, "changed").as_str(), name.span());
-    let set_changed = Ident::new(format!("{}_{}", name_str, "set_changed").as_str(), name.span());
-    let clear_changed = Ident::new(format!("{}_{}", name_str, "clear_changed").as_str(), name.span());
+    let set_changed = Ident::new(
+        format!("{}_{}", name_str, "set_changed").as_str(),
+        name.span(),
+    );
+    let clear_changed = Ident::new(
+        format!("{}_{}", name_str, "clear_changed").as_str(),
+        name.span(),
+    );
     let align = Ident::new(format!("{}_{}", name_str, "align").as_str(), name.span());
-    let set_align = Ident::new(format!("{}_{}", name_str, "set_align").as_str(), name.span());
-    let set_callback = Ident::new(format!("{}_{}", name_str, "set_callback").as_str(), name.span());
+    let set_align = Ident::new(
+        format!("{}_{}", name_str, "set_align").as_str(),
+        name.span(),
+    );
+    let set_callback = Ident::new(
+        format!("{}_{}", name_str, "set_callback").as_str(),
+        name.span(),
+    );
 
     let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
 
@@ -162,25 +218,28 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { #hide(self._inner) }
             }
 
-            // fn x(&self) -> i32 {
-            //     self._x
-            // }
+            fn x(&self) -> i32 {
+                unsafe { #x(self._inner)}
+            }
 
-            // fn y(&self) -> i32 {
-            //     self._y
-            // }
+            fn y(&self) -> i32 {
+                unsafe { #y(self._inner) }
+            }
 
-            // fn width(&self) -> i32 {
-            //     self._width
-            // }
+            fn width(&self) -> i32 {
+                unsafe { #width(self._inner) }
+            }
 
-            // fn height(&self) -> i32 {
-            //     self._height
-            // }
+            fn height(&self) -> i32 {
+                unsafe { #height(self._inner) }
+            }
 
-            // fn label(&self) -> String {
-            //     self._title.clone().to_str().unwrap().to_owned()
-            // }
+            fn label(&self) -> String {
+                unsafe {
+                    ffi::CStr::from_ptr(
+                        #label(self._inner)).to_str().unwrap().to_owned()
+                }
+            }
 
             fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
                 unsafe { mem::transmute(self._inner) }
@@ -323,7 +382,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
 
-            // fn set_callback(&mut self, cb: Box<dyn FnMut()>) { 
+            // fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
             //     unsafe {
             //         unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
             //             use std::panic::{catch_unwind, AssertUnwindSafe};
@@ -340,7 +399,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             //     }
             // }
 
-        //     fn set_callback<F>(&mut self, cb: &mut F) where F: FnMut() { 
+        //     fn set_callback<F>(&mut self, cb: &mut F) where F: FnMut() {
         //         unsafe {
         //             unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)
         //             where
@@ -401,11 +460,19 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
 fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
-    
-    let make_modal = Ident::new(format!("{}_{}", name_str, "make_modal").as_str(), name.span());
-    let fullscreen = Ident::new(format!("{}_{}", name_str, "fullscreen").as_str(), name.span());
-    let make_current = Ident::new(format!("{}_{}", name_str, "make_current").as_str(), name.span());
 
+    let make_modal = Ident::new(
+        format!("{}_{}", name_str, "make_modal").as_str(),
+        name.span(),
+    );
+    let fullscreen = Ident::new(
+        format!("{}_{}", name_str, "fullscreen").as_str(),
+        name.span(),
+    );
+    let make_current = Ident::new(
+        format!("{}_{}", name_str, "make_current").as_str(),
+        name.span(),
+    );
     let gen = quote! {
         impl WindowTrait for #name {
             fn make_modal(&mut self, val: bool) {
@@ -427,13 +494,24 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
 fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
-    
     let value = Ident::new(format!("{}_{}", name_str, "value").as_str(), name.span());
-    let set_value = Ident::new(format!("{}_{}", name_str, "set_value").as_str(), name.span());
-    let maximum_size = Ident::new(format!("{}_{}", name_str, "maximum_size").as_str(), name.span());
-    let set_maximum_size = Ident::new(format!("{}_{}", name_str, "set_maximum_size").as_str(), name.span());
+    let set_value = Ident::new(
+        format!("{}_{}", name_str, "set_value").as_str(),
+        name.span(),
+    );
+    let maximum_size = Ident::new(
+        format!("{}_{}", name_str, "maximum_size").as_str(),
+        name.span(),
+    );
+    let set_maximum_size = Ident::new(
+        format!("{}_{}", name_str, "set_maximum_size").as_str(),
+        name.span(),
+    );
     let position = Ident::new(format!("{}_{}", name_str, "position").as_str(), name.span());
-    let set_position = Ident::new(format!("{}_{}", name_str, "set_position").as_str(), name.span());
+    let set_position = Ident::new(
+        format!("{}_{}", name_str, "set_position").as_str(),
+        name.span(),
+    );
     let mark = Ident::new(format!("{}_{}", name_str, "mark").as_str(), name.span());
     let set_mark = Ident::new(format!("{}_{}", name_str, "set_mark").as_str(), name.span());
     let replace = Ident::new(format!("{}_{}", name_str, "replace").as_str(), name.span());
@@ -441,27 +519,49 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
     let append = Ident::new(format!("{}_{}", name_str, "append").as_str(), name.span());
     let copy = Ident::new(format!("{}_{}", name_str, "copy").as_str(), name.span());
     let undo = Ident::new(format!("{}_{}", name_str, "undo").as_str(), name.span());
-    let copy_cuts = Ident::new(format!("{}_{}", name_str, "copy_cuts").as_str(), name.span());
-    let text_font = Ident::new(format!("{}_{}", name_str, "text_font").as_str(), name.span());
-    let set_text_font = Ident::new(format!("{}_{}", name_str, "set_text_font").as_str(), name.span());
-    let text_color = Ident::new(format!("{}_{}", name_str, "text_color").as_str(), name.span());
-    let set_text_color = Ident::new(format!("{}_{}", name_str, "set_text_color").as_str(), name.span());
-    let text_size = Ident::new(format!("{}_{}", name_str, "text_size").as_str(), name.span());
-    let set_text_size = Ident::new(format!("{}_{}", name_str, "set_text_size").as_str(), name.span());
+    let copy_cuts = Ident::new(
+        format!("{}_{}", name_str, "copy_cuts").as_str(),
+        name.span(),
+    );
+    let text_font = Ident::new(
+        format!("{}_{}", name_str, "text_font").as_str(),
+        name.span(),
+    );
+    let set_text_font = Ident::new(
+        format!("{}_{}", name_str, "set_text_font").as_str(),
+        name.span(),
+    );
+    let text_color = Ident::new(
+        format!("{}_{}", name_str, "text_color").as_str(),
+        name.span(),
+    );
+    let set_text_color = Ident::new(
+        format!("{}_{}", name_str, "set_text_color").as_str(),
+        name.span(),
+    );
+    let text_size = Ident::new(
+        format!("{}_{}", name_str, "text_size").as_str(),
+        name.span(),
+    );
+    let set_text_size = Ident::new(
+        format!("{}_{}", name_str, "set_text_size").as_str(),
+        name.span(),
+    );
     let readonly = Ident::new(format!("{}_{}", name_str, "readonly").as_str(), name.span());
-    let set_readonly = Ident::new(format!("{}_{}", name_str, "set_readonly").as_str(), name.span());
+    let set_readonly = Ident::new(
+        format!("{}_{}", name_str, "set_readonly").as_str(),
+        name.span(),
+    );
     let wrap = Ident::new(format!("{}_{}", name_str, "wrap").as_str(), name.span());
     let set_wrap = Ident::new(format!("{}_{}", name_str, "set_wrap").as_str(), name.span());
-
 
     let gen = quote! {
         impl InputTrait for #name {
             fn value(&self) -> String {
                 unsafe {
-                    let p = #value(self._inner);
-                    ffi::CStr::from_ptr(p as *mut raw::c_char).to_str().unwrap().to_owned()
-                }       
-            }          
+                    ffi::CStr::from_ptr(#value(self._inner)).to_str().unwrap().to_owned()
+                }
+            }
             fn set_value(&self, val: &str) {
                 let temp = ffi::CString::new(val).unwrap();
                 unsafe {
@@ -595,16 +695,32 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
 fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
-    
     let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
     let get_item = Ident::new(format!("{}_{}", name_str, "get_item").as_str(), name.span());
-    let text_font = Ident::new(format!("{}_{}", name_str, "text_font").as_str(), name.span());
-    let set_text_font = Ident::new(format!("{}_{}", name_str, "set_text_font").as_str(), name.span());
-    let text_color = Ident::new(format!("{}_{}", name_str, "text_color").as_str(), name.span());
-    let set_text_color = Ident::new(format!("{}_{}", name_str, "set_text_color").as_str(), name.span());
-    let text_size = Ident::new(format!("{}_{}", name_str, "text_size").as_str(), name.span());
-    let set_text_size = Ident::new(format!("{}_{}", name_str, "set_text_size").as_str(), name.span());
-
+    let text_font = Ident::new(
+        format!("{}_{}", name_str, "text_font").as_str(),
+        name.span(),
+    );
+    let set_text_font = Ident::new(
+        format!("{}_{}", name_str, "set_text_font").as_str(),
+        name.span(),
+    );
+    let text_color = Ident::new(
+        format!("{}_{}", name_str, "text_color").as_str(),
+        name.span(),
+    );
+    let set_text_color = Ident::new(
+        format!("{}_{}", name_str, "set_text_color").as_str(),
+        name.span(),
+    );
+    let text_size = Ident::new(
+        format!("{}_{}", name_str, "text_size").as_str(),
+        name.span(),
+    );
+    let set_text_size = Ident::new(
+        format!("{}_{}", name_str, "set_text_size").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl MenuTrait for #name {
@@ -742,23 +858,43 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
 fn impl_valuator_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
-    
-    let set_bounds = Ident::new(format!("{}_{}", name_str, "set_bounds").as_str(), name.span());
+
+    let set_bounds = Ident::new(
+        format!("{}_{}", name_str, "set_bounds").as_str(),
+        name.span(),
+    );
     let minimum = Ident::new(format!("{}_{}", name_str, "minimum").as_str(), name.span());
-    let set_minimum = Ident::new(format!("{}_{}", name_str, "set_minimum").as_str(), name.span());
+    let set_minimum = Ident::new(
+        format!("{}_{}", name_str, "set_minimum").as_str(),
+        name.span(),
+    );
     let maximum = Ident::new(format!("{}_{}", name_str, "maximum").as_str(), name.span());
-    let set_maximum = Ident::new(format!("{}_{}", name_str, "set_maximum").as_str(), name.span());
-    let set_range = Ident::new(format!("{}_{}", name_str, "set_range").as_str(), name.span());
+    let set_maximum = Ident::new(
+        format!("{}_{}", name_str, "set_maximum").as_str(),
+        name.span(),
+    );
+    let set_range = Ident::new(
+        format!("{}_{}", name_str, "set_range").as_str(),
+        name.span(),
+    );
     let step = Ident::new(format!("{}_{}", name_str, "step").as_str(), name.span());
     let set_step = Ident::new(format!("{}_{}", name_str, "set_step").as_str(), name.span());
-    let set_precision = Ident::new(format!("{}_{}", name_str, "set_precision").as_str(), name.span());
+    let set_precision = Ident::new(
+        format!("{}_{}", name_str, "set_precision").as_str(),
+        name.span(),
+    );
     let value = Ident::new(format!("{}_{}", name_str, "value").as_str(), name.span());
-    let set_value = Ident::new(format!("{}_{}", name_str, "set_value").as_str(), name.span());
+    let set_value = Ident::new(
+        format!("{}_{}", name_str, "set_value").as_str(),
+        name.span(),
+    );
     let format = Ident::new(format!("{}_{}", name_str, "format").as_str(), name.span());
     let round = Ident::new(format!("{}_{}", name_str, "round").as_str(), name.span());
     let clamp = Ident::new(format!("{}_{}", name_str, "clamp").as_str(), name.span());
-    let increment = Ident::new(format!("{}_{}", name_str, "increment").as_str(), name.span());
-
+    let increment = Ident::new(
+        format!("{}_{}", name_str, "increment").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl ValuatorTrait for #name {
@@ -859,7 +995,6 @@ fn impl_valuator_trait(ast: &syn::DeriveInput) -> TokenStream {
     };
     gen.into()
 }
-
 
 #[cfg(test)]
 mod tests {

@@ -30,6 +30,21 @@ extern "C" {
     ) -> *mut Fl_Box;
 }
 extern "C" {
+    pub fn Fl_Box_x(arg1: *mut Fl_Box) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Box_y(arg1: *mut Fl_Box) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Box_width(arg1: *mut Fl_Box) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Box_height(arg1: *mut Fl_Box) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Box_label(arg1: *mut Fl_Box) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Box_set_label(arg1: *mut Fl_Box, title: *const ::std::os::raw::c_char);
 }
 extern "C" {

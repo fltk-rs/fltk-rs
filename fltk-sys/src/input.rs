@@ -30,6 +30,21 @@ extern "C" {
     ) -> *mut Fl_Input;
 }
 extern "C" {
+    pub fn Fl_Input_x(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Input_y(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Input_width(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Input_height(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Input_label(arg1: *mut Fl_Input) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Input_set_label(arg1: *mut Fl_Input, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -239,6 +254,21 @@ extern "C" {
     ) -> *mut Fl_Int_Input;
 }
 extern "C" {
+    pub fn Fl_Int_Input_x(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Int_Input_y(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Int_Input_width(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Int_Input_height(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Int_Input_label(arg1: *mut Fl_Int_Input) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Int_Input_set_label(arg1: *mut Fl_Int_Input, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -446,6 +476,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Float_Input;
+}
+extern "C" {
+    pub fn Fl_Float_Input_x(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Float_Input_y(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Float_Input_width(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Float_Input_height(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Float_Input_label(arg1: *mut Fl_Float_Input) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_label(
@@ -661,6 +706,22 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Multiline_Input;
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_x(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_y(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_width(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_height(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_label(arg1: *mut Fl_Multiline_Input)
+        -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_label(

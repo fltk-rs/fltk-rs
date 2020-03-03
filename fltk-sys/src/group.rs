@@ -30,6 +30,21 @@ extern "C" {
     ) -> *mut Fl_Group;
 }
 extern "C" {
+    pub fn Fl_Group_x(arg1: *mut Fl_Group) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Group_y(arg1: *mut Fl_Group) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Group_width(arg1: *mut Fl_Group) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Group_height(arg1: *mut Fl_Group) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Group_label(arg1: *mut Fl_Group) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Group_set_label(arg1: *mut Fl_Group, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -144,6 +159,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Pack;
+}
+extern "C" {
+    pub fn Fl_Pack_x(arg1: *mut Fl_Pack) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_y(arg1: *mut Fl_Pack) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_width(arg1: *mut Fl_Pack) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_height(arg1: *mut Fl_Pack) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_label(arg1: *mut Fl_Pack) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Pack_set_label(arg1: *mut Fl_Pack, title: *const ::std::os::raw::c_char);
@@ -262,6 +292,21 @@ extern "C" {
     ) -> *mut Fl_Scroll;
 }
 extern "C" {
+    pub fn Fl_Scroll_x(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_y(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_width(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_height(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_label(arg1: *mut Fl_Scroll) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Scroll_set_label(arg1: *mut Fl_Scroll, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -376,6 +421,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Tabs;
+}
+extern "C" {
+    pub fn Fl_Tabs_x(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_y(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_width(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_height(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_label(arg1: *mut Fl_Tabs) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Tabs_set_label(arg1: *mut Fl_Tabs, title: *const ::std::os::raw::c_char);
@@ -494,6 +554,21 @@ extern "C" {
     ) -> *mut Fl_Tile;
 }
 extern "C" {
+    pub fn Fl_Tile_x(arg1: *mut Fl_Tile) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_y(arg1: *mut Fl_Tile) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_width(arg1: *mut Fl_Tile) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_height(arg1: *mut Fl_Tile) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_label(arg1: *mut Fl_Tile) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Tile_set_label(arg1: *mut Fl_Tile, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -608,6 +683,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Text_Display;
+}
+extern "C" {
+    pub fn Fl_Text_Display_x(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_y(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_width(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_height(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_label(arg1: *mut Fl_Text_Display) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_label(
@@ -733,6 +823,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Text_Editor;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_x(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_y(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_width(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_height(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_label(arg1: *mut Fl_Text_Editor) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_label(

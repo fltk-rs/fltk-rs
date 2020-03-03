@@ -30,6 +30,21 @@ extern "C" {
     ) -> *mut Fl_Window;
 }
 extern "C" {
+    pub fn Fl_Window_x(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_y(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_width(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_height(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_label(arg1: *mut Fl_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Window_set_label(arg1: *mut Fl_Window, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -153,6 +168,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Double_Window;
+}
+extern "C" {
+    pub fn Fl_Double_Window_x(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_y(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_width(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_height(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_label(arg1: *mut Fl_Double_Window) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Double_Window_set_label(

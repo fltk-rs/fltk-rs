@@ -30,6 +30,21 @@ extern "C" {
     ) -> *mut Fl_Slider;
 }
 extern "C" {
+    pub fn Fl_Slider_x(arg1: *mut Fl_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Slider_y(arg1: *mut Fl_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Slider_width(arg1: *mut Fl_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Slider_height(arg1: *mut Fl_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Slider_label(arg1: *mut Fl_Slider) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Slider_set_label(arg1: *mut Fl_Slider, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -187,6 +202,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Counter;
+}
+extern "C" {
+    pub fn Fl_Counter_x(arg1: *mut Fl_Counter) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Counter_y(arg1: *mut Fl_Counter) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Counter_width(arg1: *mut Fl_Counter) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Counter_height(arg1: *mut Fl_Counter) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Counter_label(arg1: *mut Fl_Counter) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Counter_set_label(arg1: *mut Fl_Counter, title: *const ::std::os::raw::c_char);
@@ -351,6 +381,21 @@ extern "C" {
     ) -> *mut Fl_Dial;
 }
 extern "C" {
+    pub fn Fl_Dial_x(arg1: *mut Fl_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Dial_y(arg1: *mut Fl_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Dial_width(arg1: *mut Fl_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Dial_height(arg1: *mut Fl_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Dial_label(arg1: *mut Fl_Dial) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Dial_set_label(arg1: *mut Fl_Dial, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -507,6 +552,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Roller;
+}
+extern "C" {
+    pub fn Fl_Roller_x(arg1: *mut Fl_Roller) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Roller_y(arg1: *mut Fl_Roller) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Roller_width(arg1: *mut Fl_Roller) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Roller_height(arg1: *mut Fl_Roller) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Roller_label(arg1: *mut Fl_Roller) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Roller_set_label(arg1: *mut Fl_Roller, title: *const ::std::os::raw::c_char);
@@ -666,6 +726,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Scrollbar;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_x(arg1: *mut Fl_Scrollbar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_y(arg1: *mut Fl_Scrollbar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_width(arg1: *mut Fl_Scrollbar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_height(arg1: *mut Fl_Scrollbar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_label(arg1: *mut Fl_Scrollbar) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_label(arg1: *mut Fl_Scrollbar, title: *const ::std::os::raw::c_char);
@@ -828,6 +903,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Value_Slider;
+}
+extern "C" {
+    pub fn Fl_Value_Slider_x(arg1: *mut Fl_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Slider_y(arg1: *mut Fl_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Slider_width(arg1: *mut Fl_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Slider_height(arg1: *mut Fl_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Slider_label(arg1: *mut Fl_Value_Slider) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_label(

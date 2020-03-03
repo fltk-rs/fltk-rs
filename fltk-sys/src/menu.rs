@@ -35,6 +35,21 @@ extern "C" {
     ) -> *mut Fl_Menu_Bar;
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_x(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_y(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_width(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_height(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_label(arg1: *mut Fl_Menu_Bar) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Menu_Bar_set_label(arg1: *mut Fl_Menu_Bar, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -177,6 +192,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Menu_Button;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_x(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_y(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_width(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_height(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_label(arg1: *mut Fl_Menu_Button) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_label(
@@ -327,6 +357,21 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Choice;
+}
+extern "C" {
+    pub fn Fl_Choice_x(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_y(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_width(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_height(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_label(arg1: *mut Fl_Choice) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Choice_set_label(arg1: *mut Fl_Choice, title: *const ::std::os::raw::c_char);

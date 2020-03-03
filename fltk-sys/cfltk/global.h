@@ -13,6 +13,11 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   typedef struct widget widget;                                                \
   widget *widget##_new(int x, int y, int width, int height,                    \
                        const char *title);                                     \
+  int widget##_x(widget *);                                                    \
+  int widget##_y(widget *);                                                    \
+  int widget##_width(widget *);                                                \
+  int widget##_height(widget *);                                               \
+  const char *widget##_label(widget *);                                        \
   void widget##_set_label(widget *, const char *title);                        \
   void widget##_redraw(widget *);                                              \
   void widget##_show(widget *);                                                \
@@ -112,6 +117,11 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
                        const char *title) {                                    \
     return new widget(x, y, width, height, title);                             \
   }                                                                            \
+  int widget##_x(widget *self) { return self->x(); }                           \
+  int widget##_y(widget *self) { return self->y(); }                           \
+  int widget##_width(widget *self) { return self->w(); }                       \
+  int widget##_height(widget *self) { return self->h(); }                      \
+  const char *widget##_label(widget *self) { return self->label(); }           \
   void widget##_set_label(widget *self, const char *title) {                   \
     self->copy_label(title);                                                   \
   }                                                                            \

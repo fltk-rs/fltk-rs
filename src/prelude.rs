@@ -10,11 +10,11 @@ pub trait WidgetTrait {
     fn redraw(&mut self);
     fn show(&mut self);
     fn hide(&mut self);
-    // fn x(&self) -> i32;
-    // fn y(&self) -> i32;
-    // fn width(&self) -> i32;
-    // fn height(&self) -> i32;
-    // fn label(&self) -> String;
+    fn x(&self) -> i32;
+    fn y(&self) -> i32;
+    fn width(&self) -> i32;
+    fn height(&self) -> i32;
+    fn label(&self) -> String;
     fn as_widget_ptr(&self) -> *mut Fl_Widget;
     fn activate(&mut self);
     fn deactivate(&mut self);

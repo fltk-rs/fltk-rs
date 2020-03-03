@@ -30,6 +30,21 @@ extern "C" {
     ) -> *mut Fl_Output;
 }
 extern "C" {
+    pub fn Fl_Output_x(arg1: *mut Fl_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Output_y(arg1: *mut Fl_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Output_width(arg1: *mut Fl_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Output_height(arg1: *mut Fl_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Output_label(arg1: *mut Fl_Output) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn Fl_Output_set_label(arg1: *mut Fl_Output, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
@@ -237,6 +252,23 @@ extern "C" {
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Multiline_Output;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_x(arg1: *mut Fl_Multiline_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_y(arg1: *mut Fl_Multiline_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_width(arg1: *mut Fl_Multiline_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_height(arg1: *mut Fl_Multiline_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_label(
+        arg1: *mut Fl_Multiline_Output,
+    ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_label(
