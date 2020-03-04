@@ -1,7 +1,7 @@
 # fltk-rs
 
 Rust bindings for the FLTK GUI library.
-Still very barebones, undocumented, untested and not at all production ready! Segfaults on release builds!
+Still very barebones, undocumented, untested and not at all production ready!
 
 The FLTK gui library is a crossplatform lightweight C++ library which can be linked to statically (LGPL) to produce small and fast binaries. 
 
