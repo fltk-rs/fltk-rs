@@ -24,7 +24,7 @@ fn main() {
             if editor.value() != "" {
                 let x = choice("File unsaved, Do you wish to continue?", "Yes", "No!", "");
                 if x == 0 {
-                    editor.set_value("");
+                    editor.set_value("");                    
                 }
             }
         },
@@ -91,7 +91,7 @@ fn main() {
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
-        &mut || println!(" "),
+        &mut || fl::paste(editor),
     );
 
     menu.add("Help/About", 0, MenuFlag::Normal, &mut || {

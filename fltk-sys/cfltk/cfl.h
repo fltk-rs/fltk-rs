@@ -19,8 +19,7 @@ int Fl_event_state(void);
 int Fl_screen_h(void);
 int Fl_screen_w(void);
 // void *Fl_belowmouse(void);
-
-// void Fl_paste(void *);
+void Fl_paste(void *);
 
 #ifdef __cplusplus
 }

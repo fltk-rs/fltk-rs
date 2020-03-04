@@ -39,3 +39,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_screen_w() -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_paste(arg1: *mut ::std::os::raw::c_void);
+}

@@ -177,6 +177,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
+        impl Copy for #name {}
 
         impl WidgetTrait for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
@@ -236,8 +237,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn label(&self) -> String {
                 unsafe {
-                    ffi::CStr::from_ptr(
-                        #label(self._inner)).to_str().unwrap().to_owned()
+                    ffi::CString::from_raw(#label(self._inner) as *mut raw::c_char).into_string().unwrap()
                 }
             }
 
@@ -399,21 +399,21 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             //     }
             // }
 
-        //     fn set_callback<F>(&mut self, cb: &mut F) where F: FnMut() {
-        //         unsafe {
-        //             unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)
-        //             where
-        //                 F: FnMut(),
-        //             {
-        //                 let closure: &mut F = &mut *(data as *mut F);
-        //                 (*closure)();
-        //             }
-        //             let a: *mut F = mem::transmute(cb);
-        //             let data: *mut raw::c_void = mem::transmute(a);
-        //             let callback: fltk_sys::widget::Fl_Callback = Some(shim::<F>);
-        //             fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
-        //         }
-        //     }
+            // fn set_callback<F>(&mut self, cb: &mut F) where F: FnMut() {
+            //     unsafe {
+            //         unsafe extern "C" fn shim<F>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)
+            //         where
+            //             F: FnMut(),
+            //         {
+            //             let closure: &mut F = &mut *(data as *mut F);
+            //             (*closure)();
+            //         }
+            //         let a: *mut F = mem::transmute(cb);
+            //         let data: *mut raw::c_void = mem::transmute(a);
+            //         let callback: fltk_sys::widget::Fl_Callback = Some(shim::<F>);
+            //         fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+            //     }
+            // }
         }
     };
     gen.into()
@@ -559,7 +559,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl InputTrait for #name {
             fn value(&self) -> String {
                 unsafe {
-                    ffi::CStr::from_ptr(#value(self._inner)).to_str().unwrap().to_owned()
+                    ffi::CString::from_raw(#value(self._inner) as *mut raw::c_char).into_string().unwrap()
                 }
             }
             fn set_value(&self, val: &str) {

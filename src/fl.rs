@@ -87,14 +87,14 @@ pub fn screen_size() -> (f64, f64) {
     }
 }
 
-// pub fn paste<T>(widget: T)
-// where
-//     T: WidgetTrait + InputTrait,
-// {
-//     unsafe {
-//         fltk_sys::fl::Fl_paste(widget.as_widget_ptr() as *mut raw::c_void);
-//     }
-// }
+pub fn paste<T>(widget: T)
+where
+    T: WidgetTrait + InputTrait,
+{
+    unsafe {
+        fltk_sys::fl::Fl_paste(widget.as_widget_ptr() as *mut raw::c_void);
+    }
+}
 
 pub fn set_callback<W>(widget: &W, cb: &mut dyn FnMut())
 where
