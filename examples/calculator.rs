@@ -84,57 +84,57 @@ fn main() {
         but.set_color(Color::Light2);
     }
 
-    but_ce.clone().set_callback(&mut || {
+    fl::set_callback(&but_ce ,Box::new( || {
         txt.clear();
         old_val.clear();
         txt.push('0');
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but_c.clone().set_callback(&mut || {
+    fl::set_callback(&but_c ,Box::new( || {
         txt.clear();
         txt.push('0');
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but_back.clone().set_callback(&mut || {
+    fl::set_callback(&but_back ,Box::new( || {
         txt.pop();
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but_div.clone().set_callback(&mut || {
+    fl::set_callback(&but_div ,Box::new( || {
         old_val = out.value();
         op = '/';
         txt.clear();
         txt.push('0');
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but_mul.clone().set_callback(&mut || {
+    fl::set_callback(&but_mul ,Box::new( || {
         old_val = out.value();
         op = 'x';
         txt.clear();
         txt.push('0');
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but_sub.clone().set_callback(&mut || {
+    fl::set_callback(&but_sub ,Box::new( || {
         old_val = out.value();
         op = '-';
         txt.clear();
         txt.push('0');
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but_add.clone().set_callback(&mut || {
+    fl::set_callback(&but_add ,Box::new( || {
         old_val = out.value();
         op = '+';
         txt.clear();
-        txt.clone().push('0');
+        txt.push('0');
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but_eq.clone().set_callback(&mut || {
+    fl::set_callback(&but_eq ,Box::new( || {
         new_val = out.value();
         let old: f64 = old_val.parse().unwrap();
         let new: f64 = new_val.parse().unwrap();
@@ -149,9 +149,9 @@ fn main() {
         txt.clear();
         txt.push_str(val.to_string().as_str());
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but0.clone().set_callback(&mut || {
+    fl::set_callback(&but0 ,Box::new( || {
         if out.value() == "0" {
             //
         } else {
@@ -163,9 +163,9 @@ fn main() {
             txt.push_str("0");
             out.set_value(txt.as_str());
         }
-    });
+    }));
 
-    but1.clone().set_callback(&mut || {
+    fl::set_callback(&but1 ,Box::new( || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -175,9 +175,9 @@ fn main() {
         }
         txt.push_str("1");
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but2.set_callback(&mut || {
+    fl::set_callback(&but2 ,Box::new( || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -187,9 +187,9 @@ fn main() {
         }
         txt.push_str("2");
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but3.clone().set_callback(&mut || {
+    fl::set_callback(&but3 ,Box::new( || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -199,9 +199,9 @@ fn main() {
         }
         txt.push_str("3");
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but4.clone().set_callback(&mut || {
+    fl::set_callback(&but4 ,Box::new( || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -211,9 +211,9 @@ fn main() {
         }
         txt.push_str("4");
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but5.clone().set_callback(&mut || {
+    fl::set_callback(&but5 ,Box::new( || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -223,9 +223,9 @@ fn main() {
         }
         txt.push_str("5");
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but6.clone().set_callback(&mut || {
+    fl::set_callback(&but6 ,Box::new( || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -235,9 +235,9 @@ fn main() {
         }
         txt.push_str("6");
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but7.clone().set_callback(&mut || {
+    fl::set_callback(&but7 ,Box::new( || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -247,9 +247,9 @@ fn main() {
         }
         txt.push_str("7");
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but8.clone().set_callback(&mut || {
+    fl::set_callback(&but8 ,Box::new( || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -259,9 +259,9 @@ fn main() {
         }
         txt.push_str("8");
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but9.clone().set_callback(&mut || {
+    fl::set_callback(&but9 ,Box::new( || {
         if out.value() == "0" {
             txt.clear();
         }
@@ -271,20 +271,20 @@ fn main() {
         }
         txt.push_str("9");
         out.set_value(txt.as_str());
-    });
+    }));
 
-    but_dot.clone().set_callback(&mut || {
+    fl::set_callback(&but_dot ,Box::new( || {
         if op == '=' {
             txt.clear();
             op = '_';
             out.set_value("0.");
             txt.push_str("0.");
         }
-        if !out.value().contains(".") && !txt.contains(".") {
+        if !txt.contains(".") {
             txt.push_str(".");
             out.set_value(txt.as_str());
         }
-    });
+    }));
 
     wind.end();
     wind.show();

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::valuator::*;
-use std::{ffi, mem, os::raw};
+use std::{ffi::CString, mem, os::raw};
 
 #[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
 pub struct Slider {

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::group::*;
-use std::{ffi, mem, os::raw};
+use std::{ffi::CString, mem, os::raw};
 
 #[derive(WidgetTrait, GroupTrait, Debug, Clone)]
 pub struct Group {
@@ -43,17 +43,13 @@ impl TextEditor {
     }
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
-            let txt = ffi::CString::new(txt).unwrap();
+            let txt = CString::new(txt).unwrap();
             Fl_Text_Editor_set_text(self._inner, txt.into_raw() as *const raw::c_char)
         }
     }
     pub fn text(&self) -> String {
         unsafe {
-//            ffi::CStr::from_ptr(Fl_Text_Editor_text(self._inner))
-//                .to_str()
-//                .unwrap()
-//                .to_owned()
-            ffi::CString::from_raw(Fl_Text_Editor_text(self._inner) as *mut raw::c_char).to_str().unwrap().to_owned()
+            CString::from_raw(Fl_Text_Editor_text(self._inner) as *mut raw::c_char).into_string().unwrap()
         }
     }
 }
@@ -61,16 +57,15 @@ impl TextEditor {
 impl TextDisplay {
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
-            let txt = ffi::CString::new(txt).unwrap();
+            let txt = CString::new(txt).unwrap();
             Fl_Text_Display_set_text(self._inner, txt.as_ptr() as *const raw::c_char)
         }
     }
     pub fn text(&self) -> String {
         unsafe {
-            ffi::CStr::from_ptr(Fl_Text_Display_text(self._inner))
-                .to_str()
+            CString::from_raw(Fl_Text_Display_text(self._inner) as *mut raw::c_char)
+                .into_string()
                 .unwrap()
-                .to_owned()
         }
     }
     pub fn init(&mut self) {

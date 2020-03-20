@@ -36,18 +36,16 @@ impl FileDialog {
     }
     pub fn filename(&self) -> String {
         unsafe {
-            ffi::CStr::from_ptr(Fl_Native_File_Chooser_filename(self._inner))
-                .to_str()
+            ffi::CString::from_raw(Fl_Native_File_Chooser_filename(self._inner) as *mut raw::c_char)
+                .into_string()
                 .unwrap()
-                .to_owned()
         }
     }
     pub fn directory(&self) -> String {
         unsafe {
-            ffi::CStr::from_ptr(Fl_Native_File_Chooser_directory(self._inner))
-                .to_str()
+            ffi::CString::from_raw(Fl_Native_File_Chooser_directory(self._inner) as *mut raw::c_char)
+                .into_string()
                 .unwrap()
-                .to_owned()
         }
     }
     pub fn set_directory(&mut self, dir: &str) {
@@ -84,10 +82,9 @@ impl FileDialog {
     }
     pub fn errmsg(&self) -> String {
         unsafe {
-            ffi::CStr::from_ptr(Fl_Native_File_Chooser_errmsg(self._inner))
-                .to_str()
+            ffi::CString::from_raw(Fl_Native_File_Chooser_errmsg(self._inner) as *mut raw::c_char)
+                .into_string()
                 .unwrap()
-                .to_owned()
         }
     }
 }
@@ -125,13 +122,12 @@ pub fn input(txt: &str, deflt: &str) -> String {
     unsafe {
         let txt = ffi::CString::new(txt).unwrap();
         let deflt = ffi::CString::new(deflt).unwrap();
-        ffi::CStr::from_ptr(cfl_input(
+        ffi::CString::from_raw(cfl_input(
             txt.as_ptr() as *const raw::c_char,
             deflt.as_ptr() as *const raw::c_char,
-        ))
-        .to_str()
+        ) as *mut raw::c_char)
+        .into_string()
         .unwrap()
-        .to_owned()
     }
 }
 
@@ -139,12 +135,11 @@ pub fn password(txt: &str, deflt: &str) -> String {
     unsafe {
         let txt = ffi::CString::new(txt).unwrap();
         let deflt = ffi::CString::new(deflt).unwrap();
-        ffi::CStr::from_ptr(cfl_password(
+        ffi::CString::from_raw(cfl_password(
             txt.as_ptr() as *const raw::c_char,
             deflt.as_ptr() as *const raw::c_char,
-        ))
-        .to_str()
+        ) as *mut raw::c_char)
+        .into_string()
         .unwrap()
-        .to_owned()
     }
 }

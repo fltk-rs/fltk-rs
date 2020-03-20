@@ -4,7 +4,6 @@ pub use crate::menu::*;
 use fltk_sys::widget::*;
 
 pub trait WidgetTrait {
-    // fn new() -> Self;
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
     fn set_label(&mut self, title: &str);
     fn redraw(&mut self);
@@ -41,9 +40,6 @@ pub trait WidgetTrait {
     fn clear_changed(&mut self);
     fn align(&self) -> Align;
     fn set_align(&mut self, align: Align);
-    fn set_callback(&mut self, cb: &mut dyn FnMut());
-    // fn set_callback(&mut self, cb: Box<dyn FnMut()>);
-    // fn set_callback<F>(&mut self, cb: &mut F) where F: FnMut();
 }
 
 pub trait GroupTrait: WidgetTrait {
@@ -90,10 +86,6 @@ pub trait InputTrait {
 }
 
 pub trait MenuTrait {
-    // fn add<F: FnMut() + 'static>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F);
-    fn add(&mut self, name: &str, shortcut: i32, flag: crate::menu::MenuFlag, cb: &mut dyn FnMut());
-    // fn add<F>(&mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: F) where F: FnMut();
-    // fn add(&mut self, name: &str, shortcut: i32, flag: crate::menu::MenuFlag, cb: Box<dyn FnMut() + 'static>);
     fn get_item(&self, name: &str) -> crate::menu::MenuItem;
     fn text_font(&self) -> Font;
     fn set_text_font(&mut self, c: Font);
@@ -101,6 +93,7 @@ pub trait MenuTrait {
     fn set_text_size(&mut self, c: usize);
     fn text_color(&self) -> Color;
     fn set_text_color(&mut self, c: Color);
+    fn add<'a>(&'a mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>);
 }
 
 pub trait ValuatorTrait {

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::window::*;
-use std::{ffi, mem, os::raw};
+use std::{ffi::CString, mem, os::raw};
 
 #[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
 pub struct Window {

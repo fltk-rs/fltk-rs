@@ -20,7 +20,7 @@ fn main() {
         "File/New...",
         Shortcut::Ctrl + 'n',
         MenuFlag::Normal,
-        &mut || {
+        Box::new( || {
             if editor.value() != "" {
                 let x = choice("File unsaved, Do you wish to continue?", "Yes", "No!", "");
                 if x == 0 {
@@ -28,13 +28,13 @@ fn main() {
                 }
             }
         },
-    );
+    ));
 
     menu.add(
         "File/Open...",
         Shortcut::Ctrl + 'o',
         MenuFlag::Normal,
-        &mut || {
+        Box::new( || {
             let mut dlg = FileDialog::new(FileDialogType::BrowseFile);
             dlg.set_option(FileDialogOptions::NoOptions);
             dlg.show();
@@ -44,19 +44,19 @@ fn main() {
                 false => alert("File does not exist!"),
             }
         },
-    );
+    ));
 
     menu.add(
         "File/Save",
         Shortcut::Ctrl + 's',
         MenuFlag::Normal,
-        &mut || match path::Path::new(&filename).exists() {
+        Box::new( || match path::Path::new(&filename).exists() {
             true => fs::write(&filename, editor.value()).unwrap(),
             false => alert("Please specify a file!"),
         },
-    );
+    ));
 
-    menu.add("File/Save as...", 0, MenuFlag::MenuDivider, &mut || {
+    menu.add("File/Save as...", 0, MenuFlag::MenuDivider, Box::new( || {
         let mut dlg = FileDialog::new(FileDialogType::BrowseSaveFile);
         dlg.set_option(FileDialogOptions::SaveAsConfirm);
         dlg.show();
@@ -65,38 +65,38 @@ fn main() {
             true => fs::write(&filename, editor.value()).unwrap(),
             false => alert("Please specify a file!"),
         }
-    });
+    }));
 
-    menu.add("File/Quit", 0, MenuFlag::Normal, &mut || {
+    menu.add("File/Quit", 0, MenuFlag::Normal, Box::new( || {
         std::process::exit(0);
-    });
+    }));
 
     menu.add(
         "Edit/Cut",
         Shortcut::Ctrl + 'x',
         MenuFlag::Normal,
-        &mut || editor.cut(),
-    );
+        Box::new( || editor.cut(),
+    ));
 
     menu.add(
         "Edit/Copy",
         Shortcut::Ctrl + 'c',
         MenuFlag::Normal,
-        &mut || {
+        Box::new( || {
             editor.copy();
         },
-    );
+    ));
 
     menu.add(
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
-        &mut || fl::paste(editor),
-    );
+        Box::new( || fl::paste(editor),
+    ));
 
-    menu.add("Help/About", 0, MenuFlag::Normal, &mut || {
+    menu.add("Help/About", 0, MenuFlag::Normal, Box::new( || {
         message("This is an example application written in Rust and using the FLTK Gui library.")
-    });
+    }));
 
     let mut x = menu.get_item("Help/About");
     x.set_label_color(Color::Red);

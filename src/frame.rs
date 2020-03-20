@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::frame::*;
-use std::{ffi, mem, os::raw};
+use std::{ffi::CString, mem, os::raw};
 
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct Frame {

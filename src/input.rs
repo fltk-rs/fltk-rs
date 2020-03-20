@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::input::*;
-use std::{ffi, mem, os::raw};
+use std::{ffi::CString, mem, os::raw};
 
 #[derive(WidgetTrait, InputTrait, Debug, Clone)]
 pub struct Input {
