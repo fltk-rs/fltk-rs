@@ -160,8 +160,6 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         name.span(),
     );
 
-    let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
-
     let gen = quote! {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
@@ -352,6 +350,20 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn set_align(&mut self, align: Align) {
                 unsafe { #set_align(self._inner, align as i32) }
+            }
+
+            fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
+                unsafe {
+                    unsafe extern "C" fn shim<'a>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+                        let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
+                        let f: &mut dyn FnMut() = &mut **a;
+                        f();
+                    }
+                    let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = mem::transmute(a);
+                    let callback: fltk_sys::widget::Fl_Callback = Some(shim);
+                    fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+                }
             }
         }
     };

@@ -40,6 +40,7 @@ pub trait WidgetTrait {
     fn clear_changed(&mut self);
     fn align(&self) -> Align;
     fn set_align(&mut self, align: Align);
+    fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
 }
 
 pub trait GroupTrait: WidgetTrait {
