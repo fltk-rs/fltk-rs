@@ -12,7 +12,7 @@ Just add the following to your project's Cargo.toml file.
 fltk = "0.1.4"
 ```
 An example hello world:
-```
+```rust
 use fltk::{frame::*, window::*};
 
 fn main() {
