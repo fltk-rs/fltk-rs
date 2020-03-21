@@ -36,7 +36,7 @@ fn main() {
                  .define("OPTION_BUILD_EXAMPLES","OFF")
                  .define("OPTION_LARGE_FILE","ON")
                  .define("OPTION_USE_SYSTEM_ZLIB","ON")
-                 .define("OPTION_USE_SYSTEM_LIBPNG","ON")
+                 .define("OPTION_USE_SYSTEM_LIBPNG","OFF")
                  .define("OPTION_USE_SYSTEM_LIBJPEG","ON")
                  .define("OPTION_BUILD_HTML_DOCUMENTATION","OFF")
                  .define("OPTION_BUILD_PDF_DOCUMENTATION","OFF")
