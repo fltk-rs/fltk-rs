@@ -91,7 +91,7 @@ fn main() {
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
-        Box::new( || fl::paste(editor),
+        Box::new( || fl::paste(editor.clone()),
     ));
 
     menu.add("Help/About", 0, MenuFlag::Normal, Box::new( || {

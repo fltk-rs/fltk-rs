@@ -47,7 +47,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_clear_changed(widget *);                                       \
   int widget##_align(widget *);                                                \
   void widget##_set_align(widget *, int typ);                                  \
-  void widget##_delete(widget *);
+  void widget##_delete(widget *);                                              \
+  void widget##_set_image(widget *, void *);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -112,10 +113,17 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   double widget##_clamp(widget *, double);                                     \
   double widget##_increment(widget *, double, int);
 
+#define IMAGE_DECLARE(image)                                                   \
+  typedef struct image image;                                                  \
+  image *image##_new(const char *filename);                                    \
+  void image##_draw(image *, int X, int Y, int W, int H);                      \
+  int image##_width(image *);                                                  \
+  int image##_height(image *);
+
 #define WIDGET_DEFINE(widget)                                                  \
   widget *widget##_new(int x, int y, int width, int height,                    \
                        const char *title) {                                    \
-    return new widget(x, y, width, height, title);                             \
+    return new (std::nothrow) widget(x, y, width, height, title);              \
   }                                                                            \
   int widget##_x(widget *self) { return self->x(); }                           \
   int widget##_y(widget *self) { return self->y(); }                           \
@@ -165,7 +173,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_clear_changed(widget *self) { self->clear_changed(); }         \
   int widget##_align(widget *self) { return self->align(); }                   \
   void widget##_set_align(widget *self, int typ) { self->align(typ); }         \
-  void widget##_delete(widget *self) { delete self; }
+  void widget##_delete(widget *self) { delete self; }                          \
+  void widget##_set_image(widget *self, void *image) {                         \
+    self->image((Fl_Image *)image);                                            \
+  }
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \
@@ -276,6 +287,16 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   double widget##_increment(widget *self, double a, int b) {                   \
     return self->increment(a, b);                                              \
   }
+
+#define IMAGE_DEFINE(image)                                                    \
+  image *image##_new(const char *filename) {                                   \
+    return new (std::nothrow) image(filename);                                 \
+  }                                                                            \
+  void image##_draw(image *self, int X, int Y, int W, int H) {                 \
+    self->draw(X, Y, W, H);                                                    \
+  }                                                                            \
+  int image##_width(image *self) { return self->w(); }                         \
+  int image##_height(image *self) { return self->h(); }
 
 #ifdef __cplusplus
 }

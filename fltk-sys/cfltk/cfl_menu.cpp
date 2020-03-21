@@ -3,6 +3,7 @@
 #include <Fl/Fl_Menu_Bar.H>
 #include <Fl/Fl_Menu_Button.H>
 #include <Fl/Fl_Menu_Item.H>
+#include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>
 

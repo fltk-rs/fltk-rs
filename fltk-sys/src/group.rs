@@ -141,6 +141,9 @@ extern "C" {
     pub fn Fl_Group_delete(arg1: *mut Fl_Group);
 }
 extern "C" {
+    pub fn Fl_Group_set_image(arg1: *mut Fl_Group, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
 }
 extern "C" {
@@ -270,6 +273,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_delete(arg1: *mut Fl_Pack);
+}
+extern "C" {
+    pub fn Fl_Pack_set_image(arg1: *mut Fl_Pack, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
@@ -403,6 +409,9 @@ extern "C" {
     pub fn Fl_Scroll_delete(arg1: *mut Fl_Scroll);
 }
 extern "C" {
+    pub fn Fl_Scroll_set_image(arg1: *mut Fl_Scroll, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Scroll_begin(self_: *mut Fl_Scroll);
 }
 extern "C" {
@@ -534,6 +543,9 @@ extern "C" {
     pub fn Fl_Tabs_delete(arg1: *mut Fl_Tabs);
 }
 extern "C" {
+    pub fn Fl_Tabs_set_image(arg1: *mut Fl_Tabs, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -663,6 +675,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_delete(arg1: *mut Fl_Tile);
+}
+extern "C" {
+    pub fn Fl_Tile_set_image(arg1: *mut Fl_Tile, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
@@ -805,6 +820,9 @@ extern "C" {
     pub fn Fl_Text_Display_delete(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
+    pub fn Fl_Text_Display_set_image(arg1: *mut Fl_Text_Display, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Text_Display_begin(self_: *mut Fl_Text_Display);
 }
 extern "C" {
@@ -940,6 +958,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_delete(arg1: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_image(arg1: *mut Fl_Text_Editor, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Text_Editor_begin(self_: *mut Fl_Text_Editor);

@@ -20,6 +20,7 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_menu.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_dialog.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_valuator.h");
+    println!("cargo:rerun-if-changed=cfltk/cfl_image.h");
     println!("cargo:rerun-if-changed=cfltk/global.h");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
     
@@ -53,8 +54,16 @@ fn main() {
     println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
     if cfg!(debug_assertions) && cfg!(target_env = "msvc") {
         println!("cargo:rustc-link-lib=static=fltkd");
+        println!("cargo:rustc-link-lib=static=fltk_imagesd");
+        println!("cargo:rustc-link-lib=static=fltk_jpegd");
+        println!("cargo:rustc-link-lib=static=fltk_pngd");
+        println!("cargo:rustc-link-lib=static=fltk_zd");
     } else {
         println!("cargo:rustc-link-lib=static=fltk");
+        println!("cargo:rustc-link-lib=static=fltk_images");
+        println!("cargo:rustc-link-lib=static=fltk_jpeg");
+        println!("cargo:rustc-link-lib=static=fltk_png");
+        println!("cargo:rustc-link-lib=static=fltk_z");
     }
     
     match target_os.unwrap().as_str() {

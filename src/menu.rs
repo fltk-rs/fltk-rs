@@ -49,7 +49,7 @@ impl MenuItem {
     pub fn set_label(&mut self, txt: &str) {
         unsafe {
             let txt = std::ffi::CString::new(txt).unwrap();
-            Fl_Menu_Item_set_label(self._inner, txt.as_ptr() as *const raw::c_char);
+            Fl_Menu_Item_set_label(self._inner, txt.into_raw() as *const raw::c_char);
         }
     }
     pub fn label_type<T: WidgetType>(&self) -> T {

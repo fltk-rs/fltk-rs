@@ -2,6 +2,7 @@ pub use crate::enums::*;
 pub use crate::fl;
 pub use crate::menu::*;
 use fltk_sys::widget::*;
+use std::os::raw;
 
 pub trait WidgetTrait {
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
@@ -40,6 +41,7 @@ pub trait WidgetTrait {
     fn clear_changed(&mut self);
     fn align(&self) -> Align;
     fn set_align(&mut self, align: Align);
+    fn set_image<Image: ImageTrait>(&mut self, image: Image);
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
 }
 
@@ -113,4 +115,12 @@ pub trait ValuatorTrait {
     fn round(&self, arg2: f64) -> f64;
     fn clamp(&self, arg2: f64) -> f64;
     fn increment(&mut self, arg2: f64, arg3: i32) -> f64;
+}
+
+pub trait ImageTrait {
+    fn new(path: std::path::PathBuf) -> Self;
+    fn draw(&mut self, x: i32, y: i32, width: i32, height: i32);
+    fn width(&self) -> i32;
+    fn height(&self) -> i32;
+    fn as_ptr(&self) -> *mut raw::c_void;
 }

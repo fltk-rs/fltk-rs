@@ -1,9 +1,11 @@
-use fltk::{frame::*, window::*};
+use fltk::{frame::*, image::*, window::*};
+use std::path::PathBuf;
 
 fn main() {
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
-    let _frame = Frame::new(20, 10, 360, 260, "");
-
+    let mut frame = Frame::new(0, 0, 400, 300, "");
+    let image = SvgImage::new(PathBuf::from("screenshots/RustLogo.svg"));
+    frame.set_image(image);
     wind.end();
     wind.show();
     fl::run();

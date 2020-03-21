@@ -8,4 +8,5 @@ bindgen fltk-sys/cfltk/cfl_window.h -o fltk-sys/src/window.rs
 bindgen fltk-sys/cfltk/cfl_menu.h -o fltk-sys/src/menu.rs
 bindgen fltk-sys/cfltk/cfl_dialog.h -o fltk-sys/src/dialog.rs
 bindgen fltk-sys/cfltk/cfl_valuator.h -o fltk-sys/src/valuator.rs
+bindgen fltk-sys/cfltk/cfl_image.h -o fltk-sys/src/image.rs
 bindgen fltk-sys/cfltk/cfl.h -o fltk-sys/src/fl.rs

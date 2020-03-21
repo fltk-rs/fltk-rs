@@ -16,6 +16,21 @@ fn get_fl_name(txt: String) -> String {
     if txt == "Frame" {
         return String::from("Fl_Box");
     }
+    if txt == "JpegImage" {
+        return String::from("Fl_JPEG_Image");
+    }
+    if txt == "PngImage" {
+        return String::from("Fl_PNG_Image");
+    }
+    if txt == "BmpImage" {
+        return String::from("Fl_BMP_Image");
+    }
+    if txt == "SvgImage" {
+        return String::from("Fl_SVG_Image");
+    }
+    if txt == "GifImage" {
+        return String::from("Fl_GIF_Image");
+    }
 
     let mut fl_name = String::from("Fl");
     for c in txt.chars() {
@@ -69,6 +84,12 @@ pub fn menu_trait_macro(input: TokenStream) -> TokenStream {
 pub fn valuator_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_valuator_trait(&ast)
+}
+
+#[proc_macro_derive(ImageTrait)]
+pub fn image_trait_macro(input: TokenStream) -> TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_image_trait(&ast)
 }
 
 fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
@@ -159,12 +180,12 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_align").as_str(),
         name.span(),
     );
+    let set_image = Ident::new(
+        format!("{}_{}", name_str, "set_image").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
-        unsafe impl Send for #name {}
-        unsafe impl Sync for #name {}
-        impl Copy for #name {}
-
         impl WidgetTrait for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
@@ -259,7 +280,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     #set_tooltip(
                         self._inner,
-                        txt.as_ptr(),
+                        txt.into_raw() as *mut raw::c_char,
                     )
                 }
             }
@@ -350,6 +371,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn set_align(&mut self, align: Align) {
                 unsafe { #set_align(self._inner, align as i32) }
+            }
+
+            fn set_image<Image: ImageTrait>(&mut self, image: Image) {
+                unsafe { #set_image(self._inner, image.as_ptr()) }
             }
 
             fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
@@ -552,19 +577,19 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn replace(&mut self, beg: usize, end: usize, val: &str) {
                 let val = CString::new(val).unwrap();
                 unsafe {
-                    #replace(self._inner, beg as i32, end as i32, val.as_ptr() as *const raw::c_char, 0);
+                    #replace(self._inner, beg as i32, end as i32, val.into_raw() as *const raw::c_char, 0);
                 }
             }
             fn insert(&mut self, txt: &str) {
                 let txt = CString::new(txt).unwrap();
                 unsafe {
-                    #insert(self._inner, txt.as_ptr() as *const raw::c_char, 0);
+                    #insert(self._inner, txt.into_raw() as *const raw::c_char, 0);
                 }
             }
             fn append(&mut self, txt: &str) {
                 let txt = CString::new(txt).unwrap();
                 unsafe {
-                    #append(self._inner,  txt.as_ptr() as *const raw::c_char, 0, 0);
+                    #append(self._inner,  txt.into_raw() as *const raw::c_char, 0, 0);
                 }
             }
             fn copy(&mut self) {
@@ -686,7 +711,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: Fl_Callback = Some(shim);
-                    #add(self._inner, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
+                    #add(self._inner, temp.into_raw() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }
 
@@ -697,7 +722,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     _inner: unsafe {
                         #get_item(
                             self._inner,
-                            name.as_ptr() as *const raw::c_char,
+                            name.into_raw() as *const raw::c_char,
                         )
                     },
                 }
@@ -857,7 +882,7 @@ fn impl_valuator_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn format(&mut self, arg2: &str) {
                 unsafe {
                     let arg2 = CString::new(arg2).unwrap();
-                    #format(self._inner, arg2.as_ptr() as *mut raw::c_char);
+                    #format(self._inner, arg2.into_raw() as *mut raw::c_char);
                 }
             }
 
@@ -877,6 +902,53 @@ fn impl_valuator_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn increment(&mut self, arg2: f64, arg3: i32) -> f64 {
                 unsafe {
                     #increment(self._inner, arg2, arg3)
+                }
+            }
+        }
+    };
+    gen.into()
+}
+
+fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let name_str = get_fl_name(name.to_string());
+
+    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
+    let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
+    let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
+    let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
+
+    let gen = quote! {
+        impl ImageTrait for #name {
+            fn new(path: std::path::PathBuf) -> #name {
+                unsafe { 
+                    let temp = path.into_os_string().into_string().unwrap();
+                    let temp = std::ffi::CString::new(temp.as_str()).unwrap();
+                    #name {
+                        _inner: #new(temp.into_raw() as *const raw::c_char), 
+                    }
+                }
+            }
+
+            fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
+                unsafe { #draw(self._inner, arg2, arg3, arg4, arg5) }
+            }
+
+            fn width(&self) -> i32 {
+                unsafe {
+                    #width(self._inner)
+                }
+            }
+
+            fn height(&self) -> i32 {
+                unsafe {
+                    #height(self._inner)
+                }
+            }
+
+            fn as_ptr(&self) -> *mut raw::c_void {
+                unsafe {
+                    std::mem::transmute(self._inner)
                 }
             }
         }

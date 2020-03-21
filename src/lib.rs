@@ -11,6 +11,7 @@ pub mod prelude;
 pub mod valuator;
 pub mod widget;
 pub mod window;
+pub mod image;
 
 #[macro_use]
 extern crate fltk_derive;
@@ -19,7 +20,7 @@ extern crate fltk_derive;
 mod tests {
     #[test]
     fn it_works() {
-        let x = std::ffi::CString::new("hello").unwrap();
-        let x = x.to_str().unwrap().to_owned();
+        let x = std::path::PathBuf::new("fdsg");
+        let x = x.to_str().unwrap().as_ptr();
     }
 }

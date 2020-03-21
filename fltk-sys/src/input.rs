@@ -141,6 +141,9 @@ extern "C" {
     pub fn Fl_Input_delete(arg1: *mut Fl_Input);
 }
 extern "C" {
+    pub fn Fl_Input_set_image(arg1: *mut Fl_Input, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Input_set_value(
         arg1: *mut Fl_Input,
         arg2: *const ::std::os::raw::c_char,
@@ -363,6 +366,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_delete(arg1: *mut Fl_Int_Input);
+}
+extern "C" {
+    pub fn Fl_Int_Input_set_image(arg1: *mut Fl_Int_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Int_Input_set_value(
@@ -593,6 +599,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_delete(arg1: *mut Fl_Float_Input);
+}
+extern "C" {
+    pub fn Fl_Float_Input_set_image(arg1: *mut Fl_Float_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Float_Input_set_value(
@@ -841,6 +850,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Input_delete(arg1: *mut Fl_Multiline_Input);
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_set_image(
+        arg1: *mut Fl_Multiline_Input,
+        arg2: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_value(

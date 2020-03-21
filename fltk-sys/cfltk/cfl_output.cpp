@@ -3,6 +3,7 @@
 #include <Fl/Fl_Multiline_Output.H>
 #include <Fl/Fl_Text_Display.H>
 #include <Fl/Fl_Value_Output.H>
+#include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>
 

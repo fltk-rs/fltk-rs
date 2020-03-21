@@ -1,6 +1,7 @@
 #include "cfl_dialog.h"
 #include <Fl/Fl_Help_Dialog.H>
 #include <Fl/Fl_Native_File_Chooser.H>
+#include <FL/Fl_Image.H>
 #include <Fl/fl_ask.H>
 
 Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {

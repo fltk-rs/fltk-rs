@@ -141,6 +141,9 @@ extern "C" {
     pub fn Fl_Output_delete(arg1: *mut Fl_Output);
 }
 extern "C" {
+    pub fn Fl_Output_set_image(arg1: *mut Fl_Output, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Output_set_value(
         arg1: *mut Fl_Output,
         arg2: *const ::std::os::raw::c_char,
@@ -392,6 +395,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Output_delete(arg1: *mut Fl_Multiline_Output);
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_set_image(
+        arg1: *mut Fl_Multiline_Output,
+        arg2: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_value(

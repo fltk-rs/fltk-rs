@@ -1,7 +1,6 @@
 use fltk::{button::*, group::*, input::*, output::*, valuator::*, window::*};
 
-fn main() {
-    let mut wind = Window::new(100, 100, 500, 200, "Tabs Example");
+fn draw_gallery() {
     let tab = Tabs::new(10, 10, 500 - 20, 200 - 20, "");
     let grp1 = Group::new(10, 35, 500 - 20, 200 - 45, "Buttons");
     let _but1 = Button::new(50, 60, 90, 25, "Button");
@@ -17,6 +16,11 @@ fn main() {
     let _out = Output::new(150, 60, 90, 30, "");
     grp3.end();
     tab.end();
+}
+
+fn main() {
+    let mut wind = Window::new(100, 100, 500, 200, "Tabs Example");
+    draw_gallery();
     wind.end();
     wind.show();
     fl::run();

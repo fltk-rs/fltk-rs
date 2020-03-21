@@ -140,3 +140,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Box_delete(arg1: *mut Fl_Box);
 }
+extern "C" {
+    pub fn Fl_Box_set_image(arg1: *mut Fl_Box, arg2: *mut ::std::os::raw::c_void);
+}

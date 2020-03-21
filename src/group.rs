@@ -58,7 +58,7 @@ impl TextDisplay {
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
             let txt = CString::new(txt).unwrap();
-            Fl_Text_Display_set_text(self._inner, txt.as_ptr() as *const raw::c_char)
+            Fl_Text_Display_set_text(self._inner, txt.into_raw() as *const raw::c_char)
         }
     }
     pub fn text(&self) -> String {

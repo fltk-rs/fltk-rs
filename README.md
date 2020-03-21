@@ -66,6 +66,7 @@ Most common widgets are implemented:
 - Counter
 - Scrollbar
 - Roller
+- Images
 
 The implementation isn't complete no less. Customized event handling is not implemented.
 
@@ -75,7 +76,6 @@ The implementation isn't complete no less. Customized event handling is not impl
 - Complete widget set
 - Better documentation
 - Better testing
-- Add image support
 
 ## Contributions
 

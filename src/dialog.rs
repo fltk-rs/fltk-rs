@@ -52,7 +52,7 @@ impl FileDialog {
         unsafe {
             Fl_Native_File_Chooser_set_directory(
                 self._inner,
-                ffi::CString::new(dir).unwrap().as_ptr(),
+                ffi::CString::new(dir).unwrap().into_raw(),
             )
         }
     }
@@ -92,14 +92,14 @@ impl FileDialog {
 pub fn message(txt: &str) {
     unsafe {
         let txt = ffi::CString::new(txt).unwrap();
-        cfl_message(txt.as_ptr() as *const raw::c_char)
+        cfl_message(txt.into_raw() as *const raw::c_char)
     }
 }
 
 pub fn alert(txt: &str) {
     unsafe {
         let txt = ffi::CString::new(txt).unwrap();
-        cfl_alert(txt.as_ptr() as *const raw::c_char)
+        cfl_alert(txt.into_raw() as *const raw::c_char)
     }
 }
 
@@ -110,10 +110,10 @@ pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> usize {
         let b1 = ffi::CString::new(b1).unwrap();
         let b2 = ffi::CString::new(b2).unwrap();
         cfl_choice(
-            txt.as_ptr() as *const raw::c_char,
-            b0.as_ptr() as *const raw::c_char,
-            b1.as_ptr() as *const raw::c_char,
-            b2.as_ptr() as *const raw::c_char,
+            txt.into_raw() as *const raw::c_char,
+            b0.into_raw() as *const raw::c_char,
+            b1.into_raw() as *const raw::c_char,
+            b2.into_raw() as *const raw::c_char,
         ) as usize
     }
 }
@@ -123,8 +123,8 @@ pub fn input(txt: &str, deflt: &str) -> String {
         let txt = ffi::CString::new(txt).unwrap();
         let deflt = ffi::CString::new(deflt).unwrap();
         ffi::CString::from_raw(cfl_input(
-            txt.as_ptr() as *const raw::c_char,
-            deflt.as_ptr() as *const raw::c_char,
+            txt.into_raw() as *const raw::c_char,
+            deflt.into_raw() as *const raw::c_char,
         ) as *mut raw::c_char)
         .into_string()
         .unwrap()
@@ -136,8 +136,8 @@ pub fn password(txt: &str, deflt: &str) -> String {
         let txt = ffi::CString::new(txt).unwrap();
         let deflt = ffi::CString::new(deflt).unwrap();
         ffi::CString::from_raw(cfl_password(
-            txt.as_ptr() as *const raw::c_char,
-            deflt.as_ptr() as *const raw::c_char,
+            txt.into_raw() as *const raw::c_char,
+            deflt.into_raw() as *const raw::c_char,
         ) as *mut raw::c_char)
         .into_string()
         .unwrap()

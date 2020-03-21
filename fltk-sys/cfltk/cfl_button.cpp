@@ -7,6 +7,7 @@
 #include <Fl/Fl_Return_Button.H>
 #include <Fl/Fl_Round_Button.H>
 #include <Fl/Fl_Toggle_Button.H>
+#include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>
 

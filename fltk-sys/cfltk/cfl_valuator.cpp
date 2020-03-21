@@ -5,6 +5,7 @@
 #include <Fl/Fl_Roller.H>
 #include <Fl/Fl_Scrollbar.H>
 #include <Fl/Fl_Value_Slider.H>
+#include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>
 

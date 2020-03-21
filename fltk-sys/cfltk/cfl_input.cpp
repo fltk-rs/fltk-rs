@@ -4,6 +4,7 @@
 #include <Fl/Fl_Int_Input.H>
 #include <Fl/Fl_Multiline_Input.H>
 #include <Fl/Fl_Text_Editor.H>
+#include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>
 
