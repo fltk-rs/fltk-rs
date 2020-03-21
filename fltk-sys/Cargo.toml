@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 build = "build.rs"
 edition = "2018"
+description = "Rust bindings for the FLTK GUI library"
+repository = "https://github.com/MoAlyousef/fltk-rs"
+readme = "https://github.com/MoAlyousef/fltk-rs/blob/master/README.md"
+keywords = ["gui", "bindings", "graphics"]
 
 [lib]
 name = "fltk_sys"
