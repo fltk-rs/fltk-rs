@@ -1,6 +1,6 @@
 #include "cfl_window.h"
 #include <FL/Fl_Window.H>
-#include <Fl/Fl_Double_Window.H>
+#include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>

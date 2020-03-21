@@ -1,5 +1,5 @@
 #include "cfl_widget.h"
-#include <Fl/Fl_Widget.H>
+#include <FL/Fl_Widget.H>
 #include <FL/Fl_Image.H>
 
 void Fl_Widget_callback(Fl_Widget *self, Fl_Callback *cb) {

@@ -1,9 +1,9 @@
 #include "cfl_input.h"
 #include <FL/Fl_Input.H>
-#include <Fl/Fl_Float_Input.H>
-#include <Fl/Fl_Int_Input.H>
-#include <Fl/Fl_Multiline_Input.H>
-#include <Fl/Fl_Text_Editor.H>
+#include <FL/Fl_Float_Input.H>
+#include <FL/Fl_Int_Input.H>
+#include <FL/Fl_Multiline_Input.H>
+#include <FL/Fl_Text_Editor.H>
 #include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>

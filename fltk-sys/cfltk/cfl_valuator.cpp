@@ -1,10 +1,10 @@
 #include "cfl_valuator.h"
-#include <Fl/Fl_Slider.H>
-#include <Fl/Fl_Counter.H>
-#include <Fl/Fl_Dial.H>
-#include <Fl/Fl_Roller.H>
-#include <Fl/Fl_Scrollbar.H>
-#include <Fl/Fl_Value_Slider.H>
+#include <FL/Fl_Slider.H>
+#include <FL/Fl_Counter.H>
+#include <FL/Fl_Dial.H>
+#include <FL/Fl_Roller.H>
+#include <FL/Fl_Scrollbar.H>
+#include <FL/Fl_Value_Slider.H>
 #include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>

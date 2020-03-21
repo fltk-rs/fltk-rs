@@ -4,8 +4,8 @@
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tabs.H>
 #include <FL/Fl_Tile.H>
-#include <Fl/Fl_Text_Display.H>
-#include <Fl/Fl_Text_Editor.H>
+#include <FL/Fl_Text_Display.H>
+#include <FL/Fl_Text_Editor.H>
 #include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>
