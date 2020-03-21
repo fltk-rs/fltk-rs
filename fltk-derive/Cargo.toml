@@ -5,7 +5,6 @@ authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
 repository = "https://github.com/MoAlyousef/fltk-rs"
-readme = "https://github.com/MoAlyousef/fltk-rs/blob/master/README.md"
 keywords = ["gui", "bindings", "graphics"]
 
 [lib]
