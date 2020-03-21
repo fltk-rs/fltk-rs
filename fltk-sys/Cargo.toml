@@ -1,12 +1,9 @@
 [package]
 name = "fltk-sys"
 version = "0.1.0"
-authors = ["MoAlyousef <may642_2000@hotmail.com>"]
+authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 build = "build.rs"
 edition = "2018"
-
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [lib]
 name = "fltk_sys"

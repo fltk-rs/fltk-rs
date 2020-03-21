@@ -1,15 +1,13 @@
 [package]
 name = "fltk-derive"
 version = "0.1.0"
-authors = ["MoAlyousef <may642_2000@hotmail.com>"]
+authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 
 [lib]
 name = "fltk_derive"
 path = "src/lib.rs"
 proc-macro = true
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 syn = "^1.0.7"
