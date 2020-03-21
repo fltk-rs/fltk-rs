@@ -34,6 +34,7 @@ fn main() {
 
     let dst = cmake::Config::new("cfltk")
                  .generator("Ninja")
+                 .profile("RELEASE")
                  .define("OPTION_BUILD_EXAMPLES","OFF")
                  .define("OPTION_LARGE_FILE","ON")
                  .define("OPTION_USE_SYSTEM_ZLIB","OFF")
@@ -78,7 +79,8 @@ fn main() {
             if cfg!(target_env = "gnu") {
                 println!("cargo:rustc-link-lib=dylib=stdc++");
             }
-            println!("cargo:rustc-link-lib=dylib=wsock32");
+            println!("cargo:rustc-link-lib=dylib=ws2_32");
+            // println!("cargo:rustc-link-lib=dylib=wsock32");
             println!("cargo:rustc-link-lib=dylib=comctl32");
             println!("cargo:rustc-link-lib=dylib=gdi32");
             println!("cargo:rustc-link-lib=dylib=oleaut32");
@@ -90,6 +92,8 @@ fn main() {
             println!("cargo:rustc-link-lib=dylib=winspool");
             println!("cargo:rustc-link-lib=dylib=user32");
             println!("cargo:rustc-link-lib=dylib=kernel32");
+            println!("cargo:rustc-link-lib=dylib=odbc32");
+            println!("cargo:rustc-link-lib=dylib=odbccp32");
         },
         _ => {
             println!("cargo:rustc-link-lib=dylib=stdc++");
@@ -106,3 +110,15 @@ fn main() {
 }
 
 
+//kernel32.lib
+// user32.lib
+// gdi32.lib
+// winspool.lib
+// comdlg32.lib
+// advapi32.lib
+// shell32.lib
+// ole32.lib
+// oleaut32.lib
+// uuid.lib
+// odbc32.lib
+// odbccp32.lib

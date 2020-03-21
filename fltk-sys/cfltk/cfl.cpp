@@ -1,5 +1,6 @@
 #include "cfl.h"
 #include "cfl_widget.h"
+#include <FL/Fl_Widget.H>
 #include <FL/Fl.H>
 
 int Fl_run(void) { return Fl::run(); }
@@ -18,10 +19,6 @@ int Fl_event_dx(void) { return Fl::event_dx(); }
 
 int Fl_event_dy(void) { return Fl::event_dy(); }
 
-int Fl_event_inside(void *widget) {
-  return Fl::event_inside((const Fl_Widget *)widget);
-}
-
 int Fl_event_is_click(void) { return Fl::event_is_click(); }
 
 int Fl_event_length(void) { return Fl::event_length(); }
@@ -32,6 +29,6 @@ int Fl_screen_h(void) { return Fl::h(); }
 
 int Fl_screen_w(void) { return Fl::w(); }
 
-void *Fl_belowmouse(void) { return Fl::belowmouse(); }
-
-void Fl_paste(void *widget) { Fl::paste(*(Fl_Widget *)widget); }
+void Fl_paste(void *widget, int src) { 
+  Fl::paste(*(Fl_Widget*)widget, src, Fl::clipboard_plain_text); 
+}

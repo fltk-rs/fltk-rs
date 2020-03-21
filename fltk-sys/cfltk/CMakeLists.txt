@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(cfltk)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 add_subdirectory(fltk)
 
 add_library(cfltk STATIC 
@@ -21,6 +23,7 @@ add_library(cfltk STATIC
 target_include_directories(cfltk PUBLIC fltk)
 
 target_link_libraries(cfltk PUBLIC fltk)
+
 
 # if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
 #   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wreturn-type")
