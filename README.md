@@ -26,7 +26,7 @@ Please check the examples directory for more examples.
 ## Building
 
 To build, just run:
-```bash
+```
 $ cargo build
 ```
 
@@ -34,7 +34,7 @@ $ cargo build
 ## Dependencies
 
 CMake and Ninja need to be installed and in your PATH for a crossplatform build. After that on Windows and Mac OS X, normally no external dependencies are needed. For Linux, X11 development headers need to be installed for development. For Debian-based distrobution, that means running:
-```bash
+```
 $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
 ```
 
@@ -42,7 +42,7 @@ $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcur
 ## Examples
 
 To run the examples: 
-```bash
+```
 $ cargo run --example editor
 $ cargo run --example calculator
 $ cargo run --example gallery
