@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Download deps
+      run: |
+        sudo apt-get install -y ninja-build libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
     - uses: actions/checkout@v2
     - name: Build
       run: cargo build --verbose
