@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+pub use crate::enums::*;
 use fltk_sys::text::*;
 use std::{ffi::CString, mem, os::raw};
 
@@ -27,6 +28,56 @@ impl TextEditor {
             CString::from_raw(Fl_Text_Editor_text(self._inner) as *mut raw::c_char).into_string().unwrap()
         }
     }
+    pub fn copy(src: &TextEditor) {
+        unsafe {
+            kf_copy(src._inner);
+        }
+    }
+    pub fn cut(src: &TextEditor) {
+        unsafe {
+            kf_cut(src._inner);
+        }
+    }
+    pub fn paste(src: &TextEditor) {
+        unsafe {
+            kf_paste(src._inner);
+        }
+    }
+    pub fn undo(src: &TextEditor) {
+        unsafe {
+            kf_undo(src._inner);
+        }
+    }
+    pub fn text_font(&self) -> Font {
+        unsafe {
+            mem::transmute(text_font(self._inner as *mut Fl_Text_Display))
+        }
+    }
+    pub fn set_text_font(&mut self, font: Font) {
+        unsafe {
+            set_text_font(self._inner as *mut Fl_Text_Display, font as i32)
+        }
+    }
+    pub fn text_color(&self) -> Color {
+        unsafe {
+            mem::transmute(text_color(self._inner as *mut Fl_Text_Display))
+        }
+    }
+    pub fn set_text_color(&mut self, color: Color) {
+        unsafe {
+            set_text_color(self._inner as *mut Fl_Text_Display, color as i32)
+        }
+    }
+    pub fn text_size(&self) -> usize {
+        unsafe {
+            text_size(self._inner as *mut Fl_Text_Display) as usize
+        }
+    }
+    pub fn set_text_size(&mut self, sz: usize) {
+        unsafe {
+            set_text_size(self._inner as *mut Fl_Text_Display, sz as i32)
+        }
+    }
 }
 
 impl TextDisplay {
@@ -45,5 +96,35 @@ impl TextDisplay {
     }
     pub fn init(&mut self) {
         unsafe { Fl_Text_Display_init(self._inner) }
+    }
+    pub fn text_font(&self) -> Font {
+        unsafe {
+            mem::transmute(text_font(self._inner))
+        }
+    }
+    pub fn set_text_font(&mut self, font: Font) {
+        unsafe {
+            set_text_font(self._inner, font as i32)
+        }
+    }
+    pub fn text_color(&self) -> Color {
+        unsafe {
+            mem::transmute(text_color(self._inner))
+        }
+    }
+    pub fn set_text_color(&mut self, color: Color) {
+        unsafe {
+            set_text_color(self._inner, color as i32)
+        }
+    }
+    pub fn text_size(&self) -> usize {
+        unsafe {
+            text_size(self._inner) as usize
+        }
+    }
+    pub fn set_text_size(&mut self, sz: usize) {
+        unsafe {
+            set_text_size(self._inner, sz as i32)
+        }
     }
 }

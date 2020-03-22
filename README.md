@@ -74,8 +74,8 @@ Most common widgets are implemented:
 - Tabs
 - Scroll
 - Tile
-- TextDisplay (needs more work)
-- TextEditor (needs more work)
+- TextDisplay
+- TextEditor
 - Input, IntInput, FloatInput, MultilineInput
 - Output, MultilineOutput
 - MenuBar

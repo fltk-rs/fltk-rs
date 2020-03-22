@@ -319,3 +319,33 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_set_text(arg1: *mut Fl_Text_Editor, arg2: *const ::std::os::raw::c_char);
 }
+extern "C" {
+    pub fn kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn kf_cut(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn kf_paste(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn kf_undo(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn text_font(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn set_text_font(arg1: *mut Fl_Text_Display, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn text_size(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn set_text_size(arg1: *mut Fl_Text_Display, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn text_color(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn set_text_color(arg1: *mut Fl_Text_Display, n: ::std::os::raw::c_int);
+}
