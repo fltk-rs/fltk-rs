@@ -9,7 +9,7 @@ The FLTK gui library is a crossplatform lightweight C++ library which can be lin
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "0.1.4"
+fltk = "^0.1.5"
 ```
 An example hello world application:
 ```rust

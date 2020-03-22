@@ -2,6 +2,7 @@
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Image.H>
+#include <FL/Fl_RGB_Image.H>
 #include <cstring>
 #include <string>
 

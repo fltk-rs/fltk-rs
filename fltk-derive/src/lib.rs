@@ -184,6 +184,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
     );
+    let handle = Ident::new(
+        format!("{}_{}", name_str, "handle").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl WidgetTrait for #name {
@@ -390,6 +394,15 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
                 }
             }
+            fn handle(&mut self, ev: Event) -> bool {
+                unsafe {
+                    let x: i32 = std::mem::transmute(ev);
+                    match #handle(self._inner, x) {
+                        0 => false,
+                        _ => true,
+                    }
+                }
+            }
         }
     };
     gen.into()
@@ -418,6 +431,13 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let begin = Ident::new(format!("{}_{}", name_str, "begin").as_str(), name.span());
     let end = Ident::new(format!("{}_{}", name_str, "end").as_str(), name.span());
+    let find = Ident::new(format!("{}_{}", name_str, "find").as_str(), name.span());
+    let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
+    let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
+    let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
+    let clear = Ident::new(format!("{}_{}", name_str, "clear").as_str(), name.span());
+    let children = Ident::new(format!("{}_{}", name_str, "children").as_str(), name.span());
+    let make_resizable = Ident::new(format!("{}_{}", name_str, "make_resizable").as_str(), name.span());
 
     let gen = quote! {
         impl GroupTrait for #name {
@@ -427,6 +447,41 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn end(&self) {
                 unsafe { #end(self._inner) }
+            }
+            fn find<Widget: WidgetTrait>(&self, widget: &Widget) -> usize {
+                unsafe {
+                    #find(self._inner, widget.as_widget_ptr() as *mut raw::c_void) as usize
+                }
+            }
+            fn add<Widget: WidgetTrait>(&mut self, widget: &Widget) {
+                unsafe {
+                    #add(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
+                }
+            }
+            fn insert<Widget: WidgetTrait>(&mut self, widget: &Widget, index: usize) {
+                unsafe {
+                    #insert(self._inner, widget.as_widget_ptr() as *mut raw::c_void, index as i32)
+                }
+            }
+            fn remove(&mut self, index: usize) {
+                unsafe {
+                    #remove(self._inner, index as i32)
+                }
+            }
+            fn clear(&mut self) {
+                unsafe {
+                    #clear(self._inner)
+                }
+            }
+            fn children(&self) -> usize {
+                unsafe {
+                    #children(self._inner) as usize
+                }
+            }
+            fn make_resizable<Widget: WidgetTrait>(&self, widget: &Widget) {
+                unsafe {
+                    #make_resizable(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
+                }
             }
         }
     };
@@ -449,6 +504,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "make_current").as_str(),
         name.span(),
     );
+    let set_icon = Ident::new(format!("{}_{}", name_str, "set_icon").as_str(), name.span());
     let gen = quote! {
         impl WindowTrait for #name {
             fn make_modal(&mut self, val: bool) {
@@ -461,6 +517,9 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn make_current(&mut self) {
                 unsafe { #make_current(self._inner) }
+            }
+            fn set_icon<Image: ImageTrait>(&mut self, image: Image) {
+                unsafe { #set_icon(self._inner, image.as_ptr()) }
             }
         }
     };
@@ -921,11 +980,11 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         impl ImageTrait for #name {
             fn new(path: std::path::PathBuf) -> #name {
-                unsafe { 
+                unsafe {
                     let temp = path.into_os_string().into_string().unwrap();
                     let temp = std::ffi::CString::new(temp.as_str()).unwrap();
                     #name {
-                        _inner: #new(temp.into_raw() as *const raw::c_char), 
+                        _inner: #new(temp.into_raw() as *const raw::c_char),
                     }
                 }
             }

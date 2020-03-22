@@ -42,7 +42,7 @@ fn main() {
     let dst = cmake::Config::new("cfltk")
         .generator("Ninja")
         .profile("RELEASE")
-        // .define("OpenGL_GL_PREFERENCE", "GLVND")
+        .define("OpenGL_GL_PREFERENCE", "GLVND")
         .define("OPTION_BUILD_EXAMPLES", "OFF")
         .define("OPTION_LARGE_FILE", "ON")
         .define("OPTION_USE_SYSTEM_ZLIB", "OFF")

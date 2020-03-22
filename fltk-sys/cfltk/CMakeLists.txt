@@ -11,6 +11,7 @@ add_library(cfltk STATIC
     cfl_button.cpp 
     cfl_widget.cpp 
     cfl_group.cpp 
+    cfl_text.cpp
     cfl_box.cpp 
     cfl_input.cpp 
     cfl_output.cpp

@@ -48,16 +48,25 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_align(widget *);                                                \
   void widget##_set_align(widget *, int typ);                                  \
   void widget##_delete(widget *);                                              \
-  void widget##_set_image(widget *, void *);
+  void widget##_set_image(widget *, void *);                                   \
+  int widget##_handle(widget *, int event);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
-  void widget##_end(widget *self);
+  void widget##_end(widget *self);                                             \
+  int widget##_find(widget *self, const void *);                               \
+  void widget##_add(widget *self, void *);                                     \
+  void widget##_insert(widget *self, void *, int pos);                         \
+  void widget##_remove(widget *self, int index);                               \
+  void widget##_clear(widget *self);                                           \
+  int widget##_children(widget *self);                                         \
+  void widget##_make_resizable(widget *self, void *);
 
 #define WINDOW_DECLARE(widget)                                                 \
   void widget##_make_modal(widget *, unsigned int boolean);                    \
   void widget##_fullscreen(widget *, unsigned int boolean);                    \
-  void widget##_make_current(widget *);
+  void widget##_make_current(widget *);                                        \
+  void widget##_set_icon(widget *, const void *);
 
 #define INPUT_DECLARE(widget)                                                  \
   int widget##_set_value(widget *, const char *);                              \
@@ -176,11 +185,25 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_delete(widget *self) { delete self; }                          \
   void widget##_set_image(widget *self, void *image) {                         \
     self->image((Fl_Image *)image);                                            \
-  }
+  }                                                                            \
+  int widget##_handle(widget *self, int event) { return self->handle(event); }
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \
-  void widget##_end(widget *self) { self->end(); }
+  void widget##_end(widget *self) { self->end(); }                             \
+  int widget##_find(widget *self, const void *wid) {                           \
+    return self->find((const Fl_Widget *)wid);                                 \
+  }                                                                            \
+  void widget##_add(widget *self, void *wid) { self->add((Fl_Widget *)wid); }  \
+  void widget##_insert(widget *self, void *wid, int pos) {                     \
+    self->insert(*(Fl_Widget *)wid, pos);                                      \
+  }                                                                            \
+  void widget##_remove(widget *self, int index) { self->remove(index); }       \
+  void widget##_clear(widget *self) { self->clear(); }                         \
+  int widget##_children(widget *self) { return self->children(); }             \
+  void widget##_make_resizable(widget *self, void *wid) {                           \
+    self->resizable((Fl_Widget *)wid);                                         \
+  }
 
 #define WINDOW_DEFINE(widget)                                                  \
   void widget##_make_modal(widget *self, unsigned int boolean) {               \
@@ -197,7 +220,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
       self->fullscreen_off();                                                  \
     }                                                                          \
   }                                                                            \
-  void widget##_make_current(widget *self) { self->make_current(); }
+  void widget##_make_current(widget *self) { self->make_current(); }           \
+  void widget##_set_icon(widget *self, const void *image) {                    \
+    self->icon((const Fl_RGB_Image *)image);                                   \
+  }
 
 #define INPUT_DEFINE(widget)                                                   \
   int widget##_set_value(widget *self, const char *t) {                        \

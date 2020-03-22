@@ -4,6 +4,7 @@
 pub mod fl;
 pub mod widget;
 pub mod group;
+pub mod text;
 pub mod window;
 pub mod button;
 pub mod frame;

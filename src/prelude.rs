@@ -43,11 +43,19 @@ pub trait WidgetTrait {
     fn set_align(&mut self, align: Align);
     fn set_image<Image: ImageTrait>(&mut self, image: Image);
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
+    fn handle(&mut self, ev: Event) -> bool;
 }
 
 pub trait GroupTrait: WidgetTrait {
     fn begin(&self);
     fn end(&self);
+    fn find<Widget: WidgetTrait>(&self, widget: &Widget) -> usize;
+    fn add<Widget: WidgetTrait>(&mut self, widget: &Widget);
+    fn insert<Widget: WidgetTrait>(&mut self, widget: &Widget, index: usize);
+    fn remove(&mut self, index: usize);
+    fn clear(&mut self);
+    fn children(&self) -> usize;
+    fn make_resizable<Widget: WidgetTrait>(&self, widget: &Widget);
 }
 
 pub trait WidgetType {
@@ -55,13 +63,14 @@ pub trait WidgetType {
     fn from_i32(val: i32) -> Self;
 }
 
-pub trait WindowTrait {
+pub trait WindowTrait: GroupTrait {
     fn make_modal(&mut self, val: bool);
     fn fullscreen(&mut self, val: bool);
     fn make_current(&mut self);
+    fn set_icon<Image: ImageTrait>(&mut self, image: Image);
 }
 
-pub trait InputTrait {
+pub trait InputTrait: WidgetTrait  {
     fn value(&self) -> String;
     fn set_value(&self, val: &str);
     fn maximum_size(&self) -> usize;
@@ -88,7 +97,7 @@ pub trait InputTrait {
     fn set_wrap(&mut self, val: bool);
 }
 
-pub trait MenuTrait {
+pub trait MenuTrait: WidgetTrait  {
     fn get_item(&self, name: &str) -> crate::menu::MenuItem;
     fn text_font(&self) -> Font;
     fn set_text_font(&mut self, c: Font);
@@ -99,7 +108,7 @@ pub trait MenuTrait {
     fn add<'a>(&'a mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>);
 }
 
-pub trait ValuatorTrait {
+pub trait ValuatorTrait: WidgetTrait  {
     fn set_bounds(&mut self, a: f64, b: f64);
     fn minimum(&self) -> f64;
     fn set_minimum(&mut self, a: f64);

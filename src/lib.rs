@@ -4,6 +4,7 @@ pub mod enums;
 pub mod fl;
 pub mod frame;
 pub mod group;
+pub mod text;
 pub mod input;
 pub mod menu;
 pub mod output;

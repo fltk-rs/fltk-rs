@@ -149,6 +149,12 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_image(arg1: *mut Fl_Menu_Bar, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_handle(
+        arg1: *mut Fl_Menu_Bar,
+        event: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Bar_add(
         arg1: *mut Fl_Menu_Bar,
         name: *const ::std::os::raw::c_char,
@@ -317,6 +323,12 @@ extern "C" {
     pub fn Fl_Menu_Button_set_image(arg1: *mut Fl_Menu_Button, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Menu_Button_handle(
+        arg1: *mut Fl_Menu_Button,
+        event: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
         name: *const ::std::os::raw::c_char,
@@ -477,6 +489,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_set_image(arg1: *mut Fl_Choice, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Choice_handle(
+        arg1: *mut Fl_Choice,
+        event: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_add(

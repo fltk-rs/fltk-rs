@@ -144,10 +144,44 @@ extern "C" {
     pub fn Fl_Window_set_image(arg1: *mut Fl_Window, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Window_handle(
+        arg1: *mut Fl_Window,
+        event: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
 }
 extern "C" {
     pub fn Fl_Window_end(self_: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_find(
+        self_: *mut Fl_Window,
+        arg1: *const ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_add(self_: *mut Fl_Window, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Window_insert(
+        self_: *mut Fl_Window,
+        arg1: *mut ::std::os::raw::c_void,
+        pos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Window_remove(self_: *mut Fl_Window, index: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Window_clear(self_: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_children(self_: *mut Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_make_resizable(self_: *mut Fl_Window, arg1: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: ::std::os::raw::c_uint);
@@ -157,6 +191,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_make_current(arg1: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_set_icon(arg1: *mut Fl_Window, arg2: *const ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -302,10 +339,47 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Double_Window_handle(
+        arg1: *mut Fl_Double_Window,
+        event: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
 }
 extern "C" {
     pub fn Fl_Double_Window_end(self_: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_find(
+        self_: *mut Fl_Double_Window,
+        arg1: *const ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_add(self_: *mut Fl_Double_Window, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Double_Window_insert(
+        self_: *mut Fl_Double_Window,
+        arg1: *mut ::std::os::raw::c_void,
+        pos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Double_Window_remove(self_: *mut Fl_Double_Window, index: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Double_Window_clear(self_: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_children(self_: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_make_resizable(
+        self_: *mut Fl_Double_Window,
+        arg1: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Double_Window_make_modal(
@@ -321,4 +395,10 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_make_current(arg1: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_icon(
+        arg1: *mut Fl_Double_Window,
+        arg2: *const ::std::os::raw::c_void,
+    );
 }
