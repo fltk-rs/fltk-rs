@@ -48,8 +48,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_align(widget *);                                                \
   void widget##_set_align(widget *, int typ);                                  \
   void widget##_delete(widget *);                                              \
-  void widget##_set_image(widget *, void *);                                   \
-  int widget##_handle(widget *, int event);
+  void widget##_set_image(widget *, void *);                                   
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -185,8 +184,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_delete(widget *self) { delete self; }                          \
   void widget##_set_image(widget *self, void *image) {                         \
     self->image((Fl_Image *)image);                                            \
-  }                                                                            \
-  int widget##_handle(widget *self, int event) { return self->handle(event); }
+  }                                                                            
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \

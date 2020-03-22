@@ -9,7 +9,7 @@ The FLTK gui library is a crossplatform lightweight C++ library which can be lin
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "^0.1.5"
+fltk = "^0.1.6"
 ```
 An example hello world application:
 ```rust
@@ -27,13 +27,15 @@ Please check the examples directory for more examples.
 
 To build, just run:
 ```
+$ git clone https://github.com/MoAlyousef/fltk-rs
+$ cd fltk-rs
 $ cargo build
 ```
 
 
 ## Dependencies
 
-CMake and Ninja need to be installed and in your PATH for a crossplatform build. After that on Windows and Mac OS X, normally no external dependencies are needed. For Linux, X11 development headers need to be installed for development. For Debian-based distrobution, that means running:
+CMake and Ninja need to be installed and in your PATH for a crossplatform build. After that on Windows and Mac OS X, normally no external dependencies are needed. For Linux, X11 development headers need to be installed for development. For Debian-based distribution, that means running:
 ```
 $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
 ```

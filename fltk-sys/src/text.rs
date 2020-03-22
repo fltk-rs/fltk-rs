@@ -152,12 +152,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_set_image(arg1: *mut Fl_Text_Display, arg2: *mut ::std::os::raw::c_void);
 }
-extern "C" {
-    pub fn Fl_Text_Display_handle(
-        arg1: *mut Fl_Text_Display,
-        event: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
-}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -291,12 +285,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_image(arg1: *mut Fl_Text_Editor, arg2: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Text_Editor_handle(
-        arg1: *mut Fl_Text_Editor,
-        event: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
