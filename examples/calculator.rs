@@ -343,7 +343,6 @@ fn main() {
         }),
     );
 
-    wind.end();
     wind.show();
     fl::run();
 }

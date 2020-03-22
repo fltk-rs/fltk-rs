@@ -21,7 +21,6 @@ fn draw_gallery() {
 fn main() {
     let mut wind = Window::new(100, 100, 500, 200, "Tabs Example");
     draw_gallery();
-    wind.end();
     wind.show();
     fl::run();
 }

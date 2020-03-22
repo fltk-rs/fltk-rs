@@ -11,18 +11,17 @@ Just add the following to your project's Cargo.toml file.
 [dependencies]
 fltk = "0.1.4"
 ```
-An example hello world:
+An example hello world application:
 ```rust
-use fltk::{frame::*, window::*};
+use fltk::window::*;
 
 fn main() {
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
-    wind.end();
     wind.show();
     fl::run();
 }
 ```
-Check the examples directory for more examples.
+Please check the examples directory for more examples.
 
 ## Building
 

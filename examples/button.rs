@@ -40,7 +40,6 @@ fn draw_elements() {
         }),
     );
 
-    wind.end();
     wind.show();
     fl::run();
 }

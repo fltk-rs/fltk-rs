@@ -101,7 +101,6 @@ fn main() {
     let mut x = menu.get_item("Help/About");
     x.set_label_color(Color::Red);
 
-    wind.end();
     wind.show();
     fl::run();
 }
