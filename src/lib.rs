@@ -21,7 +21,6 @@ extern crate fltk_derive;
 mod tests {
     #[test]
     fn it_works() {
-        let x = std::path::PathBuf::new("fdsg");
-        let x = x.to_str().unwrap().as_ptr();
+        println!("works");
     }
 }
