@@ -2,10 +2,13 @@
 
 extern crate cmake;
 
-use std::{env, path::{Path, PathBuf}, process::Command};
+use std::{
+    env,
+    path::{Path, PathBuf},
+    process::Command,
+};
 
 fn main() {
-
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
     let target_os = env::var("CARGO_CFG_TARGET_OS");
@@ -23,27 +26,35 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_image.h");
     println!("cargo:rerun-if-changed=cfltk/global.h");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
-    
-    Command::new("git").args(&["submodule", "update", "--init"])
-                      .current_dir(manifest_dir.clone())
-                      .status().unwrap();
 
-    Command::new("git").args(&["checkout", "master"])
-                    .current_dir(manifest_dir.join("cfltk").join("fltk"))
-                    .status().unwrap();
+    Command::new("git")
+        .args(&["submodule", "update", "--init"])
+        .current_dir(manifest_dir.clone())
+        .status()
+        .unwrap();
+
+    Command::new("git")
+        .args(&["checkout", "master"])
+        .current_dir(manifest_dir.join("cfltk").join("fltk"))
+        .status()
+        .unwrap();
 
     let dst = cmake::Config::new("cfltk")
-                 .generator("Ninja")
-                 .profile("RELEASE")
-                 .define("OPTION_BUILD_EXAMPLES","OFF")
-                 .define("OPTION_LARGE_FILE","ON")
-                 .define("OPTION_USE_SYSTEM_ZLIB","OFF")
-                 .define("OPTION_USE_SYSTEM_LIBPNG","OFF")
-                 .define("OPTION_USE_SYSTEM_LIBJPEG","OFF")
-                 .define("OPTION_BUILD_HTML_DOCUMENTATION","OFF")
-                 .define("OPTION_BUILD_PDF_DOCUMENTATION","OFF")
-                 .build();
-    println!("cargo:rustc-link-search=native={}", dst.join("build").display());
+        .generator("Ninja")
+        .profile("RELEASE")
+        // .define("OpenGL_GL_PREFERENCE", "GLVND")
+        .define("OPTION_BUILD_EXAMPLES", "OFF")
+        .define("OPTION_LARGE_FILE", "ON")
+        .define("OPTION_USE_SYSTEM_ZLIB", "OFF")
+        .define("OPTION_USE_SYSTEM_LIBPNG", "OFF")
+        .define("OPTION_USE_SYSTEM_LIBJPEG", "OFF")
+        .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
+        .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
+        .build();
+    println!(
+        "cargo:rustc-link-search=native={}",
+        dst.join("build").display()
+    );
 
     // Change static to dylib to link dynamically, also change CMakeLists STATIC to SHARED
 
@@ -51,8 +62,10 @@ fn main() {
 
     // Comment out all following code to link dynamically
 
-
-    println!("cargo:rustc-link-search=native={}", dst.join("lib").display());
+    println!(
+        "cargo:rustc-link-search=native={}",
+        dst.join("lib").display()
+    );
     if cfg!(debug_assertions) && cfg!(target_env = "msvc") {
         println!("cargo:rustc-link-lib=static=fltkd");
         println!("cargo:rustc-link-lib=static=fltk_imagesd");
@@ -66,7 +79,7 @@ fn main() {
         println!("cargo:rustc-link-lib=static=fltk_png");
         println!("cargo:rustc-link-lib=static=fltk_z");
     }
-    
+
     match target_os.unwrap().as_str() {
         "macos" => {
             println!("cargo:rustc-link-lib=dylib=c++");
@@ -74,7 +87,7 @@ fn main() {
             println!("cargo:rustc-link-lib=framework=Cocoa");
             println!("cargo:rustc-link-lib=framework=ApplicationServices");
             println!("cargo:rustc-link-lib=dylib=z");
-        },
+        }
         "windows" => {
             if cfg!(target_env = "gnu") {
                 println!("cargo:rustc-link-lib=dylib=stdc++");
@@ -94,7 +107,7 @@ fn main() {
             println!("cargo:rustc-link-lib=dylib=kernel32");
             println!("cargo:rustc-link-lib=dylib=odbc32");
             println!("cargo:rustc-link-lib=dylib=odbccp32");
-        },
+        }
         _ => {
             println!("cargo:rustc-link-lib=dylib=stdc++");
             println!("cargo:rustc-link-lib=dylib=X11");
@@ -108,17 +121,3 @@ fn main() {
         }
     }
 }
-
-
-//kernel32.lib
-// user32.lib
-// gdi32.lib
-// winspool.lib
-// comdlg32.lib
-// advapi32.lib
-// shell32.lib
-// ole32.lib
-// oleaut32.lib
-// uuid.lib
-// odbc32.lib
-// odbccp32.lib
