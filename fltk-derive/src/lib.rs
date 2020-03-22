@@ -184,10 +184,6 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
     );
-    let handle = Ident::new(
-        format!("{}_{}", name_str, "handle").as_str(),
-        name.span(),
-    );
 
     let gen = quote! {
         impl WidgetTrait for #name {
@@ -392,15 +388,6 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: fltk_sys::widget::Fl_Callback = Some(shim);
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
-                }
-            }
-            fn handle(&mut self, ev: Event) -> bool {
-                unsafe {
-                    let x: i32 = std::mem::transmute(ev);
-                    match #handle(self._inner, x) {
-                        0 => false,
-                        _ => true,
-                    }
                 }
             }
         }

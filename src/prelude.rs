@@ -43,7 +43,6 @@ pub trait WidgetTrait {
     fn set_align(&mut self, align: Align);
     fn set_image<Image: ImageTrait>(&mut self, image: Image);
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
-    fn handle(&mut self, ev: Event) -> bool;
 }
 
 pub trait GroupTrait: WidgetTrait {

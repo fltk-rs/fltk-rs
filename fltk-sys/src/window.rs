@@ -144,12 +144,6 @@ extern "C" {
     pub fn Fl_Window_set_image(arg1: *mut Fl_Window, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_handle(
-        arg1: *mut Fl_Window,
-        event: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
 }
 extern "C" {
@@ -337,12 +331,6 @@ extern "C" {
         arg1: *mut Fl_Double_Window,
         arg2: *mut ::std::os::raw::c_void,
     );
-}
-extern "C" {
-    pub fn Fl_Double_Window_handle(
-        arg1: *mut Fl_Double_Window,
-        event: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
