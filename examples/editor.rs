@@ -1,4 +1,4 @@
-use fltk::{dialog::*, input::MultilineInput, window::Window};
+use fltk::{dialog::*, text::TextEditor, window::Window};
 use std::{fs, path};
 
 fn main() {
@@ -12,7 +12,7 @@ fn main() {
         "RustyEd",
     );
     wind.set_color(Color::Light2);
-    let mut editor = MultilineInput::new(5, 40, 790, 555, "");
+    let mut editor = TextEditor::new(5, 40, 790, 555);
     let mut menu = MenuBar::new(0, 0, 800, 40, "");
     menu.set_color(Color::Light2);
 
@@ -21,10 +21,10 @@ fn main() {
         Shortcut::Ctrl + 'n',
         MenuFlag::Normal,
         Box::new( || {
-            if editor.value() != "" {
+            if editor.text() != "" {
                 let x = choice("File unsaved, Do you wish to continue?", "Yes", "No!", "");
                 if x == 0 {
-                    editor.set_value("");                    
+                    editor.set_text("");                    
                 }
             }
         },
@@ -40,7 +40,7 @@ fn main() {
             dlg.show();
             filename = dlg.filename();
             match path::Path::new(&filename).exists() {
-                true => editor.set_value(fs::read_to_string(&filename).unwrap().as_str()),
+                true => editor.set_text(fs::read_to_string(&filename).unwrap().as_str()),
                 false => alert("File does not exist!"),
             }
         },
@@ -51,7 +51,7 @@ fn main() {
         Shortcut::Ctrl + 's',
         MenuFlag::Normal,
         Box::new( || match path::Path::new(&filename).exists() {
-            true => fs::write(&filename, editor.value()).unwrap(),
+            true => fs::write(&filename, editor.text()).unwrap(),
             false => alert("Please specify a file!"),
         },
     ));
@@ -62,7 +62,7 @@ fn main() {
         dlg.show();
         filename = dlg.filename();
         match path::Path::new(&filename).exists() {
-            true => fs::write(&filename, editor.value()).unwrap(),
+            true => fs::write(&filename, editor.text()).unwrap(),
             false => alert("Please specify a file!"),
         }
     }));
@@ -91,7 +91,7 @@ fn main() {
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
-        Box::new( || fl::paste(editor.clone()),
+        Box::new( || editor.paste(),
     ));
 
     menu.add("Help/About", 0, MenuFlag::Normal, Box::new( || {
