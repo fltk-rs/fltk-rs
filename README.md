@@ -49,7 +49,7 @@ $ cargo run --example gallery
 $ cargo run --example button
 $ cargo run --example hello
 ```
-
+![alt_test](screenshots/hello.jpg)
 ![alt_test](screenshots/gallery.jpg)
 ![alt_test](screenshots/calc.jpg)
 ![alt_test](screenshots/editor.jpg)
