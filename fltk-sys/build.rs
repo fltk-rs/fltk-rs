@@ -66,19 +66,12 @@ fn main() {
         "cargo:rustc-link-search=native={}",
         dst.join("lib").display()
     );
-    if cfg!(debug_assertions) && cfg!(target_env = "msvc") {
-        println!("cargo:rustc-link-lib=static=fltkd");
-        println!("cargo:rustc-link-lib=static=fltk_imagesd");
-        println!("cargo:rustc-link-lib=static=fltk_jpegd");
-        println!("cargo:rustc-link-lib=static=fltk_pngd");
-        println!("cargo:rustc-link-lib=static=fltk_zd");
-    } else {
-        println!("cargo:rustc-link-lib=static=fltk");
-        println!("cargo:rustc-link-lib=static=fltk_images");
-        println!("cargo:rustc-link-lib=static=fltk_jpeg");
-        println!("cargo:rustc-link-lib=static=fltk_png");
-        println!("cargo:rustc-link-lib=static=fltk_z");
-    }
+
+    println!("cargo:rustc-link-lib=static=fltk");
+    println!("cargo:rustc-link-lib=static=fltk_images");
+    println!("cargo:rustc-link-lib=static=fltk_jpeg");
+    println!("cargo:rustc-link-lib=static=fltk_png");
+    println!("cargo:rustc-link-lib=static=fltk_z");
 
     match target_os.unwrap().as_str() {
         "macos" => {
