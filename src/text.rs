@@ -14,8 +14,18 @@ pub struct TextEditor {
 }
 
 impl TextEditor {
-    pub fn init(&mut self) {
+    fn init(&mut self) {
         unsafe { Fl_Text_Editor_init(self._inner) }
+    }
+    pub fn new(x: i32, y: i32, w: i32, h: i32) -> TextEditor {
+        let temp = CString::new("").unwrap();
+        unsafe {
+            let mut x = TextEditor {
+                _inner: Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char),
+            };
+            x.init();
+            x
+        }
     }
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
@@ -28,24 +38,24 @@ impl TextEditor {
             CString::from_raw(Fl_Text_Editor_text(self._inner) as *mut raw::c_char).into_string().unwrap()
         }
     }
-    pub fn copy(src: &TextEditor) {
+    pub fn copy(&self) {
         unsafe {
-            kf_copy(src._inner);
+            kf_copy(self._inner);
         }
     }
-    pub fn cut(src: &TextEditor) {
+    pub fn cut(&self) {
         unsafe {
-            kf_cut(src._inner);
+            kf_cut(self._inner);
         }
     }
-    pub fn paste(src: &TextEditor) {
+    pub fn paste(&self) {
         unsafe {
-            kf_paste(src._inner);
+            kf_paste(self._inner);
         }
     }
-    pub fn undo(src: &TextEditor) {
+    pub fn undo(&self) {
         unsafe {
-            kf_undo(src._inner);
+            kf_undo(self._inner);
         }
     }
     pub fn text_font(&self) -> Font {
@@ -81,6 +91,19 @@ impl TextEditor {
 }
 
 impl TextDisplay {
+    fn init(&mut self) {
+        unsafe { Fl_Text_Display_init(self._inner) }
+    }
+    pub fn new(x: i32, y: i32, w: i32, h: i32) -> TextDisplay {
+        let temp = CString::new("").unwrap();
+        unsafe {
+            let mut x = TextDisplay {
+                _inner: Fl_Text_Display_new(x, y, w, h, temp.into_raw() as *const raw::c_char),
+            };
+            x.init();
+            x
+        }
+    }
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
             let txt = CString::new(txt).unwrap();
@@ -93,9 +116,6 @@ impl TextDisplay {
                 .into_string()
                 .unwrap()
         }
-    }
-    pub fn init(&mut self) {
-        unsafe { Fl_Text_Display_init(self._inner) }
     }
     pub fn text_font(&self) -> Font {
         unsafe {
