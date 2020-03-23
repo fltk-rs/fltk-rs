@@ -1,6 +1,7 @@
 pub use crate::prelude::*;
 use std::mem;
 
+/// Defines alignment rules used by FLTK for labels
 #[repr(i32)]
 #[derive(Debug, Copy, Clone)]
 pub enum Align {
@@ -11,6 +12,7 @@ pub enum Align {
     AlignRight = 8,
 }
 
+/// Defines fonts used by FLTK
 #[repr(i32)]
 #[derive(Debug, Copy, Clone)]
 pub enum Font {
@@ -33,6 +35,7 @@ pub enum Font {
     Freefont = 16,
 }
 
+/// Defines colors used by FLTK
 #[repr(i32)]
 #[derive(Debug, Copy, Clone)]
 pub enum Color {
@@ -64,6 +67,7 @@ pub enum Color {
     White = 255,
 }
 
+/// Defines event types captured by FLTK
 #[repr(i32)]
 #[derive(Debug, Copy, Clone)]
 pub enum Event {
@@ -89,6 +93,7 @@ pub enum Event {
     MouseWheel,
 }
 
+/// Defines label types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone)]
 pub enum LabelType {

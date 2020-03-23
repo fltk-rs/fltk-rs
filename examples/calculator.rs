@@ -342,7 +342,7 @@ fn main() {
             }
         }),
     );
-
+    wind.make_resizable(false);
     wind.show();
     fl::run().expect("Couldn't run calculator!");
 }

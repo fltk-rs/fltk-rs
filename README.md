@@ -8,7 +8,7 @@ The FLTK gui crate is a crossplatform lightweight library which can be linked to
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "^0.1.7"
+fltk = "^0.1.8"
 ```
 An example hello world application:
 ```rust

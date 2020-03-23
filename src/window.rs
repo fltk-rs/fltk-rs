@@ -2,11 +2,13 @@ pub use crate::prelude::*;
 use fltk_sys::window::*;
 use std::{ffi::CString, mem, os::raw};
 
+/// Creates a window widget
 #[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
 pub struct Window {
     _inner: *mut Fl_Window,
 }
 
+/// Defines the window type, can be set dynamically using the set_type() method
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone)]
 pub enum WindowType {
@@ -14,6 +16,7 @@ pub enum WindowType {
     DoubleWindow = 241,
 }
 
+/// Creates a double window widget
 #[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
 pub struct DoubleWindow {
     _inner: *mut Fl_Double_Window,

@@ -2,7 +2,7 @@ use fltk::{button::*, group::*, input::*, output::*, valuator::*, window::*};
 
 fn draw_gallery() {
     let tab = Tabs::new(10, 10, 500 - 20, 200 - 20, "");
-    let grp1 = Group::new(10, 35, 500 - 20, 200 - 45, "Buttons");
+    let mut grp1 = Group::new(10, 35, 500 - 20, 200 - 45, "Buttons");
     let _but1 = Button::new(50, 60, 90, 25, "Button");
     let _but2 = RoundButton::new(50, 90, 90, 25, "Round");
     let _but3 = CheckButton::new(50, 120, 90, 25, "Check");
@@ -16,11 +16,15 @@ fn draw_gallery() {
     let _out = Output::new(150, 60, 90, 30, "");
     grp3.end();
     tab.end();
+    // An example showing adding a widget to a group
+    let but4 = CheckButton::new(50, 150, 90, 25, "Check");
+    grp1.add(&but4);
 }
 
 fn main() {
     let mut wind = Window::new(100, 100, 500, 200, "Tabs Example");
     draw_gallery();
+    wind.make_resizable(true);
     wind.show();
     fl::run().unwrap();
 }

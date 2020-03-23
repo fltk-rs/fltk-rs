@@ -100,7 +100,7 @@ fn main() {
 
     let mut x = menu.get_item("Help/About");
     x.set_label_color(Color::Red);
-
+    wind.make_resizable(true);
     wind.show();
     fl::run().expect("Couldn't run editor");
 }
