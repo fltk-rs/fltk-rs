@@ -1,15 +1,14 @@
 # fltk-rs
 
-Rust bindings for the FLTK GUI library.
-Still very barebones, undocumented, untested and not at all production ready!
+Rust bindings for the FLTK GUI library. Still in alpha.
 
-The FLTK gui library is a crossplatform lightweight C++ library which can be linked to statically (LGPL) to produce small, self-contained and fast binaries. 
+The FLTK gui crate is a crossplatform lightweight library which can be linked to statically (LGPL) to produce small, self-contained and fast binaries.
 
 ## Using in a project
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "^0.1.6"
+fltk = "^0.1.7"
 ```
 An example hello world application:
 ```rust
@@ -18,7 +17,7 @@ use fltk::window::*;
 fn main() {
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     wind.show();
-    fl::run();
+    fl::run().unwrap();
 }
 ```
 Please check the examples directory for more examples.
@@ -90,11 +89,8 @@ Most common widgets are implemented:
 - Roller
 - Images
 
-The implementation isn't complete no less. Customized event handling is not implemented.
-
 ## Todo
 
-- Support customized event handling
 - Complete widget set
 - Better documentation
 - Better testing

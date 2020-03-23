@@ -8,6 +8,12 @@ pub struct Fl_Widget {
 pub type Fl_Callback = ::std::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
+pub type custom_handler_callback = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ::std::os::raw::c_int,
+        arg2: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int,
+>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
@@ -142,6 +148,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_set_image(arg1: *mut Fl_Group, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Group_set_handler(
+        self_: *mut *mut Fl_Group,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
@@ -306,6 +319,13 @@ extern "C" {
     pub fn Fl_Pack_set_image(arg1: *mut Fl_Pack, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Pack_set_handler(
+        self_: *mut *mut Fl_Pack,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
 }
 extern "C" {
@@ -466,6 +486,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_set_image(arg1: *mut Fl_Scroll, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Scroll_set_handler(
+        self_: *mut *mut Fl_Scroll,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Scroll_begin(self_: *mut Fl_Scroll);
@@ -630,6 +657,13 @@ extern "C" {
     pub fn Fl_Tabs_set_image(arg1: *mut Fl_Tabs, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Tabs_set_handler(
+        self_: *mut *mut Fl_Tabs,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -790,6 +824,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_set_image(arg1: *mut Fl_Tile, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Tile_set_handler(
+        self_: *mut *mut Fl_Tile,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);

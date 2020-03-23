@@ -6,7 +6,7 @@ extern "C" {
 
 typedef struct Fl_Widget Fl_Widget;
 typedef void(Fl_Callback)(Fl_Widget *, void *);
-
+typedef int (*custom_handler_callback)(int, void *);
 void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define WIDGET_DECLARE(widget)                                                 \
@@ -48,7 +48,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_align(widget *);                                                \
   void widget##_set_align(widget *, int typ);                                  \
   void widget##_delete(widget *);                                              \
-  void widget##_set_image(widget *, void *);                                   
+  void widget##_set_image(widget *, void *);                                   \
+  void widget##_set_handler(widget **self, custom_handler_callback cb,         \
+                            void *data);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -129,6 +131,29 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int image##_height(image *);
 
 #define WIDGET_DEFINE(widget)                                                  \
+  class widget##_Derived : public widget {                                     \
+    void *data_;                                                               \
+                                                                               \
+  public:                                                                      \
+    typedef int (*handler)(int, void *data);                                   \
+    handler inner_handler;                                                     \
+    widget##_Derived(int x, int y, int w, int h, const char *title = 0)        \
+        : widget(x, y, w, h, title) {}                                         \
+    widget##_Derived(widget *ptr)                                              \
+        : widget(ptr->x(), ptr->y(), ptr->w(), ptr->h(), ptr->label()) {}      \
+    operator widget *() { return (widget *)*this; }                            \
+    void set_handler(handler h) { inner_handler = h; }                         \
+    void set_handler_data(void *data) { data_ = data; }                        \
+    int handle(int event) {                                                    \
+      int ret = widget::handle(event);                                         \
+      int local = inner_handler(event, data_);                                 \
+      if (local == 0)                                                          \
+        return ret;                                                            \
+      else                                                                     \
+        return local;                                                          \
+    }                                                                          \
+  };                                                                           \
+                                                                               \
   widget *widget##_new(int x, int y, int width, int height,                    \
                        const char *title) {                                    \
     return new (std::nothrow) widget(x, y, width, height, title);              \
@@ -184,7 +209,14 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_delete(widget *self) { delete self; }                          \
   void widget##_set_image(widget *self, void *image) {                         \
     self->image((Fl_Image *)image);                                            \
-  }                                                                            
+  }                                                                            \
+  void widget##_set_handler(widget **self, custom_handler_callback cb,         \
+                            void *data) {                                      \
+    widget##_Derived *temp = new widget##_Derived(*self);                      \
+    temp->set_handler_data(data);                                              \
+    temp->set_handler(cb);                                                     \
+    *self = temp;                                                              \
+  }
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \
@@ -199,7 +231,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_remove(widget *self, int index) { self->remove(index); }       \
   void widget##_clear(widget *self) { self->clear(); }                         \
   int widget##_children(widget *self) { return self->children(); }             \
-  void widget##_make_resizable(widget *self, void *wid) {                           \
+  void widget##_make_resizable(widget *self, void *wid) {                      \
     self->resizable((Fl_Widget *)wid);                                         \
   }
 

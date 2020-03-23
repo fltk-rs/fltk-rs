@@ -22,5 +22,5 @@ fn main() {
     let mut wind = Window::new(100, 100, 500, 200, "Tabs Example");
     draw_gallery();
     wind.show();
-    fl::run();
+    fl::run().unwrap();
 }

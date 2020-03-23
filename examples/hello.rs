@@ -7,5 +7,5 @@ fn main() {
     let image = SvgImage::new(PathBuf::from("screenshots/RustLogo.svg"));
     frame.set_image(image);
     wind.show();
-    fl::run();
+    fl::run().unwrap();
 }

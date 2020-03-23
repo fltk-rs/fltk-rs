@@ -102,5 +102,5 @@ fn main() {
     x.set_label_color(Color::Red);
 
     wind.show();
-    fl::run();
+    fl::run().expect("Couldn't run editor");
 }

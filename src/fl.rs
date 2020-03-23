@@ -1,9 +1,15 @@
 pub use crate::prelude::*;
 use std::{ffi, mem, os::raw};
 
-pub fn run() {
+type Result<T> = std::result::Result<T, FltkError>;
+
+pub fn run() -> Result<()> {
     unsafe {
-        fltk_sys::fl::Fl_run();
+        let x = fltk_sys::fl::Fl_run();
+        match x {
+            0 => Ok(()),
+            _ => return Err(FltkError::Internal(FltkErrorKind::FailedToRun)),
+        }
     }
 }
 
