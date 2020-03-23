@@ -3,16 +3,17 @@ use std::{ffi, mem, os::raw};
 
 type Result<T> = std::result::Result<T, FltkError>;
 
+/// Runs the event loop
 pub fn run() -> Result<()> {
     unsafe {
-        let x = fltk_sys::fl::Fl_run();
-        match x {
+        match fltk_sys::fl::Fl_run() {
             0 => Ok(()),
             _ => return Err(FltkError::Internal(FltkErrorKind::FailedToRun)),
         }
     }
 }
 
+/// Returns the latest captured event
 pub fn event() -> Event {
     unsafe {
         let x = fltk_sys::fl::Fl_event();
@@ -21,6 +22,7 @@ pub fn event() -> Event {
     }
 }
 
+/// Returns the presed key
 pub fn event_key() -> i32 {
     unsafe {
         let x = fltk_sys::fl::Fl_event_key();
@@ -28,6 +30,7 @@ pub fn event_key() -> i32 {
     }
 }
 
+/// Returns a textual representation of the latest event
 pub fn event_text() -> String {
     unsafe {
         ffi::CString::from_raw(fltk_sys::fl::Fl_event_text() as *mut raw::c_char)
@@ -36,10 +39,12 @@ pub fn event_text() -> String {
     }
 }
 
+/// Returns the captured button event
 pub fn event_button() -> i32 {
     unsafe { fltk_sys::fl::Fl_event_button() }
 }
 
+/// Returns the number of clicks
 pub fn event_clicks() -> bool {
     unsafe {
         match fltk_sys::fl::Fl_event_clicks() {
@@ -49,10 +54,12 @@ pub fn event_clicks() -> bool {
     }
 }
 
+/// Returns the x and y coordinates of the captured event
 pub fn event_coords() -> (i32, i32) {
     unsafe { (fltk_sys::fl::Fl_event_dx(), fltk_sys::fl::Fl_event_dy()) }
 }
 
+/// Determines whether an event was a click
 pub fn event_is_click() -> bool {
     unsafe {
         match fltk_sys::fl::Fl_event_is_click() {
@@ -62,14 +69,17 @@ pub fn event_is_click() -> bool {
     }
 }
 
+/// Returns the duration of an event
 pub fn event_length() -> i32 {
     unsafe { fltk_sys::fl::Fl_event_length() }
 }
 
+/// Returns the state of the event
 pub fn event_state() -> i32 {
     unsafe { fltk_sys::fl::Fl_event_state() }
 }
 
+/// Returns a pair of the width and height of the screen
 pub fn screen_size() -> (f64, f64) {
     unsafe {
         (
@@ -79,6 +89,7 @@ pub fn screen_size() -> (f64, f64) {
     }
 }
 
+/// Used for widgets implementing the InputTrait, pastes content from the clipboard
 pub fn paste<T>(widget: T)
 where
     T: WidgetTrait + InputTrait,
@@ -88,6 +99,7 @@ where
     }
 }
 
+/// Sets the callback of a widget
 pub fn set_callback<'a, W>(widget: &'a W, cb: Box<dyn FnMut() + 'a>)
 where
     W: WidgetTrait,

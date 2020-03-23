@@ -10,6 +10,8 @@ fn draw_elements() {
     let mut but1 = Button::new(80, 80, 80, 60, "Click me!");
     let mut but2 = Button::new(240, 80, 80, 60, "Click me!");
 
+    // Different ways of handling events    
+    
     // but1.clone().set_callback(Box::new(|| match fl::event() {
     //     fl::Event::Released => {
     //         println!("{:?}", fl::event());

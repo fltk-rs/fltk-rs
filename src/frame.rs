@@ -2,11 +2,13 @@ pub use crate::prelude::*;
 use fltk_sys::frame::*;
 use std::{ffi::CString, mem, os::raw};
 
+/// Creates a new frame, an equivalent of Fl_Box
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct Frame {
     _inner: *mut Fl_Box,
 }
 
+/// Defines the frame type, which can be set using the set_type() method
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone)]
 pub enum FrameType {

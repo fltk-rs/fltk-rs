@@ -352,8 +352,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn changed(&self) -> bool {
                 unsafe {
-                    let x = #changed(self._inner);
-                    match x {
+                    match #changed(self._inner) {
                         0 => false,
                         _ => true,
                     }
@@ -483,9 +482,11 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #children(self._inner) as usize
                 }
             }
-            fn make_resizable<Widget: WidgetTrait>(&self, widget: &Widget) {
-                unsafe {
-                    #make_resizable(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
+            fn make_resizable(&self, val: bool) {
+                if val {
+                    unsafe {
+                        #make_resizable(self._inner, self._inner as *mut raw::c_void)
+                    }
                 }
             }
         }
