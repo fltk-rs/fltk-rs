@@ -8,6 +8,12 @@ pub struct Fl_Widget {
 pub type Fl_Callback = ::std::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
+pub type custom_handler_callback = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ::std::os::raw::c_int,
+        arg2: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int,
+>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
@@ -142,6 +148,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Button_set_image(arg1: *mut Fl_Button, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Button_set_handler(
+        self_: *mut *mut Fl_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -280,6 +293,13 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_set_image(arg1: *mut Fl_Check_Button, arg2: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Check_Button_set_handler(
+        self_: *mut *mut Fl_Check_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Radio_Button {
@@ -416,6 +436,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_image(arg1: *mut Fl_Radio_Button, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_set_handler(
+        self_: *mut *mut Fl_Radio_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -560,6 +587,13 @@ extern "C" {
         arg2: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Toggle_Button_set_handler(
+        self_: *mut *mut Fl_Toggle_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Round_Button {
@@ -697,6 +731,13 @@ extern "C" {
 extern "C" {
     pub fn Fl_Round_Button_set_image(arg1: *mut Fl_Round_Button, arg2: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Round_Button_set_handler(
+        self_: *mut *mut Fl_Round_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Light_Button {
@@ -833,6 +874,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Light_Button_set_image(arg1: *mut Fl_Light_Button, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Light_Button_set_handler(
+        self_: *mut *mut Fl_Light_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -977,6 +1025,13 @@ extern "C" {
         arg2: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Repeat_Button_set_handler(
+        self_: *mut *mut Fl_Repeat_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Return_Button {
@@ -1118,5 +1173,12 @@ extern "C" {
     pub fn Fl_Return_Button_set_image(
         arg1: *mut Fl_Return_Button,
         arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Return_Button_set_handler(
+        self_: *mut *mut Fl_Return_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
     );
 }

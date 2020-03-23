@@ -184,7 +184,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
     );
-
+    let set_handler = Ident::new(
+        format!("{}_{}", name_str, "set_handler").as_str(),
+        name.span(),
+    );
     let gen = quote! {
         impl WidgetTrait for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
@@ -388,6 +391,21 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: fltk_sys::widget::Fl_Callback = Some(shim);
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+                }
+            }
+            fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> i32 + 'a>) {
+                unsafe {
+                    unsafe extern "C" fn shim<'a>(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
+                        let ev: Event = std::mem::transmute(_ev);
+                        let a: *mut Box<dyn FnMut(Event) -> i32 + 'a> = mem::transmute(data);
+                        let f: &mut (dyn FnMut(Event) -> i32 + 'a) = &mut **a;
+                        let x = f(ev);
+                        x
+                    }
+                    let a: *mut Box<dyn FnMut(Event) -> i32 + 'a> = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = mem::transmute(a);
+                    let callback: custom_handler_callback = Some(shim);
+                    #set_handler(&mut self._inner, callback, data);
                 }
             }
         }

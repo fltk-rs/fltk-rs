@@ -344,5 +344,5 @@ fn main() {
     );
 
     wind.show();
-    fl::run();
+    fl::run().expect("Couldn't run calculator!");
 }

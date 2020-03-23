@@ -6,7 +6,7 @@
 extern "C" {
 #endif
 
-WIDGET_DECLARE(Fl_Button)
+WIDGET_DECLARE(Fl_Button)   
 
 WIDGET_DECLARE(Fl_Check_Button)
 

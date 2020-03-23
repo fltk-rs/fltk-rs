@@ -8,6 +8,12 @@ pub struct Fl_Widget {
 pub type Fl_Callback = ::std::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
+pub type custom_handler_callback = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ::std::os::raw::c_int,
+        arg2: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int,
+>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
@@ -142,4 +148,11 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Box_set_image(arg1: *mut Fl_Box, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Box_set_handler(
+        self_: *mut *mut Fl_Box,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }

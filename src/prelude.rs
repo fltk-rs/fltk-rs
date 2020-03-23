@@ -3,6 +3,59 @@ pub use crate::fl;
 pub use crate::menu::*;
 use fltk_sys::widget::*;
 use std::os::raw;
+use std::error::Error;
+use std::fmt;
+use std::io;
+use std::convert::From;
+
+#[derive(Debug)]
+pub enum FltkError {
+    Io(io::Error),
+    Internal(FltkErrorKind),
+    Unknown(String)
+}
+
+#[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+pub enum FltkErrorKind {
+    FailedToRun,
+    ResourceNotFound,
+}
+
+impl FltkErrorKind {
+    fn as_str(&self) -> &str {
+        match *self {
+            FltkErrorKind::FailedToRun => "Failed to run FLTK!",
+            FltkErrorKind::ResourceNotFound => "Resource Not Found!"
+        }
+    }
+}
+
+impl Error for FltkError {
+    fn description(&self) -> &str {
+        match *self {
+            FltkError::Io(ref err) => err.description(),
+            FltkError::Internal(ref err) => err.as_str(),
+            FltkError::Unknown(ref err) => err,
+        }
+    }
+}
+
+impl fmt::Display for FltkError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            FltkError::Io(ref err) => err.fmt(f),
+            FltkError::Internal(ref err) => write!(f, "An internal error occured {:?}", err),
+            FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {:?}", err),
+        }
+    }
+}
+
+impl From<io::Error> for FltkError {
+    fn from(err: io::Error) -> FltkError {
+        FltkError::Io(err)
+    }
+}
+
 
 pub trait WidgetTrait {
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
@@ -43,6 +96,7 @@ pub trait WidgetTrait {
     fn set_align(&mut self, align: Align);
     fn set_image<Image: ImageTrait>(&mut self, image: Image);
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
+    fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> i32 + 'a>);
 }
 
 pub trait GroupTrait: WidgetTrait {

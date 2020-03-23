@@ -8,6 +8,12 @@ pub struct Fl_Widget {
 pub type Fl_Callback = ::std::option::Option<
     unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
 >;
+pub type custom_handler_callback = ::std::option::Option<
+    unsafe extern "C" fn(
+        arg1: ::std::os::raw::c_int,
+        arg2: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int,
+>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
@@ -147,6 +153,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_image(arg1: *mut Fl_Menu_Bar, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_handler(
+        self_: *mut *mut Fl_Menu_Bar,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add(
@@ -317,6 +330,13 @@ extern "C" {
     pub fn Fl_Menu_Button_set_image(arg1: *mut Fl_Menu_Button, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Menu_Button_set_handler(
+        self_: *mut *mut Fl_Menu_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
         name: *const ::std::os::raw::c_char,
@@ -477,6 +497,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_set_image(arg1: *mut Fl_Choice, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Choice_set_handler(
+        self_: *mut *mut Fl_Choice,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Choice_add(
