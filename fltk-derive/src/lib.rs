@@ -762,6 +762,14 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_text_size").as_str(),
         name.span(),
     );
+    let add_choice = Ident::new(
+        format!("{}_{}", name_str, "add_choice").as_str(),
+        name.span(),
+    );
+    let get_choice = Ident::new(
+        format!("{}_{}", name_str, "get_choice").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl MenuTrait for #name {
@@ -826,6 +834,17 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_text_color(&mut self, c: Color) {
                 unsafe {
                     #set_text_color(self._inner, c as i32)
+                }
+            }
+            fn add_choice(&mut self, text: &str) {
+                unsafe {
+                    let arg2 = CString::new(text).unwrap();
+                    #add_choice(self._inner, arg2.into_raw() as *mut raw::c_char)
+                }
+            }
+            fn get_choice(&self) -> String {
+                unsafe {
+                    CString::from_raw(#get_choice(self._inner) as *mut raw::c_char).into_string().unwrap()
                 }
             }
         }

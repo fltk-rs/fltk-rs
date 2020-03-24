@@ -104,7 +104,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_text_size(widget *);                                            \
   void widget##_set_text_size(widget *, int c);                                \
   int widget##_text_color(widget *);                                           \
-  void widget##_set_text_color(widget *, int c);
+  void widget##_set_text_color(widget *, int c);                               \
+  void widget##_add_choice(widget *, const char *);                            \
+  const char* widget##_get_choice(widget *);
 
 #define VALUATOR_DECLARE(widget)                                               \
   void widget##_set_bounds(widget *, double a, double b);                      \
@@ -315,7 +317,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_text_size(widget *self) { return self->textsize(); }            \
   void widget##_set_text_size(widget *self, int c) { self->textsize(c); }      \
   int widget##_text_color(widget *self) { return self->textcolor(); }          \
-  void widget##_set_text_color(widget *self, int c) { self->textcolor(c); }
+  void widget##_set_text_color(widget *self, int c) { self->textcolor(c); }    \
+  void widget##_add_choice(widget *self, const char *str) { self->add(str); }  \
+  const char* widget##_get_choice(widget *self) { return self->text(); }
 
 #define VALUATOR_DEFINE(widget)                                                \
   void widget##_set_bounds(widget *self, double a, double b) {                 \

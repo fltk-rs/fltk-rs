@@ -243,6 +243,10 @@ pub trait MenuTrait: WidgetTrait  {
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
     fn add<'a>(&'a mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>);
+    /// Adds a simple text option to the Choice and MenuButton widgets
+    fn add_choice(&mut self, text: &str);
+    /// Gets the user choice from the Choice and MenuButton widgets
+    fn get_choice(&self) -> String;
 }
 
 pub trait ValuatorTrait: WidgetTrait  {

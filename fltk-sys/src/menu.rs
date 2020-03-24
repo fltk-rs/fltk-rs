@@ -195,6 +195,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Bar_set_text_color(arg1: *mut Fl_Menu_Bar, c: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Menu_Bar_add_choice(arg1: *mut Fl_Menu_Bar, arg2: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_get_choice(arg1: *mut Fl_Menu_Bar) -> *const ::std::os::raw::c_char;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Button {
@@ -370,6 +376,15 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_set_text_color(arg1: *mut Fl_Menu_Button, c: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Menu_Button_add_choice(
+        arg1: *mut Fl_Menu_Button,
+        arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Button_get_choice(arg1: *mut Fl_Menu_Button) -> *const ::std::os::raw::c_char;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Choice {
@@ -538,6 +553,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_set_text_color(arg1: *mut Fl_Choice, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Choice_add_choice(arg1: *mut Fl_Choice, arg2: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Choice_get_choice(arg1: *mut Fl_Choice) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Menu_Item_label(arg1: *mut Fl_Menu_Item) -> *const ::std::os::raw::c_char;
