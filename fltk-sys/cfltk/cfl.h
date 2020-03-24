@@ -4,7 +4,12 @@
 extern "C" {
 #endif
 
+typedef void(* 	Fl_Awake_Handler) (void *data);
+
 int Fl_run(void);
+int Fl_lock();
+void Fl_unlock();
+int Fl_awake(Fl_Awake_Handler handler, void* data);
 int Fl_event(void);
 int Fl_event_key(void);
 const char *Fl_event_text(void);

@@ -383,7 +383,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-                        let f: &mut dyn FnMut() = &mut **a;
+                        let f: &mut (dyn FnMut() + 'a) = &mut **a;
                         f();
                     }
                     let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
@@ -778,7 +778,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-                        let f: &mut dyn FnMut() = &mut **a;
+                        let f: &mut (dyn FnMut() + 'a) = &mut **a;
                         f();
                     }
                     let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));

@@ -31,7 +31,9 @@ fn draw_gallery() {
 fn main() {
     let (screen_width, screen_height) = fl::screen_size();
     let mut wind = Window::new((screen_width / 2.0 - 250.0) as i32, (screen_height / 2.0 - 200.0) as i32, 500, 400, "Gallery");
+
     draw_gallery();
+    
     wind.make_resizable(true);
     wind.show();
     fl::run().unwrap();

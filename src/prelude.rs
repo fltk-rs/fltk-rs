@@ -19,6 +19,7 @@ pub enum FltkError {
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum FltkErrorKind {
     FailedToRun,
+    FailedToLock,
     ResourceNotFound,
 }
 
@@ -26,6 +27,7 @@ impl FltkErrorKind {
     fn as_str(&self) -> &str {
         match *self {
             FltkErrorKind::FailedToRun => "Failed to run FLTK!",
+            FltkErrorKind::FailedToLock => "Failed to initialize app for multithreading!",
             FltkErrorKind::ResourceNotFound => "Resource Not Found!"
         }
     }
