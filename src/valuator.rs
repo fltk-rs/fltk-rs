@@ -8,6 +8,7 @@ pub struct Slider {
     _inner: *mut Fl_Slider,
 }
 
+/// Defines slider types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone)]
 pub enum SliderType {
@@ -25,6 +26,7 @@ pub struct Dial {
     _inner: *mut Fl_Dial,
 }
 
+/// Defines dial types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone)]
 pub enum DialType {
@@ -39,6 +41,7 @@ pub struct Counter {
     _inner: *mut Fl_Counter,
 }
 
+/// Defines counter types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone)]
 pub enum CounterType {
@@ -52,6 +55,7 @@ pub struct Scrollbar {
     _inner: *mut Fl_Scrollbar,
 }
 
+/// Defines scrollbar types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone)]
 pub enum ScrollBarType {
@@ -73,4 +77,16 @@ pub struct Roller {
 #[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
 pub struct ValueSlider {
     _inner: *mut Fl_Value_Slider,
+}
+
+/// Creates an adjuster widget
+#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+pub struct Adjuster {
+    _inner: *mut Fl_Adjuster,
+}
+
+/// Creates an adjuster widget
+#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+pub struct ValueInput {
+    _inner: *mut Fl_Value_Input,
 }

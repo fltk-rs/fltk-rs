@@ -187,9 +187,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Group_children(self_: *mut Fl_Group) -> ::std::os::raw::c_int;
 }
-extern "C" {
-    pub fn Fl_Group_make_resizable(self_: *mut Fl_Group, arg1: *mut ::std::os::raw::c_void);
-}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Pack {
@@ -355,9 +352,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_children(self_: *mut Fl_Pack) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Pack_make_resizable(self_: *mut Fl_Pack, arg1: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -525,9 +519,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Scroll_children(self_: *mut Fl_Scroll) -> ::std::os::raw::c_int;
 }
-extern "C" {
-    pub fn Fl_Scroll_make_resizable(self_: *mut Fl_Scroll, arg1: *mut ::std::os::raw::c_void);
-}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tabs {
@@ -694,9 +685,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tabs_children(self_: *mut Fl_Tabs) -> ::std::os::raw::c_int;
 }
-extern "C" {
-    pub fn Fl_Tabs_make_resizable(self_: *mut Fl_Tabs, arg1: *mut ::std::os::raw::c_void);
-}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tile {
@@ -862,7 +850,4 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_children(self_: *mut Fl_Tile) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Tile_make_resizable(self_: *mut Fl_Tile, arg1: *mut ::std::os::raw::c_void);
 }

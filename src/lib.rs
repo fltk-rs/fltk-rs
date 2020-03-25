@@ -12,6 +12,7 @@ pub mod prelude;
 pub mod valuator;
 pub mod widget;
 pub mod window;
+pub mod browser;
 pub mod image;
 
 #[macro_use]

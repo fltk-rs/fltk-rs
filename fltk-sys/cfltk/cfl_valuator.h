@@ -30,6 +30,14 @@ WIDGET_DECLARE(Fl_Value_Slider)
 
 VALUATOR_DECLARE(Fl_Value_Slider)
 
+WIDGET_DECLARE(Fl_Adjuster)
+
+VALUATOR_DECLARE(Fl_Adjuster)
+
+WIDGET_DECLARE(Fl_Value_Input)
+
+VALUATOR_DECLARE(Fl_Value_Input)
+
 #ifdef __cplusplus
 }
 #endif

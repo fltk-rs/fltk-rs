@@ -20,6 +20,7 @@ add_library(cfltk STATIC
     cfl_menu.cpp
     cfl_dialog.cpp
     cfl_valuator.cpp
+    cfl_browser.cpp
     cfl_image.cpp
     )
 

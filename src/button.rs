@@ -36,21 +36,25 @@ pub struct CheckButton {
     _inner: *mut Fl_Check_Button,
 }
 
+/// Creates a toggle button
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct ToggleButton {
     _inner: *mut Fl_Toggle_Button,
 }
 
+/// Creates a light button
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct LightButton {
     _inner: *mut Fl_Light_Button,
 }
 
+/// Creates a repeat button
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct RepeatButton {
     _inner: *mut Fl_Repeat_Button,
 }
 
+/// Creates a return button
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct ReturnButton {
     _inner: *mut Fl_Return_Button,

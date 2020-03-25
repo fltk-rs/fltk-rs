@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 use std::{ffi, mem, os::raw};
 
 /// Runs the event loop
-pub fn run() -> Result<(), FltkError> {
+fn run() -> Result<(), FltkError> {
     unsafe {
         match fltk_sys::fl::Fl_run() {
             0 => Ok(()),
@@ -21,6 +21,7 @@ fn lock() -> Result<(), FltkError> {
     }
 }
 
+/// sets the scheme of the application
 fn set_scheme(scheme: AppScheme) {
     let name_str = match scheme {
         AppScheme::Base => "base",
@@ -56,17 +57,23 @@ fn set_scheme(scheme: AppScheme) {
 //     }
 // }
 
+/// Basic Application struct, used to instatiate, set the scheme and run the event loop
 #[derive(Debug, Copy, Clone)]
 pub struct App {}
 
 impl App {
+    /// Instantiates an App type
     pub fn default() -> App {
         App {}
     }
+    
+    /// Sets the scheme of the application
     pub fn set_scheme(self, scheme: AppScheme) -> App {
         fl::set_scheme(scheme);
         self
     }
+    
+    /// Runs the event loop
     pub fn run(&self) -> Result<(), FltkError> {
         fl::lock()?;
         return fl::run();

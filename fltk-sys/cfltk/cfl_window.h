@@ -18,6 +18,12 @@ GROUP_DECLARE(Fl_Double_Window)
 
 WINDOW_DECLARE(Fl_Double_Window)
 
+WIDGET_DECLARE(Fl_Menu_Window)
+
+GROUP_DECLARE(Fl_Menu_Window)
+
+WINDOW_DECLARE(Fl_Menu_Window)
+
 #ifdef __cplusplus
 }
 #endif

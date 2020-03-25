@@ -39,3 +39,15 @@ pub struct FloatInput {
 pub struct MultilineInput {
     _inner: *mut Fl_Multiline_Input,
 }
+
+/// An File-input widget
+#[derive(WidgetTrait, InputTrait, Debug, Clone)]
+pub struct FileInput {
+    _inner: *mut Fl_File_Input,
+}
+
+/// An secret input widget
+#[derive(WidgetTrait, InputTrait, Debug, Clone)]
+pub struct SecretInput {
+    _inner: *mut Fl_Secret_Input,
+}

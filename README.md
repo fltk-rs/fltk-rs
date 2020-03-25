@@ -8,7 +8,7 @@ The FLTK gui crate is a crossplatform lightweight library which can be linked to
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "^0.1.10"
+fltk = "^0.1.11"
 ```
 An example hello world application:
 ```rust
@@ -65,6 +65,7 @@ Setting the scheme to Gtk
 ## Currently implemented widgets
 
 Most common widgets are implemented: 
+- Images (BMP, JPEG, GIF, PNG, SVG)
 - Button
 - RadioButton
 - ToggleButton
@@ -76,6 +77,7 @@ Most common widgets are implemented:
 - Frame (Fl_Box)
 - Window
 - DoubleWindow
+- MenuWindow
 - Group
 - Pack
 - Tabs
@@ -83,17 +85,29 @@ Most common widgets are implemented:
 - Tile
 - TextDisplay
 - TextEditor
-- Input, IntInput, FloatInput, MultilineInput
-- Output, MultilineOutput
+- Input
+- IntInput
+- FloatInput
+- MultilineInput
+- SecretInput
+- FileInput
+- Output
+- MultilineOutput
 - MenuBar
 - MenuItem
 - Choice (dropdown list)
-- Slider, ValueSlider
+- Slider
+- ValueSlider
 - Dial
 - Counter
 - Scrollbar
 - Roller
-- Images
+- Adjuster
+- ValueInput
+- Browser
+- SelectBrowser
+- HoldBrowser
+- MultiBrowser
 
 ## Todo
 

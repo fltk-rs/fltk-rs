@@ -21,3 +21,10 @@ pub enum WindowType {
 pub struct DoubleWindow {
     _inner: *mut Fl_Double_Window,
 }
+
+/// Creates a Menu window widget
+#[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
+pub struct MenuWindow {
+    _inner: *mut Fl_Menu_Window,
+}
+
