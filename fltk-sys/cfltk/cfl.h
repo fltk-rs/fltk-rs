@@ -23,6 +23,7 @@ int Fl_event_state(void);
 int Fl_screen_h(void);
 int Fl_screen_w(void);
 void Fl_paste(void *, int src);
+void Fl_set_scheme(const char* scheme);
 
 #ifdef __cplusplus
 }

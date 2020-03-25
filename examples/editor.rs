@@ -2,6 +2,7 @@ use fltk::{dialog::*, text::TextEditor, window::Window};
 use std::{fs, path};
 
 fn main() {
+    let app = fl::App::default().set_scheme(AppScheme::Gtk);
     let (screen_width, screen_height) = fl::screen_size();
     let mut filename = String::from("");
     let mut wind = Window::new(
@@ -102,5 +103,5 @@ fn main() {
     x.set_label_color(Color::Red);
     wind.make_resizable(true);
     wind.show();
-    fl::run().expect("Couldn't run editor");
+    app.run().expect("Couldn't run editor");
 }

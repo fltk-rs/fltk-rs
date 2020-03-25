@@ -56,3 +56,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_paste(arg1: *mut ::std::os::raw::c_void, src: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_set_scheme(scheme: *const ::std::os::raw::c_char);
+}

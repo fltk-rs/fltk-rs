@@ -38,3 +38,7 @@ int Fl_screen_w(void) { return Fl::w(); }
 void Fl_paste(void *widget, int src) { 
   Fl::paste(*(Fl_Widget*)widget, src, Fl::clipboard_plain_text); 
 }
+
+void Fl_set_scheme(const char* scheme) {
+  Fl::scheme(scheme);
+}

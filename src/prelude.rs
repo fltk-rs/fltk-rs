@@ -20,6 +20,7 @@ pub enum FltkError {
 pub enum FltkErrorKind {
     FailedToRun,
     FailedToLock,
+    FailedToSetScheme,
     ResourceNotFound,
 }
 
@@ -28,6 +29,7 @@ impl FltkErrorKind {
         match *self {
             FltkErrorKind::FailedToRun => "Failed to run FLTK!",
             FltkErrorKind::FailedToLock => "Failed to initialize app for multithreading!",
+            FltkErrorKind::FailedToSetScheme => "Failed to set scheme",
             FltkErrorKind::ResourceNotFound => "Resource Not Found!"
         }
     }
@@ -57,6 +59,19 @@ impl From<io::Error> for FltkError {
     fn from(err: io::Error) -> FltkError {
         FltkError::Io(err)
     }
+}
+
+/// Set the app scheme
+#[derive(Debug, Copy, Clone)]
+pub enum AppScheme {
+    /// Base fltk scheming
+    Base,
+    /// inspired by the Aqua user interface on Mac OS X
+    Plastic,
+    /// inspired by the GTK+ theme
+    Gtk,
+    /// inspired by the Clearlooks Glossy scheme
+    Gleam,
 }
 
 pub trait WidgetTrait {
@@ -137,7 +152,7 @@ pub trait WidgetTrait {
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually
-    fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> i32 + 'a>);
+    fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
 }
 
 pub trait GroupTrait: WidgetTrait {

@@ -21,52 +21,69 @@ fn lock() -> Result<(), FltkError> {
     }
 }
 
-/// Unlocks the main UI thread
-#[allow(dead_code)]
-fn unlock() {
+fn set_scheme(scheme: AppScheme) {
+    let name_str = match scheme {
+        AppScheme::Base => "base",
+        AppScheme::Gtk => "gtk+",
+        AppScheme::Gleam => "gleam",
+        AppScheme::Plastic => "plastic",
+    };
+    let name_str= std::ffi::CString::new(name_str).unwrap();
     unsafe {
-        fltk_sys::fl::Fl_unlock();
+        fltk_sys::fl::Fl_set_scheme(name_str.into_raw() as *const raw::c_char)
     }
 }
 
-pub fn awake(cb: Box<dyn FnMut()>) {
-    unsafe {
-        unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
-            let f: &mut (dyn FnMut()) = &mut **a;
-            f();
-        }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-        let data: *mut raw::c_void = mem::transmute(a);
-        let callback: fltk_sys::fl::Fl_Awake_Handler = Some(shim);
-        fltk_sys::fl::Fl_awake(callback, data);
-    }
-}
+/// Unlocks the main UI thread
+// #[allow(dead_code)]
+// fn unlock() {
+//     unsafe {
+//         fltk_sys::fl::Fl_unlock();
+//     }
+// }
+
+// pub fn awake<'a>(cb: Box<dyn FnMut() + 'a>) {
+//     unsafe {
+//         unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
+//             let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
+//             let f: &mut (dyn FnMut() + 'a) = &mut **a;
+//             f();
+//         }
+//         let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+//         let data: *mut raw::c_void = mem::transmute(a);
+//         let callback: fltk_sys::fl::Fl_Awake_Handler = Some(shim);
+//         fltk_sys::fl::Fl_awake(callback, data);
+//     }
+// }
 
 #[derive(Debug, Copy, Clone)]
 pub struct App {}
 
 impl App {
-    pub fn init() -> App {
+    pub fn default() -> App {
         App {}
+    }
+    pub fn set_scheme(self, scheme: AppScheme) -> App {
+        fl::set_scheme(scheme);
+        self
     }
     pub fn run(&self) -> Result<(), FltkError> {
         fl::lock()?;
         return fl::run();
     }
-    pub fn awake<'a>(&'a self, cb: Box<dyn FnMut() + 'a>) {
-        unsafe {
-            unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
-                let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-                let f: &mut (dyn FnMut() + 'a) = &mut **a;
-                f();
-            }
-            let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
-            let data: *mut raw::c_void = mem::transmute(a);
-            let callback: fltk_sys::fl::Fl_Awake_Handler = Some(shim);
-            fltk_sys::fl::Fl_awake(callback, data);
-        }
-    }
+    // pub fn awake<'a>(&'a self, cb: Box<dyn FnMut() + 'a>) {
+    //     unsafe {
+    //         unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
+    //             let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
+    //             let f: &mut (dyn FnMut() + 'a) = &mut **a;
+    //             f();
+    //         }
+    //         let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+    //         let data: *mut raw::c_void = mem::transmute(a);
+    //         let callback: fltk_sys::fl::Fl_Awake_Handler = Some(shim);
+    //         fltk_sys::fl::Fl_awake(callback, data);
+    //     }
+    // }
 }
 
 /// Returns the latest captured event

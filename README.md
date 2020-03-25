@@ -8,16 +8,17 @@ The FLTK gui crate is a crossplatform lightweight library which can be linked to
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "^0.1.8"
+fltk = "^0.1.10"
 ```
 An example hello world application:
 ```rust
 use fltk::window::*;
 
 fn main() {
+    let app = fl::App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     wind.show();
-    fl::run().unwrap();
+    app.run().unwrap();
 }
 ```
 Please check the examples directory for more examples.
@@ -34,7 +35,7 @@ $ cargo build
 
 ## Dependencies
 
-CMake and Ninja need to be installed and in your PATH for a crossplatform build. After that on Windows and Mac OS X, normally no external dependencies are needed. For Linux, X11 development headers need to be installed for development. For Debian-based distribution, that means running:
+CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. After that on Windows and Mac OS X, normally no external dependencies are needed. For Linux, X11 development headers need to be installed for development. For Debian-based distribution, that means running:
 ```
 $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
 ```
@@ -51,9 +52,14 @@ $ cargo run --example button
 $ cargo run --example hello
 ```
 ![alt_test](screenshots/hello.jpg)
+
 ![alt_test](screenshots/gallery.jpg)
+Setting the scheme to Gtk.
+
 ![alt_test](screenshots/calc.jpg)
+
 ![alt_test](screenshots/editor.jpg)
+Setting the scheme to Gtk
 
 
 ## Currently implemented widgets

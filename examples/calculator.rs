@@ -4,6 +4,7 @@
 use fltk::{button::Button, output::Output, prelude::*, window::Window};
 
 fn main() {
+    let app = fl::App::default().set_scheme(AppScheme::Gleam);
     let (screen_width, screen_height) = fl::screen_size();
     let border = 20;
     let but_width = 90;
@@ -344,5 +345,5 @@ fn main() {
     );
     wind.make_resizable(false);
     wind.show();
-    fl::run().expect("Couldn't run calculator!");
+    app.run().expect("Couldn't run calculator!");
 }
