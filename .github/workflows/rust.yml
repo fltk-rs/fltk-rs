@@ -9,8 +9,11 @@ on:
 jobs:
   build:
 
-    runs-on: [ubuntu-latest, windows-latest]
-
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-18.04]
+    
     steps:
     - name: Download deps
       run: |
