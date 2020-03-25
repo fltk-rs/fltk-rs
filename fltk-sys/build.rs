@@ -40,7 +40,7 @@ fn main() {
         .unwrap();
 
     let dst = cmake::Config::new("cfltk")
-        .generator("Ninja")
+        // .generator("Ninja")
         .profile("RELEASE")
         .define("OpenGL_GL_PREFERENCE", "GLVND")
         .define("OPTION_BUILD_EXAMPLES", "OFF")
@@ -56,17 +56,20 @@ fn main() {
         dst.join("build").display()
     );
 
-    // Change static to dylib to link dynamically, also change CMakeLists STATIC to SHARED
-
-    println!("cargo:rustc-link-lib=static=cfltk");
-
-    // Comment out all following code to link dynamically
-
     println!(
         "cargo:rustc-link-search=native={}",
         dst.join("lib").display()
     );
 
+    println!(
+        "cargo:rustc-link-search=native={}",
+        dst.join("lib").join("Release").display()
+    );
+
+    // Change static to dylib to link dynamically, also change CMakeLists STATIC to SHARED
+    println!("cargo:rustc-link-lib=static=cfltk");
+
+    // Comment out all following code to link dynamically
     println!("cargo:rustc-link-lib=static=fltk");
     println!("cargo:rustc-link-lib=static=fltk_images");
     println!("cargo:rustc-link-lib=static=fltk_jpeg");

@@ -3,6 +3,8 @@ project(cfltk)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
+
 add_subdirectory(fltk)
 
 add_library(cfltk STATIC 

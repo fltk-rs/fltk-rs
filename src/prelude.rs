@@ -19,6 +19,8 @@ pub enum FltkError {
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum FltkErrorKind {
     FailedToRun,
+    FailedToLock,
+    FailedToSetScheme,
     ResourceNotFound,
 }
 
@@ -26,6 +28,8 @@ impl FltkErrorKind {
     fn as_str(&self) -> &str {
         match *self {
             FltkErrorKind::FailedToRun => "Failed to run FLTK!",
+            FltkErrorKind::FailedToLock => "Failed to initialize app for multithreading!",
+            FltkErrorKind::FailedToSetScheme => "Failed to set scheme",
             FltkErrorKind::ResourceNotFound => "Resource Not Found!"
         }
     }
@@ -55,6 +59,19 @@ impl From<io::Error> for FltkError {
     fn from(err: io::Error) -> FltkError {
         FltkError::Io(err)
     }
+}
+
+/// Set the app scheme
+#[derive(Debug, Copy, Clone)]
+pub enum AppScheme {
+    /// Base fltk scheming
+    Base,
+    /// inspired by the Aqua user interface on Mac OS X
+    Plastic,
+    /// inspired by the GTK+ theme
+    Gtk,
+    /// inspired by the Clearlooks Glossy scheme
+    Gleam,
 }
 
 pub trait WidgetTrait {
@@ -135,7 +152,7 @@ pub trait WidgetTrait {
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually
-    fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> i32 + 'a>);
+    fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
 }
 
 pub trait GroupTrait: WidgetTrait {
@@ -243,6 +260,10 @@ pub trait MenuTrait: WidgetTrait  {
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
     fn add<'a>(&'a mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>);
+    /// Adds a simple text option to the Choice and MenuButton widgets
+    fn add_choice(&mut self, text: &str);
+    /// Gets the user choice from the Choice and MenuButton widgets
+    fn get_choice(&self) -> String;
 }
 
 pub trait ValuatorTrait: WidgetTrait  {
