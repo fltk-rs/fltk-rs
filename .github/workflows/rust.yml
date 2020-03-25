@@ -17,9 +17,10 @@ jobs:
     steps:
     - name: Download deps
       run: |
-        if ("${ { runner.os } }" STREQUAL "Linux")
+         if [ "$RUNNER_OS" == "Linux" ]; then
           sudo apt-get install -y libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
-        endif()
+         fi
+      shell: bash
     - uses: actions/checkout@v2
     - name: Build
       run: cargo build --verbose
