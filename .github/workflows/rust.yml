@@ -9,12 +9,18 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-18.04]
+    
     steps:
     - name: Download deps
       run: |
-        sudo apt-get install -y ninja-build libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
+         if [ "$RUNNER_OS" == "Linux" ]; then
+          sudo apt-get install -y libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
+         fi
+      shell: bash
     - uses: actions/checkout@v2
     - name: Build
       run: cargo build --verbose
