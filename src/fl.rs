@@ -118,6 +118,11 @@ pub fn event_text() -> String {
     }
 }
 
+/// Gets the character representation of the keyboard event
+pub fn event_char() -> char {
+    event_key() as u8 as char
+}
+
 /// Returns the captured button event
 pub fn event_button() -> i32 {
     unsafe { fltk_sys::fl::Fl_event_button() }

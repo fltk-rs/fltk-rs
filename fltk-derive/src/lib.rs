@@ -200,6 +200,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_handler").as_str(),
         name.span(),
     );
+    let set_trigger = Ident::new(
+        format!("{}_{}", name_str, "set_trigger").as_str(),
+        name.span(),
+    );
     let gen = quote! {
         unsafe impl Send for #name {}
         impl Copy for #name {}
@@ -421,6 +425,11 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: custom_handler_callback = Some(shim);
                     #set_handler(&mut self._inner, callback, data);
+                }
+            }
+            fn set_trigger(&mut self, trigger: CallbackTrigger) {
+                unsafe {
+                    #set_trigger(self._inner, trigger as i32)
                 }
             }
         }

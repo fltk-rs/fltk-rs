@@ -161,6 +161,19 @@ pub enum Shortcut {
     Alt = 0x00080000,
 }
 
+#[repr(i32)]
+#[derive(Debug, Copy, Clone)]
+pub enum CallbackTrigger { 
+    Never		= 0,	
+    Changed	= 1,	
+    NotChanged	= 2,	
+    Release	= 4,	
+    ReleaseAlways = 6,	
+    EnterKey	= 8,	
+    EnterKeyAlways=10,	
+    EnterKeyChanged =11	
+  }
+
 impl std::ops::Add<char> for Shortcut {
     type Output = i32;
     fn add(self, other: char) -> i32 {

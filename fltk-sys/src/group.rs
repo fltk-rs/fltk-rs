@@ -157,6 +157,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Group_set_trigger(arg1: *mut Fl_Group, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
 }
 extern "C" {
@@ -321,6 +324,9 @@ extern "C" {
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Pack_set_trigger(arg1: *mut Fl_Pack, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
@@ -489,6 +495,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Scroll_set_trigger(arg1: *mut Fl_Scroll, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Scroll_begin(self_: *mut Fl_Scroll);
 }
 extern "C" {
@@ -655,6 +664,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Tabs_set_trigger(arg1: *mut Fl_Tabs, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -819,6 +831,9 @@ extern "C" {
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Tile_set_trigger(arg1: *mut Fl_Tile, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);

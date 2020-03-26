@@ -10,7 +10,7 @@ The FLTK gui crate is a crossplatform lightweight library which can be linked to
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "^0.1.12"
+fltk = "^0.1.13"
 ```
 An example hello world application:
 ```rust
@@ -51,6 +51,7 @@ $ cargo run --example editor
 $ cargo run --example calculator
 $ cargo run --example gallery
 $ cargo run --example button
+$ cargo run --example terminal
 $ cargo run --example hello
 ```
 ![alt_test](screenshots/hello.jpg)
@@ -63,6 +64,7 @@ Setting the scheme to Gtk.
 ![alt_test](screenshots/editor.jpg)
 Setting the scheme to Gtk
 
+![alt_test](screenshots/terminal.jpg)
 
 ## Currently implemented widgets
 

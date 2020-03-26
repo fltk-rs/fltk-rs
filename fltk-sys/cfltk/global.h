@@ -50,7 +50,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_delete(widget *);                                              \
   void widget##_set_image(widget *, void *);                                   \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
-                            void *data);
+                            void *data);                                       \
+  void widget##_set_trigger(widget *, int);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -250,7 +251,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     temp->set_handler_data(data);                                              \
     temp->set_handler(cb);                                                     \
     *self = temp;                                                              \
-  }
+  }                                                                            \
+  void widget##_set_trigger(widget *self, int val) { self->when(val); }
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \
@@ -281,7 +283,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
       self->fullscreen_off();                                                  \
     }                                                                          \
   }                                                                            \
-  void widget##_make_current(widget *self) { self->make_current(); }           \
+  void widget##_make_current(widget *self) {                                   \
+    ((Fl_Window *)self)->make_current();                                       \
+  }                                                                            \
   void widget##_set_icon(widget *self, const void *image) {                    \
     self->icon((const Fl_RGB_Image *)image);                                   \
   }                                                                            \

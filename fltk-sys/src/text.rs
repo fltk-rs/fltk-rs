@@ -166,6 +166,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Text_Display_set_trigger(arg1: *mut Fl_Text_Display, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
@@ -368,6 +371,9 @@ extern "C" {
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_trigger(arg1: *mut Fl_Text_Editor, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);

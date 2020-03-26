@@ -154,6 +154,8 @@ pub trait WidgetTrait {
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually
     fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
+    /// Sets the default callback trigger for a widget
+    fn set_trigger(&mut self, trigger: CallbackTrigger);
 }
 
 /// Defines the methods implemented by all group widgets

@@ -5,6 +5,7 @@
 #include <FL/Fl_Multiline_Input.H>
 #include <FL/Fl_File_Input.H>
 #include <FL/Fl_Secret_Input.H>
+#include <FL/Fl_Spinner.H>
 #include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>
@@ -32,3 +33,4 @@ INPUT_DEFINE(Fl_Secret_Input)
 WIDGET_DEFINE(Fl_File_Input)
 
 INPUT_DEFINE(Fl_File_Input)
+
