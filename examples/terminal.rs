@@ -12,12 +12,20 @@ fn main() {
         .to_string();
     current_dir.push_str("/ $ ");
     let mut term = TextEditor::new(5, 5, 630, 470);
+    let mut cmd = String::from("");
     term.clone()
         .set_custom_handler(Box::new(|ev: Event| match ev {
             fl::Event::KeyUp => {
                 if fl::event_key() == fl::Key::Enter as i32 {
                     run_command(&mut term);
                     term.append(&current_dir);
+                    cmd.clear();
+                } else if fl::event_key() == fl::Key::BackSpace as i32 {
+                    if cmd.len() == 0 {
+                        term.append(" ");
+                    }
+                } else {
+                    cmd.push(fl::event_char());
                 }
                 true
             }
@@ -29,6 +37,8 @@ fn main() {
     app.run().unwrap();
 }
 
+// To have continuous streaming of output for long standing operations, 
+// consider using Tokio Command or the likes
 fn run_command(term: &mut TextEditor) {
     let txt = term.text();
     let mut lines: Vec<_> = txt.lines().collect();
