@@ -48,8 +48,7 @@ impl MenuItem {
     pub fn label(&self) -> String {
         unsafe {
             CString::from_raw(Fl_Menu_Item_label(self._inner) as *mut raw::c_char)
-                .into_string()
-                .unwrap()
+                .to_string_lossy().to_string()
         }
     }
 

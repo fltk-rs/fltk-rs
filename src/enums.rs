@@ -93,6 +93,51 @@ pub enum Event {
     MouseWheel,
 }
 
+#[repr(i32)]
+#[derive(Debug, Copy, Clone)]
+pub enum Key {
+    Button = 0xfee8,
+    BackSpace = 0xff08,
+    Tab = 0xff09,
+    IsoKey = 0xff0c,
+    Enter = 0xff0d,
+    Pause = 0xff13,
+    ScrollLock = 0xff14,
+    Escape = 0xff1b,
+    Kana = 0xff2e,
+    Eisu = 0xff2f,
+    Yen = 0xff30,
+    JISUnderscore = 0xff31,
+    Home = 0xff50,
+    Left = 0xff51,
+    Up = 0xff52,
+    Right = 0xff53,
+    Down = 0xff54,
+    PageUp = 0xff55,
+    PageDown = 0xff56,
+    End = 0xff57,
+    Print = 0xff61,
+    Insert = 0xff63,
+    Menu = 0xff67,
+    Help = 0xff68,
+    NumLock = 0xff7f,
+    KP = 0xff80,
+    KPEnter = 0xff8d,
+    KPLast = 0xffbd,
+    F = 0xffbd,
+    FLast = 0xffe0,
+    ShiftL = 0xffe1,
+    ShiftR = 0xffe2,
+    ControlL = 0xffe3,
+    ControlR = 0xffe4,
+    CapsLock = 0xffe5,
+    MetaL = 0xffe7,
+    MetaR = 0xffe8,
+    AltL = 0xffe9,
+    AltR = 0xffea,
+    Delete = 0xffff,
+}
+
 /// Defines label types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone)]

@@ -22,6 +22,6 @@ extern crate fltk_derive;
 mod tests {
     #[test]
     fn it_works() {
-        println!("works");
+
     }
 }

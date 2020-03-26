@@ -114,8 +114,7 @@ pub fn event_key() -> i32 {
 pub fn event_text() -> String {
     unsafe {
         ffi::CString::from_raw(fltk_sys::fl::Fl_event_text() as *mut raw::c_char)
-            .into_string()
-            .unwrap()
+            .to_string_lossy().to_string()
     }
 }
 

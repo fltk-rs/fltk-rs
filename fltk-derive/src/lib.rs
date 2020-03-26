@@ -261,7 +261,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn label(&self) -> String {
                 unsafe {
-                    CString::from_raw(#label(self._inner) as *mut raw::c_char).into_string().unwrap()
+                    CString::from_raw(#label(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
 
@@ -288,7 +288,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn tooltip(&self) -> String {
                 unsafe {
                     CString::from_raw(
-                        #tooltip(self._inner) as *mut raw::c_char).into_string().unwrap()
+                        #tooltip(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
 
@@ -619,7 +619,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl InputTrait for #name {
             fn value(&self) -> String {
                 unsafe {
-                    CString::from_raw(#value(self._inner) as *mut raw::c_char).into_string().unwrap()
+                    CString::from_raw(#value(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
             fn set_value(&self, val: &str) {
@@ -863,7 +863,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn get_choice(&self) -> String {
                 unsafe {
-                    CString::from_raw(#get_choice(self._inner) as *mut raw::c_char).into_string().unwrap()
+                    CString::from_raw(#get_choice(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
         }
@@ -1088,8 +1088,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn text(&self) -> String {
                 unsafe {
                     CString::from_raw(#text(self._inner) as *mut raw::c_char)
-                        .into_string()
-                        .unwrap()
+                        .to_string_lossy().to_string()
                 }
             }
 
@@ -1273,7 +1272,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn text(&self, line: usize) -> String {
                 unsafe {
-                    CString::from_raw(#text(self._inner, line as i32) as *mut raw::c_char).into_string().unwrap()
+                    CString::from_raw(#text(self._inner, line as i32) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
             fn set_text(&mut self, line: usize, txt: &str) {
@@ -1300,7 +1299,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl ImageTrait for #name {
             fn new(path: std::path::PathBuf) -> #name {
                 unsafe {
-                    let temp = path.into_os_string().into_string().unwrap();
+                    let temp = path.into_os_string().to_string_lossy().to_string();
                     let temp = std::ffi::CString::new(temp.as_str()).unwrap();
                     #name {
                         _inner: #new(temp.into_raw() as *const raw::c_char),

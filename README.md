@@ -4,11 +4,13 @@ Rust bindings for the FLTK GUI library. Still in alpha.
 
 The FLTK gui crate is a crossplatform lightweight library which can be linked to statically (LGPL) to produce small, self-contained and fast binaries.
 
+[Documentation](https://docs.rs/fltk)
+
 ## Using in a project
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "^0.1.11"
+fltk = "^0.1.12"
 ```
 An example hello world application:
 ```rust

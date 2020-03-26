@@ -1,10 +1,11 @@
 [package]
 name = "fltk"
-version = "0.1.11"
+version = "0.1.12"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
 repository = "https://github.com/MoAlyousef/fltk-rs"
+documentation = "https://docs.rs/fltk"
 keywords = ["gui", "bindings", "graphics"]
 license = "MIT"
 

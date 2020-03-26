@@ -43,8 +43,7 @@ impl FileDialog {
     pub fn filename(&self) -> String {
         unsafe {
             ffi::CString::from_raw(Fl_Native_File_Chooser_filename(self._inner) as *mut raw::c_char)
-                .into_string()
-                .unwrap()
+                .to_string_lossy().to_string()
         }
     }
 
@@ -52,8 +51,7 @@ impl FileDialog {
     pub fn directory(&self) -> String {
         unsafe {
             ffi::CString::from_raw(Fl_Native_File_Chooser_directory(self._inner) as *mut raw::c_char)
-                .into_string()
-                .unwrap()
+                .to_string_lossy().to_string()
         }
     }
 
@@ -107,8 +105,7 @@ impl FileDialog {
     pub fn error_message(&self) -> String {
         unsafe {
             ffi::CString::from_raw(Fl_Native_File_Chooser_errmsg(self._inner) as *mut raw::c_char)
-                .into_string()
-                .unwrap()
+                .to_string_lossy().to_string()
         }
     }
 }
@@ -156,8 +153,7 @@ pub fn input(txt: &str, deflt: &str) -> String {
             txt.into_raw() as *const raw::c_char,
             deflt.into_raw() as *const raw::c_char,
         ) as *mut raw::c_char)
-        .into_string()
-        .unwrap()
+        .to_string_lossy().to_string()
     }
 }
 
@@ -170,7 +166,6 @@ pub fn password(txt: &str, deflt: &str) -> String {
             txt.into_raw() as *const raw::c_char,
             deflt.into_raw() as *const raw::c_char,
         ) as *mut raw::c_char)
-        .into_string()
-        .unwrap()
+        .to_string_lossy().to_string()
     }
 }
