@@ -124,7 +124,6 @@ pub enum Key {
     KP = 0xff80,
     KPEnter = 0xff8d,
     KPLast = 0xffbd,
-    F = 0xffbd,
     FLast = 0xffe0,
     ShiftL = 0xffe1,
     ShiftR = 0xffe2,
