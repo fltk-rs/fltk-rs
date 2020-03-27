@@ -25,6 +25,7 @@ pub struct RadioButton {
 }
 
 impl RadioButton {
+    /// Check whether a radio button is toggled
     pub fn is_toggled(&self) -> bool {
         unsafe {
             match Fl_Radio_Button_is_toggled(self._inner) {
@@ -48,6 +49,7 @@ pub struct CheckButton {
 }
 
 impl CheckButton {
+    /// Check whether a check button is checked
     pub fn is_checked(&self) -> bool {
         unsafe {
             match Fl_Check_Button_is_checked(self._inner) {
@@ -65,6 +67,7 @@ pub struct ToggleButton {
 }
 
 impl ToggleButton {
+    /// Check whether a toggle button is toggled
     pub fn is_toggled(&self) -> bool {
         unsafe {
             match Fl_Toggle_Button_is_toggled(self._inner) {
