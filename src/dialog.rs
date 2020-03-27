@@ -184,29 +184,33 @@ pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> usize {
 
 /// Displays an input box, which returns the inputted string.
 /// Can be used for gui io
-pub fn input(txt: &str, deflt: &str) -> String {
+pub fn input(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
+        let temp = ffi::CString::new(deflt.clone()).unwrap().into_raw() as *const raw::c_char;
         let txt = ffi::CString::new(txt).unwrap();
-        let deflt = ffi::CString::new(deflt).unwrap();
-        ffi::CString::from_raw(cfl_input(
-            txt.into_raw() as *const raw::c_char,
-            deflt.into_raw() as *const raw::c_char,
-        ) as *mut raw::c_char)
-        .to_string_lossy()
-        .to_string()
+        let x = cfl_input(txt.into_raw() as *const raw::c_char, temp);
+        if x.is_null() {
+            return None;
+        } else {
+            Some(ffi::CStr::from_ptr(x as *const raw::c_char)
+                .to_string_lossy()
+                .to_string())
+        }
     }
 }
 
 /// Shows an input box, but with hidden string
-pub fn password(txt: &str, deflt: &str) -> String {
+pub fn password(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
+        let temp = ffi::CString::new(deflt.clone()).unwrap().into_raw() as *const raw::c_char;
         let txt = ffi::CString::new(txt).unwrap();
-        let deflt = ffi::CString::new(deflt).unwrap();
-        ffi::CString::from_raw(cfl_password(
-            txt.into_raw() as *const raw::c_char,
-            deflt.into_raw() as *const raw::c_char,
-        ) as *mut raw::c_char)
-        .to_string_lossy()
-        .to_string()
+        let x = cfl_password(txt.into_raw() as *const raw::c_char, temp);
+        if x.is_null() {
+            return None;
+        } else {
+            Some(ffi::CStr::from_ptr(x as *const raw::c_char)
+                .to_string_lossy()
+                .to_string())
+        }
     }
 }

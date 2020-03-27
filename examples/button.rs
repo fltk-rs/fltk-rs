@@ -62,6 +62,10 @@ impl MainWindow {
             &self.but2.clone(),
             Box::new(|| match fl::event() {
                 fl::Event::Released => {
+                    match fltk::dialog::input("hello", "") {
+                        Some(inp) => println!("{}", inp),
+                        None => return,
+                    }
                     println!("{:?}", fl::event());
                     self.but1.set_label("No!");
                     self.but2.set_label("Works");

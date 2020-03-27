@@ -76,7 +76,7 @@ int cfl_choice(const char *txt, const char *b0, const char *b1,
 }
 
 const char *cfl_input(const char *txt, const char *deflt) {
-  return fl_input(txt, deflt);
+  return fl_input("%s", deflt, txt);
 }
 
 const char *cfl_password(const char *txt, const char *deflt) {
