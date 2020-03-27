@@ -42,16 +42,49 @@ impl FileDialog {
     /// Returns the chosen file name
     pub fn filename(&self) -> String {
         unsafe {
-            ffi::CString::from_raw(Fl_Native_File_Chooser_filename(self._inner) as *mut raw::c_char)
-                .to_string_lossy().to_string()
+            let cnt = Fl_Native_File_Chooser_count(self._inner);
+            if cnt == 0 {
+                return String::from("");
+            }
+            let x = Fl_Native_File_Chooser_filenames(self._inner, 0);
+            ffi::CString::from_raw(x as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
         }
     }
 
-    /// Returns the chosen directory
+    /// Returns the chosen file names
+    pub fn filenames(&self) -> Vec<String> {
+        unsafe {
+            let cnt = Fl_Native_File_Chooser_count(self._inner);
+            let mut names: Vec<String> = vec![];
+            if cnt == 0 {
+                return names;
+            } else {
+                for i in 0..cnt {
+                    let x = Fl_Native_File_Chooser_filenames(self._inner, i);
+                    names.push(
+                        ffi::CString::from_raw(x as *mut raw::c_char)
+                            .to_string_lossy()
+                            .to_string(),
+                    )
+                }
+                names
+            }
+        }
+    }
+
+    /// Returns the preset directory
     pub fn directory(&self) -> String {
         unsafe {
-            ffi::CString::from_raw(Fl_Native_File_Chooser_directory(self._inner) as *mut raw::c_char)
-                .to_string_lossy().to_string()
+            let x = Fl_Native_File_Chooser_directory(self._inner);
+            if !x.is_null() {
+                ffi::CString::from_raw(x as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string()
+            } else {
+                String::from("")
+            }
         }
     }
 
@@ -84,20 +117,25 @@ impl FileDialog {
 
     /// Sets the title for the dialog
     pub fn set_title(&mut self, title: &str) {
+        let title = std::ffi::CString::new(title).unwrap();
         unsafe {
-            Fl_Native_File_Chooser_set_title(self._inner, title.as_ptr() as *const raw::c_char)
+            Fl_Native_File_Chooser_set_title(self._inner, title.into_raw() as *const raw::c_char)
         }
     }
 
     /// Sets the filter for the dialog
     pub fn set_filter(&mut self, f: &str) {
-        unsafe { Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr() as *const raw::c_char) }
+        let f = std::ffi::CString::new(f).unwrap();
+        unsafe {
+            Fl_Native_File_Chooser_set_filter(self._inner, f.into_raw() as *const raw::c_char)
+        }
     }
 
     /// Sets the preset filter for the dialog
     pub fn set_preset_file(&mut self, f: &str) {
+        let f = std::ffi::CString::new(f).unwrap();
         unsafe {
-            Fl_Native_File_Chooser_set_preset_file(self._inner, f.as_ptr() as *const raw::c_char)
+            Fl_Native_File_Chooser_set_preset_file(self._inner, f.into_raw() as *const raw::c_char)
         }
     }
 
@@ -105,7 +143,8 @@ impl FileDialog {
     pub fn error_message(&self) -> String {
         unsafe {
             ffi::CString::from_raw(Fl_Native_File_Chooser_errmsg(self._inner) as *mut raw::c_char)
-                .to_string_lossy().to_string()
+                .to_string_lossy()
+                .to_string()
         }
     }
 }
@@ -153,7 +192,8 @@ pub fn input(txt: &str, deflt: &str) -> String {
             txt.into_raw() as *const raw::c_char,
             deflt.into_raw() as *const raw::c_char,
         ) as *mut raw::c_char)
-        .to_string_lossy().to_string()
+        .to_string_lossy()
+        .to_string()
     }
 }
 
@@ -166,6 +206,7 @@ pub fn password(txt: &str, deflt: &str) -> String {
             txt.into_raw() as *const raw::c_char,
             deflt.into_raw() as *const raw::c_char,
         ) as *mut raw::c_char)
-        .to_string_lossy().to_string()
+        .to_string_lossy()
+        .to_string()
     }
 }

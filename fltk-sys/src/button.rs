@@ -306,6 +306,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Button_set_trigger(arg1: *mut Fl_Check_Button, arg2: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Radio_Button {
@@ -452,6 +455,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_trigger(arg1: *mut Fl_Radio_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_is_toggled(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -605,6 +611,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_trigger(arg1: *mut Fl_Toggle_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_is_toggled(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

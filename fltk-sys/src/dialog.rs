@@ -14,6 +14,16 @@ extern "C" {
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    pub fn Fl_Native_File_Chooser_filenames(
+        arg1: *mut Fl_Native_File_Chooser,
+        arg2: ::std::os::raw::c_int,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Native_File_Chooser_count(arg1: *mut Fl_Native_File_Chooser)
+        -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Native_File_Chooser_set_directory(
         arg1: *mut Fl_Native_File_Chooser,
         val: *const ::std::os::raw::c_char,

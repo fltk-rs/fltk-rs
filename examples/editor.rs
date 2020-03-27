@@ -38,8 +38,12 @@ fn main() {
         Box::new( || {
             let mut dlg = FileDialog::new(FileDialogType::BrowseFile);
             dlg.set_option(FileDialogOptions::NoOptions);
+            dlg.set_filter("*.txt");
             dlg.show();
             filename = dlg.filename();
+            if filename.is_empty() {
+                return;
+            }
             match path::Path::new(&filename).exists() {
                 true => editor.set_text(fs::read_to_string(&filename).unwrap().as_str()),
                 false => alert("File does not exist!"),
@@ -62,6 +66,9 @@ fn main() {
         dlg.set_option(FileDialogOptions::SaveAsConfirm);
         dlg.show();
         filename = dlg.filename();
+        if filename.is_empty() {
+            return;
+        }
         match path::Path::new(&filename).exists() {
             true => fs::write(&filename, editor.text()).unwrap(),
             false => alert("Please specify a file!"),

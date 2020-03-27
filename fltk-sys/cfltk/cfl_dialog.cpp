@@ -9,7 +9,19 @@ Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
 }
 
 const char *Fl_Native_File_Chooser_filename(Fl_Native_File_Chooser *self) {
-  return self->filename();
+  auto x = self->filename();
+  if (x == "") return NULL;
+  else return x;
+}
+
+const char *Fl_Native_File_Chooser_filenames(Fl_Native_File_Chooser *self, int cnt) {
+  auto x = self->filename(cnt);
+  if (x == "") return NULL;
+  else return x;
+}
+
+int Fl_Native_File_Chooser_count(Fl_Native_File_Chooser *self) {
+  return self->count();
 }
 
 void Fl_Native_File_Chooser_set_directory(Fl_Native_File_Chooser *self,

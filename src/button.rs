@@ -24,6 +24,17 @@ pub struct RadioButton {
     _inner: *mut Fl_Radio_Button,
 }
 
+impl RadioButton {
+    pub fn is_toggled(&self) -> bool {
+        unsafe {
+            match Fl_Radio_Button_is_toggled(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+}
+
 /// Creates a round button
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct RoundButton {
@@ -36,10 +47,32 @@ pub struct CheckButton {
     _inner: *mut Fl_Check_Button,
 }
 
+impl CheckButton {
+    pub fn is_checked(&self) -> bool {
+        unsafe {
+            match Fl_Check_Button_is_checked(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+}
+
 /// Creates a toggle button
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct ToggleButton {
     _inner: *mut Fl_Toggle_Button,
+}
+
+impl ToggleButton {
+    pub fn is_toggled(&self) -> bool {
+        unsafe {
+            match Fl_Toggle_Button_is_toggled(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
 }
 
 /// Creates a light button
