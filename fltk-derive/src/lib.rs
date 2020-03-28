@@ -222,6 +222,32 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
                 }
             }
+            fn default() -> Self {
+                let temp = CString::new("").unwrap();
+                unsafe {
+                    #name {
+                        _inner: #new(
+                            0,
+                            0,
+                            0,
+                            0,
+                            temp.into_raw() as *const raw::c_char,
+                        ),
+                    }
+                }
+            }
+            fn with_pos(mut self, x: i32, y: i32) -> Self {
+                self.resize(x, y, self.width(), self.height());
+                self
+            }
+            fn with_size(mut self, width: i32, height: i32) -> Self {
+                self.resize(self.x(), self.y(), width, height);
+                self
+            }
+            fn with_label(mut self, title: &str) -> Self {
+                self.set_label(title);
+                self
+            }
             fn set_label(&mut self, title: &str) {
                 let temp = CString::new(title).unwrap();
                 unsafe {

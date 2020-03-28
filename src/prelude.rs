@@ -67,6 +67,14 @@ pub trait WidgetTrait {
     /// * `heigth` - The height of the widget
     /// * `title` - The title or label of the widget
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
+    /// Creates a default and zero initialized widget
+    fn default() -> Self;
+    /// Initialize to position x, y
+    fn with_pos(self, x: i32, y: i32) -> Self;
+    /// Initialilze to dimensions width and height
+    fn with_size(self, width: i32, height: i32) -> Self;
+    /// Initialize with label/title
+    fn with_label(self, title: &str) -> Self;
     /// Sets the widget's label
     fn set_label(&mut self, title: &str);
     /// Redraws a widget, necessary for resizing and changing positions

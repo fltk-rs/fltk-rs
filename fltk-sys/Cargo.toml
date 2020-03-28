@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "0.1.17"
+version = "0.1.18"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 build = "build.rs"
 edition = "2018"

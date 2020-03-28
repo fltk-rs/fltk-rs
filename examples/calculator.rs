@@ -65,7 +65,10 @@ fn main() {
     let mut but2 = Button::new(column2, row4, but_width, but_height, "2");
     let mut but3 = Button::new(column3, row4, but_width, but_height, "3");
     let mut but_dot = Button::new(column1, row5, but_width, but_height, ".");
-    let mut but0 = Button::new(column2, row5, but_width * 2, but_height, "0");
+    let mut but0 = Button::default()
+        .with_pos(column2, row5)
+        .with_size(but_width * 2, but_height)
+        .with_label("0");
 
     let but_vec = vec![
         &mut but1,

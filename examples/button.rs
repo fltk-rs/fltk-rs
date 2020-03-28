@@ -21,7 +21,10 @@ impl MainWindow {
             wind: Window::new(0, 0, 400, 300, "Hello from rust"),
             but1: Button::new(80, 30, 80, 30, "Click me!"),
             but2: Button::new(240, 30, 80, 30, "Click me!"),
-            frame: Frame::new(20, 80, 360, 160, ""),
+            frame: Frame::default()
+                .with_pos(20, 80)
+                .with_size(360, 160)
+                .with_label(""),
         }
     }
     pub fn draw_elements(mut self) {

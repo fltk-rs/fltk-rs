@@ -7,12 +7,14 @@ The FLTK crate is a crossplatform lightweight gui library which can be staticall
 [Documentation](https://docs.rs/fltk)
 
 ## Usage
-Just add the following to your project's Cargo.toml file.
+Just add the following to your project's Cargo.toml file:
+
 ```toml
 [dependencies]
-fltk = "^0.1.17"
+fltk = "^0.1.18"
 ```
 An example hello world application:
+
 ```rust
 use fltk::{app::*, window::*};
 
@@ -24,7 +26,16 @@ fn main() {
 }
 ```
 Please check the examples directory for more examples.
-You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, as well as the width and height of the widget. Most widgets, except the TextDisplay and TextEditor, also take a label which can be left blank if needed. 
+You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, as well as the width and height of the widget. Most widgets, except the TextDisplay and TextEditor, also take a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
+
+```rust
+let but1 = Button::new(10, 10, 80, 40, "Button 1");
+
+let but2 = Button::default()
+    .with_pos(10, 10)
+    .with_size(80, 40)
+    .with_label("Button 2");
+```
 
 ## Dependencies
 
