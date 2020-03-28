@@ -1,7 +1,7 @@
 #include "cfl_dialog.h"
 #include <FL/Fl_Help_Dialog.H>
-#include <FL/Fl_Native_File_Chooser.H>
 #include <FL/Fl_Image.H>
+#include <FL/Fl_Native_File_Chooser.H>
 #include <FL/fl_ask.H>
 
 Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
@@ -9,7 +9,24 @@ Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
 }
 
 const char *Fl_Native_File_Chooser_filename(Fl_Native_File_Chooser *self) {
-  return self->filename();
+  auto x = self->filename();
+  if (x == "")
+    return NULL;
+  else
+    return x;
+}
+
+const char *Fl_Native_File_Chooser_filenames(Fl_Native_File_Chooser *self,
+                                             int cnt) {
+  auto x = self->filename(cnt);
+  if (x == "")
+    return NULL;
+  else
+    return x;
+}
+
+int Fl_Native_File_Chooser_count(Fl_Native_File_Chooser *self) {
+  return self->count();
 }
 
 void Fl_Native_File_Chooser_set_directory(Fl_Native_File_Chooser *self,
@@ -64,7 +81,7 @@ int cfl_choice(const char *txt, const char *b0, const char *b1,
 }
 
 const char *cfl_input(const char *txt, const char *deflt) {
-  return fl_input(txt, deflt);
+  return fl_input("%s", deflt, txt);
 }
 
 const char *cfl_password(const char *txt, const char *deflt) {

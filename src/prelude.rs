@@ -2,18 +2,16 @@ pub use crate::enums::*;
 pub use crate::fl;
 pub use crate::menu::*;
 use fltk_sys::widget::*;
-use std::os::raw;
-use std::error::Error;
-use std::fmt;
-use std::io;
 use std::convert::From;
+use std::error::Error;
+use std::{fmt, io, os::raw};
 
 /// Error types returned by fltk-rs + wrappers of std::io errors
 #[derive(Debug)]
 pub enum FltkError {
     Io(io::Error),
     Internal(FltkErrorKind),
-    Unknown(String)
+    Unknown(String),
 }
 
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
@@ -30,7 +28,7 @@ impl FltkErrorKind {
             FltkErrorKind::FailedToRun => "Failed to run FLTK!",
             FltkErrorKind::FailedToLock => "Failed to initialize app for multithreading!",
             FltkErrorKind::FailedToSetScheme => "Failed to set scheme",
-            FltkErrorKind::ResourceNotFound => "Resource Not Found!"
+            FltkErrorKind::ResourceNotFound => "Resource Not Found!",
         }
     }
 }
@@ -74,8 +72,15 @@ pub enum AppScheme {
     Gleam,
 }
 
+/// Defines the methods implemented by all widgets
 pub trait WidgetTrait {
     /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
+    /// # Arguments
+    /// * `x` - The x coordinate in the screen
+    /// * `y` - The y coordinate in the screen
+    /// * `width` - The width of the widget
+    /// * `heigth` - The height of the widget
+    /// * `title` - The title or label of the widget
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
     /// Sets the widget's label
     fn set_label(&mut self, title: &str);
@@ -109,7 +114,7 @@ pub trait WidgetTrait {
     fn tooltip(&self) -> String;
     /// Sets the tooltip text
     fn set_tooltip(&mut self, txt: &str);
-    /// Returns the widget type
+    /// Returns the widget type when applicable
     fn get_type<T: WidgetType>(&self) -> T;
     /// Sets the widget type
     fn set_type<T: WidgetType>(&mut self, typ: T);
@@ -141,7 +146,7 @@ pub trait WidgetTrait {
     fn changed(&self) -> bool;
     /// Mark the widget as changed
     fn set_changed(&mut self);
-    /// Mark the widget as unchanged
+    /// Clears the changed status of the widget
     fn clear_changed(&mut self);
     /// Returns the alignment of the widget
     fn align(&self) -> Align;
@@ -153,8 +158,11 @@ pub trait WidgetTrait {
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually
     fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
+    /// Sets the default callback trigger for a widget
+    fn set_trigger(&mut self, trigger: CallbackTrigger);
 }
 
+/// Defines the methods implemented by all group widgets
 pub trait GroupTrait: WidgetTrait {
     /// Begins a group, used for widgets implementing the group trait
     fn begin(&self);
@@ -172,8 +180,6 @@ pub trait GroupTrait: WidgetTrait {
     fn clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> usize;
-    /// Make the group resizable, useful for window widgets
-    fn make_resizable(&self, val: bool);
 }
 
 pub trait WidgetType {
@@ -181,6 +187,7 @@ pub trait WidgetType {
     fn from_i32(val: i32) -> Self;
 }
 
+/// Defines the methods implemented by all window widgets
 pub trait WindowTrait: GroupTrait {
     /// Makes a window modal
     fn make_modal(&mut self, val: bool);
@@ -190,9 +197,12 @@ pub trait WindowTrait: GroupTrait {
     fn make_current(&mut self);
     /// Sets the windows icon
     fn set_icon<Image: ImageTrait>(&mut self, image: Image);
+    /// Make the window resizable
+    fn make_resizable(&self, val: bool);
 }
 
-pub trait InputTrait: WidgetTrait  {
+/// Defines the methods implemented by all input and output widgets
+pub trait InputTrait: WidgetTrait {
     /// Returns the value inside the input/output widget
     fn value(&self) -> String;
     /// Sets the value inside an input/output widget
@@ -243,7 +253,8 @@ pub trait InputTrait: WidgetTrait  {
     fn set_wrap(&mut self, val: bool);
 }
 
-pub trait MenuTrait: WidgetTrait  {
+/// Defines the methods implemented by all menu widgets
+pub trait MenuTrait: WidgetTrait {
     /// Get a menu item by name
     fn get_item(&self, name: &str) -> crate::menu::MenuItem;
     /// Return the text font
@@ -266,7 +277,8 @@ pub trait MenuTrait: WidgetTrait  {
     fn get_choice(&self) -> String;
 }
 
-pub trait ValuatorTrait: WidgetTrait  {
+/// Defines the methods implemented by all valuator widgets
+pub trait ValuatorTrait: WidgetTrait {
     /// Set bounds of a valuator
     fn set_bounds(&mut self, a: f64, b: f64);
     /// Get the minimum bound of a valuator
@@ -299,6 +311,69 @@ pub trait ValuatorTrait: WidgetTrait  {
     fn increment(&mut self, arg2: f64, arg3: i32) -> f64;
 }
 
+/// Defines the methods implemented by TextDisplay and TextEditor
+pub trait DisplayTrait {
+    /// Set the text inside the widget
+    fn set_text(&mut self, txt: &str);
+    /// Returns the text inside the widget
+    fn text(&self) -> String;
+    /// Return the text font
+    fn text_font(&self) -> Font;
+    /// Sets the text font
+    fn set_text_font(&mut self, font: Font);
+    /// Return the text color
+    fn text_color(&self) -> Color;
+    /// Sets the text color
+    fn set_text_color(&mut self, color: Color);
+    /// Return the text size
+    fn text_size(&self) -> usize;
+    /// Sets the text size
+    fn set_text_size(&mut self, sz: usize);
+    /// Append text to Display widget
+    fn append(&mut self, text: &str);     
+    /// Return buffer length of Display widget                  
+    fn buffer_length(&self) -> usize;
+    /// Scroll down the Display widget
+    fn scroll(&mut self, top_line_num: usize, horiz_offset: usize);      
+    /// Insert into Display widget      
+    fn insert(&self, text: &str); 
+    /// Set the insert position
+    fn set_insert_position(&mut self, new_pos: usize);    
+    /// Return the insert position                
+    fn insert_position(&self) -> usize;   
+    /// Counts the lines from start to end                         
+    fn count_lines(&self, start: usize, end: usize, is_line_start: bool) -> usize;
+}
+
+/// Defines the methods implemented by all browser types
+pub trait BrowserTrait {
+    /// Removes the specified line
+    fn remove(&mut self, line: usize);
+    /// Adds an item
+    fn add(&mut self, item: &str);
+    /// Inserts an item at an index
+    fn insert(&mut self, line: usize, item: &str);
+    /// Moves an item
+    fn move_item(&mut self, to: usize, from: usize);
+    /// Swaps 2 items
+    fn swap(&mut self, a: usize, b: usize);
+    /// Clears the browser widget
+    fn clear(&mut self);
+    /// Returns the number of items
+    fn size(&self) -> usize;
+    /// Set the number of items
+    fn set_size(&mut self, w: i32, h: i32);
+    /// Select an item at the specified line
+    fn select(&mut self, line: usize);
+    /// Returns whether the item is selected
+    fn selected(&self, line: usize) -> bool;
+    /// Returns the text of the selected item
+    fn text(&self, line: usize) -> String;
+    /// Sets the text of the selected item
+    fn set_text(&mut self, line: usize, txt: &str);
+}
+
+/// Defines the methods implemented by all image types
 pub trait ImageTrait {
     /// Creates an image object from a path
     fn new(path: std::path::PathBuf) -> Self;

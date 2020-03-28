@@ -1,9 +1,9 @@
 #include "cfl_menu.h"
 #include <FL/Fl_Choice.H>
+#include <FL/Fl_Image.H>
 #include <FL/Fl_Menu_Bar.H>
 #include <FL/Fl_Menu_Button.H>
 #include <FL/Fl_Menu_Item.H>
-#include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>
 

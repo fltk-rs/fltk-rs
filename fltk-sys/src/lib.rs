@@ -13,6 +13,7 @@ pub mod output;
 pub mod menu;
 pub mod dialog;
 pub mod valuator;
+pub mod browser;
 pub mod image;
 
 

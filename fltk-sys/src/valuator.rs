@@ -157,6 +157,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Slider_set_trigger(arg1: *mut Fl_Slider, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Slider_set_bounds(arg1: *mut Fl_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -339,6 +342,9 @@ extern "C" {
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Counter_set_trigger(arg1: *mut Fl_Counter, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Counter_set_bounds(arg1: *mut Fl_Counter, a: f64, b: f64);
@@ -528,6 +534,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Dial_set_trigger(arg1: *mut Fl_Dial, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Dial_set_bounds(arg1: *mut Fl_Dial, a: f64, b: f64);
 }
 extern "C" {
@@ -709,6 +718,9 @@ extern "C" {
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Roller_set_trigger(arg1: *mut Fl_Roller, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Roller_set_bounds(arg1: *mut Fl_Roller, a: f64, b: f64);
@@ -893,6 +905,9 @@ extern "C" {
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Scrollbar_set_trigger(arg1: *mut Fl_Scrollbar, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_bounds(arg1: *mut Fl_Scrollbar, a: f64, b: f64);
@@ -1091,6 +1106,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Value_Slider_set_trigger(arg1: *mut Fl_Value_Slider, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Value_Slider_set_bounds(arg1: *mut Fl_Value_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -1141,6 +1159,392 @@ extern "C" {
 extern "C" {
     pub fn Fl_Value_Slider_increment(
         arg1: *mut Fl_Value_Slider,
+        arg2: f64,
+        arg3: ::std::os::raw::c_int,
+    ) -> f64;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Adjuster {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Adjuster_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Adjuster;
+}
+extern "C" {
+    pub fn Fl_Adjuster_x(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_y(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_width(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_height(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_label(arg1: *mut Fl_Adjuster) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_label(arg1: *mut Fl_Adjuster, title: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Adjuster_redraw(arg1: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_show(arg1: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_hide(arg1: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_activate(arg1: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_deactivate(arg1: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_redraw_label(arg1: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_resize(
+        arg1: *mut Fl_Adjuster,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Adjuster_tooltip(arg1: *mut Fl_Adjuster) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_tooltip(arg1: *mut Fl_Adjuster, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Adjuster_get_type(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_type(arg1: *mut Fl_Adjuster, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_color(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_color(arg1: *mut Fl_Adjuster, color: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_label_color(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_label_color(arg1: *mut Fl_Adjuster, color: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_label_font(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_label_font(arg1: *mut Fl_Adjuster, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_label_size(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_label_size(arg1: *mut Fl_Adjuster, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_label_type(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_label_type(arg1: *mut Fl_Adjuster, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_box(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_box(arg1: *mut Fl_Adjuster, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_changed(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_changed(arg1: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_clear_changed(arg1: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_align(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_align(arg1: *mut Fl_Adjuster, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_delete(arg1: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_image(arg1: *mut Fl_Adjuster, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_handler(
+        self_: *mut *mut Fl_Adjuster,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_trigger(arg1: *mut Fl_Adjuster, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_bounds(arg1: *mut Fl_Adjuster, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Adjuster_minimum(arg1: *mut Fl_Adjuster) -> f64;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_minimum(arg1: *mut Fl_Adjuster, a: f64);
+}
+extern "C" {
+    pub fn Fl_Adjuster_maximum(arg1: *mut Fl_Adjuster) -> f64;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_maximum(arg1: *mut Fl_Adjuster, a: f64);
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_range(arg1: *mut Fl_Adjuster, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_step(arg1: *mut Fl_Adjuster, a: f64, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_step(arg1: *mut Fl_Adjuster) -> f64;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_precision(arg1: *mut Fl_Adjuster, digits: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_value(arg1: *mut Fl_Adjuster) -> f64;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_value(arg1: *mut Fl_Adjuster, arg2: f64) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_format(
+        arg1: *mut Fl_Adjuster,
+        arg2: *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Adjuster_round(arg1: *mut Fl_Adjuster, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Adjuster_clamp(arg1: *mut Fl_Adjuster, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Adjuster_increment(
+        arg1: *mut Fl_Adjuster,
+        arg2: f64,
+        arg3: ::std::os::raw::c_int,
+    ) -> f64;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Value_Input {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Value_Input_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Value_Input;
+}
+extern "C" {
+    pub fn Fl_Value_Input_x(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_y(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_width(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_height(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_label(arg1: *mut Fl_Value_Input) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_label(
+        arg1: *mut Fl_Value_Input,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Input_redraw(arg1: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_show(arg1: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_hide(arg1: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_activate(arg1: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_deactivate(arg1: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_redraw_label(arg1: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_resize(
+        arg1: *mut Fl_Value_Input,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Input_tooltip(arg1: *mut Fl_Value_Input) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_tooltip(
+        arg1: *mut Fl_Value_Input,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Input_get_type(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_type(arg1: *mut Fl_Value_Input, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_color(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_color(arg1: *mut Fl_Value_Input, color: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_label_color(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_label_color(arg1: *mut Fl_Value_Input, color: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_label_font(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_label_font(arg1: *mut Fl_Value_Input, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_label_size(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_label_size(arg1: *mut Fl_Value_Input, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_label_type(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_label_type(arg1: *mut Fl_Value_Input, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_box(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_box(arg1: *mut Fl_Value_Input, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_changed(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_changed(arg1: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_clear_changed(arg1: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_align(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_align(arg1: *mut Fl_Value_Input, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_delete(arg1: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_image(arg1: *mut Fl_Value_Input, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_handler(
+        self_: *mut *mut Fl_Value_Input,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_trigger(arg1: *mut Fl_Value_Input, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_bounds(arg1: *mut Fl_Value_Input, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Value_Input_minimum(arg1: *mut Fl_Value_Input) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_minimum(arg1: *mut Fl_Value_Input, a: f64);
+}
+extern "C" {
+    pub fn Fl_Value_Input_maximum(arg1: *mut Fl_Value_Input) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_maximum(arg1: *mut Fl_Value_Input, a: f64);
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_range(arg1: *mut Fl_Value_Input, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_step(arg1: *mut Fl_Value_Input, a: f64, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_step(arg1: *mut Fl_Value_Input) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_precision(arg1: *mut Fl_Value_Input, digits: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_value(arg1: *mut Fl_Value_Input) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_value(arg1: *mut Fl_Value_Input, arg2: f64) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_format(
+        arg1: *mut Fl_Value_Input,
+        arg2: *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_round(arg1: *mut Fl_Value_Input, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Input_clamp(arg1: *mut Fl_Value_Input, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Input_increment(
+        arg1: *mut Fl_Value_Input,
         arg2: f64,
         arg3: ::std::os::raw::c_int,
     ) -> f64;

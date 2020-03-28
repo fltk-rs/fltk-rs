@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::window::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a window widget
 #[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
@@ -21,3 +21,10 @@ pub enum WindowType {
 pub struct DoubleWindow {
     _inner: *mut Fl_Double_Window,
 }
+
+/// Creates a Menu window widget
+#[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]
+pub struct MenuWindow {
+    _inner: *mut Fl_Menu_Window,
+}
+

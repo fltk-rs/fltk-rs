@@ -12,6 +12,7 @@ pub mod prelude;
 pub mod valuator;
 pub mod widget;
 pub mod window;
+pub mod browser;
 pub mod image;
 
 #[macro_use]
@@ -21,6 +22,6 @@ extern crate fltk_derive;
 mod tests {
     #[test]
     fn it_works() {
-        println!("works");
+
     }
 }

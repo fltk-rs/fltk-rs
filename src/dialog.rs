@@ -1,6 +1,10 @@
 pub use crate::prelude::*;
 use fltk_sys::dialog::*;
-use std::{ffi, mem, os::raw};
+use std::{
+    mem,
+    os::raw,
+    ffi::{CStr, CString},
+};
 
 /// Creates a file button
 #[derive(Debug, Clone)]
@@ -42,28 +46,56 @@ impl FileDialog {
     /// Returns the chosen file name
     pub fn filename(&self) -> String {
         unsafe {
-            ffi::CString::from_raw(Fl_Native_File_Chooser_filename(self._inner) as *mut raw::c_char)
-                .into_string()
-                .unwrap()
+            let cnt = Fl_Native_File_Chooser_count(self._inner);
+            if cnt == 0 {
+                return String::from("");
+            }
+            let x = Fl_Native_File_Chooser_filenames(self._inner, 0);
+            CStr::from_ptr(x as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
         }
     }
 
-    /// Returns the chosen directory
+    /// Returns the chosen file names
+    pub fn filenames(&self) -> Vec<String> {
+        unsafe {
+            let cnt = Fl_Native_File_Chooser_count(self._inner);
+            let mut names: Vec<String> = vec![];
+            if cnt == 0 {
+                return names;
+            } else {
+                for i in 0..cnt {
+                    let x = Fl_Native_File_Chooser_filenames(self._inner, i);
+                    names.push(
+                        CStr::from_ptr(x as *mut raw::c_char)
+                            .to_string_lossy()
+                            .to_string(),
+                    )
+                }
+                names
+            }
+        }
+    }
+
+    /// Returns the preset directory
     pub fn directory(&self) -> String {
         unsafe {
-            ffi::CString::from_raw(Fl_Native_File_Chooser_directory(self._inner) as *mut raw::c_char)
-                .into_string()
-                .unwrap()
+            let x = Fl_Native_File_Chooser_directory(self._inner);
+            if !x.is_null() {
+                CStr::from_ptr(x as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string()
+            } else {
+                String::from("")
+            }
         }
     }
 
     /// Sets the starting directory
     pub fn set_directory(&mut self, dir: &str) {
         unsafe {
-            Fl_Native_File_Chooser_set_directory(
-                self._inner,
-                ffi::CString::new(dir).unwrap().into_raw(),
-            )
+            Fl_Native_File_Chooser_set_directory(self._inner, CString::new(dir).unwrap().into_raw())
         }
     }
 
@@ -86,29 +118,34 @@ impl FileDialog {
 
     /// Sets the title for the dialog
     pub fn set_title(&mut self, title: &str) {
+        let title = CString::new(title).unwrap();
         unsafe {
-            Fl_Native_File_Chooser_set_title(self._inner, title.as_ptr() as *const raw::c_char)
+            Fl_Native_File_Chooser_set_title(self._inner, title.into_raw() as *const raw::c_char)
         }
     }
 
     /// Sets the filter for the dialog
     pub fn set_filter(&mut self, f: &str) {
-        unsafe { Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr() as *const raw::c_char) }
+        let f = CString::new(f).unwrap();
+        unsafe {
+            Fl_Native_File_Chooser_set_filter(self._inner, f.into_raw() as *const raw::c_char)
+        }
     }
 
     /// Sets the preset filter for the dialog
     pub fn set_preset_file(&mut self, f: &str) {
+        let f = CString::new(f).unwrap();
         unsafe {
-            Fl_Native_File_Chooser_set_preset_file(self._inner, f.as_ptr() as *const raw::c_char)
+            Fl_Native_File_Chooser_set_preset_file(self._inner, f.into_raw() as *const raw::c_char)
         }
     }
 
     /// returns the error message from the file dialog
     pub fn error_message(&self) -> String {
         unsafe {
-            ffi::CString::from_raw(Fl_Native_File_Chooser_errmsg(self._inner) as *mut raw::c_char)
-                .into_string()
-                .unwrap()
+            CStr::from_ptr(Fl_Native_File_Chooser_errmsg(self._inner) as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
         }
     }
 }
@@ -116,7 +153,7 @@ impl FileDialog {
 /// Displays a message box
 pub fn message(txt: &str) {
     unsafe {
-        let txt = ffi::CString::new(txt).unwrap();
+        let txt = CString::new(txt).unwrap();
         cfl_message(txt.into_raw() as *const raw::c_char)
     }
 }
@@ -124,7 +161,7 @@ pub fn message(txt: &str) {
 /// Displays an alert box
 pub fn alert(txt: &str) {
     unsafe {
-        let txt = ffi::CString::new(txt).unwrap();
+        let txt = CString::new(txt).unwrap();
         cfl_alert(txt.into_raw() as *const raw::c_char)
     }
 }
@@ -133,10 +170,10 @@ pub fn alert(txt: &str) {
 /// An empty choice will not be shown
 pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> usize {
     unsafe {
-        let txt = ffi::CString::new(txt).unwrap();
-        let b0 = ffi::CString::new(b0).unwrap();
-        let b1 = ffi::CString::new(b1).unwrap();
-        let b2 = ffi::CString::new(b2).unwrap();
+        let txt = CString::new(txt).unwrap();
+        let b0 = CString::new(b0).unwrap();
+        let b1 = CString::new(b1).unwrap();
+        let b2 = CString::new(b2).unwrap();
         cfl_choice(
             txt.into_raw() as *const raw::c_char,
             b0.into_raw() as *const raw::c_char,
@@ -148,29 +185,37 @@ pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> usize {
 
 /// Displays an input box, which returns the inputted string.
 /// Can be used for gui io
-pub fn input(txt: &str, deflt: &str) -> String {
+pub fn input(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
-        let txt = ffi::CString::new(txt).unwrap();
-        let deflt = ffi::CString::new(deflt).unwrap();
-        ffi::CString::from_raw(cfl_input(
-            txt.into_raw() as *const raw::c_char,
-            deflt.into_raw() as *const raw::c_char,
-        ) as *mut raw::c_char)
-        .into_string()
-        .unwrap()
+        let temp = CString::new(deflt.clone()).unwrap().into_raw() as *const raw::c_char;
+        let txt = CString::new(txt).unwrap();
+        let x = cfl_input(txt.into_raw() as *const raw::c_char, temp);
+        if x.is_null() {
+            return None;
+        } else {
+            Some(
+                CStr::from_ptr(x as *const raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
+        }
     }
 }
 
 /// Shows an input box, but with hidden string
-pub fn password(txt: &str, deflt: &str) -> String {
+pub fn password(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
-        let txt = ffi::CString::new(txt).unwrap();
-        let deflt = ffi::CString::new(deflt).unwrap();
-        ffi::CString::from_raw(cfl_password(
-            txt.into_raw() as *const raw::c_char,
-            deflt.into_raw() as *const raw::c_char,
-        ) as *mut raw::c_char)
-        .into_string()
-        .unwrap()
+        let temp = CString::new(deflt.clone()).unwrap().into_raw() as *const raw::c_char;
+        let txt = CString::new(txt).unwrap();
+        let x = cfl_password(txt.into_raw() as *const raw::c_char, temp);
+        if x.is_null() {
+            return None;
+        } else {
+            Some(
+                CStr::from_ptr(x as *const raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
+        }
     }
 }

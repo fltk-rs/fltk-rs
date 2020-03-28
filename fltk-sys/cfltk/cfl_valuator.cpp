@@ -1,11 +1,13 @@
 #include "cfl_valuator.h"
-#include <FL/Fl_Slider.H>
+#include <FL/Fl_Adjuster.H>
 #include <FL/Fl_Counter.H>
 #include <FL/Fl_Dial.H>
+#include <FL/Fl_Image.H>
 #include <FL/Fl_Roller.H>
 #include <FL/Fl_Scrollbar.H>
+#include <FL/Fl_Slider.H>
+#include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Value_Slider.H>
-#include <FL/Fl_Image.H>
 #include <cstring>
 #include <string>
 
@@ -32,3 +34,11 @@ VALUATOR_DEFINE(Fl_Scrollbar)
 WIDGET_DEFINE(Fl_Value_Slider)
 
 VALUATOR_DEFINE(Fl_Value_Slider)
+
+WIDGET_DEFINE(Fl_Adjuster)
+
+VALUATOR_DEFINE(Fl_Adjuster)
+
+WIDGET_DEFINE(Fl_Value_Input)
+
+VALUATOR_DEFINE(Fl_Value_Input)

@@ -1,8 +1,8 @@
 pub use crate::prelude::*;
-use std::{ffi, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Runs the event loop
-pub fn run() -> Result<(), FltkError> {
+fn run() -> Result<(), FltkError> {
     unsafe {
         match fltk_sys::fl::Fl_run() {
             0 => Ok(()),
@@ -21,6 +21,7 @@ fn lock() -> Result<(), FltkError> {
     }
 }
 
+/// sets the scheme of the application
 fn set_scheme(scheme: AppScheme) {
     let name_str = match scheme {
         AppScheme::Base => "base",
@@ -28,7 +29,7 @@ fn set_scheme(scheme: AppScheme) {
         AppScheme::Gleam => "gleam",
         AppScheme::Plastic => "plastic",
     };
-    let name_str= std::ffi::CString::new(name_str).unwrap();
+    let name_str= CString::new(name_str).unwrap();
     unsafe {
         fltk_sys::fl::Fl_set_scheme(name_str.into_raw() as *const raw::c_char)
     }
@@ -56,17 +57,23 @@ fn set_scheme(scheme: AppScheme) {
 //     }
 // }
 
+/// Basic Application struct, used to instatiate, set the scheme and run the event loop
 #[derive(Debug, Copy, Clone)]
 pub struct App {}
 
 impl App {
+    /// Instantiates an App type
     pub fn default() -> App {
         App {}
     }
+    
+    /// Sets the scheme of the application
     pub fn set_scheme(self, scheme: AppScheme) -> App {
         fl::set_scheme(scheme);
         self
     }
+    
+    /// Runs the event loop
     pub fn run(&self) -> Result<(), FltkError> {
         fl::lock()?;
         return fl::run();
@@ -106,10 +113,14 @@ pub fn event_key() -> i32 {
 /// Returns a textual representation of the latest event
 pub fn event_text() -> String {
     unsafe {
-        ffi::CString::from_raw(fltk_sys::fl::Fl_event_text() as *mut raw::c_char)
-            .into_string()
-            .unwrap()
+        CStr::from_ptr(fltk_sys::fl::Fl_event_text() as *mut raw::c_char)
+            .to_string_lossy().to_string()
     }
+}
+
+/// Gets the character representation of the keyboard event
+pub fn event_char() -> char {
+    event_key() as u8 as char
 }
 
 /// Returns the captured button event

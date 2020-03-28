@@ -22,6 +22,14 @@ WIDGET_DECLARE(Fl_Multiline_Input)
 
 INPUT_DECLARE(Fl_Multiline_Input)
 
+WIDGET_DECLARE(Fl_Secret_Input)
+
+INPUT_DECLARE(Fl_Secret_Input)
+
+WIDGET_DECLARE(Fl_File_Input)
+
+INPUT_DECLARE(Fl_File_Input)
+
 #ifdef __cplusplus
 }
 #endif

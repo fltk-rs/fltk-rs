@@ -86,6 +86,18 @@ pub fn valuator_trait_macro(input: TokenStream) -> TokenStream {
     impl_valuator_trait(&ast)
 }
 
+#[proc_macro_derive(DisplayTrait)]
+pub fn display_trait_macro(input: TokenStream) -> TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_display_trait(&ast)
+}
+
+#[proc_macro_derive(BrowserTrait)]
+pub fn browser_trait_macro(input: TokenStream) -> TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_browser_trait(&ast)
+}
+
 #[proc_macro_derive(ImageTrait)]
 pub fn image_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
@@ -188,6 +200,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_handler").as_str(),
         name.span(),
     );
+    let set_trigger = Ident::new(
+        format!("{}_{}", name_str, "set_trigger").as_str(),
+        name.span(),
+    );
     let gen = quote! {
         unsafe impl Send for #name {}
         impl Copy for #name {}
@@ -249,7 +265,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn label(&self) -> String {
                 unsafe {
-                    CString::from_raw(#label(self._inner) as *mut raw::c_char).into_string().unwrap()
+                    CStr::from_ptr(#label(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
 
@@ -275,8 +291,8 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn tooltip(&self) -> String {
                 unsafe {
-                    CString::from_raw(
-                        #tooltip(self._inner) as *mut raw::c_char).into_string().unwrap()
+                    CStr::from_ptr(
+                        #tooltip(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
 
@@ -397,7 +413,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
-                        let ev: Event = std::mem::transmute(_ev);
+                        let ev: Event = mem::transmute(_ev);
                         let a: *mut Box<dyn FnMut(Event) -> bool + 'a> = mem::transmute(data);
                         let f: &mut (dyn FnMut(Event) -> bool + 'a) = &mut **a;
                         match f(ev) {
@@ -409,6 +425,11 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: custom_handler_callback = Some(shim);
                     #set_handler(&mut self._inner, callback, data);
+                }
+            }
+            fn set_trigger(&mut self, trigger: CallbackTrigger) {
+                unsafe {
+                    #set_trigger(self._inner, trigger as i32)
                 }
             }
         }
@@ -445,7 +466,6 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
     let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
     let clear = Ident::new(format!("{}_{}", name_str, "clear").as_str(), name.span());
     let children = Ident::new(format!("{}_{}", name_str, "children").as_str(), name.span());
-    let make_resizable = Ident::new(format!("{}_{}", name_str, "make_resizable").as_str(), name.span());
 
     let gen = quote! {
         impl GroupTrait for #name {
@@ -486,13 +506,6 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #children(self._inner) as usize
                 }
             }
-            fn make_resizable(&self, val: bool) {
-                if val {
-                    unsafe {
-                        #make_resizable(self._inner, self._inner as *mut raw::c_void)
-                    }
-                }
-            }
         }
     };
     gen.into()
@@ -515,6 +528,10 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
         name.span(),
     );
     let set_icon = Ident::new(format!("{}_{}", name_str, "set_icon").as_str(), name.span());
+    let make_resizable = Ident::new(
+        format!("{}_{}", name_str, "make_resizable").as_str(),
+        name.span(),
+    );
     let gen = quote! {
         impl WindowTrait for #name {
             fn make_modal(&mut self, val: bool) {
@@ -530,6 +547,13 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn set_icon<Image: ImageTrait>(&mut self, image: Image) {
                 unsafe { #set_icon(self._inner, image.as_ptr()) }
+            }
+            fn make_resizable(&self, val: bool) {
+                if val {
+                    unsafe {
+                        #make_resizable(self._inner, self._inner as *mut raw::c_void)
+                    }
+                }
             }
         }
     };
@@ -604,7 +628,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl InputTrait for #name {
             fn value(&self) -> String {
                 unsafe {
-                    CString::from_raw(#value(self._inner) as *mut raw::c_char).into_string().unwrap()
+                    CStr::from_ptr(#value(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
             fn set_value(&self, val: &str) {
@@ -848,7 +872,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn get_choice(&self) -> String {
                 unsafe {
-                    CString::from_raw(#get_choice(self._inner) as *mut raw::c_char).into_string().unwrap()
+                    CStr::from_ptr(#get_choice(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
         }
@@ -997,6 +1021,280 @@ fn impl_valuator_trait(ast: &syn::DeriveInput) -> TokenStream {
     gen.into()
 }
 
+fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let name_str = get_fl_name(name.to_string());
+
+    let set_text = Ident::new(format!("{}_{}", name_str, "set_text").as_str(), name.span());
+    let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
+    let text_font = Ident::new(
+        format!("{}_{}", name_str, "text_font").as_str(),
+        name.span(),
+    );
+    let set_text_font = Ident::new(
+        format!("{}_{}", name_str, "set_text_font").as_str(),
+        name.span(),
+    );
+    let text_font = Ident::new(
+        format!("{}_{}", name_str, "text_font").as_str(),
+        name.span(),
+    );
+    let set_text_color = Ident::new(
+        format!("{}_{}", name_str, "set_text_color").as_str(),
+        name.span(),
+    );
+    let text_color = Ident::new(
+        format!("{}_{}", name_str, "text_color").as_str(),
+        name.span(),
+    );
+    let set_text_size = Ident::new(
+        format!("{}_{}", name_str, "set_text_size").as_str(),
+        name.span(),
+    );
+    let text_size = Ident::new(
+        format!("{}_{}", name_str, "text_size").as_str(),
+        name.span(),
+    );
+    let append = Ident::new(
+        format!("{}_{}", name_str, "append").as_str(),
+        name.span(),
+    );
+    let buffer_length = Ident::new(
+        format!("{}_{}", name_str, "buffer_length").as_str(),
+        name.span(),
+    );
+    let scroll = Ident::new(
+        format!("{}_{}", name_str, "scroll").as_str(),
+        name.span(),
+    );
+    let insert = Ident::new(
+        format!("{}_{}", name_str, "insert").as_str(),
+        name.span(),
+    );
+    let set_insert_position = Ident::new(
+        format!("{}_{}", name_str, "set_insert_position").as_str(),
+        name.span(),
+    );
+    let insert_position = Ident::new(
+        format!("{}_{}", name_str, "insert_position").as_str(),
+        name.span(),
+    );
+    let count_lines = Ident::new(
+        format!("{}_{}", name_str, "count_lines").as_str(),
+        name.span(),
+    );
+
+
+    let gen = quote! {
+        impl DisplayTrait for #name {
+            fn set_text(&mut self, txt: &str) {
+                unsafe {
+                    let txt = CString::new(txt).unwrap();
+                    #set_text(self._inner, txt.into_raw() as *const raw::c_char)
+                }
+            }
+
+            fn text(&self) -> String {
+                unsafe {
+                    CStr::from_ptr(#text(self._inner) as *mut raw::c_char)
+                        .to_string_lossy().to_string()
+                }
+            }
+
+            fn text_font(&self) -> Font {
+                unsafe { mem::transmute(#text_font(self._inner)) }
+            }
+
+            fn set_text_font(&mut self, font: Font) {
+                unsafe { #set_text_font(self._inner, font as i32) }
+            }
+
+            fn text_color(&self) -> Color{
+                unsafe { mem::transmute(#text_color(self._inner)) }
+            }
+            fn set_text_color(&mut self, color: Color){
+                unsafe { #set_text_color(self._inner, color as i32) }
+            }
+            fn text_size(&self) -> usize{
+                unsafe { #text_size(self._inner) as usize }
+            }
+            fn set_text_size(&mut self, sz: usize) {
+                unsafe { #set_text_size(self._inner, sz as i32) }
+            }
+            fn append(&mut self, text: &str) {
+                let text = CString::new(text).unwrap();
+                unsafe {
+                    #append(self._inner, text.into_raw() as *const raw::c_char)
+                }
+            }     
+               
+            fn buffer_length(&self) -> usize {
+                unsafe {
+                    #buffer_length(self._inner) as usize
+                }
+            }
+
+            fn scroll(&mut self, topLineNum: usize, horizOffset: usize) {
+                unsafe {
+                    #scroll(self._inner, topLineNum as i32, horizOffset as i32)
+                }
+            }  
+  
+            fn insert(&self, text: &str) {
+                let text = CString::new(text).unwrap();
+                unsafe {
+                    #insert(self._inner, text.into_raw() as *const raw::c_char)
+                }
+            }
+
+            fn set_insert_position(&mut self, newPos: usize) {
+                unsafe {
+                    #set_insert_position(self._inner, newPos as i32)
+                }
+            }    
+         
+            fn insert_position(&self) -> usize {
+                unsafe {
+                    #insert_position(self._inner) as usize
+                }
+            }  
+                       
+            fn count_lines(&self, start: usize, end: usize, is_line_start: bool) -> usize {
+                let x = match is_line_start {
+                    true => 1,
+                    false => 0,
+                };
+                unsafe {
+                    #count_lines(self._inner, start as i32, end as i32, x) as usize
+                }
+            }
+        }
+    };
+    gen.into()
+}
+
+fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let name_str = get_fl_name(name.to_string());
+
+    let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
+    let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
+    let insert = Ident::new(
+        format!("{}_{}", name_str, "insert").as_str(),
+        name.span(),
+    );
+    let move_item = Ident::new(
+        format!("{}_{}", name_str, "move").as_str(),
+        name.span(),
+    );
+    let swap = Ident::new(
+        format!("{}_{}", name_str, "swap").as_str(),
+        name.span(),
+    );
+    let clear = Ident::new(
+        format!("{}_{}", name_str, "clear").as_str(),
+        name.span(),
+    );
+    let size = Ident::new(
+        format!("{}_{}", name_str, "size").as_str(),
+        name.span(),
+    );
+    let set_size = Ident::new(
+        format!("{}_{}", name_str, "set_size").as_str(),
+        name.span(),
+    );
+    let select = Ident::new(
+        format!("{}_{}", name_str, "select").as_str(),
+        name.span(),
+    );
+    let selected = Ident::new(
+        format!("{}_{}", name_str, "selected").as_str(),
+        name.span(),
+    );
+    let text = Ident::new(
+        format!("{}_{}", name_str, "text").as_str(),
+        name.span(),
+    );
+    let set_text = Ident::new(
+        format!("{}_{}", name_str, "set_text").as_str(),
+        name.span(),
+    );
+
+    let gen = quote! {
+        impl BrowserTrait for #name {
+            fn remove(&mut self, line: usize) {
+                unsafe {
+                    #remove(self._inner, line as i32)
+                }
+            }
+            fn add(&mut self, item: &str) {
+                let item = CString::new(item).unwrap();
+                unsafe {
+                    #add(self._inner, item.into_raw() as *const raw::c_char)
+                }
+            }
+            fn insert(&mut self, line: usize, item: &str) {
+                let item = CString::new(item).unwrap();
+                unsafe {
+                    #insert(self._inner, line as i32, item.into_raw() as *const raw::c_char)
+                }
+            }
+            fn move_item(&mut self, to: usize, from: usize) {
+                unsafe {
+                    #move_item(self._inner, to as i32, from as i32)
+                }
+            }
+            fn swap(&mut self, a: usize, b: usize) {
+                unsafe {
+                    #swap(self._inner, a as i32, b as i32)
+                }
+            }
+            fn clear(&mut self) {
+                unsafe {
+                    #clear(self._inner)
+                }
+            }
+            fn size(&self) -> usize {
+                unsafe {
+                    #size(self._inner) as usize
+                }
+            }
+            fn set_size(&mut self, w: i32, h: i32) {
+                unsafe {
+                    #set_size(self._inner, w, h)
+                }
+            }
+            fn select(&mut self, line: usize) {
+                if line < self.size() {
+                    unsafe {
+                        #select(self._inner, line as i32);
+                    }
+                }
+            }
+            fn selected(&self, line: usize) -> bool {
+                unsafe {
+                    match #selected(self._inner, line as i32) {
+                        0 => false,
+                        _ => true,
+                    }
+                }
+            }
+            fn text(&self, line: usize) -> String {
+                unsafe {
+                    CStr::from_ptr(#text(self._inner, line as i32) as *mut raw::c_char).to_string_lossy().to_string()
+                }
+            }
+            fn set_text(&mut self, line: usize, txt: &str) {
+                let txt = CString::new(txt).unwrap();
+                unsafe {
+                    #set_text(self._inner, line as i32, txt.into_raw() as *const raw::c_char)
+                }
+            }
+        }
+    };
+    gen.into()
+}
+
 fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
@@ -1010,8 +1308,8 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl ImageTrait for #name {
             fn new(path: std::path::PathBuf) -> #name {
                 unsafe {
-                    let temp = path.into_os_string().into_string().unwrap();
-                    let temp = std::ffi::CString::new(temp.as_str()).unwrap();
+                    let temp = path.into_os_string().to_string_lossy().to_string();
+                    let temp = CString::new(temp.as_str()).unwrap();
                     #name {
                         _inner: #new(temp.into_raw() as *const raw::c_char),
                     }
@@ -1036,7 +1334,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn as_ptr(&self) -> *mut raw::c_void {
                 unsafe {
-                    std::mem::transmute(self._inner)
+                    mem::transmute(self._inner)
                 }
             }
         }

@@ -1,10 +1,10 @@
 #include "cfl_group.h"
 #include <FL/Fl_Group.H>
+#include <FL/Fl_Image.H>
 #include <FL/Fl_Pack.H>
 #include <FL/Fl_Scroll.H>
 #include <FL/Fl_Tabs.H>
 #include <FL/Fl_Tile.H>
-#include <FL/Fl_Image.H>
 #include <FL/Fl_Widget.H>
 #include <cstring>
 #include <string>

@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::menu::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a menu bar
 #[derive(WidgetTrait, MenuTrait, Debug, Clone)]
@@ -47,16 +47,15 @@ impl MenuItem {
     /// Returns the label of the menu item
     pub fn label(&self) -> String {
         unsafe {
-            CString::from_raw(Fl_Menu_Item_label(self._inner) as *mut raw::c_char)
-                .into_string()
-                .unwrap()
+            CStr::from_ptr(Fl_Menu_Item_label(self._inner) as *mut raw::c_char)
+                .to_string_lossy().to_string()
         }
     }
 
     /// Sets the label of the menu item
     pub fn set_label(&mut self, txt: &str) {
         unsafe {
-            let txt = std::ffi::CString::new(txt).unwrap();
+            let txt = CString::new(txt).unwrap();
             Fl_Menu_Item_set_label(self._inner, txt.into_raw() as *const raw::c_char);
         }
     }

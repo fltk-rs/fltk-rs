@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::output::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates an output widget
 #[derive(WidgetTrait, InputTrait, Debug, Clone)]

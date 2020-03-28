@@ -165,6 +165,72 @@ extern "C" {
         data: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Text_Display_set_trigger(arg1: *mut Fl_Text_Display, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Display_text_font(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_text_font(arg1: *mut Fl_Text_Display, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Display_text_size(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_text_size(arg1: *mut Fl_Text_Display, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Display_text_color(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_text_color(arg1: *mut Fl_Text_Display, n: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Display_text(arg1: *mut Fl_Text_Display) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_text(
+        arg1: *mut Fl_Text_Display,
+        arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_append(arg1: *mut Fl_Text_Display, arg2: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Display_buffer_length(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_scroll(
+        arg1: *mut Fl_Text_Display,
+        topLineNum: ::std::os::raw::c_int,
+        horizOffset: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_insert(arg1: *mut Fl_Text_Display, text: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_insert_position(
+        arg1: *mut Fl_Text_Display,
+        newPos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_insert_position(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_count_lines(
+        arg1: *const Fl_Text_Display,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+        start_pos_is_line_start: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -307,25 +373,67 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
-}
-extern "C" {
-    pub fn Fl_Text_Display_text(arg1: *mut Fl_Text_Display) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn Fl_Text_Display_set_text(
-        arg1: *mut Fl_Text_Display,
-        arg2: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Text_Editor_set_trigger(arg1: *mut Fl_Text_Editor, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_text_font(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_text_font(arg1: *mut Fl_Text_Editor, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_text_size(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_text_size(arg1: *mut Fl_Text_Editor, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_text_color(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_text_color(arg1: *mut Fl_Text_Editor, n: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Editor_text(arg1: *mut Fl_Text_Editor) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_text(arg1: *mut Fl_Text_Editor, arg2: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_append(arg1: *mut Fl_Text_Editor, arg2: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_buffer_length(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_scroll(
+        arg1: *mut Fl_Text_Editor,
+        topLineNum: ::std::os::raw::c_int,
+        horizOffset: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_insert(arg1: *mut Fl_Text_Editor, text: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_insert_position(
+        arg1: *mut Fl_Text_Editor,
+        newPos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_insert_position(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_count_lines(
+        arg1: *const Fl_Text_Editor,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+        start_pos_is_line_start: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
@@ -338,22 +446,4 @@ extern "C" {
 }
 extern "C" {
     pub fn kf_undo(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn text_font(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn set_text_font(arg1: *mut Fl_Text_Display, s: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn text_size(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn set_text_size(arg1: *mut Fl_Text_Display, s: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn text_color(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn set_text_color(arg1: *mut Fl_Text_Display, n: ::std::os::raw::c_int);
 }

@@ -9,6 +9,8 @@ typedef struct Fl_Native_File_Chooser Fl_Native_File_Chooser;
 Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int);
 
 const char *Fl_Native_File_Chooser_filename(Fl_Native_File_Chooser *);
+const char *Fl_Native_File_Chooser_filenames(Fl_Native_File_Chooser *, int);
+int Fl_Native_File_Chooser_count(Fl_Native_File_Chooser *);
 void Fl_Native_File_Chooser_set_directory(Fl_Native_File_Chooser *,
                                           const char *val);
 const char *Fl_Native_File_Chooser_directory(Fl_Native_File_Chooser *);

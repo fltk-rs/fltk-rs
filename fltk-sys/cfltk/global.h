@@ -50,7 +50,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_delete(widget *);                                              \
   void widget##_set_image(widget *, void *);                                   \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
-                            void *data);
+                            void *data);                                       \
+  void widget##_set_trigger(widget *, int);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -60,14 +61,14 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_insert(widget *self, void *, int pos);                         \
   void widget##_remove(widget *self, int index);                               \
   void widget##_clear(widget *self);                                           \
-  int widget##_children(widget *self);                                         \
-  void widget##_make_resizable(widget *self, void *);
+  int widget##_children(widget *self);
 
 #define WINDOW_DECLARE(widget)                                                 \
   void widget##_make_modal(widget *, unsigned int boolean);                    \
   void widget##_fullscreen(widget *, unsigned int boolean);                    \
   void widget##_make_current(widget *);                                        \
-  void widget##_set_icon(widget *, const void *);
+  void widget##_set_icon(widget *, const void *);                              \
+  void widget##_make_resizable(widget *self, void *);
 
 #define INPUT_DECLARE(widget)                                                  \
   int widget##_set_value(widget *, const char *);                              \
@@ -106,7 +107,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_text_color(widget *);                                           \
   void widget##_set_text_color(widget *, int c);                               \
   void widget##_add_choice(widget *, const char *);                            \
-  const char* widget##_get_choice(widget *);
+  const char *widget##_get_choice(widget *);
 
 #define VALUATOR_DECLARE(widget)                                               \
   void widget##_set_bounds(widget *, double a, double b);                      \
@@ -124,6 +125,38 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   double widget##_round(widget *, double);                                     \
   double widget##_clamp(widget *, double);                                     \
   double widget##_increment(widget *, double, int);
+
+#define DISPLAY_DECLARE(widget)                                                \
+  int widget##_text_font(const widget *);                                      \
+  void widget##_set_text_font(widget *, int s);                                \
+  int widget##_text_size(const widget *);                                      \
+  void widget##_set_text_size(widget *, int s);                                \
+  int widget##_text_color(const widget *);                                     \
+  void widget##_set_text_color(widget *, int n);                               \
+  const char *widget##_text(widget *);                                         \
+  void widget##_set_text(widget *, const char *);                              \
+  void widget##_append(widget *, const char *);                                \
+  int widget##_buffer_length(const widget *);                                  \
+  void widget##_scroll(widget *, int topLineNum, int horizOffset);             \
+  void widget##_insert(widget *, const char *text);                            \
+  void widget##_set_insert_position(widget *, int newPos);                     \
+  int widget##_insert_position(const widget *);                                \
+  int widget##_count_lines(const widget *, int start, int end,                 \
+                           int start_pos_is_line_start);
+
+#define BROWSER_DECLARE(widget)                                                \
+  void widget##_remove(widget *, int line);                                    \
+  void widget##_add(widget *, const char *newtext);                            \
+  void widget##_insert(widget *, int line, const char *newtext);               \
+  void widget##_move(widget *, int to, int from);                              \
+  void widget##_swap(widget *, int a, int b);                                  \
+  void widget##_clear(widget *);                                               \
+  int widget##_size(const widget *);                                           \
+  void widget##_set_size(widget *, int W, int H);                              \
+  int widget##_select(widget *, int line);                                     \
+  int widget##_selected(const widget *, int line);                             \
+  const char *widget##_text(const widget *, int line);                         \
+  void widget##_set_text(widget *, int line, const char *newtext);
 
 #define IMAGE_DECLARE(image)                                                   \
   typedef struct image image;                                                  \
@@ -218,7 +251,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     temp->set_handler_data(data);                                              \
     temp->set_handler(cb);                                                     \
     *self = temp;                                                              \
-  }
+  }                                                                            \
+  void widget##_set_trigger(widget *self, int val) { self->when(val); }
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \
@@ -232,10 +266,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   void widget##_remove(widget *self, int index) { self->remove(index); }       \
   void widget##_clear(widget *self) { self->clear(); }                         \
-  int widget##_children(widget *self) { return self->children(); }             \
-  void widget##_make_resizable(widget *self, void *wid) {                      \
-    self->resizable((Fl_Widget *)wid);                                         \
-  }
+  int widget##_children(widget *self) { return self->children(); }
 
 #define WINDOW_DEFINE(widget)                                                  \
   void widget##_make_modal(widget *self, unsigned int boolean) {               \
@@ -252,9 +283,14 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
       self->fullscreen_off();                                                  \
     }                                                                          \
   }                                                                            \
-  void widget##_make_current(widget *self) { self->make_current(); }           \
+  void widget##_make_current(widget *self) {                                   \
+    ((Fl_Window *)self)->make_current();                                       \
+  }                                                                            \
   void widget##_set_icon(widget *self, const void *image) {                    \
     self->icon((const Fl_RGB_Image *)image);                                   \
+  }                                                                            \
+  void widget##_make_resizable(widget *self, void *wid) {                      \
+    self->resizable((Fl_Widget *)wid);                                         \
   }
 
 #define INPUT_DEFINE(widget)                                                   \
@@ -319,7 +355,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_text_color(widget *self) { return self->textcolor(); }          \
   void widget##_set_text_color(widget *self, int c) { self->textcolor(c); }    \
   void widget##_add_choice(widget *self, const char *str) { self->add(str); }  \
-  const char* widget##_get_choice(widget *self) { return self->text(); }
+  const char *widget##_get_choice(widget *self) { return self->text(); }
 
 #define VALUATOR_DEFINE(widget)                                                \
   void widget##_set_bounds(widget *self, double a, double b) {                 \
@@ -346,6 +382,64 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   double widget##_clamp(widget *self, double val) { return self->clamp(val); } \
   double widget##_increment(widget *self, double a, int b) {                   \
     return self->increment(a, b);                                              \
+  }
+
+#define DISPLAY_DEFINE(widget)                                                 \
+  const char *widget##_text(widget *self) { return self->buffer()->text(); }   \
+  void widget##_set_text(widget *self, const char *txt) {                      \
+    self->buffer()->text(txt);                                                 \
+  }                                                                            \
+  int widget##_text_font(const widget *self) { return self->textfont(); }      \
+  void widget##_set_text_font(widget *self, int s) { self->textfont(s); }      \
+  int widget##_text_size(const widget *self) { return self->textsize(); }      \
+  void widget##_set_text_size(widget *self, int s) { self->textsize(s); }      \
+  int widget##_text_color(const widget *self) { return self->textcolor(); }    \
+  void widget##_set_text_color(widget *self, int n) { self->textcolor(n); }    \
+  void widget##_append(widget *self, const char *txt) {                        \
+    auto buff = self->buffer();                                                \
+    buff->append(txt);                                                         \
+    self->buffer(buff);                                                        \
+    self->insert_position(self->buffer()->length());                           \
+    self->scroll(self->count_lines(0, self->buffer()->length(), 1), 0);        \
+  }                                                                            \
+  int widget##_buffer_length(const widget *self) {                             \
+    return self->buffer()->length();                                           \
+  }                                                                            \
+  void widget##_scroll(widget *self, int topLineNum, int horizOffset) {        \
+    self->scroll(topLineNum, horizOffset);                                     \
+  }                                                                            \
+  void widget##_insert(widget *self, const char *text) { self->insert(text); } \
+  void widget##_set_insert_position(widget *self, int newPos) {                \
+    self->insert_position(newPos);                                             \
+  }                                                                            \
+  int widget##_insert_position(const widget *self) {                           \
+    return self->insert_position();                                            \
+  }                                                                            \
+  int widget##_count_lines(const widget *self, int start, int end,             \
+                           int start_pos_is_line_start) {                      \
+    return self->count_lines(start, end, start_pos_is_line_start);             \
+  }
+
+#define BROWSER_DEFINE(widget)                                                 \
+  void widget##_remove(widget *self, int line) { self->remove(line); }         \
+  void widget##_add(widget *self, const char *newtext) { self->add(newtext); } \
+  void widget##_insert(widget *self, int line, const char *newtext) {          \
+    self->insert(line, newtext);                                               \
+  }                                                                            \
+  void widget##_move(widget *self, int to, int from) { self->move(to, from); } \
+  void widget##_swap(widget *self, int a, int b) { self->swap(a, b); }         \
+  void widget##_clear(widget *self) { self->clear(); }                         \
+  int widget##_size(const widget *self) { return self->size(); }               \
+  void widget##_set_size(widget *self, int W, int H) { self->size(W, H); }     \
+  int widget##_select(widget *self, int line) { return self->select(line); }   \
+  int widget##_selected(const widget *self, int line) {                        \
+    return self->selected(line);                                               \
+  }                                                                            \
+  const char *widget##_text(const widget *self, int line) {                    \
+    return self->text(line);                                                   \
+  }                                                                            \
+  void widget##_set_text(widget *self, int line, const char *newtext) {        \
+    self->text(line, newtext);                                                 \
   }
 
 #define IMAGE_DEFINE(image)                                                    \
