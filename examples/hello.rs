@@ -1,8 +1,8 @@
-use fltk::{frame::*, image::*, window::*};
+use fltk::{app::*, frame::*, image::*, window::*};
 use std::path::PathBuf;
 
 fn main() {
-    let app = fl::App::default().set_scheme(AppScheme::Gleam);
+    let app = App::default().set_scheme(AppScheme::Gleam);
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 300, "");
     let image = SvgImage::new(PathBuf::from("screenshots/RustLogo.svg"));

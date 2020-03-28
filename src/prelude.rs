@@ -1,10 +1,8 @@
 pub use crate::enums::*;
-pub use crate::fl;
-pub use crate::menu::*;
 use fltk_sys::widget::*;
 use std::convert::From;
 use std::error::Error;
-use std::{fmt, io, os::raw};
+use std::{fmt, io, mem, os::raw};
 
 /// Error types returned by fltk-rs + wrappers of std::io errors
 #[derive(Debug)]
@@ -57,19 +55,6 @@ impl From<io::Error> for FltkError {
     fn from(err: io::Error) -> FltkError {
         FltkError::Io(err)
     }
-}
-
-/// Set the app scheme
-#[derive(Debug, Copy, Clone)]
-pub enum AppScheme {
-    /// Base fltk scheming
-    Base,
-    /// inspired by the Aqua user interface on Mac OS X
-    Plastic,
-    /// inspired by the GTK+ theme
-    Gtk,
-    /// inspired by the Clearlooks Glossy scheme
-    Gleam,
 }
 
 /// Defines the methods implemented by all widgets
@@ -187,6 +172,21 @@ pub trait WidgetType {
     fn from_i32(val: i32) -> Self;
 }
 
+/// Defines label types
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum LabelType {
+    NormalLabel = 0,
+    NoLabel,
+    ShadowLabel,
+    EngravedLabel,
+    EmbossedLabel,
+    MultiLabel,
+    IconLabel,
+    ImageLabel,
+    FreeLabelType,
+}
+
 /// Defines the methods implemented by all window widgets
 pub trait WindowTrait: GroupTrait {
     /// Makes a window modal
@@ -270,7 +270,7 @@ pub trait MenuTrait: WidgetTrait {
     /// Sets the text color
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
-    fn add<'a>(&'a mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>);
+    fn add<'a>(&'a mut self, name: &str, shortcut: i32, flag: crate::menu::MenuFlag, cb: Box<dyn FnMut() + 'a>);
     /// Adds a simple text option to the Choice and MenuButton widgets
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets

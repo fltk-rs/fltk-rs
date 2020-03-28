@@ -1,10 +1,12 @@
-pub use crate::prelude::*;
+pub use crate::enums::*;
+use crate::prelude::*;
+use fltk_sys::fl::*;
 use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Runs the event loop
 fn run() -> Result<(), FltkError> {
     unsafe {
-        match fltk_sys::fl::Fl_run() {
+        match Fl_run() {
             0 => Ok(()),
             _ => return Err(FltkError::Internal(FltkErrorKind::FailedToRun)),
         }
@@ -14,11 +16,24 @@ fn run() -> Result<(), FltkError> {
 /// Locks the main UI thread
 fn lock() -> Result<(), FltkError> {
     unsafe {
-        match fltk_sys::fl::Fl_lock() {
+        match Fl_lock() {
             0 => Ok(()),
             _ => return Err(FltkError::Internal(FltkErrorKind::FailedToLock)),
         }
     }
+}
+
+/// Set the app scheme
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum AppScheme {
+    /// Base fltk scheming
+    Base,
+    /// inspired by the Aqua user interface on Mac OS X
+    Plastic,
+    /// inspired by the GTK+ theme
+    Gtk,
+    /// inspired by the Clearlooks Glossy scheme
+    Gleam,
 }
 
 /// sets the scheme of the application
@@ -31,7 +46,7 @@ fn set_scheme(scheme: AppScheme) {
     };
     let name_str= CString::new(name_str).unwrap();
     unsafe {
-        fltk_sys::fl::Fl_set_scheme(name_str.into_raw() as *const raw::c_char)
+        Fl_set_scheme(name_str.into_raw() as *const raw::c_char)
     }
 }
 
@@ -39,7 +54,7 @@ fn set_scheme(scheme: AppScheme) {
 // #[allow(dead_code)]
 // fn unlock() {
 //     unsafe {
-//         fltk_sys::fl::Fl_unlock();
+//         Fl_unlock();
 //     }
 // }
 
@@ -52,8 +67,8 @@ fn set_scheme(scheme: AppScheme) {
 //         }
 //         let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
 //         let data: *mut raw::c_void = mem::transmute(a);
-//         let callback: fltk_sys::fl::Fl_Awake_Handler = Some(shim);
-//         fltk_sys::fl::Fl_awake(callback, data);
+//         let callback: Fl_Awake_Handler = Some(shim);
+//         Fl_awake(callback, data);
 //     }
 // }
 
@@ -69,14 +84,14 @@ impl App {
     
     /// Sets the scheme of the application
     pub fn set_scheme(self, scheme: AppScheme) -> App {
-        fl::set_scheme(scheme);
+        set_scheme(scheme);
         self
     }
     
     /// Runs the event loop
     pub fn run(&self) -> Result<(), FltkError> {
-        fl::lock()?;
-        return fl::run();
+        lock()?;
+        return run();
     }
     // pub fn awake<'a>(&'a self, cb: Box<dyn FnMut() + 'a>) {
     //     unsafe {
@@ -87,8 +102,8 @@ impl App {
     //         }
     //         let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
     //         let data: *mut raw::c_void = mem::transmute(a);
-    //         let callback: fltk_sys::fl::Fl_Awake_Handler = Some(shim);
-    //         fltk_sys::fl::Fl_awake(callback, data);
+    //         let callback: Fl_Awake_Handler = Some(shim);
+    //         Fl_awake(callback, data);
     //     }
     // }
 }
@@ -96,24 +111,24 @@ impl App {
 /// Returns the latest captured event
 pub fn event() -> Event {
     unsafe {
-        let x = fltk_sys::fl::Fl_event();
+        let x = Fl_event();
         let x: Event = mem::transmute(x);
         x
     }
 }
 
 /// Returns the presed key
-pub fn event_key() -> i32 {
+pub fn event_key() -> Key {
     unsafe {
-        let x = fltk_sys::fl::Fl_event_key();
-        x
+        let x = Fl_event_key();
+        mem::transmute(x)
     }
 }
 
 /// Returns a textual representation of the latest event
 pub fn event_text() -> String {
     unsafe {
-        CStr::from_ptr(fltk_sys::fl::Fl_event_text() as *mut raw::c_char)
+        CStr::from_ptr(Fl_event_text() as *mut raw::c_char)
             .to_string_lossy().to_string()
     }
 }
@@ -125,13 +140,13 @@ pub fn event_char() -> char {
 
 /// Returns the captured button event
 pub fn event_button() -> i32 {
-    unsafe { fltk_sys::fl::Fl_event_button() }
+    unsafe { Fl_event_button() }
 }
 
 /// Returns the number of clicks
 pub fn event_clicks() -> bool {
     unsafe {
-        match fltk_sys::fl::Fl_event_clicks() {
+        match Fl_event_clicks() {
             0 => false,
             _ => true,
         }
@@ -140,13 +155,13 @@ pub fn event_clicks() -> bool {
 
 /// Returns the x and y coordinates of the captured event
 pub fn event_coords() -> (i32, i32) {
-    unsafe { (fltk_sys::fl::Fl_event_dx(), fltk_sys::fl::Fl_event_dy()) }
+    unsafe { (Fl_event_dx(), Fl_event_dy()) }
 }
 
 /// Determines whether an event was a click
 pub fn event_is_click() -> bool {
     unsafe {
-        match fltk_sys::fl::Fl_event_is_click() {
+        match Fl_event_is_click() {
             0 => false,
             _ => true,
         }
@@ -155,20 +170,20 @@ pub fn event_is_click() -> bool {
 
 /// Returns the duration of an event
 pub fn event_length() -> i32 {
-    unsafe { fltk_sys::fl::Fl_event_length() }
+    unsafe { Fl_event_length() }
 }
 
 /// Returns the state of the event
 pub fn event_state() -> i32 {
-    unsafe { fltk_sys::fl::Fl_event_state() }
+    unsafe { Fl_event_state() }
 }
 
 /// Returns a pair of the width and height of the screen
 pub fn screen_size() -> (f64, f64) {
     unsafe {
         (
-            (fltk_sys::fl::Fl_screen_w() as f64 / 0.96).into(),
-            (fltk_sys::fl::Fl_screen_h() as f64 / 0.96).into(),
+            (Fl_screen_w() as f64 / 0.96).into(),
+            (Fl_screen_h() as f64 / 0.96).into(),
         )
     }
 }
@@ -179,7 +194,7 @@ where
     T: WidgetTrait + InputTrait,
 {
     unsafe {
-        fltk_sys::fl::Fl_paste(widget.as_widget_ptr() as *mut raw::c_void, 1);
+        Fl_paste(widget.as_widget_ptr() as *mut raw::c_void, 1);
     }
 }
 

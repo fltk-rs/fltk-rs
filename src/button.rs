@@ -10,7 +10,7 @@ pub struct Button {
 
 /// Defines the button type, which can be changed dynamically using the set_type function().
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ButtonType {
     NormalButton = 0,
     ToggleButton = 1,

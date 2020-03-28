@@ -10,7 +10,7 @@ pub struct Frame {
 
 /// Defines the frame type, which can be set using the set_type() method
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum FrameType {
     NoBox = 0,
     FlatBox,

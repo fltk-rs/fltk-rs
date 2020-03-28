@@ -9,7 +9,6 @@ extern crate quote;
 
 use proc_macro::TokenStream;
 use quote::*;
-use std::{ffi::CString, mem, os::raw, ptr};
 use syn::*;
 
 fn get_fl_name(txt: String) -> String {

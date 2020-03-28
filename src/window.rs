@@ -10,7 +10,7 @@ pub struct Window {
 
 /// Defines the window type, can be set dynamically using the set_type() method
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum WindowType {
     NormalWindow = 240,
     DoubleWindow = 241,

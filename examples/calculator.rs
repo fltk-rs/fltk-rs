@@ -1,11 +1,11 @@
 #![allow(unused_variables)]
 #![allow(unused_mut)]
 
-use fltk::{button::Button, output::Output, prelude::*, window::Window};
+use fltk::{app, button::*, output::*, window::*};
 
 fn main() {
-    let app = fl::App::default().set_scheme(AppScheme::Gleam);
-    let (screen_width, screen_height) = fl::screen_size();
+    let app = app::App::default().set_scheme(app::AppScheme::Gleam);
+    let (screen_width, screen_height) = app::screen_size();
     let border = 20;
     let but_width = 90;
     let but_height = 60;
@@ -85,7 +85,7 @@ fn main() {
         but.set_color(Color::Light2);
     }
 
-    fl::set_callback(
+    app::set_callback(
         &but_ce,
         Box::new(|| {
             txt.clear();
@@ -95,7 +95,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but_c,
         Box::new(|| {
             txt.clear();
@@ -104,7 +104,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but_back,
         Box::new(|| {
             txt.pop();
@@ -112,7 +112,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but_div,
         Box::new(|| {
             old_val = out.value();
@@ -123,7 +123,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but_mul,
         Box::new(|| {
             old_val = out.value();
@@ -134,7 +134,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but_sub,
         Box::new(|| {
             old_val = out.value();
@@ -145,7 +145,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but_add,
         Box::new(|| {
             old_val = out.value();
@@ -156,7 +156,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but_eq,
         Box::new(|| {
             new_val = out.value();
@@ -176,7 +176,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but0,
         Box::new(|| {
             if out.value() == "0" {
@@ -193,7 +193,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but1,
         Box::new(|| {
             if out.value() == "0" {
@@ -208,7 +208,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but2,
         Box::new(|| {
             if out.value() == "0" {
@@ -223,7 +223,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but3,
         Box::new(|| {
             if out.value() == "0" {
@@ -238,7 +238,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but4,
         Box::new(|| {
             if out.value() == "0" {
@@ -253,7 +253,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but5,
         Box::new(|| {
             if out.value() == "0" {
@@ -268,7 +268,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but6,
         Box::new(|| {
             if out.value() == "0" {
@@ -283,7 +283,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but7,
         Box::new(|| {
             if out.value() == "0" {
@@ -298,7 +298,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but8,
         Box::new(|| {
             if out.value() == "0" {
@@ -313,7 +313,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but9,
         Box::new(|| {
             if out.value() == "0" {
@@ -328,7 +328,7 @@ fn main() {
         }),
     );
 
-    fl::set_callback(
+    app::set_callback(
         &but_dot,
         Box::new(|| {
             if op == '=' {

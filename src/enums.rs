@@ -1,9 +1,6 @@
-pub use crate::prelude::*;
-use std::mem;
-
 /// Defines alignment rules used by FLTK for labels
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Align {
     AlignCenter = 0,
     AlignTop = 1,
@@ -14,7 +11,7 @@ pub enum Align {
 
 /// Defines fonts used by FLTK
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Font {
     Helvetica = 0,
     HelveticaBold = 1,
@@ -37,7 +34,7 @@ pub enum Font {
 
 /// Defines colors used by FLTK
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Color {
     ForeGround = 0,
     BackGround = 7,
@@ -69,7 +66,7 @@ pub enum Color {
 
 /// Defines event types captured by FLTK
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Event {
     NoEvent = 0,
     Push,
@@ -94,7 +91,7 @@ pub enum Event {
 }
 
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Key {
     Button = 0xfee8,
     BackSpace = 0xff08,
@@ -137,23 +134,8 @@ pub enum Key {
     Delete = 0xffff,
 }
 
-/// Defines label types
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
-pub enum LabelType {
-    NormalLabel = 0,
-    NoLabel,
-    ShadowLabel,
-    EngravedLabel,
-    EmbossedLabel,
-    MultiLabel,
-    IconLabel,
-    ImageLabel,
-    FreeLabelType,
-}
-
-#[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Shortcut {
     Shift = 0x00010000,
     CapsLock = 0x00020000,
@@ -162,17 +144,17 @@ pub enum Shortcut {
 }
 
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
-pub enum CallbackTrigger { 
-    Never		= 0,	
-    Changed	= 1,	
-    NotChanged	= 2,	
-    Release	= 4,	
-    ReleaseAlways = 6,	
-    EnterKey	= 8,	
-    EnterKeyAlways=10,	
-    EnterKeyChanged =11	
-  }
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum CallbackTrigger {
+    Never = 0,
+    Changed = 1,
+    NotChanged = 2,
+    Release = 4,
+    ReleaseAlways = 6,
+    EnterKey = 8,
+    EnterKeyAlways = 10,
+    EnterKeyChanged = 11,
+}
 
 impl std::ops::Add<char> for Shortcut {
     type Output = i32;

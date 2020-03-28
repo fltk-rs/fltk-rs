@@ -29,7 +29,7 @@ pub struct MenuItem {
 
 /// Defines the menu flag for any added menu items using the add() method
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum MenuFlag {
     Normal = 0,
     Inactive = 1,

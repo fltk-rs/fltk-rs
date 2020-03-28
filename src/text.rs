@@ -1,4 +1,3 @@
-pub use crate::enums::*;
 pub use crate::prelude::*;
 use fltk_sys::text::*;
 use std::{ffi::{CStr, CString}, mem, os::raw};

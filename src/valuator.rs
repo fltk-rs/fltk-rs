@@ -10,7 +10,7 @@ pub struct Slider {
 
 /// Defines slider types
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum SliderType {
     VerticalSlider = 0,
     HorizontalSlider = 1,
@@ -28,7 +28,7 @@ pub struct Dial {
 
 /// Defines dial types
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum DialType {
     NormalDial = 0,
     LineDial = 1,
@@ -43,7 +43,7 @@ pub struct Counter {
 
 /// Defines counter types
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum CounterType {
     NormalCounter = 0,
     SimpleCounter = 1,
@@ -57,7 +57,7 @@ pub struct Scrollbar {
 
 /// Defines scrollbar types
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ScrollBarType {
     VerticalScrollBar = 0,
     HorizontalScrollBar = 1,

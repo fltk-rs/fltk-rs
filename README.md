@@ -10,14 +10,14 @@ The FLTK crate is a crossplatform lightweight gui library which can be staticall
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "^0.1.16"
+fltk = "^0.1.17"
 ```
 An example hello world application:
 ```rust
-use fltk::window::*;
+use fltk::{app::*, window::*};
 
 fn main() {
-    let app = fl::App::default();
+    let app = App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     wind.show();
     app.run().unwrap();
