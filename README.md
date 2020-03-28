@@ -1,16 +1,16 @@
 # fltk-rs
 
-Rust bindings for the FLTK GUI library. Still in alpha.
+Rust bindings for the FLTK Graphical User Interface library. Still in alpha.
 
-The FLTK gui crate is a crossplatform lightweight library which can be linked to statically (LGPL) to produce small, self-contained and fast binaries.
+The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications. 
 
 [Documentation](https://docs.rs/fltk)
 
-## Using in a project
+## Usage
 Just add the following to your project's Cargo.toml file.
 ```toml
 [dependencies]
-fltk = "^0.1.15"
+fltk = "^0.1.16"
 ```
 An example hello world application:
 ```rust
@@ -24,6 +24,17 @@ fn main() {
 }
 ```
 Please check the examples directory for more examples.
+You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, as well as the width and height of the widget. Most widgets, except the TextDisplay and TextEditor, also take a label which can be left blank if needed. 
+
+## Dependencies
+
+CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. 
+- Windows: None.
+- MacOs: None.
+- Linux: X11 development headers need to be installed for development. For Debian-based distribution, that means running:
+```
+$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
+```
 
 ## Building
 
@@ -33,15 +44,6 @@ $ git clone https://github.com/MoAlyousef/fltk-rs
 $ cd fltk-rs
 $ cargo build
 ```
-
-
-## Dependencies
-
-CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. After that on Windows and Mac OS X, normally no external dependencies are needed. For Linux, X11 development headers need to be installed for development. For Debian-based distribution, that means running:
-```
-$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
-```
-
 
 ## Examples
 
@@ -57,11 +59,13 @@ $ cargo run --example hello
 ![alt_test](screenshots/hello.jpg)
 
 ![alt_test](screenshots/gallery.jpg)
+
 Setting the scheme to Gtk.
 
 ![alt_test](screenshots/calc.jpg)
 
 ![alt_test](screenshots/editor.jpg)
+
 Setting the scheme to Gtk
 
 ![alt_test](screenshots/terminal.jpg)

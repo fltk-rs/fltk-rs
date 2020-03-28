@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::image::*;
-use std::os::raw;
+use std::{ffi::CString, mem, os::raw};
 
 /// Creates a struct holding a Jpeg image
 #[derive(ImageTrait, Debug, Clone)]

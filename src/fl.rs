@@ -1,5 +1,5 @@
 pub use crate::prelude::*;
-use std::{ffi, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Runs the event loop
 fn run() -> Result<(), FltkError> {
@@ -29,7 +29,7 @@ fn set_scheme(scheme: AppScheme) {
         AppScheme::Gleam => "gleam",
         AppScheme::Plastic => "plastic",
     };
-    let name_str= std::ffi::CString::new(name_str).unwrap();
+    let name_str= CString::new(name_str).unwrap();
     unsafe {
         fltk_sys::fl::Fl_set_scheme(name_str.into_raw() as *const raw::c_char)
     }
@@ -113,7 +113,7 @@ pub fn event_key() -> i32 {
 /// Returns a textual representation of the latest event
 pub fn event_text() -> String {
     unsafe {
-        ffi::CString::from_raw(fltk_sys::fl::Fl_event_text() as *mut raw::c_char)
+        CStr::from_ptr(fltk_sys::fl::Fl_event_text() as *mut raw::c_char)
             .to_string_lossy().to_string()
     }
 }

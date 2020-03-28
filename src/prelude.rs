@@ -4,9 +4,7 @@ pub use crate::menu::*;
 use fltk_sys::widget::*;
 use std::convert::From;
 use std::error::Error;
-use std::fmt;
-use std::io;
-use std::os::raw;
+use std::{fmt, io, os::raw};
 
 /// Error types returned by fltk-rs + wrappers of std::io errors
 #[derive(Debug)]
@@ -77,6 +75,12 @@ pub enum AppScheme {
 /// Defines the methods implemented by all widgets
 pub trait WidgetTrait {
     /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
+    /// # Arguments
+    /// * `x` - The x coordinate in the screen
+    /// * `y` - The y coordinate in the screen
+    /// * `width` - The width of the widget
+    /// * `heigth` - The height of the widget
+    /// * `title` - The title or label of the widget
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
     /// Sets the widget's label
     fn set_label(&mut self, title: &str);
@@ -110,7 +114,7 @@ pub trait WidgetTrait {
     fn tooltip(&self) -> String;
     /// Sets the tooltip text
     fn set_tooltip(&mut self, txt: &str);
-    /// Returns the widget type
+    /// Returns the widget type when applicable
     fn get_type<T: WidgetType>(&self) -> T;
     /// Sets the widget type
     fn set_type<T: WidgetType>(&mut self, typ: T);
@@ -142,7 +146,7 @@ pub trait WidgetTrait {
     fn changed(&self) -> bool;
     /// Mark the widget as changed
     fn set_changed(&mut self);
-    /// Mark the widget as unchanged
+    /// Clears the changed status of the widget
     fn clear_changed(&mut self);
     /// Returns the alignment of the widget
     fn align(&self) -> Align;

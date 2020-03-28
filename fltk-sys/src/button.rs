@@ -909,6 +909,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Light_Button_set_trigger(arg1: *mut Fl_Light_Button, arg2: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Light_Button_is_on(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Repeat_Button {

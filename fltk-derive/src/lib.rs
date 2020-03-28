@@ -265,7 +265,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn label(&self) -> String {
                 unsafe {
-                    CString::from_raw(#label(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
+                    CStr::from_ptr(#label(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
 
@@ -291,7 +291,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn tooltip(&self) -> String {
                 unsafe {
-                    CString::from_raw(
+                    CStr::from_ptr(
                         #tooltip(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
@@ -413,7 +413,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
-                        let ev: Event = std::mem::transmute(_ev);
+                        let ev: Event = mem::transmute(_ev);
                         let a: *mut Box<dyn FnMut(Event) -> bool + 'a> = mem::transmute(data);
                         let f: &mut (dyn FnMut(Event) -> bool + 'a) = &mut **a;
                         match f(ev) {
@@ -628,7 +628,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl InputTrait for #name {
             fn value(&self) -> String {
                 unsafe {
-                    CString::from_raw(#value(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
+                    CStr::from_ptr(#value(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
             fn set_value(&self, val: &str) {
@@ -872,7 +872,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn get_choice(&self) -> String {
                 unsafe {
-                    CString::from_raw(#get_choice(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
+                    CStr::from_ptr(#get_choice(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
         }
@@ -1096,7 +1096,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn text(&self) -> String {
                 unsafe {
-                    CString::from_raw(#text(self._inner) as *mut raw::c_char)
+                    CStr::from_ptr(#text(self._inner) as *mut raw::c_char)
                         .to_string_lossy().to_string()
                 }
             }
@@ -1228,13 +1228,13 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn add(&mut self, item: &str) {
-                let item = std::ffi::CString::new(item).unwrap();
+                let item = CString::new(item).unwrap();
                 unsafe {
                     #add(self._inner, item.into_raw() as *const raw::c_char)
                 }
             }
             fn insert(&mut self, line: usize, item: &str) {
-                let item = std::ffi::CString::new(item).unwrap();
+                let item = CString::new(item).unwrap();
                 unsafe {
                     #insert(self._inner, line as i32, item.into_raw() as *const raw::c_char)
                 }
@@ -1281,11 +1281,11 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn text(&self, line: usize) -> String {
                 unsafe {
-                    CString::from_raw(#text(self._inner, line as i32) as *mut raw::c_char).to_string_lossy().to_string()
+                    CStr::from_ptr(#text(self._inner, line as i32) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
             fn set_text(&mut self, line: usize, txt: &str) {
-                let txt = std::ffi::CString::new(txt).unwrap();
+                let txt = CString::new(txt).unwrap();
                 unsafe {
                     #set_text(self._inner, line as i32, txt.into_raw() as *const raw::c_char)
                 }
@@ -1309,7 +1309,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn new(path: std::path::PathBuf) -> #name {
                 unsafe {
                     let temp = path.into_os_string().to_string_lossy().to_string();
-                    let temp = std::ffi::CString::new(temp.as_str()).unwrap();
+                    let temp = CString::new(temp.as_str()).unwrap();
                     #name {
                         _inner: #new(temp.into_raw() as *const raw::c_char),
                     }
@@ -1334,7 +1334,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn as_ptr(&self) -> *mut raw::c_void {
                 unsafe {
-                    std::mem::transmute(self._inner)
+                    mem::transmute(self._inner)
                 }
             }
         }

@@ -1,7 +1,7 @@
 pub use crate::enums::*;
 pub use crate::prelude::*;
 use fltk_sys::text::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a non-editable text display widget
 #[derive(WidgetTrait, DisplayTrait, Debug, Clone)]

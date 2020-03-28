@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::button::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a normal button
 #[derive(WidgetTrait, Debug, Clone)]
@@ -82,6 +82,18 @@ impl ToggleButton {
 #[derive(WidgetTrait, Debug, Clone)]
 pub struct LightButton {
     _inner: *mut Fl_Light_Button,
+}
+
+impl LightButton {
+    /// Check whether a light button is on
+    pub fn is_on(&self) -> bool {
+        unsafe {
+            match Fl_Light_Button_is_on(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
 }
 
 /// Creates a repeat button

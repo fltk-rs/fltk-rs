@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::browser::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a normal browser
 #[derive(WidgetTrait, BrowserTrait, Debug, Clone)]

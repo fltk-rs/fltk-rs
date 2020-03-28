@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::window::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a window widget
 #[derive(WidgetTrait, GroupTrait, WindowTrait, Debug, Clone)]

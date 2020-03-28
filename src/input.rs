@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::input::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates an input widget
 #[derive(WidgetTrait, InputTrait, Debug, Clone)]

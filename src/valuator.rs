@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::valuator::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a slider widget
 #[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]

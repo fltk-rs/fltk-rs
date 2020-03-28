@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::group::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates an widget group
 #[derive(WidgetTrait, GroupTrait, Debug, Clone)]
