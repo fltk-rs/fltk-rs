@@ -128,14 +128,20 @@ pub fn event_key() -> Key {
 /// Returns a textual representation of the latest event
 pub fn event_text() -> String {
     unsafe {
-        CStr::from_ptr(Fl_event_text() as *mut raw::c_char)
-            .to_string_lossy().to_string()
+        let x = CStr::from_ptr(Fl_event_text() as *mut raw::c_char)
+            .to_string_lossy().to_string();
+        // let mut temp = String::from("");
+        // for c in x.chars() {
+        //     if c.is_ascii_lowercase() {
+        //         temp.push(c.to_ascii_uppercase());
+        //     } else if c.is_ascii_uppercase() {
+        //         temp.push(c.to_ascii_lowercase());
+        //     } else {
+        //         //
+        //     }
+        // }
+        x
     }
-}
-
-/// Gets the character representation of the keyboard event
-pub fn event_char() -> char {
-    event_key() as u8 as char
 }
 
 /// Returns the captured button event

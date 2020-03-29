@@ -1,5 +1,5 @@
 use fltk::{app, text::*, window::*};
-use std::process::{Command, Stdio};
+use std::process::{Command, Output, Stdio};
 
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Plastic);
@@ -13,12 +13,16 @@ fn main() {
     current_dir.push_str("/ $ ");
     let mut term = SimpleTerminal::new(5, 5, 630, 470);
     let mut cmd = String::from("");
-    term.clone()
-        .set_custom_handler(Box::new(|ev: app::Event| match ev {
+    term.clone().set_custom_handler(Box::new(|ev: app::Event| {
+        // println!("{:?}", app::event());
+        match ev {
+            app::Event::Shortcut => true,
             app::Event::KeyUp => match app::event_key() {
+                app::Key::ShiftL => true,
+                app::Key::ShiftR => true,
                 app::Key::Enter => {
                     term.append("\n");
-                    run_command(&mut term);
+                    run_command(&mut term, &cmd);
                     term.append(&current_dir);
                     cmd.clear();
                     true
@@ -27,20 +31,23 @@ fn main() {
                     if cmd.len() != 0 {
                         term.remove(term.text().len() - 1, term.text().len());
                         cmd.pop().unwrap();
+                        term.move_left();
                         return true;
                     } else {
                         return false;
                     }
                 }
                 _ => {
-                    let temp = app::event_char();
-                    cmd.push(temp);
-                    term.append(&temp.to_string());
+                    let temp = app::event_text();
+                    cmd.push_str(&temp);
+                    term.append(&temp);
+                    term.move_right();
                     true
                 }
             },
             _ => false,
-        }));
+        }
+    }));
     term.append(&current_dir);
     wind.make_resizable(true);
     wind.show();
@@ -49,19 +56,24 @@ fn main() {
 
 // To have continuous streaming of output for long standing operations,
 // consider using Tokio Command or the likes
-fn run_command(term: &mut SimpleTerminal) {
-    let txt = term.text();
-    let mut lines: Vec<_> = txt.lines().collect();
-    lines.reverse();
-    let args: Vec<&str> = (&lines[0]).split_whitespace().collect();
-    if args.len() > 2 {
-        let stdout = Command::new(&args[2])
-            .args(&args[3..])
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output();
+fn run_command(term: &mut SimpleTerminal, cmd: &str) {
+    let args: Vec<&str> = cmd.split_whitespace().collect();
+    let stdout: Result<Output, std::io::Error>;
+    if args.len() > 0 {
+        if args.len() > 1 {
+            stdout = Command::new(args[0])
+                .args(&args[1..])
+                .stdout(Stdio::piped())
+                .stderr(Stdio::piped())
+                .output();
+        } else {
+            stdout = Command::new(args[0])
+                .stdout(Stdio::piped())
+                .stderr(Stdio::piped())
+                .output();
+        }
         if stdout.is_err() {
-            let msg = format!("{}: command not found!\n", &args[2]);
+            let msg = format!("{}: command not found!\n", cmd);
             term.append(&msg);
             return;
         }
