@@ -142,7 +142,12 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_insert_position(widget *, int newPos);                     \
   int widget##_insert_position(const widget *);                                \
   int widget##_count_lines(const widget *, int start, int end,                 \
-                           int start_pos_is_line_start);
+                           int start_pos_is_line_start);                       \
+  int widget##_move_right(widget *);                                           \
+  int widget##_move_left(widget *);                                            \
+  int widget##_move_up(widget *);                                              \
+  int widget##_move_down(widget *);                                            \
+  void widget##_remove(widget *self, int start, int end);
 
 #define BROWSER_DECLARE(widget)                                                \
   void widget##_remove(widget *, int line);                                    \
@@ -408,7 +413,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_scroll(widget *self, int topLineNum, int horizOffset) {        \
     self->scroll(topLineNum, horizOffset);                                     \
   }                                                                            \
-  void widget##_insert(widget *self, const char *text) { self->insert(text); } \
+  void widget##_insert(widget *self, const char *text) {                       \
+    ((Fl_Text_Display *)self)->insert(text);                                   \
+  }                                                                            \
   void widget##_set_insert_position(widget *self, int newPos) {                \
     self->insert_position(newPos);                                             \
   }                                                                            \
@@ -418,6 +425,15 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_count_lines(const widget *self, int start, int end,             \
                            int start_pos_is_line_start) {                      \
     return self->count_lines(start, end, start_pos_is_line_start);             \
+  }                                                                            \
+  int widget##_move_right(widget *self) { return self->move_right(); }         \
+  int widget##_move_left(widget *self) { return self->move_left(); }           \
+  int widget##_move_up(widget *self) { return self->move_up(); }               \
+  int widget##_move_down(widget *self) { return self->move_down(); }           \
+  void widget##_remove(widget *self, int start, int end) {                     \
+    auto buff = self->buffer();                                                \
+    buff->remove(start, end);                                                  \
+    self->buffer(buff);                                                        \
   }
 
 #define BROWSER_DEFINE(widget)                                                 \

@@ -826,7 +826,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl MenuTrait for #name {
-            fn add<'a>(&'a mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
+            fn add<'a>(&'a mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -1080,22 +1080,13 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "text_size").as_str(),
         name.span(),
     );
-    let append = Ident::new(
-        format!("{}_{}", name_str, "append").as_str(),
-        name.span(),
-    );
+    let append = Ident::new(format!("{}_{}", name_str, "append").as_str(), name.span());
     let buffer_length = Ident::new(
         format!("{}_{}", name_str, "buffer_length").as_str(),
         name.span(),
     );
-    let scroll = Ident::new(
-        format!("{}_{}", name_str, "scroll").as_str(),
-        name.span(),
-    );
-    let insert = Ident::new(
-        format!("{}_{}", name_str, "insert").as_str(),
-        name.span(),
-    );
+    let scroll = Ident::new(format!("{}_{}", name_str, "scroll").as_str(), name.span());
+    let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
     let set_insert_position = Ident::new(
         format!("{}_{}", name_str, "set_insert_position").as_str(),
         name.span(),
@@ -1108,7 +1099,23 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "count_lines").as_str(),
         name.span(),
     );
-
+    let move_right = Ident::new(
+        format!("{}_{}", name_str, "move_right").as_str(),
+        name.span(),
+    );
+    let move_left = Ident::new(
+        format!("{}_{}", name_str, "move_left").as_str(),
+        name.span(),
+    );
+    let move_up = Ident::new(format!("{}_{}", name_str, "move_up").as_str(), name.span());
+    let move_down = Ident::new(
+        format!("{}_{}", name_str, "move_down").as_str(),
+        name.span(),
+    );
+    let remove = Ident::new(
+        format!("{}_{}", name_str, "remove").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl DisplayTrait for #name {
@@ -1151,39 +1158,33 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     #append(self._inner, text.into_raw() as *const raw::c_char)
                 }
-            }     
-               
+            }
             fn buffer_length(&self) -> usize {
                 unsafe {
                     #buffer_length(self._inner) as usize
                 }
             }
-
             fn scroll(&mut self, topLineNum: usize, horizOffset: usize) {
                 unsafe {
                     #scroll(self._inner, topLineNum as i32, horizOffset as i32)
                 }
-            }  
-  
+            }
             fn insert(&self, text: &str) {
                 let text = CString::new(text).unwrap();
                 unsafe {
                     #insert(self._inner, text.into_raw() as *const raw::c_char)
                 }
             }
-
             fn set_insert_position(&mut self, newPos: usize) {
                 unsafe {
                     #set_insert_position(self._inner, newPos as i32)
                 }
-            }    
-         
+            }
             fn insert_position(&self) -> usize {
                 unsafe {
                     #insert_position(self._inner) as usize
                 }
-            }  
-                       
+            }
             fn count_lines(&self, start: usize, end: usize, is_line_start: bool) -> usize {
                 let x = match is_line_start {
                     true => 1,
@@ -1191,6 +1192,31 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                 };
                 unsafe {
                     #count_lines(self._inner, start as i32, end as i32, x) as usize
+                }
+            }
+            fn move_right(&mut self) {
+                unsafe {
+                    #move_right(self._inner);
+                }
+            }
+            fn move_left(&mut self){
+                unsafe {
+                    #move_left(self._inner);
+                }
+            }
+            fn move_up(&mut self){
+                unsafe {
+                    #move_up(self._inner);
+                }
+            }
+            fn move_down(&mut self){
+                unsafe {
+                    #move_down(self._inner);
+                }
+            }
+            fn remove(&mut self, start: usize, end: usize) {
+                unsafe {
+                    #remove(self._inner, start as i32, end as i32);
                 }
             }
         }
@@ -1204,46 +1230,16 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
     let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
-    let insert = Ident::new(
-        format!("{}_{}", name_str, "insert").as_str(),
-        name.span(),
-    );
-    let move_item = Ident::new(
-        format!("{}_{}", name_str, "move").as_str(),
-        name.span(),
-    );
-    let swap = Ident::new(
-        format!("{}_{}", name_str, "swap").as_str(),
-        name.span(),
-    );
-    let clear = Ident::new(
-        format!("{}_{}", name_str, "clear").as_str(),
-        name.span(),
-    );
-    let size = Ident::new(
-        format!("{}_{}", name_str, "size").as_str(),
-        name.span(),
-    );
-    let set_size = Ident::new(
-        format!("{}_{}", name_str, "set_size").as_str(),
-        name.span(),
-    );
-    let select = Ident::new(
-        format!("{}_{}", name_str, "select").as_str(),
-        name.span(),
-    );
-    let selected = Ident::new(
-        format!("{}_{}", name_str, "selected").as_str(),
-        name.span(),
-    );
-    let text = Ident::new(
-        format!("{}_{}", name_str, "text").as_str(),
-        name.span(),
-    );
-    let set_text = Ident::new(
-        format!("{}_{}", name_str, "set_text").as_str(),
-        name.span(),
-    );
+    let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
+    let move_item = Ident::new(format!("{}_{}", name_str, "move").as_str(), name.span());
+    let swap = Ident::new(format!("{}_{}", name_str, "swap").as_str(), name.span());
+    let clear = Ident::new(format!("{}_{}", name_str, "clear").as_str(), name.span());
+    let size = Ident::new(format!("{}_{}", name_str, "size").as_str(), name.span());
+    let set_size = Ident::new(format!("{}_{}", name_str, "set_size").as_str(), name.span());
+    let select = Ident::new(format!("{}_{}", name_str, "select").as_str(), name.span());
+    let selected = Ident::new(format!("{}_{}", name_str, "selected").as_str(), name.span());
+    let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
+    let set_text = Ident::new(format!("{}_{}", name_str, "set_text").as_str(), name.span());
 
     let gen = quote! {
         impl BrowserTrait for #name {

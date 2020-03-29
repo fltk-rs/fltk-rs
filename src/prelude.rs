@@ -278,7 +278,7 @@ pub trait MenuTrait: WidgetTrait {
     /// Sets the text color
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
-    fn add<'a>(&'a mut self, name: &str, shortcut: i32, flag: crate::menu::MenuFlag, cb: Box<dyn FnMut() + 'a>);
+    fn add<'a>(&'a mut self, name: &str, shortcut: Shortcut, flag: crate::menu::MenuFlag, cb: Box<dyn FnMut() + 'a>);
     /// Adds a simple text option to the Choice and MenuButton widgets
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
@@ -351,6 +351,12 @@ pub trait DisplayTrait {
     fn insert_position(&self) -> usize;   
     /// Counts the lines from start to end                         
     fn count_lines(&self, start: usize, end: usize, is_line_start: bool) -> usize;
+    /// 
+    fn move_right(&mut self);
+    fn move_left(&mut self);
+    fn move_up(&mut self);
+    fn move_down(&mut self);
+    fn remove(&mut self, start: usize, end: usize);
 }
 
 /// Defines the methods implemented by all browser types

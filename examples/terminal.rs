@@ -2,7 +2,7 @@ use fltk::{app, text::*, window::*};
 use std::process::{Command, Stdio};
 
 fn main() {
-    let app = app::App::default().set_scheme(app::AppScheme::Gtk);
+    let app = app::App::default().set_scheme(app::AppScheme::Plastic);
     let mut wind = Window::new(100, 100, 640, 480, "Rusty Terminal");
     let mut current_dir = std::env::current_dir()
         .unwrap()
@@ -11,24 +11,34 @@ fn main() {
         .to_string_lossy()
         .to_string();
     current_dir.push_str("/ $ ");
-    let mut term = TextEditor::new(5, 5, 630, 470);
+    let mut term = SimpleTerminal::new(5, 5, 630, 470);
     let mut cmd = String::from("");
     term.clone()
         .set_custom_handler(Box::new(|ev: app::Event| match ev {
-            app::Event::KeyUp => {
-                if app::event_key() == app::Key::Enter {
+            app::Event::KeyUp => match app::event_key() {
+                app::Key::Enter => {
+                    term.append("\n");
                     run_command(&mut term);
                     term.append(&current_dir);
                     cmd.clear();
-                } else if app::event_key() == app::Key::BackSpace {
-                    if cmd.len() == 0 {
-                        term.append(" ");
-                    }
-                } else {
-                    cmd.push(app::event_char());
+                    true
                 }
-                true
-            }
+                app::Key::BackSpace => {
+                    if cmd.len() != 0 {
+                        term.remove(term.text().len() - 1, term.text().len());
+                        cmd.pop().unwrap();
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                _ => {
+                    let temp = app::event_char();
+                    cmd.push(temp);
+                    term.append(&temp.to_string());
+                    true
+                }
+            },
             _ => false,
         }));
     term.append(&current_dir);
@@ -39,7 +49,7 @@ fn main() {
 
 // To have continuous streaming of output for long standing operations,
 // consider using Tokio Command or the likes
-fn run_command(term: &mut TextEditor) {
+fn run_command(term: &mut SimpleTerminal) {
     let txt = term.text();
     let mut lines: Vec<_> = txt.lines().collect();
     lines.reverse();

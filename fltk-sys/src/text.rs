@@ -231,6 +231,25 @@ extern "C" {
         start_pos_is_line_start: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Text_Display_move_right(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_move_left(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_move_up(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_move_down(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_remove(
+        self_: *mut Fl_Text_Display,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -436,6 +455,25 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Text_Editor_move_right(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_move_left(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_move_up(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_move_down(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_remove(
+        self_: *mut Fl_Text_Editor,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -446,4 +484,273 @@ extern "C" {
 }
 extern "C" {
     pub fn kf_undo(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Simple_Terminal {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Simple_Terminal;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_x(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_y(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_width(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_height(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_label(arg1: *mut Fl_Simple_Terminal)
+        -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_label(
+        arg1: *mut Fl_Simple_Terminal,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_redraw(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_show(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_hide(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_activate(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_deactivate(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_redraw_label(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_resize(
+        arg1: *mut Fl_Simple_Terminal,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_tooltip(
+        arg1: *mut Fl_Simple_Terminal,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_tooltip(
+        arg1: *mut Fl_Simple_Terminal,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_get_type(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_type(arg1: *mut Fl_Simple_Terminal, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_color(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_label_color(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_label_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_label_font(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_label_font(
+        arg1: *mut Fl_Simple_Terminal,
+        font: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_label_size(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_label_size(
+        arg1: *mut Fl_Simple_Terminal,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_label_type(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_label_type(
+        arg1: *mut Fl_Simple_Terminal,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_box(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_box(arg1: *mut Fl_Simple_Terminal, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_changed(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_changed(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_clear_changed(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_align(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_align(arg1: *mut Fl_Simple_Terminal, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_delete(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_image(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_handler(
+        self_: *mut *mut Fl_Simple_Terminal,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_trigger(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_text_font(arg1: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_text_font(
+        arg1: *mut Fl_Simple_Terminal,
+        s: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_text_size(arg1: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_text_size(
+        arg1: *mut Fl_Simple_Terminal,
+        s: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_text_color(arg1: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_text_color(
+        arg1: *mut Fl_Simple_Terminal,
+        n: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_text(arg1: *mut Fl_Simple_Terminal) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_text(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_append(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_buffer_length(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_scroll(
+        arg1: *mut Fl_Simple_Terminal,
+        topLineNum: ::std::os::raw::c_int,
+        horizOffset: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_insert(
+        arg1: *mut Fl_Simple_Terminal,
+        text: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_insert_position(
+        arg1: *mut Fl_Simple_Terminal,
+        newPos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_insert_position(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_count_lines(
+        arg1: *const Fl_Simple_Terminal,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+        start_pos_is_line_start: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_move_right(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_move_left(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_move_up(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_move_down(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_remove(
+        self_: *mut Fl_Simple_Terminal,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
 }

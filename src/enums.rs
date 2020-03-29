@@ -137,6 +137,7 @@ pub enum Key {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Shortcut {
+    None = 0,
     Shift = 0x00010000,
     CapsLock = 0x00020000,
     Ctrl = 0x00040000,
@@ -157,8 +158,52 @@ pub enum CallbackTrigger {
 }
 
 impl std::ops::Add<char> for Shortcut {
-    type Output = i32;
-    fn add(self, other: char) -> i32 {
-        self as i32 + other as i32
+    type Output = Shortcut;
+    fn add(self, other: char) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 + other as i32) }
     }
 }
+
+impl std::ops::BitOr<CallbackTrigger> for CallbackTrigger {
+    type Output = CallbackTrigger;
+    fn bitor(self, rhs: CallbackTrigger) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Align> for Align {
+    type Output = Align;
+    fn bitor(self, rhs: Align) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Color> for Color {
+    type Output = Color;
+    fn bitor(self, rhs: Color) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Font> for Font {
+    type Output = Font;
+    fn bitor(self, rhs: Font) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Event> for Event {
+    type Output = Event;
+    fn bitor(self, rhs: Event) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Key> for Key {
+    type Output = Key;
+    fn bitor(self, rhs: Key) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+
