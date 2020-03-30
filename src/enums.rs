@@ -135,6 +135,54 @@ pub enum Key {
     Delete = 0xffff,
 }
 
+impl Key {
+    pub fn from_i32(val: i32) -> Key {
+        match val {
+            0 => Key::None,
+            0xfee8 => Key::Button,
+            0xff08 => Key::BackSpace,
+            0xff09 => Key::Tab,
+            0xff0c => Key::IsoKey,
+            0xff0d => Key::Enter,
+            0xff13 => Key::Pause,
+            0xff14 => Key::ScrollLock,
+            0xff1b => Key::Escape,
+            0xff2e => Key::Kana,
+            0xff2f => Key::Eisu,
+            0xff30 => Key::Yen,
+            0xff31 => Key::JISUnderscore,
+            0xff50 => Key::Home,
+            0xff51 => Key::Left,
+            0xff52 => Key::Up,
+            0xff53 => Key::Right,
+            0xff54 => Key::Down,
+            0xff55 => Key::PageUp,
+            0xff56 => Key::PageDown,
+            0xff57 => Key::End,
+            0xff61 => Key::Print,
+            0xff63 => Key::Insert,
+            0xff67 => Key::Menu,
+            0xff68 => Key::Help,
+            0xff7f => Key::NumLock,
+            0xff80 => Key::KP,
+            0xff8d => Key::KPEnter,
+            0xffbd => Key::KPLast,
+            0xffe0 => Key::FLast,
+            0xffe1 => Key::ShiftL,
+            0xffe2 => Key::ShiftR,
+            0xffe3 => Key::ControlL,
+            0xffe4 => Key::ControlR,
+            0xffe5 => Key::CapsLock,
+            0xffe7 => Key::MetaL,
+            0xffe8 => Key::MetaR,
+            0xffe9 => Key::AltL,
+            0xffea => Key::AltR,
+            0xffff => Key::Delete,
+            _ => panic!("{}: Unknown key event, try using event_text() to get the textual representation of key input!", val),
+        }
+    }
+}
+
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Shortcut {
@@ -206,5 +254,3 @@ impl std::ops::BitOr<Key> for Key {
         unsafe { std::mem::transmute(self as i32 | rhs as i32) }
     }
 }
-
-

@@ -1116,6 +1116,10 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "remove").as_str(),
         name.span(),
     );
+    let show_cursor = Ident::new(
+        format!("{}_{}", name_str, "show_cursor").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl DisplayTrait for #name {
@@ -1217,6 +1221,11 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn remove(&mut self, start: usize, end: usize) {
                 unsafe {
                     #remove(self._inner, start as i32, end as i32);
+                }
+            }
+            fn show_cursor(&mut self, val: bool) {
+                unsafe {
+                    #show_cursor(self._inner, val as i32);
                 }
             }
         }

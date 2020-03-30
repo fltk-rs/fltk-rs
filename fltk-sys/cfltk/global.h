@@ -147,7 +147,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_move_left(widget *);                                            \
   int widget##_move_up(widget *);                                              \
   int widget##_move_down(widget *);                                            \
-  void widget##_remove(widget *self, int start, int end);
+  void widget##_remove(widget *self, int start, int end);                      \
+  void widget##_show_cursor(widget *, int boolean);
 
 #define BROWSER_DECLARE(widget)                                                \
   void widget##_remove(widget *, int line);                                    \
@@ -434,6 +435,12 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     auto buff = self->buffer();                                                \
     buff->remove(start, end);                                                  \
     self->buffer(buff);                                                        \
+  }                                                                            \
+  void widget##_show_cursor(widget *self, int boolean) {                       \
+    if (boolean)                                                               \
+      self->show_cursor();                                                     \
+    else                                                                       \
+      self->hide_cursor();                                                     \
   }
 
 #define BROWSER_DEFINE(widget)                                                 \

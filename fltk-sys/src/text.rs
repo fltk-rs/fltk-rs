@@ -250,6 +250,9 @@ extern "C" {
         end: ::std::os::raw::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Text_Display_show_cursor(arg1: *mut Fl_Text_Display, boolean: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -472,6 +475,9 @@ extern "C" {
         start: ::std::os::raw::c_int,
         end: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_show_cursor(arg1: *mut Fl_Text_Editor, boolean: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
@@ -752,5 +758,11 @@ extern "C" {
         self_: *mut Fl_Simple_Terminal,
         start: ::std::os::raw::c_int,
         end: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_show_cursor(
+        arg1: *mut Fl_Simple_Terminal,
+        boolean: ::std::os::raw::c_int,
     );
 }

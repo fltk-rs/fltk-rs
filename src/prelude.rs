@@ -351,12 +351,18 @@ pub trait DisplayTrait {
     fn insert_position(&self) -> usize;   
     /// Counts the lines from start to end                         
     fn count_lines(&self, start: usize, end: usize, is_line_start: bool) -> usize;
-    /// 
+    /// Moves the cursor right
     fn move_right(&mut self);
+    /// Moves the cursor left
     fn move_left(&mut self);
+    /// Moves the cursor up
     fn move_up(&mut self);
+    /// Moves the cursor down
     fn move_down(&mut self);
+    /// Remove text from start position to end position
     fn remove(&mut self, start: usize, end: usize);
+    /// Shows/hides the cursor
+    fn show_cursor(&mut self, val: bool);
 }
 
 /// Defines the methods implemented by all browser types

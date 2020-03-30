@@ -14,12 +14,21 @@ fn main() {
     let mut term = SimpleTerminal::new(5, 5, 630, 470);
     let mut cmd = String::from("");
     term.clone().set_custom_handler(Box::new(|ev: app::Event| {
-        // println!("{:?}", app::event());
+        println!("{:?}", app::event());
+        println!("{:?}", app::event_key());
         match ev {
             app::Event::Shortcut => true,
             app::Event::KeyUp => match app::event_key() {
                 app::Key::ShiftL => true,
                 app::Key::ShiftR => true,
+                app::Key::Right => {
+                    term.move_right();
+                    true
+                }
+                app::Key::Left => {
+                    term.move_left();
+                    true
+                }
                 app::Key::Enter => {
                     term.append("\n");
                     run_command(&mut term, &cmd);
@@ -49,6 +58,7 @@ fn main() {
         }
     }));
     term.append(&current_dir);
+    term.show_cursor(true);
     wind.make_resizable(true);
     wind.show();
     app.run().unwrap();
