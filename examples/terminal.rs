@@ -12,6 +12,11 @@ fn main() {
         .to_string();
     current_dir.push_str("/ $ ");
     let mut term = TextDisplay::new(5, 5, 630, 470);
+    term.set_color(Color::Black);
+    term.set_text_color(Color::White);
+    term.set_text_font(Font::Courrier);
+    term.set_cursor_color(Color::White);
+    term.set_cursor_style(CursorStyle::BlockCursor);
     let mut cmd = String::from("");
     term.clone().set_custom_handler(Box::new(|ev: app::Event| {
         // println!("{:?}", app::event());

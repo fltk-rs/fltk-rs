@@ -253,6 +253,45 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_show_cursor(arg1: *mut Fl_Text_Display, boolean: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Text_Display_set_style_table_entry(
+        self_: *mut Fl_Text_Display,
+        color: *mut ::std::os::raw::c_uint,
+        font: *mut ::std::os::raw::c_int,
+        fontsz: *mut ::std::os::raw::c_int,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_cursor_style(
+        arg1: *mut Fl_Text_Display,
+        style: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_cursor_color(
+        arg1: *mut Fl_Text_Display,
+        color: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_scrollbar_width(
+        arg1: *mut Fl_Text_Display,
+        width: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_scrollbar_size(
+        arg1: *mut Fl_Text_Display,
+        newSize: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_scrollbar_align(
+        arg1: *mut Fl_Text_Display,
+        align: ::std::os::raw::c_int,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -478,6 +517,39 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_show_cursor(arg1: *mut Fl_Text_Editor, boolean: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_style_table_entry(
+        self_: *mut Fl_Text_Editor,
+        color: *mut ::std::os::raw::c_uint,
+        font: *mut ::std::os::raw::c_int,
+        fontsz: *mut ::std::os::raw::c_int,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_cursor_style(arg1: *mut Fl_Text_Editor, style: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_cursor_color(arg1: *mut Fl_Text_Editor, color: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_scrollbar_width(
+        arg1: *mut Fl_Text_Editor,
+        width: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_scrollbar_size(
+        arg1: *mut Fl_Text_Editor,
+        newSize: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_scrollbar_align(
+        arg1: *mut Fl_Text_Editor,
+        align: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
@@ -764,5 +836,44 @@ extern "C" {
     pub fn Fl_Simple_Terminal_show_cursor(
         arg1: *mut Fl_Simple_Terminal,
         boolean: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_style_table_entry(
+        self_: *mut Fl_Simple_Terminal,
+        color: *mut ::std::os::raw::c_uint,
+        font: *mut ::std::os::raw::c_int,
+        fontsz: *mut ::std::os::raw::c_int,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_cursor_style(
+        arg1: *mut Fl_Simple_Terminal,
+        style: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_cursor_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_scrollbar_width(
+        arg1: *mut Fl_Simple_Terminal,
+        width: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_scrollbar_size(
+        arg1: *mut Fl_Simple_Terminal,
+        newSize: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_scrollbar_align(
+        arg1: *mut Fl_Simple_Terminal,
+        align: ::std::os::raw::c_int,
     );
 }

@@ -1120,6 +1120,30 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "show_cursor").as_str(),
         name.span(),
     );
+    let set_style_table_entry = Ident::new(
+        format!("{}_{}", name_str, "set_style_table_entry").as_str(),
+        name.span(),
+    );
+    let set_cursor_style = Ident::new(
+        format!("{}_{}", name_str, "set_cursor_style").as_str(),
+        name.span(),
+    );
+    let set_cursor_color = Ident::new(
+        format!("{}_{}", name_str, "set_cursor_color").as_str(),
+        name.span(),
+    );
+    let set_scrollbar_size = Ident::new(
+        format!("{}_{}", name_str, "set_scrollbar_size").as_str(),
+        name.span(),
+    );
+    let set_scrollbar_align = Ident::new(
+        format!("{}_{}", name_str, "set_scrollbar_align").as_str(),
+        name.span(),
+    );
+    let set_scrollbar_width = Ident::new(
+        format!("{}_{}", name_str, "set_scrollbar_width").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl DisplayTrait for #name {
@@ -1144,7 +1168,6 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_text_font(&mut self, font: Font) {
                 unsafe { #set_text_font(self._inner, font as i32) }
             }
-
             fn text_color(&self) -> Color{
                 unsafe { mem::transmute(#text_color(self._inner)) }
             }
@@ -1226,6 +1249,44 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn show_cursor(&mut self, val: bool) {
                 unsafe {
                     #show_cursor(self._inner, val as i32);
+                }
+            }
+            fn set_styly_table_entry(&mut self, entries: &Vec<StyleTableEntry>) {
+                let mut colors: Vec<u32> = vec![];
+                let mut fonts: Vec<i32> = vec![];
+                let mut sizes: Vec<i32> = vec![];
+                for entry in entries.iter() {
+                    colors.push(entry.color as u32);
+                    fonts.push(entry.font as i32);
+                    sizes.push(entry.size as i32);
+                }
+                unsafe {
+                    #set_style_table_entry(self._inner, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
+                }
+            }
+            fn set_cursor_style(&mut self, style: CursorStyle) {
+                unsafe {
+                    #set_cursor_style(self._inner, style as i32)
+                }
+            }
+            fn set_cursor_color(&mut self, color: Color){
+                unsafe {
+                    #set_cursor_color(self._inner, color as i32)
+                }
+            }
+            fn set_scrollbar_width(&mut self, width: i32){
+                unsafe {
+                    #set_scrollbar_width(self._inner, width as i32)
+                }
+            }
+            fn set_scrollbar_size(&mut self, size: usize){
+                unsafe {
+                    #set_scrollbar_size(self._inner, size as i32)
+                }
+            }
+            fn set_scrollbar_align(&mut self, align: Align){
+                unsafe {
+                    #set_scrollbar_align(self._inner, align as i32)
                 }
             }
         }

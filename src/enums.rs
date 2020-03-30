@@ -64,6 +64,12 @@ pub enum Color {
     White = 255,
 }
 
+impl Color {
+    pub fn from_u32(val: u32) -> Color {
+        unsafe { std::mem::transmute(val) }
+    }
+}
+
 /// Defines event types captured by FLTK
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -204,6 +210,17 @@ pub enum CallbackTrigger {
     EnterKey = 8,
     EnterKeyAlways = 10,
     EnterKeyChanged = 11,
+}
+
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum CursorStyle {
+    NormalCursor,
+    CaretCursor,
+    DimCursor,
+    BlockCursor,
+    HeavyCursor,
+    SimpleCursor,
 }
 
 impl std::ops::Add<char> for Shortcut {

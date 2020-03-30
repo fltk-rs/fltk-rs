@@ -20,6 +20,13 @@ pub struct SimpleTerminal {
     _inner: *mut Fl_Simple_Terminal,
 }
 
+#[derive(Debug, Clone, Copy)]
+pub struct StyleTableEntry {
+    pub color: Color,
+    pub font: Font,
+    pub size: usize,
+}
+
 impl TextEditor {
     fn init(&mut self) {
         unsafe { Fl_Text_Editor_init(self._inner) }

@@ -148,7 +148,14 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_move_up(widget *);                                              \
   int widget##_move_down(widget *);                                            \
   void widget##_remove(widget *self, int start, int end);                      \
-  void widget##_show_cursor(widget *, int boolean);
+  void widget##_show_cursor(widget *, int boolean);                            \
+  void widget##_set_style_table_entry(widget *self, unsigned int *color,       \
+                                      int *font, int *fontsz, int sz);         \
+  void widget##_set_cursor_style(widget *, int style);                         \
+  void widget##_set_cursor_color(widget *, int color);                         \
+  void widget##_set_scrollbar_width(widget *, int width);                      \
+  void widget##_set_scrollbar_size(widget *, int newSize);                     \
+  void widget##_set_scrollbar_align(widget *, int align);
 
 #define BROWSER_DECLARE(widget)                                                \
   void widget##_remove(widget *, int line);                                    \
@@ -441,6 +448,31 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
       self->show_cursor();                                                     \
     else                                                                       \
       self->hide_cursor();                                                     \
+  }                                                                            \
+  void widget##_set_style_table_entry(widget *self, unsigned int *color,       \
+                                      int *font, int *fontsz, int sz) {        \
+    Fl_Text_Display::Style_Table_Entry *stable =                               \
+        new Fl_Text_Display::Style_Table_Entry[sz];                            \
+    for (int i = 0; i < sz; ++i) {                                             \
+      stable[i] = {color[i], font[i], fontsz[i]};                              \
+    }                                                                          \
+    Fl_Text_Buffer *sbuff = new Fl_Text_Buffer();                              \
+    self->highlight_data(sbuff, stable, sz, 'A', 0, 0);                        \
+  }                                                                            \
+  void widget##_set_cursor_style(widget *self, int style) {                    \
+    self->cursor_style(style);                                                 \
+  }                                                                            \
+  void widget##_set_cursor_color(widget *self, int color) {                    \
+    self->cursor_color(color);                                                 \
+  }                                                                            \
+  void widget##_set_scrollbar_width(widget *self, int width) {                 \
+    self->scrollbar_width(width);                                              \
+  }                                                                            \
+  void widget##_set_scrollbar_size(widget *self, int newSize) {                \
+    self->scrollbar_size(newSize);                                             \
+  }                                                                            \
+  void widget##_set_scrollbar_align(widget *self, int align) {                 \
+    self->scrollbar_align(align);                                              \
   }
 
 #define BROWSER_DEFINE(widget)                                                 \

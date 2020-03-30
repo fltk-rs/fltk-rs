@@ -1,4 +1,5 @@
 pub use crate::enums::*;
+use crate::text::StyleTableEntry;
 use fltk_sys::widget::*;
 use std::convert::From;
 use std::error::Error;
@@ -278,7 +279,13 @@ pub trait MenuTrait: WidgetTrait {
     /// Sets the text color
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
-    fn add<'a>(&'a mut self, name: &str, shortcut: Shortcut, flag: crate::menu::MenuFlag, cb: Box<dyn FnMut() + 'a>);
+    fn add<'a>(
+        &'a mut self,
+        name: &str,
+        shortcut: Shortcut,
+        flag: crate::menu::MenuFlag,
+        cb: Box<dyn FnMut() + 'a>,
+    );
     /// Adds a simple text option to the Choice and MenuButton widgets
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
@@ -338,17 +345,17 @@ pub trait DisplayTrait {
     /// Sets the text size
     fn set_text_size(&mut self, sz: usize);
     /// Append text to Display widget
-    fn append(&mut self, text: &str);     
+    fn append(&mut self, text: &str);
     /// Return buffer length of Display widget                  
     fn buffer_length(&self) -> usize;
     /// Scroll down the Display widget
-    fn scroll(&mut self, top_line_num: usize, horiz_offset: usize);      
+    fn scroll(&mut self, top_line_num: usize, horiz_offset: usize);
     /// Insert into Display widget      
-    fn insert(&self, text: &str); 
+    fn insert(&self, text: &str);
     /// Set the insert position
-    fn set_insert_position(&mut self, new_pos: usize);    
+    fn set_insert_position(&mut self, new_pos: usize);
     /// Return the insert position                
-    fn insert_position(&self) -> usize;   
+    fn insert_position(&self) -> usize;
     /// Counts the lines from start to end                         
     fn count_lines(&self, start: usize, end: usize, is_line_start: bool) -> usize;
     /// Moves the cursor right
@@ -363,6 +370,18 @@ pub trait DisplayTrait {
     fn remove(&mut self, start: usize, end: usize);
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
+    /// Sets the style of the text widget
+    fn set_styly_table_entry(&mut self, entries: &Vec<StyleTableEntry>);
+    /// Sets the cursor style
+    fn set_cursor_style(&mut self, style: CursorStyle);
+    /// Sets the cursor color
+    fn set_cursor_color(&mut self, color: Color);
+    /// Sets the scrollbar width
+    fn set_scrollbar_width(&mut self, width: i32);
+    /// Sets the scrollbar size
+    fn set_scrollbar_size(&mut self, size: usize);
+    /// Sets the scrollbar alignment
+    fn set_scrollbar_align(&mut self, align: Align);
 }
 
 /// Defines the methods implemented by all browser types
