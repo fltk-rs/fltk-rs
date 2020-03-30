@@ -93,6 +93,7 @@ pub enum Event {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Key {
+    None = 0,
     Button = 0xfee8,
     BackSpace = 0xff08,
     Tab = 0xff09,
