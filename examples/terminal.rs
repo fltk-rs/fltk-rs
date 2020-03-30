@@ -15,7 +15,6 @@ fn main() {
     let mut cmd = String::from("");
     term.clone().set_custom_handler(Box::new(|ev: app::Event| {
         println!("{:?}", app::event());
-        println!("{:?}", app::event_key());
         match ev {
             app::Event::Shortcut => true,
             app::Event::KeyUp => match app::event_key() {

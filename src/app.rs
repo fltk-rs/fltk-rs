@@ -121,7 +121,8 @@ pub fn event() -> Event {
 pub fn event_key() -> Key {
     unsafe {
         let x = Fl_event_key();
-        Key::from_i32(x)
+        // Key::from_i32(x)
+        mem::transmute(x)
     }
 }
 
