@@ -11,10 +11,10 @@ fn main() {
         .to_string_lossy()
         .to_string();
     current_dir.push_str("/ $ ");
-    let mut term = SimpleTerminal::new(5, 5, 630, 470);
+    let mut term = TextDisplay::new(5, 5, 630, 470);
     let mut cmd = String::from("");
     term.clone().set_custom_handler(Box::new(|ev: app::Event| {
-        println!("{:?}", app::event());
+        // println!("{:?}", app::event());
         match ev {
             app::Event::Shortcut => true,
             app::Event::KeyUp => match app::event_key() {
@@ -39,7 +39,6 @@ fn main() {
                     if cmd.len() != 0 {
                         term.remove(term.text().len() - 1, term.text().len());
                         cmd.pop().unwrap();
-                        term.move_left();
                         return true;
                     } else {
                         return false;
@@ -49,7 +48,6 @@ fn main() {
                     let temp = app::event_text();
                     cmd.push_str(&temp);
                     term.append(&temp);
-                    term.move_right();
                     true
                 }
             },
@@ -65,7 +63,7 @@ fn main() {
 
 // To have continuous streaming of output for long standing operations,
 // consider using Tokio Command or the likes
-fn run_command(term: &mut SimpleTerminal, cmd: &str) {
+fn run_command(term: &mut TextDisplay, cmd: &str) {
     let args: Vec<&str> = cmd.split_whitespace().collect();
     let stdout: Result<Output, std::io::Error>;
     if args.len() > 0 {
