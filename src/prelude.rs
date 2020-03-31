@@ -3,7 +3,7 @@ use crate::text::StyleTableEntry;
 use fltk_sys::widget::*;
 use std::convert::From;
 use std::error::Error;
-use std::{fmt, io, mem, os::raw};
+use std::{fmt, io, os::raw};
 
 /// Error types returned by fltk-rs + wrappers of std::io errors
 #[derive(Debug)]
@@ -174,26 +174,6 @@ pub trait GroupTrait: WidgetTrait {
     fn clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> usize;
-}
-
-pub trait WidgetType {
-    fn to_int(self) -> i32;
-    fn from_i32(val: i32) -> Self;
-}
-
-/// Defines label types
-#[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
-pub enum LabelType {
-    NormalLabel = 0,
-    NoLabel,
-    ShadowLabel,
-    EngravedLabel,
-    EmbossedLabel,
-    MultiLabel,
-    IconLabel,
-    ImageLabel,
-    FreeLabelType,
 }
 
 /// Defines the methods implemented by all window widgets
@@ -382,6 +362,16 @@ pub trait DisplayTrait {
     fn set_scrollbar_size(&mut self, size: usize);
     /// Sets the scrollbar alignment
     fn set_scrollbar_align(&mut self, align: Align);
+    /// Returns the cursor style
+    fn cursor_style(&self) -> CursorStyle;
+    /// Returns the cursor color
+    fn cursor_color(&self) -> Color;
+    /// Returns the scrollback width
+    fn scrollbar_width(&self) -> i32;
+    /// Returns the scrollbar size
+    fn scrollbar_size(&self) -> usize;
+    /// Returns the scrollbar alignment
+    fn scrollbar_align(&self) -> Align;
 }
 
 /// Defines the methods implemented by all browser types

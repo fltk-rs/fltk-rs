@@ -346,7 +346,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn set_color(&mut self, color: Color) {
-                unsafe { #set_color(self._inner, color as i32) }
+                unsafe { #set_color(self._inner, color as u32) }
             }
 
             fn label_color(&self) -> Color {
@@ -354,7 +354,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn set_label_color(&mut self, color: Color) {
-                unsafe { #set_label_color(self._inner, color as i32) }
+                unsafe { #set_label_color(self._inner, color as u32) }
             }
 
             fn label_font(&self) -> Font {
@@ -362,7 +362,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn set_label_font(&mut self, font: Font) {
-                unsafe { #set_label_color(self._inner, font as i32) }
+                unsafe { #set_label_font(self._inner, font as i32) }
             }
 
             fn label_size(&self) -> usize {
@@ -472,7 +472,7 @@ fn impl_widget_type(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn from_i32(val: i32) -> #name {
-                unsafe { mem::transmute(val) }
+                unsafe { std::mem::transmute(val) }
             }
         }
     };
@@ -742,7 +742,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn set_text_color(&mut self, color: Color) {
                 unsafe {
-                    #set_text_color(self._inner, color as i32)
+                    #set_text_color(self._inner, color as u32)
                 }
             }
             fn text_size(&self) -> usize {
@@ -886,7 +886,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn set_text_color(&mut self, c: Color) {
                 unsafe {
-                    #set_text_color(self._inner, c as i32)
+                    #set_text_color(self._inner, c as u32)
                 }
             }
             fn add_choice(&mut self, text: &str) {
@@ -1144,6 +1144,26 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_scrollbar_width").as_str(),
         name.span(),
     );
+    let cursor_style = Ident::new(
+        format!("{}_{}", name_str, "cursor_style").as_str(),
+        name.span(),
+    );
+    let cursor_color = Ident::new(
+        format!("{}_{}", name_str, "cursor_color").as_str(),
+        name.span(),
+    );
+    let scrollbar_size = Ident::new(
+        format!("{}_{}", name_str, "scrollbar_size").as_str(),
+        name.span(),
+    );
+    let scrollbar_align = Ident::new(
+        format!("{}_{}", name_str, "scrollbar_align").as_str(),
+        name.span(),
+    );
+    let scrollbar_width = Ident::new(
+        format!("{}_{}", name_str, "scrollbar_width").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl DisplayTrait for #name {
@@ -1172,7 +1192,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { mem::transmute(#text_color(self._inner)) }
             }
             fn set_text_color(&mut self, color: Color){
-                unsafe { #set_text_color(self._inner, color as i32) }
+                unsafe { #set_text_color(self._inner, color as u32) }
             }
             fn text_size(&self) -> usize{
                 unsafe { #text_size(self._inner) as usize }
@@ -1271,7 +1291,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn set_cursor_color(&mut self, color: Color){
                 unsafe {
-                    #set_cursor_color(self._inner, color as i32)
+                    #set_cursor_color(self._inner, color as u32)
                 }
             }
             fn set_scrollbar_width(&mut self, width: i32){
@@ -1287,6 +1307,31 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_scrollbar_align(&mut self, align: Align){
                 unsafe {
                     #set_scrollbar_align(self._inner, align as i32)
+                }
+            }
+            fn cursor_style(&self) -> CursorStyle {
+                unsafe {
+                    mem::transmute(#cursor_style(self._inner))
+                }
+            }
+            fn cursor_color(&self) -> Color {
+                unsafe {
+                    mem::transmute(#cursor_color(self._inner))
+                }
+            }
+            fn scrollbar_width(&self) -> i32 {
+                unsafe {
+                    #scrollbar_width(self._inner)
+                }
+            }
+            fn scrollbar_size(&self) -> usize {
+                unsafe {
+                    #scrollbar_size(self._inner) as usize
+                }
+            }
+            fn scrollbar_align(&self) -> Align {
+                unsafe {
+                    mem::transmute(#scrollbar_align(self._inner))
                 }
             }
         }

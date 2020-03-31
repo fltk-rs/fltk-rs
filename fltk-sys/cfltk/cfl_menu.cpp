@@ -31,9 +31,9 @@ void Fl_Menu_Item_set_label_type(Fl_Menu_Item *self, int a) {
   self->labeltype(static_cast<Fl_Labeltype>(a));
 }
 
-int Fl_Menu_Item_label_color(Fl_Menu_Item *self) { return self->labelcolor(); }
+unsigned int Fl_Menu_Item_label_color(Fl_Menu_Item *self) { return self->labelcolor(); }
 
-void Fl_Menu_Item_set_label_color(Fl_Menu_Item *self, int a) {
+void Fl_Menu_Item_set_label_color(Fl_Menu_Item *self, unsigned int a) {
   self->labelcolor(a);
 }
 

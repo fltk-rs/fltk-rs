@@ -93,16 +93,16 @@ extern "C" {
     pub fn Fl_Input_set_type(arg1: *mut Fl_Input, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Input_set_color(arg1: *mut Fl_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_color(arg1: *mut Fl_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Input_label_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_label_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Input_set_label_color(arg1: *mut Fl_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_label_color(arg1: *mut Fl_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Input_label_font(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
@@ -235,10 +235,10 @@ extern "C" {
     pub fn Fl_Input_set_text_font(arg1: *mut Fl_Input, s: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_text_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_text_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Input_set_text_color(arg1: *mut Fl_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_text_color(arg1: *mut Fl_Input, s: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Input_text_size(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
@@ -330,16 +330,16 @@ extern "C" {
     pub fn Fl_Int_Input_set_type(arg1: *mut Fl_Int_Input, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_color(arg1: *mut Fl_Int_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_color(arg1: *mut Fl_Int_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Int_Input_label_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_label_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_label_color(arg1: *mut Fl_Int_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_label_color(arg1: *mut Fl_Int_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Int_Input_label_font(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
@@ -472,10 +472,10 @@ extern "C" {
     pub fn Fl_Int_Input_set_text_font(arg1: *mut Fl_Int_Input, s: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_text_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_text_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_text_color(arg1: *mut Fl_Int_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_text_color(arg1: *mut Fl_Int_Input, s: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Int_Input_text_size(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
@@ -573,16 +573,16 @@ extern "C" {
     pub fn Fl_Float_Input_set_type(arg1: *mut Fl_Float_Input, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_color(arg1: *mut Fl_Float_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_color(arg1: *mut Fl_Float_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Float_Input_label_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_label_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_label_color(arg1: *mut Fl_Float_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_label_color(arg1: *mut Fl_Float_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Float_Input_label_font(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
@@ -715,10 +715,10 @@ extern "C" {
     pub fn Fl_Float_Input_set_text_font(arg1: *mut Fl_Float_Input, s: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_text_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_text_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_text_color(arg1: *mut Fl_Float_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_text_color(arg1: *mut Fl_Float_Input, s: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Float_Input_text_size(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
@@ -819,21 +819,21 @@ extern "C" {
     pub fn Fl_Multiline_Input_set_type(arg1: *mut Fl_Multiline_Input, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_color(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_color(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_color(
         arg1: *mut Fl_Multiline_Input,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_label_color(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_label_color(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_label_color(
         arg1: *mut Fl_Multiline_Input,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -989,12 +989,12 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_text_color(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_text_color(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_text_color(
         arg1: *mut Fl_Multiline_Input,
-        s: ::std::os::raw::c_int,
+        s: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -1102,18 +1102,18 @@ extern "C" {
     pub fn Fl_Secret_Input_set_type(arg1: *mut Fl_Secret_Input, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_color(arg1: *mut Fl_Secret_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_color(arg1: *mut Fl_Secret_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_label_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_label_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Secret_Input_set_label_color(
         arg1: *mut Fl_Secret_Input,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -1247,10 +1247,10 @@ extern "C" {
     pub fn Fl_Secret_Input_set_text_font(arg1: *mut Fl_Secret_Input, s: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_text_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_text_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_text_color(arg1: *mut Fl_Secret_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_text_color(arg1: *mut Fl_Secret_Input, s: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Secret_Input_text_size(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
@@ -1342,16 +1342,16 @@ extern "C" {
     pub fn Fl_File_Input_set_type(arg1: *mut Fl_File_Input, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_color(arg1: *mut Fl_File_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_color(arg1: *mut Fl_File_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_File_Input_label_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_label_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_label_color(arg1: *mut Fl_File_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_label_color(arg1: *mut Fl_File_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_File_Input_label_font(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
@@ -1484,10 +1484,10 @@ extern "C" {
     pub fn Fl_File_Input_set_text_font(arg1: *mut Fl_File_Input, s: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_text_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_text_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_text_color(arg1: *mut Fl_File_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_text_color(arg1: *mut Fl_File_Input, s: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_File_Input_text_size(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;

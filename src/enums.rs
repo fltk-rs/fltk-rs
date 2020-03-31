@@ -1,3 +1,18 @@
+/// Defines label types
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum LabelType {
+    NormalLabel = 0,
+    NoLabel,
+    ShadowLabel,
+    EngravedLabel,
+    EmbossedLabel,
+    MultiLabel,
+    IconLabel,
+    ImageLabel,
+    FreeLabelType,
+}
+
 /// Defines alignment rules used by FLTK for labels
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -33,7 +48,7 @@ pub enum Font {
 }
 
 /// Defines colors used by FLTK
-#[repr(i32)]
+#[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Color {
     ForeGround = 0,
@@ -221,6 +236,11 @@ pub enum CursorStyle {
     BlockCursor,
     HeavyCursor,
     SimpleCursor,
+}
+
+pub trait WidgetType {
+    fn to_int(self) -> i32;
+    fn from_i32(val: i32) -> Self;
 }
 
 impl std::ops::Add<char> for Shortcut {

@@ -11,7 +11,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.1.21"
+fltk = "^0.1.22"
 ```
 An example hello world application:
 
@@ -21,6 +21,21 @@ use fltk::{app::*, window::*};
 fn main() {
     let app = App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    wind.show();
+    app.run().unwrap();
+}
+```
+
+Another example showing the basic callback functionality:
+```rust
+use fltk::{app::*, button::*, frame::*, window::*};
+
+fn main() {
+    let app = App::default();
+    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    let mut frame = Frame::new(0, 0, 400, 200, "");
+    let mut but = Button::new(160, 210, 80, 40, "Click me!");
+    but.set_callback(Box::new(|| frame.set_label("Hello World!")));
     wind.show();
     app.run().unwrap();
 }
@@ -66,6 +81,7 @@ $ cargo run --example gallery
 $ cargo run --example button
 $ cargo run --example terminal
 $ cargo run --example hello
+$ cargo run --example hello_button
 ```
 ![alt_test](screenshots/hello.jpg)
 

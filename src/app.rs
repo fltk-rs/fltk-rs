@@ -121,7 +121,6 @@ pub fn event() -> Event {
 pub fn event_key() -> Key {
     unsafe {
         let x = Fl_event_key();
-        // Key::from_i32(x)
         mem::transmute(x)
     }
 }
@@ -129,19 +128,8 @@ pub fn event_key() -> Key {
 /// Returns a textual representation of the latest event
 pub fn event_text() -> String {
     unsafe {
-        let x = CStr::from_ptr(Fl_event_text() as *mut raw::c_char)
-            .to_string_lossy().to_string();
-        // let mut temp = String::from("");
-        // for c in x.chars() {
-        //     if c.is_ascii_lowercase() {
-        //         temp.push(c.to_ascii_uppercase());
-        //     } else if c.is_ascii_uppercase() {
-        //         temp.push(c.to_ascii_lowercase());
-        //     } else {
-        //         //
-        //     }
-        // }
-        x
+          CStr::from_ptr(Fl_event_text() as *mut raw::c_char)
+            .to_string_lossy().to_string()
     }
 }
 

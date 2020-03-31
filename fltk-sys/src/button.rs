@@ -93,16 +93,16 @@ extern "C" {
     pub fn Fl_Button_set_type(arg1: *mut Fl_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Button_color(arg1: *mut Fl_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Button_color(arg1: *mut Fl_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Button_set_color(arg1: *mut Fl_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Button_set_color(arg1: *mut Fl_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Button_label_color(arg1: *mut Fl_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Button_label_color(arg1: *mut Fl_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Button_set_label_color(arg1: *mut Fl_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Button_set_label_color(arg1: *mut Fl_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Button_label_font(arg1: *mut Fl_Button) -> ::std::os::raw::c_int;
@@ -237,18 +237,18 @@ extern "C" {
     pub fn Fl_Check_Button_set_type(arg1: *mut Fl_Check_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Button_color(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Check_Button_color(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Button_set_color(arg1: *mut Fl_Check_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Check_Button_set_color(arg1: *mut Fl_Check_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Check_Button_label_color(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Check_Button_label_color(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Check_Button_set_label_color(
         arg1: *mut Fl_Check_Button,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -387,18 +387,18 @@ extern "C" {
     pub fn Fl_Radio_Button_set_type(arg1: *mut Fl_Radio_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_color(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Radio_Button_color(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Radio_Button_set_color(arg1: *mut Fl_Radio_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Radio_Button_set_color(arg1: *mut Fl_Radio_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Radio_Button_label_color(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Radio_Button_label_color(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_label_color(
         arg1: *mut Fl_Radio_Button,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -537,18 +537,18 @@ extern "C" {
     pub fn Fl_Toggle_Button_set_type(arg1: *mut Fl_Toggle_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_color(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Toggle_Button_color(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_set_color(arg1: *mut Fl_Toggle_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Toggle_Button_set_color(arg1: *mut Fl_Toggle_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_label_color(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Toggle_Button_label_color(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_label_color(
         arg1: *mut Fl_Toggle_Button,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -693,18 +693,18 @@ extern "C" {
     pub fn Fl_Round_Button_set_type(arg1: *mut Fl_Round_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Round_Button_color(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Round_Button_color(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Round_Button_set_color(arg1: *mut Fl_Round_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Round_Button_set_color(arg1: *mut Fl_Round_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Round_Button_label_color(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Round_Button_label_color(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Round_Button_set_label_color(
         arg1: *mut Fl_Round_Button,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -840,18 +840,18 @@ extern "C" {
     pub fn Fl_Light_Button_set_type(arg1: *mut Fl_Light_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Light_Button_color(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Light_Button_color(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Light_Button_set_color(arg1: *mut Fl_Light_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Light_Button_set_color(arg1: *mut Fl_Light_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Light_Button_label_color(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Light_Button_label_color(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Light_Button_set_label_color(
         arg1: *mut Fl_Light_Button,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -990,18 +990,18 @@ extern "C" {
     pub fn Fl_Repeat_Button_set_type(arg1: *mut Fl_Repeat_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_color(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Repeat_Button_color(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_set_color(arg1: *mut Fl_Repeat_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Repeat_Button_set_color(arg1: *mut Fl_Repeat_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_label_color(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Repeat_Button_label_color(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Repeat_Button_set_label_color(
         arg1: *mut Fl_Repeat_Button,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -1143,18 +1143,18 @@ extern "C" {
     pub fn Fl_Return_Button_set_type(arg1: *mut Fl_Return_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Return_Button_color(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Return_Button_color(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Return_Button_set_color(arg1: *mut Fl_Return_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Return_Button_set_color(arg1: *mut Fl_Return_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Return_Button_label_color(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Return_Button_label_color(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Return_Button_set_label_color(
         arg1: *mut Fl_Return_Button,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {

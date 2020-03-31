@@ -93,16 +93,16 @@ extern "C" {
     pub fn Fl_Window_set_type(arg1: *mut Fl_Window, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_color(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Window_color(arg1: *mut Fl_Window) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_set_color(arg1: *mut Fl_Window, color: ::std::os::raw::c_int);
+    pub fn Fl_Window_set_color(arg1: *mut Fl_Window, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Window_label_color(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Window_label_color(arg1: *mut Fl_Window) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_set_label_color(arg1: *mut Fl_Window, color: ::std::os::raw::c_int);
+    pub fn Fl_Window_set_label_color(arg1: *mut Fl_Window, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Window_label_font(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
@@ -283,18 +283,18 @@ extern "C" {
     pub fn Fl_Double_Window_set_type(arg1: *mut Fl_Double_Window, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_color(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Double_Window_color(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_color(arg1: *mut Fl_Double_Window, color: ::std::os::raw::c_int);
+    pub fn Fl_Double_Window_set_color(arg1: *mut Fl_Double_Window, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Double_Window_label_color(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Double_Window_label_color(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Double_Window_set_label_color(
         arg1: *mut Fl_Double_Window,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -494,16 +494,16 @@ extern "C" {
     pub fn Fl_Menu_Window_set_type(arg1: *mut Fl_Menu_Window, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_color(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Menu_Window_color(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_color(arg1: *mut Fl_Menu_Window, color: ::std::os::raw::c_int);
+    pub fn Fl_Menu_Window_set_color(arg1: *mut Fl_Menu_Window, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_label_color(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Menu_Window_label_color(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_label_color(arg1: *mut Fl_Menu_Window, color: ::std::os::raw::c_int);
+    pub fn Fl_Menu_Window_set_label_color(arg1: *mut Fl_Menu_Window, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Window_label_font(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;

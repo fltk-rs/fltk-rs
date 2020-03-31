@@ -98,16 +98,16 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_type(arg1: *mut Fl_Menu_Bar, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_color(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+    pub fn Fl_Menu_Bar_color(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_color(arg1: *mut Fl_Menu_Bar, color: ::std::os::raw::c_int);
+    pub fn Fl_Menu_Bar_set_color(arg1: *mut Fl_Menu_Bar, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_label_color(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+    pub fn Fl_Menu_Bar_label_color(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_label_color(arg1: *mut Fl_Menu_Bar, color: ::std::os::raw::c_int);
+    pub fn Fl_Menu_Bar_set_label_color(arg1: *mut Fl_Menu_Bar, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_label_font(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
@@ -193,10 +193,10 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_text_size(arg1: *mut Fl_Menu_Bar, c: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_text_color(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+    pub fn Fl_Menu_Bar_text_color(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_text_color(arg1: *mut Fl_Menu_Bar, c: ::std::os::raw::c_int);
+    pub fn Fl_Menu_Bar_set_text_color(arg1: *mut Fl_Menu_Bar, c: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add_choice(arg1: *mut Fl_Menu_Bar, arg2: *const ::std::os::raw::c_char);
@@ -282,16 +282,16 @@ extern "C" {
     pub fn Fl_Menu_Button_set_type(arg1: *mut Fl_Menu_Button, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_color(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Menu_Button_color(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_color(arg1: *mut Fl_Menu_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Menu_Button_set_color(arg1: *mut Fl_Menu_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_label_color(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Menu_Button_label_color(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_label_color(arg1: *mut Fl_Menu_Button, color: ::std::os::raw::c_int);
+    pub fn Fl_Menu_Button_set_label_color(arg1: *mut Fl_Menu_Button, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Button_label_font(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
@@ -377,10 +377,10 @@ extern "C" {
     pub fn Fl_Menu_Button_set_text_size(arg1: *mut Fl_Menu_Button, c: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_text_color(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Menu_Button_text_color(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_text_color(arg1: *mut Fl_Menu_Button, c: ::std::os::raw::c_int);
+    pub fn Fl_Menu_Button_set_text_color(arg1: *mut Fl_Menu_Button, c: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Button_add_choice(
@@ -463,16 +463,16 @@ extern "C" {
     pub fn Fl_Choice_set_type(arg1: *mut Fl_Choice, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_color(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+    pub fn Fl_Choice_color(arg1: *mut Fl_Choice) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Choice_set_color(arg1: *mut Fl_Choice, color: ::std::os::raw::c_int);
+    pub fn Fl_Choice_set_color(arg1: *mut Fl_Choice, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Choice_label_color(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+    pub fn Fl_Choice_label_color(arg1: *mut Fl_Choice) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Choice_set_label_color(arg1: *mut Fl_Choice, color: ::std::os::raw::c_int);
+    pub fn Fl_Choice_set_label_color(arg1: *mut Fl_Choice, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Choice_label_font(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
@@ -558,10 +558,10 @@ extern "C" {
     pub fn Fl_Choice_set_text_size(arg1: *mut Fl_Choice, c: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Choice_text_color(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+    pub fn Fl_Choice_text_color(arg1: *mut Fl_Choice) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Choice_set_text_color(arg1: *mut Fl_Choice, c: ::std::os::raw::c_int);
+    pub fn Fl_Choice_set_text_color(arg1: *mut Fl_Choice, c: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Choice_add_choice(arg1: *mut Fl_Choice, arg2: *const ::std::os::raw::c_char);
@@ -582,10 +582,10 @@ extern "C" {
     pub fn Fl_Menu_Item_set_label_type(arg1: *mut Fl_Menu_Item, a: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_label_color(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_int;
+    pub fn Fl_Menu_Item_label_color(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_set_label_color(arg1: *mut Fl_Menu_Item, a: ::std::os::raw::c_int);
+    pub fn Fl_Menu_Item_set_label_color(arg1: *mut Fl_Menu_Item, a: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Menu_Item_label_font(arg1: *mut Fl_Menu_Item) -> ::std::os::raw::c_int;

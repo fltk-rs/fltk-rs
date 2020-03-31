@@ -30,10 +30,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_tooltip(widget *, const char *txt);                        \
   int widget##_get_type(widget *);                                             \
   void widget##_set_type(widget *, int typ);                                   \
-  int widget##_color(widget *);                                                \
-  void widget##_set_color(widget *, int color);                                \
-  int widget##_label_color(widget *);                                          \
-  void widget##_set_label_color(widget *, int color);                          \
+  unsigned int widget##_color(widget *);                                       \
+  void widget##_set_color(widget *, unsigned int color);                       \
+  unsigned int widget##_label_color(widget *);                                 \
+  void widget##_set_label_color(widget *, unsigned int color);                 \
   int widget##_label_font(widget *);                                           \
   void widget##_set_label_font(widget *, int font);                            \
   int widget##_label_size(widget *);                                           \
@@ -87,8 +87,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_copy_cuts(widget *);                                            \
   int widget##_text_font(widget *);                                            \
   void widget##_set_text_font(widget *, int s);                                \
-  int widget##_text_color(widget *);                                           \
-  void widget##_set_text_color(widget *, int s);                               \
+  unsigned int widget##_text_color(widget *);                                  \
+  void widget##_set_text_color(widget *, unsigned int s);                      \
   int widget##_text_size(widget *);                                            \
   void widget##_set_text_size(widget *, int s);                                \
   int widget##_readonly(widget *);                                             \
@@ -104,8 +104,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_text_font(widget *, int c);                                \
   int widget##_text_size(widget *);                                            \
   void widget##_set_text_size(widget *, int c);                                \
-  int widget##_text_color(widget *);                                           \
-  void widget##_set_text_color(widget *, int c);                               \
+  unsigned int widget##_text_color(widget *);                                  \
+  void widget##_set_text_color(widget *, unsigned int c);                      \
   void widget##_add_choice(widget *, const char *);                            \
   const char *widget##_get_choice(widget *);
 
@@ -131,8 +131,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_text_font(widget *, int s);                                \
   int widget##_text_size(const widget *);                                      \
   void widget##_set_text_size(widget *, int s);                                \
-  int widget##_text_color(const widget *);                                     \
-  void widget##_set_text_color(widget *, int n);                               \
+  unsigned int widget##_text_color(const widget *);                            \
+  void widget##_set_text_color(widget *, unsigned int n);                      \
   const char *widget##_text(widget *);                                         \
   void widget##_set_text(widget *, const char *);                              \
   void widget##_append(widget *, const char *);                                \
@@ -152,10 +152,15 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_style_table_entry(widget *self, unsigned int *color,       \
                                       int *font, int *fontsz, int sz);         \
   void widget##_set_cursor_style(widget *, int style);                         \
-  void widget##_set_cursor_color(widget *, int color);                         \
+  void widget##_set_cursor_color(widget *, unsigned int color);                \
   void widget##_set_scrollbar_width(widget *, int width);                      \
   void widget##_set_scrollbar_size(widget *, int newSize);                     \
-  void widget##_set_scrollbar_align(widget *, int align);
+  void widget##_set_scrollbar_align(widget *, int align);                      \
+  int widget##_cursor_style(widget *);                                         \
+  unsigned int widget##_cursor_color(widget *);                                \
+  int widget##_scrollbar_width(widget *);                                      \
+  int widget##_scrollbar_size(widget *);                                       \
+  int widget##_scrollbar_align(widget *);
 
 #define BROWSER_DECLARE(widget)                                                \
   void widget##_remove(widget *, int line);                                    \
@@ -229,10 +234,14 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   int widget##_get_type(widget *self) { return self->type(); }                 \
   void widget##_set_type(widget *self, int typ) { self->type(typ); }           \
-  int widget##_color(widget *self) { return self->color(); }                   \
-  void widget##_set_color(widget *self, int color) { self->color(color); }     \
-  int widget##_label_color(widget *self) { return self->labelcolor(); }        \
-  void widget##_set_label_color(widget *self, int color) {                     \
+  unsigned int widget##_color(widget *self) { return self->color(); }          \
+  void widget##_set_color(widget *self, unsigned int color) {                  \
+    self->color(color);                                                        \
+  }                                                                            \
+  unsigned int widget##_label_color(widget *self) {                            \
+    return self->labelcolor();                                                 \
+  }                                                                            \
+  void widget##_set_label_color(widget *self, unsigned int color) {            \
     self->labelcolor(color);                                                   \
   }                                                                            \
   int widget##_label_font(widget *self) { return self->labelfont(); }          \
@@ -342,8 +351,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_copy_cuts(widget *self) { return self->cut(); }                 \
   int widget##_text_font(widget *self) { return self->textfont(); }            \
   void widget##_set_text_font(widget *self, int s) { self->textfont(s); }      \
-  int widget##_text_color(widget *self) { return self->textcolor(); }          \
-  void widget##_set_text_color(widget *self, int s) { self->textcolor(s); }    \
+  unsigned int widget##_text_color(widget *self) { return self->textcolor(); } \
+  void widget##_set_text_color(widget *self, unsigned int s) {                 \
+    self->textcolor(s);                                                        \
+  }                                                                            \
   int widget##_text_size(widget *self) { return self->textsize(); }            \
   void widget##_set_text_size(widget *self, int s) { self->textsize(s); }      \
   int widget##_readonly(widget *self) { return self->readonly(); }             \
@@ -365,8 +376,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_text_font(widget *self, int c) { self->textfont(c); }      \
   int widget##_text_size(widget *self) { return self->textsize(); }            \
   void widget##_set_text_size(widget *self, int c) { self->textsize(c); }      \
-  int widget##_text_color(widget *self) { return self->textcolor(); }          \
-  void widget##_set_text_color(widget *self, int c) { self->textcolor(c); }    \
+  unsigned int widget##_text_color(widget *self) { return self->textcolor(); } \
+  void widget##_set_text_color(widget *self, unsigned int c) {                 \
+    self->textcolor(c);                                                        \
+  }                                                                            \
   void widget##_add_choice(widget *self, const char *str) { self->add(str); }  \
   const char *widget##_get_choice(widget *self) { return self->text(); }
 
@@ -406,8 +419,12 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_text_font(widget *self, int s) { self->textfont(s); }      \
   int widget##_text_size(const widget *self) { return self->textsize(); }      \
   void widget##_set_text_size(widget *self, int s) { self->textsize(s); }      \
-  int widget##_text_color(const widget *self) { return self->textcolor(); }    \
-  void widget##_set_text_color(widget *self, int n) { self->textcolor(n); }    \
+  unsigned int widget##_text_color(const widget *self) {                       \
+    return self->textcolor();                                                  \
+  }                                                                            \
+  void widget##_set_text_color(widget *self, unsigned int n) {                 \
+    self->textcolor(n);                                                        \
+  }                                                                            \
   void widget##_append(widget *self, const char *txt) {                        \
     auto buff = self->buffer();                                                \
     buff->append(txt);                                                         \
@@ -462,7 +479,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_cursor_style(widget *self, int style) {                    \
     self->cursor_style(style);                                                 \
   }                                                                            \
-  void widget##_set_cursor_color(widget *self, int color) {                    \
+  void widget##_set_cursor_color(widget *self, unsigned int color) {           \
     self->cursor_color(color);                                                 \
   }                                                                            \
   void widget##_set_scrollbar_width(widget *self, int width) {                 \
@@ -473,7 +490,16 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   void widget##_set_scrollbar_align(widget *self, int align) {                 \
     self->scrollbar_align(align);                                              \
-  }
+  }                                                                            \
+  int widget##_cursor_style(widget *self) { return self->cursor_style(); }     \
+  unsigned int widget##_cursor_color(widget *self) {                           \
+    return self->cursor_color();                                               \
+  }                                                                            \
+  int widget##_scrollbar_width(widget *self) {                                 \
+    return self->scrollbar_width();                                            \
+  }                                                                            \
+  int widget##_scrollbar_size(widget *self) { return self->scrollbar_size(); } \
+  int widget##_scrollbar_align(widget *self) { return self->scrollbar_align(); }
 
 #define BROWSER_DEFINE(widget)                                                 \
   void widget##_remove(widget *self, int line) { self->remove(line); }         \

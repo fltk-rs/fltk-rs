@@ -93,16 +93,16 @@ extern "C" {
     pub fn Fl_Box_set_type(arg1: *mut Fl_Box, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Box_color(arg1: *mut Fl_Box) -> ::std::os::raw::c_int;
+    pub fn Fl_Box_color(arg1: *mut Fl_Box) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Box_set_color(arg1: *mut Fl_Box, color: ::std::os::raw::c_int);
+    pub fn Fl_Box_set_color(arg1: *mut Fl_Box, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Box_label_color(arg1: *mut Fl_Box) -> ::std::os::raw::c_int;
+    pub fn Fl_Box_label_color(arg1: *mut Fl_Box) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Box_set_label_color(arg1: *mut Fl_Box, color: ::std::os::raw::c_int);
+    pub fn Fl_Box_set_label_color(arg1: *mut Fl_Box, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Box_label_font(arg1: *mut Fl_Box) -> ::std::os::raw::c_int;

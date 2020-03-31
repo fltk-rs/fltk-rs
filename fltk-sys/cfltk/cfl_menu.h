@@ -28,9 +28,9 @@ int Fl_Menu_Item_label_type(Fl_Menu_Item *);
 
 void Fl_Menu_Item_set_label_type(Fl_Menu_Item *, int a);
 
-int Fl_Menu_Item_label_color(Fl_Menu_Item *);
+unsigned int Fl_Menu_Item_label_color(Fl_Menu_Item *);
 
-void Fl_Menu_Item_set_label_color(Fl_Menu_Item *, int a);
+void Fl_Menu_Item_set_label_color(Fl_Menu_Item *, unsigned int a);
 
 int Fl_Menu_Item_label_font(Fl_Menu_Item *);
 
