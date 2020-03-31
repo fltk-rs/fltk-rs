@@ -93,16 +93,16 @@ extern "C" {
     pub fn Fl_Slider_set_type(arg1: *mut Fl_Slider, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Slider_color(arg1: *mut Fl_Slider) -> ::std::os::raw::c_int;
+    pub fn Fl_Slider_color(arg1: *mut Fl_Slider) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Slider_set_color(arg1: *mut Fl_Slider, color: ::std::os::raw::c_int);
+    pub fn Fl_Slider_set_color(arg1: *mut Fl_Slider, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Slider_label_color(arg1: *mut Fl_Slider) -> ::std::os::raw::c_int;
+    pub fn Fl_Slider_label_color(arg1: *mut Fl_Slider) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Slider_set_label_color(arg1: *mut Fl_Slider, color: ::std::os::raw::c_int);
+    pub fn Fl_Slider_set_label_color(arg1: *mut Fl_Slider, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Slider_label_font(arg1: *mut Fl_Slider) -> ::std::os::raw::c_int;
@@ -280,16 +280,16 @@ extern "C" {
     pub fn Fl_Counter_set_type(arg1: *mut Fl_Counter, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Counter_color(arg1: *mut Fl_Counter) -> ::std::os::raw::c_int;
+    pub fn Fl_Counter_color(arg1: *mut Fl_Counter) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Counter_set_color(arg1: *mut Fl_Counter, color: ::std::os::raw::c_int);
+    pub fn Fl_Counter_set_color(arg1: *mut Fl_Counter, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Counter_label_color(arg1: *mut Fl_Counter) -> ::std::os::raw::c_int;
+    pub fn Fl_Counter_label_color(arg1: *mut Fl_Counter) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Counter_set_label_color(arg1: *mut Fl_Counter, color: ::std::os::raw::c_int);
+    pub fn Fl_Counter_set_label_color(arg1: *mut Fl_Counter, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Counter_label_font(arg1: *mut Fl_Counter) -> ::std::os::raw::c_int;
@@ -470,16 +470,16 @@ extern "C" {
     pub fn Fl_Dial_set_type(arg1: *mut Fl_Dial, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Dial_color(arg1: *mut Fl_Dial) -> ::std::os::raw::c_int;
+    pub fn Fl_Dial_color(arg1: *mut Fl_Dial) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Dial_set_color(arg1: *mut Fl_Dial, color: ::std::os::raw::c_int);
+    pub fn Fl_Dial_set_color(arg1: *mut Fl_Dial, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Dial_label_color(arg1: *mut Fl_Dial) -> ::std::os::raw::c_int;
+    pub fn Fl_Dial_label_color(arg1: *mut Fl_Dial) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Dial_set_label_color(arg1: *mut Fl_Dial, color: ::std::os::raw::c_int);
+    pub fn Fl_Dial_set_label_color(arg1: *mut Fl_Dial, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Dial_label_font(arg1: *mut Fl_Dial) -> ::std::os::raw::c_int;
@@ -656,16 +656,16 @@ extern "C" {
     pub fn Fl_Roller_set_type(arg1: *mut Fl_Roller, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Roller_color(arg1: *mut Fl_Roller) -> ::std::os::raw::c_int;
+    pub fn Fl_Roller_color(arg1: *mut Fl_Roller) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Roller_set_color(arg1: *mut Fl_Roller, color: ::std::os::raw::c_int);
+    pub fn Fl_Roller_set_color(arg1: *mut Fl_Roller, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Roller_label_color(arg1: *mut Fl_Roller) -> ::std::os::raw::c_int;
+    pub fn Fl_Roller_label_color(arg1: *mut Fl_Roller) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Roller_set_label_color(arg1: *mut Fl_Roller, color: ::std::os::raw::c_int);
+    pub fn Fl_Roller_set_label_color(arg1: *mut Fl_Roller, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Roller_label_font(arg1: *mut Fl_Roller) -> ::std::os::raw::c_int;
@@ -843,16 +843,16 @@ extern "C" {
     pub fn Fl_Scrollbar_set_type(arg1: *mut Fl_Scrollbar, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_color(arg1: *mut Fl_Scrollbar) -> ::std::os::raw::c_int;
+    pub fn Fl_Scrollbar_color(arg1: *mut Fl_Scrollbar) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_color(arg1: *mut Fl_Scrollbar, color: ::std::os::raw::c_int);
+    pub fn Fl_Scrollbar_set_color(arg1: *mut Fl_Scrollbar, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_label_color(arg1: *mut Fl_Scrollbar) -> ::std::os::raw::c_int;
+    pub fn Fl_Scrollbar_label_color(arg1: *mut Fl_Scrollbar) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_label_color(arg1: *mut Fl_Scrollbar, color: ::std::os::raw::c_int);
+    pub fn Fl_Scrollbar_set_label_color(arg1: *mut Fl_Scrollbar, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Scrollbar_label_font(arg1: *mut Fl_Scrollbar) -> ::std::os::raw::c_int;
@@ -1039,18 +1039,18 @@ extern "C" {
     pub fn Fl_Value_Slider_set_type(arg1: *mut Fl_Value_Slider, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_color(arg1: *mut Fl_Value_Slider) -> ::std::os::raw::c_int;
+    pub fn Fl_Value_Slider_color(arg1: *mut Fl_Value_Slider) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_color(arg1: *mut Fl_Value_Slider, color: ::std::os::raw::c_int);
+    pub fn Fl_Value_Slider_set_color(arg1: *mut Fl_Value_Slider, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_label_color(arg1: *mut Fl_Value_Slider) -> ::std::os::raw::c_int;
+    pub fn Fl_Value_Slider_label_color(arg1: *mut Fl_Value_Slider) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_label_color(
         arg1: *mut Fl_Value_Slider,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -1235,16 +1235,16 @@ extern "C" {
     pub fn Fl_Adjuster_set_type(arg1: *mut Fl_Adjuster, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Adjuster_color(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+    pub fn Fl_Adjuster_color(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_color(arg1: *mut Fl_Adjuster, color: ::std::os::raw::c_int);
+    pub fn Fl_Adjuster_set_color(arg1: *mut Fl_Adjuster, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Adjuster_label_color(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
+    pub fn Fl_Adjuster_label_color(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_label_color(arg1: *mut Fl_Adjuster, color: ::std::os::raw::c_int);
+    pub fn Fl_Adjuster_set_label_color(arg1: *mut Fl_Adjuster, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Adjuster_label_font(arg1: *mut Fl_Adjuster) -> ::std::os::raw::c_int;
@@ -1431,16 +1431,16 @@ extern "C" {
     pub fn Fl_Value_Input_set_type(arg1: *mut Fl_Value_Input, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Value_Input_color(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Value_Input_color(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_color(arg1: *mut Fl_Value_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_Value_Input_set_color(arg1: *mut Fl_Value_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Value_Input_label_color(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Value_Input_label_color(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_label_color(arg1: *mut Fl_Value_Input, color: ::std::os::raw::c_int);
+    pub fn Fl_Value_Input_set_label_color(arg1: *mut Fl_Value_Input, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Value_Input_label_font(arg1: *mut Fl_Value_Input) -> ::std::os::raw::c_int;

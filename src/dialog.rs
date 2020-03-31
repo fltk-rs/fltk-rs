@@ -14,7 +14,7 @@ pub struct FileDialog {
 
 /// Defines the type of dialog, which can be changed dynamically using the set_type() method
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum FileDialogType {
     BrowseFile = 0,
     BrowseDir,
@@ -26,7 +26,7 @@ pub enum FileDialogType {
 
 /// Defines the File dialog options, which can be set using the set_option() method.
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum FileDialogOptions {
     NoOptions = 0,
     SaveAsConfirm = 1,

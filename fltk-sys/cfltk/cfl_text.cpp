@@ -1,5 +1,6 @@
 #include "cfl_text.h"
 #include <FL/Fl_Image.H>
+#include <FL/Fl_Simple_Terminal.H>
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Text_Editor.H>
 #include <FL/Fl_Widget.H>
@@ -31,3 +32,12 @@ int kf_cut(Fl_Text_Editor *e) { return Fl_Text_Editor::kf_cut(1, e); }
 int kf_paste(Fl_Text_Editor *e) { return Fl_Text_Editor::kf_paste(1, e); }
 
 int kf_undo(Fl_Text_Editor *e) { return Fl_Text_Editor::kf_undo(1, e); }
+
+WIDGET_DEFINE(Fl_Simple_Terminal)
+
+void Fl_Simple_Terminal_init(Fl_Simple_Terminal *self) {
+  Fl_Text_Buffer *buff = new Fl_Text_Buffer();
+  self->buffer(buff);
+}
+
+DISPLAY_DEFINE(Fl_Simple_Terminal)

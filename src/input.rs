@@ -10,7 +10,7 @@ pub struct Input {
 
 /// Sets the input widget's type, which can be changed dynamically using the set_type() method
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum InputType {
     NormalInput = 0,
     FloatInput = 1,

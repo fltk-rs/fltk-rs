@@ -26,6 +26,12 @@ int kf_paste(Fl_Text_Editor *e);
 
 int kf_undo(Fl_Text_Editor *e);
 
+WIDGET_DECLARE(Fl_Simple_Terminal)
+
+void Fl_Simple_Terminal_init(Fl_Simple_Terminal *);
+
+DISPLAY_DECLARE(Fl_Simple_Terminal)
+
 #ifdef __cplusplus
 }
 #endif

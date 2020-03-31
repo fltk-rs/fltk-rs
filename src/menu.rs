@@ -29,7 +29,7 @@ pub struct MenuItem {
 
 /// Defines the menu flag for any added menu items using the add() method
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum MenuFlag {
     Normal = 0,
     Inactive = 1,
@@ -79,7 +79,7 @@ impl MenuItem {
 
     /// Sets the label color of the menu item
     pub fn set_label_color(&mut self, color: Color) {
-        unsafe { Fl_Menu_Item_set_label_color(self._inner, color as i32) }
+        unsafe { Fl_Menu_Item_set_label_color(self._inner, color as u32) }
     }
 
     /// Returns the label font of the menu item
@@ -89,7 +89,7 @@ impl MenuItem {
 
     /// Sets the label font of the menu item
     pub fn set_label_font(&mut self, font: Font) {
-        unsafe { Fl_Menu_Item_set_label_color(self._inner, font as i32) }
+        unsafe { Fl_Menu_Item_set_label_font(self._inner, font as i32) }
     }
 
     /// Returns the label size of the menu item

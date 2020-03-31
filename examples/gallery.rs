@@ -1,4 +1,14 @@
-use fltk::{button::*, frame::*, group::*, input::*, output::*, valuator::*, window::*};
+use fltk::{
+    app::{App, AppScheme},
+    button::*,
+    frame::*,
+    group::*,
+    input::*,
+    menu::*,
+    output::*,
+    valuator::*,
+    window::*,
+};
 
 fn draw_gallery() {
     let tab = Tabs::new(10, 10, 500 - 20, 400 - 20, "");
@@ -29,9 +39,15 @@ fn draw_gallery() {
 }
 
 fn main() {
-    let app = fl::App::default().set_scheme(AppScheme::Gtk);
-    let (screen_width, screen_height) = fl::screen_size();
-    let mut wind = Window::new((screen_width / 2.0 - 250.0) as i32, (screen_height / 2.0 - 200.0) as i32, 500, 400, "Gallery");
+    let app = App::default().set_scheme(AppScheme::Gtk);
+    let (screen_width, screen_height) = fltk::app::screen_size();
+    let mut wind = Window::new(
+        (screen_width / 2.0 - 250.0) as i32,
+        (screen_height / 2.0 - 200.0) as i32,
+        500,
+        400,
+        "Gallery",
+    );
 
     draw_gallery();
 

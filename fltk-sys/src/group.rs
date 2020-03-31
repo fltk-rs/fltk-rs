@@ -93,16 +93,16 @@ extern "C" {
     pub fn Fl_Group_set_type(arg1: *mut Fl_Group, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Group_color(arg1: *mut Fl_Group) -> ::std::os::raw::c_int;
+    pub fn Fl_Group_color(arg1: *mut Fl_Group) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Group_set_color(arg1: *mut Fl_Group, color: ::std::os::raw::c_int);
+    pub fn Fl_Group_set_color(arg1: *mut Fl_Group, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Group_label_color(arg1: *mut Fl_Group) -> ::std::os::raw::c_int;
+    pub fn Fl_Group_label_color(arg1: *mut Fl_Group) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Group_set_label_color(arg1: *mut Fl_Group, color: ::std::os::raw::c_int);
+    pub fn Fl_Group_set_label_color(arg1: *mut Fl_Group, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Group_label_font(arg1: *mut Fl_Group) -> ::std::os::raw::c_int;
@@ -262,16 +262,16 @@ extern "C" {
     pub fn Fl_Pack_set_type(arg1: *mut Fl_Pack, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Pack_color(arg1: *mut Fl_Pack) -> ::std::os::raw::c_int;
+    pub fn Fl_Pack_color(arg1: *mut Fl_Pack) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Pack_set_color(arg1: *mut Fl_Pack, color: ::std::os::raw::c_int);
+    pub fn Fl_Pack_set_color(arg1: *mut Fl_Pack, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Pack_label_color(arg1: *mut Fl_Pack) -> ::std::os::raw::c_int;
+    pub fn Fl_Pack_label_color(arg1: *mut Fl_Pack) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Pack_set_label_color(arg1: *mut Fl_Pack, color: ::std::os::raw::c_int);
+    pub fn Fl_Pack_set_label_color(arg1: *mut Fl_Pack, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Pack_label_font(arg1: *mut Fl_Pack) -> ::std::os::raw::c_int;
@@ -431,16 +431,16 @@ extern "C" {
     pub fn Fl_Scroll_set_type(arg1: *mut Fl_Scroll, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Scroll_color(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_int;
+    pub fn Fl_Scroll_color(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Scroll_set_color(arg1: *mut Fl_Scroll, color: ::std::os::raw::c_int);
+    pub fn Fl_Scroll_set_color(arg1: *mut Fl_Scroll, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Scroll_label_color(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_int;
+    pub fn Fl_Scroll_label_color(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Scroll_set_label_color(arg1: *mut Fl_Scroll, color: ::std::os::raw::c_int);
+    pub fn Fl_Scroll_set_label_color(arg1: *mut Fl_Scroll, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Scroll_label_font(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_int;
@@ -600,16 +600,16 @@ extern "C" {
     pub fn Fl_Tabs_set_type(arg1: *mut Fl_Tabs, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Tabs_color(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_int;
+    pub fn Fl_Tabs_color(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tabs_set_color(arg1: *mut Fl_Tabs, color: ::std::os::raw::c_int);
+    pub fn Fl_Tabs_set_color(arg1: *mut Fl_Tabs, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Tabs_label_color(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_int;
+    pub fn Fl_Tabs_label_color(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tabs_set_label_color(arg1: *mut Fl_Tabs, color: ::std::os::raw::c_int);
+    pub fn Fl_Tabs_set_label_color(arg1: *mut Fl_Tabs, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Tabs_label_font(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_int;
@@ -769,16 +769,16 @@ extern "C" {
     pub fn Fl_Tile_set_type(arg1: *mut Fl_Tile, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Tile_color(arg1: *mut Fl_Tile) -> ::std::os::raw::c_int;
+    pub fn Fl_Tile_color(arg1: *mut Fl_Tile) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tile_set_color(arg1: *mut Fl_Tile, color: ::std::os::raw::c_int);
+    pub fn Fl_Tile_set_color(arg1: *mut Fl_Tile, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Tile_label_color(arg1: *mut Fl_Tile) -> ::std::os::raw::c_int;
+    pub fn Fl_Tile_label_color(arg1: *mut Fl_Tile) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Tile_set_label_color(arg1: *mut Fl_Tile, color: ::std::os::raw::c_int);
+    pub fn Fl_Tile_set_label_color(arg1: *mut Fl_Tile, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Tile_label_font(arg1: *mut Fl_Tile) -> ::std::os::raw::c_int;

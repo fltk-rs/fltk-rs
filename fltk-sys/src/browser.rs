@@ -93,16 +93,16 @@ extern "C" {
     pub fn Fl_Browser_set_type(arg1: *mut Fl_Browser, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_color(arg1: *mut Fl_Browser) -> ::std::os::raw::c_int;
+    pub fn Fl_Browser_color(arg1: *mut Fl_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Browser_set_color(arg1: *mut Fl_Browser, color: ::std::os::raw::c_int);
+    pub fn Fl_Browser_set_color(arg1: *mut Fl_Browser, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Browser_label_color(arg1: *mut Fl_Browser) -> ::std::os::raw::c_int;
+    pub fn Fl_Browser_label_color(arg1: *mut Fl_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Browser_set_label_color(arg1: *mut Fl_Browser, color: ::std::os::raw::c_int);
+    pub fn Fl_Browser_set_label_color(arg1: *mut Fl_Browser, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Browser_label_font(arg1: *mut Fl_Browser) -> ::std::os::raw::c_int;
@@ -302,18 +302,18 @@ extern "C" {
     pub fn Fl_Hold_Browser_set_type(arg1: *mut Fl_Hold_Browser, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_color(arg1: *mut Fl_Hold_Browser) -> ::std::os::raw::c_int;
+    pub fn Fl_Hold_Browser_color(arg1: *mut Fl_Hold_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_color(arg1: *mut Fl_Hold_Browser, color: ::std::os::raw::c_int);
+    pub fn Fl_Hold_Browser_set_color(arg1: *mut Fl_Hold_Browser, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_label_color(arg1: *mut Fl_Hold_Browser) -> ::std::os::raw::c_int;
+    pub fn Fl_Hold_Browser_label_color(arg1: *mut Fl_Hold_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_label_color(
         arg1: *mut Fl_Hold_Browser,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -515,18 +515,18 @@ extern "C" {
     pub fn Fl_Select_Browser_set_type(arg1: *mut Fl_Select_Browser, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_color(arg1: *mut Fl_Select_Browser) -> ::std::os::raw::c_int;
+    pub fn Fl_Select_Browser_color(arg1: *mut Fl_Select_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_color(arg1: *mut Fl_Select_Browser, color: ::std::os::raw::c_int);
+    pub fn Fl_Select_Browser_set_color(arg1: *mut Fl_Select_Browser, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Select_Browser_label_color(arg1: *mut Fl_Select_Browser) -> ::std::os::raw::c_int;
+    pub fn Fl_Select_Browser_label_color(arg1: *mut Fl_Select_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_label_color(
         arg1: *mut Fl_Select_Browser,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -742,18 +742,18 @@ extern "C" {
     pub fn Fl_Multi_Browser_set_type(arg1: *mut Fl_Multi_Browser, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_color(arg1: *mut Fl_Multi_Browser) -> ::std::os::raw::c_int;
+    pub fn Fl_Multi_Browser_color(arg1: *mut Fl_Multi_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_color(arg1: *mut Fl_Multi_Browser, color: ::std::os::raw::c_int);
+    pub fn Fl_Multi_Browser_set_color(arg1: *mut Fl_Multi_Browser, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_label_color(arg1: *mut Fl_Multi_Browser) -> ::std::os::raw::c_int;
+    pub fn Fl_Multi_Browser_label_color(arg1: *mut Fl_Multi_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_label_color(
         arg1: *mut Fl_Multi_Browser,
-        color: ::std::os::raw::c_int,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {

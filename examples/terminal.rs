@@ -1,8 +1,8 @@
-use fltk::{text::*, window::*};
-use std::process::{Command, Stdio};
+use fltk::{app, text::*, window::*};
+use std::process::{Command, Output, Stdio};
 
 fn main() {
-    let app = fl::App::default().set_scheme(AppScheme::Gtk);
+    let app = app::App::default().set_scheme(app::AppScheme::Plastic);
     let mut wind = Window::new(100, 100, 640, 480, "Rusty Terminal");
     let mut current_dir = std::env::current_dir()
         .unwrap()
@@ -11,47 +11,81 @@ fn main() {
         .to_string_lossy()
         .to_string();
     current_dir.push_str("/ $ ");
-    let mut term = TextEditor::new(5, 5, 630, 470);
+    let mut term = TextDisplay::new(5, 5, 630, 470);
+    term.set_color(Color::Black);
+    term.set_text_color(Color::White);
+    term.set_text_font(Font::Courrier);
+    term.set_cursor_color(Color::White);
+    term.set_cursor_style(CursorStyle::BlockCursor);
     let mut cmd = String::from("");
-    term.clone()
-        .set_custom_handler(Box::new(|ev: Event| match ev {
-            fl::Event::KeyUp => {
-                if fl::event_key() == fl::Key::Enter as i32 {
-                    run_command(&mut term);
+    term.clone().set_custom_handler(Box::new(|ev: app::Event| {
+        // println!("{:?}", app::event());
+        match ev {
+            app::Event::Shortcut => true,
+            app::Event::KeyUp => match app::event_key() {
+                app::Key::ShiftL => true,
+                app::Key::ShiftR => true,
+                app::Key::Right => {
+                    term.move_right();
+                    true
+                }
+                app::Key::Left => {
+                    term.move_left();
+                    true
+                }
+                app::Key::Enter => {
+                    term.append("\n");
+                    run_command(&mut term, &cmd);
                     term.append(&current_dir);
                     cmd.clear();
-                } else if fl::event_key() == fl::Key::BackSpace as i32 {
-                    if cmd.len() == 0 {
-                        term.append(" ");
-                    }
-                } else {
-                    cmd.push(fl::event_char());
+                    true
                 }
-                true
-            }
+                app::Key::BackSpace => {
+                    if cmd.len() != 0 {
+                        term.remove(term.text().len() - 1, term.text().len());
+                        cmd.pop().unwrap();
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+                _ => {
+                    let temp = app::event_text();
+                    cmd.push_str(&temp);
+                    term.append(&temp);
+                    true
+                }
+            },
             _ => false,
-        }));
+        }
+    }));
     term.append(&current_dir);
+    term.show_cursor(true);
     wind.make_resizable(true);
     wind.show();
     app.run().unwrap();
 }
 
-// To have continuous streaming of output for long standing operations, 
+// To have continuous streaming of output for long standing operations,
 // consider using Tokio Command or the likes
-fn run_command(term: &mut TextEditor) {
-    let txt = term.text();
-    let mut lines: Vec<_> = txt.lines().collect();
-    lines.reverse();
-    let args: Vec<&str> = (&lines[0]).split_whitespace().collect();
-    if args.len() > 2 {
-        let stdout = Command::new(&args[2])
-            .args(&args[3..])
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output();
+fn run_command(term: &mut TextDisplay, cmd: &str) {
+    let args: Vec<&str> = cmd.split_whitespace().collect();
+    let stdout: Result<Output, std::io::Error>;
+    if args.len() > 0 {
+        if args.len() > 1 {
+            stdout = Command::new(args[0])
+                .args(&args[1..])
+                .stdout(Stdio::piped())
+                .stderr(Stdio::piped())
+                .output();
+        } else {
+            stdout = Command::new(args[0])
+                .stdout(Stdio::piped())
+                .stderr(Stdio::piped())
+                .output();
+        }
         if stdout.is_err() {
-            let msg = format!("{}: command not found!\n", &args[2]);
+            let msg = format!("{}: command not found!\n", cmd);
             term.append(&msg);
             return;
         }

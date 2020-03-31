@@ -1,9 +1,21 @@
-pub use crate::prelude::*;
-use std::mem;
+/// Defines label types
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum LabelType {
+    NormalLabel = 0,
+    NoLabel,
+    ShadowLabel,
+    EngravedLabel,
+    EmbossedLabel,
+    MultiLabel,
+    IconLabel,
+    ImageLabel,
+    FreeLabelType,
+}
 
 /// Defines alignment rules used by FLTK for labels
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Align {
     AlignCenter = 0,
     AlignTop = 1,
@@ -14,7 +26,7 @@ pub enum Align {
 
 /// Defines fonts used by FLTK
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Font {
     Helvetica = 0,
     HelveticaBold = 1,
@@ -36,8 +48,8 @@ pub enum Font {
 }
 
 /// Defines colors used by FLTK
-#[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Color {
     ForeGround = 0,
     BackGround = 7,
@@ -67,9 +79,15 @@ pub enum Color {
     White = 255,
 }
 
+impl Color {
+    pub fn from_u32(val: u32) -> Color {
+        unsafe { std::mem::transmute(val) }
+    }
+}
+
 /// Defines event types captured by FLTK
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Event {
     NoEvent = 0,
     Push,
@@ -94,8 +112,9 @@ pub enum Event {
 }
 
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Key {
+    None = 0,
     Button = 0xfee8,
     BackSpace = 0xff08,
     Tab = 0xff09,
@@ -137,24 +156,58 @@ pub enum Key {
     Delete = 0xffff,
 }
 
-/// Defines label types
-#[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone)]
-pub enum LabelType {
-    NormalLabel = 0,
-    NoLabel,
-    ShadowLabel,
-    EngravedLabel,
-    EmbossedLabel,
-    MultiLabel,
-    IconLabel,
-    ImageLabel,
-    FreeLabelType,
+impl Key {
+    pub fn from_i32(val: i32) -> Key {
+        match val {
+            0 => Key::None,
+            0xfee8 => Key::Button,
+            0xff08 => Key::BackSpace,
+            0xff09 => Key::Tab,
+            0xff0c => Key::IsoKey,
+            0xff0d => Key::Enter,
+            0xff13 => Key::Pause,
+            0xff14 => Key::ScrollLock,
+            0xff1b => Key::Escape,
+            0xff2e => Key::Kana,
+            0xff2f => Key::Eisu,
+            0xff30 => Key::Yen,
+            0xff31 => Key::JISUnderscore,
+            0xff50 => Key::Home,
+            0xff51 => Key::Left,
+            0xff52 => Key::Up,
+            0xff53 => Key::Right,
+            0xff54 => Key::Down,
+            0xff55 => Key::PageUp,
+            0xff56 => Key::PageDown,
+            0xff57 => Key::End,
+            0xff61 => Key::Print,
+            0xff63 => Key::Insert,
+            0xff67 => Key::Menu,
+            0xff68 => Key::Help,
+            0xff7f => Key::NumLock,
+            0xff80 => Key::KP,
+            0xff8d => Key::KPEnter,
+            0xffbd => Key::KPLast,
+            0xffe0 => Key::FLast,
+            0xffe1 => Key::ShiftL,
+            0xffe2 => Key::ShiftR,
+            0xffe3 => Key::ControlL,
+            0xffe4 => Key::ControlR,
+            0xffe5 => Key::CapsLock,
+            0xffe7 => Key::MetaL,
+            0xffe8 => Key::MetaR,
+            0xffe9 => Key::AltL,
+            0xffea => Key::AltR,
+            0xffff => Key::Delete,
+            _ => panic!("{}: Unknown key event, try using event_text() to get the textual representation of key input!", val),
+        }
+    }
 }
 
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Shortcut {
+    None = 0,
     Shift = 0x00010000,
     CapsLock = 0x00020000,
     Ctrl = 0x00040000,
@@ -162,21 +215,79 @@ pub enum Shortcut {
 }
 
 #[repr(i32)]
-#[derive(Debug, Copy, Clone)]
-pub enum CallbackTrigger { 
-    Never		= 0,	
-    Changed	= 1,	
-    NotChanged	= 2,	
-    Release	= 4,	
-    ReleaseAlways = 6,	
-    EnterKey	= 8,	
-    EnterKeyAlways=10,	
-    EnterKeyChanged =11	
-  }
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum CallbackTrigger {
+    Never = 0,
+    Changed = 1,
+    NotChanged = 2,
+    Release = 4,
+    ReleaseAlways = 6,
+    EnterKey = 8,
+    EnterKeyAlways = 10,
+    EnterKeyChanged = 11,
+}
+
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum CursorStyle {
+    NormalCursor,
+    CaretCursor,
+    DimCursor,
+    BlockCursor,
+    HeavyCursor,
+    SimpleCursor,
+}
+
+pub trait WidgetType {
+    fn to_int(self) -> i32;
+    fn from_i32(val: i32) -> Self;
+}
 
 impl std::ops::Add<char> for Shortcut {
-    type Output = i32;
-    fn add(self, other: char) -> i32 {
-        self as i32 + other as i32
+    type Output = Shortcut;
+    fn add(self, other: char) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 + other as i32) }
+    }
+}
+
+impl std::ops::BitOr<CallbackTrigger> for CallbackTrigger {
+    type Output = CallbackTrigger;
+    fn bitor(self, rhs: CallbackTrigger) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Align> for Align {
+    type Output = Align;
+    fn bitor(self, rhs: Align) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Color> for Color {
+    type Output = Color;
+    fn bitor(self, rhs: Color) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Font> for Font {
+    type Output = Font;
+    fn bitor(self, rhs: Font) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Event> for Event {
+    type Output = Event;
+    fn bitor(self, rhs: Event) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Key> for Key {
+    type Output = Key;
+    fn bitor(self, rhs: Key) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
     }
 }

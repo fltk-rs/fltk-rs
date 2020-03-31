@@ -1,6 +1,5 @@
 pub use crate::enums::*;
-pub use crate::fl;
-pub use crate::menu::*;
+use crate::text::StyleTableEntry;
 use fltk_sys::widget::*;
 use std::convert::From;
 use std::error::Error;
@@ -59,19 +58,6 @@ impl From<io::Error> for FltkError {
     }
 }
 
-/// Set the app scheme
-#[derive(Debug, Copy, Clone)]
-pub enum AppScheme {
-    /// Base fltk scheming
-    Base,
-    /// inspired by the Aqua user interface on Mac OS X
-    Plastic,
-    /// inspired by the GTK+ theme
-    Gtk,
-    /// inspired by the Clearlooks Glossy scheme
-    Gleam,
-}
-
 /// Defines the methods implemented by all widgets
 pub trait WidgetTrait {
     /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
@@ -82,6 +68,14 @@ pub trait WidgetTrait {
     /// * `heigth` - The height of the widget
     /// * `title` - The title or label of the widget
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
+    /// Creates a default and zero initialized widget
+    fn default() -> Self;
+    /// Initialize to position x, y
+    fn with_pos(self, x: i32, y: i32) -> Self;
+    /// Initialilze to dimensions width and height
+    fn with_size(self, width: i32, height: i32) -> Self;
+    /// Initialize with label/title
+    fn with_label(self, title: &str) -> Self;
     /// Sets the widget's label
     fn set_label(&mut self, title: &str);
     /// Redraws a widget, necessary for resizing and changing positions
@@ -182,11 +176,6 @@ pub trait GroupTrait: WidgetTrait {
     fn children(&self) -> usize;
 }
 
-pub trait WidgetType {
-    fn to_int(self) -> i32;
-    fn from_i32(val: i32) -> Self;
-}
-
 /// Defines the methods implemented by all window widgets
 pub trait WindowTrait: GroupTrait {
     /// Makes a window modal
@@ -270,7 +259,13 @@ pub trait MenuTrait: WidgetTrait {
     /// Sets the text color
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
-    fn add<'a>(&'a mut self, name: &str, shortcut: i32, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>);
+    fn add<'a>(
+        &'a mut self,
+        name: &str,
+        shortcut: Shortcut,
+        flag: crate::menu::MenuFlag,
+        cb: Box<dyn FnMut() + 'a>,
+    );
     /// Adds a simple text option to the Choice and MenuButton widgets
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
@@ -330,19 +325,53 @@ pub trait DisplayTrait {
     /// Sets the text size
     fn set_text_size(&mut self, sz: usize);
     /// Append text to Display widget
-    fn append(&mut self, text: &str);     
+    fn append(&mut self, text: &str);
     /// Return buffer length of Display widget                  
     fn buffer_length(&self) -> usize;
     /// Scroll down the Display widget
-    fn scroll(&mut self, top_line_num: usize, horiz_offset: usize);      
+    fn scroll(&mut self, top_line_num: usize, horiz_offset: usize);
     /// Insert into Display widget      
-    fn insert(&self, text: &str); 
+    fn insert(&self, text: &str);
     /// Set the insert position
-    fn set_insert_position(&mut self, new_pos: usize);    
+    fn set_insert_position(&mut self, new_pos: usize);
     /// Return the insert position                
-    fn insert_position(&self) -> usize;   
+    fn insert_position(&self) -> usize;
     /// Counts the lines from start to end                         
     fn count_lines(&self, start: usize, end: usize, is_line_start: bool) -> usize;
+    /// Moves the cursor right
+    fn move_right(&mut self);
+    /// Moves the cursor left
+    fn move_left(&mut self);
+    /// Moves the cursor up
+    fn move_up(&mut self);
+    /// Moves the cursor down
+    fn move_down(&mut self);
+    /// Remove text from start position to end position
+    fn remove(&mut self, start: usize, end: usize);
+    /// Shows/hides the cursor
+    fn show_cursor(&mut self, val: bool);
+    /// Sets the style of the text widget
+    fn set_styly_table_entry(&mut self, entries: &Vec<StyleTableEntry>);
+    /// Sets the cursor style
+    fn set_cursor_style(&mut self, style: CursorStyle);
+    /// Sets the cursor color
+    fn set_cursor_color(&mut self, color: Color);
+    /// Sets the scrollbar width
+    fn set_scrollbar_width(&mut self, width: i32);
+    /// Sets the scrollbar size
+    fn set_scrollbar_size(&mut self, size: usize);
+    /// Sets the scrollbar alignment
+    fn set_scrollbar_align(&mut self, align: Align);
+    /// Returns the cursor style
+    fn cursor_style(&self) -> CursorStyle;
+    /// Returns the cursor color
+    fn cursor_color(&self) -> Color;
+    /// Returns the scrollback width
+    fn scrollbar_width(&self) -> i32;
+    /// Returns the scrollbar size
+    fn scrollbar_size(&self) -> usize;
+    /// Returns the scrollbar alignment
+    fn scrollbar_align(&self) -> Align;
 }
 
 /// Defines the methods implemented by all browser types

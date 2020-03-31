@@ -2,29 +2,55 @@
 
 Rust bindings for the FLTK Graphical User Interface library. Still in alpha.
 
-The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications. 
+The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small ( < 1mb for a hello world application after stripping), self-contained (no dependencies) and fast gui applications. 
 
 [Documentation](https://docs.rs/fltk)
 
 ## Usage
-Just add the following to your project's Cargo.toml file.
+Just add the following to your project's Cargo.toml file:
+
 ```toml
 [dependencies]
-fltk = "^0.1.16"
+fltk = "^0.1.22"
 ```
 An example hello world application:
+
 ```rust
-use fltk::window::*;
+use fltk::{app::*, window::*};
 
 fn main() {
-    let app = fl::App::default();
+    let app = App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     wind.show();
     app.run().unwrap();
 }
 ```
+
+Another example showing the basic callback functionality:
+```rust
+use fltk::{app::*, button::*, frame::*, window::*};
+
+fn main() {
+    let app = App::default();
+    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    let mut frame = Frame::new(0, 0, 400, 200, "");
+    let mut but = Button::new(160, 210, 80, 40, "Click me!");
+    but.set_callback(Box::new(|| frame.set_label("Hello World!")));
+    wind.show();
+    app.run().unwrap();
+}
+```
 Please check the examples directory for more examples.
-You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, as well as the width and height of the widget. Most widgets, except the TextDisplay and TextEditor, also take a label which can be left blank if needed. 
+You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, as well as the width and height of the widget. Most widgets, except the TextDisplay and TextEditor, also take a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
+
+```rust
+let but1 = Button::new(10, 10, 80, 40, "Button 1");
+
+let but2 = Button::default()
+    .with_pos(10, 10)
+    .with_size(80, 40)
+    .with_label("Button 2");
+```
 
 ## Dependencies
 
@@ -55,6 +81,7 @@ $ cargo run --example gallery
 $ cargo run --example button
 $ cargo run --example terminal
 $ cargo run --example hello
+$ cargo run --example hello_button
 ```
 ![alt_test](screenshots/hello.jpg)
 
@@ -93,6 +120,7 @@ Most common widgets are implemented:
 - Tile
 - TextDisplay
 - TextEditor
+- SimpleTerminal
 - Input
 - IntInput
 - FloatInput

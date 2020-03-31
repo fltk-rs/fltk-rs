@@ -1,7 +1,7 @@
-use fltk::{button::*, frame::*, window::*};
+use fltk::{app, button::*, frame::*, window::*};
 
 fn main() {
-    let app = fl::App::default();
+    let app = app::App::default();
     let main_window = MainWindow::default();
     main_window.draw_elements();
     app.run().unwrap();
@@ -21,28 +21,32 @@ impl MainWindow {
             wind: Window::new(0, 0, 400, 300, "Hello from rust"),
             but1: Button::new(80, 30, 80, 30, "Click me!"),
             but2: Button::new(240, 30, 80, 30, "Click me!"),
-            frame: Frame::new(20, 80, 360, 160, ""),
+            frame: Frame::default()
+                .with_pos(20, 80)
+                .with_size(360, 160)
+                .with_label(""),
         }
     }
     pub fn draw_elements(mut self) {
         // Different ways of handling events
 
-        // but1.clone().set_callback(Box::new(|| match fl::event() {
-        //     fl::Event::Released => {
-        //         println!("{:?}", fl::event());
+        // but1.clone().set_callback(Box::new(|| match app::event() {
+        //     app::Event::Released => {
+        //         println!("{:?}", app::event());
         //         but1.set_label("Works");
         //         but2.set_label("No!");
         //     }
-        //     _ => println!("{:?}", fl::event()),
+        //     _ => println!("{:?}", app::event()),
         // }));
 
-        self.but1.clone()
-            .set_custom_handler(Box::new(|ev: Event| match ev {
-                fl::Event::Released => {
+        self.but1
+            .clone()
+            .set_custom_handler(Box::new(|ev: app::Event| match ev {
+                app::Event::Released => {
                     println!("{:?}", ev);
                     return true;
                 }
-                fl::Event::Push => {
+                app::Event::Push => {
                     let mut out = String::from("");
                     println!("{:?}", ev);
                     // Spawning a thread to allow for a responsive UI
@@ -58,19 +62,19 @@ impl MainWindow {
                 }
             }));
 
-        fl::set_callback(
+        app::set_callback(
             &self.but2.clone(),
-            Box::new(|| match fl::event() {
-                fl::Event::Released => {
+            Box::new(|| match app::event() {
+                app::Event::Released => {
                     match fltk::dialog::input("hello", "") {
                         Some(inp) => println!("{}", inp),
                         None => return,
                     }
-                    println!("{:?}", fl::event());
+                    println!("{:?}", app::event());
                     self.but1.set_label("No!");
                     self.but2.set_label("Works");
                 }
-                _ => println!("{:?}", fl::event()),
+                _ => println!("{:?}", app::event()),
             }),
         );
         self.wind.make_resizable(true);
