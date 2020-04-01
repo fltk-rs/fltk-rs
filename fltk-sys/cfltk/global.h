@@ -99,6 +99,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 #define MENU_DECLARE(widget)                                                   \
   void widget##_add(widget *, const char *name, int shortcut, Fl_Callback *,   \
                     void *, int);                                              \
+  void widget##_insert(widget *, int index, const char *name, int shortcut,    \
+                       Fl_Callback *, void *, int);                            \
   Fl_Menu_Item *widget##_get_item(widget *, const char *name);                 \
   int widget##_text_font(widget *);                                            \
   void widget##_set_text_font(widget *, int c);                                \
@@ -175,7 +177,12 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_selected(const widget *, int line);                             \
   const char *widget##_text(const widget *, int line);                         \
   void widget##_set_text(widget *, int line, const char *newtext);             \
-  void widget##_load_file(widget *, const char *file);
+  void widget##_load_file(widget *, const char *file);                         \
+  int widget##_text_size(widget *);                                            \
+  void widget##_set_text_size(widget *, int s);                                \
+  void widget##_set_icon(widget *, int line, void *icon);                      \
+  void *widget##_icon(const widget *, int line);                               \
+  void widget##_remove_icon(widget *, int line);
 
 #define IMAGE_DECLARE(image)                                                   \
   typedef struct image image;                                                  \
@@ -370,6 +377,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
                     Fl_Callback *cb, void *data, int flag) {                   \
     self->add(name, shortcut, cb, data, flag);                                 \
   }                                                                            \
+  void widget##_insert(widget *self, int index, const char *name,              \
+                       int shortcut, Fl_Callback *cb, void *data, int flag) {  \
+    self->insert(index, name, shortcut, cb, data, flag);                       \
+  }                                                                            \
   Fl_Menu_Item *widget##_get_item(widget *self, const char *name) {            \
     return (Fl_Menu_Item *)self->find_item(name);                              \
   }                                                                            \
@@ -523,7 +534,18 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_text(widget *self, int line, const char *newtext) {        \
     self->text(line, newtext);                                                 \
   }                                                                            \
-  void widget##_load_file(widget *self, const char *file) { self->load(file); }
+  void widget##_load_file(widget *self, const char *file) {                    \
+    self->load(file);                                                          \
+  }                                                                            \
+  int widget##_text_size(widget *self) { return self->textsize(); }            \
+  void widget##_set_text_size(widget *self, int s) { self->textsize(s); }      \
+  void widget##_set_icon(widget *self, int line, void *icon) {                 \
+    self->icon(line, (Fl_Image *)icon);                                        \
+  }                                                                            \
+  void *widget##_icon(const widget *self, int line) {                          \
+    return (Fl_Image *)self->icon(line);                                       \
+  }                                                                            \
+  void widget##_remove_icon(widget *self, int line) { self->remove_icon(line); }
 
 #define IMAGE_DEFINE(image)                                                    \
   image *image##_new(const char *filename) {                                   \

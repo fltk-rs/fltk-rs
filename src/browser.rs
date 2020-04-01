@@ -1,5 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::browser::*;
+use crate::image::Image;
 use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a normal browser

@@ -175,6 +175,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_insert(
+        arg1: *mut Fl_Menu_Bar,
+        index: ::std::os::raw::c_int,
+        name: *const ::std::os::raw::c_char,
+        shortcut: ::std::os::raw::c_int,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Bar_get_item(
         arg1: *mut Fl_Menu_Bar,
         name: *const ::std::os::raw::c_char,
@@ -359,6 +370,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Button_insert(
+        arg1: *mut Fl_Menu_Button,
+        index: ::std::os::raw::c_int,
+        name: *const ::std::os::raw::c_char,
+        shortcut: ::std::os::raw::c_int,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Button_get_item(
         arg1: *mut Fl_Menu_Button,
         name: *const ::std::os::raw::c_char,
@@ -532,6 +554,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Choice_add(
         arg1: *mut Fl_Choice,
+        name: *const ::std::os::raw::c_char,
+        shortcut: ::std::os::raw::c_int,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Choice_insert(
+        arg1: *mut Fl_Choice,
+        index: ::std::os::raw::c_int,
         name: *const ::std::os::raw::c_char,
         shortcut: ::std::os::raw::c_int,
         arg2: Fl_Callback,

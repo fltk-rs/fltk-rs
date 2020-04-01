@@ -167,7 +167,7 @@ pub enum Key {
 
 impl Key {
     pub fn from_i32(val: i32) -> Key {
-        unsafe {std::mem::transmute(val)}
+        unsafe { std::mem::transmute(val) }
     }
 }
 
@@ -252,6 +252,25 @@ pub enum CursorStyle {
     BlockCursor,
     HeavyCursor,
     SimpleCursor,
+}
+
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum ChartType {
+    BarChart = 0,
+    HorizontalBarChart = 1,
+    LineChart = 2,
+    FillChart = 3,
+    SpikeChart = 4,
+    PieChart = 5,
+    SpecialPieChart = 6,
+}
+
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum ClockType {
+    SquareClock = 0,
+    RoundClock = 1,
 }
 
 pub trait WidgetType {

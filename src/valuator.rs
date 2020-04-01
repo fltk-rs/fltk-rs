@@ -8,6 +8,12 @@ pub struct Slider {
     _inner: *mut Fl_Slider,
 }
 
+/// Creates a nice slider widget
+#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+pub struct NiceSlider {
+    _inner: *mut Fl_Nice_Slider,
+}
+
 /// Defines slider types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
@@ -24,6 +30,12 @@ pub enum SliderType {
 #[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
 pub struct Dial {
     _inner: *mut Fl_Dial,
+}
+
+/// Creates a line dial widget
+#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+pub struct LineDial {
+    _inner: *mut Fl_Line_Dial,
 }
 
 /// Defines dial types

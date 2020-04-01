@@ -227,6 +227,28 @@ extern "C" {
 extern "C" {
     pub fn Fl_Browser_load_file(arg1: *mut Fl_Browser, file: *const ::std::os::raw::c_char);
 }
+extern "C" {
+    pub fn Fl_Browser_text_size(arg1: *mut Fl_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Browser_set_text_size(arg1: *mut Fl_Browser, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Browser_set_icon(
+        arg1: *mut Fl_Browser,
+        line: ::std::os::raw::c_int,
+        icon: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Browser_icon(
+        arg1: *const Fl_Browser,
+        line: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Browser_remove_icon(arg1: *mut Fl_Browser, line: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Hold_Browser {
@@ -444,6 +466,28 @@ extern "C" {
         arg1: *mut Fl_Hold_Browser,
         file: *const ::std::os::raw::c_char,
     );
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_text_size(arg1: *mut Fl_Hold_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_set_text_size(arg1: *mut Fl_Hold_Browser, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_set_icon(
+        arg1: *mut Fl_Hold_Browser,
+        line: ::std::os::raw::c_int,
+        icon: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_icon(
+        arg1: *const Fl_Hold_Browser,
+        line: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_remove_icon(arg1: *mut Fl_Hold_Browser, line: ::std::os::raw::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -679,6 +723,28 @@ extern "C" {
         file: *const ::std::os::raw::c_char,
     );
 }
+extern "C" {
+    pub fn Fl_Select_Browser_text_size(arg1: *mut Fl_Select_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_set_text_size(arg1: *mut Fl_Select_Browser, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Select_Browser_set_icon(
+        arg1: *mut Fl_Select_Browser,
+        line: ::std::os::raw::c_int,
+        icon: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Select_Browser_icon(
+        arg1: *const Fl_Select_Browser,
+        line: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_remove_icon(arg1: *mut Fl_Select_Browser, line: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Multi_Browser {
@@ -906,6 +972,28 @@ extern "C" {
         file: *const ::std::os::raw::c_char,
     );
 }
+extern "C" {
+    pub fn Fl_Multi_Browser_text_size(arg1: *mut Fl_Multi_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_set_text_size(arg1: *mut Fl_Multi_Browser, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_set_icon(
+        arg1: *mut Fl_Multi_Browser,
+        line: ::std::os::raw::c_int,
+        icon: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_icon(
+        arg1: *const Fl_Multi_Browser,
+        line: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_remove_icon(arg1: *mut Fl_Multi_Browser, line: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_File_Browser {
@@ -1123,4 +1211,26 @@ extern "C" {
         arg1: *mut Fl_File_Browser,
         file: *const ::std::os::raw::c_char,
     );
+}
+extern "C" {
+    pub fn Fl_File_Browser_text_size(arg1: *mut Fl_File_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_text_size(arg1: *mut Fl_File_Browser, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_icon(
+        arg1: *mut Fl_File_Browser,
+        line: ::std::os::raw::c_int,
+        icon: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Browser_icon(
+        arg1: *const Fl_File_Browser,
+        line: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Browser_remove_icon(arg1: *mut Fl_File_Browser, line: ::std::os::raw::c_int);
 }
