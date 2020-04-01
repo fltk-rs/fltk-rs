@@ -1,5 +1,6 @@
 #include "cfl_browser.h"
 #include <FL/Fl_Browser.H>
+#include <FL/Fl_File_Browser.H>
 #include <FL/Fl_Hold_Browser.H>
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Multi_Browser.H>
@@ -22,3 +23,7 @@ BROWSER_DEFINE(Fl_Select_Browser)
 WIDGET_DEFINE(Fl_Multi_Browser)
 
 BROWSER_DEFINE(Fl_Multi_Browser)
+
+WIDGET_DEFINE(Fl_File_Browser)
+
+BROWSER_DEFINE(Fl_File_Browser)

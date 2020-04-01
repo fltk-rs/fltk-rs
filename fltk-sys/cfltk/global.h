@@ -174,7 +174,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_select(widget *, int line);                                     \
   int widget##_selected(const widget *, int line);                             \
   const char *widget##_text(const widget *, int line);                         \
-  void widget##_set_text(widget *, int line, const char *newtext);
+  void widget##_set_text(widget *, int line, const char *newtext);             \
+  void widget##_load_file(widget *, const char *file);
 
 #define IMAGE_DECLARE(image)                                                   \
   typedef struct image image;                                                  \
@@ -521,7 +522,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   void widget##_set_text(widget *self, int line, const char *newtext) {        \
     self->text(line, newtext);                                                 \
-  }
+  }                                                                            \
+  void widget##_load_file(widget *self, const char *file) { self->load(file); }
 
 #define IMAGE_DEFINE(image)                                                    \
   image *image##_new(const char *filename) {                                   \

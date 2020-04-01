@@ -11,7 +11,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.1.22"
+fltk = "^0.1.23"
 ```
 An example hello world application:
 
@@ -109,6 +109,7 @@ Most common widgets are implemented:
 - LightButton
 - RepeatButton
 - Native FileDialog
+- HelpDialog
 - Frame (Fl_Box)
 - Window
 - DoubleWindow
@@ -144,6 +145,7 @@ Most common widgets are implemented:
 - SelectBrowser
 - HoldBrowser
 - MultiBrowser
+- FileBrowser
 
 ## Todo
 

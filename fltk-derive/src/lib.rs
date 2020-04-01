@@ -1355,6 +1355,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
     let selected = Ident::new(format!("{}_{}", name_str, "selected").as_str(), name.span());
     let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
     let set_text = Ident::new(format!("{}_{}", name_str, "set_text").as_str(), name.span());
+    let load_file = Ident::new(format!("{}_{}", name_str, "load_file").as_str(), name.span());
 
     let gen = quote! {
         impl BrowserTrait for #name {
@@ -1424,6 +1425,13 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                 let txt = CString::new(txt).unwrap();
                 unsafe {
                     #set_text(self._inner, line as i32, txt.into_raw() as *const raw::c_char)
+                }
+            }
+            fn load_file(&mut self, path: &std::path::Path) {
+                let path = path.to_str().unwrap();
+                let path = CString::new(path).unwrap();
+                unsafe {
+                    #load_file(self._inner, path.into_raw() as *const raw::c_char)
                 }
             }
         }

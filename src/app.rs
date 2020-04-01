@@ -164,13 +164,13 @@ pub fn event_is_click() -> bool {
 }
 
 /// Returns the duration of an event
-pub fn event_length() -> i32 {
-    unsafe { Fl_event_length() }
+pub fn event_length() -> usize {
+    unsafe { Fl_event_length() as usize }
 }
 
 /// Returns the state of the event
-pub fn event_state() -> i32 {
-    unsafe { Fl_event_state() }
+pub fn event_state() -> Shortcut {
+    unsafe { mem::transmute(Fl_event_state()) }
 }
 
 /// Returns a pair of the width and height of the screen

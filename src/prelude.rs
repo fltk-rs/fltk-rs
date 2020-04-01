@@ -400,6 +400,8 @@ pub trait BrowserTrait {
     fn text(&self, line: usize) -> String;
     /// Sets the text of the selected item
     fn set_text(&mut self, line: usize, txt: &str);
+    /// Load a file
+    fn load_file(&mut self, path: &std::path::Path);
 }
 
 /// Defines the methods implemented by all image types

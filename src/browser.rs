@@ -35,3 +35,8 @@ pub struct MultiBrowser {
 pub struct HoldBrowser {
     _inner: *mut Fl_Hold_Browser,
 }
+
+#[derive(WidgetTrait, BrowserTrait, Debug, Clone)]
+pub struct FileBrowser {
+    _inner: *mut Fl_File_Browser,
+}

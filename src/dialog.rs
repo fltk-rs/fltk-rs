@@ -44,33 +44,33 @@ impl FileDialog {
     }
 
     /// Returns the chosen file name
-    pub fn filename(&self) -> String {
+    pub fn filename(&self) -> std::path::PathBuf {
         unsafe {
             let cnt = Fl_Native_File_Chooser_count(self._inner);
             if cnt == 0 {
-                return String::from("");
+                return std::path::PathBuf::from("");
             }
             let x = Fl_Native_File_Chooser_filenames(self._inner, 0);
-            CStr::from_ptr(x as *mut raw::c_char)
+            std::path::PathBuf::from(CStr::from_ptr(x as *mut raw::c_char)
                 .to_string_lossy()
-                .to_string()
+                .to_string())
         }
     }
 
     /// Returns the chosen file names
-    pub fn filenames(&self) -> Vec<String> {
+    pub fn filenames(&self) -> Vec<std::path::PathBuf> {
         unsafe {
             let cnt = Fl_Native_File_Chooser_count(self._inner);
-            let mut names: Vec<String> = vec![];
+            let mut names: Vec<std::path::PathBuf> = vec![];
             if cnt == 0 {
                 return names;
             } else {
                 for i in 0..cnt {
                     let x = Fl_Native_File_Chooser_filenames(self._inner, i);
                     names.push(
-                        CStr::from_ptr(x as *mut raw::c_char)
+                        std::path::PathBuf::from(CStr::from_ptr(x as *mut raw::c_char)
                             .to_string_lossy()
-                            .to_string(),
+                            .to_string()),
                     )
                 }
                 names
@@ -79,23 +79,23 @@ impl FileDialog {
     }
 
     /// Returns the preset directory
-    pub fn directory(&self) -> String {
+    pub fn directory(&self) -> std::path::PathBuf {
         unsafe {
             let x = Fl_Native_File_Chooser_directory(self._inner);
             if !x.is_null() {
-                CStr::from_ptr(x as *mut raw::c_char)
+                std::path::PathBuf::from(CStr::from_ptr(x as *mut raw::c_char)
                     .to_string_lossy()
-                    .to_string()
+                    .to_string())
             } else {
-                String::from("")
+                std::path::PathBuf::from("")
             }
         }
     }
 
     /// Sets the starting directory
-    pub fn set_directory(&mut self, dir: &str) {
+    pub fn set_directory(&mut self, dir: &std::path::Path) {
         unsafe {
-            Fl_Native_File_Chooser_set_directory(self._inner, CString::new(dir).unwrap().into_raw())
+            Fl_Native_File_Chooser_set_directory(self._inner, CString::new(dir.to_str().unwrap()).unwrap().into_raw())
         }
     }
 
@@ -216,6 +216,97 @@ pub fn password(txt: &str, deflt: &str) -> Option<String> {
                     .to_string_lossy()
                     .to_string(),
             )
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct HelpDialog {
+    _inner: *mut Fl_Help_Dialog,
+}
+
+impl HelpDialog {
+    pub fn default() -> HelpDialog {
+        unsafe {
+            HelpDialog {
+                _inner: Fl_Help_Dialog_new(),
+            }
+        }
+    }
+    pub fn hide(&mut self) {
+        unsafe {
+            Fl_Help_Dialog_hide(self._inner)
+        }
+    }
+    pub fn load(&mut self, file: &std::path::Path) ->i32 {
+        let f = file.to_str().unwrap();
+        let f = CString::new(f).unwrap();
+        unsafe {
+            Fl_Help_Dialog_load(self._inner, f.into_raw() as *const raw::c_char)
+        }
+    }
+    pub fn position(&mut self, x: i32, y: i32) {
+        unsafe {
+            Fl_Help_Dialog_position(self._inner, x, y)
+        }
+    }
+    pub fn resize(&mut self,  x: i32, y: i32,  w: i32, h: i32) {
+        unsafe {
+            Fl_Help_Dialog_resize(self._inner, x, y , w, h)
+        }
+    }
+    pub fn show(&mut self) {
+        unsafe {
+            Fl_Help_Dialog_show(self._inner)
+        }
+    }
+    pub fn set_text_size(&mut self, s: usize) {
+        unsafe {
+            Fl_Help_Dialog_set_text_size(self._inner, s as i32)
+        }
+    }
+    pub fn text_size(&mut self) -> usize {
+        unsafe {
+            Fl_Help_Dialog_text_size(self._inner) as usize
+        }
+    }
+    pub fn set_value(&mut self, f: &str) {
+        let f = CString::new(f).unwrap();
+        unsafe {
+            Fl_Help_Dialog_set_value(self._inner, f.into_raw() as *const raw::c_char)
+        }
+    }
+    pub fn value(&self) -> String {
+        unsafe {
+            CStr::from_ptr(Fl_Help_Dialog_value(self._inner)).to_string_lossy().to_string()
+        }
+    }
+    pub fn visible(&mut self) -> bool {
+        unsafe {
+            match Fl_Help_Dialog_visible(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+    pub fn w(&mut self) -> i32 {
+        unsafe {
+            Fl_Help_Dialog_w(self._inner)
+        }
+    }
+    pub fn h(&mut self) -> i32 {
+        unsafe {
+            Fl_Help_Dialog_h(self._inner)
+        }
+    }
+    pub fn x(&mut self) -> i32 {
+        unsafe {
+            Fl_Help_Dialog_x(self._inner)
+        }
+    }
+    pub fn y(&mut self) -> i32 {
+        unsafe {
+            Fl_Help_Dialog_y(self._inner)
         }
     }
 }
