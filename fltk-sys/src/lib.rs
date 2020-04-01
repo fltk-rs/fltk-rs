@@ -15,6 +15,7 @@ pub mod dialog;
 pub mod valuator;
 pub mod browser;
 pub mod image;
+pub mod misc;
 
 
 #[cfg(test)]

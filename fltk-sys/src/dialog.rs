@@ -98,3 +98,66 @@ extern "C" {
         deflt: *const ::std::os::raw::c_char,
     ) -> *const ::std::os::raw::c_char;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Help_Dialog {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_new() -> *mut Fl_Help_Dialog;
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_h(arg1: *mut Fl_Help_Dialog) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_hide(arg1: *mut Fl_Help_Dialog);
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_load(
+        arg1: *mut Fl_Help_Dialog,
+        f: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_position(
+        arg1: *mut Fl_Help_Dialog,
+        xx: ::std::os::raw::c_int,
+        yy: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_resize(
+        arg1: *mut Fl_Help_Dialog,
+        xx: ::std::os::raw::c_int,
+        yy: ::std::os::raw::c_int,
+        ww: ::std::os::raw::c_int,
+        hh: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_show(arg1: *mut Fl_Help_Dialog);
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_set_text_size(arg1: *mut Fl_Help_Dialog, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_text_size(arg1: *mut Fl_Help_Dialog) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_set_value(arg1: *mut Fl_Help_Dialog, f: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_value(arg1: *const Fl_Help_Dialog) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_visible(arg1: *mut Fl_Help_Dialog) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_w(arg1: *mut Fl_Help_Dialog) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_x(arg1: *mut Fl_Help_Dialog) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_y(arg1: *mut Fl_Help_Dialog) -> ::std::os::raw::c_int;
+}

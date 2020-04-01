@@ -46,7 +46,8 @@ fn main() {
     let mut but_add = Button::new(column4, row4, but_width, but_height, "+");
     let mut but_eq = Button::new(column4, row5, but_width, but_height, "=");
 
-    but_ce.set_color(Color::Red);
+    // but_ce.set_color(Color::from_rgb(255, 0, 0));
+    but_ce.set_color(Color::from_u32(0xff0000));
     but_c.set_color(Color::Yellow);
     but_back.set_color(Color::Yellow);
     but_div.set_color(Color::Yellow);

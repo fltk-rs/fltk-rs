@@ -43,7 +43,7 @@ fn main() {
             dlg.set_option(FileDialogOptions::NoOptions);
             dlg.set_filter("*.txt");
             dlg.show();
-            filename = dlg.filename();
+            filename = dlg.filename().to_string_lossy().to_string();
             if filename.is_empty() {
                 return;
             }
@@ -132,7 +132,7 @@ fn save_file(editor: &mut TextEditor, filename: &str, saved: &mut bool) {
         let mut dlg = FileDialog::new(FileDialogType::BrowseSaveFile);
         dlg.set_option(FileDialogOptions::SaveAsConfirm);
         dlg.show();
-        filename = dlg.filename();
+        filename = dlg.filename().to_string_lossy().to_string();
         if filename.is_empty() {
             return;
         }

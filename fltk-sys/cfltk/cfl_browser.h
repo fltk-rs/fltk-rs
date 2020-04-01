@@ -22,6 +22,10 @@ WIDGET_DECLARE(Fl_Multi_Browser)
 
 BROWSER_DECLARE(Fl_Multi_Browser)
 
+WIDGET_DECLARE(Fl_File_Browser)
+
+BROWSER_DECLARE(Fl_File_Browser)
+
 #ifdef __cplusplus
 }
 #endif

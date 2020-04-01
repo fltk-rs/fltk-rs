@@ -790,6 +790,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
     let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
+    let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
     let get_item = Ident::new(format!("{}_{}", name_str, "get_item").as_str(), name.span());
     let text_font = Ident::new(
         format!("{}_{}", name_str, "text_font").as_str(),
@@ -840,7 +841,20 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #add(self._inner, temp.into_raw() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }
-
+            fn insert<'a>(&'a mut self, idx: usize, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
+                let temp = CString::new(name).unwrap();
+                unsafe {
+                    unsafe extern "C" fn shim<'a>(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
+                        let f: &mut (dyn FnMut() + 'a) = &mut **a;
+                        f();
+                    }
+                    let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = mem::transmute(a);
+                    let callback: Fl_Callback = Some(shim);
+                    #insert(self._inner, idx as i32, temp.into_raw() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
+                }
+            }
             fn get_item(&self, name: &str) -> MenuItem {
                 let name = CString::new(name).unwrap().clone();
                 MenuItem {
@@ -1112,10 +1126,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "move_down").as_str(),
         name.span(),
     );
-    let remove = Ident::new(
-        format!("{}_{}", name_str, "remove").as_str(),
-        name.span(),
-    );
+    let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
     let show_cursor = Ident::new(
         format!("{}_{}", name_str, "show_cursor").as_str(),
         name.span(),
@@ -1355,6 +1366,31 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
     let selected = Ident::new(format!("{}_{}", name_str, "selected").as_str(), name.span());
     let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
     let set_text = Ident::new(format!("{}_{}", name_str, "set_text").as_str(), name.span());
+    let load_file = Ident::new(
+        format!("{}_{}", name_str, "load_file").as_str(),
+        name.span(),
+    );
+    let text_size = Ident::new(
+        format!("{}_{}", name_str, "text_size").as_str(),
+        name.span(),
+    );
+    let set_text_size = Ident::new(
+        format!("{}_{}", name_str, "set_text_size").as_str(),
+        name.span(),
+    );
+    let set_icon = Ident::new(
+        format!("{}_{}", name_str, "set_icon").as_str(),
+        name.span(),
+    );
+    let icon = Ident::new(
+        format!("{}_{}", name_str, "icon").as_str(),
+        name.span(),
+    );
+    let remove_icon = Ident::new(
+        format!("{}_{}", name_str, "remove_icon").as_str(),
+        name.span(),
+    );
+    
 
     let gen = quote! {
         impl BrowserTrait for #name {
@@ -1426,6 +1462,38 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_text(self._inner, line as i32, txt.into_raw() as *const raw::c_char)
                 }
             }
+            fn load_file(&mut self, path: &std::path::Path) {
+                let path = path.to_str().unwrap();
+                let path = CString::new(path).unwrap();
+                unsafe {
+                    #load_file(self._inner, path.into_raw() as *const raw::c_char)
+                }
+            }
+            fn text_size(&self) -> usize {
+                unsafe {
+                    #text_size(self._inner) as usize
+                }
+            }
+            fn set_text_size(&mut self, c: usize) {
+                unsafe {
+                    #set_text_size(self._inner, c as i32)
+                }
+            }
+            fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: Img) {
+                unsafe {
+                    #set_icon(self._inner, line as i32, image.as_ptr())
+                }
+            }
+            fn icon(&self, line: usize) -> Image {
+                unsafe {
+                    mem::transmute(#icon(self._inner, line as i32))
+                }
+            }
+            fn remove_icon(&mut self, line: usize) {
+                unsafe {
+                    #remove_icon(self._inner, line as i32)
+                }
+            }
         }
     };
     gen.into()
@@ -1469,6 +1537,11 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn as_ptr(&self) -> *mut raw::c_void {
+                unsafe {
+                    mem::transmute(self._inner)
+                }
+            }
+            fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                 unsafe {
                     mem::transmute(self._inner)
                 }

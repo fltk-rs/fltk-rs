@@ -24,6 +24,7 @@ int Fl_screen_h(void);
 int Fl_screen_w(void);
 void Fl_paste(void *, int src);
 void Fl_set_scheme(const char *scheme);
+unsigned int Fl_get_color(unsigned char r, unsigned char g, unsigned char b);
 
 #ifdef __cplusplus
 }

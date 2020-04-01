@@ -14,6 +14,7 @@ pub mod widget;
 pub mod window;
 pub mod browser;
 pub mod image;
+pub mod misc;
 
 #[macro_use]
 extern crate fltk_derive;

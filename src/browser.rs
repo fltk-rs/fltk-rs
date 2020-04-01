@@ -1,5 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::browser::*;
+use crate::image::Image;
 use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a normal browser
@@ -34,4 +35,10 @@ pub struct MultiBrowser {
 #[derive(WidgetTrait, BrowserTrait, Debug, Clone)]
 pub struct HoldBrowser {
     _inner: *mut Fl_Hold_Browser,
+}
+
+/// Creates a file browser
+#[derive(WidgetTrait, BrowserTrait, Debug, Clone)]
+pub struct FileBrowser {
+    _inner: *mut Fl_File_Browser,
 }

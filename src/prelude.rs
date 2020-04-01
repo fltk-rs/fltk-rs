@@ -1,5 +1,6 @@
 pub use crate::enums::*;
 use crate::text::StyleTableEntry;
+use crate::image::Image;
 use fltk_sys::widget::*;
 use std::convert::From;
 use std::error::Error;
@@ -266,6 +267,15 @@ pub trait MenuTrait: WidgetTrait {
         flag: crate::menu::MenuFlag,
         cb: Box<dyn FnMut() + 'a>,
     );
+    /// Inserts a menu item at an index along with its callback
+    fn insert<'a>(
+        &'a mut self,
+        idx: usize,
+        name: &str,
+        shortcut: Shortcut,
+        flag: crate::menu::MenuFlag,
+        cb: Box<dyn FnMut() + 'a>,
+    );
     /// Adds a simple text option to the Choice and MenuButton widgets
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
@@ -400,6 +410,18 @@ pub trait BrowserTrait {
     fn text(&self, line: usize) -> String;
     /// Sets the text of the selected item
     fn set_text(&mut self, line: usize, txt: &str);
+    /// Load a file
+    fn load_file(&mut self, path: &std::path::Path);
+    /// Return the text size
+    fn text_size(&self) -> usize;
+    /// Sets the text size
+    fn set_text_size(&mut self, sz: usize);
+    /// Sets the icon for browser elements
+    fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: Img);
+    /// Returns the icon of a browser element
+    fn icon(&self, line: usize) -> Image;
+    /// Removes the icon of a browser element
+    fn remove_icon(&mut self, line: usize);
 }
 
 /// Defines the methods implemented by all image types
@@ -412,6 +434,8 @@ pub trait ImageTrait {
     fn width(&self) -> i32;
     /// Return the height of the image
     fn height(&self) -> i32;
-    /// Returns a pointer of the image, for internal use
+    /// Returns a void pointer of the image, for internal use
     fn as_ptr(&self) -> *mut raw::c_void;
+    /// Retunrs a pointer of the image
+    fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
 }

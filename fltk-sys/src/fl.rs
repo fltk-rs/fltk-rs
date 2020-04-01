@@ -59,3 +59,10 @@ extern "C" {
 extern "C" {
     pub fn Fl_set_scheme(scheme: *const ::std::os::raw::c_char);
 }
+extern "C" {
+    pub fn Fl_get_color(
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
+    ) -> ::std::os::raw::c_uint;
+}

@@ -6,6 +6,8 @@
 extern "C" {
 #endif
 
+typedef struct Fl_Image Fl_Image;
+
 IMAGE_DECLARE(Fl_JPEG_Image)
 
 IMAGE_DECLARE(Fl_PNG_Image)

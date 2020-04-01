@@ -1,3 +1,5 @@
+use fltk_sys::fl::Fl_get_color;
+
 /// Defines label types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
@@ -80,8 +82,15 @@ pub enum Color {
 }
 
 impl Color {
+    pub fn from_rgb(r: u8, g: u8, b: u8) -> Color {
+        unsafe { std::mem::transmute(Fl_get_color(r, g, b)) }
+    }
     pub fn from_u32(val: u32) -> Color {
-        unsafe { std::mem::transmute(val) }
+        let hex = format!("{:06x}", val);
+        let r = u8::from_str_radix(&hex[0..2], 16).unwrap();
+        let g = u8::from_str_radix(&hex[2..4], 16).unwrap();
+        let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
+        Color::from_rgb(r, g, b)
     }
 }
 
@@ -112,7 +121,7 @@ pub enum Event {
 }
 
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum Key {
     None = 0,
     Button = 0xfee8,
@@ -158,48 +167,55 @@ pub enum Key {
 
 impl Key {
     pub fn from_i32(val: i32) -> Key {
-        match val {
-            0 => Key::None,
-            0xfee8 => Key::Button,
-            0xff08 => Key::BackSpace,
-            0xff09 => Key::Tab,
-            0xff0c => Key::IsoKey,
-            0xff0d => Key::Enter,
-            0xff13 => Key::Pause,
-            0xff14 => Key::ScrollLock,
-            0xff1b => Key::Escape,
-            0xff2e => Key::Kana,
-            0xff2f => Key::Eisu,
-            0xff30 => Key::Yen,
-            0xff31 => Key::JISUnderscore,
-            0xff50 => Key::Home,
-            0xff51 => Key::Left,
-            0xff52 => Key::Up,
-            0xff53 => Key::Right,
-            0xff54 => Key::Down,
-            0xff55 => Key::PageUp,
-            0xff56 => Key::PageDown,
-            0xff57 => Key::End,
-            0xff61 => Key::Print,
-            0xff63 => Key::Insert,
-            0xff67 => Key::Menu,
-            0xff68 => Key::Help,
-            0xff7f => Key::NumLock,
-            0xff80 => Key::KP,
-            0xff8d => Key::KPEnter,
-            0xffbd => Key::KPLast,
-            0xffe0 => Key::FLast,
-            0xffe1 => Key::ShiftL,
-            0xffe2 => Key::ShiftR,
-            0xffe3 => Key::ControlL,
-            0xffe4 => Key::ControlR,
-            0xffe5 => Key::CapsLock,
-            0xffe7 => Key::MetaL,
-            0xffe8 => Key::MetaR,
-            0xffe9 => Key::AltL,
-            0xffea => Key::AltR,
-            0xffff => Key::Delete,
-            _ => panic!("{}: Unknown key event, try using event_text() to get the textual representation of key input!", val),
+        unsafe { std::mem::transmute(val) }
+    }
+}
+
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Key {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match *self {
+            Key::None => write!(f, "None"),
+            Key::Button => write!(f, "Button"),
+            Key::BackSpace => write!(f, "BackSpace"),
+            Key::Tab => write!(f, "Tab"),
+            Key::IsoKey => write!(f, "IsoKey"),
+            Key::Enter => write!(f, "Enter"),
+            Key::Pause => write!(f, "Pause"),
+            Key::ScrollLock => write!(f, "ScrollLock"),
+            Key::Escape => write!(f, "Escape"),
+            Key::Kana => write!(f, "Kana"),
+            Key::Eisu => write!(f, "Eisu"),
+            Key::Yen => write!(f, "Yen"),
+            Key::JISUnderscore => write!(f, "JISUnderscore"),
+            Key::Home => write!(f, "Home"),
+            Key::Left => write!(f, "Left"),
+            Key::Up => write!(f, "Up"),
+            Key::Right => write!(f, "Right"),
+            Key::Down => write!(f, "Down"),
+            Key::PageUp => write!(f, "PageUp"),
+            Key::PageDown => write!(f, "PageDown"),
+            Key::End => write!(f, "End"),
+            Key::Print => write!(f, "Print"),
+            Key::Insert => write!(f, "Insert"),
+            Key::Menu => write!(f, "Menu"),
+            Key::Help => write!(f, "Help"),
+            Key::NumLock => write!(f, "NumLock"),
+            Key::KP => write!(f, "KP"),
+            Key::KPEnter => write!(f, "KPEnter"),
+            Key::KPLast => write!(f, "KPLast"),
+            Key::FLast => write!(f, "FLast"),
+            Key::ShiftL => write!(f, "ShiftL"),
+            Key::ShiftR => write!(f, "ShiftR"),
+            Key::ControlL => write!(f, "ControlL"),
+            Key::ControlR => write!(f, "ControlR"),
+            Key::CapsLock => write!(f, "CapsLock"),
+            Key::MetaL => write!(f, "MetaL"),
+            Key::MetaR => write!(f, "MetaR"),
+            Key::AltL => write!(f, "AltL"),
+            Key::AltR => write!(f, "AltR"),
+            Key::Delete => write!(f, "Delete"),
+            _ => write!(f, "{}", *self as u8 as char),
         }
     }
 }
@@ -236,6 +252,25 @@ pub enum CursorStyle {
     BlockCursor,
     HeavyCursor,
     SimpleCursor,
+}
+
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum ChartType {
+    BarChart = 0,
+    HorizontalBarChart = 1,
+    LineChart = 2,
+    FillChart = 3,
+    SpikeChart = 4,
+    PieChart = 5,
+    SpecialPieChart = 6,
+}
+
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum ClockType {
+    SquareClock = 0,
+    RoundClock = 1,
 }
 
 pub trait WidgetType {

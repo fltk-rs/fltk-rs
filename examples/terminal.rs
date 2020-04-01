@@ -20,19 +20,10 @@ fn main() {
     let mut cmd = String::from("");
     term.clone().set_custom_handler(Box::new(|ev: app::Event| {
         // println!("{:?}", app::event());
+        // println!("{:?}", app::event_key());
         match ev {
-            app::Event::Shortcut => true,
-            app::Event::KeyUp => match app::event_key() {
-                app::Key::ShiftL => true,
-                app::Key::ShiftR => true,
-                app::Key::Right => {
-                    term.move_right();
-                    true
-                }
-                app::Key::Left => {
-                    term.move_left();
-                    true
-                }
+            // fltk bug with Event::KeyDown 
+            app::Event::Shortcut => match app::event_key() {
                 app::Key::Enter => {
                     term.append("\n");
                     run_command(&mut term, &cmd);
