@@ -20,6 +20,7 @@ fn main() {
     let mut cmd = String::from("");
     term.clone().set_custom_handler(Box::new(|ev: app::Event| {
         // println!("{:?}", app::event());
+        println!("{:?}", app::event_key());
         match ev {
             // fltk bug with Event::KeyDown 
             app::Event::Shortcut => match app::event_key() {
