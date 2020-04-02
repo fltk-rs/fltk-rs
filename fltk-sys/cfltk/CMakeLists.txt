@@ -29,5 +29,3 @@ target_include_directories(cfltk PUBLIC fltk)
 
 # The following line is necessary if building a shared/dynamic library
 # target_link_libraries(cfltk PUBLIC fltk fltk_images fltk_z fltk_jpeg fltk_png)
-
-

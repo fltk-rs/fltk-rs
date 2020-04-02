@@ -16,3 +16,11 @@ impl<W: WidgetTrait> From<W> for Widget {
         }
     }
 }
+
+impl Widget {
+    pub fn from_raw(ptr: *mut Fl_Widget) -> Self {
+        Widget {
+            _inner: ptr,
+        }
+    }
+}

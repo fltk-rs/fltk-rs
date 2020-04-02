@@ -552,3 +552,159 @@ extern "C" {
 extern "C" {
     pub fn Fl_Chart_make_autosize(self_: *mut Fl_Chart, n: ::std::os::raw::c_int);
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Progress {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Progress_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Progress;
+}
+extern "C" {
+    pub fn Fl_Progress_x(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_y(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_width(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_height(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_label(arg1: *mut Fl_Progress) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Progress_set_label(arg1: *mut Fl_Progress, title: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Progress_redraw(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_show(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_hide(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_activate(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_deactivate(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_redraw_label(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_resize(
+        arg1: *mut Fl_Progress,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Progress_tooltip(arg1: *mut Fl_Progress) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Progress_set_tooltip(arg1: *mut Fl_Progress, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Progress_get_type(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_set_type(arg1: *mut Fl_Progress, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Progress_color(arg1: *mut Fl_Progress) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Progress_set_color(arg1: *mut Fl_Progress, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Progress_label_color(arg1: *mut Fl_Progress) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Progress_set_label_color(arg1: *mut Fl_Progress, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Progress_label_font(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_set_label_font(arg1: *mut Fl_Progress, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Progress_label_size(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_set_label_size(arg1: *mut Fl_Progress, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Progress_label_type(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_set_label_type(arg1: *mut Fl_Progress, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Progress_box(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_set_box(arg1: *mut Fl_Progress, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Progress_changed(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_set_changed(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_clear_changed(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_align(arg1: *mut Fl_Progress) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_set_align(arg1: *mut Fl_Progress, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Progress_delete(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_set_image(arg1: *mut Fl_Progress, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Progress_set_handler(
+        self_: *mut *mut Fl_Progress,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Progress_set_trigger(arg1: *mut Fl_Progress, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;
+}
+extern "C" {
+    pub fn Fl_Progress_set_minimum(arg1: *mut Fl_Progress, a: f64);
+}
+extern "C" {
+    pub fn Fl_Progress_maximum(arg1: *mut Fl_Progress) -> f64;
+}
+extern "C" {
+    pub fn Fl_Progress_set_maximum(arg1: *mut Fl_Progress, a: f64);
+}
+extern "C" {
+    pub fn Fl_Progress_value(arg1: *mut Fl_Progress) -> f64;
+}
+extern "C" {
+    pub fn Fl_Progress_set_value(arg1: *mut Fl_Progress, arg2: f64);
+}

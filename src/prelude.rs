@@ -1,7 +1,6 @@
 pub use crate::enums::*;
 use crate::text::StyleTableEntry;
 use crate::image::Image;
-use fltk_sys::widget::*;
 use std::convert::From;
 use std::error::Error;
 use std::{fmt, io, os::raw};
@@ -96,7 +95,7 @@ pub trait WidgetTrait {
     /// Returns the label of the widget
     fn label(&self) -> String;
     /// transforms a widget to a base Fl_Widget, for internal use
-    fn as_widget_ptr(&self) -> *mut Fl_Widget;
+    fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
     /// Activates the widget
     fn activate(&mut self);
     /// Deactivates the widget

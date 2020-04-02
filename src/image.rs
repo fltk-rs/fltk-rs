@@ -24,6 +24,15 @@ impl<I: ImageTrait> From<I> for Image {
     }
 }
 
+/// A conversion function for internal use
+impl Image {
+    pub fn from_raw(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
+        Image {
+            _inner: ptr,
+        }
+    }
+}
+
 /// Creates a struct holding a Jpeg image
 #[derive(ImageTrait, Debug, Clone)]
 pub struct JpegImage {

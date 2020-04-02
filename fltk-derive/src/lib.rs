@@ -1486,7 +1486,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn icon(&self, line: usize) -> Image {
                 unsafe {
-                    mem::transmute(#icon(self._inner, line as i32))
+                    Image::from_raw(#icon(self._inner, line as i32) as *mut fltk_sys::image::Fl_Image)
                 }
             }
             fn remove_icon(&mut self, line: usize) {

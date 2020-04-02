@@ -151,6 +151,8 @@ Most common widgets are implemented:
 - Spinner
 - Clock
 - Chart
+- Progress (progress bar)
+- Wizard
 
 ## Todo
 

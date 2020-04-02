@@ -6,6 +6,7 @@
 #include <FL/Fl_Tabs.H>
 #include <FL/Fl_Tile.H>
 #include <FL/Fl_Widget.H>
+#include <FL/Fl_Wizard.H>
 #include <cstring>
 #include <string>
 
@@ -28,3 +29,20 @@ GROUP_DEFINE(Fl_Tabs)
 WIDGET_DEFINE(Fl_Tile)
 
 GROUP_DEFINE(Fl_Tile)
+
+WIDGET_DEFINE(Fl_Wizard)
+
+void Fl_Wizard_next(Fl_Wizard *self) {
+    self->next();
+}
+void Fl_Wizard_prev(Fl_Wizard *self) {
+    self->prev();
+}
+Fl_Widget *Fl_Wizard_value(Fl_Wizard *self) {
+    return (Fl_Widget*)self->value();
+}
+void Fl_Wizard_set_value(Fl_Wizard *self, Fl_Widget *wid) {
+    self->value(wid);
+}
+
+GROUP_DEFINE(Fl_Wizard)
