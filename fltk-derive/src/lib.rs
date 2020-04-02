@@ -365,12 +365,12 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { #set_label_font(self._inner, font as i32) }
             }
 
-            fn label_size(&self) -> usize {
-                unsafe { #label_size(self._inner) as usize }
+            fn label_size(&self) -> i32 {
+                unsafe { #label_size(self._inner) }
             }
 
-            fn set_label_size(&mut self, sz: usize) {
-                unsafe { #set_label_size(self._inner, sz as i32) }
+            fn set_label_size(&mut self, sz: i32) {
+                unsafe { #set_label_size(self._inner, sz) }
             }
 
             fn label_type<T: WidgetType>(&self) -> T {
@@ -526,9 +526,9 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #clear(self._inner)
                 }
             }
-            fn children(&self) -> usize {
+            fn children(&self) -> u32 {
                 unsafe {
-                    #children(self._inner) as usize
+                    #children(self._inner) as u32
                 }
             }
         }
@@ -745,12 +745,12 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_text_color(self._inner, color as u32)
                 }
             }
-            fn text_size(&self) -> usize {
+            fn text_size(&self) -> u32 {
                 unsafe {
-                    #text_size(self._inner) as usize
+                    #text_size(self._inner) as u32
                 }
             }
-            fn set_text_size(&mut self, sz: usize) {
+            fn set_text_size(&mut self, sz: u32) {
                 unsafe {
                     #set_text_size(self._inner, sz as i32)
                 }
@@ -880,9 +880,9 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
 
-            fn text_size(&self) -> usize {
+            fn text_size(&self) -> u32 {
                 unsafe {
-                    #text_size(self._inner) as usize
+                    #text_size(self._inner) as u32
                 }
             }
 
@@ -1205,10 +1205,10 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_text_color(&mut self, color: Color){
                 unsafe { #set_text_color(self._inner, color as u32) }
             }
-            fn text_size(&self) -> usize{
-                unsafe { #text_size(self._inner) as usize }
+            fn text_size(&self) -> u32{
+                unsafe { #text_size(self._inner) as u32 }
             }
-            fn set_text_size(&mut self, sz: usize) {
+            fn set_text_size(&mut self, sz: u32) {
                 unsafe { #set_text_size(self._inner, sz as i32) }
             }
             fn append(&mut self, text: &str) {
@@ -1305,7 +1305,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_cursor_color(self._inner, color as u32)
                 }
             }
-            fn set_scrollbar_width(&mut self, width: i32){
+            fn set_scrollbar_width(&mut self, width: u32){
                 unsafe {
                     #set_scrollbar_width(self._inner, width as i32)
                 }
@@ -1330,9 +1330,9 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     mem::transmute(#cursor_color(self._inner))
                 }
             }
-            fn scrollbar_width(&self) -> i32 {
+            fn scrollbar_width(&self) -> u32 {
                 unsafe {
-                    #scrollbar_width(self._inner)
+                    #scrollbar_width(self._inner) as u32
                 }
             }
             fn scrollbar_size(&self) -> usize {
@@ -1469,12 +1469,12 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #load_file(self._inner, path.into_raw() as *const raw::c_char)
                 }
             }
-            fn text_size(&self) -> usize {
+            fn text_size(&self) -> u32 {
                 unsafe {
-                    #text_size(self._inner) as usize
+                    #text_size(self._inner) as u32
                 }
             }
-            fn set_text_size(&mut self, c: usize) {
+            fn set_text_size(&mut self, c: u32) {
                 unsafe {
                     #set_text_size(self._inner, c as i32)
                 }

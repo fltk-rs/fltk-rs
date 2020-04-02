@@ -126,9 +126,9 @@ pub trait WidgetTrait {
     /// Sets the widget label's font
     fn set_label_font(&mut self, font: Font);
     /// Returns the widget label's size
-    fn label_size(&self) -> usize;
+    fn label_size(&self) -> i32;
     /// Sets the widget label's size
-    fn set_label_size(&mut self, sz: usize);
+    fn set_label_size(&mut self, sz: i32);
     /// Returns the widget label's type
     fn label_type<T: WidgetType>(&self) -> T;
     /// Sets the widget label's type
@@ -174,7 +174,7 @@ pub trait GroupTrait: WidgetTrait {
     /// Clear a group from all widgets
     fn clear(&mut self);
     /// Return the number of children in a group
-    fn children(&self) -> usize;
+    fn children(&self) -> u32;
 }
 
 /// Defines the methods implemented by all window widgets
@@ -230,9 +230,9 @@ pub trait InputTrait: WidgetTrait {
     /// Sets the text color
     fn set_text_color(&mut self, color: Color);
     /// Return the text size
-    fn text_size(&self) -> usize;
+    fn text_size(&self) -> u32;
     /// Sets the text size
-    fn set_text_size(&mut self, sz: usize);
+    fn set_text_size(&mut self, sz: u32);
     /// Returns whether the input/output widget is readonly
     fn readonly(&self) -> bool;
     /// Set readonly status of the input/output widget
@@ -252,7 +252,7 @@ pub trait MenuTrait: WidgetTrait {
     /// Sets the text font
     fn set_text_font(&mut self, c: Font);
     /// Return the text size
-    fn text_size(&self) -> usize;
+    fn text_size(&self) -> u32;
     /// Sets the text size
     fn set_text_size(&mut self, c: usize);
     /// Return the text color
@@ -331,9 +331,9 @@ pub trait DisplayTrait {
     /// Sets the text color
     fn set_text_color(&mut self, color: Color);
     /// Return the text size
-    fn text_size(&self) -> usize;
+    fn text_size(&self) -> u32;
     /// Sets the text size
-    fn set_text_size(&mut self, sz: usize);
+    fn set_text_size(&mut self, sz: u32);
     /// Append text to Display widget
     fn append(&mut self, text: &str);
     /// Return buffer length of Display widget                  
@@ -367,8 +367,8 @@ pub trait DisplayTrait {
     /// Sets the cursor color
     fn set_cursor_color(&mut self, color: Color);
     /// Sets the scrollbar width
-    fn set_scrollbar_width(&mut self, width: i32);
-    /// Sets the scrollbar size
+    fn set_scrollbar_width(&mut self, width: u32);
+    /// Sets the scrollbar size in pixels
     fn set_scrollbar_size(&mut self, size: usize);
     /// Sets the scrollbar alignment
     fn set_scrollbar_align(&mut self, align: Align);
@@ -377,8 +377,8 @@ pub trait DisplayTrait {
     /// Returns the cursor color
     fn cursor_color(&self) -> Color;
     /// Returns the scrollback width
-    fn scrollbar_width(&self) -> i32;
-    /// Returns the scrollbar size
+    fn scrollbar_width(&self) -> u32;
+    /// Returns the scrollbar size in pixels
     fn scrollbar_size(&self) -> usize;
     /// Returns the scrollbar alignment
     fn scrollbar_align(&self) -> Align;
@@ -413,9 +413,9 @@ pub trait BrowserTrait {
     /// Load a file
     fn load_file(&mut self, path: &std::path::Path);
     /// Return the text size
-    fn text_size(&self) -> usize;
+    fn text_size(&self) -> u32;
     /// Sets the text size
-    fn set_text_size(&mut self, sz: usize);
+    fn set_text_size(&mut self, sz: u32);
     /// Sets the icon for browser elements
     fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: Img);
     /// Returns the icon of a browser element

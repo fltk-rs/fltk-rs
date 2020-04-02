@@ -44,13 +44,13 @@ impl Spinner {
             Fl_Spinner_step(self._inner)
         }
     }
-    pub fn maxsize(&self) -> usize {
+    pub fn maximum_size(&self) -> u32 {
         unsafe {
-            Fl_Spinner_maxsize(self._inner) as usize
+            Fl_Spinner_maxsize(self._inner) as u32
         }
     }
 
-    pub fn set_maxsize(&mut self, s: usize) {
+    pub fn set_maximum_size(&mut self, s: u32) {
         unsafe {
             Fl_Spinner_set_maxsize(self._inner, s as i32)
         }
@@ -68,13 +68,13 @@ impl Spinner {
         }
     }
 
-    pub fn text_size(&self) -> usize {
+    pub fn text_size(&self) -> u32 {
         unsafe {
-            Fl_Spinner_text_size(self._inner) as usize
+            Fl_Spinner_text_size(self._inner) as u32
         }
     }
 
-    pub fn set_textsize(&mut self, s: usize) {
+    pub fn set_text_size(&mut self, s: u32) {
         unsafe {
             Fl_Spinner_set_textsize(self._inner, s as i32)
         }
@@ -139,25 +139,25 @@ impl Chart {
         }
     }
 
-    pub fn size(&self) -> usize {
+    pub fn size(&self) -> u32 {
         unsafe {
-            Fl_Chart_size(self._inner) as usize
+            Fl_Chart_size(self._inner) as u32
         }
     }
 
-    pub fn set_size(&mut self, w: i32, h: i32) {
+    pub fn set_size(&mut self, w: u32, h: u32) {
         unsafe {
-            Fl_Chart_set_size(self._inner, w, h)
+            Fl_Chart_set_size(self._inner, w as i32, h as i32)
         }
     }
 
-    pub fn maxsize(&self) -> usize {
+    pub fn maximum_size(&self) -> u32 {
         unsafe {
-            Fl_Chart_maxsize(self._inner) as usize
+            Fl_Chart_maxsize(self._inner) as u32
         }
     }
 
-    pub fn set_maxsize(&mut self, s: usize) {
+    pub fn set_maximum_size(&mut self, s: u32) {
         unsafe {
             Fl_Chart_set_maxsize(self._inner, s as i32)
         }
@@ -175,13 +175,13 @@ impl Chart {
         }
     }
 
-    pub fn text_size(&self) -> usize {
+    pub fn text_size(&self) -> u32 {
         unsafe {
-            Fl_Chart_text_size(self._inner) as usize
+            Fl_Chart_text_size(self._inner) as u32
         }
     }
 
-    pub fn set_textsize(&mut self, s: usize) {
+    pub fn set_text_size(&mut self, s: u32) {
         unsafe {
             Fl_Chart_set_textsize(self._inner, s as i32)
         }
