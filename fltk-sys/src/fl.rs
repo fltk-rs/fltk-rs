@@ -66,3 +66,9 @@ extern "C" {
         b: ::std::os::raw::c_uchar,
     ) -> ::std::os::raw::c_uint;
 }
+extern "C" {
+    pub fn Fl_get_font(idx: ::std::os::raw::c_int) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_set_fonts(c: *const ::std::os::raw::c_char) -> ::std::os::raw::c_uchar;
+}

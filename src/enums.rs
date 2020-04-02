@@ -1,4 +1,5 @@
 use fltk_sys::fl::Fl_get_color;
+use crate::app::*;
 
 /// Defines label types
 #[repr(i32)]
@@ -14,6 +15,70 @@ pub enum LabelType {
     ImageLabel,
     FreeLabelType,
 }
+
+/// Defines the frame type, which can be set using the set_type() method
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum FrameType {
+    NoBox = 0,
+    FlatBox,
+    UpBox,
+    DownBox,
+    UpFrame,
+    DownFrame,
+    ThinUpBox,
+    ThinDownBox,
+    ThinUpFrame,
+    ThinDownFrame,
+    EngraveBox,
+    EmbossedBox,
+    EngravedFrame,
+    EmbossedFrame,
+    BorderBox,
+    ShadowBox,
+    BorderFrame,
+    ShadowFrame,
+    RoundedBox,
+    RShadowBox,
+    RoundedFrame,
+    RFlatBox,
+    RoundUpBox,
+    RoundDownBox,
+    DiamondUpBox,
+    DiamondDownBox,
+    OvalBox,
+    OShadowBox,
+    OvalFrame,
+    OFlatFrame,
+    PlasticUpBox,
+    PlasticDownBox,
+    PlasticUpFrame,
+    PlasticDownFrame,
+    PlasticThinUpBox,
+    PlasticThinDownBox,
+    PlasticRoundUpBox,
+    PlasticRoundDownBox,
+    GtkUpBox,
+    GtkDownBox,
+    GtkUpFrame,
+    GtkDownFrame,
+    GtkThinUpBox,
+    GtkThinDownBox,
+    GtkThinUpFrame,
+    GtkThinDownFrame,
+    GtkRoundUpFrame,
+    GtkRoundDownFrame,
+    GleamUpBox,
+    GleamDownBox,
+    GleamUpFrame,
+    GleamDownFrame,
+    GleamThinUpBox,
+    GleamThinDownBox,
+    GleamRoundUpBox,
+    GleamRoundDownBox,
+    FreeBoxType,
+}
+
 
 /// Defines alignment rules used by FLTK for labels
 #[repr(i32)]
@@ -47,6 +112,23 @@ pub enum Font {
     ScreenBold = 14,
     Zapfdingbats = 15,
     Freefont = 16,
+}
+
+impl Font {
+    pub fn by_index(idx: u8) -> Font {
+        if idx >= get_font_count() {
+            return Font::Helvetica;
+        }
+        unsafe {
+            std::mem::transmute(idx as i32)
+        }
+    }
+    pub fn by_name(name: &str) -> Font {
+        match get_font_index(name) {
+            Some(val) => Font::by_index(val),
+            None => Font::Helvetica,
+        }
+    }
 }
 
 /// Defines colors used by FLTK

@@ -79,6 +79,7 @@ pub struct App {}
 impl App {
     /// Instantiates an App type
     pub fn default() -> App {
+        set_fonts("*");
         App {}
     }
     
@@ -209,4 +210,42 @@ where
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
         fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
     }
+}
+
+fn set_fonts(name: &str) -> u8 {
+    let name = CString::new(name).unwrap();
+    unsafe {
+        Fl_set_fonts(name.into_raw() as *mut raw::c_char) as u8
+    }
+} 
+
+pub fn get_font_count() -> u8 {
+    set_fonts("*")
+}
+
+pub fn get_font_name(idx: u8) -> String {
+    unsafe {
+        CStr::from_ptr(Fl_get_font(idx as i32) as *mut raw::c_char).to_string_lossy().to_string()
+    }
+}
+
+pub fn get_font_names() -> Vec<String> {
+    let mut vec: Vec<String> = vec![];
+    let cnt = get_font_count();
+    for i in 0..cnt {
+        vec.push(get_font_name(i));
+    }
+    vec
+}
+
+pub fn get_font_index(name: &str) -> Option<u8> {
+    let cnt = set_fonts("*");
+    let mut ret: Option<u8> = None;
+    for i in 0..cnt {
+        if name == get_font_name(i) {
+            ret = Some(i);
+            break;
+        } 
+    }
+    ret
 }

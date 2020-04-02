@@ -50,3 +50,11 @@ void Fl_set_scheme(const char *scheme) { Fl::scheme(scheme); }
 unsigned int Fl_get_color(unsigned char r, unsigned char g, unsigned char b) {
   return fl_rgb_color(r, g, b);
 }
+
+const char* Fl_get_font(int idx) {
+  return Fl::get_font(idx);
+}
+
+unsigned char Fl_set_fonts(const char *c) {
+  return Fl::set_fonts(c);
+}
