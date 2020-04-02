@@ -215,7 +215,7 @@ impl std::fmt::Debug for Key {
             Key::AltL => write!(f, "AltL"),
             Key::AltR => write!(f, "AltR"),
             Key::Delete => write!(f, "Delete"),
-            _ => write!(f, "{}", *self as u8 as char),
+            _ => write!(f, "0x{:02x}", *self as i32),
         }
     }
 }
