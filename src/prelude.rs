@@ -1,5 +1,6 @@
 pub use crate::enums::*;
 use crate::text::StyleTableEntry;
+use crate::widget::Widget;
 use crate::image::Image;
 use std::convert::From;
 use std::error::Error;
@@ -96,6 +97,8 @@ pub trait WidgetTrait {
     fn label(&self) -> String;
     /// transforms a widget to a base Fl_Widget, for internal use
     fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
+    /// transforms a widget pointer to a Widget, for internal use
+    fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
     /// Activates the widget
     fn activate(&mut self);
     /// Deactivates the widget
@@ -150,7 +153,7 @@ pub trait WidgetTrait {
     fn set_image<Image: ImageTrait>(&mut self, image: Image);
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
-    /// Set a custom handler, where events are managed manually
+    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
@@ -174,6 +177,8 @@ pub trait GroupTrait: WidgetTrait {
     fn clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> u32;
+    /// Return child widget by index
+    fn child(&self, idx: usize) -> Widget;
 }
 
 /// Defines the methods implemented by all window widgets
@@ -437,4 +442,6 @@ pub trait ImageTrait {
     fn as_ptr(&self) -> *mut raw::c_void;
     /// Retunrs a pointer of the image
     fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
+    /// Transforms a raw image pointer to an image
+    fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
 }

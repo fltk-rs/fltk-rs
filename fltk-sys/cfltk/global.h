@@ -61,7 +61,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_insert(widget *self, void *, int pos);                         \
   void widget##_remove(widget *self, int index);                               \
   void widget##_clear(widget *self);                                           \
-  int widget##_children(widget *self);
+  int widget##_children(widget *self);                                         \
+  Fl_Widget *widget##_child(widget *, int index);
 
 #define WINDOW_DECLARE(widget)                                                 \
   void widget##_make_modal(widget *, unsigned int boolean);                    \
@@ -296,7 +297,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   void widget##_remove(widget *self, int index) { self->remove(index); }       \
   void widget##_clear(widget *self) { self->clear(); }                         \
-  int widget##_children(widget *self) { return self->children(); }
+  int widget##_children(widget *self) { return self->children(); }             \
+  Fl_Widget *widget##_child(widget *self, int index) {                         \
+    return self->child(index);                                                 \
+  }
 
 #define WINDOW_DEFINE(widget)                                                  \
   void widget##_make_modal(widget *self, unsigned int boolean) {               \

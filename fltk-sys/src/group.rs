@@ -190,6 +190,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Group_children(self_: *mut Fl_Group) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Group_child(arg1: *mut Fl_Group, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Pack {
@@ -358,6 +361,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_children(self_: *mut Fl_Pack) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_child(arg1: *mut Fl_Pack, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -528,6 +534,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Scroll_children(self_: *mut Fl_Scroll) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Scroll_child(arg1: *mut Fl_Scroll, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tabs {
@@ -697,6 +706,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tabs_children(self_: *mut Fl_Tabs) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Tabs_child(arg1: *mut Fl_Tabs, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tile {
@@ -865,6 +877,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_children(self_: *mut Fl_Tile) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_child(arg1: *mut Fl_Tile, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1046,4 +1061,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_children(self_: *mut Fl_Wizard) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Wizard_child(arg1: *mut Fl_Wizard, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
 }

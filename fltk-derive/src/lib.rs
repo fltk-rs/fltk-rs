@@ -298,6 +298,13 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { mem::transmute(self._inner) }
             }
 
+            fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
+                unsafe {
+                    #name {
+                        _inner: mem::transmute(ptr),
+                    }
+                }
+            }
             fn activate(&mut self) {
                 unsafe { #activate(self._inner) }
             }
@@ -491,6 +498,7 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
     let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
     let clear = Ident::new(format!("{}_{}", name_str, "clear").as_str(), name.span());
     let children = Ident::new(format!("{}_{}", name_str, "children").as_str(), name.span());
+    let child = Ident::new(format!("{}_{}", name_str, "child").as_str(), name.span());
 
     let gen = quote! {
         impl GroupTrait for #name {
@@ -529,6 +537,11 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn children(&self) -> u32 {
                 unsafe {
                     #children(self._inner) as u32
+                }
+            }
+            fn child(&self, idx: usize) -> Widget {
+                unsafe {
+                    Widget::from_raw(#child(self._inner, idx as i32) as *mut fltk_sys::widget::Fl_Widget)
                 }
             }
         }
@@ -1544,6 +1557,13 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                 unsafe {
                     mem::transmute(self._inner)
+                }
+            }
+            fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
+                unsafe {
+                    #name {
+                        _inner: mem::transmute(ptr),
+                    }
                 }
             }
         }

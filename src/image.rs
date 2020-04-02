@@ -26,10 +26,15 @@ impl<I: ImageTrait> From<I> for Image {
 
 /// A conversion function for internal use
 impl Image {
+    /// Initialize an Image base from a raw pointer
     pub fn from_raw(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
         Image {
             _inner: ptr,
         }
+    }
+    /// Transforms an Image base into another Image
+    pub fn into<I: ImageTrait>(&mut self) -> I {
+        I::from_image_ptr(self._inner)
     }
 }
 
