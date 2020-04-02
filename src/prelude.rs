@@ -321,7 +321,7 @@ pub trait ValuatorTrait: WidgetTrait {
 }
 
 /// Defines the methods implemented by TextDisplay and TextEditor
-pub trait DisplayTrait {
+pub trait DisplayTrait: WidgetTrait {
     /// Set the text inside the widget
     fn set_text(&mut self, txt: &str);
     /// Returns the text inside the widget
