@@ -168,7 +168,7 @@ pub fn alert(txt: &str) {
 
 /// Displays a choice box with upto three choices
 /// An empty choice will not be shown
-pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> usize {
+pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
     unsafe {
         let txt = CString::new(txt).unwrap();
         let b0 = CString::new(b0).unwrap();
@@ -179,7 +179,7 @@ pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> usize {
             b0.into_raw() as *const raw::c_char,
             b1.into_raw() as *const raw::c_char,
             b2.into_raw() as *const raw::c_char,
-        ) as usize
+        ) as u32
     }
 }
 
@@ -274,15 +274,15 @@ impl HelpDialog {
         }
     }
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: usize) {
+    pub fn set_text_size(&mut self, s: u32) {
         unsafe {
             Fl_Help_Dialog_set_text_size(self._inner, s as i32)
         }
     }
     /// Returns the text size
-    pub fn text_size(&mut self) -> usize {
+    pub fn text_size(&mut self) -> u32 {
         unsafe {
-            Fl_Help_Dialog_text_size(self._inner) as usize
+            Fl_Help_Dialog_text_size(self._inner) as u32
         }
     }
     /// Sets the value of the help dialog

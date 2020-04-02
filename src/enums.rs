@@ -82,9 +82,11 @@ pub enum Color {
 }
 
 impl Color {
+    /// Returns a color from RGB
     pub fn from_rgb(r: u8, g: u8, b: u8) -> Color {
         unsafe { std::mem::transmute(Fl_get_color(r, g, b)) }
     }
+    /// Returns a color from hex or decimal
     pub fn from_u32(val: u32) -> Color {
         let hex = format!("{:06x}", val);
         let r = u8::from_str_radix(&hex[0..2], 16).unwrap();
@@ -120,6 +122,7 @@ pub enum Event {
     MouseWheel,
 }
 
+/// Defines the inputted virtual keycode 
 #[repr(i32)]
 #[derive(Copy, Clone, PartialEq)]
 pub enum Key {
@@ -215,11 +218,12 @@ impl std::fmt::Debug for Key {
             Key::AltL => write!(f, "AltL"),
             Key::AltR => write!(f, "AltR"),
             Key::Delete => write!(f, "Delete"),
-            _ => write!(f, "{}", *self as u8 as char),
+            _ => write!(f, "0x{:02x}", *self as i32),
         }
     }
 }
 
+/// Defines the modifiers of virtual keycodes
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Shortcut {
@@ -230,6 +234,7 @@ pub enum Shortcut {
     Alt = 0x00080000,
 }
 
+/// Defines the types of triggers for widget callback functions
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum CallbackTrigger {
@@ -243,6 +248,7 @@ pub enum CallbackTrigger {
     EnterKeyChanged = 11,
 }
 
+/// Defines the Cursor styles supported by fltk
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum CursorStyle {
@@ -254,6 +260,7 @@ pub enum CursorStyle {
     SimpleCursor,
 }
 
+/// Defines the chart types supported by fltk
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ChartType {
@@ -266,6 +273,7 @@ pub enum ChartType {
     SpecialPieChart = 6,
 }
 
+/// Defines the clock types supported by fltk
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ClockType {

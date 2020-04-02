@@ -191,6 +191,9 @@ extern "C" {
     pub fn Fl_Window_children(self_: *mut Fl_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Window_child(arg1: *mut Fl_Window, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
     pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: ::std::os::raw::c_uint);
 }
 extern "C" {
@@ -388,6 +391,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_children(self_: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_child(
+        arg1: *mut Fl_Double_Window,
+        index: ::std::os::raw::c_int,
+    ) -> *mut Fl_Widget;
 }
 extern "C" {
     pub fn Fl_Double_Window_make_modal(
@@ -590,6 +599,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_children(self_: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_child(
+        arg1: *mut Fl_Menu_Window,
+        index: ::std::os::raw::c_int,
+    ) -> *mut Fl_Widget;
 }
 extern "C" {
     pub fn Fl_Menu_Window_make_modal(arg1: *mut Fl_Menu_Window, boolean: ::std::os::raw::c_uint);

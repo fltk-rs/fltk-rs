@@ -16,3 +16,16 @@ impl<W: WidgetTrait> From<W> for Widget {
         }
     }
 }
+
+impl Widget {
+    /// Initialize a Widget base from a pointer
+    pub fn from_raw(ptr: *mut Fl_Widget) -> Self {
+        Widget {
+            _inner: ptr,
+        }
+    }
+    /// Transform Widget base to another Widget
+    pub fn into<W: WidgetTrait>(&mut self) -> W {
+        W::from_widget_ptr(self._inner)
+    }
+}

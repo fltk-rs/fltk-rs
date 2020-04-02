@@ -164,8 +164,8 @@ pub fn event_is_click() -> bool {
 }
 
 /// Returns the duration of an event
-pub fn event_length() -> usize {
-    unsafe { Fl_event_length() as usize }
+pub fn event_length() -> u32 {
+    unsafe { Fl_event_length() as u32 }
 }
 
 /// Returns the state of the event

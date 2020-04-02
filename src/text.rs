@@ -24,7 +24,7 @@ pub struct SimpleTerminal {
 pub struct StyleTableEntry {
     pub color: Color,
     pub font: Font,
-    pub size: usize,
+    pub size: u32,
 }
 
 impl TextEditor {

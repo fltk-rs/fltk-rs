@@ -11,7 +11,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.1.24"
+fltk = "^0.1.25"
 ```
 An example hello world application:
 
@@ -151,6 +151,8 @@ Most common widgets are implemented:
 - Spinner
 - Clock
 - Chart
+- Progress (progress bar)
+- Wizard
 
 ## Todo
 

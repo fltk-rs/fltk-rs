@@ -93,12 +93,12 @@ impl MenuItem {
     }
 
     /// Returns the label size of the menu item
-    pub fn label_size(&self) -> usize {
-        unsafe { Fl_Menu_Item_label_size(self._inner) as usize }
+    pub fn label_size(&self) -> u32 {
+        unsafe { Fl_Menu_Item_label_size(self._inner) as u32 }
     }
 
     /// Sets the label size of the menu item
-    pub fn set_label_size(&mut self, sz: usize) {
+    pub fn set_label_size(&mut self, sz: u32) {
         unsafe { Fl_Menu_Item_set_label_size(self._inner, sz as i32) }
     }
 
