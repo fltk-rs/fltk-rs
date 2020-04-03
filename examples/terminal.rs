@@ -11,7 +11,8 @@ fn main() {
         .to_string_lossy()
         .to_string();
     current_dir.push_str("/ $ ");
-    let mut term = TextDisplay::new(5, 5, 630, 470);
+    let mut buf = TextBuffer::default();
+    let mut term = TextDisplay::new(5, 5, 630, 470, &mut buf);
     term.set_color(Color::Black);
     term.set_text_color(Color::White);
     term.set_text_font(Font::Courrier);
@@ -21,6 +22,7 @@ fn main() {
     term.clone().set_custom_handler(Box::new(|ev: app::Event| {
         // println!("{:?}", app::event());
         // println!("{:?}", app::event_key());
+        // println!("{:?}", app::event_text());
         match ev {
             // fltk bug with Event::KeyDown 
             app::Event::Shortcut => match app::event_key() {

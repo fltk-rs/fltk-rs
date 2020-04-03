@@ -23,6 +23,36 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct Fl_Text_Buffer {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_new() -> *mut Fl_Text_Buffer;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_delete(arg1: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_text(self_: *mut Fl_Text_Buffer) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_set_text(self_: *mut Fl_Text_Buffer, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_append(self_: *mut Fl_Text_Buffer, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_remove(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_length(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Display {
     _unused: [u8; 0],
 }
@@ -170,6 +200,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Display_get_buffer(arg1: *mut Fl_Text_Display) -> *mut Fl_Text_Buffer;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_buffer(arg1: *mut Fl_Text_Display, arg2: *mut Fl_Text_Buffer);
 }
 extern "C" {
     pub fn Fl_Text_Display_text_font(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
@@ -453,6 +489,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_get_buffer(arg1: *mut Fl_Text_Editor) -> *mut Fl_Text_Buffer;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_buffer(arg1: *mut Fl_Text_Editor, arg2: *mut Fl_Text_Buffer);
 }
 extern "C" {
     pub fn Fl_Text_Editor_text_font(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
@@ -766,6 +808,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_get_buffer(arg1: *mut Fl_Simple_Terminal) -> *mut Fl_Text_Buffer;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_buffer(arg1: *mut Fl_Simple_Terminal, arg2: *mut Fl_Text_Buffer);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_text_font(arg1: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;

@@ -25,6 +25,7 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_valuator.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_browser.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_misc.h");
+    println!("cargo:rerun-if-changed=cfltk/cfl_text.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_image.h");
     println!("cargo:rerun-if-changed=cfltk/global.h");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");

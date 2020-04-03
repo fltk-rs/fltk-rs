@@ -11,7 +11,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.1.26"
+fltk = "^0.2.0"
 ```
 An example hello world application:
 
@@ -82,6 +82,32 @@ fn main() {
     wind.show();
     app.run().unwrap();
 }
+```
+
+### Events
+Events can be handled using the set_callback method (as above) or free function, it will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the set_custom_handler() method can be used:
+```rust
+some_widget.set_custom_handler(Box::new(|ev: app::Event| {
+        match ev {
+            /* handle ev */
+        }
+    }));
+```
+
+### Theming
+FLTK offers 4 application themes (called schemes):
+- Base
+- Gtk
+- Gleam
+- Plastic
+These can be set using the App::set_scheme() function.
+Themes of individual widgets can be optionally modified using the provided methods in the WidgetTrait, such as set_color(), set_label_font(), set_frame_type() etc:
+```rust
+    some_button.set_color(Color::Light1); // You can use one of the provided colors in the fltk enums
+    some_button.set_color(Color::from_rgb(255, 0, 0)); // Or you can specify a color by rgb or hex/u32 value
+    some_button.set_color(Color::from_u32(0xffebee));
+    some_button.set_frame(FrameType::RoundUpBox);
+    some_button.set_font(Font::TimesItalic);
 ```
 
 ## Dependencies

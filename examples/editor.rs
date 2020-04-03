@@ -1,4 +1,4 @@
-use fltk::{app::*, dialog::*, menu::*, text::TextEditor, window::Window};
+use fltk::{app::*, dialog::*, menu::*, text::{TextBuffer, TextEditor}, window::Window};
 use std::{fs, path};
 
 fn main() {
@@ -10,7 +10,8 @@ fn main() {
         .center_screen()
         .with_label("RustyEd");
     wind.set_color(Color::Light2);
-    let mut editor = TextEditor::new(5, 40, 790, 555);
+    let mut buf = TextBuffer::default();
+    let mut editor = TextEditor::new(5, 40, 790, 555, &mut buf);
     editor.set_trigger(CallbackTrigger::Changed);
     editor.set_callback(Box::new(|| saved = false));
     let mut menu = MenuBar::new(0, 0, 800, 40, "");
@@ -111,7 +112,9 @@ fn main() {
         Box::new(|| {
             message(
                 "This is an example application written in Rust and using the FLTK Gui library.",
-            )
+            );
+            let buf2 = editor.get_buffer();
+            println!("{}", buf2.length());
         }),
     );
 

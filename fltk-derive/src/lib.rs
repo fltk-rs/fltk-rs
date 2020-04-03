@@ -1122,6 +1122,8 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
 
+    let get_buffer = Ident::new(format!("{}_{}", name_str, "get_buffer").as_str(), name.span());
+    let set_buffer = Ident::new(format!("{}_{}", name_str, "set_buffer").as_str(), name.span());
     let set_text = Ident::new(format!("{}_{}", name_str, "set_text").as_str(), name.span());
     let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
     let text_font = Ident::new(
@@ -1236,6 +1238,16 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl DisplayTrait for #name {
+            fn get_buffer(&self) -> TextBuffer {
+                unsafe {
+                    TextBuffer::from_ptr(#get_buffer(self._inner))
+                }
+            }
+            fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer) {
+                unsafe {
+                    #set_buffer(self._inner, buffer.as_ptr())
+                }
+            }
             fn set_text(&mut self, txt: &str) {
                 unsafe {
                     let txt = CString::new(txt).unwrap();
@@ -1560,6 +1572,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
     let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
 
     let gen = quote! {
+        impl Copy for #name {}
         impl ImageTrait for #name {
             fn new(path: std::path::PathBuf) -> #name {
                 unsafe {

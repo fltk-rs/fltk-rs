@@ -1,5 +1,5 @@
 pub use crate::enums::*;
-use crate::text::StyleTableEntry;
+use crate::text::{StyleTableEntry, TextBuffer};
 use crate::widget::Widget;
 use crate::image::Image;
 use std::convert::From;
@@ -336,6 +336,10 @@ pub trait ValuatorTrait: WidgetTrait {
 
 /// Defines the methods implemented by TextDisplay and TextEditor
 pub trait DisplayTrait: WidgetTrait {
+    /// Get the associated TextBuffer
+    fn get_buffer(&self) -> TextBuffer;
+    /// Sets the associated TextBuffer
+    fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer);
     /// Set the text inside the widget
     fn set_text(&mut self, txt: &str);
     /// Returns the text inside the widget
