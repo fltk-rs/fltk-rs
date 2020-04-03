@@ -100,6 +100,7 @@ FLTK offers 4 application themes (called schemes):
 - Gtk
 - Gleam
 - Plastic
+
 These can be set using the App::set_scheme() function.
 Themes of individual widgets can be optionally modified using the provided methods in the WidgetTrait, such as set_color(), set_label_font(), set_frame_type() etc:
 ```rust
