@@ -464,6 +464,43 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_trigger(self._inner, trigger as i32)
                 }
             }
+            fn below_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                self.resize(w.x(), w.y() + w.height() + padding, self.width(), self.height());
+                self
+            }
+            fn above_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                self.resize(w.x(), w.y() - padding - self.height(), self.width(), self.height());
+                self
+            }
+            fn right_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                self.resize(w.x() + self.width() + padding, w.y(), self.width(), self.height());
+                self
+            }
+            fn left_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                self.resize(w.x() - self.width() - padding, w.y(), self.width(), self.height());
+                self
+            }
+            fn center_of<W: WidgetTrait>(mut self, w: &W) -> Self {
+                assert!(w.width() != 0 && w.height() != 0);
+                let mut sw = self.width() as f64;
+                let mut sh = self.height() as f64;
+                let mut ww = w.width() as f64;
+                let mut wh = w.height() as f64;
+                let mut x = (ww - sw) / 2.0;
+                let mut y = (wh - sh) / 2.0;
+                self.resize(x as i32, y as i32, self.width(), self.height());
+                self.redraw();
+                self
+            }
+            fn size_of<W: WidgetTrait>(mut self, w: &W) -> Self {
+                assert!(w.width() != 0 && w.height() != 0);
+                self.resize(self.x(), self. y(), w.width(), w.height());
+                self
+            }
         }
     };
     gen.into()
@@ -572,6 +609,14 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
     );
     let gen = quote! {
         impl WindowTrait for #name {
+            fn center_screen(mut self) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                let (mut x, mut y) = screen_size();
+                x = x - self.width() as f64;
+                y = y - self.height() as f64;
+                self.resize((x / 2.0) as i32, (y / 2.0) as i32, self.width(), self.height());
+                self
+            }
             fn make_modal(&mut self, val: bool) {
                 unsafe { #make_modal(self._inner, val as u32) }
             }
@@ -1391,19 +1436,12 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_text_size").as_str(),
         name.span(),
     );
-    let set_icon = Ident::new(
-        format!("{}_{}", name_str, "set_icon").as_str(),
-        name.span(),
-    );
-    let icon = Ident::new(
-        format!("{}_{}", name_str, "icon").as_str(),
-        name.span(),
-    );
+    let set_icon = Ident::new(format!("{}_{}", name_str, "set_icon").as_str(), name.span());
+    let icon = Ident::new(format!("{}_{}", name_str, "icon").as_str(), name.span());
     let remove_icon = Ident::new(
         format!("{}_{}", name_str, "remove_icon").as_str(),
         name.span(),
     );
-    
 
     let gen = quote! {
         impl BrowserTrait for #name {

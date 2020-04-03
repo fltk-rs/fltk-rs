@@ -77,6 +77,18 @@ pub trait WidgetTrait {
     fn with_size(self, width: i32, height: i32) -> Self;
     /// Initialize with label/title
     fn with_label(self, title: &str) -> Self;
+    /// Positions the widget below w
+    fn below_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    /// Positions the widget above w
+    fn above_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    /// Positions the widget to the right of w
+    fn right_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    /// Positions the widget to the left of w
+    fn left_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    /// Positions the widget to the center of w
+    fn center_of<W: WidgetTrait>(self, w: &W) -> Self;
+    /// Takes the size of w
+    fn size_of<W: WidgetTrait>(self, w: &W) -> Self;
     /// Sets the widget's label
     fn set_label(&mut self, title: &str);
     /// Redraws a widget, necessary for resizing and changing positions
@@ -183,6 +195,8 @@ pub trait GroupTrait: WidgetTrait {
 
 /// Defines the methods implemented by all window widgets
 pub trait WindowTrait: GroupTrait {
+    /// Positions the window to the center of the screen
+    fn center_screen(self) -> Self;
     /// Makes a window modal
     fn make_modal(&mut self, val: bool);
     /// Makes a window fullscreen

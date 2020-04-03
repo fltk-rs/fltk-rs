@@ -11,7 +11,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.1.25"
+fltk = "^0.1.26"
 ```
 An example hello world application:
 
@@ -52,6 +52,38 @@ let but2 = Button::default()
     .with_label("Button 2");
 ```
 
+An example of a counter showing use of the builder pattern:
+```rust
+fn main() {
+    let app = app::App::default();
+    let mut wind = Window::default()
+        .with_size(160, 200)
+        .center_screen()
+        .with_label("Counter");
+    let mut frame = Frame::default()
+        .with_size(100, 40)
+        .center_of(&wind)
+        .with_label("0");
+    let mut but_inc = Button::default()
+        .size_of(&frame)
+        .above_of(&frame, 0)
+        .with_label("+");
+    let mut but_dec = Button::default()
+        .size_of(&frame)
+        .below_of(&frame, 0)
+        .with_label("-");
+    but_inc.set_callback(Box::new(|| {
+        frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
+    }));
+    but_dec.set_callback(Box::new(|| {
+        frame.set_label(&(frame.label().parse::<i32>().unwrap() - 1).to_string())
+    }));
+    wind.make_resizable(true);
+    wind.show();
+    app.run().unwrap();
+}
+```
+
 ## Dependencies
 
 CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. 
@@ -80,6 +112,7 @@ $ cargo run --example calculator
 $ cargo run --example gallery
 $ cargo run --example button
 $ cargo run --example terminal
+$ cargo run --example counter
 $ cargo run --example hello
 $ cargo run --example hello_button
 ```
@@ -90,6 +123,10 @@ $ cargo run --example hello_button
 Setting the scheme to Gtk.
 
 ![alt_test](screenshots/calc.jpg)
+
+![alt_test](screenshots/counter.jpg)
+
+Check the full [code](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter.rs) for the custom theming.
 
 ![alt_test](screenshots/editor.jpg)
 

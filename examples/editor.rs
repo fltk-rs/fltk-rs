@@ -3,16 +3,12 @@ use std::{fs, path};
 
 fn main() {
     let app = App::default().set_scheme(AppScheme::Gtk);
-    let (screen_width, screen_height) = screen_size();
     let mut filename = String::from("");
     let mut saved = false;
-    let mut wind = Window::new(
-        (screen_width / 2.0 - 400.0) as i32,
-        (screen_height / 2.0 - 300.0) as i32,
-        800,
-        600,
-        "RustyEd",
-    );
+    let mut wind = Window::default()
+        .with_size(800, 600)
+        .center_screen()
+        .with_label("RustyEd");
     wind.set_color(Color::Light2);
     let mut editor = TextEditor::new(5, 40, 790, 555);
     editor.set_trigger(CallbackTrigger::Changed);
