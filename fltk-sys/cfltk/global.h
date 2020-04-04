@@ -152,8 +152,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_move_down(widget *);                                            \
   void widget##_remove(widget *self, int start, int end);                      \
   void widget##_show_cursor(widget *, int boolean);                            \
-  void widget##_set_style_table_entry(widget *self, unsigned int *color,       \
-                                      int *font, int *fontsz, int sz);         \
+  void widget##_set_style_table_entry(widget *self, void *sbuf,                \
+                                      unsigned int *color, int *font,          \
+                                      int *fontsz, int sz);                    \
   void widget##_set_cursor_style(widget *, int style);                         \
   void widget##_set_cursor_color(widget *, unsigned int color);                \
   void widget##_set_scrollbar_width(widget *, int width);                      \
@@ -440,8 +441,6 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     auto buff = self->buffer();                                                \
     buff->append(txt);                                                         \
     self->buffer(buff);                                                        \
-    self->insert_position(self->buffer()->length());                           \
-    self->scroll(self->count_lines(0, self->buffer()->length(), 1), 0);        \
   }                                                                            \
   int widget##_buffer_length(const widget *self) {                             \
     return self->buffer()->length();                                           \
@@ -477,17 +476,16 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     else                                                                       \
       self->hide_cursor();                                                     \
   }                                                                            \
-  void widget##_set_style_table_entry(widget *self, unsigned int *color,       \
-                                      int *font, int *fontsz, int sz) {        \
+  void widget##_set_style_table_entry(widget *self, void *sbuff,               \
+                                      unsigned int *color, int *font,          \
+                                      int *fontsz, int sz) {                   \
     Fl_Text_Display::Style_Table_Entry *stable =                               \
         new (std::nothrow) Fl_Text_Display::Style_Table_Entry[sz];             \
     for (int i = 0; i < sz; ++i) {                                             \
       stable[i] = {color[i], font[i], fontsz[i]};                              \
     }                                                                          \
-    Fl_Text_Buffer *sbuff = new (std::nothrow) Fl_Text_Buffer();               \
-    self->highlight_data(sbuff, stable, sz, 'A', 0, 0);                        \
+    self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);      \
     delete[] stable;                                                           \
-    delete sbuff;                                                              \
   }                                                                            \
   void widget##_set_cursor_style(widget *self, int style) {                    \
     self->cursor_style(style);                                                 \

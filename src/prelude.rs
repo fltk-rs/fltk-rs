@@ -383,7 +383,7 @@ pub trait DisplayTrait: WidgetTrait {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_styly_table_entry(&mut self, entries: &Vec<StyleTableEntry>);
+    fn set_styly_table_entry(&mut self, style_buffer: &mut TextBuffer, entries: &Vec<StyleTableEntry>);
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: CursorStyle);
     /// Sets the cursor color

@@ -1122,8 +1122,14 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
 
-    let get_buffer = Ident::new(format!("{}_{}", name_str, "get_buffer").as_str(), name.span());
-    let set_buffer = Ident::new(format!("{}_{}", name_str, "set_buffer").as_str(), name.span());
+    let get_buffer = Ident::new(
+        format!("{}_{}", name_str, "get_buffer").as_str(),
+        name.span(),
+    );
+    let set_buffer = Ident::new(
+        format!("{}_{}", name_str, "set_buffer").as_str(),
+        name.span(),
+    );
     let set_text = Ident::new(format!("{}_{}", name_str, "set_text").as_str(), name.span());
     let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
     let text_font = Ident::new(
@@ -1352,7 +1358,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #show_cursor(self._inner, val as i32);
                 }
             }
-            fn set_styly_table_entry(&mut self, entries: &Vec<StyleTableEntry>) {
+            fn set_styly_table_entry(&mut self, style_buffer: &mut TextBuffer, entries: &Vec<StyleTableEntry>) {
                 let mut colors: Vec<u32> = vec![];
                 let mut fonts: Vec<i32> = vec![];
                 let mut sizes: Vec<i32> = vec![];
@@ -1362,7 +1368,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     sizes.push(entry.size as i32);
                 }
                 unsafe {
-                    #set_style_table_entry(self._inner, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
+                    #set_style_table_entry(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
                 }
             }
             fn set_cursor_style(&mut self, style: CursorStyle) {
