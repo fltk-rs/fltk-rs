@@ -191,7 +191,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   image *image##_new(const char *filename);                                    \
   void image##_draw(image *, int X, int Y, int W, int H);                      \
   int image##_width(image *);                                                  \
-  int image##_height(image *);
+  int image##_height(image *);                                                 \
+  void image##_delete(image *);
 
 #define WIDGET_DEFINE(widget)                                                  \
   class widget##_Derived : public widget {                                     \
@@ -554,7 +555,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     self->draw(X, Y, W, H);                                                    \
   }                                                                            \
   int image##_width(image *self) { return self->w(); }                         \
-  int image##_height(image *self) { return self->h(); }
+  int image##_height(image *self) { return self->h(); }                        \
+  void image##_delete(image *self) { delete self; }
 
 #ifdef __cplusplus
 }

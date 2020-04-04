@@ -34,7 +34,7 @@ impl TextBuffer {
 
     pub fn text(&self) -> String {
         unsafe {
-            CStr::from_ptr(Fl_Text_Buffer_text(self._inner) as *mut raw::c_char)
+            CString::from_raw(Fl_Text_Buffer_text(self._inner) as *mut raw::c_char)
                 .to_string_lossy().to_string()
         }
     }
@@ -59,7 +59,13 @@ impl TextBuffer {
     }
 }
 
-impl Copy for TextBuffer {}
+impl Drop for TextBuffer {
+    fn drop(&mut self) {
+        unsafe {
+            Fl_Text_Buffer_delete(self._inner)
+        }
+    }
+}
 
 /// Creates a non-editable text display widget
 #[derive(WidgetTrait, DisplayTrait, Debug, Clone)]

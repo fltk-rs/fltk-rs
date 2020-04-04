@@ -425,7 +425,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { #set_align(self._inner, align as i32) }
             }
 
-            fn set_image<Image: ImageTrait>(&mut self, image: Image) {
+            fn set_image<Image: ImageTrait>(&mut self, image: &Image) {
                 unsafe { #set_image(self._inner, image.as_ptr()) }
             }
 
@@ -628,7 +628,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn make_current(&mut self) {
                 unsafe { #make_current(self._inner) }
             }
-            fn set_icon<Image: ImageTrait>(&mut self, image: Image) {
+            fn set_icon<Image: ImageTrait>(&mut self, image: &Image) {
                 unsafe { #set_icon(self._inner, image.as_ptr()) }
             }
             fn make_resizable(&self, val: bool) {
@@ -1244,9 +1244,10 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl DisplayTrait for #name {
-            fn get_buffer(&self) -> TextBuffer {
+            fn get_buffer<'a>(&'a self) -> &'a TextBuffer {
                 unsafe {
-                    TextBuffer::from_ptr(#get_buffer(self._inner))
+                    let x = Box::from(TextBuffer::from_ptr(#get_buffer(self._inner)));
+                    &*Box::into_raw(x)
                 }
             }
             fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer) {
@@ -1263,7 +1264,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn text(&self) -> String {
                 unsafe {
-                    CStr::from_ptr(#text(self._inner) as *mut raw::c_char)
+                    CString::from_raw(#text(self._inner) as *mut raw::c_char)
                         .to_string_lossy().to_string()
                 }
             }
@@ -1548,7 +1549,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_text_size(self._inner, c as i32)
                 }
             }
-            fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: Img) {
+            fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: &Img) {
                 unsafe {
                     #set_icon(self._inner, line as i32, image.as_ptr())
                 }
@@ -1576,9 +1577,14 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
     let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
     let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
+    let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
 
     let gen = quote! {
-        impl Copy for #name {}
+        impl Drop for #name {
+            fn drop(&mut self) {
+                unsafe { #delete(self._inner) }
+            }
+        }
         impl ImageTrait for #name {
             fn new(path: std::path::PathBuf) -> #name {
                 unsafe {

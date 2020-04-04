@@ -129,7 +129,7 @@ pub fn event_key() -> Key {
 /// Returns a textual representation of the latest event
 pub fn event_text() -> String {
     unsafe {
-          CStr::from_ptr(Fl_event_text() as *mut raw::c_char)
+          CString::from_raw(Fl_event_text() as *mut raw::c_char)
             .to_string_lossy().to_string()
     }
 }

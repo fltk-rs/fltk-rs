@@ -162,7 +162,7 @@ pub trait WidgetTrait {
     /// Sets the alignment of the widget
     fn set_align(&mut self, align: Align);
     /// Sets the image of the widget
-    fn set_image<Image: ImageTrait>(&mut self, image: Image);
+    fn set_image<Image: ImageTrait>(&mut self, image: &Image);
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
@@ -204,7 +204,7 @@ pub trait WindowTrait: GroupTrait {
     /// Makes the window current
     fn make_current(&mut self);
     /// Sets the windows icon
-    fn set_icon<Image: ImageTrait>(&mut self, image: Image);
+    fn set_icon<Image: ImageTrait>(&mut self, image: &Image);
     /// Make the window resizable
     fn make_resizable(&self, val: bool);
 }
@@ -337,7 +337,7 @@ pub trait ValuatorTrait: WidgetTrait {
 /// Defines the methods implemented by TextDisplay and TextEditor
 pub trait DisplayTrait: WidgetTrait {
     /// Get the associated TextBuffer
-    fn get_buffer(&self) -> TextBuffer;
+    fn get_buffer<'a>(&'a self) -> &'a TextBuffer;
     /// Sets the associated TextBuffer
     fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer);
     /// Set the text inside the widget
@@ -439,7 +439,7 @@ pub trait BrowserTrait {
     /// Sets the text size
     fn set_text_size(&mut self, sz: u32);
     /// Sets the icon for browser elements
-    fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: Img);
+    fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: &Img);
     /// Returns the icon of a browser element
     fn icon(&self, line: usize) -> Image;
     /// Removes the icon of a browser element

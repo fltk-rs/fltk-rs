@@ -113,8 +113,6 @@ fn main() {
             message(
                 "This is an example application written in Rust and using the FLTK Gui library.",
             );
-            let buf2 = editor.get_buffer();
-            println!("{}", buf2.length());
         }),
     );
 
