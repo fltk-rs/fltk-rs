@@ -1,20 +1,17 @@
-use fltk::{app::*, dialog::*, menu::*, text::TextEditor, window::Window};
+use fltk::{app::*, dialog::*, menu::*, text::{TextBuffer, TextEditor}, window::Window};
 use std::{fs, path};
 
 fn main() {
     let app = App::default().set_scheme(AppScheme::Gtk);
-    let (screen_width, screen_height) = screen_size();
     let mut filename = String::from("");
     let mut saved = false;
-    let mut wind = Window::new(
-        (screen_width / 2.0 - 400.0) as i32,
-        (screen_height / 2.0 - 300.0) as i32,
-        800,
-        600,
-        "RustyEd",
-    );
+    let mut wind = Window::default()
+        .with_size(800, 600)
+        .center_screen()
+        .with_label("RustyEd");
     wind.set_color(Color::Light2);
-    let mut editor = TextEditor::new(5, 40, 790, 555);
+    let mut buf = TextBuffer::default();
+    let mut editor = TextEditor::new(5, 40, 790, 555, &mut buf);
     editor.set_trigger(CallbackTrigger::Changed);
     editor.set_callback(Box::new(|| saved = false));
     let mut menu = MenuBar::new(0, 0, 800, 40, "");
@@ -115,7 +112,7 @@ fn main() {
         Box::new(|| {
             message(
                 "This is an example application written in Rust and using the FLTK Gui library.",
-            )
+            );
         }),
     );
 

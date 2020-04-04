@@ -5,7 +5,6 @@ use fltk::{app, button::*, output::*, window::*};
 
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Gleam);
-    let (screen_width, screen_height) = app::screen_size();
     let border = 20;
     let but_width = 90;
     let but_height = 60;
@@ -24,13 +23,10 @@ fn main() {
     let mut new_val = String::from("0");
     let mut op = '_';
 
-    let mut wind = Window::new(
-        (screen_width / 2.0 - 200.0) as i32,
-        (screen_height / 2.0 - 250.0) as i32,
-        400,
-        500,
-        "FLTK-RS Calculator",
-    );
+    let mut wind = Window::default()
+        .with_label("FLTK Calc")
+        .with_size(400, 500)
+        .center_screen();
     wind.set_color(Color::Light2);
 
     let mut out = Output::new(border, border, 360, 140, "");

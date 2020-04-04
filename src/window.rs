@@ -1,5 +1,6 @@
 pub use crate::prelude::*;
 use crate::widget::*;
+use crate::app::*;
 use fltk_sys::window::*;
 use std::{ffi::{CStr, CString}, mem, os::raw};
 

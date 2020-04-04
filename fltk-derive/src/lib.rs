@@ -425,7 +425,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { #set_align(self._inner, align as i32) }
             }
 
-            fn set_image<Image: ImageTrait>(&mut self, image: Image) {
+            fn set_image<Image: ImageTrait>(&mut self, image: &Image) {
                 unsafe { #set_image(self._inner, image.as_ptr()) }
             }
 
@@ -463,6 +463,43 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     #set_trigger(self._inner, trigger as i32)
                 }
+            }
+            fn below_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                self.resize(w.x(), w.y() + w.height() + padding, self.width(), self.height());
+                self
+            }
+            fn above_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                self.resize(w.x(), w.y() - padding - self.height(), self.width(), self.height());
+                self
+            }
+            fn right_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                self.resize(w.x() + self.width() + padding, w.y(), self.width(), self.height());
+                self
+            }
+            fn left_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                self.resize(w.x() - self.width() - padding, w.y(), self.width(), self.height());
+                self
+            }
+            fn center_of<W: WidgetTrait>(mut self, w: &W) -> Self {
+                assert!(w.width() != 0 && w.height() != 0);
+                let mut sw = self.width() as f64;
+                let mut sh = self.height() as f64;
+                let mut ww = w.width() as f64;
+                let mut wh = w.height() as f64;
+                let mut x = (ww - sw) / 2.0;
+                let mut y = (wh - sh) / 2.0;
+                self.resize(x as i32, y as i32, self.width(), self.height());
+                self.redraw();
+                self
+            }
+            fn size_of<W: WidgetTrait>(mut self, w: &W) -> Self {
+                assert!(w.width() != 0 && w.height() != 0);
+                self.resize(self.x(), self. y(), w.width(), w.height());
+                self
             }
         }
     };
@@ -572,6 +609,14 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
     );
     let gen = quote! {
         impl WindowTrait for #name {
+            fn center_screen(mut self) -> Self {
+                assert!(self.width() != 0 && self.height() != 0);
+                let (mut x, mut y) = screen_size();
+                x = x - self.width() as f64;
+                y = y - self.height() as f64;
+                self.resize((x / 2.0) as i32, (y / 2.0) as i32, self.width(), self.height());
+                self
+            }
             fn make_modal(&mut self, val: bool) {
                 unsafe { #make_modal(self._inner, val as u32) }
             }
@@ -583,7 +628,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn make_current(&mut self) {
                 unsafe { #make_current(self._inner) }
             }
-            fn set_icon<Image: ImageTrait>(&mut self, image: Image) {
+            fn set_icon<Image: ImageTrait>(&mut self, image: &Image) {
                 unsafe { #set_icon(self._inner, image.as_ptr()) }
             }
             fn make_resizable(&self, val: bool) {
@@ -1077,6 +1122,14 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
 
+    let get_buffer = Ident::new(
+        format!("{}_{}", name_str, "get_buffer").as_str(),
+        name.span(),
+    );
+    let set_buffer = Ident::new(
+        format!("{}_{}", name_str, "set_buffer").as_str(),
+        name.span(),
+    );
     let set_text = Ident::new(format!("{}_{}", name_str, "set_text").as_str(), name.span());
     let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
     let text_font = Ident::new(
@@ -1191,6 +1244,17 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl DisplayTrait for #name {
+            fn get_buffer<'a>(&'a self) -> &'a TextBuffer {
+                unsafe {
+                    let x = Box::from(TextBuffer::from_ptr(#get_buffer(self._inner)));
+                    &*Box::into_raw(x)
+                }
+            }
+            fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer) {
+                unsafe {
+                    #set_buffer(self._inner, buffer.as_ptr())
+                }
+            }
             fn set_text(&mut self, txt: &str) {
                 unsafe {
                     let txt = CString::new(txt).unwrap();
@@ -1200,7 +1264,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn text(&self) -> String {
                 unsafe {
-                    CStr::from_ptr(#text(self._inner) as *mut raw::c_char)
+                    CString::from_raw(#text(self._inner) as *mut raw::c_char)
                         .to_string_lossy().to_string()
                 }
             }
@@ -1295,7 +1359,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #show_cursor(self._inner, val as i32);
                 }
             }
-            fn set_styly_table_entry(&mut self, entries: &Vec<StyleTableEntry>) {
+            fn set_styly_table_entry(&mut self, style_buffer: &mut TextBuffer, entries: &Vec<StyleTableEntry>) {
                 let mut colors: Vec<u32> = vec![];
                 let mut fonts: Vec<i32> = vec![];
                 let mut sizes: Vec<i32> = vec![];
@@ -1305,7 +1369,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     sizes.push(entry.size as i32);
                 }
                 unsafe {
-                    #set_style_table_entry(self._inner, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
+                    #set_style_table_entry(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
                 }
             }
             fn set_cursor_style(&mut self, style: CursorStyle) {
@@ -1391,19 +1455,12 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_text_size").as_str(),
         name.span(),
     );
-    let set_icon = Ident::new(
-        format!("{}_{}", name_str, "set_icon").as_str(),
-        name.span(),
-    );
-    let icon = Ident::new(
-        format!("{}_{}", name_str, "icon").as_str(),
-        name.span(),
-    );
+    let set_icon = Ident::new(format!("{}_{}", name_str, "set_icon").as_str(), name.span());
+    let icon = Ident::new(format!("{}_{}", name_str, "icon").as_str(), name.span());
     let remove_icon = Ident::new(
         format!("{}_{}", name_str, "remove_icon").as_str(),
         name.span(),
     );
-    
 
     let gen = quote! {
         impl BrowserTrait for #name {
@@ -1492,7 +1549,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_text_size(self._inner, c as i32)
                 }
             }
-            fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: Img) {
+            fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: &Img) {
                 unsafe {
                     #set_icon(self._inner, line as i32, image.as_ptr())
                 }
@@ -1520,8 +1577,14 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
     let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
     let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
+    let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
 
     let gen = quote! {
+        impl Drop for #name {
+            fn drop(&mut self) {
+                unsafe { #delete(self._inner) }
+            }
+        }
         impl ImageTrait for #name {
             fn new(path: std::path::PathBuf) -> #name {
                 unsafe {

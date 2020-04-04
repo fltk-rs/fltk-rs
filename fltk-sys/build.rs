@@ -25,8 +25,22 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_valuator.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_browser.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_misc.h");
+    println!("cargo:rerun-if-changed=cfltk/cfl_text.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_image.h");
     println!("cargo:rerun-if-changed=cfltk/global.h");
+    println!("cargo:rerun-if-changed=cfltk/cfl.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_widget.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_group.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_window.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_button.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_box.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_menu.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_dialog.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_valuator.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_browser.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_misc.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_text.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_image.cpp");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
 
     Command::new("git")

@@ -1,5 +1,5 @@
 pub use crate::enums::*;
-use crate::text::StyleTableEntry;
+use crate::text::{StyleTableEntry, TextBuffer};
 use crate::widget::Widget;
 use crate::image::Image;
 use std::convert::From;
@@ -77,6 +77,18 @@ pub trait WidgetTrait {
     fn with_size(self, width: i32, height: i32) -> Self;
     /// Initialize with label/title
     fn with_label(self, title: &str) -> Self;
+    /// Positions the widget below w
+    fn below_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    /// Positions the widget above w
+    fn above_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    /// Positions the widget to the right of w
+    fn right_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    /// Positions the widget to the left of w
+    fn left_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    /// Positions the widget to the center of w
+    fn center_of<W: WidgetTrait>(self, w: &W) -> Self;
+    /// Takes the size of w
+    fn size_of<W: WidgetTrait>(self, w: &W) -> Self;
     /// Sets the widget's label
     fn set_label(&mut self, title: &str);
     /// Redraws a widget, necessary for resizing and changing positions
@@ -150,7 +162,7 @@ pub trait WidgetTrait {
     /// Sets the alignment of the widget
     fn set_align(&mut self, align: Align);
     /// Sets the image of the widget
-    fn set_image<Image: ImageTrait>(&mut self, image: Image);
+    fn set_image<Image: ImageTrait>(&mut self, image: &Image);
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
@@ -183,6 +195,8 @@ pub trait GroupTrait: WidgetTrait {
 
 /// Defines the methods implemented by all window widgets
 pub trait WindowTrait: GroupTrait {
+    /// Positions the window to the center of the screen
+    fn center_screen(self) -> Self;
     /// Makes a window modal
     fn make_modal(&mut self, val: bool);
     /// Makes a window fullscreen
@@ -190,7 +204,7 @@ pub trait WindowTrait: GroupTrait {
     /// Makes the window current
     fn make_current(&mut self);
     /// Sets the windows icon
-    fn set_icon<Image: ImageTrait>(&mut self, image: Image);
+    fn set_icon<Image: ImageTrait>(&mut self, image: &Image);
     /// Make the window resizable
     fn make_resizable(&self, val: bool);
 }
@@ -322,6 +336,10 @@ pub trait ValuatorTrait: WidgetTrait {
 
 /// Defines the methods implemented by TextDisplay and TextEditor
 pub trait DisplayTrait: WidgetTrait {
+    /// Get the associated TextBuffer
+    fn get_buffer<'a>(&'a self) -> &'a TextBuffer;
+    /// Sets the associated TextBuffer
+    fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer);
     /// Set the text inside the widget
     fn set_text(&mut self, txt: &str);
     /// Returns the text inside the widget
@@ -365,7 +383,7 @@ pub trait DisplayTrait: WidgetTrait {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_styly_table_entry(&mut self, entries: &Vec<StyleTableEntry>);
+    fn set_styly_table_entry(&mut self, style_buffer: &mut TextBuffer, entries: &Vec<StyleTableEntry>);
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: CursorStyle);
     /// Sets the cursor color
@@ -421,7 +439,7 @@ pub trait BrowserTrait {
     /// Sets the text size
     fn set_text_size(&mut self, sz: u32);
     /// Sets the icon for browser elements
-    fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: Img);
+    fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: &Img);
     /// Returns the icon of a browser element
     fn icon(&self, line: usize) -> Image;
     /// Removes the icon of a browser element

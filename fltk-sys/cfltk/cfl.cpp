@@ -2,6 +2,7 @@
 #include "cfl_widget.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Widget.H>
+#include <string>
 
 int Fl_run(void) { return Fl::run(); }
 
@@ -49,4 +50,12 @@ void Fl_set_scheme(const char *scheme) { Fl::scheme(scheme); }
 
 unsigned int Fl_get_color(unsigned char r, unsigned char g, unsigned char b) {
   return fl_rgb_color(r, g, b);
+}
+
+const char* Fl_get_font(int idx) {
+  return Fl::get_font(idx);
+}
+
+unsigned char Fl_set_fonts(const char *c) {
+  return Fl::set_fonts(c);
 }

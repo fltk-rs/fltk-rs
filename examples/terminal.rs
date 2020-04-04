@@ -11,7 +11,8 @@ fn main() {
         .to_string_lossy()
         .to_string();
     current_dir.push_str("/ $ ");
-    let mut term = TextDisplay::new(5, 5, 630, 470);
+    let mut buf = TextBuffer::default();
+    let mut term = TextDisplay::new(5, 5, 630, 470, &mut buf);
     term.set_color(Color::Black);
     term.set_text_color(Color::White);
     term.set_text_font(Font::Courrier);
@@ -21,13 +22,14 @@ fn main() {
     term.clone().set_custom_handler(Box::new(|ev: app::Event| {
         // println!("{:?}", app::event());
         // println!("{:?}", app::event_key());
+        // println!("{:?}", app::event_text());
         match ev {
-            // fltk bug with Event::KeyDown 
+            // fltk bug with Event::KeyDown
             app::Event::Shortcut => match app::event_key() {
                 app::Key::Enter => {
-                    term.append("\n");
+                    term_append(&mut term, "\n");
                     run_command(&mut term, &cmd);
-                    term.append(&current_dir);
+                    term_append(&mut term, &current_dir);
                     cmd.clear();
                     true
                 }
@@ -43,14 +45,14 @@ fn main() {
                 _ => {
                     let temp = app::event_text();
                     cmd.push_str(&temp);
-                    term.append(&temp);
+                    term_append(&mut term, &temp);
                     true
                 }
             },
             _ => false,
         }
     }));
-    term.append(&current_dir);
+    term_append(&mut term, &current_dir);
     term.show_cursor(true);
     wind.make_resizable(true);
     wind.show();
@@ -59,7 +61,7 @@ fn main() {
 
 // To have continuous streaming of output for long standing operations,
 // consider using Tokio Command or the likes
-fn run_command(term: &mut TextDisplay, cmd: &str) {
+fn run_command(mut term: &mut TextDisplay, cmd: &str) {
     let args: Vec<&str> = cmd.split_whitespace().collect();
     let stdout: Result<Output, std::io::Error>;
     if args.len() > 0 {
@@ -77,11 +79,17 @@ fn run_command(term: &mut TextDisplay, cmd: &str) {
         }
         if stdout.is_err() {
             let msg = format!("{}: command not found!\n", cmd);
-            term.append(&msg);
+            term_append(&mut term, &msg);
             return;
         }
         let stdout = stdout.unwrap().stdout;
         let stdout = String::from_utf8_lossy(&stdout).to_string();
-        term.append(&stdout);
+        term_append(&mut term, &stdout);
     }
+}
+
+fn term_append(term: &mut TextDisplay, txt: &str) {
+    term.append(txt);
+    term.set_insert_position(term.buffer_length());
+    term.scroll(term.count_lines(0, term.buffer_length(), true), 0);
 }

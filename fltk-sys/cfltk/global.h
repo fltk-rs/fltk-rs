@@ -152,8 +152,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_move_down(widget *);                                            \
   void widget##_remove(widget *self, int start, int end);                      \
   void widget##_show_cursor(widget *, int boolean);                            \
-  void widget##_set_style_table_entry(widget *self, unsigned int *color,       \
-                                      int *font, int *fontsz, int sz);         \
+  void widget##_set_style_table_entry(widget *self, void *sbuf,                \
+                                      unsigned int *color, int *font,          \
+                                      int *fontsz, int sz);                    \
   void widget##_set_cursor_style(widget *, int style);                         \
   void widget##_set_cursor_color(widget *, unsigned int color);                \
   void widget##_set_scrollbar_width(widget *, int width);                      \
@@ -190,7 +191,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   image *image##_new(const char *filename);                                    \
   void image##_draw(image *, int X, int Y, int W, int H);                      \
   int image##_width(image *);                                                  \
-  int image##_height(image *);
+  int image##_height(image *);                                                 \
+  void image##_delete(image *);
 
 #define WIDGET_DEFINE(widget)                                                  \
   class widget##_Derived : public widget {                                     \
@@ -278,7 +280,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data) {                                      \
-    widget##_Derived *temp = new widget##_Derived(*self);                      \
+    widget##_Derived *temp = new (std::nothrow) widget##_Derived(*self);       \
     temp->set_handler_data(data);                                              \
     temp->set_handler(cb);                                                     \
     *self = temp;                                                              \
@@ -331,12 +333,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_set_value(widget *self, const char *t) {                        \
     return self->value(t);                                                     \
   }                                                                            \
-  const char *widget##_value(widget *self) {                                   \
-    std::string temp = self->value();                                          \
-    char *ptr = new char[temp.size() + 1];                                     \
-    strcpy(ptr, temp.c_str());                                                 \
-    return ptr;                                                                \
-  }                                                                            \
+  const char *widget##_value(widget *self) { return self->value(); }           \
   int widget##_maximum_size(widget *self) { return self->maximum_size(); }     \
   void widget##_set_maximum_size(widget *self, int m) {                        \
     self->maximum_size(m);                                                     \
@@ -445,8 +442,6 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     auto buff = self->buffer();                                                \
     buff->append(txt);                                                         \
     self->buffer(buff);                                                        \
-    self->insert_position(self->buffer()->length());                           \
-    self->scroll(self->count_lines(0, self->buffer()->length(), 1), 0);        \
   }                                                                            \
   int widget##_buffer_length(const widget *self) {                             \
     return self->buffer()->length();                                           \
@@ -482,15 +477,16 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     else                                                                       \
       self->hide_cursor();                                                     \
   }                                                                            \
-  void widget##_set_style_table_entry(widget *self, unsigned int *color,       \
-                                      int *font, int *fontsz, int sz) {        \
+  void widget##_set_style_table_entry(widget *self, void *sbuff,               \
+                                      unsigned int *color, int *font,          \
+                                      int *fontsz, int sz) {                   \
     Fl_Text_Display::Style_Table_Entry *stable =                               \
-        new Fl_Text_Display::Style_Table_Entry[sz];                            \
+        new (std::nothrow) Fl_Text_Display::Style_Table_Entry[sz];             \
     for (int i = 0; i < sz; ++i) {                                             \
       stable[i] = {color[i], font[i], fontsz[i]};                              \
     }                                                                          \
-    Fl_Text_Buffer *sbuff = new Fl_Text_Buffer();                              \
-    self->highlight_data(sbuff, stable, sz, 'A', 0, 0);                        \
+    self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);      \
+    delete[] stable;                                                           \
   }                                                                            \
   void widget##_set_cursor_style(widget *self, int style) {                    \
     self->cursor_style(style);                                                 \
@@ -549,7 +545,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void *widget##_icon(const widget *self, int line) {                          \
     return (Fl_Image *)self->icon(line);                                       \
   }                                                                            \
-  void widget##_remove_icon(widget *self, int line) { self->remove_icon(line); }
+  void widget##_remove_icon(widget *self, int l) { self->remove_icon(l); }
 
 #define IMAGE_DEFINE(image)                                                    \
   image *image##_new(const char *filename) {                                   \
@@ -559,7 +555,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     self->draw(X, Y, W, H);                                                    \
   }                                                                            \
   int image##_width(image *self) { return self->w(); }                         \
-  int image##_height(image *self) { return self->h(); }
+  int image##_height(image *self) { return self->h(); }                        \
+  void image##_delete(image *self) { delete self; }
 
 #ifdef __cplusplus
 }

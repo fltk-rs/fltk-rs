@@ -33,7 +33,7 @@ impl Image {
         }
     }
     /// Transforms an Image base into another Image
-    pub fn into<I: ImageTrait>(&mut self) -> I {
+    pub fn downcast_into<I: ImageTrait>(&mut self) -> I {
         I::from_image_ptr(self._inner)
     }
 }

@@ -49,6 +49,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_JPEG_Image_height(arg1: *mut Fl_JPEG_Image) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_JPEG_Image_delete(arg1: *mut Fl_JPEG_Image);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_PNG_Image {
@@ -71,6 +74,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_PNG_Image_height(arg1: *mut Fl_PNG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_delete(arg1: *mut Fl_PNG_Image);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -95,6 +101,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_SVG_Image_height(arg1: *mut Fl_SVG_Image) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_SVG_Image_delete(arg1: *mut Fl_SVG_Image);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_BMP_Image {
@@ -118,6 +127,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_BMP_Image_height(arg1: *mut Fl_BMP_Image) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_BMP_Image_delete(arg1: *mut Fl_BMP_Image);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_GIF_Image {
@@ -140,4 +152,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_GIF_Image_height(arg1: *mut Fl_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_GIF_Image_delete(arg1: *mut Fl_GIF_Image);
 }
