@@ -115,6 +115,7 @@ pub enum Font {
 }
 
 impl Font {
+    /// Returns a font by index, can be queried via the app::get_font_names()
     pub fn by_index(idx: u8) -> Font {
         if idx >= get_font_count() {
             return Font::Helvetica;
@@ -123,6 +124,7 @@ impl Font {
             std::mem::transmute(idx as i32)
         }
     }
+    /// Gets the font by its name, can be queried via the app::get_font_names()
     pub fn by_name(name: &str) -> Font {
         match get_font_index(name) {
             Some(val) => Font::by_index(val),
