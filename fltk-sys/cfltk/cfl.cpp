@@ -2,6 +2,7 @@
 #include "cfl_widget.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Widget.H>
+#include <new>
 #include <string>
 
 int Fl_run(void) { return Fl::run(); }
@@ -19,7 +20,7 @@ int Fl_event(void) { return Fl::event(); }
 int Fl_event_key(void) { return Fl::event_key(); }
 
 const char *Fl_event_text(void) {
-  char *buf = new char[Fl::event_length() + 1];
+  char *buf = new (std::nothrow) char[Fl::event_length() + 1];
   strncpy(buf, Fl::event_text(), Fl::event_length() + 1);
   return buf;
 }
