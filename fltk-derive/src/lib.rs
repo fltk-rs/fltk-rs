@@ -195,6 +195,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
     );
+    let image = Ident::new(
+        format!("{}_{}", name_str, "image").as_str(),
+        name.span(),
+    );
     let set_handler = Ident::new(
         format!("{}_{}", name_str, "set_handler").as_str(),
         name.span(),
@@ -210,14 +214,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
                 unsafe {
+                    let widget_ptr = #new(x, y, width, height, temp.into_raw() as *const raw::c_char);
+                    assert!(!widget_ptr.is_null());
                     #name {
-                        _inner: #new(
-                            x,
-                            y,
-                            width,
-                            height,
-                            temp.into_raw() as *const raw::c_char,
-                        ),
+                        _inner: widget_ptr,
                     }
 
                 }
@@ -225,14 +225,15 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn default() -> Self {
                 let temp = CString::new("").unwrap();
                 unsafe {
+                    let widget_ptr = #new(
+                        0,
+                        0,
+                        0,
+                        0,
+                        temp.into_raw() as *const raw::c_char);
+                        assert!(!widget_ptr.is_null());
                     #name {
-                        _inner: #new(
-                            0,
-                            0,
-                            0,
-                            0,
-                            temp.into_raw() as *const raw::c_char,
-                        ),
+                        _inner: widget_ptr,
                     }
                 }
             }
@@ -323,8 +324,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn tooltip(&self) -> String {
                 unsafe {
+                    let tooltip_ptr = #tooltip(self._inner);
+                    assert!(!tooltip_ptr.is_null());
                     CStr::from_ptr(
-                        #tooltip(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
+                        tooltip_ptr as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
 
@@ -427,6 +430,13 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn set_image<Image: ImageTrait>(&mut self, image: &Image) {
                 unsafe { #set_image(self._inner, image.as_ptr()) }
+            }
+            fn image(&self) -> Image {
+                unsafe {
+                    let image_ptr = #image(self._inner);
+                    assert!(!image_ptr.is_null());
+                    Image::from_raw(image_ptr as *mut fltk_sys::image::Fl_Image)
+                }
             }
 
             fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
@@ -578,7 +588,9 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn child(&self, idx: usize) -> Widget {
                 unsafe {
-                    Widget::from_raw(#child(self._inner, idx as i32) as *mut fltk_sys::widget::Fl_Widget)
+                    let child_widget = #child(self._inner, idx as i32);
+                    assert!(!child_widget.is_null());
+                    Widget::from_raw(child_widget as *mut fltk_sys::widget::Fl_Widget)
                 }
             }
         }
@@ -603,6 +615,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
         name.span(),
     );
     let set_icon = Ident::new(format!("{}_{}", name_str, "set_icon").as_str(), name.span());
+    let icon = Ident::new(format!("{}_{}", name_str, "icon").as_str(), name.span());
     let make_resizable = Ident::new(
         format!("{}_{}", name_str, "make_resizable").as_str(),
         name.span(),
@@ -630,6 +643,13 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn set_icon<Image: ImageTrait>(&mut self, image: &Image) {
                 unsafe { #set_icon(self._inner, image.as_ptr()) }
+            }
+            fn icon(&self) -> Image {
+                unsafe {
+                    let icon_ptr = #icon(self._inner);
+                    assert!(!icon_ptr.is_null());
+                    Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image)
+                }
             }
             fn make_resizable(&self, val: bool) {
                 if val {
@@ -711,7 +731,9 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl InputTrait for #name {
             fn value(&self) -> String {
                 unsafe {
-                    CStr::from_ptr(#value(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
+                    let value_ptr = #value(self._inner);
+                    assert!(!value_ptr.is_null());
+                    CStr::from_ptr(value_ptr as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
             fn set_value(&self, val: &str) {
@@ -915,14 +937,14 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn get_item(&self, name: &str) -> MenuItem {
                 let name = CString::new(name).unwrap().clone();
-                MenuItem {
-                    _title: name.clone(),
-                    _inner: unsafe {
-                        #get_item(
-                            self._inner,
-                            name.into_raw() as *const raw::c_char,
-                        )
-                    },
+                unsafe {
+                    let menu_item = #get_item(
+                        self._inner,
+                        name.into_raw() as *const raw::c_char);
+                    assert!(!menu_item.is_null());
+                    MenuItem {
+                        _inner: menu_item,
+                    }
                 }
             }
 
@@ -969,7 +991,9 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn get_choice(&self) -> String {
                 unsafe {
-                    CStr::from_ptr(#get_choice(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
+                    let choice_ptr = #get_choice(self._inner);
+                    assert!(!choice_ptr.is_null());
+                    CStr::from_ptr(choice_ptr as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
         }
@@ -1246,7 +1270,9 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl DisplayTrait for #name {
             fn get_buffer<'a>(&'a self) -> &'a TextBuffer {
                 unsafe {
-                    let x = Box::from(TextBuffer::from_ptr(#get_buffer(self._inner)));
+                    let buffer = #get_buffer(self._inner);
+                    assert!(!buffer.is_null());
+                    let x = Box::from(TextBuffer::from_ptr(buffer));
                     &*Box::into_raw(x)
                 }
             }
@@ -1264,7 +1290,9 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn text(&self) -> String {
                 unsafe {
-                    CString::from_raw(#text(self._inner) as *mut raw::c_char)
+                    let text = #text(self._inner);
+                    assert!(!text.is_null());
+                    CString::from_raw(text as *mut raw::c_char)
                         .to_string_lossy().to_string()
                 }
             }
@@ -1556,7 +1584,9 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn icon(&self, line: usize) -> Image {
                 unsafe {
-                    Image::from_raw(#icon(self._inner, line as i32) as *mut fltk_sys::image::Fl_Image)
+                    let icon_ptr = #icon(self._inner, line as i32);
+                    assert!(!icon_ptr.is_null());
+                    Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image)
                 }
             }
             fn remove_icon(&mut self, line: usize) {
@@ -1590,8 +1620,10 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe {
                     let temp = path.into_os_string().to_string_lossy().to_string();
                     let temp = CString::new(temp.as_str()).unwrap();
+                    let image_ptr = #new(temp.into_raw() as *const raw::c_char);
+                    assert!(!image_ptr.is_null());
                     #name {
-                        _inner: #new(temp.into_raw() as *const raw::c_char),
+                        _inner: image_ptr,
                     }
                 }
             }
@@ -1624,6 +1656,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
                 unsafe {
+                    assert!(!ptr.is_null());
                     #name {
                         _inner: mem::transmute(ptr),
                     }

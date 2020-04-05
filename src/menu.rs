@@ -1,5 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::menu::*;
+use crate::image::Image;
 use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a menu bar
@@ -24,7 +25,6 @@ pub struct Choice {
 #[derive(Debug, Clone)]
 pub struct MenuItem {
     _inner: *mut Fl_Menu_Item,
-    _title: CString,
 }
 
 /// Defines the menu flag for any added menu items using the add() method
@@ -47,7 +47,9 @@ impl MenuItem {
     /// Returns the label of the menu item
     pub fn label(&self) -> String {
         unsafe {
-            CStr::from_ptr(Fl_Menu_Item_label(self._inner) as *mut raw::c_char)
+            let label_ptr = Fl_Menu_Item_label(self._inner);
+            assert!(!label_ptr.is_null());
+            CStr::from_ptr(label_ptr as *mut raw::c_char)
                 .to_string_lossy().to_string()
         }
     }

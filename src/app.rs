@@ -129,7 +129,9 @@ pub fn event_key() -> Key {
 /// Returns a textual representation of the latest event
 pub fn event_text() -> String {
     unsafe {
-          CString::from_raw(Fl_event_text() as *mut raw::c_char)
+        let text = Fl_event_text();
+        assert!(!text.is_null());
+          CString::from_raw(text as *mut raw::c_char)
             .to_string_lossy().to_string()
     }
 }
@@ -225,7 +227,9 @@ pub fn get_font_count() -> u8 {
 
 pub fn get_font_name(idx: u8) -> String {
     unsafe {
-        CStr::from_ptr(Fl_get_font(idx as i32) as *mut raw::c_char).to_string_lossy().to_string()
+        let font = Fl_get_font(idx as i32);
+        assert!(!font.is_null());
+        CStr::from_ptr(font as *mut raw::c_char).to_string_lossy().to_string()
     }
 }
 

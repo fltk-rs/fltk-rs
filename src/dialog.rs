@@ -38,8 +38,12 @@ pub enum FileDialogOptions {
 impl FileDialog {
     /// Creates an new file dialog
     pub fn new(op: FileDialogType) -> FileDialog {
-        FileDialog {
-            _inner: unsafe { Fl_Native_File_Chooser_new(mem::transmute(op)) },
+        unsafe { 
+            let file_dialog = Fl_Native_File_Chooser_new(mem::transmute(op));
+            assert!(!file_dialog.is_null());
+            FileDialog {
+                _inner: file_dialog,
+            }
         }
     }
 
@@ -143,7 +147,9 @@ impl FileDialog {
     /// returns the error message from the file dialog
     pub fn error_message(&self) -> String {
         unsafe {
-            CStr::from_ptr(Fl_Native_File_Chooser_errmsg(self._inner) as *mut raw::c_char)
+            let err_msg = Fl_Native_File_Chooser_errmsg(self._inner);
+            assert!(!err_msg.is_null());
+            CStr::from_ptr(err_msg as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
         }
@@ -230,8 +236,10 @@ impl HelpDialog {
     /// Creates a default (size and location) help dialog
     pub fn default() -> HelpDialog {
         unsafe {
+            let help_dialog = Fl_Help_Dialog_new();
+            assert!(!help_dialog.is_null());
             HelpDialog {
-                _inner: Fl_Help_Dialog_new(),
+                _inner: help_dialog,
             }
         }
     }
@@ -248,7 +256,7 @@ impl HelpDialog {
         }
     }
     /// Loads a file for the help dialog
-    pub fn load(&mut self, file: &std::path::Path) ->i32 {
+    pub fn load(&mut self, file: &std::path::Path) -> i32 {
         let f = file.to_str().unwrap();
         let f = CString::new(f).unwrap();
         unsafe {
@@ -295,7 +303,9 @@ impl HelpDialog {
     /// Returns the value of the help dialog
     pub fn value(&self) -> String {
         unsafe {
-            CStr::from_ptr(Fl_Help_Dialog_value(self._inner)).to_string_lossy().to_string()
+            let val = Fl_Help_Dialog_value(self._inner);
+            assert!(!val.is_null());
+            CStr::from_ptr(val).to_string_lossy().to_string()
         }
     }
     /// Returs whether the help dialog is visible

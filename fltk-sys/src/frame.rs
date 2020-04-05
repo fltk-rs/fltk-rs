@@ -159,3 +159,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Box_set_trigger(arg1: *mut Fl_Box, arg2: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Box_image(arg1: *const Fl_Box) -> *mut ::std::os::raw::c_void;
+}

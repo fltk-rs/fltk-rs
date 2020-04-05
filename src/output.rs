@@ -1,5 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::output::*;
+use crate::image::Image;
 use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates an output widget

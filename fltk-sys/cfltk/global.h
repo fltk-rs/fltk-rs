@@ -51,7 +51,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_image(widget *, void *);                                   \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data);                                       \
-  void widget##_set_trigger(widget *, int);
+  void widget##_set_trigger(widget *, int);                                    \
+  void *widget##_image(const widget *);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -69,6 +70,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_fullscreen(widget *, unsigned int boolean);                    \
   void widget##_make_current(widget *);                                        \
   void widget##_set_icon(widget *, const void *);                              \
+  void *widget##_icon(const widget *);                                         \
   void widget##_make_resizable(widget *self, void *);
 
 #define INPUT_DECLARE(widget)                                                  \
@@ -285,7 +287,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     temp->set_handler(cb);                                                     \
     *self = temp;                                                              \
   }                                                                            \
-  void widget##_set_trigger(widget *self, int val) { self->when(val); }
+  void widget##_set_trigger(widget *self, int val) { self->when(val); }        \
+  void *widget##_image(const widget *self) { return (Fl_Image *)self->image(); }
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \
@@ -327,7 +330,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   void widget##_make_resizable(widget *self, void *wid) {                      \
     self->resizable((Fl_Widget *)wid);                                         \
-  }
+  }                                                                            \
+  void *widget##_icon(const widget *self) { return (Fl_Image *)self->icon(); }
 
 #define INPUT_DEFINE(widget)                                                   \
   int widget##_set_value(widget *self, const char *t) {                        \

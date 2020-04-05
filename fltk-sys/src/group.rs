@@ -160,6 +160,9 @@ extern "C" {
     pub fn Fl_Group_set_trigger(arg1: *mut Fl_Group, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Group_image(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
 }
 extern "C" {
@@ -330,6 +333,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_set_trigger(arg1: *mut Fl_Pack, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Pack_image(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
@@ -504,6 +510,9 @@ extern "C" {
     pub fn Fl_Scroll_set_trigger(arg1: *mut Fl_Scroll, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Scroll_image(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Scroll_begin(self_: *mut Fl_Scroll);
 }
 extern "C" {
@@ -674,6 +683,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_set_trigger(arg1: *mut Fl_Tabs, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tabs_image(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
@@ -848,6 +860,9 @@ extern "C" {
     pub fn Fl_Tile_set_trigger(arg1: *mut Fl_Tile, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Tile_image(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1018,6 +1033,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_set_trigger(arg1: *mut Fl_Wizard, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Wizard_image(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);

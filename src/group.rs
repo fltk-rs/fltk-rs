@@ -1,6 +1,7 @@
 pub use crate::prelude::*;
 use crate::widget::*;
 use fltk_sys::group::*;
+use crate::image::Image;
 use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates an widget group

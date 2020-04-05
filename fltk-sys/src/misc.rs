@@ -160,6 +160,9 @@ extern "C" {
     pub fn Fl_Spinner_set_trigger(arg1: *mut Fl_Spinner, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Spinner_image(arg1: *const Fl_Spinner) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
 }
 extern "C" {
@@ -342,6 +345,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Clock_set_trigger(arg1: *mut Fl_Clock, arg2: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Clock_image(arg1: *const Fl_Clock) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -479,6 +485,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_set_trigger(arg1: *mut Fl_Chart, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Chart_image(arg1: *const Fl_Chart) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -689,6 +698,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_set_trigger(arg1: *mut Fl_Progress, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Progress_image(arg1: *const Fl_Progress) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;

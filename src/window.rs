@@ -2,6 +2,7 @@ pub use crate::prelude::*;
 use crate::widget::*;
 use crate::app::*;
 use fltk_sys::window::*;
+use crate::image::Image;
 use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Creates a window widget

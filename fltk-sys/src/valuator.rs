@@ -160,6 +160,9 @@ extern "C" {
     pub fn Fl_Slider_set_trigger(arg1: *mut Fl_Slider, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Slider_image(arg1: *const Fl_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Slider_set_bounds(arg1: *mut Fl_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -353,6 +356,9 @@ extern "C" {
     pub fn Fl_Nice_Slider_set_trigger(arg1: *mut Fl_Nice_Slider, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Nice_Slider_image(arg1: *const Fl_Nice_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Nice_Slider_set_bounds(arg1: *mut Fl_Nice_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -541,6 +547,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Counter_set_trigger(arg1: *mut Fl_Counter, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Counter_image(arg1: *const Fl_Counter) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Counter_set_bounds(arg1: *mut Fl_Counter, a: f64, b: f64);
@@ -733,6 +742,9 @@ extern "C" {
     pub fn Fl_Dial_set_trigger(arg1: *mut Fl_Dial, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Dial_image(arg1: *const Fl_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Dial_set_bounds(arg1: *mut Fl_Dial, a: f64, b: f64);
 }
 extern "C" {
@@ -917,6 +929,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_trigger(arg1: *mut Fl_Line_Dial, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Line_Dial_image(arg1: *const Fl_Line_Dial) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_bounds(arg1: *mut Fl_Line_Dial, a: f64, b: f64);
@@ -1109,6 +1124,9 @@ extern "C" {
     pub fn Fl_Roller_set_trigger(arg1: *mut Fl_Roller, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Roller_image(arg1: *const Fl_Roller) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Roller_set_bounds(arg1: *mut Fl_Roller, a: f64, b: f64);
 }
 extern "C" {
@@ -1294,6 +1312,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_trigger(arg1: *mut Fl_Scrollbar, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Scrollbar_image(arg1: *const Fl_Scrollbar) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_bounds(arg1: *mut Fl_Scrollbar, a: f64, b: f64);
@@ -1495,6 +1516,9 @@ extern "C" {
     pub fn Fl_Value_Slider_set_trigger(arg1: *mut Fl_Value_Slider, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_Value_Slider_image(arg1: *const Fl_Value_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Value_Slider_set_bounds(arg1: *mut Fl_Value_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -1686,6 +1710,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Adjuster_set_trigger(arg1: *mut Fl_Adjuster, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Adjuster_image(arg1: *const Fl_Adjuster) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Adjuster_set_bounds(arg1: *mut Fl_Adjuster, a: f64, b: f64);
@@ -1882,6 +1909,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Input_set_trigger(arg1: *mut Fl_Value_Input, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Input_image(arg1: *const Fl_Value_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Value_Input_set_bounds(arg1: *mut Fl_Value_Input, a: f64, b: f64);
