@@ -48,7 +48,7 @@ impl MenuItem {
     pub fn label(&self) -> String {
         unsafe {
             let label_ptr = Fl_Menu_Item_label(self._inner);
-            assert!(!label_ptr.is_null());
+            assert!(!label_ptr.is_null(), "Failed to get menu item label!");
             CStr::from_ptr(label_ptr as *mut raw::c_char)
                 .to_string_lossy().to_string()
         }

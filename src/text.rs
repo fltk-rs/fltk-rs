@@ -13,7 +13,7 @@ impl TextBuffer {
     pub fn default() -> Self {
         unsafe {
             let text_buffer = Fl_Text_Buffer_new();
-            assert!(!text_buffer.is_null());
+            assert!(!text_buffer.is_null(), "Failed to instantiate text buffer!");
             TextBuffer {
                 _inner: text_buffer,
             }
@@ -38,7 +38,7 @@ impl TextBuffer {
     pub fn text(&self) -> String {
         unsafe {
             let text = Fl_Text_Buffer_text(self._inner);
-            assert!(!text.is_null());
+            assert!(!text.is_null(), "Failed to retrieve text from buffer!");
             CString::from_raw(text as *mut raw::c_char)
                 .to_string_lossy().to_string()
         }
@@ -103,7 +103,7 @@ impl TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
-            assert!(!text_editor.is_null());
+            assert!(!text_editor.is_null(), "Failed to instantiate text editor!");
             let mut x = TextEditor {
                 _inner: text_editor,
             };
@@ -116,7 +116,7 @@ impl TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
-            assert!(!text_editor.is_null());
+            assert!(!text_editor.is_null(), "Failed to instantiate text editor!");
             let mut x = TextEditor {
                 _inner: text_editor,
             };
@@ -156,7 +156,7 @@ impl TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display = Fl_Text_Display_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
-            assert!(!text_display.is_null());
+            assert!(!text_display.is_null(), "Failed to instantiate text display!");
             let mut x = TextDisplay {
                 _inner: text_display,
             };
@@ -169,7 +169,7 @@ impl TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display = Fl_Text_Display_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
-            assert!(!text_display.is_null());
+            assert!(!text_display.is_null(), "Failed to instantiate text display!");
             let mut x = TextDisplay {
                 _inner: text_display,
             };
@@ -185,7 +185,7 @@ impl SimpleTerminal {
         let temp = CString::new("").unwrap();
         unsafe {
             let simple_terminal = Fl_Simple_Terminal_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
-            assert!(!simple_terminal.is_null());
+            assert!(!simple_terminal.is_null(), "Failed to instantiate simple terminal!");
             let mut x = SimpleTerminal {
                 _inner: simple_terminal,
             };
@@ -198,7 +198,7 @@ impl SimpleTerminal {
         let temp = CString::new("").unwrap();
         unsafe {
             let simple_terminal = Fl_Simple_Terminal_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
-            assert!(!simple_terminal.is_null());
+            assert!(!simple_terminal.is_null(), "Failed to instantiate simple terminal!");
             let mut x = SimpleTerminal {
                 _inner: simple_terminal,
             };

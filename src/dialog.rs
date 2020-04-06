@@ -40,7 +40,7 @@ impl FileDialog {
     pub fn new(op: FileDialogType) -> FileDialog {
         unsafe { 
             let file_dialog = Fl_Native_File_Chooser_new(mem::transmute(op));
-            assert!(!file_dialog.is_null());
+            assert!(!file_dialog.is_null(), "Failed to instantiate file dialog!");
             FileDialog {
                 _inner: file_dialog,
             }
@@ -148,7 +148,7 @@ impl FileDialog {
     pub fn error_message(&self) -> String {
         unsafe {
             let err_msg = Fl_Native_File_Chooser_errmsg(self._inner);
-            assert!(!err_msg.is_null());
+            assert!(!err_msg.is_null(), "Failed to retreive error message!");
             CStr::from_ptr(err_msg as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
@@ -237,7 +237,7 @@ impl HelpDialog {
     pub fn default() -> HelpDialog {
         unsafe {
             let help_dialog = Fl_Help_Dialog_new();
-            assert!(!help_dialog.is_null());
+            assert!(!help_dialog.is_null(), "Failed to instantiate help dialog!");
             HelpDialog {
                 _inner: help_dialog,
             }
@@ -304,7 +304,7 @@ impl HelpDialog {
     pub fn value(&self) -> String {
         unsafe {
             let val = Fl_Help_Dialog_value(self._inner);
-            assert!(!val.is_null());
+            assert!(!val.is_null(), "Failed to retrieve value from help dialog!");
             CStr::from_ptr(val).to_string_lossy().to_string()
         }
     }

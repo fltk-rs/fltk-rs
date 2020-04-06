@@ -215,7 +215,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 let temp = CString::new(title).unwrap();
                 unsafe {
                     let widget_ptr = #new(x, y, width, height, temp.into_raw() as *const raw::c_char);
-                    assert!(!widget_ptr.is_null());
+                    assert!(!widget_ptr.is_null(), "Failed to instantiate widget!");
                     #name {
                         _inner: widget_ptr,
                     }
@@ -231,7 +231,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                         0,
                         0,
                         temp.into_raw() as *const raw::c_char);
-                        assert!(!widget_ptr.is_null());
+                        assert!(!widget_ptr.is_null(), "Failed to instantiate widget!");
                     #name {
                         _inner: widget_ptr,
                     }
@@ -325,7 +325,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn tooltip(&self) -> String {
                 unsafe {
                     let tooltip_ptr = #tooltip(self._inner);
-                    assert!(!tooltip_ptr.is_null());
+                    assert!(!tooltip_ptr.is_null(), "Failed to retrieve tooltip text, probably not set!");
                     CStr::from_ptr(
                         tooltip_ptr as *mut raw::c_char).to_string_lossy().to_string()
                 }
@@ -434,7 +434,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn image(&self) -> Image {
                 unsafe {
                     let image_ptr = #image(self._inner);
-                    assert!(!image_ptr.is_null());
+                    assert!(!image_ptr.is_null(), "Failed to retrieve associated image!");
                     Image::from_raw(image_ptr as *mut fltk_sys::image::Fl_Image)
                 }
             }
@@ -475,27 +475,27 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn below_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
-                assert!(self.width() != 0 && self.height() != 0);
+                assert!(self.width() != 0 && self.height() != 0, "below_of requires the size of the widget to be known!");
                 self.resize(w.x(), w.y() + w.height() + padding, self.width(), self.height());
                 self
             }
             fn above_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
-                assert!(self.width() != 0 && self.height() != 0);
+                assert!(self.width() != 0 && self.height() != 0, "above_of requires the size of the widget to be known!");
                 self.resize(w.x(), w.y() - padding - self.height(), self.width(), self.height());
                 self
             }
             fn right_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
-                assert!(self.width() != 0 && self.height() != 0);
+                assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
                 self.resize(w.x() + self.width() + padding, w.y(), self.width(), self.height());
                 self
             }
             fn left_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
-                assert!(self.width() != 0 && self.height() != 0);
+                assert!(self.width() != 0 && self.height() != 0, "left_of requires the size of the widget to be known!");
                 self.resize(w.x() - self.width() - padding, w.y(), self.width(), self.height());
                 self
             }
             fn center_of<W: WidgetTrait>(mut self, w: &W) -> Self {
-                assert!(w.width() != 0 && w.height() != 0);
+                assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
                 let mut sw = self.width() as f64;
                 let mut sh = self.height() as f64;
                 let mut ww = w.width() as f64;
@@ -507,7 +507,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 self
             }
             fn size_of<W: WidgetTrait>(mut self, w: &W) -> Self {
-                assert!(w.width() != 0 && w.height() != 0);
+                assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
                 self.resize(self.x(), self. y(), w.width(), w.height());
                 self
             }
@@ -589,7 +589,7 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn child(&self, idx: usize) -> Widget {
                 unsafe {
                     let child_widget = #child(self._inner, idx as i32);
-                    assert!(!child_widget.is_null());
+                    assert!(!child_widget.is_null(), "Failed to retrieve child widget, probably inexistant or out of bounds!");
                     Widget::from_raw(child_widget as *mut fltk_sys::widget::Fl_Widget)
                 }
             }
@@ -623,7 +623,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         impl WindowTrait for #name {
             fn center_screen(mut self) -> Self {
-                assert!(self.width() != 0 && self.height() != 0);
+                assert!(self.width() != 0 && self.height() != 0, "center_screen requires the size of the widget to be known!");
                 let (mut x, mut y) = screen_size();
                 x = x - self.width() as f64;
                 y = y - self.height() as f64;
@@ -647,7 +647,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn icon(&self) -> Image {
                 unsafe {
                     let icon_ptr = #icon(self._inner);
-                    assert!(!icon_ptr.is_null());
+                    assert!(!icon_ptr.is_null(), "Failed to retrieve associated icon!");
                     Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image)
                 }
             }
@@ -732,7 +732,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn value(&self) -> String {
                 unsafe {
                     let value_ptr = #value(self._inner);
-                    assert!(!value_ptr.is_null());
+                    assert!(!value_ptr.is_null(), "Failed to retrieve input/output value!");
                     CStr::from_ptr(value_ptr as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
@@ -941,7 +941,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let menu_item = #get_item(
                         self._inner,
                         name.into_raw() as *const raw::c_char);
-                    assert!(!menu_item.is_null());
+                    assert!(!menu_item.is_null(), "Failed to retrieve menu_item, probably a name issue or inexistent!");
                     MenuItem {
                         _inner: menu_item,
                     }
@@ -992,7 +992,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn get_choice(&self) -> String {
                 unsafe {
                     let choice_ptr = #get_choice(self._inner);
-                    assert!(!choice_ptr.is_null());
+                    assert!(!choice_ptr.is_null(), "Failed to retrieve choice!");
                     CStr::from_ptr(choice_ptr as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
@@ -1271,7 +1271,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn get_buffer<'a>(&'a self) -> &'a TextBuffer {
                 unsafe {
                     let buffer = #get_buffer(self._inner);
-                    assert!(!buffer.is_null());
+                    assert!(!buffer.is_null(), "Failed to get associated buffer!");
                     let x = Box::from(TextBuffer::from_ptr(buffer));
                     &*Box::into_raw(x)
                 }
@@ -1291,7 +1291,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn text(&self) -> String {
                 unsafe {
                     let text = #text(self._inner);
-                    assert!(!text.is_null());
+                    assert!(!text.is_null(), "Failed to get text from associated buffer!");
                     CString::from_raw(text as *mut raw::c_char)
                         .to_string_lossy().to_string()
                 }
@@ -1493,6 +1493,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         impl BrowserTrait for #name {
             fn remove(&mut self, line: usize) {
+                assert!(line > 0, "Lines start at 1!");
                 unsafe {
                     #remove(self._inner, line as i32)
                 }
@@ -1504,6 +1505,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn insert(&mut self, line: usize, item: &str) {
+                assert!(line > 0, "Lines start at 1!");
                 let item = CString::new(item).unwrap();
                 unsafe {
                     #insert(self._inner, line as i32, item.into_raw() as *const raw::c_char)
@@ -1535,6 +1537,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn select(&mut self, line: usize) {
+                assert!(line > 0, "Lines start at 1!");
                 if line < self.size() {
                     unsafe {
                         #select(self._inner, line as i32);
@@ -1542,6 +1545,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn selected(&self, line: usize) -> bool {
+                assert!(line > 0, "Lines start at 1!");
                 unsafe {
                     match #selected(self._inner, line as i32) {
                         0 => false,
@@ -1550,11 +1554,16 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn text(&self, line: usize) -> String {
+                assert!(line > 0, "Lines start at 1!");
                 unsafe {
-                    CStr::from_ptr(#text(self._inner, line as i32) as *mut raw::c_char).to_string_lossy().to_string()
+                    let text = #text(self._inner, line as i32);
+                    assert!(!text.is_null(), "Failed to retrieve text of item!");
+                    CStr::from_ptr(text as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
             fn set_text(&mut self, line: usize, txt: &str) {
+                assert!(line > 0, "Lines start at 1!");
+                assert!(line <= self.size(), "Line doesn't exist!");
                 let txt = CString::new(txt).unwrap();
                 unsafe {
                     #set_text(self._inner, line as i32, txt.into_raw() as *const raw::c_char)
@@ -1578,18 +1587,21 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: &Img) {
+                assert!(line > 0, "Lines start at 1!");
                 unsafe {
                     #set_icon(self._inner, line as i32, image.as_ptr())
                 }
             }
             fn icon(&self, line: usize) -> Image {
+                assert!(line > 0, "Lines start at 1!");
                 unsafe {
                     let icon_ptr = #icon(self._inner, line as i32);
-                    assert!(!icon_ptr.is_null());
+                    assert!(!icon_ptr.is_null(), "Icon invalid or doesn't exist!");
                     Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image)
                 }
             }
             fn remove_icon(&mut self, line: usize) {
+                assert!(line > 0, "Lines start at 1!");
                 unsafe {
                     #remove_icon(self._inner, line as i32)
                 }
@@ -1621,7 +1633,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let temp = path.into_os_string().to_string_lossy().to_string();
                     let temp = CString::new(temp.as_str()).unwrap();
                     let image_ptr = #new(temp.into_raw() as *const raw::c_char);
-                    assert!(!image_ptr.is_null());
+                    assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
                     #name {
                         _inner: image_ptr,
                     }
@@ -1656,7 +1668,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
             fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
                 unsafe {
-                    assert!(!ptr.is_null());
+                    assert!(!ptr.is_null(), "Image pointer is null!");
                     #name {
                         _inner: mem::transmute(ptr),
                     }

@@ -130,7 +130,7 @@ pub fn event_key() -> Key {
 pub fn event_text() -> String {
     unsafe {
         let text = Fl_event_text();
-        assert!(!text.is_null());
+        assert!(!text.is_null(), "Failed to retrieve event_text!");
           CString::from_raw(text as *mut raw::c_char)
             .to_string_lossy().to_string()
     }
@@ -228,7 +228,7 @@ pub fn get_font_count() -> u8 {
 pub fn get_font_name(idx: u8) -> String {
     unsafe {
         let font = Fl_get_font(idx as i32);
-        assert!(!font.is_null());
+        assert!(!font.is_null(), "Failed to get font name!");
         CStr::from_ptr(font as *mut raw::c_char).to_string_lossy().to_string()
     }
 }
