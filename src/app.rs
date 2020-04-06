@@ -153,7 +153,7 @@ pub fn event_clicks() -> bool {
 
 /// Returns the x and y coordinates of the captured event
 pub fn event_coords() -> (i32, i32) {
-    unsafe { (Fl_event_dx(), Fl_event_dy()) }
+    unsafe { (Fl_event_x(), Fl_event_y()) }
 }
 
 /// Determines whether an event was a click

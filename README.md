@@ -11,7 +11,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.4"
+fltk = "^0.2.5"
 ```
 An example hello world application:
 
@@ -142,6 +142,7 @@ $ cargo run --example terminal
 $ cargo run --example counter
 $ cargo run --example hello
 $ cargo run --example hello_button
+$ cargo run --example paint
 ```
 ![alt_test](screenshots/hello.jpg)
 
@@ -217,6 +218,8 @@ Most common widgets are implemented:
 - Chart
 - Progress (progress bar)
 - Wizard
+- ColorChooser
+- Drawing primitives
 
 ## Todo
 

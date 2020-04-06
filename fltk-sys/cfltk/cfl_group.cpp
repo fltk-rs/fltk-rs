@@ -1,4 +1,5 @@
 #include "cfl_group.h"
+#include <FL/Fl_Color_Chooser.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Pack.H>
@@ -46,3 +47,17 @@ void Fl_Wizard_set_value(Fl_Wizard *self, Fl_Widget *wid) {
 }
 
 GROUP_DEFINE(Fl_Wizard)
+
+WIDGET_DEFINE(Fl_Color_Chooser)
+
+double Fl_Color_Chooser_r(Fl_Color_Chooser *self) {
+    return self->r();
+}
+double Fl_Color_Chooser_g(Fl_Color_Chooser *self) {
+    return self->g();
+}
+double Fl_Color_Chooser_b(Fl_Color_Chooser *self) {
+    return self->b();
+}
+
+GROUP_DEFINE(Fl_Color_Chooser)

@@ -33,10 +33,10 @@ extern "C" {
     pub fn Fl_event_clicks() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_dx() -> ::std::os::raw::c_int;
+    pub fn Fl_event_x() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_event_dy() -> ::std::os::raw::c_int;
+    pub fn Fl_event_y() -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_event_is_click() -> ::std::os::raw::c_int;

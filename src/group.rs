@@ -66,3 +66,25 @@ impl Wizard {
         }
     } 
 }
+
+/// Creates a color chooser widget
+#[derive(WidgetTrait, GroupTrait, Debug, Clone)]
+pub struct ColorChooser {
+    _inner: *mut Fl_Color_Chooser,
+}
+
+impl ColorChooser {
+    pub fn rgb_color(&self) -> (u8, u8, u8) {
+        unsafe {
+            let r = (Fl_Color_Chooser_r(self._inner) * 255.0) as u8;
+            let g = (Fl_Color_Chooser_g(self._inner) * 255.0) as u8;
+            let b = (Fl_Color_Chooser_b(self._inner) * 255.0) as u8;
+            (r, g, b)
+        }
+    }
+    pub fn hex_color(&self) -> u32 {
+        let c = self.rgb_color();
+        let x = Color::from_rgb(c.0, c.1, c.2);
+        x.to_u32()
+    }
+}

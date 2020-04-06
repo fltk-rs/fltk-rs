@@ -29,9 +29,9 @@ int Fl_event_button(void) { return Fl::event_button(); }
 
 int Fl_event_clicks(void) { return Fl::event_clicks(); }
 
-int Fl_event_dx(void) { return Fl::event_dx(); }
+int Fl_event_x(void) { return Fl::event_x(); }
 
-int Fl_event_dy(void) { return Fl::event_dy(); }
+int Fl_event_y(void) { return Fl::event_y(); }
 
 int Fl_event_is_click(void) { return Fl::event_is_click(); }
 
