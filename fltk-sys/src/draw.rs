@@ -88,7 +88,7 @@ extern "C" {
         y: ::std::os::raw::c_int,
         w: ::std::os::raw::c_int,
         h: ::std::os::raw::c_int,
-        c: ::std::os::raw::c_int,
+        c: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -105,7 +105,7 @@ extern "C" {
         y: ::std::os::raw::c_int,
         w: ::std::os::raw::c_int,
         h: ::std::os::raw::c_int,
-        c: ::std::os::raw::c_int,
+        c: ::std::os::raw::c_uint,
     );
 }
 extern "C" {

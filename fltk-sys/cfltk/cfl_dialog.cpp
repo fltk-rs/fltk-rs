@@ -10,7 +10,7 @@ Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
 }
 
 const char *Fl_Native_File_Chooser_filename(Fl_Native_File_Chooser *self) {
-  auto x = self->filename();
+  const char* x = self->filename();
   if (!strcmp(x, ""))
     return NULL;
   else
@@ -19,7 +19,7 @@ const char *Fl_Native_File_Chooser_filename(Fl_Native_File_Chooser *self) {
 
 const char *Fl_Native_File_Chooser_filenames(Fl_Native_File_Chooser *self,
                                              int cnt) {
-  auto x = self->filename(cnt);
+  const char* x = self->filename(cnt);
   if (!strcmp(x, ""))
     return NULL;
   else

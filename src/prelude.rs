@@ -171,6 +171,8 @@ pub trait WidgetTrait {
     fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
+    /// Set a custom draw method
+    fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
 }
 
 /// Defines the methods implemented by all group widgets

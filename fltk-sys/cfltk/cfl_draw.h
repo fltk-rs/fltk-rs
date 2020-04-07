@@ -19,9 +19,9 @@ void cfl_point(int x, int y);
 void cfl_line_style(int style, int width, char *dashes);
 void cfl_rect(int x, int y, int w, int h);
 void cfl_focus_rect(int x, int y, int w, int h);
-void cfl_rect_with_color(int x, int y, int w, int h, int c);
+void cfl_rect_with_color(int x, int y, int w, int h, unsigned int c);
 void cfl_rectf(int x, int y, int w, int h);
-void cfl_rectf_with_color(int x, int y, int w, int h, int c);
+void cfl_rectf_with_color(int x, int y, int w, int h, unsigned int c);
 void cfl_rectf_with_rgb(int x, int y, int w, int h, unsigned char r, unsigned char g,
               unsigned char b);
 void cfl_line(int x, int y, int x1, int y1);

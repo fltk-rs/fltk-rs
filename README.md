@@ -11,7 +11,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.5"
+fltk = "^0.2.6"
 ```
 An example hello world application:
 

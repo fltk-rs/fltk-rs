@@ -207,6 +207,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_trigger").as_str(),
         name.span(),
     );
+    let set_draw = Ident::new(
+        format!("{}_{}", name_str, "set_draw").as_str(),
+        name.span(),
+    );
     let gen = quote! {
         unsafe impl Send for #name {}
         impl Copy for #name {}
@@ -467,6 +471,19 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: custom_handler_callback = Some(shim);
                     #set_handler(&mut self._inner, callback, data);
+                }
+            }
+            fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
+                unsafe {
+                    unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
+                        let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
+                        let f: &mut (dyn FnMut() + 'a) = &mut **a;
+                        f();
+                    }
+                    let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = mem::transmute(a);
+                    let callback: custom_draw_callback = Some(shim);
+                    #set_draw(&mut self._inner, callback, data);
                 }
             }
             fn set_trigger(&mut self, trigger: CallbackTrigger) {
