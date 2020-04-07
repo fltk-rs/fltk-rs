@@ -14,6 +14,8 @@ pub type custom_handler_callback = ::std::option::Option<
         arg2: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
+pub type custom_draw_callback =
+    ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
@@ -153,6 +155,13 @@ extern "C" {
     pub fn Fl_Slider_set_handler(
         self_: *mut *mut Fl_Slider,
         cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Slider_set_draw(
+        self_: *mut *mut Fl_Slider,
+        cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -353,6 +362,13 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Nice_Slider_set_draw(
+        self_: *mut *mut Fl_Nice_Slider,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Nice_Slider_set_trigger(arg1: *mut Fl_Nice_Slider, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -542,6 +558,13 @@ extern "C" {
     pub fn Fl_Counter_set_handler(
         self_: *mut *mut Fl_Counter,
         cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Counter_set_draw(
+        self_: *mut *mut Fl_Counter,
+        cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -739,6 +762,13 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Dial_set_draw(
+        self_: *mut *mut Fl_Dial,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Dial_set_trigger(arg1: *mut Fl_Dial, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -924,6 +954,13 @@ extern "C" {
     pub fn Fl_Line_Dial_set_handler(
         self_: *mut *mut Fl_Line_Dial,
         cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Line_Dial_set_draw(
+        self_: *mut *mut Fl_Line_Dial,
+        cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1121,6 +1158,13 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Roller_set_draw(
+        self_: *mut *mut Fl_Roller,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Roller_set_trigger(arg1: *mut Fl_Roller, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1307,6 +1351,13 @@ extern "C" {
     pub fn Fl_Scrollbar_set_handler(
         self_: *mut *mut Fl_Scrollbar,
         cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Scrollbar_set_draw(
+        self_: *mut *mut Fl_Scrollbar,
+        cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1513,6 +1564,13 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Value_Slider_set_draw(
+        self_: *mut *mut Fl_Value_Slider,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Value_Slider_set_trigger(arg1: *mut Fl_Value_Slider, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1705,6 +1763,13 @@ extern "C" {
     pub fn Fl_Adjuster_set_handler(
         self_: *mut *mut Fl_Adjuster,
         cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_draw(
+        self_: *mut *mut Fl_Adjuster,
+        cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1904,6 +1969,13 @@ extern "C" {
     pub fn Fl_Value_Input_set_handler(
         self_: *mut *mut Fl_Value_Input,
         cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_draw(
+        self_: *mut *mut Fl_Value_Input,
+        cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }

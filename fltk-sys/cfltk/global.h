@@ -7,6 +7,7 @@ extern "C" {
 typedef struct Fl_Widget Fl_Widget;
 typedef void(Fl_Callback)(Fl_Widget *, void *);
 typedef int (*custom_handler_callback)(int, void *);
+typedef void (*custom_draw_callback)(void *);
 void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define WIDGET_DECLARE(widget)                                                 \
@@ -51,6 +52,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_image(widget *, void *);                                   \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data);                                       \
+  void widget##_set_draw(widget **self, custom_draw_callback cb, void *data);  \
   void widget##_set_trigger(widget *, int);                                    \
   void *widget##_image(const widget *);
 
@@ -219,7 +221,21 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
         return local;                                                          \
     }                                                                          \
   };                                                                           \
+  class widget##_Drawable : public widget {                                    \
+    void *data_;                                                               \
                                                                                \
+  public:                                                                      \
+    typedef void (*drawer)(void *data);                                        \
+    drawer inner_drawer;                                                       \
+    widget##_Drawable(int x, int y, int w, int h, const char *title = 0)       \
+        : widget(x, y, w, h, title) {}                                         \
+    widget##_Drawable(widget *ptr)                                             \
+        : widget(ptr->x(), ptr->y(), ptr->w(), ptr->h(), ptr->label()) {}      \
+    operator widget *() { return (widget *)*this; }                            \
+    void set_drawer(drawer h) { inner_drawer = h; }                            \
+    void set_drawer_data(void *data) { data_ = data; }                         \
+    void draw() { inner_drawer(data_); };                                      \
+  };                                                                           \
   widget *widget##_new(int x, int y, int width, int height,                    \
                        const char *title) {                                    \
     return new (std::nothrow) widget(x, y, width, height, title);              \
@@ -283,12 +299,24 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data) {                                      \
     widget##_Derived *temp = new (std::nothrow) widget##_Derived(*self);       \
+    if (!temp)                                                                 \
+      return;                                                                  \
     temp->set_handler_data(data);                                              \
     temp->set_handler(cb);                                                     \
     *self = temp;                                                              \
   }                                                                            \
   void widget##_set_trigger(widget *self, int val) { self->when(val); }        \
-  void *widget##_image(const widget *self) { return (Fl_Image *)self->image(); }
+  void *widget##_image(const widget *self) {                                   \
+    return (Fl_Image *)self->image();                                          \
+  }                                                                            \
+  void widget##_set_draw(widget **self, custom_draw_callback cb, void *data) { \
+    widget##_Drawable *temp = new (std::nothrow) widget##_Drawable(*self);     \
+    if (!temp)                                                                 \
+      return;                                                                  \
+    temp->set_drawer_data(data);                                               \
+    temp->set_drawer(cb);                                                      \
+    *self = temp;                                                              \
+  }
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \

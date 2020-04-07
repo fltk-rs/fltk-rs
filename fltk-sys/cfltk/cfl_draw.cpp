@@ -26,11 +26,11 @@ void cfl_line_style(int style, int width, char *dashes) {
 }
 void cfl_rect(int x, int y, int w, int h) { fl_rect(x, y, w, h); }
 void cfl_focus_rect(int x, int y, int w, int h) { fl_focus_rect(x, y, w, h); }
-void cfl_rect_with_color(int x, int y, int w, int h, int c) {
+void cfl_rect_with_color(int x, int y, int w, int h, unsigned int c) {
   fl_rect(x, y, w, h, c);
 }
 void cfl_rectf(int x, int y, int w, int h) { fl_rectf(x, y, w, h); }
-void cfl_rectf_with_color(int x, int y, int w, int h, int c) {
+void cfl_rectf_with_color(int x, int y, int w, int h, unsigned int c) {
   fl_rectf(x, y, w, h, c);
 }
 void cfl_rectf_with_rgb(int x, int y, int w, int h, unsigned char r,

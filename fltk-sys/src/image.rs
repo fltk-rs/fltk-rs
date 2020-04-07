@@ -14,6 +14,8 @@ pub type custom_handler_callback = ::std::option::Option<
         arg2: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
+pub type custom_draw_callback =
+    ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,

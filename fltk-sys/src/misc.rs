@@ -14,6 +14,8 @@ pub type custom_handler_callback = ::std::option::Option<
         arg2: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
+pub type custom_draw_callback =
+    ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
@@ -153,6 +155,13 @@ extern "C" {
     pub fn Fl_Spinner_set_handler(
         self_: *mut *mut Fl_Spinner,
         cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Spinner_set_draw(
+        self_: *mut *mut Fl_Spinner,
+        cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -343,6 +352,13 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Clock_set_draw(
+        self_: *mut *mut Fl_Clock,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Clock_set_trigger(arg1: *mut Fl_Clock, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -480,6 +496,13 @@ extern "C" {
     pub fn Fl_Chart_set_handler(
         self_: *mut *mut Fl_Chart,
         cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Chart_set_draw(
+        self_: *mut *mut Fl_Chart,
+        cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -693,6 +716,13 @@ extern "C" {
     pub fn Fl_Progress_set_handler(
         self_: *mut *mut Fl_Progress,
         cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Progress_set_draw(
+        self_: *mut *mut Fl_Progress,
+        cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
