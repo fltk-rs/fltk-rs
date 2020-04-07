@@ -70,9 +70,9 @@ void cfl_arc(int x, int y, int w, int h, double a1, double a2) {
 void cfl_pie(int x, int y, int w, int h, double a1, double a2) {
   fl_pie(x, y, w, h, a1, a2);
 }
-void cfl_chord(int x, int y, int w, int h, double a1, double a2) {
-  fl_chord(x, y, w, h, a1, a2);
-}
+// void cfl_chord(int x, int y, int w, int h, double a1, double a2) {
+//   fl_chord(x, y, w, h, a1, a2);
+// }
 void cfl_push_matrix(void) { fl_push_matrix(); }
 void cfl_pop_matrix(void) { fl_pop_matrix(); }
 void cfl_scale(double x, double y) { fl_scale(x, y); }
