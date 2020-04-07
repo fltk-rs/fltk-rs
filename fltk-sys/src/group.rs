@@ -1083,3 +1083,205 @@ extern "C" {
 extern "C" {
     pub fn Fl_Wizard_child(arg1: *mut Fl_Wizard, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Color_Chooser {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Color_Chooser;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_x(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_y(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_width(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_height(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_label(arg1: *mut Fl_Color_Chooser) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_label(
+        arg1: *mut Fl_Color_Chooser,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_redraw(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_show(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_hide(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_activate(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_deactivate(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_redraw_label(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_resize(
+        arg1: *mut Fl_Color_Chooser,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_tooltip(arg1: *mut Fl_Color_Chooser) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_tooltip(
+        arg1: *mut Fl_Color_Chooser,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_get_type(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_type(arg1: *mut Fl_Color_Chooser, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_color(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_color(arg1: *mut Fl_Color_Chooser, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_label_color(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_label_color(
+        arg1: *mut Fl_Color_Chooser,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_label_font(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_label_font(
+        arg1: *mut Fl_Color_Chooser,
+        font: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_label_size(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_label_size(arg1: *mut Fl_Color_Chooser, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_label_type(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_label_type(arg1: *mut Fl_Color_Chooser, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_box(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_box(arg1: *mut Fl_Color_Chooser, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_changed(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_changed(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_clear_changed(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_align(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_align(arg1: *mut Fl_Color_Chooser, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_delete(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_image(
+        arg1: *mut Fl_Color_Chooser,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_handler(
+        self_: *mut *mut Fl_Color_Chooser,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_trigger(arg1: *mut Fl_Color_Chooser, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_image(arg1: *const Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_g(self_: *mut Fl_Color_Chooser) -> f64;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_b(self_: *mut Fl_Color_Chooser) -> f64;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_begin(self_: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_end(self_: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_find(
+        self_: *mut Fl_Color_Chooser,
+        arg1: *const ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_add(self_: *mut Fl_Color_Chooser, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_insert(
+        self_: *mut Fl_Color_Chooser,
+        arg1: *mut ::std::os::raw::c_void,
+        pos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_remove(self_: *mut Fl_Color_Chooser, index: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_clear(self_: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_children(self_: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_child(
+        arg1: *mut Fl_Color_Chooser,
+        index: ::std::os::raw::c_int,
+    ) -> *mut Fl_Widget;
+}

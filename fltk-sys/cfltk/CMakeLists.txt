@@ -23,6 +23,7 @@ add_library(cfltk STATIC
     cfl_browser.cpp
     cfl_misc.cpp
     cfl_image.cpp
+    cfl_draw.cpp
     )
 
 target_include_directories(cfltk PUBLIC fltk)
