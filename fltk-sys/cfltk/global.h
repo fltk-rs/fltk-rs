@@ -471,7 +471,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     self->textcolor(n);                                                        \
   }                                                                            \
   void widget##_append(widget *self, const char *txt) {                        \
-    auto buff = self->buffer();                                                \
+    Fl_Text_Buffer *buff = self->buffer();                                     \
     buff->append(txt);                                                         \
     self->buffer(buff);                                                        \
   }                                                                            \
@@ -499,7 +499,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_move_up(widget *self) { return self->move_up(); }               \
   int widget##_move_down(widget *self) { return self->move_down(); }           \
   void widget##_remove(widget *self, int start, int end) {                     \
-    auto buff = self->buffer();                                                \
+    Fl_Text_Buffer *buff = self->buffer();                                     \
     buff->remove(start, end);                                                  \
     self->buffer(buff);                                                        \
   }                                                                            \
@@ -514,8 +514,11 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
                                       int *fontsz, int sz) {                   \
     Fl_Text_Display::Style_Table_Entry *stable =                               \
         new (std::nothrow) Fl_Text_Display::Style_Table_Entry[sz];             \
+    if (!stable)                                                               \
+      return;                                                                  \
     for (int i = 0; i < sz; ++i) {                                             \
-      stable[i] = {color[i], font[i], fontsz[i]};                              \
+      stable[i] =                                                              \
+          {color[i], font[i], fontsz[i]};  \
     }                                                                          \
     self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);      \
     delete[] stable;                                                           \
