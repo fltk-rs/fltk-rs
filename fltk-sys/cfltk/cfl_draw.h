@@ -38,7 +38,7 @@ void cfl_yxline2(int x, int y, int y1, int x2);
 void cfl_yxline3(int x, int y, int y1, int x2, int y3);
 void cfl_arc(int x, int y, int w, int h, double a1, double a2);
 void cfl_pie(int x, int y, int w, int h, double a1, double a2);
-void cfl_chord(int x, int y, int w, int h, double a1, double a2);
+// void cfl_chord(int x, int y, int w, int h, double a1, double a2);
 void cfl_push_matrix(void);
 void cfl_pop_matrix(void);
 void cfl_scale(double x, double y);
