@@ -1,5 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::text::*;
+use crate::image::Image;
 use std::{ffi::{CStr, CString}, mem, os::raw};
 
 /// Wraps a text buffer
@@ -11,8 +12,10 @@ pub struct TextBuffer {
 impl TextBuffer {
     pub fn default() -> Self {
         unsafe {
+            let text_buffer = Fl_Text_Buffer_new();
+            assert!(!text_buffer.is_null(), "Failed to instantiate text buffer!");
             TextBuffer {
-                _inner: Fl_Text_Buffer_new(),
+                _inner: text_buffer,
             }
         }
     }
@@ -34,7 +37,9 @@ impl TextBuffer {
 
     pub fn text(&self) -> String {
         unsafe {
-            CString::from_raw(Fl_Text_Buffer_text(self._inner) as *mut raw::c_char)
+            let text = Fl_Text_Buffer_text(self._inner);
+            assert!(!text.is_null(), "Failed to retrieve text from buffer!");
+            CString::from_raw(text as *mut raw::c_char)
                 .to_string_lossy().to_string()
         }
     }
@@ -97,8 +102,10 @@ impl TextEditor {
     pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
+            let text_editor = Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
+            assert!(!text_editor.is_null(), "Failed to instantiate text editor!");
             let mut x = TextEditor {
-                _inner: Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char),
+                _inner: text_editor,
             };
             x.set_buffer(buf);
             x
@@ -108,8 +115,10 @@ impl TextEditor {
     pub fn default(buf: &mut TextBuffer) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
+            let text_editor = Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
+            assert!(!text_editor.is_null(), "Failed to instantiate text editor!");
             let mut x = TextEditor {
-                _inner: Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char),
+                _inner: text_editor,
             };
             x.set_buffer(buf);
             x
@@ -146,8 +155,10 @@ impl TextDisplay {
     pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
+            let text_display = Fl_Text_Display_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
+            assert!(!text_display.is_null(), "Failed to instantiate text display!");
             let mut x = TextDisplay {
-                _inner: Fl_Text_Display_new(x, y, w, h, temp.into_raw() as *const raw::c_char),
+                _inner: text_display,
             };
             x.set_buffer(buf);
             x
@@ -157,8 +168,10 @@ impl TextDisplay {
     pub fn default(buf: &mut TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
+            let text_display = Fl_Text_Display_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
+            assert!(!text_display.is_null(), "Failed to instantiate text display!");
             let mut x = TextDisplay {
-                _inner: Fl_Text_Display_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char),
+                _inner: text_display,
             };
             x.set_buffer(buf);
             x
@@ -171,8 +184,10 @@ impl SimpleTerminal {
     pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer)-> SimpleTerminal {
         let temp = CString::new("").unwrap();
         unsafe {
+            let simple_terminal = Fl_Simple_Terminal_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
+            assert!(!simple_terminal.is_null(), "Failed to instantiate simple terminal!");
             let mut x = SimpleTerminal {
-                _inner: Fl_Simple_Terminal_new(x, y, w, h, temp.into_raw() as *const raw::c_char),
+                _inner: simple_terminal,
             };
             x.set_buffer(buf);
             x
@@ -182,8 +197,10 @@ impl SimpleTerminal {
     pub fn default(buf: &mut TextBuffer) -> SimpleTerminal {
         let temp = CString::new("").unwrap();
         unsafe {
+            let simple_terminal = Fl_Simple_Terminal_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
+            assert!(!simple_terminal.is_null(), "Failed to instantiate simple terminal!");
             let mut x = SimpleTerminal {
-                _inner: Fl_Simple_Terminal_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char),
+                _inner: simple_terminal,
             };
             x.set_buffer(buf);
             x

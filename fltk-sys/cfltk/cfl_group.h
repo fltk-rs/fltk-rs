@@ -35,6 +35,14 @@ void Fl_Wizard_set_value(Fl_Wizard *, Fl_Widget *);
 
 GROUP_DECLARE(Fl_Wizard)
 
+WIDGET_DECLARE(Fl_Color_Chooser)
+
+double Fl_Color_Chooser_r(Fl_Color_Chooser *self);
+double Fl_Color_Chooser_g(Fl_Color_Chooser *self);
+double Fl_Color_Chooser_b(Fl_Color_Chooser *self);
+
+GROUP_DECLARE(Fl_Color_Chooser)
+
 #ifdef __cplusplus
 }
 #endif

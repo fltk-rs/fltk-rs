@@ -7,6 +7,7 @@ extern "C" {
 typedef struct Fl_Widget Fl_Widget;
 typedef void(Fl_Callback)(Fl_Widget *, void *);
 typedef int (*custom_handler_callback)(int, void *);
+typedef void (*custom_draw_callback)(void *);
 void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define WIDGET_DECLARE(widget)                                                 \
@@ -51,7 +52,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_image(widget *, void *);                                   \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data);                                       \
-  void widget##_set_trigger(widget *, int);
+  void widget##_set_draw(widget **self, custom_draw_callback cb, void *data);  \
+  void widget##_set_trigger(widget *, int);                                    \
+  void *widget##_image(const widget *);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -69,6 +72,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_fullscreen(widget *, unsigned int boolean);                    \
   void widget##_make_current(widget *);                                        \
   void widget##_set_icon(widget *, const void *);                              \
+  void *widget##_icon(const widget *);                                         \
   void widget##_make_resizable(widget *self, void *);
 
 #define INPUT_DECLARE(widget)                                                  \
@@ -217,7 +221,21 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
         return local;                                                          \
     }                                                                          \
   };                                                                           \
+  class widget##_Drawable : public widget {                                    \
+    void *data_;                                                               \
                                                                                \
+  public:                                                                      \
+    typedef void (*drawer)(void *data);                                        \
+    drawer inner_drawer;                                                       \
+    widget##_Drawable(int x, int y, int w, int h, const char *title = 0)       \
+        : widget(x, y, w, h, title) {}                                         \
+    widget##_Drawable(widget *ptr)                                             \
+        : widget(ptr->x(), ptr->y(), ptr->w(), ptr->h(), ptr->label()) {}      \
+    operator widget *() { return (widget *)*this; }                            \
+    void set_drawer(drawer h) { inner_drawer = h; }                            \
+    void set_drawer_data(void *data) { data_ = data; }                         \
+    void draw() { inner_drawer(data_); };                                      \
+  };                                                                           \
   widget *widget##_new(int x, int y, int width, int height,                    \
                        const char *title) {                                    \
     return new (std::nothrow) widget(x, y, width, height, title);              \
@@ -281,11 +299,24 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data) {                                      \
     widget##_Derived *temp = new (std::nothrow) widget##_Derived(*self);       \
+    if (!temp)                                                                 \
+      return;                                                                  \
     temp->set_handler_data(data);                                              \
     temp->set_handler(cb);                                                     \
     *self = temp;                                                              \
   }                                                                            \
-  void widget##_set_trigger(widget *self, int val) { self->when(val); }
+  void widget##_set_trigger(widget *self, int val) { self->when(val); }        \
+  void *widget##_image(const widget *self) {                                   \
+    return (Fl_Image *)self->image();                                          \
+  }                                                                            \
+  void widget##_set_draw(widget **self, custom_draw_callback cb, void *data) { \
+    widget##_Drawable *temp = new (std::nothrow) widget##_Drawable(*self);     \
+    if (!temp)                                                                 \
+      return;                                                                  \
+    temp->set_drawer_data(data);                                               \
+    temp->set_drawer(cb);                                                      \
+    *self = temp;                                                              \
+  }
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \
@@ -327,7 +358,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   void widget##_make_resizable(widget *self, void *wid) {                      \
     self->resizable((Fl_Widget *)wid);                                         \
-  }
+  }                                                                            \
+  void *widget##_icon(const widget *self) { return (Fl_Image *)self->icon(); }
 
 #define INPUT_DEFINE(widget)                                                   \
   int widget##_set_value(widget *self, const char *t) {                        \
@@ -439,7 +471,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     self->textcolor(n);                                                        \
   }                                                                            \
   void widget##_append(widget *self, const char *txt) {                        \
-    auto buff = self->buffer();                                                \
+    Fl_Text_Buffer *buff = self->buffer();                                     \
     buff->append(txt);                                                         \
     self->buffer(buff);                                                        \
   }                                                                            \
@@ -467,7 +499,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_move_up(widget *self) { return self->move_up(); }               \
   int widget##_move_down(widget *self) { return self->move_down(); }           \
   void widget##_remove(widget *self, int start, int end) {                     \
-    auto buff = self->buffer();                                                \
+    Fl_Text_Buffer *buff = self->buffer();                                     \
     buff->remove(start, end);                                                  \
     self->buffer(buff);                                                        \
   }                                                                            \
@@ -482,8 +514,11 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
                                       int *fontsz, int sz) {                   \
     Fl_Text_Display::Style_Table_Entry *stable =                               \
         new (std::nothrow) Fl_Text_Display::Style_Table_Entry[sz];             \
+    if (!stable)                                                               \
+      return;                                                                  \
     for (int i = 0; i < sz; ++i) {                                             \
-      stable[i] = {color[i], font[i], fontsz[i]};                              \
+      stable[i] =                                                              \
+          {color[i], font[i], fontsz[i]};  \
     }                                                                          \
     self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);      \
     delete[] stable;                                                           \

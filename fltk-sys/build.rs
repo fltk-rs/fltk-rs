@@ -27,6 +27,7 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_misc.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_text.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_image.h");
+    println!("cargo:rerun-if-changed=cfltk/cfl_draw.h");
     println!("cargo:rerun-if-changed=cfltk/global.h");
     println!("cargo:rerun-if-changed=cfltk/cfl.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_widget.cpp");
@@ -41,6 +42,7 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_misc.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_text.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_image.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_draw.cpp");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
 
     Command::new("git")
@@ -60,6 +62,7 @@ fn main() {
         .profile("RELEASE")
         .define("OpenGL_GL_PREFERENCE", "GLVND")
         .define("OPTION_BUILD_EXAMPLES", "OFF")
+        .define("OPTION_USE_THREADS", "ON")
         .define("OPTION_LARGE_FILE", "ON")
         .define("OPTION_USE_SYSTEM_ZLIB", "OFF")
         .define("OPTION_USE_SYSTEM_LIBPNG", "OFF")
@@ -122,6 +125,7 @@ fn main() {
         }
         _ => {
             println!("cargo:rustc-link-lib=dylib=stdc++");
+            println!("cargo:rustc-link-lib=dylib=pthread");
             println!("cargo:rustc-link-lib=dylib=X11");
             println!("cargo:rustc-link-lib=dylib=Xext");
             println!("cargo:rustc-link-lib=dylib=Xinerama");

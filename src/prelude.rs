@@ -163,12 +163,16 @@ pub trait WidgetTrait {
     fn set_align(&mut self, align: Align);
     /// Sets the image of the widget
     fn set_image<Image: ImageTrait>(&mut self, image: &Image);
+    /// Gets the image associated with the widget
+    fn image(&self) -> Image;
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
+    /// Set a custom draw method
+    fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
 }
 
 /// Defines the methods implemented by all group widgets
@@ -205,6 +209,8 @@ pub trait WindowTrait: GroupTrait {
     fn make_current(&mut self);
     /// Sets the windows icon
     fn set_icon<Image: ImageTrait>(&mut self, image: &Image);
+    /// Returns the icon of the window
+    fn icon(&self) -> Image;
     /// Make the window resizable
     fn make_resizable(&self, val: bool);
 }

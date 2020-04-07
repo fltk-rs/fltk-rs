@@ -14,6 +14,8 @@ pub type custom_handler_callback = ::std::option::Option<
         arg2: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
+pub type custom_draw_callback =
+    ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
@@ -157,7 +159,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Output_set_draw(
+        self_: *mut *mut Fl_Output,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Output_set_trigger(arg1: *mut Fl_Output, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Output_image(arg1: *const Fl_Output) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Output_set_value(
@@ -427,10 +439,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Multiline_Output_set_draw(
+        self_: *mut *mut Fl_Multiline_Output,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Multiline_Output_set_trigger(
         arg1: *mut Fl_Multiline_Output,
         arg2: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_image(
+        arg1: *const Fl_Multiline_Output,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_value(

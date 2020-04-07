@@ -14,6 +14,8 @@ pub type custom_handler_callback = ::std::option::Option<
         arg2: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
+pub type custom_draw_callback =
+    ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
@@ -157,7 +159,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Window_set_draw(
+        self_: *mut *mut Fl_Window,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Window_set_trigger(arg1: *mut Fl_Window, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Window_image(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
@@ -204,6 +216,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_set_icon(arg1: *mut Fl_Window, arg2: *const ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Window_icon(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Window_make_resizable(self_: *mut Fl_Window, arg1: *mut ::std::os::raw::c_void);
@@ -359,7 +374,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Double_Window_set_draw(
+        self_: *mut *mut Fl_Double_Window,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Double_Window_set_trigger(arg1: *mut Fl_Double_Window, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Double_Window_image(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
@@ -418,6 +443,9 @@ extern "C" {
         arg1: *mut Fl_Double_Window,
         arg2: *const ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Double_Window_icon(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Double_Window_make_resizable(
@@ -567,7 +595,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Window_set_draw(
+        self_: *mut *mut Fl_Menu_Window,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Window_set_trigger(arg1: *mut Fl_Menu_Window, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_image(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);
@@ -617,6 +655,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_icon(arg1: *mut Fl_Menu_Window, arg2: *const ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_icon(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Window_make_resizable(

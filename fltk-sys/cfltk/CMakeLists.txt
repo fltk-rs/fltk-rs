@@ -3,6 +3,9 @@ project(cfltk)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
 
 add_subdirectory(fltk)
@@ -23,6 +26,7 @@ add_library(cfltk STATIC
     cfl_browser.cpp
     cfl_misc.cpp
     cfl_image.cpp
+    cfl_draw.cpp
     )
 
 target_include_directories(cfltk PUBLIC fltk)

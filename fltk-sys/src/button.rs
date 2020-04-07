@@ -14,6 +14,8 @@ pub type custom_handler_callback = ::std::option::Option<
         arg2: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int,
 >;
+pub type custom_draw_callback =
+    ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
@@ -157,7 +159,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Button_set_draw(
+        self_: *mut *mut Fl_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Button_set_trigger(arg1: *mut Fl_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Button_image(arg1: *const Fl_Button) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -304,7 +316,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Check_Button_set_draw(
+        self_: *mut *mut Fl_Check_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Check_Button_set_trigger(arg1: *mut Fl_Check_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Check_Button_image(arg1: *const Fl_Check_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
@@ -454,7 +476,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Radio_Button_set_draw(
+        self_: *mut *mut Fl_Radio_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Radio_Button_set_trigger(arg1: *mut Fl_Radio_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_image(arg1: *const Fl_Radio_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Button_is_toggled(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
@@ -610,7 +642,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Toggle_Button_set_draw(
+        self_: *mut *mut Fl_Toggle_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Toggle_Button_set_trigger(arg1: *mut Fl_Toggle_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_image(arg1: *const Fl_Toggle_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Toggle_Button_is_toggled(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
@@ -760,7 +802,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Round_Button_set_draw(
+        self_: *mut *mut Fl_Round_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Round_Button_set_trigger(arg1: *mut Fl_Round_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Round_Button_image(arg1: *const Fl_Round_Button) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -907,7 +959,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Light_Button_set_draw(
+        self_: *mut *mut Fl_Light_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Light_Button_set_trigger(arg1: *mut Fl_Light_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Light_Button_image(arg1: *const Fl_Light_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Light_Button_is_on(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
@@ -1063,7 +1125,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Repeat_Button_set_draw(
+        self_: *mut *mut Fl_Repeat_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Repeat_Button_set_trigger(arg1: *mut Fl_Repeat_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_image(arg1: *const Fl_Repeat_Button) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1216,5 +1288,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Return_Button_set_draw(
+        self_: *mut *mut Fl_Return_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Return_Button_set_trigger(arg1: *mut Fl_Return_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Return_Button_image(arg1: *const Fl_Return_Button) -> *mut ::std::os::raw::c_void;
 }

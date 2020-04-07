@@ -115,6 +115,7 @@ pub enum Font {
 }
 
 impl Font {
+    /// Returns a font by index, can be queried via the app::get_font_names()
     pub fn by_index(idx: u8) -> Font {
         if idx >= get_font_count() {
             return Font::Helvetica;
@@ -123,6 +124,7 @@ impl Font {
             std::mem::transmute(idx as i32)
         }
     }
+    /// Gets the font by its name, can be queried via the app::get_font_names()
     pub fn by_name(name: &str) -> Font {
         match get_font_index(name) {
             Some(val) => Font::by_index(val),
@@ -175,6 +177,17 @@ impl Color {
         let g = u8::from_str_radix(&hex[2..4], 16).unwrap();
         let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
         Color::from_rgb(r, g, b)
+    }
+    pub fn to_u32(&self) -> u32 {
+        *self as u32
+    }
+    pub fn to_rgb(&self) -> (u8, u8, u8) {
+        let x = *self as u32;
+        let hex = format!("{:06x}", x);
+        let r = u8::from_str_radix(&hex[0..2], 16).unwrap();
+        let g = u8::from_str_radix(&hex[2..4], 16).unwrap();
+        let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
+        (r, g, b)
     }
 }
 
@@ -363,6 +376,24 @@ pub enum ClockType {
     RoundClock = 1,
 }
 
+/// Defines the clock types supported by fltk
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum LineStyle {
+    Solid = 0,
+    Dash,
+    Dot,
+    DashDot,
+    DashDotDot,
+    CapFlat = 100,
+    CapRound = 200,
+    CapSquare = 300,
+    JoinMiter = 1000,
+    JoinRound = 2000,
+    JoinBevel = 3000,
+}
+
+
 pub trait WidgetType {
     fn to_int(self) -> i32;
     fn from_i32(val: i32) -> Self;
@@ -411,6 +442,13 @@ impl std::ops::BitOr<Event> for Event {
 }
 
 impl std::ops::BitOr<Key> for Key {
+    type Output = Key;
+    fn bitor(self, rhs: Key) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Key> for LineStyle {
     type Output = Key;
     fn bitor(self, rhs: Key) -> Self::Output {
         unsafe { std::mem::transmute(self as i32 | rhs as i32) }
