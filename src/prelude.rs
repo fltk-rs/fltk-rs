@@ -468,4 +468,6 @@ pub trait ImageTrait {
     fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
     /// Transforms a raw image pointer to an image
     fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
+    /// Returns the raw underlying image data
+    fn as_bytes<'a>(&self) -> &'a [u8];
 }

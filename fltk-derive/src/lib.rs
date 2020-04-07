@@ -1637,6 +1637,8 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
     let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
     let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
+    let count = Ident::new(format!("{}_{}", name_str, "count").as_str(), name.span());
+    let data = Ident::new(format!("{}_{}", name_str, "data").as_str(), name.span());
 
     let gen = quote! {
         impl Drop for #name {
@@ -1689,6 +1691,14 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #name {
                         _inner: mem::transmute(ptr),
                     }
+                }
+            }
+            fn as_bytes<'a>(&self) -> &'a [u8] {
+                unsafe {
+                    let ptr = #data(self._inner);
+                    let cnt = #width(self._inner) * #height(self._inner) * 3;
+                    let ret: &[u8] = std::slice::from_raw_parts(ptr as *const u8, cnt as usize);
+                    ret
                 }
             }
         }

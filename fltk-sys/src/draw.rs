@@ -249,16 +249,6 @@ extern "C" {
         a2: f64,
     );
 }
-// extern "C" {
-//     pub fn cfl_chord(
-//         x: ::std::os::raw::c_int,
-//         y: ::std::os::raw::c_int,
-//         w: ::std::os::raw::c_int,
-//         h: ::std::os::raw::c_int,
-//         a1: f64,
-//         a2: f64,
-//     );
-// }
 extern "C" {
     pub fn cfl_push_matrix();
 }

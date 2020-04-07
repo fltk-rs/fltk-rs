@@ -54,6 +54,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_JPEG_Image_delete(arg1: *mut Fl_JPEG_Image);
 }
+extern "C" {
+    pub fn Fl_JPEG_Image_count(self_: *mut Fl_JPEG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_JPEG_Image_data(self_: *mut Fl_JPEG_Image) -> *const *const ::std::os::raw::c_char;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_PNG_Image {
@@ -79,6 +85,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_PNG_Image_delete(arg1: *mut Fl_PNG_Image);
+}
+extern "C" {
+    pub fn Fl_PNG_Image_count(self_: *mut Fl_PNG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_data(self_: *mut Fl_PNG_Image) -> *const *const ::std::os::raw::c_char;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -106,6 +118,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_SVG_Image_delete(arg1: *mut Fl_SVG_Image);
 }
+extern "C" {
+    pub fn Fl_SVG_Image_count(self_: *mut Fl_SVG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_SVG_Image_data(self_: *mut Fl_SVG_Image) -> *const *const ::std::os::raw::c_char;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_BMP_Image {
@@ -132,6 +150,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_BMP_Image_delete(arg1: *mut Fl_BMP_Image);
 }
+extern "C" {
+    pub fn Fl_BMP_Image_count(self_: *mut Fl_BMP_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_BMP_Image_data(self_: *mut Fl_BMP_Image) -> *const *const ::std::os::raw::c_char;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_GIF_Image {
@@ -157,4 +181,22 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_GIF_Image_delete(arg1: *mut Fl_GIF_Image);
+}
+extern "C" {
+    pub fn Fl_GIF_Image_count(self_: *mut Fl_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_GIF_Image_data(self_: *mut Fl_GIF_Image) -> *const *const ::std::os::raw::c_char;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_RGB_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_RGB_Image_new(
+        bits: *const ::std::os::raw::c_uchar,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    ) -> *mut Fl_RGB_Image;
 }
