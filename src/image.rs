@@ -18,9 +18,7 @@ impl Image {
 impl<I: ImageTrait> From<I> for Image {
     fn from(s: I) -> Self {
         let img: *mut Fl_Image = s.as_image_ptr();
-        Image {
-            _inner: img,
-        }
+        Image { _inner: img }
     }
 }
 
@@ -28,9 +26,7 @@ impl<I: ImageTrait> From<I> for Image {
 impl Image {
     /// Initialize an Image base from a raw pointer
     pub fn from_raw(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
-        Image {
-            _inner: ptr,
-        }
+        Image { _inner: ptr }
     }
     /// Transforms an Image base into another Image
     pub fn downcast_into<I: ImageTrait>(&mut self) -> I {

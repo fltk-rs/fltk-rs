@@ -70,9 +70,6 @@ void cfl_arc(int x, int y, int w, int h, double a1, double a2) {
 void cfl_pie(int x, int y, int w, int h, double a1, double a2) {
   fl_pie(x, y, w, h, a1, a2);
 }
-// void cfl_chord(int x, int y, int w, int h, double a1, double a2) {
-//   fl_chord(x, y, w, h, a1, a2);
-// }
 void cfl_push_matrix(void) { fl_push_matrix(); }
 void cfl_pop_matrix(void) { fl_pop_matrix(); }
 void cfl_scale(double x, double y) { fl_scale(x, y); }
@@ -175,7 +172,7 @@ void cfl_draw_image_mono(const unsigned char *buf, int X, int Y, int W, int H,
 }
 char cfl_can_do_alpha_blending(void) { return fl_can_do_alpha_blending(); }
 unsigned char *cfl_read_image(unsigned char *p, int X, int Y, int W, int H,
-                              int alpha) {
+                              int alpha) {                      
   return fl_read_image(p, X, Y, W, H, alpha);
 }
 void *cfl_capture_window_part(void *win, int x, int y, int w, int h) {

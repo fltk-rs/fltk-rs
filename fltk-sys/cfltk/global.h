@@ -196,7 +196,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void image##_draw(image *, int X, int Y, int W, int H);                      \
   int image##_width(image *);                                                  \
   int image##_height(image *);                                                 \
-  void image##_delete(image *);
+  void image##_delete(image *);                                                \
+  int image##_count(image *self);                                              \
+  const char *const *image##_data(image *self);
 
 #define WIDGET_DEFINE(widget)                                                  \
   class widget##_Derived : public widget {                                     \
@@ -517,8 +519,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     if (!stable)                                                               \
       return;                                                                  \
     for (int i = 0; i < sz; ++i) {                                             \
-      stable[i] =                                                              \
-          {color[i], font[i], fontsz[i]};  \
+      stable[i] = {color[i], font[i], fontsz[i]};                              \
     }                                                                          \
     self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);      \
     delete[] stable;                                                           \
@@ -591,7 +592,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   int image##_width(image *self) { return self->w(); }                         \
   int image##_height(image *self) { return self->h(); }                        \
-  void image##_delete(image *self) { delete self; }
+  void image##_delete(image *self) { delete self; }                            \
+  int image##_count(image *self) { return self->count(); }                     \
+  const char *const *image##_data(image *self) { return self->data(); }
 
 #ifdef __cplusplus
 }
