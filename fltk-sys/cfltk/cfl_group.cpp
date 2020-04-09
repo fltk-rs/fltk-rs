@@ -43,7 +43,7 @@ Fl_Widget *Fl_Wizard_value(Fl_Wizard *self) {
     return (Fl_Widget*)self->value();
 }
 void Fl_Wizard_set_value(Fl_Wizard *self, Fl_Widget *wid) {
-    self->value(wid);
+    LOCK(self->value(wid);)
 }
 
 GROUP_DEFINE(Fl_Wizard)

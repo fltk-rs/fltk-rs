@@ -1,7 +1,11 @@
+use crate::image::Image;
 pub use crate::prelude::*;
 use fltk_sys::text::*;
-use crate::image::Image;
-use std::{ffi::{CStr, CString}, mem, os::raw};
+use std::{
+    ffi::{CStr, CString},
+    mem,
+    os::raw,
+};
 
 /// Wraps a text buffer
 #[derive(Debug, Clone)]
@@ -20,9 +24,7 @@ impl TextBuffer {
         }
     }
     pub fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
-        TextBuffer {
-            _inner: ptr,
-        }
+        TextBuffer { _inner: ptr }
     }
     pub fn as_ptr(&self) -> *mut Fl_Text_Buffer {
         self._inner
@@ -40,21 +42,18 @@ impl TextBuffer {
             let text = Fl_Text_Buffer_text(self._inner);
             assert!(!text.is_null(), "Failed to retrieve text from buffer!");
             CString::from_raw(text as *mut raw::c_char)
-                .to_string_lossy().to_string()
+                .to_string_lossy()
+                .to_string()
         }
     }
 
     pub fn append(&mut self, text: &str) {
         let text = CString::new(text).unwrap();
-        unsafe {
-            Fl_Text_Buffer_append(self._inner, text.into_raw() as *const raw::c_char)
-        }
+        unsafe { Fl_Text_Buffer_append(self._inner, text.into_raw() as *const raw::c_char) }
     }
 
     pub fn length(&self) -> usize {
-        unsafe {
-            Fl_Text_Buffer_length(self._inner) as usize
-        }
+        unsafe { Fl_Text_Buffer_length(self._inner) as usize }
     }
 
     pub fn remove(&mut self, start: usize, end: usize) {
@@ -64,11 +63,12 @@ impl TextBuffer {
     }
 }
 
+unsafe impl Sync for TextBuffer {}
+unsafe impl Send for TextBuffer {}
+
 impl Drop for TextBuffer {
     fn drop(&mut self) {
-        unsafe {
-            Fl_Text_Buffer_delete(self._inner)
-        }
+        unsafe { Fl_Text_Buffer_delete(self._inner) }
     }
 }
 
@@ -155,8 +155,12 @@ impl TextDisplay {
     pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
-            let text_display = Fl_Text_Display_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
-            assert!(!text_display.is_null(), "Failed to instantiate text display!");
+            let text_display =
+                Fl_Text_Display_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
+            assert!(
+                !text_display.is_null(),
+                "Failed to instantiate text display!"
+            );
             let mut x = TextDisplay {
                 _inner: text_display,
             };
@@ -168,8 +172,12 @@ impl TextDisplay {
     pub fn default(buf: &mut TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
-            let text_display = Fl_Text_Display_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
-            assert!(!text_display.is_null(), "Failed to instantiate text display!");
+            let text_display =
+                Fl_Text_Display_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
+            assert!(
+                !text_display.is_null(),
+                "Failed to instantiate text display!"
+            );
             let mut x = TextDisplay {
                 _inner: text_display,
             };
@@ -181,11 +189,15 @@ impl TextDisplay {
 
 impl SimpleTerminal {
     /// Create an new SimpleTerminal widget
-    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer)-> SimpleTerminal {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> SimpleTerminal {
         let temp = CString::new("").unwrap();
         unsafe {
-            let simple_terminal = Fl_Simple_Terminal_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
-            assert!(!simple_terminal.is_null(), "Failed to instantiate simple terminal!");
+            let simple_terminal =
+                Fl_Simple_Terminal_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
+            assert!(
+                !simple_terminal.is_null(),
+                "Failed to instantiate simple terminal!"
+            );
             let mut x = SimpleTerminal {
                 _inner: simple_terminal,
             };
@@ -197,8 +209,12 @@ impl SimpleTerminal {
     pub fn default(buf: &mut TextBuffer) -> SimpleTerminal {
         let temp = CString::new("").unwrap();
         unsafe {
-            let simple_terminal = Fl_Simple_Terminal_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
-            assert!(!simple_terminal.is_null(), "Failed to instantiate simple terminal!");
+            let simple_terminal =
+                Fl_Simple_Terminal_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
+            assert!(
+                !simple_terminal.is_null(),
+                "Failed to instantiate simple terminal!"
+            );
             let mut x = SimpleTerminal {
                 _inner: simple_terminal,
             };

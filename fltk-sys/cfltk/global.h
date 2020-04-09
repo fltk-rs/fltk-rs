@@ -4,6 +4,14 @@
 extern "C" {
 #endif
 
+#ifndef LOCK
+#define LOCK(x)                                                                \
+  Fl::lock();                                                                  \
+  x;                                                                           \
+  Fl::unlock();                                                                \
+  Fl::awake();
+#endif
+
 typedef struct Fl_Widget Fl_Widget;
 typedef void(Fl_Callback)(Fl_Widget *, void *);
 typedef int (*custom_handler_callback)(int, void *);
@@ -248,66 +256,66 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_height(widget *self) { return self->h(); }                      \
   const char *widget##_label(widget *self) { return self->label(); }           \
   void widget##_set_label(widget *self, const char *title) {                   \
-    self->copy_label(title);                                                   \
+    LOCK(self->copy_label(title);)                                             \
   }                                                                            \
-  void widget##_redraw(widget *self) { self->redraw(); }                       \
-  void widget##_show(widget *self) { self->show(); }                           \
-  void widget##_hide(widget *self) { self->hide(); }                           \
-  void widget##_activate(widget *self) { self->activate(); }                   \
-  void widget##_deactivate(widget *self) { self->deactivate(); }               \
-  void widget##_redraw_label(widget *self) { self->redraw_label(); }           \
+  void widget##_redraw(widget *self) { LOCK(self->redraw();) }                 \
+  void widget##_show(widget *self) { LOCK(self->show();) }                     \
+  void widget##_hide(widget *self) { LOCK(self->hide();) }                     \
+  void widget##_activate(widget *self) { LOCK(self->activate();) }             \
+  void widget##_deactivate(widget *self) { LOCK(self->deactivate();) }         \
+  void widget##_redraw_label(widget *self) { LOCK(self->redraw_label();) }     \
   void widget##_resize(widget *self, int x, int y, int width, int height) {    \
-    self->resize(x, y, width, height);                                         \
+    LOCK(self->resize(x, y, width, height);)                                   \
   }                                                                            \
   const char *widget##_tooltip(widget *self) { return self->tooltip(); }       \
   void widget##_set_tooltip(widget *self, const char *txt) {                   \
-    self->copy_tooltip(txt);                                                   \
+    LOCK(self->copy_tooltip(txt);)                                             \
   }                                                                            \
   int widget##_get_type(widget *self) { return self->type(); }                 \
-  void widget##_set_type(widget *self, int typ) { self->type(typ); }           \
+  void widget##_set_type(widget *self, int typ) { LOCK(self->type(typ);) }     \
   unsigned int widget##_color(widget *self) { return self->color(); }          \
   void widget##_set_color(widget *self, unsigned int color) {                  \
-    self->color(color);                                                        \
+    LOCK(self->color(color);)                                                  \
   }                                                                            \
   unsigned int widget##_label_color(widget *self) {                            \
     return self->labelcolor();                                                 \
   }                                                                            \
   void widget##_set_label_color(widget *self, unsigned int color) {            \
-    self->labelcolor(color);                                                   \
+    LOCK(self->labelcolor(color);)                                             \
   }                                                                            \
   int widget##_label_font(widget *self) { return self->labelfont(); }          \
   void widget##_set_label_font(widget *self, int font) {                       \
-    self->labelfont(font);                                                     \
+    LOCK(self->labelfont(font);)                                               \
   }                                                                            \
   int widget##_label_size(widget *self) { return self->labelsize(); }          \
-  void widget##_set_label_size(widget *self, int sz) { self->labelsize(sz); }  \
+  void widget##_set_label_size(widget *self, int sz) {                         \
+    LOCK(self->labelsize(sz);)                                                 \
+  }                                                                            \
   int widget##_label_type(widget *self) { return self->labeltype(); }          \
   void widget##_set_label_type(widget *self, int typ) {                        \
-    self->labeltype(static_cast<Fl_Labeltype>(typ));                           \
+    LOCK(self->labeltype(static_cast<Fl_Labeltype>(typ));)                     \
   }                                                                            \
   int widget##_box(widget *self) { return self->box(); }                       \
   void widget##_set_box(widget *self, int typ) {                               \
-    self->box(static_cast<Fl_Boxtype>(typ));                                   \
+    LOCK(self->box(static_cast<Fl_Boxtype>(typ));)                             \
   }                                                                            \
   int widget##_changed(widget *self) { return self->changed(); }               \
-  void widget##_set_changed(widget *self) { self->set_changed(); }             \
-  void widget##_clear_changed(widget *self) { self->clear_changed(); }         \
+  void widget##_set_changed(widget *self) { LOCK(self->set_changed();) }       \
+  void widget##_clear_changed(widget *self) { LOCK(self->clear_changed();) }   \
   int widget##_align(widget *self) { return self->align(); }                   \
-  void widget##_set_align(widget *self, int typ) { self->align(typ); }         \
+  void widget##_set_align(widget *self, int typ) { LOCK(self->align(typ);) }   \
   void widget##_delete(widget *self) { delete self; }                          \
   void widget##_set_image(widget *self, void *image) {                         \
-    self->image((Fl_Image *)image);                                            \
+    LOCK(self->image((Fl_Image *)image);)                                      \
   }                                                                            \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data) {                                      \
     widget##_Derived *temp = new (std::nothrow) widget##_Derived(*self);       \
     if (!temp)                                                                 \
       return;                                                                  \
-    temp->set_handler_data(data);                                              \
-    temp->set_handler(cb);                                                     \
-    *self = temp;                                                              \
+    LOCK(temp->set_handler_data(data); temp->set_handler(cb); *self = temp;)   \
   }                                                                            \
-  void widget##_set_trigger(widget *self, int val) { self->when(val); }        \
+  void widget##_set_trigger(widget *self, int val) { LOCK(self->when(val);) }  \
   void *widget##_image(const widget *self) {                                   \
     return (Fl_Image *)self->image();                                          \
   }                                                                            \
@@ -315,9 +323,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     widget##_Drawable *temp = new (std::nothrow) widget##_Drawable(*self);     \
     if (!temp)                                                                 \
       return;                                                                  \
-    temp->set_drawer_data(data);                                               \
-    temp->set_drawer(cb);                                                      \
-    *self = temp;                                                              \
+    LOCK(temp->set_drawer_data(data); temp->set_drawer(cb); *self = temp;)     \
   }
 
 #define GROUP_DEFINE(widget)                                                   \
@@ -326,12 +332,14 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_find(widget *self, const void *wid) {                           \
     return self->find((const Fl_Widget *)wid);                                 \
   }                                                                            \
-  void widget##_add(widget *self, void *wid) { self->add((Fl_Widget *)wid); }  \
-  void widget##_insert(widget *self, void *wid, int pos) {                     \
-    self->insert(*(Fl_Widget *)wid, pos);                                      \
+  void widget##_add(widget *self, void *wid) {                                 \
+    LOCK(self->add((Fl_Widget *)wid);)                                         \
   }                                                                            \
-  void widget##_remove(widget *self, int index) { self->remove(index); }       \
-  void widget##_clear(widget *self) { self->clear(); }                         \
+  void widget##_insert(widget *self, void *wid, int pos) {                     \
+    LOCK(self->insert(*(Fl_Widget *)wid, pos);)                                \
+  }                                                                            \
+  void widget##_remove(widget *self, int index) { LOCK(self->remove(index);) } \
+  void widget##_clear(widget *self) { LOCK(self->clear();) }                   \
   int widget##_children(widget *self) { return self->children(); }             \
   Fl_Widget *widget##_child(widget *self, int index) {                         \
     return self->child(index);                                                 \
@@ -339,155 +347,212 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define WINDOW_DEFINE(widget)                                                  \
   void widget##_make_modal(widget *self, unsigned int boolean) {               \
-    if (boolean) {                                                             \
-      self->set_modal();                                                       \
-    } else {                                                                   \
-      self->set_non_modal();                                                   \
-    }                                                                          \
+    LOCK(                                                                      \
+        if (boolean) { self->set_modal(); } else { self->set_non_modal(); })   \
   }                                                                            \
   void widget##_fullscreen(widget *self, unsigned int boolean) {               \
-    if (boolean) {                                                             \
-      self->fullscreen();                                                      \
-    } else {                                                                   \
-      self->fullscreen_off();                                                  \
-    }                                                                          \
+    LOCK(                                                                      \
+        if (boolean) { self->fullscreen(); } else { self->fullscreen_off(); }) \
   }                                                                            \
   void widget##_make_current(widget *self) {                                   \
-    ((Fl_Window *)self)->make_current();                                       \
+    LOCK(((Fl_Window *)self)->make_current();)                                 \
   }                                                                            \
   void widget##_set_icon(widget *self, const void *image) {                    \
-    self->icon((const Fl_RGB_Image *)image);                                   \
+    LOCK(self->icon((const Fl_RGB_Image *)image);)                             \
   }                                                                            \
   void widget##_make_resizable(widget *self, void *wid) {                      \
-    self->resizable((Fl_Widget *)wid);                                         \
+    LOCK(self->resizable((Fl_Widget *)wid);)                                   \
   }                                                                            \
   void *widget##_icon(const widget *self) { return (Fl_Image *)self->icon(); }
 
 #define INPUT_DEFINE(widget)                                                   \
   int widget##_set_value(widget *self, const char *t) {                        \
-    return self->value(t);                                                     \
+    int ret;                                                                   \
+    LOCK(ret = self->value(t));                                                \
+    return ret;                                                                \
   }                                                                            \
   const char *widget##_value(widget *self) { return self->value(); }           \
   int widget##_maximum_size(widget *self) { return self->maximum_size(); }     \
   void widget##_set_maximum_size(widget *self, int m) {                        \
-    self->maximum_size(m);                                                     \
+    LOCK(self->maximum_size(m);)                                               \
   }                                                                            \
   int widget##_position(widget *self) { return self->position(); }             \
-  int widget##_set_position(widget *self, int p) { return self->position(p); } \
-  int widget##_set_mark(widget *self, int m) { return self->mark(m); }         \
+  int widget##_set_position(widget *self, int p) {                             \
+    int ret;                                                                   \
+    LOCK(self->position(p));                                                   \
+    return ret;                                                                \
+  }                                                                            \
+  int widget##_set_mark(widget *self, int m) {                                 \
+    int ret;                                                                   \
+    LOCK(self->mark(m));                                                       \
+    return ret;                                                                \
+  }                                                                            \
   int widget##_mark(widget *self) { return self->mark(); }                     \
   int widget##_replace(widget *self, int b, int e, const char *text,           \
                        int ilen) {                                             \
-    return self->replace(b, e, text, ilen);                                    \
+    int ret;                                                                   \
+    LOCK(ret = self->replace(b, e, text, ilen));                               \
+    return ret;                                                                \
   }                                                                            \
   int widget##_insert(widget *self, const char *t, int l) {                    \
-    return self->insert(t, l);                                                 \
+    int ret;                                                                   \
+    LOCK(ret = self->insert(t, l));                                            \
+    return ret;                                                                \
   }                                                                            \
   int widget##_append(widget *self, const char *t, int l,                      \
                       char keep_selection) {                                   \
-    return self->append(t, l, keep_selection);                                 \
+    int ret;                                                                   \
+    LOCK(ret = self->append(t, l, keep_selection));                            \
+    return ret;                                                                \
   }                                                                            \
   int widget##_copy(widget *self, int clipboard) {                             \
-    return self->copy(clipboard);                                              \
+    int ret;                                                                   \
+    LOCK(ret = self->copy(clipboard));                                         \
+    return ret;                                                                \
   }                                                                            \
-  int widget##_undo(widget *self) { return self->undo(); }                     \
-  int widget##_copy_cuts(widget *self) { return self->cut(); }                 \
+  int widget##_undo(widget *self) {                                            \
+    int ret;                                                                   \
+    LOCK(ret = self->undo());                                                  \
+    return ret;                                                                \
+  }                                                                            \
+  int widget##_copy_cuts(widget *self) {                                       \
+    int ret;                                                                   \
+    LOCK(ret = self->cut());                                                   \
+    return ret;                                                                \
+  }                                                                            \
   int widget##_text_font(widget *self) { return self->textfont(); }            \
-  void widget##_set_text_font(widget *self, int s) { self->textfont(s); }      \
+  void widget##_set_text_font(widget *self, int s) {                           \
+    LOCK(self->textfont(s);)                                                   \
+  }                                                                            \
   unsigned int widget##_text_color(widget *self) { return self->textcolor(); } \
   void widget##_set_text_color(widget *self, unsigned int s) {                 \
-    self->textcolor(s);                                                        \
+    LOCK(self->textcolor(s);)                                                  \
   }                                                                            \
   int widget##_text_size(widget *self) { return self->textsize(); }            \
-  void widget##_set_text_size(widget *self, int s) { self->textsize(s); }      \
+  void widget##_set_text_size(widget *self, int s) {                           \
+    LOCK(self->textsize(s);)                                                   \
+  }                                                                            \
   int widget##_readonly(widget *self) { return self->readonly(); }             \
   void widget##_set_readonly(widget *self, int boolean) {                      \
-    self->readonly(boolean);                                                   \
+    LOCK(self->readonly(boolean);)                                             \
   }                                                                            \
   int widget##_wrap(widget *self) { return self->wrap(); }                     \
-  void widget##_set_wrap(widget *self, int boolean) { self->wrap(boolean); }
+  void widget##_set_wrap(widget *self, int boolean) {                          \
+    LOCK(self->wrap(boolean);)                                                 \
+  }
 
 #define MENU_DEFINE(widget)                                                    \
   void widget##_add(widget *self, const char *name, int shortcut,              \
                     Fl_Callback *cb, void *data, int flag) {                   \
-    self->add(name, shortcut, cb, data, flag);                                 \
+    LOCK(self->add(name, shortcut, cb, data, flag);)                           \
   }                                                                            \
   void widget##_insert(widget *self, int index, const char *name,              \
                        int shortcut, Fl_Callback *cb, void *data, int flag) {  \
-    self->insert(index, name, shortcut, cb, data, flag);                       \
+    LOCK(self->insert(index, name, shortcut, cb, data, flag);)                 \
   }                                                                            \
   Fl_Menu_Item *widget##_get_item(widget *self, const char *name) {            \
     return (Fl_Menu_Item *)self->find_item(name);                              \
   }                                                                            \
   int widget##_text_font(widget *self) { return self->textfont(); }            \
-  void widget##_set_text_font(widget *self, int c) { self->textfont(c); }      \
+  void widget##_set_text_font(widget *self, int c) {                           \
+    LOCK(self->textfont(c);)                                                   \
+  }                                                                            \
   int widget##_text_size(widget *self) { return self->textsize(); }            \
-  void widget##_set_text_size(widget *self, int c) { self->textsize(c); }      \
+  void widget##_set_text_size(widget *self, int c) {                           \
+    LOCK(self->textsize(c);)                                                   \
+  }                                                                            \
   unsigned int widget##_text_color(widget *self) { return self->textcolor(); } \
   void widget##_set_text_color(widget *self, unsigned int c) {                 \
-    self->textcolor(c);                                                        \
+    LOCK(self->textcolor(c);)                                                  \
   }                                                                            \
-  void widget##_add_choice(widget *self, const char *str) { self->add(str); }  \
+  void widget##_add_choice(widget *self, const char *str) {                    \
+    LOCK(self->add(str);)                                                      \
+  }                                                                            \
   const char *widget##_get_choice(widget *self) { return self->text(); }
 
 #define VALUATOR_DEFINE(widget)                                                \
   void widget##_set_bounds(widget *self, double a, double b) {                 \
-    self->bounds(a, b);                                                        \
+    LOCK(self->bounds(a, b);)                                                  \
   }                                                                            \
   double widget##_minimum(widget *self) { return self->minimum(); }            \
-  void widget##_set_minimum(widget *self, double a) { self->minimum(a); }      \
-  double widget##_maximum(widget *self) { return self->maximum(); }            \
-  void widget##_set_maximum(widget *self, double a) { self->maximum(a); }      \
-  void widget##_set_range(widget *self, double a, double b) {                  \
-    self->range(a, b);                                                         \
+  void widget##_set_minimum(widget *self, double a) {                          \
+    LOCK(self->minimum(a);)                                                    \
   }                                                                            \
-  void widget##_set_step(widget *self, double a, int b) { self->step(a, b); }  \
+  double widget##_maximum(widget *self) { return self->maximum(); }            \
+  void widget##_set_maximum(widget *self, double a) {                          \
+    LOCK(self->maximum(a);)                                                    \
+  }                                                                            \
+  void widget##_set_range(widget *self, double a, double b) {                  \
+    LOCK(self->range(a, b);)                                                   \
+  }                                                                            \
+  void widget##_set_step(widget *self, double a, int b) {                      \
+    LOCK(self->step(a, b);)                                                    \
+  }                                                                            \
   double widget##_step(widget *self) { return self->step(); }                  \
   void widget##_set_precision(widget *self, int digits) {                      \
-    self->precision(digits);                                                   \
+    LOCK(self->precision(digits);)                                             \
   }                                                                            \
   double widget##_value(widget *self) { return self->value(); }                \
   int widget##_set_value(widget *self, double val) {                           \
-    return self->value(val);                                                   \
+    int ret;                                                                   \
+    LOCK(self->value(val));                                                    \
+    return ret;                                                                \
   }                                                                            \
-  int widget##_format(widget *self, char *chr) { return self->format(chr); }   \
-  double widget##_round(widget *self, double val) { return self->round(val); } \
-  double widget##_clamp(widget *self, double val) { return self->clamp(val); } \
+  int widget##_format(widget *self, char *chr) {                               \
+    int ret;                                                                   \
+    LOCK(ret = self->format(chr));                                             \
+    return ret;                                                                \
+  }                                                                            \
+  double widget##_round(widget *self, double val) {                            \
+    int ret;                                                                   \
+    LOCK(ret = self->round(val));                                              \
+    return ret;                                                                \
+  }                                                                            \
+  double widget##_clamp(widget *self, double val) {                            \
+    int ret;                                                                   \
+    LOCK(ret = self->clamp(val));                                              \
+    return ret;                                                                \
+  }                                                                            \
   double widget##_increment(widget *self, double a, int b) {                   \
-    return self->increment(a, b);                                              \
+    int ret;                                                                   \
+    LOCK(ret = self->increment(a, b));                                         \
+    return ret;                                                                \
   }
 
 #define DISPLAY_DEFINE(widget)                                                 \
   const char *widget##_text(widget *self) { return self->buffer()->text(); }   \
   void widget##_set_text(widget *self, const char *txt) {                      \
-    self->buffer()->text(txt);                                                 \
+    LOCK(self->buffer()->text(txt);)                                           \
   }                                                                            \
   int widget##_text_font(const widget *self) { return self->textfont(); }      \
-  void widget##_set_text_font(widget *self, int s) { self->textfont(s); }      \
+  void widget##_set_text_font(widget *self, int s) {                           \
+    LOCK(self->textfont(s);)                                                   \
+  }                                                                            \
   int widget##_text_size(const widget *self) { return self->textsize(); }      \
-  void widget##_set_text_size(widget *self, int s) { self->textsize(s); }      \
+  void widget##_set_text_size(widget *self, int s) {                           \
+    LOCK(self->textsize(s);)                                                   \
+  }                                                                            \
   unsigned int widget##_text_color(const widget *self) {                       \
     return self->textcolor();                                                  \
   }                                                                            \
   void widget##_set_text_color(widget *self, unsigned int n) {                 \
-    self->textcolor(n);                                                        \
+    LOCK(self->textcolor(n);)                                                  \
   }                                                                            \
   void widget##_append(widget *self, const char *txt) {                        \
-    Fl_Text_Buffer *buff = self->buffer();                                     \
-    buff->append(txt);                                                         \
-    self->buffer(buff);                                                        \
+    LOCK(Fl_Text_Buffer *buff = self->buffer(); buff->append(txt);             \
+         self->buffer(buff);)                                                  \
   }                                                                            \
   int widget##_buffer_length(const widget *self) {                             \
     return self->buffer()->length();                                           \
   }                                                                            \
   void widget##_scroll(widget *self, int topLineNum, int horizOffset) {        \
-    self->scroll(topLineNum, horizOffset);                                     \
+    LOCK(self->scroll(topLineNum, horizOffset);)                               \
   }                                                                            \
   void widget##_insert(widget *self, const char *text) {                       \
-    ((Fl_Text_Display *)self)->insert(text);                                   \
+    LOCK(((Fl_Text_Display *)self)->insert(text);)                             \
   }                                                                            \
   void widget##_set_insert_position(widget *self, int newPos) {                \
-    self->insert_position(newPos);                                             \
+    LOCK(self->insert_position(newPos);)                                       \
   }                                                                            \
   int widget##_insert_position(const widget *self) {                           \
     return self->insert_position();                                            \
@@ -496,20 +561,32 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
                            int start_pos_is_line_start) {                      \
     return self->count_lines(start, end, start_pos_is_line_start);             \
   }                                                                            \
-  int widget##_move_right(widget *self) { return self->move_right(); }         \
-  int widget##_move_left(widget *self) { return self->move_left(); }           \
-  int widget##_move_up(widget *self) { return self->move_up(); }               \
-  int widget##_move_down(widget *self) { return self->move_down(); }           \
+  int widget##_move_right(widget *self) {                                      \
+    int ret;                                                                   \
+    LOCK(ret = self->move_right());                                            \
+    return ret;                                                                \
+  }                                                                            \
+  int widget##_move_left(widget *self) {                                       \
+    int ret;                                                                   \
+    LOCK(ret = self->move_left());                                             \
+    return ret;                                                                \
+  }                                                                            \
+  int widget##_move_up(widget *self) {                                         \
+    int ret;                                                                   \
+    LOCK(ret = self->move_up());                                               \
+    return ret;                                                                \
+  }                                                                            \
+  int widget##_move_down(widget *self) {                                       \
+    int ret;                                                                   \
+    LOCK(ret = self->move_down());                                             \
+    return ret;                                                                \
+  }                                                                            \
   void widget##_remove(widget *self, int start, int end) {                     \
-    Fl_Text_Buffer *buff = self->buffer();                                     \
-    buff->remove(start, end);                                                  \
-    self->buffer(buff);                                                        \
+    LOCK(Fl_Text_Buffer *buff = self->buffer(); buff->remove(start, end);      \
+         self->buffer(buff);)                                                  \
   }                                                                            \
   void widget##_show_cursor(widget *self, int boolean) {                       \
-    if (boolean)                                                               \
-      self->show_cursor();                                                     \
-    else                                                                       \
-      self->hide_cursor();                                                     \
+    LOCK(if (boolean) self->show_cursor(); else self->hide_cursor();)          \
   }                                                                            \
   void widget##_set_style_table_entry(widget *self, void *sbuff,               \
                                       unsigned int *color, int *font,          \
@@ -521,23 +598,24 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     for (int i = 0; i < sz; ++i) {                                             \
       stable[i] = {color[i], font[i], fontsz[i]};                              \
     }                                                                          \
-    self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);      \
+    LOCK(                                                                      \
+        self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);) \
     delete[] stable;                                                           \
   }                                                                            \
   void widget##_set_cursor_style(widget *self, int style) {                    \
-    self->cursor_style(style);                                                 \
+    LOCK(self->cursor_style(style);)                                           \
   }                                                                            \
   void widget##_set_cursor_color(widget *self, unsigned int color) {           \
-    self->cursor_color(color);                                                 \
+    LOCK(self->cursor_color(color);)                                           \
   }                                                                            \
   void widget##_set_scrollbar_width(widget *self, int width) {                 \
-    self->scrollbar_width(width);                                              \
+    LOCK(self->scrollbar_width(width);)                                        \
   }                                                                            \
   void widget##_set_scrollbar_size(widget *self, int newSize) {                \
-    self->scrollbar_size(newSize);                                             \
+    LOCK(self->scrollbar_size(newSize);)                                       \
   }                                                                            \
   void widget##_set_scrollbar_align(widget *self, int align) {                 \
-    self->scrollbar_align(align);                                              \
+    LOCK(self->scrollbar_align(align);)                                        \
   }                                                                            \
   int widget##_cursor_style(widget *self) { return self->cursor_style(); }     \
   unsigned int widget##_cursor_color(widget *self) {                           \
@@ -550,17 +628,27 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_scrollbar_align(widget *self) { return self->scrollbar_align(); }
 
 #define BROWSER_DEFINE(widget)                                                 \
-  void widget##_remove(widget *self, int line) { self->remove(line); }         \
-  void widget##_add(widget *self, const char *newtext) { self->add(newtext); } \
-  void widget##_insert(widget *self, int line, const char *newtext) {          \
-    self->insert(line, newtext);                                               \
+  void widget##_remove(widget *self, int line) { LOCK(self->remove(line);) }   \
+  void widget##_add(widget *self, const char *newtext) {                       \
+    LOCK(self->add(newtext);)                                                  \
   }                                                                            \
-  void widget##_move(widget *self, int to, int from) { self->move(to, from); } \
-  void widget##_swap(widget *self, int a, int b) { self->swap(a, b); }         \
-  void widget##_clear(widget *self) { self->clear(); }                         \
+  void widget##_insert(widget *self, int line, const char *newtext) {          \
+    LOCK(self->insert(line, newtext);)                                         \
+  }                                                                            \
+  void widget##_move(widget *self, int to, int from) {                         \
+    LOCK(self->move(to, from);)                                                \
+  }                                                                            \
+  void widget##_swap(widget *self, int a, int b) { LOCK(self->swap(a, b);) }   \
+  void widget##_clear(widget *self) { LOCK(self->clear();) }                   \
   int widget##_size(const widget *self) { return self->size(); }               \
-  void widget##_set_size(widget *self, int W, int H) { self->size(W, H); }     \
-  int widget##_select(widget *self, int line) { return self->select(line); }   \
+  void widget##_set_size(widget *self, int W, int H) {                         \
+    LOCK(self->size(W, H);)                                                    \
+  }                                                                            \
+  int widget##_select(widget *self, int line) {                                \
+    int ret;                                                                   \
+    LOCK(ret = self->select(line));                                            \
+    return ret;                                                                \
+  }                                                                            \
   int widget##_selected(const widget *self, int line) {                        \
     return self->selected(line);                                               \
   }                                                                            \
@@ -568,27 +656,29 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     return self->text(line);                                                   \
   }                                                                            \
   void widget##_set_text(widget *self, int line, const char *newtext) {        \
-    self->text(line, newtext);                                                 \
+    LOCK(self->text(line, newtext);)                                           \
   }                                                                            \
   void widget##_load_file(widget *self, const char *file) {                    \
-    self->load(file);                                                          \
+    LOCK(self->load(file);)                                                    \
   }                                                                            \
   int widget##_text_size(widget *self) { return self->textsize(); }            \
-  void widget##_set_text_size(widget *self, int s) { self->textsize(s); }      \
+  void widget##_set_text_size(widget *self, int s) {                           \
+    LOCK(self->textsize(s);)                                                   \
+  }                                                                            \
   void widget##_set_icon(widget *self, int line, void *icon) {                 \
-    self->icon(line, (Fl_Image *)icon);                                        \
+    LOCK(self->icon(line, (Fl_Image *)icon);)                                  \
   }                                                                            \
   void *widget##_icon(const widget *self, int line) {                          \
     return (Fl_Image *)self->icon(line);                                       \
   }                                                                            \
-  void widget##_remove_icon(widget *self, int l) { self->remove_icon(l); }
+  void widget##_remove_icon(widget *self, int l) { LOCK(self->remove_icon(l);) }
 
 #define IMAGE_DEFINE(image)                                                    \
   image *image##_new(const char *filename) {                                   \
     return new (std::nothrow) image(filename);                                 \
   }                                                                            \
   void image##_draw(image *self, int X, int Y, int W, int H) {                 \
-    self->draw(X, Y, W, H);                                                    \
+    LOCK(self->draw(X, Y, W, H);)                                              \
   }                                                                            \
   int image##_width(image *self) { return self->w(); }                         \
   int image##_height(image *self) { return self->h(); }                        \
