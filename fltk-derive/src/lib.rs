@@ -195,10 +195,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
     );
-    let image = Ident::new(
-        format!("{}_{}", name_str, "image").as_str(),
-        name.span(),
-    );
+    let image = Ident::new(format!("{}_{}", name_str, "image").as_str(), name.span());
     let set_handler = Ident::new(
         format!("{}_{}", name_str, "set_handler").as_str(),
         name.span(),
@@ -207,14 +204,11 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_trigger").as_str(),
         name.span(),
     );
-    let set_draw = Ident::new(
-        format!("{}_{}", name_str, "set_draw").as_str(),
-        name.span(),
-    );
+    let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
     let gen = quote! {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
-        
+
         impl WidgetTrait for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();

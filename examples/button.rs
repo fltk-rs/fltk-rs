@@ -28,16 +28,6 @@ impl MainWindow {
         }
     }
     pub fn draw_elements(mut self) {
-        // Different ways of handling events
-
-        // but1.clone().set_callback(Box::new(|| match app::event() {
-        //     app::Event::Released => {
-        //         println!("{:?}", app::event());
-        //         but1.set_label("Works");
-        //         but2.set_label("No!");
-        //     }
-        //     _ => println!("{:?}", app::event()),
-        // }));
 
         self.but1
             .clone()

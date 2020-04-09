@@ -65,19 +65,27 @@ void Fl_Text_Editor_set_buffer(Fl_Text_Editor *self, Fl_Text_Buffer *buf) {
 DISPLAY_DEFINE(Fl_Text_Editor)
 
 int kf_copy(Fl_Text_Editor *e) {
-  int ret; LOCK(ret = Fl_Text_Editor::kf_copy(1, e)); return ret;
+  int ret;
+  LOCK(ret = Fl_Text_Editor::kf_copy(1, e));
+  return ret;
 }
 
 int kf_cut(Fl_Text_Editor *e) {
-  int ret; LOCK(ret = Fl_Text_Editor::kf_cut(1, e)); return ret;
+  int ret;
+  LOCK(ret = Fl_Text_Editor::kf_cut(1, e));
+  return ret;
 }
 
 int kf_paste(Fl_Text_Editor *e) {
-  int ret; LOCK(ret = Fl_Text_Editor::kf_paste(1, e)); return ret;
+  int ret;
+  LOCK(ret = Fl_Text_Editor::kf_paste(1, e));
+  return ret;
 }
 
 int kf_undo(Fl_Text_Editor *e) {
-  int ret; LOCK(ret = Fl_Text_Editor::kf_undo(1, e)); return ret;
+  int ret;
+  LOCK(ret = Fl_Text_Editor::kf_undo(1, e));
+  return ret;
 }
 
 WIDGET_DEFINE(Fl_Simple_Terminal)

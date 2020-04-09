@@ -1,21 +1,11 @@
 use fltk::{app::*, button::*, frame::*, window::*};
-use std::{thread, time};
 
 fn main() {
     let app = App::default();
-    let mut wind = Window::default()
-        .with_size(400, 300)
-        .center_screen()
-        .with_label("Hello");
-    let frame = Frame::new(0, 0, 400, 200, "");
-    let mut but1 = Button::new(160, 210, 80, 40, "Click me!");
-    but1.set_callback(Box::new(|| {
-        let mut frame = frame.clone();
-        thread::spawn(move|| {
-            thread::sleep(time::Duration::from_secs(1));
-            frame.set_label("Hello");
-        });
-    }));
+    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    let mut frame = Frame::new(0, 0, 400, 200, "");
+    let mut but = Button::new(160, 210, 80, 40, "Click me!");
+    but.set_callback(Box::new(|| frame.set_label("Hello World!")));
     wind.show();
     app.run().unwrap();
 }

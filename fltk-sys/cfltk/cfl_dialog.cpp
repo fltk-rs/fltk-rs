@@ -18,7 +18,7 @@ Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
 }
 
 const char *Fl_Native_File_Chooser_filename(Fl_Native_File_Chooser *self) {
-  const char* x = self->filename();
+  const char *x = self->filename();
   if (!strcmp(x, ""))
     return NULL;
   else
@@ -27,7 +27,7 @@ const char *Fl_Native_File_Chooser_filename(Fl_Native_File_Chooser *self) {
 
 const char *Fl_Native_File_Chooser_filenames(Fl_Native_File_Chooser *self,
                                              int cnt) {
-  const char* x = self->filename(cnt);
+  const char *x = self->filename(cnt);
   if (!strcmp(x, ""))
     return NULL;
   else
@@ -48,7 +48,9 @@ const char *Fl_Native_File_Chooser_directory(Fl_Native_File_Chooser *self) {
 }
 
 int Fl_Native_File_Chooser_show(Fl_Native_File_Chooser *self) {
-  int ret; LOCK(ret = self->show()); return ret; 
+  int ret;
+  LOCK(ret = self->show());
+  return ret;
 }
 
 void Fl_Native_File_Chooser_set_option(Fl_Native_File_Chooser *self, int opt) {
@@ -104,7 +106,9 @@ Fl_Help_Dialog *Fl_Help_Dialog_new(void) {
 int Fl_Help_Dialog_h(Fl_Help_Dialog *self) { return self->h(); }
 void Fl_Help_Dialog_hide(Fl_Help_Dialog *self) { return self->hide(); }
 int Fl_Help_Dialog_load(Fl_Help_Dialog *self, const char *f) {
-  int ret; LOCK(ret = self->load(f)); return ret; 
+  int ret;
+  LOCK(ret = self->load(f));
+  return ret;
 }
 void Fl_Help_Dialog_position(Fl_Help_Dialog *self, int xx, int yy) {
   LOCK(self->position(xx, yy);)
@@ -128,3 +132,5 @@ int Fl_Help_Dialog_visible(Fl_Help_Dialog *self) { return self->visible(); }
 int Fl_Help_Dialog_w(Fl_Help_Dialog *self) { return self->w(); }
 int Fl_Help_Dialog_x(Fl_Help_Dialog *self) { return self->x(); }
 int Fl_Help_Dialog_y(Fl_Help_Dialog *self) { return self->y(); }
+
+#undef LOCK

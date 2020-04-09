@@ -4,11 +4,13 @@
 extern "C" {
 #endif
 
+#ifndef LOCK
 #define LOCK(x)                                                                \
   Fl::lock();                                                                  \
   x;                                                                           \
   Fl::unlock();                                                                \
   Fl::awake();
+#endif
 
 typedef struct Fl_Widget Fl_Widget;
 typedef void(Fl_Callback)(Fl_Widget *, void *);
