@@ -108,14 +108,14 @@ pub fn set_line_style(style: LineStyle, width: i32) {
     }
 }
 
-/// Not sure what this does!
+/// Limits drawing to a region 
 pub fn push_clip(x: i32, y: i32, w: i32, h: i32) {
     unsafe {
         cfl_push_clip(x, y, w, h);
     }
 }
 
-/// Nor this!
+/// Puts the drawing back
 pub fn pop_clip() {
     unsafe {
         cfl_pop_clip();

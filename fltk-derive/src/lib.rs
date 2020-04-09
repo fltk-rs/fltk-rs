@@ -213,7 +213,8 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     );
     let gen = quote! {
         unsafe impl Send for #name {}
-        impl Copy for #name {}
+        unsafe impl Sync for #name {}
+        
         impl WidgetTrait for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
@@ -1641,11 +1642,15 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
     let data = Ident::new(format!("{}_{}", name_str, "data").as_str(), name.span());
 
     let gen = quote! {
+        unsafe impl Sync for #name {}
+        unsafe impl Send for #name {}
+
         impl Drop for #name {
             fn drop(&mut self) {
                 unsafe { #delete(self._inner) }
             }
         }
+
         impl ImageTrait for #name {
             fn new(path: std::path::PathBuf) -> #name {
                 unsafe {

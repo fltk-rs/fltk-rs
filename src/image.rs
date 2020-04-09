@@ -8,12 +8,6 @@ pub struct Image {
     _inner: *mut Fl_Image,
 }
 
-impl Image {
-    pub fn as_ptr(&mut self) -> *mut Fl_Image {
-        self._inner
-    }
-}
-
 /// A conversion function for internal use
 impl<I: ImageTrait> From<I> for Image {
     fn from(s: I) -> Self {
@@ -24,6 +18,10 @@ impl<I: ImageTrait> From<I> for Image {
 
 /// A conversion function for internal use
 impl Image {
+    /// Returns the internal pointer of Image
+    pub fn as_ptr(&mut self) -> *mut Fl_Image {
+        self._inner
+    }
     /// Initialize an Image base from a raw pointer
     pub fn from_raw(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
         Image { _inner: ptr }

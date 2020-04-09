@@ -7,7 +7,7 @@ fn main() {
     app.run().unwrap();
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Clone)]
 struct MainWindow {
     wind: Window,
     but1: Button,
@@ -49,11 +49,12 @@ impl MainWindow {
                 app::Event::Push => {
                     let mut out = String::from("");
                     println!("{:?}", ev);
+                    let mut frame = self.frame.clone();
                     // Spawning a thread to allow for a responsive UI
                     std::thread::spawn(move || {
                         std::thread::sleep(std::time::Duration::from_millis(1000));
                         out = String::from("Hello");
-                        self.frame.set_label(&out);
+                        frame.set_label(&out);
                     });
                     return true;
                 }

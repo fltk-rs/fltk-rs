@@ -17,15 +17,15 @@ void Fl_Text_Buffer_delete(Fl_Text_Buffer *self) { delete self; }
 const char *Fl_Text_Buffer_text(Fl_Text_Buffer *self) { return self->text(); }
 
 void Fl_Text_Buffer_set_text(Fl_Text_Buffer *self, const char *txt) {
-  self->text(txt);
+  LOCK(self->text(txt);)
 }
 
 void Fl_Text_Buffer_append(Fl_Text_Buffer *self, const char *txt) {
-  self->append(txt);
+  LOCK(self->append(txt);)
 }
 
 void Fl_Text_Buffer_remove(Fl_Text_Buffer *self, int start, int end) {
-  self->remove(start, end);
+  LOCK(self->remove(start, end);)
 }
 
 int Fl_Text_Buffer_length(const Fl_Text_Buffer *self) { return self->length(); }
@@ -42,7 +42,7 @@ Fl_Text_Buffer *Fl_Text_Display_get_buffer(Fl_Text_Display *self) {
 }
 
 void Fl_Text_Display_set_buffer(Fl_Text_Display *self, Fl_Text_Buffer *buf) {
-  self->buffer(buf);
+  LOCK(self->buffer(buf);)
 }
 
 DISPLAY_DEFINE(Fl_Text_Display)
@@ -59,18 +59,26 @@ Fl_Text_Buffer *Fl_Text_Editor_get_buffer(Fl_Text_Editor *self) {
 }
 
 void Fl_Text_Editor_set_buffer(Fl_Text_Editor *self, Fl_Text_Buffer *buf) {
-  self->buffer(buf);
+  LOCK(self->buffer(buf);)
 }
 
 DISPLAY_DEFINE(Fl_Text_Editor)
 
-int kf_copy(Fl_Text_Editor *e) { return Fl_Text_Editor::kf_copy(1, e); }
+int kf_copy(Fl_Text_Editor *e) {
+  int ret; LOCK(ret = Fl_Text_Editor::kf_copy(1, e)); return ret;
+}
 
-int kf_cut(Fl_Text_Editor *e) { return Fl_Text_Editor::kf_cut(1, e); }
+int kf_cut(Fl_Text_Editor *e) {
+  int ret; LOCK(ret = Fl_Text_Editor::kf_cut(1, e)); return ret;
+}
 
-int kf_paste(Fl_Text_Editor *e) { return Fl_Text_Editor::kf_paste(1, e); }
+int kf_paste(Fl_Text_Editor *e) {
+  int ret; LOCK(ret = Fl_Text_Editor::kf_paste(1, e)); return ret;
+}
 
-int kf_undo(Fl_Text_Editor *e) { return Fl_Text_Editor::kf_undo(1, e); }
+int kf_undo(Fl_Text_Editor *e) {
+  int ret; LOCK(ret = Fl_Text_Editor::kf_undo(1, e)); return ret;
+}
 
 WIDGET_DEFINE(Fl_Simple_Terminal)
 
@@ -85,7 +93,7 @@ Fl_Text_Buffer *Fl_Simple_Terminal_get_buffer(Fl_Simple_Terminal *self) {
 
 void Fl_Simple_Terminal_set_buffer(Fl_Simple_Terminal *self,
                                    Fl_Text_Buffer *buf) {
-  self->buffer(buf);
+  LOCK(self->buffer(buf);)
 }
 
 DISPLAY_DEFINE(Fl_Simple_Terminal)

@@ -64,6 +64,9 @@ impl TextBuffer {
     }
 }
 
+unsafe impl Sync for TextBuffer {}
+unsafe impl Send for TextBuffer {}
+
 impl Drop for TextBuffer {
     fn drop(&mut self) {
         unsafe {
