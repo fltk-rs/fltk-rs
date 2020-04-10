@@ -30,7 +30,7 @@ add_library(cfltk STATIC
     )
 
 target_include_directories(cfltk PUBLIC fltk)
-target_include_directories(cfltk PUBLIC ${CMAKE_INSTALL_PREFIX}/include)
+target_include_directories(cfltk PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/fltk)
 
 # The following line is necessary if building a shared/dynamic library
 # target_link_libraries(cfltk PUBLIC fltk fltk_images fltk_z fltk_jpeg fltk_png)
