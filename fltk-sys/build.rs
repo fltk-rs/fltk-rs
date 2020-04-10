@@ -60,6 +60,7 @@ fn main() {
     let dst = cmake::Config::new("cfltk")
         // .generator("Ninja")
         .profile("RELEASE")
+        .define("OPTION_ABI_VERSION:STRING", "10401")
         .define("OpenGL_GL_PREFERENCE", "GLVND")
         .define("OPTION_BUILD_EXAMPLES", "OFF")
         .define("OPTION_USE_THREADS", "ON")

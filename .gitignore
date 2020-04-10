@@ -5,3 +5,4 @@ fltk-sys/.build.rs.un~
 fltk-sys/build.rs~
 /.vscode
 temp.*
+.DS_Store
