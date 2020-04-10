@@ -1,4 +1,10 @@
-use fltk::{app::*, dialog::*, menu::*, text::{TextBuffer, TextEditor}, window::Window};
+use fltk::{
+    app::*,
+    dialog::*,
+    menu::*,
+    text::{TextBuffer, TextEditor},
+    window::Window,
+};
 use std::{fs, path};
 
 fn main() {
@@ -78,6 +84,8 @@ fn main() {
                 } else {
                     std::process::exit(0);
                 }
+            } else {
+                std::process::exit(0);
             }
         }),
     );
@@ -119,6 +127,19 @@ fn main() {
     let mut x = menu.get_item("Help/About");
     x.set_label_color(Color::Red);
     wind.make_resizable(true);
+    wind.set_callback(Box::new(|| {
+        if saved == false {
+            let x = choice("Would you like to save your work?", "Yes", "No", "");
+            if x == 0 {
+                save_file(&mut editor, &filename, &mut saved);
+                std::process::exit(0);
+            } else {
+                std::process::exit(0);
+            }
+        } else {
+            std::process::exit(0);
+        }
+    }));
     wind.show();
     app.run().expect("Couldn't run editor");
 }
