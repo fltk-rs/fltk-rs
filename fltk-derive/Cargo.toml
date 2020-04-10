@@ -1,6 +1,6 @@
 [package]
 name = "fltk-derive"
-version = "0.2.9"
+version = "0.2.11"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
@@ -14,5 +14,5 @@ path = "src/lib.rs"
 proc-macro = true
 
 [dependencies]
-syn = "^1.0.7"
-quote = "^1.0.2"
+syn = "^1.0.17"
+quote = "^1.0.3"

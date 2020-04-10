@@ -14,7 +14,7 @@ fn run() -> Result<(), FltkError> {
 }
 
 /// Locks the main UI thread
-fn lock() -> Result<(), FltkError> {
+pub fn lock() -> Result<(), FltkError> {
     unsafe {
         match Fl_lock() {
             0 => Ok(()),
@@ -51,26 +51,27 @@ fn set_scheme(scheme: AppScheme) {
 }
 
 /// Unlocks the main UI thread
-// #[allow(dead_code)]
-// fn unlock() {
-//     unsafe {
-//         Fl_unlock();
-//     }
-// }
+#[allow(dead_code)]
+pub fn unlock() {
+    unsafe {
+        Fl_unlock();
+    }
+}
 
-// pub fn awake<'a>(cb: Box<dyn FnMut() + 'a>) {
-//     unsafe {
-//         unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
-//             let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-//             let f: &mut (dyn FnMut() + 'a) = &mut **a;
-//             f();
-//         }
-//         let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
-//         let data: *mut raw::c_void = mem::transmute(a);
-//         let callback: Fl_Awake_Handler = Some(shim);
-//         Fl_awake(callback, data);
-//     }
-// }
+/// Awakens the main UI thread with a callback
+pub fn awake<'a>(cb: Box<dyn FnMut() + 'a>) {
+    unsafe {
+        unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
+            let f: &mut (dyn FnMut() + 'a) = &mut **a;
+            f();
+        }
+        let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+        let data: *mut raw::c_void = mem::transmute(a);
+        let callback: Fl_Awake_Handler = Some(shim);
+        Fl_awake(callback, data);
+    }
+}
 
 /// Basic Application struct, used to instatiate, set the scheme and run the event loop
 #[derive(Debug, Copy, Clone)]
@@ -79,7 +80,6 @@ pub struct App {}
 impl App {
     /// Instantiates an App type
     pub fn default() -> App {
-        set_fonts("*");
         App {}
     }
     
@@ -94,19 +94,21 @@ impl App {
         lock()?;
         return run();
     }
-    // pub fn awake<'a>(&'a self, cb: Box<dyn FnMut() + 'a>) {
-    //     unsafe {
-    //         unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
-    //             let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-    //             let f: &mut (dyn FnMut() + 'a) = &mut **a;
-    //             f();
-    //         }
-    //         let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
-    //         let data: *mut raw::c_void = mem::transmute(a);
-    //         let callback: Fl_Awake_Handler = Some(shim);
-    //         Fl_awake(callback, data);
-    //     }
-    // }
+
+    /// Awakens the main UI thread with a callback
+    pub fn awake<'a>(&'a self, cb: Box<dyn FnMut() + 'a>) {
+        unsafe {
+            unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
+                let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
+                let f: &mut (dyn FnMut() + 'a) = &mut **a;
+                f();
+            }
+            let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+            let data: *mut raw::c_void = mem::transmute(a);
+            let callback: Fl_Awake_Handler = Some(shim);
+            Fl_awake(callback, data);
+        }
+    }
 }
 
 /// Returns the latest captured event
@@ -214,6 +216,7 @@ where
     }
 }
 
+/// Initializes loaded fonts of a certain patter ```name```
 fn set_fonts(name: &str) -> u8 {
     let name = CString::new(name).unwrap();
     unsafe {
@@ -221,10 +224,12 @@ fn set_fonts(name: &str) -> u8 {
     }
 } 
 
+/// Returns the number of fonts available to the application
 pub fn get_font_count() -> u8 {
     set_fonts("*")
 }
 
+/// Gets the name of a font through its index
 pub fn get_font_name(idx: u8) -> String {
     unsafe {
         let font = Fl_get_font(idx as i32);
@@ -233,6 +238,7 @@ pub fn get_font_name(idx: u8) -> String {
     }
 }
 
+/// Returns a list of available fonts to the application
 pub fn get_font_names() -> Vec<String> {
     let mut vec: Vec<String> = vec![];
     let cnt = get_font_count();
@@ -242,6 +248,7 @@ pub fn get_font_names() -> Vec<String> {
     vec
 }
 
+/// Finds the index of a font through its name
 pub fn get_font_index(name: &str) -> Option<u8> {
     let cnt = set_fonts("*");
     let mut ret: Option<u8> = None;
