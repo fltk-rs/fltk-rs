@@ -4,15 +4,23 @@ Rust bindings for the FLTK Graphical User Interface library.
 
 The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small ( < 1mb for a hello world application after stripping), self-contained (no dependencies) and fast gui applications. 
 
-[Documentation](https://docs.rs/fltk)
+- [Documentation](https://docs.rs/fltk)
 
 ## Usage
 Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.10"
+fltk = "^0.2.11"
 ```
+Another option is to specify this git repository in your Cargo.toml file:
+```toml
+[dependencies]
+fltk = { git = "https://github.com/MoAlyousef/fltk-rs" }
+# or
+fltk = { git = "https://github.com/MoAlyousef/fltk-rs", branch = "stable" }
+```
+
 An example hello world application:
 
 ```rust
@@ -116,9 +124,14 @@ Themes of individual widgets can be optionally modified using the provided metho
 CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. 
 - Windows: None.
 - MacOs: None.
-- Linux: X11 development headers need to be installed for development. For Debian-based distribution, that means running:
+- Linux: X11 development headers need to be installed for development. 
+For Debian-based distribution, that means running:
 ```
 $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
+```
+For RHEL-based distributions, that means running:
+```
+$ sudo yum groupinstall "X Software Development" 
 ```
 
 ## Building

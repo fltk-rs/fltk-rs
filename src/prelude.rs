@@ -35,10 +35,10 @@ impl FltkErrorKind {
 
 impl Error for FltkError {
     fn description(&self) -> &str {
-        match *self {
-            FltkError::Io(ref err) => err.description(),
-            FltkError::Internal(ref err) => err.as_str(),
-            FltkError::Unknown(ref err) => err,
+        match self {
+            FltkError::Io(err) => err.description(),
+            FltkError::Internal(err) => err.as_str(),
+            FltkError::Unknown(err) => err,
         }
     }
 }
