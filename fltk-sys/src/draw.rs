@@ -536,7 +536,7 @@ extern "C" {
         y: ::std::os::raw::c_int,
         w: ::std::os::raw::c_int,
         h: ::std::os::raw::c_int,
-    ) -> *mut ::std::os::raw::c_void;
+    ) -> *mut ::std::os::raw::c_uchar;
 }
 extern "C" {
     pub fn cfl_draw_pixmap(
@@ -643,5 +643,29 @@ extern "C" {
         w: ::std::os::raw::c_int,
         h: ::std::os::raw::c_int,
         arg1: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn cfl_raw_image_to_png(
+        data: *mut ::std::os::raw::c_uchar,
+        fname: *const ::std::os::raw::c_char,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn cfl_raw_image_to_jpg(
+        data: *mut ::std::os::raw::c_uchar,
+        fname: *const ::std::os::raw::c_char,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn cfl_raw_image_to_bmp(
+        data: *mut ::std::os::raw::c_uchar,
+        fname: *const ::std::os::raw::c_char,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }

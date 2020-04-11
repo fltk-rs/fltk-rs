@@ -67,36 +67,41 @@ pub fn draw_pie(x: i32, y: i32, w: i32, h: i32, a: f64, b: f64) {
     }
 }
 
-/// Reads the drawn image from a region
-pub unsafe fn read_image(x: i32, y: i32, w: i32, h: i32) -> Vec<u8> {
-    let cp = w as usize * h as usize * 3;
-    let x = cfl_read_image(std::ptr::null_mut(), x, y, w, h, 0);
-    assert!(!x.is_null(), "Failed to read image from region!");
-    // let x = Vec::from_raw_parts(x, cp, cp);
-    let x = std::slice::from_raw_parts(x, cp);
-    x.to_vec()
-}
-
-/// Captures part of the window
-pub fn capture_window_part<Window: WindowTrait>(
-    win: &Window,
-    x: i32,
-    y: i32,
-    w: i32,
-    h: i32,
-) -> Vec<u8> {
+/// Captures part of the window and returns raw data
+pub fn capture_window_part<Window: WindowTrait>(win: &Window, x: i32, y: i32, w: i32, h: i32) -> Vec<u8> {
     assert!(
         x + w <= win.width() && y + h <= win.height(),
         "Captures must be less than the parent window's size!"
     );
+    let cp = w as usize * h as usize * 3;
     unsafe {
-        let x = cfl_capture_window_part(win.as_widget_ptr() as *mut raw::c_void, x, y, w, h);
-        assert!(!x.is_null());
-        let cp = w as usize * h as usize * 3;
-        let x: Vec<u8> = Vec::from_raw_parts(x as *mut raw::c_uchar, cp, cp);
-        x
+        let x = cfl_read_image(std::ptr::null_mut(), x, y, w, h, 0);
+        assert!(!x.is_null(), "Failed to read image from region!");
+        let x = std::slice::from_raw_parts(x, cp);
+        x.to_vec()
     }
 }
+
+// /// Captures part of the window, returns a raw RGB data
+// pub fn capture_window_part<Window: WindowTrait>(
+//     win: &Window,
+//     x: i32,
+//     y: i32,
+//     w: i32,
+//     h: i32,
+// ) -> Vec<u8> {
+//     assert!(
+//         x + w <= win.width() && y + h <= win.height(),
+//         "Captures must be less than the parent window's size!"
+//     );
+//     unsafe {
+//         let x = cfl_capture_window_part(win.as_widget_ptr() as *mut raw::c_void, x, y, w, h);
+//         assert!(!x.is_null());
+//         let cp = w as usize * h as usize * 3;
+//         let x = std::slice::from_raw_parts(x, cp);
+//         x.to_vec()
+//     }
+// }
 
 /// Sets the line style
 pub fn set_line_style(style: LineStyle, width: i32) {
@@ -120,5 +125,80 @@ pub fn push_clip(x: i32, y: i32, w: i32, h: i32) {
 pub fn pop_clip() {
     unsafe {
         cfl_pop_clip();
+    }
+}
+
+/// Transforms raw data to png file
+pub fn read_to_png_file(
+    data: Vec<u8>,
+    path: &std::path::Path,
+    w: i32,
+    h: i32,
+) -> Result<(), FltkError> {
+    let path = path.to_str().unwrap();
+    let path = std::ffi::CString::new(path).unwrap();
+    unsafe {
+        match cfl_raw_image_to_png(
+            data.as_ptr() as *mut u8,
+            path.as_ptr() as *const raw::c_char,
+            w,
+            h,
+        ) {
+            -1 => Err(FltkError::Io(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Could not write image!",
+            ))),
+            _ => Ok(()),
+        }
+    }
+}
+
+/// Transforms raw data to jpg file
+pub fn read_to_jpg_file(
+    data: Vec<u8>,
+    path: &std::path::Path,
+    w: i32,
+    h: i32,
+) -> Result<(), FltkError> {
+    let path = path.to_str().unwrap();
+    let path = std::ffi::CString::new(path).unwrap();
+    unsafe {
+        match cfl_raw_image_to_jpg(
+            data.as_ptr() as *mut u8,
+            path.as_ptr() as *const raw::c_char,
+            w,
+            h,
+        ) {
+            -1 => Err(FltkError::Io(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Could not write image!",
+            ))),
+            _ => Ok(()),
+        }
+    }
+}
+
+/// Transforms raw data to bmp file
+pub fn read_to_bmp_file(
+    data: Vec<u8>,
+    path: &std::path::Path,
+    w: i32,
+    h: i32,
+) -> Result<(), FltkError> {
+    let path = path.to_str().unwrap();
+    let path = std::ffi::CString::new(path).unwrap();
+    unsafe {
+        match cfl_raw_image_to_bmp(
+            data.as_ptr() as *mut u8,
+            path.as_ptr() as *const raw::c_char,
+            w,
+            h,
+        ) {
+            -1 => Err(FltkError::Io(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Could not write image!",
+            ))),
+            _ => Ok(()),
+        }
     }
 }

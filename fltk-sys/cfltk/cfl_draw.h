@@ -100,7 +100,7 @@ void cfl_draw_image_mono(const unsigned char *buf, int X, int Y, int W, int H,
 char cfl_can_do_alpha_blending(void);
 unsigned char *cfl_read_image(unsigned char *p, int X, int Y, int W, int H,
                              int alpha);
-void *cfl_capture_window_part(void *win, int x, int y, int w, int h);
+unsigned char *cfl_capture_window_part(void *win, int x, int y, int w, int h);
 int cfl_draw_pixmap(const char *const *data, int x, int y, int bg);
 int cfl_draw_pixmap2(/*const*/ char *const *data, int x, int y, int bg);
 int cfl_measure_pixmap(/*const*/ char *const *data, int *w, int *h);
@@ -119,6 +119,12 @@ void cfl_set_spot(int font, int size, int X, int Y, int W, int H,
                  void *win);
 void cfl_reset_spot(void);
 int cfl_draw_symbol(const char *label, int x, int y, int w, int h, int);
+
+int cfl_raw_image_to_png(unsigned char *data, const char* fname, int w, int h);
+
+int cfl_raw_image_to_jpg(unsigned char *data, const char* fname, int w, int h);
+
+int cfl_raw_image_to_bmp(unsigned char *data, const char* fname, int w, int h);
 
 #ifdef __cplusplus
 }
