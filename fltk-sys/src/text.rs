@@ -191,6 +191,14 @@ extern "C" {
     pub fn Fl_Text_Display_set_image(arg1: *mut Fl_Text_Display, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Text_Display_set_image_with_size(
+        arg1: *mut Fl_Text_Display,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Text_Display_set_handler(
         self_: *mut *mut Fl_Text_Display,
         cb: custom_handler_callback,
@@ -489,6 +497,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_image(arg1: *mut Fl_Text_Editor, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_image_with_size(
+        arg1: *mut Fl_Text_Editor,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_handler(
@@ -815,6 +831,14 @@ extern "C" {
     pub fn Fl_Simple_Terminal_set_image(
         arg1: *mut Fl_Simple_Terminal,
         arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_image_with_size(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
     );
 }
 extern "C" {

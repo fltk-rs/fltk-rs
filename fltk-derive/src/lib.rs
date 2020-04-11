@@ -195,6 +195,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
     );
+    let set_image_with_size = Ident::new(
+        format!("{}_{}", name_str, "set_image_with_size").as_str(),
+        name.span(),
+    );
     let image = Ident::new(format!("{}_{}", name_str, "image").as_str(), name.span());
     let set_handler = Ident::new(
         format!("{}_{}", name_str, "set_handler").as_str(),
@@ -321,12 +325,15 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { #resize(self._inner, x, y, width, height) }
             }
 
-            fn tooltip(&self) -> String {
+            fn tooltip(&self) -> Option<String> {
                 unsafe {
                     let tooltip_ptr = #tooltip(self._inner);
-                    assert!(!tooltip_ptr.is_null(), "Failed to retrieve tooltip text, probably not set!");
-                    CStr::from_ptr(
-                        tooltip_ptr as *mut raw::c_char).to_string_lossy().to_string()
+                    if tooltip_ptr.is_null() {
+                        None
+                    } else {
+                        Some(CStr::from_ptr(
+                            tooltip_ptr as *mut raw::c_char).to_string_lossy().to_string())
+                    }
                 }
             }
 
@@ -430,6 +437,11 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_image<Image: ImageTrait>(&mut self, image: &Image) {
                 unsafe { #set_image(self._inner, image.as_ptr()) }
             }
+
+            fn set_image_with_size<Image: ImageTrait>(&mut self, image: &Image, w: i32, h: i32) {
+                unsafe { #set_image_with_size(self._inner, image.as_ptr(), w, h) }
+            }
+
             fn image(&self) -> Image {
                 unsafe {
                     let image_ptr = #image(self._inner);
@@ -1634,6 +1646,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
     let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
     let count = Ident::new(format!("{}_{}", name_str, "count").as_str(), name.span());
     let data = Ident::new(format!("{}_{}", name_str, "data").as_str(), name.span());
+    let copy = Ident::new(format!("{}_{}", name_str, "copy").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Sync for #name {}
@@ -1654,6 +1667,16 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
                     assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
                     #name {
                         _inner: image_ptr,
+                    }
+                }
+            }
+
+            fn copy(&self) -> Self {
+                unsafe {
+                    let img = #copy(self._inner);
+                    assert!(!img.is_null(), "Coulnd't copy image!");
+                    #name {
+                        _inner: img,
                     }
                 }
             }

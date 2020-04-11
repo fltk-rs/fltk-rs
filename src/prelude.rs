@@ -120,7 +120,7 @@ pub trait WidgetTrait {
     /// Resizes and/or moves the widget, takes x, y, width and height
     fn resize(&mut self, x: i32, y: i32, width: i32, height: i32);
     /// Returns the tooltip text
-    fn tooltip(&self) -> String;
+    fn tooltip(&self) -> Option<String>;
     /// Sets the tooltip text
     fn set_tooltip(&mut self, txt: &str);
     /// Returns the widget type when applicable
@@ -163,6 +163,8 @@ pub trait WidgetTrait {
     fn set_align(&mut self, align: Align);
     /// Sets the image of the widget
     fn set_image<Image: ImageTrait>(&mut self, image: &Image);
+    /// Sets the resized image of the widget
+    fn set_image_with_size<Image: ImageTrait>(&mut self, image: &Image, w: i32, h: i32);
     /// Gets the image associated with the widget
     fn image(&self) -> Image;
     /// Sets the callback when the widget is triggered (clicks for example)
@@ -456,6 +458,8 @@ pub trait BrowserTrait {
 pub trait ImageTrait {
     /// Creates an image object from a path
     fn new(path: std::path::PathBuf) -> Self;
+    /// Creates a copy of the image
+    fn copy(&self) -> Self;
     /// Draws the image at the presupplied coordinates and size
     fn draw(&mut self, x: i32, y: i32, width: i32, height: i32);
     /// Return the width of the image

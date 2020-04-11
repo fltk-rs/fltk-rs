@@ -11,7 +11,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.11"
+fltk = "^0.2.12"
 ```
 Another option is to specify this git repository in your Cargo.toml file:
 ```toml

@@ -152,6 +152,14 @@ extern "C" {
     pub fn Fl_Group_set_image(arg1: *mut Fl_Group, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Group_set_image_with_size(
+        arg1: *mut Fl_Group,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Group_set_handler(
         self_: *mut *mut Fl_Group,
         cb: custom_handler_callback,
@@ -332,6 +340,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_set_image(arg1: *mut Fl_Pack, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Pack_set_image_with_size(
+        arg1: *mut Fl_Pack,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Pack_set_handler(
@@ -516,6 +532,14 @@ extern "C" {
     pub fn Fl_Scroll_set_image(arg1: *mut Fl_Scroll, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Scroll_set_image_with_size(
+        arg1: *mut Fl_Scroll,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Scroll_set_handler(
         self_: *mut *mut Fl_Scroll,
         cb: custom_handler_callback,
@@ -696,6 +720,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_set_image(arg1: *mut Fl_Tabs, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Tabs_set_image_with_size(
+        arg1: *mut Fl_Tabs,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Tabs_set_handler(
@@ -880,6 +912,14 @@ extern "C" {
     pub fn Fl_Tile_set_image(arg1: *mut Fl_Tile, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Tile_set_image_with_size(
+        arg1: *mut Fl_Tile,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Tile_set_handler(
         self_: *mut *mut Fl_Tile,
         cb: custom_handler_callback,
@@ -1060,6 +1100,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_set_image(arg1: *mut Fl_Wizard, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Wizard_set_image_with_size(
+        arg1: *mut Fl_Wizard,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Wizard_set_handler(
@@ -1268,6 +1316,14 @@ extern "C" {
     pub fn Fl_Color_Chooser_set_image(
         arg1: *mut Fl_Color_Chooser,
         arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_image_with_size(
+        arg1: *mut Fl_Color_Chooser,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
     );
 }
 extern "C" {

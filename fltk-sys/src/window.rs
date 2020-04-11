@@ -152,6 +152,14 @@ extern "C" {
     pub fn Fl_Window_set_image(arg1: *mut Fl_Window, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Window_set_image_with_size(
+        arg1: *mut Fl_Window,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Window_set_handler(
         self_: *mut *mut Fl_Window,
         cb: custom_handler_callback,
@@ -364,6 +372,14 @@ extern "C" {
     pub fn Fl_Double_Window_set_image(
         arg1: *mut Fl_Double_Window,
         arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_image_with_size(
+        arg1: *mut Fl_Double_Window,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
     );
 }
 extern "C" {
@@ -586,6 +602,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_image(arg1: *mut Fl_Menu_Window, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_image_with_size(
+        arg1: *mut Fl_Menu_Window,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_handler(

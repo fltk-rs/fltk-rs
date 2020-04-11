@@ -10,7 +10,7 @@ use std::{fs, path};
 fn main() {
     let app = App::default().set_scheme(AppScheme::Gtk);
     let mut filename = String::from("");
-    let mut saved = false;
+    let mut saved = true;
     let mut wind = Window::default()
         .with_size(800, 600)
         .center_screen()

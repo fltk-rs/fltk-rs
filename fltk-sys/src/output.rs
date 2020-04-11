@@ -152,6 +152,14 @@ extern "C" {
     pub fn Fl_Output_set_image(arg1: *mut Fl_Output, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Output_set_image_with_size(
+        arg1: *mut Fl_Output,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Output_set_handler(
         self_: *mut *mut Fl_Output,
         cb: custom_handler_callback,
@@ -429,6 +437,14 @@ extern "C" {
     pub fn Fl_Multiline_Output_set_image(
         arg1: *mut Fl_Multiline_Output,
         arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_set_image_with_size(
+        arg1: *mut Fl_Multiline_Output,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
     );
 }
 extern "C" {

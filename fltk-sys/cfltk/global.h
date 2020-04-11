@@ -58,6 +58,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_align(widget *, int typ);                                  \
   void widget##_delete(widget *);                                              \
   void widget##_set_image(widget *, void *);                                   \
+  void widget##_set_image_with_size(widget *, void *, int, int);               \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data);                                       \
   void widget##_set_draw(widget **self, custom_draw_callback cb, void *data);  \
@@ -206,7 +207,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int image##_height(image *);                                                 \
   void image##_delete(image *);                                                \
   int image##_count(image *self);                                              \
-  const char *const *image##_data(image *self);
+  const char *const *image##_data(image *self);                                \
+  image *image##_copy(image *self);
 
 #define WIDGET_DEFINE(widget)                                                  \
   class widget##_Derived : public widget {                                     \
@@ -305,8 +307,11 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_align(widget *self) { return self->align(); }                   \
   void widget##_set_align(widget *self, int typ) { LOCK(self->align(typ);) }   \
   void widget##_delete(widget *self) { delete self; }                          \
+  void widget##_set_image_with_size(widget *self, void *image, int w, int h) { \
+    LOCK(self->image(((Fl_Image *)image)->copy(w, h)); self->redraw();)        \
+  }                                                                            \
   void widget##_set_image(widget *self, void *image) {                         \
-    LOCK(self->image((Fl_Image *)image);)                                      \
+    LOCK(self->image(((Fl_Image *)image)->copy()); self->redraw();)            \
   }                                                                            \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data) {                                      \
@@ -347,8 +352,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define WINDOW_DEFINE(widget)                                                  \
   void widget##_make_modal(widget *self, unsigned int boolean) {               \
-    LOCK(                                                                      \
-        if (boolean) { self->set_modal(); } else { self->set_non_modal(); })   \
+    LOCK(if (boolean) { self->set_modal(); } else { self->set_non_modal(); })  \
   }                                                                            \
   void widget##_fullscreen(widget *self, unsigned int boolean) {               \
     LOCK(                                                                      \
@@ -358,7 +362,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     LOCK(((Fl_Window *)self)->make_current();)                                 \
   }                                                                            \
   void widget##_set_icon(widget *self, const void *image) {                    \
-    LOCK(self->icon((const Fl_RGB_Image *)image);)                             \
+    LOCK(self->icon((const Fl_RGB_Image *)((Fl_Image*)image)->copy());)        \
   }                                                                            \
   void widget##_make_resizable(widget *self, void *wid) {                      \
     LOCK(self->resizable((Fl_Widget *)wid);)                                   \
@@ -666,7 +670,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     LOCK(self->textsize(s);)                                                   \
   }                                                                            \
   void widget##_set_icon(widget *self, int line, void *icon) {                 \
-    LOCK(self->icon(line, (Fl_Image *)icon);)                                  \
+    LOCK(self->icon(line, ((Fl_Image *)icon)->copy());)                        \
   }                                                                            \
   void *widget##_icon(const widget *self, int line) {                          \
     return (Fl_Image *)self->icon(line);                                       \
@@ -684,7 +688,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int image##_height(image *self) { return self->h(); }                        \
   void image##_delete(image *self) { delete self; }                            \
   int image##_count(image *self) { return self->count(); }                     \
-  const char *const *image##_data(image *self) { return self->data(); }
+  const char *const *image##_data(image *self) { return self->data(); }        \
+  image *image##_copy(image *self) { return (image *)self->copy(); }
 
 #ifdef __cplusplus
 }

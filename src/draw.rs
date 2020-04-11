@@ -1,4 +1,5 @@
 pub use crate::prelude::*;
+use crate::image::RgbImage;
 use fltk_sys::draw::*;
 use std::os::raw;
 
@@ -68,7 +69,7 @@ pub fn draw_pie(x: i32, y: i32, w: i32, h: i32, a: f64, b: f64) {
 }
 
 /// Captures part of the window and returns raw data
-pub fn capture_window_part<Window: WindowTrait>(win: &Window, x: i32, y: i32, w: i32, h: i32) -> Vec<u8> {
+pub fn capture_window_part<Window: WindowTrait>(win: &Window, x: i32, y: i32, w: i32, h: i32) -> RgbImage {
     assert!(
         x + w <= win.width() && y + h <= win.height(),
         "Captures must be less than the parent window's size!"
@@ -78,7 +79,7 @@ pub fn capture_window_part<Window: WindowTrait>(win: &Window, x: i32, y: i32, w:
         let x = cfl_read_image(std::ptr::null_mut(), x, y, w, h, 0);
         assert!(!x.is_null(), "Failed to read image from region!");
         let x = std::slice::from_raw_parts(x, cp);
-        x.to_vec()
+        RgbImage::new(x.to_vec(), w, h)
     }
 }
 
@@ -129,12 +130,11 @@ pub fn pop_clip() {
 }
 
 /// Transforms raw data to png file
-pub fn read_to_png_file(
-    data: Vec<u8>,
+pub fn write_to_png_file(
+    rgb_image: RgbImage,
     path: &std::path::Path,
-    w: i32,
-    h: i32,
 ) -> Result<(), FltkError> {
+    let (data, w, h) = rgb_image.into_parts();
     let path = path.to_str().unwrap();
     let path = std::ffi::CString::new(path).unwrap();
     unsafe {
@@ -154,12 +154,11 @@ pub fn read_to_png_file(
 }
 
 /// Transforms raw data to jpg file
-pub fn read_to_jpg_file(
-    data: Vec<u8>,
+pub fn write_to_jpg_file(
+    rgb_image: RgbImage,
     path: &std::path::Path,
-    w: i32,
-    h: i32,
 ) -> Result<(), FltkError> {
+    let (data, w, h) = rgb_image.into_parts();
     let path = path.to_str().unwrap();
     let path = std::ffi::CString::new(path).unwrap();
     unsafe {
@@ -179,12 +178,11 @@ pub fn read_to_jpg_file(
 }
 
 /// Transforms raw data to bmp file
-pub fn read_to_bmp_file(
-    data: Vec<u8>,
+pub fn write_to_bmp_file(
+    rgb_image: RgbImage,
     path: &std::path::Path,
-    w: i32,
-    h: i32,
 ) -> Result<(), FltkError> {
+    let (data, w, h) = rgb_image.into_parts();
     let path = path.to_str().unwrap();
     let path = std::ffi::CString::new(path).unwrap();
     unsafe {

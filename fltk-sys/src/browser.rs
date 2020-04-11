@@ -152,6 +152,14 @@ extern "C" {
     pub fn Fl_Browser_set_image(arg1: *mut Fl_Browser, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Browser_set_image_with_size(
+        arg1: *mut Fl_Browser,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Browser_set_handler(
         self_: *mut *mut Fl_Browser,
         cb: custom_handler_callback,
@@ -397,6 +405,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_image(arg1: *mut Fl_Hold_Browser, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_set_image_with_size(
+        arg1: *mut Fl_Hold_Browser,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_handler(
@@ -662,6 +678,14 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Select_Browser_set_image_with_size(
+        arg1: *mut Fl_Select_Browser,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Select_Browser_set_handler(
         self_: *mut *mut Fl_Select_Browser,
         cb: custom_handler_callback,
@@ -921,6 +945,14 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_set_image_with_size(
+        arg1: *mut Fl_Multi_Browser,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Multi_Browser_set_handler(
         self_: *mut *mut Fl_Multi_Browser,
         cb: custom_handler_callback,
@@ -1172,6 +1204,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_set_image(arg1: *mut Fl_File_Browser, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_image_with_size(
+        arg1: *mut Fl_File_Browser,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_File_Browser_set_handler(
