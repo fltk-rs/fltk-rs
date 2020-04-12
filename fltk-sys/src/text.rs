@@ -23,6 +23,16 @@ extern "C" {
         arg2: *mut ::std::os::raw::c_void,
     );
 }
+pub type Fl_Text_Modify_Cb = ::std::option::Option<
+    unsafe extern "C" fn(
+        pos: ::std::os::raw::c_int,
+        nInserted: ::std::os::raw::c_int,
+        nDeleted: ::std::os::raw::c_int,
+        nRestyled: ::std::os::raw::c_int,
+        deletedText: *const ::std::os::raw::c_char,
+        cbArg: *mut ::std::os::raw::c_void,
+    ),
+>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Buffer {
@@ -52,6 +62,167 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Buffer_length(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_text_range(
+        self_: *const Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_insert(
+        self_: *mut Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+        text: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_replace(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+        text: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_copy(
+        self_: *mut Fl_Text_Buffer,
+        fromBuf: *mut Fl_Text_Buffer,
+        fromStart: ::std::os::raw::c_int,
+        fromEnd: ::std::os::raw::c_int,
+        toPos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_undo(
+        self_: *mut Fl_Text_Buffer,
+        cp: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_canUndo(self_: *mut Fl_Text_Buffer, flag: ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_loadfile(
+        self_: *mut Fl_Text_Buffer,
+        file: *const ::std::os::raw::c_char,
+        buflen: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_tab_distance(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_set_tab_distance(
+        self_: *mut Fl_Text_Buffer,
+        tabDist: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_select(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_selected(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_unselect(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_selection_position(
+        self_: *mut Fl_Text_Buffer,
+        start: *mut ::std::os::raw::c_int,
+        end: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_selection_text(self_: *mut Fl_Text_Buffer)
+        -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_remove_selection(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_replace_selection(
+        self_: *mut Fl_Text_Buffer,
+        text: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_highlight(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_is_highlighted(self_: *mut Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_unhighlight(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_highlight_position(
+        self_: *mut Fl_Text_Buffer,
+        start: *mut ::std::os::raw::c_int,
+        end: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_highlight_text(self_: *mut Fl_Text_Buffer)
+        -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_line_text(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_line_start(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_word_start(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_word_end(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_count_lines(
+        self_: *const Fl_Text_Buffer,
+        startPos: ::std::os::raw::c_int,
+        endPos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_add_modify_callback(
+        self_: *mut Fl_Text_Buffer,
+        bufModifiedCB: Fl_Text_Modify_Cb,
+        cbArg: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_remove_modify_callback(
+        self_: *mut Fl_Text_Buffer,
+        bufModifiedCB: Fl_Text_Modify_Cb,
+        cbArg: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_call_modify_callbacks(self_: *mut Fl_Text_Buffer);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

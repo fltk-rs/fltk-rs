@@ -11,7 +11,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.12"
+fltk = "^0.2.13"
 ```
 Another option is to specify this git repository in your Cargo.toml file:
 ```toml
@@ -239,6 +239,7 @@ Most common widgets are implemented:
 - Complete widget set
 - Better documentation
 - Better testing
+- Add tables!
 
 ## Contributions
 

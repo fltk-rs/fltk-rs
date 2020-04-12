@@ -14,6 +14,7 @@ pub struct TextBuffer {
 }
 
 impl TextBuffer {
+    /// Initialized a default text buffer
     pub fn default() -> Self {
         unsafe {
             let text_buffer = Fl_Text_Buffer_new();
@@ -23,13 +24,17 @@ impl TextBuffer {
             }
         }
     }
+    /// Initialized a text buffer from a pointer
     pub fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         TextBuffer { _inner: ptr }
     }
+    
+    /// Returns the inner pointer from a text buffer
     pub fn as_ptr(&self) -> *mut Fl_Text_Buffer {
         self._inner
     }
 
+    /// Sets the text of the buffer
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
             let txt = CString::new(txt).unwrap();
@@ -37,6 +42,7 @@ impl TextBuffer {
         }
     }
 
+    /// Returns the text of the buffer
     pub fn text(&self) -> String {
         unsafe {
             let text = Fl_Text_Buffer_text(self._inner);
@@ -47,18 +53,316 @@ impl TextBuffer {
         }
     }
 
+    /// Appends to the buffer
     pub fn append(&mut self, text: &str) {
         let text = CString::new(text).unwrap();
         unsafe { Fl_Text_Buffer_append(self._inner, text.into_raw() as *const raw::c_char) }
     }
 
+    /// Get the length of the buffer
     pub fn length(&self) -> usize {
         unsafe { Fl_Text_Buffer_length(self._inner) as usize }
     }
 
+    /// Removes from the buffer
     pub fn remove(&mut self, start: usize, end: usize) {
         unsafe {
             Fl_Text_Buffer_remove(self._inner, start as i32, end as i32);
+        }
+    }
+
+    /// Returns the text within the range
+    pub fn text_range(&self, start: usize, end: usize) -> String {
+        unsafe {
+            let x = Fl_Text_Buffer_text_range(self._inner, start as i32, end as i32);
+            assert!(!x.is_null(), "Null pointer exception!");
+            CString::from_raw(x as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
+        }
+    }
+
+    /// Inserts text into a position
+    pub fn insert(&mut self, pos: usize, text: &str) {
+        let text = CString::new(text).unwrap();
+        unsafe {
+            Fl_Text_Buffer_insert(
+                self._inner,
+                pos as i32,
+                text.into_raw() as *const raw::c_char,
+            )
+        }
+    }
+
+    /// Replaces text from position ```start``` to ```end```
+    pub fn replace(&mut self, start: usize, end: usize, text: &str) {
+        let text = CString::new(text).unwrap();
+        unsafe {
+            Fl_Text_Buffer_replace(
+                self._inner,
+                start as i32,
+                end as i32,
+                text.into_raw() as *const raw::c_char,
+            )
+        }
+    }
+
+    /// Copies text from a source buffer into the current buffer
+    pub fn copy(&mut self, source_buf: TextBuffer, start: usize, end: usize, to: usize) {
+        unsafe {
+            Fl_Text_Buffer_copy(
+                self._inner,
+                source_buf.as_ptr(),
+                start as i32,
+                end as i32,
+                to as i32,
+            )
+        }
+    }
+
+    /// Performs an undo operation on the buffer
+    pub fn undo(&mut self) -> Result<(), FltkError> {
+        unsafe {
+            match Fl_Text_Buffer_undo(self._inner, std::ptr::null_mut()) {
+                0 => Err(FltkError::Unknown(String::from("Failed to undo"))),
+                _ => Ok(()),
+            }
+        }
+    }
+
+    /// Sets whether the buffer can undo
+    pub fn can_undo(&mut self, flag: bool) {
+        unsafe { Fl_Text_Buffer_canUndo(self._inner, flag as i8) }
+    }
+
+    /// Loads a file into the buffer
+    pub fn loadfile(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
+        let path = path.to_str().unwrap();
+        let path = CString::new(path).unwrap();
+        unsafe {
+            match Fl_Text_Buffer_loadfile(self._inner, path.into_raw() as *const raw::c_char, 0) {
+                0 => Err(FltkError::Unknown(String::from("Failed to undo"))),
+                _ => Ok(()),
+            }
+        }
+    }
+
+    /// Returns the tab distance for the buffer
+    pub fn tab_distance(&self) -> u32 {
+        unsafe { Fl_Text_Buffer_tab_distance(self._inner) as u32 }
+    }
+
+    /// Sets the tab distance
+    pub fn set_tab_distance(&mut self, tab_dist: u32) {
+        unsafe { Fl_Text_Buffer_set_tab_distance(self._inner, tab_dist as i32) }
+    }
+
+    /// Selects the text from start to end
+    pub fn select(&mut self, start: usize, end: usize) {
+        unsafe { Fl_Text_Buffer_select(self._inner, start as i32, end as i32) }
+    }
+
+    /// Returns whether text is selected
+    pub fn selected(&self) -> bool {
+        unsafe {
+            match Fl_Text_Buffer_selected(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    /// Unselects text
+    pub fn unselect(&mut self) {
+        unsafe { Fl_Text_Buffer_unselect(self._inner) }
+    }
+
+    /// Returns the selection position
+    pub fn selection_position(&mut self) -> Option<(usize, usize)> {
+        unsafe {
+            let start: *mut raw::c_int = std::ptr::null_mut();
+            let end: *mut raw::c_int = std::ptr::null_mut();
+            let ret = Fl_Text_Buffer_selection_position(self._inner, start, end);
+            if ret != 0 {
+                let x = (*start as usize, *end as usize);
+                Some(x)
+            } else {
+                None
+            }
+        }
+    }
+
+    /// Returns the selection text
+    pub fn selection_text(&mut self) -> String {
+        unsafe {
+            let x = Fl_Text_Buffer_selection_text(self._inner);
+            assert!(!x.is_null(), "Null pointer exception!");
+            CString::from_raw(x as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
+        }
+    }
+
+    /// Removes the selection
+    pub fn remove_selection(&mut self) {
+        unsafe { Fl_Text_Buffer_remove_selection(self._inner) }
+    }
+
+    /// Replaces selection
+    pub fn replace_selection(&mut self, text: &str) {
+        let text = CString::new(text).unwrap();
+        unsafe {
+            Fl_Text_Buffer_replace_selection(self._inner, text.into_raw() as *const raw::c_char)
+        }
+    }
+
+    /// Highlights selection
+    pub fn highlight(&mut self, start: usize, end: usize) {
+        unsafe { Fl_Text_Buffer_highlight(self._inner, start as i32, end as i32) }
+    }
+
+    /// Returns whether text is highlighted
+    pub fn is_highlighted(&mut self) -> bool {
+        unsafe {
+            match Fl_Text_Buffer_is_highlighted(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    /// Unhighlights text
+    pub fn unhighlight(&mut self) {
+        unsafe { Fl_Text_Buffer_unhighlight(self._inner) }
+    }
+
+    /// Returns the highlight position
+    pub fn highlight_position(&mut self) -> Option<(usize, usize)> {
+        unsafe {
+            let start: *mut raw::c_int = std::ptr::null_mut();
+            let end: *mut raw::c_int = std::ptr::null_mut();
+            let ret = Fl_Text_Buffer_highlight_position(self._inner, start, end);
+            if ret != 0 {
+                let x = (*start as usize, *end as usize);
+                Some(x)
+            } else {
+                None
+            }
+        }
+    }
+
+    /// Returns the highlighted text
+    pub fn highlight_text(&mut self) -> String {
+        unsafe {
+            let x = Fl_Text_Buffer_highlight_text(self._inner);
+            assert!(!x.is_null(), "Null pointer exception!");
+            CString::from_raw(x as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
+        }
+    }
+
+    /// Returns the line at pos
+    pub fn line_text(&self, pos: usize) -> String {
+        unsafe {
+            let x = Fl_Text_Buffer_line_text(self._inner, pos as i32);
+            assert!(!x.is_null(), "Null pointer exception!");
+            CString::from_raw(x as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
+        }
+    }
+
+    /// Returns the index of the line's start position at pos
+    pub fn line_start(&self, pos: usize) -> usize {
+        unsafe { Fl_Text_Buffer_line_start(self._inner, pos as i32) as usize }
+    }
+
+    /// Returns the index of the first character of a word at pos
+    pub fn word_start(&self, pos: usize) -> usize {
+        unsafe { Fl_Text_Buffer_word_start(self._inner, pos as i32) as usize }
+    }
+    
+    /// Returns the index of the last character of a word at pos
+    pub fn word_end(&self, pos: usize) -> usize {
+        unsafe { Fl_Text_Buffer_word_end(self._inner, pos as i32) as usize }
+    }
+
+    /// Counts the lines from start to end
+    pub fn count_lines(&self, start: usize, end: usize) -> usize {
+        unsafe { Fl_Text_Buffer_count_lines(self._inner, start as i32, end as i32) as usize }
+    }
+
+    /// Calls the modify callbacks
+    pub fn call_modify_callbacks(&mut self) {
+        unsafe { Fl_Text_Buffer_call_modify_callbacks(self._inner) }
+    }
+
+    /// Adds a modify callback
+    pub fn add_modify_callback<'a>(
+        &'a mut self,
+        cb: Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a>,
+    ) {
+        unsafe {
+            unsafe extern "C" fn shim<'a>(
+                pos: raw::c_int,
+                inserted: raw::c_int,
+                deleted: raw::c_int,
+                restyled: raw::c_int,
+                deleted_text: *const raw::c_char,
+                data: *mut raw::c_void,
+            ) {
+                let deleted_text = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
+                let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
+                    mem::transmute(data);
+                let f: &mut (dyn FnMut(usize, usize, usize, usize, &str) + 'a) = &mut **a;
+                f(
+                    pos as usize,
+                    inserted as usize,
+                    deleted as usize,
+                    restyled as usize,
+                    &deleted_text,
+                )
+            }
+            let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
+                Box::into_raw(Box::new(cb));
+            let data: *mut raw::c_void = mem::transmute(a);
+            let callback: Fl_Text_Modify_Cb = Some(shim);
+            Fl_Text_Buffer_add_modify_callback(self._inner, callback, data);
+        }
+    }
+
+    /// Removes a modify callback
+    pub fn remove_modify_callback<'a>(
+        &'a mut self,
+        cb: Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a>,
+    ) {
+        unsafe {
+            unsafe extern "C" fn shim<'a>(
+                pos: raw::c_int,
+                inserted: raw::c_int,
+                deleted: raw::c_int,
+                restyled: raw::c_int,
+                deleted_text: *const raw::c_char,
+                data: *mut raw::c_void,
+            ) {
+                let deleted_text = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
+                let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
+                    mem::transmute(data);
+                let f: &mut (dyn FnMut(usize, usize, usize, usize, &str) + 'a) = &mut **a;
+                f(
+                    pos as usize,
+                    inserted as usize,
+                    deleted as usize,
+                    restyled as usize,
+                    &deleted_text,
+                )
+            }
+            let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
+                Box::into_raw(Box::new(cb));
+            let data: *mut raw::c_void = mem::transmute(a);
+            let callback: Fl_Text_Modify_Cb = Some(shim);
+            Fl_Text_Buffer_remove_modify_callback(self._inner, callback, data);
         }
     }
 }
