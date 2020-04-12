@@ -1,7 +1,8 @@
 pub use crate::enums::*;
+use crate::image::Image;
 use crate::text::{StyleTableEntry, TextBuffer};
 use crate::widget::Widget;
-use crate::image::Image;
+use crate::window::Window;
 use std::convert::From;
 use std::error::Error;
 use std::{fmt, io, os::raw};
@@ -175,6 +176,20 @@ pub trait WidgetTrait {
     fn set_trigger(&mut self, trigger: CallbackTrigger);
     /// Set a custom draw method
     fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
+    /// Returns the parent of the widget
+    fn parent(&self) -> Option<Widget>;
+    /// Gets the selection color of the widget
+    fn selection_color(&mut self) -> Color;
+    /// Sets the selection color of the widget
+    fn set_selection_color(&mut self, color: Color);
+    /// Runs the already registered callback
+    fn do_callback(&mut self);
+    /// Checks whether the self widget is inside another widget
+    fn inside(&self, wid: Widget) -> bool;
+    /// Returns the direct window holding the widget
+    fn window(&self) -> Option<Window>;
+    /// Returns the topmost window holding the widget
+    fn top_window(&self) -> Option<Window>;
 }
 
 /// Defines the methods implemented by all group widgets
@@ -391,7 +406,11 @@ pub trait DisplayTrait: WidgetTrait {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_styly_table_entry(&mut self, style_buffer: &mut TextBuffer, entries: &Vec<StyleTableEntry>);
+    fn set_styly_table_entry(
+        &mut self,
+        style_buffer: &mut TextBuffer,
+        entries: &Vec<StyleTableEntry>,
+    );
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: CursorStyle);
     /// Sets the cursor color

@@ -180,6 +180,30 @@ extern "C" {
     pub fn Fl_Group_image(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Group_parent(self_: *const Fl_Group) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Group_selection_color(arg1: *mut Fl_Group) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Group_set_selection_color(arg1: *mut Fl_Group, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Group_do_callback(arg1: *mut Fl_Group);
+}
+extern "C" {
+    pub fn Fl_Group_inside(
+        self_: *const Fl_Group,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Group_window(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Group_top_window(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
 }
 extern "C" {
@@ -368,6 +392,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_image(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Pack_parent(self_: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Pack_selection_color(arg1: *mut Fl_Pack) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Pack_set_selection_color(arg1: *mut Fl_Pack, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Pack_do_callback(arg1: *mut Fl_Pack);
+}
+extern "C" {
+    pub fn Fl_Pack_inside(
+        self_: *const Fl_Pack,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_window(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Pack_top_window(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
@@ -560,6 +608,30 @@ extern "C" {
     pub fn Fl_Scroll_image(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Scroll_parent(self_: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_selection_color(arg1: *mut Fl_Scroll) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_selection_color(arg1: *mut Fl_Scroll, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Scroll_do_callback(arg1: *mut Fl_Scroll);
+}
+extern "C" {
+    pub fn Fl_Scroll_inside(
+        self_: *const Fl_Scroll,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_window(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_top_window(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Scroll_begin(self_: *mut Fl_Scroll);
 }
 extern "C" {
@@ -748,6 +820,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_image(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tabs_parent(self_: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tabs_selection_color(arg1: *mut Fl_Tabs) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_selection_color(arg1: *mut Fl_Tabs, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Tabs_do_callback(arg1: *mut Fl_Tabs);
+}
+extern "C" {
+    pub fn Fl_Tabs_inside(
+        self_: *const Fl_Tabs,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_window(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tabs_top_window(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
@@ -940,6 +1036,30 @@ extern "C" {
     pub fn Fl_Tile_image(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Tile_parent(self_: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tile_selection_color(arg1: *mut Fl_Tile) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Tile_set_selection_color(arg1: *mut Fl_Tile, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Tile_do_callback(arg1: *mut Fl_Tile);
+}
+extern "C" {
+    pub fn Fl_Tile_inside(
+        self_: *const Fl_Tile,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_window(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tile_top_window(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1128,6 +1248,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_image(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_parent(self_: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_selection_color(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Wizard_set_selection_color(arg1: *mut Fl_Wizard, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Wizard_do_callback(arg1: *mut Fl_Wizard);
+}
+extern "C" {
+    pub fn Fl_Wizard_inside(
+        self_: *const Fl_Wizard,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Wizard_window(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_top_window(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -1345,6 +1489,35 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_image(arg1: *const Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_parent(self_: *const Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_selection_color(arg1: *mut Fl_Color_Chooser) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_selection_color(
+        arg1: *mut Fl_Color_Chooser,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_do_callback(arg1: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_inside(
+        self_: *const Fl_Color_Chooser,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_window(arg1: *const Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_top_window(
+        arg1: *const Fl_Color_Chooser,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;

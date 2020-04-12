@@ -209,10 +209,40 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         name.span(),
     );
     let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
+    let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
+    let selection_color = Ident::new(
+        format!("{}_{}", name_str, "selection_color").as_str(),
+        name.span(),
+    );
+    let set_selection_color = Ident::new(
+        format!("{}_{}", name_str, "set_selection_color").as_str(),
+        name.span(),
+    );
+    let do_callback = Ident::new(
+        format!("{}_{}", name_str, "do_callback").as_str(),
+        name.span(),
+    );
+    let inside = Ident::new(format!("{}_{}", name_str, "inside").as_str(), name.span());
+    let window = Ident::new(format!("{}_{}", name_str, "window").as_str(), name.span());
+    let top_window = Ident::new(
+        format!("{}_{}", name_str, "top_window").as_str(),
+        name.span(),
+    );
+
     let gen = quote! {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
-
+        impl From<crate::widget::Widget> for #name {
+            fn from(wid: crate::widget::Widget) -> Self {
+                let wid: *mut fltk_sys::widget::Fl_Widget = wid.as_ptr();
+                assert!(!wid.is_null());
+                unsafe {
+                    #name {
+                        _inner: mem::transmute(wid),
+                    }
+                }
+            }
+        }
         impl WidgetTrait for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
@@ -534,6 +564,59 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
                 self.resize(self.x(), self. y(), w.width(), w.height());
                 self
+            }
+            fn parent(&self) -> Option<crate::widget::Widget> {
+                unsafe {
+                    let x = #parent(self._inner);
+                    if x.is_null() {
+                        None
+                    } else {
+                        Some(crate::widget::Widget::from_raw(x as *mut fltk_sys::widget::Fl_Widget))
+                    }
+                }
+            }
+            fn selection_color(&mut self) -> Color {
+                unsafe {
+                    mem::transmute(#selection_color(self._inner))
+                }
+            }
+            fn set_selection_color(&mut self, color: Color) {
+                unsafe {
+                    #set_selection_color(self._inner, color as u32);
+                }
+            }
+            fn do_callback(&mut self) {
+                unsafe {
+                    #do_callback(self._inner);
+                }
+            }
+            fn inside(&self, wid: crate::widget::Widget) -> bool {
+                unsafe {
+                    match #inside(self._inner, wid.as_ptr() as *mut raw::c_void) {
+                        0 => false,
+                        _ => true,
+                    }
+                }
+            }
+            fn window(&self) -> Option<crate::window::Window> {
+                unsafe {
+                    let wind_ptr = #window(self._inner);
+                    if wind_ptr.is_null() {
+                        None
+                    } else {
+                        Some(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget))
+                    }
+                }
+            }
+            fn top_window(&self) -> Option<crate::window::Window> {
+                unsafe {
+                    let wind_ptr = #top_window(self._inner);
+                    if wind_ptr.is_null() {
+                        None
+                    } else {
+                        Some(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget))
+                    }
+                }
             }
         }
     };

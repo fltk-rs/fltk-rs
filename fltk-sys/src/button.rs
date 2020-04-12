@@ -179,6 +179,30 @@ extern "C" {
 extern "C" {
     pub fn Fl_Button_image(arg1: *const Fl_Button) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Button_parent(self_: *const Fl_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Button_selection_color(arg1: *mut Fl_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Button_set_selection_color(arg1: *mut Fl_Button, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Button_do_callback(arg1: *mut Fl_Button);
+}
+extern "C" {
+    pub fn Fl_Button_inside(
+        self_: *const Fl_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_window(arg1: *const Fl_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Button_top_window(arg1: *const Fl_Button) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Check_Button {
@@ -343,6 +367,33 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_image(arg1: *const Fl_Check_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Check_Button_parent(self_: *const Fl_Check_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Check_Button_selection_color(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Check_Button_set_selection_color(
+        arg1: *mut Fl_Check_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Check_Button_do_callback(arg1: *mut Fl_Check_Button);
+}
+extern "C" {
+    pub fn Fl_Check_Button_inside(
+        self_: *const Fl_Check_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_window(arg1: *const Fl_Check_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Check_Button_top_window(arg1: *const Fl_Check_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
@@ -511,6 +562,33 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_image(arg1: *const Fl_Radio_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_parent(self_: *const Fl_Radio_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_selection_color(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_set_selection_color(
+        arg1: *mut Fl_Radio_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Button_do_callback(arg1: *mut Fl_Radio_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_inside(
+        self_: *const Fl_Radio_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_window(arg1: *const Fl_Radio_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_top_window(arg1: *const Fl_Radio_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Button_is_toggled(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
@@ -687,6 +765,35 @@ extern "C" {
     pub fn Fl_Toggle_Button_image(arg1: *const Fl_Toggle_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Toggle_Button_parent(self_: *const Fl_Toggle_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_selection_color(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_set_selection_color(
+        arg1: *mut Fl_Toggle_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_do_callback(arg1: *mut Fl_Toggle_Button);
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_inside(
+        self_: *const Fl_Toggle_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_window(arg1: *const Fl_Toggle_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_top_window(
+        arg1: *const Fl_Toggle_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Toggle_Button_is_toggled(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
@@ -854,6 +961,33 @@ extern "C" {
 extern "C" {
     pub fn Fl_Round_Button_image(arg1: *const Fl_Round_Button) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Round_Button_parent(self_: *const Fl_Round_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Round_Button_selection_color(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Round_Button_set_selection_color(
+        arg1: *mut Fl_Round_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Round_Button_do_callback(arg1: *mut Fl_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Round_Button_inside(
+        self_: *const Fl_Round_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_window(arg1: *const Fl_Round_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Round_Button_top_window(arg1: *const Fl_Round_Button) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Light_Button {
@@ -1018,6 +1152,33 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Light_Button_image(arg1: *const Fl_Light_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Light_Button_parent(self_: *const Fl_Light_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Light_Button_selection_color(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Light_Button_set_selection_color(
+        arg1: *mut Fl_Light_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Light_Button_do_callback(arg1: *mut Fl_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Light_Button_inside(
+        self_: *const Fl_Light_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Light_Button_window(arg1: *const Fl_Light_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Light_Button_top_window(arg1: *const Fl_Light_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Light_Button_is_on(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
@@ -1193,6 +1354,35 @@ extern "C" {
 extern "C" {
     pub fn Fl_Repeat_Button_image(arg1: *const Fl_Repeat_Button) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Repeat_Button_parent(self_: *const Fl_Repeat_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_selection_color(arg1: *mut Fl_Repeat_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_set_selection_color(
+        arg1: *mut Fl_Repeat_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_do_callback(arg1: *mut Fl_Repeat_Button);
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_inside(
+        self_: *const Fl_Repeat_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_window(arg1: *const Fl_Repeat_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_top_window(
+        arg1: *const Fl_Repeat_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Return_Button {
@@ -1363,4 +1553,33 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_image(arg1: *const Fl_Return_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Return_Button_parent(self_: *const Fl_Return_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Return_Button_selection_color(arg1: *mut Fl_Return_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Return_Button_set_selection_color(
+        arg1: *mut Fl_Return_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Return_Button_do_callback(arg1: *mut Fl_Return_Button);
+}
+extern "C" {
+    pub fn Fl_Return_Button_inside(
+        self_: *const Fl_Return_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_window(arg1: *const Fl_Return_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Return_Button_top_window(
+        arg1: *const Fl_Return_Button,
+    ) -> *mut ::std::os::raw::c_void;
 }

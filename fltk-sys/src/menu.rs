@@ -185,6 +185,30 @@ extern "C" {
     pub fn Fl_Menu_Bar_image(arg1: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_parent(self_: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_selection_color(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_selection_color(arg1: *mut Fl_Menu_Bar, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_do_callback(arg1: *mut Fl_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_inside(
+        self_: *const Fl_Menu_Bar,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_window(arg1: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_top_window(arg1: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Menu_Bar_add(
         arg1: *mut Fl_Menu_Bar,
         name: *const ::std::os::raw::c_char,
@@ -398,6 +422,33 @@ extern "C" {
     pub fn Fl_Menu_Button_image(arg1: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Menu_Button_parent(self_: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_selection_color(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_selection_color(
+        arg1: *mut Fl_Menu_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Button_do_callback(arg1: *mut Fl_Menu_Button);
+}
+extern "C" {
+    pub fn Fl_Menu_Button_inside(
+        self_: *const Fl_Menu_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_window(arg1: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_top_window(arg1: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
         name: *const ::std::os::raw::c_char,
@@ -606,6 +657,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_image(arg1: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Choice_parent(self_: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Choice_selection_color(arg1: *mut Fl_Choice) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Choice_set_selection_color(arg1: *mut Fl_Choice, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Choice_do_callback(arg1: *mut Fl_Choice);
+}
+extern "C" {
+    pub fn Fl_Choice_inside(
+        self_: *const Fl_Choice,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_window(arg1: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Choice_top_window(arg1: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Choice_add(

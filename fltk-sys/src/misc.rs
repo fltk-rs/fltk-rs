@@ -180,6 +180,30 @@ extern "C" {
     pub fn Fl_Spinner_image(arg1: *const Fl_Spinner) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Spinner_parent(self_: *const Fl_Spinner) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Spinner_selection_color(arg1: *mut Fl_Spinner) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Spinner_set_selection_color(arg1: *mut Fl_Spinner, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Spinner_do_callback(arg1: *mut Fl_Spinner);
+}
+extern "C" {
+    pub fn Fl_Spinner_inside(
+        self_: *const Fl_Spinner,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Spinner_window(arg1: *const Fl_Spinner) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Spinner_top_window(arg1: *const Fl_Spinner) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
 }
 extern "C" {
@@ -380,6 +404,30 @@ extern "C" {
 extern "C" {
     pub fn Fl_Clock_image(arg1: *const Fl_Clock) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Clock_parent(self_: *const Fl_Clock) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Clock_selection_color(arg1: *mut Fl_Clock) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Clock_set_selection_color(arg1: *mut Fl_Clock, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Clock_do_callback(arg1: *mut Fl_Clock);
+}
+extern "C" {
+    pub fn Fl_Clock_inside(
+        self_: *const Fl_Clock,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Clock_window(arg1: *const Fl_Clock) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Clock_top_window(arg1: *const Fl_Clock) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -535,6 +583,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_image(arg1: *const Fl_Chart) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Chart_parent(self_: *const Fl_Chart) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Chart_selection_color(arg1: *mut Fl_Chart) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Chart_set_selection_color(arg1: *mut Fl_Chart, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Chart_do_callback(arg1: *mut Fl_Chart);
+}
+extern "C" {
+    pub fn Fl_Chart_inside(
+        self_: *const Fl_Chart,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Chart_window(arg1: *const Fl_Chart) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Chart_top_window(arg1: *const Fl_Chart) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -763,6 +835,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_image(arg1: *const Fl_Progress) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Progress_parent(self_: *const Fl_Progress) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Progress_selection_color(arg1: *mut Fl_Progress) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Progress_set_selection_color(arg1: *mut Fl_Progress, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Progress_do_callback(arg1: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_inside(
+        self_: *const Fl_Progress,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_window(arg1: *const Fl_Progress) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Progress_top_window(arg1: *const Fl_Progress) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;

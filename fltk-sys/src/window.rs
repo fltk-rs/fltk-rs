@@ -180,6 +180,30 @@ extern "C" {
     pub fn Fl_Window_image(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Window_parent(self_: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Window_selection_color(arg1: *mut Fl_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Window_set_selection_color(arg1: *mut Fl_Window, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Window_do_callback(arg1: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_inside(
+        self_: *const Fl_Window,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_window(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Window_top_window(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
 }
 extern "C" {
@@ -401,6 +425,35 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_image(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Double_Window_parent(self_: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Double_Window_selection_color(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_selection_color(
+        arg1: *mut Fl_Double_Window,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Double_Window_do_callback(arg1: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_inside(
+        self_: *const Fl_Double_Window,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_window(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Double_Window_top_window(
+        arg1: *const Fl_Double_Window,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
@@ -630,6 +683,33 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_image(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_parent(self_: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_selection_color(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_selection_color(
+        arg1: *mut Fl_Menu_Window,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Window_do_callback(arg1: *mut Fl_Menu_Window);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_inside(
+        self_: *const Fl_Menu_Window,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_window(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_top_window(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);

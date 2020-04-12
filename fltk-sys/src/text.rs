@@ -219,6 +219,33 @@ extern "C" {
     pub fn Fl_Text_Display_image(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Text_Display_parent(self_: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Display_selection_color(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_selection_color(
+        arg1: *mut Fl_Text_Display,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_do_callback(arg1: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Display_inside(
+        self_: *const Fl_Text_Display,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_window(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Display_top_window(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
@@ -525,6 +552,33 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_image(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_parent(self_: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_selection_color(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_selection_color(
+        arg1: *mut Fl_Text_Editor,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_do_callback(arg1: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_inside(
+        self_: *const Fl_Text_Editor,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_window(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_top_window(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
@@ -864,6 +918,41 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_image(arg1: *const Fl_Simple_Terminal)
         -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_parent(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_selection_color(
+        arg1: *mut Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_selection_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_do_callback(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_inside(
+        self_: *const Fl_Simple_Terminal,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_window(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_top_window(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);

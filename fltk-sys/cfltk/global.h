@@ -63,7 +63,14 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
                             void *data);                                       \
   void widget##_set_draw(widget **self, custom_draw_callback cb, void *data);  \
   void widget##_set_trigger(widget *, int);                                    \
-  void *widget##_image(const widget *);
+  void *widget##_image(const widget *);                                        \
+  void *widget##_parent(const widget *self);                                   \
+  unsigned int widget##_selection_color(widget *);                             \
+  void widget##_set_selection_color(widget *, unsigned int color);             \
+  void widget##_do_callback(widget *);                                         \
+  int widget##_inside(const widget *self, void *);                             \
+  void *widget##_window(const widget *);                                       \
+  void *widget##_top_window(const widget *);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -329,6 +336,23 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     if (!temp)                                                                 \
       return;                                                                  \
     LOCK(temp->set_drawer_data(data); temp->set_drawer(cb); *self = temp;)     \
+  }                                                                            \
+  void *widget##_parent(const widget *self) {                                  \
+    return (Fl_Group *)self->parent();                                         \
+  }                                                                            \
+  unsigned int widget##_selection_color(widget *self) {                        \
+    return self->selection_color();                                            \
+  }                                                                            \
+  void widget##_set_selection_color(widget *self, unsigned int color) {        \
+    LOCK(self->selection_color(color);)                                        \
+  }                                                                            \
+  void widget##_do_callback(widget *self) { LOCK(self->do_callback();) }       \
+  int widget##_inside(const widget *self, void *wid) {                         \
+    return self->inside((Fl_Widget *)wid);                                     \
+  }                                                                            \
+  void *widget##_window(const widget *self) { return (void *)self->window(); } \
+  void *widget##_top_window(const widget *self) {                              \
+    return (void *)self->top_window();                                         \
   }
 
 #define GROUP_DEFINE(widget)                                                   \
@@ -362,7 +386,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     LOCK(((Fl_Window *)self)->make_current();)                                 \
   }                                                                            \
   void widget##_set_icon(widget *self, const void *image) {                    \
-    LOCK(self->icon((const Fl_RGB_Image *)((Fl_Image*)image)->copy());)        \
+    LOCK(self->icon((const Fl_RGB_Image *)((Fl_Image *)image)->copy());)       \
   }                                                                            \
   void widget##_make_resizable(widget *self, void *wid) {                      \
     LOCK(self->resizable((Fl_Widget *)wid);)                                   \
