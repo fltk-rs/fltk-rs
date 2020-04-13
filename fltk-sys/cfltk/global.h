@@ -184,7 +184,31 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   unsigned int widget##_cursor_color(widget *);                                \
   int widget##_scrollbar_width(widget *);                                      \
   int widget##_scrollbar_size(widget *);                                       \
-  int widget##_scrollbar_align(widget *);
+  int widget##_scrollbar_align(widget *);                                      \
+  int widget##_line_start(const widget *self, int pos);                        \
+  int widget##_line_end(const widget *self, int startPos,                      \
+                        int startPosIsLineStart);                              \
+  int widget##_skip_lines(widget *self, int startPos, int nLines,              \
+                          int startPosIsLineStart);                            \
+  int widget##_rewind_lines(widget *self, int startPos, int nLines);           \
+  void widget##_next_word(widget *self);                                       \
+  void widget##_previous_word(widget *self);                                   \
+  int widget##_word_start(const widget *self, int pos);                        \
+  int widget##_word_end(const widget *self, int pos);                          \
+  double widget##_x_to_col(const widget *self, double x);                      \
+  double widget##_col_to_x(const widget *self, double col);                    \
+  void widget##_set_linenumber_width(widget *self, int width);                 \
+  int widget##_linenumber_width(const widget *self);                           \
+  void widget##_set_linenumber_font(widget *self, int val);                    \
+  int widget##_linenumber_font(const widget *self);                            \
+  void widget##_set_linenumber_size(widget *self, int val);                    \
+  int widget##_linenumber_size(const widget *self);                            \
+  void widget##_set_linenumber_fgcolor(widget *self, unsigned int val);        \
+  unsigned int widget##_linenumber_fgcolor(const widget *self);                \
+  void widget##_set_linenumber_bgcolor(widget *self, unsigned int val);        \
+  unsigned int widget##_linenumber_bgcolor(const widget *self);                \
+  void widget##_set_linenumber_align(widget *self, int val);                   \
+  int widget##_linenumber_align(const widget *self);
 
 #define BROWSER_DECLARE(widget)                                                \
   void widget##_remove(widget *, int line);                                    \
@@ -653,7 +677,77 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     return self->scrollbar_width();                                            \
   }                                                                            \
   int widget##_scrollbar_size(widget *self) { return self->scrollbar_size(); } \
-  int widget##_scrollbar_align(widget *self) { return self->scrollbar_align(); }
+  int widget##_scrollbar_align(widget *self) {                                 \
+    return self->scrollbar_align();                                            \
+  }                                                                            \
+  int widget##_line_start(const widget *self, int pos) {                       \
+    return self->line_start(pos);                                              \
+  }                                                                            \
+  int widget##_line_end(const widget *self, int startPos,                      \
+                        int startPosIsLineStart) {                             \
+    return self->line_end(startPos, startPosIsLineStart);                      \
+  }                                                                            \
+  int widget##_skip_lines(widget *self, int startPos, int nLines,              \
+                          int startPosIsLineStart) {                           \
+    int ret;                                                                   \
+    LOCK(ret = self->skip_lines(startPos, nLines, startPosIsLineStart);)       \
+    return ret;                                                                \
+  }                                                                            \
+  int widget##_rewind_lines(widget *self, int startPos, int nLines) {          \
+    int ret;                                                                   \
+    LOCK(ret = self->rewind_lines(startPos, nLines);)                          \
+    return ret;                                                                \
+  }                                                                            \
+  void widget##_next_word(widget *self) { LOCK(self->next_word();) }           \
+  void widget##_previous_word(widget *self) { LOCK(self->previous_word();) }   \
+  int widget##_word_start(const widget *self, int pos) {                       \
+    return self->word_start(pos);                                              \
+  }                                                                            \
+  int widget##_word_end(const widget *self, int pos) {                         \
+    return self->word_end(pos);                                                \
+  }                                                                            \
+  double widget##_x_to_col(const widget *self, double x) {                     \
+    return self->x_to_col(x);                                                  \
+  }                                                                            \
+  double widget##_col_to_x(const widget *self, double col) {                   \
+    return self->col_to_x(col);                                                \
+  }                                                                            \
+  void widget##_set_linenumber_width(widget *self, int width) {                \
+    LOCK(self->linenumber_width(width);)                                       \
+  }                                                                            \
+  int widget##_linenumber_width(const widget *self) {                          \
+    return self->linenumber_width();                                           \
+  }                                                                            \
+  void widget##_set_linenumber_font(widget *self, int val) {                   \
+    LOCK(self->linenumber_font(val);)                                          \
+  }                                                                            \
+  int widget##_linenumber_font(const widget *self) {                           \
+    return self->linenumber_font();                                            \
+  }                                                                            \
+  void widget##_set_linenumber_size(widget *self, int val) {                   \
+    LOCK(self->linenumber_size(val);)                                          \
+  }                                                                            \
+  int widget##_linenumber_size(const widget *self) {                           \
+    return self->linenumber_size();                                            \
+  }                                                                            \
+  void widget##_set_linenumber_fgcolor(widget *self, unsigned int val) {       \
+    LOCK(self->linenumber_fgcolor(val);)                                       \
+  }                                                                            \
+  unsigned int widget##_linenumber_fgcolor(const widget *self) {               \
+    return self->linenumber_fgcolor();                                         \
+  }                                                                            \
+  void widget##_set_linenumber_bgcolor(widget *self, unsigned int val) {       \
+    LOCK(self->linenumber_bgcolor(val);)                                       \
+  }                                                                            \
+  unsigned int widget##_linenumber_bgcolor(const widget *self) {               \
+    return self->linenumber_bgcolor();                                         \
+  }                                                                            \
+  void widget##_set_linenumber_align(widget *self, int val) {                  \
+    LOCK(self->linenumber_align(val);)                                         \
+  }                                                                            \
+  int widget##_linenumber_align(const widget *self) {                          \
+    return self->linenumber_align();                                           \
+  }
 
 #define BROWSER_DEFINE(widget)                                                 \
   void widget##_remove(widget *self, int line) { LOCK(self->remove(line);) }   \

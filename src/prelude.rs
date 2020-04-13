@@ -431,6 +431,50 @@ pub trait DisplayTrait: WidgetTrait {
     fn scrollbar_size(&self) -> usize;
     /// Returns the scrollbar alignment
     fn scrollbar_align(&self) -> Align;
+    /// Returns the beginning of the line from the current position
+    fn line_start(&self, pos: usize) -> usize;
+    /// Returns the ending of the line from the current position
+    fn line_end(&self, start_pos: usize, is_line_start: bool) -> usize;
+    /// Skips lines from start_pos
+    fn skip_lines(&mut self, start_pos: usize, lines: usize, is_line_start: bool) -> usize;
+    /// Rewinds the lines
+    fn rewind_lines(&mut self, start_pos: usize, lines: usize) -> usize;
+    /// Goes to the next word
+    fn next_word(&mut self);
+    /// Goes to the previous word
+    fn previous_word(&mut self);
+    /// Returns the position of the start of the word, relative to the current position
+    fn word_start(&self, pos: usize) -> usize;
+    /// Returns the position of the end of the word, relative to the current position
+    fn word_end(&self, pos: usize) -> usize;
+    /// Convert an x pixel position into a column number.
+    fn x_to_col(&self, x: f64) -> f64;
+    /// Convert a column number into an x pixel position
+    fn col_to_x(&self, col: f64) -> f64;
+    /// Sets the linenumber width
+    fn set_linenumber_width(&mut self, w: i32);
+    /// Gets the linenumber width
+    fn linenumber_width(&self) -> i32;
+    /// Sets the linenumber font
+    fn set_linenumber_font(&mut self, font: Font);
+    /// Gets the linenumber font
+    fn linenumber_font(&self) -> Font;
+    /// Sets the linenumber size
+    fn set_linenumber_size(&mut self, size: usize);
+    /// Gets the linenumber size
+    fn linenumber_size(&self) -> usize;
+    /// Sets the linenumber foreground color
+    fn set_linenumber_fgcolor(&mut self, color: Color);
+    /// Gets the linenumber foreground color
+    fn linenumber_fgcolor(&self) -> Color;
+    /// Sets the linenumber background color
+    fn set_linenumber_bgcolor(&mut self, color: Color);
+    /// Gets the linenumber background color
+    fn linenumber_bgcolor(&self) -> Color;
+    /// Sets the linenumber alignment
+    fn set_linenumber_align(&mut self, align: Align);
+    /// Gets the linenumber alignment
+    fn linenumber_align(&self) -> Align;
 }
 
 /// Defines the methods implemented by all browser types

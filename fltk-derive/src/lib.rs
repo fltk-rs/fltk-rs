@@ -1372,6 +1372,82 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "scrollbar_width").as_str(),
         name.span(),
     );
+    let line_start = Ident::new(
+        format!("{}_{}", name_str, "line_start").as_str(),
+        name.span(),
+    );
+    let line_end = Ident::new(format!("{}_{}", name_str, "line_end").as_str(), name.span());
+    let skip_lines = Ident::new(
+        format!("{}_{}", name_str, "skip_lines").as_str(),
+        name.span(),
+    );
+    let rewind_lines = Ident::new(
+        format!("{}_{}", name_str, "rewind_lines").as_str(),
+        name.span(),
+    );
+    let next_word = Ident::new(
+        format!("{}_{}", name_str, "next_word").as_str(),
+        name.span(),
+    );
+    let previous_word = Ident::new(
+        format!("{}_{}", name_str, "previous_word").as_str(),
+        name.span(),
+    );
+    let word_start = Ident::new(
+        format!("{}_{}", name_str, "word_start").as_str(),
+        name.span(),
+    );
+    let word_end = Ident::new(format!("{}_{}", name_str, "word_end").as_str(), name.span());
+    let x_to_col = Ident::new(format!("{}_{}", name_str, "x_to_col").as_str(), name.span());
+    let col_to_x = Ident::new(format!("{}_{}", name_str, "col_to_x").as_str(), name.span());
+    let set_linenumber_width = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_width").as_str(),
+        name.span(),
+    );
+    let linenumber_width = Ident::new(
+        format!("{}_{}", name_str, "linenumber_width").as_str(),
+        name.span(),
+    );
+    let set_linenumber_font = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_font").as_str(),
+        name.span(),
+    );
+    let linenumber_font = Ident::new(
+        format!("{}_{}", name_str, "linenumber_font").as_str(),
+        name.span(),
+    );
+    let set_linenumber_size = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_size").as_str(),
+        name.span(),
+    );
+    let linenumber_size = Ident::new(
+        format!("{}_{}", name_str, "linenumber_size").as_str(),
+        name.span(),
+    );
+    let set_linenumber_fgcolor = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_fgcolor").as_str(),
+        name.span(),
+    );
+    let linenumber_fgcolor = Ident::new(
+        format!("{}_{}", name_str, "linenumber_fgcolor").as_str(),
+        name.span(),
+    );
+    let set_linenumber_bgcolor = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_bgcolor").as_str(),
+        name.span(),
+    );
+    let linenumber_bgcolor = Ident::new(
+        format!("{}_{}", name_str, "linenumber_bgcolor").as_str(),
+        name.span(),
+    );
+    let set_linenumber_align = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_align").as_str(),
+        name.span(),
+    );
+    let linenumber_align = Ident::new(
+        format!("{}_{}", name_str, "linenumber_align").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl DisplayTrait for #name {
@@ -1555,6 +1631,116 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn scrollbar_align(&self) -> Align {
                 unsafe {
                     mem::transmute(#scrollbar_align(self._inner))
+                }
+            }
+            fn line_start(&self, pos: usize) -> usize {
+                unsafe {
+                    #line_start(self._inner, pos as i32) as usize
+                }
+            }
+            fn line_end(&self, start_pos: usize, is_line_start: bool) -> usize {
+                unsafe {
+                    #line_end(self._inner, start_pos as i32, is_line_start as i32) as usize
+                }
+            }
+            fn skip_lines(&mut self, start_pos: usize, lines: usize, is_line_start: bool) -> usize {
+                unsafe {
+                    #skip_lines(self._inner, start_pos as i32, lines as i32, is_line_start as i32) as usize
+                }
+            }
+            fn rewind_lines(&mut self, start_pos: usize, lines: usize) -> usize {
+                unsafe {
+                    #rewind_lines(self._inner, start_pos as i32, lines as i32) as usize
+                }
+            }
+            fn next_word(&mut self) {
+                unsafe {
+                    #next_word(self._inner)
+                }
+            }
+            fn previous_word(&mut self) {
+                unsafe {
+                    #previous_word(self._inner)
+                }
+            }
+            fn word_start(&self, pos: usize) -> usize {
+                unsafe {
+                    #word_start(self._inner, pos as i32) as usize
+                }
+            }
+            fn word_end(&self, pos: usize) -> usize {
+                unsafe {
+                    #word_end(self._inner, pos as i32) as usize
+                }
+            }
+            fn x_to_col(&self, x: f64) -> f64 {
+                unsafe {
+                    #x_to_col(self._inner, x)
+                }
+            }
+            fn col_to_x(&self, col: f64) -> f64 {
+                unsafe {
+                    #col_to_x(self._inner, col)
+                }
+            }
+            fn set_linenumber_width(&mut self, w: i32) {
+                unsafe {
+                    #set_linenumber_width(self._inner, w)
+                }
+            }
+            fn linenumber_width(&self) -> i32 {
+                unsafe {
+                    #linenumber_width(self._inner)
+                }
+            }
+            fn set_linenumber_font(&mut self, font: Font) {
+                unsafe {
+                    #set_linenumber_font(self._inner, font as i32)
+                }
+            }
+            fn linenumber_font(&self) -> Font {
+                unsafe {
+                    mem::transmute(#linenumber_font(self._inner))
+                }
+            }
+            fn set_linenumber_size(&mut self, size: usize) {
+                unsafe {
+                    #set_linenumber_size(self._inner, size as i32)
+                }
+            }
+            fn linenumber_size(&self) -> usize {
+                unsafe {
+                    #linenumber_size(self._inner) as usize
+                }
+            }
+            fn set_linenumber_fgcolor(&mut self, color: Color) {
+                unsafe {
+                    #set_linenumber_fgcolor(self._inner, color as u32)
+                }
+            }
+            fn linenumber_fgcolor(&self) -> Color {
+                unsafe {
+                    mem::transmute(#linenumber_fgcolor(self._inner))
+                }
+            }
+            fn set_linenumber_bgcolor(&mut self, color: Color) {
+                unsafe {
+                    #set_linenumber_bgcolor(self._inner, color as u32)
+                }
+            }
+            fn linenumber_bgcolor(&self) -> Color {
+                unsafe {
+                    mem::transmute(#linenumber_bgcolor(self._inner))
+                }
+            }
+            fn set_linenumber_align(&mut self, align: Align) {
+                unsafe {
+                    #set_linenumber_align(self._inner, align as i32)
+                }
+            }
+            fn linenumber_align(&self) -> Align {
+                unsafe {
+                    mem::transmute(#linenumber_align(self._inner))
                 }
             }
         }
