@@ -19,19 +19,18 @@ WIDGET_DEFINE(Fl_Choice)
 
 MENU_DEFINE(Fl_Choice)
 
-Fl_Menu_Item *Fl_Menu_Item_new(void) {
-  Fl_Menu_Item *items = new (std::nothrow) Fl_Menu_Item[10];
-  if (!items) return NULL;
-  std::memset(items, 0, 10);
+Fl_Menu_Item *Fl_Menu_Item_new(char** args, int sz) {
+  Fl_Menu_Item *items = new (std::nothrow) Fl_Menu_Item[sz + 1];
+  if (!items)
+    return NULL;
+  for (int i = 0; i < sz; i++) {
+    items[i] = { args[i] };
+  }
+  items[sz] = { NULL };
   return items;
 }
 
 void Fl_Menu_Item_delete(Fl_Menu_Item *self) { delete[] self; }
-
-void Fl_Menu_Item_add_choice(Fl_Menu_Item *self, const char *choice) {
-  Fl_Menu_Item* i = self->next();
-  *i = {choice};
-}
 
 const Fl_Menu_Item *Fl_Menu_Item_popup(Fl_Menu_Item *self, int x, int y) {
   return self->popup(x, y);

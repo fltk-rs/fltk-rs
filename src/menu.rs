@@ -1,7 +1,11 @@
+use crate::image::Image;
 pub use crate::prelude::*;
 use fltk_sys::menu::*;
-use crate::image::Image;
-use std::{ffi::{CStr, CString}, mem, os::raw};
+use std::{
+    ffi::{CStr, CString},
+    mem,
+    os::raw,
+};
 
 /// Creates a menu bar
 #[derive(WidgetTrait, MenuTrait, Debug, Clone)]
@@ -45,30 +49,28 @@ pub enum MenuFlag {
 
 impl MenuItem {
     /// Initializes a new window, useful for popup menus
-    pub fn default() -> MenuItem {
+    pub fn new(choices: Vec<&str>) -> MenuItem {
         unsafe {
-            let item_ptr = Fl_Menu_Item_new();
-            assert!(!item_ptr.is_null());
-            MenuItem {
-                _inner: item_ptr,
+            let sz = choices.len();
+            let mut temp: Vec<*mut raw::c_char> = vec![];
+            for choice in choices {
+                temp.push(CString::new(choice).unwrap().into_raw() as *mut raw::c_char);
             }
+            let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
+            assert!(!item_ptr.is_null());
+            MenuItem { _inner: item_ptr }
         }
     }
-    /// Adds a choice to the menu item, useful for popup menus
-    pub fn add_choice(&mut self, choice: &str) {
-        let choice = CString::new(choice).unwrap();
-        unsafe {
-            Fl_Menu_Item_add_choice(self._inner, choice.into_raw() as *const raw::c_char)
-        }
-    }
-    /// Creates a popup menu at the specified coordinates and returns its choice 
+    /// Creates a popup menu at the specified coordinates and returns its choice
     pub fn popup(&mut self, x: i32, y: i32) -> Option<MenuItem> {
         unsafe {
             let item = Fl_Menu_Item_popup(self._inner, x, y);
             if item.is_null() {
                 None
             } else {
-                let item = MenuItem {_inner: item as *mut Fl_Menu_Item};
+                let item = MenuItem {
+                    _inner: item as *mut Fl_Menu_Item,
+                };
                 Some(item)
             }
         }
@@ -79,7 +81,8 @@ impl MenuItem {
             let label_ptr = Fl_Menu_Item_label(self._inner);
             assert!(!label_ptr.is_null(), "Failed to get menu item label!");
             CStr::from_ptr(label_ptr as *mut raw::c_char)
-                .to_string_lossy().to_string()
+                .to_string_lossy()
+                .to_string()
         }
     }
 
@@ -191,13 +194,5 @@ impl MenuItem {
     /// Hides the menu item
     pub fn hide(&mut self) {
         unsafe { Fl_Menu_Item_hide(self._inner) }
-    }
-}
-
-impl Drop for MenuItem {
-    fn drop(&mut self) {
-        unsafe {
-            Fl_Menu_Item_delete(self._inner)
-        }
     }
 }
