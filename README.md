@@ -239,7 +239,7 @@ Most common widgets are implemented:
 - Complete widget set
 - Better documentation
 - Better testing
-- Add tables!
+- Add tables
 
 ## Contributions
 

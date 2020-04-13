@@ -734,6 +734,22 @@ extern "C" {
     pub fn Fl_Choice_get_choice(arg1: *mut Fl_Choice) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+    pub fn Fl_Menu_Item_new() -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_delete(self_: *mut Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_add_choice(self_: *mut Fl_Menu_Item, choice: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_popup(
+        self_: *mut Fl_Menu_Item,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    ) -> *const Fl_Menu_Item;
+}
+extern "C" {
     pub fn Fl_Menu_Item_label(arg1: *mut Fl_Menu_Item) -> *const ::std::os::raw::c_char;
 }
 extern "C" {

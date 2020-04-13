@@ -61,3 +61,7 @@ double Fl_Color_Chooser_b(Fl_Color_Chooser *self) {
 }
 
 GROUP_DEFINE(Fl_Color_Chooser)
+
+// WIDGET_DEFINE(Fl_Table)
+
+// GROUP_DEFINE(Fl_Table)

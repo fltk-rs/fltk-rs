@@ -44,6 +44,35 @@ pub enum MenuFlag {
 }
 
 impl MenuItem {
+    /// Initializes a new window, useful for popup menus
+    pub fn default() -> MenuItem {
+        unsafe {
+            let item_ptr = Fl_Menu_Item_new();
+            assert!(!item_ptr.is_null());
+            MenuItem {
+                _inner: item_ptr,
+            }
+        }
+    }
+    /// Adds a choice to the menu item, useful for popup menus
+    pub fn add_choice(&mut self, choice: &str) {
+        let choice = CString::new(choice).unwrap();
+        unsafe {
+            Fl_Menu_Item_add_choice(self._inner, choice.into_raw() as *const raw::c_char)
+        }
+    }
+    /// Creates a popup menu at the specified coordinates and returns its choice 
+    pub fn popup(&mut self, x: i32, y: i32) -> Option<MenuItem> {
+        unsafe {
+            let item = Fl_Menu_Item_popup(self._inner, x, y);
+            if item.is_null() {
+                None
+            } else {
+                let item = MenuItem {_inner: item as *mut Fl_Menu_Item};
+                Some(item)
+            }
+        }
+    }
     /// Returns the label of the menu item
     pub fn label(&self) -> String {
         unsafe {
@@ -162,5 +191,13 @@ impl MenuItem {
     /// Hides the menu item
     pub fn hide(&mut self) {
         unsafe { Fl_Menu_Item_hide(self._inner) }
+    }
+}
+
+impl Drop for MenuItem {
+    fn drop(&mut self) {
+        unsafe {
+            Fl_Menu_Item_delete(self._inner)
+        }
     }
 }
