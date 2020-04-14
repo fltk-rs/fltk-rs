@@ -58,11 +58,19 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_align(widget *, int typ);                                  \
   void widget##_delete(widget *);                                              \
   void widget##_set_image(widget *, void *);                                   \
+  void widget##_set_image_with_size(widget *, void *, int, int);               \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data);                                       \
   void widget##_set_draw(widget **self, custom_draw_callback cb, void *data);  \
   void widget##_set_trigger(widget *, int);                                    \
-  void *widget##_image(const widget *);
+  void *widget##_image(const widget *);                                        \
+  void *widget##_parent(const widget *self);                                   \
+  unsigned int widget##_selection_color(widget *);                             \
+  void widget##_set_selection_color(widget *, unsigned int color);             \
+  void widget##_do_callback(widget *);                                         \
+  int widget##_inside(const widget *self, void *);                             \
+  void *widget##_window(const widget *);                                       \
+  void *widget##_top_window(const widget *);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -176,7 +184,31 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   unsigned int widget##_cursor_color(widget *);                                \
   int widget##_scrollbar_width(widget *);                                      \
   int widget##_scrollbar_size(widget *);                                       \
-  int widget##_scrollbar_align(widget *);
+  int widget##_scrollbar_align(widget *);                                      \
+  int widget##_line_start(const widget *self, int pos);                        \
+  int widget##_line_end(const widget *self, int startPos,                      \
+                        int startPosIsLineStart);                              \
+  int widget##_skip_lines(widget *self, int startPos, int nLines,              \
+                          int startPosIsLineStart);                            \
+  int widget##_rewind_lines(widget *self, int startPos, int nLines);           \
+  void widget##_next_word(widget *self);                                       \
+  void widget##_previous_word(widget *self);                                   \
+  int widget##_word_start(const widget *self, int pos);                        \
+  int widget##_word_end(const widget *self, int pos);                          \
+  double widget##_x_to_col(const widget *self, double x);                      \
+  double widget##_col_to_x(const widget *self, double col);                    \
+  void widget##_set_linenumber_width(widget *self, int width);                 \
+  int widget##_linenumber_width(const widget *self);                           \
+  void widget##_set_linenumber_font(widget *self, int val);                    \
+  int widget##_linenumber_font(const widget *self);                            \
+  void widget##_set_linenumber_size(widget *self, int val);                    \
+  int widget##_linenumber_size(const widget *self);                            \
+  void widget##_set_linenumber_fgcolor(widget *self, unsigned int val);        \
+  unsigned int widget##_linenumber_fgcolor(const widget *self);                \
+  void widget##_set_linenumber_bgcolor(widget *self, unsigned int val);        \
+  unsigned int widget##_linenumber_bgcolor(const widget *self);                \
+  void widget##_set_linenumber_align(widget *self, int val);                   \
+  int widget##_linenumber_align(const widget *self);
 
 #define BROWSER_DECLARE(widget)                                                \
   void widget##_remove(widget *, int line);                                    \
@@ -206,7 +238,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int image##_height(image *);                                                 \
   void image##_delete(image *);                                                \
   int image##_count(image *self);                                              \
-  const char *const *image##_data(image *self);
+  const char *const *image##_data(image *self);                                \
+  image *image##_copy(image *self);
 
 #define WIDGET_DEFINE(widget)                                                  \
   class widget##_Derived : public widget {                                     \
@@ -305,8 +338,11 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_align(widget *self) { return self->align(); }                   \
   void widget##_set_align(widget *self, int typ) { LOCK(self->align(typ);) }   \
   void widget##_delete(widget *self) { delete self; }                          \
+  void widget##_set_image_with_size(widget *self, void *image, int w, int h) { \
+    LOCK(self->image(((Fl_Image *)image)->copy(w, h)); self->redraw();)        \
+  }                                                                            \
   void widget##_set_image(widget *self, void *image) {                         \
-    LOCK(self->image((Fl_Image *)image);)                                      \
+    LOCK(self->image(((Fl_Image *)image)->copy()); self->redraw();)            \
   }                                                                            \
   void widget##_set_handler(widget **self, custom_handler_callback cb,         \
                             void *data) {                                      \
@@ -324,6 +360,23 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     if (!temp)                                                                 \
       return;                                                                  \
     LOCK(temp->set_drawer_data(data); temp->set_drawer(cb); *self = temp;)     \
+  }                                                                            \
+  void *widget##_parent(const widget *self) {                                  \
+    return (Fl_Group *)self->parent();                                         \
+  }                                                                            \
+  unsigned int widget##_selection_color(widget *self) {                        \
+    return self->selection_color();                                            \
+  }                                                                            \
+  void widget##_set_selection_color(widget *self, unsigned int color) {        \
+    LOCK(self->selection_color(color);)                                        \
+  }                                                                            \
+  void widget##_do_callback(widget *self) { LOCK(self->do_callback();) }       \
+  int widget##_inside(const widget *self, void *wid) {                         \
+    return self->inside((Fl_Widget *)wid);                                     \
+  }                                                                            \
+  void *widget##_window(const widget *self) { return (void *)self->window(); } \
+  void *widget##_top_window(const widget *self) {                              \
+    return (void *)self->top_window();                                         \
   }
 
 #define GROUP_DEFINE(widget)                                                   \
@@ -347,8 +400,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define WINDOW_DEFINE(widget)                                                  \
   void widget##_make_modal(widget *self, unsigned int boolean) {               \
-    LOCK(                                                                      \
-        if (boolean) { self->set_modal(); } else { self->set_non_modal(); })   \
+    LOCK(if (boolean) { self->set_modal(); } else { self->set_non_modal(); })  \
   }                                                                            \
   void widget##_fullscreen(widget *self, unsigned int boolean) {               \
     LOCK(                                                                      \
@@ -358,7 +410,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     LOCK(((Fl_Window *)self)->make_current();)                                 \
   }                                                                            \
   void widget##_set_icon(widget *self, const void *image) {                    \
-    LOCK(self->icon((const Fl_RGB_Image *)image);)                             \
+    LOCK(self->icon((const Fl_RGB_Image *)((Fl_Image *)image)->copy());)       \
   }                                                                            \
   void widget##_make_resizable(widget *self, void *wid) {                      \
     LOCK(self->resizable((Fl_Widget *)wid);)                                   \
@@ -625,7 +677,77 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     return self->scrollbar_width();                                            \
   }                                                                            \
   int widget##_scrollbar_size(widget *self) { return self->scrollbar_size(); } \
-  int widget##_scrollbar_align(widget *self) { return self->scrollbar_align(); }
+  int widget##_scrollbar_align(widget *self) {                                 \
+    return self->scrollbar_align();                                            \
+  }                                                                            \
+  int widget##_line_start(const widget *self, int pos) {                       \
+    return self->line_start(pos);                                              \
+  }                                                                            \
+  int widget##_line_end(const widget *self, int startPos,                      \
+                        int startPosIsLineStart) {                             \
+    return self->line_end(startPos, startPosIsLineStart);                      \
+  }                                                                            \
+  int widget##_skip_lines(widget *self, int startPos, int nLines,              \
+                          int startPosIsLineStart) {                           \
+    int ret;                                                                   \
+    LOCK(ret = self->skip_lines(startPos, nLines, startPosIsLineStart);)       \
+    return ret;                                                                \
+  }                                                                            \
+  int widget##_rewind_lines(widget *self, int startPos, int nLines) {          \
+    int ret;                                                                   \
+    LOCK(ret = self->rewind_lines(startPos, nLines);)                          \
+    return ret;                                                                \
+  }                                                                            \
+  void widget##_next_word(widget *self) { LOCK(self->next_word();) }           \
+  void widget##_previous_word(widget *self) { LOCK(self->previous_word();) }   \
+  int widget##_word_start(const widget *self, int pos) {                       \
+    return self->word_start(pos);                                              \
+  }                                                                            \
+  int widget##_word_end(const widget *self, int pos) {                         \
+    return self->word_end(pos);                                                \
+  }                                                                            \
+  double widget##_x_to_col(const widget *self, double x) {                     \
+    return self->x_to_col(x);                                                  \
+  }                                                                            \
+  double widget##_col_to_x(const widget *self, double col) {                   \
+    return self->col_to_x(col);                                                \
+  }                                                                            \
+  void widget##_set_linenumber_width(widget *self, int width) {                \
+    LOCK(self->linenumber_width(width);)                                       \
+  }                                                                            \
+  int widget##_linenumber_width(const widget *self) {                          \
+    return self->linenumber_width();                                           \
+  }                                                                            \
+  void widget##_set_linenumber_font(widget *self, int val) {                   \
+    LOCK(self->linenumber_font(val);)                                          \
+  }                                                                            \
+  int widget##_linenumber_font(const widget *self) {                           \
+    return self->linenumber_font();                                            \
+  }                                                                            \
+  void widget##_set_linenumber_size(widget *self, int val) {                   \
+    LOCK(self->linenumber_size(val);)                                          \
+  }                                                                            \
+  int widget##_linenumber_size(const widget *self) {                           \
+    return self->linenumber_size();                                            \
+  }                                                                            \
+  void widget##_set_linenumber_fgcolor(widget *self, unsigned int val) {       \
+    LOCK(self->linenumber_fgcolor(val);)                                       \
+  }                                                                            \
+  unsigned int widget##_linenumber_fgcolor(const widget *self) {               \
+    return self->linenumber_fgcolor();                                         \
+  }                                                                            \
+  void widget##_set_linenumber_bgcolor(widget *self, unsigned int val) {       \
+    LOCK(self->linenumber_bgcolor(val);)                                       \
+  }                                                                            \
+  unsigned int widget##_linenumber_bgcolor(const widget *self) {               \
+    return self->linenumber_bgcolor();                                         \
+  }                                                                            \
+  void widget##_set_linenumber_align(widget *self, int val) {                  \
+    LOCK(self->linenumber_align(val);)                                         \
+  }                                                                            \
+  int widget##_linenumber_align(const widget *self) {                          \
+    return self->linenumber_align();                                           \
+  }
 
 #define BROWSER_DEFINE(widget)                                                 \
   void widget##_remove(widget *self, int line) { LOCK(self->remove(line);) }   \
@@ -666,7 +788,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     LOCK(self->textsize(s);)                                                   \
   }                                                                            \
   void widget##_set_icon(widget *self, int line, void *icon) {                 \
-    LOCK(self->icon(line, (Fl_Image *)icon);)                                  \
+    LOCK(self->icon(line, ((Fl_Image *)icon)->copy());)                        \
   }                                                                            \
   void *widget##_icon(const widget *self, int line) {                          \
     return (Fl_Image *)self->icon(line);                                       \
@@ -684,7 +806,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int image##_height(image *self) { return self->h(); }                        \
   void image##_delete(image *self) { delete self; }                            \
   int image##_count(image *self) { return self->count(); }                     \
-  const char *const *image##_data(image *self) { return self->data(); }
+  const char *const *image##_data(image *self) { return self->data(); }        \
+  image *image##_copy(image *self) { return (image *)self->copy(); }
 
 #ifdef __cplusplus
 }

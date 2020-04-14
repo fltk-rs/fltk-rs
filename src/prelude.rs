@@ -1,7 +1,8 @@
 pub use crate::enums::*;
+use crate::image::Image;
 use crate::text::{StyleTableEntry, TextBuffer};
 use crate::widget::Widget;
-use crate::image::Image;
+use crate::window::Window;
 use std::convert::From;
 use std::error::Error;
 use std::{fmt, io, os::raw};
@@ -120,7 +121,7 @@ pub trait WidgetTrait {
     /// Resizes and/or moves the widget, takes x, y, width and height
     fn resize(&mut self, x: i32, y: i32, width: i32, height: i32);
     /// Returns the tooltip text
-    fn tooltip(&self) -> String;
+    fn tooltip(&self) -> Option<String>;
     /// Sets the tooltip text
     fn set_tooltip(&mut self, txt: &str);
     /// Returns the widget type when applicable
@@ -163,6 +164,8 @@ pub trait WidgetTrait {
     fn set_align(&mut self, align: Align);
     /// Sets the image of the widget
     fn set_image<Image: ImageTrait>(&mut self, image: &Image);
+    /// Sets the resized image of the widget
+    fn set_image_with_size<Image: ImageTrait>(&mut self, image: &Image, w: i32, h: i32);
     /// Gets the image associated with the widget
     fn image(&self) -> Image;
     /// Sets the callback when the widget is triggered (clicks for example)
@@ -173,6 +176,20 @@ pub trait WidgetTrait {
     fn set_trigger(&mut self, trigger: CallbackTrigger);
     /// Set a custom draw method
     fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
+    /// Returns the parent of the widget
+    fn parent(&self) -> Option<Widget>;
+    /// Gets the selection color of the widget
+    fn selection_color(&mut self) -> Color;
+    /// Sets the selection color of the widget
+    fn set_selection_color(&mut self, color: Color);
+    /// Runs the already registered callback
+    fn do_callback(&mut self);
+    /// Checks whether the self widget is inside another widget
+    fn inside(&self, wid: Widget) -> bool;
+    /// Returns the direct window holding the widget
+    fn window(&self) -> Option<Window>;
+    /// Returns the topmost window holding the widget
+    fn top_window(&self) -> Option<Window>;
 }
 
 /// Defines the methods implemented by all group widgets
@@ -389,7 +406,11 @@ pub trait DisplayTrait: WidgetTrait {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_styly_table_entry(&mut self, style_buffer: &mut TextBuffer, entries: &Vec<StyleTableEntry>);
+    fn set_styly_table_entry(
+        &mut self,
+        style_buffer: &mut TextBuffer,
+        entries: &Vec<StyleTableEntry>,
+    );
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: CursorStyle);
     /// Sets the cursor color
@@ -410,6 +431,50 @@ pub trait DisplayTrait: WidgetTrait {
     fn scrollbar_size(&self) -> usize;
     /// Returns the scrollbar alignment
     fn scrollbar_align(&self) -> Align;
+    /// Returns the beginning of the line from the current position
+    fn line_start(&self, pos: usize) -> usize;
+    /// Returns the ending of the line from the current position
+    fn line_end(&self, start_pos: usize, is_line_start: bool) -> usize;
+    /// Skips lines from start_pos
+    fn skip_lines(&mut self, start_pos: usize, lines: usize, is_line_start: bool) -> usize;
+    /// Rewinds the lines
+    fn rewind_lines(&mut self, start_pos: usize, lines: usize) -> usize;
+    /// Goes to the next word
+    fn next_word(&mut self);
+    /// Goes to the previous word
+    fn previous_word(&mut self);
+    /// Returns the position of the start of the word, relative to the current position
+    fn word_start(&self, pos: usize) -> usize;
+    /// Returns the position of the end of the word, relative to the current position
+    fn word_end(&self, pos: usize) -> usize;
+    /// Convert an x pixel position into a column number.
+    fn x_to_col(&self, x: f64) -> f64;
+    /// Convert a column number into an x pixel position
+    fn col_to_x(&self, col: f64) -> f64;
+    /// Sets the linenumber width
+    fn set_linenumber_width(&mut self, w: i32);
+    /// Gets the linenumber width
+    fn linenumber_width(&self) -> i32;
+    /// Sets the linenumber font
+    fn set_linenumber_font(&mut self, font: Font);
+    /// Gets the linenumber font
+    fn linenumber_font(&self) -> Font;
+    /// Sets the linenumber size
+    fn set_linenumber_size(&mut self, size: usize);
+    /// Gets the linenumber size
+    fn linenumber_size(&self) -> usize;
+    /// Sets the linenumber foreground color
+    fn set_linenumber_fgcolor(&mut self, color: Color);
+    /// Gets the linenumber foreground color
+    fn linenumber_fgcolor(&self) -> Color;
+    /// Sets the linenumber background color
+    fn set_linenumber_bgcolor(&mut self, color: Color);
+    /// Gets the linenumber background color
+    fn linenumber_bgcolor(&self) -> Color;
+    /// Sets the linenumber alignment
+    fn set_linenumber_align(&mut self, align: Align);
+    /// Gets the linenumber alignment
+    fn linenumber_align(&self) -> Align;
 }
 
 /// Defines the methods implemented by all browser types
@@ -456,6 +521,8 @@ pub trait BrowserTrait {
 pub trait ImageTrait {
     /// Creates an image object from a path
     fn new(path: std::path::PathBuf) -> Self;
+    /// Creates a copy of the image
+    fn copy(&self) -> Self;
     /// Draws the image at the presupplied coordinates and size
     fn draw(&mut self, x: i32, y: i32, width: i32, height: i32);
     /// Return the width of the image

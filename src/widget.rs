@@ -24,6 +24,10 @@ impl Widget {
             _inner: ptr,
         }
     }
+    /// Returns the inner pointer
+    pub fn as_ptr(&self) -> *mut Fl_Widget {
+        self._inner
+    }
     /// Transform Widget base to another Widget
     pub fn into<W: WidgetTrait>(&mut self) -> W {
         W::from_widget_ptr(self._inner)

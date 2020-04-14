@@ -152,6 +152,14 @@ extern "C" {
     pub fn Fl_Box_set_image(arg1: *mut Fl_Box, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Box_set_image_with_size(
+        arg1: *mut Fl_Box,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Box_set_handler(
         self_: *mut *mut Fl_Box,
         cb: custom_handler_callback,
@@ -170,4 +178,28 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Box_image(arg1: *const Fl_Box) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Box_parent(self_: *const Fl_Box) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Box_selection_color(arg1: *mut Fl_Box) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Box_set_selection_color(arg1: *mut Fl_Box, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Box_do_callback(arg1: *mut Fl_Box);
+}
+extern "C" {
+    pub fn Fl_Box_inside(
+        self_: *const Fl_Box,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Box_window(arg1: *const Fl_Box) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Box_top_window(arg1: *const Fl_Box) -> *mut ::std::os::raw::c_void;
 }

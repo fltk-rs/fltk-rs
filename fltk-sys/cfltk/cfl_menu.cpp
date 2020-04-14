@@ -19,6 +19,23 @@ WIDGET_DEFINE(Fl_Choice)
 
 MENU_DEFINE(Fl_Choice)
 
+Fl_Menu_Item *Fl_Menu_Item_new(char** args, int sz) {
+  Fl_Menu_Item *items = new (std::nothrow) Fl_Menu_Item[sz + 1];
+  if (!items)
+    return NULL;
+  for (int i = 0; i < sz; i++) {
+    items[i] = { args[i] };
+  }
+  items[sz] = { NULL };
+  return items;
+}
+
+void Fl_Menu_Item_delete(Fl_Menu_Item *self) { delete[] self; }
+
+const Fl_Menu_Item *Fl_Menu_Item_popup(Fl_Menu_Item *self, int x, int y) {
+  return self->popup(x, y);
+}
+
 const char *Fl_Menu_Item_label(Fl_Menu_Item *self) { return self->label(); }
 
 void Fl_Menu_Item_set_label(Fl_Menu_Item *self, const char *a) {
@@ -31,7 +48,9 @@ void Fl_Menu_Item_set_label_type(Fl_Menu_Item *self, int a) {
   LOCK(self->labeltype(static_cast<Fl_Labeltype>(a));)
 }
 
-unsigned int Fl_Menu_Item_label_color(Fl_Menu_Item *self) { return self->labelcolor(); }
+unsigned int Fl_Menu_Item_label_color(Fl_Menu_Item *self) {
+  return self->labelcolor();
+}
 
 void Fl_Menu_Item_set_label_color(Fl_Menu_Item *self, unsigned int a) {
   LOCK(self->labelcolor(a);)

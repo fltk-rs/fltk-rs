@@ -29,9 +29,11 @@ fn main() {
     wind.set_color(Color::from_u32(0xffebee));
     frame.set_label_size(20);
     but_inc.set_color(Color::from_u32(0x304FFE));
+    but_inc.set_selection_color(Color::Green);
     but_inc.set_label_size(18);
     but_inc.set_frame(FrameType::RoundUpBox);
     but_dec.set_color(Color::from_u32(0x2962FF));
+    but_dec.set_selection_color(Color::Red);
     but_dec.set_frame(FrameType::RoundUpBox);
     but_dec.set_label_size(18);
     // End theming

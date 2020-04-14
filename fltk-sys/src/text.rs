@@ -23,6 +23,16 @@ extern "C" {
         arg2: *mut ::std::os::raw::c_void,
     );
 }
+pub type Fl_Text_Modify_Cb = ::std::option::Option<
+    unsafe extern "C" fn(
+        pos: ::std::os::raw::c_int,
+        nInserted: ::std::os::raw::c_int,
+        nDeleted: ::std::os::raw::c_int,
+        nRestyled: ::std::os::raw::c_int,
+        deletedText: *const ::std::os::raw::c_char,
+        cbArg: *mut ::std::os::raw::c_void,
+    ),
+>;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Buffer {
@@ -52,6 +62,167 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Buffer_length(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_text_range(
+        self_: *const Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_insert(
+        self_: *mut Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+        text: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_replace(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+        text: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_copy(
+        self_: *mut Fl_Text_Buffer,
+        fromBuf: *mut Fl_Text_Buffer,
+        fromStart: ::std::os::raw::c_int,
+        fromEnd: ::std::os::raw::c_int,
+        toPos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_undo(
+        self_: *mut Fl_Text_Buffer,
+        cp: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_canUndo(self_: *mut Fl_Text_Buffer, flag: ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_loadfile(
+        self_: *mut Fl_Text_Buffer,
+        file: *const ::std::os::raw::c_char,
+        buflen: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_tab_distance(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_set_tab_distance(
+        self_: *mut Fl_Text_Buffer,
+        tabDist: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_select(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_selected(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_unselect(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_selection_position(
+        self_: *mut Fl_Text_Buffer,
+        start: *mut ::std::os::raw::c_int,
+        end: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_selection_text(self_: *mut Fl_Text_Buffer)
+        -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_remove_selection(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_replace_selection(
+        self_: *mut Fl_Text_Buffer,
+        text: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_highlight(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_is_highlighted(self_: *mut Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_unhighlight(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_highlight_position(
+        self_: *mut Fl_Text_Buffer,
+        start: *mut ::std::os::raw::c_int,
+        end: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_highlight_text(self_: *mut Fl_Text_Buffer)
+        -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_line_text(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_line_start(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_word_start(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_word_end(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_count_lines(
+        self_: *const Fl_Text_Buffer,
+        startPos: ::std::os::raw::c_int,
+        endPos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_add_modify_callback(
+        self_: *mut Fl_Text_Buffer,
+        bufModifiedCB: Fl_Text_Modify_Cb,
+        cbArg: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_remove_modify_callback(
+        self_: *mut Fl_Text_Buffer,
+        bufModifiedCB: Fl_Text_Modify_Cb,
+        cbArg: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_call_modify_callbacks(self_: *mut Fl_Text_Buffer);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -191,6 +362,14 @@ extern "C" {
     pub fn Fl_Text_Display_set_image(arg1: *mut Fl_Text_Display, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Text_Display_set_image_with_size(
+        arg1: *mut Fl_Text_Display,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Text_Display_set_handler(
         self_: *mut *mut Fl_Text_Display,
         cb: custom_handler_callback,
@@ -209,6 +388,33 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Display_image(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Display_parent(self_: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Display_selection_color(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_selection_color(
+        arg1: *mut Fl_Text_Display,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_do_callback(arg1: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Display_inside(
+        self_: *const Fl_Text_Display,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_window(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Display_top_window(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
@@ -356,6 +562,118 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_scrollbar_align(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Text_Display_line_start(
+        self_: *const Fl_Text_Display,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_line_end(
+        self_: *const Fl_Text_Display,
+        startPos: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_skip_lines(
+        self_: *mut Fl_Text_Display,
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_rewind_lines(
+        self_: *mut Fl_Text_Display,
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_next_word(self_: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Display_previous_word(self_: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Display_word_start(
+        self_: *const Fl_Text_Display,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_word_end(
+        self_: *const Fl_Text_Display,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_x_to_col(self_: *const Fl_Text_Display, x: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Text_Display_col_to_x(self_: *const Fl_Text_Display, col: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_linenumber_width(
+        self_: *mut Fl_Text_Display,
+        width: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_linenumber_width(self_: *const Fl_Text_Display)
+        -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_linenumber_font(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_linenumber_font(self_: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_linenumber_size(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_linenumber_size(self_: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_linenumber_fgcolor(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_linenumber_fgcolor(
+        self_: *const Fl_Text_Display,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_linenumber_bgcolor(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_linenumber_bgcolor(
+        self_: *const Fl_Text_Display,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_linenumber_align(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_linenumber_align(self_: *const Fl_Text_Display)
+        -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -491,6 +809,14 @@ extern "C" {
     pub fn Fl_Text_Editor_set_image(arg1: *mut Fl_Text_Editor, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Text_Editor_set_image_with_size(
+        arg1: *mut Fl_Text_Editor,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Text_Editor_set_handler(
         self_: *mut *mut Fl_Text_Editor,
         cb: custom_handler_callback,
@@ -509,6 +835,33 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_image(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_parent(self_: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_selection_color(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_selection_color(
+        arg1: *mut Fl_Text_Editor,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_do_callback(arg1: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_inside(
+        self_: *const Fl_Text_Editor,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_window(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_top_window(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
@@ -649,6 +1002,116 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_scrollbar_align(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_line_start(
+        self_: *const Fl_Text_Editor,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_line_end(
+        self_: *const Fl_Text_Editor,
+        startPos: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_skip_lines(
+        self_: *mut Fl_Text_Editor,
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_rewind_lines(
+        self_: *mut Fl_Text_Editor,
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_next_word(self_: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_previous_word(self_: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_word_start(
+        self_: *const Fl_Text_Editor,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_word_end(
+        self_: *const Fl_Text_Editor,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_x_to_col(self_: *const Fl_Text_Editor, x: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_col_to_x(self_: *const Fl_Text_Editor, col: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_linenumber_width(
+        self_: *mut Fl_Text_Editor,
+        width: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_linenumber_width(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_linenumber_font(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_linenumber_font(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_linenumber_size(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_linenumber_size(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_linenumber_fgcolor(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_linenumber_fgcolor(
+        self_: *const Fl_Text_Editor,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_linenumber_bgcolor(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_linenumber_bgcolor(
+        self_: *const Fl_Text_Editor,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_linenumber_align(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_linenumber_align(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
@@ -818,6 +1281,14 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Simple_Terminal_set_image_with_size(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Simple_Terminal_set_handler(
         self_: *mut *mut Fl_Simple_Terminal,
         cb: custom_handler_callback,
@@ -840,6 +1311,41 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_image(arg1: *const Fl_Simple_Terminal)
         -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_parent(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_selection_color(
+        arg1: *mut Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_selection_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_do_callback(arg1: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_inside(
+        self_: *const Fl_Simple_Terminal,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_window(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_top_window(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);
@@ -1015,5 +1521,123 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_scrollbar_align(
         arg1: *mut Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_line_start(
+        self_: *const Fl_Simple_Terminal,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_line_end(
+        self_: *const Fl_Simple_Terminal,
+        startPos: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_skip_lines(
+        self_: *mut Fl_Simple_Terminal,
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_rewind_lines(
+        self_: *mut Fl_Simple_Terminal,
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_next_word(self_: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_previous_word(self_: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_word_start(
+        self_: *const Fl_Simple_Terminal,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_word_end(
+        self_: *const Fl_Simple_Terminal,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_x_to_col(self_: *const Fl_Simple_Terminal, x: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_col_to_x(self_: *const Fl_Simple_Terminal, col: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_width(
+        self_: *mut Fl_Simple_Terminal,
+        width: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_width(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_font(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_font(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_size(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_size(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_fgcolor(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_fgcolor(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_bgcolor(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_bgcolor(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_linenumber_align(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_linenumber_align(
+        self_: *const Fl_Simple_Terminal,
     ) -> ::std::os::raw::c_int;
 }

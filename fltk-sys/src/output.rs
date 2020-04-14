@@ -152,6 +152,14 @@ extern "C" {
     pub fn Fl_Output_set_image(arg1: *mut Fl_Output, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Output_set_image_with_size(
+        arg1: *mut Fl_Output,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Output_set_handler(
         self_: *mut *mut Fl_Output,
         cb: custom_handler_callback,
@@ -170,6 +178,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Output_image(arg1: *const Fl_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Output_parent(self_: *const Fl_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Output_selection_color(arg1: *mut Fl_Output) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Output_set_selection_color(arg1: *mut Fl_Output, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Output_do_callback(arg1: *mut Fl_Output);
+}
+extern "C" {
+    pub fn Fl_Output_inside(
+        self_: *const Fl_Output,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Output_window(arg1: *const Fl_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Output_top_window(arg1: *const Fl_Output) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Output_set_value(
@@ -432,6 +464,14 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Multiline_Output_set_image_with_size(
+        arg1: *mut Fl_Multiline_Output,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Multiline_Output_set_handler(
         self_: *mut *mut Fl_Multiline_Output,
         cb: custom_handler_callback,
@@ -453,6 +493,41 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Output_image(
+        arg1: *const Fl_Multiline_Output,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_parent(
+        self_: *const Fl_Multiline_Output,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_selection_color(
+        arg1: *mut Fl_Multiline_Output,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_set_selection_color(
+        arg1: *mut Fl_Multiline_Output,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_do_callback(arg1: *mut Fl_Multiline_Output);
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_inside(
+        self_: *const Fl_Multiline_Output,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_window(
+        arg1: *const Fl_Multiline_Output,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_top_window(
         arg1: *const Fl_Multiline_Output,
     ) -> *mut ::std::os::raw::c_void;
 }

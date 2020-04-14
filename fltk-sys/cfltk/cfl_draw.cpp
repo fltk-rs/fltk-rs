@@ -1,8 +1,10 @@
 #include "cfl_draw.h"
 #include <FL/Enumerations.H>
 #include <FL/Fl_Image.H>
-#include <FL/fl_draw.H>
 #include <FL/Fl_Window.H>
+#include <FL/fl_draw.H>
+#include <jpeg/jpeglib.h>
+#include <png/png.h>
 #include <string>
 
 void cfl_set_color_int(unsigned int c) { fl_color(c); }
@@ -13,7 +15,9 @@ unsigned int cfl_get_color(void) { return fl_color(); }
 void cfl_push_clip(int x, int y, int w, int h) { fl_push_clip(x, y, w, h); }
 void cfl_push_no_clip(void) { fl_push_no_clip(); }
 void cfl_pop_clip(void) { fl_pop_clip(); }
-int cfl_not_clipped(int x, int y, int w, int h) { return fl_not_clipped(x, y, w, h); }
+int cfl_not_clipped(int x, int y, int w, int h) {
+  return fl_not_clipped(x, y, w, h);
+}
 int cfl_clip_box(int x, int y, int w, int h, int *X, int *Y, int *W, int *H) {
   return fl_clip_box(x, y, w, h, *X, *Y, *W, *H);
 }
@@ -172,11 +176,12 @@ void cfl_draw_image_mono(const unsigned char *buf, int X, int Y, int W, int H,
 }
 char cfl_can_do_alpha_blending(void) { return fl_can_do_alpha_blending(); }
 unsigned char *cfl_read_image(unsigned char *p, int X, int Y, int W, int H,
-                              int alpha) {                      
+                              int alpha) {
   return fl_read_image(p, X, Y, W, H, alpha);
 }
-void *cfl_capture_window_part(void *win, int x, int y, int w, int h) {
-  return (void *)fl_capture_window_part((Fl_Window *)win, x, y, w, h);
+unsigned char *cfl_capture_window_part(void *win, int x, int y, int w, int h) {
+  Fl_RGB_Image *tmp = fl_capture_window_part((Fl_Window *)win, x, y, w, h);
+  return (unsigned char *)tmp->data();
 }
 int cfl_draw_pixmap(const char *const *data, int x, int y, int bg) {
   return fl_draw_pixmap(data, x, y, bg);
@@ -208,7 +213,8 @@ void cfl_set_cursor2(int cursor, int fg, int bg) {
 const char *cfl_expand_text(const char *from, char *buf, int maxbuf,
                             double maxw, int *n, double *width, int wrap,
                             int draw_symbols) {
-  return fl_expand_text(from, buf, maxbuf, maxw, *n, *width, wrap, draw_symbols);
+  return fl_expand_text(from, buf, maxbuf, maxw, *n, *width, wrap,
+                        draw_symbols);
 }
 void cfl_set_status(int X, int Y, int W, int H) { fl_set_status(X, Y, W, H); }
 void cfl_set_spot(int font, int size, int X, int Y, int W, int H, void *win) {
@@ -217,4 +223,108 @@ void cfl_set_spot(int font, int size, int X, int Y, int W, int H, void *win) {
 void cfl_reset_spot(void) { fl_reset_spot(); }
 int cfl_draw_symbol(const char *label, int x, int y, int w, int h, int c) {
   return fl_draw_symbol(label, x, y, w, h, c);
+}
+
+// The following code was copied from stackoverflow
+int cfl_raw_image_to_png(unsigned char *data, const char *fname, int w, int h) {
+  FILE *fp;
+
+  if ((fp = fopen(fname, "wb")) == NULL) {
+    return -1;
+  }
+
+  png_structp pptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
+  png_infop iptr = png_create_info_struct(pptr);
+  png_bytep ptr = (png_bytep)data;
+
+  png_init_io(pptr, fp);
+  png_set_IHDR(pptr, iptr, w, h, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE,
+               PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+  png_set_sRGB(pptr, iptr, PNG_sRGB_INTENT_PERCEPTUAL);
+
+  png_write_info(pptr, iptr);
+
+  for (int i = h; i > 0; i--, ptr += w * 3) {
+    png_write_row(pptr, ptr);
+  }
+
+  png_write_end(pptr, iptr);
+  png_destroy_write_struct(&pptr, &iptr);
+
+  fclose(fp);
+  return 0;
+}
+
+int cfl_raw_image_to_jpg(unsigned char *data, const char *fname, int w, int h) {
+  struct jpeg_compress_struct cinfo;
+  struct jpeg_error_mgr jerr;
+
+  JSAMPROW row_pointer[1];
+  FILE *outfile = fopen(fname, "wb");
+
+  if (!outfile) {
+    return -1;
+  }
+  cinfo.err = jpeg_std_error(&jerr);
+  jpeg_create_compress(&cinfo);
+  jpeg_stdio_dest(&cinfo, outfile);
+
+  cinfo.image_width = w;
+  cinfo.image_height = h;
+  cinfo.input_components = 3;
+  cinfo.in_color_space = JCS_RGB;
+
+  jpeg_set_defaults(&cinfo);
+
+  jpeg_start_compress(&cinfo, (boolean)1);
+
+  while (cinfo.next_scanline < cinfo.image_height) {
+    row_pointer[0] =
+        &data[cinfo.next_scanline * cinfo.image_width * cinfo.input_components];
+    jpeg_write_scanlines(&cinfo, row_pointer, 1);
+  }
+
+  jpeg_finish_compress(&cinfo);
+  jpeg_destroy_compress(&cinfo);
+  fclose(outfile);
+
+  return 0;
+}
+
+int cfl_raw_image_to_bmp(unsigned char *data, const char *fname, int w, int h) {
+  FILE *f;
+  int filesize = 54 + 3 * w * h;
+
+  unsigned char bmpfileheader[14] = {'B', 'M', 0, 0,  0, 0, 0,
+                                     0,   0,   0, 54, 0, 0, 0};
+  unsigned char bmpinfoheader[40] = {40, 0, 0, 0, 0, 0, 0,  0,
+                                     0,  0, 0, 0, 1, 0, 24, 0};
+  unsigned char bmppad[3] = {0, 0, 0};
+
+  bmpfileheader[2] = (unsigned char)(filesize);
+  bmpfileheader[3] = (unsigned char)(filesize >> 8);
+  bmpfileheader[4] = (unsigned char)(filesize >> 16);
+  bmpfileheader[5] = (unsigned char)(filesize >> 24);
+
+  bmpinfoheader[4] = (unsigned char)(w);
+  bmpinfoheader[5] = (unsigned char)(w >> 8);
+  bmpinfoheader[6] = (unsigned char)(w >> 16);
+  bmpinfoheader[7] = (unsigned char)(w >> 24);
+  bmpinfoheader[8] = (unsigned char)(h);
+  bmpinfoheader[9] = (unsigned char)(h >> 8);
+  bmpinfoheader[10] = (unsigned char)(h >> 16);
+  bmpinfoheader[11] = (unsigned char)(h >> 24);
+
+  f = fopen(fname, "wb");
+  if (!f)
+    return -1;
+  fwrite(bmpfileheader, 1, 14, f);
+  fwrite(bmpinfoheader, 1, 40, f);
+  for (int i = 0; i < h; i++) {
+    fwrite(data + (w * (h - i - 1) * 3), 3, w, f);
+    fwrite(bmppad, 1, (4 - (w * 3) % 4) % 4, f);
+  }
+
+  fclose(f);
+  return 0;
 }

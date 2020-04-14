@@ -195,6 +195,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
     );
+    let set_image_with_size = Ident::new(
+        format!("{}_{}", name_str, "set_image_with_size").as_str(),
+        name.span(),
+    );
     let image = Ident::new(format!("{}_{}", name_str, "image").as_str(), name.span());
     let set_handler = Ident::new(
         format!("{}_{}", name_str, "set_handler").as_str(),
@@ -205,10 +209,40 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         name.span(),
     );
     let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
+    let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
+    let selection_color = Ident::new(
+        format!("{}_{}", name_str, "selection_color").as_str(),
+        name.span(),
+    );
+    let set_selection_color = Ident::new(
+        format!("{}_{}", name_str, "set_selection_color").as_str(),
+        name.span(),
+    );
+    let do_callback = Ident::new(
+        format!("{}_{}", name_str, "do_callback").as_str(),
+        name.span(),
+    );
+    let inside = Ident::new(format!("{}_{}", name_str, "inside").as_str(), name.span());
+    let window = Ident::new(format!("{}_{}", name_str, "window").as_str(), name.span());
+    let top_window = Ident::new(
+        format!("{}_{}", name_str, "top_window").as_str(),
+        name.span(),
+    );
+
     let gen = quote! {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
-
+        impl From<crate::widget::Widget> for #name {
+            fn from(wid: crate::widget::Widget) -> Self {
+                let wid: *mut fltk_sys::widget::Fl_Widget = wid.as_ptr();
+                assert!(!wid.is_null());
+                unsafe {
+                    #name {
+                        _inner: mem::transmute(wid),
+                    }
+                }
+            }
+        }
         impl WidgetTrait for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
@@ -321,12 +355,15 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { #resize(self._inner, x, y, width, height) }
             }
 
-            fn tooltip(&self) -> String {
+            fn tooltip(&self) -> Option<String> {
                 unsafe {
                     let tooltip_ptr = #tooltip(self._inner);
-                    assert!(!tooltip_ptr.is_null(), "Failed to retrieve tooltip text, probably not set!");
-                    CStr::from_ptr(
-                        tooltip_ptr as *mut raw::c_char).to_string_lossy().to_string()
+                    if tooltip_ptr.is_null() {
+                        None
+                    } else {
+                        Some(CStr::from_ptr(
+                            tooltip_ptr as *mut raw::c_char).to_string_lossy().to_string())
+                    }
                 }
             }
 
@@ -430,6 +467,11 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_image<Image: ImageTrait>(&mut self, image: &Image) {
                 unsafe { #set_image(self._inner, image.as_ptr()) }
             }
+
+            fn set_image_with_size<Image: ImageTrait>(&mut self, image: &Image, w: i32, h: i32) {
+                unsafe { #set_image_with_size(self._inner, image.as_ptr(), w, h) }
+            }
+
             fn image(&self) -> Image {
                 unsafe {
                     let image_ptr = #image(self._inner);
@@ -522,6 +564,59 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
                 self.resize(self.x(), self. y(), w.width(), w.height());
                 self
+            }
+            fn parent(&self) -> Option<crate::widget::Widget> {
+                unsafe {
+                    let x = #parent(self._inner);
+                    if x.is_null() {
+                        None
+                    } else {
+                        Some(crate::widget::Widget::from_raw(x as *mut fltk_sys::widget::Fl_Widget))
+                    }
+                }
+            }
+            fn selection_color(&mut self) -> Color {
+                unsafe {
+                    mem::transmute(#selection_color(self._inner))
+                }
+            }
+            fn set_selection_color(&mut self, color: Color) {
+                unsafe {
+                    #set_selection_color(self._inner, color as u32);
+                }
+            }
+            fn do_callback(&mut self) {
+                unsafe {
+                    #do_callback(self._inner);
+                }
+            }
+            fn inside(&self, wid: crate::widget::Widget) -> bool {
+                unsafe {
+                    match #inside(self._inner, wid.as_ptr() as *mut raw::c_void) {
+                        0 => false,
+                        _ => true,
+                    }
+                }
+            }
+            fn window(&self) -> Option<crate::window::Window> {
+                unsafe {
+                    let wind_ptr = #window(self._inner);
+                    if wind_ptr.is_null() {
+                        None
+                    } else {
+                        Some(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget))
+                    }
+                }
+            }
+            fn top_window(&self) -> Option<crate::window::Window> {
+                unsafe {
+                    let wind_ptr = #top_window(self._inner);
+                    if wind_ptr.is_null() {
+                        None
+                    } else {
+                        Some(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget))
+                    }
+                }
             }
         }
     };
@@ -1277,6 +1372,82 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "scrollbar_width").as_str(),
         name.span(),
     );
+    let line_start = Ident::new(
+        format!("{}_{}", name_str, "line_start").as_str(),
+        name.span(),
+    );
+    let line_end = Ident::new(format!("{}_{}", name_str, "line_end").as_str(), name.span());
+    let skip_lines = Ident::new(
+        format!("{}_{}", name_str, "skip_lines").as_str(),
+        name.span(),
+    );
+    let rewind_lines = Ident::new(
+        format!("{}_{}", name_str, "rewind_lines").as_str(),
+        name.span(),
+    );
+    let next_word = Ident::new(
+        format!("{}_{}", name_str, "next_word").as_str(),
+        name.span(),
+    );
+    let previous_word = Ident::new(
+        format!("{}_{}", name_str, "previous_word").as_str(),
+        name.span(),
+    );
+    let word_start = Ident::new(
+        format!("{}_{}", name_str, "word_start").as_str(),
+        name.span(),
+    );
+    let word_end = Ident::new(format!("{}_{}", name_str, "word_end").as_str(), name.span());
+    let x_to_col = Ident::new(format!("{}_{}", name_str, "x_to_col").as_str(), name.span());
+    let col_to_x = Ident::new(format!("{}_{}", name_str, "col_to_x").as_str(), name.span());
+    let set_linenumber_width = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_width").as_str(),
+        name.span(),
+    );
+    let linenumber_width = Ident::new(
+        format!("{}_{}", name_str, "linenumber_width").as_str(),
+        name.span(),
+    );
+    let set_linenumber_font = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_font").as_str(),
+        name.span(),
+    );
+    let linenumber_font = Ident::new(
+        format!("{}_{}", name_str, "linenumber_font").as_str(),
+        name.span(),
+    );
+    let set_linenumber_size = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_size").as_str(),
+        name.span(),
+    );
+    let linenumber_size = Ident::new(
+        format!("{}_{}", name_str, "linenumber_size").as_str(),
+        name.span(),
+    );
+    let set_linenumber_fgcolor = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_fgcolor").as_str(),
+        name.span(),
+    );
+    let linenumber_fgcolor = Ident::new(
+        format!("{}_{}", name_str, "linenumber_fgcolor").as_str(),
+        name.span(),
+    );
+    let set_linenumber_bgcolor = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_bgcolor").as_str(),
+        name.span(),
+    );
+    let linenumber_bgcolor = Ident::new(
+        format!("{}_{}", name_str, "linenumber_bgcolor").as_str(),
+        name.span(),
+    );
+    let set_linenumber_align = Ident::new(
+        format!("{}_{}", name_str, "set_linenumber_align").as_str(),
+        name.span(),
+    );
+    let linenumber_align = Ident::new(
+        format!("{}_{}", name_str, "linenumber_align").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl DisplayTrait for #name {
@@ -1462,6 +1633,116 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     mem::transmute(#scrollbar_align(self._inner))
                 }
             }
+            fn line_start(&self, pos: usize) -> usize {
+                unsafe {
+                    #line_start(self._inner, pos as i32) as usize
+                }
+            }
+            fn line_end(&self, start_pos: usize, is_line_start: bool) -> usize {
+                unsafe {
+                    #line_end(self._inner, start_pos as i32, is_line_start as i32) as usize
+                }
+            }
+            fn skip_lines(&mut self, start_pos: usize, lines: usize, is_line_start: bool) -> usize {
+                unsafe {
+                    #skip_lines(self._inner, start_pos as i32, lines as i32, is_line_start as i32) as usize
+                }
+            }
+            fn rewind_lines(&mut self, start_pos: usize, lines: usize) -> usize {
+                unsafe {
+                    #rewind_lines(self._inner, start_pos as i32, lines as i32) as usize
+                }
+            }
+            fn next_word(&mut self) {
+                unsafe {
+                    #next_word(self._inner)
+                }
+            }
+            fn previous_word(&mut self) {
+                unsafe {
+                    #previous_word(self._inner)
+                }
+            }
+            fn word_start(&self, pos: usize) -> usize {
+                unsafe {
+                    #word_start(self._inner, pos as i32) as usize
+                }
+            }
+            fn word_end(&self, pos: usize) -> usize {
+                unsafe {
+                    #word_end(self._inner, pos as i32) as usize
+                }
+            }
+            fn x_to_col(&self, x: f64) -> f64 {
+                unsafe {
+                    #x_to_col(self._inner, x)
+                }
+            }
+            fn col_to_x(&self, col: f64) -> f64 {
+                unsafe {
+                    #col_to_x(self._inner, col)
+                }
+            }
+            fn set_linenumber_width(&mut self, w: i32) {
+                unsafe {
+                    #set_linenumber_width(self._inner, w)
+                }
+            }
+            fn linenumber_width(&self) -> i32 {
+                unsafe {
+                    #linenumber_width(self._inner)
+                }
+            }
+            fn set_linenumber_font(&mut self, font: Font) {
+                unsafe {
+                    #set_linenumber_font(self._inner, font as i32)
+                }
+            }
+            fn linenumber_font(&self) -> Font {
+                unsafe {
+                    mem::transmute(#linenumber_font(self._inner))
+                }
+            }
+            fn set_linenumber_size(&mut self, size: usize) {
+                unsafe {
+                    #set_linenumber_size(self._inner, size as i32)
+                }
+            }
+            fn linenumber_size(&self) -> usize {
+                unsafe {
+                    #linenumber_size(self._inner) as usize
+                }
+            }
+            fn set_linenumber_fgcolor(&mut self, color: Color) {
+                unsafe {
+                    #set_linenumber_fgcolor(self._inner, color as u32)
+                }
+            }
+            fn linenumber_fgcolor(&self) -> Color {
+                unsafe {
+                    mem::transmute(#linenumber_fgcolor(self._inner))
+                }
+            }
+            fn set_linenumber_bgcolor(&mut self, color: Color) {
+                unsafe {
+                    #set_linenumber_bgcolor(self._inner, color as u32)
+                }
+            }
+            fn linenumber_bgcolor(&self) -> Color {
+                unsafe {
+                    mem::transmute(#linenumber_bgcolor(self._inner))
+                }
+            }
+            fn set_linenumber_align(&mut self, align: Align) {
+                unsafe {
+                    #set_linenumber_align(self._inner, align as i32)
+                }
+            }
+            fn linenumber_align(&self) -> Align {
+                unsafe {
+                    mem::transmute(#linenumber_align(self._inner))
+                }
+            }
         }
     };
     gen.into()
@@ -1634,6 +1915,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
     let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
     let count = Ident::new(format!("{}_{}", name_str, "count").as_str(), name.span());
     let data = Ident::new(format!("{}_{}", name_str, "data").as_str(), name.span());
+    let copy = Ident::new(format!("{}_{}", name_str, "copy").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Sync for #name {}
@@ -1654,6 +1936,16 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
                     assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
                     #name {
                         _inner: image_ptr,
+                    }
+                }
+            }
+
+            fn copy(&self) -> Self {
+                unsafe {
+                    let img = #copy(self._inner);
+                    assert!(!img.is_null(), "Coulnd't copy image!");
+                    #name {
+                        _inner: img,
                     }
                 }
             }

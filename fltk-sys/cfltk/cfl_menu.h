@@ -20,6 +20,12 @@ WIDGET_DECLARE(Fl_Choice)
 
 MENU_DECLARE(Fl_Choice)
 
+Fl_Menu_Item *Fl_Menu_Item_new(char** args, int sz);
+
+void Fl_Menu_Item_delete(Fl_Menu_Item *self);
+
+const Fl_Menu_Item *Fl_Menu_Item_popup(Fl_Menu_Item *self, int x, int y);
+
 const char *Fl_Menu_Item_label(Fl_Menu_Item *);
 
 void Fl_Menu_Item_set_label(Fl_Menu_Item *, const char *a);

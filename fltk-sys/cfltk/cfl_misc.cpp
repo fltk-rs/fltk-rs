@@ -95,4 +95,5 @@ void Fl_Progress_set_maximum(Fl_Progress *self, double a) { LOCK(self->maximum(a
 double Fl_Progress_value(Fl_Progress *self) { return self->value(); }               
 void Fl_Progress_set_value(Fl_Progress *self, double val) {                          
   LOCK(self->value(val);)                                                
-}      
+}
+
