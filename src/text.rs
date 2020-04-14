@@ -312,7 +312,10 @@ impl TextBuffer {
                 deleted_text: *const raw::c_char,
                 data: *mut raw::c_void,
             ) {
-                let deleted_text = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
+                let mut temp = String::from("");
+                if !deleted_text.is_null() {
+                    temp = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
+                } 
                 let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
                     mem::transmute(data);
                 let f: &mut (dyn FnMut(usize, usize, usize, usize, &str) + 'a) = &mut **a;
@@ -321,7 +324,7 @@ impl TextBuffer {
                     inserted as usize,
                     deleted as usize,
                     restyled as usize,
-                    &deleted_text,
+                    &temp,
                 )
             }
             let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
@@ -346,7 +349,10 @@ impl TextBuffer {
                 deleted_text: *const raw::c_char,
                 data: *mut raw::c_void,
             ) {
-                let deleted_text = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
+                let mut temp = String::from("");
+                if !deleted_text.is_null() {
+                    temp = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
+                } 
                 let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
                     mem::transmute(data);
                 let f: &mut (dyn FnMut(usize, usize, usize, usize, &str) + 'a) = &mut **a;
@@ -355,7 +361,7 @@ impl TextBuffer {
                     inserted as usize,
                     deleted as usize,
                     restyled as usize,
-                    &deleted_text,
+                    &temp,
                 )
             }
             let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =

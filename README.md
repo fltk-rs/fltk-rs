@@ -2,17 +2,20 @@
 
 Rust bindings for the FLTK Graphical User Interface library.
 
-The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small ( < 1mb for a hello world application after stripping), self-contained (no dependencies) and fast gui applications. 
+The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
+Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 
 - [Crate](https://crates.io/crates/fltk)
 - [Documentation](https://docs.rs/fltk)
+- [Link](https://github.com/fltk/fltk) to the official FLTK repository.
+- [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
 
 ## Usage
 Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.14"
+fltk = "^0.2.15"
 ```
 
 An example hello world application:
