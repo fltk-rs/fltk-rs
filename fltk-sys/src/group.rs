@@ -237,6 +237,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Group_child(arg1: *mut Fl_Group, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
 }
+extern "C" {
+    pub fn Fl_Group_resizable(self_: *mut Fl_Group, arg1: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Pack {
@@ -450,6 +453,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_child(arg1: *mut Fl_Pack, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Pack_resizable(self_: *mut Fl_Pack, arg1: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -665,6 +671,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Scroll_child(arg1: *mut Fl_Scroll, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
 }
+extern "C" {
+    pub fn Fl_Scroll_resizable(self_: *mut Fl_Scroll, arg1: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tabs {
@@ -879,6 +888,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tabs_child(arg1: *mut Fl_Tabs, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
 }
+extern "C" {
+    pub fn Fl_Tabs_resizable(self_: *mut Fl_Tabs, arg1: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tile {
@@ -1092,6 +1104,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_child(arg1: *mut Fl_Tile, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Tile_resizable(self_: *mut Fl_Tile, arg1: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1318,6 +1333,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_child(arg1: *mut Fl_Wizard, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Wizard_resizable(self_: *mut Fl_Wizard, arg1: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1564,4 +1582,10 @@ extern "C" {
         arg1: *mut Fl_Color_Chooser,
         index: ::std::os::raw::c_int,
     ) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_resizable(
+        self_: *mut Fl_Color_Chooser,
+        arg1: *mut ::std::os::raw::c_void,
+    );
 }

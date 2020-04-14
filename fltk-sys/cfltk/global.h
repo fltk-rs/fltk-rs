@@ -81,7 +81,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_remove(widget *self, int index);                               \
   void widget##_clear(widget *self);                                           \
   int widget##_children(widget *self);                                         \
-  Fl_Widget *widget##_child(widget *, int index);
+  Fl_Widget *widget##_child(widget *, int index);                              \
+  void widget##_resizable(widget *self, void *);
 
 #define WINDOW_DECLARE(widget)                                                 \
   void widget##_make_modal(widget *, unsigned int boolean);                    \
@@ -396,6 +397,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_children(widget *self) { return self->children(); }             \
   Fl_Widget *widget##_child(widget *self, int index) {                         \
     return self->child(index);                                                 \
+  }                                                                            \
+  void widget##_resizable(widget *self, void *wid) {                           \
+    LOCK(self->resizable((Fl_Widget *)wid);)                                   \
   }
 
 #define WINDOW_DEFINE(widget)                                                  \

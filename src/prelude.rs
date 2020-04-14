@@ -212,6 +212,8 @@ pub trait GroupTrait: WidgetTrait {
     fn children(&self) -> u32;
     /// Return child widget by index
     fn child(&self, idx: usize) -> Widget;
+    /// Make the passed widget resizable
+    fn resizable<Widget: WidgetTrait>(&self, widget: &mut Widget);
 }
 
 /// Defines the methods implemented by all window widgets
@@ -229,7 +231,7 @@ pub trait WindowTrait: GroupTrait {
     /// Returns the icon of the window
     fn icon(&self) -> Image;
     /// Make the window resizable
-    fn make_resizable(&self, val: bool);
+    fn make_resizable(&mut self, val: bool);
 }
 
 /// Defines the methods implemented by all input and output widgets

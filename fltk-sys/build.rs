@@ -58,7 +58,6 @@ fn main() {
         .unwrap();
 
     let dst = cmake::Config::new("cfltk")
-        // .generator("Ninja")
         .profile("RELEASE")
         .define("OPTION_ABI_VERSION:STRING", "10401")
         .define("OpenGL_GL_PREFERENCE", "GLVND")
@@ -109,7 +108,6 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=stdc++");
             }
             println!("cargo:rustc-link-lib=dylib=ws2_32");
-            // println!("cargo:rustc-link-lib=dylib=wsock32");
             println!("cargo:rustc-link-lib=dylib=comctl32");
             println!("cargo:rustc-link-lib=dylib=gdi32");
             println!("cargo:rustc-link-lib=dylib=oleaut32");
@@ -122,7 +120,6 @@ fn main() {
             println!("cargo:rustc-link-lib=dylib=user32");
             println!("cargo:rustc-link-lib=dylib=kernel32");
             println!("cargo:rustc-link-lib=dylib=odbc32");
-            println!("cargo:rustc-link-lib=dylib=odbccp32");
         }
         _ => {
             println!("cargo:rustc-link-lib=dylib=stdc++");

@@ -653,6 +653,10 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
     let clear = Ident::new(format!("{}_{}", name_str, "clear").as_str(), name.span());
     let children = Ident::new(format!("{}_{}", name_str, "children").as_str(), name.span());
     let child = Ident::new(format!("{}_{}", name_str, "child").as_str(), name.span());
+    let resizable = Ident::new(
+        format!("{}_{}", name_str, "resizable").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl GroupTrait for #name {
@@ -698,6 +702,11 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let child_widget = #child(self._inner, idx as i32);
                     assert!(!child_widget.is_null(), "Failed to retrieve child widget, probably inexistant or out of bounds!");
                     Widget::from_raw(child_widget as *mut fltk_sys::widget::Fl_Widget)
+                }
+            }
+            fn resizable<Widget: WidgetTrait>(&self, widget: &mut Widget) {
+                unsafe {
+                    #resizable(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
                 }
             }
         }
@@ -758,7 +767,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
                     Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image)
                 }
             }
-            fn make_resizable(&self, val: bool) {
+            fn make_resizable(&mut self, val: bool) {
                 if val {
                     unsafe {
                         #make_resizable(self._inner, self._inner as *mut raw::c_void)
