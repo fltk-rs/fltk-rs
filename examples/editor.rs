@@ -124,7 +124,7 @@ fn main() {
         }),
     );
 
-    let mut x = menu.get_item("Help/About");
+    let mut x = menu.get_item("Help/About").unwrap();
     x.set_label_color(Color::Red);
     wind.make_resizable(true);
     wind.set_callback(Box::new(|| {

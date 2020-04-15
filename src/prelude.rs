@@ -10,7 +10,8 @@ use std::{fmt, io, os::raw};
 /// Error types returned by fltk-rs + wrappers of std::io errors
 #[derive(Debug)]
 pub enum FltkError {
-    Io(io::Error),
+    IoError(io::Error),
+    NullError(std::ffi::NulError),
     Internal(FltkErrorKind),
     Unknown(String),
 }
@@ -37,7 +38,8 @@ impl FltkErrorKind {
 impl Error for FltkError {
     fn description(&self) -> &str {
         match self {
-            FltkError::Io(err) => err.description(),
+            FltkError::IoError(err) => err.description(),
+            FltkError::NullError(err) => err.description(),
             FltkError::Internal(err) => err.as_str(),
             FltkError::Unknown(err) => err,
         }
@@ -47,7 +49,8 @@ impl Error for FltkError {
 impl fmt::Display for FltkError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            FltkError::Io(ref err) => err.fmt(f),
+            FltkError::IoError(ref err) => err.fmt(f),
+            FltkError::NullError(ref err) => err.fmt(f),
             FltkError::Internal(ref err) => write!(f, "An internal error occured {:?}", err),
             FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {:?}", err),
         }
@@ -56,7 +59,13 @@ impl fmt::Display for FltkError {
 
 impl From<io::Error> for FltkError {
     fn from(err: io::Error) -> FltkError {
-        FltkError::Io(err)
+        FltkError::IoError(err)
+    }
+}
+
+impl From<std::ffi::NulError> for FltkError {
+    fn from(err: std::ffi::NulError) -> FltkError {
+        FltkError::NullError(err)
     }
 }
 
@@ -199,19 +208,19 @@ pub trait GroupTrait: WidgetTrait {
     /// Ends a group, used for widgets implementing the group trait
     fn end(&self);
     /// Find a widget within a group and return its index
-    fn find<Widget: WidgetTrait>(&self, widget: &Widget) -> usize;
+    fn find<Widget: WidgetTrait>(&self, widget: &Widget) -> u32;
     /// Add a widget to a group
     fn add<Widget: WidgetTrait>(&mut self, widget: &Widget);
     /// Insert a widget to a group at a certain index
-    fn insert<Widget: WidgetTrait>(&mut self, widget: &Widget, index: usize);
+    fn insert<Widget: WidgetTrait>(&mut self, widget: &Widget, index: u32);
     /// Remove a widget from a group
-    fn remove(&mut self, index: usize);
+    fn remove(&mut self, index: u32);
     /// Clear a group from all widgets
     fn clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> u32;
     /// Return child widget by index
-    fn child(&self, idx: usize) -> Option<Widget>;
+    fn child(&self, idx: u32) -> Option<Widget>;
     /// Make the passed widget resizable
     fn resizable<Widget: WidgetTrait>(&self, widget: &mut Widget);
 }
@@ -241,9 +250,9 @@ pub trait InputTrait: WidgetTrait {
     /// Sets the value inside an input/output widget
     fn set_value(&self, val: &str);
     /// Returns the maximum size (in bytes) accepted by an input/output widget
-    fn maximum_size(&self) -> usize;
+    fn maximum_size(&self) -> u32;
     /// Sets the maximum size (in bytes) accepted by an input/output widget
-    fn set_maximum_size(&mut self, val: usize);
+    fn set_maximum_size(&mut self, val: u32);
     /// Returns the postion inside an input/output widget
     fn position(&self) -> i32;
     /// Sets the postion inside an input/output widget
@@ -253,7 +262,7 @@ pub trait InputTrait: WidgetTrait {
     /// Sets the mark inside an input/output widget
     fn set_mark(&mut self, val: i32);
     /// Replace content with a &str
-    fn replace(&mut self, beg: usize, end: usize, val: &str);
+    fn replace(&mut self, beg: u32, end: u32, val: &str);
     /// Insert a &str
     fn insert(&mut self, txt: &str);
     /// Append a &str
@@ -297,7 +306,7 @@ pub trait MenuTrait: WidgetTrait {
     /// Return the text size
     fn text_size(&self) -> u32;
     /// Sets the text size
-    fn set_text_size(&mut self, c: usize);
+    fn set_text_size(&mut self, c: u32);
     /// Return the text color
     fn text_color(&self) -> Color;
     /// Sets the text color
@@ -313,7 +322,7 @@ pub trait MenuTrait: WidgetTrait {
     /// Inserts a menu item at an index along with its callback
     fn insert<'a>(
         &'a mut self,
-        idx: usize,
+        idx: u32,
         name: &str,
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
@@ -384,17 +393,17 @@ pub trait DisplayTrait: WidgetTrait {
     /// Append text to Display widget
     fn append(&mut self, text: &str);
     /// Return buffer length of Display widget                  
-    fn buffer_length(&self) -> usize;
+    fn buffer_length(&self) -> u32;
     /// Scroll down the Display widget
-    fn scroll(&mut self, top_line_num: usize, horiz_offset: usize);
+    fn scroll(&mut self, top_line_num: u32, horiz_offset: u32);
     /// Insert into Display widget      
     fn insert(&self, text: &str);
     /// Set the insert position
-    fn set_insert_position(&mut self, new_pos: usize);
+    fn set_insert_position(&mut self, new_pos: u32);
     /// Return the insert position                
-    fn insert_position(&self) -> usize;
+    fn insert_position(&self) -> u32;
     /// Counts the lines from start to end                         
-    fn count_lines(&self, start: usize, end: usize, is_line_start: bool) -> usize;
+    fn count_lines(&self, start: u32, end: u32, is_line_start: bool) -> u32;
     /// Moves the cursor right
     fn move_right(&mut self);
     /// Moves the cursor left
@@ -404,7 +413,7 @@ pub trait DisplayTrait: WidgetTrait {
     /// Moves the cursor down
     fn move_down(&mut self);
     /// Remove text from start position to end position
-    fn remove(&mut self, start: usize, end: usize);
+    fn remove(&mut self, start: u32, end: u32);
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
@@ -420,7 +429,7 @@ pub trait DisplayTrait: WidgetTrait {
     /// Sets the scrollbar width
     fn set_scrollbar_width(&mut self, width: i32);
     /// Sets the scrollbar size in pixels
-    fn set_scrollbar_size(&mut self, size: usize);
+    fn set_scrollbar_size(&mut self, size: u32);
     /// Sets the scrollbar alignment
     fn set_scrollbar_align(&mut self, align: Align);
     /// Returns the cursor style
@@ -430,25 +439,25 @@ pub trait DisplayTrait: WidgetTrait {
     /// Returns the scrollback width
     fn scrollbar_width(&self) -> u32;
     /// Returns the scrollbar size in pixels
-    fn scrollbar_size(&self) -> usize;
+    fn scrollbar_size(&self) -> u32;
     /// Returns the scrollbar alignment
     fn scrollbar_align(&self) -> Align;
     /// Returns the beginning of the line from the current position
-    fn line_start(&self, pos: usize) -> usize;
+    fn line_start(&self, pos: u32) -> u32;
     /// Returns the ending of the line from the current position
-    fn line_end(&self, start_pos: usize, is_line_start: bool) -> usize;
+    fn line_end(&self, start_pos: u32, is_line_start: bool) -> u32;
     /// Skips lines from start_pos
-    fn skip_lines(&mut self, start_pos: usize, lines: usize, is_line_start: bool) -> usize;
+    fn skip_lines(&mut self, start_pos: u32, lines: u32, is_line_start: bool) -> u32;
     /// Rewinds the lines
-    fn rewind_lines(&mut self, start_pos: usize, lines: usize) -> usize;
+    fn rewind_lines(&mut self, start_pos: u32, lines: u32) -> u32;
     /// Goes to the next word
     fn next_word(&mut self);
     /// Goes to the previous word
     fn previous_word(&mut self);
     /// Returns the position of the start of the word, relative to the current position
-    fn word_start(&self, pos: usize) -> usize;
+    fn word_start(&self, pos: u32) -> u32;
     /// Returns the position of the end of the word, relative to the current position
-    fn word_end(&self, pos: usize) -> usize;
+    fn word_end(&self, pos: u32) -> u32;
     /// Convert an x pixel position into a column number.
     fn x_to_col(&self, x: f64) -> f64;
     /// Convert a column number into an x pixel position
@@ -462,9 +471,9 @@ pub trait DisplayTrait: WidgetTrait {
     /// Gets the linenumber font
     fn linenumber_font(&self) -> Font;
     /// Sets the linenumber size
-    fn set_linenumber_size(&mut self, size: usize);
+    fn set_linenumber_size(&mut self, size: u32);
     /// Gets the linenumber size
-    fn linenumber_size(&self) -> usize;
+    fn linenumber_size(&self) -> u32;
     /// Sets the linenumber foreground color
     fn set_linenumber_fgcolor(&mut self, color: Color);
     /// Gets the linenumber foreground color
@@ -482,29 +491,29 @@ pub trait DisplayTrait: WidgetTrait {
 /// Defines the methods implemented by all browser types
 pub trait BrowserTrait {
     /// Removes the specified line
-    fn remove(&mut self, line: usize);
+    fn remove(&mut self, line: u32);
     /// Adds an item
     fn add(&mut self, item: &str);
     /// Inserts an item at an index
-    fn insert(&mut self, line: usize, item: &str);
+    fn insert(&mut self, line: u32, item: &str);
     /// Moves an item
-    fn move_item(&mut self, to: usize, from: usize);
+    fn move_item(&mut self, to: u32, from: u32);
     /// Swaps 2 items
-    fn swap(&mut self, a: usize, b: usize);
+    fn swap(&mut self, a: u32, b: u32);
     /// Clears the browser widget
     fn clear(&mut self);
     /// Returns the number of items
-    fn size(&self) -> usize;
+    fn size(&self) -> u32;
     /// Set the number of items
     fn set_size(&mut self, w: i32, h: i32);
     /// Select an item at the specified line
-    fn select(&mut self, line: usize);
+    fn select(&mut self, line: u32);
     /// Returns whether the item is selected
-    fn selected(&self, line: usize) -> bool;
+    fn selected(&self, line: u32) -> bool;
     /// Returns the text of the selected item
-    fn text(&self, line: usize) -> Option<String>;
+    fn text(&self, line: u32) -> Option<String>;
     /// Sets the text of the selected item
-    fn set_text(&mut self, line: usize, txt: &str);
+    fn set_text(&mut self, line: u32, txt: &str);
     /// Load a file
     fn load_file(&mut self, path: &std::path::Path);
     /// Return the text size
@@ -512,17 +521,17 @@ pub trait BrowserTrait {
     /// Sets the text size
     fn set_text_size(&mut self, sz: u32);
     /// Sets the icon for browser elements
-    fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: &Img);
+    fn set_icon<Img: ImageTrait>(&mut self, line: u32, image: &Img);
     /// Returns the icon of a browser element
-    fn icon(&self, line: usize) -> Option<Image>;
+    fn icon(&self, line: u32) -> Option<Image>;
     /// Removes the icon of a browser element
-    fn remove_icon(&mut self, line: usize);
+    fn remove_icon(&mut self, line: u32);
 }
 
 /// Defines the methods implemented by all image types
 pub trait ImageTrait {
     /// Creates an image object from a path
-    fn new(path: std::path::PathBuf) -> Self;
+    fn new(path: &std::path::Path) -> Self;
     /// Creates a copy of the image
     fn copy(&self) -> Self;
     /// Draws the image at the presupplied coordinates and size

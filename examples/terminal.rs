@@ -35,7 +35,8 @@ fn main() {
                 }
                 app::Key::BackSpace => {
                     if cmd.len() != 0 {
-                        term.remove(term.text().len() - 1, term.text().len());
+                        let text_len = term.text().len() as u32;
+                        term.remove(text_len - 1, text_len as u32);
                         cmd.pop().unwrap();
                         return true;
                     } else {

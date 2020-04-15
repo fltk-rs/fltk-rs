@@ -129,14 +129,14 @@ impl Chart {
         }
     }
     /// Inserts an entry at an index
-    pub fn insert(&mut self, idx: usize, val: f64, txt: &str, col: u32) {
+    pub fn insert(&mut self, idx: u32, val: f64, txt: &str, col: u32) {
         let txt = std::ffi::CString::new(txt).unwrap();
         unsafe {
             Fl_Chart_insert(self._inner, idx as i32, val, txt.into_raw() as *const raw::c_char, col)
         }
     }
     /// Replaces an entry at an index
-    pub fn replace(&mut self, idx: usize, val: f64, txt: &str, col: u32) {
+    pub fn replace(&mut self, idx: u32, val: f64, txt: &str, col: u32) {
         let txt = std::ffi::CString::new(txt).unwrap();
         unsafe {
             Fl_Chart_replace(self._inner, idx as i32, val, txt.into_raw() as *const raw::c_char, col)

@@ -60,23 +60,23 @@ impl TextBuffer {
     }
 
     /// Get the length of the buffer
-    pub fn length(&self) -> usize {
-        unsafe { Fl_Text_Buffer_length(self._inner) as usize }
+    pub fn length(&self) -> u32 {
+        unsafe { Fl_Text_Buffer_length(self._inner) as u32 }
     }
 
     /// Removes from the buffer
-    pub fn remove(&mut self, start: usize, end: usize) {
-        assert!(start <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        assert!(end <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
+    pub fn remove(&mut self, start: u32, end: u32) {
+        assert!(start <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        assert!(end <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
         unsafe {
             Fl_Text_Buffer_remove(self._inner, start as i32, end as i32);
         }
     }
 
     /// Returns the text within the range
-    pub fn text_range(&self, start: usize, end: usize) -> Option<String> {
-        assert!(start <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        assert!(end <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
+    pub fn text_range(&self, start: u32, end: u32) -> Option<String> {
+        assert!(start <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        assert!(end <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
         unsafe {
             let x = Fl_Text_Buffer_text_range(self._inner, start as i32, end as i32);
             if x.is_null() {
@@ -90,8 +90,8 @@ impl TextBuffer {
     }
 
     /// Inserts text into a position
-    pub fn insert(&mut self, pos: usize, text: &str) {
-        assert!(pos <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
+    pub fn insert(&mut self, pos: u32, text: &str) {
+        assert!(pos <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
         let text = CString::new(text).unwrap();
         unsafe {
             Fl_Text_Buffer_insert(
@@ -103,9 +103,9 @@ impl TextBuffer {
     }
 
     /// Replaces text from position ```start``` to ```end```
-    pub fn replace(&mut self, start: usize, end: usize, text: &str) {
-        assert!(start <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        assert!(end <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
+    pub fn replace(&mut self, start: u32, end: u32, text: &str) {
+        assert!(start <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        assert!(end <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
         let text = CString::new(text).unwrap();
         unsafe {
             Fl_Text_Buffer_replace(
@@ -118,10 +118,10 @@ impl TextBuffer {
     }
 
     /// Copies text from a source buffer into the current buffer
-    pub fn copy(&mut self, source_buf: TextBuffer, start: usize, end: usize, to: usize) {
-        assert!(start <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        assert!(end <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        assert!(to <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
+    pub fn copy(&mut self, source_buf: TextBuffer, start: u32, end: u32, to: u32) {
+        assert!(start <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        assert!(end <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        assert!(to <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
         unsafe {
             Fl_Text_Buffer_copy(
                 self._inner,
@@ -167,14 +167,14 @@ impl TextBuffer {
 
     /// Sets the tab distance
     pub fn set_tab_distance(&mut self, tab_dist: u32) {
-        assert!(tab_dist <= std::i32::MAX as u32, "usize entries must be < std::i32::MAX for compatibility!");
+        assert!(tab_dist <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
         unsafe { Fl_Text_Buffer_set_tab_distance(self._inner, tab_dist as i32) }
     }
 
     /// Selects the text from start to end
-    pub fn select(&mut self, start: usize, end: usize) {
-        assert!(start <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        assert!(end <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
+    pub fn select(&mut self, start: u32, end: u32) {
+        assert!(start <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        assert!(end <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
         unsafe { Fl_Text_Buffer_select(self._inner, start as i32, end as i32) }
     }
 
@@ -194,13 +194,13 @@ impl TextBuffer {
     }
 
     /// Returns the selection position
-    pub fn selection_position(&mut self) -> Option<(usize, usize)> {
+    pub fn selection_position(&mut self) -> Option<(u32, u32)> {
         unsafe {
             let start: *mut raw::c_int = std::ptr::null_mut();
             let end: *mut raw::c_int = std::ptr::null_mut();
             let ret = Fl_Text_Buffer_selection_position(self._inner, start, end);
             if ret != 0 {
-                let x = (*start as usize, *end as usize);
+                let x = (*start as u32, *end as u32);
                 Some(x)
             } else {
                 None
@@ -233,9 +233,9 @@ impl TextBuffer {
     }
 
     /// Highlights selection
-    pub fn highlight(&mut self, start: usize, end: usize) {
-        assert!(start <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        assert!(end <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
+    pub fn highlight(&mut self, start: u32, end: u32) {
+        assert!(start <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        assert!(end <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
         unsafe { Fl_Text_Buffer_highlight(self._inner, start as i32, end as i32) }
     }
 
@@ -255,13 +255,13 @@ impl TextBuffer {
     }
 
     /// Returns the highlight position
-    pub fn highlight_position(&mut self) -> Option<(usize, usize)> {
+    pub fn highlight_position(&mut self) -> Option<(u32, u32)> {
         unsafe {
             let start: *mut raw::c_int = std::ptr::null_mut();
             let end: *mut raw::c_int = std::ptr::null_mut();
             let ret = Fl_Text_Buffer_highlight_position(self._inner, start, end);
             if ret != 0 {
-                let x = (*start as usize, *end as usize);
+                let x = (*start as u32, *end as u32);
                 Some(x)
             } else {
                 None
@@ -281,8 +281,8 @@ impl TextBuffer {
     }
 
     /// Returns the line at pos
-    pub fn line_text(&self, pos: usize) -> String {
-        assert!(pos <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
+    pub fn line_text(&self, pos: u32) -> String {
+        assert!(pos <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
         unsafe {
             let x = Fl_Text_Buffer_line_text(self._inner, pos as i32);
             assert!(!x.is_null(), "Null pointer exception!");
@@ -293,28 +293,28 @@ impl TextBuffer {
     }
 
     /// Returns the index of the line's start position at pos
-    pub fn line_start(&self, pos: usize) -> usize {
-        assert!(pos <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        unsafe { Fl_Text_Buffer_line_start(self._inner, pos as i32) as usize }
+    pub fn line_start(&self, pos: u32) -> u32 {
+        assert!(pos <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Text_Buffer_line_start(self._inner, pos as i32) as u32 }
     }
 
     /// Returns the index of the first character of a word at pos
-    pub fn word_start(&self, pos: usize) -> usize {
-        assert!(pos <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        unsafe { Fl_Text_Buffer_word_start(self._inner, pos as i32) as usize }
+    pub fn word_start(&self, pos: u32) -> u32 {
+        assert!(pos <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Text_Buffer_word_start(self._inner, pos as i32) as u32 }
     }
     
     /// Returns the index of the last character of a word at pos
-    pub fn word_end(&self, pos: usize) -> usize {
-        assert!(pos <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        unsafe { Fl_Text_Buffer_word_end(self._inner, pos as i32) as usize }
+    pub fn word_end(&self, pos: u32) -> u32 {
+        assert!(pos <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Text_Buffer_word_end(self._inner, pos as i32) as u32 }
     }
 
     /// Counts the lines from start to end
-    pub fn count_lines(&self, start: usize, end: usize) -> usize {
-        assert!(start <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        assert!(end <= std::i32::MAX as usize, "usize entries must be < std::i32::MAX for compatibility!");
-        unsafe { Fl_Text_Buffer_count_lines(self._inner, start as i32, end as i32) as usize }
+    pub fn count_lines(&self, start: u32, end: u32) -> u32 {
+        assert!(start <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        assert!(end <= std::i32::MAX as u32, "u32 entries must be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Text_Buffer_count_lines(self._inner, start as i32, end as i32) as u32 }
     }
 
     /// Calls the modify callbacks
@@ -325,7 +325,7 @@ impl TextBuffer {
     /// Adds a modify callback
     pub fn add_modify_callback<'a>(
         &'a mut self,
-        cb: Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a>,
+        cb: Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a>,
     ) {
         unsafe {
             unsafe extern "C" fn shim<'a>(
@@ -340,18 +340,18 @@ impl TextBuffer {
                 if !deleted_text.is_null() {
                     temp = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
                 } 
-                let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
+                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a> =
                     mem::transmute(data);
-                let f: &mut (dyn FnMut(usize, usize, usize, usize, &str) + 'a) = &mut **a;
+                let f: &mut (dyn FnMut(u32, u32, u32, u32, &str) + 'a) = &mut **a;
                 f(
-                    pos as usize,
-                    inserted as usize,
-                    deleted as usize,
-                    restyled as usize,
+                    pos as u32,
+                    inserted as u32,
+                    deleted as u32,
+                    restyled as u32,
                     &temp,
                 )
             }
-            let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a> =
                 Box::into_raw(Box::new(cb));
             let data: *mut raw::c_void = mem::transmute(a);
             let callback: Fl_Text_Modify_Cb = Some(shim);
@@ -362,7 +362,7 @@ impl TextBuffer {
     /// Removes a modify callback
     pub fn remove_modify_callback<'a>(
         &'a mut self,
-        cb: Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a>,
+        cb: Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a>,
     ) {
         unsafe {
             unsafe extern "C" fn shim<'a>(
@@ -377,18 +377,18 @@ impl TextBuffer {
                 if !deleted_text.is_null() {
                     temp = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
                 } 
-                let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
+                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a> =
                     mem::transmute(data);
-                let f: &mut (dyn FnMut(usize, usize, usize, usize, &str) + 'a) = &mut **a;
+                let f: &mut (dyn FnMut(u32, u32, u32, u32, &str) + 'a) = &mut **a;
                 f(
-                    pos as usize,
-                    inserted as usize,
-                    deleted as usize,
-                    restyled as usize,
+                    pos as u32,
+                    inserted as u32,
+                    deleted as u32,
+                    restyled as u32,
                     &temp,
                 )
             }
-            let a: *mut Box<dyn FnMut(usize, usize, usize, usize, &str) + 'a> =
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a> =
                 Box::into_raw(Box::new(cb));
             let data: *mut raw::c_void = mem::transmute(a);
             let callback: Fl_Text_Modify_Cb = Some(shim);
