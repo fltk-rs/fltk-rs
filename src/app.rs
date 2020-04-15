@@ -230,11 +230,14 @@ pub fn get_font_count() -> u8 {
 }
 
 /// Gets the name of a font through its index
-pub fn get_font_name(idx: u8) -> String {
+pub fn get_font_name(idx: u8) -> Option<String> {
     unsafe {
         let font = Fl_get_font(idx as i32);
-        assert!(!font.is_null(), "Failed to get font name!");
-        CStr::from_ptr(font as *mut raw::c_char).to_string_lossy().to_string()
+        if font.is_null() {
+            None
+        } else {
+            Some(CStr::from_ptr(font as *mut raw::c_char).to_string_lossy().to_string())
+        }
     }
 }
 
@@ -243,7 +246,7 @@ pub fn get_font_names() -> Vec<String> {
     let mut vec: Vec<String> = vec![];
     let cnt = get_font_count();
     for i in 0..cnt {
-        vec.push(get_font_name(i));
+        vec.push(get_font_name(i).unwrap());
     }
     vec
 }
@@ -253,7 +256,7 @@ pub fn get_font_index(name: &str) -> Option<u8> {
     let cnt = set_fonts("*");
     let mut ret: Option<u8> = None;
     for i in 0..cnt {
-        if name == get_font_name(i) {
+        if name == get_font_name(i).unwrap() {
             ret = Some(i);
             break;
         } 

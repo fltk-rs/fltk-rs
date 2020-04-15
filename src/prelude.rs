@@ -167,7 +167,7 @@ pub trait WidgetTrait {
     /// Sets the resized image of the widget
     fn set_image_with_size<Image: ImageTrait>(&mut self, image: &Image, w: i32, h: i32);
     /// Gets the image associated with the widget
-    fn image(&self) -> Image;
+    fn image(&self) -> Option<Image>;
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
@@ -211,7 +211,7 @@ pub trait GroupTrait: WidgetTrait {
     /// Return the number of children in a group
     fn children(&self) -> u32;
     /// Return child widget by index
-    fn child(&self, idx: usize) -> Widget;
+    fn child(&self, idx: usize) -> Option<Widget>;
     /// Make the passed widget resizable
     fn resizable<Widget: WidgetTrait>(&self, widget: &mut Widget);
 }
@@ -229,7 +229,7 @@ pub trait WindowTrait: GroupTrait {
     /// Sets the windows icon
     fn set_icon<Image: ImageTrait>(&mut self, image: &Image);
     /// Returns the icon of the window
-    fn icon(&self) -> Image;
+    fn icon(&self) -> Option<Image>;
     /// Make the window resizable
     fn make_resizable(&mut self, val: bool);
 }
@@ -289,7 +289,7 @@ pub trait InputTrait: WidgetTrait {
 /// Defines the methods implemented by all menu widgets
 pub trait MenuTrait: WidgetTrait {
     /// Get a menu item by name
-    fn get_item(&self, name: &str) -> crate::menu::MenuItem;
+    fn get_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -322,7 +322,7 @@ pub trait MenuTrait: WidgetTrait {
     /// Adds a simple text option to the Choice and MenuButton widgets
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
-    fn get_choice(&self) -> String;
+    fn get_choice(&self) -> Option<String>;
 }
 
 /// Defines the methods implemented by all valuator widgets
@@ -418,7 +418,7 @@ pub trait DisplayTrait: WidgetTrait {
     /// Sets the cursor color
     fn set_cursor_color(&mut self, color: Color);
     /// Sets the scrollbar width
-    fn set_scrollbar_width(&mut self, width: u32);
+    fn set_scrollbar_width(&mut self, width: i32);
     /// Sets the scrollbar size in pixels
     fn set_scrollbar_size(&mut self, size: usize);
     /// Sets the scrollbar alignment
@@ -502,7 +502,7 @@ pub trait BrowserTrait {
     /// Returns whether the item is selected
     fn selected(&self, line: usize) -> bool;
     /// Returns the text of the selected item
-    fn text(&self, line: usize) -> String;
+    fn text(&self, line: usize) -> Option<String>;
     /// Sets the text of the selected item
     fn set_text(&mut self, line: usize, txt: &str);
     /// Load a file
@@ -514,7 +514,7 @@ pub trait BrowserTrait {
     /// Sets the icon for browser elements
     fn set_icon<Img: ImageTrait>(&mut self, line: usize, image: &Img);
     /// Returns the icon of a browser element
-    fn icon(&self, line: usize) -> Image;
+    fn icon(&self, line: usize) -> Option<Image>;
     /// Removes the icon of a browser element
     fn remove_icon(&mut self, line: usize);
 }

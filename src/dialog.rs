@@ -145,13 +145,16 @@ impl FileDialog {
     }
 
     /// returns the error message from the file dialog
-    pub fn error_message(&self) -> String {
+    pub fn error_message(&self) -> Option<String> {
         unsafe {
             let err_msg = Fl_Native_File_Chooser_errmsg(self._inner);
-            assert!(!err_msg.is_null(), "Failed to retreive error message!");
-            CStr::from_ptr(err_msg as *mut raw::c_char)
+            if err_msg.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(err_msg as *mut raw::c_char)
                 .to_string_lossy()
-                .to_string()
+                .to_string())
+            }
         }
     }
 }
@@ -301,11 +304,14 @@ impl HelpDialog {
         }
     }
     /// Returns the value of the help dialog
-    pub fn value(&self) -> String {
+    pub fn value(&self) -> Option<String> {
         unsafe {
             let val = Fl_Help_Dialog_value(self._inner);
-            assert!(!val.is_null(), "Failed to retrieve value from help dialog!");
-            CStr::from_ptr(val).to_string_lossy().to_string()
+            if val.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(val).to_string_lossy().to_string())
+            }
         }
     }
     /// Returs whether the help dialog is visible

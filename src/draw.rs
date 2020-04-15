@@ -69,14 +69,17 @@ pub fn draw_pie(x: i32, y: i32, w: i32, h: i32, a: f64, b: f64) {
 }
 
 /// Captures part of the window and returns raw data
-pub fn capture_window<Window: WindowTrait>(win: &mut Window) -> RgbImage {
+pub fn capture_window<Window: WindowTrait>(win: &mut Window) -> Option<RgbImage> {
     let cp = win.width() as usize * win.height() as usize * 3;
     win.show();
     unsafe {
         let x = cfl_read_image(std::ptr::null_mut(), 0, 0, win.width(), win.height(), 0);
-        assert!(!x.is_null(), "Failed to read image from region!");
-        let x = std::slice::from_raw_parts(x, cp);
-        RgbImage::new(x.to_vec(), win.width(), win.height())
+        if x.is_null() {
+            None
+        } else {
+            let x = std::slice::from_raw_parts(x, cp);
+            Some(RgbImage::new(x.to_vec(), win.width(), win.height()))
+        }
     }
 }
 
