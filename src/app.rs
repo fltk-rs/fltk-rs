@@ -1,7 +1,11 @@
 pub use crate::enums::*;
 use crate::prelude::*;
 use fltk_sys::fl::*;
-use std::{ffi::{CStr, CString}, mem, os::raw};
+use std::{
+    ffi::{CStr, CString},
+    mem,
+    os::raw,
+};
 
 /// Runs the event loop
 fn run() -> Result<(), FltkError> {
@@ -44,10 +48,8 @@ fn set_scheme(scheme: AppScheme) {
         AppScheme::Gleam => "gleam",
         AppScheme::Plastic => "plastic",
     };
-    let name_str= CString::new(name_str).unwrap();
-    unsafe {
-        Fl_set_scheme(name_str.into_raw() as *const raw::c_char)
-    }
+    let name_str = CString::new(name_str).unwrap();
+    unsafe { Fl_set_scheme(name_str.into_raw() as *const raw::c_char) }
 }
 
 /// Unlocks the main UI thread
@@ -82,13 +84,13 @@ impl App {
     pub fn default() -> App {
         App {}
     }
-    
+
     /// Sets the scheme of the application
     pub fn set_scheme(self, scheme: AppScheme) -> App {
         set_scheme(scheme);
         self
     }
-    
+
     /// Runs the event loop
     pub fn run(&self) -> Result<(), FltkError> {
         lock()?;
@@ -133,8 +135,9 @@ pub fn event_text() -> String {
     unsafe {
         let text = Fl_event_text();
         assert!(!text.is_null(), "Failed to retrieve event_text!");
-          CString::from_raw(text as *mut raw::c_char)
-            .to_string_lossy().to_string()
+        CString::from_raw(text as *mut raw::c_char)
+            .to_string_lossy()
+            .to_string()
     }
 }
 
@@ -204,7 +207,10 @@ where
     W: WidgetTrait,
 {
     unsafe {
-        unsafe extern "C" fn shim<'a>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+        unsafe extern "C" fn shim<'a>(
+            _wid: *mut fltk_sys::widget::Fl_Widget,
+            data: *mut raw::c_void,
+        ) {
             let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
             let f: &mut (dyn FnMut() + 'a) = &mut **a;
             f();
@@ -219,10 +225,8 @@ where
 /// Initializes loaded fonts of a certain patter ```name```
 fn set_fonts(name: &str) -> u8 {
     let name = CString::new(name).unwrap();
-    unsafe {
-        Fl_set_fonts(name.into_raw() as *mut raw::c_char) as u8
-    }
-} 
+    unsafe { Fl_set_fonts(name.into_raw() as *mut raw::c_char) as u8 }
+}
 
 /// Returns the number of fonts available to the application
 pub fn get_font_count() -> u8 {
@@ -236,7 +240,11 @@ pub fn get_font_name(idx: u8) -> Option<String> {
         if font.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(font as *mut raw::c_char).to_string_lossy().to_string())
+            Some(
+                CStr::from_ptr(font as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
         }
     }
 }
@@ -259,7 +267,7 @@ pub fn get_font_index(name: &str) -> Option<u8> {
         if name == get_font_name(i).unwrap() {
             ret = Some(i);
             break;
-        } 
+        }
     }
     ret
 }

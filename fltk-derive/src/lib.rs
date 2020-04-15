@@ -232,6 +232,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
+
         impl From<crate::widget::Widget> for #name {
             fn from(wid: crate::widget::Widget) -> Self {
                 let wid: *mut fltk_sys::widget::Fl_Widget = wid.as_ptr();
@@ -496,7 +497,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
                 }
             }
-            fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
+            unsafe fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let ev: Event = mem::transmute(_ev);
@@ -513,7 +514,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_handler(&mut self._inner, callback, data);
                 }
             }
-            fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
+            unsafe fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
                 unsafe {
                     unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);

@@ -28,31 +28,31 @@ impl MainWindow {
         }
     }
     pub fn draw_elements(mut self) {
-
-        self.but1
-            .clone()
-            .set_custom_handler(Box::new(|ev: app::Event| match ev {
-                app::Event::Released => {
-                    println!("{:?}", ev);
-                    return true;
-                }
-                app::Event::Push => {
-                    let mut out = String::from("");
-                    println!("{:?}", ev);
-                    let mut frame = self.frame.clone();
-                    // Spawning a thread to allow for a responsive UI
-                    std::thread::spawn(move || {
-                        std::thread::sleep(std::time::Duration::from_millis(1000));
-                        out = String::from("Hello");
-                        frame.set_label(&out);
-                    });
-                    return true;
-                }
-                _ => {
-                    return false;
-                }
-            }));
-
+        unsafe {
+            self.but1
+                .clone()
+                .set_custom_handler(Box::new(|ev: app::Event| match ev {
+                    app::Event::Released => {
+                        println!("{:?}", ev);
+                        return true;
+                    }
+                    app::Event::Push => {
+                        let mut out = String::from("");
+                        println!("{:?}", ev);
+                        let mut frame = self.frame.clone();
+                        // Spawning a thread to allow for a responsive UI
+                        std::thread::spawn(move || {
+                            std::thread::sleep(std::time::Duration::from_millis(1000));
+                            out = String::from("Hello");
+                            frame.set_label(&out);
+                        });
+                        return true;
+                    }
+                    _ => {
+                        return false;
+                    }
+                }));
+        }
         app::set_callback(
             &self.but2.clone(),
             Box::new(|| match app::event() {

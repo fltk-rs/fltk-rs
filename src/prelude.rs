@@ -180,11 +180,11 @@ pub trait WidgetTrait {
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
-    fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
+    unsafe fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
     /// Set a custom draw method
-    fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
+    unsafe fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Returns the parent of the widget
     fn parent(&self) -> Option<Widget>;
     /// Gets the selection color of the widget

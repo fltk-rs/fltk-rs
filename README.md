@@ -15,7 +15,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.16"
+fltk = "^0.2.17"
 ```
 
 An example hello world application:
@@ -90,13 +90,15 @@ fn main() {
 ```
 
 ### Events
-Events can be handled using the set_callback method (as above) or free function, it will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the set_custom_handler() method can be used:
+Events can be handled using the set_callback method (as above) or free function, it will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the unsafe set_custom_handler() method can be used:
 ```rust
-some_widget.set_custom_handler(Box::new(|ev: app::Event| {
-        match ev {
-            /* handle ev */
-        }
-    }));
+    unsafe {
+        some_widget.set_custom_handler(Box::new(|ev: app::Event| {
+            match ev {
+                /* handle ev */
+            }
+        }));
+    }
 ```
 
 ### Theming
