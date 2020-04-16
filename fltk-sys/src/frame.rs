@@ -203,3 +203,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Box_top_window(arg1: *const Fl_Box) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Box_takes_events(arg1: *const Fl_Box) -> ::std::os::raw::c_int;
+}

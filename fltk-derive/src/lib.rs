@@ -228,6 +228,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "top_window").as_str(),
         name.span(),
     );
+    let takes_events = Ident::new(format!("{}_{}", name_str, "takes_events").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -485,6 +486,9 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
+                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
+                    return;
+                }
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
@@ -498,6 +502,9 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
+                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
+                    return;
+                }
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let ev: Event = mem::transmute(_ev);
@@ -515,6 +522,9 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
+                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
+                    return;
+                }
                 unsafe {
                     unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
@@ -619,6 +629,14 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                         None
                     } else {
                         Some(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget))
+                    }
+                }
+            }
+            fn takes_events(&self) -> bool {
+                unsafe {
+                    match #takes_events(self._inner) {
+                        0 => false,
+                        _ => true,
                     }
                 }
             }
@@ -1040,6 +1058,9 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         impl MenuTrait for #name {
             fn add<'a>(&'a mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
+                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
+                    return;
+                }
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -1054,6 +1075,9 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
             fn insert<'a>(&'a mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
+                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
+                    return;
+                }
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_wid: *mut Fl_Widget, data: *mut raw::c_void) {

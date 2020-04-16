@@ -18,6 +18,10 @@ path = "src/lib.rs"
 fltk-sys = { path = "fltk-sys", version = "^0.2.18" }
 fltk-derive = { path = "fltk-derive", version = "^0.2.18" }
 
+[features]
+default = []
+fltk-shared = []
+
 [[example]]
 name = "hello"
 

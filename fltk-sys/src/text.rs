@@ -417,6 +417,9 @@ extern "C" {
     pub fn Fl_Text_Display_top_window(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Text_Display_takes_events(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
@@ -840,6 +843,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_top_window(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_takes_events(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
@@ -1305,6 +1311,11 @@ extern "C" {
     pub fn Fl_Simple_Terminal_top_window(
         arg1: *const Fl_Simple_Terminal,
     ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_takes_events(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);

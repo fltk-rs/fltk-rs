@@ -7,10 +7,13 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
+
+option(CFLTK_BUILD_SHARED "Builds a shared library" OFF)
 
 add_subdirectory(fltk)
 
-add_library(cfltk STATIC 
+set(CFLTK_SRCS  
     cfl.cpp 
     cfl_window.cpp 
     cfl_button.cpp 
@@ -29,8 +32,15 @@ add_library(cfltk STATIC
     cfl_draw.cpp
     )
 
+if(CFLTK_BUILD_SHARED)
+    add_library(cfltk SHARED ${CFLTK_SRCS})
+else()
+    add_library(cfltk STATIC ${CFLTK_SRCS})
+endif()
+
 target_include_directories(cfltk PUBLIC fltk)
 target_include_directories(cfltk PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/fltk)
 
-# The following line is necessary if building a shared/dynamic library
-# target_link_libraries(cfltk PUBLIC fltk fltk_images fltk_z fltk_jpeg fltk_png)
+if(CFLTK_BUILD_SHARED)
+    target_link_libraries(cfltk PUBLIC fltk fltk_images fltk_z fltk_jpeg fltk_png)
+endif()

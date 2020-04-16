@@ -206,6 +206,9 @@ pub fn set_callback<'a, W>(widget: &'a W, cb: Box<dyn FnMut() + 'a>)
 where
     W: WidgetTrait,
 {
+    if !widget.top_window().unwrap().takes_events() || !widget.takes_events() {
+        return;
+    }
     unsafe {
         unsafe extern "C" fn shim<'a>(
             _wid: *mut fltk_sys::widget::Fl_Widget,

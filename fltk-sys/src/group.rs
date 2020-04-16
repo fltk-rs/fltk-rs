@@ -204,6 +204,9 @@ extern "C" {
     pub fn Fl_Group_top_window(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Group_takes_events(arg1: *const Fl_Group) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
 }
 extern "C" {
@@ -419,6 +422,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_top_window(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Pack_takes_events(arg1: *const Fl_Pack) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
@@ -638,6 +644,9 @@ extern "C" {
     pub fn Fl_Scroll_top_window(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Scroll_takes_events(arg1: *const Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Scroll_begin(self_: *mut Fl_Scroll);
 }
 extern "C" {
@@ -855,6 +864,9 @@ extern "C" {
     pub fn Fl_Tabs_top_window(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Tabs_takes_events(arg1: *const Fl_Tabs) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -1070,6 +1082,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_top_window(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tile_takes_events(arg1: *const Fl_Tile) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
@@ -1307,6 +1322,9 @@ extern "C" {
     pub fn Fl_Color_Chooser_top_window(
         arg1: *const Fl_Color_Chooser,
     ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_takes_events(arg1: *const Fl_Color_Chooser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;

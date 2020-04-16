@@ -70,7 +70,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_do_callback(widget *);                                         \
   int widget##_inside(const widget *self, void *);                             \
   void *widget##_window(const widget *);                                       \
-  void *widget##_top_window(const widget *);
+  void *widget##_top_window(const widget *);                                   \
+  int widget##_takes_events(const widget *);
 
 #define GROUP_DECLARE(widget)                                                  \
   void widget##_begin(widget *self);                                           \
@@ -368,7 +369,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void *widget##_window(const widget *self) { return (void *)self->window(); } \
   void *widget##_top_window(const widget *self) {                              \
     return (void *)self->top_window();                                         \
-  }
+  }                                                                            \
+  int widget##_takes_events(const widget *self) { return self->takesevents(); }
 
 #define GROUP_DEFINE(widget)                                                   \
   void widget##_begin(widget *self) { self->begin(); }                         \

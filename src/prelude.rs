@@ -199,6 +199,8 @@ pub trait WidgetTrait {
     fn window(&self) -> Option<Window>;
     /// Returns the topmost window holding the widget
     fn top_window(&self) -> Option<Window>;
+    /// Checks whether a widget is capable of taking events
+    fn takes_events(&self) -> bool;
 }
 
 /// Defines the methods implemented by all group widgets

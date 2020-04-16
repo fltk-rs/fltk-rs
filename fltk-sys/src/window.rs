@@ -204,6 +204,9 @@ extern "C" {
     pub fn Fl_Window_top_window(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Window_takes_events(arg1: *const Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
 }
 extern "C" {
@@ -457,6 +460,9 @@ extern "C" {
     pub fn Fl_Double_Window_top_window(
         arg1: *const Fl_Double_Window,
     ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Double_Window_takes_events(arg1: *const Fl_Double_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
@@ -719,6 +725,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_top_window(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_takes_events(arg1: *const Fl_Menu_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);

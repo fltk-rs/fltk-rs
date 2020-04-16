@@ -204,6 +204,9 @@ extern "C" {
     pub fn Fl_Output_top_window(arg1: *const Fl_Output) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Output_takes_events(arg1: *const Fl_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Output_set_value(
         arg1: *mut Fl_Output,
         arg2: *const ::std::os::raw::c_char,
@@ -530,6 +533,11 @@ extern "C" {
     pub fn Fl_Multiline_Output_top_window(
         arg1: *const Fl_Multiline_Output,
     ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_takes_events(
+        arg1: *const Fl_Multiline_Output,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_value(
