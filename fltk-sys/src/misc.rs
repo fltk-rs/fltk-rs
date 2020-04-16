@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Spinner_set_handler(
-        self_: *mut *mut Fl_Spinner,
+        self_: *mut Fl_Spinner,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Spinner_set_draw(
-        self_: *mut *mut Fl_Spinner,
+        self_: *mut Fl_Spinner,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -386,14 +386,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Clock_set_handler(
-        self_: *mut *mut Fl_Clock,
+        self_: *mut Fl_Clock,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Clock_set_draw(
-        self_: *mut *mut Fl_Clock,
+        self_: *mut Fl_Clock,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -566,14 +566,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_set_handler(
-        self_: *mut *mut Fl_Chart,
+        self_: *mut Fl_Chart,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Chart_set_draw(
-        self_: *mut *mut Fl_Chart,
+        self_: *mut Fl_Chart,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -818,14 +818,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_set_handler(
-        self_: *mut *mut Fl_Progress,
+        self_: *mut Fl_Progress,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Progress_set_draw(
-        self_: *mut *mut Fl_Progress,
+        self_: *mut Fl_Progress,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );

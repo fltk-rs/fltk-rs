@@ -229,7 +229,6 @@ Most common widgets are implemented:
 - Clock
 - Chart
 - Progress (progress bar)
-- Wizard
 - ColorChooser
 - Drawing primitives
 

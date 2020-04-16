@@ -511,7 +511,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(Event) -> bool + 'a> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: custom_handler_callback = Some(shim);
-                    #set_handler(&mut self._inner, callback, data);
+                    #set_handler(self._inner, callback, data);
                 }
             }
             unsafe fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
@@ -524,7 +524,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: custom_draw_callback = Some(shim);
-                    #set_draw(&mut self._inner, callback, data);
+                    #set_draw(self._inner, callback, data);
                 }
             }
             fn set_trigger(&mut self, trigger: CallbackTrigger) {

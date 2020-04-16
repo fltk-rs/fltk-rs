@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_set_handler(
-        self_: *mut *mut Fl_Browser,
+        self_: *mut Fl_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Browser_set_draw(
-        self_: *mut *mut Fl_Browser,
+        self_: *mut Fl_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -440,14 +440,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_handler(
-        self_: *mut *mut Fl_Hold_Browser,
+        self_: *mut Fl_Hold_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_draw(
-        self_: *mut *mut Fl_Hold_Browser,
+        self_: *mut Fl_Hold_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -738,14 +738,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_handler(
-        self_: *mut *mut Fl_Select_Browser,
+        self_: *mut Fl_Select_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_draw(
-        self_: *mut *mut Fl_Select_Browser,
+        self_: *mut Fl_Select_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1037,14 +1037,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_handler(
-        self_: *mut *mut Fl_Multi_Browser,
+        self_: *mut Fl_Multi_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_draw(
-        self_: *mut *mut Fl_Multi_Browser,
+        self_: *mut Fl_Multi_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1327,14 +1327,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_set_handler(
-        self_: *mut *mut Fl_File_Browser,
+        self_: *mut Fl_File_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_File_Browser_set_draw(
-        self_: *mut *mut Fl_File_Browser,
+        self_: *mut Fl_File_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );

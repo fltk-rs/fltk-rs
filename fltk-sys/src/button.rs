@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Button_set_handler(
-        self_: *mut *mut Fl_Button,
+        self_: *mut Fl_Button,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Button_set_draw(
-        self_: *mut *mut Fl_Button,
+        self_: *mut Fl_Button,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -350,14 +350,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_set_handler(
-        self_: *mut *mut Fl_Check_Button,
+        self_: *mut Fl_Check_Button,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Check_Button_set_draw(
-        self_: *mut *mut Fl_Check_Button,
+        self_: *mut Fl_Check_Button,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -545,14 +545,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_handler(
-        self_: *mut *mut Fl_Radio_Button,
+        self_: *mut Fl_Radio_Button,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Radio_Button_set_draw(
-        self_: *mut *mut Fl_Radio_Button,
+        self_: *mut Fl_Radio_Button,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -746,14 +746,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_handler(
-        self_: *mut *mut Fl_Toggle_Button,
+        self_: *mut Fl_Toggle_Button,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Toggle_Button_set_draw(
-        self_: *mut *mut Fl_Toggle_Button,
+        self_: *mut Fl_Toggle_Button,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -943,14 +943,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Round_Button_set_handler(
-        self_: *mut *mut Fl_Round_Button,
+        self_: *mut Fl_Round_Button,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Round_Button_set_draw(
-        self_: *mut *mut Fl_Round_Button,
+        self_: *mut Fl_Round_Button,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1135,14 +1135,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Light_Button_set_handler(
-        self_: *mut *mut Fl_Light_Button,
+        self_: *mut Fl_Light_Button,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Light_Button_set_draw(
-        self_: *mut *mut Fl_Light_Button,
+        self_: *mut Fl_Light_Button,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1336,14 +1336,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Repeat_Button_set_handler(
-        self_: *mut *mut Fl_Repeat_Button,
+        self_: *mut Fl_Repeat_Button,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Repeat_Button_set_draw(
-        self_: *mut *mut Fl_Repeat_Button,
+        self_: *mut Fl_Repeat_Button,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1536,14 +1536,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_set_handler(
-        self_: *mut *mut Fl_Return_Button,
+        self_: *mut Fl_Return_Button,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Return_Button_set_draw(
-        self_: *mut *mut Fl_Return_Button,
+        self_: *mut Fl_Return_Button,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );

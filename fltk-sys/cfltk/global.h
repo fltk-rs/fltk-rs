@@ -59,9 +59,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_delete(widget *);                                              \
   void widget##_set_image(widget *, void *);                                   \
   void widget##_set_image_with_size(widget *, void *, int, int);               \
-  void widget##_set_handler(widget **self, custom_handler_callback cb,         \
+  void widget##_set_handler(widget *self, custom_handler_callback cb,          \
                             void *data);                                       \
-  void widget##_set_draw(widget **self, custom_draw_callback cb, void *data);  \
+  void widget##_set_draw(widget *self, custom_draw_callback cb, void *data);   \
   void widget##_set_trigger(widget *, int);                                    \
   void *widget##_image(const widget *);                                        \
   void *widget##_parent(const widget *self);                                   \
@@ -244,45 +244,44 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define WIDGET_DEFINE(widget)                                                  \
   class widget##_Derived : public widget {                                     \
-    void *data_;                                                               \
+    void *ev_data_ = NULL;                                                     \
+    void *draw_data_ = NULL;                                                   \
                                                                                \
   public:                                                                      \
     typedef int (*handler)(int, void *data);                                   \
-    handler inner_handler;                                                     \
+    handler inner_handler = NULL;                                              \
+    typedef void (*drawer)(void *data);                                        \
+    drawer inner_drawer = NULL;                                                \
     widget##_Derived(int x, int y, int w, int h, const char *title = 0)        \
         : widget(x, y, w, h, title) {}                                         \
-    widget##_Derived(widget *ptr)                                              \
-        : widget(ptr->x(), ptr->y(), ptr->w(), ptr->h(), ptr->label()) {}      \
     operator widget *() { return (widget *)*this; }                            \
     void set_handler(handler h) { inner_handler = h; }                         \
-    void set_handler_data(void *data) { data_ = data; }                        \
+    void set_handler_data(void *data) { ev_data_ = data; }                     \
     int handle(int event) {                                                    \
       int ret = widget::handle(event);                                         \
-      int local = inner_handler(event, data_);                                 \
-      if (local == 0)                                                          \
+      int local = 0;                                                           \
+      if (ev_data_ && inner_handler) {                                         \
+        local = inner_handler(event, ev_data_);                                \
+        if (local == 0)                                                        \
+          return ret;                                                          \
+        else                                                                   \
+          return local;                                                        \
+      } else {                                                                 \
         return ret;                                                            \
-      else                                                                     \
-        return local;                                                          \
+      }                                                                        \
     }                                                                          \
-  };                                                                           \
-  class widget##_Drawable : public widget {                                    \
-    void *data_;                                                               \
-                                                                               \
-  public:                                                                      \
-    typedef void (*drawer)(void *data);                                        \
-    drawer inner_drawer;                                                       \
-    widget##_Drawable(int x, int y, int w, int h, const char *title = 0)       \
-        : widget(x, y, w, h, title) {}                                         \
-    widget##_Drawable(widget *ptr)                                             \
-        : widget(ptr->x(), ptr->y(), ptr->w(), ptr->h(), ptr->label()) {}      \
-    operator widget *() { return (widget *)*this; }                            \
     void set_drawer(drawer h) { inner_drawer = h; }                            \
-    void set_drawer_data(void *data) { data_ = data; }                         \
-    void draw() { inner_drawer(data_); };                                      \
+    void set_drawer_data(void *data) { draw_data_ = data; }                    \
+    void draw() {                                                              \
+      widget::draw();                                                          \
+                                                                               \
+      if (draw_data_ && inner_drawer)                                          \
+        inner_drawer(draw_data_);                                              \
+    };                                                                         \
   };                                                                           \
   widget *widget##_new(int x, int y, int width, int height,                    \
                        const char *title) {                                    \
-    return new (std::nothrow) widget(x, y, width, height, title);              \
+    return new (std::nothrow) widget##_Derived(x, y, width, height, title);    \
   }                                                                            \
   int widget##_x(widget *self) { return self->x(); }                           \
   int widget##_y(widget *self) { return self->y(); }                           \
@@ -345,22 +344,18 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_image(widget *self, void *image) {                         \
     LOCK(self->image(((Fl_Image *)image)->copy()); self->redraw();)            \
   }                                                                            \
-  void widget##_set_handler(widget **self, custom_handler_callback cb,         \
+  void widget##_set_handler(widget *self, custom_handler_callback cb,          \
                             void *data) {                                      \
-    widget##_Derived *temp = new (std::nothrow) widget##_Derived(*self);       \
-    if (!temp)                                                                 \
-      return;                                                                  \
-    LOCK(temp->set_handler_data(data); temp->set_handler(cb); *self = temp;)   \
+    LOCK(((widget##_Derived *)self)->set_handler_data(data);                   \
+         ((widget##_Derived *)self)->set_handler(cb);)                         \
   }                                                                            \
   void widget##_set_trigger(widget *self, int val) { LOCK(self->when(val);) }  \
   void *widget##_image(const widget *self) {                                   \
     return (Fl_Image *)self->image();                                          \
   }                                                                            \
-  void widget##_set_draw(widget **self, custom_draw_callback cb, void *data) { \
-    widget##_Drawable *temp = new (std::nothrow) widget##_Drawable(*self);     \
-    if (!temp)                                                                 \
-      return;                                                                  \
-    LOCK(temp->set_drawer_data(data); temp->set_drawer(cb); *self = temp;)     \
+  void widget##_set_draw(widget *self, custom_draw_callback cb, void *data) {  \
+    LOCK(((widget##_Derived *)self)->set_drawer_data(data);                    \
+         ((widget##_Derived *)self)->set_drawer(cb);)                          \
   }                                                                            \
   void *widget##_parent(const widget *self) {                                  \
     return (Fl_Group *)self->parent();                                         \

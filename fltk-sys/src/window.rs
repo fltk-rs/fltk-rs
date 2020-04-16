@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_set_handler(
-        self_: *mut *mut Fl_Window,
+        self_: *mut Fl_Window,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Window_set_draw(
-        self_: *mut *mut Fl_Window,
+        self_: *mut Fl_Window,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -411,14 +411,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_set_handler(
-        self_: *mut *mut Fl_Double_Window,
+        self_: *mut Fl_Double_Window,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Double_Window_set_draw(
-        self_: *mut *mut Fl_Double_Window,
+        self_: *mut Fl_Double_Window,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -675,14 +675,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_handler(
-        self_: *mut *mut Fl_Menu_Window,
+        self_: *mut Fl_Menu_Window,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_draw(
-        self_: *mut *mut Fl_Menu_Window,
+        self_: *mut Fl_Menu_Window,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );

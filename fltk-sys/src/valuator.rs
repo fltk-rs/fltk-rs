@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Slider_set_handler(
-        self_: *mut *mut Fl_Slider,
+        self_: *mut Fl_Slider,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Slider_set_draw(
-        self_: *mut *mut Fl_Slider,
+        self_: *mut Fl_Slider,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -396,14 +396,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_handler(
-        self_: *mut *mut Fl_Nice_Slider,
+        self_: *mut Fl_Nice_Slider,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_draw(
-        self_: *mut *mut Fl_Nice_Slider,
+        self_: *mut Fl_Nice_Slider,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -631,14 +631,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Counter_set_handler(
-        self_: *mut *mut Fl_Counter,
+        self_: *mut Fl_Counter,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Counter_set_draw(
-        self_: *mut *mut Fl_Counter,
+        self_: *mut Fl_Counter,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -863,14 +863,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Dial_set_handler(
-        self_: *mut *mut Fl_Dial,
+        self_: *mut Fl_Dial,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Dial_set_draw(
-        self_: *mut *mut Fl_Dial,
+        self_: *mut Fl_Dial,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1091,14 +1091,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_handler(
-        self_: *mut *mut Fl_Line_Dial,
+        self_: *mut Fl_Line_Dial,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_draw(
-        self_: *mut *mut Fl_Line_Dial,
+        self_: *mut Fl_Line_Dial,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1323,14 +1323,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Roller_set_handler(
-        self_: *mut *mut Fl_Roller,
+        self_: *mut Fl_Roller,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Roller_set_draw(
-        self_: *mut *mut Fl_Roller,
+        self_: *mut Fl_Roller,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1552,14 +1552,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_handler(
-        self_: *mut *mut Fl_Scrollbar,
+        self_: *mut Fl_Scrollbar,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_draw(
-        self_: *mut *mut Fl_Scrollbar,
+        self_: *mut Fl_Scrollbar,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1793,14 +1793,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_handler(
-        self_: *mut *mut Fl_Value_Slider,
+        self_: *mut Fl_Value_Slider,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_draw(
-        self_: *mut *mut Fl_Value_Slider,
+        self_: *mut Fl_Value_Slider,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -2031,14 +2031,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Adjuster_set_handler(
-        self_: *mut *mut Fl_Adjuster,
+        self_: *mut Fl_Adjuster,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Adjuster_set_draw(
-        self_: *mut *mut Fl_Adjuster,
+        self_: *mut Fl_Adjuster,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -2269,14 +2269,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Input_set_handler(
-        self_: *mut *mut Fl_Value_Input,
+        self_: *mut Fl_Value_Input,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Value_Input_set_draw(
-        self_: *mut *mut Fl_Value_Input,
+        self_: *mut Fl_Value_Input,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );

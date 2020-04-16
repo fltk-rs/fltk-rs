@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Output_set_handler(
-        self_: *mut *mut Fl_Output,
+        self_: *mut Fl_Output,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Output_set_draw(
-        self_: *mut *mut Fl_Output,
+        self_: *mut Fl_Output,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -473,14 +473,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_handler(
-        self_: *mut *mut Fl_Multiline_Output,
+        self_: *mut Fl_Multiline_Output,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_draw(
-        self_: *mut *mut Fl_Multiline_Output,
+        self_: *mut Fl_Multiline_Output,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );

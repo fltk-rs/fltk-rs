@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Box_set_handler(
-        self_: *mut *mut Fl_Box,
+        self_: *mut Fl_Box,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Box_set_draw(
-        self_: *mut *mut Fl_Box,
+        self_: *mut Fl_Box,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
