@@ -15,13 +15,16 @@ fn main() {
         .with_size(800, 600)
         .center_screen()
         .with_label("RustyEd");
-    wind.set_color(Color::Light2);
     let mut buf = TextBuffer::default();
     let mut editor = TextEditor::new(5, 40, 790, 555, &mut buf);
+    editor.set_text_font(Font::Courrier);
+    buf.set_tab_distance(4);
+    editor.set_linenumber_width(14);
+    editor.set_linenumber_fgcolor(Color::from_u32(0x8b8386));
     editor.set_trigger(CallbackTrigger::Changed);
-    editor.set_callback(Box::new(|| saved = false));
     let mut menu = MenuBar::new(0, 0, 800, 40, "");
     menu.set_color(Color::Light2);
+    wind.make_resizable(true);
     wind.end();
     wind.show();
     menu.add(
@@ -128,7 +131,7 @@ fn main() {
 
     let mut x = menu.get_item("Help/About").unwrap();
     x.set_label_color(Color::Red);
-    wind.make_resizable(true);
+    editor.set_callback(Box::new(|| saved = false));
     wind.set_callback(Box::new(|| {
         if saved == false {
             let x = choice("Would you like to save your work?", "Yes", "No", "");
