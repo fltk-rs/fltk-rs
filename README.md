@@ -93,6 +93,7 @@ fn main() {
 
 ### Events
 **Handling must be started after the drawing is done and the main window shown. i.e. after calling the Window::show() method.**
+
 Events can be handled using the set_callback method (as above) or free function, it will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the set_custom_handler() method can be used:
 ```rust
 some_widget.set_custom_handler(Box::new(|ev: app::Event| {
