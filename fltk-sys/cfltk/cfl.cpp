@@ -21,8 +21,15 @@ int Fl_event_key(void) { return Fl::event_key(); }
 
 const char *Fl_event_text(void) {
   char *buf = (char*)malloc(Fl::event_length() + 1);
-  strncpy(buf, Fl::event_text(), Fl::event_length() + 1);
-  return buf;
+  const char *ev_text = Fl::event_text();
+  int len = Fl::event_length();
+  if (buf && len != 0 && ev_text) {
+    strncpy(buf, ev_text, len + 1);
+    return buf;
+  } else {
+    free(buf);
+    return NULL;
+  }
 }
 
 int Fl_event_button(void) { return Fl::event_button(); }
