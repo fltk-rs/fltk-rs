@@ -52,6 +52,7 @@ fn main() {
     draw_gallery();
 
     wind.make_resizable(true);
+    wind.end();
     wind.show();
     app.run().unwrap();
 }

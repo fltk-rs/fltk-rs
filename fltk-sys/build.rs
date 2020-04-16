@@ -57,8 +57,11 @@ fn main() {
         .status()
         .unwrap();
 
-    let dst = cmake::Config::new("cfltk")
-        // .generator("Ninja")
+    let mut dst = cmake::Config::new("cfltk");
+    if cfg!(feature = "fltk-shared") {
+        dst.define("CFLTK_BUILD_SHARED", "ON");
+    }
+    let dst = dst
         .profile("RELEASE")
         .define("OPTION_ABI_VERSION:STRING", "10401")
         .define("OpenGL_GL_PREFERENCE", "GLVND")
@@ -86,55 +89,57 @@ fn main() {
         dst.join("lib").join("Release").display()
     );
 
-    // Change static to dylib to link dynamically, also change CMakeLists STATIC to SHARED
-    println!("cargo:rustc-link-lib=static=cfltk");
+    if !cfg!(feature = "fltk-shared") {
+        println!("cargo:rustc-link-lib=static=cfltk");
+    } else {
+        println!("cargo:rustc-link-lib=dylib=cfltk");
+    }
 
-    // Comment out all following code to link dynamically
-    println!("cargo:rustc-link-lib=static=fltk");
-    println!("cargo:rustc-link-lib=static=fltk_images");
-    println!("cargo:rustc-link-lib=static=fltk_jpeg");
-    println!("cargo:rustc-link-lib=static=fltk_png");
-    println!("cargo:rustc-link-lib=static=fltk_z");
+    if !cfg!(feature = "fltk-shared") {
+        println!("cargo:rustc-link-lib=static=fltk");
+        println!("cargo:rustc-link-lib=static=fltk_images");
+        println!("cargo:rustc-link-lib=static=fltk_jpeg");
+        println!("cargo:rustc-link-lib=static=fltk_png");
+        println!("cargo:rustc-link-lib=static=fltk_z");
 
-    match target_os.unwrap().as_str() {
-        "macos" => {
-            println!("cargo:rustc-link-lib=dylib=c++");
-            println!("cargo:rustc-link-lib=framework=Carbon");
-            println!("cargo:rustc-link-lib=framework=Cocoa");
-            println!("cargo:rustc-link-lib=framework=ApplicationServices");
-            println!("cargo:rustc-link-lib=dylib=z");
-        }
-        "windows" => {
-            if cfg!(target_env = "gnu") {
-                println!("cargo:rustc-link-lib=dylib=stdc++");
+        match target_os.unwrap().as_str() {
+            "macos" => {
+                println!("cargo:rustc-link-lib=dylib=c++");
+                println!("cargo:rustc-link-lib=framework=Carbon");
+                println!("cargo:rustc-link-lib=framework=Cocoa");
+                println!("cargo:rustc-link-lib=framework=ApplicationServices");
+                println!("cargo:rustc-link-lib=dylib=z");
             }
-            println!("cargo:rustc-link-lib=dylib=ws2_32");
-            // println!("cargo:rustc-link-lib=dylib=wsock32");
-            println!("cargo:rustc-link-lib=dylib=comctl32");
-            println!("cargo:rustc-link-lib=dylib=gdi32");
-            println!("cargo:rustc-link-lib=dylib=oleaut32");
-            println!("cargo:rustc-link-lib=dylib=ole32");
-            println!("cargo:rustc-link-lib=dylib=uuid");
-            println!("cargo:rustc-link-lib=dylib=shell32");
-            println!("cargo:rustc-link-lib=dylib=advapi32");
-            println!("cargo:rustc-link-lib=dylib=comdlg32");
-            println!("cargo:rustc-link-lib=dylib=winspool");
-            println!("cargo:rustc-link-lib=dylib=user32");
-            println!("cargo:rustc-link-lib=dylib=kernel32");
-            println!("cargo:rustc-link-lib=dylib=odbc32");
-            println!("cargo:rustc-link-lib=dylib=odbccp32");
-        }
-        _ => {
-            println!("cargo:rustc-link-lib=dylib=stdc++");
-            println!("cargo:rustc-link-lib=dylib=pthread");
-            println!("cargo:rustc-link-lib=dylib=X11");
-            println!("cargo:rustc-link-lib=dylib=Xext");
-            println!("cargo:rustc-link-lib=dylib=Xinerama");
-            println!("cargo:rustc-link-lib=dylib=Xcursor");
-            println!("cargo:rustc-link-lib=dylib=Xrender");
-            println!("cargo:rustc-link-lib=dylib=Xfixes");
-            println!("cargo:rustc-link-lib=dylib=Xft");
-            println!("cargo:rustc-link-lib=dylib=fontconfig");
+            "windows" => {
+                if cfg!(target_env = "gnu") {
+                    println!("cargo:rustc-link-lib=dylib=stdc++");
+                }
+                println!("cargo:rustc-link-lib=dylib=ws2_32");
+                println!("cargo:rustc-link-lib=dylib=comctl32");
+                println!("cargo:rustc-link-lib=dylib=gdi32");
+                println!("cargo:rustc-link-lib=dylib=oleaut32");
+                println!("cargo:rustc-link-lib=dylib=ole32");
+                println!("cargo:rustc-link-lib=dylib=uuid");
+                println!("cargo:rustc-link-lib=dylib=shell32");
+                println!("cargo:rustc-link-lib=dylib=advapi32");
+                println!("cargo:rustc-link-lib=dylib=comdlg32");
+                println!("cargo:rustc-link-lib=dylib=winspool");
+                println!("cargo:rustc-link-lib=dylib=user32");
+                println!("cargo:rustc-link-lib=dylib=kernel32");
+                println!("cargo:rustc-link-lib=dylib=odbc32");
+            }
+            _ => {
+                println!("cargo:rustc-link-lib=dylib=stdc++");
+                println!("cargo:rustc-link-lib=dylib=pthread");
+                println!("cargo:rustc-link-lib=dylib=X11");
+                println!("cargo:rustc-link-lib=dylib=Xext");
+                println!("cargo:rustc-link-lib=dylib=Xinerama");
+                println!("cargo:rustc-link-lib=dylib=Xcursor");
+                println!("cargo:rustc-link-lib=dylib=Xrender");
+                println!("cargo:rustc-link-lib=dylib=Xfixes");
+                println!("cargo:rustc-link-lib=dylib=Xft");
+                println!("cargo:rustc-link-lib=dylib=fontconfig");
+            }
         }
     }
 }

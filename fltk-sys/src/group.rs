@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_set_handler(
-        self_: *mut *mut Fl_Group,
+        self_: *mut Fl_Group,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Group_set_draw(
-        self_: *mut *mut Fl_Group,
+        self_: *mut Fl_Group,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -204,6 +204,9 @@ extern "C" {
     pub fn Fl_Group_top_window(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Group_takes_events(arg1: *const Fl_Group) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
 }
 extern "C" {
@@ -236,6 +239,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_child(arg1: *mut Fl_Group, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Group_resizable(self_: *mut Fl_Group, arg1: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -375,14 +381,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_set_handler(
-        self_: *mut *mut Fl_Pack,
+        self_: *mut Fl_Pack,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Pack_set_draw(
-        self_: *mut *mut Fl_Pack,
+        self_: *mut Fl_Pack,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -418,6 +424,9 @@ extern "C" {
     pub fn Fl_Pack_top_window(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Pack_takes_events(arg1: *const Fl_Pack) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
 }
 extern "C" {
@@ -450,6 +459,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_child(arg1: *mut Fl_Pack, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Pack_resizable(self_: *mut Fl_Pack, arg1: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -589,14 +601,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_set_handler(
-        self_: *mut *mut Fl_Scroll,
+        self_: *mut Fl_Scroll,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Scroll_set_draw(
-        self_: *mut *mut Fl_Scroll,
+        self_: *mut Fl_Scroll,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -632,6 +644,9 @@ extern "C" {
     pub fn Fl_Scroll_top_window(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Scroll_takes_events(arg1: *const Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Scroll_begin(self_: *mut Fl_Scroll);
 }
 extern "C" {
@@ -664,6 +679,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_child(arg1: *mut Fl_Scroll, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Scroll_resizable(self_: *mut Fl_Scroll, arg1: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -803,14 +821,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_set_handler(
-        self_: *mut *mut Fl_Tabs,
+        self_: *mut Fl_Tabs,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Tabs_set_draw(
-        self_: *mut *mut Fl_Tabs,
+        self_: *mut Fl_Tabs,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -846,6 +864,9 @@ extern "C" {
     pub fn Fl_Tabs_top_window(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Tabs_takes_events(arg1: *const Fl_Tabs) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -878,6 +899,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_child(arg1: *mut Fl_Tabs, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Tabs_resizable(self_: *mut Fl_Tabs, arg1: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1017,14 +1041,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_set_handler(
-        self_: *mut *mut Fl_Tile,
+        self_: *mut Fl_Tile,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Tile_set_draw(
-        self_: *mut *mut Fl_Tile,
+        self_: *mut Fl_Tile,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1060,6 +1084,9 @@ extern "C" {
     pub fn Fl_Tile_top_window(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Tile_takes_events(arg1: *const Fl_Tile) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1093,231 +1120,8 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tile_child(arg1: *mut Fl_Tile, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
 }
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct Fl_Wizard {
-    _unused: [u8; 0],
-}
 extern "C" {
-    pub fn Fl_Wizard_new(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        title: *const ::std::os::raw::c_char,
-    ) -> *mut Fl_Wizard;
-}
-extern "C" {
-    pub fn Fl_Wizard_x(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_y(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_width(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_height(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_label(arg1: *mut Fl_Wizard) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_label(arg1: *mut Fl_Wizard, title: *const ::std::os::raw::c_char);
-}
-extern "C" {
-    pub fn Fl_Wizard_redraw(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_show(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_hide(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_activate(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_deactivate(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_redraw_label(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_resize(
-        arg1: *mut Fl_Wizard,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
-    pub fn Fl_Wizard_tooltip(arg1: *mut Fl_Wizard) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_tooltip(arg1: *mut Fl_Wizard, txt: *const ::std::os::raw::c_char);
-}
-extern "C" {
-    pub fn Fl_Wizard_get_type(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_type(arg1: *mut Fl_Wizard, typ: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Wizard_color(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_uint;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_color(arg1: *mut Fl_Wizard, color: ::std::os::raw::c_uint);
-}
-extern "C" {
-    pub fn Fl_Wizard_label_color(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_uint;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_label_color(arg1: *mut Fl_Wizard, color: ::std::os::raw::c_uint);
-}
-extern "C" {
-    pub fn Fl_Wizard_label_font(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_label_font(arg1: *mut Fl_Wizard, font: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Wizard_label_size(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_label_size(arg1: *mut Fl_Wizard, sz: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Wizard_label_type(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_label_type(arg1: *mut Fl_Wizard, typ: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Wizard_box(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_box(arg1: *mut Fl_Wizard, typ: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Wizard_changed(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_changed(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_clear_changed(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_align(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_align(arg1: *mut Fl_Wizard, typ: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Wizard_delete(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_set_image(arg1: *mut Fl_Wizard, arg2: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Wizard_set_image_with_size(
-        arg1: *mut Fl_Wizard,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
-    pub fn Fl_Wizard_set_handler(
-        self_: *mut *mut Fl_Wizard,
-        cb: custom_handler_callback,
-        data: *mut ::std::os::raw::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Wizard_set_draw(
-        self_: *mut *mut Fl_Wizard,
-        cb: custom_draw_callback,
-        data: *mut ::std::os::raw::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Wizard_set_trigger(arg1: *mut Fl_Wizard, arg2: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Wizard_image(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_Wizard_parent(self_: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_Wizard_selection_color(arg1: *mut Fl_Wizard) -> ::std::os::raw::c_uint;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_selection_color(arg1: *mut Fl_Wizard, color: ::std::os::raw::c_uint);
-}
-extern "C" {
-    pub fn Fl_Wizard_do_callback(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_inside(
-        self_: *const Fl_Wizard,
-        arg1: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_window(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_Wizard_top_window(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_prev(arg1: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_value(arg1: *mut Fl_Wizard) -> *mut Fl_Widget;
-}
-extern "C" {
-    pub fn Fl_Wizard_set_value(arg1: *mut Fl_Wizard, arg2: *mut Fl_Widget);
-}
-extern "C" {
-    pub fn Fl_Wizard_begin(self_: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_end(self_: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_find(
-        self_: *mut Fl_Wizard,
-        arg1: *const ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_add(self_: *mut Fl_Wizard, arg1: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Wizard_insert(
-        self_: *mut Fl_Wizard,
-        arg1: *mut ::std::os::raw::c_void,
-        pos: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
-    pub fn Fl_Wizard_remove(self_: *mut Fl_Wizard, index: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Wizard_clear(self_: *mut Fl_Wizard);
-}
-extern "C" {
-    pub fn Fl_Wizard_children(self_: *mut Fl_Wizard) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Wizard_child(arg1: *mut Fl_Wizard, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+    pub fn Fl_Tile_resizable(self_: *mut Fl_Tile, arg1: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1472,14 +1276,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_set_handler(
-        self_: *mut *mut Fl_Color_Chooser,
+        self_: *mut Fl_Color_Chooser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Color_Chooser_set_draw(
-        self_: *mut *mut Fl_Color_Chooser,
+        self_: *mut Fl_Color_Chooser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1518,6 +1322,9 @@ extern "C" {
     pub fn Fl_Color_Chooser_top_window(
         arg1: *const Fl_Color_Chooser,
     ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_takes_events(arg1: *const Fl_Color_Chooser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
@@ -1564,4 +1371,10 @@ extern "C" {
         arg1: *mut Fl_Color_Chooser,
         index: ::std::os::raw::c_int,
     ) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_resizable(
+        self_: *mut Fl_Color_Chooser,
+        arg1: *mut ::std::os::raw::c_void,
+    );
 }

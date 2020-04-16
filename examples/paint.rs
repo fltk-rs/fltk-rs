@@ -8,6 +8,8 @@ fn main() {
     frame.set_frame(FrameType::DownBox);
     let mut x = 0;
     let mut y = 0;
+    wind.end();
+    wind.show();
     frame.set_custom_handler(Box::new(|ev| {
         // println!("{:?}", ev);
         set_draw_color(Color::Red);
@@ -19,7 +21,7 @@ fn main() {
                 y = coords.1;
                 draw_point(x, y);
                 true
-            },
+            }
             app::Event::Drag => {
                 let coords = app::event_coords();
                 // println!("{:?}", coords);
@@ -34,6 +36,5 @@ fn main() {
             _ => false,
         }
     }));
-    wind.show();
     app.run().unwrap();
 }

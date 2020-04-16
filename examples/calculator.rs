@@ -85,6 +85,10 @@ fn main() {
         but.set_color(Color::Light2);
     }
 
+    wind.make_resizable(false);
+    wind.end();
+    wind.show();
+
     app::set_callback(
         &but_ce,
         Box::new(|| {
@@ -343,7 +347,5 @@ fn main() {
             }
         }),
     );
-    wind.make_resizable(false);
-    wind.show();
     app.run().expect("Couldn't run calculator!");
 }

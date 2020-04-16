@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Spinner_set_handler(
-        self_: *mut *mut Fl_Spinner,
+        self_: *mut Fl_Spinner,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Spinner_set_draw(
-        self_: *mut *mut Fl_Spinner,
+        self_: *mut Fl_Spinner,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -202,6 +202,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Spinner_top_window(arg1: *const Fl_Spinner) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Spinner_takes_events(arg1: *const Fl_Spinner) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
@@ -386,14 +389,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Clock_set_handler(
-        self_: *mut *mut Fl_Clock,
+        self_: *mut Fl_Clock,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Clock_set_draw(
-        self_: *mut *mut Fl_Clock,
+        self_: *mut Fl_Clock,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -427,6 +430,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Clock_top_window(arg1: *const Fl_Clock) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Clock_takes_events(arg1: *const Fl_Clock) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -566,14 +572,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_set_handler(
-        self_: *mut *mut Fl_Chart,
+        self_: *mut Fl_Chart,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Chart_set_draw(
-        self_: *mut *mut Fl_Chart,
+        self_: *mut Fl_Chart,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -607,6 +613,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_top_window(arg1: *const Fl_Chart) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Chart_takes_events(arg1: *const Fl_Chart) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -818,14 +827,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_set_handler(
-        self_: *mut *mut Fl_Progress,
+        self_: *mut Fl_Progress,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Progress_set_draw(
-        self_: *mut *mut Fl_Progress,
+        self_: *mut Fl_Progress,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -859,6 +868,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_top_window(arg1: *const Fl_Progress) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Progress_takes_events(arg1: *const Fl_Progress) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;

@@ -88,24 +88,24 @@ impl RgbImage {
     pub fn into_png_image(self) -> Result<PngImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
         let _ = write_to_png_file(self, &path)?;
-        let ret = PngImage::new(path.clone()).copy();
-        std::fs::remove_file(path)?;
+        let ret = PngImage::new(&path).copy();
+        std::fs::remove_file(&path)?;
         Ok(ret)
     }
     /// Transforms the RgbImage to a JpegImage
     pub fn into_jpg_image(self) -> Result<JpegImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
         let _ = write_to_jpg_file(self, &path)?;
-        let ret = JpegImage::new(path.clone()).copy();
-        std::fs::remove_file(path)?;
+        let ret = JpegImage::new(&path).copy();
+        std::fs::remove_file(&path)?;
         Ok(ret)
     }
     /// Transforms the RgbImage to a BmpImage
     pub fn into_bmp_image(&self) -> Result<BmpImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
         let _ = write_to_bmp_file(self.clone(), &path)?;
-        let ret = BmpImage::new(path.clone()).copy();
-        std::fs::remove_file(path)?;
+        let ret = BmpImage::new(&path).copy();
+        std::fs::remove_file(&path)?;
         Ok(ret)
     }
 }

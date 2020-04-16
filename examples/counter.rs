@@ -19,6 +19,9 @@ fn main() {
         .size_of(&frame)
         .below_of(&frame, 0)
         .with_label("-");
+    wind.make_resizable(true);
+    wind.end();
+    wind.show();
     but_inc.set_callback(Box::new(|| {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
     }));
@@ -37,7 +40,5 @@ fn main() {
     but_dec.set_frame(FrameType::RoundUpBox);
     but_dec.set_label_size(18);
     // End theming
-    wind.make_resizable(true);
-    wind.show();
     app.run().unwrap();
 }

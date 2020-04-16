@@ -2,23 +2,20 @@
 
 Rust bindings for the FLTK Graphical User Interface library.
 
-The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small ( < 1mb for a hello world application after stripping), self-contained (no dependencies) and fast gui applications. 
+The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
+Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 
+- [Crate](https://crates.io/crates/fltk)
 - [Documentation](https://docs.rs/fltk)
+- [Link](https://github.com/fltk/fltk) to the official FLTK repository.
+- [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
 
 ## Usage
 Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.14"
-```
-Another option is to specify this git repository in your Cargo.toml file:
-```toml
-[dependencies]
-fltk = { git = "https://github.com/MoAlyousef/fltk-rs" }
-# or
-fltk = { git = "https://github.com/MoAlyousef/fltk-rs", branch = "stable" }
+fltk = "^0.2.18"
 ```
 
 An example hello world application:
@@ -43,8 +40,9 @@ fn main() {
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 200, "");
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
-    but.set_callback(Box::new(|| frame.set_label("Hello World!")));
+    wind.end();
     wind.show();
+    but.set_callback(Box::new(|| frame.set_label("Hello World!")));
     app.run().unwrap();
 }
 ```
@@ -80,26 +78,29 @@ fn main() {
         .size_of(&frame)
         .below_of(&frame, 0)
         .with_label("-");
+    wind.make_resizable(true);
+    wind.end();
+    wind.show();
     but_inc.set_callback(Box::new(|| {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
     }));
     but_dec.set_callback(Box::new(|| {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() - 1).to_string())
     }));
-    wind.make_resizable(true);
-    wind.show();
     app.run().unwrap();
 }
 ```
 
 ### Events
+**Handling must be started after the drawing is done and the main window shown. i.e. after calling the Window::show() method.**
+
 Events can be handled using the set_callback method (as above) or free function, it will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the set_custom_handler() method can be used:
 ```rust
 some_widget.set_custom_handler(Box::new(|ev: app::Event| {
-        match ev {
-            /* handle ev */
-        }
-    }));
+    match ev {
+        /* handle ev */
+    }
+}));
 ```
 
 ### Theming
@@ -122,8 +123,8 @@ Themes of individual widgets can be optionally modified using the provided metho
 ## Dependencies
 
 CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. 
-- Windows: None.
-- MacOs: None.
+- Windows: No dependencies.
+- MacOs: No dependencies.
 - Linux: X11 development headers need to be installed for development. 
 For Debian-based distribution, that means running:
 ```
@@ -230,7 +231,6 @@ Most common widgets are implemented:
 - Clock
 - Chart
 - Progress (progress bar)
-- Wizard
 - ColorChooser
 - Drawing primitives
 

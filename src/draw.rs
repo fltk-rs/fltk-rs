@@ -1,5 +1,5 @@
-pub use crate::prelude::*;
 use crate::image::RgbImage;
+pub use crate::prelude::*;
 use fltk_sys::draw::*;
 use std::os::raw;
 
@@ -69,14 +69,17 @@ pub fn draw_pie(x: i32, y: i32, w: i32, h: i32, a: f64, b: f64) {
 }
 
 /// Captures part of the window and returns raw data
-pub fn capture_window<Window: WindowTrait>(win: &mut Window) -> RgbImage {
+pub fn capture_window<Window: WindowTrait>(win: &mut Window) -> Option<RgbImage> {
     let cp = win.width() as usize * win.height() as usize * 3;
     win.show();
     unsafe {
         let x = cfl_read_image(std::ptr::null_mut(), 0, 0, win.width(), win.height(), 0);
-        assert!(!x.is_null(), "Failed to read image from region!");
-        let x = std::slice::from_raw_parts(x, cp);
-        RgbImage::new(x.to_vec(), win.width(), win.height())
+        if x.is_null() {
+            None
+        } else {
+            let x = std::slice::from_raw_parts(x, cp);
+            Some(RgbImage::new(x.to_vec(), win.width(), win.height()))
+        }
     }
 }
 
@@ -127,13 +130,13 @@ pub fn pop_clip() {
 }
 
 /// Transforms raw data to png file
-pub fn write_to_png_file(
-    rgb_image: RgbImage,
-    path: &std::path::Path,
-) -> Result<(), FltkError> {
+pub fn write_to_png_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
     let (data, w, h) = rgb_image.into_parts();
-    let path = path.to_str().unwrap();
-    let path = std::ffi::CString::new(path).unwrap();
+    let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
+        std::io::ErrorKind::Other,
+        "Could not convert path to string!",
+    )))?;
+    let path = std::ffi::CString::new(path)?;
     unsafe {
         match cfl_raw_image_to_png(
             data.as_ptr() as *mut u8,
@@ -141,7 +144,7 @@ pub fn write_to_png_file(
             w,
             h,
         ) {
-            -1 => Err(FltkError::Io(std::io::Error::new(
+            -1 => Err(FltkError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not write image!",
             ))),
@@ -151,13 +154,13 @@ pub fn write_to_png_file(
 }
 
 /// Transforms raw data to jpg file
-pub fn write_to_jpg_file(
-    rgb_image: RgbImage,
-    path: &std::path::Path,
-) -> Result<(), FltkError> {
+pub fn write_to_jpg_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
     let (data, w, h) = rgb_image.into_parts();
-    let path = path.to_str().unwrap();
-    let path = std::ffi::CString::new(path).unwrap();
+    let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
+        std::io::ErrorKind::Other,
+        "Could not convert path to string!",
+    )))?;
+    let path = std::ffi::CString::new(path)?;
     unsafe {
         match cfl_raw_image_to_jpg(
             data.as_ptr() as *mut u8,
@@ -165,7 +168,7 @@ pub fn write_to_jpg_file(
             w,
             h,
         ) {
-            -1 => Err(FltkError::Io(std::io::Error::new(
+            -1 => Err(FltkError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not write image!",
             ))),
@@ -175,13 +178,13 @@ pub fn write_to_jpg_file(
 }
 
 /// Transforms raw data to bmp file
-pub fn write_to_bmp_file(
-    rgb_image: RgbImage,
-    path: &std::path::Path,
-) -> Result<(), FltkError> {
+pub fn write_to_bmp_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
     let (data, w, h) = rgb_image.into_parts();
-    let path = path.to_str().unwrap();
-    let path = std::ffi::CString::new(path).unwrap();
+    let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
+        std::io::ErrorKind::Other,
+        "Could not convert path to string!",
+    )))?;
+    let path = std::ffi::CString::new(path)?;
     unsafe {
         match cfl_raw_image_to_bmp(
             data.as_ptr() as *mut u8,
@@ -189,7 +192,7 @@ pub fn write_to_bmp_file(
             w,
             h,
         ) {
-            -1 => Err(FltkError::Io(std::io::Error::new(
+            -1 => Err(FltkError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not write image!",
             ))),

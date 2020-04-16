@@ -161,14 +161,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_set_handler(
-        self_: *mut *mut Fl_Browser,
+        self_: *mut Fl_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Browser_set_draw(
-        self_: *mut *mut Fl_Browser,
+        self_: *mut Fl_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -202,6 +202,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_top_window(arg1: *const Fl_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Browser_takes_events(arg1: *const Fl_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Browser_remove(arg1: *mut Fl_Browser, line: ::std::os::raw::c_int);
@@ -440,14 +443,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_handler(
-        self_: *mut *mut Fl_Hold_Browser,
+        self_: *mut Fl_Hold_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_draw(
-        self_: *mut *mut Fl_Hold_Browser,
+        self_: *mut Fl_Hold_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -484,6 +487,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_top_window(arg1: *const Fl_Hold_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_takes_events(arg1: *const Fl_Hold_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_remove(arg1: *mut Fl_Hold_Browser, line: ::std::os::raw::c_int);
@@ -738,14 +744,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_handler(
-        self_: *mut *mut Fl_Select_Browser,
+        self_: *mut Fl_Select_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_draw(
-        self_: *mut *mut Fl_Select_Browser,
+        self_: *mut Fl_Select_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -787,6 +793,9 @@ extern "C" {
     pub fn Fl_Select_Browser_top_window(
         arg1: *const Fl_Select_Browser,
     ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_takes_events(arg1: *const Fl_Select_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_remove(arg1: *mut Fl_Select_Browser, line: ::std::os::raw::c_int);
@@ -1037,14 +1046,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_handler(
-        self_: *mut *mut Fl_Multi_Browser,
+        self_: *mut Fl_Multi_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_draw(
-        self_: *mut *mut Fl_Multi_Browser,
+        self_: *mut Fl_Multi_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1083,6 +1092,9 @@ extern "C" {
     pub fn Fl_Multi_Browser_top_window(
         arg1: *const Fl_Multi_Browser,
     ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_takes_events(arg1: *const Fl_Multi_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_remove(arg1: *mut Fl_Multi_Browser, line: ::std::os::raw::c_int);
@@ -1327,14 +1339,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_set_handler(
-        self_: *mut *mut Fl_File_Browser,
+        self_: *mut Fl_File_Browser,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_File_Browser_set_draw(
-        self_: *mut *mut Fl_File_Browser,
+        self_: *mut Fl_File_Browser,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
@@ -1371,6 +1383,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_top_window(arg1: *const Fl_File_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Browser_takes_events(arg1: *const Fl_File_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_File_Browser_remove(arg1: *mut Fl_File_Browser, line: ::std::os::raw::c_int);

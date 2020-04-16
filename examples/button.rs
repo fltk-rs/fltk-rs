@@ -28,7 +28,9 @@ impl MainWindow {
         }
     }
     pub fn draw_elements(mut self) {
-
+        self.wind.make_resizable(true);
+        self.wind.end();
+        self.wind.show();
         self.but1
             .clone()
             .set_custom_handler(Box::new(|ev: app::Event| match ev {
@@ -52,7 +54,6 @@ impl MainWindow {
                     return false;
                 }
             }));
-
         app::set_callback(
             &self.but2.clone(),
             Box::new(|| match app::event() {
@@ -68,7 +69,5 @@ impl MainWindow {
                 _ => println!("{:?}", app::event()),
             }),
         );
-        self.wind.make_resizable(true);
-        self.wind.show();
     }
 }
