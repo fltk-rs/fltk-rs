@@ -22,16 +22,18 @@ fn main() {
     editor.set_callback(Box::new(|| saved = false));
     let mut menu = MenuBar::new(0, 0, 800, 40, "");
     menu.set_color(Color::Light2);
-
+    wind.end();
+    wind.show();
     menu.add(
         "File/New...",
         Shortcut::Ctrl + 'n',
         MenuFlag::Normal,
         Box::new(|| {
-            if editor.text() != "" {
+            if editor.buffer().text() != "" {
                 let x = choice("File unsaved, Do you wish to continue?", "Yes", "No!", "h");
                 if x == 0 {
-                    editor.set_text("");
+                    // editor.buffer().set_text("");
+                    buf.set_text("");
                 }
             }
         }),
@@ -51,7 +53,7 @@ fn main() {
                 return;
             }
             match path::Path::new(&filename).exists() {
-                true => editor.set_text(fs::read_to_string(&filename).unwrap().as_str()),
+                true => buf.set_text(fs::read_to_string(&filename).unwrap().as_str()),
                 false => alert("File does not exist!"),
             }
         }),
@@ -140,7 +142,6 @@ fn main() {
             std::process::exit(0);
         }
     }));
-    wind.show();
     app.run().expect("Couldn't run editor");
 }
 
@@ -156,7 +157,7 @@ fn save_file(editor: &mut TextEditor, filename: &str, saved: &mut bool) {
         }
         match path::Path::new(&filename).exists() {
             true => {
-                fs::write(&filename, editor.text()).unwrap();
+                fs::write(&filename, editor.buffer().text()).unwrap();
                 *saved = true;
             }
             false => alert("Please specify a file!"),
@@ -164,7 +165,7 @@ fn save_file(editor: &mut TextEditor, filename: &str, saved: &mut bool) {
     } else {
         match path::Path::new(&filename).exists() {
             true => {
-                fs::write(&filename, editor.text()).unwrap();
+                fs::write(&filename, editor.buffer().text()).unwrap();
                 *saved = true;
             }
             false => alert("Please specify a file!"),

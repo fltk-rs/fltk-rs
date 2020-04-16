@@ -497,7 +497,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
                 }
             }
-            unsafe fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
+            fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let ev: Event = mem::transmute(_ev);
@@ -514,7 +514,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_handler(self._inner, callback, data);
                 }
             }
-            unsafe fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
+            fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
                 unsafe {
                     unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
@@ -1293,8 +1293,6 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_buffer").as_str(),
         name.span(),
     );
-    let set_text = Ident::new(format!("{}_{}", name_str, "set_text").as_str(), name.span());
-    let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
     let text_font = Ident::new(
         format!("{}_{}", name_str, "text_font").as_str(),
         name.span(),
@@ -1321,11 +1319,6 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
     );
     let text_size = Ident::new(
         format!("{}_{}", name_str, "text_size").as_str(),
-        name.span(),
-    );
-    let append = Ident::new(format!("{}_{}", name_str, "append").as_str(), name.span());
-    let buffer_length = Ident::new(
-        format!("{}_{}", name_str, "buffer_length").as_str(),
         name.span(),
     );
     let scroll = Ident::new(format!("{}_{}", name_str, "scroll").as_str(), name.span());
@@ -1355,7 +1348,6 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "move_down").as_str(),
         name.span(),
     );
-    let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
     let show_cursor = Ident::new(
         format!("{}_{}", name_str, "show_cursor").as_str(),
         name.span(),
@@ -1483,7 +1475,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl DisplayTrait for #name {
-            fn get_buffer<'a>(&'a self) -> &'a TextBuffer {
+            fn buffer<'a>(&'a self) -> &'a TextBuffer {
                 unsafe {
                     let buffer = #get_buffer(self._inner);
                     assert!(!buffer.is_null(), "Failed to get associated buffer!");
@@ -1496,22 +1488,6 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_buffer(self._inner, buffer.as_ptr())
                 }
             }
-            fn set_text(&mut self, txt: &str) {
-                unsafe {
-                    let txt = CString::new(txt).unwrap();
-                    #set_text(self._inner, txt.into_raw() as *const raw::c_char)
-                }
-            }
-
-            fn text(&self) -> String {
-                unsafe {
-                    let text = #text(self._inner);
-                    assert!(!text.is_null(), "Failed to get text from associated buffer!");
-                    CString::from_raw(text as *mut raw::c_char)
-                        .to_string_lossy().to_string()
-                }
-            }
-
             fn text_font(&self) -> Font {
                 unsafe { mem::transmute(#text_font(self._inner)) }
             }
@@ -1531,17 +1507,6 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_text_size(&mut self, sz: u32) {
                 assert!(sz <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe { #set_text_size(self._inner, sz as i32) }
-            }
-            fn append(&mut self, text: &str) {
-                let text = CString::new(text).unwrap();
-                unsafe {
-                    #append(self._inner, text.into_raw() as *const raw::c_char)
-                }
-            }
-            fn buffer_length(&self) -> u32 {
-                unsafe {
-                    #buffer_length(self._inner) as u32
-                }
             }
             fn scroll(&mut self, topLineNum: u32, horizOffset: u32) {
                 unsafe {
@@ -1596,13 +1561,6 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn move_down(&mut self){
                 unsafe {
                     #move_down(self._inner);
-                }
-            }
-            fn remove(&mut self, start: u32, end: u32) {
-                assert!(start <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                assert!(end <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                unsafe {
-                    #remove(self._inner, start as i32, end as i32);
                 }
             }
             fn show_cursor(&mut self, val: bool) {

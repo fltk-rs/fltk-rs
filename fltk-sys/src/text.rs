@@ -444,21 +444,6 @@ extern "C" {
     pub fn Fl_Text_Display_set_text_color(arg1: *mut Fl_Text_Display, n: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Display_text(arg1: *mut Fl_Text_Display) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn Fl_Text_Display_set_text(
-        arg1: *mut Fl_Text_Display,
-        arg2: *const ::std::os::raw::c_char,
-    );
-}
-extern "C" {
-    pub fn Fl_Text_Display_append(arg1: *mut Fl_Text_Display, arg2: *const ::std::os::raw::c_char);
-}
-extern "C" {
-    pub fn Fl_Text_Display_buffer_length(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
-}
-extern "C" {
     pub fn Fl_Text_Display_scroll(
         arg1: *mut Fl_Text_Display,
         topLineNum: ::std::os::raw::c_int,
@@ -496,13 +481,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Display_move_down(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Text_Display_remove(
-        self_: *mut Fl_Text_Display,
-        start: ::std::os::raw::c_int,
-        end: ::std::os::raw::c_int,
-    );
 }
 extern "C" {
     pub fn Fl_Text_Display_show_cursor(arg1: *mut Fl_Text_Display, boolean: ::std::os::raw::c_int);
@@ -891,18 +869,6 @@ extern "C" {
     pub fn Fl_Text_Editor_set_text_color(arg1: *mut Fl_Text_Editor, n: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_text(arg1: *mut Fl_Text_Editor) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn Fl_Text_Editor_set_text(arg1: *mut Fl_Text_Editor, arg2: *const ::std::os::raw::c_char);
-}
-extern "C" {
-    pub fn Fl_Text_Editor_append(arg1: *mut Fl_Text_Editor, arg2: *const ::std::os::raw::c_char);
-}
-extern "C" {
-    pub fn Fl_Text_Editor_buffer_length(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
-}
-extern "C" {
     pub fn Fl_Text_Editor_scroll(
         arg1: *mut Fl_Text_Editor,
         topLineNum: ::std::os::raw::c_int,
@@ -940,13 +906,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_move_down(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Text_Editor_remove(
-        self_: *mut Fl_Text_Editor,
-        start: ::std::os::raw::c_int,
-        end: ::std::os::raw::c_int,
-    );
 }
 extern "C" {
     pub fn Fl_Text_Editor_show_cursor(arg1: *mut Fl_Text_Editor, boolean: ::std::os::raw::c_int);
@@ -1385,26 +1344,6 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_text(arg1: *mut Fl_Simple_Terminal) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn Fl_Simple_Terminal_set_text(
-        arg1: *mut Fl_Simple_Terminal,
-        arg2: *const ::std::os::raw::c_char,
-    );
-}
-extern "C" {
-    pub fn Fl_Simple_Terminal_append(
-        arg1: *mut Fl_Simple_Terminal,
-        arg2: *const ::std::os::raw::c_char,
-    );
-}
-extern "C" {
-    pub fn Fl_Simple_Terminal_buffer_length(
-        arg1: *const Fl_Simple_Terminal,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
     pub fn Fl_Simple_Terminal_scroll(
         arg1: *mut Fl_Simple_Terminal,
         topLineNum: ::std::os::raw::c_int,
@@ -1447,13 +1386,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_move_down(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Simple_Terminal_remove(
-        self_: *mut Fl_Simple_Terminal,
-        start: ::std::os::raw::c_int,
-        end: ::std::os::raw::c_int,
-    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_show_cursor(

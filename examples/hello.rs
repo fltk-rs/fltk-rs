@@ -8,6 +8,7 @@ fn main() {
     let image = SvgImage::new(&PathBuf::from("screenshots/RustLogo.svg"));
     frame.set_image(&image);
     wind.make_resizable(true);
+    wind.end();
     wind.show();
     app.run().unwrap();
 }

@@ -8,34 +8,33 @@ fn main() {
     frame.set_frame(FrameType::DownBox);
     let mut x = 0;
     let mut y = 0;
-    unsafe {
-        frame.set_custom_handler(Box::new(|ev| {
-            // println!("{:?}", ev);
-            set_draw_color(Color::Red);
-            set_line_style(LineStyle::Solid, 1);
-            match ev {
-                app::Event::Push => {
-                    let coords = app::event_coords();
-                    x = coords.0;
-                    y = coords.1;
-                    draw_point(x, y);
-                    true
-                }
-                app::Event::Drag => {
-                    let coords = app::event_coords();
-                    // println!("{:?}", coords);
-                    if coords.0 < 5 || coords.0 > 795 || coords.1 < 5 || coords.1 > 595 {
-                        return false;
-                    }
-                    draw_line(x, y, coords.0, coords.1);
-                    x = coords.0;
-                    y = coords.1;
-                    true
-                }
-                _ => false,
-            }
-        }));
-    }
+    wind.end();
     wind.show();
+    frame.set_custom_handler(Box::new(|ev| {
+        // println!("{:?}", ev);
+        set_draw_color(Color::Red);
+        set_line_style(LineStyle::Solid, 1);
+        match ev {
+            app::Event::Push => {
+                let coords = app::event_coords();
+                x = coords.0;
+                y = coords.1;
+                draw_point(x, y);
+                true
+            }
+            app::Event::Drag => {
+                let coords = app::event_coords();
+                // println!("{:?}", coords);
+                if coords.0 < 5 || coords.0 > 795 || coords.1 < 5 || coords.1 > 595 {
+                    return false;
+                }
+                draw_line(x, y, coords.0, coords.1);
+                x = coords.0;
+                y = coords.1;
+                true
+            }
+            _ => false,
+        }
+    }));
     app.run().unwrap();
 }

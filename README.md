@@ -15,7 +15,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.17"
+fltk = "^0.2.18"
 ```
 
 An example hello world application:
@@ -40,8 +40,9 @@ fn main() {
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 200, "");
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
-    but.set_callback(Box::new(|| frame.set_label("Hello World!")));
+    wind.end();
     wind.show();
+    but.set_callback(Box::new(|| frame.set_label("Hello World!")));
     app.run().unwrap();
 }
 ```
@@ -77,28 +78,28 @@ fn main() {
         .size_of(&frame)
         .below_of(&frame, 0)
         .with_label("-");
+    wind.make_resizable(true);
+    wind.end();
+    wind.show();
     but_inc.set_callback(Box::new(|| {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
     }));
     but_dec.set_callback(Box::new(|| {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() - 1).to_string())
     }));
-    wind.make_resizable(true);
-    wind.show();
     app.run().unwrap();
 }
 ```
 
 ### Events
-Events can be handled using the set_callback method (as above) or free function, it will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the unsafe set_custom_handler() method can be used:
+**Handling must be started after the drawing is done and the main window shown. i.e. after calling the Window::show() method.**
+Events can be handled using the set_callback method (as above) or free function, it will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the set_custom_handler() method can be used:
 ```rust
-    unsafe {
-        some_widget.set_custom_handler(Box::new(|ev: app::Event| {
-            match ev {
-                /* handle ev */
-            }
-        }));
+some_widget.set_custom_handler(Box::new(|ev: app::Event| {
+    match ev {
+        /* handle ev */
     }
+}));
 ```
 
 ### Theming

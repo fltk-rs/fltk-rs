@@ -180,11 +180,11 @@ pub trait WidgetTrait {
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
-    unsafe fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
+    fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
     /// Set a custom draw method
-    unsafe fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
+    fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Returns the parent of the widget
     fn parent(&self) -> Option<Widget>;
     /// Gets the selection color of the widget
@@ -371,13 +371,9 @@ pub trait ValuatorTrait: WidgetTrait {
 /// Defines the methods implemented by TextDisplay and TextEditor
 pub trait DisplayTrait: WidgetTrait {
     /// Get the associated TextBuffer
-    fn get_buffer<'a>(&'a self) -> &'a TextBuffer;
+    fn buffer<'a>(&'a self) -> &'a TextBuffer;
     /// Sets the associated TextBuffer
     fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer);
-    /// Set the text inside the widget
-    fn set_text(&mut self, txt: &str);
-    /// Returns the text inside the widget
-    fn text(&self) -> String;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -390,10 +386,6 @@ pub trait DisplayTrait: WidgetTrait {
     fn text_size(&self) -> u32;
     /// Sets the text size
     fn set_text_size(&mut self, sz: u32);
-    /// Append text to Display widget
-    fn append(&mut self, text: &str);
-    /// Return buffer length of Display widget                  
-    fn buffer_length(&self) -> u32;
     /// Scroll down the Display widget
     fn scroll(&mut self, top_line_num: u32, horiz_offset: u32);
     /// Insert into Display widget      
@@ -412,8 +404,6 @@ pub trait DisplayTrait: WidgetTrait {
     fn move_up(&mut self);
     /// Moves the cursor down
     fn move_down(&mut self);
-    /// Remove text from start position to end position
-    fn remove(&mut self, start: u32, end: u32);
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget

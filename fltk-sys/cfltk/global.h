@@ -157,10 +157,6 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_text_size(widget *, int s);                                \
   unsigned int widget##_text_color(const widget *);                            \
   void widget##_set_text_color(widget *, unsigned int n);                      \
-  const char *widget##_text(widget *);                                         \
-  void widget##_set_text(widget *, const char *);                              \
-  void widget##_append(widget *, const char *);                                \
-  int widget##_buffer_length(const widget *);                                  \
   void widget##_scroll(widget *, int topLineNum, int horizOffset);             \
   void widget##_insert(widget *, const char *text);                            \
   void widget##_set_insert_position(widget *, int newPos);                     \
@@ -171,7 +167,6 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   int widget##_move_left(widget *);                                            \
   int widget##_move_up(widget *);                                              \
   int widget##_move_down(widget *);                                            \
-  void widget##_remove(widget *self, int start, int end);                      \
   void widget##_show_cursor(widget *, int boolean);                            \
   void widget##_set_style_table_entry(widget *self, void *sbuf,                \
                                       unsigned int *color, int *font,          \
@@ -571,10 +566,6 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }
 
 #define DISPLAY_DEFINE(widget)                                                 \
-  const char *widget##_text(widget *self) { return self->buffer()->text(); }   \
-  void widget##_set_text(widget *self, const char *txt) {                      \
-    LOCK(self->buffer()->text(txt);)                                           \
-  }                                                                            \
   int widget##_text_font(const widget *self) { return self->textfont(); }      \
   void widget##_set_text_font(widget *self, int s) {                           \
     LOCK(self->textfont(s);)                                                   \
@@ -588,13 +579,6 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   void widget##_set_text_color(widget *self, unsigned int n) {                 \
     LOCK(self->textcolor(n);)                                                  \
-  }                                                                            \
-  void widget##_append(widget *self, const char *txt) {                        \
-    LOCK(Fl_Text_Buffer *buff = self->buffer(); buff->append(txt);             \
-         self->buffer(buff);)                                                  \
-  }                                                                            \
-  int widget##_buffer_length(const widget *self) {                             \
-    return self->buffer()->length();                                           \
   }                                                                            \
   void widget##_scroll(widget *self, int topLineNum, int horizOffset) {        \
     LOCK(self->scroll(topLineNum, horizOffset);)                               \
@@ -631,10 +615,6 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     int ret;                                                                   \
     LOCK(ret = self->move_down());                                             \
     return ret;                                                                \
-  }                                                                            \
-  void widget##_remove(widget *self, int start, int end) {                     \
-    LOCK(Fl_Text_Buffer *buff = self->buffer(); buff->remove(start, end);      \
-         self->buffer(buff);)                                                  \
   }                                                                            \
   void widget##_show_cursor(widget *self, int boolean) {                       \
     LOCK(if (boolean) self->show_cursor(); else self->hide_cursor();)          \
