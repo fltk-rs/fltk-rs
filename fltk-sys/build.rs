@@ -61,6 +61,9 @@ fn main() {
     if cfg!(feature = "fltk-shared") {
         dst.define("CFLTK_BUILD_SHARED", "ON");
     }
+    if cfg!(feature = "use-ninja") {
+        dst.generator("Ninja");
+    }
     let dst = dst
         .profile("RELEASE")
         .define("OPTION_ABI_VERSION:STRING", "10401")

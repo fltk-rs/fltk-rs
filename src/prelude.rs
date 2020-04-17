@@ -396,6 +396,8 @@ pub trait DisplayTrait: WidgetTrait {
     fn set_insert_position(&mut self, new_pos: u32);
     /// Return the insert position                
     fn insert_position(&self) -> u32;
+    /// Gets the x and y positions of the cursor
+    fn position_to_xy(&self, pos: u32) -> (u32, u32);
     /// Counts the lines from start to end                         
     fn count_lines(&self, start: u32, end: u32, is_line_start: bool) -> u32;
     /// Moves the cursor right
