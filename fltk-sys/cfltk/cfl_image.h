@@ -1,10 +1,19 @@
 #pragma once
 
-#include "global.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define IMAGE_DECLARE(image)                                                   \
+  typedef struct image image;                                                  \
+  image *image##_new(const char *filename);                                    \
+  void image##_draw(image *, int X, int Y, int W, int H);                      \
+  int image##_width(image *);                                                  \
+  int image##_height(image *);                                                 \
+  void image##_delete(image *);                                                \
+  int image##_count(image *self);                                              \
+  const char *const *image##_data(image *self);                                \
+  image *image##_copy(image *self);
 
 typedef struct Fl_Image Fl_Image;
 

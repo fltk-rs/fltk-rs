@@ -1,5 +1,5 @@
-use fltk_sys::fl::Fl_get_color;
 use crate::app::*;
+use fltk_sys::fl::Fl_get_color;
 
 /// Defines label types
 #[repr(i32)]
@@ -79,7 +79,6 @@ pub enum FrameType {
     FreeBoxType,
 }
 
-
 /// Defines alignment rules used by FLTK for labels
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -120,9 +119,7 @@ impl Font {
         if idx >= get_font_count() {
             return Font::Helvetica;
         }
-        unsafe {
-            std::mem::transmute(idx as i32)
-        }
+        unsafe { std::mem::transmute(idx as i32) }
     }
     /// Gets the font by its name, can be queried via the app::get_font_names()
     pub fn by_name(name: &str) -> Font {
@@ -217,7 +214,7 @@ pub enum Event {
     MouseWheel,
 }
 
-/// Defines the inputted virtual keycode 
+/// Defines the inputted virtual keycode
 #[repr(i32)]
 #[derive(Copy, Clone, PartialEq)]
 pub enum Key {
@@ -392,7 +389,6 @@ pub enum LineStyle {
     JoinRound = 2000,
     JoinBevel = 3000,
 }
-
 
 pub trait WidgetType {
     fn to_int(self) -> i32;

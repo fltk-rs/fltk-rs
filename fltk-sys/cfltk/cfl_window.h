@@ -1,10 +1,19 @@
 #pragma once
 
-#include "global.h"
+#include "cfl_group.h"
+#include "cfl_widget.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define WINDOW_DECLARE(widget)                                                 \
+  void widget##_make_modal(widget *, unsigned int boolean);                    \
+  void widget##_fullscreen(widget *, unsigned int boolean);                    \
+  void widget##_make_current(widget *);                                        \
+  void widget##_set_icon(widget *, const void *);                              \
+  void *widget##_icon(const widget *);                                         \
+  void widget##_make_resizable(widget *self, void *);
 
 WIDGET_DECLARE(Fl_Window)
 

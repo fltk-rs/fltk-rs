@@ -1,7 +1,6 @@
 #include "cfl_box.h"
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Image.H>
-#include <cstring>
-#include <string>
+#include <new>
 
 WIDGET_DEFINE(Fl_Box)

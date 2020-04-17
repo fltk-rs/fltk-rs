@@ -18,12 +18,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.20"
+fltk = "^0.2.21"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
 [dependencies.fltk]
-version = "^0.2.20"
+version = "^0.2.21"
 features = ["fltk-shared"]
 ```
 
@@ -121,7 +121,7 @@ FLTK offers 4 application themes (called schemes):
 - Plastic
 
 These can be set using the App::set_scheme() function.
-Themes of individual widgets can be optionally modified using the provided methods in the WidgetTrait, such as set_color(), set_label_font(), set_frame_type() etc:
+Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait, such as set_color(), set_label_font(), set_frame_type() etc:
 ```rust
     some_button.set_color(Color::Light1); // You can use one of the provided colors in the fltk enums
     some_button.set_color(Color::from_rgb(255, 0, 0)); // Or you can specify a color by rgb or hex/u32 value
@@ -257,3 +257,9 @@ Most common widgets are implemented:
 ## Contributions
 
 Contributions are very welcome!
+
+Regarding the wrapping code: I had issues with using Rust-Bindgen directly on C++ code. So wrapping must be in C/C++. The wrapping headers must be in C89 (no issues running bindgen on them). The wrapping code in .cpp files can be in C++98 or C++11, as not to impose on users having to install a new C++ compiler. Bindgen had a dependency on LLVM and libclang, so I prefer that it not be added as dependency to this project. However, I strongly advise installing it and using it for development. You can see the fltk-sys/bind.sh script on how bindgen is used with this project for development. C/C++ must be formatted using clang-format. Rust code must be formatted using rustfmt. 
+
+## License
+
+Code licensed under the MIT license!

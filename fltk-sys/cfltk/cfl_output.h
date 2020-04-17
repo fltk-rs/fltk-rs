@@ -1,6 +1,7 @@
 #pragma once
 
-#include "global.h"
+#include "cfl_input.h"
+#include "cfl_widget.h"
 
 #ifdef __cplusplus
 extern "C" {

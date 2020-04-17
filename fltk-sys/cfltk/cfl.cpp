@@ -3,7 +3,7 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Widget.H>
 #include <new>
-#include <string>
+#include <string.h>
 
 int Fl_run(void) { return Fl::run(); }
 
@@ -20,7 +20,7 @@ int Fl_event(void) { return Fl::event(); }
 int Fl_event_key(void) { return Fl::event_key(); }
 
 const char *Fl_event_text(void) {
-  char *buf = (char*)malloc(Fl::event_length() + 1);
+  char *buf = (char *)malloc(Fl::event_length() + 1);
   const char *ev_text = Fl::event_text();
   int len = Fl::event_length();
   if (buf && len != 0 && ev_text) {
@@ -60,10 +60,6 @@ unsigned int Fl_get_color(unsigned char r, unsigned char g, unsigned char b) {
   return fl_rgb_color(r, g, b);
 }
 
-const char* Fl_get_font(int idx) {
-  return Fl::get_font(idx);
-}
+const char *Fl_get_font(int idx) { return Fl::get_font(idx); }
 
-unsigned char Fl_set_fonts(const char *c) {
-  return Fl::set_fonts(c);
-}
+unsigned char Fl_set_fonts(const char *c) { return Fl::set_fonts(c); }

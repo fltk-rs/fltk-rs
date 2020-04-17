@@ -69,7 +69,7 @@ pub fn draw_pie(x: i32, y: i32, w: i32, h: i32, a: f64, b: f64) {
 }
 
 /// Captures part of the window and returns raw data
-pub fn capture_window<Window: WindowTrait>(win: &mut Window) -> Option<RgbImage> {
+pub fn capture_window<Window: WindowExt>(win: &mut Window) -> Option<RgbImage> {
     let cp = win.width() as usize * win.height() as usize * 3;
     win.show();
     unsafe {
@@ -84,7 +84,7 @@ pub fn capture_window<Window: WindowTrait>(win: &mut Window) -> Option<RgbImage>
 }
 
 // /// Captures part of the window, returns a raw RGB data
-// pub fn capture_window_part<Window: WindowTrait>(
+// pub fn capture_window_part<Window: WindowExt>(
 //     win: &Window,
 //     x: i32,
 //     y: i32,

@@ -1,6 +1,6 @@
 use fltk::{app, text::*, window::*};
-use std::process::{Command, Stdio};
 use std::path::{Path, PathBuf};
+use std::process::{Command, Stdio};
 
 struct Term<'a> {
     term: TextDisplay,
@@ -135,4 +135,3 @@ fn main() {
     term.handle_event();
     app.run().unwrap();
 }
-

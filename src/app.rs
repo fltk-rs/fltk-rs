@@ -191,10 +191,10 @@ pub fn screen_size() -> (f64, f64) {
     }
 }
 
-/// Used for widgets implementing the InputTrait, pastes content from the clipboard
+/// Used for widgets implementing the InputExt, pastes content from the clipboard
 pub fn paste<T>(widget: T)
 where
-    T: WidgetTrait + InputTrait,
+    T: WidgetExt + InputExt,
 {
     unsafe {
         Fl_paste(widget.as_widget_ptr() as *mut raw::c_void, 1);
@@ -204,7 +204,7 @@ where
 /// Sets the callback of a widget
 pub fn set_callback<'a, W>(widget: &'a W, cb: Box<dyn FnMut() + 'a>)
 where
-    W: WidgetTrait,
+    W: WidgetExt,
 {
     if !widget.top_window().unwrap().takes_events() || !widget.takes_events() {
         return;

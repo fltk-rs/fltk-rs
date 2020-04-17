@@ -1,10 +1,25 @@
 #pragma once
 
-#include "global.h"
+#include "cfl_widget.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define MENU_DECLARE(widget)                                                   \
+  void widget##_add(widget *, const char *name, int shortcut, Fl_Callback *,   \
+                    void *, int);                                              \
+  void widget##_insert(widget *, int index, const char *name, int shortcut,    \
+                       Fl_Callback *, void *, int);                            \
+  Fl_Menu_Item *widget##_get_item(widget *, const char *name);                 \
+  int widget##_text_font(widget *);                                            \
+  void widget##_set_text_font(widget *, int c);                                \
+  int widget##_text_size(widget *);                                            \
+  void widget##_set_text_size(widget *, int c);                                \
+  unsigned int widget##_text_color(widget *);                                  \
+  void widget##_set_text_color(widget *, unsigned int c);                      \
+  void widget##_add_choice(widget *, const char *);                            \
+  const char *widget##_get_choice(widget *);
 
 typedef struct Fl_Menu_Item Fl_Menu_Item;
 

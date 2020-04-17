@@ -1,10 +1,14 @@
+use crate::image::Image;
 pub use crate::prelude::*;
 use fltk_sys::input::*;
-use crate::image::Image;
-use std::{ffi::{CStr, CString}, mem, os::raw};
+use std::{
+    ffi::{CStr, CString},
+    mem,
+    os::raw,
+};
 
 /// Creates an input widget
-#[derive(WidgetTrait, InputTrait, Debug, Clone)]
+#[derive(WidgetExt, InputExt, Debug, Clone)]
 pub struct Input {
     _inner: *mut Fl_Input,
 }
@@ -24,31 +28,31 @@ pub enum InputType {
 }
 
 /// Creates an input widget which takes only integers
-#[derive(WidgetTrait, InputTrait, Debug, Clone)]
+#[derive(WidgetExt, InputExt, Debug, Clone)]
 pub struct IntInput {
     _inner: *mut Fl_Int_Input,
 }
 
 /// Creates an input widget which takes only floats
-#[derive(WidgetTrait, InputTrait, Debug, Clone)]
+#[derive(WidgetExt, InputExt, Debug, Clone)]
 pub struct FloatInput {
     _inner: *mut Fl_Float_Input,
 }
 
 /// Creates a multiline-input widget
-#[derive(WidgetTrait, InputTrait, Debug, Clone)]
+#[derive(WidgetExt, InputExt, Debug, Clone)]
 pub struct MultilineInput {
     _inner: *mut Fl_Multiline_Input,
 }
 
 /// Creates a File-input widget
-#[derive(WidgetTrait, InputTrait, Debug, Clone)]
+#[derive(WidgetExt, InputExt, Debug, Clone)]
 pub struct FileInput {
     _inner: *mut Fl_File_Input,
 }
 
 /// Creates a secret input widget
-#[derive(WidgetTrait, InputTrait, Debug, Clone)]
+#[derive(WidgetExt, InputExt, Debug, Clone)]
 pub struct SecretInput {
     _inner: *mut Fl_Secret_Input,
 }

@@ -2,29 +2,6 @@
 
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct Fl_Widget {
-    _unused: [u8; 0],
-}
-pub type Fl_Callback = ::std::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
->;
-pub type custom_handler_callback = ::std::option::Option<
-    unsafe extern "C" fn(
-        arg1: ::std::os::raw::c_int,
-        arg2: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int,
->;
-pub type custom_draw_callback =
-    ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>;
-extern "C" {
-    pub fn Fl_Widget_callback_with_captures(
-        arg1: *mut Fl_Widget,
-        cb: Fl_Callback,
-        arg2: *mut ::std::os::raw::c_void,
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
 pub struct Fl_Image {
     _unused: [u8; 0],
 }

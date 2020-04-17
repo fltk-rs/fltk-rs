@@ -8,19 +8,19 @@ use std::{
 };
 
 /// Creates a menu bar
-#[derive(WidgetTrait, MenuTrait, Debug, Clone)]
+#[derive(WidgetExt, MenuExt, Debug, Clone)]
 pub struct MenuBar {
     _inner: *mut Fl_Menu_Bar,
 }
 
 /// Creates a menu button
-#[derive(WidgetTrait, MenuTrait, Debug, Clone)]
+#[derive(WidgetExt, MenuExt, Debug, Clone)]
 pub struct MenuButton {
     _inner: *mut Fl_Menu_Button,
 }
 
 /// Creates a menu choice
-#[derive(WidgetTrait, MenuTrait, Debug, Clone)]
+#[derive(WidgetExt, MenuExt, Debug, Clone)]
 pub struct Choice {
     _inner: *mut Fl_Choice,
 }

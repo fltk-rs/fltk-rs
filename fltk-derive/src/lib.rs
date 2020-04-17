@@ -43,7 +43,7 @@ fn get_fl_name(txt: String) -> String {
     fl_name
 }
 
-#[proc_macro_derive(WidgetTrait)]
+#[proc_macro_derive(WidgetExt)]
 pub fn widget_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_widget_trait(&ast)
@@ -55,49 +55,49 @@ pub fn widget_type_macro(input: TokenStream) -> TokenStream {
     impl_widget_type(&ast)
 }
 
-#[proc_macro_derive(GroupTrait)]
+#[proc_macro_derive(GroupExt)]
 pub fn group_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_group_trait(&ast)
 }
 
-#[proc_macro_derive(WindowTrait)]
+#[proc_macro_derive(WindowExt)]
 pub fn window_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_window_trait(&ast)
 }
 
-#[proc_macro_derive(InputTrait)]
+#[proc_macro_derive(InputExt)]
 pub fn input_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_input_trait(&ast)
 }
 
-#[proc_macro_derive(MenuTrait)]
+#[proc_macro_derive(MenuExt)]
 pub fn menu_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_menu_trait(&ast)
 }
 
-#[proc_macro_derive(ValuatorTrait)]
+#[proc_macro_derive(ValuatorExt)]
 pub fn valuator_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_valuator_trait(&ast)
 }
 
-#[proc_macro_derive(DisplayTrait)]
+#[proc_macro_derive(DisplayExt)]
 pub fn display_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_display_trait(&ast)
 }
 
-#[proc_macro_derive(BrowserTrait)]
+#[proc_macro_derive(BrowserExt)]
 pub fn browser_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_browser_trait(&ast)
 }
 
-#[proc_macro_derive(ImageTrait)]
+#[proc_macro_derive(ImageExt)]
 pub fn image_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_image_trait(&ast)
@@ -228,7 +228,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "top_window").as_str(),
         name.span(),
     );
-    let takes_events = Ident::new(format!("{}_{}", name_str, "takes_events").as_str(), name.span());
+    let takes_events = Ident::new(
+        format!("{}_{}", name_str, "takes_events").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -245,7 +248,8 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
         }
-        impl WidgetTrait for #name {
+
+        impl WidgetExt for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
                 unsafe {
@@ -257,6 +261,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
                 }
             }
+
             fn default() -> Self {
                 let temp = CString::new("").unwrap();
                 unsafe {
@@ -272,18 +277,22 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+
             fn with_pos(mut self, x: i32, y: i32) -> Self {
                 self.resize(x, y, self.width(), self.height());
                 self
             }
+
             fn with_size(mut self, width: i32, height: i32) -> Self {
                 self.resize(self.x(), self.y(), width, height);
                 self
             }
+
             fn with_label(mut self, title: &str) -> Self {
                 self.set_label(title);
                 self
             }
+
             fn set_label(&mut self, title: &str) {
                 let temp = CString::new(title).unwrap();
                 unsafe {
@@ -341,6 +350,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+
             fn activate(&mut self) {
                 unsafe { #activate(self._inner) }
             }
@@ -466,11 +476,11 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 unsafe { #set_align(self._inner, align as i32) }
             }
 
-            fn set_image<Image: ImageTrait>(&mut self, image: &Image) {
+            fn set_image<Image: ImageExt>(&mut self, image: &Image) {
                 unsafe { #set_image(self._inner, image.as_ptr()) }
             }
 
-            fn set_image_with_size<Image: ImageTrait>(&mut self, image: &Image, w: i32, h: i32) {
+            fn set_image_with_size<Image: ImageExt>(&mut self, image: &Image, w: i32, h: i32) {
                 unsafe { #set_image_with_size(self._inner, image.as_ptr(), w, h) }
             }
 
@@ -501,6 +511,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
                 }
             }
+            
             fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     return;
@@ -521,6 +532,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_handler(self._inner, callback, data);
                 }
             }
+            
             fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     return;
@@ -537,32 +549,38 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_draw(self._inner, callback, data);
                 }
             }
+            
             fn set_trigger(&mut self, trigger: CallbackTrigger) {
                 unsafe {
                     #set_trigger(self._inner, trigger as i32)
                 }
             }
-            fn below_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+            
+            fn below_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
                 assert!(self.width() != 0 && self.height() != 0, "below_of requires the size of the widget to be known!");
                 self.resize(w.x(), w.y() + w.height() + padding, self.width(), self.height());
                 self
             }
-            fn above_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+            
+            fn above_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
                 assert!(self.width() != 0 && self.height() != 0, "above_of requires the size of the widget to be known!");
                 self.resize(w.x(), w.y() - padding - self.height(), self.width(), self.height());
                 self
             }
-            fn right_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+            
+            fn right_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
                 assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
                 self.resize(w.x() + self.width() + padding, w.y(), self.width(), self.height());
                 self
             }
-            fn left_of<W: WidgetTrait>(mut self, w: &W, padding: i32) -> Self {
+            
+            fn left_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
                 assert!(self.width() != 0 && self.height() != 0, "left_of requires the size of the widget to be known!");
                 self.resize(w.x() - self.width() - padding, w.y(), self.width(), self.height());
                 self
             }
-            fn center_of<W: WidgetTrait>(mut self, w: &W) -> Self {
+            
+            fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
                 assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
                 let mut sw = self.width() as f64;
                 let mut sh = self.height() as f64;
@@ -574,11 +592,13 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 self.redraw();
                 self
             }
-            fn size_of<W: WidgetTrait>(mut self, w: &W) -> Self {
+            
+            fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
                 assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
                 self.resize(self.x(), self. y(), w.width(), w.height());
                 self
             }
+            
             fn parent(&self) -> Option<crate::widget::Widget> {
                 unsafe {
                     let x = #parent(self._inner);
@@ -589,21 +609,25 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn selection_color(&mut self) -> Color {
                 unsafe {
                     mem::transmute(#selection_color(self._inner))
                 }
             }
+            
             fn set_selection_color(&mut self, color: Color) {
                 unsafe {
                     #set_selection_color(self._inner, color as u32);
                 }
             }
+            
             fn do_callback(&mut self) {
                 unsafe {
                     #do_callback(self._inner);
                 }
             }
+            
             fn inside(&self, wid: crate::widget::Widget) -> bool {
                 unsafe {
                     match #inside(self._inner, wid.as_ptr() as *mut raw::c_void) {
@@ -612,6 +636,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn window(&self) -> Option<crate::window::Window> {
                 unsafe {
                     let wind_ptr = #window(self._inner);
@@ -622,6 +647,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn top_window(&self) -> Option<crate::window::Window> {
                 unsafe {
                     let wind_ptr = #top_window(self._inner);
@@ -632,6 +658,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn takes_events(&self) -> bool {
                 unsafe {
                     match #takes_events(self._inner) {
@@ -681,7 +708,7 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl GroupTrait for #name {
+        impl GroupExt for #name {
             fn begin(&self) {
                 unsafe { #begin(self._inner) }
             }
@@ -689,38 +716,45 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn end(&self) {
                 unsafe { #end(self._inner) }
             }
-            fn find<Widget: WidgetTrait>(&self, widget: &Widget) -> u32 {
+            
+            fn find<Widget: WidgetExt>(&self, widget: &Widget) -> u32 {
                 unsafe {
                     #find(self._inner, widget.as_widget_ptr() as *mut raw::c_void) as u32
                 }
             }
-            fn add<Widget: WidgetTrait>(&mut self, widget: &Widget) {
+            
+            fn add<Widget: WidgetExt>(&mut self, widget: &Widget) {
                 unsafe {
                     #add(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
                 }
             }
-            fn insert<Widget: WidgetTrait>(&mut self, widget: &Widget, index: u32) {
+            
+            fn insert<Widget: WidgetExt>(&mut self, widget: &Widget, index: u32) {
                 unsafe {
                     assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                     #insert(self._inner, widget.as_widget_ptr() as *mut raw::c_void, index as i32)
                 }
             }
+            
             fn remove(&mut self, index: u32) {
                 unsafe {
                     assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                     #remove(self._inner, index as i32)
                 }
             }
+            
             fn clear(&mut self) {
                 unsafe {
                     #clear(self._inner)
                 }
             }
+            
             fn children(&self) -> u32 {
                 unsafe {
                     #children(self._inner) as u32
                 }
             }
+            
             fn child(&self, idx: u32) -> Option<Widget> {
                 unsafe {
                     assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -732,7 +766,8 @@ fn impl_group_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
-            fn resizable<Widget: WidgetTrait>(&self, widget: &mut Widget) {
+            
+            fn resizable<Widget: WidgetExt>(&self, widget: &mut Widget) {
                 unsafe {
                     #resizable(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
                 }
@@ -765,7 +800,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
         name.span(),
     );
     let gen = quote! {
-        impl WindowTrait for #name {
+        impl WindowExt for #name {
             fn center_screen(mut self) -> Self {
                 assert!(self.width() != 0 && self.height() != 0, "center_screen requires the size of the widget to be known!");
                 let (mut x, mut y) = screen_size();
@@ -774,6 +809,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
                 self.resize((x / 2.0) as i32, (y / 2.0) as i32, self.width(), self.height());
                 self
             }
+            
             fn make_modal(&mut self, val: bool) {
                 unsafe { #make_modal(self._inner, val as u32) }
             }
@@ -785,9 +821,11 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn make_current(&mut self) {
                 unsafe { #make_current(self._inner) }
             }
-            fn set_icon<Image: ImageTrait>(&mut self, image: &Image) {
+            
+            fn set_icon<Image: ImageExt>(&mut self, image: &Image) {
                 unsafe { #set_icon(self._inner, image.as_ptr()) }
             }
+            
             fn icon(&self) -> Option<Image> {
                 unsafe {
                     let icon_ptr = #icon(self._inner);
@@ -798,6 +836,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn make_resizable(&mut self, val: bool) {
                 if val {
                     unsafe {
@@ -875,7 +914,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
     let set_wrap = Ident::new(format!("{}_{}", name_str, "set_wrap").as_str(), name.span());
 
     let gen = quote! {
-        impl InputTrait for #name {
+        impl InputExt for #name {
             fn value(&self) -> String {
                 unsafe {
                     let value_ptr = #value(self._inner);
@@ -883,43 +922,51 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
                     CStr::from_ptr(value_ptr as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
+            
             fn set_value(&self, val: &str) {
                 let temp = CString::new(val).unwrap();
                 unsafe {
                     #set_value(self._inner, temp.into_raw() as *const raw::c_char);
                 }
             }
+            
             fn maximum_size(&self) -> u32 {
                 unsafe {
                     #maximum_size(self._inner) as u32
                 }
             }
+            
             fn set_maximum_size(&mut self, val: u32) {
                 unsafe {
                     assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                     #set_maximum_size(self._inner, val as i32)
                 }
             }
+            
             fn position(&self) -> i32 {
                 unsafe {
                     #position(self._inner)
                 }
             }
+            
             fn set_position(&mut self, val: i32) {
                 unsafe {
                     #set_position(self._inner, val);
                 }
             }
+            
             fn mark(&self) -> i32 {
                 unsafe {
                     #mark(self._inner)
                 }
             }
+            
             fn set_mark(&mut self, val: i32) {
                 unsafe {
                     #set_mark(self._inner, val);
                 }
             }
+            
             fn replace(&mut self, beg: u32, end: u32, val: &str) {
                 let val = CString::new(val).unwrap();
                 unsafe {
@@ -927,64 +974,76 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #replace(self._inner, beg as i32, end as i32, val.into_raw() as *const raw::c_char, 0);
                 }
             }
+            
             fn insert(&mut self, txt: &str) {
                 let txt = CString::new(txt).unwrap();
                 unsafe {
                     #insert(self._inner, txt.into_raw() as *const raw::c_char, 0);
                 }
             }
+            
             fn append(&mut self, txt: &str) {
                 let txt = CString::new(txt).unwrap();
                 unsafe {
                     #append(self._inner,  txt.into_raw() as *const raw::c_char, 0, 0);
                 }
             }
+            
             fn copy(&mut self) {
                 unsafe {
                     #copy(self._inner, 1);
                 }
             }
+            
             fn undo(&mut self) {
                 unsafe {
                     #undo(self._inner);
                 }
             }
+            
             fn cut(&mut self) {
                 unsafe {
                     #copy_cuts(self._inner);
                 }
             }
+            
             fn text_font(&self) -> Font {
                 unsafe {
                     mem::transmute(#text_font(self._inner))
                 }
             }
+            
             fn set_text_font(&mut self, font: Font) {
                 unsafe {
                     #set_text_font(self._inner, font as i32)
                 }
             }
+            
             fn text_color(&self) -> Color {
                 unsafe {
                     mem::transmute(#text_color(self._inner))
                 }
             }
+            
             fn set_text_color(&mut self, color: Color) {
                 unsafe {
                     #set_text_color(self._inner, color as u32)
                 }
             }
+            
             fn text_size(&self) -> u32 {
                 unsafe {
                     #text_size(self._inner) as u32
                 }
             }
+            
             fn set_text_size(&mut self, sz: u32) {
                 unsafe {
                     assert!(sz <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                     #set_text_size(self._inner, sz as i32)
                 }
             }
+            
             fn readonly(&self) -> bool {
                 unsafe {
                     match #readonly(self._inner) {
@@ -993,11 +1052,13 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn set_readonly(&mut self, val: bool) {
                 unsafe {
                     #set_readonly(self._inner, val as i32)
                 }
             }
+            
             fn wrap(&self) -> bool {
                 unsafe {
                     match #wrap(self._inner) {
@@ -1006,6 +1067,7 @@ fn impl_input_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn set_wrap(&mut self, val: bool) {
                 unsafe {
                     #set_wrap(self._inner, val as i32)
@@ -1056,7 +1118,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl MenuTrait for #name {
+        impl MenuExt for #name {
             fn add<'a>(&'a mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     return;
@@ -1074,6 +1136,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #add(self._inner, temp.into_raw() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }
+            
             fn insert<'a>(&'a mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     return;
@@ -1091,6 +1154,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #insert(self._inner, idx as i32, temp.into_raw() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }
+            
             fn get_item(&self, name: &str) -> Option<MenuItem> {
                 let name = CString::new(name).unwrap().clone();
                 unsafe {
@@ -1143,12 +1207,14 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_text_color(self._inner, c as u32)
                 }
             }
+            
             fn add_choice(&mut self, text: &str) {
                 unsafe {
                     let arg2 = CString::new(text).unwrap();
                     #add_choice(self._inner, arg2.into_raw() as *mut raw::c_char)
                 }
             }
+            
             fn get_choice(&self) -> Option<String> {
                 unsafe {
                     let choice_ptr = #get_choice(self._inner);
@@ -1206,7 +1272,7 @@ fn impl_valuator_trait(ast: &syn::DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl ValuatorTrait for #name {
+        impl ValuatorExt for #name {
             fn set_bounds(&mut self, a: f64, b: f64) {
                 unsafe {
                     #set_bounds(self._inner, a, b)
@@ -1500,9 +1566,13 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "linenumber_align").as_str(),
         name.span(),
     );
+    let in_selection = Ident::new(
+        format!("{}_{}", name_str, "in_selection").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
-        impl DisplayTrait for #name {
+        impl DisplayExt for #name {
             fn buffer<'a>(&'a self) -> &'a TextBuffer {
                 unsafe {
                     let buffer = #get_buffer(self._inner);
@@ -1511,11 +1581,13 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     &*Box::into_raw(x)
                 }
             }
+            
             fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer) {
                 unsafe {
                     #set_buffer(self._inner, buffer.as_ptr())
                 }
             }
+            
             fn text_font(&self) -> Font {
                 unsafe { mem::transmute(#text_font(self._inner)) }
             }
@@ -1523,19 +1595,24 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn set_text_font(&mut self, font: Font) {
                 unsafe { #set_text_font(self._inner, font as i32) }
             }
+            
             fn text_color(&self) -> Color{
                 unsafe { mem::transmute(#text_color(self._inner)) }
             }
+            
             fn set_text_color(&mut self, color: Color){
                 unsafe { #set_text_color(self._inner, color as u32) }
             }
+            
             fn text_size(&self) -> u32{
                 unsafe { #text_size(self._inner) as u32 }
             }
+            
             fn set_text_size(&mut self, sz: u32) {
                 assert!(sz <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe { #set_text_size(self._inner, sz as i32) }
             }
+            
             fn scroll(&mut self, topLineNum: u32, horizOffset: u32) {
                 unsafe {
                     assert!(topLineNum <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -1543,23 +1620,27 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #scroll(self._inner, topLineNum as i32, horizOffset as i32)
                 }
             }
+            
             fn insert(&self, text: &str) {
                 let text = CString::new(text).unwrap();
                 unsafe {
                     #insert(self._inner, text.into_raw() as *const raw::c_char)
                 }
             }
+            
             fn set_insert_position(&mut self, newPos: u32) {
                 unsafe {
                     assert!(newPos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                     #set_insert_position(self._inner, newPos as i32)
                 }
             }
+            
             fn insert_position(&self) -> u32 {
                 unsafe {
                     #insert_position(self._inner) as u32
                 }
             }
+            
             fn position_to_xy(&self, pos: u32) -> (u32, u32) {
                 assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
@@ -1569,6 +1650,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     (x as u32, y as u32)
                 }
             }
+            
             fn count_lines(&self, start: u32, end: u32, is_line_start: bool) -> u32 {
                 let x = match is_line_start {
                     true => 1,
@@ -1580,31 +1662,37 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #count_lines(self._inner, start as i32, end as i32, x) as u32
                 }
             }
+            
             fn move_right(&mut self) {
                 unsafe {
                     #move_right(self._inner);
                 }
             }
+            
             fn move_left(&mut self){
                 unsafe {
                     #move_left(self._inner);
                 }
             }
+            
             fn move_up(&mut self){
                 unsafe {
                     #move_up(self._inner);
                 }
             }
+            
             fn move_down(&mut self){
                 unsafe {
                     #move_down(self._inner);
                 }
             }
+            
             fn show_cursor(&mut self, val: bool) {
                 unsafe {
                     #show_cursor(self._inner, val as i32);
                 }
             }
+            
             fn set_styly_table_entry(&mut self, style_buffer: &mut TextBuffer, entries: &Vec<StyleTableEntry>) {
                 let mut colors: Vec<u32> = vec![];
                 let mut fonts: Vec<i32> = vec![];
@@ -1618,69 +1706,82 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_style_table_entry(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
                 }
             }
+            
             fn set_cursor_style(&mut self, style: CursorStyle) {
                 unsafe {
                     #set_cursor_style(self._inner, style as i32)
                 }
             }
+            
             fn set_cursor_color(&mut self, color: Color){
                 unsafe {
                     #set_cursor_color(self._inner, color as u32)
                 }
             }
+            
             fn set_scrollbar_width(&mut self, width: i32){
                 unsafe {
                     #set_scrollbar_width(self._inner, width)
                 }
             }
+            
             fn set_scrollbar_size(&mut self, size: u32){
                 assert!(size <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #set_scrollbar_size(self._inner, size as i32)
                 }
             }
+            
             fn set_scrollbar_align(&mut self, align: Align){
                 unsafe {
                     #set_scrollbar_align(self._inner, align as i32)
                 }
             }
+            
             fn cursor_style(&self) -> CursorStyle {
                 unsafe {
                     mem::transmute(#cursor_style(self._inner))
                 }
             }
+            
             fn cursor_color(&self) -> Color {
                 unsafe {
                     mem::transmute(#cursor_color(self._inner))
                 }
             }
+            
             fn scrollbar_width(&self) -> u32 {
                 unsafe {
                     #scrollbar_width(self._inner) as u32
                 }
             }
+            
             fn scrollbar_size(&self) -> u32 {
                 unsafe {
                     #scrollbar_size(self._inner) as u32
                 }
             }
+            
             fn scrollbar_align(&self) -> Align {
                 unsafe {
                     mem::transmute(#scrollbar_align(self._inner))
                 }
             }
+            
             fn line_start(&self, pos: u32) -> u32 {
                 assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #line_start(self._inner, pos as i32) as u32
                 }
             }
+            
             fn line_end(&self, start_pos: u32, is_line_start: bool) -> u32 {
                 assert!(start_pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #line_end(self._inner, start_pos as i32, is_line_start as i32) as u32
                 }
             }
+            
             fn skip_lines(&mut self, start_pos: u32, lines: u32, is_line_start: bool) -> u32 {
                 assert!(start_pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 assert!(lines <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -1688,6 +1789,7 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #skip_lines(self._inner, start_pos as i32, lines as i32, is_line_start as i32) as u32
                 }
             }
+            
             fn rewind_lines(&mut self, start_pos: u32, lines: u32) -> u32 {
                 assert!(start_pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 assert!(lines <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -1695,97 +1797,124 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #rewind_lines(self._inner, start_pos as i32, lines as i32) as u32
                 }
             }
+            
             fn next_word(&mut self) {
                 unsafe {
                     #next_word(self._inner)
                 }
             }
+            
             fn previous_word(&mut self) {
                 unsafe {
                     #previous_word(self._inner)
                 }
             }
+            
             fn word_start(&self, pos: u32) -> u32 {
                 assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #word_start(self._inner, pos as i32) as u32
                 }
             }
+            
             fn word_end(&self, pos: u32) -> u32 {
                 assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #word_end(self._inner, pos as i32) as u32
                 }
             }
+            
             fn x_to_col(&self, x: f64) -> f64 {
                 unsafe {
                     #x_to_col(self._inner, x)
                 }
             }
+            
             fn col_to_x(&self, col: f64) -> f64 {
                 unsafe {
                     #col_to_x(self._inner, col)
                 }
             }
+            
             fn set_linenumber_width(&mut self, w: i32) {
                 unsafe {
                     #set_linenumber_width(self._inner, w)
                 }
             }
+            
             fn linenumber_width(&self) -> i32 {
                 unsafe {
                     #linenumber_width(self._inner)
                 }
             }
+            
             fn set_linenumber_font(&mut self, font: Font) {
                 unsafe {
                     #set_linenumber_font(self._inner, font as i32)
                 }
             }
+            
             fn linenumber_font(&self) -> Font {
                 unsafe {
                     mem::transmute(#linenumber_font(self._inner))
                 }
             }
+            
             fn set_linenumber_size(&mut self, size: u32) {
                 assert!(size <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #set_linenumber_size(self._inner, size as i32)
                 }
             }
+            
             fn linenumber_size(&self) -> u32 {
                 unsafe {
                     #linenumber_size(self._inner) as u32
                 }
             }
+            
             fn set_linenumber_fgcolor(&mut self, color: Color) {
                 unsafe {
                     #set_linenumber_fgcolor(self._inner, color as u32)
                 }
             }
+            
             fn linenumber_fgcolor(&self) -> Color {
                 unsafe {
                     mem::transmute(#linenumber_fgcolor(self._inner))
                 }
             }
+            
             fn set_linenumber_bgcolor(&mut self, color: Color) {
                 unsafe {
                     #set_linenumber_bgcolor(self._inner, color as u32)
                 }
             }
+            
             fn linenumber_bgcolor(&self) -> Color {
                 unsafe {
                     mem::transmute(#linenumber_bgcolor(self._inner))
                 }
             }
+            
             fn set_linenumber_align(&mut self, align: Align) {
                 unsafe {
                     #set_linenumber_align(self._inner, align as i32)
                 }
             }
+            
             fn linenumber_align(&self) -> Align {
                 unsafe {
                     mem::transmute(#linenumber_align(self._inner))
+                }
+            }
+            
+            fn in_selection(&self, x: i32, y: i32) -> bool {
+                unsafe {
+                    match #in_selection(self._inner, x, y) {
+                        0 => false,
+                        _ => true,
+                    }
                 }
             }
         }
@@ -1829,7 +1958,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl BrowserTrait for #name {
+        impl BrowserExt for #name {
             fn remove(&mut self, line: u32) {
                 assert!(line > 0, "Lines start at 1!");
                 assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -1837,12 +1966,14 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #remove(self._inner, line as i32)
                 }
             }
+            
             fn add(&mut self, item: &str) {
                 let item = CString::new(item).unwrap();
                 unsafe {
                     #add(self._inner, item.into_raw() as *const raw::c_char)
                 }
             }
+            
             fn insert(&mut self, line: u32, item: &str) {
                 assert!(line > 0, "Lines start at 1!");
                 assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -1851,6 +1982,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #insert(self._inner, line as i32, item.into_raw() as *const raw::c_char)
                 }
             }
+            
             fn move_item(&mut self, to: u32, from: u32) {
                 assert!(to <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 assert!(from <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -1858,6 +1990,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #move_item(self._inner, to as i32, from as i32)
                 }
             }
+            
             fn swap(&mut self, a: u32, b: u32) {
                 assert!(a <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 assert!(b <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -1865,21 +1998,25 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #swap(self._inner, a as i32, b as i32)
                 }
             }
+            
             fn clear(&mut self) {
                 unsafe {
                     #clear(self._inner)
                 }
             }
+            
             fn size(&self) -> u32 {
                 unsafe {
                     #size(self._inner) as u32
                 }
             }
+            
             fn set_size(&mut self, w: i32, h: i32) {
                 unsafe {
                     #set_size(self._inner, w, h)
                 }
             }
+            
             fn select(&mut self, line: u32) {
                 assert!(line > 0, "Lines start at 1!");
                 if line < self.size() {
@@ -1888,6 +2025,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn selected(&self, line: u32) -> bool {
                 assert!(line > 0, "Lines start at 1!");
                 assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -1898,6 +2036,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn text(&self, line: u32) -> Option<String> {
                 assert!(line > 0, "Lines start at 1!");
                 assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -1910,6 +2049,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn set_text(&mut self, line: u32, txt: &str) {
                 assert!(line > 0, "Lines start at 1!");
                 assert!(line <= self.size(), "Line doesn't exist!");
@@ -1918,6 +2058,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_text(self._inner, line as i32, txt.into_raw() as *const raw::c_char)
                 }
             }
+            
             fn load_file(&mut self, path: &std::path::Path) {
                 let path = path.to_str().unwrap();
                 let path = CString::new(path).unwrap();
@@ -1925,22 +2066,26 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #load_file(self._inner, path.into_raw() as *const raw::c_char)
                 }
             }
+            
             fn text_size(&self) -> u32 {
                 unsafe {
                     #text_size(self._inner) as u32
                 }
             }
+            
             fn set_text_size(&mut self, c: u32) {
                 unsafe {
                     #set_text_size(self._inner, c as i32)
                 }
             }
-            fn set_icon<Img: ImageTrait>(&mut self, line: u32, image: &Img) {
+            
+            fn set_icon<Img: ImageExt>(&mut self, line: u32, image: &Img) {
                 assert!(line > 0, "Lines start at 1!");
                 unsafe {
                     #set_icon(self._inner, line as i32, image.as_ptr())
                 }
             }
+            
             fn icon(&self, line: u32) -> Option<Image> {
                 assert!(line > 0, "Lines start at 1!");
                 unsafe {
@@ -1952,6 +2097,7 @@ fn impl_browser_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn remove_icon(&mut self, line: u32) {
                 assert!(line > 0, "Lines start at 1!");
                 unsafe {
@@ -1986,7 +2132,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
         }
 
-        impl ImageTrait for #name {
+        impl ImageExt for #name {
             fn new(path: &std::path::Path) -> #name {
                 assert!(path.exists(), "Proper image initialization requires an existent path!");
                 unsafe {
@@ -2031,11 +2177,13 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
                     mem::transmute(self._inner)
                 }
             }
+            
             fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                 unsafe {
                     mem::transmute(self._inner)
                 }
             }
+            
             fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
                 unsafe {
                     assert!(!ptr.is_null(), "Image pointer is null!");
@@ -2044,6 +2192,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
+            
             fn as_bytes<'a>(&self) -> &'a [u8] {
                 unsafe {
                     let ptr = #data(self._inner);

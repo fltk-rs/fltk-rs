@@ -1,10 +1,46 @@
 #pragma once
 
-#include "global.h"
+#include "cfl_widget.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define GROUP_DECLARE(widget)                                                  \
+  void widget##_begin(widget *self);                                           \
+  void widget##_end(widget *self);                                             \
+  int widget##_find(widget *self, const void *);                               \
+  void widget##_add(widget *self, void *);                                     \
+  void widget##_insert(widget *self, void *, int pos);                         \
+  void widget##_remove(widget *self, int index);                               \
+  void widget##_clear(widget *self);                                           \
+  int widget##_children(widget *self);                                         \
+  Fl_Widget *widget##_child(widget *, int index);                              \
+  void widget##_resizable(widget *self, void *);
+
+
+#define GROUP_DEFINE(widget)                                                   \
+  void widget##_begin(widget *self) { self->begin(); }                         \
+  void widget##_end(widget *self) { self->end(); }                             \
+  int widget##_find(widget *self, const void *wid) {                           \
+    return self->find((const Fl_Widget *)wid);                                 \
+  }                                                                            \
+  void widget##_add(widget *self, void *wid) {                                 \
+    LOCK(self->add((Fl_Widget *)wid);)                                         \
+  }                                                                            \
+  void widget##_insert(widget *self, void *wid, int pos) {                     \
+    LOCK(self->insert(*(Fl_Widget *)wid, pos);)                                \
+  }                                                                            \
+  void widget##_remove(widget *self, int index) { LOCK(self->remove(index);) } \
+  void widget##_clear(widget *self) { LOCK(self->clear();) }                   \
+  int widget##_children(widget *self) { return self->children(); }             \
+  Fl_Widget *widget##_child(widget *self, int index) {                         \
+    return self->child(index);                                                 \
+  }                                                                            \
+  void widget##_resizable(widget *self, void *wid) {                           \
+    LOCK(self->resizable((Fl_Widget *)wid);)                                   \
+  }
+
 
 WIDGET_DECLARE(Fl_Group)
 
@@ -29,8 +65,11 @@ GROUP_DECLARE(Fl_Tile)
 // WIDGET_DECLARE(Fl_Wizard)
 
 // void Fl_Wizard_next(Fl_Wizard *);
+
 // void Fl_Wizard_prev(Fl_Wizard *);
+
 // Fl_Widget *Fl_Wizard_value(Fl_Wizard *);
+
 // void Fl_Wizard_set_value(Fl_Wizard *, Fl_Widget *);
 
 // GROUP_DECLARE(Fl_Wizard)
@@ -38,7 +77,9 @@ GROUP_DECLARE(Fl_Tile)
 WIDGET_DECLARE(Fl_Color_Chooser)
 
 double Fl_Color_Chooser_r(Fl_Color_Chooser *self);
+
 double Fl_Color_Chooser_g(Fl_Color_Chooser *self);
+
 double Fl_Color_Chooser_b(Fl_Color_Chooser *self);
 
 GROUP_DECLARE(Fl_Color_Chooser)
