@@ -8,7 +8,6 @@ use std::{
 };
 
 /// Wraps a text buffer
-#[derive(Debug, Clone)]
 pub struct TextBuffer {
     _inner: *mut Fl_Text_Buffer,
 }

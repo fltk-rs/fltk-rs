@@ -2,7 +2,6 @@ use fltk::{app, text::*, window::*};
 use std::process::{Command, Stdio};
 use std::path::{Path, PathBuf};
 
-#[derive(Debug)]
 struct Term<'a> {
     term: TextDisplay,
     current_dir: String,

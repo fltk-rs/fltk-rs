@@ -162,6 +162,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_insert(widget *, const char *text);                            \
   void widget##_set_insert_position(widget *, int newPos);                     \
   int widget##_insert_position(const widget *);                                \
+  int widget##_position_to_xy(const widget *self, int pos, int *x, int *y);    \
   int widget##_count_lines(const widget *, int start, int end,                 \
                            int start_pos_is_line_start);                       \
   int widget##_move_right(widget *);                                           \
@@ -593,6 +594,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   }                                                                            \
   int widget##_insert_position(const widget *self) {                           \
     return self->insert_position();                                            \
+  }                                                                            \
+                                                                               \
+  int widget##_position_to_xy(const widget *self, int pos, int *x, int *y) {   \
+    return self->position_to_xy(pos, x, y);                                    \
   }                                                                            \
   int widget##_count_lines(const widget *self, int start, int end,             \
                            int start_pos_is_line_start) {                      \

@@ -1355,6 +1355,10 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "insert_position").as_str(),
         name.span(),
     );
+    let position_to_xy = Ident::new(
+        format!("{}_{}", name_str, "position_to_xy").as_str(),
+        name.span(),
+    );
     let count_lines = Ident::new(
         format!("{}_{}", name_str, "count_lines").as_str(),
         name.span(),
@@ -1554,6 +1558,15 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn insert_position(&self) -> u32 {
                 unsafe {
                     #insert_position(self._inner) as u32
+                }
+            }
+            fn position_to_xy(&self, pos: u32) -> (u32, u32) {
+                assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                unsafe {
+                    let mut x: i32 = 0;
+                    let mut y: i32 = 0;
+                    #position_to_xy(self._inner, pos as i32, &mut x, &mut y);
+                    (x as u32, y as u32)
                 }
             }
             fn count_lines(&self, start: u32, end: u32, is_line_start: bool) -> u32 {

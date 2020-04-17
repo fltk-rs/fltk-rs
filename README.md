@@ -18,12 +18,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.19"
+fltk = "^0.2.20"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
 [dependencies.fltk]
-version = "^0.2.19"
+version = "^0.2.20"
 features = ["fltk-shared"]
 ```
 
@@ -146,6 +146,7 @@ For RHEL-based distributions, that means running:
 ```
 $ sudo yum groupinstall "X Software Development" 
 ```
+If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
 
 ## Building
 

@@ -466,6 +466,14 @@ extern "C" {
     pub fn Fl_Text_Display_insert_position(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Text_Display_position_to_xy(
+        self_: *const Fl_Text_Display,
+        pos: ::std::os::raw::c_int,
+        x: *mut ::std::os::raw::c_int,
+        y: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Text_Display_count_lines(
         arg1: *const Fl_Text_Display,
         start: ::std::os::raw::c_int,
@@ -892,6 +900,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_insert_position(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_position_to_xy(
+        self_: *const Fl_Text_Editor,
+        pos: ::std::os::raw::c_int,
+        x: *mut ::std::os::raw::c_int,
+        y: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_count_lines(
@@ -1376,6 +1392,14 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_insert_position(
         arg1: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_position_to_xy(
+        self_: *const Fl_Simple_Terminal,
+        pos: ::std::os::raw::c_int,
+        x: *mut ::std::os::raw::c_int,
+        y: *mut ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
