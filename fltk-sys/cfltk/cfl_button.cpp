@@ -8,8 +8,7 @@
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Round_Button.H>
 #include <FL/Fl_Toggle_Button.H>
-#include <cstring>
-#include <string>
+#include <new>
 
 WIDGET_DEFINE(Fl_Button)
 

@@ -1,16 +1,20 @@
+use crate::image::Image;
 pub use crate::prelude::*;
 use fltk_sys::valuator::*;
-use crate::image::Image;
-use std::{ffi::{CStr, CString}, mem, os::raw};
+use std::{
+    ffi::{CStr, CString},
+    mem,
+    os::raw,
+};
 
 /// Creates a slider widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct Slider {
     _inner: *mut Fl_Slider,
 }
 
 /// Creates a nice slider widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct NiceSlider {
     _inner: *mut Fl_Nice_Slider,
 }
@@ -28,13 +32,13 @@ pub enum SliderType {
 }
 
 /// Creates a dial widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct Dial {
     _inner: *mut Fl_Dial,
 }
 
 /// Creates a line dial widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct LineDial {
     _inner: *mut Fl_Line_Dial,
 }
@@ -49,7 +53,7 @@ pub enum DialType {
 }
 
 /// Creates a counter widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct Counter {
     _inner: *mut Fl_Counter,
 }
@@ -63,7 +67,7 @@ pub enum CounterType {
 }
 
 /// Creates a scrollbar widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct Scrollbar {
     _inner: *mut Fl_Scrollbar,
 }
@@ -81,25 +85,25 @@ pub enum ScrollBarType {
 }
 
 /// Creates a roller widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct Roller {
     _inner: *mut Fl_Roller,
 }
 
 /// Creates a value slider widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct ValueSlider {
     _inner: *mut Fl_Value_Slider,
 }
 
 /// Creates an adjuster widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct Adjuster {
     _inner: *mut Fl_Adjuster,
 }
 
 /// Creates an adjuster widget
-#[derive(WidgetTrait, ValuatorTrait, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
 pub struct ValueInput {
     _inner: *mut Fl_Value_Input,
 }

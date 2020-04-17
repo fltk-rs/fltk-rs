@@ -70,7 +70,7 @@ impl From<std::ffi::NulError> for FltkError {
 }
 
 /// Defines the methods implemented by all widgets
-pub trait WidgetTrait {
+pub trait WidgetExt {
     /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
     /// # Arguments
     /// * `x` - The x coordinate in the screen
@@ -88,17 +88,17 @@ pub trait WidgetTrait {
     /// Initialize with label/title
     fn with_label(self, title: &str) -> Self;
     /// Positions the widget below w
-    fn below_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    fn below_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self;
     /// Positions the widget above w
-    fn above_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    fn above_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self;
     /// Positions the widget to the right of w
-    fn right_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    fn right_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self;
     /// Positions the widget to the left of w
-    fn left_of<W: WidgetTrait>(self, w: &W, padding: i32) -> Self;
+    fn left_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self;
     /// Positions the widget to the center of w
-    fn center_of<W: WidgetTrait>(self, w: &W) -> Self;
+    fn center_of<W: WidgetExt>(self, w: &W) -> Self;
     /// Takes the size of w
-    fn size_of<W: WidgetTrait>(self, w: &W) -> Self;
+    fn size_of<W: WidgetExt>(self, w: &W) -> Self;
     /// Sets the widget's label
     fn set_label(&mut self, title: &str);
     /// Redraws a widget, necessary for resizing and changing positions
@@ -172,9 +172,9 @@ pub trait WidgetTrait {
     /// Sets the alignment of the widget
     fn set_align(&mut self, align: Align);
     /// Sets the image of the widget
-    fn set_image<Image: ImageTrait>(&mut self, image: &Image);
+    fn set_image<Image: ImageExt>(&mut self, image: &Image);
     /// Sets the resized image of the widget
-    fn set_image_with_size<Image: ImageTrait>(&mut self, image: &Image, w: i32, h: i32);
+    fn set_image_with_size<Image: ImageExt>(&mut self, image: &Image, w: i32, h: i32);
     /// Gets the image associated with the widget
     fn image(&self) -> Option<Image>;
     /// Sets the callback when the widget is triggered (clicks for example)
@@ -204,17 +204,17 @@ pub trait WidgetTrait {
 }
 
 /// Defines the methods implemented by all group widgets
-pub trait GroupTrait: WidgetTrait {
+pub trait GroupExt: WidgetExt {
     /// Begins a group, used for widgets implementing the group trait
     fn begin(&self);
     /// Ends a group, used for widgets implementing the group trait
     fn end(&self);
     /// Find a widget within a group and return its index
-    fn find<Widget: WidgetTrait>(&self, widget: &Widget) -> u32;
+    fn find<Widget: WidgetExt>(&self, widget: &Widget) -> u32;
     /// Add a widget to a group
-    fn add<Widget: WidgetTrait>(&mut self, widget: &Widget);
+    fn add<Widget: WidgetExt>(&mut self, widget: &Widget);
     /// Insert a widget to a group at a certain index
-    fn insert<Widget: WidgetTrait>(&mut self, widget: &Widget, index: u32);
+    fn insert<Widget: WidgetExt>(&mut self, widget: &Widget, index: u32);
     /// Remove a widget from a group
     fn remove(&mut self, index: u32);
     /// Clear a group from all widgets
@@ -224,11 +224,11 @@ pub trait GroupTrait: WidgetTrait {
     /// Return child widget by index
     fn child(&self, idx: u32) -> Option<Widget>;
     /// Make the passed widget resizable
-    fn resizable<Widget: WidgetTrait>(&self, widget: &mut Widget);
+    fn resizable<Widget: WidgetExt>(&self, widget: &mut Widget);
 }
 
 /// Defines the methods implemented by all window widgets
-pub trait WindowTrait: GroupTrait {
+pub trait WindowExt: GroupExt {
     /// Positions the window to the center of the screen
     fn center_screen(self) -> Self;
     /// Makes a window modal
@@ -238,7 +238,7 @@ pub trait WindowTrait: GroupTrait {
     /// Makes the window current
     fn make_current(&mut self);
     /// Sets the windows icon
-    fn set_icon<Image: ImageTrait>(&mut self, image: &Image);
+    fn set_icon<Image: ImageExt>(&mut self, image: &Image);
     /// Returns the icon of the window
     fn icon(&self) -> Option<Image>;
     /// Make the window resizable
@@ -246,7 +246,7 @@ pub trait WindowTrait: GroupTrait {
 }
 
 /// Defines the methods implemented by all input and output widgets
-pub trait InputTrait: WidgetTrait {
+pub trait InputExt: WidgetExt {
     /// Returns the value inside the input/output widget
     fn value(&self) -> String;
     /// Sets the value inside an input/output widget
@@ -298,7 +298,7 @@ pub trait InputTrait: WidgetTrait {
 }
 
 /// Defines the methods implemented by all menu widgets
-pub trait MenuTrait: WidgetTrait {
+pub trait MenuExt: WidgetExt {
     /// Get a menu item by name
     fn get_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
     /// Return the text font
@@ -337,7 +337,7 @@ pub trait MenuTrait: WidgetTrait {
 }
 
 /// Defines the methods implemented by all valuator widgets
-pub trait ValuatorTrait: WidgetTrait {
+pub trait ValuatorExt: WidgetExt {
     /// Set bounds of a valuator
     fn set_bounds(&mut self, a: f64, b: f64);
     /// Get the minimum bound of a valuator
@@ -371,7 +371,7 @@ pub trait ValuatorTrait: WidgetTrait {
 }
 
 /// Defines the methods implemented by TextDisplay and TextEditor
-pub trait DisplayTrait: WidgetTrait {
+pub trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
     fn buffer<'a>(&'a self) -> &'a TextBuffer;
     /// Sets the associated TextBuffer
@@ -480,10 +480,12 @@ pub trait DisplayTrait: WidgetTrait {
     fn set_linenumber_align(&mut self, align: Align);
     /// Gets the linenumber alignment
     fn linenumber_align(&self) -> Align;
+    /// Checks whether a pixel is within a text selection
+    fn in_selection(&self, x: i32, y: i32) -> bool;
 }
 
 /// Defines the methods implemented by all browser types
-pub trait BrowserTrait {
+pub trait BrowserExt {
     /// Removes the specified line
     fn remove(&mut self, line: u32);
     /// Adds an item
@@ -515,7 +517,7 @@ pub trait BrowserTrait {
     /// Sets the text size
     fn set_text_size(&mut self, sz: u32);
     /// Sets the icon for browser elements
-    fn set_icon<Img: ImageTrait>(&mut self, line: u32, image: &Img);
+    fn set_icon<Img: ImageExt>(&mut self, line: u32, image: &Img);
     /// Returns the icon of a browser element
     fn icon(&self, line: u32) -> Option<Image>;
     /// Removes the icon of a browser element
@@ -523,7 +525,7 @@ pub trait BrowserTrait {
 }
 
 /// Defines the methods implemented by all image types
-pub trait ImageTrait {
+pub trait ImageExt {
     /// Creates an image object from a path
     fn new(path: &std::path::Path) -> Self;
     /// Creates a copy of the image

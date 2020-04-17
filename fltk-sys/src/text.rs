@@ -663,6 +663,13 @@ extern "C" {
     pub fn Fl_Text_Display_linenumber_align(self_: *const Fl_Text_Display)
         -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Text_Display_in_selection(
+        self_: *const Fl_Text_Display,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -1093,6 +1100,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_linenumber_align(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_in_selection(
+        self_: *const Fl_Text_Editor,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
@@ -1606,5 +1620,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_linenumber_align(
         self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_in_selection(
+        self_: *const Fl_Simple_Terminal,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }

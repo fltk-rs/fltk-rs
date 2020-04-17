@@ -4,8 +4,37 @@
 #include <FL/Fl_Menu_Bar.H>
 #include <FL/Fl_Menu_Button.H>
 #include <FL/Fl_Menu_Item.H>
-#include <cstring>
-#include <string>
+#include <new>
+
+
+#define MENU_DEFINE(widget)                                                    \
+  void widget##_add(widget *self, const char *name, int shortcut,              \
+                    Fl_Callback *cb, void *data, int flag) {                   \
+    LOCK(self->add(name, shortcut, cb, data, flag);)                           \
+  }                                                                            \
+  void widget##_insert(widget *self, int index, const char *name,              \
+                       int shortcut, Fl_Callback *cb, void *data, int flag) {  \
+    LOCK(self->insert(index, name, shortcut, cb, data, flag);)                 \
+  }                                                                            \
+  Fl_Menu_Item *widget##_get_item(widget *self, const char *name) {            \
+    return (Fl_Menu_Item *)self->find_item(name);                              \
+  }                                                                            \
+  int widget##_text_font(widget *self) { return self->textfont(); }            \
+  void widget##_set_text_font(widget *self, int c) {                           \
+    LOCK(self->textfont(c);)                                                   \
+  }                                                                            \
+  int widget##_text_size(widget *self) { return self->textsize(); }            \
+  void widget##_set_text_size(widget *self, int c) {                           \
+    LOCK(self->textsize(c);)                                                   \
+  }                                                                            \
+  unsigned int widget##_text_color(widget *self) { return self->textcolor(); } \
+  void widget##_set_text_color(widget *self, unsigned int c) {                 \
+    LOCK(self->textcolor(c);)                                                  \
+  }                                                                            \
+  void widget##_add_choice(widget *self, const char *str) {                    \
+    LOCK(self->add(str);)                                                      \
+  }                                                                            \
+  const char *widget##_get_choice(widget *self) { return self->text(); }
 
 WIDGET_DEFINE(Fl_Menu_Bar)
 

@@ -1,9 +1,9 @@
 pub use crate::prelude::*;
 use fltk_sys::dialog::*;
 use std::{
+    ffi::{CStr, CString},
     mem,
     os::raw,
-    ffi::{CStr, CString},
 };
 
 /// Creates a file button
@@ -38,7 +38,7 @@ pub enum FileDialogOptions {
 impl FileDialog {
     /// Creates an new file dialog
     pub fn new(op: FileDialogType) -> FileDialog {
-        unsafe { 
+        unsafe {
             let file_dialog = Fl_Native_File_Chooser_new(mem::transmute(op));
             assert!(!file_dialog.is_null(), "Failed to instantiate file dialog!");
             FileDialog {
@@ -55,9 +55,11 @@ impl FileDialog {
                 return std::path::PathBuf::from("");
             }
             let x = Fl_Native_File_Chooser_filenames(self._inner, 0);
-            std::path::PathBuf::from(CStr::from_ptr(x as *mut raw::c_char)
-                .to_string_lossy()
-                .to_string())
+            std::path::PathBuf::from(
+                CStr::from_ptr(x as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
         }
     }
 
@@ -71,11 +73,11 @@ impl FileDialog {
             } else {
                 for i in 0..cnt {
                     let x = Fl_Native_File_Chooser_filenames(self._inner, i);
-                    names.push(
-                        std::path::PathBuf::from(CStr::from_ptr(x as *mut raw::c_char)
+                    names.push(std::path::PathBuf::from(
+                        CStr::from_ptr(x as *mut raw::c_char)
                             .to_string_lossy()
-                            .to_string()),
-                    )
+                            .to_string(),
+                    ))
                 }
                 names
             }
@@ -87,9 +89,11 @@ impl FileDialog {
         unsafe {
             let x = Fl_Native_File_Chooser_directory(self._inner);
             if !x.is_null() {
-                std::path::PathBuf::from(CStr::from_ptr(x as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string())
+                std::path::PathBuf::from(
+                    CStr::from_ptr(x as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
             } else {
                 std::path::PathBuf::from("")
             }
@@ -99,7 +103,10 @@ impl FileDialog {
     /// Sets the starting directory
     pub fn set_directory(&mut self, dir: &std::path::Path) {
         unsafe {
-            Fl_Native_File_Chooser_set_directory(self._inner, CString::new(dir.to_str().unwrap()).unwrap().into_raw())
+            Fl_Native_File_Chooser_set_directory(
+                self._inner,
+                CString::new(dir.to_str().unwrap()).unwrap().into_raw(),
+            )
         }
     }
 
@@ -151,9 +158,11 @@ impl FileDialog {
             if err_msg.is_null() {
                 None
             } else {
-                Some(CStr::from_ptr(err_msg as *mut raw::c_char)
-                .to_string_lossy()
-                .to_string())
+                Some(
+                    CStr::from_ptr(err_msg as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
             }
         }
     }
@@ -254,54 +263,38 @@ impl HelpDialog {
     }
     /// Hides the help dialog
     pub fn hide(&mut self) {
-        unsafe {
-            Fl_Help_Dialog_hide(self._inner)
-        }
+        unsafe { Fl_Help_Dialog_hide(self._inner) }
     }
     /// Loads a file for the help dialog
     pub fn load(&mut self, file: &std::path::Path) -> i32 {
         let f = file.to_str().unwrap();
         let f = CString::new(f).unwrap();
-        unsafe {
-            Fl_Help_Dialog_load(self._inner, f.into_raw() as *const raw::c_char)
-        }
+        unsafe { Fl_Help_Dialog_load(self._inner, f.into_raw() as *const raw::c_char) }
     }
     /// Sets the position of the help dialog
     pub fn position(&mut self, x: i32, y: i32) {
-        unsafe {
-            Fl_Help_Dialog_position(self._inner, x, y)
-        }
+        unsafe { Fl_Help_Dialog_position(self._inner, x, y) }
     }
     /// Resizes the help dialog
-    pub fn resize(&mut self,  x: i32, y: i32,  w: i32, h: i32) {
-        unsafe {
-            Fl_Help_Dialog_resize(self._inner, x, y , w, h)
-        }
+    pub fn resize(&mut self, x: i32, y: i32, w: i32, h: i32) {
+        unsafe { Fl_Help_Dialog_resize(self._inner, x, y, w, h) }
     }
     /// Shows the help dialog
     pub fn show(&mut self) {
-        unsafe {
-            Fl_Help_Dialog_show(self._inner)
-        }
+        unsafe { Fl_Help_Dialog_show(self._inner) }
     }
     /// Sets the text size
     pub fn set_text_size(&mut self, s: u32) {
-        unsafe {
-            Fl_Help_Dialog_set_text_size(self._inner, s as i32)
-        }
+        unsafe { Fl_Help_Dialog_set_text_size(self._inner, s as i32) }
     }
     /// Returns the text size
     pub fn text_size(&mut self) -> u32 {
-        unsafe {
-            Fl_Help_Dialog_text_size(self._inner) as u32
-        }
+        unsafe { Fl_Help_Dialog_text_size(self._inner) as u32 }
     }
     /// Sets the value of the help dialog
     pub fn set_value(&mut self, f: &str) {
         let f = CString::new(f).unwrap();
-        unsafe {
-            Fl_Help_Dialog_set_value(self._inner, f.into_raw() as *const raw::c_char)
-        }
+        unsafe { Fl_Help_Dialog_set_value(self._inner, f.into_raw() as *const raw::c_char) }
     }
     /// Returns the value of the help dialog
     pub fn value(&self) -> Option<String> {
@@ -325,26 +318,18 @@ impl HelpDialog {
     }
     /// Returns the width of the help dialog
     pub fn width(&mut self) -> i32 {
-        unsafe {
-            Fl_Help_Dialog_w(self._inner)
-        }
+        unsafe { Fl_Help_Dialog_w(self._inner) }
     }
     /// Returns the height of the help dialog
     pub fn height(&mut self) -> i32 {
-        unsafe {
-            Fl_Help_Dialog_h(self._inner)
-        }
+        unsafe { Fl_Help_Dialog_h(self._inner) }
     }
     /// Returns the x position of the help dialog
     pub fn x(&mut self) -> i32 {
-        unsafe {
-            Fl_Help_Dialog_x(self._inner)
-        }
+        unsafe { Fl_Help_Dialog_x(self._inner) }
     }
     /// Returns the y position of the help dialog
     pub fn y(&mut self) -> i32 {
-        unsafe {
-            Fl_Help_Dialog_y(self._inner)
-        }
+        unsafe { Fl_Help_Dialog_y(self._inner) }
     }
 }

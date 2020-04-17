@@ -3,6 +3,7 @@
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Native_File_Chooser.H>
 #include <FL/fl_ask.H>
+#include <string.h>
 #include <new>
 
 #ifndef LOCK
@@ -104,33 +105,46 @@ Fl_Help_Dialog *Fl_Help_Dialog_new(void) {
 }
 
 int Fl_Help_Dialog_h(Fl_Help_Dialog *self) { return self->h(); }
+
 void Fl_Help_Dialog_hide(Fl_Help_Dialog *self) { return self->hide(); }
+
 int Fl_Help_Dialog_load(Fl_Help_Dialog *self, const char *f) {
   int ret;
   LOCK(ret = self->load(f));
   return ret;
 }
+
 void Fl_Help_Dialog_position(Fl_Help_Dialog *self, int xx, int yy) {
   LOCK(self->position(xx, yy);)
 }
+
 void Fl_Help_Dialog_resize(Fl_Help_Dialog *self, int xx, int yy, int ww,
                            int hh) {
   LOCK(self->resize(xx, yy, ww, hh);)
 }
+
 void Fl_Help_Dialog_show(Fl_Help_Dialog *self) { LOCK(self->show();) }
+
 void Fl_Help_Dialog_set_text_size(Fl_Help_Dialog *self, int s) {
   LOCK(self->textsize(s);)
 }
+
 int Fl_Help_Dialog_text_size(Fl_Help_Dialog *self) { return self->textsize(); }
+
 void Fl_Help_Dialog_set_value(Fl_Help_Dialog *self, const char *f) {
   LOCK(self->value(f);)
 }
+
 const char *Fl_Help_Dialog_value(const Fl_Help_Dialog *self) {
   return self->value();
 }
+
 int Fl_Help_Dialog_visible(Fl_Help_Dialog *self) { return self->visible(); }
+
 int Fl_Help_Dialog_w(Fl_Help_Dialog *self) { return self->w(); }
+
 int Fl_Help_Dialog_x(Fl_Help_Dialog *self) { return self->x(); }
+
 int Fl_Help_Dialog_y(Fl_Help_Dialog *self) { return self->y(); }
 
 #undef LOCK
