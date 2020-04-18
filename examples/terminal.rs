@@ -90,8 +90,7 @@ impl<'a> Term<'a> {
                 // println!("{:?}", app::event_key());
                 // println!("{:?}", app::event_text());
                 match ev {
-                    // fltk bug with Event::KeyDown
-                    app::Event::Shortcut => match app::event_key() {
+                    app::Event::KeyDown => match app::event_key() {
                         app::Key::Enter => {
                             self.append("\n");
                             self.run_command();
