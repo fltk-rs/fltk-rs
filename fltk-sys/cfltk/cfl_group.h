@@ -84,6 +84,10 @@ double Fl_Color_Chooser_b(Fl_Color_Chooser *self);
 
 GROUP_DECLARE(Fl_Color_Chooser)
 
+// WIDGET_DECLARE(Fl_Table)
+
+// GROUP_DECLARE(Fl_Table)
+
 #ifdef __cplusplus
 }
 #endif

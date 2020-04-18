@@ -1,5 +1,7 @@
 use crate::image::Image;
 pub use crate::prelude::*;
+use crate::widget::Widget;
+use crate::window::Window;
 use fltk_sys::misc::*;
 use std::{
     ffi::{CStr, CString},
@@ -214,6 +216,142 @@ impl Progress {
     pub fn set_value(&mut self, arg2: f64) {
         unsafe {
             Fl_Progress_set_value(self._inner, arg2);
+        }
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct Tooltip {}
+
+impl Tooltip {
+    pub fn delay() -> f32 {
+        unsafe { Fl_Tooltip_delay() }
+    }
+
+    pub fn set_delay(f: f32) {
+        unsafe { Fl_Tooltip_set_delay(f) }
+    }
+
+    pub fn hidedelay() -> f32 {
+        unsafe { Fl_Tooltip_hidedelay() }
+    }
+
+    pub fn set_hidedelay(f: f32) {
+        unsafe { Fl_Tooltip_set_hidedelay(f) }
+    }
+
+    pub fn hoverdelay() -> f32 {
+        unsafe { Fl_Tooltip_hoverdelay() }
+    }
+
+    pub fn set_hoverdelay(f: f32) {
+        unsafe { Fl_Tooltip_set_hoverdelay(f) }
+    }
+
+    pub fn enabled() -> bool {
+        unsafe {
+            match Fl_Tooltip_enabled() {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    pub fn enable(b: bool) {
+        unsafe { Fl_Tooltip_enable(b as i32) }
+    }
+
+    pub fn disable() {
+        unsafe { Fl_Tooltip_disable() }
+    }
+
+    pub fn enter_area<W: WidgetExt>(widget: W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
+        let tip = CString::new(tip).unwrap();
+        unsafe {
+            Fl_Tooltip_enter_area(
+                widget.as_widget_ptr() as *mut Fl_Widget,
+                x,
+                y,
+                w,
+                h,
+                tip.into_raw() as *const raw::c_char,
+            )
+        }
+    }
+
+    pub fn current_widget() -> Widget {
+        unsafe {
+            let widget_ptr = Fl_Tooltip_current_widget();
+            assert!(!widget_ptr.is_null());
+            Widget::from_raw(widget_ptr as *mut fltk_sys::widget::Fl_Widget)
+        }
+    }
+
+    pub fn current<W: WidgetExt>(w: W) {
+        unsafe { Fl_Tooltip_current(w.as_widget_ptr() as *mut Fl_Widget) }
+    }
+
+    pub fn font() -> Font {
+        unsafe { mem::transmute(Fl_Tooltip_font()) }
+    }
+
+    pub fn set_font(font: Font) {
+        unsafe { Fl_Tooltip_set_font(font as i32) }
+    }
+
+    pub fn font_size() -> u32 {
+        unsafe { Fl_Tooltip_font_size() as u32 }
+    }
+
+    pub fn set_font_size(s: u32) {
+        unsafe { Fl_Tooltip_set_font_size(s as i32) }
+    }
+
+    pub fn color() -> Color {
+        unsafe { mem::transmute(Fl_Tooltip_color()) }
+    }
+
+    pub fn set_color(c: Color) {
+        unsafe { Fl_Tooltip_set_color(c as u32) }
+    }
+
+    pub fn text_color() -> Color {
+        unsafe { mem::transmute(Fl_Tooltip_text_color()) }
+    }
+
+    pub fn set_text_color(c: Color) {
+        unsafe { Fl_Tooltip_set_text_color(c as u32) }
+    }
+
+    pub fn margin_width() -> u32 {
+        unsafe { Fl_Tooltip_margin_width() as u32 }
+    }
+
+    pub fn set_margin_width(v: u32) {
+        unsafe { Fl_Tooltip_set_margin_width(v as i32) }
+    }
+
+    pub fn margin_height() -> u32 {
+        unsafe { Fl_Tooltip_margin_height() as u32 }
+    }
+
+    pub fn set_margin_height(v: u32) {
+        unsafe { Fl_Tooltip_set_margin_height(v as i32) }
+    }
+
+    pub fn wrap_width() -> u32 {
+        unsafe { Fl_Tooltip_wrap_width() as u32 }
+    }
+
+    pub fn set_wrap_width(v: u32) {
+        unsafe { Fl_Tooltip_set_wrap_width(v as i32) }
+    }
+
+    pub fn current_window<W: WindowExt>() -> Window {
+        unsafe {
+            let wind = Fl_Tooltip_current_window();
+            assert!(!wind.is_null());
+            Window::from_widget_ptr(wind as *mut fltk_sys::widget::Fl_Widget)
         }
     }
 }

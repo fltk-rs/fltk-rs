@@ -10,6 +10,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
 
 option(CFLTK_BUILD_SHARED "Builds a shared library" OFF)
+option(CFLTK_BUILD_TESTS "Builds C++ tests" OFF)
 
 add_subdirectory(fltk)
 
@@ -38,9 +39,17 @@ else()
     add_library(cfltk STATIC ${CFLTK_SRCS})
 endif()
 
-target_include_directories(cfltk PUBLIC fltk)
-target_include_directories(cfltk PUBLIC ${CMAKE_CURRENT_BINARY_DIR}/fltk)
+target_include_directories(cfltk PUBLIC fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk)
 
 if(CFLTK_BUILD_SHARED)
     target_link_libraries(cfltk PUBLIC fltk fltk_images fltk_z fltk_jpeg fltk_png)
+endif()
+
+if(CFLTK_BUILD_TESTS)
+    enable_testing()
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/tests)
+    add_executable(test1 tests/test1.cpp)
+    target_include_directories(test1 PUBLIC fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk ${CMAKE_CURRENT_LIST_DIR})
+    target_link_libraries(test1 PUBLIC cfltk fltk fltk_images fltk_z fltk_jpeg fltk_png)
+    add_test(cfltk_tests test1)
 endif()

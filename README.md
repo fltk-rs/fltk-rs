@@ -18,7 +18,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.21"
+fltk = "^0.2.22"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
@@ -245,6 +245,7 @@ Most common widgets are implemented:
 - Chart
 - Progress (progress bar)
 - ColorChooser
+- Tooltip
 - Drawing primitives
 
 ## Todo

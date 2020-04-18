@@ -63,6 +63,10 @@ fn main() {
     if cfg!(feature = "use-ninja") {
         dst.generator("Ninja");
     }
+    if cfg!(feature = "cpp-testing") {
+        println!("cargo:rerun-if-changed=cfltk/tests/test1.cpp");
+        dst.define("CFLTK_BUILD_TESTS", "ON");
+    }
     let dst = dst
         .profile("RELEASE")
         .define("OPTION_ABI_VERSION:STRING", "10401")

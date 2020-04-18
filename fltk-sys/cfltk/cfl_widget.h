@@ -88,7 +88,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     operator widget *() { return (widget *)*this; }                            \
     void set_handler(handler h) { inner_handler = h; }                         \
     void set_handler_data(void *data) { ev_data_ = data; }                     \
-    int handle(int event) {                                                    \
+    int handle(int event) override {                                                    \
       int ret = widget::handle(event);                                         \
       int local = 0;                                                           \
       if (ev_data_ && inner_handler) {                                         \
@@ -103,7 +103,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     }                                                                          \
     void set_drawer(drawer h) { inner_drawer = h; }                            \
     void set_drawer_data(void *data) { draw_data_ = data; }                    \
-    void draw() {                                                              \
+    void draw() override {                                                              \
       widget::draw();                                                          \
                                                                                \
       if (draw_data_ && inner_drawer)                                          \
