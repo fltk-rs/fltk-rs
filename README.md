@@ -23,7 +23,7 @@ fltk = "^0.2.22"
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
 [dependencies.fltk]
-version = "^0.2.21"
+version = "^0.2.22"
 features = ["fltk-shared"]
 ```
 
@@ -258,8 +258,6 @@ Most common widgets are implemented:
 ## Contributions
 
 Contributions are very welcome!
-
-Regarding the wrapping code: I had issues with using Rust-Bindgen directly on C++ code. So wrapping must be in C/C++. The wrapping headers must be in C89 (no issues running bindgen on them). The wrapping code in .cpp files can be in C++98 or C++11, as not to impose on users having to install a new C++ compiler. Bindgen had a dependency on LLVM and libclang, so I prefer that it not be added as dependency to this project. However, I strongly advise installing it and using it for development. You can see the fltk-sys/bind.sh script on how bindgen is used with this project for development. C/C++ must be formatted using clang-format. Rust code must be formatted using rustfmt. 
 
 ## License
 

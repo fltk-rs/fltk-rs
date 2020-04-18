@@ -203,6 +203,14 @@ pub trait WidgetExt {
     fn takes_events(&self) -> bool;
 }
 
+/// Defines the methods implemented by all button widgets
+pub trait ButtonExt: WidgetExt {
+    /// Gets the shortcut associated with a button
+    fn shortcut(&self) -> Shortcut;
+    /// Sets the shortcut associated with a button
+    fn set_shortcut(&mut self, shortcut: Shortcut);
+}
+
 /// Defines the methods implemented by all group widgets
 pub trait GroupExt: WidgetExt {
     /// Begins a group, used for widgets implementing the group trait
