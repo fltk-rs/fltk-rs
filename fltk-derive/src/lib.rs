@@ -503,7 +503,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    return;
+                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
@@ -520,7 +520,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             
             fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    return;
+                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 unsafe {
                     unsafe extern "C" fn shim<'a>(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
@@ -541,7 +541,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             
             fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    return;
+                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 unsafe {
                     unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
@@ -1153,7 +1153,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl MenuExt for #name {
             fn add<'a>(&'a mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    return;
+                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 let temp = CString::new(name).unwrap();
                 unsafe {
@@ -1171,7 +1171,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             
             fn insert<'a>(&'a mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    return;
+                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 let temp = CString::new(name).unwrap();
                 unsafe {

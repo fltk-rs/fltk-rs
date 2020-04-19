@@ -210,7 +210,7 @@ where
     W: WidgetExt,
 {
     if !widget.top_window().unwrap().takes_events() || !widget.takes_events() {
-        return;
+        panic!("The widget failed to capture events, probably it (or the window) is inactive");
     }
     unsafe {
         unsafe extern "C" fn shim<'a>(
