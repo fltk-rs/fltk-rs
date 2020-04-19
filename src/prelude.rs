@@ -22,6 +22,7 @@ pub enum FltkErrorKind {
     FailedToLock,
     FailedToSetScheme,
     ResourceNotFound,
+    TableError,
 }
 
 impl FltkErrorKind {
@@ -31,6 +32,7 @@ impl FltkErrorKind {
             FltkErrorKind::FailedToLock => "Failed to initialize app for multithreading!",
             FltkErrorKind::FailedToSetScheme => "Failed to set scheme",
             FltkErrorKind::ResourceNotFound => "Resource Not Found!",
+            FltkErrorKind::TableError => "Table selection error!",
         }
     }
 }
@@ -180,11 +182,12 @@ pub trait WidgetExt {
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
-    fn set_custom_handler<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
+    /// Handled or ignored events shoult return true, unhandled events should return false
+    fn handle<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
     /// Set a custom draw method
-    fn set_custom_draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
+    fn draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
     /// Returns the parent of the widget
     fn parent(&self) -> Option<Widget>;
     /// Gets the selection color of the widget
@@ -203,6 +206,14 @@ pub trait WidgetExt {
     fn takes_events(&self) -> bool;
 }
 
+/// Defines the methods implemented by all button widgets
+pub trait ButtonExt: WidgetExt {
+    /// Gets the shortcut associated with a button
+    fn shortcut(&self) -> Shortcut;
+    /// Sets the shortcut associated with a button
+    fn set_shortcut(&mut self, shortcut: Shortcut);
+}
+
 /// Defines the methods implemented by all group widgets
 pub trait GroupExt: WidgetExt {
     /// Begins a group, used for widgets implementing the group trait
@@ -216,7 +227,7 @@ pub trait GroupExt: WidgetExt {
     /// Insert a widget to a group at a certain index
     fn insert<Widget: WidgetExt>(&mut self, widget: &Widget, index: u32);
     /// Remove a widget from a group
-    fn remove(&mut self, index: u32);
+    fn remove<Widget: WidgetExt>(&mut self, widget: &Widget);
     /// Clear a group from all widgets
     fn clear(&mut self);
     /// Return the number of children in a group
@@ -300,7 +311,7 @@ pub trait InputExt: WidgetExt {
 /// Defines the methods implemented by all menu widgets
 pub trait MenuExt: WidgetExt {
     /// Get a menu item by name
-    fn get_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
+    fn item(&self, name: &str) -> Option<crate::menu::MenuItem>;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -333,7 +344,7 @@ pub trait MenuExt: WidgetExt {
     /// Adds a simple text option to the Choice and MenuButton widgets
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
-    fn get_choice(&self) -> Option<String>;
+    fn choice(&self) -> Option<String>;
 }
 
 /// Defines the methods implemented by all valuator widgets
@@ -485,7 +496,7 @@ pub trait DisplayExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all browser types
-pub trait BrowserExt {
+pub trait BrowserExt: WidgetExt {
     /// Removes the specified line
     fn remove(&mut self, line: u32);
     /// Adds an item
@@ -522,6 +533,124 @@ pub trait BrowserExt {
     fn icon(&self, line: u32) -> Option<Image>;
     /// Removes the icon of a browser element
     fn remove_icon(&mut self, line: u32);
+}
+
+/// Defines the methods implemented by table types
+pub trait TableExt: GroupExt {
+    /// Clears the table
+    fn clear(&mut self);
+    /// Sets the table frame, table_box
+    fn set_table_frame(&mut self, frame: FrameType);
+    /// Gets the table frame, table box
+    fn table_frame(&self) -> FrameType;
+    /// Sets the number of rows
+    fn set_rows(&mut self, val: u32);
+    /// Gets the number of rows
+    fn rows(&self) -> u32;
+    /// Sets the number of columns
+    fn set_cols(&mut self, val: u32);
+    /// Gets the number of columns
+    fn cols(&self) -> u32;
+    /// Returns the range of row and column numbers for all visible and partially visible cells in the table.
+    fn visible_cells(
+        &mut self,
+        r1: &mut i32,
+        r2: &mut i32,
+        c1: &mut i32,
+        c2: &mut i32,
+    );
+    /// Returns whether the resize is interactive
+    fn is_interactive_resize(&self) -> bool;
+    /// Returns whether a row is resizable
+    fn row_resize(&self) -> bool;
+    /// Sets a row to be resizable
+    fn set_row_resize(&mut self, flag: bool);
+    /// Returns whether a column is resizable
+    fn col_resize(&self) -> bool;
+    /// Sets a column to be resizable
+    fn set_col_resize(&mut self, flag: bool);
+    /// Returns the current column minimum resize value.
+    fn col_resize_min(&self) -> u32;
+    /// Sets the current column minimum resize value.
+    fn set_col_resize_min(&mut self, val: u32);
+    /// Returns the current row minimum resize value.
+    fn row_resize_min(&self) -> u32;
+    /// Sets the current row minimum resize value.
+    fn set_row_resize_min(&mut self, val: u32);
+    /// Returns if row headers are enabled or not
+    fn row_header(&self) -> bool;
+    /// Sets whether a row headers are enabled or not
+    fn set_row_header(&mut self, flag: bool);
+    /// Returns if column headers are enabled or not
+    fn col_header(&self) -> bool;
+    /// Sets whether a column headers are enabled or not
+    fn set_col_header(&mut self, flag: bool);
+    /// Sets the column header height
+    fn set_col_header_height(&mut self, height: i32);
+    /// Gets the column header height
+    fn col_header_height(&self) -> i32;
+    /// Sets the row header width
+    fn set_row_header_width(&mut self, width: i32);
+    /// Gets the row header width
+    fn row_header_width(&self) -> i32;
+    /// Sets the row header color
+    fn set_row_header_color(&mut self, val: Color);
+    /// Gets the row header color
+    fn row_header_color(&self) -> Color;
+    /// Sets the column header color
+    fn set_col_header_color(&mut self, val: Color);
+    /// Gets the row header color
+    fn col_header_color(&self) -> Color;
+    /// Sets the row's height
+    fn set_row_height(&mut self, row: i32, height: i32);
+    /// Gets the row's height
+    fn row_height(&self, row: i32) -> i32;
+    /// Sets the columns's width
+    fn set_col_width(&mut self, col: i32, width: i32);
+    /// Gets the columns's width
+    fn col_width(&self, col: i32) -> i32;
+    /// Sets all rows height
+    fn set_row_height_all(&mut self, height: i32);
+    /// Sets all columns's width
+    fn set_col_width_all(&mut self, width: i32);
+    /// Sets the row's position
+    fn set_row_position(&mut self, row: i32);
+    /// Sets the columns's position
+    fn set_col_position(&mut self, col: i32);
+    /// Gets the row's position
+    fn row_position(&self) -> i32;
+    /// Gets the columns's position
+    fn col_position(&self) -> i32;
+    /// Sets the top row
+    fn set_top_row(&mut self, row: i32);
+    /// Gets the top row
+    fn top_row(&self) -> i32;
+    /// Returns whether a cell is selected
+    fn is_selected(&self, r: i32, c: i32) -> bool;
+    /// Gets the selection
+    fn get_selection(
+        &self,
+        row_top: &mut i32,
+        col_left: &mut i32,
+        row_bot: &mut i32,
+        col_right: &mut i32,
+    );
+    /// Sets the selection
+    fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
+    /// Moves the cursor with shift select
+    fn move_cursor_with_shift_select(&mut self, r: i32, c: i32, shiftselect: bool);
+    /// Moves the cursor
+    fn move_cursor(&mut self, r: i32, c: i32);
+    /// Resets the internal array of widget sizes and positions.
+    fn init_sizes(&mut self);
+    /// Returns the scrollbar size
+    fn scrollbar_size(&self) -> u32;
+    /// Sets the scrollbar size
+    fn set_scrollbar_size(&mut self, new_size: u32);
+    /// Sets the tab key cell navigation
+    fn set_tab_cell_nav(&mut self, val: u32);
+    /// Returns the tab key cell navigation
+    fn tab_cell_nav(&self) -> u32;
 }
 
 /// Defines the methods implemented by all image types

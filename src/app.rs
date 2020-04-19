@@ -134,10 +134,13 @@ pub fn event_key() -> Key {
 pub fn event_text() -> String {
     unsafe {
         let text = Fl_event_text();
-        assert!(!text.is_null(), "Failed to retrieve event_text!");
-        CString::from_raw(text as *mut raw::c_char)
+        if text.is_null() {
+            String::from("")
+        } else {
+            CString::from_raw(text as *mut raw::c_char)
             .to_string_lossy()
             .to_string()
+        }
     }
 }
 
@@ -207,7 +210,7 @@ where
     W: WidgetExt,
 {
     if !widget.top_window().unwrap().takes_events() || !widget.takes_events() {
-        return;
+        panic!("The widget failed to capture events, probably it (or the window) is inactive");
     }
     unsafe {
         unsafe extern "C" fn shim<'a>(

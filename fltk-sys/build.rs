@@ -28,6 +28,7 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_text.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_image.h");
     println!("cargo:rerun-if-changed=cfltk/cfl_draw.h");
+    println!("cargo:rerun-if-changed=cfltk/cfl_table.h");
     println!("cargo:rerun-if-changed=cfltk/cfl.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_widget.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_group.cpp");
@@ -42,6 +43,7 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_text.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_image.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_draw.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_table.cpp");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
 
     Command::new("git")
@@ -62,6 +64,10 @@ fn main() {
     }
     if cfg!(feature = "use-ninja") {
         dst.generator("Ninja");
+    }
+    if cfg!(feature = "cpp-testing") {
+        println!("cargo:rerun-if-changed=cfltk/tests/test1.cpp");
+        dst.define("CFLTK_BUILD_TESTS", "ON");
     }
     let dst = dst
         .profile("RELEASE")

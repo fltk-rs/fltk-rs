@@ -92,6 +92,65 @@ double Fl_Progress_value(Fl_Progress *);
 
 void Fl_Progress_set_value(Fl_Progress *, double);
 
+float Fl_Tooltip_delay(void);
+
+void Fl_Tooltip_set_delay(float f);
+
+float Fl_Tooltip_hidedelay(void);
+
+void Fl_Tooltip_set_hidedelay(float f);
+
+float Fl_Tooltip_hoverdelay(void);
+
+void Fl_Tooltip_set_hoverdelay(float f);
+
+int Fl_Tooltip_enabled(void);
+
+void Fl_Tooltip_enable(int b);
+
+void Fl_Tooltip_disable(void);
+
+void (*Fl_Tooltip_enter)(Fl_Widget *w);
+
+void Fl_Tooltip_enter_area(Fl_Widget *w, int X, int Y, int W, int H,
+                           const char *tip);
+
+void (*Fl_Tooltip_exit)(Fl_Widget *w);
+
+void *Fl_Tooltip_current_widget(void);
+
+void Fl_Tooltip_current(Fl_Widget *);
+
+int Fl_Tooltip_font(void);
+
+void Fl_Tooltip_set_font(int i);
+
+int Fl_Tooltip_font_size(void);
+
+void Fl_Tooltip_set_font_size(int s);
+
+int Fl_Tooltip_color(void);
+
+void Fl_Tooltip_set_color(unsigned int c);
+
+int Fl_Tooltip_text_color(void);
+
+void Fl_Tooltip_set_text_color(unsigned int c);
+
+int Fl_Tooltip_margin_width(void);
+
+void Fl_Tooltip_set_margin_width(int v);
+
+int Fl_Tooltip_margin_height(void);
+
+void Fl_Tooltip_set_margin_height(int v);
+
+int Fl_Tooltip_wrap_width(void);
+
+void Fl_Tooltip_set_wrap_width(int v);
+
+void *Fl_Tooltip_current_window(void);
+
 #ifdef __cplusplus
 }
 #endif

@@ -33,7 +33,7 @@ impl MainWindow {
         self.wind.show();
         self.but1
             .clone()
-            .set_custom_handler(Box::new(|ev: app::Event| match ev {
+            .handle(Box::new(|ev: app::Event| match ev {
                 app::Event::Released => {
                     println!("{:?}", ev);
                     return true;

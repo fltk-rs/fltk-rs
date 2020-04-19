@@ -85,13 +85,12 @@ impl<'a> Term<'a> {
     pub fn handle_event(&mut self) {
         self.term
             .clone()
-            .set_custom_handler(Box::new(|ev: app::Event| {
+            .handle(Box::new(|ev: app::Event| {
                 // println!("{:?}", app::event());
                 // println!("{:?}", app::event_key());
                 // println!("{:?}", app::event_text());
                 match ev {
-                    // fltk bug with Event::KeyDown
-                    app::Event::Shortcut => match app::event_key() {
+                    app::Event::KeyDown => match app::event_key() {
                         app::Key::Enter => {
                             self.append("\n");
                             self.run_command();

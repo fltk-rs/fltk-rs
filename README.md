@@ -18,12 +18,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.2.21"
+fltk = "^0.3.0"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
 [dependencies.fltk]
-version = "^0.2.21"
+version = "^0.3.0"
 features = ["fltk-shared"]
 ```
 
@@ -104,14 +104,15 @@ fn main() {
 ### Events
 **Event handling must be done after the drawing is done and the main window shown.**
 
-Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the set_custom_handler() method can be used:
+Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the handle() method can be used:
 ```rust
-some_widget.set_custom_handler(Box::new(|ev: app::Event| {
+some_widget.handle(Box::new(|ev: app::Event| {
     match ev {
         /* handle ev */
     }
 }));
 ```
+Handled or ignored events shoult return true, unhandled events should return false.
 
 ### Theming
 FLTK offers 4 application themes (called schemes):
@@ -245,6 +246,9 @@ Most common widgets are implemented:
 - Chart
 - Progress (progress bar)
 - ColorChooser
+- Tooltip
+- Table
+- TableRow
 - Drawing primitives
 
 ## Todo
@@ -252,13 +256,10 @@ Most common widgets are implemented:
 - Complete widget set
 - Better documentation
 - Better testing
-- Add tables
 
 ## Contributions
 
 Contributions are very welcome!
-
-Regarding the wrapping code: I had issues with using Rust-Bindgen directly on C++ code. So wrapping must be in C/C++. The wrapping headers must be in C89 (no issues running bindgen on them). The wrapping code in .cpp files can be in C++98 or C++11, as not to impose on users having to install a new C++ compiler. Bindgen had a dependency on LLVM and libclang, so I prefer that it not be added as dependency to this project. However, I strongly advise installing it and using it for development. You can see the fltk-sys/bind.sh script on how bindgen is used with this project for development. C/C++ must be formatted using clang-format. Rust code must be formatted using rustfmt. 
 
 ## License
 

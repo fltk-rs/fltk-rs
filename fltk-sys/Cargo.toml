@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "0.2.21"
+version = "0.3.0"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 build = "build.rs"
 edition = "2018"
@@ -20,4 +20,5 @@ cmake = "^0.1.42"
 default = []
 fltk-shared = []
 use-ninja = []
+cpp-testing = [] # for C++ testing
 

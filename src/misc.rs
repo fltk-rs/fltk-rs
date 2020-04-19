@@ -1,5 +1,7 @@
 use crate::image::Image;
 pub use crate::prelude::*;
+use crate::widget::Widget;
+use crate::window::Window;
 use fltk_sys::misc::*;
 use std::{
     ffi::{CStr, CString},
@@ -48,6 +50,7 @@ impl Spinner {
     }
     /// Sets the maximum size supported by the spinner widget
     pub fn set_maximum_size(&mut self, s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Spinner_set_maxsize(self._inner, s as i32) }
     }
     /// Gets the text font
@@ -64,6 +67,7 @@ impl Spinner {
     }
     /// Sets the text size
     pub fn set_text_size(&mut self, s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Spinner_set_textsize(self._inner, s as i32) }
     }
     /// Gets the text's color
@@ -95,11 +99,14 @@ impl Chart {
     }
     /// Adds an entry
     pub fn add(&mut self, val: f64, txt: &str, col: u32) {
+        assert!(col <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         let txt = std::ffi::CString::new(txt).unwrap();
         unsafe { Fl_Chart_add(self._inner, val, txt.into_raw() as *const raw::c_char, col) }
     }
     /// Inserts an entry at an index
     pub fn insert(&mut self, idx: u32, val: f64, txt: &str, col: u32) {
+        assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        assert!(col <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         let txt = std::ffi::CString::new(txt).unwrap();
         unsafe {
             Fl_Chart_insert(
@@ -113,6 +120,8 @@ impl Chart {
     }
     /// Replaces an entry at an index
     pub fn replace(&mut self, idx: u32, val: f64, txt: &str, col: u32) {
+        assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        assert!(col <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         let txt = std::ffi::CString::new(txt).unwrap();
         unsafe {
             Fl_Chart_replace(
@@ -134,6 +143,8 @@ impl Chart {
     }
     /// Sets the size of the chart
     pub fn set_size(&mut self, w: u32, h: u32) {
+        assert!(w <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        assert!(h <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Chart_set_size(self._inner, w as i32, h as i32) }
     }
     /// Gets the maximum supported size of the chart
@@ -142,6 +153,7 @@ impl Chart {
     }
     /// Sets the maximum supported size of the chart
     pub fn set_maximum_size(&mut self, s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Chart_set_maxsize(self._inner, s as i32) }
     }
     /// Gets the text font
@@ -158,6 +170,7 @@ impl Chart {
     }
     /// Sets the text size
     pub fn set_text_size(&mut self, s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Chart_set_textsize(self._inner, s as i32) }
     }
     /// Gets the text's color
@@ -214,6 +227,148 @@ impl Progress {
     pub fn set_value(&mut self, arg2: f64) {
         unsafe {
             Fl_Progress_set_value(self._inner, arg2);
+        }
+    }
+}
+
+/// Shows a standalone tooltip
+#[derive(Clone, Debug)]
+pub struct Tooltip {}
+
+impl Tooltip {
+    /// Gets the tooltip's delay
+    pub fn delay() -> f32 {
+        unsafe { Fl_Tooltip_delay() }
+    }
+    /// Sets the tooltip's delay
+    pub fn set_delay(f: f32) {
+        unsafe { Fl_Tooltip_set_delay(f) }
+    }
+    /// Gets the tooltip's hide delay
+    pub fn hidedelay() -> f32 {
+        unsafe { Fl_Tooltip_hidedelay() }
+    }
+    /// Sets the tooltip's hide delay
+    pub fn set_hidedelay(f: f32) {
+        unsafe { Fl_Tooltip_set_hidedelay(f) }
+    }
+    /// Gets the tooltip's hover delay
+    pub fn hoverdelay() -> f32 {
+        unsafe { Fl_Tooltip_hoverdelay() }
+    }
+    /// Sets the tooltip's hover delay
+    pub fn set_hoverdelay(f: f32) {
+        unsafe { Fl_Tooltip_set_hoverdelay(f) }
+    }
+    /// Returns whether the tooltip is enabled
+    pub fn enabled() -> bool {
+        unsafe {
+            match Fl_Tooltip_enabled() {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+    /// Sets whether the tooltip is enabled
+    pub fn enable(b: bool) {
+        unsafe { Fl_Tooltip_enable(b as i32) }
+    }
+    /// Disables the tooltip
+    pub fn disable() {
+        unsafe { Fl_Tooltip_disable() }
+    }
+    /// Defines the area of the tooltip
+    pub fn enter_area<W: WidgetExt>(widget: W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
+        let tip = CString::new(tip).unwrap();
+        unsafe {
+            Fl_Tooltip_enter_area(
+                widget.as_widget_ptr() as *mut Fl_Widget,
+                x,
+                y,
+                w,
+                h,
+                tip.into_raw() as *const raw::c_char,
+            )
+        }
+    }
+    /// Returns the current widget under the tooltip
+    pub fn current_widget() -> Widget {
+        unsafe {
+            let widget_ptr = Fl_Tooltip_current_widget();
+            assert!(!widget_ptr.is_null());
+            Widget::from_raw(widget_ptr as *mut fltk_sys::widget::Fl_Widget)
+        }
+    }
+    /// Sets the current widget associated with the tooltip
+    pub fn current<W: WidgetExt>(w: W) {
+        unsafe { Fl_Tooltip_current(w.as_widget_ptr() as *mut Fl_Widget) }
+    }
+    /// Gets the tooltip's font
+    pub fn font() -> Font {
+        unsafe { mem::transmute(Fl_Tooltip_font()) }
+    }
+    /// Sets the tooltip's font
+    pub fn set_font(font: Font) {
+        unsafe { Fl_Tooltip_set_font(font as i32) }
+    }
+    /// Gets the tooltip's font size
+    pub fn font_size() -> u32 {
+        unsafe { Fl_Tooltip_font_size() as u32 }
+    }
+    /// Sets the tooltip's font size
+    pub fn set_font_size(s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Tooltip_set_font_size(s as i32) }
+    }
+    /// Gets the tooltip's color
+    pub fn color() -> Color {
+        unsafe { mem::transmute(Fl_Tooltip_color()) }
+    }
+    /// Sets the tooltip's color
+    pub fn set_color(c: Color) {
+        unsafe { Fl_Tooltip_set_color(c as u32) }
+    }
+    /// Gets the tooltip's text color
+    pub fn text_color() -> Color {
+        unsafe { mem::transmute(Fl_Tooltip_text_color()) }
+    }
+    /// Sets the tooltip's text color
+    pub fn set_text_color(c: Color) {
+        unsafe { Fl_Tooltip_set_text_color(c as u32) }
+    }
+    /// Gets the margin width
+    pub fn margin_width() -> u32 {
+        unsafe { Fl_Tooltip_margin_width() as u32 }
+    }
+    /// Sets the margin width
+    pub fn set_margin_width(v: u32) {
+        assert!(v <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Tooltip_set_margin_width(v as i32) }
+    }
+    /// Gets the margin height
+    pub fn margin_height() -> u32 {
+        unsafe { Fl_Tooltip_margin_height() as u32 }
+    }
+    /// Sets the margin height
+    pub fn set_margin_height(v: u32) {
+        assert!(v <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Tooltip_set_margin_height(v as i32) }
+    }
+    /// Gets the wrap width
+    pub fn wrap_width() -> u32 {
+        unsafe { Fl_Tooltip_wrap_width() as u32 }
+    }
+    /// Sets the wrap width
+    pub fn set_wrap_width(v: u32) {
+        assert!(v <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Tooltip_set_wrap_width(v as i32) }
+    }
+    /// Returns the current window
+    pub fn current_window<W: WindowExt>() -> Window {
+        unsafe {
+            let wind = Fl_Tooltip_current_window();
+            assert!(!wind.is_null());
+            Window::from_widget_ptr(wind as *mut fltk_sys::widget::Fl_Widget)
         }
     }
 }

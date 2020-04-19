@@ -890,3 +890,97 @@ extern "C" {
 extern "C" {
     pub fn Fl_Progress_set_value(arg1: *mut Fl_Progress, arg2: f64);
 }
+extern "C" {
+    pub fn Fl_Tooltip_delay() -> f32;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_delay(f: f32);
+}
+extern "C" {
+    pub fn Fl_Tooltip_hidedelay() -> f32;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_hidedelay(f: f32);
+}
+extern "C" {
+    pub fn Fl_Tooltip_hoverdelay() -> f32;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_hoverdelay(f: f32);
+}
+extern "C" {
+    pub fn Fl_Tooltip_enabled() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tooltip_enable(b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tooltip_disable();
+}
+extern "C" {
+    pub static mut Fl_Tooltip_enter: ::std::option::Option<unsafe extern "C" fn(w: *mut Fl_Widget)>;
+}
+extern "C" {
+    pub fn Fl_Tooltip_enter_area(
+        w: *mut Fl_Widget,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+        tip: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub static mut Fl_Tooltip_exit: ::std::option::Option<unsafe extern "C" fn(w: *mut Fl_Widget)>;
+}
+extern "C" {
+    pub fn Fl_Tooltip_current_widget() -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tooltip_current(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Tooltip_font() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_font(i: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tooltip_font_size() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_font_size(s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tooltip_color() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_color(c: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Tooltip_text_color() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_text_color(c: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Tooltip_margin_width() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_margin_width(v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tooltip_margin_height() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_margin_height(v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tooltip_wrap_width() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tooltip_set_wrap_width(v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tooltip_current_window() -> *mut ::std::os::raw::c_void;
+}
