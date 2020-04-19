@@ -8,25 +8,25 @@ use std::{
 };
 
 /// Creates a menu bar
-#[derive(WidgetExt, MenuExt, Debug, Clone)]
+#[derive(WidgetExt, MenuExt, Debug)]
 pub struct MenuBar {
     _inner: *mut Fl_Menu_Bar,
 }
 
 /// Creates a menu button
-#[derive(WidgetExt, MenuExt, Debug, Clone)]
+#[derive(WidgetExt, MenuExt, Debug)]
 pub struct MenuButton {
     _inner: *mut Fl_Menu_Button,
 }
 
 /// Creates a menu choice
-#[derive(WidgetExt, MenuExt, Debug, Clone)]
+#[derive(WidgetExt, MenuExt, Debug)]
 pub struct Choice {
     _inner: *mut Fl_Choice,
 }
 
 /// Creates a menu item
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct MenuItem {
     _inner: *mut Fl_Menu_Item,
 }
