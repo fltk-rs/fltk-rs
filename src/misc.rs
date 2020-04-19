@@ -50,6 +50,7 @@ impl Spinner {
     }
     /// Sets the maximum size supported by the spinner widget
     pub fn set_maximum_size(&mut self, s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Spinner_set_maxsize(self._inner, s as i32) }
     }
     /// Gets the text font
@@ -66,6 +67,7 @@ impl Spinner {
     }
     /// Sets the text size
     pub fn set_text_size(&mut self, s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Spinner_set_textsize(self._inner, s as i32) }
     }
     /// Gets the text's color
@@ -97,11 +99,14 @@ impl Chart {
     }
     /// Adds an entry
     pub fn add(&mut self, val: f64, txt: &str, col: u32) {
+        assert!(col <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         let txt = std::ffi::CString::new(txt).unwrap();
         unsafe { Fl_Chart_add(self._inner, val, txt.into_raw() as *const raw::c_char, col) }
     }
     /// Inserts an entry at an index
     pub fn insert(&mut self, idx: u32, val: f64, txt: &str, col: u32) {
+        assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        assert!(col <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         let txt = std::ffi::CString::new(txt).unwrap();
         unsafe {
             Fl_Chart_insert(
@@ -115,6 +120,8 @@ impl Chart {
     }
     /// Replaces an entry at an index
     pub fn replace(&mut self, idx: u32, val: f64, txt: &str, col: u32) {
+        assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        assert!(col <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         let txt = std::ffi::CString::new(txt).unwrap();
         unsafe {
             Fl_Chart_replace(
@@ -136,6 +143,8 @@ impl Chart {
     }
     /// Sets the size of the chart
     pub fn set_size(&mut self, w: u32, h: u32) {
+        assert!(w <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        assert!(h <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Chart_set_size(self._inner, w as i32, h as i32) }
     }
     /// Gets the maximum supported size of the chart
@@ -144,6 +153,7 @@ impl Chart {
     }
     /// Sets the maximum supported size of the chart
     pub fn set_maximum_size(&mut self, s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Chart_set_maxsize(self._inner, s as i32) }
     }
     /// Gets the text font
@@ -160,6 +170,7 @@ impl Chart {
     }
     /// Sets the text size
     pub fn set_text_size(&mut self, s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Chart_set_textsize(self._inner, s as i32) }
     }
     /// Gets the text's color
@@ -304,6 +315,7 @@ impl Tooltip {
     }
 
     pub fn set_font_size(s: u32) {
+        assert!(s <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Tooltip_set_font_size(s as i32) }
     }
 
@@ -328,6 +340,7 @@ impl Tooltip {
     }
 
     pub fn set_margin_width(v: u32) {
+        assert!(v <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Tooltip_set_margin_width(v as i32) }
     }
 
@@ -336,6 +349,7 @@ impl Tooltip {
     }
 
     pub fn set_margin_height(v: u32) {
+        assert!(v <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Tooltip_set_margin_height(v as i32) }
     }
 
@@ -344,6 +358,7 @@ impl Tooltip {
     }
 
     pub fn set_wrap_width(v: u32) {
+        assert!(v <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { Fl_Tooltip_set_wrap_width(v as i32) }
     }
 
