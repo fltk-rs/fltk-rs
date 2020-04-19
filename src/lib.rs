@@ -12,6 +12,7 @@ pub mod menu;
 pub mod misc;
 pub mod output;
 pub mod prelude;
+pub mod table;
 pub mod text;
 pub mod valuator;
 pub mod widget;

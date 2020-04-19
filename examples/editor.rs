@@ -129,7 +129,7 @@ fn main() {
         }),
     );
 
-    let mut x = menu.get_item("Help/About").unwrap();
+    let mut x = menu.item("Help/About").unwrap();
     x.set_label_color(Color::Red);
     editor.set_callback(Box::new(|| saved = false));
     wind.set_callback(Box::new(|| {

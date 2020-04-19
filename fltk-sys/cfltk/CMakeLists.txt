@@ -31,6 +31,7 @@ set(CFLTK_SRCS
     cfl_misc.cpp
     cfl_image.cpp
     cfl_draw.cpp
+    cfl_table.cpp
     )
 
 if(CFLTK_BUILD_SHARED)

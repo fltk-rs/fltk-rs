@@ -1380,57 +1380,57 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct Fl_Window {
+pub struct Fl_Table {
     _unused: [u8; 0],
 }
 extern "C" {
-    pub fn Fl_Window_new(
+    pub fn Fl_Table_new(
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
         width: ::std::os::raw::c_int,
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
-    ) -> *mut Fl_Window;
+    ) -> *mut Fl_Table;
 }
 extern "C" {
-    pub fn Fl_Window_x(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_x(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_y(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_y(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_width(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_width(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_height(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_height(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_label(arg1: *mut Fl_Window) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Table_label(arg1: *mut Fl_Table) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Window_set_label(arg1: *mut Fl_Window, title: *const ::std::os::raw::c_char);
+    pub fn Fl_Table_set_label(arg1: *mut Fl_Table, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Window_redraw(arg1: *mut Fl_Window);
+    pub fn Fl_Table_redraw(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_show(arg1: *mut Fl_Window);
+    pub fn Fl_Table_show(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_hide(arg1: *mut Fl_Window);
+    pub fn Fl_Table_hide(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_activate(arg1: *mut Fl_Window);
+    pub fn Fl_Table_activate(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_deactivate(arg1: *mut Fl_Window);
+    pub fn Fl_Table_deactivate(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_redraw_label(arg1: *mut Fl_Window);
+    pub fn Fl_Table_redraw_label(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_resize(
-        arg1: *mut Fl_Window,
+    pub fn Fl_Table_resize(
+        arg1: *mut Fl_Table,
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
         width: ::std::os::raw::c_int,
@@ -1438,240 +1438,414 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Window_tooltip(arg1: *mut Fl_Window) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Table_tooltip(arg1: *mut Fl_Table) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Window_set_tooltip(arg1: *mut Fl_Window, txt: *const ::std::os::raw::c_char);
+    pub fn Fl_Table_set_tooltip(arg1: *mut Fl_Table, txt: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Window_get_type(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_get_type(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_type(arg1: *mut Fl_Window, typ: ::std::os::raw::c_int);
+    pub fn Fl_Table_set_type(arg1: *mut Fl_Table, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_color(arg1: *mut Fl_Window) -> ::std::os::raw::c_uint;
+    pub fn Fl_Table_color(arg1: *mut Fl_Table) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_set_color(arg1: *mut Fl_Window, color: ::std::os::raw::c_uint);
+    pub fn Fl_Table_set_color(arg1: *mut Fl_Table, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Window_label_color(arg1: *mut Fl_Window) -> ::std::os::raw::c_uint;
+    pub fn Fl_Table_label_color(arg1: *mut Fl_Table) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_set_label_color(arg1: *mut Fl_Window, color: ::std::os::raw::c_uint);
+    pub fn Fl_Table_set_label_color(arg1: *mut Fl_Table, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Window_label_font(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_label_font(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_label_font(arg1: *mut Fl_Window, font: ::std::os::raw::c_int);
+    pub fn Fl_Table_set_label_font(arg1: *mut Fl_Table, font: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_label_size(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_label_size(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_label_size(arg1: *mut Fl_Window, sz: ::std::os::raw::c_int);
+    pub fn Fl_Table_set_label_size(arg1: *mut Fl_Table, sz: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_label_type(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_label_type(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_label_type(arg1: *mut Fl_Window, typ: ::std::os::raw::c_int);
+    pub fn Fl_Table_set_label_type(arg1: *mut Fl_Table, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_box(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_box(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_box(arg1: *mut Fl_Window, typ: ::std::os::raw::c_int);
+    pub fn Fl_Table_set_box(arg1: *mut Fl_Table, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_changed(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_changed(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_changed(arg1: *mut Fl_Window);
+    pub fn Fl_Table_set_changed(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_clear_changed(arg1: *mut Fl_Window);
+    pub fn Fl_Table_clear_changed(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_align(arg1: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_align(arg1: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_align(arg1: *mut Fl_Window, typ: ::std::os::raw::c_int);
+    pub fn Fl_Table_set_align(arg1: *mut Fl_Table, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_delete(arg1: *mut Fl_Window);
+    pub fn Fl_Table_delete(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_set_image(arg1: *mut Fl_Window, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Table_set_image(arg1: *mut Fl_Table, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_set_image_with_size(
-        arg1: *mut Fl_Window,
+    pub fn Fl_Table_set_image_with_size(
+        arg1: *mut Fl_Table,
         arg2: *mut ::std::os::raw::c_void,
         arg3: ::std::os::raw::c_int,
         arg4: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Window_set_handler(
-        self_: *mut Fl_Window,
+    pub fn Fl_Table_set_handler(
+        self_: *mut Fl_Table,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Window_set_draw(
-        self_: *mut Fl_Window,
+    pub fn Fl_Table_set_draw(
+        self_: *mut Fl_Table,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Window_set_trigger(arg1: *mut Fl_Window, arg2: ::std::os::raw::c_int);
+    pub fn Fl_Table_set_trigger(arg1: *mut Fl_Table, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_image(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_image(arg1: *const Fl_Table) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_parent(self_: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_parent(self_: *const Fl_Table) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_selection_color(arg1: *mut Fl_Window) -> ::std::os::raw::c_uint;
+    pub fn Fl_Table_selection_color(arg1: *mut Fl_Table) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Window_set_selection_color(arg1: *mut Fl_Window, color: ::std::os::raw::c_uint);
+    pub fn Fl_Table_set_selection_color(arg1: *mut Fl_Table, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Window_do_callback(arg1: *mut Fl_Window);
+    pub fn Fl_Table_do_callback(arg1: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_inside(
-        self_: *const Fl_Window,
+    pub fn Fl_Table_inside(
+        self_: *const Fl_Table,
         arg1: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_window(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_window(arg1: *const Fl_Table) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_top_window(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_top_window(arg1: *const Fl_Table) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_takes_events(arg1: *const Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_takes_events(arg1: *const Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_begin(self_: *mut Fl_Window);
+    pub fn Fl_Table_begin(self_: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_end(self_: *mut Fl_Window);
+    pub fn Fl_Table_end(self_: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_find(
-        self_: *mut Fl_Window,
+    pub fn Fl_Table_find(
+        self_: *mut Fl_Table,
         arg1: *const ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_add(self_: *mut Fl_Window, arg1: *mut ::std::os::raw::c_void);
+    pub fn Fl_Table_add(self_: *mut Fl_Table, arg1: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_insert(
-        self_: *mut Fl_Window,
+    pub fn Fl_Table_insert(
+        self_: *mut Fl_Table,
         arg1: *mut ::std::os::raw::c_void,
         pos: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Window_remove(self_: *mut Fl_Window, wid: *mut ::std::os::raw::c_void);
+    pub fn Fl_Table_remove(self_: *mut Fl_Table, wid: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_clear(self_: *mut Fl_Window);
+    pub fn Fl_Table_clear(self_: *mut Fl_Table);
 }
 extern "C" {
-    pub fn Fl_Window_children(self_: *mut Fl_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_children(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_child(arg1: *mut Fl_Window, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
+    pub fn Fl_Table_child(arg1: *mut Fl_Table, index: ::std::os::raw::c_int) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Window_resizable(self_: *mut Fl_Window, arg1: *mut ::std::os::raw::c_void);
+    pub fn Fl_Table_resizable(self_: *mut Fl_Table, arg1: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: ::std::os::raw::c_uint);
+    pub fn Fl_Table_set_table_box(self_: *mut Fl_Table, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_fullscreen(arg1: *mut Fl_Window, boolean: ::std::os::raw::c_uint);
+    pub fn Fl_Table_table_box(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_make_current(arg1: *mut Fl_Window);
+    pub fn Fl_Table_set_rows(self_: *mut Fl_Table, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_set_icon(arg1: *mut Fl_Window, arg2: *const ::std::os::raw::c_void);
+    pub fn Fl_Table_rows(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_icon(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_set_cols(self_: *mut Fl_Table, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Window_make_resizable(self_: *mut Fl_Window, arg1: *mut ::std::os::raw::c_void);
+    pub fn Fl_Table_cols(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_visible_cells(
+        self_: *mut Fl_Table,
+        r1: *mut ::std::os::raw::c_int,
+        r2: *mut ::std::os::raw::c_int,
+        c1: *mut ::std::os::raw::c_int,
+        c2: *mut ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_is_interactive_resize(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_row_resize(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_row_resize(self_: *mut Fl_Table, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_col_resize(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_col_resize(self_: *mut Fl_Table, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_col_resize_min(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_col_resize_min(self_: *mut Fl_Table, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_row_resize_min(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_row_resize_min(self_: *mut Fl_Table, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_row_header(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_row_header(self_: *mut Fl_Table, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_col_header(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_col_header(self_: *mut Fl_Table, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_set_col_header_height(self_: *mut Fl_Table, height: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_col_header_height(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_row_header_width(self_: *mut Fl_Table, width: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_row_header_width(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_row_header_color(self_: *mut Fl_Table, val: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Table_row_header_color(self_: *mut Fl_Table) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Table_set_col_header_color(self_: *mut Fl_Table, val: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Table_col_header_color(self_: *mut Fl_Table) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Table_set_row_height(
+        self_: *mut Fl_Table,
+        row: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_row_height(
+        self_: *mut Fl_Table,
+        row: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_col_width(
+        self_: *mut Fl_Table,
+        col: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_col_width(
+        self_: *mut Fl_Table,
+        col: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_row_height_all(self_: *mut Fl_Table, height: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_set_col_width_all(self_: *mut Fl_Table, width: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_set_row_position(self_: *mut Fl_Table, row: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_set_col_position(self_: *mut Fl_Table, col: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_row_position(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_col_position(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_top_row(self_: *mut Fl_Table, row: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_top_row(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_is_selected(
+        self_: *mut Fl_Table,
+        r: ::std::os::raw::c_int,
+        c: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_get_selection(
+        self_: *mut Fl_Table,
+        row_top: *mut ::std::os::raw::c_int,
+        col_left: *mut ::std::os::raw::c_int,
+        row_bot: *mut ::std::os::raw::c_int,
+        col_right: *mut ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_set_selection(
+        self_: *mut Fl_Table,
+        row_top: ::std::os::raw::c_int,
+        col_left: ::std::os::raw::c_int,
+        row_bot: ::std::os::raw::c_int,
+        col_right: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_move_cursor_with_shiftselect(
+        self_: *mut Fl_Table,
+        R: ::std::os::raw::c_int,
+        C: ::std::os::raw::c_int,
+        shiftselect: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_move_cursor(
+        self_: *mut Fl_Table,
+        R: ::std::os::raw::c_int,
+        C: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_init_sizes(self_: *mut Fl_Table);
+}
+extern "C" {
+    pub fn Fl_Table_scrollbar_size(self_: *const Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_scrollbar_size(self_: *mut Fl_Table, newSize: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_set_tab_cell_nav(self_: *mut Fl_Table, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_tab_cell_nav(self_: *const Fl_Table) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct Fl_Double_Window {
+pub struct Fl_Table_Row {
     _unused: [u8; 0],
 }
 extern "C" {
-    pub fn Fl_Double_Window_new(
+    pub fn Fl_Table_Row_new(
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
         width: ::std::os::raw::c_int,
         height: ::std::os::raw::c_int,
         title: *const ::std::os::raw::c_char,
-    ) -> *mut Fl_Double_Window;
+    ) -> *mut Fl_Table_Row;
 }
 extern "C" {
-    pub fn Fl_Double_Window_x(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_x(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_y(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_y(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_width(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_width(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_height(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_height(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_label(arg1: *mut Fl_Double_Window) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Table_Row_label(arg1: *mut Fl_Table_Row) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label(
-        arg1: *mut Fl_Double_Window,
-        title: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Table_Row_set_label(arg1: *mut Fl_Table_Row, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Double_Window_redraw(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_redraw(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_show(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_show(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_hide(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_hide(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_activate(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_activate(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_deactivate(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_deactivate(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_redraw_label(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_redraw_label(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_resize(
-        arg1: *mut Fl_Double_Window,
+    pub fn Fl_Table_Row_resize(
+        arg1: *mut Fl_Table_Row,
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
         width: ::std::os::raw::c_int,
@@ -1679,469 +1853,385 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_tooltip(arg1: *mut Fl_Double_Window) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Table_Row_tooltip(arg1: *mut Fl_Table_Row) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_tooltip(
-        arg1: *mut Fl_Double_Window,
-        txt: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Table_Row_set_tooltip(arg1: *mut Fl_Table_Row, txt: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Double_Window_get_type(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_get_type(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_type(arg1: *mut Fl_Double_Window, typ: ::std::os::raw::c_int);
+    pub fn Fl_Table_Row_set_type(arg1: *mut Fl_Table_Row, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_color(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_uint;
+    pub fn Fl_Table_Row_color(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_color(arg1: *mut Fl_Double_Window, color: ::std::os::raw::c_uint);
+    pub fn Fl_Table_Row_set_color(arg1: *mut Fl_Table_Row, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Double_Window_label_color(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_uint;
+    pub fn Fl_Table_Row_label_color(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label_color(
-        arg1: *mut Fl_Double_Window,
-        color: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Table_Row_set_label_color(arg1: *mut Fl_Table_Row, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Double_Window_label_font(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_label_font(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label_font(
-        arg1: *mut Fl_Double_Window,
-        font: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Table_Row_set_label_font(arg1: *mut Fl_Table_Row, font: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_label_size(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_label_size(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label_size(arg1: *mut Fl_Double_Window, sz: ::std::os::raw::c_int);
+    pub fn Fl_Table_Row_set_label_size(arg1: *mut Fl_Table_Row, sz: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_label_type(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_label_type(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_label_type(arg1: *mut Fl_Double_Window, typ: ::std::os::raw::c_int);
+    pub fn Fl_Table_Row_set_label_type(arg1: *mut Fl_Table_Row, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_box(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_box(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_box(arg1: *mut Fl_Double_Window, typ: ::std::os::raw::c_int);
+    pub fn Fl_Table_Row_set_box(arg1: *mut Fl_Table_Row, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_changed(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_changed(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_changed(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_set_changed(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_clear_changed(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_clear_changed(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_align(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_align(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_align(arg1: *mut Fl_Double_Window, typ: ::std::os::raw::c_int);
+    pub fn Fl_Table_Row_set_align(arg1: *mut Fl_Table_Row, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_delete(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_delete(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_image(
-        arg1: *mut Fl_Double_Window,
-        arg2: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Table_Row_set_image(arg1: *mut Fl_Table_Row, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_image_with_size(
-        arg1: *mut Fl_Double_Window,
+    pub fn Fl_Table_Row_set_image_with_size(
+        arg1: *mut Fl_Table_Row,
         arg2: *mut ::std::os::raw::c_void,
         arg3: ::std::os::raw::c_int,
         arg4: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_handler(
-        self_: *mut Fl_Double_Window,
+    pub fn Fl_Table_Row_set_handler(
+        self_: *mut Fl_Table_Row,
         cb: custom_handler_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_draw(
-        self_: *mut Fl_Double_Window,
+    pub fn Fl_Table_Row_set_draw(
+        self_: *mut Fl_Table_Row,
         cb: custom_draw_callback,
         data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_trigger(arg1: *mut Fl_Double_Window, arg2: ::std::os::raw::c_int);
+    pub fn Fl_Table_Row_set_trigger(arg1: *mut Fl_Table_Row, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_image(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_Row_image(arg1: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_parent(self_: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_Row_parent(self_: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_selection_color(arg1: *mut Fl_Double_Window) -> ::std::os::raw::c_uint;
+    pub fn Fl_Table_Row_selection_color(arg1: *mut Fl_Table_Row) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_selection_color(
-        arg1: *mut Fl_Double_Window,
-        color: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Table_Row_set_selection_color(arg1: *mut Fl_Table_Row, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Double_Window_do_callback(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_do_callback(arg1: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_inside(
-        self_: *const Fl_Double_Window,
+    pub fn Fl_Table_Row_inside(
+        self_: *const Fl_Table_Row,
         arg1: *mut ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_window(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_Row_window(arg1: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_top_window(
-        arg1: *const Fl_Double_Window,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_Row_top_window(arg1: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_takes_events(arg1: *const Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_takes_events(arg1: *const Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_begin(self_: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_end(self_: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_end(self_: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_find(
-        self_: *mut Fl_Double_Window,
+    pub fn Fl_Table_Row_find(
+        self_: *mut Fl_Table_Row,
         arg1: *const ::std::os::raw::c_void,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_add(self_: *mut Fl_Double_Window, arg1: *mut ::std::os::raw::c_void);
+    pub fn Fl_Table_Row_add(self_: *mut Fl_Table_Row, arg1: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_insert(
-        self_: *mut Fl_Double_Window,
+    pub fn Fl_Table_Row_insert(
+        self_: *mut Fl_Table_Row,
         arg1: *mut ::std::os::raw::c_void,
         pos: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_remove(self_: *mut Fl_Double_Window, wid: *mut ::std::os::raw::c_void);
+    pub fn Fl_Table_Row_remove(self_: *mut Fl_Table_Row, wid: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Double_Window_clear(self_: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_clear(self_: *mut Fl_Table_Row);
 }
 extern "C" {
-    pub fn Fl_Double_Window_children(self_: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_children(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_child(
-        arg1: *mut Fl_Double_Window,
+    pub fn Fl_Table_Row_child(
+        arg1: *mut Fl_Table_Row,
         index: ::std::os::raw::c_int,
     ) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Double_Window_resizable(
-        self_: *mut Fl_Double_Window,
-        arg1: *mut ::std::os::raw::c_void,
+    pub fn Fl_Table_Row_resizable(self_: *mut Fl_Table_Row, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_table_box(self_: *mut Fl_Table_Row, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_Row_table_box(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_rows(self_: *mut Fl_Table_Row, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_Row_rows(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_cols(self_: *mut Fl_Table_Row, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_Row_cols(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_visible_cells(
+        self_: *mut Fl_Table_Row,
+        r1: *mut ::std::os::raw::c_int,
+        r2: *mut ::std::os::raw::c_int,
+        c1: *mut ::std::os::raw::c_int,
+        c2: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_make_modal(
-        arg1: *mut Fl_Double_Window,
-        boolean: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Table_Row_is_interactive_resize(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_fullscreen(
-        arg1: *mut Fl_Double_Window,
-        boolean: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Table_Row_row_resize(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_make_current(arg1: *mut Fl_Double_Window);
+    pub fn Fl_Table_Row_set_row_resize(self_: *mut Fl_Table_Row, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_icon(
-        arg1: *mut Fl_Double_Window,
-        arg2: *const ::std::os::raw::c_void,
-    );
+    pub fn Fl_Table_Row_col_resize(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_icon(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_Row_set_col_resize(self_: *mut Fl_Table_Row, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Double_Window_make_resizable(
-        self_: *mut Fl_Double_Window,
-        arg1: *mut ::std::os::raw::c_void,
-    );
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct Fl_Menu_Window {
-    _unused: [u8; 0],
+    pub fn Fl_Table_Row_col_resize_min(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_new(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        title: *const ::std::os::raw::c_char,
-    ) -> *mut Fl_Menu_Window;
+    pub fn Fl_Table_Row_set_col_resize_min(self_: *mut Fl_Table_Row, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_x(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_row_resize_min(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_y(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_set_row_resize_min(self_: *mut Fl_Table_Row, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_width(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_row_header(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_height(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_set_row_header(self_: *mut Fl_Table_Row, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_label(arg1: *mut Fl_Menu_Window) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Table_Row_col_header(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_label(
-        arg1: *mut Fl_Menu_Window,
-        title: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Table_Row_set_col_header(self_: *mut Fl_Table_Row, flag: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_redraw(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_show(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_hide(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_activate(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_deactivate(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_redraw_label(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_resize(
-        arg1: *mut Fl_Menu_Window,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
+    pub fn Fl_Table_Row_set_col_header_height(
+        self_: *mut Fl_Table_Row,
         height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_tooltip(arg1: *mut Fl_Menu_Window) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Table_Row_col_header_height(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_tooltip(
-        arg1: *mut Fl_Menu_Window,
-        txt: *const ::std::os::raw::c_char,
+    pub fn Fl_Table_Row_set_row_header_width(
+        self_: *mut Fl_Table_Row,
+        width: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_get_type(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
+    pub fn Fl_Table_Row_row_header_width(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_type(arg1: *mut Fl_Menu_Window, typ: ::std::os::raw::c_int);
+    pub fn Fl_Table_Row_set_row_header_color(self_: *mut Fl_Table_Row, val: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_color(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_uint;
+    pub fn Fl_Table_Row_row_header_color(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_color(arg1: *mut Fl_Menu_Window, color: ::std::os::raw::c_uint);
+    pub fn Fl_Table_Row_set_col_header_color(self_: *mut Fl_Table_Row, val: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_label_color(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_uint;
+    pub fn Fl_Table_Row_col_header_color(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_label_color(arg1: *mut Fl_Menu_Window, color: ::std::os::raw::c_uint);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_label_font(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_label_font(arg1: *mut Fl_Menu_Window, font: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_label_size(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_label_size(arg1: *mut Fl_Menu_Window, sz: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_label_type(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_label_type(arg1: *mut Fl_Menu_Window, typ: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_box(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_box(arg1: *mut Fl_Menu_Window, typ: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_changed(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_changed(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_clear_changed(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_align(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_align(arg1: *mut Fl_Menu_Window, typ: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_delete(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_image(arg1: *mut Fl_Menu_Window, arg2: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_image_with_size(
-        arg1: *mut Fl_Menu_Window,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
+    pub fn Fl_Table_Row_set_row_height(
+        self_: *mut Fl_Table_Row,
+        row: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_handler(
-        self_: *mut Fl_Menu_Window,
-        cb: custom_handler_callback,
-        data: *mut ::std::os::raw::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_draw(
-        self_: *mut Fl_Menu_Window,
-        cb: custom_draw_callback,
-        data: *mut ::std::os::raw::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_trigger(arg1: *mut Fl_Menu_Window, arg2: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_image(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_parent(self_: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_selection_color(arg1: *mut Fl_Menu_Window) -> ::std::os::raw::c_uint;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_selection_color(
-        arg1: *mut Fl_Menu_Window,
-        color: ::std::os::raw::c_uint,
-    );
-}
-extern "C" {
-    pub fn Fl_Menu_Window_do_callback(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_inside(
-        self_: *const Fl_Menu_Window,
-        arg1: *mut ::std::os::raw::c_void,
+    pub fn Fl_Table_Row_row_height(
+        self_: *mut Fl_Table_Row,
+        row: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_window(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_Row_set_col_width(
+        self_: *mut Fl_Table_Row,
+        col: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_top_window(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_takes_events(arg1: *const Fl_Menu_Window) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_end(self_: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_find(
-        self_: *mut Fl_Menu_Window,
-        arg1: *const ::std::os::raw::c_void,
+    pub fn Fl_Table_Row_col_width(
+        self_: *mut Fl_Table_Row,
+        col: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_add(self_: *mut Fl_Menu_Window, arg1: *mut ::std::os::raw::c_void);
+    pub fn Fl_Table_Row_set_row_height_all(self_: *mut Fl_Table_Row, height: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_insert(
-        self_: *mut Fl_Menu_Window,
-        arg1: *mut ::std::os::raw::c_void,
-        pos: ::std::os::raw::c_int,
+    pub fn Fl_Table_Row_set_col_width_all(self_: *mut Fl_Table_Row, width: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_row_position(self_: *mut Fl_Table_Row, row: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_col_position(self_: *mut Fl_Table_Row, col: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_Row_row_position(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_col_position(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_top_row(self_: *mut Fl_Table_Row, row: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_Row_top_row(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_is_selected(
+        self_: *mut Fl_Table_Row,
+        r: ::std::os::raw::c_int,
+        c: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_get_selection(
+        self_: *mut Fl_Table_Row,
+        row_top: *mut ::std::os::raw::c_int,
+        col_left: *mut ::std::os::raw::c_int,
+        row_bot: *mut ::std::os::raw::c_int,
+        col_right: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_remove(self_: *mut Fl_Menu_Window, wid: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_clear(self_: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_children(self_: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_child(
-        arg1: *mut Fl_Menu_Window,
-        index: ::std::os::raw::c_int,
-    ) -> *mut Fl_Widget;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_resizable(self_: *mut Fl_Menu_Window, arg1: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_make_modal(arg1: *mut Fl_Menu_Window, boolean: ::std::os::raw::c_uint);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_fullscreen(arg1: *mut Fl_Menu_Window, boolean: ::std::os::raw::c_uint);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_make_current(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_set_icon(arg1: *mut Fl_Menu_Window, arg2: *const ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Menu_Window_icon(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_Menu_Window_make_resizable(
-        self_: *mut Fl_Menu_Window,
-        arg1: *mut ::std::os::raw::c_void,
+    pub fn Fl_Table_Row_set_selection(
+        self_: *mut Fl_Table_Row,
+        row_top: ::std::os::raw::c_int,
+        col_left: ::std::os::raw::c_int,
+        row_bot: ::std::os::raw::c_int,
+        col_right: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Table_Row_move_cursor_with_shiftselect(
+        self_: *mut Fl_Table_Row,
+        R: ::std::os::raw::c_int,
+        C: ::std::os::raw::c_int,
+        shiftselect: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_move_cursor(
+        self_: *mut Fl_Table_Row,
+        R: ::std::os::raw::c_int,
+        C: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_init_sizes(self_: *mut Fl_Table_Row);
+}
+extern "C" {
+    pub fn Fl_Table_Row_scrollbar_size(self_: *const Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_scrollbar_size(
+        self_: *mut Fl_Table_Row,
+        newSize: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_tab_cell_nav(self_: *mut Fl_Table_Row, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_Row_tab_cell_nav(self_: *const Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_row_selected(
+        self_: *mut Fl_Table_Row,
+        row: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_select_row(
+        self_: *mut Fl_Table_Row,
+        row: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_select_all_rows(self_: *mut Fl_Table_Row);
 }

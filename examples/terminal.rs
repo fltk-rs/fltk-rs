@@ -85,7 +85,7 @@ impl<'a> Term<'a> {
     pub fn handle_event(&mut self) {
         self.term
             .clone()
-            .set_custom_handler(Box::new(|ev: app::Event| {
+            .handle(Box::new(|ev: app::Event| {
                 // println!("{:?}", app::event());
                 // println!("{:?}", app::event_key());
                 // println!("{:?}", app::event_text());

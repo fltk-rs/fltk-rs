@@ -229,7 +229,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Group_remove(self_: *mut Fl_Group, index: ::std::os::raw::c_int);
+    pub fn Fl_Group_remove(self_: *mut Fl_Group, wid: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Group_clear(self_: *mut Fl_Group);
@@ -449,7 +449,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Pack_remove(self_: *mut Fl_Pack, index: ::std::os::raw::c_int);
+    pub fn Fl_Pack_remove(self_: *mut Fl_Pack, wid: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Pack_clear(self_: *mut Fl_Pack);
@@ -669,7 +669,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Scroll_remove(self_: *mut Fl_Scroll, index: ::std::os::raw::c_int);
+    pub fn Fl_Scroll_remove(self_: *mut Fl_Scroll, wid: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Scroll_clear(self_: *mut Fl_Scroll);
@@ -889,7 +889,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Tabs_remove(self_: *mut Fl_Tabs, index: ::std::os::raw::c_int);
+    pub fn Fl_Tabs_remove(self_: *mut Fl_Tabs, wid: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Tabs_clear(self_: *mut Fl_Tabs);
@@ -1109,7 +1109,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Tile_remove(self_: *mut Fl_Tile, index: ::std::os::raw::c_int);
+    pub fn Fl_Tile_remove(self_: *mut Fl_Tile, wid: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Tile_clear(self_: *mut Fl_Tile);
@@ -1358,7 +1358,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Color_Chooser_remove(self_: *mut Fl_Color_Chooser, index: ::std::os::raw::c_int);
+    pub fn Fl_Color_Chooser_remove(self_: *mut Fl_Color_Chooser, wid: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Color_Chooser_clear(self_: *mut Fl_Color_Chooser);

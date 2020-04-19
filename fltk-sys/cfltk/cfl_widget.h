@@ -88,7 +88,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     operator widget *() { return (widget *)*this; }                            \
     void set_handler(handler h) { inner_handler = h; }                         \
     void set_handler_data(void *data) { ev_data_ = data; }                     \
-    int handle(int event) override {                                                    \
+    int handle(int event) override {                                           \
       int ret = widget::handle(event);                                         \
       int local = 0;                                                           \
       if (ev_data_ && inner_handler) {                                         \
@@ -103,7 +103,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     }                                                                          \
     void set_drawer(drawer h) { inner_drawer = h; }                            \
     void set_drawer_data(void *data) { draw_data_ = data; }                    \
-    void draw() override {                                                              \
+    void draw() override {                                                     \
       widget::draw();                                                          \
                                                                                \
       if (draw_data_ && inner_drawer)                                          \
@@ -136,7 +136,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     LOCK(self->copy_tooltip(txt);)                                             \
   }                                                                            \
   int widget##_get_type(widget *self) { return self->type(); }                 \
-  void widget##_set_type(widget *self, int typ) { LOCK(self->type(typ);) }     \
+  void widget##_set_type(widget *self, int typ) {                              \
+    LOCK(auto val = self->type(); self->type((decltype(val))typ);)             \
+  }                                                                            \
   unsigned int widget##_color(widget *self) { return self->color(); }          \
   void widget##_set_color(widget *self, unsigned int color) {                  \
     LOCK(self->color(color);)                                                  \
@@ -197,7 +199,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
   void widget##_set_selection_color(widget *self, unsigned int color) {        \
     LOCK(self->selection_color(color);)                                        \
   }                                                                            \
-  void widget##_do_callback(widget *self) { LOCK(self->do_callback();) }       \
+  void widget##_do_callback(widget *self) {                                    \
+    LOCK(((Fl_Widget *)self)->do_callback();)                                  \
+  }                                                                            \
   int widget##_inside(const widget *self, void *wid) {                         \
     return self->inside((Fl_Widget *)wid);                                     \
   }                                                                            \
