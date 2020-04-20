@@ -90,7 +90,7 @@ fn main() {
     wind.show();
 
     app::set_callback(
-        &but_ce,
+        & mut but_ce,
         Box::new(|| {
             txt.clear();
             old_val.clear();
@@ -100,7 +100,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but_c,
+        & mut but_c,
         Box::new(|| {
             txt.clear();
             txt.push('0');
@@ -109,7 +109,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but_back,
+        & mut but_back,
         Box::new(|| {
             txt.pop();
             out.set_value(txt.as_str());
@@ -117,7 +117,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but_div,
+        & mut but_div,
         Box::new(|| {
             old_val = out.value();
             op = '/';
@@ -128,7 +128,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but_mul,
+        & mut but_mul,
         Box::new(|| {
             old_val = out.value();
             op = 'x';
@@ -139,7 +139,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but_sub,
+        & mut but_sub,
         Box::new(|| {
             old_val = out.value();
             op = '-';
@@ -150,7 +150,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but_add,
+        & mut but_add,
         Box::new(|| {
             old_val = out.value();
             op = '+';
@@ -161,7 +161,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but_eq,
+        & mut but_eq,
         Box::new(|| {
             new_val = out.value();
             let old: f64 = old_val.parse().unwrap();
@@ -181,7 +181,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but0,
+        & mut but0,
         Box::new(|| {
             if out.value() == "0" {
                 //
@@ -198,7 +198,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but1,
+        & mut but1,
         Box::new(|| {
             if out.value() == "0" {
                 txt.clear();
@@ -213,7 +213,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but2,
+        & mut but2,
         Box::new(|| {
             if out.value() == "0" {
                 txt.clear();
@@ -228,7 +228,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but3,
+        & mut but3,
         Box::new(|| {
             if out.value() == "0" {
                 txt.clear();
@@ -243,7 +243,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but4,
+        & mut but4,
         Box::new(|| {
             if out.value() == "0" {
                 txt.clear();
@@ -258,7 +258,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but5,
+        & mut but5,
         Box::new(|| {
             if out.value() == "0" {
                 txt.clear();
@@ -273,7 +273,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but6,
+        & mut but6,
         Box::new(|| {
             if out.value() == "0" {
                 txt.clear();
@@ -288,7 +288,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but7,
+        & mut but7,
         Box::new(|| {
             if out.value() == "0" {
                 txt.clear();
@@ -303,7 +303,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but8,
+        & mut but8,
         Box::new(|| {
             if out.value() == "0" {
                 txt.clear();
@@ -318,7 +318,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but9,
+        & mut but9,
         Box::new(|| {
             if out.value() == "0" {
                 txt.clear();
@@ -333,7 +333,7 @@ fn main() {
     );
 
     app::set_callback(
-        &but_dot,
+        & mut but_dot,
         Box::new(|| {
             if op == '=' {
                 txt.clear();

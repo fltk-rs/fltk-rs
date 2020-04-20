@@ -1159,7 +1159,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl MenuExt for #name {
-            fn add<'a>(&'a mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
+            fn add<'a>(&'a mut self, name: &'a str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
@@ -1173,7 +1173,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: Fl_Callback = Some(shim);
-                    #add(self._inner, temp.into_raw() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
+                    #add(self._inner, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }
 
@@ -2397,7 +2397,7 @@ fn impl_table_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn is_interactive_resize(&self) -> bool {
                 unsafe {
                     match #is_interactive_resize(self._inner) {
-                        0 => false, 
+                        0 => false,
                         _ => true,
                     }
                 }
@@ -2406,7 +2406,7 @@ fn impl_table_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn row_resize(&self) -> bool {
                 unsafe {
                     match #row_resize(self._inner) {
-                        0 => false, 
+                        0 => false,
                         _ => true,
                     }
                 }
@@ -2421,7 +2421,7 @@ fn impl_table_trait(ast: &syn::DeriveInput) -> TokenStream {
             fn col_resize(&self) -> bool {
                 unsafe {
                     match #col_resize(self._inner) {
-                        0 => false, 
+                        0 => false,
                         _ => true,
                     }
                 }
@@ -2545,7 +2545,7 @@ fn impl_table_trait(ast: &syn::DeriveInput) -> TokenStream {
 
             fn row_height(&self, row: i32) -> i32 {
                 unsafe {
-                    #row_height(self._inner, row) 
+                    #row_height(self._inner, row)
                 }
             }
 
@@ -2667,7 +2667,7 @@ fn impl_table_trait(ast: &syn::DeriveInput) -> TokenStream {
                     #set_tab_cell_nav(self._inner, val as i32)
                 }
             }
-            
+
             fn tab_cell_nav(&self) -> u32 {
                 unsafe {
                     #tab_cell_nav(self._inner) as u32

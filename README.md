@@ -18,12 +18,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.3.0"
+fltk = "^0.2.22"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
 [dependencies.fltk]
-version = "^0.3.0"
+version = "^0.2.22"
 features = ["fltk-shared"]
 ```
 
@@ -102,7 +102,7 @@ fn main() {
 ```
 
 ### Events
-**Event handling must be done after the drawing is done and the main window shown.**
+**Event handling must be done after the drawing is done and the main window shown. And must be done in fn main()**
 
 Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the handle() method can be used:
 ```rust
@@ -249,6 +249,7 @@ Most common widgets are implemented:
 - Tooltip
 - Table
 - TableRow
+- Wizard
 - Drawing primitives
 
 ## Todo

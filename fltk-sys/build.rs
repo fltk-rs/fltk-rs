@@ -53,6 +53,12 @@ fn main() {
         .unwrap();
 
     Command::new("git")
+        .args(&["submodule", "update", "--remote"])
+        .current_dir(manifest_dir.clone())
+        .status()
+        .unwrap();
+
+    Command::new("git")
         .args(&["checkout", "master"])
         .current_dir(manifest_dir.join("cfltk").join("fltk"))
         .status()

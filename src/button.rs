@@ -112,3 +112,24 @@ pub struct RepeatButton {
 pub struct ReturnButton {
     _inner: *mut Fl_Return_Button,
 }
+
+
+#[cfg(test)]
+mod button {
+    use super::*;
+    #[test]
+    fn label() {
+        let mut but = Button::new(0,0,0,0,"hello");
+        let but2 = but.clone();
+        but.set_label("cloned");
+        assert!(but2.label() == "cloned");
+    }
+    #[test]
+    fn tooltip() {
+        let mut but = Button::new(0,0,0,0,"hello");
+        but.set_tooltip("tooltip");
+        assert!(but.tooltip().unwrap() == "tooltip");
+        let but2 = but.clone();
+        assert!(but2.tooltip().unwrap() == "tooltip");
+    }
+}

@@ -82,7 +82,7 @@ impl<'a> Term<'a> {
     }
     // To have continuous streaming of output for long standing operations,
     // consider using Tokio Command or the likes
-    pub fn handle_event(&mut self) {
+    pub fn handle_events(&mut self) {
         self.term
             .clone()
             .handle(Box::new(|ev: app::Event| {
@@ -131,6 +131,6 @@ fn main() {
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    term.handle_event();
+    term.handle_events();
     app.run().unwrap();
 }

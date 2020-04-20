@@ -205,7 +205,7 @@ where
 }
 
 /// Sets the callback of a widget
-pub fn set_callback<'a, W>(widget: &'a W, cb: Box<dyn FnMut() + 'a>)
+pub fn set_callback<'a, W>(widget: &'a mut W, cb: Box<dyn FnMut() + 'a>)
 where
     W: WidgetExt,
 {

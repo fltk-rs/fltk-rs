@@ -327,7 +327,7 @@ pub trait MenuExt: WidgetExt {
     /// Add a menu item along with its callback
     fn add<'a>(
         &'a mut self,
-        name: &str,
+        name: &'a str,
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: Box<dyn FnMut() + 'a>,

@@ -55,7 +55,7 @@ impl MainWindow {
                 }
             }));
         app::set_callback(
-            &self.but2.clone(),
+            &mut self.but2.clone(),
             Box::new(|| match app::event() {
                 app::Event::Released => {
                     match fltk::dialog::input("hello", "") {

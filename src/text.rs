@@ -617,3 +617,18 @@ impl SimpleTerminal {
         }
     }
 }
+
+#[cfg(test)]
+mod editor {
+    use super::*;
+    #[test]
+    fn buffer() {
+        let mut buf = TextBuffer::default();
+        let e = TextEditor::new(0, 0, 0, 0, &mut buf);
+        buf.set_text("Hello");
+        assert!(e.buffer().text() == "Hello");
+        let e2 = e.clone();
+        buf.set_text("cloned");
+        assert!(e2.buffer().text() == "cloned");
+    }
+}
