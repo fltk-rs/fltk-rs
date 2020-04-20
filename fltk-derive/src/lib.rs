@@ -1159,7 +1159,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl MenuExt for #name {
-            fn add<'a>(&'a mut self, name: &'a str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut() + 'a>) {
+            unsafe fn add<'a>(&'a mut self, name: &'a str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
@@ -1177,7 +1177,7 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
 
-            fn insert<'a>(&'a mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
+            unsafe fn insert<'a>(&'a mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }

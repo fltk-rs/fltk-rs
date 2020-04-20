@@ -325,7 +325,7 @@ pub trait MenuExt: WidgetExt {
     /// Sets the text color
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
-    fn add<'a>(
+    unsafe fn add<'a>(
         &'a mut self,
         name: &'a str,
         shortcut: Shortcut,
@@ -333,7 +333,7 @@ pub trait MenuExt: WidgetExt {
         cb: Box<dyn FnMut() + 'a>,
     );
     /// Inserts a menu item at an index along with its callback
-    fn insert<'a>(
+    unsafe fn insert<'a>(
         &'a mut self,
         idx: u32,
         name: &str,
