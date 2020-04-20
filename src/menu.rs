@@ -264,32 +264,4 @@ mod menu {
         add_items();
         menu.do_callback();
     }
-    #[test]
-    fn ownership() {
-        pub struct Owner {
-            pub menu: MenuBar,
-        }
-        impl Owner {
-            pub fn new() -> Owner {
-                Owner {
-                    menu: MenuBar::new(0, 0, 0, 0, "hello"),
-                }
-            }
-            pub fn init(&mut self) {
-                self.menu.clone().add(
-                    "Edit/Cut",
-                    Shortcut::Ctrl + 'x',
-                    MenuFlag::Normal,
-                    Box::new(|| self.menu.set_label("h")),
-                );
-            }
-        }
-        let mut wind = crate::window::Window::new(0, 0, 0, 0, "");
-        let mut o = Owner::new();
-        wind.end();
-        wind.show();
-        o.init();
-        o.menu.do_callback();
-        assert!(o.menu.label() == "h");
-    }
 }
