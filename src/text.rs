@@ -65,11 +65,11 @@ impl TextBuffer {
 
     /// Removes from the buffer
     pub fn remove(&mut self, start: u32, end: u32) {
-        assert!(
+        debug_assert!(
             start <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        assert!(
+        debug_assert!(
             end <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -80,11 +80,11 @@ impl TextBuffer {
 
     /// Returns the text within the range
     pub fn text_range(&self, start: u32, end: u32) -> Option<String> {
-        assert!(
+        debug_assert!(
             start <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        assert!(
+        debug_assert!(
             end <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -104,7 +104,7 @@ impl TextBuffer {
 
     /// Inserts text into a position
     pub fn insert(&mut self, pos: u32, text: &str) {
-        assert!(
+        debug_assert!(
             pos <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -120,11 +120,11 @@ impl TextBuffer {
 
     /// Replaces text from position ```start``` to ```end```
     pub fn replace(&mut self, start: u32, end: u32, text: &str) {
-        assert!(
+        debug_assert!(
             start <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        assert!(
+        debug_assert!(
             end <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -141,15 +141,15 @@ impl TextBuffer {
 
     /// Copies text from a source buffer into the current buffer
     pub fn copy(&mut self, source_buf: TextBuffer, start: u32, end: u32, to: u32) {
-        assert!(
+        debug_assert!(
             start <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        assert!(
+        debug_assert!(
             end <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        assert!(
+        debug_assert!(
             to <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -198,7 +198,7 @@ impl TextBuffer {
 
     /// Sets the tab distance
     pub fn set_tab_distance(&mut self, tab_dist: u32) {
-        assert!(
+        debug_assert!(
             tab_dist <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -207,11 +207,11 @@ impl TextBuffer {
 
     /// Selects the text from start to end
     pub fn select(&mut self, start: u32, end: u32) {
-        assert!(
+        debug_assert!(
             start <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        assert!(
+        debug_assert!(
             end <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -274,11 +274,11 @@ impl TextBuffer {
 
     /// Highlights selection
     pub fn highlight(&mut self, start: u32, end: u32) {
-        assert!(
+        debug_assert!(
             start <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        assert!(
+        debug_assert!(
             end <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -328,7 +328,7 @@ impl TextBuffer {
 
     /// Returns the line at pos
     pub fn line_text(&self, pos: u32) -> String {
-        assert!(
+        debug_assert!(
             pos <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -343,7 +343,7 @@ impl TextBuffer {
 
     /// Returns the index of the line's start position at pos
     pub fn line_start(&self, pos: u32) -> u32 {
-        assert!(
+        debug_assert!(
             pos <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -352,7 +352,7 @@ impl TextBuffer {
 
     /// Returns the index of the first character of a word at pos
     pub fn word_start(&self, pos: u32) -> u32 {
-        assert!(
+        debug_assert!(
             pos <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -361,7 +361,7 @@ impl TextBuffer {
 
     /// Returns the index of the last character of a word at pos
     pub fn word_end(&self, pos: u32) -> u32 {
-        assert!(
+        debug_assert!(
             pos <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -370,11 +370,11 @@ impl TextBuffer {
 
     /// Counts the lines from start to end
     pub fn count_lines(&self, start: u32, end: u32) -> u32 {
-        assert!(
+        debug_assert!(
             start <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        assert!(
+        debug_assert!(
             end <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
@@ -621,7 +621,5 @@ impl SimpleTerminal {
 #[cfg(test)]
 mod editor {
     #[test]
-    fn buffer() {
-
-    }
+    fn buffer() {}
 }
