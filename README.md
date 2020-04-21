@@ -18,7 +18,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.3.1"
+fltk = "^0.3.2"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
