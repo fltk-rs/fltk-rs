@@ -113,23 +113,21 @@ fn main() {
         .set_callback(Box::new(move || editor_cloned.borrow_mut().saved = false));
 
     let editor_cloned = editor.clone();
-    let buf_cloned = buf.clone();
     menu.add(
         "File/New...",
         Shortcut::Ctrl + 'n',
         MenuFlag::Normal,
         Box::new(move || {
             if editor_cloned.borrow().buffer().text() != "" {
-                let x = choice("File unsaved, Do you wish to continue?", "Yes", "No!", "h");
+                let x = choice("File unsaved, Do you wish to continue?", "Yes", "No!", "");
                 if x == 0 {
-                    buf_cloned.borrow_mut().set_text("");
+                    editor_cloned.borrow().buffer().set_text("");
                 }
             }
         }),
     );
 
     let editor_cloned = editor.clone();
-    let buf_cloned = buf.clone();
     menu.add(
         "File/Open...",
         Shortcut::Ctrl + 'o',
@@ -146,7 +144,7 @@ fn main() {
                 return;
             }
             match path::Path::new(&editor_cloned.borrow().filename()).exists() {
-                true => buf_cloned.borrow_mut().set_text(
+                true => editor_cloned.borrow().buffer().set_text(
                     fs::read_to_string(&editor_cloned.borrow().filename())
                         .unwrap()
                         .as_str(),

@@ -384,7 +384,7 @@ pub trait ValuatorExt: WidgetExt {
 /// Defines the methods implemented by TextDisplay and TextEditor
 pub trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
-    fn buffer<'a>(&'a self) -> &'a TextBuffer;
+    fn buffer<'a>(&'a self) -> &'a mut TextBuffer;
     /// Sets the associated TextBuffer
     fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer);
     /// Return the text font

@@ -13,8 +13,6 @@ impl Term {
     pub fn new(mut buf: &mut TextBuffer) -> Term {
         let mut current_dir = std::env::current_dir()
             .unwrap()
-            .file_name()
-            .unwrap()
             .to_string_lossy()
             .to_string();
         current_dir.push_str("/ $ ");
@@ -32,11 +30,11 @@ impl Term {
         self.term.set_cursor_style(CursorStyle::BlockCursor);
         self.term.show_cursor(true);
     }
-    fn append(&mut self, buf: &mut TextBuffer, txt: &str) {
-        buf.append(txt);
-        self.term.set_insert_position(buf.length());
+    fn append(&mut self, txt: &str) {
+        self.term.buffer().append(txt);
+        self.term.set_insert_position(self.term.buffer().length());
         self.term
-            .scroll(self.term.count_lines(0, buf.length(), true), 0);
+            .scroll(self.term.count_lines(0, self.term.buffer().length(), true), 0);
     }
     fn run_command(&mut self) -> String {
         let args = self.cmd.clone();
@@ -69,8 +67,6 @@ impl Term {
             std::env::set_current_dir(path).unwrap();
             let mut current_dir = std::env::current_dir()
                 .unwrap()
-                .file_name()
-                .unwrap()
                 .to_string_lossy()
                 .to_string();
             current_dir.push_str("/ $ ");
@@ -89,7 +85,7 @@ fn main() {
     let mut term = Term::new(&mut buf);
     term.style();
     let dir = term.current_dir.clone();
-    term.append(&mut buf, &dir);
+    term.append( &dir);
     wind.make_resizable(true);
     wind.end();
     wind.show();
@@ -101,18 +97,18 @@ fn main() {
             match ev {
                 app::Event::KeyDown => match app::event_key() {
                     app::Key::Enter => {
-                        term.append(&mut buf, "\n");
+                        term.append( "\n");
                         let out = term.run_command();
-                        term.append(&mut buf, &out);
+                        term.append( &out);
                         let current_dir = term.current_dir.clone();
-                        term.append(&mut buf, &current_dir);
+                        term.append( &current_dir);
                         term.cmd.clear();
                         true
                     }
                     app::Key::BackSpace => {
                         if term.cmd.len() != 0 {
                             let text_len = inner.buffer().text().len() as u32;
-                            buf.remove(text_len - 1, text_len as u32);
+                            inner.buffer().remove(text_len - 1, text_len as u32);
                             term.cmd.pop().unwrap();
                             return true;
                         } else {
@@ -122,7 +118,7 @@ fn main() {
                     _ => {
                         let temp = app::event_text();
                         term.cmd.push_str(&temp);
-                        term.append(&mut buf, &temp);
+                        term.append( &temp);
                         true
                     }
                 },

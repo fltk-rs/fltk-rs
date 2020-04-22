@@ -509,9 +509,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
-                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
-                }
+                debug_assert!(
+                    self.top_window().unwrap().takes_events() && self.takes_events(), 
+                    "Handling events requires that the window and widget be active!"
+                );
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -526,9 +527,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>) {
-                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
-                }
+                debug_assert!(
+                    self.top_window().unwrap().takes_events() && self.takes_events(), 
+                    "Handling events requires that the window and widget be active!"
+                );
                 unsafe {
                     unsafe extern "C" fn shim(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let ev: Event = mem::transmute(_ev);
@@ -547,9 +549,10 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn draw(&mut self, cb: Box<dyn FnMut()>) {
-                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
-                }
+                debug_assert!(
+                    self.top_window().unwrap().takes_events() && self.takes_events(), 
+                    "Handling events requires that the window and widget be active!"
+                );
                 unsafe {
                     unsafe extern "C" fn shim(data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -570,31 +573,31 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn below_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
-                assert!(self.width() != 0 && self.height() != 0, "below_of requires the size of the widget to be known!");
+                debug_assert!(self.width() != 0 && self.height() != 0, "below_of requires the size of the widget to be known!");
                 self.resize(w.x(), w.y() + w.height() + padding, self.width(), self.height());
                 self
             }
 
             fn above_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
-                assert!(self.width() != 0 && self.height() != 0, "above_of requires the size of the widget to be known!");
+                debug_assert!(self.width() != 0 && self.height() != 0, "above_of requires the size of the widget to be known!");
                 self.resize(w.x(), w.y() - padding - self.height(), self.width(), self.height());
                 self
             }
 
             fn right_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
-                assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
+                debug_assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
                 self.resize(w.x() + self.width() + padding, w.y(), self.width(), self.height());
                 self
             }
 
             fn left_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
-                assert!(self.width() != 0 && self.height() != 0, "left_of requires the size of the widget to be known!");
+                debug_assert!(self.width() != 0 && self.height() != 0, "left_of requires the size of the widget to be known!");
                 self.resize(w.x() - self.width() - padding, w.y(), self.width(), self.height());
                 self
             }
 
             fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
-                assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
+                debug_assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
                 let mut sw = self.width() as f64;
                 let mut sh = self.height() as f64;
                 let mut ww = w.width() as f64;
@@ -607,7 +610,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
-                assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
+                debug_assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
                 self.resize(self.x(), self. y(), w.width(), w.height());
                 self
             }
@@ -843,7 +846,7 @@ fn impl_window_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         impl WindowExt for #name {
             fn center_screen(mut self) -> Self {
-                assert!(self.width() != 0 && self.height() != 0, "center_screen requires the size of the widget to be known!");
+                debug_assert!(self.width() != 0 && self.height() != 0, "center_screen requires the size of the widget to be known!");
                 let (mut x, mut y) = screen_size();
                 x = x - self.width() as f64;
                 y = y - self.height() as f64;
@@ -1161,9 +1164,10 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         impl MenuExt for #name {
             fn add(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut()>) {
-                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
-                }
+                debug_assert!(
+                    self.top_window().unwrap().takes_events() && self.takes_events(), 
+                    "Handling events requires that the window and widget be active!"
+                );
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -1179,9 +1183,10 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
             }
 
             fn insert(&mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut()>) {
-                if !self.top_window().unwrap().takes_events() || !self.takes_events() {
-                    panic!("The widget failed to capture events, probably it (or the window) is inactive");
-                }
+                debug_assert!(
+                    self.top_window().unwrap().takes_events() && self.takes_events(), 
+                    "Handling events requires that the window and widget be active!"
+                );
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -1614,12 +1619,12 @@ fn impl_display_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl DisplayExt for #name {
-            fn buffer<'a>(&'a self) -> &'a TextBuffer {
+            fn buffer<'a>(&'a self) -> &'a mut TextBuffer {
                 unsafe {
                     let buffer = #get_buffer(self._inner);
                     assert!(!buffer.is_null(), "Failed to get associated buffer!");
                     let x = Box::from(TextBuffer::from_ptr(buffer));
-                    &*Box::into_raw(x)
+                    &mut *Box::into_raw(x)
                 }
             }
 
@@ -2704,7 +2709,7 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
 
         impl ImageExt for #name {
             fn new(path: &std::path::Path) -> #name {
-                assert!(path.exists(), "Proper image initialization requires an existent path!");
+                debug_assert!(path.exists(), "Proper image initialization requires an existent path!");
                 unsafe {
                     let temp = path.to_str().unwrap();
                     let temp = CString::new(temp).unwrap();
