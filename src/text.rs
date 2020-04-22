@@ -8,6 +8,7 @@ use std::{
 };
 
 /// Wraps a text buffer, Cloning a text buffer invalidates the underlying pointer, thus the no derive(Clone)
+#[derive(Debug)]
 pub struct TextBuffer {
     _inner: *mut Fl_Text_Buffer,
 }
@@ -140,7 +141,7 @@ impl TextBuffer {
     }
 
     /// Copies text from a source buffer into the current buffer
-    pub fn copy(&mut self, source_buf: TextBuffer, start: u32, end: u32, to: u32) {
+    pub fn copy(&mut self, source_buf: &TextBuffer, start: u32, end: u32, to: u32) {
         debug_assert!(
             start <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
@@ -387,12 +388,12 @@ impl TextBuffer {
     }
 
     /// Adds a modify callback
-    pub fn add_modify_callback<'a>(
-        &'a mut self,
-        cb: Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a>,
+    pub fn add_modify_callback(
+        &mut self,
+        cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>,
     ) {
         unsafe {
-            unsafe extern "C" fn shim<'a>(
+            unsafe extern "C" fn shim(
                 pos: raw::c_int,
                 inserted: raw::c_int,
                 deleted: raw::c_int,
@@ -404,8 +405,8 @@ impl TextBuffer {
                 if !deleted_text.is_null() {
                     temp = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
                 }
-                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a> = mem::transmute(data);
-                let f: &mut (dyn FnMut(u32, u32, u32, u32, &str) + 'a) = &mut **a;
+                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = mem::transmute(data);
+                let f: &mut (dyn FnMut(u32, u32, u32, u32, &str)) = &mut **a;
                 f(
                     pos as u32,
                     inserted as u32,
@@ -414,7 +415,7 @@ impl TextBuffer {
                     &temp,
                 )
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
             let data: *mut raw::c_void = mem::transmute(a);
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_add_modify_callback(self._inner, callback, data);
@@ -422,12 +423,12 @@ impl TextBuffer {
     }
 
     /// Removes a modify callback
-    pub fn remove_modify_callback<'a>(
-        &'a mut self,
-        cb: Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a>,
+    pub fn remove_modify_callback(
+        &mut self,
+        cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>,
     ) {
         unsafe {
-            unsafe extern "C" fn shim<'a>(
+            unsafe extern "C" fn shim(
                 pos: raw::c_int,
                 inserted: raw::c_int,
                 deleted: raw::c_int,
@@ -439,8 +440,8 @@ impl TextBuffer {
                 if !deleted_text.is_null() {
                     temp = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
                 }
-                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a> = mem::transmute(data);
-                let f: &mut (dyn FnMut(u32, u32, u32, u32, &str) + 'a) = &mut **a;
+                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = mem::transmute(data);
+                let f: &mut (dyn FnMut(u32, u32, u32, u32, &str)) = &mut **a;
                 f(
                     pos as u32,
                     inserted as u32,
@@ -449,7 +450,7 @@ impl TextBuffer {
                     &temp,
                 )
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str) + 'a> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
             let data: *mut raw::c_void = mem::transmute(a);
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_remove_modify_callback(self._inner, callback, data);
@@ -459,6 +460,14 @@ impl TextBuffer {
 
 unsafe impl Sync for TextBuffer {}
 unsafe impl Send for TextBuffer {}
+
+impl Clone for TextBuffer {
+    fn clone(&self) -> TextBuffer {
+        let mut temp = TextBuffer::default();
+        temp.copy(self, 0, 0, self.length());
+        temp
+    }
+}
 
 impl Drop for TextBuffer {
     fn drop(&mut self) {

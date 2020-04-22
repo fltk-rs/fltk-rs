@@ -7,7 +7,7 @@ fn main() {
     app.run().unwrap();
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 struct MainWindow {
     wind: Window,
     but1: Button,
@@ -32,8 +32,7 @@ impl MainWindow {
         self.wind.end();
         self.wind.show();
         self.but1
-            .clone()
-            .handle(Box::new(|ev: app::Event| match ev {
+            .handle(Box::new(move |ev: app::Event| match ev {
                 app::Event::Released => {
                     println!("{:?}", ev);
                     return true;
@@ -56,7 +55,7 @@ impl MainWindow {
             }));
         app::set_callback(
             &mut self.but2.clone(),
-            Box::new(|| match app::event() {
+            Box::new(move || match app::event() {
                 app::Event::Released => {
                     match fltk::dialog::input("hello", "") {
                         Some(inp) => println!("{}", inp),

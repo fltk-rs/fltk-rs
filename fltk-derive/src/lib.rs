@@ -248,6 +248,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
+        impl Copy for #name {}
 
         impl From<crate::widget::Widget> for #name {
             fn from(wid: crate::widget::Widget) -> Self {
@@ -507,55 +508,55 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
+            fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 unsafe {
-                    unsafe extern "C" fn shim<'a>(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-                        let f: &mut (dyn FnMut() + 'a) = &mut **a;
+                    unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+                        let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                        let f: &mut (dyn FnMut()) = &mut **a;
                         f();
                     }
-                    let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: fltk_sys::widget::Fl_Callback = Some(shim);
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
                 }
             }
 
-            fn handle<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>) {
+            fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 unsafe {
-                    unsafe extern "C" fn shim<'a>(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
+                    unsafe extern "C" fn shim(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let ev: Event = mem::transmute(_ev);
-                        let a: *mut Box<dyn FnMut(Event) -> bool + 'a> = mem::transmute(data);
-                        let f: &mut (dyn FnMut(Event) -> bool + 'a) = &mut **a;
+                        let a: *mut Box<dyn FnMut(Event) -> bool> = mem::transmute(data);
+                        let f: &mut (dyn FnMut(Event) -> bool) = &mut **a;
                         match f(ev) {
                             true => return 1,
                             false => return 0,
                         }
                     }
-                    let a: *mut Box<dyn FnMut(Event) -> bool + 'a> = Box::into_raw(Box::new(cb));
+                    let a: *mut Box<dyn FnMut(Event) -> bool> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: custom_handler_callback = Some(shim);
                     #set_handler(self._inner, callback, data);
                 }
             }
 
-            fn draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>) {
+            fn draw(&mut self, cb: Box<dyn FnMut()>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 unsafe {
-                    unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-                        let f: &mut (dyn FnMut() + 'a) = &mut **a;
+                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                        let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                        let f: &mut (dyn FnMut()) = &mut **a;
                         f();
                     }
-                    let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: custom_draw_callback = Some(shim);
                     #set_draw(self._inner, callback, data);
@@ -1159,36 +1160,36 @@ fn impl_menu_trait(ast: &syn::DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl MenuExt for #name {
-            unsafe fn add<'a>(&'a mut self, name: &'a str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut() + 'a>) {
+            fn add(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut()>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 let temp = CString::new(name).unwrap();
                 unsafe {
-                    unsafe extern "C" fn shim<'a>(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-                        let f: &mut (dyn FnMut() + 'a) = &mut **a;
+                    unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                        let f: &mut (dyn FnMut()) = &mut **a;
                         f();
                     }
-                    let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: Fl_Callback = Some(shim);
                     #add(self._inner, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }
 
-            unsafe fn insert<'a>(&'a mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut() + 'a>) {
+            fn insert(&mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut()>) {
                 if !self.top_window().unwrap().takes_events() || !self.takes_events() {
                     panic!("The widget failed to capture events, probably it (or the window) is inactive");
                 }
                 let temp = CString::new(name).unwrap();
                 unsafe {
-                    unsafe extern "C" fn shim<'a>(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-                        let f: &mut (dyn FnMut() + 'a) = &mut **a;
+                    unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                        let f: &mut (dyn FnMut()) = &mut **a;
                         f();
                     }
-                    let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: Fl_Callback = Some(shim);
                     #insert(self._inner, idx as i32, temp.into_raw() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);

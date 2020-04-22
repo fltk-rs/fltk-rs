@@ -2,6 +2,8 @@
 #![allow(unused_mut)]
 
 use fltk::{app, button::*, output::*, window::*};
+use std::rc::Rc;
+use std::cell::RefCell;
 
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Gleam);
@@ -18,10 +20,10 @@ fn main() {
     let row4 = but_height * 3 + 180;
     let row5 = but_height * 4 + 180;
 
-    let mut txt = String::from("0");
-    let mut old_val = String::from("0");
+    let mut op = Rc::from(RefCell::from(String::from("_")));
+    let mut txt = Rc::from(RefCell::from(String::from("0")));
+    let mut old_val = Rc::from(RefCell::from(String::from("0")));
     let mut new_val = String::from("0");
-    let mut op = '_';
 
     let mut wind = Window::default()
         .with_label("FLTK Calc")
@@ -42,7 +44,6 @@ fn main() {
     let mut but_add = Button::new(column4, row4, but_width, but_height, "+");
     let mut but_eq = Button::new(column4, row5, but_width, but_height, "=");
 
-    // but_ce.set_color(Color::from_rgb(255, 0, 0));
     but_ce.set_color(Color::from_u32(0xff0000));
     but_c.set_color(Color::Yellow);
     but_back.set_color(Color::Yellow);
@@ -78,272 +79,128 @@ fn main() {
         &mut but8,
         &mut but9,
         &mut but0,
-        &mut but_dot,
     ];
 
-    for but in but_vec {
-        but.set_color(Color::Light2);
-    }
+    let but_op_vec = vec![
+        but_add,
+        but_sub,
+        but_mul,
+        but_div,
+    ];
 
     wind.make_resizable(false);
     wind.end();
     wind.show();
 
+    for but in but_vec {
+        but.set_color(Color::Light2);
+        let mut txt = txt.clone();
+        let op = op.clone();
+        let label = but.label();
+        app::set_callback(
+            but,
+            Box::new(move || {
+                if out.value() == "0" {
+                    txt.borrow_mut().clear();
+                }
+                if op.borrow().as_str() == "=" {
+                    txt.borrow_mut().clear();
+                    op.borrow_mut().clear();
+                    op.borrow_mut().push_str("_");
+                }
+                txt.borrow_mut().push_str(&label);
+                out.set_value(txt.borrow().as_str());
+            }),
+        );
+    }
+
+    for mut but in but_op_vec {
+        let mut txt = txt.clone();
+        let old_val = old_val.clone();
+        let op = op.clone();
+        let label = but.label().clone();
+        app::set_callback(
+            &mut but,
+            Box::new(move || {
+                old_val.borrow_mut().clear();
+                old_val.borrow_mut().push_str(&out.value());
+                op.borrow_mut().clear();
+                op.borrow_mut().push_str(&label);
+                txt.borrow_mut().clear();
+                txt.borrow_mut().push('0');
+                out.set_value(txt.borrow().as_str());
+            }),
+        );
+    }
+
+    let mut txt_cloned = txt.clone();
+    let old_val_cloned = old_val.clone();
     app::set_callback(
         & mut but_ce,
-        Box::new(|| {
-            txt.clear();
-            old_val.clear();
-            txt.push('0');
-            out.set_value(txt.as_str());
+        Box::new(move || {
+            txt_cloned.borrow_mut().clear();
+            old_val_cloned.borrow_mut().clear();
+            txt_cloned.borrow_mut().push('0');
+            out.set_value(txt_cloned.borrow().as_str());
         }),
     );
 
+    let mut txt_cloned = txt.clone();
     app::set_callback(
         & mut but_c,
-        Box::new(|| {
-            txt.clear();
-            txt.push('0');
-            out.set_value(txt.as_str());
+        Box::new(move || {
+            txt_cloned.borrow_mut().clear();
+            txt_cloned.borrow_mut().push('0');
+            out.set_value(txt_cloned.borrow().as_str());
         }),
     );
 
+    let mut txt_cloned = txt.clone();
     app::set_callback(
         & mut but_back,
-        Box::new(|| {
-            txt.pop();
-            out.set_value(txt.as_str());
+        Box::new(move || {
+            txt_cloned.borrow_mut().pop();
+            out.set_value(txt_cloned.borrow().as_str());
         }),
     );
 
-    app::set_callback(
-        & mut but_div,
-        Box::new(|| {
-            old_val = out.value();
-            op = '/';
-            txt.clear();
-            txt.push('0');
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but_mul,
-        Box::new(|| {
-            old_val = out.value();
-            op = 'x';
-            txt.clear();
-            txt.push('0');
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but_sub,
-        Box::new(|| {
-            old_val = out.value();
-            op = '-';
-            txt.clear();
-            txt.push('0');
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but_add,
-        Box::new(|| {
-            old_val = out.value();
-            op = '+';
-            txt.clear();
-            txt.push('0');
-            out.set_value(txt.as_str());
-        }),
-    );
-
+    let mut txt_cloned = txt.clone();
+    let op_cloned = op.clone();
     app::set_callback(
         & mut but_eq,
-        Box::new(|| {
+        Box::new(move || {
             new_val = out.value();
-            let old: f64 = old_val.parse().unwrap();
+            let old: f64 = old_val.borrow().parse().unwrap();
             let new: f64 = new_val.parse().unwrap();
-            let val = match op {
-                '/' => old / new,
-                'x' => old * new,
-                '+' => old + new,
-                '-' => old - new,
+            let val = match op_cloned.borrow().as_str() {
+                "/" => old / new,
+                "x" => old * new,
+                "+" => old + new,
+                "-" => old - new,
                 _ => new,
             };
-            op = '=';
-            txt.clear();
-            txt.push_str(val.to_string().as_str());
-            out.set_value(txt.as_str());
+            op_cloned.borrow_mut().clear();
+            op_cloned.borrow_mut().push_str("_");
+            txt_cloned.borrow_mut().clear();
+            txt_cloned.borrow_mut().push_str(val.to_string().as_str());
+            out.set_value(txt_cloned.borrow().as_str());
         }),
     );
 
-    app::set_callback(
-        & mut but0,
-        Box::new(|| {
-            if out.value() == "0" {
-                //
-            } else {
-                if op == '=' {
-                    txt.clear();
-                    out.set_value("");
-                    op = '_';
-                }
-                txt.push_str("0");
-                out.set_value(txt.as_str());
-            }
-        }),
-    );
-
-    app::set_callback(
-        & mut but1,
-        Box::new(|| {
-            if out.value() == "0" {
-                txt.clear();
-            }
-            if op == '=' {
-                txt.clear();
-                op = '_';
-            }
-            txt.push_str("1");
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but2,
-        Box::new(|| {
-            if out.value() == "0" {
-                txt.clear();
-            }
-            if op == '=' {
-                txt.clear();
-                op = '_';
-            }
-            txt.push_str("2");
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but3,
-        Box::new(|| {
-            if out.value() == "0" {
-                txt.clear();
-            }
-            if op == '=' {
-                txt.clear();
-                op = '_';
-            }
-            txt.push_str("3");
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but4,
-        Box::new(|| {
-            if out.value() == "0" {
-                txt.clear();
-            }
-            if op == '=' {
-                txt.clear();
-                op = '_';
-            }
-            txt.push_str("4");
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but5,
-        Box::new(|| {
-            if out.value() == "0" {
-                txt.clear();
-            }
-            if op == '=' {
-                txt.clear();
-                op = '_';
-            }
-            txt.push_str("5");
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but6,
-        Box::new(|| {
-            if out.value() == "0" {
-                txt.clear();
-            }
-            if op == '=' {
-                txt.clear();
-                op = '_';
-            }
-            txt.push_str("6");
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but7,
-        Box::new(|| {
-            if out.value() == "0" {
-                txt.clear();
-            }
-            if op == '=' {
-                txt.clear();
-                op = '_';
-            }
-            txt.push_str("7");
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but8,
-        Box::new(|| {
-            if out.value() == "0" {
-                txt.clear();
-            }
-            if op == '=' {
-                txt.clear();
-                op = '_';
-            }
-            txt.push_str("8");
-            out.set_value(txt.as_str());
-        }),
-    );
-
-    app::set_callback(
-        & mut but9,
-        Box::new(|| {
-            if out.value() == "0" {
-                txt.clear();
-            }
-            if op == '=' {
-                txt.clear();
-                op = '_';
-            }
-            txt.push_str("9");
-            out.set_value(txt.as_str());
-        }),
-    );
-
+    but_dot.set_color(Color::Light2);
     app::set_callback(
         & mut but_dot,
-        Box::new(|| {
-            if op == '=' {
-                txt.clear();
-                op = '_';
+        Box::new(move || {
+            if op.borrow().as_str() == "=" {
+                txt.borrow_mut().clear();
+                op.borrow_mut().clear();
+                op.borrow_mut().push_str("_");
                 out.set_value("0.");
-                txt.push_str("0.");
+                txt.borrow_mut().push_str("0.");
             }
-            if !txt.contains(".") {
-                txt.push_str(".");
-                out.set_value(txt.as_str());
+            if !txt.borrow().contains(".") {
+                txt.borrow_mut().push_str(".");
+                out.set_value(txt.borrow().as_str());
             }
         }),
     );

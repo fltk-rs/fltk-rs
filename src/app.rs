@@ -61,14 +61,14 @@ pub fn unlock() {
 }
 
 /// Awakens the main UI thread with a callback
-pub fn awake<'a>(cb: Box<dyn FnMut() + 'a>) {
+pub fn awake(cb: Box<dyn FnMut()>) {
     unsafe {
-        unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-            let f: &mut (dyn FnMut() + 'a) = &mut **a;
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let f: &mut (dyn FnMut()) = &mut **a;
             f();
         }
-        let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = mem::transmute(a);
         let callback: Fl_Awake_Handler = Some(shim);
         Fl_awake(callback, data);
@@ -98,14 +98,14 @@ impl App {
     }
 
     /// Awakens the main UI thread with a callback
-    pub fn awake<'a>(&'a self, cb: Box<dyn FnMut() + 'a>) {
+    pub fn awake(&self, cb: Box<dyn FnMut()>) {
         unsafe {
-            unsafe extern "C" fn shim<'a>(data: *mut raw::c_void) {
-                let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-                let f: &mut (dyn FnMut() + 'a) = &mut **a;
+            unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                let f: &mut (dyn FnMut()) = &mut **a;
                 f();
             }
-            let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
             let data: *mut raw::c_void = mem::transmute(a);
             let callback: Fl_Awake_Handler = Some(shim);
             Fl_awake(callback, data);
@@ -205,7 +205,7 @@ where
 }
 
 /// Sets the callback of a widget
-pub fn set_callback<'a, W>(widget: &'a mut W, cb: Box<dyn FnMut() + 'a>)
+pub fn set_callback<W>(widget: &mut W, cb: Box<dyn FnMut()>)
 where
     W: WidgetExt,
 {
@@ -213,15 +213,15 @@ where
         panic!("The widget failed to capture events, probably it (or the window) is inactive");
     }
     unsafe {
-        unsafe extern "C" fn shim<'a>(
+        unsafe extern "C" fn shim(
             _wid: *mut fltk_sys::widget::Fl_Widget,
             data: *mut raw::c_void,
         ) {
-            let a: *mut Box<dyn FnMut() + 'a> = mem::transmute(data);
-            let f: &mut (dyn FnMut() + 'a) = &mut **a;
+            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let f: &mut (dyn FnMut()) = &mut **a;
             f();
         }
-        let a: *mut Box<dyn FnMut() + 'a> = Box::into_raw(Box::new(cb));
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = mem::transmute(a);
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
         fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);

@@ -18,12 +18,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.3.2"
+fltk = "^0.3.3"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
 [dependencies.fltk]
-version = "^0.3.2"
+version = "^0.3.3"
 features = ["fltk-shared"]
 ```
 
@@ -52,7 +52,7 @@ fn main() {
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
     wind.end();
     wind.show();
-    but.set_callback(Box::new(|| frame.set_label("Hello World!")));
+    but.set_callback(Box::new(move || frame.set_label("Hello World!")));
     app.run().unwrap();
 }
 ```
@@ -91,10 +91,10 @@ fn main() {
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    but_inc.set_callback(Box::new(|| {
+    but_inc.set_callback(Box::new(move || {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
     }));
-    but_dec.set_callback(Box::new(|| {
+    but_dec.set_callback(Box::new(move || {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() - 1).to_string())
     }));
     app.run().unwrap();
@@ -106,7 +106,7 @@ fn main() {
 
 Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the handle() method can be used:
 ```rust
-some_widget.handle(Box::new(|ev: app::Event| {
+some_widget.handle(Box::new(move |ev: app::Event| {
     match ev {
         /* handle ev */
     }
