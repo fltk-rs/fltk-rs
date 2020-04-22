@@ -6,14 +6,17 @@
 #include <FL/Fl_Menu_Item.H>
 #include <new>
 
-
 #define MENU_DEFINE(widget)                                                    \
   void widget##_add(widget *self, const char *name, int shortcut,              \
                     Fl_Callback *cb, void *data, int flag) {                   \
+    if (!cb || !data)                                                          \
+      return;                                                                  \
     LOCK(self->add(name, shortcut, cb, data, flag);)                           \
   }                                                                            \
   void widget##_insert(widget *self, int index, const char *name,              \
                        int shortcut, Fl_Callback *cb, void *data, int flag) {  \
+    if (!cb || !data)                                                          \
+      return;                                                                  \
     LOCK(self->insert(index, name, shortcut, cb, data, flag);)                 \
   }                                                                            \
   Fl_Menu_Item *widget##_get_item(widget *self, const char *name) {            \
@@ -48,14 +51,14 @@ WIDGET_DEFINE(Fl_Choice)
 
 MENU_DEFINE(Fl_Choice)
 
-Fl_Menu_Item *Fl_Menu_Item_new(char** args, int sz) {
+Fl_Menu_Item *Fl_Menu_Item_new(char **args, int sz) {
   Fl_Menu_Item *items = new (std::nothrow) Fl_Menu_Item[sz + 1];
   if (!items)
     return NULL;
   for (int i = 0; i < sz; i++) {
-    items[i] = { args[i] };
+    items[i] = {args[i]};
   }
-  items[sz] = { NULL };
+  items[sz] = {NULL};
   return items;
 }
 

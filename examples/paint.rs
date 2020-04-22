@@ -10,7 +10,7 @@ fn main() {
     let mut y = 0;
     wind.end();
     wind.show();
-    frame.handle(Box::new(|ev| {
+    frame.handle(Box::new(move |ev| {
         // println!("{:?}", ev);
         set_draw_color(Color::Red);
         set_line_style(LineStyle::Solid, 1);

@@ -180,14 +180,14 @@ pub trait WidgetExt {
     /// Gets the image associated with the widget
     fn image(&self) -> Option<Image>;
     /// Sets the callback when the widget is triggered (clicks for example)
-    fn set_callback<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
+    fn set_callback(&mut self, cb: Box<dyn FnMut()>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
-    fn handle<'a>(&'a mut self, cb: Box<dyn FnMut(Event) -> bool + 'a>);
+    fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
     /// Set a custom draw method
-    fn draw<'a>(&'a mut self, cb: Box<dyn FnMut() + 'a>);
+    fn draw(&mut self, cb: Box<dyn FnMut()>);
     /// Returns the parent of the widget
     fn parent(&self) -> Option<Widget>;
     /// Gets the selection color of the widget
@@ -325,21 +325,21 @@ pub trait MenuExt: WidgetExt {
     /// Sets the text color
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
-    fn add<'a>(
-        &'a mut self,
+    fn add(
+        &mut self,
         name: &str,
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
-        cb: Box<dyn FnMut() + 'a>,
+        cb: Box<dyn FnMut()>,
     );
     /// Inserts a menu item at an index along with its callback
-    fn insert<'a>(
-        &'a mut self,
+    fn insert(
+        &mut self,
         idx: u32,
         name: &str,
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
-        cb: Box<dyn FnMut() + 'a>,
+        cb: Box<dyn FnMut()>,
     );
     /// Adds a simple text option to the Choice and MenuButton widgets
     fn add_choice(&mut self, text: &str);

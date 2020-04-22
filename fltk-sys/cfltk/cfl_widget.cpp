@@ -8,5 +8,6 @@ void Fl_Widget_callback(Fl_Widget *self, Fl_Callback *cb) {
 
 void Fl_Widget_callback_with_captures(Fl_Widget *self, Fl_Callback *cb,
                                       void *data) {
-  self->callback(cb, data);
+  if (!cb || !data) return;
+  LOCK(self->callback(cb, data);)
 }

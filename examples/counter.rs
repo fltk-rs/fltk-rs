@@ -22,10 +22,10 @@ fn main() {
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    but_inc.set_callback(Box::new(|| {
+    but_inc.set_callback(Box::new(move || {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
     }));
-    but_dec.set_callback(Box::new(|| {
+    but_dec.set_callback(Box::new(move || {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() - 1).to_string())
     }));
     // Theming

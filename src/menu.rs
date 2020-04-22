@@ -8,25 +8,25 @@ use std::{
 };
 
 /// Creates a menu bar
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetExt, MenuExt, Clone, Debug)]
 pub struct MenuBar {
     _inner: *mut Fl_Menu_Bar,
 }
 
 /// Creates a menu button
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetExt, MenuExt, Clone, Debug)]
 pub struct MenuButton {
     _inner: *mut Fl_Menu_Button,
 }
 
 /// Creates a menu choice
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetExt, MenuExt, Clone, Debug)]
 pub struct Choice {
     _inner: *mut Fl_Choice,
 }
 
 /// Creates a menu item
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct MenuItem {
     _inner: *mut Fl_Menu_Item,
 }
@@ -194,5 +194,25 @@ impl MenuItem {
     /// Hides the menu item
     pub fn hide(&mut self) {
         unsafe { Fl_Menu_Item_hide(self._inner) }
+    }
+}
+
+#[cfg(test)]
+mod menu {
+    use super::*;
+    #[test]
+    fn label() {
+        let mut menu = MenuBar::new(0, 0, 0, 0, "hello");
+        let menu2 = menu.clone();
+        menu.set_label("cloned");
+        assert!(menu2.label() == "cloned");
+    }
+    #[test]
+    fn tooltip() {
+        let mut menu = MenuBar::new(0, 0, 0, 0, "hello");
+        menu.set_tooltip("tooltip");
+        assert!(menu.tooltip().unwrap() == "tooltip");
+        let menu2 = menu.clone();
+        assert!(menu2.tooltip().unwrap() == "tooltip");
     }
 }

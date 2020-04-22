@@ -7,6 +7,6 @@ fn main() {
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
     wind.end();
     wind.show();
-    but.set_callback(Box::new(|| frame.set_label("Hello World!")));
+    but.set_callback(Box::new(move || frame.set_label("Hello World!")));
     app.run().unwrap();
 }
