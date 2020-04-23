@@ -138,8 +138,8 @@ pub fn event_text() -> String {
             String::from("")
         } else {
             CString::from_raw(text as *mut raw::c_char)
-            .to_string_lossy()
-            .to_string()
+                .to_string_lossy()
+                .to_string()
         }
     }
 }
@@ -209,14 +209,12 @@ pub fn set_callback<W>(widget: &mut W, cb: Box<dyn FnMut()>)
 where
     W: WidgetExt,
 {
-    if !widget.top_window().unwrap().takes_events() || !widget.takes_events() {
-        panic!("The widget failed to capture events, probably it (or the window) is inactive");
-    }
+    debug_assert!(
+        widget.top_window().unwrap().takes_events() && widget.takes_events(),
+        "Handling events requires that the window and widget be active!"
+    );
     unsafe {
-        unsafe extern "C" fn shim(
-            _wid: *mut fltk_sys::widget::Fl_Widget,
-            data: *mut raw::c_void,
-        ) {
+        unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
             let f: &mut (dyn FnMut()) = &mut **a;
             f();

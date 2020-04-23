@@ -10,7 +10,7 @@ use std::{
 };
 
 /// Creates a window widget
-#[derive(WidgetExt, GroupExt, WindowExt, Debug, Clone)]
+#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct Window {
     _inner: *mut Fl_Window,
 }
@@ -24,13 +24,13 @@ pub enum WindowType {
 }
 
 /// Creates a double window widget
-#[derive(WidgetExt, GroupExt, WindowExt, Debug, Clone)]
+#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct DoubleWindow {
     _inner: *mut Fl_Double_Window,
 }
 
 /// Creates a Menu window widget
-#[derive(WidgetExt, GroupExt, WindowExt, Debug, Clone)]
+#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct MenuWindow {
     _inner: *mut Fl_Menu_Window,
 }

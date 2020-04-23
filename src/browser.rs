@@ -8,7 +8,7 @@ use std::{
 };
 
 /// Creates a normal browser
-#[derive(WidgetExt, BrowserExt, Debug, Clone)]
+#[derive(WidgetExt, BrowserExt, Debug)]
 pub struct Browser {
     _inner: *mut Fl_Browser,
 }
@@ -24,25 +24,25 @@ pub enum BrowserType {
 }
 
 /// Creates a radio browser
-#[derive(WidgetExt, BrowserExt, Debug, Clone)]
+#[derive(WidgetExt, BrowserExt, Debug)]
 pub struct SelectBrowser {
     _inner: *mut Fl_Select_Browser,
 }
 
 /// Creates a multi-browser
-#[derive(WidgetExt, BrowserExt, Debug, Clone)]
+#[derive(WidgetExt, BrowserExt, Debug)]
 pub struct MultiBrowser {
     _inner: *mut Fl_Multi_Browser,
 }
 
 /// Creates a hold browser
-#[derive(WidgetExt, BrowserExt, Debug, Clone)]
+#[derive(WidgetExt, BrowserExt, Debug)]
 pub struct HoldBrowser {
     _inner: *mut Fl_Hold_Browser,
 }
 
 /// Creates a file browser
-#[derive(WidgetExt, BrowserExt, Debug, Clone)]
+#[derive(WidgetExt, BrowserExt, Debug)]
 pub struct FileBrowser {
     _inner: *mut Fl_File_Browser,
 }

@@ -9,6 +9,9 @@ extern "C" {
     pub fn Fl_Native_File_Chooser_new(arg1: ::std::os::raw::c_int) -> *mut Fl_Native_File_Chooser;
 }
 extern "C" {
+    pub fn Fl_Native_File_Chooser_delete(self_: *mut Fl_Native_File_Chooser);
+}
+extern "C" {
     pub fn Fl_Native_File_Chooser_filename(
         arg1: *mut Fl_Native_File_Chooser,
     ) -> *const ::std::os::raw::c_char;
@@ -105,6 +108,9 @@ pub struct Fl_Help_Dialog {
 }
 extern "C" {
     pub fn Fl_Help_Dialog_new() -> *mut Fl_Help_Dialog;
+}
+extern "C" {
+    pub fn Fl_Help_Dialog_delete(self_: *mut Fl_Help_Dialog);
 }
 extern "C" {
     pub fn Fl_Help_Dialog_h(arg1: *mut Fl_Help_Dialog) -> ::std::os::raw::c_int;

@@ -9,18 +9,19 @@ use std::{
 };
 
 /// Creates a table
-#[derive(WidgetExt, GroupExt, TableExt, Debug, Clone)]
+#[derive(WidgetExt, GroupExt, TableExt, Debug)]
 pub struct Table {
     _inner: *mut Fl_Table,
 }
 
 /// Creates a table row
-#[derive(WidgetExt, GroupExt, TableExt, Debug, Clone)]
+#[derive(WidgetExt, GroupExt, TableExt, Debug)]
 pub struct TableRow {
     _inner: *mut Fl_Table_Row,
 }
 
 #[repr(i32)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum TableRowSelectMode {
     SelectNone,
     SelectSingle,

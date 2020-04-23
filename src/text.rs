@@ -476,19 +476,19 @@ impl Drop for TextBuffer {
 }
 
 /// Creates a non-editable text display widget
-#[derive(WidgetExt, DisplayExt, Debug, Clone)]
+#[derive(WidgetExt, DisplayExt, Debug)]
 pub struct TextDisplay {
     _inner: *mut Fl_Text_Display,
 }
 
 /// Creates an editable text display widget
-#[derive(WidgetExt, DisplayExt, Debug, Clone)]
+#[derive(WidgetExt, DisplayExt, Debug)]
 pub struct TextEditor {
     _inner: *mut Fl_Text_Editor,
 }
 
 /// Creates an editable text display widget
-#[derive(WidgetExt, DisplayExt, Debug, Clone)]
+#[derive(WidgetExt, DisplayExt, Debug)]
 pub struct SimpleTerminal {
     _inner: *mut Fl_Simple_Terminal,
 }

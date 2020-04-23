@@ -4,7 +4,7 @@ use fltk_sys::image::*;
 use std::{ffi::CString, mem, os::raw};
 
 /// Wrapper around Fl_Image, used to wrap other image types
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Image {
     _inner: *mut Fl_Image,
 }
@@ -34,37 +34,37 @@ impl Image {
 }
 
 /// Creates a struct holding a Jpeg image
-#[derive(ImageExt, Debug, Clone)]
+#[derive(ImageExt, Debug)]
 pub struct JpegImage {
     _inner: *mut Fl_JPEG_Image,
 }
 
 /// Creates a struct holding a PNG image
-#[derive(ImageExt, Debug, Clone)]
+#[derive(ImageExt, Debug)]
 pub struct PngImage {
     _inner: *mut Fl_PNG_Image,
 }
 
 /// Creates a struct holding an SVG image
-#[derive(ImageExt, Debug, Clone)]
+#[derive(ImageExt, Debug)]
 pub struct SvgImage {
     _inner: *mut Fl_SVG_Image,
 }
 
 /// Creates a struct holding a BMP image
-#[derive(ImageExt, Debug, Clone)]
+#[derive(ImageExt, Debug)]
 pub struct BmpImage {
     _inner: *mut Fl_BMP_Image,
 }
 
 /// Creates a struct holding a GIF image
-#[derive(ImageExt, Debug, Clone)]
+#[derive(ImageExt, Debug)]
 pub struct GifImage {
     _inner: *mut Fl_GIF_Image,
 }
 
 /// Creates a struct holding a raw RGB image
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct RgbImage {
     _inner: Vec<u8>,
     _w: i32,
@@ -101,9 +101,9 @@ impl RgbImage {
         Ok(ret)
     }
     /// Transforms the RgbImage to a BmpImage
-    pub fn into_bmp_image(&self) -> Result<BmpImage, FltkError> {
+    pub fn into_bmp_image(self) -> Result<BmpImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
-        let _ = write_to_bmp_file(self.clone(), &path)?;
+        let _ = write_to_bmp_file(self, &path)?;
         let ret = BmpImage::new(&path).copy();
         std::fs::remove_file(&path)?;
         Ok(ret)

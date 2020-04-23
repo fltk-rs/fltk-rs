@@ -18,6 +18,10 @@ Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
   return new (std::nothrow) Fl_Native_File_Chooser(val);
 }
 
+void Fl_Native_File_Chooser_delete(Fl_Native_File_Chooser *self) {
+  delete self;
+}
+
 const char *Fl_Native_File_Chooser_filename(Fl_Native_File_Chooser *self) {
   const char *x = self->filename();
   if (!strcmp(x, ""))
@@ -102,6 +106,10 @@ const char *cfl_password(const char *txt, const char *deflt) {
 
 Fl_Help_Dialog *Fl_Help_Dialog_new(void) {
   return new (std::nothrow) Fl_Help_Dialog();
+}
+
+void Fl_Help_Dialog_delete(Fl_Help_Dialog *self) {
+  delete self;
 }
 
 int Fl_Help_Dialog_h(Fl_Help_Dialog *self) { return self->h(); }

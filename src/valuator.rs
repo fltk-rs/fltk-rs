@@ -8,13 +8,13 @@ use std::{
 };
 
 /// Creates a slider widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Slider {
     _inner: *mut Fl_Slider,
 }
 
 /// Creates a nice slider widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct NiceSlider {
     _inner: *mut Fl_Nice_Slider,
 }
@@ -32,13 +32,13 @@ pub enum SliderType {
 }
 
 /// Creates a dial widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Dial {
     _inner: *mut Fl_Dial,
 }
 
 /// Creates a line dial widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct LineDial {
     _inner: *mut Fl_Line_Dial,
 }
@@ -53,7 +53,7 @@ pub enum DialType {
 }
 
 /// Creates a counter widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Counter {
     _inner: *mut Fl_Counter,
 }
@@ -67,7 +67,7 @@ pub enum CounterType {
 }
 
 /// Creates a scrollbar widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Scrollbar {
     _inner: *mut Fl_Scrollbar,
 }
@@ -85,25 +85,25 @@ pub enum ScrollBarType {
 }
 
 /// Creates a roller widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Roller {
     _inner: *mut Fl_Roller,
 }
 
 /// Creates a value slider widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct ValueSlider {
     _inner: *mut Fl_Value_Slider,
 }
 
 /// Creates an adjuster widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Adjuster {
     _inner: *mut Fl_Adjuster,
 }
 
 /// Creates an adjuster widget
-#[derive(WidgetExt, ValuatorExt, Debug, Clone)]
+#[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct ValueInput {
     _inner: *mut Fl_Value_Input,
 }

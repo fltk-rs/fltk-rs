@@ -1,6 +1,8 @@
 use fltk::{app, text::*, window::*};
+use std::cell::RefCell;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
+use std::rc::Rc;
 
 #[derive(Debug)]
 struct Term {
@@ -12,8 +14,6 @@ struct Term {
 impl Term {
     pub fn new(mut buf: &mut TextBuffer) -> Term {
         let mut current_dir = std::env::current_dir()
-            .unwrap()
-            .file_name()
             .unwrap()
             .to_string_lossy()
             .to_string();
@@ -32,11 +32,13 @@ impl Term {
         self.term.set_cursor_style(CursorStyle::BlockCursor);
         self.term.show_cursor(true);
     }
-    fn append(&mut self, buf: &mut TextBuffer, txt: &str) {
-        buf.append(txt);
-        self.term.set_insert_position(buf.length());
-        self.term
-            .scroll(self.term.count_lines(0, buf.length(), true), 0);
+    fn append(&mut self, txt: &str) {
+        self.term.buffer().append(txt);
+        self.term.set_insert_position(self.term.buffer().length());
+        self.term.scroll(
+            self.term.count_lines(0, self.term.buffer().length(), true),
+            0,
+        );
     }
     fn run_command(&mut self) -> String {
         let args = self.cmd.clone();
@@ -69,8 +71,6 @@ impl Term {
             std::env::set_current_dir(path).unwrap();
             let mut current_dir = std::env::current_dir()
                 .unwrap()
-                .file_name()
-                .unwrap()
                 .to_string_lossy()
                 .to_string();
             current_dir.push_str("/ $ ");
@@ -89,45 +89,49 @@ fn main() {
     let mut term = Term::new(&mut buf);
     term.style();
     let dir = term.current_dir.clone();
-    term.append(&mut buf, &dir);
+    term.append(&dir);
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    let inner = term.term;
-    inner.clone().handle(Box::new(move |ev| {
-            // println!("{:?}", app::event());
-            // println!("{:?}", app::event_key());
-            // println!("{:?}", app::event_text());
-            match ev {
-                app::Event::KeyDown => match app::event_key() {
-                    app::Key::Enter => {
-                        term.append(&mut buf, "\n");
-                        let out = term.run_command();
-                        term.append(&mut buf, &out);
-                        let current_dir = term.current_dir.clone();
-                        term.append(&mut buf, &current_dir);
-                        term.cmd.clear();
-                        true
+    let term = Rc::from(RefCell::from(term));
+    let term_clone = term.clone();
+    term_clone.borrow_mut().term.handle(Box::new(move |ev| {
+        // println!("{:?}", app::event());
+        // println!("{:?}", app::event_key());
+        // println!("{:?}", app::event_text());
+        match ev {
+            app::Event::KeyDown => match app::event_key() {
+                app::Key::Enter => {
+                    term.borrow_mut().append("\n");
+                    let out = term.borrow_mut().run_command();
+                    term.borrow_mut().append(&out);
+                    let current_dir = term.borrow().current_dir.clone();
+                    term.borrow_mut().append(&current_dir);
+                    term.borrow_mut().cmd.clear();
+                    true
+                }
+                app::Key::BackSpace => {
+                    if term.borrow().cmd.len() != 0 {
+                        let text_len = term.borrow().term.buffer().text().len() as u32;
+                        term.borrow_mut()
+                            .term
+                            .buffer()
+                            .remove(text_len - 1, text_len as u32);
+                        term.borrow_mut().cmd.pop().unwrap();
+                        return true;
+                    } else {
+                        return false;
                     }
-                    app::Key::BackSpace => {
-                        if term.cmd.len() != 0 {
-                            let text_len = inner.buffer().text().len() as u32;
-                            buf.remove(text_len - 1, text_len as u32);
-                            term.cmd.pop().unwrap();
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                    _ => {
-                        let temp = app::event_text();
-                        term.cmd.push_str(&temp);
-                        term.append(&mut buf, &temp);
-                        true
-                    }
-                },
-                _ => false,
-            }
+                }
+                _ => {
+                    let temp = app::event_text();
+                    term.borrow_mut().cmd.push_str(&temp);
+                    term.borrow_mut().append(&temp);
+                    true
+                }
+            },
+            _ => false,
+        }
     }));
     app.run().unwrap();
 }

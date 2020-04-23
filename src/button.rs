@@ -8,7 +8,7 @@ use std::{
 };
 
 /// Creates a normal button
-#[derive(WidgetExt, ButtonExt, Debug, Clone)]
+#[derive(WidgetExt, ButtonExt, Debug)]
 pub struct Button {
     _inner: *mut Fl_Button,
 }
@@ -24,7 +24,7 @@ pub enum ButtonType {
 }
 
 /// Creates a radio button
-#[derive(WidgetExt, ButtonExt, Debug, Clone)]
+#[derive(WidgetExt, ButtonExt, Debug)]
 pub struct RadioButton {
     _inner: *mut Fl_Radio_Button,
 }
@@ -42,13 +42,13 @@ impl RadioButton {
 }
 
 /// Creates a round button
-#[derive(WidgetExt, ButtonExt, Debug, Clone)]
+#[derive(WidgetExt, ButtonExt, Debug)]
 pub struct RoundButton {
     _inner: *mut Fl_Round_Button,
 }
 
 /// Creates a check button
-#[derive(WidgetExt, ButtonExt, Debug, Clone)]
+#[derive(WidgetExt, ButtonExt, Debug)]
 pub struct CheckButton {
     _inner: *mut Fl_Check_Button,
 }
@@ -66,7 +66,7 @@ impl CheckButton {
 }
 
 /// Creates a toggle button
-#[derive(WidgetExt, ButtonExt, Debug, Clone)]
+#[derive(WidgetExt, ButtonExt, Debug)]
 pub struct ToggleButton {
     _inner: *mut Fl_Toggle_Button,
 }
@@ -84,7 +84,7 @@ impl ToggleButton {
 }
 
 /// Creates a light button
-#[derive(WidgetExt, ButtonExt, Debug, Clone)]
+#[derive(WidgetExt, ButtonExt, Debug)]
 pub struct LightButton {
     _inner: *mut Fl_Light_Button,
 }
@@ -102,13 +102,13 @@ impl LightButton {
 }
 
 /// Creates a repeat button
-#[derive(WidgetExt, ButtonExt, Debug, Clone)]
+#[derive(WidgetExt, ButtonExt, Debug)]
 pub struct RepeatButton {
     _inner: *mut Fl_Repeat_Button,
 }
 
 /// Creates a return button
-#[derive(WidgetExt, ButtonExt, Debug, Clone)]
+#[derive(WidgetExt, ButtonExt, Debug)]
 pub struct ReturnButton {
     _inner: *mut Fl_Return_Button,
 }
@@ -118,18 +118,9 @@ pub struct ReturnButton {
 mod button {
     use super::*;
     #[test]
-    fn label() {
-        let mut but = Button::new(0,0,0,0,"hello");
-        let but2 = but.clone();
-        but.set_label("cloned");
-        assert!(but2.label() == "cloned");
-    }
-    #[test]
     fn tooltip() {
         let mut but = Button::new(0,0,0,0,"hello");
         but.set_tooltip("tooltip");
         assert!(but.tooltip().unwrap() == "tooltip");
-        let but2 = but.clone();
-        assert!(but2.tooltip().unwrap() == "tooltip");
     }
 }

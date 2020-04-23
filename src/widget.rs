@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 use fltk_sys::widget::*;
 
 /// An abstract type, shouldn't be instantiated in user code
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Widget {
     _inner: *mut Fl_Widget,
 }
