@@ -65,6 +65,9 @@ fn main() {
     if cfg!(feature = "use-ninja") {
         dst.generator("Ninja");
     }
+    if cfg!(feature = "system-fltk") {
+        dst.define("USE_SYSTEM_FLTK", "ON");
+    }
     if cfg!(feature = "cpp-testing") {
         println!("cargo:rerun-if-changed=cfltk/tests/test1.cpp");
         dst.define("CFLTK_BUILD_TESTS", "ON");

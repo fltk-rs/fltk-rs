@@ -682,7 +682,7 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                     }
                 }
             }
-            fn unsafe_clone(&self) -> #name {
+            unsafe fn copy(&self) -> #name {
                 #name {
                     _inner: self._inner,
                 }
