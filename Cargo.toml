@@ -31,9 +31,6 @@ name = "hello"
 name = "hello_button"
 
 [[example]]
-name = "button"
-
-[[example]]
 name = "counter"
 
 [[example]]

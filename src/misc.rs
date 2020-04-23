@@ -10,7 +10,7 @@ use std::{
 };
 
 /// Creates a spinner widget
-#[derive(WidgetExt, Debug, Clone)]
+#[derive(WidgetExt, Debug)]
 pub struct Spinner {
     _inner: *mut Fl_Spinner,
 }
@@ -81,13 +81,13 @@ impl Spinner {
 }
 
 /// Creates a clock widget
-#[derive(WidgetExt, Debug, Clone)]
+#[derive(WidgetExt, Debug)]
 pub struct Clock {
     _inner: *mut Fl_Clock,
 }
 
 /// Creates a chart widget
-#[derive(WidgetExt, Debug, Clone)]
+#[derive(WidgetExt, Debug)]
 pub struct Chart {
     _inner: *mut Fl_Chart,
 }
@@ -197,7 +197,7 @@ impl Chart {
 }
 
 /// Creates a progress bar
-#[derive(WidgetExt, Debug, Clone)]
+#[derive(WidgetExt, Debug)]
 pub struct Progress {
     _inner: *mut Fl_Progress,
 }

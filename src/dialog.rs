@@ -7,7 +7,7 @@ use std::{
 };
 
 /// Creates a file button
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct FileDialog {
     _inner: *mut Fl_Native_File_Chooser,
 }
@@ -168,6 +168,15 @@ impl FileDialog {
     }
 }
 
+impl Drop for FileDialog {
+    fn drop(&mut self) {
+        unsafe {
+            Fl_Native_File_Chooser_delete(self._inner)
+        }
+    }
+}
+
+
 /// Displays a message box
 pub fn message(txt: &str) {
     unsafe {
@@ -239,7 +248,7 @@ pub fn password(txt: &str, deflt: &str) -> Option<String> {
 }
 
 /// Creates a help dialog
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct HelpDialog {
     _inner: *mut Fl_Help_Dialog,
 }
@@ -331,5 +340,13 @@ impl HelpDialog {
     /// Returns the y position of the help dialog
     pub fn y(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_y(self._inner) }
+    }
+}
+
+impl Drop for HelpDialog {
+    fn drop(&mut self) {
+        unsafe {
+            Fl_Help_Dialog_delete(self._inner)
+        }
     }
 }

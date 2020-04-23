@@ -8,19 +8,19 @@ use std::{
 };
 
 /// Creates a menu bar
-#[derive(WidgetExt, MenuExt, Clone, Debug)]
+#[derive(WidgetExt, MenuExt, Debug)]
 pub struct MenuBar {
     _inner: *mut Fl_Menu_Bar,
 }
 
 /// Creates a menu button
-#[derive(WidgetExt, MenuExt, Clone, Debug)]
+#[derive(WidgetExt, MenuExt, Debug)]
 pub struct MenuButton {
     _inner: *mut Fl_Menu_Button,
 }
 
 /// Creates a menu choice
-#[derive(WidgetExt, MenuExt, Clone, Debug)]
+#[derive(WidgetExt, MenuExt, Debug)]
 pub struct Choice {
     _inner: *mut Fl_Choice,
 }
@@ -203,16 +203,12 @@ mod menu {
     #[test]
     fn label() {
         let mut menu = MenuBar::new(0, 0, 0, 0, "hello");
-        let menu2 = menu.clone();
         menu.set_label("cloned");
-        assert!(menu2.label() == "cloned");
     }
     #[test]
     fn tooltip() {
         let mut menu = MenuBar::new(0, 0, 0, 0, "hello");
         menu.set_tooltip("tooltip");
         assert!(menu.tooltip().unwrap() == "tooltip");
-        let menu2 = menu.clone();
-        assert!(menu2.tooltip().unwrap() == "tooltip");
     }
 }

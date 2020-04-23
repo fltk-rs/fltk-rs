@@ -248,7 +248,6 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
-        impl Copy for #name {}
 
         impl From<crate::widget::Widget> for #name {
             fn from(wid: crate::widget::Widget) -> Self {
@@ -681,6 +680,11 @@ fn impl_widget_trait(ast: &syn::DeriveInput) -> TokenStream {
                         0 => false,
                         _ => true,
                     }
+                }
+            }
+            fn unsafe_clone(&self) -> #name {
+                #name {
+                    _inner: self._inner,
                 }
             }
         }
@@ -2704,6 +2708,12 @@ fn impl_image_trait(ast: &syn::DeriveInput) -> TokenStream {
         impl Drop for #name {
             fn drop(&mut self) {
                 unsafe { #delete(self._inner) }
+            }
+        }
+
+        impl Clone for #name {
+            fn clone(&self) -> Self {
+                self.copy()
             }
         }
 

@@ -91,13 +91,7 @@ fn main() {
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    but_inc.set_callback(Box::new(move || {
-        frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
-    }));
-    but_dec.set_callback(Box::new(move || {
-        frame.set_label(&(frame.label().parse::<i32>().unwrap() - 1).to_string())
-    }));
-    app.run().unwrap();
+    /* Event handling */
 }
 ```
 
@@ -165,7 +159,6 @@ To run the examples:
 $ cargo run --example editor
 $ cargo run --example calculator
 $ cargo run --example gallery
-$ cargo run --example button
 $ cargo run --example terminal
 $ cargo run --example counter
 $ cargo run --example hello

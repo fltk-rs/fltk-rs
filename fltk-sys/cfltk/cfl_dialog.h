@@ -8,6 +8,8 @@ typedef struct Fl_Native_File_Chooser Fl_Native_File_Chooser;
 
 Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int);
 
+void Fl_Native_File_Chooser_delete(Fl_Native_File_Chooser *self);
+
 const char *Fl_Native_File_Chooser_filename(Fl_Native_File_Chooser *);
 
 const char *Fl_Native_File_Chooser_filenames(Fl_Native_File_Chooser *, int);
@@ -48,6 +50,8 @@ const char *cfl_password(const char *txt, const char *deflt);
 typedef struct Fl_Help_Dialog Fl_Help_Dialog;
 
 Fl_Help_Dialog* Fl_Help_Dialog_new(void);
+
+void Fl_Help_Dialog_delete(Fl_Help_Dialog *self);
 
 int Fl_Help_Dialog_h(Fl_Help_Dialog *);
 

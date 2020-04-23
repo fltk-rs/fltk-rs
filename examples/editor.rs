@@ -10,11 +10,9 @@ use std::ops::{Deref, DerefMut};
 use std::rc::Rc;
 use std::{fs, path};
 
-#[derive(Clone)]
 pub struct Editor {
     pub editor: TextEditor,
     filename: String,
-    saved: bool,
 }
 
 impl Editor {
@@ -22,12 +20,7 @@ impl Editor {
         Editor {
             editor: TextEditor::new(5, 40, 790, 555, &mut buf),
             filename: String::from(""),
-            saved: true,
         }
-    }
-
-    pub fn saved(&self) -> bool {
-        self.saved
     }
 
     pub fn filename(&self) -> String {
@@ -46,7 +39,7 @@ impl Editor {
         self.editor.set_trigger(CallbackTrigger::Changed);
     }
 
-    pub fn save_file(&mut self) {
+    pub fn save_file(&mut self, saved: &mut bool) {
         let mut filename = self.filename.clone();
         if filename.is_empty() {
             let mut dlg = FileDialog::new(FileDialogType::BrowseSaveFile);
@@ -59,7 +52,7 @@ impl Editor {
             match path::Path::new(&filename).exists() {
                 true => {
                     fs::write(&filename, self.editor.buffer().text()).unwrap();
-                    self.saved = true;
+                    *saved = true;
                 }
                 false => alert("Please specify a file!"),
             }
@@ -67,7 +60,7 @@ impl Editor {
             match path::Path::new(&filename).exists() {
                 true => {
                     fs::write(&filename, self.editor.buffer().text()).unwrap();
-                    self.saved = true;
+                    *saved = true;
                 }
                 false => alert("Please specify a file!"),
             }
@@ -105,14 +98,16 @@ fn main() {
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    let inner_editor = editor.editor;
-    let editor = Rc::from(RefCell::from(editor));
-    let editor_cloned = editor.clone();
-    inner_editor
-        .clone()
-        .set_callback(Box::new(move || editor_cloned.borrow_mut().saved = false));
+    let mut saved = false;
+    // let inner_editor = editor.editor;
+    let editor_rc = Rc::from(RefCell::from(editor));
+    let editor_cloned = editor_rc.clone();
+    editor_cloned
+        .borrow_mut()
+        .editor
+        .set_callback(Box::new(move || saved = false));
 
-    let editor_cloned = editor.clone();
+    let editor_cloned = editor_rc.clone();
     menu.add(
         "File/New...",
         Shortcut::Ctrl + 'n',
@@ -127,7 +122,7 @@ fn main() {
         }),
     );
 
-    let editor_cloned = editor.clone();
+    let editor_cloned = editor_rc.clone();
     menu.add(
         "File/Open...",
         Shortcut::Ctrl + 'o',
@@ -154,32 +149,32 @@ fn main() {
         }),
     );
 
-    let editor_cloned = editor.clone();
+    let editor_cloned = editor_rc.clone();
     menu.add(
         "File/Save",
         Shortcut::Ctrl + 's',
         MenuFlag::Normal,
-        Box::new(move || editor_cloned.borrow_mut().save_file()),
+        Box::new(move || editor_cloned.borrow_mut().save_file(&mut saved)),
     );
 
-    let editor_cloned = editor.clone();
+    let editor_cloned = editor_rc.clone();
     menu.add(
         "File/Save as...",
         Shortcut::None,
         MenuFlag::MenuDivider,
-        Box::new(move || editor_cloned.borrow_mut().save_file()),
+        Box::new(move || editor_cloned.borrow_mut().save_file(&mut saved)),
     );
 
-    let editor_cloned = editor.clone();
+    let editor_cloned = editor_rc.clone();
     menu.add(
         "File/Quit",
         Shortcut::None,
         MenuFlag::Normal,
         Box::new(move || {
-            if editor_cloned.borrow().saved() == false {
+            if saved == false {
                 let x = choice("Would you like to save your work?", "Yes", "No", "");
                 if x == 0 {
-                    editor_cloned.borrow_mut().save_file();
+                    editor_cloned.borrow_mut().save_file(&mut saved);
                     std::process::exit(0);
                 } else {
                     std::process::exit(0);
@@ -190,29 +185,30 @@ fn main() {
         }),
     );
 
-    let editor_cloned = editor.clone();
+    let editor_cloned = editor_rc.clone();
     menu.add(
         "Edit/Cut",
         Shortcut::Ctrl + 'x',
         MenuFlag::Normal,
-        Box::new(move || editor_cloned.borrow_mut().cut()),
+        Box::new(move || editor_cloned.borrow().cut()),
     );
 
-    let editor_cloned = editor.clone();
+    let editor_cloned = editor_rc.clone();
     menu.add(
         "Edit/Copy",
         Shortcut::Ctrl + 'c',
         MenuFlag::Normal,
         Box::new(move || {
-            editor_cloned.borrow_mut().copy();
+            editor_cloned.borrow().copy();
         }),
     );
 
+    let editor_cloned = editor_rc.clone();
     menu.add(
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
-        Box::new(move || inner_editor.paste()),
+        Box::new(move || editor_cloned.borrow().paste()),
     );
 
     menu.add(
@@ -228,13 +224,13 @@ fn main() {
 
     let mut x = menu.item("Help/About").unwrap();
     x.set_label_color(Color::Red);
-    
-    let editor_cloned = editor.clone();
+
+    let editor_cloned = editor_rc.clone();
     wind.set_callback(Box::new(move || {
-        if editor_cloned.borrow().saved == false {
+        if saved == false {
             let x = choice("Would you like to save your work?", "Yes", "No", "");
             if x == 0 {
-                editor_cloned.borrow_mut().save_file();
+                editor_cloned.borrow_mut().save_file(&mut saved);
                 std::process::exit(0);
             } else {
                 std::process::exit(0);
