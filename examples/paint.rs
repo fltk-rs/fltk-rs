@@ -13,7 +13,7 @@ fn main() {
     frame.handle(Box::new(move |ev| {
         // println!("{:?}", ev);
         set_draw_color(Color::Red);
-        set_line_style(LineStyle::Solid, 1);
+        set_line_style(LineStyle::Solid, 3);
         match ev {
             app::Event::Push => {
                 let coords = app::event_coords();

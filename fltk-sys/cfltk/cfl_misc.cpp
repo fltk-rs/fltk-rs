@@ -32,7 +32,7 @@ double Fl_Spinner_step(Fl_Spinner *self) { return self->step(); }
 
 int Fl_Spinner_maxsize(const Fl_Spinner *self) { return self->maximum_size(); }
 
-void Fl_Spinner_Fl_Spinner_set_maxsize(Fl_Spinner *self, int m) {
+void Fl_Spinner_set_maxsize(Fl_Spinner *self, int m) {
   LOCK(self->maximum_size(m);)
 }
 
@@ -86,7 +86,7 @@ void Fl_Chart_set_size(Fl_Chart *self, int W, int H) { LOCK(self->size(W, H);) }
 
 int Fl_Chart_maxsize(const Fl_Chart *self) { return self->maxsize(); }
 
-void Fl_Chart_Fl_Chart_set_maxsize(Fl_Chart *self, int m) {
+void Fl_Chart_set_maxsize(Fl_Chart *self, int m) {
   LOCK(self->maxsize(m);)
 }
 

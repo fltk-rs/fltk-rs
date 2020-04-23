@@ -18,15 +18,15 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.3.4"
+fltk = "^0.3.5"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
 [dependencies.fltk]
-version = "^0.3.4"
+version = "^0.3.5"
 features = ["fltk-shared"]
 ```
-You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature.
+You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
 
 An example hello world application:
 
@@ -187,63 +187,80 @@ Setting the scheme to Gtk
 ## Currently implemented widgets
 
 Most common widgets are implemented: 
-- Images (BMP, JPEG, GIF, PNG, SVG)
-- Button
-- RadioButton
-- ToggleButton
-- RoundButton
-- CheckButton
-- LightButton
-- RepeatButton
-- Native FileDialog
-- HelpDialog
+- Image widgets
+    - BmpImage
+    - JpegImage
+    - GifImage
+    - PngImage
+    - SvgImage
+- Buttons
+    - Button
+    - RadioButton
+    - ToggleButton
+    - RoundButton
+    - CheckButton
+    - LightButton
+    - RepeatButton
+- Dialogs
+    - Native FileDialog
+    - HelpDialog
 - Frame (Fl_Box)
-- Window
-- DoubleWindow
-- MenuWindow
-- Group
-- Pack
-- Tabs
-- Scroll
-- Tile
-- TextDisplay
-- TextEditor
-- SimpleTerminal
-- Input
-- IntInput
-- FloatInput
-- MultilineInput
-- SecretInput
-- FileInput
-- Output
-- MultilineOutput
-- MenuBar
-- MenuItem
-- Choice (dropdown list)
-- Slider
-- NiceSlider
-- ValueSlider
-- Dial
-- LineDial
-- Counter
-- Scrollbar
-- Roller
-- Adjuster
-- ValueInput
-- Browser
-- SelectBrowser
-- HoldBrowser
-- MultiBrowser
-- FileBrowser
-- Spinner
-- Clock
-- Chart
-- Progress (progress bar)
-- ColorChooser
-- Tooltip
-- Table
-- TableRow
-- Wizard
+- Windows
+    - Window
+    - DoubleWindow
+    - MenuWindow
+- Groups
+    - Group
+    - Pack
+    - Tabs
+    - Scroll
+    - Tile
+    - Wizard
+- Text display widgets
+    - TextDisplay
+    - TextEditor
+    - SimpleTerminal
+- Input widgets
+    - Input
+    - IntInput
+    - FloatInput
+    - MultilineInput
+    - SecretInput
+    - FileInput
+- Output widgets
+    - Output
+    - MultilineOutput
+- Menu widgets
+    - MenuBar
+    - MenuItem
+    - Choice (dropdown list)
+- Valuator widgets
+    - Slider
+    - NiceSlider
+    - ValueSlider
+    - Dial
+    - LineDial
+    - Counter
+    - Scrollbar
+    - Roller
+    - Adjuster
+    - ValueInput
+- Browsing widgets
+    - Browser
+    - SelectBrowser
+    - HoldBrowser
+    - MultiBrowser
+    - FileBrowser
+- Miscelaneous widgets
+    - Spinner
+    - Clock
+    - Chart
+    - Progress (progress bar)
+    - ColorChooser
+    - Tooltip
+- Table widgets
+    - Table
+    - TableRow
 - Drawing primitives
 
 ## Todo

@@ -11,8 +11,15 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
 
 option(CFLTK_BUILD_SHARED "Builds a shared library" OFF)
 option(CFLTK_BUILD_TESTS "Builds C++ tests" OFF)
+option(USE_SYSTEM_FLTK "Finds and uses the installed FLTK library" OFF)
 
-add_subdirectory(fltk)
+# If cmake can't find the installed fltk, you might have to set the FLTK_DIR enviromental variable,
+# export FLTK_DIR=/path/to/fltk
+if(USE_SYSTEM_FLTK)
+    find_package(FLTK REQUIRED NO_MODULE)
+else()
+    add_subdirectory(fltk)
+endif()
 
 set(CFLTK_SRCS  
     cfl.cpp 
@@ -40,7 +47,11 @@ else()
     add_library(cfltk STATIC ${CFLTK_SRCS})
 endif()
 
-target_include_directories(cfltk PUBLIC fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk)
+if(USE_SYSTEM_FLTK)
+    target_include_directories(cfltk PUBLIC ${FLTK_INCLUDE_DIRS})
+else()
+    target_include_directories(cfltk PUBLIC fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk)
+endif()
 
 if(CFLTK_BUILD_SHARED)
     target_link_libraries(cfltk PUBLIC fltk fltk_images fltk_z fltk_jpeg fltk_png)
