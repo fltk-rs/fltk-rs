@@ -99,7 +99,6 @@ fn main() {
     wind.end();
     wind.show();
     let mut saved = false;
-    // let inner_editor = editor.editor;
     let editor_rc = Rc::from(RefCell::from(editor));
     let editor_cloned = editor_rc.clone();
     editor_cloned
