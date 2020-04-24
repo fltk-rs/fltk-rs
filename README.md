@@ -107,7 +107,7 @@ some_widget.handle(Box::new(move |ev: app::Event| {
     }
 }));
 ```
-Handled or ignored events shoult return true, unhandled events should return false.
+Handled or ignored events should return true, unhandled events should return false.
 
 ### Theming
 FLTK offers 4 application themes (called schemes):
