@@ -8,7 +8,6 @@ fn main() {
         .with_size(160, 200)
         .center_screen()
         .with_label("Counter");
-    wind.make_resizable(true);
     let mut frame = Frame::default()
         .with_size(100, 40)
         .center_of(&wind)
