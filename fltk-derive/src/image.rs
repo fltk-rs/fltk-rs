@@ -1,0 +1,107 @@
+use crate::utils::get_fl_name;
+use proc_macro::TokenStream;
+use quote::*;
+use syn::*;
+
+pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+    let name_str = get_fl_name(name.to_string());
+
+    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
+    let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
+    let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
+    let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
+    let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
+    let count = Ident::new(format!("{}_{}", name_str, "count").as_str(), name.span());
+    let data = Ident::new(format!("{}_{}", name_str, "data").as_str(), name.span());
+    let copy = Ident::new(format!("{}_{}", name_str, "copy").as_str(), name.span());
+
+    let gen = quote! {
+        unsafe impl Sync for #name {}
+        unsafe impl Send for #name {}
+
+        impl Drop for #name {
+            fn drop(&mut self) {
+                unsafe { #delete(self._inner) }
+            }
+        }
+
+        impl Clone for #name {
+            fn clone(&self) -> Self {
+                self.copy()
+            }
+        }
+
+        impl ImageExt for #name {
+            fn new(path: &std::path::Path) -> #name {
+                debug_assert!(path.exists(), "Proper image initialization requires an existent path!");
+                unsafe {
+                    let temp = path.to_str().unwrap();
+                    let temp = CString::new(temp).unwrap();
+                    let image_ptr = #new(temp.into_raw() as *const raw::c_char);
+                    assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
+                    #name {
+                        _inner: image_ptr,
+                    }
+                }
+            }
+
+            fn copy(&self) -> Self {
+                unsafe {
+                    let img = #copy(self._inner);
+                    assert!(!img.is_null(), "Coulnd't copy image!");
+                    #name {
+                        _inner: img,
+                    }
+                }
+            }
+
+            fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
+                unsafe { #draw(self._inner, arg2, arg3, arg4, arg5) }
+            }
+
+            fn width(&self) -> i32 {
+                unsafe {
+                    #width(self._inner)
+                }
+            }
+
+            fn height(&self) -> i32 {
+                unsafe {
+                    #height(self._inner)
+                }
+            }
+
+            fn as_ptr(&self) -> *mut raw::c_void {
+                unsafe {
+                    mem::transmute(self._inner)
+                }
+            }
+
+            fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
+                unsafe {
+                    mem::transmute(self._inner)
+                }
+            }
+
+            fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
+                unsafe {
+                    assert!(!ptr.is_null(), "Image pointer is null!");
+                    #name {
+                        _inner: mem::transmute(ptr),
+                    }
+                }
+            }
+
+            fn to_bytes(self) -> Vec<u8> {
+                unsafe {
+                    let ptr = #data(self._inner);
+                    let cnt = #width(self._inner) * #height(self._inner) * 3;
+                    let ret: &[u8] = std::slice::from_raw_parts(ptr as *const u8, cnt as usize);
+                    ret.to_vec()
+                }
+            }
+        }
+    };
+    gen.into()
+}
