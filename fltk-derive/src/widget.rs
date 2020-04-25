@@ -244,7 +244,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { mem::transmute(self._inner) }
             }
 
-            fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
+            unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
+                assert!(!ptr.is_null());
                 unsafe {
                     #name {
                         _inner: mem::transmute(ptr),

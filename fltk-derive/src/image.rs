@@ -84,7 +84,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
+            unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
                 unsafe {
                     assert!(!ptr.is_null(), "Image pointer is null!");
                     #name {

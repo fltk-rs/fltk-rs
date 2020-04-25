@@ -17,7 +17,8 @@ impl<W: WidgetExt> From<W> for Widget {
 
 impl Widget {
     /// Initialize a Widget base from a pointer
-    pub fn from_raw(ptr: *mut Fl_Widget) -> Self {
+    pub unsafe fn from_raw(ptr: *mut Fl_Widget) -> Self {
+        assert!(!ptr.is_null());
         Widget { _inner: ptr }
     }
     /// Returns the inner pointer
@@ -26,6 +27,6 @@ impl Widget {
     }
     /// Transform Widget base to another Widget
     pub fn into<W: WidgetExt>(&mut self) -> W {
-        W::from_widget_ptr(self._inner)
+        unsafe { W::from_widget_ptr(self._inner) }
     }
 }

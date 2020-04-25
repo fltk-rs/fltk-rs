@@ -24,12 +24,12 @@ impl Image {
         self._inner
     }
     /// Initialize an Image base from a raw pointer
-    pub fn from_raw(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
+    pub unsafe fn from_raw(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
         Image { _inner: ptr }
     }
     /// Transforms an Image base into another Image
     pub fn downcast_into<I: ImageExt>(&mut self) -> I {
-        I::from_image_ptr(self._inner)
+        unsafe { I::from_image_ptr(self._inner) }
     }
 }
 
