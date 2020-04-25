@@ -15,13 +15,13 @@
 //! Just add the following to your project's Cargo.toml file:
 //! ```toml
 //! [dependencies]
-//! fltk = "^0.3.4"
+//! fltk = "^0.3.6"
 //! ```
 //! 
 //! The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 //! ```toml
 //! [dependencies.fltk]
-//! version = "^0.3.4"
+//! version = "^0.3.6"
 //! features = ["fltk-shared"]
 //! ```
 //! 
