@@ -15,13 +15,13 @@
 //! Just add the following to your project's Cargo.toml file:
 //! ```toml
 //! [dependencies]
-//! fltk = "^0.3.4"
+//! fltk = "^0.3"
 //! ```
 //! 
 //! The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 //! ```toml
 //! [dependencies.fltk]
-//! version = "^0.3.4"
+//! version = "^0.3"
 //! features = ["fltk-shared"]
 //! ```
 //! 
@@ -110,7 +110,7 @@
 //! }));
 //! ```
 //! 
-//! Handled or ignored events shoult return true, unhandled events should return false.
+//! Handled or ignored events should return true, unhandled events should return false.
 //!
 //! # Theming
 //! FLTK offers 4 application themes (called schemes):

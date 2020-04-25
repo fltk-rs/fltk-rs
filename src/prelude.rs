@@ -122,7 +122,7 @@ pub trait WidgetExt {
     /// transforms a widget to a base Fl_Widget, for internal use
     fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
     /// transforms a widget pointer to a Widget, for internal use
-    fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
+    unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
     /// Activates the widget
     fn activate(&mut self);
     /// Deactivates the widget
@@ -672,7 +672,7 @@ pub trait ImageExt {
     /// Retunrs a pointer of the image
     fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
     /// Transforms a raw image pointer to an image
-    fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
+    unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
     /// Returns the raw underlying image data
     fn to_bytes(self) -> Vec<u8>;
 }

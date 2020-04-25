@@ -25,7 +25,7 @@ impl TextBuffer {
         }
     }
     /// Initialized a text buffer from a pointer
-    pub fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
+    pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         TextBuffer { _inner: ptr }
     }
 
