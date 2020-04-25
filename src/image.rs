@@ -20,7 +20,7 @@ impl<I: ImageExt> From<I> for Image {
 /// A conversion function for internal use
 impl Image {
     /// Returns the internal pointer of Image
-    pub fn as_ptr(&mut self) -> *mut Fl_Image {
+    pub fn as_ptr(&self) -> *mut Fl_Image {
         self._inner
     }
     /// Initialize an Image base from a raw pointer

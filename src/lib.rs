@@ -151,9 +151,3 @@ pub mod window;
 
 #[macro_use]
 extern crate fltk_derive;
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {}
-}

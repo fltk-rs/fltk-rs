@@ -44,16 +44,7 @@ fn main() {
     let mut but_sub = Button::new(column4, row3, but_width, but_height, "-");
     let mut but_add = Button::new(column4, row4, but_width, but_height, "+");
     let mut but_eq = Button::new(column4, row5, but_width, but_height, "=");
-
-    but_ce.set_color(Color::from_u32(0xff0000));
-    but_c.set_color(Color::Yellow);
-    but_back.set_color(Color::Yellow);
-    but_div.set_color(Color::Yellow);
-    but_mul.set_color(Color::Yellow);
-    but_sub.set_color(Color::Yellow);
-    but_add.set_color(Color::Yellow);
-    but_eq.set_color(Color::Yellow);
-
+    
     let mut but7 = Button::new(column1, row2, but_width, but_height, "7");
     let mut but8 = Button::new(column2, row2, but_width, but_height, "8");
     let mut but9 = Button::new(column3, row2, but_width, but_height, "9");
@@ -64,10 +55,21 @@ fn main() {
     let mut but2 = Button::new(column2, row4, but_width, but_height, "2");
     let mut but3 = Button::new(column3, row4, but_width, but_height, "3");
     let mut but_dot = Button::new(column1, row5, but_width, but_height, ".");
-    let mut but0 = Button::default()
-        .with_pos(column2, row5)
-        .with_size(but_width * 2, but_height)
-        .with_label("0");
+    let mut but0 = Button::new(column2, row5, but_width *2, but_height, "0");
+
+    but_ce.set_color(Color::from_u32(0xff0000));
+    but_c.set_color(Color::Yellow);
+    but_back.set_color(Color::Yellow);
+    but_div.set_color(Color::Yellow);
+    but_mul.set_color(Color::Yellow);
+    but_sub.set_color(Color::Yellow);
+    but_add.set_color(Color::Yellow);
+    but_eq.set_color(Color::Yellow);
+    but_dot.set_color(Color::Light2);
+
+    wind.make_resizable(false);
+    wind.end();
+    wind.show();
 
     let but_vec = vec![
         &mut but1,
@@ -88,10 +90,6 @@ fn main() {
         but_mul,
         but_div,
     ];
-
-    wind.make_resizable(false);
-    wind.end();
-    wind.show();
 
     for but in but_vec {
         but.set_color(Color::Light2);
@@ -165,8 +163,11 @@ fn main() {
     app::set_callback(
         & mut but_back,
         Box::new(move || {
-            txt_cloned.borrow_mut().pop();
-            out_c.borrow_mut().set_value(txt_cloned.borrow().as_str());
+            let val = out_c.borrow().value();
+            if val.len() > 1 {
+                txt_cloned.borrow_mut().pop();
+                out_c.borrow_mut().set_value(txt_cloned.borrow().as_str());
+            }
         }),
     );
 
@@ -194,7 +195,6 @@ fn main() {
         }),
     );
 
-    but_dot.set_color(Color::Light2);
     let out_c = out.clone();
     app::set_callback(
         & mut but_dot,
@@ -212,5 +212,6 @@ fn main() {
             }
         }),
     );
+
     app.run().expect("Couldn't run calculator!");
 }

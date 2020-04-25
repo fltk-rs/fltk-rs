@@ -18,12 +18,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.3.5"
+fltk = "^0.3.6"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
 [dependencies.fltk]
-version = "^0.3.5"
+version = "^0.3.6"
 features = ["fltk-shared"]
 ```
 You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
