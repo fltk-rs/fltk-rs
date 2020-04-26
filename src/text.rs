@@ -24,6 +24,10 @@ impl TextBuffer {
             }
         }
     }
+    /// Deletes the TextBuffer
+    pub unsafe fn delete(&mut self) {
+        Fl_Text_Buffer_delete(self._inner)
+    }
     /// Initialized a text buffer from a pointer
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         TextBuffer { _inner: ptr }
@@ -469,11 +473,11 @@ impl Clone for TextBuffer {
     }
 }
 
-impl Drop for TextBuffer {
-    fn drop(&mut self) {
-        unsafe { Fl_Text_Buffer_delete(self._inner) }
-    }
-}
+// impl Drop for TextBuffer {
+//     fn drop(&mut self) {
+//         unsafe { Fl_Text_Buffer_delete(self._inner) }
+//     }
+// }
 
 /// Creates a non-editable text display widget
 #[derive(WidgetExt, DisplayExt, Debug)]
