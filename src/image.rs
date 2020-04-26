@@ -151,12 +151,17 @@ pub struct RgbImage {
 
 impl RgbImage {
     /// Initializes a new raw RgbImage
-    pub fn new(data: Vec<u8>, w: i32, h: i32, depth: u32) -> RgbImage {
-        let sz = w * h;
+    pub fn new(data: &Vec<u8>, w: i32, h: i32, depth: u32) -> RgbImage {
+        assert!(depth < 5, "Valid depth range from 0..=4!");
+        let mut sz = w * h;
+        if depth > 0 {
+            sz = sz * depth as i32;
+        }
         assert!(sz as usize <= data.len());
-        assert!(depth < 5);
+        let img =  unsafe { Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32) };
+        assert!(!img.is_null(), "Couldn't generate RGB image!");
         RgbImage {
-            _inner: unsafe { Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32) },
+            _inner: img,
         }
     }
     /// Deconstructs a raw RgbImage into parts

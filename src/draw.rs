@@ -78,7 +78,7 @@ pub fn capture_window<Window: WindowExt>(win: &mut Window) -> Option<RgbImage> {
             None
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
-            Some(RgbImage::new(x.to_vec(), win.width(), win.height(), 3))
+            Some(RgbImage::new(&x.to_vec(), win.width(), win.height(), 3))
         }
     }
 }
