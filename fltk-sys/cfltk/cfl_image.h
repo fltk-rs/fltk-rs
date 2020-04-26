@@ -29,7 +29,21 @@ IMAGE_DECLARE(Fl_GIF_Image)
 
 typedef struct Fl_RGB_Image Fl_RGB_Image;
 
-Fl_RGB_Image* Fl_RGB_Image_new(const unsigned char *bits, int W, int H);
+Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int depth);
+
+void Fl_RGB_Image_draw(Fl_RGB_Image *, int X, int Y, int W, int H);
+
+int Fl_RGB_Image_width(Fl_RGB_Image *);
+
+int Fl_RGB_Image_height(Fl_RGB_Image *);
+
+void Fl_RGB_Image_delete(Fl_RGB_Image *);
+
+int Fl_RGB_Image_count(Fl_RGB_Image *self);
+
+const char *const *Fl_RGB_Image_data(Fl_RGB_Image *self);
+
+Fl_RGB_Image *Fl_RGB_Image_copy(Fl_RGB_Image *self);
 
 #ifdef __cplusplus
 }

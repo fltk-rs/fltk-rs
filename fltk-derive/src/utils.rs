@@ -17,6 +17,9 @@ pub fn get_fl_name(txt: String) -> String {
     if txt == "GifImage" {
         return String::from("Fl_GIF_Image");
     }
+    if txt == "RgbImage" {
+        return String::from("Fl_RGB_Image");
+    }
 
     let mut fl_name = String::from("Fl");
     for c in txt.chars() {

@@ -657,8 +657,6 @@ pub trait TableExt: GroupExt {
 
 /// Defines the methods implemented by all image types
 pub trait ImageExt {
-    /// Creates an image object from a path
-    fn new(path: &std::path::Path) -> Self;
     /// Creates a copy of the image
     fn copy(&self) -> Self;
     /// Draws the image at the presupplied coordinates and size

@@ -190,5 +190,33 @@ extern "C" {
         bits: *const ::std::os::raw::c_uchar,
         W: ::std::os::raw::c_int,
         H: ::std::os::raw::c_int,
+        depth: ::std::os::raw::c_int,
     ) -> *mut Fl_RGB_Image;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_draw(
+        arg1: *mut Fl_RGB_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_RGB_Image_width(arg1: *mut Fl_RGB_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_height(arg1: *mut Fl_RGB_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_delete(arg1: *mut Fl_RGB_Image);
+}
+extern "C" {
+    pub fn Fl_RGB_Image_count(self_: *mut Fl_RGB_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_data(self_: *mut Fl_RGB_Image) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_copy(self_: *mut Fl_RGB_Image) -> *mut Fl_RGB_Image;
 }
