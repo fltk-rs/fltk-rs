@@ -205,7 +205,7 @@ pub trait WidgetExt {
     /// Checks whether a widget is capable of taking events
     fn takes_events(&self) -> bool;
     /// Gets a shallow copy of the widget, an escape hatch!
-    unsafe fn copy(&self) -> Self;
+    unsafe fn memcpy(&self) -> Self;
 }
 
 /// Defines the methods implemented by all button widgets
