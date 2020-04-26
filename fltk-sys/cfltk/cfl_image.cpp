@@ -17,9 +17,6 @@
 #endif
 
 #define IMAGE_DEFINE(image)                                                    \
-  image *image##_new(const char *filename) {                                   \
-    return new (std::nothrow) image(filename);                                 \
-  }                                                                            \
   void image##_draw(image *self, int X, int Y, int W, int H) {                 \
     LOCK(self->draw(X, Y, W, H);)                                              \
   }                                                                            \
@@ -30,17 +27,58 @@
   const char *const *image##_data(image *self) { return self->data(); }        \
   image *image##_copy(image *self) { return (image *)self->copy(); }
 
-
 IMAGE_DEFINE(Fl_JPEG_Image)
+
+Fl_JPEG_Image *Fl_JPEG_Image_new(const char *filename) {
+  return new (std::nothrow) Fl_JPEG_Image(filename);
+}
 
 IMAGE_DEFINE(Fl_PNG_Image)
 
+Fl_PNG_Image *Fl_PNG_Image_new(const char *filename) {
+  return new (std::nothrow) Fl_PNG_Image(filename);
+}
+
 IMAGE_DEFINE(Fl_SVG_Image)
+
+Fl_SVG_Image *Fl_SVG_Image_new(const char *filename) {
+  return new (std::nothrow) Fl_SVG_Image(filename);
+}
 
 IMAGE_DEFINE(Fl_BMP_Image)
 
+Fl_BMP_Image *Fl_BMP_Image_new(const char *filename) {
+  return new (std::nothrow) Fl_BMP_Image(filename);
+}
+
 IMAGE_DEFINE(Fl_GIF_Image)
 
-Fl_RGB_Image* Fl_RGB_Image_new(const unsigned char *bits, int W, int H) {
-    return new (std::nothrow) Fl_RGB_Image(bits, W, H);
+Fl_GIF_Image *Fl_GIF_Image_new(const char *filename) {
+  return new (std::nothrow) Fl_GIF_Image(filename);
 }
+
+IMAGE_DEFINE(Fl_RGB_Image)
+Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H,
+                               int depth) {
+  return new (std::nothrow) Fl_RGB_Image(bits, W, H, depth);
+}
+
+// void Fl_RGB_Image_draw(Fl_RGB_Image *self, int X, int Y, int W, int H) {
+//   self->draw(X, Y, W, H);
+// }
+
+// int Fl_RGB_Image_width(Fl_RGB_Image *self) { return self->w(); }
+
+// int Fl_RGB_Image_height(Fl_RGB_Image *self) { return self->h(); }
+
+// void Fl_RGB_Image_delete(Fl_RGB_Image *self) { delete self; }
+
+// int Fl_RGB_Image_count(Fl_RGB_Image *self) { return self->count(); }
+
+// const char *const *Fl_RGB_Image_data(Fl_RGB_Image *self) {
+//   return self->data();
+// }
+
+// Fl_RGB_Image *Fl_RGB_Image_copy(Fl_RGB_Image *self) {
+//   return (Fl_RGB_Image *)self->copy();
+// }

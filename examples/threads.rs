@@ -34,7 +34,7 @@ fn main() {
 //     let mut but = Button::new(160, 210, 80, 40, "Click me!");
 //     wind.show();
 //     but.set_callback(Box::new(move || {
-//         let mut frame = unsafe { frame.copy() };
+//         let mut frame = unsafe { frame.memcpy() };
 //         thread::spawn(move|| {
 //             for i in 0..1000 {
 //                 thread::sleep(time::Duration::from_millis(10));

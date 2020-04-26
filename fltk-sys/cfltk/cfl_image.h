@@ -6,7 +6,6 @@ extern "C" {
 
 #define IMAGE_DECLARE(image)                                                   \
   typedef struct image image;                                                  \
-  image *image##_new(const char *filename);                                    \
   void image##_draw(image *, int X, int Y, int W, int H);                      \
   int image##_width(image *);                                                  \
   int image##_height(image *);                                                 \
@@ -19,17 +18,28 @@ typedef struct Fl_Image Fl_Image;
 
 IMAGE_DECLARE(Fl_JPEG_Image)
 
+Fl_JPEG_Image *Fl_JPEG_Image_new(const char *filename);
+
 IMAGE_DECLARE(Fl_PNG_Image)
+
+Fl_PNG_Image *Fl_PNG_Image_new(const char *filename);
 
 IMAGE_DECLARE(Fl_SVG_Image)
 
+Fl_SVG_Image *Fl_SVG_Image_new(const char *filename);
+
 IMAGE_DECLARE(Fl_BMP_Image)
+
+Fl_BMP_Image *Fl_BMP_Image_new(const char *filename);
 
 IMAGE_DECLARE(Fl_GIF_Image)
 
-typedef struct Fl_RGB_Image Fl_RGB_Image;
+Fl_GIF_Image *Fl_GIF_Image_new(const char *filename);
 
-Fl_RGB_Image* Fl_RGB_Image_new(const unsigned char *bits, int W, int H);
+IMAGE_DECLARE(Fl_RGB_Image)
+
+Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int depth);
+
 
 #ifdef __cplusplus
 }

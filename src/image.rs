@@ -28,7 +28,7 @@ impl Image {
         Image { _inner: ptr }
     }
     /// Transforms an Image base into another Image
-    pub fn downcast_into<I: ImageExt>(&mut self) -> I {
+    pub fn downcast_into<I: ImageExt>(self) -> I {
         unsafe { I::from_image_ptr(self._inner) }
     }
 }
@@ -39,10 +39,42 @@ pub struct JpegImage {
     _inner: *mut Fl_JPEG_Image,
 }
 
+impl JpegImage {
+    pub fn new(path: &std::path::Path) -> JpegImage {
+        debug_assert!(
+            path.exists(),
+            "Proper image initialization requires an existent path!"
+        );
+        unsafe {
+            let temp = path.to_str().unwrap();
+            let temp = CString::new(temp).unwrap();
+            let image_ptr = Fl_JPEG_Image_new(temp.into_raw() as *const raw::c_char);
+            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
+            JpegImage { _inner: image_ptr }
+        }
+    }
+}
+
 /// Creates a struct holding a PNG image
 #[derive(ImageExt, Debug)]
 pub struct PngImage {
     _inner: *mut Fl_PNG_Image,
+}
+
+impl PngImage {
+    pub fn new(path: &std::path::Path) -> PngImage {
+        debug_assert!(
+            path.exists(),
+            "Proper image initialization requires an existent path!"
+        );
+        unsafe {
+            let temp = path.to_str().unwrap();
+            let temp = CString::new(temp).unwrap();
+            let image_ptr = Fl_PNG_Image_new(temp.into_raw() as *const raw::c_char);
+            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
+            PngImage { _inner: image_ptr }
+        }
+    }
 }
 
 /// Creates a struct holding an SVG image
@@ -51,10 +83,42 @@ pub struct SvgImage {
     _inner: *mut Fl_SVG_Image,
 }
 
+impl SvgImage {
+    pub fn new(path: &std::path::Path) -> SvgImage {
+        debug_assert!(
+            path.exists(),
+            "Proper image initialization requires an existent path!"
+        );
+        unsafe {
+            let temp = path.to_str().unwrap();
+            let temp = CString::new(temp).unwrap();
+            let image_ptr = Fl_SVG_Image_new(temp.into_raw() as *const raw::c_char);
+            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
+            SvgImage { _inner: image_ptr }
+        }
+    }
+}
+
 /// Creates a struct holding a BMP image
 #[derive(ImageExt, Debug)]
 pub struct BmpImage {
     _inner: *mut Fl_BMP_Image,
+}
+
+impl BmpImage {
+    pub fn new(path: &std::path::Path) -> BmpImage {
+        debug_assert!(
+            path.exists(),
+            "Proper image initialization requires an existent path!"
+        );
+        unsafe {
+            let temp = path.to_str().unwrap();
+            let temp = CString::new(temp).unwrap();
+            let image_ptr = Fl_BMP_Image_new(temp.into_raw() as *const raw::c_char);
+            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
+            BmpImage { _inner: image_ptr }
+        }
+    }
 }
 
 /// Creates a struct holding a GIF image
@@ -63,26 +127,48 @@ pub struct GifImage {
     _inner: *mut Fl_GIF_Image,
 }
 
+impl GifImage {
+    pub fn new(path: &std::path::Path) -> GifImage {
+        debug_assert!(
+            path.exists(),
+            "Proper image initialization requires an existent path!"
+        );
+        unsafe {
+            let temp = path.to_str().unwrap();
+            let temp = CString::new(temp).unwrap();
+            let image_ptr = Fl_GIF_Image_new(temp.into_raw() as *const raw::c_char);
+            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
+            GifImage { _inner: image_ptr }
+        }
+    }
+}
+
 /// Creates a struct holding a raw RGB image
-#[derive(Debug)]
+#[derive(ImageExt, Debug)]
 pub struct RgbImage {
-    _inner: Vec<u8>,
-    _w: i32,
-    _h: i32,
+    _inner: *mut Fl_RGB_Image,
 }
 
 impl RgbImage {
     /// Initializes a new raw RgbImage
-    pub fn new(data: Vec<u8>, w: i32, h: i32) -> RgbImage {
+    pub fn new(data: &Vec<u8>, w: i32, h: i32, depth: u32) -> RgbImage {
+        assert!(depth < 5, "Valid depth range from 0..=4!");
+        let mut sz = w * h;
+        if depth > 0 {
+            sz = sz * depth as i32;
+        }
+        assert!(sz as usize <= data.len());
+        let img =  unsafe { Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32) };
+        assert!(!img.is_null(), "Couldn't generate RGB image!");
         RgbImage {
-            _inner: data,
-            _w: w,
-            _h: h,
+            _inner: img,
         }
     }
     /// Deconstructs a raw RgbImage into parts
     pub fn into_parts(self) -> (Vec<u8>, i32, i32) {
-        (self._inner, self._w, self._h)
+        let w = self.width();
+        let h = self.height();
+        (self.to_bytes(), w, h)
     }
     /// Transforms the RgbImage to a PngImage
     pub fn into_png_image(self) -> Result<PngImage, FltkError> {

@@ -70,15 +70,15 @@ pub fn draw_pie(x: i32, y: i32, w: i32, h: i32, a: f64, b: f64) {
 
 /// Captures part of the window and returns raw data
 pub fn capture_window<Window: WindowExt>(win: &mut Window) -> Option<RgbImage> {
-    let cp = win.width() as usize * win.height() as usize * 3;
+    let cp = win.width() as u32 * win.height() as u32 * 3;
     win.show();
     unsafe {
         let x = cfl_read_image(std::ptr::null_mut(), 0, 0, win.width(), win.height(), 0);
         if x.is_null() {
             None
         } else {
-            let x = std::slice::from_raw_parts(x, cp);
-            Some(RgbImage::new(x.to_vec(), win.width(), win.height()))
+            let x = std::slice::from_raw_parts(x, cp as usize);
+            Some(RgbImage::new(&x.to_vec(), win.width(), win.height(), 3))
         }
     }
 }
@@ -98,8 +98,8 @@ pub fn capture_window<Window: WindowExt>(win: &mut Window) -> Option<RgbImage> {
 //     unsafe {
 //         let x = cfl_capture_window_part(win.as_widget_ptr() as *mut raw::c_void, x, y, w, h);
 //         assert!(!x.is_null());
-//         let cp = w as usize * h as usize * 3;
-//         let x = std::slice::from_raw_parts(x, cp);
+//         let cp = w as u32 * h as u32 * 3;
+//         let x = std::slice::from_raw_parts(x, cp as usize);
 //         x.to_vec()
 //     }
 // }

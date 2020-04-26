@@ -205,7 +205,7 @@ pub trait WidgetExt {
     /// Checks whether a widget is capable of taking events
     fn takes_events(&self) -> bool;
     /// Gets a shallow copy of the widget, an escape hatch!
-    unsafe fn copy(&self) -> Self;
+    unsafe fn memcpy(&self) -> Self;
 }
 
 /// Defines the methods implemented by all button widgets
@@ -657,8 +657,6 @@ pub trait TableExt: GroupExt {
 
 /// Defines the methods implemented by all image types
 pub trait ImageExt {
-    /// Creates an image object from a path
-    fn new(path: &std::path::Path) -> Self;
     /// Creates a copy of the image
     fn copy(&self) -> Self;
     /// Draws the image at the presupplied coordinates and size

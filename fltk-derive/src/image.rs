@@ -33,19 +33,6 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
         }
 
         impl ImageExt for #name {
-            fn new(path: &std::path::Path) -> #name {
-                debug_assert!(path.exists(), "Proper image initialization requires an existent path!");
-                unsafe {
-                    let temp = path.to_str().unwrap();
-                    let temp = CString::new(temp).unwrap();
-                    let image_ptr = #new(temp.into_raw() as *const raw::c_char);
-                    assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
-                    #name {
-                        _inner: image_ptr,
-                    }
-                }
-            }
-
             fn copy(&self) -> Self {
                 unsafe {
                     let img = #copy(self._inner);

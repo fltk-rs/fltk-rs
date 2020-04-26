@@ -572,7 +572,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
-            unsafe fn copy(&self) -> #name {
+            unsafe fn memcpy(&self) -> #name {
                 #name {
                     _inner: self._inner,
                 }
