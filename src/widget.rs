@@ -26,7 +26,7 @@ impl Widget {
         self._inner
     }
     /// Transform Widget base to another Widget
-    pub fn into<W: WidgetExt>(&mut self) -> W {
+    pub fn into<W: WidgetExt>(self) -> W {
         unsafe { W::from_widget_ptr(self._inner) }
     }
 }

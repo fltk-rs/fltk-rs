@@ -6,7 +6,6 @@ extern "C" {
 
 #define IMAGE_DECLARE(image)                                                   \
   typedef struct image image;                                                  \
-  image *image##_new(const char *filename);                                    \
   void image##_draw(image *, int X, int Y, int W, int H);                      \
   int image##_width(image *);                                                  \
   int image##_height(image *);                                                 \
@@ -19,31 +18,28 @@ typedef struct Fl_Image Fl_Image;
 
 IMAGE_DECLARE(Fl_JPEG_Image)
 
+Fl_JPEG_Image *Fl_JPEG_Image_new(const char *filename);
+
 IMAGE_DECLARE(Fl_PNG_Image)
+
+Fl_PNG_Image *Fl_PNG_Image_new(const char *filename);
 
 IMAGE_DECLARE(Fl_SVG_Image)
 
+Fl_SVG_Image *Fl_SVG_Image_new(const char *filename);
+
 IMAGE_DECLARE(Fl_BMP_Image)
+
+Fl_BMP_Image *Fl_BMP_Image_new(const char *filename);
 
 IMAGE_DECLARE(Fl_GIF_Image)
 
-typedef struct Fl_RGB_Image Fl_RGB_Image;
+Fl_GIF_Image *Fl_GIF_Image_new(const char *filename);
+
+IMAGE_DECLARE(Fl_RGB_Image)
 
 Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int depth);
 
-void Fl_RGB_Image_draw(Fl_RGB_Image *, int X, int Y, int W, int H);
-
-int Fl_RGB_Image_width(Fl_RGB_Image *);
-
-int Fl_RGB_Image_height(Fl_RGB_Image *);
-
-void Fl_RGB_Image_delete(Fl_RGB_Image *);
-
-int Fl_RGB_Image_count(Fl_RGB_Image *self);
-
-const char *const *Fl_RGB_Image_data(Fl_RGB_Image *self);
-
-Fl_RGB_Image *Fl_RGB_Image_copy(Fl_RGB_Image *self);
 
 #ifdef __cplusplus
 }

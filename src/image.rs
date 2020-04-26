@@ -28,7 +28,7 @@ impl Image {
         Image { _inner: ptr }
     }
     /// Transforms an Image base into another Image
-    pub fn downcast_into<I: ImageExt>(&mut self) -> I {
+    pub fn downcast_into<I: ImageExt>(self) -> I {
         unsafe { I::from_image_ptr(self._inner) }
     }
 }
