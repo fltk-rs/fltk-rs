@@ -409,6 +409,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+    pub fn Fl_Check_Button_set_checked(arg1: *mut Fl_Check_Button, checked: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Check_Button_shortcut(self_: *const Fl_Check_Button) -> ::std::os::raw::c_int;

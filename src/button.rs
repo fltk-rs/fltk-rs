@@ -63,6 +63,17 @@ impl CheckButton {
             }
         }
     }
+
+    /// Set whether button is checked
+    pub fn set_checked(&self, checked: bool) {
+        unsafe {
+            if checked {
+                Fl_Check_Button_set_checked(self._inner, 1);
+            } else {
+                Fl_Check_Button_set_checked(self._inner, 0);
+            }
+        }
+    }
 }
 
 /// Creates a toggle button

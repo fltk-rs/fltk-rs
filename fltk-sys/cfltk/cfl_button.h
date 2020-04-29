@@ -17,6 +17,7 @@ BUTTON_DECLARE(Fl_Button)
 WIDGET_DECLARE(Fl_Check_Button)
 
 int Fl_Check_Button_is_checked(Fl_Check_Button *);
+void Fl_Check_Button_set_checked(Fl_Check_Button *self, int checked);
 
 BUTTON_DECLARE(Fl_Check_Button)
 
