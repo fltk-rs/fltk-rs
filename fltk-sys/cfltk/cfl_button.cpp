@@ -23,6 +23,7 @@ BUTTON_DEFINE(Fl_Button)
 WIDGET_DEFINE(Fl_Check_Button)
 
 int Fl_Check_Button_is_checked(Fl_Check_Button *self) { return self->value(); }
+void Fl_Check_Button_set_checked(Fl_Check_Button *self, int checked) { self->value(checked); }
 
 BUTTON_DEFINE(Fl_Check_Button)
 
