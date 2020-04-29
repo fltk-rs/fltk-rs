@@ -30,13 +30,19 @@ pub struct RadioButton {
 }
 
 impl RadioButton {
-    /// Check whether a radio button is toggled
+    /// Check whether a RadioButton is toggled
     pub fn is_toggled(&self) -> bool {
         unsafe {
             match Fl_Radio_Button_is_toggled(self._inner) {
                 0 => false,
                 _ => true,
             }
+        }
+    }
+    /// Sets whether the RadioButton is toggled or not
+    pub fn toggle(&mut self, val: bool) {
+        unsafe {
+            Fl_Radio_Button_toggle(self._inner, val as i32)
         }
     }
 }
@@ -47,6 +53,24 @@ pub struct RoundButton {
     _inner: *mut Fl_Round_Button,
 }
 
+impl RoundButton {
+    /// Check whether a RoundButton is toggled
+    pub fn is_toggled(&self) -> bool {
+        unsafe {
+            match Fl_Round_Button_is_toggled(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+    /// Sets whether the RoundButton is toggled or not
+    pub fn toggle(&mut self, val: bool) {
+        unsafe {
+            Fl_Round_Button_toggle(self._inner, val as i32)
+        }
+    }
+}
+
 /// Creates a check button
 #[derive(WidgetExt, ButtonExt, Debug)]
 pub struct CheckButton {
@@ -54,7 +78,7 @@ pub struct CheckButton {
 }
 
 impl CheckButton {
-    /// Check whether a check button is checked
+    /// Check whether a CheckButton is checked
     pub fn is_checked(&self) -> bool {
         unsafe {
             match Fl_Check_Button_is_checked(self._inner) {
@@ -63,15 +87,10 @@ impl CheckButton {
             }
         }
     }
-
-    /// Set whether button is checked
+    /// Set whether CheckButton is checked or not
     pub fn set_checked(&self, checked: bool) {
         unsafe {
-            if checked {
-                Fl_Check_Button_set_checked(self._inner, 1);
-            } else {
-                Fl_Check_Button_set_checked(self._inner, 0);
-            }
+            Fl_Check_Button_set_checked(self._inner, checked as i32);
         }
     }
 }
@@ -83,13 +102,19 @@ pub struct ToggleButton {
 }
 
 impl ToggleButton {
-    /// Check whether a toggle button is toggled
+    /// Check whether a ToggleButton is toggled
     pub fn is_toggled(&self) -> bool {
         unsafe {
             match Fl_Toggle_Button_is_toggled(self._inner) {
                 0 => false,
                 _ => true,
             }
+        }
+    }
+    /// Sets whether the ToggleButton is toggled or not
+    pub fn toggle(&mut self, val: bool) {
+        unsafe {
+            Fl_Toggle_Button_toggle(self._inner, val as i32)
         }
     }
 }
@@ -101,13 +126,19 @@ pub struct LightButton {
 }
 
 impl LightButton {
-    /// Check whether a light button is on
+    /// Check whether a LightButton is on
     pub fn is_on(&self) -> bool {
         unsafe {
             match Fl_Light_Button_is_on(self._inner) {
                 0 => false,
                 _ => true,
             }
+        }
+    }
+    /// Sets whether the LightButton is on or not
+    pub fn turn_on(&mut self, on: bool) {
+        unsafe {
+            Fl_Light_Button_turn_on(self._inner, on as i32)
         }
     }
 }
