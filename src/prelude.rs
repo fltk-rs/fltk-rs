@@ -214,6 +214,15 @@ pub trait ButtonExt: WidgetExt {
     fn shortcut(&self) -> Shortcut;
     /// Sets the shortcut associated with a button
     fn set_shortcut(&mut self, shortcut: Shortcut);
+    /// Clears the value of the button.
+    /// Useful for round, radio, light, toggle and check buttons
+    fn clear(&mut self);
+    /// Returns whether a button is set or not
+    /// Useful for round, radio, light, toggle and check buttons
+    fn is_set(&self) -> bool;
+    /// Sets whether a button is set or not
+    /// Useful for round, radio, light, toggle and check buttons
+    fn set(&mut self, flag: bool);
 }
 
 /// Defines the methods implemented by all group widgets
