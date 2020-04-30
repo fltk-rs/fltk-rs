@@ -169,6 +169,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
+                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     match #clear_submenu(self._inner, idx as i32) {
                         0 => Ok(()),
