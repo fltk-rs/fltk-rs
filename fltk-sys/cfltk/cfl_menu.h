@@ -19,7 +19,9 @@ extern "C" {
   unsigned int widget##_text_color(widget *);                                  \
   void widget##_set_text_color(widget *, unsigned int c);                      \
   void widget##_add_choice(widget *, const char *);                            \
-  const char *widget##_get_choice(widget *);
+  const char *widget##_get_choice(widget *);                                   \
+  void widget##_clear(widget *);                                               \
+  int widget##_clear_submenu(widget *, int index);
 
 typedef struct Fl_Menu_Item Fl_Menu_Item;
 
@@ -35,7 +37,7 @@ WIDGET_DECLARE(Fl_Choice)
 
 MENU_DECLARE(Fl_Choice)
 
-Fl_Menu_Item *Fl_Menu_Item_new(char** args, int sz);
+Fl_Menu_Item *Fl_Menu_Item_new(char **args, int sz);
 
 void Fl_Menu_Item_delete(Fl_Menu_Item *self);
 

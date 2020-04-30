@@ -37,7 +37,13 @@
   void widget##_add_choice(widget *self, const char *str) {                    \
     LOCK(self->add(str);)                                                      \
   }                                                                            \
-  const char *widget##_get_choice(widget *self) { return self->text(); }
+  const char *widget##_get_choice(widget *self) { return self->text(); }       \
+  void widget##_clear(widget *self) { LOCK(self->clear();) }                   \
+  int widget##_clear_submenu(widget *self, int index) {                        \
+    int ret = 0;                                                               \
+    LOCK(ret = self->clear_submenu(index));                                    \
+    return ret;                                                                \
+  }
 
 WIDGET_DEFINE(Fl_Menu_Bar)
 

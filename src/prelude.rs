@@ -21,6 +21,7 @@ pub enum FltkErrorKind {
     FailedToRun,
     FailedToLock,
     FailedToSetScheme,
+    FailedOperation,
     ResourceNotFound,
     TableError,
 }
@@ -31,7 +32,8 @@ impl FltkErrorKind {
             FltkErrorKind::FailedToRun => "Failed to run FLTK!",
             FltkErrorKind::FailedToLock => "Failed to initialize app for multithreading!",
             FltkErrorKind::FailedToSetScheme => "Failed to set scheme",
-            FltkErrorKind::ResourceNotFound => "Resource Not Found!",
+            FltkErrorKind::FailedOperation => "Failed to run operation",
+            FltkErrorKind::ResourceNotFound => "Resource not found!",
             FltkErrorKind::TableError => "Table selection error!",
         }
     }
@@ -356,6 +358,10 @@ pub trait MenuExt: WidgetExt {
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
     fn choice(&self) -> Option<String>;
+    /// Clears the items in a menu
+    fn clear(&mut self);
+    /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
+    fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
 }
 
 /// Defines the methods implemented by all valuator widgets

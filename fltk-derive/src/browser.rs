@@ -142,6 +142,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn load_file(&mut self, path: &std::path::Path) {
+                debug_assert!(path.exists(), "Path does not exist!");
                 let path = path.to_str().unwrap();
                 let path = CString::new(path).unwrap();
                 unsafe {
