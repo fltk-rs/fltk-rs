@@ -28,6 +28,12 @@ features = ["fltk-shared"]
 ```
 You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
 
+To use the master branch in your project, you can use:
+```toml
+[dependencies]
+fltk = { git = "https://github.com/MoAlyousef/fltk-rs" }
+```
+
 An example hello world application:
 
 ```rust
@@ -134,13 +140,17 @@ CMake and a C++ compiler need to be installed and in your PATH for a crossplatfo
 - MacOs: No dependencies.
 - Linux: X11 development headers need to be installed for development. 
 
-For Debian-based distribution, that means running:
+For Debian-based GUI distribution, that means running:
 ```
 $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
 ```
-For RHEL-based distributions, that means running:
+For RHEL-based GUI distributions, that means running:
 ```
 $ sudo yum groupinstall "X Software Development" 
+```
+For Arch-based GUI distributions, that means running:
+```
+$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes
 ```
 If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
 
