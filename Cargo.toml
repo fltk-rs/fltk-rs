@@ -51,3 +51,6 @@ name = "paint"
 
 [[example]]
 name = "threads"
+
+[[example]]
+name = "messages"

@@ -63,3 +63,19 @@ unsigned int Fl_get_color(unsigned char r, unsigned char g, unsigned char b) {
 const char *Fl_get_font(int idx) { return Fl::get_font(idx); }
 
 unsigned char Fl_set_fonts(const char *c) { return Fl::set_fonts(c); }
+
+void Fl_add_handler(int (*ev_handler)(int ev)) {
+  Fl::add_handler(ev_handler);
+}
+
+void Fl_awake_msg(void *msg) {
+  Fl::awake(msg);
+}
+
+void *Fl_thread_msg(void) {
+  return Fl::thread_message();
+}
+
+int Fl_wait(void) {
+  return Fl::wait();
+}

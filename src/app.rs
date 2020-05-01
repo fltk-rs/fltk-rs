@@ -97,6 +97,11 @@ impl App {
         return run();
     }
 
+    /// Wait for incoming messages
+    pub fn wait(&self) -> bool {
+        wait()
+    }
+
     /// Awakens the main UI thread with a callback
     pub fn awake(&self, cb: Box<dyn FnMut()>) {
         unsafe {
@@ -275,3 +280,46 @@ pub fn get_font_index(name: &str) -> Option<u8> {
     }
     ret
 }
+
+/// Adds a custom handler for unhandled events
+pub fn add_handler(cb: fn(Event) -> bool) {
+    unsafe {
+        let callback: Option<
+            unsafe extern "C" fn(ev: raw::c_int) -> raw::c_int,
+        > = Some(mem::transmute(move |ev| {
+            cb(ev) as i32;
+        }));
+        Fl_add_handler(callback);
+    }
+}
+
+/// Sends a custom message
+pub fn awake_msg<T: Copy>(msg: T) {
+    unsafe {
+        let msg: *const T = &msg;
+        Fl_awake_msg(msg as *mut raw::c_void)
+    }
+}
+
+/// Receives a custom message
+pub fn thread_msg<T: Copy>() -> Option<T> {
+    unsafe {
+        let msg = Fl_thread_msg();
+        if msg.is_null() {
+            None
+        } else {
+            let msg: *const T = msg as *const T;
+            Some(*msg)
+        }
+    }
+}
+
+fn wait() -> bool {
+    unsafe {
+        match Fl_wait() {
+            0 => false,
+            _ => true,
+        }
+    }
+}
+
