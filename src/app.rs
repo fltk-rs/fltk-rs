@@ -101,7 +101,7 @@ impl App {
     pub fn wait(&self) -> bool {
         let ret = lock();
         if ret.is_err() {
-            return false
+            return false;
         }
         wait()
     }
@@ -288,11 +288,10 @@ pub fn get_font_index(name: &str) -> Option<u8> {
 /// Adds a custom handler for unhandled events
 pub fn add_handler(cb: fn(Event) -> bool) {
     unsafe {
-        let callback: Option<
-            unsafe extern "C" fn(ev: raw::c_int) -> raw::c_int,
-        > = Some(mem::transmute(move |ev| {
-            cb(ev) as i32;
-        }));
+        let callback: Option<unsafe extern "C" fn(ev: raw::c_int) -> raw::c_int> =
+            Some(mem::transmute(move |ev| {
+                cb(ev) as i32;
+            }));
         Fl_add_handler(callback);
     }
 }
@@ -307,7 +306,7 @@ fn wait() -> bool {
 }
 
 /// Sends a custom message
-fn awake_msg<T>(msg: T) {
+pub fn awake_msg<T>(msg: T) {
     unsafe {
         let msg: *mut raw::c_void = mem::transmute(&msg);
         Fl_awake_msg(msg)
@@ -315,7 +314,7 @@ fn awake_msg<T>(msg: T) {
 }
 
 /// Receives a custom message
-fn thread_msg<T>() -> Option<T> {
+pub fn thread_msg<T>() -> Option<T> {
     unsafe {
         let msg = Fl_thread_msg();
         if msg.is_null() {
@@ -355,7 +354,11 @@ impl<T> Receiver<T> {
 
 /// Creates a channel returning a Sender and Receiver structs
 pub fn channel<T>() -> (Sender<T>, Receiver<T>) {
-    let s = Sender { data: std::marker::PhantomData, };
-    let r = Receiver { data: std::marker::PhantomData, };
+    let s = Sender {
+        data: std::marker::PhantomData,
+    };
+    let r = Receiver {
+        data: std::marker::PhantomData,
+    };
     (s, r)
 }
