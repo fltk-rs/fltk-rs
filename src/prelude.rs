@@ -4,7 +4,6 @@ use crate::text::{StyleTableEntry, TextBuffer};
 use crate::widget::Widget;
 use crate::window::Window;
 use std::convert::From;
-use std::error::Error;
 use std::{fmt, io, os::raw};
 
 /// Error types returned by fltk-rs + wrappers of std::io errors
@@ -24,30 +23,6 @@ pub enum FltkErrorKind {
     FailedOperation,
     ResourceNotFound,
     TableError,
-}
-
-impl FltkErrorKind {
-    fn as_str(&self) -> &str {
-        match *self {
-            FltkErrorKind::FailedToRun => "Failed to run FLTK!",
-            FltkErrorKind::FailedToLock => "Failed to initialize app for multithreading!",
-            FltkErrorKind::FailedToSetScheme => "Failed to set scheme",
-            FltkErrorKind::FailedOperation => "Failed to run operation",
-            FltkErrorKind::ResourceNotFound => "Resource not found!",
-            FltkErrorKind::TableError => "Table selection error!",
-        }
-    }
-}
-
-impl Error for FltkError {
-    fn description(&self) -> &str {
-        match self {
-            FltkError::IoError(err) => err.description(),
-            FltkError::NullError(err) => err.description(),
-            FltkError::Internal(err) => err.as_str(),
-            FltkError::Unknown(err) => err,
-        }
-    }
 }
 
 impl fmt::Display for FltkError {
