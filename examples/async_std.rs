@@ -28,3 +28,5 @@
 //     }));
 //     app.run().unwrap();
 // }
+
+fn main() {}
