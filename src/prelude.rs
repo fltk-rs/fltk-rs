@@ -4,7 +4,6 @@ use crate::text::{StyleTableEntry, TextBuffer};
 use crate::widget::Widget;
 use crate::window::Window;
 use std::convert::From;
-use std::error::Error;
 use std::{fmt, io, os::raw};
 
 /// Error types returned by fltk-rs + wrappers of std::io errors
@@ -21,31 +20,9 @@ pub enum FltkErrorKind {
     FailedToRun,
     FailedToLock,
     FailedToSetScheme,
+    FailedOperation,
     ResourceNotFound,
     TableError,
-}
-
-impl FltkErrorKind {
-    fn as_str(&self) -> &str {
-        match *self {
-            FltkErrorKind::FailedToRun => "Failed to run FLTK!",
-            FltkErrorKind::FailedToLock => "Failed to initialize app for multithreading!",
-            FltkErrorKind::FailedToSetScheme => "Failed to set scheme",
-            FltkErrorKind::ResourceNotFound => "Resource Not Found!",
-            FltkErrorKind::TableError => "Table selection error!",
-        }
-    }
-}
-
-impl Error for FltkError {
-    fn description(&self) -> &str {
-        match self {
-            FltkError::IoError(err) => err.description(),
-            FltkError::NullError(err) => err.description(),
-            FltkError::Internal(err) => err.as_str(),
-            FltkError::Unknown(err) => err,
-        }
-    }
 }
 
 impl fmt::Display for FltkError {
@@ -356,6 +333,10 @@ pub trait MenuExt: WidgetExt {
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
     fn choice(&self) -> Option<String>;
+    /// Clears the items in a menu
+    fn clear(&mut self);
+    /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
+    fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
 }
 
 /// Defines the methods implemented by all valuator widgets

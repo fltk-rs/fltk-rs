@@ -72,3 +72,19 @@ extern "C" {
 extern "C" {
     pub fn Fl_set_fonts(c: *const ::std::os::raw::c_char) -> ::std::os::raw::c_uchar;
 }
+extern "C" {
+    pub fn Fl_add_handler(
+        ev_handler: ::std::option::Option<
+            unsafe extern "C" fn(ev: ::std::os::raw::c_int) -> ::std::os::raw::c_int,
+        >,
+    );
+}
+extern "C" {
+    pub fn Fl_awake_msg(msg: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_thread_msg() -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_wait() -> ::std::os::raw::c_int;
+}
