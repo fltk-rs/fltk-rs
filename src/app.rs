@@ -297,27 +297,6 @@ pub fn add_handler(cb: fn(Event) -> bool) {
     }
 }
 
-/// Sends a custom message
-pub fn awake_msg<T: Copy>(msg: T) {
-    unsafe {
-        let msg: *const T = &msg;
-        Fl_awake_msg(msg as *mut raw::c_void)
-    }
-}
-
-/// Receives a custom message
-pub fn thread_msg<T: Copy>() -> Option<T> {
-    unsafe {
-        let msg = Fl_thread_msg();
-        if msg.is_null() {
-            None
-        } else {
-            let msg: *const T = msg as *const T;
-            Some(*msg)
-        }
-    }
-}
-
 fn wait() -> bool {
     unsafe {
         match Fl_wait() {
@@ -327,3 +306,56 @@ fn wait() -> bool {
     }
 }
 
+/// Sends a custom message
+fn awake_msg<T>(msg: T) {
+    unsafe {
+        let msg: *mut raw::c_void = mem::transmute(&msg);
+        Fl_awake_msg(msg)
+    }
+}
+
+/// Receives a custom message
+fn thread_msg<T>() -> Option<T> {
+    unsafe {
+        let msg = Fl_thread_msg();
+        if msg.is_null() {
+            None
+        } else {
+            let msg: *const T = msg as *const T;
+            Some(std::ptr::read(msg))
+        }
+    }
+}
+
+/// Creates a sender struct
+#[derive(Debug, Clone, Copy)]
+pub struct Sender<T> {
+    data: std::marker::PhantomData<T>,
+}
+
+impl<T> Sender<T> {
+    /// Sends a message
+    pub fn send(&self, val: T) {
+        awake_msg(val)
+    }
+}
+
+/// Creates a receiver struct
+#[derive(Debug, Clone, Copy)]
+pub struct Receiver<T> {
+    data: std::marker::PhantomData<T>,
+}
+
+impl<T> Receiver<T> {
+    /// Receives a message
+    pub fn recv(&self) -> Option<T> {
+        thread_msg()
+    }
+}
+
+/// Creates a channel returning a Sender and Receiver structs
+pub fn channel<T>() -> (Sender<T>, Receiver<T>) {
+    let s = Sender { data: std::marker::PhantomData, };
+    let r = Receiver { data: std::marker::PhantomData, };
+    (s, r)
+}
