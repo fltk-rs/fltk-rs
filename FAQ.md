@@ -2,7 +2,7 @@
 
 ## Build issues
 
-### Build fails on windows, why can't CMake find my toolchain!
+### Build fails on windows, why can't CMake find my toolchain?
 If you're building using the MSVC toolchain, make sure you run you're build (at least your initial build) using the Native Tools Command Prompt, which should appear once you start typing "native" in the start menu, choose the version corresponding to your installed Rust toolchain (x86 or x64). The Native Tools Command Prompt has all the environment variables set correctly for native development.
 
 If you're building for the GNU toolchain, make sure that Make is also installed, which usually comes installed in MSYS2 and Cygwin.
@@ -29,7 +29,9 @@ Rust, by default, statically links your application. FLTK is built also for stat
 
 ### Why do I get a console window whenever I start my GUI app?
 This is the default behavior of the toolchain, and is helpful for debugging purposes. It can be turned off easily by adding ```#![windows_subsystem = "windows"]``` at the beginning of your main.rs file if you're on windows. For Mac OS and Linux, this is done by a post-build process to create a Mac OS Bundle or Linux AppImage respectively.
+
 See [cargo-bundle](https://github.com/burtonageo/cargo-bundle) for an automated tool for creating Mac OS app bundles. 
+
 See [here](https://docs.appimage.org/packaging-guide/overview.html#converting-existing-binary-packages) for directions on creating an AppImage for Linux.
 
 ### Why is the size of my resulting executable larger than I had expected?
@@ -40,8 +42,8 @@ FLTK is known for it's small applications. If your application is, make sure you
 
 ### Can I use this crate in a commercial application?
 Yes. This crate has an MIT license which requires acknowledgment. FLTK (the C++ library) is licensed under the LGPL license with an exception allowing static linking for commercial/closed-source use. You can find the full terms of both licenses here:
-https://github.com/fltk/fltk/blob/master/COPYING
-https://github.com/MoAlyousef/fltk-rs/blob/master/LICENSE
+- https://github.com/fltk/fltk/blob/master/COPYING
+- https://github.com/MoAlyousef/fltk-rs/blob/master/LICENSE
 
 ## Alignment
 
