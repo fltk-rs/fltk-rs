@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-
+- Removed hard requirement of of Copy for sent messages.
 
 ## [0.3.11] - 2020-05-03
 ### Changes
