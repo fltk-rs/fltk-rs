@@ -1,4 +1,4 @@
-// Works, but requires having async_std as a dependency
+// Works, but requires adding async_std
 
 // // Example1 using callbacks and Arc, Mutex
 // use async_std::sync::{Arc, Mutex};
