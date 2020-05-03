@@ -1,4 +1,4 @@
-// Works, but requires having async_std as a dependency
+// Works, but requires adding tokio
 
 // // Example 1 using Arc, Mutex
 // use fltk::{app::*, button::*, frame::*, window::*};
