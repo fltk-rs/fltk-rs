@@ -1,5 +1,9 @@
 # fltk-rs
 
+[![Documentation](https://docs.rs/fltk/badge.svg)](https://docs.rs/fltk)
+[![Crates.io](https://img.shields.io/crates/v/fltk.svg)](https://crates.io/crates/fltk)
+[![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/MoAlyousef/fltk/blob/master/LICENSE)
+
 Rust bindings for the FLTK Graphical User Interface library. 
 
 The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
@@ -8,8 +12,6 @@ This crate is still in active development and is not production ready. However, 
 
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 
-- [Crate](https://crates.io/crates/fltk)
-- [Documentation](https://docs.rs/fltk)
 - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
 - [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
 
@@ -273,15 +275,9 @@ Most common widgets are implemented:
     - TableRow
 - Drawing primitives
 
-## Todo
-
-- Complete widget set
-- Better documentation
-- Better testing
-
 ## Contributions
 
-Contributions are very welcome!
+Contributions are very welcome! Even if just for submitting bug fixes, improving the documentation, adding tests and/or examples.
 
 ## License
 
