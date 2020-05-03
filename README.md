@@ -4,6 +4,7 @@
 [![Crates.io](https://img.shields.io/crates/v/fltk.svg)](https://crates.io/crates/fltk)
 [![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/MoAlyousef/fltk/blob/master/LICENSE)
 
+
 Rust bindings for the FLTK Graphical User Interface library. 
 
 The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
@@ -27,6 +28,9 @@ The library is automatically statically linked to your binary. If however you wo
 [dependencies.fltk]
 version = "^0.3"
 features = ["fltk-shared"]
+# or
+[dependencies]
+fltk = { version = "^0.3", features = ["fltk-shared"] }
 ```
 You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
 
@@ -156,6 +160,10 @@ $ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfix
 ```
 If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
 
+## FAQ
+
+please check the [FAQ](https://github.com/MoAlyousef/fltk-rs/blob/master/FAQ.md) page for frequently asked questions, encountered issues, guides on deployment, and contribution.
+
 ## Building
 
 To build, just run:
@@ -205,6 +213,7 @@ Most common widgets are implemented:
     - GifImage
     - PngImage
     - SvgImage
+    - RgbImage
 - Buttons
     - Button
     - RadioButton
@@ -275,10 +284,3 @@ Most common widgets are implemented:
     - TableRow
 - Drawing primitives
 
-## Contributions
-
-Contributions are very welcome! Even if just for submitting bug fixes, improving the documentation, adding tests and/or examples.
-
-## License
-
-Code licensed under the MIT license!
