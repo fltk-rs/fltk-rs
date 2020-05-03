@@ -35,7 +35,7 @@ See [cargo-bundle](https://github.com/burtonageo/cargo-bundle) for an automated 
 See [here](https://docs.appimage.org/packaging-guide/overview.html#converting-existing-binary-packages) for directions on creating an AppImage for Linux.
 
 ### Why is the size of my resulting executable larger than I had expected?
-FLTK is known for it's small applications. If your application is, make sure you're building in release, and make sure symbols are stripped using the strip command in Unix-like systems. On Windows it's unnecessary since symbols would end up in the pdb file (which shouldn't be deployed).
+FLTK is known for it's small applications. Make sure you're building in release, and make sure symbols are stripped using the strip command in Unix-like systems. On Windows it's unnecessary since symbols would end up in the pdb file (which shouldn't be deployed).
 
 
 ## Licensing
