@@ -1,7 +1,5 @@
 use fltk::{app::*, frame::*, window::*};
 
-// required for windows
-#[repr(align(32))]
 #[derive(Debug, Copy, Clone)]
 pub enum Message {
     Increment(i32),

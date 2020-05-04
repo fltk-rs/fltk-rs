@@ -204,7 +204,7 @@ pub fn screen_size() -> (f64, f64) {
 }
 
 /// Used for widgets implementing the InputExt, pastes content from the clipboard
-pub fn paste<T>(widget: T)
+pub fn paste<T>(widget: &T)
 where
     T: WidgetExt + InputExt,
 {
@@ -306,15 +306,14 @@ fn wait() -> bool {
 }
 
 /// Sends a custom message
-fn awake_msg<T: Copy>(msg: T) {
+fn awake_msg<T>(msg: T) {
     unsafe {
-        let msg: *mut raw::c_void = mem::transmute(&msg);
-        Fl_awake_msg(msg)
+        Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void)
     }
 }
 
 /// Receives a custom message
-fn thread_msg<T: Copy>() -> Option<T> {
+fn thread_msg<T>() -> Option<T> {
     unsafe {
         let msg = Fl_thread_msg();
         if msg.is_null() {
@@ -328,11 +327,11 @@ fn thread_msg<T: Copy>() -> Option<T> {
 
 /// Creates a sender struct
 #[derive(Debug, Clone, Copy)]
-pub struct Sender<T: Copy> {
+pub struct Sender<T> {
     data: std::marker::PhantomData<T>,
 }
 
-impl<T: Copy> Sender<T> {
+impl<T> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
         awake_msg(val)
@@ -341,11 +340,11 @@ impl<T: Copy> Sender<T> {
 
 /// Creates a receiver struct
 #[derive(Debug, Clone, Copy)]
-pub struct Receiver<T: Copy> {
+pub struct Receiver<T> {
     data: std::marker::PhantomData<T>,
 }
 
-impl<T: Copy> Receiver<T> {
+impl<T> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         thread_msg()
@@ -353,7 +352,7 @@ impl<T: Copy> Receiver<T> {
 }
 
 /// Creates a channel returning a Sender and Receiver structs
-pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
+pub fn channel<T>() -> (Sender<T>, Receiver<T>) {
     let s = Sender {
         data: std::marker::PhantomData,
     };

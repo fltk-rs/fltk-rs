@@ -64,7 +64,7 @@ impl Wizard {
         }
     }
     /// Sets the underlying widget of the current view
-    pub fn set_current_widget<W: WidgetExt>(&mut self, w: W) {
+    pub fn set_current_widget<W: WidgetExt>(&mut self, w: &W) {
         unsafe {
             Fl_Wizard_set_value(self._inner, w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget)
         }
