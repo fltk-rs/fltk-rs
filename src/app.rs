@@ -204,7 +204,7 @@ pub fn screen_size() -> (f64, f64) {
 }
 
 /// Used for widgets implementing the InputExt, pastes content from the clipboard
-pub fn paste<T>(widget: T)
+pub fn paste<T>(widget: &T)
 where
     T: WidgetExt + InputExt,
 {

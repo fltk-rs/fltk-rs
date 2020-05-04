@@ -1,8 +1,13 @@
 # Changelog
 
+
 ## Unreleased
 ### Changes
+
+## [0.3.12] - 2020-05-05
+### Changes
 - Removed hard requirement of of Copy for sent messages.
+- Fix some methods taking an immutable reference to widgets
 
 ## [0.3.11] - 2020-05-03
 ### Changes
