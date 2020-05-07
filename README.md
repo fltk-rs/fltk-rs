@@ -208,23 +208,24 @@ $ cargo run --example hello
 $ cargo run --example hello_button
 $ cargo run --example paint
 ```
-![alt_test](screenshots/hello.jpg)
 
-![alt_test](screenshots/gallery.jpg)
+<img alt="Hello" src="screenshots/hello.jpg">
+
+<img alt="Gallery" width=600 height=500 src="screenshots/gallery.jpg">
 
 Setting the scheme to Gtk.
 
-![alt_test](screenshots/calc.jpg)
+<img alt="Calculator" width=400 height=500 src="screenshots/calc.jpg">
 
-![alt_test](screenshots/counter.jpg)
+<img alt="Counter" width=240 height=300 src="screenshots/counter.jpg">
 
 Check the full [code](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter.rs) for the custom theming.
 
-![alt_test](screenshots/editor.jpg)
+<img alt="Editor" width=800 height=600 src="screenshots/editor.jpg">
 
 Setting the scheme to Gtk
 
-![alt_test](screenshots/terminal.jpg)
+<img alt="Terminal" width=800 height=600 src="screenshots/terminal.jpg">
 
 ## Currently implemented widgets
 
