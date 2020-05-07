@@ -325,16 +325,24 @@ fn thread_msg<T>() -> Option<T> {
     }
 }
 
+#[repr(C)]
+struct Message<T: Copy> {
+    id: usize,
+    msg: T,
+}
+
 /// Creates a sender struct
 #[derive(Debug, Clone, Copy)]
 pub struct Sender<T: Copy> {
     data: std::marker::PhantomData<T>,
+    id: usize,
 }
 
 impl<T: Copy> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
-        awake_msg(val)
+        let msg = Message { id: self.id, msg: val };
+        awake_msg(msg)
     }
 }
 
@@ -342,22 +350,38 @@ impl<T: Copy> Sender<T> {
 #[derive(Debug, Clone, Copy)]
 pub struct Receiver<T: Copy> {
     data: std::marker::PhantomData<T>,
+    id: usize,
 }
 
 impl<T: Copy> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
-        thread_msg()
+        let data: Option<Message<T>> = thread_msg();
+        if data.is_some() {
+            let data = data.unwrap();
+            if data.id == self.id {
+                Some(data.msg)
+            } else {
+                None
+            }
+        } else {
+            None
+        }
     }
 }
 
 /// Creates a channel returning a Sender and Receiver structs
 pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
-    let s = Sender {
+    let mut s = Sender {
         data: std::marker::PhantomData,
+        id: 0,
     };
-    let r = Receiver {
+    let mut r = Receiver {
         data: std::marker::PhantomData,
+        id: 0,
     };
+    let sz = std::mem::size_of::<T>();
+    s.id = sz;
+    r.id = sz;
     (s, r)
 }

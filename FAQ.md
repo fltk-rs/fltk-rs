@@ -11,7 +11,7 @@ If you're building for the GNU toolchain, make sure that Make is also installed,
 If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048, it should work by using the fltk-shared feature. Which would also generate a dynamic library which would need to be deployed with your application.
 ```toml
 [dependencies]
-fltk = { version = "^0.3", features = ["fltk-shared"] }
+fltk = { version = "^0.4", features = ["fltk-shared"] }
 ```
 
 ### How do I force CMake to use a certain C++ compiler?

@@ -3,6 +3,10 @@
 ## Unreleased
 ### Changes
 
+## [0.4.1] - 2020-05-07
+### Changes
+- Fix documentation
+
 ## [0.4.0] - 2020-05-07
 ### Changes
 - Reinstated hard requirement of of Copy for sent messages.
