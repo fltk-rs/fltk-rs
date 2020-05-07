@@ -111,15 +111,37 @@ fn main() {
 ### Events
 **Event handling must be done after the drawing is done and the main window shown. And must be done in fn main()**
 
-Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the handle() method can be used:
+Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
 ```rust
-some_widget.handle(Box::new(move |ev: app::Event| {
-    match ev {
-        /* handle ev */
-    }
-}));
+    /* previous hello world code */
+    but.set_callback(Box::new(move || frame.set_label("Hello World!")));
+    app.run().unwrap();
 ```
-Handled or ignored events should return true, unhandled events should return false.
+Another way is to use message passing:
+```rust
+    /* previous counter code */
+    let (s, r) = app::channel::<Message>();
+    but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
+    but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
+    while app.wait() {
+        let label: i32 = frame.label().parse().unwrap();
+        match r.recv() {
+            Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
+            Some(Message::Decrement) => frame.set_label(&(label - 1).to_string()),
+            None => (),
+        }
+    }
+```
+
+For custom event handling, the handle() method can be used:
+```rust
+    some_widget.handle(Box::new(move |ev: app::Event| {
+        match ev {
+            /* handle ev */
+        }
+    }));
+```
+Handled or ignored events should return true, unhandled events should return false. More examples are available in the examples directory.
 
 ### Theming
 FLTK offers 4 application themes (called schemes):

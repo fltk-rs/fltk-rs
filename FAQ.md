@@ -55,6 +55,18 @@ FLTK has some known issues with text alignment and right-to-left language suppor
 ### Do you plan on supporting multithreading or async/await?
 FLTK supports multithreaded and concurrent applications. See the examples directory for examples on usage with threads, messages, async_std and tokio.
 
+## Windowing
+
+### Why does FLTK exit when I hit the escape key?
+This is the default behavior in FLTK. You can easily override it by setting a callback for your main window:
+```rust
+    wind.set_callback(Box::new(move || {
+        if fltk::app::event() == fltk::app::Event::Close {
+            std::process::exit(0); // Which would close using the close button. You can also assign other keys to close the application
+        }
+    }));
+```
+
 ## Memory and unsafety
 
 ### How memory safe is fltk-rs?
