@@ -141,12 +141,15 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn load_file(&mut self, path: &std::path::Path) {
-                debug_assert!(path.exists(), "Path does not exist!");
+            fn load(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
+                if !path.exists() {
+                    return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+                }
                 let path = path.to_str().unwrap();
-                let path = CString::new(path).unwrap();
+                let path = CString::new(path)?;
                 unsafe {
-                    #load_file(self._inner, path.into_raw() as *const raw::c_char)
+                    #load_file(self._inner, path.into_raw() as *const raw::c_char);
+                    Ok(())
                 }
             }
 

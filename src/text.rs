@@ -185,12 +185,15 @@ impl TextBuffer {
     }
 
     /// Loads a file into the buffer
-    pub fn loadfile(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
+    pub fn load_file(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
         let path = path.to_str().unwrap();
-        let path = CString::new(path).unwrap();
+        let path = CString::new(path)?;
         unsafe {
             match Fl_Text_Buffer_loadfile(self._inner, path.into_raw() as *const raw::c_char, 0) {
-                0 => Err(FltkError::Unknown(String::from("Failed to undo"))),
+                0 => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
                 _ => Ok(()),
             }
         }

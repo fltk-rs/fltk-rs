@@ -275,10 +275,15 @@ impl HelpDialog {
         unsafe { Fl_Help_Dialog_hide(self._inner) }
     }
     /// Loads a file for the help dialog
-    pub fn load(&mut self, file: &std::path::Path) -> i32 {
+    pub fn load(&mut self, file: &std::path::Path) -> Result<(), FltkError> {
         let f = file.to_str().unwrap();
-        let f = CString::new(f).unwrap();
-        unsafe { Fl_Help_Dialog_load(self._inner, f.into_raw() as *const raw::c_char) }
+        let f = CString::new(f)?;
+        unsafe { 
+            match Fl_Help_Dialog_load(self._inner, f.into_raw() as *const raw::c_char) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
+            }
+        }
     }
     /// Sets the position of the help dialog
     pub fn position(&mut self, x: i32, y: i32) {

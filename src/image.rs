@@ -40,17 +40,18 @@ pub struct JpegImage {
 }
 
 impl JpegImage {
-    pub fn new(path: &std::path::Path) -> JpegImage {
-        debug_assert!(
-            path.exists(),
-            "Proper image initialization requires an existent path!"
-        );
+    pub fn load(path: &std::path::Path) -> Result<JpegImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
         unsafe {
             let temp = path.to_str().unwrap();
-            let temp = CString::new(temp).unwrap();
+            let temp = CString::new(temp)?;
             let image_ptr = Fl_JPEG_Image_new(temp.into_raw() as *const raw::c_char);
-            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
-            JpegImage { _inner: image_ptr }
+            if image_ptr.is_null() {
+                return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            }
+            Ok(JpegImage { _inner: image_ptr })
         }
     }
 }
@@ -62,17 +63,18 @@ pub struct PngImage {
 }
 
 impl PngImage {
-    pub fn new(path: &std::path::Path) -> PngImage {
-        debug_assert!(
-            path.exists(),
-            "Proper image initialization requires an existent path!"
-        );
+    pub fn load(path: &std::path::Path) -> Result<PngImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
         unsafe {
             let temp = path.to_str().unwrap();
-            let temp = CString::new(temp).unwrap();
+            let temp = CString::new(temp)?;
             let image_ptr = Fl_PNG_Image_new(temp.into_raw() as *const raw::c_char);
-            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
-            PngImage { _inner: image_ptr }
+            if image_ptr.is_null() {
+                return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            }
+            Ok(PngImage { _inner: image_ptr })
         }
     }
 }
@@ -84,17 +86,18 @@ pub struct SvgImage {
 }
 
 impl SvgImage {
-    pub fn new(path: &std::path::Path) -> SvgImage {
-        debug_assert!(
-            path.exists(),
-            "Proper image initialization requires an existent path!"
-        );
+    pub fn load(path: &std::path::Path) -> Result<SvgImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
         unsafe {
             let temp = path.to_str().unwrap();
-            let temp = CString::new(temp).unwrap();
+            let temp = CString::new(temp)?;
             let image_ptr = Fl_SVG_Image_new(temp.into_raw() as *const raw::c_char);
-            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
-            SvgImage { _inner: image_ptr }
+            if image_ptr.is_null() {
+                return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            }
+            Ok(SvgImage { _inner: image_ptr })
         }
     }
 }
@@ -106,17 +109,18 @@ pub struct BmpImage {
 }
 
 impl BmpImage {
-    pub fn new(path: &std::path::Path) -> BmpImage {
-        debug_assert!(
-            path.exists(),
-            "Proper image initialization requires an existent path!"
-        );
+    pub fn load(path: &std::path::Path) -> Result<BmpImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
         unsafe {
             let temp = path.to_str().unwrap();
-            let temp = CString::new(temp).unwrap();
+            let temp = CString::new(temp)?;
             let image_ptr = Fl_BMP_Image_new(temp.into_raw() as *const raw::c_char);
-            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
-            BmpImage { _inner: image_ptr }
+            if image_ptr.is_null() {
+                return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            }
+            Ok(BmpImage { _inner: image_ptr })
         }
     }
 }
@@ -128,17 +132,18 @@ pub struct GifImage {
 }
 
 impl GifImage {
-    pub fn new(path: &std::path::Path) -> GifImage {
-        debug_assert!(
-            path.exists(),
-            "Proper image initialization requires an existent path!"
-        );
+    pub fn load(path: &std::path::Path) -> Result<GifImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
         unsafe {
             let temp = path.to_str().unwrap();
-            let temp = CString::new(temp).unwrap();
+            let temp = CString::new(temp)?;
             let image_ptr = Fl_GIF_Image_new(temp.into_raw() as *const raw::c_char);
-            assert!(!image_ptr.is_null(), "Image invalid or doesn't exist!");
-            GifImage { _inner: image_ptr }
+            if image_ptr.is_null() {
+                return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            }
+            Ok(GifImage { _inner: image_ptr })
         }
     }
 }
@@ -158,11 +163,9 @@ impl RgbImage {
             sz = sz * depth as i32;
         }
         assert!(sz as usize <= data.len());
-        let img =  unsafe { Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32) };
+        let img = unsafe { Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32) };
         assert!(!img.is_null(), "Couldn't generate RGB image!");
-        RgbImage {
-            _inner: img,
-        }
+        RgbImage { _inner: img }
     }
     /// Deconstructs a raw RgbImage into parts
     pub fn into_parts(self) -> (Vec<u8>, i32, i32) {
@@ -174,7 +177,7 @@ impl RgbImage {
     pub fn into_png_image(self) -> Result<PngImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
         let _ = write_to_png_file(self, &path)?;
-        let ret = PngImage::new(&path).copy();
+        let ret = PngImage::load(&path)?.copy();
         std::fs::remove_file(&path)?;
         Ok(ret)
     }
@@ -182,7 +185,7 @@ impl RgbImage {
     pub fn into_jpg_image(self) -> Result<JpegImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
         let _ = write_to_jpg_file(self, &path)?;
-        let ret = JpegImage::new(&path).copy();
+        let ret = JpegImage::load(&path)?.copy();
         std::fs::remove_file(&path)?;
         Ok(ret)
     }
@@ -190,7 +193,7 @@ impl RgbImage {
     pub fn into_bmp_image(self) -> Result<BmpImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
         let _ = write_to_bmp_file(self, &path)?;
-        let ret = BmpImage::new(&path).copy();
+        let ret = BmpImage::load(&path)?.copy();
         std::fs::remove_file(&path)?;
         Ok(ret)
     }
