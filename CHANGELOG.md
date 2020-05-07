@@ -1,8 +1,13 @@
 # Changelog
 
-
 ## Unreleased
 ### Changes
+
+## [0.4.0] - 2020-05-07
+### Changes
+- Reinstated hard requirement of of Copy for sent messages.
+- Change Image::new to Image::load when it involves getting an image from the filesystem.
+- Make methods involved in loading file return Result.
 
 ## [0.3.12] - 2020-05-05
 ### Changes

@@ -327,11 +327,11 @@ fn thread_msg<T>() -> Option<T> {
 
 /// Creates a sender struct
 #[derive(Debug, Clone, Copy)]
-pub struct Sender<T> {
+pub struct Sender<T: Copy> {
     data: std::marker::PhantomData<T>,
 }
 
-impl<T> Sender<T> {
+impl<T: Copy> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
         awake_msg(val)
@@ -340,11 +340,11 @@ impl<T> Sender<T> {
 
 /// Creates a receiver struct
 #[derive(Debug, Clone, Copy)]
-pub struct Receiver<T> {
+pub struct Receiver<T: Copy> {
     data: std::marker::PhantomData<T>,
 }
 
-impl<T> Receiver<T> {
+impl<T: Copy> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         thread_msg()
@@ -352,7 +352,7 @@ impl<T> Receiver<T> {
 }
 
 /// Creates a channel returning a Sender and Receiver structs
-pub fn channel<T>() -> (Sender<T>, Receiver<T>) {
+pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
     let s = Sender {
         data: std::marker::PhantomData,
     };

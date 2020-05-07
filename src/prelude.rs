@@ -514,7 +514,7 @@ pub trait BrowserExt: WidgetExt {
     /// Sets the text of the selected item
     fn set_text(&mut self, line: u32, txt: &str);
     /// Load a file
-    fn load_file(&mut self, path: &std::path::Path);
+    fn load(&mut self, path: &std::path::Path) -> Result<(), FltkError>;
     /// Return the text size
     fn text_size(&self) -> u32;
     /// Sets the text size
