@@ -37,6 +37,8 @@ See [here](https://docs.appimage.org/packaging-guide/overview.html#converting-ex
 ### Why is the size of my resulting executable larger than I had expected?
 FLTK is known for it's small applications. Make sure you're building in release, and make sure symbols are stripped using the strip command in Unix-like systems. On Windows it's unnecessary since symbols would end up in the pdb file (which shouldn't be deployed).
 
+### Can I cross-compile my application to a mobile platform or WASM?
+FLTK currently doesn't support WASM nor mobile platforms. It is focused on desktop applications.
 
 ## Licensing
 
