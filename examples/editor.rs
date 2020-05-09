@@ -221,21 +221,23 @@ fn main() {
         }),
     );
 
-    let mut x = menu.item("Help/About").unwrap();
+    let mut x = menu.item("File/Quit").unwrap();
     x.set_label_color(Color::Red);
 
     let editor_cloned = editor_rc.clone();
     wind.set_callback(Box::new(move || {
-        if saved == false {
-            let x = choice("Would you like to save your work?", "Yes", "No", "");
-            if x == 0 {
-                editor_cloned.borrow_mut().save_file(&mut saved);
-                std::process::exit(0);
+        if fltk::app::event() == fltk::app::Event::Close {
+            if saved == false {
+                let x = choice("Would you like to save your work?", "Yes", "No", "");
+                if x == 0 {
+                    editor_cloned.borrow_mut().save_file(&mut saved);
+                    std::process::exit(0);
+                } else {
+                    std::process::exit(0);
+                }
             } else {
                 std::process::exit(0);
             }
-        } else {
-            std::process::exit(0);
         }
     }));
     app.run().expect("Couldn't run editor");

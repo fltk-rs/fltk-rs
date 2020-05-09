@@ -67,6 +67,11 @@ This is the default behavior in FLTK. You can easily override it by setting a ca
     }));
 ```
 
+## Panics
+
+### My app panics when I try to handle events, how can I fix it?
+This is due to a debug_assert which checks that the involved widget and the window are capable of handling events. Although most events would be handled correctly, some events require that the aforementioned conditions be met. Thus it is advisable to place your event handling code after the main drawing is done, i.e after calling your main window's show() method. Another point is that event handling and drawing should be done in the main thread.
+
 ## Memory and unsafety
 
 ### How memory safe is fltk-rs?

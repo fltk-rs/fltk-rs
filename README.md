@@ -109,7 +109,7 @@ fn main() {
 ```
 
 ### Events
-**Event handling must be done after the drawing is done and the main window shown. And must be done in fn main()**
+**Event handling must be done after the drawing is done and the main window shown. And must be done in the main thread**
 
 Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
 ```rust
@@ -141,7 +141,7 @@ For custom event handling, the handle() method can be used:
         }
     }));
 ```
-Handled or ignored events should return true, unhandled events should return false. More examples are available in the examples directory.
+Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the examples directory.
 
 ### Theming
 FLTK offers 4 application themes (called schemes):
