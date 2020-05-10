@@ -91,3 +91,7 @@ void Fl_repeat_timeout(double t, void (*timeout_h)(void*), void *data) {
 void Fl_remove_timeout(void (*timeout_h)(void*), void *data) {
   Fl::remove_timeout(timeout_h, data);
 }
+
+int Fl_dnd(void) {
+  return Fl::dnd();
+}

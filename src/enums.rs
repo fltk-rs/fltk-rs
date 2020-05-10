@@ -212,6 +212,14 @@ pub enum Event {
     Paste,
     SelectionClear,
     MouseWheel,
+    DndEnter,
+    DndDrag,
+    DndLeave,
+    DndRelease,
+    ScreenConfigChanged,
+    Fullscreen,
+    ZoomGesture,
+    ZoomEvent,
 }
 
 /// Defines the inputted virtual keycode

@@ -62,6 +62,8 @@ void Fl_repeat_timeout(double t, void (*)(void*), void *);
 
 void Fl_remove_timeout(void (*)(void*), void *);
 
+int Fl_dnd(void);
+
 #ifdef __cplusplus
 }
 #endif
