@@ -386,6 +386,7 @@ pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
     (s, r)
 }
 
+/// Adds a one-shot timeout callback.
 pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
@@ -400,6 +401,8 @@ pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
     }
 }
 
+/// Repeats a timeout callback from the expiration of the previous timeout
+/// You may only call this method inside a timeout callback.
 pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
@@ -414,6 +417,7 @@ pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
     }
 }
 
+/// Removes a timeout callback
 pub fn remove_timeout(cb: Box<dyn FnMut()>) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
