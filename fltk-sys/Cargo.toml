@@ -21,5 +21,8 @@ default = []
 fltk-shared = []
 use-ninja = []
 system-fltk = []
+system-libpng = []
+system-libjpeg = []
+system-zlib = []
 cpp-testing = [] # for C++ testing
 
