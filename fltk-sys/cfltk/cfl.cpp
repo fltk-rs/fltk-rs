@@ -95,3 +95,7 @@ void Fl_remove_timeout(void (*timeout_h)(void*), void *data) {
 int Fl_dnd(void) {
   return Fl::dnd();
 }
+
+void *Fl_first_window(void) {
+  return (void*)Fl::first_window();
+}

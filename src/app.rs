@@ -386,8 +386,22 @@ pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
     (s, r)
 }
 
+fn first_window() -> Option<crate::window::Window> {
+    unsafe {
+        let x = Fl_first_window();
+        if x.is_null() {
+            None
+        } else {
+            let x = crate::window::Window::from_widget_ptr(x as *mut fltk_sys::widget::Fl_Widget);
+            Some(x)
+        }
+    }
+}
+
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
 pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
+    let main_win = first_window();
+    debug_assert!(main_win.is_some() && main_win.unwrap().takes_events(), "Main Window is unable to take events!");
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -405,6 +419,8 @@ pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
 /// You may only call this method inside a timeout callback.
 /// The timeout duration `tm` is indicated in seconds
 pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
+    let main_win = first_window();
+    debug_assert!(main_win.is_some() && main_win.unwrap().takes_events(), "Main Window is unable to take events!");
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);

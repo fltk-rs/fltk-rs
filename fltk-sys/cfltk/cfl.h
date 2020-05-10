@@ -64,6 +64,8 @@ void Fl_remove_timeout(void (*)(void*), void *);
 
 int Fl_dnd(void);
 
+void *Fl_first_window(void);
+
 #ifdef __cplusplus
 }
 #endif

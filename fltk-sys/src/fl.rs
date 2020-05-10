@@ -108,3 +108,9 @@ extern "C" {
         arg2: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_dnd() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_first_window() -> *mut ::std::os::raw::c_void;
+}
