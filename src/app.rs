@@ -385,3 +385,45 @@ pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
     r.id = sz;
     (s, r)
 }
+
+pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let f: &mut (dyn FnMut()) = &mut **a;
+            f();
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+        let data: *mut raw::c_void = mem::transmute(a);
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fltk_sys::fl::Fl_add_timeout(tm,  callback, data);
+    }
+}
+
+pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let f: &mut (dyn FnMut()) = &mut **a;
+            f();
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+        let data: *mut raw::c_void = mem::transmute(a);
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fltk_sys::fl::Fl_repeat_timeout(tm,  callback, data);
+    }
+}
+
+pub fn remove_timeout(cb: Box<dyn FnMut()>) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let f: &mut (dyn FnMut()) = &mut **a;
+            f();
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+        let data: *mut raw::c_void = mem::transmute(a);
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fltk_sys::fl::Fl_remove_timeout(callback, data);
+    }
+}

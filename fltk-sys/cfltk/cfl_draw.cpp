@@ -327,6 +327,8 @@ int cfl_draw_symbol(const char *label, int x, int y, int w, int h, int c) {
 
 // The following code was copied from stackoverflow
 int cfl_raw_image_to_png(unsigned char *data, const char *fname, int w, int h) {
+  if (!data || !fname) return -1;
+  
   FILE *fp;
 
   if ((fp = fopen(fname, "wb")) == NULL) {
@@ -334,7 +336,9 @@ int cfl_raw_image_to_png(unsigned char *data, const char *fname, int w, int h) {
   }
 
   png_structp pptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
+  if (!pptr) return -1;
   png_infop iptr = png_create_info_struct(pptr);
+  if (!iptr) return -1;
   png_bytep ptr = (png_bytep)data;
 
   png_init_io(pptr, fp);
@@ -356,6 +360,7 @@ int cfl_raw_image_to_png(unsigned char *data, const char *fname, int w, int h) {
 }
 
 int cfl_raw_image_to_jpg(unsigned char *data, const char *fname, int w, int h) {
+  if (!data || !fname) return -1;
   struct jpeg_compress_struct cinfo;
   struct jpeg_error_mgr jerr;
 
@@ -392,6 +397,7 @@ int cfl_raw_image_to_jpg(unsigned char *data, const char *fname, int w, int h) {
 }
 
 int cfl_raw_image_to_bmp(unsigned char *data, const char *fname, int w, int h) {
+  if (!data || !fname) return -1;
   FILE *f;
   int filesize = 54 + 3 * w * h;
 
