@@ -57,6 +57,12 @@ if(CFLTK_BUILD_SHARED OR USE_SYSTEM_FLTK)
     target_link_libraries(cfltk PUBLIC fltk fltk_images fltk_z fltk_jpeg fltk_png)
 endif()
 
+if(USE_SYSTEM_FLTK)
+    install(TARGETS cfltk
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        )
+endif()
+
 if(CFLTK_BUILD_TESTS)
     enable_testing()
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/tests)

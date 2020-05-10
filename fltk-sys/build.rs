@@ -105,6 +105,7 @@ fn main() {
         .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
         .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
         .build();
+        
     println!(
         "cargo:rustc-link-search=native={}",
         dst.join("build").display()
@@ -129,9 +130,6 @@ fn main() {
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
         println!("cargo:rustc-link-lib=static=fltk_images");
-        // println!("cargo:rustc-link-lib=static=fltk_jpeg");
-        // println!("cargo:rustc-link-lib=static=fltk_png");
-        // println!("cargo:rustc-link-lib=static=fltk_z");
 
         if cfg!(feature = "system-libpng") {
             println!("cargo:rustc-link-lib=dylib=png");
@@ -157,7 +155,6 @@ fn main() {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
-                println!("cargo:rustc-link-lib=dylib=z");
             }
             "windows" => {
                 if cfg!(target_env = "gnu") {

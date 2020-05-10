@@ -32,7 +32,7 @@ features = ["fltk-shared"]
 [dependencies]
 fltk = { version = "^0.4", features = ["fltk-shared"] }
 ```
-You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
+You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the system-fltk feature, but note that this crate uses the latest FLTK.
 
 To use the master branch in your project, you can use:
 ```toml

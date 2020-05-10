@@ -49,7 +49,7 @@ const char *cfl_password(const char *txt, const char *deflt);
 
 typedef struct Fl_Help_Dialog Fl_Help_Dialog;
 
-Fl_Help_Dialog* Fl_Help_Dialog_new(void);
+Fl_Help_Dialog *Fl_Help_Dialog_new(void);
 
 void Fl_Help_Dialog_delete(Fl_Help_Dialog *self);
 
