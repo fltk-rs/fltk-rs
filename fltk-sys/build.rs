@@ -59,19 +59,42 @@ fn main() {
         .unwrap();
 
     let mut dst = cmake::Config::new("cfltk");
+
     if cfg!(feature = "fltk-shared") {
         dst.define("CFLTK_BUILD_SHARED", "ON");
     }
+
     if cfg!(feature = "use-ninja") {
         dst.generator("Ninja");
     }
+
     if cfg!(feature = "system-fltk") {
         dst.define("USE_SYSTEM_FLTK", "ON");
     }
+
+    if cfg!(feature = "system-libpng") {
+        dst.define("OPTION_USE_SYSTEM_LIBPNG", "ON");
+    } else {
+        dst.define("OPTION_USE_SYSTEM_LIBPNG", "OFF");
+    }
+
+    if cfg!(feature = "system-libjpeg") {
+        dst.define("OPTION_USE_SYSTEM_LIBJPEG", "ON");
+    } else {
+        dst.define("OPTION_USE_SYSTEM_LIBJPEG", "OFF");
+    }
+
+    if cfg!(feature = "system-zlib") {
+        dst.define("OPTION_USE_SYSTEM_ZLIB", "ON");
+    } else {
+        dst.define("OPTION_USE_SYSTEM_ZLIB", "OFF");
+    }
+
     if cfg!(feature = "cpp-testing") {
         println!("cargo:rerun-if-changed=cfltk/tests/test1.cpp");
         dst.define("CFLTK_BUILD_TESTS", "ON");
     }
+
     let dst = dst
         .profile("RELEASE")
         .define("OPTION_ABI_VERSION:STRING", "10401")
@@ -79,12 +102,10 @@ fn main() {
         .define("OPTION_BUILD_EXAMPLES", "OFF")
         .define("OPTION_USE_THREADS", "ON")
         .define("OPTION_LARGE_FILE", "ON")
-        .define("OPTION_USE_SYSTEM_ZLIB", "OFF")
-        .define("OPTION_USE_SYSTEM_LIBPNG", "OFF")
-        .define("OPTION_USE_SYSTEM_LIBJPEG", "OFF")
         .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
         .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
         .build();
+        
     println!(
         "cargo:rustc-link-search=native={}",
         dst.join("build").display()
@@ -109,9 +130,24 @@ fn main() {
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
         println!("cargo:rustc-link-lib=static=fltk_images");
-        println!("cargo:rustc-link-lib=static=fltk_jpeg");
-        println!("cargo:rustc-link-lib=static=fltk_png");
-        println!("cargo:rustc-link-lib=static=fltk_z");
+
+        if cfg!(feature = "system-libpng") {
+            println!("cargo:rustc-link-lib=dylib=png");
+        } else {
+            println!("cargo:rustc-link-lib=static=fltk_png");
+        }
+    
+        if cfg!(feature = "system-libjpeg") {
+            println!("cargo:rustc-link-lib=dylib=jpeg");
+        } else {
+            println!("cargo:rustc-link-lib=static=fltk_jpeg");
+        }
+    
+        if cfg!(feature = "system-zlib") {
+            println!("cargo:rustc-link-lib=dylib=z");
+        } else {
+            println!("cargo:rustc-link-lib=static=fltk_z");
+        }
 
         match target_os.unwrap().as_str() {
             "macos" => {
@@ -119,7 +155,6 @@ fn main() {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
-                println!("cargo:rustc-link-lib=dylib=z");
             }
             "windows" => {
                 if cfg!(target_env = "gnu") {

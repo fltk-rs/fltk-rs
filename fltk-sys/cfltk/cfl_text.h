@@ -7,62 +7,62 @@ extern "C" {
 #endif
 
 #define DISPLAY_DECLARE(widget)                                                \
-  int widget##_text_font(const widget *);                                      \
-  void widget##_set_text_font(widget *, int s);                                \
-  int widget##_text_size(const widget *);                                      \
-  void widget##_set_text_size(widget *, int s);                                \
-  unsigned int widget##_text_color(const widget *);                            \
-  void widget##_set_text_color(widget *, unsigned int n);                      \
-  void widget##_scroll(widget *, int topLineNum, int horizOffset);             \
-  void widget##_insert(widget *, const char *text);                            \
-  void widget##_set_insert_position(widget *, int newPos);                     \
-  int widget##_insert_position(const widget *);                                \
-  int widget##_position_to_xy(const widget *self, int pos, int *x, int *y);    \
-  int widget##_count_lines(const widget *, int start, int end,                 \
-                           int start_pos_is_line_start);                       \
-  int widget##_move_right(widget *);                                           \
-  int widget##_move_left(widget *);                                            \
-  int widget##_move_up(widget *);                                              \
-  int widget##_move_down(widget *);                                            \
-  void widget##_show_cursor(widget *, int boolean);                            \
-  void widget##_set_style_table_entry(widget *self, void *sbuf,                \
-                                      unsigned int *color, int *font,          \
-                                      int *fontsz, int sz);                    \
-  void widget##_set_cursor_style(widget *, int style);                         \
-  void widget##_set_cursor_color(widget *, unsigned int color);                \
-  void widget##_set_scrollbar_width(widget *, int width);                      \
-  void widget##_set_scrollbar_size(widget *, int newSize);                     \
-  void widget##_set_scrollbar_align(widget *, int align);                      \
-  int widget##_cursor_style(widget *);                                         \
-  unsigned int widget##_cursor_color(widget *);                                \
-  int widget##_scrollbar_width(widget *);                                      \
-  int widget##_scrollbar_size(widget *);                                       \
-  int widget##_scrollbar_align(widget *);                                      \
-  int widget##_line_start(const widget *self, int pos);                        \
-  int widget##_line_end(const widget *self, int startPos,                      \
-                        int startPosIsLineStart);                              \
-  int widget##_skip_lines(widget *self, int startPos, int nLines,              \
+    int widget##_text_font(const widget *);                                    \
+    void widget##_set_text_font(widget *, int s);                              \
+    int widget##_text_size(const widget *);                                    \
+    void widget##_set_text_size(widget *, int s);                              \
+    unsigned int widget##_text_color(const widget *);                          \
+    void widget##_set_text_color(widget *, unsigned int n);                    \
+    void widget##_scroll(widget *, int topLineNum, int horizOffset);           \
+    void widget##_insert(widget *, const char *text);                          \
+    void widget##_set_insert_position(widget *, int newPos);                   \
+    int widget##_insert_position(const widget *);                              \
+    int widget##_position_to_xy(const widget *self, int pos, int *x, int *y);  \
+    int widget##_count_lines(const widget *, int start, int end,               \
+                             int start_pos_is_line_start);                     \
+    int widget##_move_right(widget *);                                         \
+    int widget##_move_left(widget *);                                          \
+    int widget##_move_up(widget *);                                            \
+    int widget##_move_down(widget *);                                          \
+    void widget##_show_cursor(widget *, int boolean);                          \
+    void widget##_set_style_table_entry(widget *self, void *sbuf,              \
+                                        unsigned int *color, int *font,        \
+                                        int *fontsz, int sz);                  \
+    void widget##_set_cursor_style(widget *, int style);                       \
+    void widget##_set_cursor_color(widget *, unsigned int color);              \
+    void widget##_set_scrollbar_width(widget *, int width);                    \
+    void widget##_set_scrollbar_size(widget *, int newSize);                   \
+    void widget##_set_scrollbar_align(widget *, int align);                    \
+    int widget##_cursor_style(widget *);                                       \
+    unsigned int widget##_cursor_color(widget *);                              \
+    int widget##_scrollbar_width(widget *);                                    \
+    int widget##_scrollbar_size(widget *);                                     \
+    int widget##_scrollbar_align(widget *);                                    \
+    int widget##_line_start(const widget *self, int pos);                      \
+    int widget##_line_end(const widget *self, int startPos,                    \
                           int startPosIsLineStart);                            \
-  int widget##_rewind_lines(widget *self, int startPos, int nLines);           \
-  void widget##_next_word(widget *self);                                       \
-  void widget##_previous_word(widget *self);                                   \
-  int widget##_word_start(const widget *self, int pos);                        \
-  int widget##_word_end(const widget *self, int pos);                          \
-  double widget##_x_to_col(const widget *self, double x);                      \
-  double widget##_col_to_x(const widget *self, double col);                    \
-  void widget##_set_linenumber_width(widget *self, int width);                 \
-  int widget##_linenumber_width(const widget *self);                           \
-  void widget##_set_linenumber_font(widget *self, int val);                    \
-  int widget##_linenumber_font(const widget *self);                            \
-  void widget##_set_linenumber_size(widget *self, int val);                    \
-  int widget##_linenumber_size(const widget *self);                            \
-  void widget##_set_linenumber_fgcolor(widget *self, unsigned int val);        \
-  unsigned int widget##_linenumber_fgcolor(const widget *self);                \
-  void widget##_set_linenumber_bgcolor(widget *self, unsigned int val);        \
-  unsigned int widget##_linenumber_bgcolor(const widget *self);                \
-  void widget##_set_linenumber_align(widget *self, int val);                   \
-  int widget##_linenumber_align(const widget *self);                           \
-  int widget##_in_selection(const widget *self, int x, int y);                 
+    int widget##_skip_lines(widget *self, int startPos, int nLines,            \
+                            int startPosIsLineStart);                          \
+    int widget##_rewind_lines(widget *self, int startPos, int nLines);         \
+    void widget##_next_word(widget *self);                                     \
+    void widget##_previous_word(widget *self);                                 \
+    int widget##_word_start(const widget *self, int pos);                      \
+    int widget##_word_end(const widget *self, int pos);                        \
+    double widget##_x_to_col(const widget *self, double x);                    \
+    double widget##_col_to_x(const widget *self, double col);                  \
+    void widget##_set_linenumber_width(widget *self, int width);               \
+    int widget##_linenumber_width(const widget *self);                         \
+    void widget##_set_linenumber_font(widget *self, int val);                  \
+    int widget##_linenumber_font(const widget *self);                          \
+    void widget##_set_linenumber_size(widget *self, int val);                  \
+    int widget##_linenumber_size(const widget *self);                          \
+    void widget##_set_linenumber_fgcolor(widget *self, unsigned int val);      \
+    unsigned int widget##_linenumber_fgcolor(const widget *self);              \
+    void widget##_set_linenumber_bgcolor(widget *self, unsigned int val);      \
+    unsigned int widget##_linenumber_bgcolor(const widget *self);              \
+    void widget##_set_linenumber_align(widget *self, int val);                 \
+    int widget##_linenumber_align(const widget *self);                         \
+    int widget##_in_selection(const widget *self, int x, int y);
 
 typedef void (*Fl_Text_Modify_Cb)(int pos, int nInserted, int nDeleted,
                                   int nRestyled, const char *deletedText,

@@ -32,7 +32,7 @@ features = ["fltk-shared"]
 [dependencies]
 fltk = { version = "^0.4", features = ["fltk-shared"] }
 ```
-You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
+You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the system-fltk feature, but note that this crate uses the latest FLTK.
 
 To use the master branch in your project, you can use:
 ```toml
@@ -109,17 +109,39 @@ fn main() {
 ```
 
 ### Events
-**Event handling must be done after the drawing is done and the main window shown. And must be done in fn main()**
+**Event handling must be done after the drawing is done and the main window shown. And must be done in the main thread**
 
-Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the handle() method can be used:
+Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
 ```rust
-some_widget.handle(Box::new(move |ev: app::Event| {
-    match ev {
-        /* handle ev */
-    }
-}));
+    /* previous hello world code */
+    but.set_callback(Box::new(move || frame.set_label("Hello World!")));
+    app.run().unwrap();
 ```
-Handled or ignored events should return true, unhandled events should return false.
+Another way is to use message passing:
+```rust
+    /* previous counter code */
+    let (s, r) = app::channel::<Message>();
+    but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
+    but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
+    while app.wait() {
+        let label: i32 = frame.label().parse().unwrap();
+        match r.recv() {
+            Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
+            Some(Message::Decrement) => frame.set_label(&(label - 1).to_string()),
+            None => (),
+        }
+    }
+```
+
+For custom event handling, the handle() method can be used:
+```rust
+    some_widget.handle(Box::new(move |ev: app::Event| {
+        match ev {
+            /* handle ev */
+        }
+    }));
+```
+Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the examples directory.
 
 ### Theming
 FLTK offers 4 application themes (called schemes):
@@ -186,23 +208,24 @@ $ cargo run --example hello
 $ cargo run --example hello_button
 $ cargo run --example paint
 ```
-![alt_test](screenshots/hello.jpg)
 
-![alt_test](screenshots/gallery.jpg)
+<img alt="Hello" src="screenshots/hello.jpg">
+
+<img alt="Gallery" width=600 height=500 src="screenshots/gallery.jpg">
 
 Setting the scheme to Gtk.
 
-![alt_test](screenshots/calc.jpg)
+<img alt="Calculator" width=400 height=500 src="screenshots/calc.jpg">
 
-![alt_test](screenshots/counter.jpg)
+<img alt="Counter" width=240 height=300 src="screenshots/counter.jpg">
 
 Check the full [code](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter.rs) for the custom theming.
 
-![alt_test](screenshots/editor.jpg)
+<img alt="Editor" width=800 height=600 src="screenshots/editor.jpg">
 
 Setting the scheme to Gtk
 
-![alt_test](screenshots/terminal.jpg)
+<img alt="Terminal" width=800 height=600 src="screenshots/terminal.jpg">
 
 ## Currently implemented widgets
 

@@ -6,19 +6,19 @@
 //!
 //!
 //! Rust bindings for the FLTK Graphical User Interface library. 
-
+//!
 //! The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
-
+//!
 //! This crate is still in active development and is not production ready. However, you can still try it out and give valuable feedback.
-
+//!
 //! Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
-
+//!
 //! - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
 //! - [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
-
+//!
 //! ## Usage
 //! Just add the following to your project's Cargo.toml file:
-
+//!
 //! ```toml
 //! [dependencies]
 //! fltk = "^0.4"
@@ -33,18 +33,18 @@
 //! fltk = { version = "^0.4", features = ["fltk-shared"] }
 //! ```
 //! You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
-
+//!
 //! To use the master branch in your project, you can use:
 //! ```toml
 //! [dependencies]
 //! fltk = { git = "https://github.com/MoAlyousef/fltk-rs" }
 //! ```
-
+//!
 //! An example hello world application:
-
+//!
 //! ```rust
 //! use fltk::{app::*, window::*};
-
+//!
 //! fn main() {
 //!     let app = App::default();
 //!     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
@@ -53,7 +53,7 @@
 //!     app.run().unwrap();
 //! }
 //! ```
-
+//!
 //! Another example showing the basic callback functionality:
 //! ```rust
 //! use fltk::{app::*, button::*, frame::*, window::*};
@@ -71,16 +71,16 @@
 //! ```
 //! Please check the examples directory for more examples.
 //! You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, as well as the width and height of the widget. Most widgets, except the TextDisplay and TextEditor, also take a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
-
+//!
 //! ```rust
 //! let but1 = Button::new(10, 10, 80, 40, "Button 1");
-
+//!
 //! let but2 = Button::default()
 //!     .with_pos(10, 10)
 //!     .with_size(80, 40)
 //!     .with_label("Button 2");
 //! ```
-
+//!
 //! An example of a counter showing use of the builder pattern:
 //! ```rust
 //! fn main() {
@@ -107,27 +107,47 @@
 //!     /* Event handling */
 //! }
 //! ```
-
+//!
 //! ### Events
-//! **Event handling must be done after the drawing is done and the main window shown. And must be done in fn main()**
-
-//! Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons). For custom event handling, the handle() method can be used:
+//! Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
 //! ```rust
-//! some_widget.handle(Box::new(move |ev: app::Event| {
-//!     match ev {
-//!         /* handle ev */
-//!     }
-//! }));
+//!     /* previous hello world code */
+//!     but.set_callback(Box::new(move || frame.set_label("Hello World!")));
+//!     app.run().unwrap();
 //! ```
-//! Handled or ignored events should return true, unhandled events should return false.
-
+//! Another way is to use message passing:
+//! ```rust
+//!     /* previous counter code */
+//!     let (s, r) = app::channel::<Message>();
+//!     but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
+//!     but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
+//!     while app.wait() {
+//!         let label: i32 = frame.label().parse().unwrap();
+//!         match r.recv() {
+//!             Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
+//!             Some(Message::Decrement) => frame.set_label(&(label - 1).to_string()),
+//!             None => (),
+//!         }
+//!     }
+//! ```
+//!
+//! For custom event handling, the handle() method can be used:
+//! ```rust
+//!     some_widget.handle(Box::new(move |ev: app::Event| {
+//!         match ev {
+//!             /* handle ev */
+//!         }
+//!     }));
+//! ```
+//! Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the examples directory.
+//!
 //! ### Theming
 //! FLTK offers 4 application themes (called schemes):
 //! - Base
 //! - Gtk
 //! - Gleam
 //! - Plastic
-
+//!
 //! These can be set using the App::set_scheme() function.
 //! Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait, such as set_color(), set_label_font(), set_frame_type() etc:
 //! ```rust
@@ -137,9 +157,9 @@
 //!     some_button.set_frame(FrameType::RoundUpBox);
 //!     some_button.set_font(Font::TimesItalic);
 //! ```
-
+//!
 //! ## FAQ
-
+//!
 //! please check the [FAQ](https://github.com/MoAlyousef/fltk-rs/blob/master/FAQ.md) page for frequently asked questions, encountered issues, guides on deployment, and contribution.
 
 pub mod app;

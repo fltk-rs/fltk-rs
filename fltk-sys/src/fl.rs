@@ -88,3 +88,29 @@ extern "C" {
 extern "C" {
     pub fn Fl_wait() -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_add_timeout(
+        t: f64,
+        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_repeat_timeout(
+        t: f64,
+        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_remove_timeout(
+        arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_dnd() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_first_window() -> *mut ::std::os::raw::c_void;
+}

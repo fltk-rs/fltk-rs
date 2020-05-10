@@ -37,6 +37,8 @@ See [here](https://docs.appimage.org/packaging-guide/overview.html#converting-ex
 ### Why is the size of my resulting executable larger than I had expected?
 FLTK is known for it's small applications. Make sure you're building in release, and make sure symbols are stripped using the strip command in Unix-like systems. On Windows it's unnecessary since symbols would end up in the pdb file (which shouldn't be deployed).
 
+### Can I cross-compile my application to a mobile platform or WASM?
+FLTK currently doesn't support WASM nor mobile platforms. It is focused on desktop applications.
 
 ## Licensing
 
@@ -55,6 +57,23 @@ FLTK has some known issues with text alignment and right-to-left language suppor
 ### Do you plan on supporting multithreading or async/await?
 FLTK supports multithreaded and concurrent applications. See the examples directory for examples on usage with threads, messages, async_std and tokio.
 
+## Windowing
+
+### Why does FLTK exit when I hit the escape key?
+This is the default behavior in FLTK. You can easily override it by setting a callback for your main window:
+```rust
+    wind.set_callback(Box::new(move || {
+        if fltk::app::event() == fltk::app::Event::Close {
+            std::process::exit(0); // Which would close using the close button. You can also assign other keys to close the application
+        }
+    }));
+```
+
+## Panics
+
+### My app panics when I try to handle events, how can I fix it?
+This is due to a debug_assert which checks that the involved widget and the window are capable of handling events. Although most events would be handled correctly, some events require that the aforementioned conditions be met. Thus it is advisable to place your event handling code after the main drawing is done, i.e after calling your main window's show() method. Another point is that event handling and drawing should be done in the main thread.
+
 ## Memory and unsafety
 
 ### How memory safe is fltk-rs?
@@ -68,7 +87,7 @@ Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so 
 
 ### How can I contribute?
 Contributions are very welcome! Even if just for submitting bug fixes, improving the documentation, adding tests and/or examples.
-The wrapper itself which can be found in the fltk-sys directory, uses C89 for the headers and C++11 for the source files. Bindgen is used on the header files using bind.sh script. It's not added as dependency to this project since it depends on libclang and llvm which has some build issues on windows last time I tried it. C89 was chosen for the headers since bindgen works best with them. It's possible to contribute by directly modifying the .rs files in the fltk-sys directory. For the C/C++ code, the default clang-format formatting is used. For Rust, rustfmt is used. The Rust code shouldn't use nightly/unstable features. Avoid pulling in heavy or unnecessary dependencies. Doc comments would also be appreciated.
+The wrapper itself which can be found in the fltk-sys directory, uses C89 for the headers and C++11 for the source files. Bindgen is used on the header files using bind.sh script. It's not added as dependency to this project since it depends on libclang and llvm which has some build issues on windows last time I tried it. C89 was chosen for the headers since bindgen works best with them. It's possible to contribute by directly modifying the .rs files in the fltk-sys directory. For the C/C++ code, the supplied clang-format formatting is used. For Rust, rustfmt is used. The Rust code shouldn't use nightly/unstable features. Avoid pulling in heavy or unnecessary dependencies. Doc comments would also be appreciated.
 
 ### I disagree with a current api, how can I change it?
 If you would like to change the api in some way, I propose opening an issue first so that it can be discussed before putting a large amount of work on it.

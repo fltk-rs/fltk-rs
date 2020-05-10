@@ -44,7 +44,7 @@ void Fl_set_scheme(const char *scheme);
 
 unsigned int Fl_get_color(unsigned char r, unsigned char g, unsigned char b);
 
-const char* Fl_get_font(int idx);
+const char *Fl_get_font(int idx);
 
 unsigned char Fl_set_fonts(const char *c);
 
@@ -55,6 +55,16 @@ void Fl_awake_msg(void *msg);
 void *Fl_thread_msg(void);
 
 int Fl_wait(void);
+
+void Fl_add_timeout(double t, void (*)(void *), void *);
+
+void Fl_repeat_timeout(double t, void (*)(void *), void *);
+
+void Fl_remove_timeout(void (*)(void *), void *);
+
+int Fl_dnd(void);
+
+void *Fl_first_window(void);
 
 #ifdef __cplusplus
 }

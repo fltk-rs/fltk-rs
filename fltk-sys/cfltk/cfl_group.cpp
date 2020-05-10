@@ -1,4 +1,5 @@
 #include "cfl_group.h"
+#include <FL/Fl.H>
 #include <FL/Fl_Color_Chooser.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Image.H>
@@ -32,16 +33,12 @@ GROUP_DEFINE(Fl_Tile)
 
 WIDGET_DEFINE(Fl_Wizard)
 
-void Fl_Wizard_next(Fl_Wizard *self) {
-    self->next();
-}
+void Fl_Wizard_next(Fl_Wizard *self) { self->next(); }
 
-void Fl_Wizard_prev(Fl_Wizard *self) {
-    self->prev();
-}
+void Fl_Wizard_prev(Fl_Wizard *self) { self->prev(); }
 
 Fl_Widget *Fl_Wizard_value(Fl_Wizard *self) {
-    return (Fl_Widget*)self->value();
+    return (Fl_Widget *)self->value();
 }
 
 void Fl_Wizard_set_value(Fl_Wizard *self, Fl_Widget *wid) {
@@ -52,14 +49,8 @@ GROUP_DEFINE(Fl_Wizard)
 
 WIDGET_DEFINE(Fl_Color_Chooser)
 
-double Fl_Color_Chooser_r(Fl_Color_Chooser *self) {
-    return self->r();
-}
-double Fl_Color_Chooser_g(Fl_Color_Chooser *self) {
-    return self->g();
-}
-double Fl_Color_Chooser_b(Fl_Color_Chooser *self) {
-    return self->b();
-}
+double Fl_Color_Chooser_r(Fl_Color_Chooser *self) { return self->r(); }
+double Fl_Color_Chooser_g(Fl_Color_Chooser *self) { return self->g(); }
+double Fl_Color_Chooser_b(Fl_Color_Chooser *self) { return self->b(); }
 
 GROUP_DEFINE(Fl_Color_Chooser)

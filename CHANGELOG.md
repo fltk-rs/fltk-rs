@@ -2,6 +2,9 @@
 
 ## Unreleased
 ### Changes
+- Added timeout callback functions to the app module.
+- Added features to use system libjpeg, libpng and zlib instead of bundled ones.
+- Added initial support for Drag and Drop operations
 
 ## [0.4.1] - 2020-05-07
 ### Changes

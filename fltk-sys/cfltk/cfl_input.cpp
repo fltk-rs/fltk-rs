@@ -1,4 +1,5 @@
 #include "cfl_input.h"
+#include <FL/Fl.H>
 #include <FL/Fl_File_Input.H>
 #include <FL/Fl_Float_Input.H>
 #include <FL/Fl_Image.H>
