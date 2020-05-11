@@ -84,10 +84,4 @@ That said, fltk-rs is still in active development, and has not yet been fuzzed n
 Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so the unsafe keyword is needed.
 
 ## Contributing
-
-### How can I contribute?
-Contributions are very welcome! Even if just for submitting bug fixes, improving the documentation, adding tests and/or examples.
-The wrapper itself which can be found in the fltk-sys directory, uses C89 for the headers and C++11 for the source files. Bindgen is used on the header files using bind.sh script. It's not added as dependency to this project since it depends on libclang and llvm which has some build issues on windows last time I tried it. C89 was chosen for the headers since bindgen works best with them. It's possible to contribute by directly modifying the .rs files in the fltk-sys directory. For the C/C++ code, the supplied clang-format formatting is used. For Rust, rustfmt is used. The Rust code shouldn't use nightly/unstable features. Avoid pulling in heavy or unnecessary dependencies. Doc comments would also be appreciated.
-
-### I disagree with a current api, how can I change it?
-If you would like to change the api in some way, I propose opening an issue first so that it can be discussed before putting a large amount of work on it.
+Please refer to the [CONTRIBUTING](https://github.com/MoAlyousef/fltk-rs/blob/master/CONTRIBUTING.md) page for further information.
