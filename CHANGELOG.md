@@ -1,6 +1,10 @@
 # Changelog
 
+
 ## Unreleased
+### Changes
+
+## [0.4.2] - 2020-05-10
 ### Changes
 - Added timeout callback functions to the app module.
 - Added features to use system libjpeg, libpng and zlib instead of bundled ones.
