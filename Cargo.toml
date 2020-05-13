@@ -10,7 +10,7 @@ keywords = ["gui", "bindings", "graphics"]
 categories = ["gui"]
 readme = "README.md"
 license = "MIT"
-exclude = ["/screenshots", "/examples", "/.github"]
+exclude = ["/screenshots", "/.github"]
 
 [lib]
 name = "fltk"
