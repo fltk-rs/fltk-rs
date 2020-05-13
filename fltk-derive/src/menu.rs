@@ -52,7 +52,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl MenuExt for #name {
+        unsafe impl MenuExt for #name {
             fn add(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut()>) {
                 debug_assert!(
                     self.top_window().unwrap().takes_events() && self.takes_events(), 

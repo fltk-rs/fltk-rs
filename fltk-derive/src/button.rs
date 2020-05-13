@@ -19,7 +19,7 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
     let set_value = Ident::new(format!("{}_{}", name_str, "set_value").as_str(), name.span());
 
     let gen = quote! {
-        impl ButtonExt for #name {
+        unsafe impl ButtonExt for #name {
             fn shortcut(&self) -> Shortcut {
                 unsafe {
                     mem::transmute(#shortcut(self._inner))

@@ -85,7 +85,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
         drawer inner_drawer = NULL;                                            \
         widget##_Derived(int x, int y, int w, int h, const char *title = 0)    \
             : widget(x, y, w, h, title) {}                                     \
-        operator widget *() { return (widget *)*this; }                        \
+        operator widget *() { return (widget *)this; }                         \
         void set_handler(handler h) { inner_handler = h; }                     \
         void set_handler_data(void *data) { ev_data_ = data; }                 \
         int handle(int event) override {                                       \

@@ -2,7 +2,8 @@
 
 [![Documentation](https://docs.rs/fltk/badge.svg)](https://docs.rs/fltk)
 [![Crates.io](https://img.shields.io/crates/v/fltk.svg)](https://crates.io/crates/fltk)
-[![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/MoAlyousef/fltk/blob/master/LICENSE)
+[![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/MoAlyousef/fltk-rs/blob/master/LICENSE)
+[![Build](https://github.com/MoAlyousef/fltk-rs/workflows/Build/badge.svg?branch=master)](https://github.com/MoAlyousef/fltk-rs/actions)
 
 
 Rust bindings for the FLTK Graphical User Interface library. 
@@ -209,23 +210,23 @@ $ cargo run --example hello_button
 $ cargo run --example paint
 ```
 
-<img alt="Hello" src="screenshots/hello.jpg">
+![alt_test](screenshots/hello.jpg)
 
-<img alt="Gallery" width=600 height=500 src="screenshots/gallery.jpg">
+![alt_test](screenshots/gallery.jpg)
 
 Setting the scheme to Gtk.
 
-<img alt="Calculator" width=400 height=500 src="screenshots/calc.jpg">
+![alt_test](screenshots/calc.jpg)
 
 <img alt="Counter" width=240 height=300 src="screenshots/counter.jpg">
 
 Check the full [code](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter.rs) for the custom theming.
 
-<img alt="Editor" width=800 height=600 src="screenshots/editor.jpg">
+![alt_test](screenshots/editor.jpg)
 
 Setting the scheme to Gtk
 
-<img alt="Terminal" width=800 height=600 src="screenshots/terminal.jpg">
+![alt_test](screenshots/terminal.jpg)
 
 ## Currently implemented widgets
 

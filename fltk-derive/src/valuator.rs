@@ -46,7 +46,7 @@ pub fn impl_valuator_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl ValuatorExt for #name {
+        unsafe impl ValuatorExt for #name {
             fn set_bounds(&mut self, a: f64, b: f64) {
                 unsafe {
                     #set_bounds(self._inner, a, b)

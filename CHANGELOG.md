@@ -1,8 +1,14 @@
 # Changelog
 
-
 ## Unreleased
 ### Changes
+- (NULL)
+
+## [0.4.3] - 2020-05-13
+### Changes
+- Mark internal traits as unsafe.
+- Fix operator widget*().
+- Add excludes to Cargo.toml.
 
 ## [0.4.2] - 2020-05-10
 ### Changes

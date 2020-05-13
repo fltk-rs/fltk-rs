@@ -150,7 +150,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
         }
 
-        impl WidgetExt for #name {
+        unsafe impl WidgetExt for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
                 unsafe {

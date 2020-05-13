@@ -79,6 +79,7 @@ This is due to a debug_assert which checks that the involved widget and the wind
 ### How memory safe is fltk-rs?
 FLTK manages it's own memory. Any widget is automatically owned by a parent, which is the enclosing widget implementing GroupExt such as windws etc. This is done in the C++ FLTK library itself. Any constructed widget calls the current() method which detects the enclosing group widget, and calls its add() method rending ownership to the group widget. Upon destruction of the group widget, all owned widgets are freed. So while FLTK widgets don't leak, this might create lifetime issues with certain widgets, namely the TextEditor and TextDisplay widgets. These 2 widgets require a TextBuffer which might get destroyed/freed before the destruction of these widgets. So the crate's approach is to tend to naive use. That means TextBuffer currently leaks, this avoids memory unsafety issues and segfaults in favor of a memory leak. It does however offer an unsafe delete() method for manual memory management if necessary. 
 That said, fltk-rs is still in active development, and has not yet been fuzzed nor thouroughly tested for memory safety issues.
+The 2 internal traits fltk-sys and fltk-derive are supposed to remain internal, and not be exposed into the public api.
 
 ### Why is fltk-rs using so much unsafe code?
 Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so the unsafe keyword is needed.
