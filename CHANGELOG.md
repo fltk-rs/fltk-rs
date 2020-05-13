@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (NULL)
+- Added wrapper for program_should_quit signal.
 
 ## [0.4.3] - 2020-05-13
 ### Changes

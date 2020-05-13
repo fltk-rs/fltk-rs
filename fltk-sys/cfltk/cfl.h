@@ -66,6 +66,10 @@ int Fl_dnd(void);
 
 void *Fl_first_window(void);
 
+int Fl_should_program_quit(void);
+
+void Fl_program_should_quit(int flag);
+
 #ifdef __cplusplus
 }
 #endif

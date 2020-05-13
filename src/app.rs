@@ -448,3 +448,18 @@ pub fn remove_timeout(cb: Box<dyn FnMut()>) {
         fltk_sys::fl::Fl_remove_timeout(callback, data);
     }
 }
+
+pub fn should_program_quit() -> bool {
+    unsafe {
+        match Fl_should_program_quit() {
+            0 => false,
+            _ => true,
+        }
+    }
+}
+
+pub fn program_should_quit(flag: bool) {
+    unsafe {
+        Fl_program_should_quit(flag as i32)
+    }
+}
