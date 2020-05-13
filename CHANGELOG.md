@@ -2,6 +2,16 @@
 
 ## Unreleased
 ### Changes
+- (NULL)
+
+## [0.4.3] - 2020-05-13
+### Changes
+- Mark internal traits as unsafe.
+- Fix operator widget*().
+- Add excludes to Cargo.toml.
+
+## [0.4.2] - 2020-05-10
+### Changes
 - Added timeout callback functions to the app module.
 - Added features to use system libjpeg, libpng and zlib instead of bundled ones.
 - Added initial support for Drag and Drop operations

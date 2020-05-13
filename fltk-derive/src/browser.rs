@@ -40,7 +40,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl BrowserExt for #name {
+        unsafe impl BrowserExt for #name {
             fn remove(&mut self, line: u32) {
                 assert!(line > 0, "Lines start at 1!");
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");

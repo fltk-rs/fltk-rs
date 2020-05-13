@@ -79,15 +79,10 @@ This is due to a debug_assert which checks that the involved widget and the wind
 ### How memory safe is fltk-rs?
 FLTK manages it's own memory. Any widget is automatically owned by a parent, which is the enclosing widget implementing GroupExt such as windws etc. This is done in the C++ FLTK library itself. Any constructed widget calls the current() method which detects the enclosing group widget, and calls its add() method rending ownership to the group widget. Upon destruction of the group widget, all owned widgets are freed. So while FLTK widgets don't leak, this might create lifetime issues with certain widgets, namely the TextEditor and TextDisplay widgets. These 2 widgets require a TextBuffer which might get destroyed/freed before the destruction of these widgets. So the crate's approach is to tend to naive use. That means TextBuffer currently leaks, this avoids memory unsafety issues and segfaults in favor of a memory leak. It does however offer an unsafe delete() method for manual memory management if necessary. 
 That said, fltk-rs is still in active development, and has not yet been fuzzed nor thouroughly tested for memory safety issues.
+The 2 internal traits fltk-sys and fltk-derive are supposed to remain internal, and not be exposed into the public api.
 
 ### Why is fltk-rs using so much unsafe code?
 Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so the unsafe keyword is needed.
 
 ## Contributing
-
-### How can I contribute?
-Contributions are very welcome! Even if just for submitting bug fixes, improving the documentation, adding tests and/or examples.
-The wrapper itself which can be found in the fltk-sys directory, uses C89 for the headers and C++11 for the source files. Bindgen is used on the header files using bind.sh script. It's not added as dependency to this project since it depends on libclang and llvm which has some build issues on windows last time I tried it. C89 was chosen for the headers since bindgen works best with them. It's possible to contribute by directly modifying the .rs files in the fltk-sys directory. For the C/C++ code, the supplied clang-format formatting is used. For Rust, rustfmt is used. The Rust code shouldn't use nightly/unstable features. Avoid pulling in heavy or unnecessary dependencies. Doc comments would also be appreciated.
-
-### I disagree with a current api, how can I change it?
-If you would like to change the api in some way, I propose opening an issue first so that it can be discussed before putting a large amount of work on it.
+Please refer to the [CONTRIBUTING](https://github.com/MoAlyousef/fltk-rs/blob/master/CONTRIBUTING.md) page for further information.

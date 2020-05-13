@@ -198,7 +198,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl TableExt for #name {
+        unsafe impl TableExt for #name {
             fn clear(&mut self) {
                 unsafe {
                     #clear(self._inner)

@@ -69,7 +69,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
     let set_wrap = Ident::new(format!("{}_{}", name_str, "set_wrap").as_str(), name.span());
 
     let gen = quote! {
-        impl InputExt for #name {
+        unsafe impl InputExt for #name {
             fn value(&self) -> String {
                 unsafe {
                     let value_ptr = #value(self._inner);

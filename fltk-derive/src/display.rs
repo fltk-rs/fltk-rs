@@ -205,7 +205,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl DisplayExt for #name {
+        unsafe impl DisplayExt for #name {
             fn buffer<'a>(&'a self) -> &'a mut TextBuffer {
                 unsafe {
                     let buffer = #get_buffer(self._inner);

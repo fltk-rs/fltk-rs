@@ -49,7 +49,7 @@ impl From<std::ffi::NulError> for FltkError {
 }
 
 /// Defines the methods implemented by all widgets
-pub trait WidgetExt {
+pub unsafe trait WidgetExt {
     /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
     /// # Arguments
     /// * `x` - The x coordinate in the screen
@@ -186,7 +186,7 @@ pub trait WidgetExt {
 }
 
 /// Defines the methods implemented by all button widgets
-pub trait ButtonExt: WidgetExt {
+pub unsafe trait ButtonExt: WidgetExt {
     /// Gets the shortcut associated with a button
     fn shortcut(&self) -> Shortcut;
     /// Sets the shortcut associated with a button
@@ -203,7 +203,7 @@ pub trait ButtonExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all group widgets
-pub trait GroupExt: WidgetExt {
+pub unsafe trait GroupExt: WidgetExt {
     /// Begins a group, used for widgets implementing the group trait
     fn begin(&self);
     /// Ends a group, used for widgets implementing the group trait
@@ -227,7 +227,7 @@ pub trait GroupExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all window widgets
-pub trait WindowExt: GroupExt {
+pub unsafe trait WindowExt: GroupExt {
     /// Positions the window to the center of the screen
     fn center_screen(self) -> Self;
     /// Makes a window modal
@@ -245,7 +245,7 @@ pub trait WindowExt: GroupExt {
 }
 
 /// Defines the methods implemented by all input and output widgets
-pub trait InputExt: WidgetExt {
+pub unsafe trait InputExt: WidgetExt {
     /// Returns the value inside the input/output widget
     fn value(&self) -> String;
     /// Sets the value inside an input/output widget
@@ -297,7 +297,7 @@ pub trait InputExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all menu widgets
-pub trait MenuExt: WidgetExt {
+pub unsafe trait MenuExt: WidgetExt {
     /// Get a menu item by name
     fn item(&self, name: &str) -> Option<crate::menu::MenuItem>;
     /// Return the text font
@@ -340,7 +340,7 @@ pub trait MenuExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all valuator widgets
-pub trait ValuatorExt: WidgetExt {
+pub unsafe trait ValuatorExt: WidgetExt {
     /// Set bounds of a valuator
     fn set_bounds(&mut self, a: f64, b: f64);
     /// Get the minimum bound of a valuator
@@ -374,7 +374,7 @@ pub trait ValuatorExt: WidgetExt {
 }
 
 /// Defines the methods implemented by TextDisplay and TextEditor
-pub trait DisplayExt: WidgetExt {
+pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
     fn buffer<'a>(&'a self) -> &'a mut TextBuffer;
     /// Sets the associated TextBuffer
@@ -488,7 +488,7 @@ pub trait DisplayExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all browser types
-pub trait BrowserExt: WidgetExt {
+pub unsafe trait BrowserExt: WidgetExt {
     /// Removes the specified line
     fn remove(&mut self, line: u32);
     /// Adds an item
@@ -528,7 +528,7 @@ pub trait BrowserExt: WidgetExt {
 }
 
 /// Defines the methods implemented by table types
-pub trait TableExt: GroupExt {
+pub unsafe trait TableExt: GroupExt {
     /// Clears the table
     fn clear(&mut self);
     /// Sets the table frame, table_box
@@ -646,7 +646,7 @@ pub trait TableExt: GroupExt {
 }
 
 /// Defines the methods implemented by all image types
-pub trait ImageExt {
+pub unsafe trait ImageExt {
     /// Creates a copy of the image
     fn copy(&self) -> Self;
     /// Draws the image at the presupplied coordinates and size

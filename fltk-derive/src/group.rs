@@ -23,7 +23,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl GroupExt for #name {
+        unsafe impl GroupExt for #name {
             fn begin(&self) {
                 unsafe { #begin(self._inner) }
             }

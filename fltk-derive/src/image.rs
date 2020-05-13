@@ -32,7 +32,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
             }
         }
 
-        impl ImageExt for #name {
+        unsafe impl ImageExt for #name {
             fn copy(&self) -> Self {
                 unsafe {
                     let img = #copy(self._inner);
