@@ -154,4 +154,8 @@ int Fl_Help_Dialog_x(Fl_Help_Dialog *self) { return self->x(); }
 
 int Fl_Help_Dialog_y(Fl_Help_Dialog *self) { return self->y(); }
 
+void Fl_beep(int type) {
+    fl_beep(type);
+}
+
 #undef LOCK

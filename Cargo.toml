@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "0.4.3"
+version = "0.4.4"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
@@ -18,13 +18,14 @@ path = "src/lib.rs"
 
 [workspace]
 members = [
+    ".",
     "fltk-sys",
     "fltk-derive",
 ]
 
 [dependencies]
-fltk-sys = { path = "fltk-sys", version = "^0.4.3" }
-fltk-derive = { path = "fltk-derive", version = "^0.4.3" }
+fltk-sys = { path = "fltk-sys", version = "^0.4.4" }
+fltk-derive = { path = "fltk-derive", version = "^0.4.4" }
 
 [features]
 default = []

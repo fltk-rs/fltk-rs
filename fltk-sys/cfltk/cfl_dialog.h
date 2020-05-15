@@ -81,6 +81,8 @@ int Fl_Help_Dialog_x(Fl_Help_Dialog *);
 
 int Fl_Help_Dialog_y(Fl_Help_Dialog *);
 
+void Fl_beep(int type);
+
 #ifdef __cplusplus
 }
 #endif

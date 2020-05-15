@@ -114,3 +114,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_first_window() -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_should_program_quit() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_program_should_quit(flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_rand() -> ::std::os::raw::c_uint;
+}

@@ -109,6 +109,12 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
             if (draw_data_ && inner_drawer)                                    \
                 inner_drawer(draw_data_);                                      \
         };                                                                     \
+        ~widget##_Derived() {                                                  \
+            void *user_data_ = widget::user_data();                            \
+            free(user_data_);                                                  \
+            free(ev_data_);                                                    \
+            free(draw_data_);                                                  \
+        }                                                                      \
     };                                                                         \
     widget *widget##_new(int x, int y, int width, int height,                  \
                          const char *title) {                                  \

@@ -326,19 +326,19 @@ fn thread_msg<T>() -> Option<T> {
 }
 
 #[repr(C)]
-struct Message<T: Copy> {
+struct Message<T: Copy + Send + Sync> {
     id: usize,
     msg: T,
 }
 
 /// Creates a sender struct
 #[derive(Debug, Clone, Copy)]
-pub struct Sender<T: Copy> {
+pub struct Sender<T: Copy + Send + Sync> {
     data: std::marker::PhantomData<T>,
     id: usize,
 }
 
-impl<T: Copy> Sender<T> {
+impl<T: Copy + Send + Sync> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
         let msg = Message { id: self.id, msg: val };
@@ -348,12 +348,12 @@ impl<T: Copy> Sender<T> {
 
 /// Creates a receiver struct
 #[derive(Debug, Clone, Copy)]
-pub struct Receiver<T: Copy> {
+pub struct Receiver<T: Copy + Send + Sync> {
     data: std::marker::PhantomData<T>,
     id: usize,
 }
 
-impl<T: Copy> Receiver<T> {
+impl<T: Copy + Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         let data: Option<Message<T>> = thread_msg();
@@ -371,18 +371,19 @@ impl<T: Copy> Receiver<T> {
 }
 
 /// Creates a channel returning a Sender and Receiver structs
-pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
-    let mut s = Sender {
-        data: std::marker::PhantomData,
-        id: 0,
-    };
-    let mut r = Receiver {
-        data: std::marker::PhantomData,
-        id: 0,
-    };
+// The implementation could really use generic statics
+pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
     let sz = std::mem::size_of::<T>();
-    s.id = sz;
-    r.id = sz;
+    let rnd = unsafe { Fl_rand() } as usize;
+    let tid = rnd + sz;
+    let s = Sender {
+        data: std::marker::PhantomData,
+        id: tid,
+    };
+    let r = Receiver {
+        data: std::marker::PhantomData,
+        id: tid,
+    };
     (s, r)
 }
 
@@ -446,5 +447,22 @@ pub fn remove_timeout(cb: Box<dyn FnMut()>) {
         let data: *mut raw::c_void = mem::transmute(a);
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         fltk_sys::fl::Fl_remove_timeout(callback, data);
+    }
+}
+
+/// Returns whether a quit signal was sent
+pub fn should_program_quit() -> bool {
+    unsafe {
+        match Fl_should_program_quit() {
+            0 => false,
+            _ => true,
+        }
+    }
+}
+
+/// Determines whether a program should quit
+pub fn program_should_quit(flag: bool) {
+    unsafe {
+        Fl_program_should_quit(flag as i32)
     }
 }

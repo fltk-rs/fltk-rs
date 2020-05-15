@@ -355,3 +355,22 @@ impl Drop for HelpDialog {
         }
     }
 }
+
+/// Defines the type of beep to be passed to the beep function
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum BeepType {
+    Default = 0, 
+    Message, 
+    Error, 
+    Question, 
+    Password, 
+    Notification, 
+}
+
+/// Emits a beep
+pub fn beep(tp: BeepType) {
+    unsafe {
+        Fl_beep(tp as i32)
+    }
+}
