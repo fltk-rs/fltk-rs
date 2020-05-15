@@ -372,17 +372,15 @@ impl<T: Copy> Receiver<T> {
 
 /// Creates a channel returning a Sender and Receiver structs
 pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
-    let mut s = Sender {
-        data: std::marker::PhantomData,
-        id: 0,
-    };
-    let mut r = Receiver {
-        data: std::marker::PhantomData,
-        id: 0,
-    };
     let sz = std::mem::size_of::<T>();
-    s.id = sz;
-    r.id = sz;
+    let s = Sender {
+        data: std::marker::PhantomData,
+        id: sz,
+    };
+    let r = Receiver {
+        data: std::marker::PhantomData,
+        id: sz,
+    };
     (s, r)
 }
 
