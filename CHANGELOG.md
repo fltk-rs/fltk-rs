@@ -2,6 +2,10 @@
 
 ## Unreleased
 ### Changes
+- (NULL)
+
+## [0.4.4] - 2020-05-15
+### Changes
 - Added wrapper for program_should_quit signal.
 - Free user data after widget destruction.
 - Added beeps.
