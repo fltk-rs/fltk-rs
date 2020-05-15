@@ -2,7 +2,8 @@
 
 ## Unreleased
 ### Changes
-- (NULL)
+- Require Rust 1.38 or higher.
+- Use type hashing for channels.
 
 ## [0.4.4] - 2020-05-15
 ### Changes

@@ -1,6 +1,8 @@
 pub use crate::enums::*;
 use crate::prelude::*;
 use fltk_sys::fl::*;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 use std::{
     ffi::{CStr, CString},
     mem,
@@ -307,9 +309,7 @@ fn wait() -> bool {
 
 /// Sends a custom message
 fn awake_msg<T>(msg: T) {
-    unsafe {
-        Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void)
-    }
+    unsafe { Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void) }
 }
 
 /// Receives a custom message
@@ -327,7 +327,9 @@ fn thread_msg<T>() -> Option<T> {
 
 #[repr(C)]
 struct Message<T: Copy + Send + Sync> {
-    id: usize,
+    id: u32,
+    hash: u64,
+    sz: usize,
     msg: T,
 }
 
@@ -335,13 +337,20 @@ struct Message<T: Copy + Send + Sync> {
 #[derive(Debug, Clone, Copy)]
 pub struct Sender<T: Copy + Send + Sync> {
     data: std::marker::PhantomData<T>,
-    id: usize,
+    id: u32,
+    hash: u64,
+    sz: usize,
 }
 
 impl<T: Copy + Send + Sync> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
-        let msg = Message { id: self.id, msg: val };
+        let msg = Message {
+            id: self.id,
+            hash: self.hash,
+            sz: self.sz,
+            msg: val,
+        };
         awake_msg(msg)
     }
 }
@@ -350,7 +359,9 @@ impl<T: Copy + Send + Sync> Sender<T> {
 #[derive(Debug, Clone, Copy)]
 pub struct Receiver<T: Copy + Send + Sync> {
     data: std::marker::PhantomData<T>,
-    id: usize,
+    id: u32,
+    hash: u64,
+    sz: usize,
 }
 
 impl<T: Copy + Send + Sync> Receiver<T> {
@@ -359,7 +370,7 @@ impl<T: Copy + Send + Sync> Receiver<T> {
         let data: Option<Message<T>> = thread_msg();
         if data.is_some() {
             let data = data.unwrap();
-            if data.id == self.id {
+            if data.id == self.id && data.sz == self.sz && data.hash == self.hash {
                 Some(data.msg)
             } else {
                 None
@@ -373,16 +384,24 @@ impl<T: Copy + Send + Sync> Receiver<T> {
 /// Creates a channel returning a Sender and Receiver structs
 // The implementation could really use generic statics
 pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
-    let sz = std::mem::size_of::<T>();
-    let rnd = unsafe { Fl_rand() } as usize;
-    let tid = rnd + sz;
+    let msg_sz = std::mem::size_of::<T>();
+    let rnd = unsafe { Fl_rand() };
+    let type_name = std::any::type_name::<T>();
+    let mut hasher = DefaultHasher::new();
+    type_name.hash(&mut hasher);
+    let type_hash = hasher.finish();
+    println!("{} {} {}", rnd, type_hash, msg_sz);
     let s = Sender {
         data: std::marker::PhantomData,
-        id: tid,
+        id: rnd,
+        hash: type_hash,
+        sz: msg_sz,
     };
     let r = Receiver {
         data: std::marker::PhantomData,
-        id: tid,
+        id: rnd,
+        hash: type_hash,
+        sz: msg_sz,
     };
     (s, r)
 }
@@ -402,7 +421,10 @@ fn first_window() -> Option<crate::window::Window> {
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
 pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
     let main_win = first_window();
-    debug_assert!(main_win.is_some() && main_win.unwrap().takes_events(), "Main Window is unable to take events!");
+    debug_assert!(
+        main_win.is_some() && main_win.unwrap().takes_events(),
+        "Main Window is unable to take events!"
+    );
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -412,7 +434,7 @@ pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = mem::transmute(a);
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fltk_sys::fl::Fl_add_timeout(tm,  callback, data);
+        fltk_sys::fl::Fl_add_timeout(tm, callback, data);
     }
 }
 
@@ -421,7 +443,10 @@ pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
 /// The timeout duration `tm` is indicated in seconds
 pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
     let main_win = first_window();
-    debug_assert!(main_win.is_some() && main_win.unwrap().takes_events(), "Main Window is unable to take events!");
+    debug_assert!(
+        main_win.is_some() && main_win.unwrap().takes_events(),
+        "Main Window is unable to take events!"
+    );
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -431,7 +456,7 @@ pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = mem::transmute(a);
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fltk_sys::fl::Fl_repeat_timeout(tm,  callback, data);
+        fltk_sys::fl::Fl_repeat_timeout(tm, callback, data);
     }
 }
 
@@ -462,7 +487,5 @@ pub fn should_program_quit() -> bool {
 
 /// Determines whether a program should quit
 pub fn program_should_quit(flag: bool) {
-    unsafe {
-        Fl_program_should_quit(flag as i32)
-    }
+    unsafe { Fl_program_should_quit(flag as i32) }
 }

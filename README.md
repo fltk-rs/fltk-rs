@@ -18,6 +18,7 @@ Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 - [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
 
 ## Usage
+
 Just add the following to your project's Cargo.toml file:
 
 ```toml
@@ -33,7 +34,7 @@ features = ["fltk-shared"]
 [dependencies]
 fltk = { version = "^0.4", features = ["fltk-shared"] }
 ```
-You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the system-fltk feature, but note that this crate uses the latest FLTK.
+You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the system-fltk feature, but note that this crate uses the latest FLTK (1.40).
 
 To use the master branch in your project, you can use:
 ```toml
@@ -145,6 +146,7 @@ For custom event handling, the handle() method can be used:
 Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the examples directory.
 
 ### Theming
+
 FLTK offers 4 application themes (called schemes):
 - Base
 - Gtk
@@ -163,7 +165,7 @@ Themes of individual widgets can be optionally modified using the provided metho
 
 ## Dependencies
 
-CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. 
+Rust version > 1.38. CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. 
 
 - Windows: No dependencies.
 - MacOs: No dependencies.
