@@ -167,3 +167,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Help_Dialog_y(arg1: *mut Fl_Help_Dialog) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_beep(type_: ::std::os::raw::c_int);
+}

@@ -449,6 +449,7 @@ pub fn remove_timeout(cb: Box<dyn FnMut()>) {
     }
 }
 
+/// Returns whether a quit signal was sent
 pub fn should_program_quit() -> bool {
     unsafe {
         match Fl_should_program_quit() {
@@ -458,6 +459,7 @@ pub fn should_program_quit() -> bool {
     }
 }
 
+/// Determines whether a program should quit
 pub fn program_should_quit(flag: bool) {
     unsafe {
         Fl_program_should_quit(flag as i32)
