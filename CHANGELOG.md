@@ -4,7 +4,8 @@
 ### Changes
 - Added wrapper for program_should_quit signal.
 - Free user data after widget destruction.
-- Added beeps
+- Added beeps.
+- Require channel messages to also be Send and Sync.
 
 ## [0.4.3] - 2020-05-13
 ### Changes

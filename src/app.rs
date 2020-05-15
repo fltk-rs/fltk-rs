@@ -326,19 +326,19 @@ fn thread_msg<T>() -> Option<T> {
 }
 
 #[repr(C)]
-struct Message<T: Copy> {
+struct Message<T: Copy + Send + Sync> {
     id: usize,
     msg: T,
 }
 
 /// Creates a sender struct
 #[derive(Debug, Clone, Copy)]
-pub struct Sender<T: Copy> {
+pub struct Sender<T: Copy + Send + Sync> {
     data: std::marker::PhantomData<T>,
     id: usize,
 }
 
-impl<T: Copy> Sender<T> {
+impl<T: Copy + Send + Sync> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
         let msg = Message { id: self.id, msg: val };
@@ -348,12 +348,12 @@ impl<T: Copy> Sender<T> {
 
 /// Creates a receiver struct
 #[derive(Debug, Clone, Copy)]
-pub struct Receiver<T: Copy> {
+pub struct Receiver<T: Copy + Send + Sync> {
     data: std::marker::PhantomData<T>,
     id: usize,
 }
 
-impl<T: Copy> Receiver<T> {
+impl<T: Copy + Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         let data: Option<Message<T>> = thread_msg();
@@ -372,7 +372,7 @@ impl<T: Copy> Receiver<T> {
 
 /// Creates a channel returning a Sender and Receiver structs
 // The implementation could really use generic statics
-pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
+pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
     let sz = std::mem::size_of::<T>();
     let rnd = unsafe { Fl_rand() } as usize;
     let tid = rnd + sz;
