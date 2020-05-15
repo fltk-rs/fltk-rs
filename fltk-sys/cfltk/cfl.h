@@ -70,6 +70,8 @@ int Fl_should_program_quit(void);
 
 void Fl_program_should_quit(int flag);
 
+unsigned int Fl_rand(void);
+
 #ifdef __cplusplus
 }
 #endif

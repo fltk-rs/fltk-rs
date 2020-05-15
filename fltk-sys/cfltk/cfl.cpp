@@ -4,6 +4,7 @@
 #include <FL/Fl_Widget.H>
 #include <new>
 #include <string.h>
+#include <random>
 
 int Fl_run(void) { return Fl::run(); }
 
@@ -94,4 +95,11 @@ int Fl_should_program_quit(void) {
 
 void Fl_program_should_quit(int flag) {
     Fl::program_should_quit(flag);
+}
+
+unsigned int Fl_rand(void) {
+    std::mt19937 rng;
+    std::uniform_int_distribution<std::mt19937::result_type> dist(0, UINT_FAST32_MAX);
+    rng.seed(std::random_device()());
+    return dist(rng);
 }

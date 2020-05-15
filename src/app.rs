@@ -371,15 +371,18 @@ impl<T: Copy> Receiver<T> {
 }
 
 /// Creates a channel returning a Sender and Receiver structs
+// The implementation could really use generic statics
 pub fn channel<T: Copy>() -> (Sender<T>, Receiver<T>) {
     let sz = std::mem::size_of::<T>();
+    let rnd = unsafe { Fl_rand() } as usize;
+    let tid = rnd + sz;
     let s = Sender {
         data: std::marker::PhantomData,
-        id: sz,
+        id: tid,
     };
     let r = Receiver {
         data: std::marker::PhantomData,
-        id: sz,
+        id: tid,
     };
     (s, r)
 }

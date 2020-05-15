@@ -120,3 +120,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_program_should_quit(flag: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_rand() -> ::std::os::raw::c_uint;
+}
