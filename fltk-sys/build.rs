@@ -44,6 +44,7 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_image.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_draw.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_table.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_tree.cpp");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
 
     Command::new("git")

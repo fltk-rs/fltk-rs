@@ -308,5 +308,8 @@ Most common widgets are implemented:
 - Table widgets
     - Table
     - TableRow
+- Trees
+    - Tree
+    - TreeItem
 - Drawing primitives
 

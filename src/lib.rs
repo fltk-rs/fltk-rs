@@ -181,6 +181,7 @@ pub mod output;
 pub mod prelude;
 pub mod table;
 pub mod text;
+pub mod tree;
 pub mod valuator;
 pub mod widget;
 pub mod window;
