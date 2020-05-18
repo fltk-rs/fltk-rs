@@ -260,14 +260,18 @@ impl Tree {
         unsafe {
             let mut items: *mut Fl_Tree_Item = std::ptr::null_mut();
             let mut cnt = 0;
-            Fl_Tree_get_selected_items(self._inner, &mut items, &mut cnt);
-            let s = std::slice::from_raw_parts_mut(items, cnt as usize);
-            println!("{}", cnt);
+            let ret = Fl_Tree_get_selected_items(self._inner, &mut items, &mut cnt);
             let mut v: Vec<Option<TreeItem>> = vec![];
-            for x in s {
-                v.push(TreeItem::from_raw(x as *mut Fl_Tree_Item));
+            if ret > 0 {
+                let s = std::slice::from_raw_parts_mut(&mut items, cnt as usize);
+                for i in 0..s.len() {
+                    let val = TreeItem::from_raw(s[i] as *mut Fl_Tree_Item);
+                    v.push(val);
+                }
+                v
+            } else {
+                v
             }
-            v
         }
     }
 

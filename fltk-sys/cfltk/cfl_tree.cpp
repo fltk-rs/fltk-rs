@@ -110,10 +110,10 @@ int Fl_Tree_get_selected_items(Fl_Tree *self, Fl_Tree_Item **items, int *cnt) {
     int c = 0;
     for (Fl_Tree_Item *i = self->first_selected_item(); i; i = self->next_selected_item(i))
         c++;
+    if (c == 0) return 0;
     auto arr = new Fl_Tree_Item_Array(c);
     auto ret = self->get_selected_items(*arr);
-    auto first = (*arr)[0];
-    items = &first;
+    *items = (*arr)[0];
     *cnt = c;
     return ret;
 }

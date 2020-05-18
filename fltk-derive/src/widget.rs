@@ -194,6 +194,11 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
+            fn with_align(mut self, align: Align) -> Self {
+                self.set_align(align);
+                self
+            }
+
             fn set_label(&mut self, title: &str) {
                 let temp = CString::new(title).unwrap();
                 unsafe {
