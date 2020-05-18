@@ -12,6 +12,10 @@ typedef struct Fl_Tree_Item Fl_Tree_Item;
 
 typedef struct Fl_Tree_Item_Array Fl_Tree_Item_Array;
 
+void Fl_Tree_begin(Fl_Tree *self);       
+
+void Fl_Tree_end(Fl_Tree *self);                                          
+
 void show_self(Fl_Tree *self);
 
 void root_label(Fl_Tree *self, const char *new_label);
@@ -20,13 +24,17 @@ Fl_Tree_Item *root(Fl_Tree *self);
 
 void set_root(Fl_Tree *self, Fl_Tree_Item *newitem);
 
-Fl_Tree_Item *add(Fl_Tree *self, Fl_Tree_Item *parent_item, const char *name);
+Fl_Tree_Item *add(Fl_Tree *self, const char *name);
 
 Fl_Tree_Item *insert_above(Fl_Tree *self, Fl_Tree_Item *above,
                            const char *name);
 
 Fl_Tree_Item *insert(Fl_Tree *self, Fl_Tree_Item *item, const char *name,
                      int pos);
+
+const Fl_Tree_Item *find_item(const Fl_Tree *self, const char *path);                     
+
+Fl_Tree_Item *find_item_mut(Fl_Tree *self, const char *path);       
 
 int Fl_Tree_remove(Fl_Tree *self, Fl_Tree_Item *item);
 
@@ -63,21 +71,21 @@ Fl_Tree_Item *next_selected_item(Fl_Tree *self, Fl_Tree_Item *item, int dir);
 
 int get_selected_items(Fl_Tree *self, Fl_Tree_Item **items, int *cnt);
 
-int open(Fl_Tree *self, Fl_Tree_Item *item, int docallback);
+int open(Fl_Tree *self, const char *path, int docallback);
 
 void open_toggle(Fl_Tree *self, Fl_Tree_Item *item, int docallback);
 
-int close(Fl_Tree *self, Fl_Tree_Item *item, int docallback);
+int close(Fl_Tree *self, const char *path, int docallback);
 
-int is_open(const Fl_Tree *self, Fl_Tree_Item *item);
+int is_open(const Fl_Tree *self, const char *path);
 
-int is_close(const Fl_Tree *self, Fl_Tree_Item *item);
+int is_close(const Fl_Tree *self, const char *path);
 
-int Fl_Tree_select(Fl_Tree *self, Fl_Tree_Item *item, int docallback);
+int Fl_Tree_select(Fl_Tree *self, const char *path, int docallback);
 
 void select_toggle(Fl_Tree *self, Fl_Tree_Item *item, int docallback);
 
-int deselect(Fl_Tree *self, Fl_Tree_Item *item, int docallback);
+int deselect(Fl_Tree *self, const char *path, int docallback);
 
 int deselect_all(Fl_Tree *self, Fl_Tree_Item *item, int docallback);
 
@@ -95,7 +103,7 @@ void set_item_focus(Fl_Tree *self, Fl_Tree_Item *item);
 
 Fl_Tree_Item *get_item_focus(const Fl_Tree *self);
 
-int is_selected(const Fl_Tree *self, Fl_Tree_Item *item);
+int is_selected(Fl_Tree *self, const char *path);
 
 int item_labelfont(const Fl_Tree *self);
 

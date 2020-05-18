@@ -217,6 +217,12 @@ pub struct Fl_Tree_Item_Array {
     _unused: [u8; 0],
 }
 extern "C" {
+    pub fn Fl_Tree_begin(self_: *mut Fl_Tree);
+}
+extern "C" {
+    pub fn Fl_Tree_end(self_: *mut Fl_Tree);
+}
+extern "C" {
     pub fn show_self(self_: *mut Fl_Tree);
 }
 extern "C" {
@@ -229,11 +235,7 @@ extern "C" {
     pub fn set_root(self_: *mut Fl_Tree, newitem: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn add(
-        self_: *mut Fl_Tree,
-        parent_item: *mut Fl_Tree_Item,
-        name: *const ::std::os::raw::c_char,
-    ) -> *mut Fl_Tree_Item;
+    pub fn add(self_: *mut Fl_Tree, name: *const ::std::os::raw::c_char) -> *mut Fl_Tree_Item;
 }
 extern "C" {
     pub fn insert_above(
@@ -248,6 +250,18 @@ extern "C" {
         item: *mut Fl_Tree_Item,
         name: *const ::std::os::raw::c_char,
         pos: ::std::os::raw::c_int,
+    ) -> *mut Fl_Tree_Item;
+}
+extern "C" {
+    pub fn find_item(
+        self_: *const Fl_Tree,
+        path: *const ::std::os::raw::c_char,
+    ) -> *const Fl_Tree_Item;
+}
+extern "C" {
+    pub fn find_item_mut(
+        self_: *mut Fl_Tree,
+        path: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
@@ -315,14 +329,14 @@ extern "C" {
 extern "C" {
     pub fn get_selected_items(
         self_: *mut Fl_Tree,
-        items: *mut Fl_Tree_Item,
+        items: *mut *mut Fl_Tree_Item,
         cnt: *mut ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn open(
         self_: *mut Fl_Tree,
-        item: *mut Fl_Tree_Item,
+        path: *const ::std::os::raw::c_char,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
@@ -336,20 +350,26 @@ extern "C" {
 extern "C" {
     pub fn close(
         self_: *mut Fl_Tree,
-        item: *mut Fl_Tree_Item,
+        path: *const ::std::os::raw::c_char,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn is_open(self_: *const Fl_Tree, item: *mut Fl_Tree_Item) -> ::std::os::raw::c_int;
+    pub fn is_open(
+        self_: *const Fl_Tree,
+        path: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn is_close(self_: *const Fl_Tree, item: *mut Fl_Tree_Item) -> ::std::os::raw::c_int;
+    pub fn is_close(
+        self_: *const Fl_Tree,
+        path: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_select(
         self_: *mut Fl_Tree,
-        item: *mut Fl_Tree_Item,
+        path: *const ::std::os::raw::c_char,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
@@ -363,7 +383,7 @@ extern "C" {
 extern "C" {
     pub fn deselect(
         self_: *mut Fl_Tree,
-        item: *mut Fl_Tree_Item,
+        path: *const ::std::os::raw::c_char,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
@@ -414,7 +434,10 @@ extern "C" {
     pub fn get_item_focus(self_: *const Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn is_selected(self_: *const Fl_Tree, item: *mut Fl_Tree_Item) -> ::std::os::raw::c_int;
+    pub fn is_selected(
+        self_: *mut Fl_Tree,
+        path: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn item_labelfont(self_: *const Fl_Tree) -> ::std::os::raw::c_int;

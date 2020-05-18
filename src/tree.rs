@@ -84,11 +84,19 @@ impl TreeItem {
 }
 
 impl Tree {
+    pub fn begin(&self) {
+        unsafe { fltk_sys::tree::Fl_Tree_begin(self._inner) }
+    }
+
+    pub fn end(&self) {
+        unsafe { fltk_sys::tree::Fl_Tree_end(self._inner) }
+    }
+
     pub fn show_self(&mut self) {
         unsafe { fltk_sys::tree::show_self(self._inner) }
     }
 
-    pub fn root_label(&mut self, new_label: &str) {
+    pub fn set_root_label(&mut self, new_label: &str) {
         let new_label = CString::new(new_label).unwrap();
         unsafe {
             fltk_sys::tree::root_label(self._inner, new_label.into_raw() as *const raw::c_char)
@@ -99,18 +107,18 @@ impl Tree {
         unsafe { TreeItem::from_raw(fltk_sys::tree::root(self._inner)) }
     }
 
-    pub fn set_root(&mut self, newitem: TreeItem) {
-        unsafe { fltk_sys::tree::set_root(self._inner, newitem._inner) }
+    pub fn set_root(&mut self, newitem: Option<TreeItem>) {
+        let ptr = match newitem {
+            None => std::ptr::null_mut(),
+            Some(item) => item._inner,
+        };
+        unsafe { fltk_sys::tree::set_root(self._inner, ptr) }
     }
 
-    pub fn add(&mut self, parent_item: TreeItem, name: &str) -> Option<TreeItem> {
-        let name = CString::new(name).unwrap();
+    pub fn add(&mut self, path: &str) -> Option<TreeItem> {
+        let path = CString::new(path).unwrap();
         unsafe {
-            let x = fltk_sys::tree::add(
-                self._inner,
-                parent_item._inner,
-                name.into_raw() as *mut raw::c_char,
-            );
+            let x = fltk_sys::tree::add(self._inner, path.into_raw() as *mut raw::c_char);
             assert!(!x.is_null());
             TreeItem::from_raw(x)
         }
@@ -159,6 +167,18 @@ impl Tree {
     pub fn clear_children(&mut self, item: TreeItem) {
         unsafe {
             fltk_sys::tree::clear_children(self._inner as *mut fltk_sys::tree::Fl_Tree, item._inner)
+        }
+    }
+
+    pub fn find_item(&self, path: &str) -> Option<TreeItem> {
+        let path = CString::new(path).unwrap();
+        unsafe {
+            let x = fltk_sys::tree::find_item(self._inner, path.into_raw() as *mut raw::c_char);
+            if x.is_null() {
+                None
+            } else {
+                TreeItem::from_raw(x as *mut fltk_sys::tree::Fl_Tree_Item)
+            }
         }
     }
 
@@ -238,24 +258,27 @@ impl Tree {
 
     pub fn get_selected_items(&mut self) -> Vec<Option<TreeItem>> {
         unsafe {
-            let mut items: Vec<*mut fltk_sys::tree::Fl_Tree_Item> = vec![];
-            let cnt: *mut i32 = std::ptr::null_mut();
-            fltk_sys::tree::get_selected_items(
-                self._inner,
-                items.as_mut_ptr() as *mut fltk_sys::tree::Fl_Tree_Item,
-                cnt,
-            );
-            let mut items2: Vec<Option<TreeItem>> = Vec::with_capacity(cnt as usize);
-            for item in items {
-                items2.push(TreeItem::from_raw(item));
+            let mut items: *mut fltk_sys::tree::Fl_Tree_Item = std::ptr::null_mut();
+            let mut cnt = 0;
+            fltk_sys::tree::get_selected_items(self._inner, &mut items, &mut cnt);
+            let s = std::slice::from_raw_parts_mut(items, cnt as usize);
+            println!("{}", cnt);
+            let mut v: Vec<Option<TreeItem>> = vec![];
+            for x in s {
+                v.push(TreeItem::from_raw(x as *mut fltk_sys::tree::Fl_Tree_Item));
             }
-            items2
+            v
         }
     }
 
-    pub fn open(&mut self, item: TreeItem, docallback: bool) -> Result<(), FltkError> {
+    pub fn open(&mut self, path: &str, docallback: bool) -> Result<(), FltkError> {
+        let path = CString::new(path).unwrap();
         unsafe {
-            match fltk_sys::tree::open(self._inner, item._inner, docallback as i32) {
+            match fltk_sys::tree::open(
+                self._inner,
+                path.into_raw() as *mut raw::c_char,
+                docallback as i32,
+            ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
@@ -266,36 +289,55 @@ impl Tree {
         unsafe { fltk_sys::tree::open_toggle(self._inner, item._inner, docallback as i32) }
     }
 
-    pub fn close(&mut self, item: TreeItem, docallback: bool) -> Result<(), FltkError> {
+    pub fn close(&mut self, path: &str, docallback: bool) -> Result<(), FltkError> {
+        let path = CString::new(path).unwrap();
         unsafe {
-            match fltk_sys::tree::close(self._inner, item._inner, docallback as i32) {
+            match fltk_sys::tree::close(
+                self._inner,
+                path.into_raw() as *mut raw::c_char,
+                docallback as i32,
+            ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
         }
     }
 
-    pub fn is_open(&self, item: TreeItem) -> bool {
+    // pub fn close_path(&mut self, path: &str) {
+    //     let path = CString::new(path).unwrap();
+    //     unsafe {
+    //         fltk_sys::tree::close_path(self._inner, path.into_raw() as *mut raw::c_char, 1)
+    //     }
+    // }
+
+    pub fn is_open(&self, path: &str) -> bool {
+        let path = CString::new(path).unwrap();
         unsafe {
-            match fltk_sys::tree::is_open(self._inner, item._inner) {
+            match fltk_sys::tree::is_open(self._inner, path.into_raw() as *mut raw::c_char) {
                 0 => false,
                 _ => true,
             }
         }
     }
 
-    pub fn is_close(&self, item: TreeItem) -> bool {
+    pub fn is_close(&self, path: &str) -> bool {
+        let path = CString::new(path).unwrap();
         unsafe {
-            match fltk_sys::tree::is_close(self._inner, item._inner) {
+            match fltk_sys::tree::is_close(self._inner, path.into_raw() as *mut raw::c_char) {
                 0 => false,
                 _ => true,
             }
         }
     }
 
-    pub fn select(&mut self, item: TreeItem, docallback: bool) -> Result<(), FltkError> {
+    pub fn select(&mut self, path: &str, docallback: bool) -> Result<(), FltkError> {
+        let path = CString::new(path).unwrap();
         unsafe {
-            match fltk_sys::tree::Fl_Tree_select(self._inner, item._inner, docallback as i32) {
+            match fltk_sys::tree::Fl_Tree_select(
+                self._inner,
+                path.into_raw() as *mut raw::c_char,
+                docallback as i32,
+            ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
@@ -306,9 +348,14 @@ impl Tree {
         unsafe { fltk_sys::tree::select_toggle(self._inner, item._inner, docallback as i32) }
     }
 
-    pub fn deselect(&mut self, item: TreeItem, docallback: bool) -> Result<(), FltkError> {
+    pub fn deselect(&mut self, path: &str, docallback: bool) -> Result<(), FltkError> {
+        let path = CString::new(path).unwrap();
         unsafe {
-            match fltk_sys::tree::deselect(self._inner, item._inner, docallback as i32) {
+            match fltk_sys::tree::deselect(
+                self._inner,
+                path.into_raw() as *mut raw::c_char,
+                docallback as i32,
+            ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
@@ -394,9 +441,10 @@ impl Tree {
         unsafe { TreeItem::from_raw(fltk_sys::tree::get_item_focus(self._inner)) }
     }
 
-    pub fn is_selected(&self, item: TreeItem) -> bool {
+    pub fn is_selected(&self, path: &str) -> bool {
+        let path = CString::new(path).unwrap();
         unsafe {
-            match fltk_sys::tree::is_selected(self._inner, item._inner) {
+            match fltk_sys::tree::is_selected(self._inner, path.into_raw() as *mut raw::c_char) {
                 0 => false,
                 _ => true,
             }
