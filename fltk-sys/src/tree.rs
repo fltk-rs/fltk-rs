@@ -223,29 +223,32 @@ extern "C" {
     pub fn Fl_Tree_end(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn show_self(self_: *mut Fl_Tree);
+    pub fn Fl_Tree_show_self(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn root_label(self_: *mut Fl_Tree, new_label: *const ::std::os::raw::c_char);
+    pub fn Fl_Tree_root_label(self_: *mut Fl_Tree, new_label: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn root(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_root(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn set_root(self_: *mut Fl_Tree, newitem: *mut Fl_Tree_Item);
+    pub fn Fl_Tree_set_root(self_: *mut Fl_Tree, newitem: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn add(self_: *mut Fl_Tree, name: *const ::std::os::raw::c_char) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_add(
+        self_: *mut Fl_Tree,
+        name: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn insert_above(
+    pub fn Fl_Tree_insert_above(
         self_: *mut Fl_Tree,
         above: *mut Fl_Tree_Item,
         name: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn insert(
+    pub fn Fl_Tree_insert(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
         name: *const ::std::os::raw::c_char,
@@ -253,13 +256,13 @@ extern "C" {
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn find_item(
+    pub fn Fl_Tree_find_item(
         self_: *const Fl_Tree,
         path: *const ::std::os::raw::c_char,
     ) -> *const Fl_Tree_Item;
 }
 extern "C" {
-    pub fn find_item_mut(
+    pub fn Fl_Tree_find_item_mut(
         self_: *mut Fl_Tree,
         path: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Tree_Item;
@@ -268,51 +271,53 @@ extern "C" {
     pub fn Fl_Tree_remove(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn clear(self_: *mut Fl_Tree);
+    pub fn Fl_Tree_clear(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn clear_children(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
+    pub fn Fl_Tree_clear_children(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn find_clicked(self_: *const Fl_Tree, yonly: ::std::os::raw::c_int)
-        -> *const Fl_Tree_Item;
+    pub fn Fl_Tree_find_clicked(
+        self_: *const Fl_Tree,
+        yonly: ::std::os::raw::c_int,
+    ) -> *const Fl_Tree_Item;
 }
 extern "C" {
-    pub fn item_clicked(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_item_clicked(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn first(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_first(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn first_visible_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_first_visible_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn next(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_next(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn prev(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_prev(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn last(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_last(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn last_visible_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_last_visible_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn next_visible_item(
+    pub fn Fl_Tree_next_visible_item(
         self_: *mut Fl_Tree,
         start: *mut Fl_Tree_Item,
         dir: ::std::os::raw::c_int,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn first_selected_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_first_selected_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn last_selected_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_last_selected_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn next_item(
+    pub fn Fl_Tree_next_item(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
         dir: ::std::os::raw::c_int,
@@ -320,48 +325,48 @@ extern "C" {
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn next_selected_item(
+    pub fn Fl_Tree_next_selected_item(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
         dir: ::std::os::raw::c_int,
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn get_selected_items(
+    pub fn Fl_Tree_get_selected_items(
         self_: *mut Fl_Tree,
         items: *mut *mut Fl_Tree_Item,
         cnt: *mut ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn open(
+    pub fn Fl_Tree_open(
         self_: *mut Fl_Tree,
         path: *const ::std::os::raw::c_char,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn open_toggle(
+    pub fn Fl_Tree_open_toggle(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
         docallback: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn close(
+    pub fn Fl_Tree_close(
         self_: *mut Fl_Tree,
         path: *const ::std::os::raw::c_char,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn is_open(
+    pub fn Fl_Tree_is_open(
         self_: *const Fl_Tree,
         path: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn is_close(
+    pub fn Fl_Tree_is_close(
         self_: *const Fl_Tree,
         path: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
@@ -374,42 +379,42 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn select_toggle(
+    pub fn Fl_Tree_select_toggle(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
         docallback: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn deselect(
+    pub fn Fl_Tree_deselect(
         self_: *mut Fl_Tree,
         path: *const ::std::os::raw::c_char,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn deselect_all(
+    pub fn Fl_Tree_deselect_all(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn select_only(
+    pub fn Fl_Tree_select_only(
         self_: *mut Fl_Tree,
         selitem: *mut Fl_Tree_Item,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn select_all(
+    pub fn Fl_Tree_select_all(
         self_: *mut Fl_Tree,
         item: *mut Fl_Tree_Item,
         docallback: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn extend_selection_dir(
+    pub fn Fl_Tree_extend_selection_dir(
         self_: *mut Fl_Tree,
         from: *mut Fl_Tree_Item,
         to: *mut Fl_Tree_Item,
@@ -419,7 +424,7 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn extend_selection(
+    pub fn Fl_Tree_extend_selection(
         self_: *mut Fl_Tree,
         from: *mut Fl_Tree_Item,
         to: *mut Fl_Tree_Item,
@@ -428,230 +433,235 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_item_focus(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
+    pub fn Fl_Tree_set_item_focus(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn get_item_focus(self_: *const Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_get_item_focus(self_: *const Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn is_selected(
+    pub fn Fl_Tree_is_selected(
         self_: *mut Fl_Tree,
         path: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn item_labelfont(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_item_labelfont(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_item_labelfont(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_item_labelfont(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn item_labelsize(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_item_labelsize(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_item_labelsize(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_item_labelsize(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn item_labelfgcolor(self_: *const Fl_Tree) -> ::std::os::raw::c_uint;
+    pub fn Fl_Tree_item_labelfgcolor(self_: *const Fl_Tree) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn set_item_labelfgcolor(self_: *mut Fl_Tree, val: ::std::os::raw::c_uint);
+    pub fn Fl_Tree_set_item_labelfgcolor(self_: *mut Fl_Tree, val: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn item_labelbgcolor(self_: *const Fl_Tree) -> ::std::os::raw::c_uint;
+    pub fn Fl_Tree_item_labelbgcolor(self_: *const Fl_Tree) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn set_item_labelbgcolor(self_: *mut Fl_Tree, val: ::std::os::raw::c_uint);
+    pub fn Fl_Tree_set_item_labelbgcolor(self_: *mut Fl_Tree, val: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn connectorcolor(self_: *const Fl_Tree) -> ::std::os::raw::c_uint;
+    pub fn Fl_Tree_connectorcolor(self_: *const Fl_Tree) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn set_connectorcolor(self_: *mut Fl_Tree, val: ::std::os::raw::c_uint);
+    pub fn Fl_Tree_set_connectorcolor(self_: *mut Fl_Tree, val: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn marginleft(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_marginleft(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_marginleft(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_marginleft(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn margintop(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_margintop(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_margintop(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_margintop(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn marginbottom(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_marginbottom(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_marginbottom(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_marginbottom(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn linespacing(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_linespacing(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_linespacing(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_linespacing(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn openchild_marginbottom(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_openchild_marginbottom(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_openchild_marginbottom(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_openchild_marginbottom(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn usericonmarginleft(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_usericonmarginleft(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_usericonmarginleft(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_usericonmarginleft(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn labelmarginleft(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_labelmarginleft(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_labelmarginleft(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_labelmarginleft(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn widgetmarginleft(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_widgetmarginleft(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_widgetmarginleft(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_widgetmarginleft(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn connectorwidth(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_connectorwidth(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_connectorwidth(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_connectorwidth(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn usericon(self_: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Tree_usericon(self_: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn set_usericon(self_: *mut Fl_Tree, val: *mut ::std::os::raw::c_void);
+    pub fn Fl_Tree_set_usericon(self_: *mut Fl_Tree, val: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn openicon(self_: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Tree_openicon(self_: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn set_openicon(self_: *mut Fl_Tree, val: *mut ::std::os::raw::c_void);
+    pub fn Fl_Tree_set_openicon(self_: *mut Fl_Tree, val: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn closeicon(self_: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Tree_closeicon(self_: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn set_closeicon(self_: *mut Fl_Tree, val: *mut ::std::os::raw::c_void);
+    pub fn Fl_Tree_set_closeicon(self_: *mut Fl_Tree, val: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn showcollapse(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_showcollapse(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_showcollapse(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_showcollapse(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn showroot(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_showroot(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_showroot(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_showroot(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn connectorstyle(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_connectorstyle(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_connectorstyle(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_connectorstyle(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn sortorder(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_sortorder(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_sortorder(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_sortorder(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn selectbox(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_selectbox(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_selectbox(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_selectbox(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn selectmode(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_selectmode(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_selectmode(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_selectmode(self_: *mut Fl_Tree, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn item_reselect_mode(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_item_reselect_mode(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_item_reselect_mode(self_: *mut Fl_Tree, mode: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_item_reselect_mode(self_: *mut Fl_Tree, mode: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn item_draw_mode(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_item_draw_mode(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_item_draw_mode(self_: *mut Fl_Tree, mode: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_item_draw_mode(self_: *mut Fl_Tree, mode: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn calc_dimensions(self_: *mut Fl_Tree);
+    pub fn Fl_Tree_calc_dimensions(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn calc_tree(self_: *mut Fl_Tree);
+    pub fn Fl_Tree_calc_tree(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn recalc_tree(self_: *mut Fl_Tree);
+    pub fn Fl_Tree_recalc_tree(self_: *mut Fl_Tree);
 }
 extern "C" {
-    pub fn displayed(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_displayed(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item)
+        -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn show_item(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item, yoff: ::std::os::raw::c_int);
+    pub fn Fl_Tree_show_item(
+        self_: *mut Fl_Tree,
+        item: *mut Fl_Tree_Item,
+        yoff: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn show_item_top(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
+    pub fn Fl_Tree_show_item_top(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn show_item_middle(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
+    pub fn Fl_Tree_show_item_middle(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn show_item_bottom(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
+    pub fn Fl_Tree_show_item_bottom(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn display(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
+    pub fn Fl_Tree_display(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn vposition(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_vposition(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_vposition(self_: *mut Fl_Tree, pos: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_vposition(self_: *mut Fl_Tree, pos: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn hposition(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_hposition(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_hposition(self_: *mut Fl_Tree, pos: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_hposition(self_: *mut Fl_Tree, pos: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn is_scrollbar(self_: *mut Fl_Tree, w: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_is_scrollbar(self_: *mut Fl_Tree, w: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn scrollbar_size(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_scrollbar_size(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_scrollbar_size(self_: *mut Fl_Tree, size: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_scrollbar_size(self_: *mut Fl_Tree, size: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn is_vscroll_visible(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_is_vscroll_visible(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn is_hscroll_visible(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_is_hscroll_visible(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn set_callback_item(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
+    pub fn Fl_Tree_set_callback_item(self_: *mut Fl_Tree, item: *mut Fl_Tree_Item);
 }
 extern "C" {
-    pub fn callback_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
+    pub fn Fl_Tree_callback_item(self_: *mut Fl_Tree) -> *mut Fl_Tree_Item;
 }
 extern "C" {
-    pub fn set_callback_reason(self_: *mut Fl_Tree, reason: ::std::os::raw::c_int);
+    pub fn Fl_Tree_set_callback_reason(self_: *mut Fl_Tree, reason: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn callback_reason(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+    pub fn Fl_Tree_callback_reason(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }

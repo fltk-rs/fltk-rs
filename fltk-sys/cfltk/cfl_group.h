@@ -19,8 +19,8 @@ extern "C" {
     void widget##_resizable(widget *self, void *);
 
 #define GROUP_DEFINE(widget)                                                   \
-    void widget##_begin(widget *self) { self->begin(); }                       \
-    void widget##_end(widget *self) { self->end(); }                           \
+    void widget##_begin(widget *self) { LOCK(self->begin();) }                 \
+    void widget##_end(widget *self) { LOCK(self->end();) }                     \
     int widget##_find(widget *self, const void *wid) {                         \
         return self->find((const Fl_Widget *)wid);                             \
     }                                                                          \
