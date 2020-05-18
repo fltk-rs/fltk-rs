@@ -501,7 +501,12 @@ void Fl_Tree_set_Item_label(Fl_Tree_Item *self, const char *val) {
     LOCK(self->label(val);)
 }
 
-const char *Fl_Tree_Item_label(const Fl_Tree_Item *self) { self->label(); }
+const char *Fl_Tree_Item_label(const Fl_Tree_Item *self) { 
+    auto label = self->label(); 
+    char *buf = (char *)malloc(strlen(label) + 1);
+    strncpy(buf, label, strlen(label) + 1);
+    return buf;
+}
 
 void Fl_Tree_Item_set_labelfont(Fl_Tree_Item *self, int val) {
     LOCK(self->labelfont(val);)
