@@ -14,6 +14,6 @@ fn main() {
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    but.set_callback(Box::new(move ||  println!("{}", tree.get_selected_items().len()) ));
+    but.set_callback(Box::new(move ||  println!("{}", tree.get_selected_items().unwrap().len()) ));
     app.run().unwrap();
 }

@@ -1,5 +1,6 @@
 use crate::image::Image;
 pub use crate::prelude::*;
+use crate::widget::Widget;
 use fltk_sys::tree::*;
 use std::{
     ffi::{CStr, CString},
@@ -72,18 +73,22 @@ pub struct TreeItem {
     _inner: *mut Fl_Tree_Item,
 }
 
-impl TreeItem {
-    pub unsafe fn from_raw(ptr: *mut Fl_Tree_Item) -> Option<TreeItem> {
-        if ptr.is_null() {
-            None
-        } else {
-            let x = TreeItem { _inner: ptr };
-            Some(x)
-        }
-    }
+/// Defines a tree item array
+#[derive(Debug)]
+struct TreeItemArray {
+    _inner: *mut Fl_Tree_Item_Array,
 }
 
 impl Tree {
+    pub unsafe fn from_raw(ptr: *mut Fl_Tree) -> Option<Tree> {
+        if ptr.is_null() {
+            None
+        } else {
+            let x = Tree { _inner: ptr };
+            Some(x)
+        }
+    }
+
     pub fn begin(&self) {
         unsafe { Fl_Tree_begin(self._inner) }
     }
@@ -256,21 +261,14 @@ impl Tree {
         }
     }
 
-    pub fn get_selected_items(&mut self) -> Vec<Option<TreeItem>> {
+    pub fn get_selected_items(&mut self) -> Option<Vec<TreeItem>> {
         unsafe {
-            let mut items: *mut Fl_Tree_Item = std::ptr::null_mut();
-            let mut cnt = 0;
-            let ret = Fl_Tree_get_selected_items(self._inner, &mut items, &mut cnt);
-            let mut v: Vec<Option<TreeItem>> = vec![];
-            if ret > 0 {
-                let s = std::slice::from_raw_parts_mut(&mut items, cnt as usize);
-                for i in 0..s.len() {
-                    let val = TreeItem::from_raw(s[i] as *mut Fl_Tree_Item);
-                    v.push(val);
-                }
-                v
+            let mut items = TreeItemArray { _inner: std::ptr::null_mut(), };
+            let ret = Fl_Tree_get_selected_items(self._inner, &mut items._inner);
+            if ret == 0 {
+                None
             } else {
-                v
+                items.into_vec()
             }
         }
     }
@@ -795,5 +793,565 @@ impl Tree {
 
     pub fn callback_reason(&self) -> TreeReason {
         unsafe { mem::transmute(Fl_Tree_callback_reason(self._inner)) }
+    }
+}
+
+impl TreeItem {
+    pub unsafe fn from_raw(ptr: *mut Fl_Tree_Item) -> Option<TreeItem> {
+        if ptr.is_null() {
+            None
+        } else {
+            let x = TreeItem { _inner: ptr };
+            Some(x)
+        }
+    }
+    pub fn x(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_x(self._inner)
+        }
+    }
+
+    pub fn y(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_y(self._inner)
+        }
+    }
+
+    pub fn w(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_w(self._inner)
+        }
+    }
+
+    pub fn h(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_h(self._inner)
+        }
+    }
+
+    pub fn label_x(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_label_x(self._inner)
+        }
+    }
+
+    pub fn label_y(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_label_y(self._inner)
+        }
+    }
+
+    pub fn label_w(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_label_w(self._inner)
+        }
+    }
+
+    pub fn label_h(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_label_h(self._inner)
+        }
+    }
+
+    pub fn show_self(&self, indent: &str) {
+        let indent = CString::new(indent).unwrap();
+        unsafe {
+            Fl_Tree_Item_show_self(self._inner, indent.into_raw() as *mut raw::c_char)
+        }
+    }
+
+    pub fn set_label(&mut self, val: &str) {
+        let val = CString::new(val).unwrap();
+        unsafe {
+            Fl_Tree_set_Item_label(self._inner, val.into_raw() as *mut raw::c_char)
+        }
+    }
+
+    pub fn label(&self) -> String {
+        unsafe {
+            CStr::from_ptr(Fl_Tree_Item_label(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
+        }
+    }
+
+    pub fn set_labelfont(&mut self, val: Font) {
+        unsafe {
+            Fl_Tree_Item_set_labelfont(self._inner, val as i32)
+        }
+    }
+
+    pub fn labelfont(&self) -> Font {
+        unsafe {
+            mem::transmute(Fl_Tree_Item_labelfont(self._inner))
+        }
+    }
+
+    pub fn set_labelsize(&mut self, val: i32) {
+        unsafe {
+            Fl_Tree_Item_set_labelsize(self._inner, val)
+        }
+    }
+
+    pub fn labelsize(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_labelsize(self._inner)
+        }
+    }
+
+    pub fn set_labelfgcolor(&mut self, val: Color) {
+        unsafe {
+            Fl_Tree_Item_set_labelfgcolor(self._inner, val as u32)
+        }
+    }
+
+    pub fn labelfgcolor(&self) -> Color {
+        unsafe {
+            mem::transmute(Fl_Tree_Item_labelfgcolor(self._inner))
+        }
+    }
+
+    pub fn set_labelcolor(&mut self, val: Color) {
+        unsafe {
+            Fl_Tree_Item_set_labelcolor(self._inner, val as u32)
+        }
+    }
+
+    pub fn labelcolor(&self) -> Color {
+        unsafe {
+            mem::transmute(Fl_Tree_Item_labelcolor(self._inner))
+        }
+    }
+
+    pub fn set_labelbgcolor(&mut self, val: Color) {
+        unsafe {
+            Fl_Tree_Item_set_labelbgcolor(self._inner, val as u32)
+        }
+    }
+
+    pub fn labelbgcolor(&self) -> Color {
+        unsafe {
+            mem::transmute(Fl_Tree_Item_labelbgcolor(self._inner))
+        }
+    }
+
+    pub fn set_widget<W: WidgetExt>(&mut self, val: W) {
+        unsafe {
+            Fl_Tree_Item_set_widget(self._inner, val.as_widget_ptr() as *mut Fl_Widget)
+        }
+    }
+
+    pub fn widget(&self) -> Widget {
+        unsafe {
+            Widget::from_raw(Fl_Tree_Item_widget(self._inner) as *mut fltk_sys::widget::Fl_Widget)
+        }
+    }
+
+    pub fn children(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_children(self._inner)
+        }
+    }
+
+    pub fn child( &self, t: i32) -> Option<TreeItem> {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_child(self._inner, t) as *mut Fl_Tree_Item)
+        }
+    }
+
+    pub fn has_children(&self) -> bool {
+        unsafe {
+            match Fl_Tree_Item_has_children(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    pub fn find_child( &mut self, name: &str) -> Result<u32, FltkError> {
+        let name = CString::new(name).unwrap();
+        unsafe {
+            let x =  Fl_Tree_Item_find_child(self._inner, name.into_raw());
+            if x == -1 {
+                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+            } else {
+                Ok(x as u32)
+            }
+        }
+    }
+
+    pub fn remove_child(&mut self, new_label: &str) -> Result<(), FltkError> {
+        let new_label = CString::new(new_label).unwrap();
+        unsafe {
+            match Fl_Tree_Item_remove_child(self._inner, new_label.into_raw()) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
+    pub fn clear_children(&mut self) {
+        unsafe {
+            Fl_Tree_Item_clear_children(self._inner)
+        }
+    }
+
+    pub fn swap_children( &mut self, a: TreeItem, b: TreeItem) -> Result<(), FltkError> {
+        unsafe {
+            match Fl_Tree_Item_swap_children(self._inner, a._inner, b._inner) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
+    pub fn find_child_item( &self, name: &str) -> Option<TreeItem> {
+        let name = CString::new(name).unwrap();
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_find_child_item(self._inner, name.into_raw()) as *mut Fl_Tree_Item)
+        }
+    }
+
+    pub fn replace( &mut self, new_item: TreeItem) -> Option<TreeItem> {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_replace(self._inner, new_item._inner))
+        }
+    }
+
+    pub fn replace_child( &mut self, olditem: TreeItem, newitem: TreeItem) -> Option<TreeItem> {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_replace_child(self._inner, olditem._inner, newitem._inner))
+        }
+    }
+
+    pub fn deparent( &mut self, index: i32) -> Option<TreeItem> {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_deparent(self._inner, index))
+        }
+    }
+
+    pub fn reparent( &mut self, newchild: TreeItem, index: i32) -> Result<(), FltkError> {
+        unsafe {
+            match Fl_Tree_Item_reparent(self._inner, newchild._inner, index) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
+    pub fn move_item( &mut self, to: i32, from: i32) -> Result<(), FltkError> {
+        unsafe {
+            match Fl_Tree_Item_move(self._inner, to, from) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
+    pub fn move_above( &mut self, item: TreeItem) -> Result<(), FltkError> {
+        unsafe {
+            match Fl_Tree_Item_move_above(self._inner, item._inner) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
+    pub fn move_below( &mut self, item: TreeItem) -> Result<(), FltkError> {
+        unsafe {
+            match Fl_Tree_Item_move_below(self._inner, item._inner) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
+    pub fn move_into( &mut self, item: TreeItem, pos: i32) -> Result<(), FltkError> {
+        unsafe {
+            match Fl_Tree_Item_move_into(self._inner, item._inner, pos) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            }
+        }
+    }
+
+    pub fn depth(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_depth(self._inner)
+        }
+    }
+
+    pub fn prev(&mut self) -> Option<TreeItem> {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_prev(self._inner))
+        }
+    }
+
+    pub fn next(&mut self) -> Option<TreeItem> {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_next(self._inner))
+        }
+    }
+
+    pub fn next_sibling(&mut self) -> Option<TreeItem> {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_next_sibling(self._inner))
+        }
+    }
+
+    pub fn prev_sibling(&mut self) -> Option<TreeItem> {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_prev_sibling(self._inner))
+        }
+    }
+
+    pub fn update_prev_next(&mut self, index: u32) {
+        unsafe {
+            Fl_Tree_Item_update_prev_next(self._inner, index as i32)
+        }
+    }
+
+    pub fn parent(&self) -> Option<TreeItem> {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_parent(self._inner) as *mut Fl_Tree_Item)
+        }
+    }
+
+    pub fn set_parent(&mut self, val: TreeItem) {
+        unsafe {
+            Fl_Tree_Item_set_parent(self._inner, val._inner)
+        }
+    }
+
+    pub fn tree(&self) -> Option<Tree> {
+        unsafe {
+            Tree::from_raw(Fl_Tree_Item_tree(self._inner) as *mut Fl_Tree)
+        }
+    }
+
+    pub fn open(&mut self) {
+        unsafe {
+            Fl_Tree_Item_open(self._inner)
+        }
+    }
+
+    pub fn close(&mut self) {
+        unsafe {
+            Fl_Tree_Item_close(self._inner)
+        }
+    }
+
+    pub fn is_open(&self) -> bool {
+        unsafe {
+            match Fl_Tree_Item_is_open(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    pub fn is_close(&self) -> bool {
+        unsafe {
+            match Fl_Tree_Item_is_close(self._inner) {
+                0 => false,
+                _ => true,  
+            }
+        }
+    }
+
+    pub fn open_toggle(&mut self) {
+        unsafe {
+            Fl_Tree_Item_open_toggle(self._inner)
+        }
+    }
+
+    pub fn select(&mut self, val: u32) {
+        unsafe {
+            Fl_Tree_Item_select(self._inner, val as i32)
+        }
+    }
+
+    pub fn select_toggle(&mut self) {
+        unsafe {
+            Fl_Tree_Item_select_toggle(self._inner)
+        }
+    }
+
+    pub fn select_all(&mut self) -> u32 {
+        unsafe {
+            Fl_Tree_Item_select_all(self._inner) as u32
+        }
+    }
+
+    pub fn deselect(&mut self) {
+        unsafe {
+            Fl_Tree_Item_deselect(self._inner)
+        }
+    }
+
+    pub fn deselect_all(&mut self) -> u32 {
+        unsafe {
+            Fl_Tree_Item_deselect_all(self._inner) as u32
+        }
+    }
+
+    pub fn is_root(&self) -> bool {
+        unsafe {
+            match Fl_Tree_Item_is_root(self._inner) {
+                0 => false,
+                _ => true,  
+            }
+        }
+    }
+
+    pub fn is_visible(&self) -> bool {
+        unsafe {
+            match Fl_Tree_Item_is_visible(self._inner) {
+                0 => false,
+                _ => true,  
+            }
+        }
+    }
+
+    pub fn is_active(&self) -> bool {
+        unsafe {
+            match Fl_Tree_Item_is_active(self._inner) {
+                0 => false,
+                _ => true,  
+            }
+        }
+    }
+
+    pub fn is_activated(&self) -> bool {
+        unsafe {
+            match Fl_Tree_Item_is_activated(self._inner) {
+                0 => false,
+                _ => true,  
+            }
+        }
+    }
+
+    pub fn deactivate(&mut self) {
+        unsafe {
+            Fl_Tree_Item_deactivate(self._inner)
+        }
+    }
+
+    pub fn activate(&mut self, val: bool) {
+        unsafe {
+            Fl_Tree_Item_activate(self._inner, val as i32)
+        }
+    }
+
+    pub fn is_selected(&self) -> bool {
+        unsafe {
+            match Fl_Tree_Item_is_selected(self._inner) {
+                0 => false,
+                _ => true,  
+            }
+        }
+    }
+}
+
+impl TreeItemArray {
+    fn total(&self) -> i32 {
+        unsafe {
+            Fl_Tree_Item_Array_total(self._inner) 
+        }
+    }
+    
+    // #[allow(dead_code)]
+    // fn swap( &mut self, ax: i32, bx: i32,) {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_swap( self._inner, ax, bx,)
+    //     }
+    // }
+    
+    // #[allow(dead_code)]
+    // fn move_item( &mut self, to: i32, from: i32,) -> i32 {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_move( self._inner, to, from,) 
+    //     }
+    // }
+    
+    // #[allow(dead_code)]
+    // fn deparent( &mut self, pos: i32,) -> i32 {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_deparent( self._inner, pos,) 
+    //     }
+    // }
+    
+    // #[allow(dead_code)]
+    // fn reparent( &mut self, item: TreeItem, newparent: TreeItem, pos: i32,) -> i32 {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_reparent( self._inner, item._inner, newparent._inner, pos,) 
+    //     }
+    // }
+    
+    // #[allow(dead_code)]
+    // fn clear(&mut self) {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_clear(self._inner)
+    //     }
+    // }
+    
+    // #[allow(dead_code)]
+    // fn add(&mut self, val: TreeItem) {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_add(self._inner, val._inner)
+    //     }
+    // }
+    
+    // #[allow(dead_code)]
+    // fn insert( &mut self, pos: i32, new_item: TreeItem,) {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_insert( self._inner, pos, new_item._inner,)
+    //     }
+    // }
+    
+    // #[allow(dead_code)]
+    // fn replace( &mut self, pos: i32, new_item: TreeItem,) {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_replace( self._inner, pos, new_item._inner,)
+    //     }
+    // }
+    
+    // #[allow(dead_code)]
+    // fn remove(&mut self, index: i32) {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_remove(self._inner, index)
+    //     }
+    // }
+    
+    // #[allow(dead_code)]
+    // fn remove_item( &mut self, item: TreeItem,) -> i32 {
+    //     unsafe {
+    //         Fl_Tree_Item_Array_remove_item( self._inner, item._inner,)
+    //     }
+    // }
+
+    fn at(&self, idx: i32) -> TreeItem {
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_Array_at(self._inner, idx)).unwrap()
+        }
+    }
+
+    fn into_vec(self) -> Option<Vec<TreeItem>> {
+        let c = self.total();
+        let mut v: Vec<TreeItem> = vec![];
+        if c == 0 {
+            None
+        } else {
+            for i in 0..c {
+                v.push(self.at(i));
+            }
+            Some(v) 
+        }
+    }
+}
+
+impl Drop for TreeItemArray {
+    fn drop(&mut self) {
+        unsafe {
+            Fl_Tree_Item_Array_delete(self._inner)
+        }
     }
 }
