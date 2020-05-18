@@ -4,6 +4,13 @@
 ### Changes
 - (NULL)
 
+## [0.4.5] - 2020-05-19
+### Changes
+- Require Rust 1.38 or higher.
+- Use type hashing for channels.
+- Add support for Trees and TreeItems.
+- Add feature to support legacy OpenGL.
+
 ## [0.4.4] - 2020-05-15
 ### Changes
 - Added wrapper for program_should_quit signal.

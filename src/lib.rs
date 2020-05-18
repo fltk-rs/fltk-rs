@@ -17,6 +17,7 @@
 //! - [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
 //!
 //! ## Usage
+//!
 //! Just add the following to your project's Cargo.toml file:
 //!
 //! ```toml
@@ -109,6 +110,7 @@
 //! ```
 //!
 //! ### Events
+//!
 //! Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
 //! ```rust
 //!     /* previous hello world code */
@@ -142,6 +144,7 @@
 //! Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the examples directory.
 //!
 //! ### Theming
+//!
 //! FLTK offers 4 application themes (called schemes):
 //! - Base
 //! - Gtk
@@ -178,6 +181,7 @@ pub mod output;
 pub mod prelude;
 pub mod table;
 pub mod text;
+pub mod tree;
 pub mod valuator;
 pub mod widget;
 pub mod window;

@@ -66,6 +66,8 @@ pub unsafe trait WidgetExt {
     fn with_size(self, width: i32, height: i32) -> Self;
     /// Initialize with label/title
     fn with_label(self, title: &str) -> Self;
+    /// Sets the initial alignment of the widget
+    fn with_align(self, align: Align) -> Self;
     /// Positions the widget below w
     fn below_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self;
     /// Positions the widget above w

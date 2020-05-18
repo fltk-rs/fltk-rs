@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "0.4.4"
+version = "0.4.5"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 build = "build.rs"
 edition = "2018"
@@ -24,5 +24,6 @@ system-fltk = []
 system-libpng = []
 system-libjpeg = []
 system-zlib = []
+legacy-opengl = []
 cpp-testing = [] # for C++ testing
 

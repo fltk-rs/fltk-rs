@@ -14,4 +14,5 @@ bindgen fltk-sys/cfltk/cfl_image.h -o fltk-sys/src/image.rs
 bindgen fltk-sys/cfltk/cfl_misc.h -o fltk-sys/src/misc.rs
 bindgen fltk-sys/cfltk/cfl_draw.h -o fltk-sys/src/draw.rs
 bindgen fltk-sys/cfltk/cfl_table.h -o fltk-sys/src/table.rs
+bindgen fltk-sys/cfltk/cfl_tree.h -o fltk-sys/src/tree.rs
 bindgen fltk-sys/cfltk/cfl.h -o fltk-sys/src/fl.rs

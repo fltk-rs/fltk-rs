@@ -44,6 +44,7 @@ fn main() {
     println!("cargo:rerun-if-changed=cfltk/cfl_image.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_draw.cpp");
     println!("cargo:rerun-if-changed=cfltk/cfl_table.cpp");
+    println!("cargo:rerun-if-changed=cfltk/cfl_tree.cpp");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
 
     Command::new("git")
@@ -90,6 +91,12 @@ fn main() {
         dst.define("OPTION_USE_SYSTEM_ZLIB", "OFF");
     }
 
+    if cfg!(feature = "legacy-opengl") {
+        dst.define("OpenGL_GL_PREFERENCE", "LEGACY");
+    } else {
+        dst.define("OpenGL_GL_PREFERENCE", "GLVND");
+    }
+
     if cfg!(feature = "cpp-testing") {
         println!("cargo:rerun-if-changed=cfltk/tests/test1.cpp");
         dst.define("CFLTK_BUILD_TESTS", "ON");
@@ -98,7 +105,6 @@ fn main() {
     let dst = dst
         .profile("RELEASE")
         .define("OPTION_ABI_VERSION:STRING", "10401")
-        .define("OpenGL_GL_PREFERENCE", "GLVND")
         .define("OPTION_BUILD_EXAMPLES", "OFF")
         .define("OPTION_USE_THREADS", "ON")
         .define("OPTION_LARGE_FILE", "ON")
