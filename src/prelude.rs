@@ -664,5 +664,7 @@ pub unsafe trait ImageExt {
     /// Transforms a raw image pointer to an image
     unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
     /// Returns the raw underlying image data
-    fn to_bytes(self) -> Vec<u8>;
+    fn to_rgb(&self) -> Vec<u8>;
+    /// Scales the image
+    fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool);
 }

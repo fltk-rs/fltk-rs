@@ -51,18 +51,21 @@ impl Wizard {
             Fl_Wizard_next(self._inner)
         }
     }
+    
     /// Gets the previous view of the wizard
     pub fn prev(&mut self) {
         unsafe {
             Fl_Wizard_prev(self._inner)
         }
     }
+    
     /// Gets the underlying widget of the current view
     pub fn current_widget(&mut self) -> Widget {
         unsafe {
             Widget::from_raw(Fl_Wizard_value(self._inner) as *mut fltk_sys::widget::Fl_Widget)
         }
     }
+    
     /// Sets the underlying widget of the current view
     pub fn set_current_widget<W: WidgetExt>(&mut self, w: &W) {
         unsafe {

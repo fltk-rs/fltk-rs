@@ -61,6 +61,7 @@ impl MenuItem {
             MenuItem { _inner: item_ptr }
         }
     }
+    
     /// Creates a popup menu at the specified coordinates and returns its choice
     pub fn popup(&mut self, x: i32, y: i32) -> Option<MenuItem> {
         unsafe {
@@ -75,6 +76,7 @@ impl MenuItem {
             }
         }
     }
+    
     /// Returns the label of the menu item
     pub fn label(&self) -> String {
         unsafe {
@@ -196,6 +198,10 @@ impl MenuItem {
         unsafe { Fl_Menu_Item_hide(self._inner) }
     }
 }
+
+unsafe impl Send for MenuItem {}
+
+unsafe impl Sync for MenuItem {}
 
 #[cfg(test)]
 mod menu {

@@ -38,7 +38,19 @@ extern "C" {
     pub fn Fl_JPEG_Image_copy(self_: *mut Fl_JPEG_Image) -> *mut Fl_JPEG_Image;
 }
 extern "C" {
+    pub fn Fl_JPEG_Image_scale(
+        self_: *mut Fl_JPEG_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_JPEG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_JPEG_Image;
+}
+extern "C" {
+    pub fn Fl_JPEG_Image_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_JPEG_Image;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -73,7 +85,22 @@ extern "C" {
     pub fn Fl_PNG_Image_copy(self_: *mut Fl_PNG_Image) -> *mut Fl_PNG_Image;
 }
 extern "C" {
+    pub fn Fl_PNG_Image_scale(
+        self_: *mut Fl_PNG_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_PNG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_PNG_Image;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_from(
+        data: *const ::std::os::raw::c_uchar,
+        size: ::std::os::raw::c_int,
+    ) -> *mut Fl_PNG_Image;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -108,7 +135,19 @@ extern "C" {
     pub fn Fl_SVG_Image_copy(self_: *mut Fl_SVG_Image) -> *mut Fl_SVG_Image;
 }
 extern "C" {
+    pub fn Fl_SVG_Image_scale(
+        self_: *mut Fl_SVG_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_SVG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_SVG_Image;
+}
+extern "C" {
+    pub fn Fl_SVG_Image_from(data: *const ::std::os::raw::c_char) -> *mut Fl_SVG_Image;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -143,7 +182,19 @@ extern "C" {
     pub fn Fl_BMP_Image_copy(self_: *mut Fl_BMP_Image) -> *mut Fl_BMP_Image;
 }
 extern "C" {
+    pub fn Fl_BMP_Image_scale(
+        self_: *mut Fl_BMP_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_BMP_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_BMP_Image;
+}
+extern "C" {
+    pub fn Fl_BMP_Image_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_BMP_Image;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -178,7 +229,19 @@ extern "C" {
     pub fn Fl_GIF_Image_copy(self_: *mut Fl_GIF_Image) -> *mut Fl_GIF_Image;
 }
 extern "C" {
+    pub fn Fl_GIF_Image_scale(
+        self_: *mut Fl_GIF_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_GIF_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_GIF_Image_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_GIF_Image;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -211,6 +274,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_RGB_Image_copy(self_: *mut Fl_RGB_Image) -> *mut Fl_RGB_Image;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_scale(
+        self_: *mut Fl_RGB_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_RGB_Image_new(

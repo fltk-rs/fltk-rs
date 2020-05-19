@@ -2396,3 +2396,253 @@ extern "C" {
         arg3: ::std::os::raw::c_int,
     ) -> f64;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Value_Output {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Value_Output_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Value_Output;
+}
+extern "C" {
+    pub fn Fl_Value_Output_x(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_y(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_width(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_height(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_label(arg1: *mut Fl_Value_Output) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_label(
+        arg1: *mut Fl_Value_Output,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_redraw(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_show(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_hide(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_activate(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_deactivate(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_redraw_label(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_resize(
+        arg1: *mut Fl_Value_Output,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_tooltip(arg1: *mut Fl_Value_Output) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_tooltip(
+        arg1: *mut Fl_Value_Output,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_get_type(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_type(arg1: *mut Fl_Value_Output, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Output_color(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_color(arg1: *mut Fl_Value_Output, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Value_Output_label_color(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_label_color(
+        arg1: *mut Fl_Value_Output,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_label_font(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_label_font(arg1: *mut Fl_Value_Output, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Output_label_size(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_label_size(arg1: *mut Fl_Value_Output, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Output_label_type(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_label_type(arg1: *mut Fl_Value_Output, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Output_box(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_box(arg1: *mut Fl_Value_Output, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Output_changed(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_changed(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_clear_changed(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_align(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_align(arg1: *mut Fl_Value_Output, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Output_delete(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_image(arg1: *mut Fl_Value_Output, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_image_with_size(
+        arg1: *mut Fl_Value_Output,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_handler(
+        self_: *mut Fl_Value_Output,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_draw(
+        self_: *mut Fl_Value_Output,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_trigger(arg1: *mut Fl_Value_Output, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Output_image(arg1: *const Fl_Value_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Output_parent(self_: *const Fl_Value_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Output_selection_color(arg1: *mut Fl_Value_Output) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_selection_color(
+        arg1: *mut Fl_Value_Output,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_do_callback(arg1: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_inside(
+        self_: *const Fl_Value_Output,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_window(arg1: *const Fl_Value_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Output_top_window(arg1: *const Fl_Value_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Output_takes_events(arg1: *const Fl_Value_Output) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_bounds(arg1: *mut Fl_Value_Output, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Value_Output_minimum(arg1: *mut Fl_Value_Output) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_minimum(arg1: *mut Fl_Value_Output, a: f64);
+}
+extern "C" {
+    pub fn Fl_Value_Output_maximum(arg1: *mut Fl_Value_Output) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_maximum(arg1: *mut Fl_Value_Output, a: f64);
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_range(arg1: *mut Fl_Value_Output, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_step(arg1: *mut Fl_Value_Output, a: f64, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Output_step(arg1: *mut Fl_Value_Output) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_precision(arg1: *mut Fl_Value_Output, digits: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Value_Output_value(arg1: *mut Fl_Value_Output) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_value(
+        arg1: *mut Fl_Value_Output,
+        arg2: f64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_format(
+        arg1: *mut Fl_Value_Output,
+        arg2: *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Output_round(arg1: *mut Fl_Value_Output, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Output_clamp(arg1: *mut Fl_Value_Output, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Value_Output_increment(
+        arg1: *mut Fl_Value_Output,
+        arg2: f64,
+        arg3: ::std::os::raw::c_int,
+    ) -> f64;
+}

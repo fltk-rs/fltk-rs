@@ -73,6 +73,8 @@ Fl_Tree_Item *Fl_Tree_next_selected_item(Fl_Tree *self, Fl_Tree_Item *item,
 
 int Fl_Tree_get_selected_items(Fl_Tree *self, Fl_Tree_Item_Array **arr);
 
+int Fl_Tree_get_items(Fl_Tree *self, Fl_Tree_Item_Array **arr);
+
 int Fl_Tree_open(Fl_Tree *self, const char *path, int docallback);
 
 void Fl_Tree_open_toggle(Fl_Tree *self, Fl_Tree_Item *item, int docallback);

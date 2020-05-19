@@ -338,6 +338,12 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Tree_get_items(
+        self_: *mut Fl_Tree,
+        arr: *mut *mut Fl_Tree_Item_Array,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Tree_open(
         self_: *mut Fl_Tree,
         path: *const ::std::os::raw::c_char,

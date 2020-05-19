@@ -26,12 +26,20 @@
     void image##_delete(image *self) { delete self; }                          \
     int image##_count(image *self) { return self->count(); }                   \
     const char *const *image##_data(image *self) { return self->data(); }      \
-    image *image##_copy(image *self) { return (image *)self->copy(); }
+    image *image##_copy(image *self) { return (image *)self->copy(); }         \
+    void image##_scale(image *self, int width, int height, int proportional,   \
+                       int can_expand) {                                       \
+        LOCK(self->scale(width, height, proportional, can_expand);)            \
+    }
 
 IMAGE_DEFINE(Fl_JPEG_Image)
 
 Fl_JPEG_Image *Fl_JPEG_Image_new(const char *filename) {
     return new (std::nothrow) Fl_JPEG_Image(filename);
+}
+
+Fl_JPEG_Image *Fl_JPEG_Image_from(const unsigned char *data) {
+    return new (std::nothrow) Fl_JPEG_Image(NULL, data);
 }
 
 IMAGE_DEFINE(Fl_PNG_Image)
@@ -40,10 +48,18 @@ Fl_PNG_Image *Fl_PNG_Image_new(const char *filename) {
     return new (std::nothrow) Fl_PNG_Image(filename);
 }
 
+Fl_PNG_Image *Fl_PNG_Image_from(const unsigned char *data, int size) {
+    return new (std::nothrow) Fl_PNG_Image(NULL, data, size);
+}
+
 IMAGE_DEFINE(Fl_SVG_Image)
 
 Fl_SVG_Image *Fl_SVG_Image_new(const char *filename) {
     return new (std::nothrow) Fl_SVG_Image(filename);
+}
+
+Fl_SVG_Image *Fl_SVG_Image_from(const char *data) {
+    return new (std::nothrow) Fl_SVG_Image(NULL, data);
 }
 
 IMAGE_DEFINE(Fl_BMP_Image)
@@ -52,10 +68,18 @@ Fl_BMP_Image *Fl_BMP_Image_new(const char *filename) {
     return new (std::nothrow) Fl_BMP_Image(filename);
 }
 
+Fl_BMP_Image *Fl_BMP_Image_from(const unsigned char *data) {
+    return new (std::nothrow) Fl_BMP_Image(NULL, data);
+}
+
 IMAGE_DEFINE(Fl_GIF_Image)
 
 Fl_GIF_Image *Fl_GIF_Image_new(const char *filename) {
     return new (std::nothrow) Fl_GIF_Image(filename);
+}
+
+Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data) {
+    return new (std::nothrow) Fl_GIF_Image(NULL, data);
 }
 
 IMAGE_DEFINE(Fl_RGB_Image)

@@ -1107,6 +1107,572 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct Fl_Radio_Round_Button {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Radio_Round_Button;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_x(arg1: *mut Fl_Radio_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_y(arg1: *mut Fl_Radio_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_width(arg1: *mut Fl_Radio_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_height(arg1: *mut Fl_Radio_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_label(
+        arg1: *mut Fl_Radio_Round_Button,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_label(
+        arg1: *mut Fl_Radio_Round_Button,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_redraw(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_show(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_hide(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_activate(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_deactivate(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_redraw_label(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_resize(
+        arg1: *mut Fl_Radio_Round_Button,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_tooltip(
+        arg1: *mut Fl_Radio_Round_Button,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_tooltip(
+        arg1: *mut Fl_Radio_Round_Button,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_get_type(
+        arg1: *mut Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_type(
+        arg1: *mut Fl_Radio_Round_Button,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_color(arg1: *mut Fl_Radio_Round_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_color(
+        arg1: *mut Fl_Radio_Round_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_label_color(
+        arg1: *mut Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_label_color(
+        arg1: *mut Fl_Radio_Round_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_label_font(
+        arg1: *mut Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_label_font(
+        arg1: *mut Fl_Radio_Round_Button,
+        font: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_label_size(
+        arg1: *mut Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_label_size(
+        arg1: *mut Fl_Radio_Round_Button,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_label_type(
+        arg1: *mut Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_label_type(
+        arg1: *mut Fl_Radio_Round_Button,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_box(arg1: *mut Fl_Radio_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_box(
+        arg1: *mut Fl_Radio_Round_Button,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_changed(arg1: *mut Fl_Radio_Round_Button)
+        -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_changed(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_clear_changed(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_align(arg1: *mut Fl_Radio_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_align(
+        arg1: *mut Fl_Radio_Round_Button,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_delete(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_image(
+        arg1: *mut Fl_Radio_Round_Button,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_image_with_size(
+        arg1: *mut Fl_Radio_Round_Button,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_handler(
+        self_: *mut Fl_Radio_Round_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_draw(
+        self_: *mut Fl_Radio_Round_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_trigger(
+        arg1: *mut Fl_Radio_Round_Button,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_image(
+        arg1: *const Fl_Radio_Round_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_parent(
+        self_: *const Fl_Radio_Round_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_selection_color(
+        arg1: *mut Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_selection_color(
+        arg1: *mut Fl_Radio_Round_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_do_callback(arg1: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_inside(
+        self_: *const Fl_Radio_Round_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_window(
+        arg1: *const Fl_Radio_Round_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_top_window(
+        arg1: *const Fl_Radio_Round_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_takes_events(
+        arg1: *const Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_is_toggled(
+        arg1: *mut Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_toggle(
+        arg1: *mut Fl_Radio_Round_Button,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_shortcut(
+        self_: *const Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_shortcut(
+        self_: *mut Fl_Radio_Round_Button,
+        shortcut: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_clear(self_: *mut Fl_Radio_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_value(self_: *mut Fl_Radio_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_value(
+        self_: *mut Fl_Radio_Round_Button,
+        flag: ::std::os::raw::c_int,
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Radio_Light_Button {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Radio_Light_Button;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_x(arg1: *mut Fl_Radio_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_y(arg1: *mut Fl_Radio_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_width(arg1: *mut Fl_Radio_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_height(arg1: *mut Fl_Radio_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_label(
+        arg1: *mut Fl_Radio_Light_Button,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_label(
+        arg1: *mut Fl_Radio_Light_Button,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_redraw(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_show(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_hide(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_activate(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_deactivate(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_redraw_label(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_resize(
+        arg1: *mut Fl_Radio_Light_Button,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_tooltip(
+        arg1: *mut Fl_Radio_Light_Button,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_tooltip(
+        arg1: *mut Fl_Radio_Light_Button,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_get_type(
+        arg1: *mut Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_type(
+        arg1: *mut Fl_Radio_Light_Button,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_color(arg1: *mut Fl_Radio_Light_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_color(
+        arg1: *mut Fl_Radio_Light_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_label_color(
+        arg1: *mut Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_label_color(
+        arg1: *mut Fl_Radio_Light_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_label_font(
+        arg1: *mut Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_label_font(
+        arg1: *mut Fl_Radio_Light_Button,
+        font: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_label_size(
+        arg1: *mut Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_label_size(
+        arg1: *mut Fl_Radio_Light_Button,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_label_type(
+        arg1: *mut Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_label_type(
+        arg1: *mut Fl_Radio_Light_Button,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_box(arg1: *mut Fl_Radio_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_box(
+        arg1: *mut Fl_Radio_Light_Button,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_changed(arg1: *mut Fl_Radio_Light_Button)
+        -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_changed(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_clear_changed(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_align(arg1: *mut Fl_Radio_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_align(
+        arg1: *mut Fl_Radio_Light_Button,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_delete(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_image(
+        arg1: *mut Fl_Radio_Light_Button,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_image_with_size(
+        arg1: *mut Fl_Radio_Light_Button,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_handler(
+        self_: *mut Fl_Radio_Light_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_draw(
+        self_: *mut Fl_Radio_Light_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_trigger(
+        arg1: *mut Fl_Radio_Light_Button,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_image(
+        arg1: *const Fl_Radio_Light_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_parent(
+        self_: *const Fl_Radio_Light_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_selection_color(
+        arg1: *mut Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_selection_color(
+        arg1: *mut Fl_Radio_Light_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_do_callback(arg1: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_inside(
+        self_: *const Fl_Radio_Light_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_window(
+        arg1: *const Fl_Radio_Light_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_top_window(
+        arg1: *const Fl_Radio_Light_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_takes_events(
+        arg1: *const Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_is_toggled(
+        arg1: *mut Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_toggle(
+        arg1: *mut Fl_Radio_Light_Button,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_shortcut(
+        self_: *const Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_shortcut(
+        self_: *mut Fl_Radio_Light_Button,
+        shortcut: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_clear(self_: *mut Fl_Radio_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_value(self_: *mut Fl_Radio_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_value(
+        self_: *mut Fl_Radio_Light_Button,
+        flag: ::std::os::raw::c_int,
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct Fl_Light_Button {
     _unused: [u8; 0],
 }

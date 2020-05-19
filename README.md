@@ -248,9 +248,16 @@ Most common widgets are implemented:
     - CheckButton
     - LightButton
     - RepeatButton
+    - RadioLightButton
+    - RadioRoundButton
 - Dialogs
     - Native FileDialog
     - HelpDialog
+    - Message dialog
+    - Alert dialog
+    - Password dialog
+    - Choice dialog
+    - Input dialog
 - Frame (Fl_Box)
 - Windows
     - Window
@@ -263,6 +270,7 @@ Most common widgets are implemented:
     - Scroll
     - Tile
     - Wizard
+    - ColorChooser
 - Text display widgets
     - TextDisplay
     - TextEditor
@@ -292,6 +300,7 @@ Most common widgets are implemented:
     - Roller
     - Adjuster
     - ValueInput
+    - ValueOutput
 - Browsing widgets
     - Browser
     - SelectBrowser

@@ -4,6 +4,15 @@
 ### Changes
 - (NULL)
 
+## [0.4.6] - 2020-05-20
+### Changes
+- Add get_items() method to Tree widget.
+- Add support for loading images from data/memory using the from_data() method.
+- impl Send and Sync for TreeItem and MenuItem.
+- Renamed ImageExt to_bytes to to_rgb which is more approprate.
+- Added more button and valuator widgets.
+- Add scale method to images.
+
 ## [0.4.5] - 2020-05-19
 ### Changes
 - Require Rust 1.38 or higher.

@@ -12,7 +12,9 @@ extern "C" {
     void image##_delete(image *);                                              \
     int image##_count(image *self);                                            \
     const char *const *image##_data(image *self);                              \
-    image *image##_copy(image *self);
+    image *image##_copy(image *self);                                          \
+    void image##_scale(image *self, int width, int height, int proportional,   \
+                       int can_expand);
 
 typedef struct Fl_Image Fl_Image;
 
@@ -20,21 +22,31 @@ IMAGE_DECLARE(Fl_JPEG_Image)
 
 Fl_JPEG_Image *Fl_JPEG_Image_new(const char *filename);
 
+Fl_JPEG_Image *Fl_JPEG_Image_from(const unsigned char *data);
+
 IMAGE_DECLARE(Fl_PNG_Image)
 
 Fl_PNG_Image *Fl_PNG_Image_new(const char *filename);
+
+Fl_PNG_Image *Fl_PNG_Image_from(const unsigned char *data, int size);
 
 IMAGE_DECLARE(Fl_SVG_Image)
 
 Fl_SVG_Image *Fl_SVG_Image_new(const char *filename);
 
+Fl_SVG_Image *Fl_SVG_Image_from(const char *data);
+
 IMAGE_DECLARE(Fl_BMP_Image)
 
 Fl_BMP_Image *Fl_BMP_Image_new(const char *filename);
 
+Fl_BMP_Image *Fl_BMP_Image_from(const unsigned char *data);
+
 IMAGE_DECLARE(Fl_GIF_Image)
 
 Fl_GIF_Image *Fl_GIF_Image_new(const char *filename);
+
+Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data);
 
 IMAGE_DECLARE(Fl_RGB_Image)
 

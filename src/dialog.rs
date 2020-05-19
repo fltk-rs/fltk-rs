@@ -264,16 +264,19 @@ impl HelpDialog {
             }
         }
     }
+    
     /// Creates a new Help dialog with position(x, y) and size(w, h)
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> HelpDialog {
         let mut temp = HelpDialog::default();
         temp.resize(x, y, w, h);
         temp
     }
+    
     /// Hides the help dialog
     pub fn hide(&mut self) {
         unsafe { Fl_Help_Dialog_hide(self._inner) }
     }
+    
     /// Loads a file for the help dialog
     pub fn load(&mut self, file: &std::path::Path) -> Result<(), FltkError> {
         let f = file.to_str().unwrap();
@@ -285,31 +288,38 @@ impl HelpDialog {
             }
         }
     }
+    
     /// Sets the position of the help dialog
     pub fn position(&mut self, x: i32, y: i32) {
         unsafe { Fl_Help_Dialog_position(self._inner, x, y) }
     }
+    
     /// Resizes the help dialog
     pub fn resize(&mut self, x: i32, y: i32, w: i32, h: i32) {
         unsafe { Fl_Help_Dialog_resize(self._inner, x, y, w, h) }
     }
+    
     /// Shows the help dialog
     pub fn show(&mut self) {
         unsafe { Fl_Help_Dialog_show(self._inner) }
     }
+    
     /// Sets the text size
     pub fn set_text_size(&mut self, s: u32) {
         unsafe { Fl_Help_Dialog_set_text_size(self._inner, s as i32) }
     }
+    
     /// Returns the text size
     pub fn text_size(&mut self) -> u32 {
         unsafe { Fl_Help_Dialog_text_size(self._inner) as u32 }
     }
+    
     /// Sets the value of the help dialog
     pub fn set_value(&mut self, f: &str) {
         let f = CString::new(f).unwrap();
         unsafe { Fl_Help_Dialog_set_value(self._inner, f.into_raw() as *const raw::c_char) }
     }
+    
     /// Returns the value of the help dialog
     pub fn value(&self) -> Option<String> {
         unsafe {
@@ -321,6 +331,7 @@ impl HelpDialog {
             }
         }
     }
+    
     /// Returs whether the help dialog is visible
     pub fn visible(&mut self) -> bool {
         unsafe {
@@ -330,18 +341,22 @@ impl HelpDialog {
             }
         }
     }
+    
     /// Returns the width of the help dialog
     pub fn width(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_w(self._inner) }
     }
+    
     /// Returns the height of the help dialog
     pub fn height(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_h(self._inner) }
     }
+    
     /// Returns the x position of the help dialog
     pub fn x(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_x(self._inner) }
     }
+    
     /// Returns the y position of the help dialog
     pub fn y(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_y(self._inner) }
