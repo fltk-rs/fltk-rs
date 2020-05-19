@@ -54,6 +54,13 @@ impl JpegImage {
             Ok(JpegImage { _inner: image_ptr })
         }
     }
+    pub fn from_data(data: &[u8]) -> Self {
+        unsafe {
+            let x = Fl_JPEG_Image_from(data.as_ptr());
+            assert!(!x.is_null());
+            JpegImage { _inner: x }
+        }
+    }
 }
 
 /// Creates a struct holding a PNG image
@@ -75,6 +82,13 @@ impl PngImage {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
             Ok(PngImage { _inner: image_ptr })
+        }
+    }
+    pub fn from_data(data: &[u8]) -> Self {
+        unsafe {
+            let x = Fl_PNG_Image_from(data.as_ptr());
+            assert!(!x.is_null());
+            PngImage { _inner: x }
         }
     }
 }
@@ -100,6 +114,14 @@ impl SvgImage {
             Ok(SvgImage { _inner: image_ptr })
         }
     }
+    pub fn from_data(data: &str) -> Self {
+        let data = CString::new(data).unwrap();
+        unsafe {
+            let x = Fl_SVG_Image_from(data.into_raw() as *const raw::c_char);
+            assert!(!x.is_null());
+            SvgImage { _inner: x }
+        }
+    }
 }
 
 /// Creates a struct holding a BMP image
@@ -123,6 +145,13 @@ impl BmpImage {
             Ok(BmpImage { _inner: image_ptr })
         }
     }
+    pub fn from_data(data: &[u8]) -> Self {
+        unsafe {
+            let x = Fl_BMP_Image_from(data.as_ptr());
+            assert!(!x.is_null());
+            BmpImage { _inner: x }
+        }
+    }
 }
 
 /// Creates a struct holding a GIF image
@@ -144,6 +173,13 @@ impl GifImage {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
             Ok(GifImage { _inner: image_ptr })
+        }
+    }
+    pub fn from_data(data: &[u8]) -> Self {
+        unsafe {
+            let x = Fl_GIF_Image_from(data.as_ptr());
+            assert!(!x.is_null());
+            GifImage { _inner: x }
         }
     }
 }
@@ -171,7 +207,7 @@ impl RgbImage {
     pub fn into_parts(self) -> (Vec<u8>, i32, i32) {
         let w = self.width();
         let h = self.height();
-        (self.to_bytes(), w, h)
+        (self.to_rgb(), w, h)
     }
     /// Transforms the RgbImage to a PngImage
     pub fn into_png_image(self) -> Result<PngImage, FltkError> {

@@ -34,10 +34,18 @@ Fl_JPEG_Image *Fl_JPEG_Image_new(const char *filename) {
     return new (std::nothrow) Fl_JPEG_Image(filename);
 }
 
+Fl_JPEG_Image *Fl_JPEG_Image_from(const unsigned char *data) {
+    return new (std::nothrow) Fl_JPEG_Image(NULL, data);
+}
+
 IMAGE_DEFINE(Fl_PNG_Image)
 
 Fl_PNG_Image *Fl_PNG_Image_new(const char *filename) {
     return new (std::nothrow) Fl_PNG_Image(filename);
+}
+
+Fl_PNG_Image *Fl_PNG_Image_from(const unsigned char *data, int size) {
+    return new (std::nothrow) Fl_PNG_Image(NULL, data, size);
 }
 
 IMAGE_DEFINE(Fl_SVG_Image)
@@ -46,16 +54,28 @@ Fl_SVG_Image *Fl_SVG_Image_new(const char *filename) {
     return new (std::nothrow) Fl_SVG_Image(filename);
 }
 
+Fl_SVG_Image *Fl_SVG_Image_from(const char *data) {
+    return new (std::nothrow) Fl_SVG_Image(NULL, data);
+}
+
 IMAGE_DEFINE(Fl_BMP_Image)
 
 Fl_BMP_Image *Fl_BMP_Image_new(const char *filename) {
     return new (std::nothrow) Fl_BMP_Image(filename);
 }
 
+Fl_BMP_Image *Fl_BMP_Image_from(const unsigned char *data) {
+    return new (std::nothrow) Fl_BMP_Image(NULL, data);
+}
+
 IMAGE_DEFINE(Fl_GIF_Image)
 
 Fl_GIF_Image *Fl_GIF_Image_new(const char *filename) {
     return new (std::nothrow) Fl_GIF_Image(filename);
+}
+
+Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data) {
+    return new (std::nothrow) Fl_GIF_Image(NULL, data);
 }
 
 IMAGE_DEFINE(Fl_RGB_Image)

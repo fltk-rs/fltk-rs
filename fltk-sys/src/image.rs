@@ -40,6 +40,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_JPEG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_JPEG_Image;
 }
+extern "C" {
+    pub fn Fl_JPEG_Image_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_JPEG_Image;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_PNG_Image {
@@ -74,6 +77,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_PNG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_PNG_Image;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_PNG_Image;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -110,6 +116,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_SVG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_SVG_Image;
 }
+extern "C" {
+    pub fn Fl_SVG_Image_from(data: *const ::std::os::raw::c_char) -> *mut Fl_SVG_Image;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_BMP_Image {
@@ -145,6 +154,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_BMP_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_BMP_Image;
 }
+extern "C" {
+    pub fn Fl_BMP_Image_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_BMP_Image;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_GIF_Image {
@@ -179,6 +191,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_GIF_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_GIF_Image_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_GIF_Image;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

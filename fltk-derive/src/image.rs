@@ -80,7 +80,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn to_bytes(self) -> Vec<u8> {
+            fn to_rgb(&self) -> Vec<u8> {
                 unsafe {
                     let ptr = #data(self._inner);
                     let cnt = #width(self._inner) * #height(self._inner) * 3;

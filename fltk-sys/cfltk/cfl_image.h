@@ -20,21 +20,31 @@ IMAGE_DECLARE(Fl_JPEG_Image)
 
 Fl_JPEG_Image *Fl_JPEG_Image_new(const char *filename);
 
+Fl_JPEG_Image *Fl_JPEG_Image_from(const unsigned char *data);
+
 IMAGE_DECLARE(Fl_PNG_Image)
 
 Fl_PNG_Image *Fl_PNG_Image_new(const char *filename);
+
+Fl_PNG_Image *Fl_PNG_Image_from(const unsigned char *data);
 
 IMAGE_DECLARE(Fl_SVG_Image)
 
 Fl_SVG_Image *Fl_SVG_Image_new(const char *filename);
 
+Fl_SVG_Image *Fl_SVG_Image_from(const char *data);
+
 IMAGE_DECLARE(Fl_BMP_Image)
 
 Fl_BMP_Image *Fl_BMP_Image_new(const char *filename);
 
+Fl_BMP_Image *Fl_BMP_Image_from(const unsigned char *data);
+
 IMAGE_DECLARE(Fl_GIF_Image)
 
 Fl_GIF_Image *Fl_GIF_Image_new(const char *filename);
+
+Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data);
 
 IMAGE_DECLARE(Fl_RGB_Image)
 

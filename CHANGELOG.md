@@ -3,6 +3,7 @@
 ## Unreleased
 ### Changes
 - Add get_items method to Tree widget.
+- Add initial support for loading images from data.
 
 ## [0.4.5] - 2020-05-19
 ### Changes
