@@ -23,10 +23,12 @@ impl Image {
     pub fn as_ptr(&self) -> *mut Fl_Image {
         self._inner
     }
+
     /// Initialize an Image base from a raw pointer
     pub unsafe fn from_raw(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
         Image { _inner: ptr }
     }
+
     /// Transforms an Image base into another Image
     pub fn downcast_into<I: ImageExt>(self) -> I {
         unsafe { I::from_image_ptr(self._inner) }
@@ -40,6 +42,7 @@ pub struct JpegImage {
 }
 
 impl JpegImage {
+    /// Loads the image from a filesystem path
     pub fn load(path: &std::path::Path) -> Result<JpegImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -54,11 +57,20 @@ impl JpegImage {
             Ok(JpegImage { _inner: image_ptr })
         }
     }
-    pub fn from_data(data: &[u8]) -> Self {
+    
+    /// Loads the image from data/memory
+    pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
-            let x = Fl_JPEG_Image_from(data.as_ptr());
-            assert!(!x.is_null());
-            JpegImage { _inner: x }
+            if data.is_empty() {
+                None
+            } else {
+                let x = Fl_JPEG_Image_from(data.as_ptr());
+                if x.is_null() {
+                    None
+                } else {
+                    Some(JpegImage { _inner: x })
+                }
+            }
         }
     }
 }
@@ -70,6 +82,7 @@ pub struct PngImage {
 }
 
 impl PngImage {
+    /// Loads the image from a filesystem path
     pub fn load(path: &std::path::Path) -> Result<PngImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -84,11 +97,20 @@ impl PngImage {
             Ok(PngImage { _inner: image_ptr })
         }
     }
-    pub fn from_data(data: &[u8]) -> Self {
+    
+    /// Loads the image from data/memory
+    pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
-            let x = Fl_PNG_Image_from(data.as_ptr());
-            assert!(!x.is_null());
-            PngImage { _inner: x }
+            if data.is_empty() {
+                None
+            } else {
+                let x = Fl_PNG_Image_from(data.as_ptr());
+                if x.is_null() {
+                    None
+                } else {
+                    Some(PngImage { _inner: x })
+                }
+            }
         }
     }
 }
@@ -100,6 +122,7 @@ pub struct SvgImage {
 }
 
 impl SvgImage {
+    /// Loads the image from a filesystem path
     pub fn load(path: &std::path::Path) -> Result<SvgImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -114,12 +137,21 @@ impl SvgImage {
             Ok(SvgImage { _inner: image_ptr })
         }
     }
-    pub fn from_data(data: &str) -> Self {
-        let data = CString::new(data).unwrap();
-        unsafe {
-            let x = Fl_SVG_Image_from(data.into_raw() as *const raw::c_char);
-            assert!(!x.is_null());
-            SvgImage { _inner: x }
+    
+    /// Loads the image from data/memory
+    pub fn from_data(data: &str) -> Option<Self> {
+        if data.is_empty() {
+            None
+        } else {
+            let data = CString::new(data).unwrap();
+            unsafe {
+                let x = Fl_SVG_Image_from(data.into_raw() as *const raw::c_char);
+                if x.is_null() {
+                    None
+                } else {
+                    Some(SvgImage { _inner: x })
+                }
+            }
         }
     }
 }
@@ -131,6 +163,7 @@ pub struct BmpImage {
 }
 
 impl BmpImage {
+    /// Loads the image from a filesystem path
     pub fn load(path: &std::path::Path) -> Result<BmpImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -145,11 +178,20 @@ impl BmpImage {
             Ok(BmpImage { _inner: image_ptr })
         }
     }
-    pub fn from_data(data: &[u8]) -> Self {
+    
+    /// Loads the image from data/memory
+    pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
-            let x = Fl_BMP_Image_from(data.as_ptr());
-            assert!(!x.is_null());
-            BmpImage { _inner: x }
+            if data.is_empty() {
+                None
+            } else {
+                let x = Fl_BMP_Image_from(data.as_ptr());
+                if x.is_null() {
+                    None
+                } else {
+                    Some(BmpImage { _inner: x })
+                }
+            }
         }
     }
 }
@@ -161,6 +203,7 @@ pub struct GifImage {
 }
 
 impl GifImage {
+    /// Loads the image from a filesystem path
     pub fn load(path: &std::path::Path) -> Result<GifImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -175,11 +218,20 @@ impl GifImage {
             Ok(GifImage { _inner: image_ptr })
         }
     }
-    pub fn from_data(data: &[u8]) -> Self {
+    
+    /// Loads the image from data/memory
+    pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
-            let x = Fl_GIF_Image_from(data.as_ptr());
-            assert!(!x.is_null());
-            GifImage { _inner: x }
+            if data.is_empty() {
+                None
+            } else {
+                let x = Fl_GIF_Image_from(data.as_ptr());
+                if x.is_null() {
+                    None
+                } else {
+                    Some(GifImage { _inner: x })
+                }
+            }
         }
     }
 }
@@ -203,12 +255,14 @@ impl RgbImage {
         assert!(!img.is_null(), "Couldn't generate RGB image!");
         RgbImage { _inner: img }
     }
+
     /// Deconstructs a raw RgbImage into parts
     pub fn into_parts(self) -> (Vec<u8>, i32, i32) {
         let w = self.width();
         let h = self.height();
         (self.to_rgb(), w, h)
     }
+
     /// Transforms the RgbImage to a PngImage
     pub fn into_png_image(self) -> Result<PngImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
@@ -217,6 +271,7 @@ impl RgbImage {
         std::fs::remove_file(&path)?;
         Ok(ret)
     }
+
     /// Transforms the RgbImage to a JpegImage
     pub fn into_jpg_image(self) -> Result<JpegImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
@@ -225,6 +280,7 @@ impl RgbImage {
         std::fs::remove_file(&path)?;
         Ok(ret)
     }
+
     /// Transforms the RgbImage to a BmpImage
     pub fn into_bmp_image(self) -> Result<BmpImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");

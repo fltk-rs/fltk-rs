@@ -102,8 +102,14 @@ pub struct Adjuster {
     _inner: *mut Fl_Adjuster,
 }
 
-/// Creates an adjuster widget
+/// Creates an value input widget
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct ValueInput {
     _inner: *mut Fl_Value_Input,
+}
+
+/// Creates an value output widget
+#[derive(WidgetExt, ValuatorExt, Debug)]
+pub struct ValueOutput {
+    _inner: *mut Fl_Value_Output,
 }

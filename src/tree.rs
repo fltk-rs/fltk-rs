@@ -1467,6 +1467,10 @@ impl TreeItemArray {
     }
 }
 
+unsafe impl Send for TreeItem {}
+
+unsafe impl Sync for TreeItem {}
+
 impl Drop for TreeItemArray {
     fn drop(&mut self) {
         unsafe { Fl_Tree_Item_Array_delete(self._inner) }

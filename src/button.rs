@@ -39,10 +39,61 @@ impl RadioButton {
             }
         }
     }
+
     /// Sets whether the RadioButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
         unsafe {
             Fl_Radio_Button_toggle(self._inner, val as i32)
+        }
+    }
+}
+
+/// Creates a radio round button
+#[derive(WidgetExt, ButtonExt, Debug)]
+pub struct RadioRoundButton {
+    _inner: *mut Fl_Radio_Round_Button,
+}
+
+impl RadioRoundButton {
+    /// Check whether a RadioRoundButton is toggled
+    pub fn is_toggled(&self) -> bool {
+        unsafe {
+            match Fl_Radio_Round_Button_is_toggled(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    /// Sets whether the RadioRoundButton is toggled or not
+    pub fn toggle(&mut self, val: bool) {
+        unsafe {
+            Fl_Radio_Round_Button_toggle(self._inner, val as i32)
+        }
+    }
+}
+
+/// Creates a radio light button
+#[derive(WidgetExt, ButtonExt, Debug)]
+pub struct RadioLightButton {
+    _inner: *mut Fl_Radio_Light_Button,
+}
+
+impl RadioLightButton {
+    /// Check whether a RadioLightButton is toggled
+    pub fn is_toggled(&self) -> bool {
+        unsafe {
+            match Fl_Radio_Light_Button_is_toggled(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    /// Sets whether the RadioLightButton is toggled or not
+    pub fn toggle(&mut self, val: bool) {
+        unsafe {
+            Fl_Radio_Light_Button_toggle(self._inner, val as i32)
         }
     }
 }
@@ -63,6 +114,7 @@ impl RoundButton {
             }
         }
     }
+
     /// Sets whether the RoundButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
         unsafe {
@@ -87,6 +139,7 @@ impl CheckButton {
             }
         }
     }
+
     /// Set whether CheckButton is checked or not
     pub fn set_checked(&self, checked: bool) {
         unsafe {
@@ -111,6 +164,7 @@ impl ToggleButton {
             }
         }
     }
+
     /// Sets whether the ToggleButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
         unsafe {
@@ -135,6 +189,7 @@ impl LightButton {
             }
         }
     }
+
     /// Sets whether the LightButton is on or not
     pub fn turn_on(&mut self, on: bool) {
         unsafe {

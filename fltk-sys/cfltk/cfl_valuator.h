@@ -63,6 +63,10 @@ WIDGET_DECLARE(Fl_Value_Input)
 
 VALUATOR_DECLARE(Fl_Value_Input)
 
+WIDGET_DECLARE(Fl_Value_Output)
+
+VALUATOR_DECLARE(Fl_Value_Output)
+
 #ifdef __cplusplus
 }
 #endif

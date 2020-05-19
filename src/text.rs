@@ -24,10 +24,12 @@ impl TextBuffer {
             }
         }
     }
+    
     /// Deletes the TextBuffer
     pub unsafe fn delete(&mut self) {
         Fl_Text_Buffer_delete(self._inner)
     }
+    
     /// Initialized a text buffer from a pointer
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         TextBuffer { _inner: ptr }
@@ -521,6 +523,7 @@ impl TextEditor {
             x
         }
     }
+    
     /// Creates a default and zero initialized TextEditor
     pub fn default(buf: &mut TextBuffer) -> TextEditor {
         let temp = CString::new("").unwrap();
@@ -534,24 +537,28 @@ impl TextEditor {
             x
         }
     }
+    
     /// Copies the text within the TextEditor widget
     pub fn copy(&self) {
         unsafe {
             kf_copy(self._inner);
         }
     }
+    
     /// Cuts the text within the TextEditor widget
     pub fn cut(&self) {
         unsafe {
             kf_cut(self._inner);
         }
     }
+    
     /// Pastes text from the clipboard into the TextEditor widget
     pub fn paste(&self) {
         unsafe {
             kf_paste(self._inner);
         }
     }
+    
     /// Undo changes in the TextEditor widget
     pub fn undo(&self) {
         unsafe {
@@ -578,6 +585,7 @@ impl TextDisplay {
             x
         }
     }
+    
     /// Creates a default and zero initialized TextDisplay
     pub fn default(buf: &mut TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
@@ -615,6 +623,7 @@ impl SimpleTerminal {
             x
         }
     }
+    
     /// Creates a default and zero initialized SimpleTerminal
     pub fn default(buf: &mut TextBuffer) -> SimpleTerminal {
         let temp = CString::new("").unwrap();

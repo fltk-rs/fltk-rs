@@ -5,10 +5,14 @@
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Light_Button.H>
 #include <FL/Fl_Radio_Button.H>
+#include <FL/Fl_Radio_Light_Button.H>
+#include <FL/Fl_Radio_Round_Button.H>
 #include <FL/Fl_Repeat_Button.H>
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Round_Button.H>
 #include <FL/Fl_Toggle_Button.H>
+#include <FL/Fl_Toggle_Light_Button.H>
+#include <FL/Fl_Toggle_Round_Button.H>
 #include <new>
 
 #define BUTTON_DEFINE(widget)                                                  \
@@ -60,6 +64,31 @@ void Fl_Toggle_Button_toggle(Fl_Toggle_Button *self, int boolean) {
 
 BUTTON_DEFINE(Fl_Toggle_Button)
 
+
+// WIDGET_DEFINE(Fl_Toggle_Round_Button)
+
+// int Fl_Toggle_Round_Button_is_toggled(Fl_Toggle_Round_Button *self) {
+//     return self->value();
+// }
+
+// void Fl_Toggle_Round_Button_toggle(Fl_Toggle_Round_Button *self, int boolean) {
+//     LOCK(self->value(boolean);)
+// }
+
+// BUTTON_DEFINE(Fl_Toggle_Round_Button)
+
+// WIDGET_DEFINE(Fl_Toggle_Light_Button)
+
+// int Fl_Toggle_Light_Button_is_toggled(Fl_Toggle_Light_Button *self) {
+//     return self->value();
+// }
+
+// void Fl_Toggle_Light_Button_toggle(Fl_Toggle_Light_Button *self, int boolean) {
+//     LOCK(self->value(boolean);)
+// }
+
+// BUTTON_DEFINE(Fl_Toggle_Light_Button)
+
 WIDGET_DEFINE(Fl_Round_Button)
 
 int Fl_Round_Button_is_toggled(Fl_Round_Button *self) { return self->value(); }
@@ -69,6 +98,30 @@ void Fl_Round_Button_toggle(Fl_Round_Button *self, int boolean) {
 }
 
 BUTTON_DEFINE(Fl_Round_Button)
+
+WIDGET_DEFINE(Fl_Radio_Round_Button)
+
+int Fl_Radio_Round_Button_is_toggled(Fl_Radio_Round_Button *self) {
+    return self->value();
+}
+
+void Fl_Radio_Round_Button_toggle(Fl_Radio_Round_Button *self, int boolean) {
+    LOCK(self->value(boolean);)
+}
+
+BUTTON_DEFINE(Fl_Radio_Round_Button)
+
+WIDGET_DEFINE(Fl_Radio_Light_Button)
+
+int Fl_Radio_Light_Button_is_toggled(Fl_Radio_Light_Button *self) {
+    return self->value();
+}
+
+void Fl_Radio_Light_Button_toggle(Fl_Radio_Light_Button *self, int boolean) {
+    LOCK(self->value(boolean);)
+}
+
+BUTTON_DEFINE(Fl_Radio_Light_Button)
 
 WIDGET_DEFINE(Fl_Light_Button)
 

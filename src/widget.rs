@@ -21,10 +21,12 @@ impl Widget {
         assert!(!ptr.is_null());
         Widget { _inner: ptr }
     }
+    
     /// Returns the inner pointer
     pub fn as_ptr(&self) -> *mut Fl_Widget {
         self._inner
     }
+    
     /// Transform Widget base to another Widget
     pub fn into<W: WidgetExt>(self) -> W {
         unsafe { W::from_widget_ptr(self._inner) }

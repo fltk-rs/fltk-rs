@@ -10,6 +10,7 @@
 #include <FL/Fl_Scrollbar.H>
 #include <FL/Fl_Slider.H>
 #include <FL/Fl_Value_Input.H>
+#include <FL/Fl_Value_Output.H>
 #include <FL/Fl_Value_Slider.H>
 #include <new>
 
@@ -101,3 +102,7 @@ VALUATOR_DEFINE(Fl_Adjuster)
 WIDGET_DEFINE(Fl_Value_Input)
 
 VALUATOR_DEFINE(Fl_Value_Input)
+
+WIDGET_DEFINE(Fl_Value_Output)
+
+VALUATOR_DEFINE(Fl_Value_Output)

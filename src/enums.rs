@@ -121,6 +121,7 @@ impl Font {
         }
         unsafe { std::mem::transmute(idx as i32) }
     }
+    
     /// Gets the font by its name, can be queried via the app::get_font_names()
     pub fn by_name(name: &str) -> Font {
         match get_font_index(name) {
@@ -167,6 +168,7 @@ impl Color {
     pub fn from_rgb(r: u8, g: u8, b: u8) -> Color {
         unsafe { std::mem::transmute(Fl_get_color(r, g, b)) }
     }
+    
     /// Returns a color from hex or decimal
     pub fn from_u32(val: u32) -> Color {
         let hex = format!("{:06x}", val);
