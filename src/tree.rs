@@ -308,6 +308,21 @@ impl Tree {
         }
     }
 
+    /// Gets the all tree items
+    pub fn get_items(&self) -> Option<Vec<TreeItem>> {
+        unsafe {
+            let mut items = TreeItemArray {
+                _inner: std::ptr::null_mut(),
+            };
+            let ret = Fl_Tree_get_items(self._inner, &mut items._inner);
+            if ret == 0 {
+                None
+            } else {
+                items.into_vec()
+            }
+        }
+    }
+
     /// Opens a tree item, causing the children to be shown
     pub fn open(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
         let path = CString::new(path).unwrap();

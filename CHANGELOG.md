@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (NULL)
+- Add get_items method to Tree widget.
 
 ## [0.4.5] - 2020-05-19
 ### Changes

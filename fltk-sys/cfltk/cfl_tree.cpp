@@ -134,6 +134,18 @@ int Fl_Tree_get_selected_items(Fl_Tree *self, Fl_Tree_Item_Array **arr) {
     return ret;
 }
 
+int Fl_Tree_get_items(Fl_Tree *self, Fl_Tree_Item_Array **arr) {
+    int c = 0;
+    for (Fl_Tree_Item *i = self->first(); i; i = self->next_item(i))
+        c++;
+    if (c == 0)
+        return 0;
+    *arr = new (std::nothrow) Fl_Tree_Item_Array(c);
+    for (Fl_Tree_Item *i = self->first(); i; i = self->next_item(i))
+        (*arr)->add(i);
+    return c;
+}
+
 int Fl_Tree_open(Fl_Tree *self, const char *path, int docallback) {
     if (!path)
         return 0;
@@ -501,8 +513,8 @@ void Fl_Tree_set_Item_label(Fl_Tree_Item *self, const char *val) {
     LOCK(self->label(val);)
 }
 
-const char *Fl_Tree_Item_label(const Fl_Tree_Item *self) { 
-    auto label = self->label(); 
+const char *Fl_Tree_Item_label(const Fl_Tree_Item *self) {
+    auto label = self->label();
     char *buf = (char *)malloc(strlen(label) + 1);
     strncpy(buf, label, strlen(label) + 1);
     return buf;
@@ -755,10 +767,9 @@ int Fl_Tree_Item_Array_remove_item(Fl_Tree_Item_Array *self,
 
 Fl_Tree_Item *Fl_Tree_Item_Array_at(Fl_Tree_Item_Array *self, int index) {
     auto total = self->total();
-    if (index >= total) return NULL;
+    if (index >= total)
+        return NULL;
     return (*self)[index];
 }
 
-void Fl_Tree_Item_Array_delete(Fl_Tree_Item_Array *self) {
-    delete self;
-}
+void Fl_Tree_Item_Array_delete(Fl_Tree_Item_Array *self) { delete self; }
