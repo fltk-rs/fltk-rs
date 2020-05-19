@@ -15,6 +15,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
     let count = Ident::new(format!("{}_{}", name_str, "count").as_str(), name.span());
     let data = Ident::new(format!("{}_{}", name_str, "data").as_str(), name.span());
     let copy = Ident::new(format!("{}_{}", name_str, "copy").as_str(), name.span());
+    let scale = Ident::new(format!("{}_{}", name_str, "scale").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Sync for #name {}
@@ -86,6 +87,12 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     let cnt = #width(self._inner) * #height(self._inner) * 3;
                     let ret: &[u8] = std::slice::from_raw_parts(ptr as *const u8, cnt as usize);
                     ret.to_vec()
+                }
+            }
+
+            fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {
+                unsafe {
+                    #scale(self._inner, width, height, proportional as i32, can_expand as i32)
                 }
             }
         }

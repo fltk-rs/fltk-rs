@@ -42,7 +42,7 @@ pub struct JpegImage {
 }
 
 impl JpegImage {
-    /// Loads the image from a filesystem path
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<JpegImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -58,7 +58,7 @@ impl JpegImage {
         }
     }
     
-    /// Loads the image from data/memory
+    /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
             if data.is_empty() {
@@ -82,7 +82,7 @@ pub struct PngImage {
 }
 
 impl PngImage {
-    /// Loads the image from a filesystem path
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<PngImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -98,13 +98,13 @@ impl PngImage {
         }
     }
     
-    /// Loads the image from data/memory
+    /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
             if data.is_empty() {
                 None
             } else {
-                let x = Fl_PNG_Image_from(data.as_ptr());
+                let x = Fl_PNG_Image_from(data.as_ptr(), data.len() as i32);
                 if x.is_null() {
                     None
                 } else {
@@ -122,7 +122,7 @@ pub struct SvgImage {
 }
 
 impl SvgImage {
-    /// Loads the image from a filesystem path
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<SvgImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -138,7 +138,7 @@ impl SvgImage {
         }
     }
     
-    /// Loads the image from data/memory
+    /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &str) -> Option<Self> {
         if data.is_empty() {
             None
@@ -163,7 +163,7 @@ pub struct BmpImage {
 }
 
 impl BmpImage {
-    /// Loads the image from a filesystem path
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<BmpImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -179,7 +179,7 @@ impl BmpImage {
         }
     }
     
-    /// Loads the image from data/memory
+    /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
             if data.is_empty() {
@@ -203,7 +203,7 @@ pub struct GifImage {
 }
 
 impl GifImage {
-    /// Loads the image from a filesystem path
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<GifImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -219,7 +219,7 @@ impl GifImage {
         }
     }
     
-    /// Loads the image from data/memory
+    /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
             if data.is_empty() {

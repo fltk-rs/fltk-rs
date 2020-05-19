@@ -7,6 +7,7 @@
 - impl Send and Sync for TreeItem and MenuItem.
 - Renamed ImageExt to_bytes to to_rgb which is more approprate.
 - Added more button and valuator widgets.
+- Add scale method to images.
 
 ## [0.4.5] - 2020-05-19
 ### Changes

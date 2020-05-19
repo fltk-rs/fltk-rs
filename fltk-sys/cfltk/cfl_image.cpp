@@ -26,7 +26,11 @@
     void image##_delete(image *self) { delete self; }                          \
     int image##_count(image *self) { return self->count(); }                   \
     const char *const *image##_data(image *self) { return self->data(); }      \
-    image *image##_copy(image *self) { return (image *)self->copy(); }
+    image *image##_copy(image *self) { return (image *)self->copy(); }         \
+    void image##_scale(image *self, int width, int height, int proportional,   \
+                       int can_expand) {                                       \
+        LOCK(self->scale(width, height, proportional, can_expand);)            \
+    }
 
 IMAGE_DEFINE(Fl_JPEG_Image)
 

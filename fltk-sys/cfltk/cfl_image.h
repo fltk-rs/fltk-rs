@@ -12,7 +12,9 @@ extern "C" {
     void image##_delete(image *);                                              \
     int image##_count(image *self);                                            \
     const char *const *image##_data(image *self);                              \
-    image *image##_copy(image *self);
+    image *image##_copy(image *self);                                          \
+    void image##_scale(image *self, int width, int height, int proportional,   \
+                       int can_expand);
 
 typedef struct Fl_Image Fl_Image;
 
