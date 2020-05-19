@@ -26,7 +26,7 @@ IMAGE_DECLARE(Fl_PNG_Image)
 
 Fl_PNG_Image *Fl_PNG_Image_new(const char *filename);
 
-Fl_PNG_Image *Fl_PNG_Image_from(const unsigned char *data);
+Fl_PNG_Image *Fl_PNG_Image_from(const unsigned char *data, int size);
 
 IMAGE_DECLARE(Fl_SVG_Image)
 
