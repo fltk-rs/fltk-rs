@@ -1,4 +1,4 @@
-// This is an example using the image crate
+// // This is an example using the image crate
 
 // use fltk::{app::*, frame::*, image::RgbImage, window::*};
 // use image::GenericImageView;
@@ -19,7 +19,7 @@
 //     app.run().unwrap();
 // }
 
-// This is an example using the rust_embed crate
+// // This is an example using the rust_embed crate
 
 // use fltk::{app::*, frame::*, image::*, window::*};
 // #[macro_use]
@@ -44,7 +44,7 @@
 //     app.run().unwrap();
 // }
 
-// This is an example showing using the inbuilt image functions
+// // This is an example showing using the inbuilt image functions
 
 use fltk::{app::*, frame::*, image::*, window::*};
 use std::path::PathBuf;
