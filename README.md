@@ -276,6 +276,7 @@ The most commonly widgets are implemented:
     - Window
     - DoubleWindow
     - MenuWindow
+    - GlWindow
 - Groups
     - Group
     - Pack

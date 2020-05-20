@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (NULL)
+- Add GlWindow.
 
 ## [0.4.6] - 2020-05-20
 ### Changes
