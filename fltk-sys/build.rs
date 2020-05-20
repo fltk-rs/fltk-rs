@@ -195,7 +195,7 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=Xfixes");
                 println!("cargo:rustc-link-lib=dylib=Xft");
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
-                println!("cargo:rustc-link-lib=dylib=GL");
+                println!("cargo:rustc-link-lib=dylib=glx");
             }
         }
     }
