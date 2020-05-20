@@ -7,11 +7,15 @@
 //     let app = App::default();
 //     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //     let mut frame = Frame::new(0, 0, 400, 200, "");
+//
 //     let img = image::open("./examples/image.jpg").unwrap();
 //     let (x, y) = img.dimensions();
 //     let rgb = RgbImage::new(&img.to_bytes(), x as i32, y as i32, 3);
+//
 //     frame.set_image(&rgb);
+//
 //     wind.show();
+//
 //     app.run().unwrap();
 // }
 
@@ -29,10 +33,14 @@
 //     let app = App::default();
 //     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //     let mut frame = Frame::new(0, 0, 400, 200, "");
+//
 //     let img = Asset::get("image.jpg").unwrap();
 //     let jpg = JpegImage::from_data(&img).unwrap();
+//
 //     frame.set_image(&jpg);
+//
 //     wind.show();
+//
 //     app.run().unwrap();
 // }
 
@@ -45,10 +53,14 @@ fn main() {
     let app = App::default().set_scheme(AppScheme::Gleam);
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 300, "");
+
     let mut image = SvgImage::load(&PathBuf::from("screenshots/RustLogo.svg")).unwrap();
     image.scale(200, 200, true, true);
+
     frame.set_image(&image);
+
     wind.make_resizable(true);
     wind.show();
+
     app.run().unwrap();
 }

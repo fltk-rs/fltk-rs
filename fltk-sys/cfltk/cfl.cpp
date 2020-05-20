@@ -103,4 +103,3 @@ unsigned int Fl_rand(void) {
     rng.seed(std::random_device()());
     return dist(rng);
 }
-

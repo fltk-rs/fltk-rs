@@ -1,26 +1,33 @@
 use fltk::{app::*, button::*, tree::*, window::*};
+use std::env;
 
 fn main() {
-    let app = App::default().set_scheme(AppScheme::Gleam);
+    let path = env::current_dir().unwrap();
+
+    let app = App::default().set_scheme(AppScheme::Gtk);   
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
-    let mut but = Button::new(160, 260, 80, 40, "Get Items");
-    let mut tree = Tree::new(0, 0, 400, 250, "");
-    tree.set_select_mode(TreeSelect::Multi);
-    tree.add("First");
-    tree.add("First/1st");
-    tree.add("First/2nd/3rd");
-    tree.add("Second");
-    tree.add("Third");
-    let mut f = tree.first().unwrap();
-    // let mut f2 = tree.first().unwrap();
-    f.set_label("Hi");
+    let mut but = Button::new(160, 255, 80, 40, "Get Items");
+    let mut tree = Tree::new(5, 10, 190, 240, "");
+    tree.add(path.to_str().unwrap());
+    
+    let mut items = tree.get_items().unwrap();
+    items.as_mut_slice()[0].set_label("/");
+    
+    let mut tree2 = Tree::new(205, 10, 190, 240, "");
+    tree2.set_select_mode(TreeSelect::Multi);
+    tree2.add("First");
+    tree2.add("First/1st");
+    tree2.add("First/2nd/3rd");
+    tree2.add("Second");
+    tree2.add("Third");
+    
     wind.make_resizable(true);
-    wind.end();
     wind.show();
-    println!("{}", f.label());
-    but.set_callback(Box::new(move || match tree.get_selected_items() {
+    
+    but.set_callback(Box::new(move || match tree2.get_selected_items() {
         None => println!("No items selected"),
         Some(vals) => println!("{} items selected", vals.len()),
     }));
+    
     app.run().unwrap();
 }

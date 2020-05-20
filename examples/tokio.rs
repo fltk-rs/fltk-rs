@@ -1,16 +1,17 @@
 // Works, but requires adding tokio
 
 // // Example 1 using Arc, Mutex
+//
 // use fltk::{app::*, button::*, frame::*, window::*};
 // use std::sync::Arc;
 // use std::time::Duration;
 // use tokio::sync::Mutex;
-
+//
 // async fn hello() -> String {
 //     tokio::time::delay_for(Duration::from_secs(2)).await;
 //     String::from("Hello, world!")
 // }
-
+//
 // #[tokio::main]
 // async fn main() {
 //     let app = App::default();
@@ -19,7 +20,9 @@
 //     let mut but = Button::new(160, 210, 80, 40, "Click me!");
 //     wind.end();
 //     wind.show();
+//
 //     let frame = Arc::from(Mutex::from(frame));
+//
 //     but.set_callback(Box::new(move || {
 //         let frame = frame.clone();
 //         tokio::spawn(async move {
@@ -28,10 +31,12 @@
 //             frame.set_label(&msg);
 //         });
 //     }));
+//
 //     app.run().unwrap();
 // }
 
 // // Example2 using channels
+//
 // use fltk::{app::*, button::*, frame::*, window::*};
 // use tokio::sync::mpsc::channel;
 // use std::time::Duration;
@@ -55,7 +60,9 @@
 //     let mut but = Button::new(160, 210, 80, 40, "Click me!");
 //     wind.end();
 //     wind.show();
+//
 //     let (s, mut r) = channel::<Message>(10);
+//
 //     but.set_callback(Box::new(move || {
 //         let mut s = s.clone();
 //         tokio::spawn(async move {
@@ -63,6 +70,7 @@
 //             s.try_send(Message::Inc(v)).unwrap();
 //         });
 //     }));
+//
 //     while app.wait() {
 //         match r.try_recv() {
 //             Ok(Message::Inc(v)) => frame.set_label(&format!("increments by {}", v)),

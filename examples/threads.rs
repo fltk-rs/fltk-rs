@@ -8,9 +8,12 @@ fn main() {
         .with_size(400, 300)
         .center_screen()
         .with_label("Hello");
-    let frame = Arc::from(Mutex::from(Frame::new(0, 0, 400, 200, "")));
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
+
+    let frame = Arc::from(Mutex::from(Frame::new(0, 0, 400, 200, "")));
+
     wind.show();
+
     but.set_callback(Box::new(move || {
         let frame = frame.clone();
         thread::spawn(move|| {
@@ -21,6 +24,7 @@ fn main() {
             }
         });
     }));
+
     app.run().unwrap();
 }
 
@@ -32,7 +36,9 @@ fn main() {
 //         .with_label("Hello");
 //     let frame = Frame::new(0, 0, 400, 200, "");
 //     let mut but = Button::new(160, 210, 80, 40, "Click me!");
+//
 //     wind.show();
+//
 //     but.set_callback(Box::new(move || {
 //         let mut frame = unsafe { frame.memcpy() };
 //         thread::spawn(move|| {
@@ -42,5 +48,6 @@ fn main() {
 //             }
 //         });
 //     }));
+//
 //     app.run().unwrap();
 // }

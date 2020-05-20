@@ -17,13 +17,16 @@ impl Term {
             .unwrap()
             .to_string_lossy()
             .to_string();
+
         current_dir.push_str("/ $ ");
+
         Term {
             term: TextDisplay::new(5, 5, 630, 470, &mut buf),
             current_dir: current_dir,
             cmd: String::from(""),
         }
     }
+
     pub fn style(&mut self) {
         self.term.set_color(Color::Black);
         self.term.set_text_color(Color::Green);
@@ -32,6 +35,7 @@ impl Term {
         self.term.set_cursor_style(CursorStyle::BlockCursor);
         self.term.show_cursor(true);
     }
+
     fn append(&mut self, txt: &str) {
         self.term.buffer().append(txt);
         self.term.set_insert_position(self.term.buffer().length());
@@ -40,9 +44,11 @@ impl Term {
             0,
         );
     }
+
     fn run_command(&mut self) -> String {
         let args = self.cmd.clone();
         let args: Vec<&str> = args.split_whitespace().collect();
+        
         if args.len() > 0 {
             let mut cmd = Command::new(args[0]);
             if args.len() > 1 {
@@ -66,6 +72,7 @@ impl Term {
             return String::from("");
         }
     }
+
     pub fn change_dir(&mut self, path: &Path) -> String {
         if path.exists() && path.is_dir() {
             std::env::set_current_dir(path).unwrap();
@@ -86,14 +93,19 @@ fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Plastic);
     let mut wind = Window::new(100, 100, 640, 480, "Rusty Terminal");
     let mut buf = TextBuffer::default();
+
     let mut term = Term::new(&mut buf);
     term.style();
+
     let dir = term.current_dir.clone();
     term.append(&dir);
+
     wind.make_resizable(true);
     wind.end();
     wind.show();
+
     let term = Rc::from(RefCell::from(term));
+
     let term_clone = term.clone();
     term_clone.borrow_mut().term.handle(Box::new(move |ev| {
         // println!("{:?}", app::event());
@@ -133,5 +145,6 @@ fn main() {
             _ => false,
         }
     }));
+    
     app.run().unwrap();
 }
