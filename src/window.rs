@@ -42,11 +42,13 @@ pub struct GlContext {
 }
 
 /// Creates a OpenGL window widget
+#[cfg(feature = "gl-window")]
 #[derive(WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct GlWindow {
     _inner: *mut Fl_Gl_Window,
 }
 
+#[cfg(feature = "gl-window")]
 impl GlWindow {
     /// Flush window content
     pub fn flush(&mut self) {
