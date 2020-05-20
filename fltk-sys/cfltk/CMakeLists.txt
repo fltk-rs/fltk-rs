@@ -59,6 +59,7 @@ set(CFLTK_LIBS fltk fltk_images fltk_z fltk_jpeg fltk_png)
 option(FLTK_GL_WIN_SUPPORT "Support for Fl_Gl_Window" OFF)
 
 if(FLTK_GL_WIN_SUPPORT)
+    target_compile_definitions(cfltk PUBLIC "FLTK_GL_WIN_SUPPORT")
     set(CFLTK_LIBS ${CFLTK_LIBS} fltk_gl)
 endif()
 
