@@ -136,7 +136,7 @@ fn main() {
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
         println!("cargo:rustc-link-lib=static=fltk_images");
-        println!("cargo:rustc-link-lib=static=fltk_gl");
+        // println!("cargo:rustc-link-lib=static=fltk_gl");
 
         if cfg!(feature = "system-libpng") {
             println!("cargo:rustc-link-lib=dylib=png");
