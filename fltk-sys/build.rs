@@ -140,6 +140,7 @@ fn main() {
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
         println!("cargo:rustc-link-lib=static=fltk_images");
+        
         if cfg!(feature = "gl-window") {
             println!("cargo:rustc-link-lib=static=fltk_gl");
         }
