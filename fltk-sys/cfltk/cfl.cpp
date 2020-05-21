@@ -3,8 +3,8 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Widget.H>
 #include <new>
-#include <string.h>
 #include <random>
+#include <string.h>
 
 int Fl_run(void) { return Fl::run(); }
 
@@ -51,8 +51,8 @@ int Fl_screen_h(void) { return Fl::h(); }
 
 int Fl_screen_w(void) { return Fl::w(); }
 
-void Fl_paste(void *widget, int src) {
-    Fl::paste(*(Fl_Widget *)widget, src, Fl::clipboard_plain_text);
+void Fl_paste(Fl_Widget *widget, int src) {
+    Fl::paste(*widget, src, Fl::clipboard_plain_text);
 }
 
 void Fl_set_scheme(const char *scheme) { Fl::scheme(scheme); }
@@ -89,29 +89,20 @@ int Fl_dnd(void) { return Fl::dnd(); }
 
 void *Fl_first_window(void) { return (void *)Fl::first_window(); }
 
-int Fl_should_program_quit(void) {
-    return Fl::program_should_quit();
-}
+int Fl_should_program_quit(void) { return Fl::program_should_quit(); }
 
-void Fl_program_should_quit(int flag) {
-    Fl::program_should_quit(flag);
-}
+void Fl_program_should_quit(int flag) { Fl::program_should_quit(flag); }
 
 unsigned int Fl_rand(void) {
     std::mt19937 rng;
-    std::uniform_int_distribution<std::mt19937::result_type> dist(0, UINT_FAST32_MAX);
+    std::uniform_int_distribution<std::mt19937::result_type> dist(
+        0, UINT_FAST32_MAX);
     rng.seed(std::random_device()());
     return dist(rng);
 }
 
-int Fl_event_inside(const void *wid) {
-    return Fl::event_inside((const Fl_Widget*) wid);
-}
+int Fl_event_inside(int x, int y, int w, int h) { return Fl::event_inside(x, y, w, h); }
 
-void *Fl_belowmouse() {
-    return (void *)Fl::belowmouse();
-}
+// Fl_Widget *Fl_belowmouse() { return Fl::belowmouse(); }
 
-void Fl_delete_widget(void *w) {
-    Fl::delete_widget((Fl_Widget*)w);
-}
+void Fl_delete_widget(Fl_Widget *w) { Fl::delete_widget(w); }

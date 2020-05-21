@@ -179,7 +179,7 @@ The following are the features offered by the crate:
 
 ## Dependencies
 
-Rust version > 1.38. CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. 
+Rust version > 1.38. CMake and a C++17 compiler need to be installed and in your PATH for a crossplatform build. 
 
 - Windows: No dependencies.
 - MacOs: No dependencies.

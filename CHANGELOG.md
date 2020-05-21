@@ -3,6 +3,7 @@
 ## Unreleased
 ### Changes
 - Add several handler methods, (belowmouse, delete_widget, event_inside).
+- Require a C++17 compiler to deal with msvc issues.
 
 ## [0.4.7] - 2020-05-20
 ### Changes
