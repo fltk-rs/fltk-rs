@@ -175,7 +175,6 @@ The following are the features offered by the crate:
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
-- gl-window: Support for GlWindow, requires OpenGL development headers.
 
 ## Dependencies
 
@@ -183,11 +182,11 @@ Rust version > 1.38. CMake and a C++17 compiler need to be installed and in your
 
 - Windows: No dependencies.
 - MacOs: No dependencies.
-- Linux: X11 development headers need to be installed for development. 
+- Linux: X11 and OpenGL development headers need to be installed for development. 
 
-For Debian-based GUI distribution, that means running:
+For Debian-based GUI distributions, that means running:
 ```
-$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
+$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libgl1-mesa-dev libglu1-mesa-dev
 ```
 For RHEL-based GUI distributions, that means running:
 ```
@@ -195,7 +194,7 @@ $ sudo yum groupinstall "X Software Development"
 ```
 For Arch-based GUI distributions, that means running:
 ```
-$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes
+$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes libgl mesa --needed
 ```
 If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
 

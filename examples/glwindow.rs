@@ -1,12 +1,11 @@
 // // This is an example showing basic usage of a GlWindow
-// // This requires the gl-window feature to be enabled
 
 // #![allow(non_camel_case_types)]
 // #![allow(dead_code)]
 // #![allow(non_upper_case_globals)]
 //
 // use fltk::{app::*, window::*};
-// mod gl;
+// mod gl; // For aw gl calls just by running bindgen on the gl.h header
 //
 // pub fn main() {
 //     let app = App::default().set_scheme(AppScheme::Gleam);

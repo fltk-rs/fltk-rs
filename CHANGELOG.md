@@ -6,6 +6,15 @@
 
 ## [0.4.8] - 2020-05-20
 ### Changes
+- Remove the necessity for the gl-window feature flag, however on Linux distros, OpenGL headers must be installed.
+- Add several handler methods (delete_widget, event_inside_widget, event_inside).
+- Add app::delete_widget() for safe widget deletion during event handling.
+- Require a C++17 compiler to deal with msvc issues.
+- Fix GlWindow conditional compilation.
+- Fix GLU linkage on Linux.
+
+## [0.4.8] - 2020-05-20 (YANKED)
+### Changes
 - Add several handler methods (delete_widget, event_inside_widget, event_inside).
 - Add app::delete_widget() for safe widget deletion during event handling.
 - Require a C++17 compiler to deal with msvc issues.
