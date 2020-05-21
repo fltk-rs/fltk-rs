@@ -4,6 +4,7 @@ use std::rc::Rc;
 
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Gtk);
+
     let mut wind = Window::default()
         .with_size(160, 200)
         .center_screen()
@@ -24,17 +25,21 @@ fn main() {
     wind.make_resizable(true);
     wind.end();
     wind.show();
+
     let frame = Rc::from(RefCell::from(frame));
+
     let frame1 = frame.clone();
     but_inc.set_callback(Box::new(move || {
         let label = (frame1.borrow().label().parse::<i32>().unwrap() + 1).to_string();
         frame1.borrow_mut().set_label(&label);
     }));
+
     let frame1 = frame.clone();
     but_dec.set_callback(Box::new(move || {
         let label = (frame1.borrow().label().parse::<i32>().unwrap() - 1).to_string();
         frame1.borrow_mut().set_label(&label);
     }));
+
     // Theming
     wind.set_color(Color::from_u32(0xffebee));
     but_inc.set_color(Color::from_u32(0x304FFE));
@@ -46,5 +51,6 @@ fn main() {
     but_dec.set_frame(FrameType::RoundUpBox);
     but_dec.set_label_size(18);
     // End theming
+    
     app.run().unwrap();
 }

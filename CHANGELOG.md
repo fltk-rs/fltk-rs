@@ -4,6 +4,13 @@
 ### Changes
 - (NULL)
 
+## [0.4.7] - 2020-05-20
+### Changes
+- Add GlWindow under gl-window feature flag.
+- Add draw::show_colormap.
+- Add draw methods.
+- Add set_cursor method for window types.
+
 ## [0.4.6] - 2020-05-20
 ### Changes
 - Add get_items() method to Tree widget.

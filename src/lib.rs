@@ -2,7 +2,9 @@
 //!
 //! [![Documentation](https://docs.rs/fltk/badge.svg)](https://docs.rs/fltk)
 //! [![Crates.io](https://img.shields.io/crates/v/fltk.svg)](https://crates.io/crates/fltk)
-//! [![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/MoAlyousef/fltk/blob/master/LICENSE)
+//! [![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/MoAlyousef/fltk-rs/blob/master/LICENSE)
+//! [![Build](https://github.com/MoAlyousef/fltk-rs/workflows/Build/badge.svg?branch=master)](https://github.com/MoAlyousef/fltk-rs/actions)
+//!
 //!
 //!
 //! Rust bindings for the FLTK Graphical User Interface library. 
@@ -121,8 +123,10 @@
 //! ```rust
 //!     /* previous counter code */
 //!     let (s, r) = app::channel::<Message>();
+//!
 //!     but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
 //!     but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
+//!
 //!     while app.wait() {
 //!         let label: i32 = frame.label().parse().unwrap();
 //!         match r.recv() {
@@ -141,7 +145,8 @@
 //!         }
 //!     }));
 //! ```
-//! Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the examples directory.
+//! Handled or ignored events using the handle method should return true, unhandled events should return false. 
+//! More examples are available in the examples directory.
 //!
 //! ### Theming
 //!
@@ -152,7 +157,8 @@
 //! - Plastic
 //!
 //! These can be set using the App::set_scheme() function.
-//! Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait, such as set_color(), set_label_font(), set_frame_type() etc:
+//! Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait, 
+//! such as set_color(), set_label_font(), set_frame_type() etc:
 //! ```rust
 //!     some_button.set_color(Color::Light1); //! You can use one of the provided colors in the fltk enums
 //!     some_button.set_color(Color::from_rgb(255, 0, 0)); //! Or you can specify a color by rgb or hex/u32 value
@@ -160,6 +166,18 @@
 //!     some_button.set_frame(FrameType::RoundUpBox);
 //!     some_button.set_font(Font::TimesItalic);
 //! ```
+//!
+//! ## Features
+//!
+//! The following are the features offered by the crate:
+//! - fltk-shared: Builds a shared lib of fltk
+//! - use-ninja:  If you have ninja build installed, it builds faster than make or VS
+//! - system-fltk: If you would like to use the installed fltk library, should be FLTK 1.4
+//! - system-libpng: Uses the system libpng
+//! - system-libjpeg: Uses the system libjpeg
+//! - system-zlib: Uses the system zlib
+//! - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
+//! - gl-window: Support for GlWindow
 //!
 //! ## FAQ
 //!

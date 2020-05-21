@@ -54,8 +54,17 @@ else()
     target_include_directories(cfltk PUBLIC fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk)
 endif()
 
+set(CFLTK_LIBS fltk fltk_images fltk_z fltk_jpeg fltk_png)
+
+option(FLTK_GL_WIN_SUPPORT "Support for Fl_Gl_Window" OFF)
+
+if(FLTK_GL_WIN_SUPPORT)
+    target_compile_definitions(cfltk PUBLIC "FLTK_GL_WIN_SUPPORT")
+    set(CFLTK_LIBS ${CFLTK_LIBS} fltk_gl)
+endif()
+
 if(CFLTK_BUILD_SHARED OR USE_SYSTEM_FLTK)
-    target_link_libraries(cfltk PUBLIC fltk fltk_images fltk_z fltk_jpeg fltk_png)
+    target_link_libraries(cfltk PUBLIC ${CFLTK_LIBS})
 endif()
 
 if(USE_SYSTEM_FLTK)
@@ -69,6 +78,6 @@ if(CFLTK_BUILD_TESTS)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/tests)
     add_executable(test1 tests/test1.cpp)
     target_include_directories(test1 PUBLIC fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk ${CMAKE_CURRENT_LIST_DIR})
-    target_link_libraries(test1 PUBLIC cfltk fltk fltk_images fltk_z fltk_jpeg fltk_png)
+    target_link_libraries(test1 PUBLIC cfltk ${CFLTK_LIBS})
     add_test(cfltk_tests test1)
 endif()

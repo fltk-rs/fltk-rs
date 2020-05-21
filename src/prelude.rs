@@ -244,6 +244,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn icon(&self) -> Option<Image>;
     /// Make the window resizable
     fn make_resizable(&mut self, val: bool);
+    /// Sets the cursor style within the window
+    fn set_cursor(&mut self, cursor: CursorStyle);
 }
 
 /// Defines the methods implemented by all input and output widgets

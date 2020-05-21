@@ -123,8 +123,10 @@ Another way is to use message passing:
 ```rust
     /* previous counter code */
     let (s, r) = app::channel::<Message>();
+
     but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
     but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
+    
     while app.wait() {
         let label: i32 = frame.label().parse().unwrap();
         match r.recv() {
@@ -162,6 +164,18 @@ Themes of individual widgets can be optionally modified using the provided metho
     some_button.set_frame(FrameType::RoundUpBox);
     some_button.set_font(Font::TimesItalic);
 ```
+
+## Features
+
+The following are the features offered by the crate:
+- fltk-shared: Builds a shared lib of fltk
+- use-ninja:  If you have ninja build installed, it builds faster than make or VS
+- system-fltk: If you would like to use the installed fltk library, should be FLTK 1.4
+- system-libpng: Uses the system libpng
+- system-libjpeg: Uses the system libjpeg
+- system-zlib: Uses the system zlib
+- legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
+- gl-window: Support for GlWindow
 
 ## Dependencies
 
@@ -232,7 +246,7 @@ Setting the scheme to Gtk
 
 ## Currently implemented widgets
 
-Most common widgets are implemented: 
+The most commonly widgets are implemented: 
 - Image widgets
     - BmpImage
     - JpegImage
@@ -263,6 +277,7 @@ Most common widgets are implemented:
     - Window
     - DoubleWindow
     - MenuWindow
+    - GlWindow
 - Groups
     - Group
     - Pack
@@ -312,7 +327,6 @@ Most common widgets are implemented:
     - Clock
     - Chart
     - Progress (progress bar)
-    - ColorChooser
     - Tooltip
 - Table widgets
     - Table

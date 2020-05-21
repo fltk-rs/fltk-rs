@@ -84,22 +84,30 @@ impl DerefMut for Editor {
 
 fn main() {
     let app = App::default().set_scheme(AppScheme::Gtk);
+
     let mut wind = Window::default()
         .with_size(800, 600)
         .center_screen()
         .with_label("RustyEd");
+
     let mut menu = MenuBar::new(0, 0, 800, 40, "");
     menu.set_color(Color::Light2);
+
     let buf = TextBuffer::default();
     let buf = Rc::from(RefCell::from(buf));
     buf.borrow_mut().set_tab_distance(4);
+
     let mut editor = Editor::new(buf.borrow_mut().deref_mut());
+
     editor.style();
     wind.make_resizable(true);
     wind.end();
     wind.show();
+
     let mut saved = false;
+
     let editor_rc = Rc::from(RefCell::from(editor));
+
     let editor_cloned = editor_rc.clone();
     editor_cloned
         .borrow_mut()
@@ -240,5 +248,6 @@ fn main() {
             }
         }
     }));
+    
     app.run().expect("Couldn't run editor");
 }

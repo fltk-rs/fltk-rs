@@ -34,6 +34,7 @@ fn main() {
     let mut out = Output::new(border, border, 360, 140, "");
     out.set_text_size(30);
     out.set_value("0");
+    
     let out = Rc::from(RefCell::from(out));
 
     let mut but_ce = Button::new(column1, row1, but_width, but_height, "CE");

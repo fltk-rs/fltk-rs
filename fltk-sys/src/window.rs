@@ -1848,6 +1848,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Window_make_resizable(self_: *mut Fl_Window, arg1: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Window_set_cursor(self_: *mut Fl_Window, cursor: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {
@@ -2124,6 +2127,9 @@ extern "C" {
         arg1: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Double_Window_set_cursor(self_: *mut Fl_Double_Window, cursor: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -2376,4 +2382,7 @@ extern "C" {
         self_: *mut Fl_Menu_Window,
         arg1: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_cursor(self_: *mut Fl_Menu_Window, cursor: ::std::os::raw::c_int);
 }

@@ -14,11 +14,15 @@ fn main() {
     let mut but_dec = Button::new(30, 120, 100, 40, "-");
     wind.end();
     wind.show();
+
     let (s, r) = app::channel::<Message>();
+
     but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
     but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
+
     while app.wait() {
         let label: i32 = frame.label().parse().unwrap();
+        
         match r.recv() {
             Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
             Some(Message::Decrement) => frame.set_label(&(label - 1).to_string()),

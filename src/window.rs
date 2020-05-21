@@ -34,3 +34,131 @@ pub struct DoubleWindow {
 pub struct MenuWindow {
     _inner: *mut Fl_Menu_Window,
 }
+
+/// A wrapper around a raw OpenGL context
+#[cfg(feature = "gl-window")]
+#[derive(Debug)]
+pub struct GlContext {
+    _inner: *mut raw::c_void,
+}
+
+#[cfg(feature = "gl-window")]
+impl GlContext {
+    /// Create a GlContext from an opaque gl context pointer
+    pub unsafe fn from_raw(ptr: *mut raw::c_void) -> GlContext {
+        GlContext { _inner: ptr, }
+    }
+}
+
+/// Creates a OpenGL window widget
+#[cfg(feature = "gl-window")]
+#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
+pub struct GlWindow {
+    _inner: *mut Fl_Gl_Window,
+}
+
+#[cfg(feature = "gl-window")]
+impl GlWindow {
+    /// Flush window content
+    pub fn flush(&mut self) {
+        unsafe { Fl_Gl_Window_flush(self._inner) }
+    }
+
+    /// Returns whether the OpeGL context is still valid
+    pub fn valid(&self) -> bool {
+        unsafe {
+            match Fl_Gl_Window_valid(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    /// Mark the OpeGL context as still valid
+    pub fn set_valid(&mut self, v: bool) {
+        unsafe { Fl_Gl_Window_set_valid(self._inner, v as i8) }
+    }
+
+    /// Returns whether the context is valid upon creation
+    pub fn context_valid(&self) -> bool {
+        unsafe {
+            match Fl_Gl_Window_context_valid(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    /// Mark the context as valid upon creation
+    pub fn set_context_valid(&mut self, v: bool) {
+        unsafe { Fl_Gl_Window_set_context_valid(self._inner, v as i8) }
+    }
+
+    /// Returns the GlContext
+    pub fn context(&self) -> Option<GlContext> {
+        unsafe {
+            let x = Fl_Gl_Window_context(self._inner);
+            if x.is_null() {
+                None
+            } else {
+                Some(GlContext { _inner: x })
+            }
+        }
+    }
+
+    /// Sets the GlContext
+    pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
+        unsafe { Fl_Gl_Window_set_context(self._inner, ctx._inner, destroy_flag as i32) }
+    }
+
+    /// Swaps the back and front buffers
+    pub fn swap_buffers(&mut self) {
+        unsafe { Fl_Gl_Window_swap_buffers(self._inner) }
+    }
+
+    /// Sets the projection so 0,0 is in the lower left of the window
+    /// and each pixel is 1 unit wide/tall.
+    pub fn ortho(&mut self) {
+        unsafe { Fl_Gl_Window_ortho(self._inner) }
+    }
+
+    /// Returns whether the GlWindow can do overlay
+    pub fn can_do_overlay(&mut self) -> bool {
+        unsafe {
+            match Fl_Gl_Window_can_do_overlay(self._inner) {
+                0 => false,
+                _ => true,
+            }
+        }
+    }
+
+    /// Redraws the overlay
+    pub fn redraw_overlay(&mut self) {
+        unsafe { Fl_Gl_Window_redraw_overlay(self._inner) }
+    }
+
+    /// Hides the overlay
+    pub fn hide_overlay(&mut self) {
+        unsafe { Fl_Gl_Window_hide_overlay(self._inner) }
+    }
+
+    /// Makes the overlay current
+    pub fn make_overlay_current(&mut self) {
+        unsafe { Fl_Gl_Window_make_overlay_current(self._inner) }
+    }
+
+    /// Returns the pixels per unit
+    pub fn pixels_per_unit(&mut self) -> f32 {
+        unsafe { Fl_Gl_Window_pixels_per_unit(self._inner) }
+    }
+
+    /// Gets the window's width in pixels
+    pub fn pixel_w(&mut self) -> i32 {
+        unsafe { Fl_Gl_Window_pixel_w(self._inner) }
+    }
+
+    /// Gets the window's height in pixels
+    pub fn pixel_h(&mut self) -> i32 {
+        unsafe { Fl_Gl_Window_pixel_h(self._inner) }
+    }
+}
