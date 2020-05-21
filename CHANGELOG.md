@@ -3,6 +3,8 @@
 ## Unreleased
 ### Changes
 - Add GlWindow under gl-window feature flag.
+- Add draw::show_colormap.
+- Add draw methods.
 
 ## [0.4.6] - 2020-05-20
 ### Changes

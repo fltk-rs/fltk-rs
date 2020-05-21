@@ -636,16 +636,6 @@ extern "C" {
     pub fn cfl_reset_spot();
 }
 extern "C" {
-    pub fn cfl_draw_symbol(
-        label: *const ::std::os::raw::c_char,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        w: ::std::os::raw::c_int,
-        h: ::std::os::raw::c_int,
-        arg1: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
-}
-extern "C" {
     pub fn cfl_raw_image_to_png(
         data: *mut ::std::os::raw::c_uchar,
         fname: *const ::std::os::raw::c_char,
@@ -668,4 +658,7 @@ extern "C" {
         w: ::std::os::raw::c_int,
         h: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_show_colormap(old_col: ::std::os::raw::c_uint) -> ::std::os::raw::c_uint;
 }

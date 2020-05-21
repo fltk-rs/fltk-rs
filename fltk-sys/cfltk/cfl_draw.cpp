@@ -4,6 +4,7 @@
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Window.H>
 #include <FL/fl_draw.H>
+#include <FL/fl_show_colormap.H>
 #include <jpeg/jpeglib.h>
 #include <png/png.h>
 
@@ -322,8 +323,8 @@ void cfl_set_spot(int font, int size, int X, int Y, int W, int H, void *win) {
 
 void cfl_reset_spot(void) { fl_reset_spot(); }
 
-int cfl_draw_symbol(const char *label, int x, int y, int w, int h, int c) {
-    return fl_draw_symbol(label, x, y, w, h, c);
+unsigned int Fl_show_colormap(unsigned int old_col) {
+    return fl_show_colormap((Fl_Color)old_col);
 }
 
 // The following code was copied from stackoverflow
