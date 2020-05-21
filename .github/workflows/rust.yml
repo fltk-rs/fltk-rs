@@ -23,4 +23,4 @@ jobs:
       shell: bash
     - uses: actions/checkout@v2
     - name: Build
-      run: cargo build --features="gl-window" --examples --verbose
+      run: cargo build --examples --verbose
