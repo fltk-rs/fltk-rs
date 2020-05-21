@@ -36,7 +36,7 @@ system-libpng = ["fltk-sys/system-libpng"] # Uses the system libpng
 system-libjpeg = ["fltk-sys/system-libjpeg"] # Uses the system libjpeg
 system-zlib = ["fltk-sys/system-zlib"] # Uses the system zlib
 legacy-opengl = ["fltk-sys/legacy-opengl"] # Support of Lagacy OpenGL
-gl-window = ["fltk-sys/gl-window"] # Support for GlWindow
+gl-window = ["fltk-sys/gl-window"] # Support for GlWindow, requires OpenGL development headers
 cpp-testing = ["fltk-sys/cpp-testing"] # For internal C++ testing
 
 [[example]]
