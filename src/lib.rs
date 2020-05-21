@@ -177,7 +177,6 @@
 //! - system-libjpeg: Uses the system libjpeg
 //! - system-zlib: Uses the system zlib
 //! - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
-//! - gl-window: Support for GlWindow, requires OpenGL development headers.
 //!
 //! ## FAQ
 //!

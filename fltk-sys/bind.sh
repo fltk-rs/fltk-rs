@@ -5,7 +5,7 @@ bindgen fltk-sys/cfltk/cfl_text.h -o fltk-sys/src/text.rs
 bindgen fltk-sys/cfltk/cfl_input.h -o fltk-sys/src/input.rs
 bindgen fltk-sys/cfltk/cfl_output.h -o fltk-sys/src/output.rs
 bindgen fltk-sys/cfltk/cfl_widget.h -o fltk-sys/src/widget.rs
-bindgen fltk-sys/cfltk/cfl_window.h -o fltk-sys/src/window.rs -- -DFLTK_GL_WIN_SUPPORT
+bindgen fltk-sys/cfltk/cfl_window.h -o fltk-sys/src/window.rs
 bindgen fltk-sys/cfltk/cfl_menu.h -o fltk-sys/src/menu.rs
 bindgen fltk-sys/cfltk/cfl_dialog.h -o fltk-sys/src/dialog.rs
 bindgen fltk-sys/cfltk/cfl_valuator.h -o fltk-sys/src/valuator.rs

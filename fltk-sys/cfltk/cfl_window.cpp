@@ -54,8 +54,6 @@ GROUP_DEFINE(Fl_Menu_Window)
 
 WINDOW_DEFINE(Fl_Menu_Window)
 
-#ifdef FLTK_GL_WIN_SUPPORT
-
 WIDGET_DEFINE(Fl_Gl_Window)
 
 GROUP_DEFINE(Fl_Gl_Window)
@@ -115,5 +113,3 @@ float Fl_Gl_Window_pixels_per_unit(Fl_Gl_Window *self) {
 int Fl_Gl_Window_pixel_w(Fl_Gl_Window *self) { return self->pixel_w(); }
 
 int Fl_Gl_Window_pixel_h(Fl_Gl_Window *self) { return self->pixel_h(); }
-
-#endif

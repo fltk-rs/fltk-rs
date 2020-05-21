@@ -54,14 +54,7 @@ else()
     target_include_directories(cfltk PUBLIC fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk)
 endif()
 
-set(CFLTK_LIBS fltk fltk_images fltk_z fltk_jpeg fltk_png)
-
-option(FLTK_GL_WIN_SUPPORT "Support for Fl_Gl_Window" OFF)
-
-if(FLTK_GL_WIN_SUPPORT)
-    target_compile_definitions(cfltk PUBLIC "FLTK_GL_WIN_SUPPORT")
-    set(CFLTK_LIBS ${CFLTK_LIBS} fltk_gl)
-endif()
+set(CFLTK_LIBS fltk fltk_images fltk_z fltk_jpeg fltk_png fltk_gl)
 
 if(CFLTK_BUILD_SHARED OR USE_SYSTEM_FLTK)
     target_link_libraries(cfltk PUBLIC ${CFLTK_LIBS})
