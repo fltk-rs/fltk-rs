@@ -327,7 +327,6 @@ The most commonly widgets are implemented:
     - Clock
     - Chart
     - Progress (progress bar)
-    - ColorChooser
     - Tooltip
 - Table widgets
     - Table
