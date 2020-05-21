@@ -467,7 +467,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn cfl_frame7(
+    pub fn cfl_frame(
         s: *const ::std::os::raw::c_char,
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
@@ -491,7 +491,7 @@ extern "C" {
         y: ::std::os::raw::c_int,
         w: ::std::os::raw::c_int,
         h: ::std::os::raw::c_int,
-        arg1: ::std::os::raw::c_int,
+        arg1: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -661,4 +661,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_show_colormap(old_col: ::std::os::raw::c_uint) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn cfl_copy_offscreen(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+        pixmap: *mut ::std::os::raw::c_void,
+        srcx: ::std::os::raw::c_int,
+        srcy: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn cfl_create_offscreen(
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn cfl_begin_offscreen(b: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn cfl_delete_offscreen(bitmap: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn cfl_rescale_offscreen(ctx: *mut ::std::os::raw::c_void);
 }

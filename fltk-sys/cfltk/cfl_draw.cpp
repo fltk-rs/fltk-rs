@@ -32,9 +32,9 @@ int cfl_clip_box(int x, int y, int w, int h, int *X, int *Y, int *W, int *H) {
 
 void cfl_restore_clip(void) { fl_restore_clip(); }
 
-void cfl_set_clip_region(void *r) { fl_clip_region(*(Fl_Region *)r); }
+void cfl_set_clip_region(void *r) { fl_clip_region((Fl_Region)r); }
 
-void *cfl_clip_region(void) { return (void *)cfl_clip_region(); }
+void *cfl_clip_region(void) { return (void *)fl_clip_region(); }
 
 void cfl_point(int x, int y) { fl_point(x, y); }
 
@@ -172,8 +172,6 @@ void cfl_transformed_vertex(double xf, double yf) {
     fl_transformed_vertex(xf, yf);
 }
 
-void cfl_end_offscreen(void) { fl_end_offscreen(); }
-
 void cfl_set_font(int face, int fsize) { fl_font(face, fsize); }
 
 int cfl_font(void) { return fl_font(); }
@@ -237,15 +235,15 @@ void cfl_draw5(const char *str, int x, int y, int w, int h, int align,
     fl_draw(str, x, y, w, h, align, (Fl_Image *)*img, draw_symbols);
 }
 
-void cfl_frame7(const char *s, int x, int y, int w, int h) {
+void cfl_frame(const char *s, int x, int y, int w, int h) {
     fl_frame(s, x, y, w, h);
 }
 
 void cfl_frame2(const char *s, int x, int y, int w, int h) {
-    fl_frame(s, x, y, w, h);
+    fl_frame2(s, x, y, w, h);
 }
 
-void cfl_draw_box(int box_type, int x, int y, int w, int h, int c) {
+void cfl_draw_box(int box_type, int x, int y, int w, int h, unsigned int c) {
     fl_draw_box((Fl_Boxtype)box_type, x, y, w, h, c);
 }
 
@@ -325,6 +323,27 @@ void cfl_reset_spot(void) { fl_reset_spot(); }
 
 unsigned int Fl_show_colormap(unsigned int old_col) {
     return fl_show_colormap((Fl_Color)old_col);
+}
+
+void cfl_copy_offscreen(int x, int y, int w, int h, void *pixmap, int srcx,
+                        int srcy) {
+    fl_copy_offscreen(x, y, w, h, (Fl_Offscreen)pixmap, srcx, srcy);
+}
+
+void *cfl_create_offscreen(int w, int h) {
+    return (void *)fl_create_offscreen(w, h);
+}
+
+void cfl_begin_offscreen(void *b) { fl_begin_offscreen((Fl_Offscreen)b); }
+
+void cfl_end_offscreen(void) { fl_end_offscreen(); }
+
+void cfl_delete_offscreen(void *bitmap) {
+    fl_delete_offscreen((Fl_Offscreen)bitmap);
+}
+
+void cfl_rescale_offscreen(void *ctx) {
+    fl_rescale_offscreen(*(Fl_Offscreen *)ctx);
 }
 
 // The following code was copied from stackoverflow

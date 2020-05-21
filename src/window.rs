@@ -36,9 +36,18 @@ pub struct MenuWindow {
 }
 
 /// A wrapper around a raw OpenGL context
+#[cfg(feature = "gl-window")]
 #[derive(Debug)]
 pub struct GlContext {
     _inner: *mut raw::c_void,
+}
+
+#[cfg(feature = "gl-window")]
+impl GlContext {
+    /// Create a GlContext from an opaque gl context pointer
+    pub unsafe fn from_raw(ptr: *mut raw::c_void) -> GlContext {
+        GlContext { _inner: ptr, }
+    }
 }
 
 /// Creates a OpenGL window widget

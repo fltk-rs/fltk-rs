@@ -26,6 +26,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "make_resizable").as_str(),
         name.span(),
     );
+    let set_cursor = Ident::new(format!("{}_{}", name_str, "set_cursor").as_str(), name.span());
+
     let gen = quote! {
         unsafe impl WindowExt for #name {
             fn center_screen(mut self) -> Self {
@@ -69,6 +71,12 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     unsafe {
                         #make_resizable(self._inner, self._inner as *mut raw::c_void)
                     }
+                }
+            }
+
+            fn set_cursor(&mut self, cursor: CursorStyle) {
+                unsafe {
+                    #set_cursor(self._inner, cursor as i32)
                 }
             }
         }

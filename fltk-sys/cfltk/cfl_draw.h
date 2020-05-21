@@ -174,11 +174,11 @@ void cfl_measure(const char *str, int *x, int *y, int draw_symbols);
 void cfl_draw5(const char *str, int x, int y, int w, int h, int align,
                void **img, int draw_symbols);
 
-void cfl_frame7(const char *s, int x, int y, int w, int h);
+void cfl_frame(const char *s, int x, int y, int w, int h);
 
 void cfl_frame2(const char *s, int x, int y, int w, int h);
 
-void cfl_draw_box(int box_type, int x, int y, int w, int h, int);
+void cfl_draw_box(int box_type, int x, int y, int w, int h, unsigned int);
 
 void cfl_draw_image(const unsigned char *buf, int X, int Y, int W, int H, int D,
                     int L);
@@ -232,6 +232,19 @@ int cfl_raw_image_to_jpg(unsigned char *data, const char *fname, int w, int h);
 int cfl_raw_image_to_bmp(unsigned char *data, const char *fname, int w, int h);
 
 unsigned int Fl_show_colormap(unsigned int old_col);
+
+void cfl_copy_offscreen(int x, int y, int w, int h, void *pixmap, int srcx,
+                        int srcy);
+
+void *cfl_create_offscreen(int w, int h);
+
+void cfl_begin_offscreen(void *b);
+
+void cfl_end_offscreen(void);
+
+void cfl_delete_offscreen(void *bitmap);
+
+void cfl_rescale_offscreen(void *ctx);
 
 #ifdef __cplusplus
 }
