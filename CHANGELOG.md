@@ -2,7 +2,15 @@
 
 ## Unreleased
 ### Changes
-- (NULL)
+- (None)
+
+## [0.4.8] - 2020-05-20
+### Changes
+- Add several handler methods (delete_widget, event_inside_widget, event_inside).
+- Add app::delete_widget() for safe widget deletion during event handling.
+- Require a C++17 compiler to deal with msvc issues.
+- Fix GlWindow conditional compilation.
+- Fix GLU linkage on Linux.
 
 ## [0.4.7] - 2020-05-20
 ### Changes

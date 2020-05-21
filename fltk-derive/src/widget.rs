@@ -138,18 +138,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
 
-        impl From<crate::widget::Widget> for #name {
-            fn from(wid: crate::widget::Widget) -> Self {
-                let wid: *mut fltk_sys::widget::Fl_Widget = wid.as_ptr();
-                assert!(!wid.is_null());
-                unsafe {
-                    #name {
-                        _inner: mem::transmute(wid),
-                    }
-                }
-            }
-        }
-
         unsafe impl WidgetExt for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
@@ -159,7 +147,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     #name {
                         _inner: widget_ptr,
                     }
-
                 }
             }
 

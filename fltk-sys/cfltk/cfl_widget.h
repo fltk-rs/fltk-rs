@@ -104,7 +104,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
         void set_drawer(drawer h) { inner_drawer = h; }                        \
         void set_drawer_data(void *data) { draw_data_ = data; }                \
         void draw() override {                                                 \
-            widget::draw();                                                    \
+            if constexpr (!std::is_same_v<widget, Fl_Widget>)                  \
+                widget::draw();                                                \
                                                                                \
             if (draw_data_ && inner_drawer)                                    \
                 inner_drawer(draw_data_);                                      \
@@ -225,6 +226,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     int widget##_takes_events(const widget *self) {                            \
         return self->takesevents();                                            \
     }
+
+WIDGET_DECLARE(Fl_Widget)
 
 #ifdef __cplusplus
 }

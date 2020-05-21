@@ -208,6 +208,7 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
                 if cfg!(feature = "gl-window") {
                     println!("cargo:rustc-link-lib=dylib=GL");
+                    println!("cargo:rustc-link-lib=dylib=GLU");
                 }
             }
         }

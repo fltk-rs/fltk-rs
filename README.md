@@ -175,11 +175,11 @@ The following are the features offered by the crate:
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
-- gl-window: Support for GlWindow
+- gl-window: Support for GlWindow, requires OpenGL development headers.
 
 ## Dependencies
 
-Rust version > 1.38. CMake and a C++ compiler need to be installed and in your PATH for a crossplatform build. 
+Rust version > 1.38. CMake and a C++17 compiler need to be installed and in your PATH for a crossplatform build. 
 
 - Windows: No dependencies.
 - MacOs: No dependencies.

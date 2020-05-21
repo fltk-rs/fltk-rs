@@ -211,7 +211,7 @@ where
     T: WidgetExt + InputExt,
 {
     unsafe {
-        Fl_paste(widget.as_widget_ptr() as *mut raw::c_void, 1);
+        Fl_paste(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
     }
 }
 
@@ -489,3 +489,48 @@ pub fn should_program_quit() -> bool {
 pub fn program_should_quit(flag: bool) {
     unsafe { Fl_program_should_quit(flag as i32) }
 }
+
+/// Returns whether an event occured within a widget
+pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
+    let x = wid.x();
+    let y = wid.y();
+    let w = wid.width();
+    let h = wid.height();
+    unsafe {
+        match Fl_event_inside(x, y, w, h) {
+            0 => false,
+            _ => true,
+        }
+    }
+}
+
+/// Returns whether an event occured within a region
+pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
+    unsafe {
+        match Fl_event_inside(x, y, w, h) {
+            0 => false,
+            _ => true,
+        }
+    }
+}
+
+
+// pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
+//     unsafe {
+//         let x = Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
+//         if x.is_null() {
+//             None
+//         } else {
+//             Some(crate::widget::Widget::from_widget_ptr(x as *mut fltk_sys::widget::Fl_Widget))
+//         }
+//     }
+// }
+
+/// Safe widget deletion during event handling. Deletes widgets and their children.
+pub fn delete_widget<Wid: WidgetExt>(wid: &Wid) {
+    unsafe {
+        Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget)
+    }
+}
+
+

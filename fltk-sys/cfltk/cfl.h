@@ -4,6 +4,8 @@
 extern "C" {
 #endif
 
+typedef struct Fl_Widget Fl_Widget;
+
 typedef void (*Fl_Awake_Handler)(void *data);
 
 int Fl_run(void);
@@ -38,7 +40,7 @@ int Fl_screen_h(void);
 
 int Fl_screen_w(void);
 
-void Fl_paste(void *, int src);
+void Fl_paste(Fl_Widget *, int src);
 
 void Fl_set_scheme(const char *scheme);
 
@@ -71,6 +73,12 @@ int Fl_should_program_quit(void);
 void Fl_program_should_quit(int flag);
 
 unsigned int Fl_rand(void);
+
+int Fl_event_inside(int, int, int, int);
+
+// Fl_Widget *Fl_belowmouse(void);
+
+void Fl_delete_widget(Fl_Widget *w);
 
 #ifdef __cplusplus
 }

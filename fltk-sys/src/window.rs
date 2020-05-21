@@ -23,6 +23,184 @@ extern "C" {
         arg2: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Widget_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Widget_x(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_y(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_width(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_height(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_label(arg1: *mut Fl_Widget) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label(arg1: *mut Fl_Widget, title: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Widget_redraw(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_show(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_hide(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_activate(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_deactivate(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_redraw_label(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_resize(
+        arg1: *mut Fl_Widget,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Widget_set_tooltip(arg1: *mut Fl_Widget, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Widget_get_type(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_type(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Widget_label_font(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label_font(arg1: *mut Fl_Widget, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_label_size(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label_size(arg1: *mut Fl_Widget, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_label_type(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label_type(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_box(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_box(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_changed(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_changed(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_changed(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_align(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_align(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_delete(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_set_image_with_size(
+        arg1: *mut Fl_Widget,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_set_handler(
+        self_: *mut Fl_Widget,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_set_draw(
+        self_: *mut Fl_Widget,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_parent(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_selection_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_set_selection_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Widget_do_callback(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_inside(
+        self_: *const Fl_Widget,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_window(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_top_window(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
@@ -2385,4 +2563,303 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_cursor(self_: *mut Fl_Menu_Window, cursor: ::std::os::raw::c_int);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Gl_Window {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Gl_Window_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Gl_Window;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_x(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_y(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_width(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_height(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_label(arg1: *mut Fl_Gl_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_label(arg1: *mut Fl_Gl_Window, title: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_redraw(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_show(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_hide(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_activate(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_deactivate(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_redraw_label(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_resize(
+        arg1: *mut Fl_Gl_Window,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_tooltip(arg1: *mut Fl_Gl_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_tooltip(arg1: *mut Fl_Gl_Window, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_get_type(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_type(arg1: *mut Fl_Gl_Window, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_color(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_color(arg1: *mut Fl_Gl_Window, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_label_color(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_label_color(arg1: *mut Fl_Gl_Window, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_label_font(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_label_font(arg1: *mut Fl_Gl_Window, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_label_size(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_label_size(arg1: *mut Fl_Gl_Window, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_label_type(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_label_type(arg1: *mut Fl_Gl_Window, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_box(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_box(arg1: *mut Fl_Gl_Window, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_changed(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_changed(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_clear_changed(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_align(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_align(arg1: *mut Fl_Gl_Window, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_delete(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_image(arg1: *mut Fl_Gl_Window, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_image_with_size(
+        arg1: *mut Fl_Gl_Window,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_handler(
+        self_: *mut Fl_Gl_Window,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_draw(
+        self_: *mut Fl_Gl_Window,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_trigger(arg1: *mut Fl_Gl_Window, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_image(arg1: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_parent(self_: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_selection_color(arg1: *mut Fl_Gl_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_selection_color(arg1: *mut Fl_Gl_Window, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_do_callback(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_inside(
+        self_: *const Fl_Gl_Window,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_window(arg1: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_top_window(arg1: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_takes_events(arg1: *const Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_begin(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_end(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_find(
+        self_: *mut Fl_Gl_Window,
+        arg1: *const ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_add(self_: *mut Fl_Gl_Window, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_insert(
+        self_: *mut Fl_Gl_Window,
+        arg1: *mut ::std::os::raw::c_void,
+        pos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_remove(self_: *mut Fl_Gl_Window, wid: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_clear(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_children(self_: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_child(
+        arg1: *mut Fl_Gl_Window,
+        index: ::std::os::raw::c_int,
+    ) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_resizable(self_: *mut Fl_Gl_Window, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_make_modal(arg1: *mut Fl_Gl_Window, boolean: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_fullscreen(arg1: *mut Fl_Gl_Window, boolean: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_make_current(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_icon(arg1: *mut Fl_Gl_Window, arg2: *const ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_icon(arg1: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_make_resizable(self_: *mut Fl_Gl_Window, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_cursor(self_: *mut Fl_Gl_Window, cursor: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_valid(self_: *const Fl_Gl_Window) -> ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_valid(self_: *mut Fl_Gl_Window, v: ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_context_valid(self_: *const Fl_Gl_Window) -> ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_context_valid(self_: *mut Fl_Gl_Window, v: ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_can_do(self_: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_context(self_: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_context(
+        self_: *mut Fl_Gl_Window,
+        ctx: *mut ::std::os::raw::c_void,
+        destroy_flag: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_swap_buffers(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_ortho(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_can_do_overlay(self_: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_redraw_overlay(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_hide_overlay(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_make_overlay_current(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_pixels_per_unit(self_: *mut Fl_Gl_Window) -> f32;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_pixel_w(self_: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_pixel_h(self_: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
 }
