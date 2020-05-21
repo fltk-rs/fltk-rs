@@ -4,18 +4,18 @@ use fltk_sys::image::*;
 use std::{ffi::CString, mem, os::raw};
 
 /// Wrapper around Fl_Image, used to wrap other image types
-#[derive(Debug)]
+#[derive(ImageExt, Debug)]
 pub struct Image {
     _inner: *mut Fl_Image,
 }
 
-/// A conversion function for internal use
-impl<I: ImageExt> From<I> for Image {
-    fn from(s: I) -> Self {
-        let img: *mut Fl_Image = s.as_image_ptr();
-        Image { _inner: img }
-    }
-}
+// /// A conversion function for internal use
+// impl<I: ImageExt> From<I> for Image {
+//     fn from(s: I) -> Self {
+//         let img: *mut Fl_Image = s.as_image_ptr();
+//         Image { _inner: img }
+//     }
+// }
 
 /// A conversion function for internal use
 impl Image {

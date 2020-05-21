@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (NULL)
+- Add several handler methods, (belowmouse, delete_widget, event_inside).
 
 ## [0.4.7] - 2020-05-20
 ### Changes

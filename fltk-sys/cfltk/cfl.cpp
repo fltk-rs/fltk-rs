@@ -103,3 +103,15 @@ unsigned int Fl_rand(void) {
     rng.seed(std::random_device()());
     return dist(rng);
 }
+
+int Fl_event_inside(const void *wid) {
+    return Fl::event_inside((const Fl_Widget*) wid);
+}
+
+void *Fl_belowmouse() {
+    return (void *)Fl::belowmouse();
+}
+
+void Fl_delete_widget(void *w) {
+    Fl::delete_widget((Fl_Widget*)w);
+}

@@ -23,6 +23,184 @@ extern "C" {
         arg2: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Widget_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Widget_x(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_y(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_width(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_height(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_label(arg1: *mut Fl_Widget) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label(arg1: *mut Fl_Widget, title: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Widget_redraw(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_show(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_hide(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_activate(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_deactivate(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_redraw_label(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_resize(
+        arg1: *mut Fl_Widget,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Widget_set_tooltip(arg1: *mut Fl_Widget, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Widget_get_type(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_type(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Widget_label_font(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label_font(arg1: *mut Fl_Widget, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_label_size(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label_size(arg1: *mut Fl_Widget, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_label_type(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_label_type(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_box(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_box(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_changed(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_changed(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_changed(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_align(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_align(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_delete(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_set_image_with_size(
+        arg1: *mut Fl_Widget,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_set_handler(
+        self_: *mut Fl_Widget,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_set_draw(
+        self_: *mut Fl_Widget,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_parent(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_selection_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_set_selection_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Widget_do_callback(arg1: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_inside(
+        self_: *const Fl_Widget,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_window(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_top_window(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
+}
 pub type Fl_Text_Modify_Cb = ::std::option::Option<
     unsafe extern "C" fn(
         pos: ::std::os::raw::c_int,

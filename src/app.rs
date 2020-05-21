@@ -489,3 +489,34 @@ pub fn should_program_quit() -> bool {
 pub fn program_should_quit(flag: bool) {
     unsafe { Fl_program_should_quit(flag as i32) }
 }
+
+
+pub fn event_inside<Wid: WidgetExt>(wid: &Wid) -> bool {
+    unsafe {
+        match Fl_event_inside(wid.as_widget_ptr() as *mut raw::c_void) {
+            0 => false,
+            _ => true,
+        }
+    }
+}
+
+
+pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
+    unsafe {
+        let x = Fl_belowmouse() as *mut fltk_sys::widget::Fl_Widget;
+        if x.is_null() {
+            None
+        } else {
+            Some(crate::widget::Widget::from_widget_ptr(x))
+        }
+    }
+}
+
+
+pub fn delete_widget<Wid: WidgetExt>(wid: &Wid) {
+    unsafe {
+        Fl_delete_widget(wid.as_widget_ptr() as *mut raw::c_void)
+    }
+}
+
+

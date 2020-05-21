@@ -5,6 +5,42 @@
 pub struct Fl_Image {
     _unused: [u8; 0],
 }
+extern "C" {
+    pub fn Fl_Image_draw(
+        arg1: *mut Fl_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Image_width(arg1: *mut Fl_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Image_height(arg1: *mut Fl_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Image_delete(arg1: *mut Fl_Image);
+}
+extern "C" {
+    pub fn Fl_Image_count(self_: *mut Fl_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Image_data(self_: *mut Fl_Image) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Image_copy(self_: *mut Fl_Image) -> *mut Fl_Image;
+}
+extern "C" {
+    pub fn Fl_Image_scale(
+        self_: *mut Fl_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_JPEG_Image {

@@ -42,6 +42,8 @@ Fl_JPEG_Image *Fl_JPEG_Image_from(const unsigned char *data) {
     return new (std::nothrow) Fl_JPEG_Image(NULL, data);
 }
 
+IMAGE_DEFINE(Fl_Image)
+
 IMAGE_DEFINE(Fl_PNG_Image)
 
 Fl_PNG_Image *Fl_PNG_Image_new(const char *filename) {

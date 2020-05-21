@@ -72,6 +72,12 @@ void Fl_program_should_quit(int flag);
 
 unsigned int Fl_rand(void);
 
+int Fl_event_inside(const void *);
+
+void *Fl_belowmouse(void);
+
+void Fl_delete_widget(void *w);
+
 #ifdef __cplusplus
 }
 #endif

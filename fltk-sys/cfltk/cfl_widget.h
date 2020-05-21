@@ -226,6 +226,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
         return self->takesevents();                                            \
     }
 
+WIDGET_DECLARE(Fl_Widget)
+
 #ifdef __cplusplus
 }
 #endif

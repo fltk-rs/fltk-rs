@@ -16,7 +16,7 @@ extern "C" {
     void image##_scale(image *self, int width, int height, int proportional,   \
                        int can_expand);
 
-typedef struct Fl_Image Fl_Image;
+IMAGE_DECLARE(Fl_Image)
 
 IMAGE_DECLARE(Fl_JPEG_Image)
 

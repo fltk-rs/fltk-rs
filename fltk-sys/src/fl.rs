@@ -123,3 +123,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_rand() -> ::std::os::raw::c_uint;
 }
+extern "C" {
+    pub fn Fl_event_inside(arg1: *const ::std::os::raw::c_void) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_belowmouse() -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_delete_widget(w: *mut ::std::os::raw::c_void);
+}
