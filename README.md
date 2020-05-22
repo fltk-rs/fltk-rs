@@ -27,10 +27,6 @@ fltk = "^0.4"
 ```
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
-[dependencies.fltk]
-version = "^0.4"
-features = ["fltk-shared"]
-# or
 [dependencies]
 fltk = { version = "^0.4", features = ["fltk-shared"] }
 ```
