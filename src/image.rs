@@ -35,6 +35,43 @@ impl Image {
     }
 }
 
+/// Creates a struct holding a shared image
+#[derive(ImageExt, Debug)]
+pub struct SharedImage {
+    _inner: *mut Fl_Shared_Image,
+}
+
+impl SharedImage {
+    /// Loads a SharedImage from a path
+    pub fn load(path: &std::path::Path) -> Result<SharedImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        unsafe {
+            let temp = path.to_str().unwrap();
+            let temp = CString::new(temp)?;
+            let x = Fl_Shared_Image_get(temp.as_ptr(), 0, 0);
+            if x.is_null() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                Ok(SharedImage { _inner: x })
+            }
+        }
+    }
+
+    /// Loads a SharedImage from an RgbImage
+    pub fn from_rgb(rgb: RgbImage, own_it: bool) -> Option<SharedImage> {
+        unsafe {
+            let x = Fl_Shared_Image_from_rgb(rgb._inner, own_it as i32);
+            if x.is_null() {
+                None
+            } else {
+                Some(SharedImage { _inner: x })
+            }
+        }
+    }
+}
+
 /// Creates a struct holding a Jpeg image
 #[derive(ImageExt, Debug)]
 pub struct JpegImage {
@@ -50,14 +87,14 @@ impl JpegImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_JPEG_Image_new(temp.as_ptr() as *const raw::c_char);
+            let image_ptr = Fl_JPEG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
             Ok(JpegImage { _inner: image_ptr })
         }
     }
-    
+
     /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
@@ -90,14 +127,14 @@ impl PngImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_PNG_Image_new(temp.as_ptr() as *const raw::c_char);
+            let image_ptr = Fl_PNG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
             Ok(PngImage { _inner: image_ptr })
         }
     }
-    
+
     /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
@@ -130,14 +167,14 @@ impl SvgImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_SVG_Image_new(temp.as_ptr() as *const raw::c_char);
+            let image_ptr = Fl_SVG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
             Ok(SvgImage { _inner: image_ptr })
         }
     }
-    
+
     /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &str) -> Option<Self> {
         if data.is_empty() {
@@ -145,7 +182,7 @@ impl SvgImage {
         } else {
             let data = CString::new(data).unwrap();
             unsafe {
-                let x = Fl_SVG_Image_from(data.as_ptr() as *const raw::c_char);
+                let x = Fl_SVG_Image_from(data.as_ptr());
                 if x.is_null() {
                     None
                 } else {
@@ -171,14 +208,14 @@ impl BmpImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_BMP_Image_new(temp.as_ptr() as *const raw::c_char);
+            let image_ptr = Fl_BMP_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
             Ok(BmpImage { _inner: image_ptr })
         }
     }
-    
+
     /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {
@@ -211,14 +248,14 @@ impl GifImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_GIF_Image_new(temp.as_ptr() as *const raw::c_char);
+            let image_ptr = Fl_GIF_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
             Ok(GifImage { _inner: image_ptr })
         }
     }
-    
+
     /// Loads the image from data/memory, Doesn't check for the validity of the data
     pub fn from_data(data: &[u8]) -> Option<Self> {
         unsafe {

@@ -81,7 +81,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn set_value(&self, val: &str) {
                 let temp = CString::new(val).unwrap();
                 unsafe {
-                    #set_value(self._inner, temp.as_ptr() as *const raw::c_char);
+                    #set_value(self._inner, temp.as_ptr());
                 }
             }
 
@@ -126,21 +126,21 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 let val = CString::new(val).unwrap();
                 unsafe {
                     debug_assert!(beg <= std::i32::MAX as u32 && end <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                    #replace(self._inner, beg as i32, end as i32, val.as_ptr() as *const raw::c_char, 0);
+                    #replace(self._inner, beg as i32, end as i32, val.as_ptr(), 0);
                 }
             }
 
             fn insert(&mut self, txt: &str) {
                 let txt = CString::new(txt).unwrap();
                 unsafe {
-                    #insert(self._inner, txt.as_ptr() as *const raw::c_char, 0);
+                    #insert(self._inner, txt.as_ptr(), 0);
                 }
             }
 
             fn append(&mut self, txt: &str) {
                 let txt = CString::new(txt).unwrap();
                 unsafe {
-                    #append(self._inner,  txt.as_ptr() as *const raw::c_char, 0, 0);
+                    #append(self._inner,  txt.as_ptr(), 0, 0);
                 }
             }
 

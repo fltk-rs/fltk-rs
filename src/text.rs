@@ -44,7 +44,7 @@ impl TextBuffer {
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
             let txt = CString::new(txt).unwrap();
-            Fl_Text_Buffer_set_text(self._inner, txt.as_ptr() as *const raw::c_char)
+            Fl_Text_Buffer_set_text(self._inner, txt.as_ptr())
         }
     }
 
@@ -62,7 +62,7 @@ impl TextBuffer {
     /// Appends to the buffer
     pub fn append(&mut self, text: &str) {
         let text = CString::new(text).unwrap();
-        unsafe { Fl_Text_Buffer_append(self._inner, text.as_ptr() as *const raw::c_char) }
+        unsafe { Fl_Text_Buffer_append(self._inner, text.as_ptr()) }
     }
 
     /// Get the length of the buffer
@@ -120,7 +120,7 @@ impl TextBuffer {
             Fl_Text_Buffer_insert(
                 self._inner,
                 pos as i32,
-                text.as_ptr() as *const raw::c_char,
+                text.as_ptr(),
             )
         }
     }
@@ -141,7 +141,7 @@ impl TextBuffer {
                 self._inner,
                 start as i32,
                 end as i32,
-                text.as_ptr() as *const raw::c_char,
+                text.as_ptr(),
             )
         }
     }
@@ -194,7 +194,7 @@ impl TextBuffer {
         let path = path.to_str().unwrap();
         let path = CString::new(path)?;
         unsafe {
-            match Fl_Text_Buffer_loadfile(self._inner, path.as_ptr() as *const raw::c_char, 0) {
+            match Fl_Text_Buffer_loadfile(self._inner, path.as_ptr(), 0) {
                 0 => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
                 _ => Ok(()),
             }
@@ -278,7 +278,7 @@ impl TextBuffer {
     pub fn replace_selection(&mut self, text: &str) {
         let text = CString::new(text).unwrap();
         unsafe {
-            Fl_Text_Buffer_replace_selection(self._inner, text.as_ptr() as *const raw::c_char)
+            Fl_Text_Buffer_replace_selection(self._inner, text.as_ptr())
         }
     }
 

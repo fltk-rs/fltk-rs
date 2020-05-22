@@ -328,3 +328,62 @@ extern "C" {
         depth: ::std::os::raw::c_int,
     ) -> *mut Fl_RGB_Image;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Shared_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Shared_Image_draw(
+        arg1: *mut Fl_Shared_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shared_Image_width(arg1: *mut Fl_Shared_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_height(arg1: *mut Fl_Shared_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_delete(arg1: *mut Fl_Shared_Image);
+}
+extern "C" {
+    pub fn Fl_Shared_Image_count(self_: *mut Fl_Shared_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_data(
+        self_: *mut Fl_Shared_Image,
+    ) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_copy(self_: *mut Fl_Shared_Image) -> *mut Fl_Shared_Image;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_scale(
+        self_: *mut Fl_Shared_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shared_Image_get(
+        name: *const ::std::os::raw::c_char,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    ) -> *mut Fl_Shared_Image;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_from_rgb(
+        rgb: *mut Fl_RGB_Image,
+        own_it: ::std::os::raw::c_int,
+    ) -> *mut Fl_Shared_Image;
+}
+extern "C" {
+    pub fn Fl_register_images();
+}

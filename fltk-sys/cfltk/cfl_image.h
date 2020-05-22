@@ -53,6 +53,14 @@ IMAGE_DECLARE(Fl_RGB_Image)
 Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H,
                                int depth);
 
+IMAGE_DECLARE(Fl_Shared_Image)   
+
+Fl_Shared_Image *Fl_Shared_Image_get(const char *name, int W, int H);
+
+Fl_Shared_Image *Fl_Shared_Image_from_rgb(Fl_RGB_Image *rgb, int own_it);
+
+void Fl_register_images(void);
+
 #ifdef __cplusplus
 }
 #endif

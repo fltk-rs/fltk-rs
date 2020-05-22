@@ -177,7 +177,7 @@ The following are the features offered by the crate:
 Rust version > 1.38. CMake and a C++17 compiler need to be installed and in your PATH for a crossplatform build. 
 
 - Windows: No dependencies.
-- MacOs: No dependencies.
+- MacOS: No dependencies.
 - Linux: X11 and OpenGL development headers need to be installed for development. 
 
 For Debian-based GUI distributions, that means running:
@@ -243,6 +243,7 @@ Setting the scheme to Gtk
 
 The most commonly widgets are implemented: 
 - Image widgets
+    - SharedImage
     - BmpImage
     - JpegImage
     - GifImage

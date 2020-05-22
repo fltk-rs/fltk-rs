@@ -51,7 +51,7 @@ fn set_scheme(scheme: AppScheme) {
         AppScheme::Plastic => "plastic",
     };
     let name_str = CString::new(name_str).unwrap();
-    unsafe { Fl_set_scheme(name_str.as_ptr() as *const raw::c_char) }
+    unsafe { Fl_set_scheme(name_str.as_ptr()) }
 }
 
 /// Unlocks the main UI thread
@@ -84,6 +84,7 @@ pub struct App {}
 impl App {
     /// Instantiates an App type
     pub fn default() -> App {
+        register_images();
         App {}
     }
 
@@ -530,6 +531,12 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 pub fn delete_widget<Wid: WidgetExt>(wid: &Wid) {
     unsafe {
         Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget)
+    }
+}
+
+fn register_images() {
+    unsafe {
+        fltk_sys::image::Fl_register_images()
     }
 }
 
