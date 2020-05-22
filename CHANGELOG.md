@@ -4,7 +4,7 @@
 ### Changes
 - (None)
 
-## [0.4.9] - 2020-05-20
+## [0.4.9] - 2020-05-21
 ### Changes
 - Remove the necessity for the gl-window feature flag, however on Linux distros, OpenGL headers must be installed.
 - Add several handler methods (delete_widget, event_inside_widget, event_inside).
