@@ -434,13 +434,13 @@ pub fn descent() -> i32 {
 /// Returns the typographical width of a string
 pub fn width(txt: &str) -> f64 {
     let txt = CString::new(txt).unwrap();
-    unsafe { cfl_width(txt.into_raw()) }
+    unsafe { cfl_width(txt.as_ptr()) }
 }
 
 /// Returns the typographical width of a sequence of n characters
 pub fn width2(txt: &str, n: i32) -> f64 {
     let txt = CString::new(txt).unwrap();
-    unsafe { cfl_width2(txt.into_raw(), n) }
+    unsafe { cfl_width2(txt.as_ptr(), n) }
 }
 
 /// Returns the typographical width of a single character
@@ -452,7 +452,7 @@ pub fn width3(c: char) -> f64 {
 pub fn latin1_to_local(txt: &str, n: i32) -> String {
     let txt = CString::new(txt).unwrap();
     unsafe {
-        let x = cfl_latin1_to_local(txt.into_raw(), n);
+        let x = cfl_latin1_to_local(txt.as_ptr(), n);
         assert!(!x.is_null());
         CStr::from_ptr(x as *mut raw::c_char)
             .to_string_lossy()
@@ -464,7 +464,7 @@ pub fn latin1_to_local(txt: &str, n: i32) -> String {
 pub fn local_to_latin1(txt: &str, n: i32) -> String {
     let txt = CString::new(txt).unwrap();
     unsafe {
-        let x = cfl_local_to_latin1(txt.into_raw(), n);
+        let x = cfl_local_to_latin1(txt.as_ptr(), n);
         assert!(!x.is_null());
         CStr::from_ptr(x as *mut raw::c_char)
             .to_string_lossy()
@@ -475,33 +475,33 @@ pub fn local_to_latin1(txt: &str, n: i32) -> String {
 /// Draws a string starting at the given x, y location
 pub fn draw(txt: &str, x: i32, y: i32) {
     let txt = CString::new(txt).unwrap();
-    unsafe { cfl_draw(txt.into_raw(), x, y) }
+    unsafe { cfl_draw(txt.as_ptr(), x, y) }
 }
 
 /// Draws a string starting at the given x, y location, rotated to an angle
 pub fn draw2(angle: i32, txt: &str, x: i32, y: i32) {
     let txt = CString::new(txt).unwrap();
-    unsafe { cfl_draw2(angle, txt.into_raw(), x, y) }
+    unsafe { cfl_draw2(angle, txt.as_ptr(), x, y) }
 }
 
 /// Draws a UTF-8 string right to left starting at the given x, y location
 pub fn rtl_draw(txt: &str, x: i32, y: i32) {
     let n = txt.len() as i32;
     let txt = CString::new(txt).unwrap();
-    unsafe { cfl_rtl_draw(txt.into_raw(), n, x, y) }
+    unsafe { cfl_rtl_draw(txt.as_ptr(), n, x, y) }
 }
 
 /// Draws a frame with text
 pub fn frame(s: &str, x: i32, y: i32, w: i32, h: i32) {
     let s = CString::new(s).unwrap();
-    unsafe { cfl_frame(s.into_raw(), x, y, w, h) }
+    unsafe { cfl_frame(s.as_ptr(), x, y, w, h) }
 }
 
 /// Draws a frame with text.
 /// Differs from frame() by the order of the line segments
 pub fn frame2(s: &str, x: i32, y: i32, w: i32, h: i32) {
     let s = CString::new(s).unwrap();
-    unsafe { cfl_frame2(s.into_raw(), x, y, w, h) }
+    unsafe { cfl_frame2(s.as_ptr(), x, y, w, h) }
 }
 
 /// Draws a box given the box type, size, position and color

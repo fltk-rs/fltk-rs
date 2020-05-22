@@ -52,7 +52,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn add(&mut self, item: &str) {
                 let item = CString::new(item).unwrap();
                 unsafe {
-                    #add(self._inner, item.into_raw() as *const raw::c_char)
+                    #add(self._inner, item.as_ptr() as *const raw::c_char)
                 }
             }
 
@@ -61,7 +61,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 let item = CString::new(item).unwrap();
                 unsafe {
-                    #insert(self._inner, line as i32, item.into_raw() as *const raw::c_char)
+                    #insert(self._inner, line as i32, item.as_ptr() as *const raw::c_char)
                 }
             }
 
@@ -137,7 +137,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(line <= self.size(), "Line doesn't exist!");
                 let txt = CString::new(txt).unwrap();
                 unsafe {
-                    #set_text(self._inner, line as i32, txt.into_raw() as *const raw::c_char)
+                    #set_text(self._inner, line as i32, txt.as_ptr() as *const raw::c_char)
                 }
             }
 
@@ -148,7 +148,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 let path = path.to_str().unwrap();
                 let path = CString::new(path)?;
                 unsafe {
-                    #load_file(self._inner, path.into_raw() as *const raw::c_char);
+                    #load_file(self._inner, path.as_ptr() as *const raw::c_char);
                     Ok(())
                 }
             }

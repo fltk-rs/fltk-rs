@@ -87,7 +87,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: Fl_Callback = Some(shim);
-                    #insert(self._inner, idx as i32, temp.into_raw() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
+                    #insert(self._inner, idx as i32, temp.as_ptr() as *const raw::c_char, shortcut as i32, callback, data, flag as i32);
                 }
             }
 
@@ -96,7 +96,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     let menu_item = #get_item(
                         self._inner,
-                        name.into_raw() as *const raw::c_char);
+                        name.as_ptr() as *const raw::c_char);
                     if menu_item.is_null() {
                         None
                     } else {
@@ -147,7 +147,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn add_choice(&mut self, text: &str) {
                 unsafe {
                     let arg2 = CString::new(text).unwrap();
-                    #add_choice(self._inner, arg2.into_raw() as *mut raw::c_char)
+                    #add_choice(self._inner, arg2.as_ptr() as *mut raw::c_char)
                 }
             }
 

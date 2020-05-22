@@ -122,7 +122,7 @@ impl Tree {
     /// Sets the root label
     pub fn set_root_label(&mut self, new_label: &str) {
         let new_label = CString::new(new_label).unwrap();
-        unsafe { Fl_Tree_root_label(self._inner, new_label.into_raw() as *const raw::c_char) }
+        unsafe { Fl_Tree_root_label(self._inner, new_label.as_ptr() as *const raw::c_char) }
     }
 
     /// Gets the Tree's root
@@ -143,7 +143,7 @@ impl Tree {
     pub fn add(&mut self, path: &str) -> Option<TreeItem> {
         let path = CString::new(path).unwrap();
         unsafe {
-            let x = Fl_Tree_add(self._inner, path.into_raw() as *mut raw::c_char);
+            let x = Fl_Tree_add(self._inner, path.as_ptr() as *mut raw::c_char);
             TreeItem::from_raw(x)
         }
     }
@@ -155,7 +155,7 @@ impl Tree {
             let x = Fl_Tree_insert_above(
                 self._inner,
                 above._inner,
-                name.into_raw() as *mut raw::c_char,
+                name.as_ptr() as *mut raw::c_char,
             );
             TreeItem::from_raw(x)
         }
@@ -169,7 +169,7 @@ impl Tree {
             let x = Fl_Tree_insert(
                 self._inner,
                 item._inner,
-                name.into_raw() as *mut raw::c_char,
+                name.as_ptr() as *mut raw::c_char,
                 pos as i32,
             );
             TreeItem::from_raw(x)
@@ -200,7 +200,7 @@ impl Tree {
     pub fn find_item(&self, path: &str) -> Option<TreeItem> {
         let path = CString::new(path).unwrap();
         unsafe {
-            let x = Fl_Tree_find_item(self._inner, path.into_raw() as *mut raw::c_char);
+            let x = Fl_Tree_find_item(self._inner, path.as_ptr() as *mut raw::c_char);
             if x.is_null() {
                 None
             } else {
@@ -329,7 +329,7 @@ impl Tree {
         unsafe {
             match Fl_Tree_open(
                 self._inner,
-                path.into_raw() as *mut raw::c_char,
+                path.as_ptr() as *mut raw::c_char,
                 do_callback as i32,
             ) {
                 0 => Ok(()),
@@ -350,7 +350,7 @@ impl Tree {
         unsafe {
             match Fl_Tree_close(
                 self._inner,
-                path.into_raw() as *mut raw::c_char,
+                path.as_ptr() as *mut raw::c_char,
                 do_callback as i32,
             ) {
                 0 => Ok(()),
@@ -363,7 +363,7 @@ impl Tree {
     pub fn is_open(&self, path: &str) -> bool {
         let path = CString::new(path).unwrap();
         unsafe {
-            match Fl_Tree_is_open(self._inner, path.into_raw() as *mut raw::c_char) {
+            match Fl_Tree_is_open(self._inner, path.as_ptr() as *mut raw::c_char) {
                 0 => false,
                 _ => true,
             }
@@ -374,7 +374,7 @@ impl Tree {
     pub fn is_close(&self, path: &str) -> bool {
         let path = CString::new(path).unwrap();
         unsafe {
-            match Fl_Tree_is_close(self._inner, path.into_raw() as *mut raw::c_char) {
+            match Fl_Tree_is_close(self._inner, path.as_ptr() as *mut raw::c_char) {
                 0 => false,
                 _ => true,
             }
@@ -387,7 +387,7 @@ impl Tree {
         unsafe {
             match Fl_Tree_select(
                 self._inner,
-                path.into_raw() as *mut raw::c_char,
+                path.as_ptr() as *mut raw::c_char,
                 do_callback as i32,
             ) {
                 0 => Ok(()),
@@ -406,7 +406,7 @@ impl Tree {
         unsafe {
             match Fl_Tree_deselect(
                 self._inner,
-                path.into_raw() as *mut raw::c_char,
+                path.as_ptr() as *mut raw::c_char,
                 do_callback as i32,
             ) {
                 0 => Ok(()),
@@ -500,7 +500,7 @@ impl Tree {
     pub fn is_selected(&self, path: &str) -> bool {
         let path = CString::new(path).unwrap();
         unsafe {
-            match Fl_Tree_is_selected(self._inner, path.into_raw() as *mut raw::c_char) {
+            match Fl_Tree_is_selected(self._inner, path.as_ptr() as *mut raw::c_char) {
                 0 => false,
                 _ => true,
             }
@@ -983,13 +983,13 @@ impl TreeItem {
     /// Shows the tree item
     pub fn show_self(&self, indent: &str) {
         let indent = CString::new(indent).unwrap();
-        unsafe { Fl_Tree_Item_show_self(self._inner, indent.into_raw() as *mut raw::c_char) }
+        unsafe { Fl_Tree_Item_show_self(self._inner, indent.as_ptr() as *mut raw::c_char) }
     }
 
     /// Sets the label of the tree item
     pub fn set_label(&mut self, val: &str) {
         let val = CString::new(val).unwrap();
-        unsafe { Fl_Tree_set_Item_label(self._inner, val.into_raw() as *mut raw::c_char) }
+        unsafe { Fl_Tree_set_Item_label(self._inner, val.as_ptr() as *mut raw::c_char) }
     }
 
     /// Gets the label of the tree item
@@ -1091,7 +1091,7 @@ impl TreeItem {
     pub fn find_child(&mut self, name: &str) -> Result<u32, FltkError> {
         let name = CString::new(name).unwrap();
         unsafe {
-            let x = Fl_Tree_Item_find_child(self._inner, name.into_raw());
+            let x = Fl_Tree_Item_find_child(self._inner, name.as_ptr());
             if x == -1 {
                 Err(FltkError::Internal(FltkErrorKind::FailedOperation))
             } else {
@@ -1104,7 +1104,7 @@ impl TreeItem {
     pub fn remove_child(&mut self, new_label: &str) -> Result<(), FltkError> {
         let new_label = CString::new(new_label).unwrap();
         unsafe {
-            match Fl_Tree_Item_remove_child(self._inner, new_label.into_raw()) {
+            match Fl_Tree_Item_remove_child(self._inner, new_label.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
@@ -1131,7 +1131,7 @@ impl TreeItem {
         let name = CString::new(name).unwrap();
         unsafe {
             TreeItem::from_raw(
-                Fl_Tree_Item_find_child_item(self._inner, name.into_raw()) as *mut Fl_Tree_Item
+                Fl_Tree_Item_find_child_item(self._inner, name.as_ptr()) as *mut Fl_Tree_Item
             )
         }
     }

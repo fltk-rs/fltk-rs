@@ -257,7 +257,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn insert(&self, text: &str) {
                 let text = CString::new(text).unwrap();
                 unsafe {
-                    #insert(self._inner, text.into_raw() as *const raw::c_char)
+                    #insert(self._inner, text.as_ptr() as *const raw::c_char)
                 }
             }
 

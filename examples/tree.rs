@@ -8,7 +8,7 @@ fn main() {
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut but = Button::new(160, 255, 80, 40, "Get Items");
     let mut tree = Tree::new(5, 10, 190, 240, "");
-    tree.add(path.to_str().unwrap());
+    tree.add(path.to_str().unwrap()); // Works for unix paths!
     
     let mut items = tree.get_items().unwrap();
     items.as_mut_slice()[0].set_label("/");
@@ -26,7 +26,7 @@ fn main() {
     
     but.set_callback(Box::new(move || match tree2.get_selected_items() {
         None => println!("No items selected"),
-        Some(vals) => println!("{} items selected", vals.len()),
+        Some(vals) => println!("{} items selected", vals.as_slice()[0].label()),
     }));
     
     app.run().unwrap();

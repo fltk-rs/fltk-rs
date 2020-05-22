@@ -105,7 +105,7 @@ impl FileDialog {
         unsafe {
             Fl_Native_File_Chooser_set_directory(
                 self._inner,
-                CString::new(dir.to_str().unwrap()).unwrap().into_raw(),
+                CString::new(dir.to_str().unwrap()).unwrap().as_ptr(),
             )
         }
     }
@@ -131,7 +131,7 @@ impl FileDialog {
     pub fn set_title(&mut self, title: &str) {
         let title = CString::new(title).unwrap();
         unsafe {
-            Fl_Native_File_Chooser_set_title(self._inner, title.into_raw() as *const raw::c_char)
+            Fl_Native_File_Chooser_set_title(self._inner, title.as_ptr() as *const raw::c_char)
         }
     }
 
@@ -139,7 +139,7 @@ impl FileDialog {
     pub fn set_filter(&mut self, f: &str) {
         let f = CString::new(f).unwrap();
         unsafe {
-            Fl_Native_File_Chooser_set_filter(self._inner, f.into_raw() as *const raw::c_char)
+            Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr() as *const raw::c_char)
         }
     }
 
@@ -147,7 +147,7 @@ impl FileDialog {
     pub fn set_preset_file(&mut self, f: &str) {
         let f = CString::new(f).unwrap();
         unsafe {
-            Fl_Native_File_Chooser_set_preset_file(self._inner, f.into_raw() as *const raw::c_char)
+            Fl_Native_File_Chooser_set_preset_file(self._inner, f.as_ptr() as *const raw::c_char)
         }
     }
 
@@ -181,7 +181,7 @@ impl Drop for FileDialog {
 pub fn message(txt: &str) {
     unsafe {
         let txt = CString::new(txt).unwrap();
-        cfl_message(txt.into_raw() as *const raw::c_char)
+        cfl_message(txt.as_ptr() as *const raw::c_char)
     }
 }
 
@@ -189,7 +189,7 @@ pub fn message(txt: &str) {
 pub fn alert(txt: &str) {
     unsafe {
         let txt = CString::new(txt).unwrap();
-        cfl_alert(txt.into_raw() as *const raw::c_char)
+        cfl_alert(txt.as_ptr() as *const raw::c_char)
     }
 }
 
@@ -202,10 +202,10 @@ pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
         let b1 = CString::new(b1).unwrap();
         let b2 = CString::new(b2).unwrap();
         cfl_choice(
-            txt.into_raw() as *const raw::c_char,
-            b0.into_raw() as *const raw::c_char,
-            b1.into_raw() as *const raw::c_char,
-            b2.into_raw() as *const raw::c_char,
+            txt.as_ptr() as *const raw::c_char,
+            b0.as_ptr() as *const raw::c_char,
+            b1.as_ptr() as *const raw::c_char,
+            b2.as_ptr() as *const raw::c_char,
         ) as u32
     }
 }
@@ -214,9 +214,9 @@ pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
 /// Can be used for gui io
 pub fn input(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
-        let temp = CString::new(deflt.clone()).unwrap().into_raw() as *const raw::c_char;
+        let temp = CString::new(deflt.clone()).unwrap().as_ptr() as *const raw::c_char;
         let txt = CString::new(txt).unwrap();
-        let x = cfl_input(txt.into_raw() as *const raw::c_char, temp);
+        let x = cfl_input(txt.as_ptr() as *const raw::c_char, temp);
         if x.is_null() {
             return None;
         } else {
@@ -232,9 +232,9 @@ pub fn input(txt: &str, deflt: &str) -> Option<String> {
 /// Shows an input box, but with hidden string
 pub fn password(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
-        let temp = CString::new(deflt.clone()).unwrap().into_raw() as *const raw::c_char;
+        let temp = CString::new(deflt.clone()).unwrap().as_ptr() as *const raw::c_char;
         let txt = CString::new(txt).unwrap();
-        let x = cfl_password(txt.into_raw() as *const raw::c_char, temp);
+        let x = cfl_password(txt.as_ptr() as *const raw::c_char, temp);
         if x.is_null() {
             return None;
         } else {
@@ -282,7 +282,7 @@ impl HelpDialog {
         let f = file.to_str().unwrap();
         let f = CString::new(f)?;
         unsafe { 
-            match Fl_Help_Dialog_load(self._inner, f.into_raw() as *const raw::c_char) {
+            match Fl_Help_Dialog_load(self._inner, f.as_ptr() as *const raw::c_char) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }
@@ -317,7 +317,7 @@ impl HelpDialog {
     /// Sets the value of the help dialog
     pub fn set_value(&mut self, f: &str) {
         let f = CString::new(f).unwrap();
-        unsafe { Fl_Help_Dialog_set_value(self._inner, f.into_raw() as *const raw::c_char) }
+        unsafe { Fl_Help_Dialog_set_value(self._inner, f.as_ptr() as *const raw::c_char) }
     }
     
     /// Returns the value of the help dialog
