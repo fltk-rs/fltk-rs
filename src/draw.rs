@@ -234,74 +234,74 @@ pub fn transformed_vertex(xf: f64, yf: f64) {
 }
 
 /// Draws a filled rectangle
-pub fn rectf(x: i32, y: i32, w: i32, h: i32) {
+pub fn draw_rectf(x: i32, y: i32, w: i32, h: i32) {
     unsafe { cfl_rectf(x, y, w, h) }
 }
 
 /// Draws a filled rectangle with specified RGB color
-pub fn rectf_with_rgb(x: i32, y: i32, w: i32, h: i32, r: u8, g: u8, b: u8) {
+pub fn draw_rectf_with_rgb(x: i32, y: i32, w: i32, h: i32, r: u8, g: u8, b: u8) {
     unsafe { cfl_rectf_with_rgb(x, y, w, h, r, g, b) }
 }
 
 /// Draws a line from (x,y) to (x1,y1) and another from (x1,y1) to (x2,y2)
-pub fn line2(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
+pub fn draw_line2(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
     unsafe { cfl_line2(x, y, x1, y1, x2, y2) }
 }
 
 /// Outlines a 4-sided polygon with lines
-pub fn loop2(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
+pub fn draw_loop2(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
     unsafe { cfl_loop2(x, y, x1, y1, x2, y2, x3, y3) }
 }
 
 /// Fills a 3-sided polygon. The polygon must be convex
-pub fn polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
+pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
     unsafe { cfl_polygon(x, y, x1, y1, x2, y2) }
 }
 
 /// Fills a 4-sided polygon. The polygon must be convex
-pub fn polygon2(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
+pub fn draw_polygon2(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
     unsafe { cfl_polygon2(x, y, x1, y1, x2, y2, x3, y3) }
 }
 
 /// Adds a series of points on a Bezier curve to the path
-pub fn curve(x0: f64, y0: f64, x1: f64, y1: f64, x2: f64, y2: f64, x3: f64, y3: f64) {
+pub fn draw_curve(x0: f64, y0: f64, x1: f64, y1: f64, x2: f64, y2: f64, x3: f64, y3: f64) {
     unsafe { cfl_curve(x0, y0, x1, y1, x2, y2, x3, y3) }
 }
 
 /// Draws an arc
-pub fn arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
+pub fn draw_arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
     unsafe { cfl_arc2(x, y, r, start, end) }
 }
 
 /// Draws a horizontal line from (x,y) to (x1,y)
-pub fn xyline(x: i32, y: i32, x1: i32) {
+pub fn draw_xyline(x: i32, y: i32, x1: i32) {
     unsafe { cfl_xyline(x, y, x1) }
 }
 
 /// Draws a horizontal line from (x,y) to (x1,y), then vertical from (x1,y) to (x1,y2)
-pub fn xyline2(x: i32, y: i32, x1: i32, y2: i32) {
+pub fn draw_xyline2(x: i32, y: i32, x1: i32, y2: i32) {
     unsafe { cfl_xyline2(x, y, x1, y2) }
 }
 
 /// Draws a horizontal line from (x,y) to (x1,y), then a vertical from (x1,y) to (x1,y2)
 /// and then another horizontal from (x1,y2) to (x3,y2)
-pub fn xyline3(x: i32, y: i32, x1: i32, y2: i32, x3: i32) {
+pub fn draw_xyline3(x: i32, y: i32, x1: i32, y2: i32, x3: i32) {
     unsafe { cfl_xyline3(x, y, x1, y2, x3) }
 }
 
 /// Draws a vertical line from (x,y) to (x,y1)
-pub fn yxline(x: i32, y: i32, y1: i32) {
+pub fn draw_yxline(x: i32, y: i32, y1: i32) {
     unsafe { cfl_yxline(x, y, y1) }
 }
 
 /// Draws a vertical line from (x,y) to (x,y1), then a horizontal from (x,y1) to (x2,y1)
-pub fn yxline2(x: i32, y: i32, y1: i32, x2: i32) {
+pub fn draw_yxline2(x: i32, y: i32, y1: i32, x2: i32) {
     unsafe { cfl_yxline2(x, y, y1, x2) }
 }
 
 ///  Draws a vertical line from (x,y) to (x,y1) then a horizontal from (x,y1)
 /// to (x2,y1), then another vertical from (x2,y1) to (x2,y3)
-pub fn yxline3(x: i32, y: i32, y1: i32, x2: i32, y3: i32) {
+pub fn draw_yxline3(x: i32, y: i32, y1: i32, x2: i32, y3: i32) {
     unsafe { cfl_yxline3(x, y, y1, x2, y3) }
 }
 
@@ -492,14 +492,14 @@ pub fn rtl_draw(txt: &str, x: i32, y: i32) {
 }
 
 /// Draws a frame with text
-pub fn frame(s: &str, x: i32, y: i32, w: i32, h: i32) {
+pub fn draw_frame(s: &str, x: i32, y: i32, w: i32, h: i32) {
     let s = CString::new(s).unwrap();
     unsafe { cfl_frame(s.as_ptr(), x, y, w, h) }
 }
 
 /// Draws a frame with text.
 /// Differs from frame() by the order of the line segments
-pub fn frame2(s: &str, x: i32, y: i32, w: i32, h: i32) {
+pub fn draw_frame2(s: &str, x: i32, y: i32, w: i32, h: i32) {
     let s = CString::new(s).unwrap();
     unsafe { cfl_frame2(s.as_ptr(), x, y, w, h) }
 }
@@ -613,7 +613,7 @@ pub fn write_to_png_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<
     unsafe {
         match cfl_raw_image_to_png(
             data.as_ptr() as *mut u8,
-            path.as_ptr() as *const raw::c_char,
+            path.as_ptr(),
             w,
             h,
         ) {
@@ -637,7 +637,7 @@ pub fn write_to_jpg_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<
     unsafe {
         match cfl_raw_image_to_jpg(
             data.as_ptr() as *mut u8,
-            path.as_ptr() as *const raw::c_char,
+            path.as_ptr(),
             w,
             h,
         ) {
@@ -661,7 +661,7 @@ pub fn write_to_bmp_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<
     unsafe {
         match cfl_raw_image_to_bmp(
             data.as_ptr() as *mut u8,
-            path.as_ptr() as *const raw::c_char,
+            path.as_ptr(),
             w,
             h,
         ) {

@@ -243,6 +243,7 @@ Setting the scheme to Gtk
 
 The most commonly widgets are implemented: 
 - Image widgets
+    - SharedImage
     - BmpImage
     - JpegImage
     - GifImage

@@ -7,6 +7,7 @@
 #include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_RGB_Image.H>
 #include <FL/Fl_SVG_Image.H>
+#include <FL/Fl_Shared_Image.H>
 #include <new>
 
 #ifndef LOCK
@@ -88,6 +89,43 @@ IMAGE_DEFINE(Fl_RGB_Image)
 Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H,
                                int depth) {
     return new (std::nothrow) Fl_RGB_Image(bits, W, H, depth);
+}
+
+void Fl_Shared_Image_draw(Fl_Shared_Image *self, int X, int Y, int W, int H) {
+    LOCK(self->draw(X, Y, W, H);)
+}
+
+int Fl_Shared_Image_width(Fl_Shared_Image *self) { return self->w(); }
+
+int Fl_Shared_Image_height(Fl_Shared_Image *self) { return self->h(); }
+
+void Fl_Shared_Image_delete(Fl_Shared_Image *self) { self->release(); }
+
+int Fl_Shared_Image_count(Fl_Shared_Image *self) { return self->count(); }
+
+const char *const *Fl_Shared_Image_data(Fl_Shared_Image *self) {
+    return self->data();
+}
+
+Fl_Shared_Image *Fl_Shared_Image_copy(Fl_Shared_Image *self) {
+    return (Fl_Shared_Image *)self->copy();
+}
+
+void Fl_Shared_Image_scale(Fl_Shared_Image *self, int width, int height,
+                           int proportional, int can_expand) {
+    LOCK(self->scale(width, height, proportional, can_expand);)
+}
+
+Fl_Shared_Image *Fl_Shared_Image_get(const char *name, int W, int H) {
+    return Fl_Shared_Image::get(name, W, H);
+}
+
+Fl_Shared_Image *Fl_Shared_Image_from_rgb(Fl_RGB_Image *rgb, int own_it) {
+    return Fl_Shared_Image::get(rgb, own_it);
+}
+
+void Fl_register_images() {
+    fl_register_images();
 }
 
 // void Fl_RGB_Image_draw(Fl_RGB_Image *self, int X, int Y, int W, int H) {

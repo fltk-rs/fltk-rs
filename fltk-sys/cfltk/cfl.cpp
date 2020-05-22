@@ -25,7 +25,7 @@ const char *Fl_event_text(void) {
     const char *ev_text = Fl::event_text();
     int len = Fl::event_length();
     if (buf && len != 0 && ev_text) {
-        strncpy(buf, ev_text, len + 1);
+        memcpy(buf, ev_text, len + 1);
         return buf;
     } else {
         free(buf);

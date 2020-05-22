@@ -122,7 +122,7 @@ impl Tree {
     /// Sets the root label
     pub fn set_root_label(&mut self, new_label: &str) {
         let new_label = CString::new(new_label).unwrap();
-        unsafe { Fl_Tree_root_label(self._inner, new_label.as_ptr() as *const raw::c_char) }
+        unsafe { Fl_Tree_root_label(self._inner, new_label.as_ptr()) }
     }
 
     /// Gets the Tree's root

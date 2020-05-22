@@ -2,7 +2,8 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Prefix all draw methods with draw_.
+- Add a SharedImage struct.
 
 ## [0.4.10] - 2020-05-22
 ### Changes
