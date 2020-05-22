@@ -116,7 +116,7 @@ impl Chart {
     pub fn add(&mut self, val: f64, txt: &str, col: u32) {
         debug_assert!(col <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         let txt = std::ffi::CString::new(txt).unwrap();
-        unsafe { Fl_Chart_add(self._inner, val, txt.into_raw() as *const raw::c_char, col) }
+        unsafe { Fl_Chart_add(self._inner, val, txt.as_ptr() as *const raw::c_char, col) }
     }
     
     /// Inserts an entry at an index
@@ -129,7 +129,7 @@ impl Chart {
                 self._inner,
                 idx as i32,
                 val,
-                txt.into_raw() as *const raw::c_char,
+                txt.as_ptr() as *const raw::c_char,
                 col,
             )
         }
@@ -145,7 +145,7 @@ impl Chart {
                 self._inner,
                 idx as i32,
                 val,
-                txt.into_raw() as *const raw::c_char,
+                txt.as_ptr() as *const raw::c_char,
                 col,
             )
         }
@@ -331,7 +331,7 @@ impl Tooltip {
                 y,
                 w,
                 h,
-                tip.into_raw() as *const raw::c_char,
+                tip.as_ptr() as *const raw::c_char,
             )
         }
     }

@@ -50,7 +50,7 @@ impl JpegImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_JPEG_Image_new(temp.into_raw() as *const raw::c_char);
+            let image_ptr = Fl_JPEG_Image_new(temp.as_ptr() as *const raw::c_char);
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
@@ -90,7 +90,7 @@ impl PngImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_PNG_Image_new(temp.into_raw() as *const raw::c_char);
+            let image_ptr = Fl_PNG_Image_new(temp.as_ptr() as *const raw::c_char);
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
@@ -130,7 +130,7 @@ impl SvgImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_SVG_Image_new(temp.into_raw() as *const raw::c_char);
+            let image_ptr = Fl_SVG_Image_new(temp.as_ptr() as *const raw::c_char);
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
@@ -145,7 +145,7 @@ impl SvgImage {
         } else {
             let data = CString::new(data).unwrap();
             unsafe {
-                let x = Fl_SVG_Image_from(data.into_raw() as *const raw::c_char);
+                let x = Fl_SVG_Image_from(data.as_ptr() as *const raw::c_char);
                 if x.is_null() {
                     None
                 } else {
@@ -171,7 +171,7 @@ impl BmpImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_BMP_Image_new(temp.into_raw() as *const raw::c_char);
+            let image_ptr = Fl_BMP_Image_new(temp.as_ptr() as *const raw::c_char);
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }
@@ -211,7 +211,7 @@ impl GifImage {
         unsafe {
             let temp = path.to_str().unwrap();
             let temp = CString::new(temp)?;
-            let image_ptr = Fl_GIF_Image_new(temp.into_raw() as *const raw::c_char);
+            let image_ptr = Fl_GIF_Image_new(temp.as_ptr() as *const raw::c_char);
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
             }

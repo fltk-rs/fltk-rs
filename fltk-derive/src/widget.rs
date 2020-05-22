@@ -191,7 +191,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     #set_label(
                         self._inner,
-                        temp.into_raw() as *const raw::c_char,
+                        temp.as_ptr() as *const raw::c_char,
                     )
                 }
             }
@@ -278,7 +278,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     #set_tooltip(
                         self._inner,
-                        txt.into_raw() as *mut raw::c_char,
+                        txt.as_ptr() as *mut raw::c_char,
                     )
                 }
             }

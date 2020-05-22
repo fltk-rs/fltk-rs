@@ -118,7 +118,7 @@ pub fn impl_valuator_trait(ast: &DeriveInput) -> TokenStream {
             fn format(&mut self, arg2: &str) {
                 unsafe {
                     let arg2 = CString::new(arg2).unwrap();
-                    #format(self._inner, arg2.into_raw() as *mut raw::c_char);
+                    #format(self._inner, arg2.as_ptr() as *mut raw::c_char);
                 }
             }
 

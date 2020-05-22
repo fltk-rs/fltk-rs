@@ -51,7 +51,7 @@ fn set_scheme(scheme: AppScheme) {
         AppScheme::Plastic => "plastic",
     };
     let name_str = CString::new(name_str).unwrap();
-    unsafe { Fl_set_scheme(name_str.into_raw() as *const raw::c_char) }
+    unsafe { Fl_set_scheme(name_str.as_ptr() as *const raw::c_char) }
 }
 
 /// Unlocks the main UI thread
@@ -240,7 +240,7 @@ where
 /// Initializes loaded fonts of a certain patter ```name```
 fn set_fonts(name: &str) -> u8 {
     let name = CString::new(name).unwrap();
-    unsafe { Fl_set_fonts(name.into_raw() as *mut raw::c_char) as u8 }
+    unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
 
 /// Returns the number of fonts available to the application
@@ -390,7 +390,7 @@ pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
     let mut hasher = DefaultHasher::new();
     type_name.hash(&mut hasher);
     let type_hash = hasher.finish();
-    println!("{} {} {}", rnd, type_hash, msg_sz);
+
     let s = Sender {
         data: std::marker::PhantomData,
         id: rnd,
