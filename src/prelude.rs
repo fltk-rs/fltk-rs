@@ -246,6 +246,11 @@ pub unsafe trait WindowExt: GroupExt {
     fn make_resizable(&mut self, val: bool);
     /// Sets the cursor style within the window
     fn set_cursor(&mut self, cursor: CursorStyle);
+    /// Returns whether a window is shown
+    fn shown(&self) -> bool;
+    /// Get the raw system handle of the window
+    /// void pointer to: (Windows: HWND, X11: Xid, MacOS: NSWindow)
+    fn raw_handle(&self) -> *const raw::c_void;
 }
 
 /// Defines the methods implemented by all input and output widgets

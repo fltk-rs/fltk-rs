@@ -2029,6 +2029,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Window_set_cursor(self_: *mut Fl_Window, cursor: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Window_shown(self_: *mut Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_raw_handle(w: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {
@@ -2308,6 +2314,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Double_Window_set_cursor(self_: *mut Fl_Double_Window, cursor: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Double_Window_shown(self_: *mut Fl_Double_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_raw_handle(w: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -2564,6 +2576,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Window_set_cursor(self_: *mut Fl_Menu_Window, cursor: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Menu_Window_shown(self_: *mut Fl_Menu_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_raw_handle(w: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Gl_Window {
@@ -2807,6 +2825,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_cursor(self_: *mut Fl_Gl_Window, cursor: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_shown(self_: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_raw_handle(w: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);

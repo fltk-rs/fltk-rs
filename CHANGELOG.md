@@ -2,8 +2,13 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.4.11] - 2020-05-23
+### Changes
 - Prefix all draw methods with draw_.
 - Add a SharedImage struct.
+- Add shown() and raw_handle() methods to WindowExt trait.
 
 ## [0.4.10] - 2020-05-22
 ### Changes

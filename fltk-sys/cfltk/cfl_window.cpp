@@ -7,6 +7,7 @@
 #include <FL/Fl_RGB_Image.H>
 #include <FL/Fl_Single_Window.H>
 #include <FL/Fl_Window.H>
+#include <FL/platform.H>
 #include <new>
 
 #define WINDOW_DEFINE(widget)                                                  \
@@ -34,7 +35,9 @@
     }                                                                          \
     void widget##_set_cursor(widget *self, int cursor) {                       \
         LOCK(self->cursor((Fl_Cursor)cursor);)                                 \
-    }
+    }                                                                          \
+    int widget##_shown(widget *self) { return self->shown(); }                 \
+    void *widget##_raw_handle(const widget *w) { return (void *)fl_xid_(w); }
 
 WIDGET_DEFINE(Fl_Window)
 

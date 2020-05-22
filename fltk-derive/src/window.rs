@@ -27,6 +27,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let set_cursor = Ident::new(format!("{}_{}", name_str, "set_cursor").as_str(), name.span());
+    let shown = Ident::new(format!("{}_{}", name_str, "shown").as_str(), name.span());
+    let raw_handle = Ident::new(format!("{}_{}", name_str, "raw_handle").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl WindowExt for #name {
@@ -77,6 +79,21 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             fn set_cursor(&mut self, cursor: CursorStyle) {
                 unsafe {
                     #set_cursor(self._inner, cursor as i32)
+                }
+            }
+
+            fn shown(&self) -> bool {
+                unsafe {
+                    match #shown(self._inner) {
+                        0 => false,
+                        _ => true,
+                    }
+                }
+            }
+
+            fn raw_handle(&self) -> *const raw::c_void {
+                unsafe {
+                    #raw_handle(self._inner)
                 }
             }
         }
