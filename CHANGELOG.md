@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Translate gl functions available via fltk.
 
 ## [0.4.11] - 2020-05-23
 ### Changes

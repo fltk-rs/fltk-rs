@@ -1,39 +1,58 @@
-// // This is an example showing basic usage of a GlWindow
+use fltk::{app::*, gl::*, window::*};
 
-// #![allow(non_camel_case_types)]
-// #![allow(dead_code)]
-// #![allow(non_upper_case_globals)]
-//
-// use fltk::{app::*, window::*};
-// mod gl; // For aw gl calls just by running bindgen on the gl.h header
-//
-// pub fn main() {
-//     let app = App::default().set_scheme(AppScheme::Gleam);
-//     let mut wind = GlWindow::new(100, 100, 800, 600, "GlWindow Example");
-//
-//     wind.make_resizable(true);
-//     wind.end();
-//     wind.show();
-//
-//     let w = wind.width() as f32;
-//     let h = wind.height() as f32;
-//
-//     wind.draw(Box::new(move || {
-//         unsafe {
-//             gl::glClear(gl::GL_COLOR_BUFFER_BIT);
-//             gl::glColor3f(1.0, 1.0, 1.0);
-//             gl::glBegin(gl::GL_LINE_STRIP); 
-//             gl::glVertex2f(w, h); 
-//             gl::glVertex2f(-w,-h);
-//             gl::glEnd();
-//             gl::glBegin(gl::GL_LINE_STRIP); 
-//             gl::glVertex2f(w,-h); 
-//             gl::glVertex2f(-w, h); 
-//             gl::glEnd()
-//         }
-//     }));
-//
-//     app.run().unwrap();
-// }
+pub fn main() {
+    let app = App::default().set_scheme(AppScheme::Gleam);
+    let mut wind = GlWindow::new(100, 100, 800, 600, "GlWindow Example");
 
-fn main() {}
+    wind.end();
+    wind.show();
+
+    let w = wind.width() as f32;
+    let h = wind.height() as f32;
+    let rotangle = 0.0;
+
+    wind.draw(Box::new(move || {
+        unsafe {
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            glViewport(0, 0, w as i32, h as i32);
+            gluPerspective(45.0, (w / h).into(), 1.0, 10.0);
+            glTranslatef(0.0, 0.0, -5.0);
+            glMatrixMode(GL_MODELVIEW);
+            glLoadIdentity();
+            glRotatef(rotangle, 1.0, 0.0, 1.0);
+            glRotatef(rotangle, 0.0, 1.0, 0.0);
+            glRotatef(rotangle, 1.0, 1.0, 1.0);
+            glColor3f(1.0, 0.0, 0.0);
+            glBegin(GL_POLYGON);
+            glVertex3f(0.0, 1.0, 0.0);
+            glVertex3f(1.0, -1.0, 1.0);
+            glVertex3f(-1.0, -1.0, 1.0);
+            glEnd();
+            glColor3f(0.0, 1.0, 0.0);
+            glBegin(GL_POLYGON);
+            glVertex3f(0.0, 1.0, 0.0);
+            glVertex3f(0.0, -1.0, -1.0);
+            glVertex3f(1.0, -1.0, 1.0);
+            glEnd();
+            glColor3f(0.0, 0.0, 1.0);
+            glBegin(GL_POLYGON);
+            glVertex3f(0.0, 1.0, 0.0);
+            glVertex3f(-1.0, -1.0, 1.0);
+            glVertex3f(0.0, -1.0, -1.0);
+            glEnd();
+            glColor3f(0.5, 0.5, 0.5);
+            glBegin(GL_POLYGON);
+            glVertex3f(1.0, -1.0, 1.0);
+            glVertex3f(0.0, -1.0, -1.0);
+            glVertex3f(-1.0, -1.0, 1.0);
+            glEnd();
+            glEnable(GL_DEPTH_TEST);
+            glLoadIdentity();
+            glRasterPos2f(-3.0, -2.0);
+        }
+    }));
+
+    app.run().unwrap();
+}
