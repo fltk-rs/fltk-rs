@@ -2887,3 +2887,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Gl_Window_pixel_h(self_: *mut Fl_Gl_Window) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Gl_Window_mode(self_: *const Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_mode(self_: *mut Fl_Gl_Window, mode: ::std::os::raw::c_int);
+}

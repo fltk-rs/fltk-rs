@@ -157,4 +157,18 @@ impl GlWindow {
     pub fn pixel_h(&mut self) -> i32 {
         unsafe { Fl_Gl_Window_pixel_h(self._inner) }
     }
+    
+    /// Get the Mode of the GlWindow
+    pub fn mode(&self) -> Mode {
+        unsafe {
+            mem::transmute(Fl_Gl_Window_mode(self._inner))
+        }
+    }
+
+    /// Set the Mode of the GlWindow
+    pub fn set_mode(&mut self, mode: Mode) {
+        unsafe {
+            Fl_Gl_Window_set_mode(self._inner, mode as i32);
+        }
+    }
 }

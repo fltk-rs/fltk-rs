@@ -121,7 +121,7 @@ impl Font {
         }
         unsafe { std::mem::transmute(idx as i32) }
     }
-    
+
     /// Gets the font by its name, can be queried via the app::get_font_names()
     pub fn by_name(name: &str) -> Font {
         match get_font_index(name) {
@@ -168,7 +168,7 @@ impl Color {
     pub fn from_rgb(r: u8, g: u8, b: u8) -> Color {
         unsafe { std::mem::transmute(Fl_get_color(r, g, b)) }
     }
-    
+
     /// Returns a color from hex or decimal
     pub fn from_u32(val: u32) -> Color {
         let hex = format!("{:06x}", val);
@@ -400,6 +400,24 @@ pub enum LineStyle {
     JoinBevel = 3000,
 }
 
+/// Defines Fl_Mode types
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum Mode {
+    Rgb = 0,
+    Index = 1,
+    Double = 2,
+    Accum = 4,
+    Alpha = 8,
+    Depth = 16,
+    Stencil = 32,
+    Rgb8 = 64,
+    MultiSample = 128,
+    Stereo = 256,
+    FakeSingle = 512, // Fake single buffered windows using double-buffer
+    Opengl3 = 1024,
+}
+
 pub trait WidgetType {
     fn to_int(self) -> i32;
     fn from_i32(val: i32) -> Self;
@@ -454,9 +472,16 @@ impl std::ops::BitOr<Key> for Key {
     }
 }
 
-impl std::ops::BitOr<Key> for LineStyle {
-    type Output = Key;
-    fn bitor(self, rhs: Key) -> Self::Output {
+impl std::ops::BitOr<LineStyle> for LineStyle {
+    type Output = LineStyle;
+    fn bitor(self, rhs: LineStyle) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<Mode> for Mode {
+    type Output = Mode;
+    fn bitor(self, rhs: Mode) -> Self::Output {
         unsafe { std::mem::transmute(self as i32 | rhs as i32) }
     }
 }
