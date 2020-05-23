@@ -2,9 +2,9 @@ use fltk::{app::*, gl::*, window::*};
 
 pub fn main() {
     let app = App::default().set_scheme(AppScheme::Gleam);
-    let mut wind = GlWindow::new(100, 100, 800, 600, "GlWindow Example");
+    let mut wind = GlWindow::new(100, 100, 600, 400, "GlWindow Example");
     wind.set_mode(Mode::Opengl3);
-    
+
     wind.end();
     wind.show();
 
@@ -49,7 +49,6 @@ pub fn main() {
             glVertex3f(0.0, -1.0, -1.0);
             glVertex3f(-1.0, -1.0, 1.0);
             glEnd();
-            glEnable(GL_DEPTH_TEST);
             glLoadIdentity();
             glRasterPos2f(-3.0, -2.0);
         }

@@ -16,4 +16,4 @@ bindgen fltk-sys/cfltk/cfl_draw.h -o fltk-sys/src/draw.rs
 bindgen fltk-sys/cfltk/cfl_table.h -o fltk-sys/src/table.rs
 bindgen fltk-sys/cfltk/cfl_tree.h -o fltk-sys/src/tree.rs
 bindgen fltk-sys/cfltk/cfl.h -o fltk-sys/src/fl.rs
-bindgen --no-layout-tests --no-doc-comments fltk-sys/cfltk/fltk/FL/glu.h -o fltk-sys/src/glu.rs -- -I fltk-sys/cfltk/fltk/ -x c++
+bindgen fltk-sys/cfltk/cfl_gl.h -o fltk-sys/src/glu.rs
