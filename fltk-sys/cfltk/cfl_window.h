@@ -76,6 +76,10 @@ int Fl_Gl_Window_pixel_w(Fl_Gl_Window *self);
 
 int Fl_Gl_Window_pixel_h(Fl_Gl_Window *self);
 
+int Fl_Gl_Window_mode(const Fl_Gl_Window *self);
+
+void Fl_Gl_Window_set_mode(Fl_Gl_Window *self, int mode);
+
 #ifdef __cplusplus
 }
 #endif

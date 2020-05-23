@@ -4,6 +4,12 @@
 ### Changes
 - (None)
 
+## [0.4.12] - 2020-05-24
+### Changes
+- Translate gl functions exposed via fltk.
+- Add mode and set_mode to GlWindow.
+- Prefer platfrom gl header.
+
 ## [0.4.11] - 2020-05-23
 ### Changes
 - Prefix all draw methods with draw_.
