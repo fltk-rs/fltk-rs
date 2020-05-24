@@ -1,4 +1,6 @@
-use fltk::{app, draw::*, frame::*, window::*};
+use fltk::{app, button::*, draw::*, frame::*, window::*};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Gtk);
@@ -8,39 +10,59 @@ fn main() {
     frame.set_color(Color::White);
     frame.set_frame(FrameType::DownBox);
 
-    let mut x = 0;
-    let mut y = 0;
-
     wind.end();
     wind.show();
 
-    frame.handle(Box::new(move |ev| {
+    let offs = Offscreen::new(790, 590).unwrap();
+    offs.begin();
+    set_draw_color(Color::White);
+    draw_rectf(0, 0, 790, 590);
+    offs.end();
+
+    let frame = Rc::from(RefCell::from(frame));
+    let frame_rc = frame.clone();
+    let offs = Rc::from(RefCell::from(offs));
+    let offs_rc = offs.clone();
+
+    frame_rc.borrow_mut().draw(Box::new(move || {
+        if offs_rc.borrow().is_valid() {
+            offs_rc.borrow().copy(5, 5, 790, 590, 0, 0);
+        }
+    }));
+
+    let mut x = 0;
+    let mut y = 0;
+
+    let frame = frame_rc.clone();
+    frame_rc.borrow_mut().handle(Box::new(move |ev| {
         // println!("{:?}", ev);
         set_draw_color(Color::Red);
         set_line_style(LineStyle::Solid, 3);
 
         match ev {
             app::Event::Push => {
+                offs.borrow().begin();
                 let coords = app::event_coords();
                 x = coords.0;
                 y = coords.1;
                 draw_point(x, y);
+                offs.borrow().end();
+                frame.borrow_mut().redraw();
                 true
             }
             app::Event::Drag => {
+                offs.borrow().begin();
                 let coords = app::event_coords();
-                // println!("{:?}", coords);
-                if coords.0 < 5 || coords.0 > 795 || coords.1 < 5 || coords.1 > 595 {
-                    return false;
-                }
                 draw_line(x, y, coords.0, coords.1);
                 x = coords.0;
                 y = coords.1;
+                offs.borrow().end();
+                frame.borrow_mut().redraw();
                 true
             }
             _ => false,
         }
     }));
-    
+
     app.run().unwrap();
 }

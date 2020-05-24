@@ -15,9 +15,11 @@ pub fn main() {
     wind.draw(Box::new(move || draw_triangle(0.0)));
 
     thread::spawn(move || {
-        for i in 0..1000 {
+        let mut i = 0;
+        loop {
             thread::sleep(Duration::from_millis(16));
             // Rotates the triangle at 60 fps
+            i += 1;
             wind.draw(Box::new(move || draw_triangle(i as f32)));
             wind.redraw();
         }
