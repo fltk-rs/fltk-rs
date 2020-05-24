@@ -171,10 +171,11 @@ The following are the features offered by the crate:
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
+- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms
 
 ## Dependencies
 
-Rust version > 1.38. CMake and a C++17 compiler need to be installed and in your PATH for a crossplatform build. 
+Rust version > 1.38. CMake and a C++17 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag. 
 
 - Windows: No dependencies.
 - MacOS: No dependencies.
