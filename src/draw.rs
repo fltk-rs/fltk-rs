@@ -25,6 +25,75 @@ unsafe impl Sync for Offscreen {}
 
 unsafe impl Send for Offscreen {}
 
+impl Offscreen {
+    /// Creates a new offscreen type
+    pub fn new(w: i32, h: i32) -> Option<Offscreen> {
+        unsafe {
+            let x = cfl_create_offscreen(w, h);
+            if x.is_null() {
+                None
+            } else {
+                Some(Offscreen { _inner: x, })
+            }
+        }
+    }
+
+    /// Creates an uninitialized offscreen type
+    pub unsafe fn uninit() -> Offscreen {
+        Offscreen { _inner: std::ptr::null_mut(), }
+    }
+    
+    /// Begins drawing in the offscreen
+    pub fn begin(&self) {
+        unsafe {
+            cfl_begin_offscreen(self._inner)
+        }
+    }
+
+    /// Ends drawing in the offscreen
+    pub fn end(&self) {
+        unsafe {
+            cfl_end_offscreen()
+        }
+    }
+
+    /// Copies the offscreen
+    pub fn copy(&self, x: i32, y: i32, w: i32, h: i32, srcx: i32, srcy: i32) {
+        unsafe {
+            cfl_copy_offscreen(x, y, w, h, self._inner, srcx, srcy)
+        }
+    }
+
+    /// Rescales the offscreen
+    pub fn rescale(&mut self) {
+        unsafe {
+            cfl_rescale_offscreen(self._inner)
+        }
+    }
+
+    /// Checks the validity of the offscreen
+    pub fn is_valid(&self) -> bool {
+        if self._inner.is_null() {
+            false
+        } else {
+            true
+        }
+    }
+
+    /// Performs a shallow copy of the offscreen
+    pub unsafe fn memcpy(&self) -> Offscreen {
+        Offscreen { _inner: self._inner }
+    }
+}
+
+impl Drop for Offscreen {
+    fn drop(&mut self) {
+        unsafe {
+            cfl_delete_offscreen(self._inner)
+        }
+    }
+}
+
 /// Shows a color map
 pub fn show_colormap(old_color: Color) -> Color {
     unsafe { mem::transmute(Fl_show_colormap(old_color as u32)) }
@@ -131,18 +200,21 @@ pub fn pop_clip() {
 }
 
 /// Sets the clip region
-pub fn set_clip_region(r: Region) {
+pub fn set_clip_region(r: &Region) {
     unsafe {
         cfl_set_clip_region(r._inner)
     }
 }
  
 /// Gets the clip region
-pub fn clip_region() -> Region {
+pub fn clip_region() -> Option<Region> {
     unsafe {
         let x = cfl_clip_region();
-        assert!(!x.is_null());
-        Region { _inner: x }
+        if x.is_null() {
+            None
+        } else {
+            Some(Region { _inner: x })
+        }
     }
 }
 
@@ -167,7 +239,8 @@ pub fn restore_clip() {
 }
 
 /// Copies the offscreen
-pub fn copy_offscreen( x: i32, y: i32, w: i32, h: i32, pixmap: Offscreen, srcx: i32, srcy: i32,) {
+#[allow(dead_code)]
+fn copy_offscreen( x: i32, y: i32, w: i32, h: i32, pixmap: &Offscreen, srcx: i32, srcy: i32,) {
     unsafe {
         cfl_copy_offscreen( x, y, w, h, pixmap._inner, srcx, srcy,)
     }
@@ -183,7 +256,8 @@ pub fn create_offscreen( w: i32, h: i32,) -> Offscreen {
 }
 
 /// Begins the offscreen
-pub fn begin_offscreen(b: Offscreen) {
+#[allow(dead_code)]
+fn begin_offscreen(b: &Offscreen) {
     unsafe {
         cfl_begin_offscreen(b._inner)
     }
@@ -195,14 +269,16 @@ pub fn end_offscreen() {
 }
 
 /// Deletes the offscreen
-pub fn delete_offscreen(bitmap: Offscreen) {
+#[allow(dead_code)]
+fn delete_offscreen(bitmap: &mut Offscreen) {
     unsafe {
         cfl_delete_offscreen(bitmap._inner)
     }
 }
 
 /// Rescales the offscreen
-pub fn rescale_offscreen(ctx: Offscreen) {
+#[allow(dead_code)]
+fn rescale_offscreen(ctx: &mut Offscreen) {
     unsafe {
         cfl_rescale_offscreen(ctx._inner)
     }

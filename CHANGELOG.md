@@ -9,6 +9,7 @@
 - Translate gl functions exposed via fltk.
 - Add mode and set_mode to GlWindow.
 - Prefer platfrom gl header.
+- Add support for bundled fltk via the fltk-bundled feature flag.
 
 ## [0.4.11] - 2020-05-23
 ### Changes
