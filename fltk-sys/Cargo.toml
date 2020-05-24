@@ -25,5 +25,6 @@ system-libpng = []
 system-libjpeg = []
 system-zlib = []
 legacy-opengl = []
+fltk-bundled = []
 cpp-testing = [] # for C++ testing
 
