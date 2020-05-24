@@ -1,5 +1,6 @@
 use fltk::{app::*, gl::*, window::*};
-use std::{time::Duration, thread};
+use std::cell::RefCell;
+use std::rc::Rc;
 
 const W: i32 = 600;
 const H: i32 = 400;
@@ -12,35 +13,46 @@ pub fn main() {
     wind.end();
     wind.show();
 
-    wind.draw(Box::new(move || draw_triangle(0.0)));
+    let rotangle = Rc::from(RefCell::from(0.0));
+    let rotangle_rc = rotangle.clone();
 
-    thread::spawn(move || {
-        let mut i = 0;
-        loop {
-            thread::sleep(Duration::from_millis(16));
-            // Rotates the triangle at 60 fps
-            i += 1;
-            wind.draw(Box::new(move || draw_triangle(i as f32)));
-            wind.redraw();
+    wind.draw(Box::new(move || draw_triangle(&rotangle_rc.borrow())));
+
+    let (s, r) = channel::<(i32, i32)>();
+
+    wind.handle(Box::new(move |ev| {
+        match ev {
+            Event::Drag => {
+                s.send(event_coords());
+                true
+            },
+            _ => false,
         }
-    });
+    }));
 
-    app.run().unwrap();
+    while app.wait() {
+        match r.recv() {
+            Some(coords) => { 
+                let rand: f32 = ((coords.0 - W/2) * (coords.1 - H/2) / 360) as f32;
+                *rotangle.borrow_mut() += rand;
+                wind.redraw();
+            },
+            None => (),
+        }
+    }
 }
 
-fn draw_triangle(rotangle: f32) {
+fn draw_triangle(rotangle: &f32) {
     unsafe {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glViewport(0, 0, W, H);
-        gluPerspective(45.0, (W as f32/ H as f32).into(), 1.0, 10.0);
+        gluPerspective(45.0, (W as f32 / H as f32).into(), 1.0, 10.0);
         glTranslatef(0.0, 0.0, -5.0);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        glRotatef(rotangle, 1.0, 0.0, 1.0);
-        glRotatef(rotangle, 0.0, 1.0, 0.0);
-        glRotatef(rotangle, 1.0, 1.0, 1.0);
+        glRotatef(*rotangle, 1.0, 1.0, 0.0);
         glColor3f(1.0, 0.0, 0.0);
         glBegin(GL_POLYGON);
         glVertex3f(0.0, 1.0, 0.0);
@@ -69,3 +81,5 @@ fn draw_triangle(rotangle: f32) {
         glRasterPos2f(-3.0, -2.0);
     }
 }
+
+
