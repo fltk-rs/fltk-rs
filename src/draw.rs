@@ -200,18 +200,21 @@ pub fn pop_clip() {
 }
 
 /// Sets the clip region
-pub fn set_clip_region(r: Region) {
+pub fn set_clip_region(r: &Region) {
     unsafe {
         cfl_set_clip_region(r._inner)
     }
 }
  
 /// Gets the clip region
-pub fn clip_region() -> Region {
+pub fn clip_region() -> Option<Region> {
     unsafe {
         let x = cfl_clip_region();
-        assert!(!x.is_null());
-        Region { _inner: x }
+        if x.is_null() {
+            None
+        } else {
+            Some(Region { _inner: x })
+        }
     }
 }
 
