@@ -226,7 +226,7 @@ fn main() {
         }),
     );
 
-    let mut x = menu.item("File/Quit").unwrap();
+    let mut x = menu.find_item("File/Quit").unwrap();
     x.set_label_color(Color::Red);
 
     let mut editor = editor.clone();

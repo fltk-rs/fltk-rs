@@ -307,7 +307,7 @@ pub unsafe trait InputExt: WidgetExt {
 /// Defines the methods implemented by all menu widgets
 pub unsafe trait MenuExt: WidgetExt {
     /// Get a menu item by name
-    fn item(&self, name: &str) -> Option<crate::menu::MenuItem>;
+    fn find_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
