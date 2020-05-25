@@ -8,7 +8,6 @@ const H: i32 = 400;
 pub fn main() {
     let app = App::default().set_scheme(AppScheme::Gleam);
     let mut wind = GlWindow::new(100, 100, W, H, "Rotate me!");
-    wind.set_mode(Mode::Opengl3);
 
     wind.end();
     wind.show();
