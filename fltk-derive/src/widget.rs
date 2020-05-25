@@ -138,6 +138,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
 
+        impl Clone for #name {
+            fn clone(&self) -> #name {
+                #name { _inner: self._inner }
+            }
+        }
+
         unsafe impl WidgetExt for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
@@ -562,11 +568,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         0 => false,
                         _ => true,
                     }
-                }
-            }
-            unsafe fn memcpy(&self) -> #name {
-                #name {
-                    _inner: self._inner,
                 }
             }
         }

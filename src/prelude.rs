@@ -22,6 +22,7 @@ pub enum FltkErrorKind {
     FailedToSetScheme,
     FailedOperation,
     ResourceNotFound,
+    ImageFormatError,
     TableError,
 }
 
@@ -183,8 +184,6 @@ pub unsafe trait WidgetExt {
     fn top_window(&self) -> Option<Window>;
     /// Checks whether a widget is capable of taking events
     fn takes_events(&self) -> bool;
-    /// Gets a shallow copy of the widget, an escape hatch!
-    unsafe fn memcpy(&self) -> Self;
 }
 
 /// Defines the methods implemented by all button widgets

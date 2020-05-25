@@ -10,6 +10,7 @@ use std::ops::{Deref, DerefMut};
 use std::rc::Rc;
 use std::{fs, path};
 
+#[derive(Debug, Clone)]
 pub struct Editor {
     pub editor: TextEditor,
     filename: String,
@@ -106,30 +107,27 @@ fn main() {
 
     let mut saved = false;
 
-    let editor_rc = Rc::from(RefCell::from(editor));
-
-    let editor_cloned = editor_rc.clone();
-    editor_cloned
-        .borrow_mut()
+    let mut editor_c = editor.clone();
+    editor_c
         .editor
         .set_callback(Box::new(move || saved = false));
 
-    let editor_cloned = editor_rc.clone();
+    let editor_c = editor.clone();
     menu.add(
         "File/New...",
         Shortcut::Ctrl + 'n',
         MenuFlag::Normal,
         Box::new(move || {
-            if editor_cloned.borrow().buffer().text() != "" {
+            if editor_c.buffer().text() != "" {
                 let x = choice("File unsaved, Do you wish to continue?", "Yes", "No!", "");
                 if x == 0 {
-                    editor_cloned.borrow().buffer().set_text("");
+                    editor_c.buffer().set_text("");
                 }
             }
         }),
     );
 
-    let editor_cloned = editor_rc.clone();
+    let mut editor_c = editor.clone();
     menu.add(
         "File/Open...",
         Shortcut::Ctrl + 'o',
@@ -139,15 +137,14 @@ fn main() {
             dlg.set_option(FileDialogOptions::NoOptions);
             dlg.set_filter("*.txt");
             dlg.show();
-            editor_cloned
-                .borrow_mut()
+            editor_c
                 .set_filename(&dlg.filename().to_string_lossy().to_string());
-            if editor_cloned.borrow().filename.is_empty() {
+            if editor_c.filename.is_empty() {
                 return;
             }
-            match path::Path::new(&editor_cloned.borrow().filename()).exists() {
-                true => editor_cloned.borrow().buffer().set_text(
-                    fs::read_to_string(&editor_cloned.borrow().filename())
+            match path::Path::new(&editor_c.filename()).exists() {
+                true => editor_c.buffer().set_text(
+                    fs::read_to_string(&editor_c.filename())
                         .unwrap()
                         .as_str(),
                 ),
@@ -156,23 +153,23 @@ fn main() {
         }),
     );
 
-    let editor_cloned = editor_rc.clone();
+    let mut editor_c = editor.clone();
     menu.add(
         "File/Save",
         Shortcut::Ctrl + 's',
         MenuFlag::Normal,
-        Box::new(move || editor_cloned.borrow_mut().save_file(&mut saved)),
+        Box::new(move || editor_c.save_file(&mut saved)),
     );
 
-    let editor_cloned = editor_rc.clone();
+    let mut editor_c = editor.clone();
     menu.add(
         "File/Save as...",
         Shortcut::None,
         MenuFlag::MenuDivider,
-        Box::new(move || editor_cloned.borrow_mut().save_file(&mut saved)),
+        Box::new(move || editor_c.save_file(&mut saved)),
     );
 
-    let editor_cloned = editor_rc.clone();
+    let mut editor_c = editor.clone();
     menu.add(
         "File/Quit",
         Shortcut::None,
@@ -181,7 +178,7 @@ fn main() {
             if saved == false {
                 let x = choice("Would you like to save your work?", "Yes", "No", "");
                 if x == 0 {
-                    editor_cloned.borrow_mut().save_file(&mut saved);
+                    editor_c.save_file(&mut saved);
                     std::process::exit(0);
                 } else {
                     std::process::exit(0);
@@ -192,30 +189,30 @@ fn main() {
         }),
     );
 
-    let editor_cloned = editor_rc.clone();
+    let editor_c = editor.clone();
     menu.add(
         "Edit/Cut",
         Shortcut::Ctrl + 'x',
         MenuFlag::Normal,
-        Box::new(move || editor_cloned.borrow().cut()),
+        Box::new(move || editor_c.cut()),
     );
 
-    let editor_cloned = editor_rc.clone();
+    let editor_c = editor.clone();
     menu.add(
         "Edit/Copy",
         Shortcut::Ctrl + 'c',
         MenuFlag::Normal,
         Box::new(move || {
-            editor_cloned.borrow().copy();
+            editor_c.copy();
         }),
     );
 
-    let editor_cloned = editor_rc.clone();
+    let editor_c = editor.clone();
     menu.add(
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
-        Box::new(move || editor_cloned.borrow().paste()),
+        Box::new(move || editor_c.paste()),
     );
 
     menu.add(
@@ -232,13 +229,13 @@ fn main() {
     let mut x = menu.item("File/Quit").unwrap();
     x.set_label_color(Color::Red);
 
-    let editor_cloned = editor_rc.clone();
+    let mut editor = editor.clone();
     wind.set_callback(Box::new(move || {
         if fltk::app::event() == fltk::app::Event::Close {
             if saved == false {
                 let x = choice("Would you like to save your work?", "Yes", "No", "");
                 if x == 0 {
-                    editor_cloned.borrow_mut().save_file(&mut saved);
+                    editor.save_file(&mut saved);
                     std::process::exit(0);
                 } else {
                     std::process::exit(0);
@@ -248,6 +245,6 @@ fn main() {
             }
         }
     }));
-    
+
     app.run().expect("Couldn't run editor");
 }

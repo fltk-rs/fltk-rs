@@ -643,16 +643,16 @@ pub fn reset_spot() {
 
 
 /// Captures part of the window and returns raw data
-pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Option<RgbImage> {
+pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     let cp = win.width() as u32 * win.height() as u32 * 3;
     win.show();
     unsafe {
         let x = cfl_read_image(std::ptr::null_mut(), 0, 0, win.width(), win.height(), 0);
         if x.is_null() {
-            None
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
-            Some(RgbImage::new(&x.to_vec(), win.width(), win.height(), 3))
+            Ok(RgbImage::new(&x.to_vec(), win.width(), win.height(), 3)?)
         }
     }
 }

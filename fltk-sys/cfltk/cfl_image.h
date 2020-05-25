@@ -14,7 +14,8 @@ extern "C" {
     const char *const *image##_data(image *self);                              \
     image *image##_copy(image *self);                                          \
     void image##_scale(image *self, int width, int height, int proportional,   \
-                       int can_expand);
+                       int can_expand);                                        \
+    int image##_fail(image *self);
 
 IMAGE_DECLARE(Fl_Image)
 
@@ -53,11 +54,13 @@ IMAGE_DECLARE(Fl_RGB_Image)
 Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H,
                                int depth);
 
-IMAGE_DECLARE(Fl_Shared_Image)   
+IMAGE_DECLARE(Fl_Shared_Image)
 
 Fl_Shared_Image *Fl_Shared_Image_get(const char *name, int W, int H);
 
 Fl_Shared_Image *Fl_Shared_Image_from_rgb(Fl_RGB_Image *rgb, int own_it);
+
+int Fl_Shared_Image_fail(Fl_Shared_Image *self);
 
 void Fl_register_images(void);
 
