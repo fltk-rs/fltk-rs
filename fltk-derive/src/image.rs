@@ -95,6 +95,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     #scale(self._inner, width, height, proportional as i32, can_expand as i32)
                 }
             }
+
         }
     };
     gen.into()

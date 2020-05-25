@@ -46,6 +46,11 @@ impl GlContext {
     pub unsafe fn from_raw(ptr: *mut raw::c_void) -> GlContext {
         GlContext { _inner: ptr, }
     }
+
+    /// Returns the underlying pointer
+    pub fn into_raw(self) -> *mut raw::c_void {
+        self._inner
+    }
 }
 
 /// Creates a OpenGL window widget

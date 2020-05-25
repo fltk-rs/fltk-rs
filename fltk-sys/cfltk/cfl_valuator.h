@@ -67,6 +67,30 @@ WIDGET_DECLARE(Fl_Value_Output)
 
 VALUATOR_DECLARE(Fl_Value_Output)
 
+WIDGET_DECLARE(Fl_Fill_Slider)
+
+VALUATOR_DECLARE(Fl_Fill_Slider)
+
+WIDGET_DECLARE(Fl_Fill_Dial)
+
+VALUATOR_DECLARE(Fl_Fill_Dial)
+
+WIDGET_DECLARE(Fl_Hor_Slider)
+
+VALUATOR_DECLARE(Fl_Hor_Slider)
+
+WIDGET_DECLARE(Fl_Hor_Fill_Slider)
+
+VALUATOR_DECLARE(Fl_Hor_Fill_Slider)
+
+WIDGET_DECLARE(Fl_Hor_Nice_Slider)
+
+VALUATOR_DECLARE(Fl_Hor_Nice_Slider)
+
+WIDGET_DECLARE(Fl_Hor_Value_Slider)
+
+VALUATOR_DECLARE(Fl_Hor_Value_Slider)
+
 #ifdef __cplusplus
 }
 #endif

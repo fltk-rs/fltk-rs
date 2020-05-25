@@ -150,7 +150,9 @@ impl Tree {
 
     /// Inserts a TreeItem above another tree item
     pub fn insert_above(&mut self, above: TreeItem, name: &str) -> Option<TreeItem> {
-        assert!(!above._inner.is_null());
+        if above._inner.is_null() {
+            return None;
+        }
         let name = CString::new(name).unwrap();
         unsafe {
             let x = Fl_Tree_insert_above(
@@ -164,7 +166,9 @@ impl Tree {
 
     /// Inserts a TreeItem at a position ```pos```
     pub fn insert(&mut self, item: TreeItem, name: &str, pos: u32) -> Option<TreeItem> {
-        assert!(!item._inner.is_null());
+        if item._inner.is_null() {
+            return None;
+        }
         debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         let name = CString::new(name).unwrap();
         unsafe {
@@ -180,7 +184,9 @@ impl Tree {
 
     /// Removes a TreeItem
     pub fn remove(&mut self, item: TreeItem) -> Result<(), FltkError> {
-        assert!(!item._inner.is_null());
+        if item._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_remove(self._inner, item._inner) {
                 0 => Ok(()),
@@ -235,13 +241,17 @@ impl Tree {
 
     /// Gets the next tree item
     pub fn next(&mut self, item: TreeItem) -> Option<TreeItem> {
-        assert!(!item._inner.is_null());
+        if item._inner.is_null() {
+            return None;
+        }
         unsafe { TreeItem::from_raw(Fl_Tree_next(self._inner, item._inner)) }
     }
 
     /// Gets the previous tree item
     pub fn prev(&mut self, item: TreeItem) -> Option<TreeItem> {
-        assert!(!item._inner.is_null());
+        if item._inner.is_null() {
+            return None;
+        }
         unsafe { TreeItem::from_raw(Fl_Tree_prev(self._inner, item._inner)) }
     }
 
@@ -257,7 +267,9 @@ impl Tree {
 
     /// Gets the next visible tree item
     pub fn next_visible_item(&mut self, start: TreeItem, direction_key: Key) -> Option<TreeItem> {
-        assert!(!start._inner.is_null());
+        if start._inner.is_null() {
+            return None;
+        }
         unsafe {
             TreeItem::from_raw(Fl_Tree_next_visible_item(
                 self._inner,
@@ -279,7 +291,9 @@ impl Tree {
 
     /// Gets the next tree item, direction_key is by default Key::Down
     pub fn next_item(&mut self, item: TreeItem, direction_key: Key, visible: bool) -> Option<TreeItem> {
-        assert!(!item._inner.is_null());
+        if item._inner.is_null() {
+            return None;
+        }
         unsafe {
             TreeItem::from_raw(Fl_Tree_next_item(
                 self._inner,
@@ -292,7 +306,9 @@ impl Tree {
 
     /// Gets the next selected tree item, direction_key is by default Key::Down
     pub fn next_selected_item(&mut self, item: TreeItem, direction_key: Key) -> Option<TreeItem> {
-        assert!(!item._inner.is_null());
+        if item._inner.is_null() {
+            return None;
+        }
         unsafe {
             TreeItem::from_raw(Fl_Tree_next_selected_item(
                 self._inner,
@@ -428,7 +444,9 @@ impl Tree {
 
     /// Deselect all items
     pub fn deselect_all(&mut self, item: TreeItem, do_callback: bool) -> Result<(), FltkError> {
-        assert!(!item._inner.is_null());
+        if item._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_deselect_all(self._inner, item._inner, do_callback as i32) {
                 0 => Ok(()),
@@ -439,7 +457,9 @@ impl Tree {
 
     /// Select only the specified item, deselecting all others that might be selected.
     pub fn select_only(&mut self, selected_item: TreeItem, do_callback: bool) -> Result<(), FltkError> {
-        assert!(!selected_item._inner.is_null());
+        if selected_item._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_select_only(self._inner, selected_item._inner, do_callback as i32) {
                 0 => Ok(()),
@@ -450,7 +470,9 @@ impl Tree {
 
     /// Select all items
     pub fn select_all(&mut self, item: TreeItem, do_callback: bool) -> Result<(), FltkError> {
-        assert!(!item._inner.is_null());
+        if item._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_select_all(self._inner, item._inner, do_callback as i32) {
                 0 => Ok(()),
@@ -468,8 +490,9 @@ impl Tree {
         val: TreeItemSelect,
         visible: bool,
     ) -> Result<(), FltkError> {
-        assert!(!from._inner.is_null());
-        assert!(!to._inner.is_null());
+        if from._inner.is_null() || to._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_extend_selection_dir(
                 self._inner,
@@ -493,8 +516,9 @@ impl Tree {
         val: TreeItemSelect,
         visible: bool,
     ) -> Result<(), FltkError> {
-        assert!(!from._inner.is_null());
-        assert!(!to._inner.is_null());
+        if from._inner.is_null() || to._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_extend_selection(self._inner, from._inner, to._inner, val as i32, visible as i32)
             {
@@ -1123,7 +1147,9 @@ impl TreeItem {
 
     /// Gets the child item at idx position
     pub fn child(&self, idx: u32) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return None;
+        }
         debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { TreeItem::from_raw(Fl_Tree_Item_child(self._inner, idx as i32) as *mut Fl_Tree_Item) }
     }
@@ -1141,7 +1167,9 @@ impl TreeItem {
 
     /// Find a child using its name, returns index result
     pub fn find_child(&mut self, name: &str) -> Result<u32, FltkError> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         let name = CString::new(name).unwrap();
         unsafe {
             let x = Fl_Tree_Item_find_child(self._inner, name.as_ptr());
@@ -1155,7 +1183,9 @@ impl TreeItem {
 
     /// Remove child using its name
     pub fn remove_child(&mut self, new_label: &str) -> Result<(), FltkError> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         let new_label = CString::new(new_label).unwrap();
         unsafe {
             match Fl_Tree_Item_remove_child(self._inner, new_label.as_ptr()) {
@@ -1173,7 +1203,9 @@ impl TreeItem {
 
     /// Swap children a and b
     pub fn swap_children(&mut self, a: TreeItem, b: TreeItem) -> Result<(), FltkError> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_Item_swap_children(self._inner, a._inner, b._inner) {
                 0 => Ok(()),
@@ -1184,7 +1216,9 @@ impl TreeItem {
 
     /// Find child by name, returns option of the item
     pub fn find_child_item(&self, name: &str) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return None;
+        }
         let name = CString::new(name).unwrap();
         unsafe {
             TreeItem::from_raw(
@@ -1195,16 +1229,17 @@ impl TreeItem {
 
     /// Replace a tree item
     pub fn replace(&mut self, new_item: TreeItem) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
-        assert!(!new_item._inner.is_null());
+        if self._inner.is_null() || new_item._inner.is_null() {
+            return None;
+        }
         unsafe { TreeItem::from_raw(Fl_Tree_Item_replace(self._inner, new_item._inner)) }
     }
 
     /// Replace a child
     pub fn replace_child(&mut self, old_item: TreeItem, new_item: TreeItem) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
-        assert!(!old_item._inner.is_null());
-        assert!(!new_item._inner.is_null());
+        if self._inner.is_null() || new_item._inner.is_null() || old_item._inner.is_null() {
+            return None;
+        }
         unsafe {
             TreeItem::from_raw(Fl_Tree_Item_replace_child(
                 self._inner,
@@ -1216,15 +1251,18 @@ impl TreeItem {
 
     /// Deparent a child by index
     pub fn deparent(&mut self, index: u32) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return None;
+        }
         debug_assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe { TreeItem::from_raw(Fl_Tree_Item_deparent(self._inner, index as i32)) }
     }
 
     /// Reparent a child by index
     pub fn reparent(&mut self, new_child: TreeItem, index: u32) -> Result<(), FltkError> {
-        assert!(!self._inner.is_null());
-        assert!(!new_child._inner.is_null());
+        if self._inner.is_null() || new_child._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         debug_assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe {
             match Fl_Tree_Item_reparent(self._inner, new_child._inner, index as i32) {
@@ -1236,7 +1274,9 @@ impl TreeItem {
 
     /// Move item 
     pub fn move_item(&mut self, to: u32, from: u32) -> Result<(), FltkError> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         debug_assert!(to <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         debug_assert!(from <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe {
@@ -1249,7 +1289,9 @@ impl TreeItem {
 
     /// Move item above another item
     pub fn move_above(&mut self, item: TreeItem) -> Result<(), FltkError> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_Item_move_above(self._inner, item._inner) {
                 0 => Ok(()),
@@ -1260,7 +1302,9 @@ impl TreeItem {
 
     /// Move item below another item
     pub fn move_below(&mut self, item: TreeItem) -> Result<(), FltkError> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() || item._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_Item_move_below(self._inner, item._inner) {
                 0 => Ok(()),
@@ -1271,7 +1315,9 @@ impl TreeItem {
 
     /// Move item into another item
     pub fn move_into(&mut self, item: TreeItem, pos: u32) -> Result<(), FltkError> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() || item._inner.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
         unsafe {
             match Fl_Tree_Item_move_into(self._inner, item._inner, pos as i32) {
@@ -1289,25 +1335,33 @@ impl TreeItem {
 
     /// Gets the previous item
     pub fn prev(&mut self) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return None;
+        }
         unsafe { TreeItem::from_raw(Fl_Tree_Item_prev(self._inner)) }
     }
 
     /// Gets the next item
     pub fn next(&mut self) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return None;
+        }
         unsafe { TreeItem::from_raw(Fl_Tree_Item_next(self._inner)) }
     }
 
     /// Gets the next sibling
     pub fn next_sibling(&mut self) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return None;
+        }
         unsafe { TreeItem::from_raw(Fl_Tree_Item_next_sibling(self._inner)) }
     }
 
     /// Gets the previous sibling
     pub fn prev_sibling(&mut self) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return None;
+        }
         unsafe { TreeItem::from_raw(Fl_Tree_Item_prev_sibling(self._inner)) }
     }
 
@@ -1320,7 +1374,9 @@ impl TreeItem {
 
     /// Return the parent of the item
     pub fn parent(&self) -> Option<TreeItem> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return None;
+        }
         unsafe { TreeItem::from_raw(Fl_Tree_Item_parent(self._inner) as *mut Fl_Tree_Item) }
     }
 
@@ -1332,7 +1388,9 @@ impl TreeItem {
 
     /// Return the tree of the item
     pub fn tree(&self) -> Option<Tree> {
-        assert!(!self._inner.is_null());
+        if self._inner.is_null() {
+            return None;
+        }
         unsafe { Tree::from_raw(Fl_Tree_Item_tree(self._inner) as *mut Fl_Tree) }
     }
 
@@ -1542,9 +1600,9 @@ impl TreeItemArray {
     }
 
     /// Gets the item at idx
-    fn at(&self, idx: u32) -> TreeItem {
+    fn at(&self, idx: u32) -> Option<TreeItem> {
         debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-        unsafe { TreeItem::from_raw(Fl_Tree_Item_Array_at(self._inner, idx as i32)).unwrap() }
+        unsafe { TreeItem::from_raw(Fl_Tree_Item_Array_at(self._inner, idx as i32)) }
     }
 
     /// Transforms the TreeItemArray into a vector
@@ -1555,7 +1613,11 @@ impl TreeItemArray {
             None
         } else {
             for i in 0..c {
-                v.push(self.at(i));
+                let val = self.at(i);
+                if val.is_none() {
+                    return None;
+                }
+                v.push(val.unwrap());
             }
             Some(v)
         }

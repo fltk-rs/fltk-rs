@@ -570,6 +570,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
+
+            fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
+                self.set_callback(Box::new(move || sender.send(msg)))
+            }
         }
     };
     gen.into()

@@ -2824,3 +2824,1594 @@ extern "C" {
         arg3: ::std::os::raw::c_int,
     ) -> f64;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Fill_Slider {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Fill_Slider;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_x(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_y(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_width(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_height(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_label(arg1: *mut Fl_Fill_Slider) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_label(
+        arg1: *mut Fl_Fill_Slider,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_redraw(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_show(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_hide(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_activate(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_deactivate(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_redraw_label(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_resize(
+        arg1: *mut Fl_Fill_Slider,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_tooltip(arg1: *mut Fl_Fill_Slider) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_tooltip(
+        arg1: *mut Fl_Fill_Slider,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_get_type(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_type(arg1: *mut Fl_Fill_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_color(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_color(arg1: *mut Fl_Fill_Slider, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_label_color(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_label_color(arg1: *mut Fl_Fill_Slider, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_label_font(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_label_font(arg1: *mut Fl_Fill_Slider, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_label_size(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_label_size(arg1: *mut Fl_Fill_Slider, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_label_type(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_label_type(arg1: *mut Fl_Fill_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_box(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_box(arg1: *mut Fl_Fill_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_changed(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_changed(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_clear_changed(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_align(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_align(arg1: *mut Fl_Fill_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_delete(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_image(arg1: *mut Fl_Fill_Slider, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_image_with_size(
+        arg1: *mut Fl_Fill_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_handler(
+        self_: *mut Fl_Fill_Slider,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_draw(
+        self_: *mut Fl_Fill_Slider,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_trigger(arg1: *mut Fl_Fill_Slider, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_image(arg1: *const Fl_Fill_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_parent(self_: *const Fl_Fill_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_selection_color(arg1: *mut Fl_Fill_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_selection_color(
+        arg1: *mut Fl_Fill_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_do_callback(arg1: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_inside(
+        self_: *const Fl_Fill_Slider,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_window(arg1: *const Fl_Fill_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_top_window(arg1: *const Fl_Fill_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_takes_events(arg1: *const Fl_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_bounds(arg1: *mut Fl_Fill_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_minimum(arg1: *mut Fl_Fill_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_minimum(arg1: *mut Fl_Fill_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_maximum(arg1: *mut Fl_Fill_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_maximum(arg1: *mut Fl_Fill_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_range(arg1: *mut Fl_Fill_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_step(arg1: *mut Fl_Fill_Slider, a: f64, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_step(arg1: *mut Fl_Fill_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_precision(arg1: *mut Fl_Fill_Slider, digits: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_value(arg1: *mut Fl_Fill_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_value(arg1: *mut Fl_Fill_Slider, arg2: f64) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_format(
+        arg1: *mut Fl_Fill_Slider,
+        arg2: *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_round(arg1: *mut Fl_Fill_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_clamp(arg1: *mut Fl_Fill_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_increment(
+        arg1: *mut Fl_Fill_Slider,
+        arg2: f64,
+        arg3: ::std::os::raw::c_int,
+    ) -> f64;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Fill_Dial {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Fill_Dial;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_x(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_y(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_width(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_height(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_label(arg1: *mut Fl_Fill_Dial) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_label(arg1: *mut Fl_Fill_Dial, title: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_redraw(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_show(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_hide(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_activate(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_deactivate(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_redraw_label(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_resize(
+        arg1: *mut Fl_Fill_Dial,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_tooltip(arg1: *mut Fl_Fill_Dial) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_tooltip(arg1: *mut Fl_Fill_Dial, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_get_type(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_type(arg1: *mut Fl_Fill_Dial, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_color(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_color(arg1: *mut Fl_Fill_Dial, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_label_color(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_label_color(arg1: *mut Fl_Fill_Dial, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_label_font(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_label_font(arg1: *mut Fl_Fill_Dial, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_label_size(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_label_size(arg1: *mut Fl_Fill_Dial, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_label_type(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_label_type(arg1: *mut Fl_Fill_Dial, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_box(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_box(arg1: *mut Fl_Fill_Dial, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_changed(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_changed(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_clear_changed(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_align(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_align(arg1: *mut Fl_Fill_Dial, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_delete(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_image(arg1: *mut Fl_Fill_Dial, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_image_with_size(
+        arg1: *mut Fl_Fill_Dial,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_handler(
+        self_: *mut Fl_Fill_Dial,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_draw(
+        self_: *mut Fl_Fill_Dial,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_trigger(arg1: *mut Fl_Fill_Dial, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_image(arg1: *const Fl_Fill_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_parent(self_: *const Fl_Fill_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_selection_color(arg1: *mut Fl_Fill_Dial) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_selection_color(arg1: *mut Fl_Fill_Dial, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_do_callback(arg1: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_inside(
+        self_: *const Fl_Fill_Dial,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_window(arg1: *const Fl_Fill_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_top_window(arg1: *const Fl_Fill_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_takes_events(arg1: *const Fl_Fill_Dial) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_bounds(arg1: *mut Fl_Fill_Dial, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_minimum(arg1: *mut Fl_Fill_Dial) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_minimum(arg1: *mut Fl_Fill_Dial, a: f64);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_maximum(arg1: *mut Fl_Fill_Dial) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_maximum(arg1: *mut Fl_Fill_Dial, a: f64);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_range(arg1: *mut Fl_Fill_Dial, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_step(arg1: *mut Fl_Fill_Dial, a: f64, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_step(arg1: *mut Fl_Fill_Dial) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_precision(arg1: *mut Fl_Fill_Dial, digits: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_value(arg1: *mut Fl_Fill_Dial) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_value(arg1: *mut Fl_Fill_Dial, arg2: f64) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_format(
+        arg1: *mut Fl_Fill_Dial,
+        arg2: *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_round(arg1: *mut Fl_Fill_Dial, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_clamp(arg1: *mut Fl_Fill_Dial, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_increment(
+        arg1: *mut Fl_Fill_Dial,
+        arg2: f64,
+        arg3: ::std::os::raw::c_int,
+    ) -> f64;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Hor_Slider {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Hor_Slider;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_x(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_y(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_width(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_height(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_label(arg1: *mut Fl_Hor_Slider) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_label(arg1: *mut Fl_Hor_Slider, title: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_redraw(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_show(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_hide(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_activate(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_deactivate(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_redraw_label(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_resize(
+        arg1: *mut Fl_Hor_Slider,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_tooltip(arg1: *mut Fl_Hor_Slider) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_tooltip(arg1: *mut Fl_Hor_Slider, txt: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_get_type(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_type(arg1: *mut Fl_Hor_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_color(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_color(arg1: *mut Fl_Hor_Slider, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_label_color(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_label_color(arg1: *mut Fl_Hor_Slider, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_label_font(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_label_font(arg1: *mut Fl_Hor_Slider, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_label_size(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_label_size(arg1: *mut Fl_Hor_Slider, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_label_type(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_label_type(arg1: *mut Fl_Hor_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_box(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_box(arg1: *mut Fl_Hor_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_changed(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_changed(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_clear_changed(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_align(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_align(arg1: *mut Fl_Hor_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_delete(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_image(arg1: *mut Fl_Hor_Slider, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_image_with_size(
+        arg1: *mut Fl_Hor_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_handler(
+        self_: *mut Fl_Hor_Slider,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_draw(
+        self_: *mut Fl_Hor_Slider,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_trigger(arg1: *mut Fl_Hor_Slider, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_image(arg1: *const Fl_Hor_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_parent(self_: *const Fl_Hor_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_selection_color(arg1: *mut Fl_Hor_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_selection_color(
+        arg1: *mut Fl_Hor_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_do_callback(arg1: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_inside(
+        self_: *const Fl_Hor_Slider,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_window(arg1: *const Fl_Hor_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_top_window(arg1: *const Fl_Hor_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_takes_events(arg1: *const Fl_Hor_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_bounds(arg1: *mut Fl_Hor_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_minimum(arg1: *mut Fl_Hor_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_minimum(arg1: *mut Fl_Hor_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_maximum(arg1: *mut Fl_Hor_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_maximum(arg1: *mut Fl_Hor_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_range(arg1: *mut Fl_Hor_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_step(arg1: *mut Fl_Hor_Slider, a: f64, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_step(arg1: *mut Fl_Hor_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_precision(arg1: *mut Fl_Hor_Slider, digits: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_value(arg1: *mut Fl_Hor_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_value(arg1: *mut Fl_Hor_Slider, arg2: f64) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_format(
+        arg1: *mut Fl_Hor_Slider,
+        arg2: *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_round(arg1: *mut Fl_Hor_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_clamp(arg1: *mut Fl_Hor_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_increment(
+        arg1: *mut Fl_Hor_Slider,
+        arg2: f64,
+        arg3: ::std::os::raw::c_int,
+    ) -> f64;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Hor_Fill_Slider {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Hor_Fill_Slider;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_x(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_y(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_width(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_height(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_label(arg1: *mut Fl_Hor_Fill_Slider)
+        -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_label(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_redraw(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_show(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_hide(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_activate(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_deactivate(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_redraw_label(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_resize(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_tooltip(
+        arg1: *mut Fl_Hor_Fill_Slider,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_tooltip(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_get_type(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_type(arg1: *mut Fl_Hor_Fill_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_color(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_color(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_label_color(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_label_color(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_label_font(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_label_font(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        font: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_label_size(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_label_size(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_label_type(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_label_type(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_box(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_box(arg1: *mut Fl_Hor_Fill_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_changed(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_changed(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_clear_changed(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_align(arg1: *mut Fl_Hor_Fill_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_align(arg1: *mut Fl_Hor_Fill_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_delete(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_image(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_image_with_size(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_handler(
+        self_: *mut Fl_Hor_Fill_Slider,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_draw(
+        self_: *mut Fl_Hor_Fill_Slider,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_trigger(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_image(arg1: *const Fl_Hor_Fill_Slider)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_parent(
+        self_: *const Fl_Hor_Fill_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_selection_color(
+        arg1: *mut Fl_Hor_Fill_Slider,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_selection_color(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_do_callback(arg1: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_inside(
+        self_: *const Fl_Hor_Fill_Slider,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_window(
+        arg1: *const Fl_Hor_Fill_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_top_window(
+        arg1: *const Fl_Hor_Fill_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_takes_events(
+        arg1: *const Fl_Hor_Fill_Slider,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_bounds(arg1: *mut Fl_Hor_Fill_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_minimum(arg1: *mut Fl_Hor_Fill_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_minimum(arg1: *mut Fl_Hor_Fill_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_maximum(arg1: *mut Fl_Hor_Fill_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_maximum(arg1: *mut Fl_Hor_Fill_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_range(arg1: *mut Fl_Hor_Fill_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_step(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        a: f64,
+        b: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_step(arg1: *mut Fl_Hor_Fill_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_precision(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        digits: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_value(arg1: *mut Fl_Hor_Fill_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_value(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        arg2: f64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_format(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        arg2: *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_round(arg1: *mut Fl_Hor_Fill_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_clamp(arg1: *mut Fl_Hor_Fill_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_increment(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        arg2: f64,
+        arg3: ::std::os::raw::c_int,
+    ) -> f64;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Hor_Nice_Slider {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Hor_Nice_Slider;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_x(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_y(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_width(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_height(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_label(arg1: *mut Fl_Hor_Nice_Slider)
+        -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_label(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_redraw(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_show(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_hide(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_activate(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_deactivate(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_redraw_label(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_resize(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_tooltip(
+        arg1: *mut Fl_Hor_Nice_Slider,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_tooltip(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_get_type(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_type(arg1: *mut Fl_Hor_Nice_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_color(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_color(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_label_color(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_label_color(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_label_font(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_label_font(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        font: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_label_size(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_label_size(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_label_type(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_label_type(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_box(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_box(arg1: *mut Fl_Hor_Nice_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_changed(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_changed(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_clear_changed(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_align(arg1: *mut Fl_Hor_Nice_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_align(arg1: *mut Fl_Hor_Nice_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_delete(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_image(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_image_with_size(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_handler(
+        self_: *mut Fl_Hor_Nice_Slider,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_draw(
+        self_: *mut Fl_Hor_Nice_Slider,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_trigger(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_image(arg1: *const Fl_Hor_Nice_Slider)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_parent(
+        self_: *const Fl_Hor_Nice_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_selection_color(
+        arg1: *mut Fl_Hor_Nice_Slider,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_selection_color(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_do_callback(arg1: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_inside(
+        self_: *const Fl_Hor_Nice_Slider,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_window(
+        arg1: *const Fl_Hor_Nice_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_top_window(
+        arg1: *const Fl_Hor_Nice_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_takes_events(
+        arg1: *const Fl_Hor_Nice_Slider,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_bounds(arg1: *mut Fl_Hor_Nice_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_minimum(arg1: *mut Fl_Hor_Nice_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_minimum(arg1: *mut Fl_Hor_Nice_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_maximum(arg1: *mut Fl_Hor_Nice_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_maximum(arg1: *mut Fl_Hor_Nice_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_range(arg1: *mut Fl_Hor_Nice_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_step(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        a: f64,
+        b: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_step(arg1: *mut Fl_Hor_Nice_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_precision(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        digits: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_value(arg1: *mut Fl_Hor_Nice_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_value(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        arg2: f64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_format(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        arg2: *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_round(arg1: *mut Fl_Hor_Nice_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_clamp(arg1: *mut Fl_Hor_Nice_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_increment(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        arg2: f64,
+        arg3: ::std::os::raw::c_int,
+    ) -> f64;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Hor_Value_Slider {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Hor_Value_Slider;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_x(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_y(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_width(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_height(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_label(
+        arg1: *mut Fl_Hor_Value_Slider,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_label(
+        arg1: *mut Fl_Hor_Value_Slider,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_redraw(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_show(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_hide(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_activate(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_deactivate(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_redraw_label(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_resize(
+        arg1: *mut Fl_Hor_Value_Slider,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_tooltip(
+        arg1: *mut Fl_Hor_Value_Slider,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_tooltip(
+        arg1: *mut Fl_Hor_Value_Slider,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_get_type(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_type(arg1: *mut Fl_Hor_Value_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_color(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_color(
+        arg1: *mut Fl_Hor_Value_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_label_color(
+        arg1: *mut Fl_Hor_Value_Slider,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_label_color(
+        arg1: *mut Fl_Hor_Value_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_label_font(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_label_font(
+        arg1: *mut Fl_Hor_Value_Slider,
+        font: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_label_size(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_label_size(
+        arg1: *mut Fl_Hor_Value_Slider,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_label_type(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_label_type(
+        arg1: *mut Fl_Hor_Value_Slider,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_box(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_box(arg1: *mut Fl_Hor_Value_Slider, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_changed(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_changed(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_clear_changed(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_align(arg1: *mut Fl_Hor_Value_Slider) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_align(
+        arg1: *mut Fl_Hor_Value_Slider,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_delete(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_image(
+        arg1: *mut Fl_Hor_Value_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_image_with_size(
+        arg1: *mut Fl_Hor_Value_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+        arg3: ::std::os::raw::c_int,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_handler(
+        self_: *mut Fl_Hor_Value_Slider,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_draw(
+        self_: *mut Fl_Hor_Value_Slider,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_trigger(
+        arg1: *mut Fl_Hor_Value_Slider,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_image(
+        arg1: *const Fl_Hor_Value_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_parent(
+        self_: *const Fl_Hor_Value_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_selection_color(
+        arg1: *mut Fl_Hor_Value_Slider,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_selection_color(
+        arg1: *mut Fl_Hor_Value_Slider,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_do_callback(arg1: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_inside(
+        self_: *const Fl_Hor_Value_Slider,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_window(
+        arg1: *const Fl_Hor_Value_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_top_window(
+        arg1: *const Fl_Hor_Value_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_takes_events(
+        arg1: *const Fl_Hor_Value_Slider,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_bounds(arg1: *mut Fl_Hor_Value_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_minimum(arg1: *mut Fl_Hor_Value_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_minimum(arg1: *mut Fl_Hor_Value_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_maximum(arg1: *mut Fl_Hor_Value_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_maximum(arg1: *mut Fl_Hor_Value_Slider, a: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_range(arg1: *mut Fl_Hor_Value_Slider, a: f64, b: f64);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_step(
+        arg1: *mut Fl_Hor_Value_Slider,
+        a: f64,
+        b: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_step(arg1: *mut Fl_Hor_Value_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_precision(
+        arg1: *mut Fl_Hor_Value_Slider,
+        digits: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_value(arg1: *mut Fl_Hor_Value_Slider) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_value(
+        arg1: *mut Fl_Hor_Value_Slider,
+        arg2: f64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_format(
+        arg1: *mut Fl_Hor_Value_Slider,
+        arg2: *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_round(arg1: *mut Fl_Hor_Value_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_clamp(arg1: *mut Fl_Hor_Value_Slider, arg2: f64) -> f64;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_increment(
+        arg1: *mut Fl_Hor_Value_Slider,
+        arg2: f64,
+        arg3: ::std::os::raw::c_int,
+    ) -> f64;
+}

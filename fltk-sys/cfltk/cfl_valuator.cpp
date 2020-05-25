@@ -3,6 +3,12 @@
 #include <FL/Fl_Adjuster.H>
 #include <FL/Fl_Counter.H>
 #include <FL/Fl_Dial.H>
+#include <FL/Fl_Fill_Dial.H>
+#include <FL/Fl_Fill_Slider.H>
+#include <FL/Fl_Hor_Fill_Slider.H>
+#include <FL/Fl_Hor_Nice_Slider.H>
+#include <FL/Fl_Hor_Slider.H>
+#include <FL/Fl_Hor_Value_Slider.H>
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Line_Dial.H>
 #include <FL/Fl_Nice_Slider.H>
@@ -106,3 +112,27 @@ VALUATOR_DEFINE(Fl_Value_Input)
 WIDGET_DEFINE(Fl_Value_Output)
 
 VALUATOR_DEFINE(Fl_Value_Output)
+
+WIDGET_DEFINE(Fl_Fill_Slider)
+
+VALUATOR_DEFINE(Fl_Fill_Slider)
+
+WIDGET_DEFINE(Fl_Fill_Dial)
+
+VALUATOR_DEFINE(Fl_Fill_Dial)
+
+WIDGET_DEFINE(Fl_Hor_Slider)
+
+VALUATOR_DEFINE(Fl_Hor_Slider)
+
+WIDGET_DEFINE(Fl_Hor_Fill_Slider)
+
+VALUATOR_DEFINE(Fl_Hor_Fill_Slider)
+
+WIDGET_DEFINE(Fl_Hor_Nice_Slider)
+
+VALUATOR_DEFINE(Fl_Hor_Nice_Slider)
+
+WIDGET_DEFINE(Fl_Hor_Value_Slider)
+
+VALUATOR_DEFINE(Fl_Hor_Value_Slider)

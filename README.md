@@ -120,10 +120,10 @@ Another way is to use message passing:
     /* previous counter code */
     let (s, r) = app::channel::<Message>();
 
-    but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
-    but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
+    but_inc.emit(s, Message::Increment);
+    but_dec.emit(s, Message::Decrement);
     
-    while app.wait() {
+    while app.wait().unwrap() {
         let label: i32 = frame.label().parse().unwrap();
         match r.recv() {
             Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
@@ -314,6 +314,12 @@ The most commonly widgets are implemented:
     - Adjuster
     - ValueInput
     - ValueOutput
+    - FillSlider
+    - FillDial
+    - HorSlider (Horizontal slider)
+    - HorFillSlider
+    - HorNiceSlider
+    - HorValueSlider
 - Browsing widgets
     - Browser
     - SelectBrowser

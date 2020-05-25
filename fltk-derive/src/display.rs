@@ -296,27 +296,43 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn move_right(&mut self) {
+            fn move_right(&mut self) -> Result<(), FltkError> {
                 unsafe {
-                    #move_right(self._inner);
+                    let x = #move_right(self._inner);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn move_left(&mut self){
+            fn move_left(&mut self) -> Result<(), FltkError> {
                 unsafe {
-                    #move_left(self._inner);
+                    let x = #move_left(self._inner);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn move_up(&mut self){
+            fn move_up(&mut self) -> Result<(), FltkError> {
                 unsafe {
-                    #move_up(self._inner);
+                    let x = #move_up(self._inner);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn move_down(&mut self){
+            fn move_down(&mut self) -> Result<(), FltkError> {
                 unsafe {
-                    #move_down(self._inner);
+                    let x = #move_down(self._inner);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 

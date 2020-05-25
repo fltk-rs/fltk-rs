@@ -184,6 +184,8 @@ pub unsafe trait WidgetExt {
     fn top_window(&self) -> Option<Window>;
     /// Checks whether a widget is capable of taking events
     fn takes_events(&self) -> bool;
+    /// Emits a message on callback using a sender
+    fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T);
 }
 
 /// Defines the methods implemented by all button widgets
@@ -265,23 +267,23 @@ pub unsafe trait InputExt: WidgetExt {
     /// Returns the postion inside an input/output widget
     fn position(&self) -> i32;
     /// Sets the postion inside an input/output widget
-    fn set_position(&mut self, val: i32);
+    fn set_position(&mut self, val: i32) -> Result<(), FltkError>;
     /// Returns the mark inside an input/output widget
     fn mark(&self) -> i32;
     /// Sets the mark inside an input/output widget
-    fn set_mark(&mut self, val: i32);
+    fn set_mark(&mut self, val: i32) -> Result<(), FltkError>;
     /// Replace content with a &str
-    fn replace(&mut self, beg: u32, end: u32, val: &str);
+    fn replace(&mut self, beg: u32, end: u32, val: &str) -> Result<(), FltkError>;
     /// Insert a &str
-    fn insert(&mut self, txt: &str);
+    fn insert(&mut self, txt: &str) -> Result<(), FltkError>;
     /// Append a &str
-    fn append(&mut self, txt: &str);
+    fn append(&mut self, txt: &str) -> Result<(), FltkError>;
     /// Copy the value within the widget
-    fn copy(&mut self);
+    fn copy(&mut self) -> Result<(), FltkError>;
     /// Undo changes
-    fn undo(&mut self);
+    fn undo(&mut self) -> Result<(), FltkError>;
     /// Cut the value within the widget
-    fn cut(&mut self);
+    fn cut(&mut self) -> Result<(), FltkError>;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -372,7 +374,7 @@ pub unsafe trait ValuatorExt: WidgetExt {
     /// Set the value of a valuator
     fn set_value(&mut self, arg2: f64);
     /// Set the format of a valuator
-    fn format(&mut self, arg2: &str);
+    fn format(&mut self, arg2: &str) -> Result<(), FltkError> ;
     /// Round the valuator
     fn round(&self, arg2: f64) -> f64;
     /// Clamp the valuator
@@ -412,13 +414,13 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Counts the lines from start to end                         
     fn count_lines(&self, start: u32, end: u32, is_line_start: bool) -> u32;
     /// Moves the cursor right
-    fn move_right(&mut self);
+    fn move_right(&mut self) -> Result<(), FltkError>;
     /// Moves the cursor left
-    fn move_left(&mut self);
+    fn move_left(&mut self) -> Result<(), FltkError>;
     /// Moves the cursor up
-    fn move_up(&mut self);
+    fn move_up(&mut self) -> Result<(), FltkError>;
     /// Moves the cursor down
-    fn move_down(&mut self);
+    fn move_down(&mut self) -> Result<(), FltkError>;
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
@@ -638,9 +640,9 @@ pub unsafe trait TableExt: GroupExt {
     /// Sets the selection
     fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
     /// Moves the cursor with shift select
-    fn move_cursor_with_shift_select(&mut self, r: i32, c: i32, shiftselect: bool);
+    fn move_cursor_with_shift_select(&mut self, r: i32, c: i32, shiftselect: bool) -> Result<(), FltkError>;
     /// Moves the cursor
-    fn move_cursor(&mut self, r: i32, c: i32);
+    fn move_cursor(&mut self, r: i32, c: i32) -> Result<(), FltkError>;
     /// Resets the internal array of widget sizes and positions.
     fn init_sizes(&mut self);
     /// Returns the scrollbar size

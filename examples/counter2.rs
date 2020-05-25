@@ -17,10 +17,10 @@ fn main() {
 
     let (s, r) = app::channel::<Message>();
 
-    but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
-    but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
+    but_inc.emit(s, Message::Increment);
+    but_dec.emit(s, Message::Decrement);
 
-    while app.wait() {
+    while app.wait().unwrap() {
         let label: i32 = frame.label().parse().unwrap();
         
         match r.recv() {

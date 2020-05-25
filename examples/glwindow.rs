@@ -29,7 +29,7 @@ pub fn main() {
         }
     }));
 
-    while app.wait() {
+    while app.wait().unwrap() {
         match r.recv() {
             Some(coords) => { 
                 let rand: f32 = ((coords.0 - W/2) * (coords.1 - H/2) / 360) as f32;

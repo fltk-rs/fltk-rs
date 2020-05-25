@@ -71,7 +71,7 @@
 //         });
 //     }));
 //
-//     while app.wait() {
+//     while app.wait().unwrap() {
 //         match r.try_recv() {
 //             Ok(Message::Inc(v)) => frame.set_label(&format!("increments by {}", v)),
 //             _ => (),

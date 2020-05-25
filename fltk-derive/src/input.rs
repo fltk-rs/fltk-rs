@@ -104,9 +104,13 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_position(&mut self, val: i32) {
+            fn set_position(&mut self, val: i32) -> Result<(), FltkError> {
                 unsafe {
-                    #set_position(self._inner, val);
+                    let x = #set_position(self._inner, val);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
@@ -116,49 +120,77 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_mark(&mut self, val: i32) {
+            fn set_mark(&mut self, val: i32) -> Result<(), FltkError> {
                 unsafe {
-                    #set_mark(self._inner, val);
+                    let x = #set_mark(self._inner, val);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn replace(&mut self, beg: u32, end: u32, val: &str) {
+            fn replace(&mut self, beg: u32, end: u32, val: &str) -> Result<(), FltkError> {
                 let val = CString::new(val).unwrap();
                 unsafe {
                     debug_assert!(beg <= std::i32::MAX as u32 && end <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                    #replace(self._inner, beg as i32, end as i32, val.as_ptr(), 0);
+                    let x = #replace(self._inner, beg as i32, end as i32, val.as_ptr(), 0);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn insert(&mut self, txt: &str) {
+            fn insert(&mut self, txt: &str) -> Result<(), FltkError> {
                 let txt = CString::new(txt).unwrap();
                 unsafe {
-                    #insert(self._inner, txt.as_ptr(), 0);
+                    let x = #insert(self._inner, txt.as_ptr(), 0);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn append(&mut self, txt: &str) {
+            fn append(&mut self, txt: &str) -> Result<(), FltkError> {
                 let txt = CString::new(txt).unwrap();
                 unsafe {
-                    #append(self._inner,  txt.as_ptr(), 0, 0);
+                    let x = #append(self._inner,  txt.as_ptr(), 0, 0);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn copy(&mut self) {
+            fn copy(&mut self) -> Result<(), FltkError> {
                 unsafe {
-                    #copy(self._inner, 1);
+                    let x = #copy(self._inner, 1);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn undo(&mut self) {
+            fn undo(&mut self) -> Result<(), FltkError> {
                 unsafe {
-                    #undo(self._inner);
+                    let x = #undo(self._inner);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn cut(&mut self) {
+            fn cut(&mut self) -> Result<(), FltkError> {
                 unsafe {
-                    #copy_cuts(self._inner);
+                    let x = #copy_cuts(self._inner);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 

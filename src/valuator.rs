@@ -113,3 +113,39 @@ pub struct ValueInput {
 pub struct ValueOutput {
     _inner: *mut Fl_Value_Output,
 }
+
+/// Creates a fill slider
+#[derive(WidgetExt, ValuatorExt, Debug)]
+pub struct FillSlider {
+    _inner: *mut Fl_Fill_Slider,
+}
+
+/// Creates a fill dial
+#[derive(WidgetExt, ValuatorExt, Debug)]
+pub struct FillDial {
+    _inner: *mut Fl_Fill_Dial,
+}
+
+/// Creates a horizontal slider
+#[derive(WidgetExt, ValuatorExt, Debug)]
+pub struct HorSlider {
+    _inner: *mut Fl_Hor_Slider,
+}
+
+/// Creates a horizontal fill slider
+#[derive(WidgetExt, ValuatorExt, Debug)]
+pub struct HorFillSlider {
+    _inner: *mut Fl_Hor_Fill_Slider,
+}
+
+/// Creates a horizontal nice slider
+#[derive(WidgetExt, ValuatorExt, Debug)]
+pub struct HorNiceSlider {
+    _inner: *mut Fl_Hor_Nice_Slider,
+}
+
+/// Creates a horizontal value slider
+#[derive(WidgetExt, ValuatorExt, Debug)]
+pub struct HorValueSlider {
+    _inner: *mut Fl_Hor_Value_Slider,
+}

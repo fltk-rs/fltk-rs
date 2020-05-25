@@ -4,6 +4,9 @@
 ### Changes
 - Image constructors return a Result instead of an Option for all ops.
 - Impl Clone for widgets, since they have interior mutability (basically Arc<Mutex<widget>> on the C++ side).
+- Systematically return Error when FLTK (C++) returns Error code.
+- Add emit method for widgets which take a app::Sender and a message to allow for message passing and shorted callback function. 
+- Added the rest of the horizontal valuator widgets.
 
 ## [0.4.13] - 2020-05-25
 ### Changes

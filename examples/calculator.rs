@@ -91,10 +91,7 @@ fn main() {
     for but in but_vec {
         but.set_color(Color::Light2);
         let label = but.label();
-        app::set_callback(
-            but,
-            Box::new(move || s.send(Message::Number(label.parse().unwrap()))),
-        );
+        but.emit(s, Message::Number(label.parse().unwrap()));
     }
 
     for mut but in but_op_vec {
@@ -115,12 +112,12 @@ fn main() {
             "@<-" => Ops::Back,
             _ => Ops::None,
         };
-        app::set_callback(&mut but, Box::new(move || s.send(Message::Op(op))));
+        but.emit( s, Message::Op(op));
     }
 
-    app::set_callback(&mut but_dot, Box::new(move || s.send(Message::Dot)));
+    but_dot.emit(s, Message::Dot);
 
-    while app.wait() {
+    while app.wait().unwrap() {
         match r.recv() {
             Some(val) => match val {
                 Message::Number(num) => {
@@ -179,7 +176,7 @@ fn main() {
                             _ => new,
                         };
                         operation = Ops::None;
-                        txt.clear();
+                        txt = String::from("0");
                         out.set_value(&val.to_string());
                     }
                     _ => (),

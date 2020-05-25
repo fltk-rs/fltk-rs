@@ -485,15 +485,23 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn move_cursor_with_shift_select(&mut self, r: i32, c: i32, shiftselect: bool) {
+            fn move_cursor_with_shift_select(&mut self, r: i32, c: i32, shiftselect: bool) -> Result<(), FltkError> {
                 unsafe {
-                    #move_cursor_with_shiftselect(self._inner, r, c, shiftselect as i32);
+                    let x = #move_cursor_with_shiftselect(self._inner, r, c, shiftselect as i32);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 
-            fn move_cursor(&mut self, r: i32, c: i32) {
+            fn move_cursor(&mut self, r: i32, c: i32) -> Result<(), FltkError> {
                 unsafe {
-                    #move_cursor(self._inner, r, c);
+                    let x = #move_cursor(self._inner, r, c);
+                    if x == 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    Ok(())
                 }
             }
 

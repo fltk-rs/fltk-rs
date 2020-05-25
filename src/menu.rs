@@ -64,6 +64,9 @@ impl MenuItem {
     
     /// Creates a popup menu at the specified coordinates and returns its choice
     pub fn popup(&mut self, x: i32, y: i32) -> Option<MenuItem> {
+        if self._inner.is_null() {
+            return None;
+        }
         unsafe {
             let item = Fl_Menu_Item_popup(self._inner, x, y);
             if item.is_null() {
@@ -78,14 +81,18 @@ impl MenuItem {
     }
     
     /// Returns the label of the menu item
-    pub fn label(&self) -> String {
-        assert!(!self._inner.is_null());
+    pub fn label(&self) -> Option<String> {
+        if self._inner.is_null() {
+            return None;
+        }
         unsafe {
             let label_ptr = Fl_Menu_Item_label(self._inner);
-            assert!(!label_ptr.is_null(), "Failed to get menu item label!");
-            CStr::from_ptr(label_ptr as *mut raw::c_char)
+            if label_ptr.is_null() {
+                return None;
+            }
+            Some(CStr::from_ptr(label_ptr as *mut raw::c_char)
                 .to_string_lossy()
-                .to_string()
+                .to_string())
         }
     }
 
