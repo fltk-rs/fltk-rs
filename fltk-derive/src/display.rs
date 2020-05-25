@@ -209,7 +209,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn buffer<'a>(&'a self) -> &'a mut TextBuffer {
                 unsafe {
                     let buffer = #get_buffer(self._inner);
-                    assert!(!buffer.is_null(), "Failed to get associated buffer!");
+                    assert!(!buffer.is_null());
                     let x = Box::from(TextBuffer::from_ptr(buffer));
                     &mut *Box::into_raw(x)
                 }

@@ -1053,14 +1053,16 @@ impl TreeItem {
     }
 
     /// Gets the label of the tree item
-    pub fn label(&self) -> String {
+    pub fn label(&self) -> Option<String> {
         assert!(!self._inner.is_null());
         unsafe {
             let x = Fl_Tree_Item_label(self._inner);
-            assert!(!x.is_null());
-            CStr::from_ptr(x as *mut raw::c_char)
+            if x.is_null() {
+                return None;
+            }
+            Some(CStr::from_ptr(x as *mut raw::c_char)
                 .to_string_lossy()
-                .to_string()
+                .to_string())
         }
     }
 

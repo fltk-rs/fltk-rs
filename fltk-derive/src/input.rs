@@ -73,7 +73,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn value(&self) -> String {
                 unsafe {
                     let value_ptr = #value(self._inner);
-                    assert!(!value_ptr.is_null(), "Failed to retrieve input/output value!");
+                    assert!(!value_ptr.is_null());
                     CStr::from_ptr(value_ptr as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }

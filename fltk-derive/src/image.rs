@@ -37,7 +37,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
             fn copy(&self) -> Self {
                 unsafe {
                     let img = #copy(self._inner);
-                    assert!(!img.is_null(), "Coulnd't copy image!");
+                    assert!(!img.is_null());
                     #name {
                         _inner: img,
                     }
@@ -74,7 +74,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
                 unsafe {
-                    assert!(!ptr.is_null(), "Image pointer is null!");
+                    assert!(!ptr.is_null());
                     #name {
                         _inner: mem::transmute(ptr),
                     }

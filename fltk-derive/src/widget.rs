@@ -149,7 +149,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let temp = CString::new(title).unwrap();
                 unsafe {
                     let widget_ptr = #new(x, y, width, height, temp.into_raw() as *const raw::c_char);
-                    assert!(!widget_ptr.is_null(), "Failed to instantiate widget!");
+                    assert!(!widget_ptr.is_null());
                     #name {
                         _inner: widget_ptr,
                     }
@@ -165,7 +165,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         0,
                         0,
                         temp.into_raw() as *const raw::c_char);
-                        assert!(!widget_ptr.is_null(), "Failed to instantiate widget!");
+                        assert!(!widget_ptr.is_null());
                     #name {
                         _inner: widget_ptr,
                     }

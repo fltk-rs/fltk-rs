@@ -18,18 +18,18 @@ impl TextBuffer {
     pub fn default() -> Self {
         unsafe {
             let text_buffer = Fl_Text_Buffer_new();
-            assert!(!text_buffer.is_null(), "Failed to instantiate text buffer!");
+            assert!(!text_buffer.is_null());
             TextBuffer {
                 _inner: text_buffer,
             }
         }
     }
-    
+
     /// Deletes the TextBuffer
     pub unsafe fn delete(&mut self) {
         Fl_Text_Buffer_delete(self._inner)
     }
-    
+
     /// Initialized a text buffer from a pointer
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         TextBuffer { _inner: ptr }
@@ -52,7 +52,7 @@ impl TextBuffer {
     pub fn text(&self) -> String {
         unsafe {
             let text = Fl_Text_Buffer_text(self._inner);
-            assert!(!text.is_null(), "Failed to retrieve text from buffer!");
+            assert!(!text.is_null());
             CString::from_raw(text as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
@@ -116,13 +116,7 @@ impl TextBuffer {
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
         let text = CString::new(text).unwrap();
-        unsafe {
-            Fl_Text_Buffer_insert(
-                self._inner,
-                pos as i32,
-                text.as_ptr(),
-            )
-        }
+        unsafe { Fl_Text_Buffer_insert(self._inner, pos as i32, text.as_ptr()) }
     }
 
     /// Replaces text from position ```start``` to ```end```
@@ -136,14 +130,7 @@ impl TextBuffer {
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
         let text = CString::new(text).unwrap();
-        unsafe {
-            Fl_Text_Buffer_replace(
-                self._inner,
-                start as i32,
-                end as i32,
-                text.as_ptr(),
-            )
-        }
+        unsafe { Fl_Text_Buffer_replace(self._inner, start as i32, end as i32, text.as_ptr()) }
     }
 
     /// Copies text from a source buffer into the current buffer
@@ -262,7 +249,7 @@ impl TextBuffer {
     pub fn selection_text(&mut self) -> String {
         unsafe {
             let x = Fl_Text_Buffer_selection_text(self._inner);
-            assert!(!x.is_null(), "Null pointer exception!");
+            assert!(!x.is_null());
             CString::from_raw(x as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
@@ -277,9 +264,7 @@ impl TextBuffer {
     /// Replaces selection
     pub fn replace_selection(&mut self, text: &str) {
         let text = CString::new(text).unwrap();
-        unsafe {
-            Fl_Text_Buffer_replace_selection(self._inner, text.as_ptr())
-        }
+        unsafe { Fl_Text_Buffer_replace_selection(self._inner, text.as_ptr()) }
     }
 
     /// Highlights selection
@@ -329,7 +314,7 @@ impl TextBuffer {
     pub fn highlight_text(&mut self) -> String {
         unsafe {
             let x = Fl_Text_Buffer_highlight_text(self._inner);
-            assert!(!x.is_null(), "Null pointer exception!");
+            assert!(!x.is_null());
             CString::from_raw(x as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
@@ -344,7 +329,7 @@ impl TextBuffer {
         );
         unsafe {
             let x = Fl_Text_Buffer_line_text(self._inner, pos as i32);
-            assert!(!x.is_null(), "Null pointer exception!");
+            assert!(!x.is_null());
             CString::from_raw(x as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
@@ -397,10 +382,7 @@ impl TextBuffer {
     }
 
     /// Adds a modify callback
-    pub fn add_modify_callback(
-        &mut self,
-        cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>,
-    ) {
+    pub fn add_modify_callback(&mut self, cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>) {
         unsafe {
             unsafe extern "C" fn shim(
                 pos: raw::c_int,
@@ -432,10 +414,7 @@ impl TextBuffer {
     }
 
     /// Removes a modify callback
-    pub fn remove_modify_callback(
-        &mut self,
-        cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>,
-    ) {
+    pub fn remove_modify_callback(&mut self, cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>) {
         unsafe {
             unsafe extern "C" fn shim(
                 pos: raw::c_int,
@@ -515,7 +494,7 @@ impl TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
-            assert!(!text_editor.is_null(), "Failed to instantiate text editor!");
+            assert!(!text_editor.is_null());
             let mut x = TextEditor {
                 _inner: text_editor,
             };
@@ -523,13 +502,13 @@ impl TextEditor {
             x
         }
     }
-    
+
     /// Creates a default and zero initialized TextEditor
     pub fn default(buf: &mut TextBuffer) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
-            assert!(!text_editor.is_null(), "Failed to instantiate text editor!");
+            assert!(!text_editor.is_null());
             let mut x = TextEditor {
                 _inner: text_editor,
             };
@@ -537,28 +516,28 @@ impl TextEditor {
             x
         }
     }
-    
+
     /// Copies the text within the TextEditor widget
     pub fn copy(&self) {
         unsafe {
             kf_copy(self._inner);
         }
     }
-    
+
     /// Cuts the text within the TextEditor widget
     pub fn cut(&self) {
         unsafe {
             kf_cut(self._inner);
         }
     }
-    
+
     /// Pastes text from the clipboard into the TextEditor widget
     pub fn paste(&self) {
         unsafe {
             kf_paste(self._inner);
         }
     }
-    
+
     /// Undo changes in the TextEditor widget
     pub fn undo(&self) {
         unsafe {
@@ -574,10 +553,7 @@ impl TextDisplay {
         unsafe {
             let text_display =
                 Fl_Text_Display_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
-            assert!(
-                !text_display.is_null(),
-                "Failed to instantiate text display!"
-            );
+            assert!(!text_display.is_null(),);
             let mut x = TextDisplay {
                 _inner: text_display,
             };
@@ -585,17 +561,14 @@ impl TextDisplay {
             x
         }
     }
-    
+
     /// Creates a default and zero initialized TextDisplay
     pub fn default(buf: &mut TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display =
                 Fl_Text_Display_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
-            assert!(
-                !text_display.is_null(),
-                "Failed to instantiate text display!"
-            );
+            assert!(!text_display.is_null(),);
             let mut x = TextDisplay {
                 _inner: text_display,
             };
@@ -612,10 +585,7 @@ impl SimpleTerminal {
         unsafe {
             let simple_terminal =
                 Fl_Simple_Terminal_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
-            assert!(
-                !simple_terminal.is_null(),
-                "Failed to instantiate simple terminal!"
-            );
+            assert!(!simple_terminal.is_null(),);
             let mut x = SimpleTerminal {
                 _inner: simple_terminal,
             };
@@ -623,17 +593,14 @@ impl SimpleTerminal {
             x
         }
     }
-    
+
     /// Creates a default and zero initialized SimpleTerminal
     pub fn default(buf: &mut TextBuffer) -> SimpleTerminal {
         let temp = CString::new("").unwrap();
         unsafe {
             let simple_terminal =
                 Fl_Simple_Terminal_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
-            assert!(
-                !simple_terminal.is_null(),
-                "Failed to instantiate simple terminal!"
-            );
+            assert!(!simple_terminal.is_null(),);
             let mut x = SimpleTerminal {
                 _inner: simple_terminal,
             };
