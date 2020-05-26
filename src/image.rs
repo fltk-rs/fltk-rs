@@ -20,7 +20,7 @@ pub struct Image {
 /// A conversion function for internal use
 impl Image {
     /// Returns the internal pointer of Image
-    pub fn as_ptr(&self) -> *mut Fl_Image {
+    pub unsafe fn as_ptr(&self) -> *mut Fl_Image {
         self._inner
     }
 

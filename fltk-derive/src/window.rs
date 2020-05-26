@@ -91,7 +91,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn raw_handle(&self) -> *const raw::c_void {
+            unsafe fn raw_handle(&self) -> *const raw::c_void {
                 unsafe {
                     #raw_handle(self._inner)
                 }

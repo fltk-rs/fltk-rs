@@ -36,7 +36,7 @@ impl TextBuffer {
     }
 
     /// Returns the inner pointer from a text buffer
-    pub fn as_ptr(&self) -> *mut Fl_Text_Buffer {
+    pub unsafe fn as_ptr(&self) -> *mut Fl_Text_Buffer {
         self._inner
     }
 

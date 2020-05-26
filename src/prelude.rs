@@ -26,6 +26,16 @@ pub enum FltkErrorKind {
     TableError,
 }
 
+impl std::error::Error for FltkError {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            FltkError::IoError(err) => Some(err),
+            FltkError::NullError(err) => Some(err),
+            _ => None,
+        }
+    }
+}
+
 impl fmt::Display for FltkError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
@@ -100,7 +110,7 @@ pub unsafe trait WidgetExt {
     /// Returns the label of the widget
     fn label(&self) -> String;
     /// transforms a widget to a base Fl_Widget, for internal use
-    fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
+    unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
     /// transforms a widget pointer to a Widget, for internal use
     unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
     /// Activates the widget
@@ -251,7 +261,7 @@ pub unsafe trait WindowExt: GroupExt {
     fn shown(&self) -> bool;
     /// Get the raw system handle of the window
     /// void pointer to: (Windows: HWND, X11: Xid, MacOS: NSWindow)
-    fn raw_handle(&self) -> *const raw::c_void;
+    unsafe fn raw_handle(&self) -> *const raw::c_void;
 }
 
 /// Defines the methods implemented by all input and output widgets
@@ -666,9 +676,9 @@ pub unsafe trait ImageExt {
     /// Return the height of the image
     fn height(&self) -> i32;
     /// Returns a void pointer of the image, for internal use
-    fn as_ptr(&self) -> *mut raw::c_void;
+    unsafe fn as_ptr(&self) -> *mut raw::c_void;
     /// Retunrs a pointer of the image
-    fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
+    unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
     /// Transforms a raw image pointer to an image
     unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
     /// Returns the raw underlying image data

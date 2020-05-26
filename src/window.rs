@@ -48,7 +48,7 @@ impl GlContext {
     }
 
     /// Returns the underlying pointer
-    pub fn into_raw(self) -> *mut raw::c_void {
+    pub unsafe fn into_raw(self) -> *mut raw::c_void {
         self._inner
     }
 }

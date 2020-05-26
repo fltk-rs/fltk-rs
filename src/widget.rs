@@ -27,7 +27,7 @@ impl Widget {
     }
     
     /// Returns the inner pointer
-    pub fn as_ptr(&self) -> *mut Fl_Widget {
+    pub unsafe fn as_ptr(&self) -> *mut Fl_Widget {
         self._inner
     }
     

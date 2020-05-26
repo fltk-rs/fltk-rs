@@ -60,13 +60,13 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn as_ptr(&self) -> *mut raw::c_void {
+            unsafe fn as_ptr(&self) -> *mut raw::c_void {
                 unsafe {
                     mem::transmute(self._inner)
                 }
             }
 
-            fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
+            unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                 unsafe {
                     mem::transmute(self._inner)
                 }

@@ -26,7 +26,7 @@ fn main() {
     
     but.set_callback(Box::new(move || match tree2.get_selected_items() {
         None => println!("No items selected"),
-        Some(vals) => println!("{} items selected", vals.as_slice()[0].label()),
+        Some(vals) => println!("{} items selected", vals.as_slice()[0].label().unwrap()),
     }));
     
     app.run().unwrap();
