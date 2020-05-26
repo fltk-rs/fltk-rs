@@ -10,6 +10,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
     let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
     let get_item = Ident::new(format!("{}_{}", name_str, "get_item").as_str(), name.span());
+    let set_item = Ident::new(format!("{}_{}", name_str, "set_item").as_str(), name.span());
     let text_font = Ident::new(
         format!("{}_{}", name_str, "text_font").as_str(),
         name.span(),
@@ -40,6 +41,14 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     );
     let get_choice = Ident::new(
         format!("{}_{}", name_str, "get_choice").as_str(),
+        name.span(),
+    );
+    let value = Ident::new(
+        format!("{}_{}", name_str, "value").as_str(),
+        name.span(),
+    );
+    let set_value = Ident::new(
+        format!("{}_{}", name_str, "set_value").as_str(),
         name.span(),
     );
     let clear = Ident::new(
@@ -107,6 +116,14 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn set_item(&mut self, item: &MenuItem) -> bool {
+                unsafe {
+                    #set_item(
+                        self._inner,
+                        item._inner) != 0
+                }
+            }
+
             fn text_font(&self) -> Font {
                 unsafe {
                     mem::transmute(#text_font(self._inner))
@@ -159,6 +176,18 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(CStr::from_ptr(choice_ptr as *mut raw::c_char).to_string_lossy().to_string())
                     }
+                }
+            }
+
+            fn value(&self) -> i32 {
+                unsafe {
+                    #value(self._inner)
+                }
+            }
+
+            fn set_value(&mut self,v:i32) -> bool {
+                unsafe {
+                    #set_value(self._inner,v) != 0
                 }
             }
 

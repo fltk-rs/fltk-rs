@@ -95,3 +95,13 @@ impl ColorChooser {
         x.to_u32()
     }
 }
+
+impl Pack {
+    pub fn spacing(&self) -> i32 {
+        unsafe { Fl_Pack_spacing(self._inner) }
+    }
+
+    pub fn set_spacing(&mut self, spacing: i32) {
+        unsafe { Fl_Pack_set_spacing(self._inner, spacing); }
+    }
+}
