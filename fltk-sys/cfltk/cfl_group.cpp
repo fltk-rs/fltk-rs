@@ -54,3 +54,6 @@ double Fl_Color_Chooser_g(Fl_Color_Chooser *self) { return self->g(); }
 double Fl_Color_Chooser_b(Fl_Color_Chooser *self) { return self->b(); }
 
 GROUP_DEFINE(Fl_Color_Chooser)
+
+int Fl_Pack_spacing(Fl_Pack *self) { return self->spacing(); }
+void Fl_Pack_set_spacing(Fl_Pack *self,int spacing) { self->spacing(spacing); }

@@ -218,10 +218,10 @@ pub fn set_callback<W>(widget: &mut W, cb: Box<dyn FnMut()>)
 where
     W: WidgetExt,
 {
-    debug_assert!(
-        widget.top_window().unwrap().takes_events() && widget.takes_events(),
-        "Handling events requires that the window and widget be active!"
-    );
+    // debug_assert!(
+    //     widget.top_window().unwrap().takes_events() && widget.takes_events(),
+    //     "Handling events requires that the window and widget be active!"
+    // );
     unsafe {
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -404,7 +404,8 @@ pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
     (s, r)
 }
 
-fn first_window() -> Option<crate::window::Window> {
+/// Returns the first window of the application
+pub fn first_window() -> Option<crate::window::Window> {
     unsafe {
         let x = Fl_first_window();
         if x.is_null() {
@@ -418,11 +419,11 @@ fn first_window() -> Option<crate::window::Window> {
 
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
 pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
-    let main_win = first_window();
-    debug_assert!(
-        main_win.is_some() && main_win.unwrap().takes_events(),
-        "Main Window is unable to take events!"
-    );
+    // let main_win = first_window();
+    // debug_assert!(
+    //     main_win.is_some() && main_win.unwrap().takes_events(),
+    //     "Main Window is unable to take events!"
+    // );
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -440,11 +441,11 @@ pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
 /// You may only call this method inside a timeout callback.
 /// The timeout duration `tm` is indicated in seconds
 pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
-    let main_win = first_window();
-    debug_assert!(
-        main_win.is_some() && main_win.unwrap().takes_events(),
-        "Main Window is unable to take events!"
-    );
+    // let main_win = first_window();
+    // debug_assert!(
+    //     main_win.is_some() && main_win.unwrap().takes_events(),
+    //     "Main Window is unable to take events!"
+    // );
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -524,11 +525,9 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 //     }
 // }
 
-/// Safe widget deletion during event handling. Deletes widgets and their children.
-pub fn delete_widget<Wid: WidgetExt>(wid: &Wid) {
-    unsafe {
-        Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget)
-    }
+/// Deletes widgets and their children.
+pub unsafe fn delete_widget<Wid: WidgetExt>(wid: &Wid) {
+    Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget)
 }
 
 fn register_images() {

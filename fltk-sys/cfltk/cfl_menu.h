@@ -12,6 +12,7 @@ extern "C" {
     void widget##_insert(widget *, int index, const char *name, int shortcut,  \
                          Fl_Callback *, void *, int);                          \
     Fl_Menu_Item *widget##_get_item(widget *, const char *name);               \
+    int widget##_set_item(widget *,Fl_Menu_Item *item);                        \
     int widget##_text_font(widget *);                                          \
     void widget##_set_text_font(widget *, int c);                              \
     int widget##_text_size(widget *);                                          \
@@ -20,6 +21,8 @@ extern "C" {
     void widget##_set_text_color(widget *, unsigned int c);                    \
     void widget##_add_choice(widget *, const char *);                          \
     const char *widget##_get_choice(widget *);                                 \
+    int widget##_value(widget *);                                              \
+    int widget##_set_value(widget *,int v);                                    \
     void widget##_clear(widget *);                                             \
     int widget##_clear_submenu(widget *, int index);
 

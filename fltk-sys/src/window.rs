@@ -1788,6 +1788,12 @@ extern "C" {
         arg1: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Pack_spacing(self_: *mut Fl_Pack) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_set_spacing(self_: *mut Fl_Pack, spacing: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Window {

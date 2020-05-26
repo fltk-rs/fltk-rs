@@ -398,12 +398,12 @@ pub fn pop_matrix() {
 }
 
 /// Concatenates scaling transformation onto the current one
-pub fn scale(x: f64, y: f64) {
+pub fn scale_xy(x: f64, y: f64) {
     unsafe { cfl_scale(x, y) }
 }
 
 /// Concatenates scaling transformation onto the current one
-pub fn scale2(x: f64) {
+pub fn scale_x(x: f64) {
     unsafe { cfl_scale2(x) }
 }
 
@@ -526,7 +526,7 @@ pub fn width2(txt: &str, n: i32) -> f64 {
 }
 
 /// Returns the typographical width of a single character
-pub fn width3(c: char) -> f64 {
+pub fn char_width(c: char) -> f64 {
     unsafe { cfl_width3(c as u32) }
 }
 
@@ -555,13 +555,13 @@ pub fn local_to_latin1(txt: &str, n: i32) -> String {
 }
 
 /// Draws a string starting at the given x, y location
-pub fn draw(txt: &str, x: i32, y: i32) {
+pub fn draw_text(txt: &str, x: i32, y: i32) {
     let txt = CString::new(txt).unwrap();
     unsafe { cfl_draw(txt.as_ptr(), x, y) }
 }
 
 /// Draws a string starting at the given x, y location, rotated to an angle
-pub fn draw2(angle: i32, txt: &str, x: i32, y: i32) {
+pub fn draw_text_angled(angle: i32, txt: &str, x: i32, y: i32) {
     let txt = CString::new(txt).unwrap();
     unsafe { cfl_draw2(angle, txt.as_ptr(), x, y) }
 }
@@ -628,7 +628,7 @@ pub fn set_cursor(cursor: CursorStyle) {
 }
 
 /// Sets the cursor style
-pub fn set_cursor2(cursor: CursorStyle, fg: Color, bg: Color) {
+pub fn set_cursor_with_color(cursor: CursorStyle, fg: Color, bg: Color) {
     unsafe { cfl_set_cursor2(cursor as i32, fg as i32, bg as i32) }
 }
 

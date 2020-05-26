@@ -4,6 +4,14 @@
 ### Changes
 - (None)
 
+## [0.5.1] - 2020-05-26
+### Changes
+- Added several methods to MenuExt and Pack.
+- Relax callback restrictions.
+- Give some more descriptive names for draw methods.
+- Revert back to C++11 for the wrapper.
+- Allow for custom widget creation, along with example.
+
 ## [0.5.0] - 2020-05-26
 ### Changes
 - Image constructors return a Result instead of an Option for all ops.

@@ -175,7 +175,7 @@ The following are the features offered by the crate:
 
 ## Dependencies
 
-Rust version > 1.38. CMake and a C++17 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag. 
+Rust version > 1.38. CMake and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag. 
 
 - Windows: No dependencies.
 - MacOS: No dependencies.

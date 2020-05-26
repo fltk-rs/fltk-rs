@@ -84,6 +84,10 @@ double Fl_Color_Chooser_b(Fl_Color_Chooser *self);
 
 GROUP_DECLARE(Fl_Color_Chooser)
 
+int Fl_Pack_spacing(Fl_Pack *self);
+
+void Fl_Pack_set_spacing(Fl_Pack *self,int spacing);
+
 #ifdef __cplusplus
 }
 #endif
