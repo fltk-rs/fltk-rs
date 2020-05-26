@@ -336,6 +336,12 @@ pub enum Shortcut {
     Alt = 0x00080000,
 }
 
+impl Shortcut {
+    pub fn from_char(c: char) -> Shortcut {
+        Shortcut::None + c
+    }
+}
+
 /// Defines the types of triggers for widget callback functions
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]

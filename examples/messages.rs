@@ -27,7 +27,7 @@ fn main() {
         s.send(Message::Increment(2));
     });
 
-    while app.wait() {
+    while app.wait().unwrap() {
         let msg = r.recv();
         
         match msg {

@@ -40,7 +40,7 @@ impl FileDialog {
     pub fn new(op: FileDialogType) -> FileDialog {
         unsafe {
             let file_dialog = Fl_Native_File_Chooser_new(mem::transmute(op));
-            assert!(!file_dialog.is_null(), "Failed to instantiate file dialog!");
+            assert!(!file_dialog.is_null());
             FileDialog {
                 _inner: file_dialog,
             }
@@ -258,7 +258,7 @@ impl HelpDialog {
     pub fn default() -> HelpDialog {
         unsafe {
             let help_dialog = Fl_Help_Dialog_new();
-            assert!(!help_dialog.is_null(), "Failed to instantiate help dialog!");
+            assert!(!help_dialog.is_null());
             HelpDialog {
                 _inner: help_dialog,
             }

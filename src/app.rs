@@ -101,12 +101,9 @@ impl App {
     }
 
     /// Wait for incoming messages
-    pub fn wait(&self) -> bool {
-        let ret = lock();
-        if ret.is_err() {
-            return false;
-        }
-        wait()
+    pub fn wait(&self) -> Result<bool, FltkError> {
+        lock()?;
+        Ok(wait())
     }
 
     /// Awakens the main UI thread with a callback

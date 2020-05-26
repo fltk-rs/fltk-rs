@@ -31,7 +31,8 @@
     void image##_scale(image *self, int width, int height, int proportional,   \
                        int can_expand) {                                       \
         LOCK(self->scale(width, height, proportional, can_expand);)            \
-    }
+    }                                                                          \
+    int image##_fail(image *self) { return self->fail(); }
 
 IMAGE_DEFINE(Fl_JPEG_Image)
 
@@ -124,9 +125,11 @@ Fl_Shared_Image *Fl_Shared_Image_from_rgb(Fl_RGB_Image *rgb, int own_it) {
     return Fl_Shared_Image::get(rgb, own_it);
 }
 
-void Fl_register_images() {
-    fl_register_images();
+int Fl_Shared_Image_fail(Fl_Shared_Image *self) {
+    return self->fail();
 }
+
+void Fl_register_images() { fl_register_images(); }
 
 // void Fl_RGB_Image_draw(Fl_RGB_Image *self, int X, int Y, int W, int H) {
 //   self->draw(X, Y, W, H);

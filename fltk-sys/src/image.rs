@@ -41,6 +41,9 @@ extern "C" {
         can_expand: ::std::os::raw::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Image_fail(self_: *mut Fl_Image) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_JPEG_Image {
@@ -81,6 +84,9 @@ extern "C" {
         proportional: ::std::os::raw::c_int,
         can_expand: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_JPEG_Image_fail(self_: *mut Fl_JPEG_Image) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_JPEG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_JPEG_Image;
@@ -128,6 +134,9 @@ extern "C" {
         proportional: ::std::os::raw::c_int,
         can_expand: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_PNG_Image_fail(self_: *mut Fl_PNG_Image) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_PNG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_PNG_Image;
@@ -180,6 +189,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_SVG_Image_fail(self_: *mut Fl_SVG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_SVG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_SVG_Image;
 }
 extern "C" {
@@ -225,6 +237,9 @@ extern "C" {
         proportional: ::std::os::raw::c_int,
         can_expand: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_BMP_Image_fail(self_: *mut Fl_BMP_Image) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_BMP_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_BMP_Image;
@@ -274,6 +289,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_GIF_Image_fail(self_: *mut Fl_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_GIF_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_GIF_Image;
 }
 extern "C" {
@@ -319,6 +337,9 @@ extern "C" {
         proportional: ::std::os::raw::c_int,
         can_expand: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_RGB_Image_fail(self_: *mut Fl_RGB_Image) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_RGB_Image_new(
@@ -370,6 +391,9 @@ extern "C" {
         proportional: ::std::os::raw::c_int,
         can_expand: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Shared_Image_fail(self_: *mut Fl_Shared_Image) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Shared_Image_get(
