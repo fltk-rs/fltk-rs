@@ -130,7 +130,7 @@ int Fl_Tree_get_selected_items(Fl_Tree *self, Fl_Tree_Item_Array **arr) {
     if (c == 0)
         return 0;
     *arr = new (std::nothrow) Fl_Tree_Item_Array(c);
-    auto ret = self->get_selected_items(**arr);
+    int ret = self->get_selected_items(**arr);
     return ret;
 }
 
@@ -514,7 +514,7 @@ void Fl_Tree_set_Item_label(Fl_Tree_Item *self, const char *val) {
 }
 
 const char *Fl_Tree_Item_label(const Fl_Tree_Item *self) {
-    auto label = self->label();
+    char *label = self->label();
     char *buf = (char *)malloc(strlen(label) + 1);
     memcpy(buf, label, strlen(label) + 1);
     return buf;
@@ -766,7 +766,7 @@ int Fl_Tree_Item_Array_remove_item(Fl_Tree_Item_Array *self,
 }
 
 Fl_Tree_Item *Fl_Tree_Item_Array_at(Fl_Tree_Item_Array *self, int index) {
-    auto total = self->total();
+    int total = self->total();
     if (index >= total)
         return NULL;
     return (*self)[index];

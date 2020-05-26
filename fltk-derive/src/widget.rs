@@ -414,10 +414,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>) {
-                debug_assert!(
-                    self.top_window().unwrap().takes_events() && self.takes_events(), 
-                    "Handling events requires that the window and widget be active!"
-                );
+                // debug_assert!(
+                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     "Handling events requires that the window and widget be active!"
+                // );
                 unsafe {
                     unsafe extern "C" fn shim(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let ev: Event = mem::transmute(_ev);
