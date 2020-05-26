@@ -3,7 +3,7 @@
 Contributions are very welcome! Even if just for submitting bug fixes, improving the documentation, adding tests and/or examples.
 
 ### Contributing to the wrapper
-The wrapper itself which can be found in the fltk-sys directory, it uses C89 for the headers and C++11 for the source files. 
+The wrapper itself which can be found in the fltk-sys directory, it uses C89 for the headers and C++17 for the source files. 
 Bindgen is used on the header files using bind.sh script. It's not added as dependency to this project since it depends on libclang and 
 llvm which has some build issues on windows last time I tried it. 
 C89 was chosen for the headers since bindgen works best with them. 
