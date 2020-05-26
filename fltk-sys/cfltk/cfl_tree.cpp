@@ -514,7 +514,7 @@ void Fl_Tree_set_Item_label(Fl_Tree_Item *self, const char *val) {
 }
 
 const char *Fl_Tree_Item_label(const Fl_Tree_Item *self) {
-    char *label = self->label();
+    const char *label = self->label();
     char *buf = (char *)malloc(strlen(label) + 1);
     memcpy(buf, label, strlen(label) + 1);
     return buf;
