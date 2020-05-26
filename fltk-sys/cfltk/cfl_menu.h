@@ -84,12 +84,6 @@ void Fl_Menu_Item_activate(Fl_Menu_Item *);
 
 void Fl_Menu_Item_deactivate(Fl_Menu_Item *);
 
-int Fl_Choice_value(Fl_Choice *self);
-
-int Fl_Choice_set_value(Fl_Choice *self, int val);
-
-int Fl_Choice_set_value_item(Fl_Choice *self,const Fl_Menu_Item *item);
-
 #ifdef __cplusplus
 }
 #endif

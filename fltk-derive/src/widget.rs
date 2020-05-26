@@ -396,10 +396,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
-                debug_assert!(
-                    self.top_window().unwrap().takes_events() && self.takes_events(), 
-                    "Handling events requires that the window and widget be active!"
-                );
+                // debug_assert!(
+                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     "Handling events requires that the window and widget be active!"
+                // );
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -436,10 +436,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn draw(&mut self, cb: Box<dyn FnMut()>) {
-                debug_assert!(
-                    self.top_window().unwrap().takes_events() && self.takes_events(), 
-                    "Handling events requires that the window and widget be active!"
-                );
+                // debug_assert!(
+                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     "Handling events requires that the window and widget be active!"
+                // );
                 unsafe {
                     unsafe extern "C" fn shim(data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);

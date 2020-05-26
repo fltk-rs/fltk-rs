@@ -63,10 +63,10 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl MenuExt for #name {
             fn add(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut()>) {
-                debug_assert!(
-                    self.top_window().unwrap().takes_events() && self.takes_events(), 
-                    "Handling events requires that the window and widget be active!"
-                );
+                // debug_assert!(
+                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     "Handling events requires that the window and widget be active!"
+                // );
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -82,10 +82,10 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn insert(&mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut()>) {
-                debug_assert!(
-                    self.top_window().unwrap().takes_events() && self.takes_events(), 
-                    "Handling events requires that the window and widget be active!"
-                );
+                // debug_assert!(
+                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     "Handling events requires that the window and widget be active!"
+                // );
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
