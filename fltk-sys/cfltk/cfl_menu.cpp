@@ -24,6 +24,11 @@
     Fl_Menu_Item *widget##_get_item(widget *self, const char *name) {          \
         return (Fl_Menu_Item *)self->find_item(name);                          \
     }                                                                          \
+    int widget##_set_item(widget *self,Fl_Menu_Item *item) {                   \
+        int ret = 0;                                                           \
+        LOCK(ret = self->value(item);)                                         \
+        return ret;                                                            \
+    }                                                                          \
     int widget##_text_font(widget *self) { return self->textfont(); }          \
     void widget##_set_text_font(widget *self, int c) {                         \
         LOCK(self->textfont(c);)                                               \
@@ -42,6 +47,16 @@
         LOCK(self->add(str);)                                                  \
     }                                                                          \
     const char *widget##_get_choice(widget *self) { return self->text(); }     \
+    int widget##_value(widget *self) {                                         \
+        int ret = 0;                                                           \
+        LOCK(ret = self->value();)                                             \
+        return ret;                                                            \
+    }                                                                          \
+    int widget##_set_value(widget *self,int v) {                               \
+        int ret = 0;                                                           \
+        LOCK(ret = self->value(v);)                                            \
+        return ret;                                                            \
+    }                                                                          \
     void widget##_clear(widget *self) { LOCK(self->clear();) }                 \
     int widget##_clear_submenu(widget *self, int index) {                      \
         int ret = 0;                                                           \

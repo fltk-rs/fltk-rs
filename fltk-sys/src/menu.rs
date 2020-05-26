@@ -417,6 +417,12 @@ extern "C" {
     ) -> *mut Fl_Menu_Item;
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_set_item(
+        arg1: *mut Fl_Menu_Bar,
+        item: *mut Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Bar_text_font(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -439,6 +445,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_get_choice(arg1: *mut Fl_Menu_Bar) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_value(arg1: *mut Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_value(
+        arg1: *mut Fl_Menu_Bar,
+        v: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_clear(arg1: *mut Fl_Menu_Bar);
@@ -669,6 +684,12 @@ extern "C" {
     ) -> *mut Fl_Menu_Item;
 }
 extern "C" {
+    pub fn Fl_Menu_Button_set_item(
+        arg1: *mut Fl_Menu_Button,
+        item: *mut Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Button_text_font(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -694,6 +715,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Button_get_choice(arg1: *mut Fl_Menu_Button) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_value(arg1: *mut Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_value(
+        arg1: *mut Fl_Menu_Button,
+        v: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_clear(arg1: *mut Fl_Menu_Button);
@@ -915,6 +945,12 @@ extern "C" {
     ) -> *mut Fl_Menu_Item;
 }
 extern "C" {
+    pub fn Fl_Choice_set_item(
+        arg1: *mut Fl_Choice,
+        item: *mut Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Choice_text_font(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -937,6 +973,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_get_choice(arg1: *mut Fl_Choice) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Choice_value(arg1: *mut Fl_Choice) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_set_value(
+        arg1: *mut Fl_Choice,
+        v: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_clear(arg1: *mut Fl_Choice);
@@ -1019,4 +1064,10 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Item_deactivate(arg1: *mut Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Choice_set_value_item(
+        self_: *mut Fl_Choice,
+        item: *const Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
 }

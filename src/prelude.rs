@@ -320,6 +320,8 @@ pub unsafe trait InputExt: WidgetExt {
 pub unsafe trait MenuExt: WidgetExt {
     /// Get a menu item by name
     fn find_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
+    /// Set selected item
+    fn set_item(&mut self, item: &crate::menu::MenuItem) -> bool;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -353,6 +355,10 @@ pub unsafe trait MenuExt: WidgetExt {
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
     fn choice(&self) -> Option<String>;
+    /// Get index into menu of the last item chosen
+    fn value(&self) -> i32;
+    /// Set index into menu of the last item chosen,return true if the new value is different than the old one
+    fn set_value(&mut self,v:i32) -> bool;
     /// Clears the items in a menu
     fn clear(&mut self);
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
