@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased [0.5.0]
+## Unreleased
+### Changes
+- (None)
+
+## [0.5.0] - 2020-05-26
 ### Changes
 - Image constructors return a Result instead of an Option for all ops.
 - Impl Clone for widgets, since they have interior mutability (basically Arc<Mutex<widget>> on the C++ side).
