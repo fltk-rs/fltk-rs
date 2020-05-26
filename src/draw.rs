@@ -45,6 +45,7 @@ impl Offscreen {
     
     /// Begins drawing in the offscreen
     pub fn begin(&self) {
+        assert!(!self._inner.is_null());
         unsafe {
             cfl_begin_offscreen(self._inner)
         }
@@ -52,6 +53,7 @@ impl Offscreen {
 
     /// Ends drawing in the offscreen
     pub fn end(&self) {
+        assert!(!self._inner.is_null());
         unsafe {
             cfl_end_offscreen()
         }
@@ -59,6 +61,7 @@ impl Offscreen {
 
     /// Copies the offscreen
     pub fn copy(&self, x: i32, y: i32, w: i32, h: i32, srcx: i32, srcy: i32) {
+        assert!(!self._inner.is_null());
         unsafe {
             cfl_copy_offscreen(x, y, w, h, self._inner, srcx, srcy)
         }
@@ -66,6 +69,7 @@ impl Offscreen {
 
     /// Rescales the offscreen
     pub fn rescale(&mut self) {
+        assert!(!self._inner.is_null());
         unsafe {
             cfl_rescale_offscreen(self._inner)
         }
@@ -73,6 +77,7 @@ impl Offscreen {
 
     /// Checks the validity of the offscreen
     pub fn is_valid(&self) -> bool {
+        assert!(!self._inner.is_null());
         if self._inner.is_null() {
             false
         } else {
@@ -82,6 +87,7 @@ impl Offscreen {
 
     /// Performs a shallow copy of the offscreen
     pub unsafe fn memcpy(&self) -> Offscreen {
+        assert!(!self._inner.is_null());
         Offscreen { _inner: self._inner }
     }
 }
@@ -643,16 +649,16 @@ pub fn reset_spot() {
 
 
 /// Captures part of the window and returns raw data
-pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Option<RgbImage> {
+pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     let cp = win.width() as u32 * win.height() as u32 * 3;
     win.show();
     unsafe {
         let x = cfl_read_image(std::ptr::null_mut(), 0, 0, win.width(), win.height(), 0);
         if x.is_null() {
-            None
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
-            Some(RgbImage::new(&x.to_vec(), win.width(), win.height(), 3))
+            Ok(RgbImage::new(&x.to_vec(), win.width(), win.height(), 3)?)
         }
     }
 }

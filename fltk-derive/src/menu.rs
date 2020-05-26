@@ -91,7 +91,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn item(&self, name: &str) -> Option<MenuItem> {
+            fn find_item(&self, name: &str) -> Option<MenuItem> {
                 let name = CString::new(name).unwrap().clone();
                 unsafe {
                     let menu_item = #get_item(

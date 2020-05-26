@@ -20,7 +20,7 @@ pub struct Image {
 /// A conversion function for internal use
 impl Image {
     /// Returns the internal pointer of Image
-    pub fn as_ptr(&self) -> *mut Fl_Image {
+    pub unsafe fn as_ptr(&self) -> *mut Fl_Image {
         self._inner
     }
 
@@ -54,19 +54,25 @@ impl SharedImage {
             if x.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
+                if Fl_Shared_Image_fail(x) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
                 Ok(SharedImage { _inner: x })
             }
         }
     }
 
     /// Loads a SharedImage from an RgbImage
-    pub fn from_rgb(rgb: RgbImage, own_it: bool) -> Option<SharedImage> {
+    pub fn from_rgb(rgb: RgbImage, own_it: bool) -> Result<SharedImage, FltkError> {
         unsafe {
             let x = Fl_Shared_Image_from_rgb(rgb._inner, own_it as i32);
             if x.is_null() {
-                None
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
-                Some(SharedImage { _inner: x })
+                if Fl_Shared_Image_fail(x) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(SharedImage { _inner: x })
             }
         }
     }
@@ -90,22 +96,29 @@ impl JpegImage {
             let image_ptr = Fl_JPEG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            } else {
+                if Fl_JPEG_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(JpegImage { _inner: image_ptr })
             }
-            Ok(JpegImage { _inner: image_ptr })
         }
     }
 
-    /// Loads the image from data/memory, Doesn't check for the validity of the data
-    pub fn from_data(data: &[u8]) -> Option<Self> {
+    /// Loads the image from data/memory
+    pub fn from_data(data: &[u8]) -> Result<JpegImage, FltkError> {
         unsafe {
             if data.is_empty() {
-                None
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
                 let x = Fl_JPEG_Image_from(data.as_ptr());
                 if x.is_null() {
-                    None
+                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
-                    Some(JpegImage { _inner: x })
+                    if Fl_JPEG_Image_fail(x) < 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                    }
+                    Ok(JpegImage { _inner: x })
                 }
             }
         }
@@ -130,22 +143,29 @@ impl PngImage {
             let image_ptr = Fl_PNG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            } else {
+                if Fl_PNG_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(PngImage { _inner: image_ptr })
             }
-            Ok(PngImage { _inner: image_ptr })
         }
     }
 
-    /// Loads the image from data/memory, Doesn't check for the validity of the data
-    pub fn from_data(data: &[u8]) -> Option<Self> {
+    /// Loads the image from data/memory
+    pub fn from_data(data: &[u8]) -> Result<PngImage, FltkError> {
         unsafe {
             if data.is_empty() {
-                None
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
                 let x = Fl_PNG_Image_from(data.as_ptr(), data.len() as i32);
                 if x.is_null() {
-                    None
+                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
-                    Some(PngImage { _inner: x })
+                    if Fl_PNG_Image_fail(x) < 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                    }
+                    Ok(PngImage { _inner: x })
                 }
             }
         }
@@ -170,23 +190,30 @@ impl SvgImage {
             let image_ptr = Fl_SVG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            } else {
+                if Fl_SVG_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(SvgImage { _inner: image_ptr })
             }
-            Ok(SvgImage { _inner: image_ptr })
         }
     }
 
-    /// Loads the image from data/memory, Doesn't check for the validity of the data
-    pub fn from_data(data: &str) -> Option<Self> {
+    /// Loads the image from data/memory
+    pub fn from_data(data: &str) -> Result<SvgImage, FltkError> {
         if data.is_empty() {
-            None
+            Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
         } else {
             let data = CString::new(data).unwrap();
             unsafe {
                 let x = Fl_SVG_Image_from(data.as_ptr());
                 if x.is_null() {
-                    None
+                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
-                    Some(SvgImage { _inner: x })
+                    if Fl_SVG_Image_fail(x) < 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                    }
+                    Ok(SvgImage { _inner: x })
                 }
             }
         }
@@ -211,22 +238,29 @@ impl BmpImage {
             let image_ptr = Fl_BMP_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            } else {
+                if Fl_BMP_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(BmpImage { _inner: image_ptr })
             }
-            Ok(BmpImage { _inner: image_ptr })
         }
     }
 
-    /// Loads the image from data/memory, Doesn't check for the validity of the data
-    pub fn from_data(data: &[u8]) -> Option<Self> {
+    /// Loads the image from data/memory
+    pub fn from_data(data: &[u8]) -> Result<BmpImage, FltkError> {
         unsafe {
             if data.is_empty() {
-                None
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
                 let x = Fl_BMP_Image_from(data.as_ptr());
                 if x.is_null() {
-                    None
+                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
-                    Some(BmpImage { _inner: x })
+                    if Fl_BMP_Image_fail(x) < 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                    }
+                    Ok(BmpImage { _inner: x })
                 }
             }
         }
@@ -251,22 +285,29 @@ impl GifImage {
             let image_ptr = Fl_GIF_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
                 return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+            } else {
+                if Fl_GIF_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(GifImage { _inner: image_ptr })
             }
-            Ok(GifImage { _inner: image_ptr })
         }
     }
 
-    /// Loads the image from data/memory, Doesn't check for the validity of the data
-    pub fn from_data(data: &[u8]) -> Option<Self> {
+    /// Loads the image from data/memory
+    pub fn from_data(data: &[u8]) -> Result<GifImage, FltkError> {
         unsafe {
             if data.is_empty() {
-                None
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
                 let x = Fl_GIF_Image_from(data.as_ptr());
                 if x.is_null() {
-                    None
+                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
-                    Some(GifImage { _inner: x })
+                    if Fl_GIF_Image_fail(x) < 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                    }
+                    Ok(GifImage { _inner: x })
                 }
             }
         }
@@ -281,16 +322,28 @@ pub struct RgbImage {
 
 impl RgbImage {
     /// Initializes a new raw RgbImage
-    pub fn new(data: &Vec<u8>, w: i32, h: i32, depth: u32) -> RgbImage {
-        assert!(depth < 5, "Valid depth range from 0..=4!");
+    pub fn new(data: &Vec<u8>, w: i32, h: i32, depth: u32) -> Result<RgbImage, FltkError> {
+        if depth > 4 {
+            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+        }
         let mut sz = w * h;
         if depth > 0 {
             sz = sz * depth as i32;
         }
-        assert!(sz as usize <= data.len());
+        if sz > data.len() as i32 {
+            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+        }
         let img = unsafe { Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32) };
-        assert!(!img.is_null(), "Couldn't generate RGB image!");
-        RgbImage { _inner: img }
+        if img.is_null() {
+            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+        } else {
+            unsafe {
+                if Fl_RGB_Image_fail(img) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+            }
+            Ok(RgbImage { _inner: img })
+        }
     }
 
     /// Deconstructs a raw RgbImage into parts

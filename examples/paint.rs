@@ -19,12 +19,11 @@ fn main() {
     draw_rectf(0, 0, 790, 590);
     offs.end();
 
-    let frame = Rc::from(RefCell::from(frame));
-    let frame_rc = frame.clone();
+    let mut frame_c = frame.clone();
     let offs = Rc::from(RefCell::from(offs));
     let offs_rc = offs.clone();
 
-    frame_rc.borrow_mut().draw(Box::new(move || {
+    frame.draw(Box::new(move || {
         if offs_rc.borrow().is_valid() {
             offs_rc.borrow().copy(5, 5, 790, 590, 0, 0);
         }
@@ -33,8 +32,7 @@ fn main() {
     let mut x = 0;
     let mut y = 0;
 
-    let frame = frame_rc.clone();
-    frame_rc.borrow_mut().handle(Box::new(move |ev| {
+    frame_c.handle(Box::new(move |ev| {
         // println!("{:?}", ev);
         set_draw_color(Color::Red);
         set_line_style(LineStyle::Solid, 3);
@@ -47,7 +45,7 @@ fn main() {
                 y = coords.1;
                 draw_point(x, y);
                 offs.borrow().end();
-                frame.borrow_mut().redraw();
+                frame.redraw();
                 true
             }
             app::Event::Drag => {
@@ -57,7 +55,7 @@ fn main() {
                 x = coords.0;
                 y = coords.1;
                 offs.borrow().end();
-                frame.borrow_mut().redraw();
+                frame.redraw();
                 true
             }
             _ => false,

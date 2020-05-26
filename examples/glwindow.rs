@@ -8,7 +8,6 @@ const H: i32 = 400;
 pub fn main() {
     let app = App::default().set_scheme(AppScheme::Gleam);
     let mut wind = GlWindow::new(100, 100, W, H, "Rotate me!");
-    wind.set_mode(Mode::Opengl3);
 
     wind.end();
     wind.show();
@@ -30,7 +29,7 @@ pub fn main() {
         }
     }));
 
-    while app.wait() {
+    while app.wait().unwrap() {
         match r.recv() {
             Some(coords) => { 
                 let rand: f32 = ((coords.0 - W/2) * (coords.1 - H/2) / 360) as f32;

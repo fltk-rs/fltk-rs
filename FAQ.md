@@ -11,7 +11,7 @@ If you're building for the GNU toolchain, make sure that Make is also installed,
 If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048, it should work by using the fltk-shared feature. Which would also generate a dynamic library which would need to be deployed with your application.
 ```toml
 [dependencies]
-fltk = { version = "^0.4", features = ["fltk-shared"] }
+fltk = { version = "^0.5", features = ["fltk-shared"] }
 ```
 
 ### How do I force CMake to use a certain C++ compiler?
@@ -77,9 +77,12 @@ This is due to a debug_assert which checks that the involved widget and the wind
 ## Memory and unsafety
 
 ### How memory-safe is fltk-rs?
-FLTK manages it's own memory. Any widget is automatically owned by a parent, which is the enclosing widget implementing GroupExt such as windws etc. This is done in the C++ FLTK library itself. Any constructed widget calls the current() method which detects the enclosing group widget, and calls its add() method rending ownership to the group widget. Upon destruction of the group widget, all owned widgets are freed. So while FLTK widgets don't leak, this might create lifetime issues with certain widgets, namely the TextEditor and TextDisplay widgets. These 2 widgets require a TextBuffer which might get destroyed/freed before the destruction of these widgets. So the crate's approach is to tend to naive use. That means TextBuffer currently leaks, this avoids memory unsafety issues and segfaults in favor of a memory leak. It does however offer an unsafe delete() method for manual memory management if necessary. 
+FLTK manages it's own memory. Any widget is automatically owned by a parent which does the book-keeping as well and deletion, this is the enclosing widget implementing GroupExt such as windws etc. This is done in the C++ FLTK library itself. Any constructed widget calls the current() method which detects the enclosing group widget, and calls its add() method rending ownership to the group widget. Upon destruction of the group widget, all owned widgets are freed. Also all widgets are wrapped in a mutex for all mutating methods. That means widgets have interior mutability as if wrapped in an Arc<Mutex<widget>>. Cloning a widget performs a memcpy of the underlying pointer and allows for interior mutability; it does not create a new widget.
+SharedImages are reference-counted by FLTK and cloning an image does create a new image. All mutating methods are wrapped in locks, however images don't offer interior mutability, and would require manual wrapping the Rust side for multi-threaded applications.
+This locking might lead to some performance degradation as compared to the original FLTK library, it does allow for multithreaded applications, and is necessary in an FLTK (C++) application if it also required threading.
+So while FLTK widgets don't leak, this might create lifetime issues with certain widgets, namely the TextEditor and TextDisplay widgets. These 2 widgets require a TextBuffer which might get destroyed/freed before the destruction of these widgets. So the crate's approach is to tend to naive use. That means TextBuffer currently leaks, this avoids memory unsafety issues and segfaults in favor of a memory leak. It does however offer an unsafe delete() method for manual memory management if necessary. 
 That said, fltk-rs is still in active development, and has not yet been fuzzed nor thouroughly tested for memory safety issues.
-The 2 internal traits fltk-sys and fltk-derive are supposed to remain internal, and not be exposed into the public api.
+The 2 internal traits fltk-sys and fltk-derive are supposed to remain internal, and not be exposed into the public api, and are thus marked unsafe.
 
 ### Why is fltk-rs using so much unsafe code?
 Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so the unsafe keyword is needed.

@@ -1,10 +1,8 @@
 use fltk::{app, text::*, window::*};
-use std::cell::RefCell;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
-use std::rc::Rc;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 struct Term {
     pub term: TextDisplay,
     current_dir: String,
@@ -104,32 +102,30 @@ fn main() {
     wind.end();
     wind.show();
 
-    let term = Rc::from(RefCell::from(term));
-
-    let term_clone = term.clone();
-    term_clone.borrow_mut().term.handle(Box::new(move |ev| {
+    let mut term_c = term.clone();
+    term_c.term.handle(Box::new(move |ev| {
         // println!("{:?}", app::event());
         // println!("{:?}", app::event_key());
         // println!("{:?}", app::event_text());
         match ev {
             app::Event::KeyDown => match app::event_key() {
                 app::Key::Enter => {
-                    term.borrow_mut().append("\n");
-                    let out = term.borrow_mut().run_command();
-                    term.borrow_mut().append(&out);
-                    let current_dir = term.borrow().current_dir.clone();
-                    term.borrow_mut().append(&current_dir);
-                    term.borrow_mut().cmd.clear();
+                    term.append("\n");
+                    let out = term.run_command();
+                    term.append(&out);
+                    let current_dir = term.current_dir.clone();
+                    term.append(&current_dir);
+                    term.cmd.clear();
                     true
                 }
                 app::Key::BackSpace => {
-                    if term.borrow().cmd.len() != 0 {
-                        let text_len = term.borrow().term.buffer().text().len() as u32;
-                        term.borrow_mut()
+                    if term.cmd.len() != 0 {
+                        let text_len = term.term.buffer().text().len() as u32;
+                        term
                             .term
                             .buffer()
                             .remove(text_len - 1, text_len as u32);
-                        term.borrow_mut().cmd.pop().unwrap();
+                        term.cmd.pop().unwrap();
                         return true;
                     } else {
                         return false;
@@ -137,8 +133,8 @@ fn main() {
                 }
                 _ => {
                     let temp = app::event_text();
-                    term.borrow_mut().cmd.push_str(&temp);
-                    term.borrow_mut().append(&temp);
+                    term.cmd.push_str(&temp);
+                    term.append(&temp);
                     true
                 }
             },

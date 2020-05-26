@@ -1,6 +1,4 @@
 use fltk::{app, button::*, frame::*, window::*};
-use std::cell::RefCell;
-use std::rc::Rc;
 
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Gtk);
@@ -26,18 +24,16 @@ fn main() {
     wind.end();
     wind.show();
 
-    let frame = Rc::from(RefCell::from(frame));
-
-    let frame1 = frame.clone();
+    let mut frame1 = frame.clone();
     but_inc.set_callback(Box::new(move || {
-        let label = (frame1.borrow().label().parse::<i32>().unwrap() + 1).to_string();
-        frame1.borrow_mut().set_label(&label);
+        let label = (frame1.label().parse::<i32>().unwrap() + 1).to_string();
+        frame1.set_label(&label);
     }));
 
-    let frame1 = frame.clone();
+    let mut frame1 = frame.clone();
     but_dec.set_callback(Box::new(move || {
-        let label = (frame1.borrow().label().parse::<i32>().unwrap() - 1).to_string();
-        frame1.borrow_mut().set_label(&label);
+        let label = (frame1.label().parse::<i32>().unwrap() - 1).to_string();
+        frame1.set_label(&label);
     }));
 
     // Theming

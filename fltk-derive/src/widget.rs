@@ -138,12 +138,18 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
 
+        impl Clone for #name {
+            fn clone(&self) -> #name {
+                #name { _inner: self._inner }
+            }
+        }
+
         unsafe impl WidgetExt for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
                 unsafe {
                     let widget_ptr = #new(x, y, width, height, temp.into_raw() as *const raw::c_char);
-                    assert!(!widget_ptr.is_null(), "Failed to instantiate widget!");
+                    assert!(!widget_ptr.is_null());
                     #name {
                         _inner: widget_ptr,
                     }
@@ -159,7 +165,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         0,
                         0,
                         temp.into_raw() as *const raw::c_char);
-                        assert!(!widget_ptr.is_null(), "Failed to instantiate widget!");
+                        assert!(!widget_ptr.is_null());
                     #name {
                         _inner: widget_ptr,
                     }
@@ -232,7 +238,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
+            unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
                 unsafe { mem::transmute(self._inner) }
             }
 
@@ -564,10 +570,9 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
-            unsafe fn memcpy(&self) -> #name {
-                #name {
-                    _inner: self._inner,
-                }
+
+            fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
+                self.set_callback(Box::new(move || sender.send(msg)))
             }
         }
     };

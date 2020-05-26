@@ -42,7 +42,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl BrowserExt for #name {
             fn remove(&mut self, line: u32) {
-                assert!(line > 0, "Lines start at 1!");
+                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #remove(self._inner, line as i32)
@@ -57,7 +57,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn insert(&mut self, line: u32, item: &str) {
-                assert!(line > 0, "Lines start at 1!");
+                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 let item = CString::new(item).unwrap();
                 unsafe {
@@ -100,7 +100,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn select(&mut self, line: u32) {
-                assert!(line > 0, "Lines start at 1!");
+                assert!(line > 0);
                 if line < self.size() {
                     unsafe {
                         #select(self._inner, line as i32);
@@ -109,7 +109,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn selected(&self, line: u32) -> bool {
-                assert!(line > 0, "Lines start at 1!");
+                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     match #selected(self._inner, line as i32) {
@@ -120,7 +120,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn text(&self, line: u32) -> Option<String> {
-                assert!(line > 0, "Lines start at 1!");
+                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     let text = #text(self._inner, line as i32);
@@ -133,8 +133,8 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_text(&mut self, line: u32, txt: &str) {
-                assert!(line > 0, "Lines start at 1!");
-                assert!(line <= self.size(), "Line doesn't exist!");
+                assert!(line > 0);
+                assert!(line <= self.size());
                 let txt = CString::new(txt).unwrap();
                 unsafe {
                     #set_text(self._inner, line as i32, txt.as_ptr())
@@ -166,14 +166,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_icon<Img: ImageExt>(&mut self, line: u32, image: &Img) {
-                assert!(line > 0, "Lines start at 1!");
+                assert!(line > 0);
                 unsafe {
                     #set_icon(self._inner, line as i32, image.as_ptr())
                 }
             }
 
             fn icon(&self, line: u32) -> Option<Image> {
-                assert!(line > 0, "Lines start at 1!");
+                assert!(line > 0);
                 unsafe {
                     let icon_ptr = #icon(self._inner, line as i32);
                     if icon_ptr.is_null() {
@@ -185,7 +185,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn remove_icon(&mut self, line: u32) {
-                assert!(line > 0, "Lines start at 1!");
+                assert!(line > 0);
                 unsafe {
                     #remove_icon(self._inner, line as i32)
                 }

@@ -24,16 +24,16 @@
 //!
 //! ```toml
 //! [dependencies]
-//! fltk = "^0.4"
+//! fltk = "^0.5"
 //! ```
 //! The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 //! ```toml
 //! [dependencies.fltk]
-//! version = "^0.4"
+//! version = "^0.5"
 //! features = ["fltk-shared"]
 //! # or
 //! [dependencies]
-//! fltk = { version = "^0.4", features = ["fltk-shared"] }
+//! fltk = { version = "^0.5", features = ["fltk-shared"] }
 //! ```
 //! You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
 //!
@@ -127,7 +127,7 @@
 //!     but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
 //!     but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
 //!
-//!     while app.wait() {
+//!     while app.wait().unwrap() {
 //!         let label: i32 = frame.label().parse().unwrap();
 //!         match r.recv() {
 //!             Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),

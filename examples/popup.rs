@@ -13,7 +13,7 @@ fn main() {
         let mut x = MenuItem::new(v);
         match x.popup(100, 100) {
             None => println!("No value was chosen!"),
-            Some(val) => println!("{}", val.label()),
+            Some(val) => println!("{}", val.label().unwrap()),
         }
     }));
 
