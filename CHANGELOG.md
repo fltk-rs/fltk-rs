@@ -2,6 +2,10 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.5.1] - 2020-05-26
+### Changes
 - Added several methods to MenuExt and Pack.
 - Relax callback restrictions.
 - Give some more descriptive names for draw methods.
