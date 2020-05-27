@@ -1065,9 +1065,3 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Item_deactivate(arg1: *mut Fl_Menu_Item);
 }
-extern "C" {
-    pub fn Fl_Choice_set_value_item(
-        self_: *mut Fl_Choice,
-        item: *const Fl_Menu_Item,
-    ) -> ::std::os::raw::c_int;
-}

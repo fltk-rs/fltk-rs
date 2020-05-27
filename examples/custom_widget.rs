@@ -14,19 +14,25 @@ impl FlatButton {
         x.handle();
         x
     }
-    
+
     // Overrides the draw function
     fn draw(&mut self) {
         let b = self.wid.clone();
         self.wid.draw(Box::new(move || {
-            draw::set_draw_color(Color::from_u32(0xFFC300));
-            draw::draw_rectf(b.x(), b.y(), b.width(), b.height());
+            draw::draw_box(
+                FrameType::GtkDownBox,
+                b.x(),
+                b.y(),
+                b.width(),
+                b.height(),
+                Color::from_u32(0xFFC300),
+            );
             draw::set_draw_color(Color::Black);
             draw::draw_text_angled(-15, &b.label(), b.x() + 2, b.y() + 15);
         }));
     }
 
-    // Overrides the handle function. 
+    // Overrides the handle function.
     // Notice the do_callback which allows the set_callback method to work
     fn handle(&mut self) {
         let mut wid = self.wid.clone();
@@ -34,8 +40,8 @@ impl FlatButton {
             app::Event::Push => {
                 wid.do_callback();
                 true
-            },
-            _ => false
+            }
+            _ => false,
         }));
     }
 }
@@ -61,6 +67,7 @@ fn main() {
     wind.set_color(Color::from_u32(0x6D4C41));
     let mut but = FlatButton::new(160, 200, 80, 40, "Increment");
     let mut frame = Frame::new(0, 0, 400, 300, "0");
+    frame.set_label_color(Color::from_u32(0xFFC300));
 
     wind.end();
     wind.show();

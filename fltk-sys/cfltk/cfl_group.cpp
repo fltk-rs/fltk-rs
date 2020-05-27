@@ -21,6 +21,22 @@ GROUP_DEFINE(Fl_Pack)
 
 WIDGET_DEFINE(Fl_Scroll)
 
+int Fl_Scroll_xposition(const Fl_Scroll *self) { return self->xposition(); }
+
+int Fl_Scroll_yposition(const Fl_Scroll *self) { return self->yposition(); }
+
+void Fl_Scroll_scroll_to(Fl_Scroll *self, int x, int y) {
+    LOCK(self->scroll_to(x, y);)
+}
+
+int Fl_Scroll_scrollbar_size(const Fl_Scroll *self) {
+    return self->scrollbar_size();
+}
+
+void Fl_Scroll_set_scrollbar_size(Fl_Scroll *self, int newSize) {
+    LOCK(self->scrollbar_size(newSize);)
+}
+
 GROUP_DEFINE(Fl_Scroll)
 
 WIDGET_DEFINE(Fl_Tabs)
@@ -56,4 +72,4 @@ double Fl_Color_Chooser_b(Fl_Color_Chooser *self) { return self->b(); }
 GROUP_DEFINE(Fl_Color_Chooser)
 
 int Fl_Pack_spacing(Fl_Pack *self) { return self->spacing(); }
-void Fl_Pack_set_spacing(Fl_Pack *self,int spacing) { self->spacing(spacing); }
+void Fl_Pack_set_spacing(Fl_Pack *self, int spacing) { self->spacing(spacing); }

@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add Fl_Scroll methods.
 
 ## [0.5.1] - 2020-05-26
 ### Changes

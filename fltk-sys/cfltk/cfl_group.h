@@ -52,6 +52,16 @@ GROUP_DECLARE(Fl_Pack)
 
 WIDGET_DECLARE(Fl_Scroll)
 
+int Fl_Scroll_xposition(const Fl_Scroll *self);
+
+int Fl_Scroll_yposition(const Fl_Scroll *self);
+
+void Fl_Scroll_scroll_to(Fl_Scroll *self, int, int);
+
+int Fl_Scroll_scrollbar_size(const Fl_Scroll *self);
+
+void Fl_Scroll_set_scrollbar_size(Fl_Scroll *self, int newSize);
+
 GROUP_DECLARE(Fl_Scroll)
 
 WIDGET_DECLARE(Fl_Tabs)

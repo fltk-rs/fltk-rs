@@ -825,6 +825,25 @@ extern "C" {
     pub fn Fl_Scroll_takes_events(arg1: *const Fl_Scroll) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Scroll_xposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_yposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_scroll_to(
+        self_: *mut Fl_Scroll,
+        arg1: ::std::os::raw::c_int,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Scroll_scrollbar_size(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_scrollbar_size(self_: *mut Fl_Scroll, newSize: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Scroll_begin(self_: *mut Fl_Scroll);
 }
 extern "C" {
