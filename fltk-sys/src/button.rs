@@ -201,6 +201,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Button {
@@ -383,6 +386,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Button_takes_events(arg1: *const Fl_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_user_data(arg1: *const Fl_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Button_shortcut(self_: *const Fl_Button) -> ::std::os::raw::c_int;
@@ -593,6 +599,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_takes_events(arg1: *const Fl_Check_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_user_data(arg1: *const Fl_Check_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
@@ -812,6 +821,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_takes_events(arg1: *const Fl_Radio_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_user_data(arg1: *const Fl_Radio_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Button_is_toggled(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
@@ -1041,6 +1053,10 @@ extern "C" {
     pub fn Fl_Toggle_Button_takes_events(arg1: *const Fl_Toggle_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Toggle_Button_user_data(arg1: *const Fl_Toggle_Button)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Toggle_Button_is_toggled(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -1258,6 +1274,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Round_Button_takes_events(arg1: *const Fl_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_user_data(arg1: *const Fl_Round_Button) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Round_Button_is_toggled(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
@@ -1531,6 +1550,11 @@ extern "C" {
     pub fn Fl_Radio_Round_Button_takes_events(
         arg1: *const Fl_Radio_Round_Button,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_user_data(
+        arg1: *const Fl_Radio_Round_Button,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_is_toggled(
@@ -1816,6 +1840,11 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Radio_Light_Button_user_data(
+        arg1: *const Fl_Radio_Light_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Radio_Light_Button_is_toggled(
         arg1: *mut Fl_Radio_Light_Button,
     ) -> ::std::os::raw::c_int;
@@ -2045,6 +2074,9 @@ extern "C" {
     pub fn Fl_Light_Button_takes_events(arg1: *const Fl_Light_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Light_Button_user_data(arg1: *const Fl_Light_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Light_Button_is_on(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -2272,6 +2304,10 @@ extern "C" {
     pub fn Fl_Repeat_Button_takes_events(arg1: *const Fl_Repeat_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Repeat_Button_user_data(arg1: *const Fl_Repeat_Button)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Repeat_Button_shortcut(self_: *const Fl_Repeat_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -2491,6 +2527,10 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_takes_events(arg1: *const Fl_Return_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_user_data(arg1: *const Fl_Return_Button)
+        -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Return_Button_shortcut(self_: *const Fl_Return_Button) -> ::std::os::raw::c_int;

@@ -317,8 +317,8 @@ fn thread_msg<T>() -> Option<T> {
         if msg.is_null() {
             None
         } else {
-            let msg: *const T = msg as *const T;
-            Some(std::ptr::read(msg))
+            let msg = Box::from_raw(msg as *const _ as *mut T);
+            Some(*msg)
         }
     }
 }

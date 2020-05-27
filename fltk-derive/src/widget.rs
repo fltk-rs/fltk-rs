@@ -133,6 +133,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "takes_events").as_str(),
         name.span(),
     );
+    let user_data = Ident::new(
+        format!("{}_{}", name_str, "user_data").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -400,6 +404,9 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 //     self.top_window().unwrap().takes_events() && self.takes_events(), 
                 //     "Handling events requires that the window and widget be active!"
                 // );
+                extern "C" {
+                    fn free(ptr: *mut raw::c_void);
+                }
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -573,6 +580,17 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
                 self.set_callback(Box::new(move || sender.send(msg)))
+            }
+
+            unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
+                let ptr = #user_data(self._inner);
+                if ptr.is_null() {
+                    None
+                } else {
+                    let x = ptr as *mut Box<dyn FnMut()>;
+                    let x = Box::from_raw(x);
+                    Some(*x)
+                }
             }
         }
     };

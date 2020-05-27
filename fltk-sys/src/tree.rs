@@ -201,6 +201,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tree {
@@ -383,6 +386,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tree_takes_events(arg1: *const Fl_Tree) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tree_user_data(arg1: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

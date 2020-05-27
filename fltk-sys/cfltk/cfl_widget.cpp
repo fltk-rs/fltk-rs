@@ -214,3 +214,5 @@ int Fl_Widget_takes_events(const Fl_Widget *self) {
     return self->takesevents();
 }
 
+void *Fl_Widget_user_data(const Fl_Widget *self) { return self->user_data(); }
+

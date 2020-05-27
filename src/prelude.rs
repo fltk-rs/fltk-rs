@@ -196,6 +196,8 @@ pub unsafe trait WidgetExt {
     fn takes_events(&self) -> bool;
     /// Emits a message on callback using a sender
     fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T);
+    /// Retakes ownership of the user callback data
+    unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
 }
 
 /// Defines the methods implemented by all button widgets

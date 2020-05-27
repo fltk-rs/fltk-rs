@@ -201,6 +201,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Input {
@@ -383,6 +386,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_takes_events(arg1: *const Fl_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Input_user_data(arg1: *const Fl_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Input_set_value(
@@ -665,6 +671,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_takes_events(arg1: *const Fl_Int_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Int_Input_user_data(arg1: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_value(
@@ -956,6 +965,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_takes_events(arg1: *const Fl_Float_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Float_Input_user_data(arg1: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_value(
@@ -1284,6 +1296,11 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Multiline_Input_user_data(
+        arg1: *const Fl_Multiline_Input,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Multiline_Input_set_value(
         arg1: *mut Fl_Multiline_Input,
         arg2: *const ::std::os::raw::c_char,
@@ -1597,6 +1614,9 @@ extern "C" {
     pub fn Fl_Secret_Input_takes_events(arg1: *const Fl_Secret_Input) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Secret_Input_user_data(arg1: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Secret_Input_set_value(
         arg1: *mut Fl_Secret_Input,
         arg2: *const ::std::os::raw::c_char,
@@ -1880,6 +1900,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Input_takes_events(arg1: *const Fl_File_Input) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Input_user_data(arg1: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_File_Input_set_value(
