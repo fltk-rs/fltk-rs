@@ -34,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: lib_${{ matrix.os }}
-        path: target/debug/build/**/out/lib
+        path: target/release/build/**/out/lib
