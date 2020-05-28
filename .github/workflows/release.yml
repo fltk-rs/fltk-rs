@@ -24,7 +24,7 @@ jobs:
     - name: xcode-select
       run: |
          if [ "$RUNNER_OS" == "macOS" ]; then
-          sudo xcode-select -s /Applications/Xcode_11.5.app/Contents/Developer
+          sudo xcode-select -s /Applications/Xcode_11.3.app/Contents/Developer
          fi
       shell: bash
     - uses: actions/checkout@v2
