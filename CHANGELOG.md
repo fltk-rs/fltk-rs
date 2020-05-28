@@ -1,6 +1,11 @@
 # Changelog
 
+
 ## Unreleased
+### Changes
+- (None)
+
+## [0.5.2] - 2020-05-28
 ### Changes
 - Add Fl_Scroll methods.
 - Mark GroupExt clear method as unsafe since it could invalidate underlying widgets.
