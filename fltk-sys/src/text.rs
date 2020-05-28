@@ -201,6 +201,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_take_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_visible_focus(self_: *mut Fl_Widget, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
 pub type Fl_Text_Modify_Cb = ::std::option::Option<
     unsafe extern "C" fn(
         pos: ::std::os::raw::c_int,
@@ -596,6 +614,25 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Display_takes_events(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_user_data(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Display_take_focus(self_: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_visible_focus(self_: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Display_clear_visible_focus(self_: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Display_visible_focus(self_: *mut Fl_Text_Display, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Display_has_visible_focus(self_: *mut Fl_Text_Display)
+        -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
@@ -1039,6 +1076,24 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_takes_events(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_user_data(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_take_focus(self_: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_visible_focus(self_: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_clear_visible_focus(self_: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_visible_focus(self_: *mut Fl_Text_Editor, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_has_visible_focus(self_: *mut Fl_Text_Editor) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
@@ -1524,6 +1579,31 @@ extern "C" {
     pub fn Fl_Simple_Terminal_takes_events(
         arg1: *const Fl_Simple_Terminal,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_user_data(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_take_focus(self_: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_visible_focus(self_: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_clear_visible_focus(self_: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_visible_focus(
+        self_: *mut Fl_Simple_Terminal,
+        v: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_has_visible_focus(
+        self_: *mut Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);

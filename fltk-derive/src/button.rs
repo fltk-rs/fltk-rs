@@ -3,7 +3,6 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-
 pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
@@ -16,7 +15,10 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
     );
     let clear = Ident::new(format!("{}_{}", name_str, "clear").as_str(), name.span());
     let value = Ident::new(format!("{}_{}", name_str, "value").as_str(), name.span());
-    let set_value = Ident::new(format!("{}_{}", name_str, "set_value").as_str(), name.span());
+    let set_value = Ident::new(
+        format!("{}_{}", name_str, "set_value").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl ButtonExt for #name {
@@ -46,7 +48,7 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
-            
+
             fn set(&mut self, flag: bool) {
                 unsafe {
                     #set_value(self._inner, flag as i32)

@@ -579,11 +579,15 @@ int Fl_Tree_Item_has_children(const Fl_Tree_Item *self) {
 }
 
 int Fl_Tree_Item_find_child(Fl_Tree_Item *self, const char *name) {
-    int ret; LOCK(ret = self->find_child(name)); return ret;
+    int ret;
+    LOCK(ret = self->find_child(name));
+    return ret;
 }
 
 int Fl_Tree_Item_remove_child(Fl_Tree_Item *self, const char *new_label) {
-    int ret; LOCK(ret = self->remove_child(new_label)); return ret;
+    int ret;
+    LOCK(ret = self->remove_child(new_label));
+    return ret;
 }
 
 void Fl_Tree_Item_clear_children(Fl_Tree_Item *self) {
@@ -592,7 +596,9 @@ void Fl_Tree_Item_clear_children(Fl_Tree_Item *self) {
 
 int Fl_Tree_Item_swap_children(Fl_Tree_Item *self, Fl_Tree_Item *a,
                                Fl_Tree_Item *b) {
-    int ret; LOCK(ret = self->swap_children(a, b)); return ret;
+    int ret;
+    LOCK(ret = self->swap_children(a, b));
+    return ret;
 }
 
 const Fl_Tree_Item *Fl_Tree_Item_find_child_item(const Fl_Tree_Item *self,
@@ -601,52 +607,80 @@ const Fl_Tree_Item *Fl_Tree_Item_find_child_item(const Fl_Tree_Item *self,
 }
 
 Fl_Tree_Item *Fl_Tree_Item_replace(Fl_Tree_Item *self, Fl_Tree_Item *new_item) {
-    Fl_Tree_Item *ret; LOCK(ret = self->replace(new_item)); return ret;
+    Fl_Tree_Item *ret;
+    LOCK(ret = self->replace(new_item));
+    return ret;
 }
 
 Fl_Tree_Item *Fl_Tree_Item_replace_child(Fl_Tree_Item *self,
                                          Fl_Tree_Item *olditem,
                                          Fl_Tree_Item *newitem) {
-    Fl_Tree_Item *ret; LOCK(ret = self->replace_child(olditem, newitem)); return ret;
+    Fl_Tree_Item *ret;
+    LOCK(ret = self->replace_child(olditem, newitem));
+    return ret;
 }
 
 Fl_Tree_Item *Fl_Tree_Item_deparent(Fl_Tree_Item *self, int index) {
-    Fl_Tree_Item *ret; LOCK(ret = self->deparent(index)); return ret;
+    Fl_Tree_Item *ret;
+    LOCK(ret = self->deparent(index));
+    return ret;
 }
 
 int Fl_Tree_Item_reparent(Fl_Tree_Item *self, Fl_Tree_Item *newchild,
                           int index) {
-    int ret; LOCK(ret = self->reparent(newchild, index)); return ret;
+    int ret;
+    LOCK(ret = self->reparent(newchild, index));
+    return ret;
 }
 
 int Fl_Tree_Item_move(Fl_Tree_Item *self, int to, int from) {
-    int ret; LOCK(ret = self->move(to, from)); return ret;
+    int ret;
+    LOCK(ret = self->move(to, from));
+    return ret;
 }
 
 int Fl_Tree_Item_move_above(Fl_Tree_Item *self, Fl_Tree_Item *item) {
-    int ret; LOCK(ret = self->move_above(item)); return ret;
+    int ret;
+    LOCK(ret = self->move_above(item));
+    return ret;
 }
 
 int Fl_Tree_Item_move_below(Fl_Tree_Item *self, Fl_Tree_Item *item) {
-    int ret; LOCK(ret = self->move_below(item)); return ret;
+    int ret;
+    LOCK(ret = self->move_below(item));
+    return ret;
 }
 
 int Fl_Tree_Item_move_into(Fl_Tree_Item *self, Fl_Tree_Item *item, int pos) {
-    int ret; LOCK(ret = self->move_into(item, pos)); return ret;
+    int ret;
+    LOCK(ret = self->move_into(item, pos));
+    return ret;
 }
 
 int Fl_Tree_Item_depth(const Fl_Tree_Item *self) { return self->depth(); }
 
-Fl_Tree_Item *Fl_Tree_Item_prev(Fl_Tree_Item *self) { Fl_Tree_Item *ret; LOCK(ret = self->prev()); return ret; }
+Fl_Tree_Item *Fl_Tree_Item_prev(Fl_Tree_Item *self) {
+    Fl_Tree_Item *ret;
+    LOCK(ret = self->prev());
+    return ret;
+}
 
-Fl_Tree_Item *Fl_Tree_Item_next(Fl_Tree_Item *self) { Fl_Tree_Item *ret; LOCK(ret = self->next()); return ret; }
+Fl_Tree_Item *Fl_Tree_Item_next(Fl_Tree_Item *self) {
+    Fl_Tree_Item *ret;
+    LOCK(ret = self->next());
+    return ret;
+}
 
 Fl_Tree_Item *Fl_Tree_Item_next_sibling(Fl_Tree_Item *self) {
-    Fl_Tree_Item *ret; LOCK(ret = self->next_sibling()); return ret;
+    Fl_Tree_Item *ret;
+    LOCK(ret = self->next_sibling());
+    return ret;
 }
 
 Fl_Tree_Item *Fl_Tree_Item_prev_sibling(Fl_Tree_Item *self) {
-    Fl_Tree_Item *ret; LOCK(ret = self->prev_sibling()); return ret;
+    Fl_Tree_Item *ret;
+    LOCK(ret = self->prev_sibling());
+    return ret;
 }
 
 void Fl_Tree_Item_update_prev_next(Fl_Tree_Item *self, int index) {
@@ -683,12 +717,18 @@ void Fl_Tree_Item_select_toggle(Fl_Tree_Item *self) {
     LOCK(self->select_toggle();)
 }
 
-int Fl_Tree_Item_select_all(Fl_Tree_Item *self) { int ret; LOCK(ret = self->select_all()); return ret; }
+int Fl_Tree_Item_select_all(Fl_Tree_Item *self) {
+    int ret;
+    LOCK(ret = self->select_all());
+    return ret;
+}
 
 void Fl_Tree_Item_deselect(Fl_Tree_Item *self) { LOCK(self->deselect();) }
 
 int Fl_Tree_Item_deselect_all(Fl_Tree_Item *self) {
-   int ret; LOCK(ret = self->deselect_all()); return ret;
+    int ret;
+    LOCK(ret = self->deselect_all());
+    return ret;
 }
 
 int Fl_Tree_Item_is_root(const Fl_Tree_Item *self) { return self->is_root(); }

@@ -26,6 +26,45 @@ pub struct Scroll {
     _inner: *mut Fl_Scroll,
 }
 
+impl Scroll {
+    /// Returns the x position
+    pub fn xposition(&self) -> u32 {
+        unsafe { Fl_Scroll_xposition(self._inner) as u32 }
+    }
+
+    /// Returns the y position
+    pub fn yposition(&self) -> u32 {
+        unsafe { Fl_Scroll_yposition(self._inner) as u32 }
+    }
+
+    /// Scrolls from ```from``` to ```to```
+    pub fn scroll_to(&mut self, from: u32, to: u32) {
+        debug_assert!(
+            from <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
+        debug_assert!(
+            to <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
+        unsafe { Fl_Scroll_scroll_to(self._inner, from as i32, to as i32) }
+    }
+
+    /// Gets the scrollbar size
+    pub fn scrollbar_size(&self) -> u32 {
+        unsafe { Fl_Scroll_scrollbar_size(self._inner) as u32 }
+    }
+
+    /// Sets the scrollbar size
+    pub fn set_scrollbar_size(&mut self, new_size: u32) {
+        debug_assert!(
+            new_size <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
+        unsafe { Fl_Scroll_set_scrollbar_size(self._inner, new_size as i32) }
+    }
+}
+
 /// Creates a tab which can contain widgets
 #[derive(WidgetExt, GroupExt, Debug)]
 pub struct Tabs {
@@ -47,29 +86,28 @@ pub struct Wizard {
 impl Wizard {
     /// Gets the next view of the wizard
     pub fn next(&mut self) {
-        unsafe {
-            Fl_Wizard_next(self._inner)
-        }
+        unsafe { Fl_Wizard_next(self._inner) }
     }
-    
+
     /// Gets the previous view of the wizard
     pub fn prev(&mut self) {
-        unsafe {
-            Fl_Wizard_prev(self._inner)
-        }
+        unsafe { Fl_Wizard_prev(self._inner) }
     }
-    
+
     /// Gets the underlying widget of the current view
     pub fn current_widget(&mut self) -> Widget {
         unsafe {
             Widget::from_raw(Fl_Wizard_value(self._inner) as *mut fltk_sys::widget::Fl_Widget)
         }
     }
-    
+
     /// Sets the underlying widget of the current view
     pub fn set_current_widget<W: WidgetExt>(&mut self, w: &W) {
         unsafe {
-            Fl_Wizard_set_value(self._inner, w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget)
+            Fl_Wizard_set_value(
+                self._inner,
+                w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
+            )
         }
     }
 }
@@ -102,6 +140,8 @@ impl Pack {
     }
 
     pub fn set_spacing(&mut self, spacing: i32) {
-        unsafe { Fl_Pack_set_spacing(self._inner, spacing); }
+        unsafe {
+            Fl_Pack_set_spacing(self._inner, spacing);
+        }
     }
 }

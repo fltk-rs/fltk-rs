@@ -1,8 +1,8 @@
-pub use crate::prelude::*;
 use crate::image::Image;
+pub use crate::prelude::*;
 use fltk_sys::widget::*;
+use std::ffi::{CStr, CString};
 use std::mem;
-use std::ffi::{CString, CStr};
 use std::os::raw;
 
 /// An abstract type, shouldn't be instantiated in user code
@@ -25,12 +25,12 @@ impl Widget {
         assert!(!ptr.is_null());
         Widget { _inner: ptr }
     }
-    
+
     /// Returns the inner pointer
     pub unsafe fn as_ptr(&self) -> *mut Fl_Widget {
         self._inner
     }
-    
+
     /// Transform Widget base to another Widget
     pub fn into<W: WidgetExt>(self) -> W {
         unsafe { W::from_widget_ptr(self._inner) }

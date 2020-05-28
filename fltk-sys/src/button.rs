@@ -201,6 +201,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_take_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_visible_focus(self_: *mut Fl_Widget, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Button {
@@ -383,6 +401,24 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Button_takes_events(arg1: *const Fl_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_user_data(arg1: *const Fl_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Button_take_focus(self_: *mut Fl_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_set_visible_focus(self_: *mut Fl_Button);
+}
+extern "C" {
+    pub fn Fl_Button_clear_visible_focus(self_: *mut Fl_Button);
+}
+extern "C" {
+    pub fn Fl_Button_visible_focus(self_: *mut Fl_Button, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Button_has_visible_focus(self_: *mut Fl_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Button_shortcut(self_: *const Fl_Button) -> ::std::os::raw::c_int;
@@ -593,6 +629,25 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_takes_events(arg1: *const Fl_Check_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_user_data(arg1: *const Fl_Check_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Check_Button_take_focus(self_: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_set_visible_focus(self_: *mut Fl_Check_Button);
+}
+extern "C" {
+    pub fn Fl_Check_Button_clear_visible_focus(self_: *mut Fl_Check_Button);
+}
+extern "C" {
+    pub fn Fl_Check_Button_visible_focus(self_: *mut Fl_Check_Button, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Check_Button_has_visible_focus(self_: *mut Fl_Check_Button)
+        -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> ::std::os::raw::c_int;
@@ -812,6 +867,25 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Button_takes_events(arg1: *const Fl_Radio_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_user_data(arg1: *const Fl_Radio_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_take_focus(self_: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_set_visible_focus(self_: *mut Fl_Radio_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_clear_visible_focus(self_: *mut Fl_Radio_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_visible_focus(self_: *mut Fl_Radio_Button, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Radio_Button_has_visible_focus(self_: *mut Fl_Radio_Button)
+        -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Radio_Button_is_toggled(arg1: *mut Fl_Radio_Button) -> ::std::os::raw::c_int;
@@ -1041,6 +1115,27 @@ extern "C" {
     pub fn Fl_Toggle_Button_takes_events(arg1: *const Fl_Toggle_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Toggle_Button_user_data(arg1: *const Fl_Toggle_Button)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_take_focus(self_: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_set_visible_focus(self_: *mut Fl_Toggle_Button);
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_clear_visible_focus(self_: *mut Fl_Toggle_Button);
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_visible_focus(self_: *mut Fl_Toggle_Button, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_has_visible_focus(
+        self_: *mut Fl_Toggle_Button,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Toggle_Button_is_toggled(arg1: *mut Fl_Toggle_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -1258,6 +1353,25 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Round_Button_takes_events(arg1: *const Fl_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_user_data(arg1: *const Fl_Round_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Round_Button_take_focus(self_: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_set_visible_focus(self_: *mut Fl_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Round_Button_clear_visible_focus(self_: *mut Fl_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Round_Button_visible_focus(self_: *mut Fl_Round_Button, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Round_Button_has_visible_focus(self_: *mut Fl_Round_Button)
+        -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Round_Button_is_toggled(arg1: *mut Fl_Round_Button) -> ::std::os::raw::c_int;
@@ -1531,6 +1645,33 @@ extern "C" {
     pub fn Fl_Radio_Round_Button_takes_events(
         arg1: *const Fl_Radio_Round_Button,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_user_data(
+        arg1: *const Fl_Radio_Round_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_take_focus(
+        self_: *mut Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_visible_focus(self_: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_clear_visible_focus(self_: *mut Fl_Radio_Round_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_visible_focus(
+        self_: *mut Fl_Radio_Round_Button,
+        v: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_has_visible_focus(
+        self_: *mut Fl_Radio_Round_Button,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_is_toggled(
@@ -1816,6 +1957,33 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Radio_Light_Button_user_data(
+        arg1: *const Fl_Radio_Light_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_take_focus(
+        self_: *mut Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_set_visible_focus(self_: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_clear_visible_focus(self_: *mut Fl_Radio_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_visible_focus(
+        self_: *mut Fl_Radio_Light_Button,
+        v: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_has_visible_focus(
+        self_: *mut Fl_Radio_Light_Button,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Radio_Light_Button_is_toggled(
         arg1: *mut Fl_Radio_Light_Button,
     ) -> ::std::os::raw::c_int;
@@ -2045,6 +2213,25 @@ extern "C" {
     pub fn Fl_Light_Button_takes_events(arg1: *const Fl_Light_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Light_Button_user_data(arg1: *const Fl_Light_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Light_Button_take_focus(self_: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Light_Button_set_visible_focus(self_: *mut Fl_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Light_Button_clear_visible_focus(self_: *mut Fl_Light_Button);
+}
+extern "C" {
+    pub fn Fl_Light_Button_visible_focus(self_: *mut Fl_Light_Button, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Light_Button_has_visible_focus(self_: *mut Fl_Light_Button)
+        -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Light_Button_is_on(arg1: *mut Fl_Light_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -2272,6 +2459,27 @@ extern "C" {
     pub fn Fl_Repeat_Button_takes_events(arg1: *const Fl_Repeat_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Repeat_Button_user_data(arg1: *const Fl_Repeat_Button)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_take_focus(self_: *mut Fl_Repeat_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_set_visible_focus(self_: *mut Fl_Repeat_Button);
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_clear_visible_focus(self_: *mut Fl_Repeat_Button);
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_visible_focus(self_: *mut Fl_Repeat_Button, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_has_visible_focus(
+        self_: *mut Fl_Repeat_Button,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Repeat_Button_shortcut(self_: *const Fl_Repeat_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -2491,6 +2699,27 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_takes_events(arg1: *const Fl_Return_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_user_data(arg1: *const Fl_Return_Button)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Return_Button_take_focus(self_: *mut Fl_Return_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_set_visible_focus(self_: *mut Fl_Return_Button);
+}
+extern "C" {
+    pub fn Fl_Return_Button_clear_visible_focus(self_: *mut Fl_Return_Button);
+}
+extern "C" {
+    pub fn Fl_Return_Button_visible_focus(self_: *mut Fl_Return_Button, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Return_Button_has_visible_focus(
+        self_: *mut Fl_Return_Button,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Return_Button_shortcut(self_: *const Fl_Return_Button) -> ::std::os::raw::c_int;

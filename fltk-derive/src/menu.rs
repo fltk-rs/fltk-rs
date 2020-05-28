@@ -3,7 +3,6 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-
 pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
@@ -43,18 +42,12 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "get_choice").as_str(),
         name.span(),
     );
-    let value = Ident::new(
-        format!("{}_{}", name_str, "value").as_str(),
-        name.span(),
-    );
+    let value = Ident::new(format!("{}_{}", name_str, "value").as_str(), name.span());
     let set_value = Ident::new(
         format!("{}_{}", name_str, "set_value").as_str(),
         name.span(),
     );
-    let clear = Ident::new(
-        format!("{}_{}", name_str, "clear").as_str(),
-        name.span(),
-    );
+    let clear = Ident::new(format!("{}_{}", name_str, "clear").as_str(), name.span());
     let clear_submenu = Ident::new(
         format!("{}_{}", name_str, "clear_submenu").as_str(),
         name.span(),
@@ -64,7 +57,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl MenuExt for #name {
             fn add(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut()>) {
                 // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
                 let temp = CString::new(name).unwrap();
@@ -83,7 +76,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn insert(&mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut()>) {
                 // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
                 let temp = CString::new(name).unwrap();

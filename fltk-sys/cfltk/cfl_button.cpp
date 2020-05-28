@@ -64,14 +64,14 @@ void Fl_Toggle_Button_toggle(Fl_Toggle_Button *self, int boolean) {
 
 BUTTON_DEFINE(Fl_Toggle_Button)
 
-
 // WIDGET_DEFINE(Fl_Toggle_Round_Button)
 
 // int Fl_Toggle_Round_Button_is_toggled(Fl_Toggle_Round_Button *self) {
 //     return self->value();
 // }
 
-// void Fl_Toggle_Round_Button_toggle(Fl_Toggle_Round_Button *self, int boolean) {
+// void Fl_Toggle_Round_Button_toggle(Fl_Toggle_Round_Button *self, int boolean)
+// {
 //     LOCK(self->value(boolean);)
 // }
 
@@ -83,7 +83,8 @@ BUTTON_DEFINE(Fl_Toggle_Button)
 //     return self->value();
 // }
 
-// void Fl_Toggle_Light_Button_toggle(Fl_Toggle_Light_Button *self, int boolean) {
+// void Fl_Toggle_Light_Button_toggle(Fl_Toggle_Light_Button *self, int boolean)
+// {
 //     LOCK(self->value(boolean);)
 // }
 

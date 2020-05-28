@@ -24,7 +24,7 @@
     Fl_Menu_Item *widget##_get_item(widget *self, const char *name) {          \
         return (Fl_Menu_Item *)self->find_item(name);                          \
     }                                                                          \
-    int widget##_set_item(widget *self,Fl_Menu_Item *item) {                   \
+    int widget##_set_item(widget *self, Fl_Menu_Item *item) {                  \
         int ret = 0;                                                           \
         LOCK(ret = self->value(item);)                                         \
         return ret;                                                            \
@@ -52,7 +52,7 @@
         LOCK(ret = self->value();)                                             \
         return ret;                                                            \
     }                                                                          \
-    int widget##_set_value(widget *self,int v) {                               \
+    int widget##_set_value(widget *self, int v) {                              \
         int ret = 0;                                                           \
         LOCK(ret = self->value(v);)                                            \
         return ret;                                                            \

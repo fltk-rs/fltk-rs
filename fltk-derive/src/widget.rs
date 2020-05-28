@@ -3,13 +3,13 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-
 pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
     let name_str = get_fl_name(name.to_string());
 
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
+    let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
     let x = Ident::new(format!("{}_{}", name_str, "x").as_str(), name.span());
     let y = Ident::new(format!("{}_{}", name_str, "y").as_str(), name.span());
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
@@ -131,6 +131,30 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     );
     let takes_events = Ident::new(
         format!("{}_{}", name_str, "takes_events").as_str(),
+        name.span(),
+    );
+    let user_data = Ident::new(
+        format!("{}_{}", name_str, "user_data").as_str(),
+        name.span(),
+    );
+    let take_focus = Ident::new(
+        format!("{}_{}", name_str, "take_focus").as_str(),
+        name.span(),
+    );
+    let set_visible_focus = Ident::new(
+        format!("{}_{}", name_str, "set_visible_focus").as_str(),
+        name.span(),
+    );
+    let clear_visible_focus = Ident::new(
+        format!("{}_{}", name_str, "clear_visible_focus").as_str(),
+        name.span(),
+    );
+    let visible_focus = Ident::new(
+        format!("{}_{}", name_str, "visible_focus").as_str(),
+        name.span(),
+    );
+    let has_visible_focus = Ident::new(
+        format!("{}_{}", name_str, "has_visible_focus").as_str(),
         name.span(),
     );
 
@@ -397,9 +421,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
                 // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
+                extern "C" {
+                    fn free(ptr: *mut raw::c_void);
+                }
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -415,7 +442,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>) {
                 // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
                 unsafe {
@@ -437,7 +464,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn draw(&mut self, cb: Box<dyn FnMut()>) {
                 // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
                 unsafe {
@@ -573,6 +600,64 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
                 self.set_callback(Box::new(move || sender.send(msg)))
+            }
+
+            unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
+                let ptr = #user_data(self._inner);
+                if ptr.is_null() {
+                    None
+                } else {
+                    let x = ptr as *mut Box<dyn FnMut()>;
+                    let x = Box::from_raw(x);
+                    Some(*x)
+                }
+            }
+
+            unsafe fn raw_user_data(&self) -> *mut raw::c_void {
+                #user_data(self._inner)
+            }
+
+            unsafe fn delete(&mut self) {
+                unsafe {
+                    #delete(self._inner)
+                }
+            }
+
+            fn take_focus(&mut self) -> Result<(), FltkError> {
+                unsafe {
+                    match #take_focus(self._inner) {
+                        0 => Ok(()),
+                        _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+                    }
+                }
+            }
+
+
+            fn set_visible_focus(&mut self) {
+                unsafe {
+                    #set_visible_focus(self._inner)
+                }
+            }
+
+
+            fn clear_visible_focus(&mut self) {
+                unsafe {
+                    #clear_visible_focus(self._inner)
+                }
+            }
+
+
+            fn visible_focus(&mut self, v: bool) {
+                unsafe {
+                    #visible_focus(self._inner, v as i32)
+                }
+            }
+
+
+            fn has_visible_focus(&mut self) -> bool {
+                unsafe {
+                    #has_visible_focus(self._inner) != 0
+                }
             }
         }
     };

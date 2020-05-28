@@ -214,3 +214,24 @@ int Fl_Widget_takes_events(const Fl_Widget *self) {
     return self->takesevents();
 }
 
+void *Fl_Widget_user_data(const Fl_Widget *self) { return self->user_data(); }
+
+int Fl_Widget_take_focus(Fl_Widget *self) {
+    int ret; LOCK(ret = self->take_focus()); return ret;
+}
+
+void Fl_Widget_set_visible_focus(Fl_Widget *self) {
+    LOCK(self->set_visible_focus();)
+}
+
+void Fl_Widget_clear_visible_focus(Fl_Widget *self) {
+    LOCK(self->clear_visible_focus();)
+}
+
+void Fl_Widget_visible_focus(Fl_Widget *self, int v) {
+    LOCK(self->visible_focus(v);)
+}
+
+unsigned int Fl_Widget_has_visible_focus(Fl_Widget *self) {
+    return self->visible_focus();
+}

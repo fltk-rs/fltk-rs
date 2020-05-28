@@ -125,9 +125,7 @@ Fl_Shared_Image *Fl_Shared_Image_from_rgb(Fl_RGB_Image *rgb, int own_it) {
     return Fl_Shared_Image::get(rgb, own_it);
 }
 
-int Fl_Shared_Image_fail(Fl_Shared_Image *self) {
-    return self->fail();
-}
+int Fl_Shared_Image_fail(Fl_Shared_Image *self) { return self->fail(); }
 
 void Fl_register_images() { fl_register_images(); }
 

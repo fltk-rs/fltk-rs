@@ -44,7 +44,7 @@ pub struct GlContext {
 impl GlContext {
     /// Create a GlContext from an opaque gl context pointer
     pub unsafe fn from_raw(ptr: *mut raw::c_void) -> GlContext {
-        GlContext { _inner: ptr, }
+        GlContext { _inner: ptr }
     }
 
     /// Returns the underlying pointer
@@ -162,12 +162,10 @@ impl GlWindow {
     pub fn pixel_h(&mut self) -> i32 {
         unsafe { Fl_Gl_Window_pixel_h(self._inner) }
     }
-    
+
     /// Get the Mode of the GlWindow
     pub fn mode(&self) -> Mode {
-        unsafe {
-            mem::transmute(Fl_Gl_Window_mode(self._inner))
-        }
+        unsafe { mem::transmute(Fl_Gl_Window_mode(self._inner)) }
     }
 
     /// Set the Mode of the GlWindow

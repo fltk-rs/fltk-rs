@@ -201,6 +201,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_take_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_visible_focus(self_: *mut Fl_Widget, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
@@ -383,6 +401,24 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_takes_events(arg1: *const Fl_Group) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Group_user_data(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Group_take_focus(self_: *mut Fl_Group) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Group_set_visible_focus(self_: *mut Fl_Group);
+}
+extern "C" {
+    pub fn Fl_Group_clear_visible_focus(self_: *mut Fl_Group);
+}
+extern "C" {
+    pub fn Fl_Group_visible_focus(self_: *mut Fl_Group, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Group_has_visible_focus(self_: *mut Fl_Group) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
@@ -605,6 +641,24 @@ extern "C" {
     pub fn Fl_Pack_takes_events(arg1: *const Fl_Pack) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Pack_user_data(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Pack_take_focus(self_: *mut Fl_Pack) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_set_visible_focus(self_: *mut Fl_Pack);
+}
+extern "C" {
+    pub fn Fl_Pack_clear_visible_focus(self_: *mut Fl_Pack);
+}
+extern "C" {
+    pub fn Fl_Pack_visible_focus(self_: *mut Fl_Pack, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Pack_has_visible_focus(self_: *mut Fl_Pack) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
 }
 extern "C" {
@@ -823,6 +877,43 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_takes_events(arg1: *const Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_user_data(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_take_focus(self_: *mut Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_visible_focus(self_: *mut Fl_Scroll);
+}
+extern "C" {
+    pub fn Fl_Scroll_clear_visible_focus(self_: *mut Fl_Scroll);
+}
+extern "C" {
+    pub fn Fl_Scroll_visible_focus(self_: *mut Fl_Scroll, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Scroll_has_visible_focus(self_: *mut Fl_Scroll) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Scroll_xposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_yposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_scroll_to(
+        self_: *mut Fl_Scroll,
+        arg1: ::std::os::raw::c_int,
+        arg2: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Scroll_scrollbar_size(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_scrollbar_size(self_: *mut Fl_Scroll, newSize: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Scroll_begin(self_: *mut Fl_Scroll);
@@ -1045,6 +1136,24 @@ extern "C" {
     pub fn Fl_Tabs_takes_events(arg1: *const Fl_Tabs) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Tabs_user_data(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tabs_take_focus(self_: *mut Fl_Tabs) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_visible_focus(self_: *mut Fl_Tabs);
+}
+extern "C" {
+    pub fn Fl_Tabs_clear_visible_focus(self_: *mut Fl_Tabs);
+}
+extern "C" {
+    pub fn Fl_Tabs_visible_focus(self_: *mut Fl_Tabs, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tabs_has_visible_focus(self_: *mut Fl_Tabs) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -1265,6 +1374,24 @@ extern "C" {
     pub fn Fl_Tile_takes_events(arg1: *const Fl_Tile) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Tile_user_data(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tile_take_focus(self_: *mut Fl_Tile) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_set_visible_focus(self_: *mut Fl_Tile);
+}
+extern "C" {
+    pub fn Fl_Tile_clear_visible_focus(self_: *mut Fl_Tile);
+}
+extern "C" {
+    pub fn Fl_Tile_visible_focus(self_: *mut Fl_Tile, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tile_has_visible_focus(self_: *mut Fl_Tile) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1483,6 +1610,24 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_takes_events(arg1: *const Fl_Wizard) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Wizard_user_data(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_take_focus(self_: *mut Fl_Wizard) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Wizard_set_visible_focus(self_: *mut Fl_Wizard);
+}
+extern "C" {
+    pub fn Fl_Wizard_clear_visible_focus(self_: *mut Fl_Wizard);
+}
+extern "C" {
+    pub fn Fl_Wizard_visible_focus(self_: *mut Fl_Wizard, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Wizard_has_visible_focus(self_: *mut Fl_Wizard) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -1737,6 +1882,27 @@ extern "C" {
     pub fn Fl_Color_Chooser_takes_events(arg1: *const Fl_Color_Chooser) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Color_Chooser_user_data(arg1: *const Fl_Color_Chooser)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_take_focus(self_: *mut Fl_Color_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_visible_focus(self_: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_clear_visible_focus(self_: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_visible_focus(self_: *mut Fl_Color_Chooser, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_has_visible_focus(
+        self_: *mut Fl_Color_Chooser,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
 }
 extern "C" {
@@ -1976,6 +2142,24 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_takes_events(arg1: *const Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_user_data(arg1: *const Fl_Table) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_take_focus(self_: *mut Fl_Table) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_set_visible_focus(self_: *mut Fl_Table);
+}
+extern "C" {
+    pub fn Fl_Table_clear_visible_focus(self_: *mut Fl_Table);
+}
+extern "C" {
+    pub fn Fl_Table_visible_focus(self_: *mut Fl_Table, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_has_visible_focus(self_: *mut Fl_Table) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Table_begin(self_: *mut Fl_Table);
@@ -2391,6 +2575,24 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_Row_takes_events(arg1: *const Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_user_data(arg1: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_Row_take_focus(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_visible_focus(self_: *mut Fl_Table_Row);
+}
+extern "C" {
+    pub fn Fl_Table_Row_clear_visible_focus(self_: *mut Fl_Table_Row);
+}
+extern "C" {
+    pub fn Fl_Table_Row_visible_focus(self_: *mut Fl_Table_Row, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Table_Row_has_visible_focus(self_: *mut Fl_Table_Row) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Table_Row_begin(self_: *mut Fl_Table_Row);

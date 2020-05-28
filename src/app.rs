@@ -317,8 +317,8 @@ fn thread_msg<T>() -> Option<T> {
         if msg.is_null() {
             None
         } else {
-            let msg: *const T = msg as *const T;
-            Some(std::ptr::read(msg))
+            let msg = Box::from_raw(msg as *const _ as *mut T);
+            Some(*msg)
         }
     }
 }
@@ -513,7 +513,6 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     }
 }
 
-
 // pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
 //     unsafe {
 //         let x = Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
@@ -531,9 +530,5 @@ pub unsafe fn delete_widget<Wid: WidgetExt>(wid: &Wid) {
 }
 
 fn register_images() {
-    unsafe {
-        fltk_sys::image::Fl_register_images()
-    }
+    unsafe { fltk_sys::image::Fl_register_images() }
 }
-
-

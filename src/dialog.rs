@@ -130,25 +130,19 @@ impl FileDialog {
     /// Sets the title for the dialog
     pub fn set_title(&mut self, title: &str) {
         let title = CString::new(title).unwrap();
-        unsafe {
-            Fl_Native_File_Chooser_set_title(self._inner, title.as_ptr())
-        }
+        unsafe { Fl_Native_File_Chooser_set_title(self._inner, title.as_ptr()) }
     }
 
     /// Sets the filter for the dialog
     pub fn set_filter(&mut self, f: &str) {
         let f = CString::new(f).unwrap();
-        unsafe {
-            Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr())
-        }
+        unsafe { Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr()) }
     }
 
     /// Sets the preset filter for the dialog
     pub fn set_preset_file(&mut self, f: &str) {
         let f = CString::new(f).unwrap();
-        unsafe {
-            Fl_Native_File_Chooser_set_preset_file(self._inner, f.as_ptr())
-        }
+        unsafe { Fl_Native_File_Chooser_set_preset_file(self._inner, f.as_ptr()) }
     }
 
     /// returns the error message from the file dialog
@@ -170,12 +164,9 @@ impl FileDialog {
 
 impl Drop for FileDialog {
     fn drop(&mut self) {
-        unsafe {
-            Fl_Native_File_Chooser_delete(self._inner)
-        }
+        unsafe { Fl_Native_File_Chooser_delete(self._inner) }
     }
 }
-
 
 /// Displays a message box
 pub fn message(txt: &str) {
@@ -201,12 +192,7 @@ pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
         let b0 = CString::new(b0).unwrap();
         let b1 = CString::new(b1).unwrap();
         let b2 = CString::new(b2).unwrap();
-        cfl_choice(
-            txt.as_ptr(),
-            b0.as_ptr(),
-            b1.as_ptr(),
-            b2.as_ptr(),
-        ) as u32
+        cfl_choice(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
     }
 }
 
@@ -264,62 +250,62 @@ impl HelpDialog {
             }
         }
     }
-    
+
     /// Creates a new Help dialog with position(x, y) and size(w, h)
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> HelpDialog {
         let mut temp = HelpDialog::default();
         temp.resize(x, y, w, h);
         temp
     }
-    
+
     /// Hides the help dialog
     pub fn hide(&mut self) {
         unsafe { Fl_Help_Dialog_hide(self._inner) }
     }
-    
+
     /// Loads a file for the help dialog
     pub fn load(&mut self, file: &std::path::Path) -> Result<(), FltkError> {
         let f = file.to_str().unwrap();
         let f = CString::new(f)?;
-        unsafe { 
+        unsafe {
             match Fl_Help_Dialog_load(self._inner, f.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }
         }
     }
-    
+
     /// Sets the position of the help dialog
     pub fn position(&mut self, x: i32, y: i32) {
         unsafe { Fl_Help_Dialog_position(self._inner, x, y) }
     }
-    
+
     /// Resizes the help dialog
     pub fn resize(&mut self, x: i32, y: i32, w: i32, h: i32) {
         unsafe { Fl_Help_Dialog_resize(self._inner, x, y, w, h) }
     }
-    
+
     /// Shows the help dialog
     pub fn show(&mut self) {
         unsafe { Fl_Help_Dialog_show(self._inner) }
     }
-    
+
     /// Sets the text size
     pub fn set_text_size(&mut self, s: u32) {
         unsafe { Fl_Help_Dialog_set_text_size(self._inner, s as i32) }
     }
-    
+
     /// Returns the text size
     pub fn text_size(&mut self) -> u32 {
         unsafe { Fl_Help_Dialog_text_size(self._inner) as u32 }
     }
-    
+
     /// Sets the value of the help dialog
     pub fn set_value(&mut self, f: &str) {
         let f = CString::new(f).unwrap();
         unsafe { Fl_Help_Dialog_set_value(self._inner, f.as_ptr()) }
     }
-    
+
     /// Returns the value of the help dialog
     pub fn value(&self) -> Option<String> {
         unsafe {
@@ -331,7 +317,7 @@ impl HelpDialog {
             }
         }
     }
-    
+
     /// Returs whether the help dialog is visible
     pub fn visible(&mut self) -> bool {
         unsafe {
@@ -341,22 +327,22 @@ impl HelpDialog {
             }
         }
     }
-    
+
     /// Returns the width of the help dialog
     pub fn width(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_w(self._inner) }
     }
-    
+
     /// Returns the height of the help dialog
     pub fn height(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_h(self._inner) }
     }
-    
+
     /// Returns the x position of the help dialog
     pub fn x(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_x(self._inner) }
     }
-    
+
     /// Returns the y position of the help dialog
     pub fn y(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_y(self._inner) }
@@ -365,9 +351,7 @@ impl HelpDialog {
 
 impl Drop for HelpDialog {
     fn drop(&mut self) {
-        unsafe {
-            Fl_Help_Dialog_delete(self._inner)
-        }
+        unsafe { Fl_Help_Dialog_delete(self._inner) }
     }
 }
 
@@ -375,17 +359,15 @@ impl Drop for HelpDialog {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum BeepType {
-    Default = 0, 
-    Message, 
-    Error, 
-    Question, 
-    Password, 
-    Notification, 
+    Default = 0,
+    Message,
+    Error,
+    Question,
+    Password,
+    Notification,
 }
 
 /// Emits a beep
 pub fn beep(tp: BeepType) {
-    unsafe {
-        Fl_beep(tp as i32)
-    }
+    unsafe { Fl_beep(tp as i32) }
 }

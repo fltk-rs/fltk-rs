@@ -393,31 +393,35 @@ char Fl_Tree_Item_is_selected(const Fl_Tree_Item *self);
 
 // TreeItemArray
 
-  int Fl_Tree_Item_Array_total(const Fl_Tree_Item_Array *self);
-  
-  void Fl_Tree_Item_Array_swap(Fl_Tree_Item_Array *self, int ax, int bx);
-  
-  int Fl_Tree_Item_Array_move(Fl_Tree_Item_Array *self, int to, int from);
-  
-  int Fl_Tree_Item_Array_deparent(Fl_Tree_Item_Array *self, int pos);
-  
-  int Fl_Tree_Item_Array_reparent(Fl_Tree_Item_Array *self, Fl_Tree_Item *item, Fl_Tree_Item *newparent, int pos);
-  
-  void Fl_Tree_Item_Array_clear(Fl_Tree_Item_Array *self);
-  
-  void Fl_Tree_Item_Array_add(Fl_Tree_Item_Array *self, Fl_Tree_Item *val);
-  
-  void Fl_Tree_Item_Array_insert(Fl_Tree_Item_Array *self, int pos, Fl_Tree_Item *new_item);
-  
-  void Fl_Tree_Item_Array_replace(Fl_Tree_Item_Array *self, int pos, Fl_Tree_Item *new_item);
-  
-  void Fl_Tree_Item_Array_remove(Fl_Tree_Item_Array *self, int index);
-  
-  int  Fl_Tree_Item_Array_remove_item(Fl_Tree_Item_Array *self, Fl_Tree_Item *item);
+int Fl_Tree_Item_Array_total(const Fl_Tree_Item_Array *self);
 
-  Fl_Tree_Item *Fl_Tree_Item_Array_at(Fl_Tree_Item_Array *self, int index);
+void Fl_Tree_Item_Array_swap(Fl_Tree_Item_Array *self, int ax, int bx);
 
-  void Fl_Tree_Item_Array_delete(Fl_Tree_Item_Array *self);
+int Fl_Tree_Item_Array_move(Fl_Tree_Item_Array *self, int to, int from);
+
+int Fl_Tree_Item_Array_deparent(Fl_Tree_Item_Array *self, int pos);
+
+int Fl_Tree_Item_Array_reparent(Fl_Tree_Item_Array *self, Fl_Tree_Item *item,
+                                Fl_Tree_Item *newparent, int pos);
+
+void Fl_Tree_Item_Array_clear(Fl_Tree_Item_Array *self);
+
+void Fl_Tree_Item_Array_add(Fl_Tree_Item_Array *self, Fl_Tree_Item *val);
+
+void Fl_Tree_Item_Array_insert(Fl_Tree_Item_Array *self, int pos,
+                               Fl_Tree_Item *new_item);
+
+void Fl_Tree_Item_Array_replace(Fl_Tree_Item_Array *self, int pos,
+                                Fl_Tree_Item *new_item);
+
+void Fl_Tree_Item_Array_remove(Fl_Tree_Item_Array *self, int index);
+
+int Fl_Tree_Item_Array_remove_item(Fl_Tree_Item_Array *self,
+                                   Fl_Tree_Item *item);
+
+Fl_Tree_Item *Fl_Tree_Item_Array_at(Fl_Tree_Item_Array *self, int index);
+
+void Fl_Tree_Item_Array_delete(Fl_Tree_Item_Array *self);
 
 #ifdef __cplusplus
 }

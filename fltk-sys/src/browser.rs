@@ -201,6 +201,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_take_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_visible_focus(self_: *mut Fl_Widget, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Browser {
@@ -383,6 +401,24 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_takes_events(arg1: *const Fl_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Browser_user_data(arg1: *const Fl_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Browser_take_focus(self_: *mut Fl_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Browser_set_visible_focus(self_: *mut Fl_Browser);
+}
+extern "C" {
+    pub fn Fl_Browser_clear_visible_focus(self_: *mut Fl_Browser);
+}
+extern "C" {
+    pub fn Fl_Browser_visible_focus(self_: *mut Fl_Browser, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Browser_has_visible_focus(self_: *mut Fl_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Browser_remove(arg1: *mut Fl_Browser, line: ::std::os::raw::c_int);
@@ -668,6 +704,25 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_takes_events(arg1: *const Fl_Hold_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_user_data(arg1: *const Fl_Hold_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_take_focus(self_: *mut Fl_Hold_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_set_visible_focus(self_: *mut Fl_Hold_Browser);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_clear_visible_focus(self_: *mut Fl_Hold_Browser);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_visible_focus(self_: *mut Fl_Hold_Browser, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_has_visible_focus(self_: *mut Fl_Hold_Browser)
+        -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_remove(arg1: *mut Fl_Hold_Browser, line: ::std::os::raw::c_int);
@@ -976,6 +1031,28 @@ extern "C" {
     pub fn Fl_Select_Browser_takes_events(arg1: *const Fl_Select_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Select_Browser_user_data(
+        arg1: *const Fl_Select_Browser,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_take_focus(self_: *mut Fl_Select_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_set_visible_focus(self_: *mut Fl_Select_Browser);
+}
+extern "C" {
+    pub fn Fl_Select_Browser_clear_visible_focus(self_: *mut Fl_Select_Browser);
+}
+extern "C" {
+    pub fn Fl_Select_Browser_visible_focus(self_: *mut Fl_Select_Browser, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Select_Browser_has_visible_focus(
+        self_: *mut Fl_Select_Browser,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Select_Browser_remove(arg1: *mut Fl_Select_Browser, line: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1275,6 +1352,27 @@ extern "C" {
     pub fn Fl_Multi_Browser_takes_events(arg1: *const Fl_Multi_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_user_data(arg1: *const Fl_Multi_Browser)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_take_focus(self_: *mut Fl_Multi_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_set_visible_focus(self_: *mut Fl_Multi_Browser);
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_clear_visible_focus(self_: *mut Fl_Multi_Browser);
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_visible_focus(self_: *mut Fl_Multi_Browser, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_has_visible_focus(
+        self_: *mut Fl_Multi_Browser,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Multi_Browser_remove(arg1: *mut Fl_Multi_Browser, line: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1564,6 +1662,25 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_takes_events(arg1: *const Fl_File_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Browser_user_data(arg1: *const Fl_File_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Browser_take_focus(self_: *mut Fl_File_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_visible_focus(self_: *mut Fl_File_Browser);
+}
+extern "C" {
+    pub fn Fl_File_Browser_clear_visible_focus(self_: *mut Fl_File_Browser);
+}
+extern "C" {
+    pub fn Fl_File_Browser_visible_focus(self_: *mut Fl_File_Browser, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Browser_has_visible_focus(self_: *mut Fl_File_Browser)
+        -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_File_Browser_remove(arg1: *mut Fl_File_Browser, line: ::std::os::raw::c_int);
