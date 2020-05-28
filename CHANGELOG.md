@@ -3,7 +3,8 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add a method to unset callbacks.
+- Fix double free after acquiring user_data.
 
 ## [0.5.2] - 2020-05-28
 ### Changes

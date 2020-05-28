@@ -424,9 +424,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
-                extern "C" {
-                    fn free(ptr: *mut raw::c_void);
-                }
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -437,6 +434,18 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: fltk_sys::widget::Fl_Callback = Some(shim);
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+                }
+            }
+
+            fn unset_callback(&mut self) {
+                unsafe {
+                    let old_data = self.user_data();
+                    if old_data.is_some() {
+                        let old_data = old_data.unwrap();
+                    }
+                    // let callback: Option<unsafe extern "C" fn(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)> = None;
+                    // fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, std::ptr::null_mut());
+                    self.set_callback(Box::new(move || {/* do nothing! */} ));
                 }
             }
 
