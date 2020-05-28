@@ -155,11 +155,8 @@ impl Tree {
         }
         let name = CString::new(name).unwrap();
         unsafe {
-            let x = Fl_Tree_insert_above(
-                self._inner,
-                above._inner,
-                name.as_ptr() as *mut raw::c_char,
-            );
+            let x =
+                Fl_Tree_insert_above(self._inner, above._inner, name.as_ptr() as *mut raw::c_char);
             TreeItem::from_raw(x)
         }
     }
@@ -169,7 +166,10 @@ impl Tree {
         if item._inner.is_null() {
             return None;
         }
-        debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            pos <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         let name = CString::new(name).unwrap();
         unsafe {
             let x = Fl_Tree_insert(
@@ -221,7 +221,9 @@ impl Tree {
 
     /// finds a clicked item
     pub fn find_clicked(&self, yonly: bool) -> Option<TreeItem> {
-        unsafe { TreeItem::from_raw(Fl_Tree_find_clicked(self._inner, yonly as i32) as *mut Fl_Tree_Item) }
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_find_clicked(self._inner, yonly as i32) as *mut Fl_Tree_Item)
+        }
     }
 
     /// Set the item that was last clicked.
@@ -290,7 +292,12 @@ impl Tree {
     }
 
     /// Gets the next tree item, direction_key is by default Key::Down
-    pub fn next_item(&mut self, item: TreeItem, direction_key: Key, visible: bool) -> Option<TreeItem> {
+    pub fn next_item(
+        &mut self,
+        item: TreeItem,
+        direction_key: Key,
+        visible: bool,
+    ) -> Option<TreeItem> {
         if item._inner.is_null() {
             return None;
         }
@@ -456,7 +463,11 @@ impl Tree {
     }
 
     /// Select only the specified item, deselecting all others that might be selected.
-    pub fn select_only(&mut self, selected_item: TreeItem, do_callback: bool) -> Result<(), FltkError> {
+    pub fn select_only(
+        &mut self,
+        selected_item: TreeItem,
+        do_callback: bool,
+    ) -> Result<(), FltkError> {
         if selected_item._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
@@ -520,8 +531,13 @@ impl Tree {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
         unsafe {
-            match Fl_Tree_extend_selection(self._inner, from._inner, to._inner, val as i32, visible as i32)
-            {
+            match Fl_Tree_extend_selection(
+                self._inner,
+                from._inner,
+                to._inner,
+                val as i32,
+                visible as i32,
+            ) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
@@ -567,7 +583,10 @@ impl Tree {
 
     /// Sets the items' label size
     pub fn set_item_label_size(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_item_labelsize(self._inner, val as i32) }
     }
 
@@ -608,7 +627,10 @@ impl Tree {
 
     /// Sets the left margin
     pub fn set_margin_left(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_marginleft(self._inner, val as i32) }
     }
 
@@ -619,7 +641,10 @@ impl Tree {
 
     /// Sets the top margin
     pub fn set_margin_top(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_margintop(self._inner, val as i32) }
     }
 
@@ -630,7 +655,10 @@ impl Tree {
 
     /// Sets the bottom margin
     pub fn set_margin_bottom(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_marginbottom(self._inner, val as i32) }
     }
 
@@ -641,7 +669,10 @@ impl Tree {
 
     /// Sets the line spacing
     pub fn set_line_spacing(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_linespacing(self._inner, val as i32) }
     }
 
@@ -652,7 +683,10 @@ impl Tree {
 
     /// Sets the open child bottom margin
     pub fn set_open_child_margin_bottom(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_openchild_marginbottom(self._inner, val as i32) }
     }
 
@@ -663,7 +697,10 @@ impl Tree {
 
     /// Sets the user icon left margin
     pub fn set_user_icon_margin_left(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_usericonmarginleft(self._inner, val as i32) }
     }
 
@@ -674,7 +711,10 @@ impl Tree {
 
     /// Sets the label's left margin
     pub fn set_label_margin_left(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_labelmarginleft(self._inner, val as i32) }
     }
 
@@ -685,7 +725,10 @@ impl Tree {
 
     /// Sets the widget's left margin
     pub fn set_widget_margin_left(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_widgetmarginleft(self._inner, val as i32) }
     }
 
@@ -696,7 +739,10 @@ impl Tree {
 
     /// Sets the connector's width
     pub fn set_connector_width(&mut self, val: u32) {
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_set_connectorwidth(self._inner, val as i32) }
     }
 
@@ -1060,9 +1106,11 @@ impl TreeItem {
             if x.is_null() {
                 return None;
             }
-            Some(CStr::from_ptr(x as *mut raw::c_char)
-                .to_string_lossy()
-                .to_string())
+            Some(
+                CStr::from_ptr(x as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
         }
     }
 
@@ -1081,7 +1129,10 @@ impl TreeItem {
     /// Sets the label's size
     pub fn set_label_size(&mut self, val: u32) {
         assert!(!self._inner.is_null());
-        debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            val <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_Item_set_labelsize(self._inner, val as i32) }
     }
 
@@ -1152,8 +1203,13 @@ impl TreeItem {
         if self._inner.is_null() {
             return None;
         }
-        debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-        unsafe { TreeItem::from_raw(Fl_Tree_Item_child(self._inner, idx as i32) as *mut Fl_Tree_Item) }
+        debug_assert!(
+            idx <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
+        unsafe {
+            TreeItem::from_raw(Fl_Tree_Item_child(self._inner, idx as i32) as *mut Fl_Tree_Item)
+        }
     }
 
     /// Returns whether the item has children
@@ -1256,7 +1312,10 @@ impl TreeItem {
         if self._inner.is_null() {
             return None;
         }
-        debug_assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            index <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { TreeItem::from_raw(Fl_Tree_Item_deparent(self._inner, index as i32)) }
     }
 
@@ -1265,7 +1324,10 @@ impl TreeItem {
         if self._inner.is_null() || new_child._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
-        debug_assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            index <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe {
             match Fl_Tree_Item_reparent(self._inner, new_child._inner, index as i32) {
                 0 => Ok(()),
@@ -1274,13 +1336,19 @@ impl TreeItem {
         }
     }
 
-    /// Move item 
+    /// Move item
     pub fn move_item(&mut self, to: u32, from: u32) -> Result<(), FltkError> {
         if self._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
-        debug_assert!(to <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-        debug_assert!(from <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            to <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
+        debug_assert!(
+            from <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe {
             match Fl_Tree_Item_move(self._inner, to as i32, from as i32) {
                 0 => Ok(()),
@@ -1320,7 +1388,10 @@ impl TreeItem {
         if self._inner.is_null() || item._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
-        debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            pos <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe {
             match Fl_Tree_Item_move_into(self._inner, item._inner, pos as i32) {
                 0 => Ok(()),
@@ -1370,7 +1441,10 @@ impl TreeItem {
     /// Update surrounding siblings
     pub fn update_prev_next(&mut self, index: u32) {
         assert!(!self._inner.is_null());
-        debug_assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            index <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_Item_update_prev_next(self._inner, index as i32) }
     }
 
@@ -1439,7 +1513,10 @@ impl TreeItem {
     /// Select an item at index
     pub fn select(&mut self, index: u32) {
         assert!(!self._inner.is_null());
-        debug_assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            index <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Tree_Item_select(self._inner, index as i32) }
     }
 
@@ -1603,7 +1680,10 @@ impl TreeItemArray {
 
     /// Gets the item at idx
     fn at(&self, idx: u32) -> Option<TreeItem> {
-        debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            idx <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { TreeItem::from_raw(Fl_Tree_Item_Array_at(self._inner, idx as i32)) }
     }
 

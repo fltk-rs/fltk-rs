@@ -1,9 +1,9 @@
 use crate::image::RgbImage;
 pub use crate::prelude::*;
 use fltk_sys::draw::*;
-use std::os::raw;
-use std::mem;
 use std::ffi::{CStr, CString};
+use std::mem;
+use std::os::raw;
 
 /// Opaque type around Fl_Region
 #[derive(Debug)]
@@ -33,46 +33,40 @@ impl Offscreen {
             if x.is_null() {
                 None
             } else {
-                Some(Offscreen { _inner: x, })
+                Some(Offscreen { _inner: x })
             }
         }
     }
 
     /// Creates an uninitialized offscreen type
     pub unsafe fn uninit() -> Offscreen {
-        Offscreen { _inner: std::ptr::null_mut(), }
+        Offscreen {
+            _inner: std::ptr::null_mut(),
+        }
     }
-    
+
     /// Begins drawing in the offscreen
     pub fn begin(&self) {
         assert!(!self._inner.is_null());
-        unsafe {
-            cfl_begin_offscreen(self._inner)
-        }
+        unsafe { cfl_begin_offscreen(self._inner) }
     }
 
     /// Ends drawing in the offscreen
     pub fn end(&self) {
         assert!(!self._inner.is_null());
-        unsafe {
-            cfl_end_offscreen()
-        }
+        unsafe { cfl_end_offscreen() }
     }
 
     /// Copies the offscreen
     pub fn copy(&self, x: i32, y: i32, w: i32, h: i32, srcx: i32, srcy: i32) {
         assert!(!self._inner.is_null());
-        unsafe {
-            cfl_copy_offscreen(x, y, w, h, self._inner, srcx, srcy)
-        }
+        unsafe { cfl_copy_offscreen(x, y, w, h, self._inner, srcx, srcy) }
     }
 
     /// Rescales the offscreen
     pub fn rescale(&mut self) {
         assert!(!self._inner.is_null());
-        unsafe {
-            cfl_rescale_offscreen(self._inner)
-        }
+        unsafe { cfl_rescale_offscreen(self._inner) }
     }
 
     /// Checks the validity of the offscreen
@@ -88,15 +82,15 @@ impl Offscreen {
     /// Performs a shallow copy of the offscreen
     pub unsafe fn memcpy(&self) -> Offscreen {
         assert!(!self._inner.is_null());
-        Offscreen { _inner: self._inner }
+        Offscreen {
+            _inner: self._inner,
+        }
     }
 }
 
 impl Drop for Offscreen {
     fn drop(&mut self) {
-        unsafe {
-            cfl_delete_offscreen(self._inner)
-        }
+        unsafe { cfl_delete_offscreen(self._inner) }
     }
 }
 
@@ -207,11 +201,9 @@ pub fn pop_clip() {
 
 /// Sets the clip region
 pub fn set_clip_region(r: &Region) {
-    unsafe {
-        cfl_set_clip_region(r._inner)
-    }
+    unsafe { cfl_set_clip_region(r._inner) }
 }
- 
+
 /// Gets the clip region
 pub fn clip_region() -> Option<Region> {
     unsafe {
@@ -246,16 +238,14 @@ pub fn restore_clip() {
 
 /// Copies the offscreen
 #[allow(dead_code)]
-fn copy_offscreen( x: i32, y: i32, w: i32, h: i32, pixmap: &Offscreen, srcx: i32, srcy: i32,) {
-    unsafe {
-        cfl_copy_offscreen( x, y, w, h, pixmap._inner, srcx, srcy,)
-    }
+fn copy_offscreen(x: i32, y: i32, w: i32, h: i32, pixmap: &Offscreen, srcx: i32, srcy: i32) {
+    unsafe { cfl_copy_offscreen(x, y, w, h, pixmap._inner, srcx, srcy) }
 }
 
 /// Creates an offscreen
-pub fn create_offscreen( w: i32, h: i32,) -> Offscreen {
+pub fn create_offscreen(w: i32, h: i32) -> Offscreen {
     unsafe {
-        let x = cfl_create_offscreen( w, h,);
+        let x = cfl_create_offscreen(w, h);
         assert!(!x.is_null());
         Offscreen { _inner: x }
     }
@@ -264,9 +254,7 @@ pub fn create_offscreen( w: i32, h: i32,) -> Offscreen {
 /// Begins the offscreen
 #[allow(dead_code)]
 fn begin_offscreen(b: &Offscreen) {
-    unsafe {
-        cfl_begin_offscreen(b._inner)
-    }
+    unsafe { cfl_begin_offscreen(b._inner) }
 }
 
 /// Ends the offscreen
@@ -277,17 +265,13 @@ pub fn end_offscreen() {
 /// Deletes the offscreen
 #[allow(dead_code)]
 fn delete_offscreen(bitmap: &mut Offscreen) {
-    unsafe {
-        cfl_delete_offscreen(bitmap._inner)
-    }
+    unsafe { cfl_delete_offscreen(bitmap._inner) }
 }
 
 /// Rescales the offscreen
 #[allow(dead_code)]
 fn rescale_offscreen(ctx: &mut Offscreen) {
-    unsafe {
-        cfl_rescale_offscreen(ctx._inner)
-    }
+    unsafe { cfl_rescale_offscreen(ctx._inner) }
 }
 
 /// Transforms coordinate using the current transformation matrix
@@ -504,7 +488,9 @@ pub fn height() -> i32 {
 
 /// Sets the line spacing for the current font
 pub fn set_height(font: Font, size: u32) {
-    unsafe { cfl_set_height(font as i32, size as i32); }
+    unsafe {
+        cfl_set_height(font as i32, size as i32);
+    }
 }
 
 /// Returns the recommended distance above the bottom of a height() tall box to
@@ -639,14 +625,23 @@ pub fn set_status(x: i32, y: i32, w: i32, h: i32) {
 
 /// Sets spot within the window
 pub fn set_spot<Win: WindowExt>(font: Font, size: u32, x: i32, y: i32, w: i32, h: i32, win: &Win) {
-    unsafe { cfl_set_spot(font as i32, size as i32, x, y, w, h, win.as_widget_ptr() as *mut raw::c_void) }
+    unsafe {
+        cfl_set_spot(
+            font as i32,
+            size as i32,
+            x,
+            y,
+            w,
+            h,
+            win.as_widget_ptr() as *mut raw::c_void,
+        )
+    }
 }
 
 /// Resets the spot within the window
 pub fn reset_spot() {
     unsafe { cfl_reset_spot() }
 }
-
 
 /// Captures part of the window and returns raw data
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
@@ -693,12 +688,7 @@ pub fn write_to_png_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<
     )))?;
     let path = std::ffi::CString::new(path)?;
     unsafe {
-        match cfl_raw_image_to_png(
-            data.as_ptr() as *mut u8,
-            path.as_ptr(),
-            w,
-            h,
-        ) {
+        match cfl_raw_image_to_png(data.as_ptr() as *mut u8, path.as_ptr(), w, h) {
             -1 => Err(FltkError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not write image!",
@@ -717,12 +707,7 @@ pub fn write_to_jpg_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<
     )))?;
     let path = std::ffi::CString::new(path)?;
     unsafe {
-        match cfl_raw_image_to_jpg(
-            data.as_ptr() as *mut u8,
-            path.as_ptr(),
-            w,
-            h,
-        ) {
+        match cfl_raw_image_to_jpg(data.as_ptr() as *mut u8, path.as_ptr(), w, h) {
             -1 => Err(FltkError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not write image!",
@@ -741,12 +726,7 @@ pub fn write_to_bmp_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<
     )))?;
     let path = std::ffi::CString::new(path)?;
     unsafe {
-        match cfl_raw_image_to_bmp(
-            data.as_ptr() as *mut u8,
-            path.as_ptr(),
-            w,
-            h,
-        ) {
+        match cfl_raw_image_to_bmp(data.as_ptr() as *mut u8, path.as_ptr(), w, h) {
             -1 => Err(FltkError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not write image!",

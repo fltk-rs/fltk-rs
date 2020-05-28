@@ -7,7 +7,7 @@
 //!
 //!
 //!
-//! Rust bindings for the FLTK Graphical User Interface library. 
+//! Rust bindings for the FLTK Graphical User Interface library.
 //!
 //! The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
 //!
@@ -145,7 +145,7 @@
 //!         }
 //!     }));
 //! ```
-//! Handled or ignored events using the handle method should return true, unhandled events should return false. 
+//! Handled or ignored events using the handle method should return true, unhandled events should return false.
 //! More examples are available in the examples directory.
 //!
 //! ### Theming
@@ -157,7 +157,7 @@
 //! - Plastic
 //!
 //! These can be set using the App::set_scheme() function.
-//! Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait, 
+//! Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait,
 //! such as set_color(), set_label_font(), set_frame_type() etc:
 //! ```rust
 //!     some_button.set_color(Color::Light1); //! You can use one of the provided colors in the fltk enums

@@ -3,7 +3,6 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-
 pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
@@ -136,6 +135,26 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     );
     let user_data = Ident::new(
         format!("{}_{}", name_str, "user_data").as_str(),
+        name.span(),
+    );
+    let take_focus = Ident::new(
+        format!("{}_{}", name_str, "take_focus").as_str(),
+        name.span(),
+    );
+    let set_visible_focus = Ident::new(
+        format!("{}_{}", name_str, "set_visible_focus").as_str(),
+        name.span(),
+    );
+    let clear_visible_focus = Ident::new(
+        format!("{}_{}", name_str, "clear_visible_focus").as_str(),
+        name.span(),
+    );
+    let visible_focus = Ident::new(
+        format!("{}_{}", name_str, "visible_focus").as_str(),
+        name.span(),
+    );
+    let has_visible_focus = Ident::new(
+        format!("{}_{}", name_str, "has_visible_focus").as_str(),
         name.span(),
     );
 
@@ -402,7 +421,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
                 // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
                 extern "C" {
@@ -423,7 +442,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>) {
                 // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
                 unsafe {
@@ -445,7 +464,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn draw(&mut self, cb: Box<dyn FnMut()>) {
                 // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(), 
+                //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
                 unsafe {
@@ -597,10 +616,47 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             unsafe fn raw_user_data(&self) -> *mut raw::c_void {
                 #user_data(self._inner)
             }
-            
+
             unsafe fn delete(&mut self) {
                 unsafe {
                     #delete(self._inner)
+                }
+            }
+
+            fn take_focus(&mut self) -> Result<(), FltkError> {
+                unsafe {
+                    match #take_focus(self._inner) {
+                        0 => Ok(()),
+                        _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+                    }
+                }
+            }
+
+
+            fn set_visible_focus(&mut self) {
+                unsafe {
+                    #set_visible_focus(self._inner)
+                }
+            }
+
+
+            fn clear_visible_focus(&mut self) {
+                unsafe {
+                    #clear_visible_focus(self._inner)
+                }
+            }
+
+
+            fn visible_focus(&mut self, v: bool) {
+                unsafe {
+                    #visible_focus(self._inner, v as i32)
+                }
+            }
+
+
+            fn has_visible_focus(&mut self) -> bool {
+                unsafe {
+                    #has_visible_focus(self._inner) != 0
                 }
             }
         }

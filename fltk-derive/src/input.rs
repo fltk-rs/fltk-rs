@@ -3,7 +3,6 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-
 pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());

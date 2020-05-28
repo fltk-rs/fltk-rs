@@ -61,7 +61,7 @@ impl MenuItem {
             MenuItem { _inner: item_ptr }
         }
     }
-    
+
     /// Creates a popup menu at the specified coordinates and returns its choice
     pub fn popup(&mut self, x: i32, y: i32) -> Option<MenuItem> {
         if self._inner.is_null() {
@@ -79,7 +79,7 @@ impl MenuItem {
             }
         }
     }
-    
+
     /// Returns the label of the menu item
     pub fn label(&self) -> Option<String> {
         if self._inner.is_null() {
@@ -90,9 +90,11 @@ impl MenuItem {
             if label_ptr.is_null() {
                 return None;
             }
-            Some(CStr::from_ptr(label_ptr as *mut raw::c_char)
-                .to_string_lossy()
-                .to_string())
+            Some(
+                CStr::from_ptr(label_ptr as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
         }
     }
 

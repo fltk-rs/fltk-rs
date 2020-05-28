@@ -204,3 +204,18 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Widget_take_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_set_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_visible_focus(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_visible_focus(self_: *mut Fl_Widget, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+}

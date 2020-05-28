@@ -42,9 +42,7 @@ impl RadioButton {
 
     /// Sets whether the RadioButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe {
-            Fl_Radio_Button_toggle(self._inner, val as i32)
-        }
+        unsafe { Fl_Radio_Button_toggle(self._inner, val as i32) }
     }
 }
 
@@ -67,9 +65,7 @@ impl RadioRoundButton {
 
     /// Sets whether the RadioRoundButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe {
-            Fl_Radio_Round_Button_toggle(self._inner, val as i32)
-        }
+        unsafe { Fl_Radio_Round_Button_toggle(self._inner, val as i32) }
     }
 }
 
@@ -92,9 +88,7 @@ impl RadioLightButton {
 
     /// Sets whether the RadioLightButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe {
-            Fl_Radio_Light_Button_toggle(self._inner, val as i32)
-        }
+        unsafe { Fl_Radio_Light_Button_toggle(self._inner, val as i32) }
     }
 }
 
@@ -117,9 +111,7 @@ impl RoundButton {
 
     /// Sets whether the RoundButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe {
-            Fl_Round_Button_toggle(self._inner, val as i32)
-        }
+        unsafe { Fl_Round_Button_toggle(self._inner, val as i32) }
     }
 }
 
@@ -167,9 +159,7 @@ impl ToggleButton {
 
     /// Sets whether the ToggleButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
-        unsafe {
-            Fl_Toggle_Button_toggle(self._inner, val as i32)
-        }
+        unsafe { Fl_Toggle_Button_toggle(self._inner, val as i32) }
     }
 }
 
@@ -192,9 +182,7 @@ impl LightButton {
 
     /// Sets whether the LightButton is on or not
     pub fn turn_on(&mut self, on: bool) {
-        unsafe {
-            Fl_Light_Button_turn_on(self._inner, on as i32)
-        }
+        unsafe { Fl_Light_Button_turn_on(self._inner, on as i32) }
     }
 }
 
@@ -210,13 +198,12 @@ pub struct ReturnButton {
     _inner: *mut Fl_Return_Button,
 }
 
-
 #[cfg(test)]
 mod button {
     use super::*;
     #[test]
     fn tooltip() {
-        let mut but = Button::new(0,0,0,0,"hello");
+        let mut but = Button::new(0, 0, 0, 0, "hello");
         but.set_tooltip("tooltip");
         assert!(but.tooltip().unwrap() == "tooltip");
     }

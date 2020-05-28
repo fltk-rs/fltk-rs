@@ -196,6 +196,16 @@ pub unsafe trait WidgetExt {
     fn takes_events(&self) -> bool;
     /// Emits a message on callback using a sender
     fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T);
+    /// Make the widget take focus
+    fn take_focus(&mut self) -> Result<(), FltkError>;
+    /// Set the widget to have visible focus
+    fn set_visible_focus(&mut self);
+    /// Clear visible focus
+    fn clear_visible_focus(&mut self);
+    /// Set the visible focus using a flag
+    fn visible_focus(&mut self, v: bool);
+    /// Return whether the widget has visible focus
+    fn has_visible_focus(&mut self) -> bool;
     /// Retakes ownership of the user callback data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     /// Retakes ownership of the user callback data
@@ -364,7 +374,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Get index into menu of the last item chosen
     fn value(&self) -> i32;
     /// Set index into menu of the last item chosen,return true if the new value is different than the old one
-    fn set_value(&mut self,v:i32) -> bool;
+    fn set_value(&mut self, v: i32) -> bool;
     /// Clears the items in a menu
     fn clear(&mut self);
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
@@ -396,7 +406,7 @@ pub unsafe trait ValuatorExt: WidgetExt {
     /// Set the value of a valuator
     fn set_value(&mut self, arg2: f64);
     /// Set the format of a valuator
-    fn format(&mut self, arg2: &str) -> Result<(), FltkError> ;
+    fn format(&mut self, arg2: &str) -> Result<(), FltkError>;
     /// Round the valuator
     fn round(&self, arg2: f64) -> f64;
     /// Clamp the valuator
@@ -576,13 +586,7 @@ pub unsafe trait TableExt: GroupExt {
     /// Gets the number of columns
     fn cols(&self) -> u32;
     /// Returns the range of row and column numbers for all visible and partially visible cells in the table.
-    fn visible_cells(
-        &mut self,
-        r1: &mut i32,
-        r2: &mut i32,
-        c1: &mut i32,
-        c2: &mut i32,
-    );
+    fn visible_cells(&mut self, r1: &mut i32, r2: &mut i32, c1: &mut i32, c2: &mut i32);
     /// Returns whether the resize is interactive
     fn is_interactive_resize(&self) -> bool;
     /// Returns whether a row is resizable
@@ -662,7 +666,12 @@ pub unsafe trait TableExt: GroupExt {
     /// Sets the selection
     fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
     /// Moves the cursor with shift select
-    fn move_cursor_with_shift_select(&mut self, r: i32, c: i32, shiftselect: bool) -> Result<(), FltkError>;
+    fn move_cursor_with_shift_select(
+        &mut self,
+        r: i32,
+        c: i32,
+        shiftselect: bool,
+    ) -> Result<(), FltkError>;
     /// Moves the cursor
     fn move_cursor(&mut self, r: i32, c: i32) -> Result<(), FltkError>;
     /// Resets the internal array of widget sizes and positions.

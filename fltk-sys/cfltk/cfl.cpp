@@ -101,7 +101,9 @@ unsigned int Fl_rand(void) {
     return dist(rng);
 }
 
-int Fl_event_inside(int x, int y, int w, int h) { return Fl::event_inside(x, y, w, h); }
+int Fl_event_inside(int x, int y, int w, int h) {
+    return Fl::event_inside(x, y, w, h);
+}
 
 // Fl_Widget *Fl_belowmouse() { return Fl::belowmouse(); }
 

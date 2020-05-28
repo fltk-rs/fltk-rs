@@ -72,7 +72,12 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     void *widget##_window(const widget *);                                     \
     void *widget##_top_window(const widget *);                                 \
     int widget##_takes_events(const widget *);                                 \
-    void *widget##_user_data(const widget *);
+    void *widget##_user_data(const widget *);                                  \
+    int widget##_take_focus(widget *self);                                     \
+    void widget##_set_visible_focus(widget *self);                             \
+    void widget##_clear_visible_focus(widget *self);                           \
+    void widget##_visible_focus(widget *self, int v);                          \
+    unsigned int widget##_has_visible_focus(widget *self);
 
 #define WIDGET_DEFINE(widget)                                                  \
     class widget##_Derived : public widget {                                   \
@@ -225,7 +230,24 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     int widget##_takes_events(const widget *self) {                            \
         return self->takesevents();                                            \
     }                                                                          \
-    void *widget##_user_data(const widget *self) { return self->user_data(); }
+    void *widget##_user_data(const widget *self) { return self->user_data(); } \
+    int widget##_take_focus(widget *self) {                                    \
+        int ret;                                                               \
+        LOCK(ret = self->take_focus());                                        \
+        return ret;                                                            \
+    }                                                                          \
+    void widget##_set_visible_focus(widget *self) {                            \
+        LOCK(self->set_visible_focus();)                                       \
+    }                                                                          \
+    void widget##_clear_visible_focus(widget *self) {                          \
+        LOCK(self->clear_visible_focus();)                                     \
+    }                                                                          \
+    void widget##_visible_focus(widget *self, int v) {                         \
+        LOCK(self->visible_focus(v);)                                          \
+    }                                                                          \
+    unsigned int widget##_has_visible_focus(widget *self) {                    \
+        return self->visible_focus();                                          \
+    }
 
 WIDGET_DECLARE(Fl_Widget)
 

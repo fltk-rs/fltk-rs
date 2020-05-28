@@ -3,7 +3,6 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-
 pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
@@ -26,9 +25,15 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "make_resizable").as_str(),
         name.span(),
     );
-    let set_cursor = Ident::new(format!("{}_{}", name_str, "set_cursor").as_str(), name.span());
+    let set_cursor = Ident::new(
+        format!("{}_{}", name_str, "set_cursor").as_str(),
+        name.span(),
+    );
     let shown = Ident::new(format!("{}_{}", name_str, "shown").as_str(), name.span());
-    let raw_handle = Ident::new(format!("{}_{}", name_str, "raw_handle").as_str(), name.span());
+    let raw_handle = Ident::new(
+        format!("{}_{}", name_str, "raw_handle").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl WindowExt for #name {

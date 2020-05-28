@@ -117,10 +117,6 @@ int Fl_Gl_Window_pixel_w(Fl_Gl_Window *self) { return self->pixel_w(); }
 
 int Fl_Gl_Window_pixel_h(Fl_Gl_Window *self) { return self->pixel_h(); }
 
-int Fl_Gl_Window_mode(const Fl_Gl_Window *self) {
-    return self->mode();
-}
+int Fl_Gl_Window_mode(const Fl_Gl_Window *self) { return self->mode(); }
 
-void Fl_Gl_Window_set_mode(Fl_Gl_Window *self, int mode) {
-    self->mode(mode);
-}
+void Fl_Gl_Window_set_mode(Fl_Gl_Window *self, int mode) { self->mode(mode); }

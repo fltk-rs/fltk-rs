@@ -513,7 +513,6 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     }
 }
 
-
 // pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
 //     unsafe {
 //         let x = Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
@@ -531,9 +530,5 @@ pub unsafe fn delete_widget<Wid: WidgetExt>(wid: &Wid) {
 }
 
 fn register_images() {
-    unsafe {
-        fltk_sys::image::Fl_register_images()
-    }
+    unsafe { fltk_sys::image::Fl_register_images() }
 }
-
-
