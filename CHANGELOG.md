@@ -3,6 +3,8 @@
 ## Unreleased
 ### Changes
 - Add Fl_Scroll methods.
+- Mark GroupExt clear method as unsafe since it could invalidate underlying widgets.
+- Add WidgetExt unsafe methods to acquire user_data and manually delete widgets.
 
 ## [0.5.1] - 2020-05-26
 ### Changes

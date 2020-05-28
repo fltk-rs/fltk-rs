@@ -198,6 +198,10 @@ pub unsafe trait WidgetExt {
     fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T);
     /// Retakes ownership of the user callback data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
+    /// Retakes ownership of the user callback data
+    unsafe fn raw_user_data(&self) -> *mut raw::c_void;
+    /// Manually delete a widget
+    unsafe fn delete(&mut self);
 }
 
 /// Defines the methods implemented by all button widgets
@@ -232,7 +236,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Remove a widget from a group
     fn remove<Widget: WidgetExt>(&mut self, widget: &Widget);
     /// Clear a group from all widgets
-    fn clear(&mut self);
+    unsafe fn clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> u32;
     /// Return child widget by index

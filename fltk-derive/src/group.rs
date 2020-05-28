@@ -57,7 +57,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn clear(&mut self) {
+            unsafe fn clear(&mut self) {
                 unsafe {
                     #clear(self._inner)
                 }

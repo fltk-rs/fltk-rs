@@ -10,6 +10,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let name_str = get_fl_name(name.to_string());
 
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
+    let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
     let x = Ident::new(format!("{}_{}", name_str, "x").as_str(), name.span());
     let y = Ident::new(format!("{}_{}", name_str, "y").as_str(), name.span());
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
@@ -590,6 +591,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let x = ptr as *mut Box<dyn FnMut()>;
                     let x = Box::from_raw(x);
                     Some(*x)
+                }
+            }
+
+            unsafe fn raw_user_data(&self) -> *mut raw::c_void {
+                #user_data(self._inner)
+            }
+            
+            unsafe fn delete(&mut self) {
+                unsafe {
+                    #delete(self._inner)
                 }
             }
         }
