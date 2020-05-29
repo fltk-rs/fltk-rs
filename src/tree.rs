@@ -214,9 +214,9 @@ impl Tree {
     }
 
     /// Clears a tree
-    pub fn clear(&mut self) {
+    pub unsafe fn clear(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_clear(self._inner) }
+        Fl_Tree_clear(self._inner)
     }
 
     /// Clears all children

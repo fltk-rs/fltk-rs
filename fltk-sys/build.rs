@@ -18,7 +18,11 @@ fn main() {
     println!("cargo:rerun-if-changed=build.rs");
 
     if cfg!(feature = "fltk-bundled") {
-        let url = PathBuf::from(format!("https://github.com/MoAlyousef/fltk-rs/releases/download/{}/lib_x64-{}.tar.gz", pkg_version, target_os.as_str()));
+        let url = PathBuf::from(format!(
+            "https://github.com/MoAlyousef/fltk-rs/releases/download/{}/lib_x64-{}.tar.gz",
+            pkg_version,
+            target_os.as_str()
+        ));
 
         Command::new("curl")
             .args(&["-LOk", url.to_str().unwrap()])

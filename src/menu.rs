@@ -32,6 +32,7 @@ pub struct Choice {
 #[derive(Debug, Clone)]
 pub struct MenuItem {
     _inner: *mut Fl_Menu_Item,
+    _alloc: bool,
 }
 
 /// Defines the menu flag for any added menu items using the add() method
@@ -61,7 +62,10 @@ impl MenuItem {
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
-            MenuItem { _inner: item_ptr }
+            MenuItem {
+                _inner: item_ptr,
+                _alloc: true,
+            }
         }
     }
 
@@ -77,6 +81,7 @@ impl MenuItem {
             } else {
                 let item = MenuItem {
                     _inner: item as *mut Fl_Menu_Item,
+                    _alloc: false,
                 };
                 Some(item)
             }
@@ -85,6 +90,7 @@ impl MenuItem {
 
     /// Returns the label of the menu item
     pub fn label(&self) -> Option<String> {
+        assert!(!self._inner.is_null());
         if self._inner.is_null() {
             return None;
         }
@@ -219,6 +225,7 @@ impl MenuItem {
 
     /// Returns whether a menu item is a submenu
     pub fn is_submenu(&self) -> bool {
+        assert!(!self._inner.is_null());
         unsafe { Fl_Menu_Item_submenu(self._inner) != 0 }
     }
 
@@ -242,7 +249,10 @@ impl MenuItem {
             if ptr.is_null() {
                 None
             } else {
-                Some(MenuItem { _inner: ptr })
+                Some(MenuItem {
+                    _inner: ptr,
+                    _alloc: self._alloc,
+                })
             }
         }
     }
@@ -266,8 +276,12 @@ impl MenuItem {
 
     /// Set a callback for the menu item
     pub fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
+        assert!(!self._inner.is_null());
         unsafe {
-            unsafe extern "C" fn shim(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
+            unsafe extern "C" fn shim(
+                _wid: *mut fltk_sys::menu::Fl_Widget,
+                data: *mut raw::c_void,
+            ) {
                 let a: *mut Box<dyn FnMut()> = mem::transmute(data);
                 let f: &mut (dyn FnMut()) = &mut **a;
                 f();
@@ -290,14 +304,25 @@ impl MenuItem {
 
     /// Delete the old callback and replace it with an empty one
     pub fn safe_unset_callback(&mut self) {
-        unsafe { self.unset_callback(); }
-        self.set_callback(Box::new(move || {/* do nothing */ }));
+        assert!(!self._inner.is_null());
+        unsafe {
+            self.unset_callback();
+        }
+        self.set_callback(Box::new(move || { /* do nothing */ }));
     }
 }
 
 unsafe impl Send for MenuItem {}
 
 unsafe impl Sync for MenuItem {}
+
+impl Drop for MenuItem {
+    fn drop(&mut self) {
+        if self._alloc {
+            unsafe { Fl_Menu_Item_delete(self._inner) }
+        }
+    }
+}
 
 #[cfg(test)]
 mod menu {

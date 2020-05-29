@@ -73,7 +73,10 @@
     void widget##_set_mode(widget *self, int i, int fl) {                      \
         LOCK(self->mode(fl);)                                                  \
     }                                                                          \
-    int widget##_mode(const widget *self, int i) { return self->mode(i); }
+    int widget##_mode(const widget *self, int i) { return self->mode(i); }     \
+    int widget##_find_index(const widget *self, const char *label) {           \
+        return self->find_index(label);                                        \
+    }
 
 WIDGET_DEFINE(Fl_Menu_Bar)
 
@@ -160,7 +163,7 @@ Fl_Menu_Item *Fl_Menu_Item_next(Fl_Menu_Item *self, int idx) {
     return self->next(idx);
 }
 
-void Fl_Menu_Item_callback(Fl_Menu_Item *self, Fl_Callback* c, void* p) {
+void Fl_Menu_Item_callback(Fl_Menu_Item *self, Fl_Callback *c, void *p) {
     LOCK(self->callback(c, p);)
 }
 

@@ -7,6 +7,8 @@
 - Remove redundant delete_widget function.
 - Add method to iterate menus.
 - Add a safe variant to delete and unset callbacks.
+- Calls to widget::clear will automatically delete allocated user_data.
+- Mark clear methods not acting on FLTK widgets as unsafe.
 
 ## [0.5.3] - 2020-05-29
 ### Changes

@@ -534,6 +534,12 @@ extern "C" {
         i: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Bar_find_index(
+        self_: *const Fl_Menu_Bar,
+        label: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Button {
@@ -856,6 +862,12 @@ extern "C" {
         i: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Button_find_index(
+        self_: *const Fl_Menu_Button,
+        label: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Choice {
@@ -1158,6 +1170,12 @@ extern "C" {
     pub fn Fl_Choice_mode(
         self_: *const Fl_Choice,
         i: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_find_index(
+        self_: *const Fl_Choice,
+        label: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {

@@ -348,6 +348,8 @@ pub unsafe trait MenuExt: WidgetExt {
     fn find_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
     /// Set selected item
     fn set_item(&mut self, item: &crate::menu::MenuItem) -> bool;
+    /// Find an item's index by its label
+    fn find_index(&self, label: &str) -> u32;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -386,10 +388,9 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Set index into menu of the last item chosen,return true if the new value is different than the old one
     fn set_value(&mut self, v: i32) -> bool;
     /// Clears the items in a menu, effectively deleting them.
-    fn clear(&mut self);
+    unsafe fn clear(&mut self);
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
-    /// Notice that clear_submenu only removes the MenuItems and does not delete them
-    fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
+    unsafe fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
     /// Get the size of the menu widget
     fn size(&self) -> u32;
     /// Get the text label of the menu item at index idx
