@@ -55,6 +55,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let size = Ident::new(format!("{}_{}", name_str, "size").as_str(), name.span());
     let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
     let at = Ident::new(format!("{}_{}", name_str, "at").as_str(), name.span());
+    let mode = Ident::new(format!("{}_{}", name_str, "mode").as_str(), name.span());
+    let set_mode = Ident::new(format!("{}_{}", name_str, "set_mode").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl MenuExt for #name {
@@ -263,6 +265,18 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(MenuItem { _inner: ptr })
                     }
+                }
+            }
+
+            fn mode(&self, idx: u32) -> crate::menu::MenuFlag {
+                unsafe {
+                    mem::transmute(#mode(self._inner, idx as i32))
+                }
+            }
+            
+            fn set_mode(&mut self, idx: u32, flag: crate::menu::MenuFlag) {
+                unsafe {
+                    #set_mode(self._inner, idx as i32, flag as i32)
                 }
             }
         }

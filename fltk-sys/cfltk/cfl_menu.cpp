@@ -69,7 +69,11 @@
     }                                                                          \
     const Fl_Menu_Item *widget##_at(const widget *self, int idx) {             \
         return &self->menu()[idx];                                             \
-    }
+    }                                                                          \
+    void widget##_set_mode(widget *self, int i, int fl) {                      \
+        LOCK(self->mode(fl);)                                                  \
+    }                                                                          \
+    int widget##_mode(const widget *self, int i) { return self->mode(i); }
 
 WIDGET_DEFINE(Fl_Menu_Bar)
 
@@ -150,8 +154,14 @@ void Fl_Menu_Item_activate(Fl_Menu_Item *self) { LOCK(self->activate();) }
 
 void Fl_Menu_Item_deactivate(Fl_Menu_Item *self) { LOCK(self->deactivate();) }
 
+int Fl_Menu_Item_submenu(const Fl_Menu_Item *self) { return self->submenu(); }
+
 Fl_Menu_Item *Fl_Menu_Item_next(Fl_Menu_Item *self, int idx) {
     return self->next(idx);
+}
+
+void Fl_Menu_Item_callback(Fl_Menu_Item *self, Fl_Callback* c, void* p) {
+    LOCK(self->callback(c, p);)
 }
 
 void *Fl_Menu_Item_user_data(const Fl_Menu_Item *self) {

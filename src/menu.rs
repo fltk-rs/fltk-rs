@@ -217,6 +217,11 @@ impl MenuItem {
         unsafe { Fl_Menu_Item_deactivate(self._inner) }
     }
 
+    /// Returns whether a menu item is a submenu
+    pub fn is_submenu(&self) -> bool {
+        unsafe { Fl_Menu_Item_submenu(self._inner) != 0 }
+    }
+
     /// Shows the menu item
     pub fn show(&mut self) {
         assert!(!self._inner.is_null());
@@ -229,6 +234,7 @@ impl MenuItem {
         unsafe { Fl_Menu_Item_hide(self._inner) }
     }
 
+    /// Get the next menu item
     pub fn next(&mut self, idx: u32) -> Option<MenuItem> {
         assert!(!self._inner.is_null());
         unsafe {
@@ -258,12 +264,34 @@ impl MenuItem {
         Fl_Menu_Item_set_user_data(self._inner, data)
     }
 
+    /// Set a callback for the menu item
+    pub fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
+        unsafe {
+            unsafe extern "C" fn shim(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
+                let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                let f: &mut (dyn FnMut()) = &mut **a;
+                f();
+            }
+            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+            let data: *mut raw::c_void = mem::transmute(a);
+            let callback: fltk_sys::menu::Fl_Callback = Some(shim);
+            Fl_Menu_Item_callback(self._inner, callback, data);
+        }
+    }
+
+    /// Manually unset a callback
     pub unsafe fn unset_callback(&mut self) {
         let old_data = self.user_data();
         if old_data.is_some() {
             let _ = old_data.unwrap();
             self.set_user_data(0 as *mut raw::c_void);
         }
+    }
+
+    /// Delete the old callback and replace it with an empty one
+    pub fn safe_unset_callback(&mut self) {
+        unsafe { self.unset_callback(); }
+        self.set_callback(Box::new(move || {/* do nothing */ }));
     }
 }
 

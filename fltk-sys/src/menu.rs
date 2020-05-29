@@ -521,6 +521,19 @@ extern "C" {
         idx: ::std::os::raw::c_int,
     ) -> *const Fl_Menu_Item;
 }
+extern "C" {
+    pub fn Fl_Menu_Bar_set_mode(
+        self_: *mut Fl_Menu_Bar,
+        i: ::std::os::raw::c_int,
+        fl: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_mode(
+        self_: *const Fl_Menu_Bar,
+        i: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Button {
@@ -830,6 +843,19 @@ extern "C" {
         idx: ::std::os::raw::c_int,
     ) -> *const Fl_Menu_Item;
 }
+extern "C" {
+    pub fn Fl_Menu_Button_set_mode(
+        self_: *mut Fl_Menu_Button,
+        i: ::std::os::raw::c_int,
+        fl: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Button_mode(
+        self_: *const Fl_Menu_Button,
+        i: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Choice {
@@ -1122,6 +1148,19 @@ extern "C" {
     pub fn Fl_Choice_at(arg1: *const Fl_Choice, idx: ::std::os::raw::c_int) -> *const Fl_Menu_Item;
 }
 extern "C" {
+    pub fn Fl_Choice_set_mode(
+        self_: *mut Fl_Choice,
+        i: ::std::os::raw::c_int,
+        fl: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Choice_mode(
+        self_: *const Fl_Choice,
+        i: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Item_new(
         args: *mut *mut ::std::os::raw::c_char,
         sz: ::std::os::raw::c_int,
@@ -1195,10 +1234,20 @@ extern "C" {
     pub fn Fl_Menu_Item_deactivate(arg1: *mut Fl_Menu_Item);
 }
 extern "C" {
+    pub fn Fl_Menu_Item_submenu(self_: *const Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Item_next(
         self_: *mut Fl_Menu_Item,
         idx: ::std::os::raw::c_int,
     ) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_callback(
+        self_: *mut Fl_Menu_Item,
+        c: Fl_Callback,
+        p: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Menu_Item_user_data(arg1: *const Fl_Menu_Item) -> *mut ::std::os::raw::c_void;

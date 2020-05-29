@@ -6,6 +6,7 @@
 - Add cleanup after menu deletion.
 - Remove redundant delete_widget function.
 - Add method to iterate menus.
+- Add a safe variant to delete and unset callbacks.
 
 ## [0.5.3] - 2020-05-29
 ### Changes

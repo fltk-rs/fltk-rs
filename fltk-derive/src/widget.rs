@@ -501,6 +501,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn safe_unset_callback(&mut self) {
+                assert!(!self.was_deleted());
+                unsafe { self.unset_callback(); }
+                self.set_callback(Box::new(move || {/* do nothing */ }));
+            }
+
             fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>) {
                 assert!(!self.was_deleted());
                 // debug_assert!(
@@ -700,17 +706,19 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             unsafe fn set_user_data(&mut self, data: *mut raw::c_void) {
-                #set_user_data(self._inner, data)
+                unsafe { #set_user_data(self._inner, data) }
             }
 
             unsafe fn raw_user_data(&self) -> *mut raw::c_void {
                 #user_data(self._inner)
             }
 
-            unsafe fn delete(&mut self) {
-                    assert!(!self.was_deleted());
+            fn delete(&mut self) {
+                assert!(!self.was_deleted());
+                unsafe {
                     #delete(self._inner);
                     self.cleanup();
+                }
             }
 
             fn take_focus(&mut self) -> Result<(), FltkError> {

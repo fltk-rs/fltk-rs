@@ -173,6 +173,8 @@ pub unsafe trait WidgetExt {
     fn set_callback(&mut self, cb: Box<dyn FnMut()>);
     /// Unset the defined callback
     unsafe fn unset_callback(&mut self);
+    /// Delete the old callback and replace it with an empty one
+    fn safe_unset_callback(&mut self);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
     fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>);
@@ -209,7 +211,7 @@ pub unsafe trait WidgetExt {
     /// Return whether the widget has visible focus
     fn has_visible_focus(&mut self) -> bool;
     /// Manually delete a widget
-    unsafe fn delete(&mut self);
+    fn delete(&mut self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
     /// Retakes ownership of the user callback data
@@ -383,9 +385,10 @@ pub unsafe trait MenuExt: WidgetExt {
     fn value(&self) -> i32;
     /// Set index into menu of the last item chosen,return true if the new value is different than the old one
     fn set_value(&mut self, v: i32) -> bool;
-    /// Clears the items in a menu
+    /// Clears the items in a menu, effectively deleting them.
     fn clear(&mut self);
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
+    /// Notice that clear_submenu only removes the MenuItems and does not delete them
     fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
     /// Get the size of the menu widget
     fn size(&self) -> u32;
@@ -393,6 +396,10 @@ pub unsafe trait MenuExt: WidgetExt {
     fn text(&self, idx: u32) -> Option<String>;
     /// Get the menu item at an index
     fn at(&self, idx: u32) -> Option<crate::menu::MenuItem>;
+    /// Set the mode of a menu item by index and flag
+    fn mode(&self, idx: u32) -> crate::menu::MenuFlag;
+    /// Get the mode of a menu item
+    fn set_mode(&mut self, idx: u32, flag: crate::menu::MenuFlag);
 }
 
 /// Defines the methods implemented by all valuator widgets
