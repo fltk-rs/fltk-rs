@@ -219,6 +219,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
 }
+extern "C" {
+    pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Slider {
@@ -419,6 +422,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Slider_has_visible_focus(self_: *mut Fl_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Slider_set_user_data(arg1: *mut Fl_Slider, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Slider_set_bounds(arg1: *mut Fl_Slider, a: f64, b: f64);
@@ -680,6 +686,12 @@ extern "C" {
     pub fn Fl_Nice_Slider_has_visible_focus(self_: *mut Fl_Nice_Slider) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Nice_Slider_set_user_data(
+        arg1: *mut Fl_Nice_Slider,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Nice_Slider_set_bounds(arg1: *mut Fl_Nice_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -931,6 +943,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Counter_has_visible_focus(self_: *mut Fl_Counter) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Counter_set_user_data(arg1: *mut Fl_Counter, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Counter_set_bounds(arg1: *mut Fl_Counter, a: f64, b: f64);
@@ -1186,6 +1201,9 @@ extern "C" {
     pub fn Fl_Dial_has_visible_focus(self_: *mut Fl_Dial) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Dial_set_user_data(arg1: *mut Fl_Dial, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Dial_set_bounds(arg1: *mut Fl_Dial, a: f64, b: f64);
 }
 extern "C" {
@@ -1433,6 +1451,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Line_Dial_has_visible_focus(self_: *mut Fl_Line_Dial) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Line_Dial_set_user_data(arg1: *mut Fl_Line_Dial, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_bounds(arg1: *mut Fl_Line_Dial, a: f64, b: f64);
@@ -1688,6 +1709,9 @@ extern "C" {
     pub fn Fl_Roller_has_visible_focus(self_: *mut Fl_Roller) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Roller_set_user_data(arg1: *mut Fl_Roller, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Roller_set_bounds(arg1: *mut Fl_Roller, a: f64, b: f64);
 }
 extern "C" {
@@ -1936,6 +1960,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_has_visible_focus(self_: *mut Fl_Scrollbar) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_set_user_data(arg1: *mut Fl_Scrollbar, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_bounds(arg1: *mut Fl_Scrollbar, a: f64, b: f64);
@@ -2204,6 +2231,12 @@ extern "C" {
         -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Value_Slider_set_user_data(
+        arg1: *mut Fl_Value_Slider,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Value_Slider_set_bounds(arg1: *mut Fl_Value_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -2458,6 +2491,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Adjuster_has_visible_focus(self_: *mut Fl_Adjuster) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_user_data(arg1: *mut Fl_Adjuster, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Adjuster_set_bounds(arg1: *mut Fl_Adjuster, a: f64, b: f64);
@@ -2720,6 +2756,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Input_has_visible_focus(self_: *mut Fl_Value_Input) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_user_data(
+        arg1: *mut Fl_Value_Input,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Value_Input_set_bounds(arg1: *mut Fl_Value_Input, a: f64, b: f64);
@@ -2988,6 +3030,12 @@ extern "C" {
         -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Value_Output_set_user_data(
+        arg1: *mut Fl_Value_Output,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Value_Output_set_bounds(arg1: *mut Fl_Value_Output, a: f64, b: f64);
 }
 extern "C" {
@@ -3253,6 +3301,12 @@ extern "C" {
     pub fn Fl_Fill_Slider_has_visible_focus(self_: *mut Fl_Fill_Slider) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Fill_Slider_set_user_data(
+        arg1: *mut Fl_Fill_Slider,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Fill_Slider_set_bounds(arg1: *mut Fl_Fill_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -3504,6 +3558,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Fill_Dial_has_visible_focus(self_: *mut Fl_Fill_Dial) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_user_data(arg1: *mut Fl_Fill_Dial, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_bounds(arg1: *mut Fl_Fill_Dial, a: f64, b: f64);
@@ -3760,6 +3817,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Slider_has_visible_focus(self_: *mut Fl_Hor_Slider) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_user_data(arg1: *mut Fl_Hor_Slider, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_bounds(arg1: *mut Fl_Hor_Slider, a: f64, b: f64);
@@ -4064,6 +4124,12 @@ extern "C" {
     pub fn Fl_Hor_Fill_Slider_has_visible_focus(
         self_: *mut Fl_Hor_Fill_Slider,
     ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_user_data(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_bounds(arg1: *mut Fl_Hor_Fill_Slider, a: f64, b: f64);
@@ -4378,6 +4444,12 @@ extern "C" {
     pub fn Fl_Hor_Nice_Slider_has_visible_focus(
         self_: *mut Fl_Hor_Nice_Slider,
     ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_user_data(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_bounds(arg1: *mut Fl_Hor_Nice_Slider, a: f64, b: f64);
@@ -4700,6 +4772,12 @@ extern "C" {
     pub fn Fl_Hor_Value_Slider_has_visible_focus(
         self_: *mut Fl_Hor_Value_Slider,
     ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_user_data(
+        arg1: *mut Fl_Hor_Value_Slider,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_bounds(arg1: *mut Fl_Hor_Value_Slider, a: f64, b: f64);

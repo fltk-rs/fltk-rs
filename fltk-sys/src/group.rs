@@ -219,6 +219,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
 }
+extern "C" {
+    pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
@@ -419,6 +422,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_has_visible_focus(self_: *mut Fl_Group) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Group_set_user_data(arg1: *mut Fl_Group, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
@@ -659,6 +665,9 @@ extern "C" {
     pub fn Fl_Pack_has_visible_focus(self_: *mut Fl_Pack) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Pack_set_user_data(arg1: *mut Fl_Pack, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
 }
 extern "C" {
@@ -895,6 +904,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_has_visible_focus(self_: *mut Fl_Scroll) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_user_data(arg1: *mut Fl_Scroll, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Scroll_xposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
@@ -1154,6 +1166,9 @@ extern "C" {
     pub fn Fl_Tabs_has_visible_focus(self_: *mut Fl_Tabs) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Tabs_set_user_data(arg1: *mut Fl_Tabs, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -1392,6 +1407,9 @@ extern "C" {
     pub fn Fl_Tile_has_visible_focus(self_: *mut Fl_Tile) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Tile_set_user_data(arg1: *mut Fl_Tile, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1628,6 +1646,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_has_visible_focus(self_: *mut Fl_Wizard) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Wizard_set_user_data(arg1: *mut Fl_Wizard, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -1901,6 +1922,12 @@ extern "C" {
     pub fn Fl_Color_Chooser_has_visible_focus(
         self_: *mut Fl_Color_Chooser,
     ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_user_data(
+        arg1: *mut Fl_Color_Chooser,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;

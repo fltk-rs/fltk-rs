@@ -228,6 +228,43 @@ impl MenuItem {
         assert!(!self._inner.is_null());
         unsafe { Fl_Menu_Item_hide(self._inner) }
     }
+
+    pub fn next(&mut self, idx: u32) -> Option<MenuItem> {
+        assert!(!self._inner.is_null());
+        unsafe {
+            let ptr = Fl_Menu_Item_next(self._inner, idx as i32);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(MenuItem { _inner: ptr })
+            }
+        }
+    }
+
+    /// Get the user data
+    pub unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
+        let ptr = Fl_Menu_Item_user_data(self._inner);
+        if ptr.is_null() {
+            None
+        } else {
+            let x = ptr as *mut Box<dyn FnMut()>;
+            let x = Box::from_raw(x);
+            Some(*x)
+        }
+    }
+
+    /// Manually set the user data
+    pub unsafe fn set_user_data(&mut self, data: *mut raw::c_void) {
+        Fl_Menu_Item_set_user_data(self._inner, data)
+    }
+
+    pub unsafe fn unset_callback(&mut self) {
+        let old_data = self.user_data();
+        if old_data.is_some() {
+            let _ = old_data.unwrap();
+            self.set_user_data(0 as *mut raw::c_void);
+        }
+    }
 }
 
 unsafe impl Send for MenuItem {}

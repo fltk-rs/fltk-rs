@@ -52,6 +52,9 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "clear_submenu").as_str(),
         name.span(),
     );
+    let size = Ident::new(format!("{}_{}", name_str, "size").as_str(), name.span());
+    let text = Ident::new(format!("{}_{}", name_str, "text").as_str(), name.span());
+    let at = Ident::new(format!("{}_{}", name_str, "at").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl MenuExt for #name {
@@ -201,17 +204,64 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn clear(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #clear(self._inner)
+                    let sz = self.size();
+                    let mut v: Vec<MenuItem> = vec![];
+                    if sz > 0 {
+                        for i in 0..sz {
+                            v.push(self.at(i).unwrap());
+                        }
+                    }
+                    #clear(self._inner);
+                    if sz > 0 {
+                        for mut child in v {
+                            child.unset_callback();
+                            child._inner = 0 as *mut Fl_Menu_Item;
+                        }
+                    }
                 }
             }
 
             fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
+                assert!(!self.was_deleted());
                 debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
-                    assert!(!self.was_deleted());
                     match #clear_submenu(self._inner, idx as i32) {
                         0 => Ok(()),
                         _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+                    }
+                }
+            }
+
+            fn size(&self) -> u32 {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #size(self._inner) as u32
+                }
+            }
+
+            fn text(&self, idx: u32) -> Option<String> {
+                assert!(!self.was_deleted());
+                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                unsafe {
+                    let text = #text(self._inner, idx as i32);
+                    if text.is_null() {
+                        None
+                    } else {
+                        Some(CStr::from_ptr(text as *mut raw::c_char).to_string_lossy().to_string())
+                    }
+                } 
+            }
+
+            fn at(&self, idx: u32) -> Option<crate::menu::MenuItem> {
+                assert!(!self.was_deleted());
+                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                assert!(idx < self.size());
+                unsafe {
+                    let ptr = #at(self._inner, idx as i32) as *mut Fl_Menu_Item;
+                    if ptr.is_null() {
+                        None
+                    } else {
+                        Some(MenuItem { _inner: ptr })
                     }
                 }
             }

@@ -157,6 +157,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "has_visible_focus").as_str(),
         name.span(),
     );
+    let set_user_data = Ident::new(
+        format!("{}_{}", name_str, "set_user_data").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -489,9 +493,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let old_data = self.user_data();
                     if old_data.is_some() {
                         let old_data = old_data.unwrap();
+                        self.set_user_data(0 as *mut raw::c_void);
                     }
-                    let callback: Option<unsafe extern "C" fn(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)> = None;
-                    fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, std::ptr::null_mut());
+                    // let callback: Option<unsafe extern "C" fn(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)> = None;
+                    // fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, std::ptr::null_mut());
                     // self.set_callback(Box::new(move || {/* do nothing! */} ));
                 }
             }
@@ -692,6 +697,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let x = Box::from_raw(x);
                     Some(*x)
                 }
+            }
+
+            unsafe fn set_user_data(&mut self, data: *mut raw::c_void) {
+                #set_user_data(self._inner, data)
             }
 
             unsafe fn raw_user_data(&self) -> *mut raw::c_void {

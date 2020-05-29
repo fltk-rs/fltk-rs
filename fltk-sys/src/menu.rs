@@ -219,6 +219,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
 }
+extern "C" {
+    pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Item {
@@ -426,6 +429,9 @@ extern "C" {
     pub fn Fl_Menu_Bar_has_visible_focus(self_: *mut Fl_Menu_Bar) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_set_user_data(arg1: *mut Fl_Menu_Bar, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Menu_Bar_add(
         arg1: *mut Fl_Menu_Bar,
         name: *const ::std::os::raw::c_char,
@@ -499,6 +505,21 @@ extern "C" {
         arg1: *mut Fl_Menu_Bar,
         index: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_size(arg1: *const Fl_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_text(
+        arg1: *const Fl_Menu_Bar,
+        idx: ::std::os::raw::c_int,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_at(
+        arg1: *const Fl_Menu_Bar,
+        idx: ::std::os::raw::c_int,
+    ) -> *const Fl_Menu_Item;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -711,6 +732,12 @@ extern "C" {
     pub fn Fl_Menu_Button_has_visible_focus(self_: *mut Fl_Menu_Button) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Menu_Button_set_user_data(
+        arg1: *mut Fl_Menu_Button,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
         name: *const ::std::os::raw::c_char,
@@ -787,6 +814,21 @@ extern "C" {
         arg1: *mut Fl_Menu_Button,
         index: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_size(arg1: *const Fl_Menu_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_text(
+        arg1: *const Fl_Menu_Button,
+        idx: ::std::os::raw::c_int,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_at(
+        arg1: *const Fl_Menu_Button,
+        idx: ::std::os::raw::c_int,
+    ) -> *const Fl_Menu_Item;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -990,6 +1032,9 @@ extern "C" {
     pub fn Fl_Choice_has_visible_focus(self_: *mut Fl_Choice) -> ::std::os::raw::c_uint;
 }
 extern "C" {
+    pub fn Fl_Choice_set_user_data(arg1: *mut Fl_Choice, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Choice_add(
         arg1: *mut Fl_Choice,
         name: *const ::std::os::raw::c_char,
@@ -1065,6 +1110,18 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Choice_size(arg1: *const Fl_Choice) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_text(
+        arg1: *const Fl_Choice,
+        idx: ::std::os::raw::c_int,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Choice_at(arg1: *const Fl_Choice, idx: ::std::os::raw::c_int) -> *const Fl_Menu_Item;
+}
+extern "C" {
     pub fn Fl_Menu_Item_new(
         args: *mut *mut ::std::os::raw::c_char,
         sz: ::std::os::raw::c_int,
@@ -1136,4 +1193,16 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Item_deactivate(arg1: *mut Fl_Menu_Item);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_next(
+        self_: *mut Fl_Menu_Item,
+        idx: ::std::os::raw::c_int,
+    ) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_user_data(arg1: *const Fl_Menu_Item) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_set_user_data(arg1: *mut Fl_Menu_Item, data: *mut ::std::os::raw::c_void);
 }

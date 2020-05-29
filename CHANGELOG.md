@@ -3,6 +3,9 @@
 ## Unreleased
 ### Changes
 - Add more checks for widget deletion.
+- Add cleanup after menu deletion.
+- Remove redundant delete_widget function.
+- Add method to iterate menus.
 
 ## [0.5.3] - 2020-05-29
 ### Changes

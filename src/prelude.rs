@@ -214,6 +214,8 @@ pub unsafe trait WidgetExt {
     fn was_deleted(&self) -> bool;
     /// Retakes ownership of the user callback data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
+    /// Manually set the user data
+    unsafe fn set_user_data(&mut self, data: *mut raw::c_void);
     /// Retakes ownership of the user callback data
     unsafe fn raw_user_data(&self) -> *mut raw::c_void;
     /// Cleanup after widget deletion
@@ -385,6 +387,12 @@ pub unsafe trait MenuExt: WidgetExt {
     fn clear(&mut self);
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
     fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
+    /// Get the size of the menu widget
+    fn size(&self) -> u32;
+    /// Get the text label of the menu item at index idx
+    fn text(&self, idx: u32) -> Option<String>;
+    /// Get the menu item at an index
+    fn at(&self, idx: u32) -> Option<crate::menu::MenuItem>;
 }
 
 /// Defines the methods implemented by all valuator widgets

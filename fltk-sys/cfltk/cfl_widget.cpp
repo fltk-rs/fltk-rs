@@ -237,3 +237,7 @@ void Fl_Widget_visible_focus(Fl_Widget *self, int v) {
 unsigned int Fl_Widget_has_visible_focus(Fl_Widget *self) {
     return self->visible_focus();
 }
+
+void Fl_Widget_set_user_data(Fl_Widget *self, void *data) {
+    LOCK(self->user_data(data);)
+}

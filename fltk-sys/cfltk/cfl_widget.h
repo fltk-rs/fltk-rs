@@ -77,7 +77,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     void widget##_set_visible_focus(widget *self);                             \
     void widget##_clear_visible_focus(widget *self);                           \
     void widget##_visible_focus(widget *self, int v);                          \
-    unsigned int widget##_has_visible_focus(widget *self);
+    unsigned int widget##_has_visible_focus(widget *self);                     \
+    void widget##_set_user_data(widget *, void *data);
 
 #define WIDGET_DEFINE(widget)                                                  \
     class widget##_Derived : public widget {                                   \
@@ -241,6 +242,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     }                                                                          \
     unsigned int widget##_has_visible_focus(widget *self) {                    \
         return self->visible_focus();                                          \
+    }                                                                          \
+    void widget##_set_user_data(widget *self, void *data) {                    \
+        LOCK(self->user_data(data);)                                           \
     }
 
 WIDGET_DECLARE(Fl_Widget)
