@@ -546,30 +546,40 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn below_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "below_of requires the size of the widget to be known!");
                 self.resize(w.x(), w.y() + w.height() + padding, self.width(), self.height());
                 self
             }
 
             fn above_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "above_of requires the size of the widget to be known!");
                 self.resize(w.x(), w.y() - padding - self.height(), self.width(), self.height());
                 self
             }
 
             fn right_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
                 self.resize(w.x() + self.width() + padding, w.y(), self.width(), self.height());
                 self
             }
 
             fn left_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "left_of requires the size of the widget to be known!");
                 self.resize(w.x() - self.width() - padding, w.y(), self.width(), self.height());
                 self
             }
 
             fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
                 debug_assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
                 let mut sw = self.width() as f64;
                 let mut sh = self.height() as f64;
@@ -583,6 +593,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
                 debug_assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
                 self.resize(self.x(), self. y(), w.width(), w.height());
                 self
@@ -623,6 +635,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn inside(&self, wid: crate::widget::Widget) -> bool {
                 assert!(!self.was_deleted());
+                assert!(!wid.was_deleted());
                 unsafe {
                     match #inside(self._inner, wid.as_ptr() as *mut raw::c_void) {
                         0 => false,

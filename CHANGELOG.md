@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add more checks for widget deletion.
 
 ## [0.5.3] - 2020-05-29
 ### Changes

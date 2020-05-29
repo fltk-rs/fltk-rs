@@ -382,6 +382,7 @@ impl Tooltip {
 
     /// Defines the area of the tooltip
     pub fn enter_area<W: WidgetExt>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
+        assert!(!widget.was_deleted());
         let tip = CString::new(tip).unwrap();
         unsafe {
             Fl_Tooltip_enter_area(
@@ -406,6 +407,7 @@ impl Tooltip {
 
     /// Sets the current widget associated with the tooltip
     pub fn current<W: WidgetExt>(w: &W) {
+        assert!(!w.was_deleted());
         unsafe { Fl_Tooltip_current(w.as_widget_ptr() as *mut Fl_Widget) }
     }
 

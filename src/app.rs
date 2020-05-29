@@ -208,6 +208,7 @@ pub fn paste<T>(widget: &T)
 where
     T: WidgetExt + InputExt,
 {
+    assert!(!widget.was_deleted());
     unsafe {
         Fl_paste(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
     }
@@ -218,6 +219,7 @@ pub fn set_callback<W>(widget: &mut W, cb: Box<dyn FnMut()>)
 where
     W: WidgetExt,
 {
+    assert!(!widget.was_deleted());
     // debug_assert!(
     //     widget.top_window().unwrap().takes_events() && widget.takes_events(),
     //     "Handling events requires that the window and widget be active!"
@@ -491,6 +493,7 @@ pub fn program_should_quit(flag: bool) {
 
 /// Returns whether an event occured within a widget
 pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
+    assert!(!wid.was_deleted());
     let x = wid.x();
     let y = wid.y();
     let w = wid.width();
@@ -526,6 +529,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 
 /// Deletes widgets and their children.
 pub unsafe fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
+    assert!(!wid.was_deleted());
     Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
     wid.cleanup();
 }

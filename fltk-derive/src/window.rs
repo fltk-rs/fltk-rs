@@ -38,6 +38,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl WindowExt for #name {
             fn center_screen(mut self) -> Self {
+                assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "center_screen requires the size of the widget to be known!");
                 let (mut x, mut y) = screen_size();
                 x = x - self.width() as f64;

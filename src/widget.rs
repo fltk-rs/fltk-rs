@@ -39,6 +39,7 @@ impl Widget {
 
     /// Transform Widget base to another Widget
     pub fn into<W: WidgetExt>(self) -> W {
+        assert!(!self.was_deleted());
         unsafe { W::from_widget_ptr(self._inner) }
     }
 }
