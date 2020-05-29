@@ -1,10 +1,15 @@
 # Changelog
 
-
 ## Unreleased
+### Changes
+- (None)
+
+## [0.5.3] - 2020-05-29
 ### Changes
 - Add a method to unset callbacks.
 - Fix double free after acquiring user_data.
+- Add a tracker pointer to all widgets.
+- Check for use after widget deletion for all operations on widgets.
 
 ## [0.5.2] - 2020-05-28
 ### Changes

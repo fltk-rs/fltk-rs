@@ -11,4 +11,5 @@ use std::{
 #[derive(WidgetExt, Debug)]
 pub struct Frame {
     _inner: *mut Fl_Box,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }

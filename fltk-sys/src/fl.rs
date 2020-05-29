@@ -5,6 +5,11 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Widget_Tracker {
+    _unused: [u8; 0],
+}
 pub type Fl_Awake_Handler =
     ::std::option::Option<unsafe extern "C" fn(data: *mut ::std::os::raw::c_void)>;
 extern "C" {
@@ -138,4 +143,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_delete_widget(w: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_Tracker_new(w: *mut Fl_Widget) -> *mut Fl_Widget_Tracker;
+}
+extern "C" {
+    pub fn Fl_Widget_Tracker_deleted(self_: *mut Fl_Widget_Tracker) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_Tracker_delete(self_: *mut Fl_Widget_Tracker);
 }

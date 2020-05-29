@@ -24,21 +24,25 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl GroupExt for #name {
             fn begin(&self) {
+                assert!(!self.was_deleted());
                 unsafe { #begin(self._inner) }
             }
 
             fn end(&self) {
+                assert!(!self.was_deleted());
                 unsafe { #end(self._inner) }
             }
 
             fn find<Widget: WidgetExt>(&self, widget: &Widget) -> u32 {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #find(self._inner, widget.as_widget_ptr() as *mut raw::c_void) as u32
                 }
             }
 
             fn add<Widget: WidgetExt>(&mut self, widget: &Widget) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #add(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
                 }
             }
@@ -46,24 +50,40 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
             fn insert<Widget: WidgetExt>(&mut self, widget: &Widget, index: u32) {
                 unsafe {
                     debug_assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    assert!(!self.was_deleted());
                     #insert(self._inner, widget.as_widget_ptr() as *mut raw::c_void, index as i32)
                 }
             }
 
             fn remove<Widget: WidgetExt>(&mut self, widget: &Widget) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #remove(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
                 }
             }
 
-            unsafe fn clear(&mut self) {
+            fn clear(&mut self) {
                 unsafe {
-                    #clear(self._inner)
+                    assert!(!self.was_deleted());
+                    let sz = self.children();
+                    let mut v: Vec<Widget> = vec![];
+                    if sz > 0 {
+                        for i in 0..sz {
+                            v.push(self.child(i).unwrap());
+                        }
+                    }
+                    #clear(self._inner);
+                    if sz > 0 {
+                        for mut child in v {
+                            child.cleanup();
+                        }
+                    }
                 }
             }
 
             fn children(&self) -> u32 {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #children(self._inner) as u32
                 }
             }
@@ -71,6 +91,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
             fn child(&self, idx: u32) -> Option<Widget> {
                 unsafe {
                     debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    assert!(!self.was_deleted());
                     let child_widget = #child(self._inner, idx as i32);
                     if child_widget.is_null() {
                         None
@@ -82,6 +103,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
 
             fn resizable<Widget: WidgetExt>(&self, widget: &mut Widget) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #resizable(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
                 }
             }

@@ -70,6 +70,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: Fl_Callback = Some(shim);
+                    assert!(!self.was_deleted());
                     #add(self._inner, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
                 }
             }
@@ -89,6 +90,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
                     let callback: Fl_Callback = Some(shim);
+                    assert!(!self.was_deleted());
                     #insert(self._inner, idx as i32, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
                 }
             }
@@ -96,6 +98,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn find_item(&self, name: &str) -> Option<MenuItem> {
                 let name = CString::new(name).unwrap().clone();
                 unsafe {
+                    assert!(!self.was_deleted());
                     let menu_item = #get_item(
                         self._inner,
                         name.as_ptr());
@@ -111,6 +114,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_item(&mut self, item: &MenuItem) -> bool {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_item(
                         self._inner,
                         item._inner) != 0
@@ -119,18 +123,21 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn text_font(&self) -> Font {
                 unsafe {
+                    assert!(!self.was_deleted());
                     mem::transmute(#text_font(self._inner))
                 }
             }
 
             fn set_text_font(&mut self, c: Font) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_text_font(self._inner, c as i32)
                 }
             }
 
             fn text_size(&self) -> u32 {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #text_size(self._inner) as u32
                 }
             }
@@ -138,18 +145,21 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn set_text_size(&mut self, c: u32) {
                 unsafe {
                     debug_assert!(c <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    assert!(!self.was_deleted());
                     #set_text_size(self._inner, c as i32)
                 }
             }
 
             fn text_color(&self) -> Color {
                 unsafe {
+                    assert!(!self.was_deleted());
                     mem::transmute(#text_color(self._inner))
                 }
             }
 
             fn set_text_color(&mut self, c: Color) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_text_color(self._inner, c as u32)
                 }
             }
@@ -157,12 +167,14 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn add_choice(&mut self, text: &str) {
                 unsafe {
                     let arg2 = CString::new(text).unwrap();
+                    assert!(!self.was_deleted());
                     #add_choice(self._inner, arg2.as_ptr() as *mut raw::c_char)
                 }
             }
 
             fn choice(&self) -> Option<String> {
                 unsafe {
+                    assert!(!self.was_deleted());
                     let choice_ptr = #get_choice(self._inner);
                     if choice_ptr.is_null() {
                         None
@@ -174,18 +186,21 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn value(&self) -> i32 {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #value(self._inner)
                 }
             }
 
             fn set_value(&mut self,v:i32) -> bool {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_value(self._inner,v) != 0
                 }
             }
 
             fn clear(&mut self) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #clear(self._inner)
                 }
             }
@@ -193,6 +208,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
                 debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
+                    assert!(!self.was_deleted());
                     match #clear_submenu(self._inner, idx as i32) {
                         0 => Ok(()),
                         _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),

@@ -47,23 +47,28 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn make_modal(&mut self, val: bool) {
+                assert!(!self.was_deleted());
                 unsafe { #make_modal(self._inner, val as u32) }
             }
 
             fn fullscreen(&mut self, val: bool) {
+                assert!(!self.was_deleted());
                 unsafe { #fullscreen(self._inner, val as u32) }
             }
 
             fn make_current(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe { #make_current(self._inner) }
             }
 
             fn set_icon<Image: ImageExt>(&mut self, image: &Image) {
+                assert!(!self.was_deleted());
                 unsafe { #set_icon(self._inner, image.as_ptr()) }
             }
 
             fn icon(&self) -> Option<Image> {
                 unsafe {
+                    assert!(!self.was_deleted());
                     let icon_ptr = #icon(self._inner);
                     if icon_ptr.is_null() {
                         None
@@ -76,6 +81,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             fn make_resizable(&mut self, val: bool) {
                 if val {
                     unsafe {
+                        assert!(!self.was_deleted());
                         #make_resizable(self._inner, self._inner as *mut raw::c_void)
                     }
                 }
@@ -83,12 +89,14 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_cursor(&mut self, cursor: CursorStyle) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_cursor(self._inner, cursor as i32)
                 }
             }
 
             fn shown(&self) -> bool {
                 unsafe {
+                    assert!(!self.was_deleted());
                     match #shown(self._inner) {
                         0 => false,
                         _ => true,
@@ -98,6 +106,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn raw_handle(&self) -> *const raw::c_void {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #raw_handle(self._inner)
                 }
             }

@@ -44,6 +44,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
+                    assert!(!self.was_deleted());
                     #remove(self._inner, line as i32)
                 }
             }
@@ -51,6 +52,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn add(&mut self, item: &str) {
                 let item = CString::new(item).unwrap();
                 unsafe {
+                    assert!(!self.was_deleted());
                     #add(self._inner, item.as_ptr())
                 }
             }
@@ -60,6 +62,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 let item = CString::new(item).unwrap();
                 unsafe {
+                    assert!(!self.was_deleted());
                     #insert(self._inner, line as i32, item.as_ptr())
                 }
             }
@@ -68,6 +71,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(to <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 debug_assert!(from <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
+                    assert!(!self.was_deleted());
                     #move_item(self._inner, to as i32, from as i32)
                 }
             }
@@ -76,24 +80,28 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(a <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 debug_assert!(b <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
+                    assert!(!self.was_deleted());
                     #swap(self._inner, a as i32, b as i32)
                 }
             }
 
             fn clear(&mut self) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #clear(self._inner)
                 }
             }
 
             fn size(&self) -> u32 {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #size(self._inner) as u32
                 }
             }
 
             fn set_size(&mut self, w: i32, h: i32) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_size(self._inner, w, h)
                 }
             }
@@ -102,6 +110,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(line > 0);
                 if line < self.size() {
                     unsafe {
+                        assert!(!self.was_deleted());
                         #select(self._inner, line as i32);
                     }
                 }
@@ -111,6 +120,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
+                    assert!(!self.was_deleted());
                     match #selected(self._inner, line as i32) {
                         0 => false,
                         _ => true,
@@ -122,6 +132,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
+                    assert!(!self.was_deleted());
                     let text = #text(self._inner, line as i32);
                     if text.is_null() {
                         None
@@ -136,6 +147,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(line <= self.size());
                 let txt = CString::new(txt).unwrap();
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_text(self._inner, line as i32, txt.as_ptr())
                 }
             }
@@ -147,6 +159,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 let path = path.to_str().unwrap();
                 let path = CString::new(path)?;
                 unsafe {
+                    assert!(!self.was_deleted());
                     #load_file(self._inner, path.as_ptr());
                     Ok(())
                 }
@@ -154,12 +167,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn text_size(&self) -> u32 {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #text_size(self._inner) as u32
                 }
             }
 
             fn set_text_size(&mut self, c: u32) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_text_size(self._inner, c as i32)
                 }
             }
@@ -167,6 +182,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn set_icon<Img: ImageExt>(&mut self, line: u32, image: &Img) {
                 assert!(line > 0);
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_icon(self._inner, line as i32, image.as_ptr())
                 }
             }
@@ -174,6 +190,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn icon(&self, line: u32) -> Option<Image> {
                 assert!(line > 0);
                 unsafe {
+                    assert!(!self.was_deleted());
                     let icon_ptr = #icon(self._inner, line as i32);
                     if icon_ptr.is_null() {
                         None
@@ -186,6 +203,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn remove_icon(&mut self, line: u32) {
                 assert!(line > 0);
                 unsafe {
+                    assert!(!self.was_deleted());
                     #remove_icon(self._inner, line as i32)
                 }
             }

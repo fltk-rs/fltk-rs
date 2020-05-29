@@ -108,3 +108,15 @@ int Fl_event_inside(int x, int y, int w, int h) {
 // Fl_Widget *Fl_belowmouse() { return Fl::belowmouse(); }
 
 void Fl_delete_widget(Fl_Widget *w) { Fl::delete_widget(w); }
+
+Fl_Widget_Tracker *Fl_Widget_Tracker_new(Fl_Widget *w) {
+    return new (std::nothrow) Fl_Widget_Tracker(w);
+}
+
+int Fl_Widget_Tracker_deleted(Fl_Widget_Tracker *self) {
+    return self->deleted();
+}
+
+void Fl_Widget_Tracker_delete(Fl_Widget_Tracker *self) {
+    delete self;
+}
