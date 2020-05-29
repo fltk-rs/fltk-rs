@@ -171,6 +171,8 @@ pub unsafe trait WidgetExt {
     fn image(&self) -> Option<Image>;
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback(&mut self, cb: Box<dyn FnMut()>);
+    /// Unset the defined callback
+    unsafe fn unset_callback(&mut self);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
     fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>);
@@ -206,12 +208,16 @@ pub unsafe trait WidgetExt {
     fn visible_focus(&mut self, v: bool);
     /// Return whether the widget has visible focus
     fn has_visible_focus(&mut self) -> bool;
+    /// Check if a widget was deleted
+    fn was_deleted(&self) -> bool;
     /// Retakes ownership of the user callback data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     /// Retakes ownership of the user callback data
     unsafe fn raw_user_data(&self) -> *mut raw::c_void;
     /// Manually delete a widget
     unsafe fn delete(&mut self);
+    /// Cleanup after widget deletion
+    unsafe fn cleanup(&mut self);
 }
 
 /// Defines the methods implemented by all button widgets
@@ -246,7 +252,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Remove a widget from a group
     fn remove<Widget: WidgetExt>(&mut self, widget: &Widget);
     /// Clear a group from all widgets
-    unsafe fn clear(&mut self);
+    fn clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> u32;
     /// Return child widget by index

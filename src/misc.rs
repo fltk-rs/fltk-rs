@@ -13,46 +13,55 @@ use std::{
 #[derive(WidgetExt, Debug)]
 pub struct Spinner {
     _inner: *mut Fl_Spinner,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl Spinner {
     /// Returns the minimum value of the spinner widget
     pub fn minimum(&self) -> f64 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_minimum(self._inner) }
     }
 
     /// Sets the minimu value of the spinner widget
     pub fn set_minimum(&mut self, a: f64) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_minimum(self._inner, a) }
     }
 
     /// Returns the maximum value of the spinner widget
     pub fn maximum(&self) -> f64 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_maximum(self._inner) }
     }
 
     /// Sets the minimum value of the spinner widget
     pub fn set_maximum(&mut self, a: f64) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_maximum(self._inner, a) }
     }
 
     /// Sets the range of the spinner widget
     pub fn set_range(&mut self, a: f64, b: f64) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_range(self._inner, a, b) }
     }
 
     /// Sets the step of the spinner widget
     pub fn set_step(&mut self, a: f64) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_step(self._inner, a) }
     }
 
     /// Gets the range of the spinner widget
     pub fn step(&self) -> f64 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_step(self._inner) }
     }
 
     /// Returns the maximum size supported by the spinner widget
     pub fn maximum_size(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_maxsize(self._inner) as u32 }
     }
 
@@ -62,21 +71,25 @@ impl Spinner {
             s <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_maxsize(self._inner, s as i32) }
     }
 
     /// Gets the text font
     pub fn text_font(&self) -> Font {
+        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Spinner_text_font(self._inner)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_text_font(self._inner, f as i32) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_text_size(self._inner) as u32 }
     }
 
@@ -86,16 +99,19 @@ impl Spinner {
             s <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_textsize(self._inner, s as i32) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
+        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Spinner_text_color(self._inner)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_text_color(self._inner, color as u32) }
     }
 }
@@ -104,17 +120,20 @@ impl Spinner {
 #[derive(WidgetExt, Debug)]
 pub struct Clock {
     _inner: *mut Fl_Clock,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a chart widget
 #[derive(WidgetExt, Debug)]
 pub struct Chart {
     _inner: *mut Fl_Chart,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl Chart {
     /// Clears the chart
     pub fn clear(&mut self) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_clear(self._inner) }
     }
 
@@ -125,6 +144,7 @@ impl Chart {
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
         let txt = std::ffi::CString::new(txt).unwrap();
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_add(self._inner, val, txt.as_ptr(), col) }
     }
 
@@ -139,6 +159,7 @@ impl Chart {
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
         let txt = std::ffi::CString::new(txt).unwrap();
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_insert(self._inner, idx as i32, val, txt.as_ptr(), col) }
     }
 
@@ -153,16 +174,19 @@ impl Chart {
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
         let txt = std::ffi::CString::new(txt).unwrap();
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_replace(self._inner, idx as i32, val, txt.as_ptr(), col) }
     }
 
     /// Sets the bounds of the chart
     pub fn set_bounds(&mut self, a: f64, b: f64) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_bounds(self._inner, a, b) }
     }
 
     /// Returns the size of the chart
     pub fn size(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_size(self._inner) as u32 }
     }
 
@@ -176,11 +200,13 @@ impl Chart {
             h <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_size(self._inner, w as i32, h as i32) }
     }
 
     /// Gets the maximum supported size of the chart
     pub fn maximum_size(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_maxsize(self._inner) as u32 }
     }
 
@@ -190,21 +216,25 @@ impl Chart {
             s <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_maxsize(self._inner, s as i32) }
     }
 
     /// Gets the text font
     pub fn text_font(&self) -> Font {
+        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Chart_text_font(self._inner)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_text_font(self._inner, f as i32) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_text_size(self._inner) as u32 }
     }
 
@@ -214,22 +244,26 @@ impl Chart {
             s <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_textsize(self._inner, s as i32) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
+        assert!(!self.was_deleted());
         unsafe { std::mem::transmute(Fl_Chart_text_color(self._inner)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_text_color(self._inner, color as u32) }
     }
 
     /// Returns wheter the chart is autosizable
     pub fn is_autosize(&self) -> bool {
         unsafe {
+            assert!(!self.was_deleted());
             match Fl_Chart_is_autosize(self._inner) {
                 0 => false,
                 _ => true,
@@ -239,6 +273,7 @@ impl Chart {
 
     /// Sets the ability of the chart to be autosizable
     pub fn make_autosize(&mut self, val: bool) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Chart_make_autosize(self._inner, val as i32) }
     }
 }
@@ -247,37 +282,44 @@ impl Chart {
 #[derive(WidgetExt, Debug)]
 pub struct Progress {
     _inner: *mut Fl_Progress,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl Progress {
     /// Returns the minimum value of the progress bar
     pub fn minimum(&self) -> f64 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Progress_minimum(self._inner) }
     }
 
     /// Sets the minimu value of the progress bar
     pub fn set_minimum(&mut self, a: f64) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Progress_set_minimum(self._inner, a) }
     }
 
     /// Returns the maximum value of the progress bar
     pub fn maximum(&self) -> f64 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Progress_maximum(self._inner) }
     }
 
     /// Sets the minimum value of the progress bar
     pub fn set_maximum(&mut self, a: f64) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Progress_set_maximum(self._inner, a) }
     }
 
     /// Returns the value of the progress bar
     pub fn value(&self) -> f64 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Progress_value(self._inner) }
     }
 
     /// Sets the value of the progress bar
     pub fn set_value(&mut self, arg2: f64) {
         unsafe {
+            assert!(!self.was_deleted());
             Fl_Progress_set_value(self._inner, arg2);
         }
     }

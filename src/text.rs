@@ -467,18 +467,21 @@ impl Clone for TextBuffer {
 #[derive(WidgetExt, DisplayExt, Debug)]
 pub struct TextDisplay {
     _inner: *mut Fl_Text_Display,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates an editable text display widget
 #[derive(WidgetExt, DisplayExt, Debug)]
 pub struct TextEditor {
     _inner: *mut Fl_Text_Editor,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates an editable text display widget
 #[derive(WidgetExt, DisplayExt, Debug)]
 pub struct SimpleTerminal {
     _inner: *mut Fl_Simple_Terminal,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -495,8 +498,12 @@ impl TextEditor {
         unsafe {
             let text_editor = Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
             assert!(!text_editor.is_null());
+            let tracker =
+                fltk_sys::fl::Fl_Widget_Tracker_new(text_editor as *mut fltk_sys::fl::Fl_Widget);
+            assert!(!tracker.is_null());
             let mut x = TextEditor {
                 _inner: text_editor,
+                _tracker: tracker,
             };
             x.set_buffer(buf);
             x
@@ -509,8 +516,12 @@ impl TextEditor {
         unsafe {
             let text_editor = Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
             assert!(!text_editor.is_null());
+            let tracker =
+                fltk_sys::fl::Fl_Widget_Tracker_new(text_editor as *mut fltk_sys::fl::Fl_Widget);
+            assert!(!tracker.is_null());
             let mut x = TextEditor {
                 _inner: text_editor,
+                _tracker: tracker,
             };
             x.set_buffer(buf);
             x
@@ -519,6 +530,7 @@ impl TextEditor {
 
     /// Copies the text within the TextEditor widget
     pub fn copy(&self) {
+        assert!(!self.was_deleted());
         unsafe {
             kf_copy(self._inner);
         }
@@ -526,6 +538,7 @@ impl TextEditor {
 
     /// Cuts the text within the TextEditor widget
     pub fn cut(&self) {
+        assert!(!self.was_deleted());
         unsafe {
             kf_cut(self._inner);
         }
@@ -533,6 +546,7 @@ impl TextEditor {
 
     /// Pastes text from the clipboard into the TextEditor widget
     pub fn paste(&self) {
+        assert!(!self.was_deleted());
         unsafe {
             kf_paste(self._inner);
         }
@@ -540,6 +554,7 @@ impl TextEditor {
 
     /// Undo changes in the TextEditor widget
     pub fn undo(&self) {
+        assert!(!self.was_deleted());
         unsafe {
             kf_undo(self._inner);
         }
@@ -554,8 +569,12 @@ impl TextDisplay {
             let text_display =
                 Fl_Text_Display_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
             assert!(!text_display.is_null(),);
+            let tracker =
+                fltk_sys::fl::Fl_Widget_Tracker_new(text_display as *mut fltk_sys::fl::Fl_Widget);
+            assert!(!tracker.is_null());
             let mut x = TextDisplay {
                 _inner: text_display,
+                _tracker: tracker,
             };
             x.set_buffer(buf);
             x
@@ -569,8 +588,12 @@ impl TextDisplay {
             let text_display =
                 Fl_Text_Display_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
             assert!(!text_display.is_null(),);
+            let tracker =
+                fltk_sys::fl::Fl_Widget_Tracker_new(text_display as *mut fltk_sys::fl::Fl_Widget);
+            assert!(!tracker.is_null());
             let mut x = TextDisplay {
                 _inner: text_display,
+                _tracker: tracker,
             };
             x.set_buffer(buf);
             x
@@ -586,8 +609,13 @@ impl SimpleTerminal {
             let simple_terminal =
                 Fl_Simple_Terminal_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
             assert!(!simple_terminal.is_null(),);
+            let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(
+                simple_terminal as *mut fltk_sys::fl::Fl_Widget,
+            );
+            assert!(!tracker.is_null());
             let mut x = SimpleTerminal {
                 _inner: simple_terminal,
+                _tracker: tracker,
             };
             x.set_buffer(buf);
             x
@@ -601,8 +629,13 @@ impl SimpleTerminal {
             let simple_terminal =
                 Fl_Simple_Terminal_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
             assert!(!simple_terminal.is_null(),);
+            let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(
+                simple_terminal as *mut fltk_sys::fl::Fl_Widget,
+            );
+            assert!(!tracker.is_null());
             let mut x = SimpleTerminal {
                 _inner: simple_terminal,
+                _tracker: tracker,
             };
             x.set_buffer(buf);
             x

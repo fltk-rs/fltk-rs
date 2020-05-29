@@ -11,12 +11,14 @@ use std::{
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Slider {
     _inner: *mut Fl_Slider,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a nice slider widget
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct NiceSlider {
     _inner: *mut Fl_Nice_Slider,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines slider types
@@ -35,12 +37,14 @@ pub enum SliderType {
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Dial {
     _inner: *mut Fl_Dial,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a line dial widget
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct LineDial {
     _inner: *mut Fl_Line_Dial,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines dial types
@@ -56,6 +60,7 @@ pub enum DialType {
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Counter {
     _inner: *mut Fl_Counter,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines counter types
@@ -70,6 +75,7 @@ pub enum CounterType {
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Scrollbar {
     _inner: *mut Fl_Scrollbar,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines scrollbar types
@@ -88,64 +94,75 @@ pub enum ScrollBarType {
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Roller {
     _inner: *mut Fl_Roller,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a value slider widget
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct ValueSlider {
     _inner: *mut Fl_Value_Slider,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates an adjuster widget
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct Adjuster {
     _inner: *mut Fl_Adjuster,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates an value input widget
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct ValueInput {
     _inner: *mut Fl_Value_Input,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates an value output widget
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct ValueOutput {
     _inner: *mut Fl_Value_Output,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a fill slider
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct FillSlider {
     _inner: *mut Fl_Fill_Slider,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a fill dial
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct FillDial {
     _inner: *mut Fl_Fill_Dial,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a horizontal slider
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct HorSlider {
     _inner: *mut Fl_Hor_Slider,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a horizontal fill slider
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct HorFillSlider {
     _inner: *mut Fl_Hor_Fill_Slider,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a horizontal nice slider
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct HorNiceSlider {
     _inner: *mut Fl_Hor_Nice_Slider,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a horizontal value slider
 #[derive(WidgetExt, ValuatorExt, Debug)]
 pub struct HorValueSlider {
     _inner: *mut Fl_Hor_Value_Slider,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }

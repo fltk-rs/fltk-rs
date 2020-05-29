@@ -525,8 +525,9 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 // }
 
 /// Deletes widgets and their children.
-pub unsafe fn delete_widget<Wid: WidgetExt>(wid: &Wid) {
-    Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget)
+pub unsafe fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
+    Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
+    wid.cleanup();
 }
 
 fn register_images() {

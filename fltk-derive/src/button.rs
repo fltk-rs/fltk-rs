@@ -24,24 +24,28 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl ButtonExt for #name {
             fn shortcut(&self) -> Shortcut {
                 unsafe {
+                    assert!(!self.was_deleted());
                     mem::transmute(#shortcut(self._inner))
                 }
             }
 
             fn set_shortcut(&mut self, shortcut: Shortcut) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_shortcut(self._inner, shortcut as i32)
                 }
             }
 
             fn clear(&mut self) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #clear(self._inner);
                 }
             }
 
             fn is_set(&self) -> bool {
                 unsafe {
+                    assert!(!self.was_deleted());
                     match #value(self._inner) {
                         0 => false,
                         _ => true,
@@ -51,6 +55,7 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set(&mut self, flag: bool) {
                 unsafe {
+                    assert!(!self.was_deleted());
                     #set_value(self._inner, flag as i32)
                 }
             }

@@ -6,6 +6,8 @@ extern "C" {
 
 typedef struct Fl_Widget Fl_Widget;
 
+typedef struct Fl_Widget_Tracker Fl_Widget_Tracker;
+
 typedef void (*Fl_Awake_Handler)(void *data);
 
 int Fl_run(void);
@@ -79,6 +81,12 @@ int Fl_event_inside(int, int, int, int);
 // Fl_Widget *Fl_belowmouse(void);
 
 void Fl_delete_widget(Fl_Widget *w);
+
+Fl_Widget_Tracker *Fl_Widget_Tracker_new(Fl_Widget *w);
+
+int Fl_Widget_Tracker_deleted(Fl_Widget_Tracker *self);
+
+void Fl_Widget_Tracker_delete(Fl_Widget_Tracker *self);
 
 #ifdef __cplusplus
 }

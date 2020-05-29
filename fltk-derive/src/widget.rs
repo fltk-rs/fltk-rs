@@ -7,7 +7,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
     let name_str = get_fl_name(name.to_string());
-
+    let ptr_name = Ident::new(format!("{}", name_str).as_str(), name.span());
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
     let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
     let x = Ident::new(format!("{}_{}", name_str, "x").as_str(), name.span());
@@ -164,7 +164,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
         impl Clone for #name {
             fn clone(&self) -> #name {
-                #name { _inner: self._inner }
+                #name { _inner: self._inner, _tracker: self._tracker }
             }
         }
 
@@ -174,8 +174,11 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     let widget_ptr = #new(x, y, width, height, temp.into_raw() as *const raw::c_char);
                     assert!(!widget_ptr.is_null());
+                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
+                    assert!(!tracker.is_null());
                     #name {
                         _inner: widget_ptr,
+                        _tracker: tracker,
                     }
                 }
             }
@@ -190,8 +193,11 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         0,
                         temp.into_raw() as *const raw::c_char);
                         assert!(!widget_ptr.is_null());
+                        let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
+                        assert!(!tracker.is_null());
                     #name {
                         _inner: widget_ptr,
+                        _tracker: tracker,
                     }
                 }
             }
@@ -217,6 +223,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_label(&mut self, title: &str) {
+                assert!(!self.was_deleted());
                 let temp = CString::new(title).unwrap();
                 unsafe {
                     #set_label(
@@ -227,36 +234,44 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn redraw(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #redraw(self._inner);
                 }
             }
 
             fn show(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe { #show(self._inner) }
             }
 
             fn hide(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe { #hide(self._inner) }
             }
 
             fn x(&self) -> i32 {
+                assert!(!self.was_deleted());
                 unsafe { #x(self._inner)}
             }
 
             fn y(&self) -> i32 {
+                assert!(!self.was_deleted());
                 unsafe { #y(self._inner) }
             }
 
             fn width(&self) -> i32 {
+                assert!(!self.was_deleted());
                 unsafe { #width(self._inner) }
             }
 
             fn height(&self) -> i32 {
+                assert!(!self.was_deleted());
                 unsafe { #height(self._inner) }
             }
 
             fn label(&self) -> String {
+                assert!(!self.was_deleted());
                 unsafe {
                     CStr::from_ptr(#label(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
@@ -269,29 +284,37 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
                 assert!(!ptr.is_null());
                 unsafe {
+                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
+                    assert!(!tracker.is_null());
                     #name {
                         _inner: mem::transmute(ptr),
+                        _tracker: tracker,
                     }
                 }
             }
 
             fn activate(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe { #activate(self._inner) }
             }
 
             fn deactivate(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe { #deactivate(self._inner) }
             }
 
             fn redraw_label(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe { #redraw_label(self._inner) }
             }
 
             fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
+                assert!(!self.was_deleted());
                 unsafe { #resize(self._inner, x, y, width, height) }
             }
 
             fn tooltip(&self) -> Option<String> {
+                assert!(!self.was_deleted());
                 unsafe {
                     let tooltip_ptr = #tooltip(self._inner);
                     if tooltip_ptr.is_null() {
@@ -304,6 +327,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_tooltip(&mut self, txt: &str) {
+                assert!(!self.was_deleted());
                 let txt = CString::new(txt).unwrap();
                 unsafe {
                     #set_tooltip(
@@ -314,68 +338,83 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn get_type<T: WidgetType>(&self) -> T {
+                assert!(!self.was_deleted());
                 unsafe { T::from_i32(#get_type(self._inner)) }
             }
 
             fn set_type<T: WidgetType>(&mut self, typ: T) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #set_type(self._inner, typ.to_int());
                 }
             }
 
             fn color(&self) -> Color {
+                assert!(!self.was_deleted());
                 unsafe { mem::transmute(#color(self._inner)) }
             }
 
             fn set_color(&mut self, color: Color) {
+                assert!(!self.was_deleted());
                 unsafe { #set_color(self._inner, color as u32) }
             }
 
             fn label_color(&self) -> Color {
+                assert!(!self.was_deleted());
                 unsafe { mem::transmute(#label_color(self._inner)) }
             }
 
             fn set_label_color(&mut self, color: Color) {
+                assert!(!self.was_deleted());
                 unsafe { #set_label_color(self._inner, color as u32) }
             }
 
             fn label_font(&self) -> Font {
+                assert!(!self.was_deleted());
                 unsafe { mem::transmute(#label_font(self._inner)) }
             }
 
             fn set_label_font(&mut self, font: Font) {
+                assert!(!self.was_deleted());
                 unsafe { #set_label_font(self._inner, font as i32) }
             }
 
             fn label_size(&self) -> i32 {
+                assert!(!self.was_deleted());
                 unsafe { #label_size(self._inner) }
             }
 
             fn set_label_size(&mut self, sz: i32) {
+                assert!(!self.was_deleted());
                 unsafe { #set_label_size(self._inner, sz) }
             }
 
             fn label_type<T: WidgetType>(&self) -> T {
+                assert!(!self.was_deleted());
                 unsafe { T::from_i32(#label_type(self._inner)) }
             }
 
             fn set_label_type<T: WidgetType>(&mut self, typ: T) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #set_label_type(self._inner, typ.to_int());
                 }
             }
 
             fn frame<T: WidgetType>(&self) -> T {
+                assert!(!self.was_deleted());
                 unsafe { T::from_i32(#frame(self._inner)) }
             }
 
             fn set_frame<T: WidgetType>(&mut self, typ: T) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #set_frame(self._inner, typ.to_int());
                 }
             }
 
             fn changed(&self) -> bool {
+                assert!(!self.was_deleted());
                 unsafe {
                     match #changed(self._inner) {
                         0 => false,
@@ -385,30 +424,37 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_changed(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe { #set_changed(self._inner) }
             }
 
             fn clear_changed(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe {#clear_changed(self._inner) }
             }
 
             fn align(&self) -> Align {
+                assert!(!self.was_deleted());
                 unsafe { mem::transmute(#align(self._inner)) }
             }
 
             fn set_align(&mut self, align: Align) {
+                assert!(!self.was_deleted());
                 unsafe { #set_align(self._inner, align as i32) }
             }
 
             fn set_image<Image: ImageExt>(&mut self, image: &Image) {
+                assert!(!self.was_deleted());
                 unsafe { #set_image(self._inner, image.as_ptr()) }
             }
 
             fn set_image_with_size<Image: ImageExt>(&mut self, image: &Image, w: i32, h: i32) {
+                assert!(!self.was_deleted());
                 unsafe { #set_image_with_size(self._inner, image.as_ptr(), w, h) }
             }
 
             fn image(&self) -> Option<Image> {
+                assert!(!self.was_deleted());
                 unsafe {
                     let image_ptr = #image(self._inner);
                     if image_ptr.is_null() {
@@ -420,13 +466,11 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
+                assert!(!self.was_deleted());
                 // debug_assert!(
                 //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
-                extern "C" {
-                    fn free(ptr: *mut raw::c_void);
-                }
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
@@ -440,7 +484,20 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            unsafe fn unset_callback(&mut self) {
+                unsafe {
+                    let old_data = self.user_data();
+                    if old_data.is_some() {
+                        let old_data = old_data.unwrap();
+                    }
+                    let callback: Option<unsafe extern "C" fn(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)> = None;
+                    fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, std::ptr::null_mut());
+                    // self.set_callback(Box::new(move || {/* do nothing! */} ));
+                }
+            }
+
             fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>) {
+                assert!(!self.was_deleted());
                 // debug_assert!(
                 //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
@@ -463,6 +520,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn draw(&mut self, cb: Box<dyn FnMut()>) {
+                assert!(!self.was_deleted());
                 // debug_assert!(
                 //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
@@ -481,6 +539,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_trigger(&mut self, trigger: CallbackTrigger) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #set_trigger(self._inner, trigger as i32)
                 }
@@ -530,6 +589,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn parent(&self) -> Option<crate::widget::Widget> {
+                assert!(!self.was_deleted());
                 unsafe {
                     let x = #parent(self._inner);
                     if x.is_null() {
@@ -541,24 +601,28 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn selection_color(&mut self) -> Color {
+                assert!(!self.was_deleted());
                 unsafe {
                     mem::transmute(#selection_color(self._inner))
                 }
             }
 
             fn set_selection_color(&mut self, color: Color) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #set_selection_color(self._inner, color as u32);
                 }
             }
 
             fn do_callback(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #do_callback(self._inner);
                 }
             }
 
             fn inside(&self, wid: crate::widget::Widget) -> bool {
+                assert!(!self.was_deleted());
                 unsafe {
                     match #inside(self._inner, wid.as_ptr() as *mut raw::c_void) {
                         0 => false,
@@ -568,6 +632,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn window(&self) -> Option<crate::window::Window> {
+                assert!(!self.was_deleted());
                 unsafe {
                     let wind_ptr = #window(self._inner);
                     if wind_ptr.is_null() {
@@ -579,6 +644,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn top_window(&self) -> Option<crate::window::Window> {
+                assert!(!self.was_deleted());
                 unsafe {
                     let wind_ptr = #top_window(self._inner);
                     if wind_ptr.is_null() {
@@ -590,6 +656,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn takes_events(&self) -> bool {
+                assert!(!self.was_deleted());
                 unsafe {
                     match #takes_events(self._inner) {
                         0 => false,
@@ -599,6 +666,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
+                assert!(!self.was_deleted());
                 self.set_callback(Box::new(move || sender.send(msg)))
             }
 
@@ -619,11 +687,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn delete(&mut self) {
                 unsafe {
-                    #delete(self._inner)
+                    #delete(self._inner);
+                    self.cleanup();
                 }
             }
 
             fn take_focus(&mut self) -> Result<(), FltkError> {
+                assert!(!self.was_deleted());
                 unsafe {
                     match #take_focus(self._inner) {
                         0 => Ok(()),
@@ -634,6 +704,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
 
             fn set_visible_focus(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #set_visible_focus(self._inner)
                 }
@@ -641,6 +712,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
 
             fn clear_visible_focus(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #clear_visible_focus(self._inner)
                 }
@@ -648,6 +720,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
 
             fn visible_focus(&mut self, v: bool) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #visible_focus(self._inner, v as i32)
                 }
@@ -655,9 +728,23 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
 
             fn has_visible_focus(&mut self) -> bool {
+                assert!(!self.was_deleted());
                 unsafe {
                     #has_visible_focus(self._inner) != 0
                 }
+            }
+
+            fn was_deleted(&self) -> bool {
+                unsafe {
+                    return self._inner.is_null() || self._tracker.is_null() || fltk_sys::fl::Fl_Widget_Tracker_deleted(self._tracker) != 0;
+                }
+            }
+
+            unsafe fn cleanup(&mut self) {
+                self.unset_callback();
+                self._inner = std::ptr::null_mut() as *mut #ptr_name;
+                fltk_sys::fl::Fl_Widget_Tracker_delete(self._tracker);
+                self._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
             }
         }
     };

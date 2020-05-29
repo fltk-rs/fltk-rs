@@ -9,6 +9,7 @@ use std::os::raw;
 #[derive(WidgetExt, Debug)]
 pub struct Widget {
     _inner: *mut Fl_Widget,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 // /// A conversion function for internal use
@@ -23,7 +24,12 @@ impl Widget {
     /// Initialize a Widget base from a pointer
     pub unsafe fn from_raw(ptr: *mut Fl_Widget) -> Self {
         assert!(!ptr.is_null());
-        Widget { _inner: ptr }
+        let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
+        assert!(!tracker.is_null());
+        Widget {
+            _inner: ptr,
+            _tracker: tracker,
+        }
     }
 
     /// Returns the inner pointer

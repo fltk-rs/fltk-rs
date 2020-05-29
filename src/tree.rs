@@ -79,6 +79,7 @@ pub enum TreeItemDrawMode {
 #[derive(WidgetExt, Debug)]
 pub struct Tree {
     _inner: *mut Fl_Tree,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines a tree item
@@ -99,39 +100,52 @@ impl Tree {
         if ptr.is_null() {
             None
         } else {
-            let x = Tree { _inner: ptr };
+            let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
+            if tracker.is_null() {
+                return None;
+            }
+            let x = Tree {
+                _inner: ptr,
+                _tracker: tracker,
+            };
             Some(x)
         }
     }
 
     /// Begins the Tree widget
     pub fn begin(&self) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_begin(self._inner) }
     }
 
     /// Ends the Tree widget
     pub fn end(&self) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_end(self._inner) }
     }
 
     /// Shows the Tree widget
     pub fn show_self(&mut self) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_show_self(self._inner) }
     }
 
     /// Sets the root label
     pub fn set_root_label(&mut self, new_label: &str) {
+        assert!(!self.was_deleted());
         let new_label = CString::new(new_label).unwrap();
         unsafe { Fl_Tree_root_label(self._inner, new_label.as_ptr()) }
     }
 
     /// Gets the Tree's root
     pub fn root(&mut self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_root(self._inner)) }
     }
 
     /// Sets the Tree's root
     pub fn set_root(&mut self, new_item: Option<TreeItem>) {
+        assert!(!self.was_deleted());
         let ptr = match new_item {
             None => std::ptr::null_mut(),
             Some(item) => item._inner,
@@ -141,6 +155,7 @@ impl Tree {
 
     /// Adds a TreeItem
     pub fn add(&mut self, path: &str) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         let path = CString::new(path).unwrap();
         unsafe {
             let x = Fl_Tree_add(self._inner, path.as_ptr() as *mut raw::c_char);
@@ -150,6 +165,7 @@ impl Tree {
 
     /// Inserts a TreeItem above another tree item
     pub fn insert_above(&mut self, above: TreeItem, name: &str) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         if above._inner.is_null() {
             return None;
         }
@@ -163,6 +179,7 @@ impl Tree {
 
     /// Inserts a TreeItem at a position ```pos```
     pub fn insert(&mut self, item: TreeItem, name: &str, pos: u32) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         if item._inner.is_null() {
             return None;
         }
@@ -184,6 +201,7 @@ impl Tree {
 
     /// Removes a TreeItem
     pub fn remove(&mut self, item: TreeItem) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         if item._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
@@ -197,17 +215,20 @@ impl Tree {
 
     /// Clears a tree
     pub fn clear(&mut self) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_clear(self._inner) }
     }
 
     /// Clears all children
     pub fn clear_children(&mut self, item: TreeItem) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_clear_children(self._inner as *mut Fl_Tree, item._inner) }
     }
 
     /// Finds a tree item
     pub fn find_item(&self, path: &str) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         let path = CString::new(path).unwrap();
         unsafe {
             let x = Fl_Tree_find_item(self._inner, path.as_ptr() as *mut raw::c_char);
@@ -221,6 +242,7 @@ impl Tree {
 
     /// finds a clicked item
     pub fn find_clicked(&self, yonly: bool) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe {
             TreeItem::from_raw(Fl_Tree_find_clicked(self._inner, yonly as i32) as *mut Fl_Tree_Item)
         }
@@ -228,21 +250,25 @@ impl Tree {
 
     /// Set the item that was last clicked.
     pub fn set_item_clicked(&mut self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_item_clicked(self._inner)) }
     }
 
     /// Gets the first tree item
     pub fn first(&mut self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_first(self._inner)) }
     }
 
     /// Gets the first visible tree item
     pub fn first_visible_item(&mut self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_first_visible_item(self._inner)) }
     }
 
     /// Gets the next tree item
     pub fn next(&mut self, item: TreeItem) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         if item._inner.is_null() {
             return None;
         }
@@ -251,6 +277,7 @@ impl Tree {
 
     /// Gets the previous tree item
     pub fn prev(&mut self, item: TreeItem) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         if item._inner.is_null() {
             return None;
         }
@@ -259,16 +286,19 @@ impl Tree {
 
     /// Gets the last tree item
     pub fn last(&mut self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_last(self._inner)) }
     }
 
     /// Gets the last visible tree item
     pub fn last_visible_item(&mut self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_last_visible_item(self._inner)) }
     }
 
     /// Gets the next visible tree item
     pub fn next_visible_item(&mut self, start: TreeItem, direction_key: Key) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         if start._inner.is_null() {
             return None;
         }
@@ -283,11 +313,13 @@ impl Tree {
 
     /// Gets the first selected tree item
     pub fn first_selected_item(&mut self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_first_selected_item(self._inner)) }
     }
 
     /// Gets the last selected tree item
     pub fn last_selected_item(&mut self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_last_selected_item(self._inner)) }
     }
 
@@ -298,6 +330,7 @@ impl Tree {
         direction_key: Key,
         visible: bool,
     ) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         if item._inner.is_null() {
             return None;
         }
@@ -313,6 +346,7 @@ impl Tree {
 
     /// Gets the next selected tree item, direction_key is by default Key::Down
     pub fn next_selected_item(&mut self, item: TreeItem, direction_key: Key) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         if item._inner.is_null() {
             return None;
         }
@@ -327,6 +361,7 @@ impl Tree {
 
     /// Gets the selected tree items
     pub fn get_selected_items(&mut self) -> Option<Vec<TreeItem>> {
+        assert!(!self.was_deleted());
         unsafe {
             let mut items = TreeItemArray {
                 _inner: std::ptr::null_mut(),
@@ -342,6 +377,7 @@ impl Tree {
 
     /// Gets the all tree items
     pub fn get_items(&self) -> Option<Vec<TreeItem>> {
+        assert!(!self.was_deleted());
         unsafe {
             let mut items = TreeItemArray {
                 _inner: std::ptr::null_mut(),
@@ -357,6 +393,7 @@ impl Tree {
 
     /// Opens a tree item, causing the children to be shown
     pub fn open(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         let path = CString::new(path).unwrap();
         unsafe {
             match Fl_Tree_open(
@@ -373,12 +410,14 @@ impl Tree {
 
     /// Toggle the open state
     pub fn open_toggle(&mut self, item: TreeItem, do_callback: bool) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_open_toggle(self._inner, item._inner, do_callback as i32) }
     }
 
     /// Close a tree item, causing the children to be hidden
     pub fn close(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         let path = CString::new(path).unwrap();
         unsafe {
             match Fl_Tree_close(
@@ -394,6 +433,7 @@ impl Tree {
 
     /// Returns whether an item is open
     pub fn is_open(&self, path: &str) -> bool {
+        assert!(!self.was_deleted());
         let path = CString::new(path).unwrap();
         unsafe {
             match Fl_Tree_is_open(self._inner, path.as_ptr() as *mut raw::c_char) {
@@ -405,6 +445,7 @@ impl Tree {
 
     /// Returns whether an item is closed
     pub fn is_close(&self, path: &str) -> bool {
+        assert!(!self.was_deleted());
         let path = CString::new(path).unwrap();
         unsafe {
             match Fl_Tree_is_close(self._inner, path.as_ptr() as *mut raw::c_char) {
@@ -416,6 +457,7 @@ impl Tree {
 
     /// Select a tree item
     pub fn select(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         let path = CString::new(path).unwrap();
         unsafe {
             match Fl_Tree_select(
@@ -431,11 +473,13 @@ impl Tree {
 
     /// Toggle the select state of the specified
     pub fn select_toggle(&mut self, item: TreeItem, do_callback: bool) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_select_toggle(self._inner, item._inner, do_callback as i32) }
     }
 
     pub fn deselect(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         let path = CString::new(path).unwrap();
         unsafe {
             match Fl_Tree_deselect(
@@ -451,6 +495,7 @@ impl Tree {
 
     /// Deselect all items
     pub fn deselect_all(&mut self, item: TreeItem, do_callback: bool) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         if item._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
@@ -468,6 +513,7 @@ impl Tree {
         selected_item: TreeItem,
         do_callback: bool,
     ) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         if selected_item._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
@@ -481,6 +527,7 @@ impl Tree {
 
     /// Select all items
     pub fn select_all(&mut self, item: TreeItem, do_callback: bool) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         if item._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
@@ -501,6 +548,7 @@ impl Tree {
         val: TreeItemSelect,
         visible: bool,
     ) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         if from._inner.is_null() || to._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
@@ -527,6 +575,7 @@ impl Tree {
         val: TreeItemSelect,
         visible: bool,
     ) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         if from._inner.is_null() || to._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
         }
@@ -546,17 +595,20 @@ impl Tree {
 
     /// Set the item that currently should have keyboard focus
     pub fn set_item_focus(&mut self, item: TreeItem) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_set_item_focus(self._inner, item._inner) }
     }
 
     /// Get the item that currently has keyboard focus
     pub fn get_item_focus(&self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_get_item_focus(self._inner)) }
     }
 
     /// Returns whether an item is selected
     pub fn is_selected(&self, path: &str) -> bool {
+        assert!(!self.was_deleted());
         let path = CString::new(path).unwrap();
         unsafe {
             match Fl_Tree_is_selected(self._inner, path.as_ptr() as *mut raw::c_char) {
@@ -568,21 +620,25 @@ impl Tree {
 
     /// Gets the items' label font
     pub fn item_label_font(&self) -> Font {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_item_labelfont(self._inner)) }
     }
 
     /// Sets the items' label font
     pub fn set_item_label_font(&mut self, val: Font) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_labelfont(self._inner, val as i32) }
     }
 
     /// Gets the items' label size
     pub fn item_label_size(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_item_labelsize(self._inner) as u32 }
     }
 
     /// Sets the items' label size
     pub fn set_item_label_size(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -592,41 +648,49 @@ impl Tree {
 
     /// Gets the items' foreground color
     pub fn item_label_fg_color(&self) -> Color {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_item_labelfgcolor(self._inner)) }
     }
 
     /// Sets the items' foreground color
     pub fn set_item_label_fg_color(&mut self, val: Color) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_labelfgcolor(self._inner, val as u32) }
     }
 
     /// Gets the items' background color
     pub fn item_label_bg_color(&self) -> Color {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_item_labelbgcolor(self._inner)) }
     }
 
     /// Sets the items' foreground color
     pub fn set_item_label_bg_color(&mut self, val: Color) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_labelbgcolor(self._inner, val as u32) }
     }
 
     /// Gets the items' connector color
     pub fn connector_color(&self) -> Color {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_connectorcolor(self._inner)) }
     }
 
     /// Sets the items' foreground color
     pub fn set_connector_color(&mut self, val: Color) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_connectorcolor(self._inner, val as u32) }
     }
 
     /// Gets the left margin
     pub fn margin_left(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_marginleft(self._inner) as u32 }
     }
 
     /// Sets the left margin
     pub fn set_margin_left(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -636,11 +700,13 @@ impl Tree {
 
     /// Gets the top margin
     pub fn margin_top(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_margintop(self._inner) as u32 }
     }
 
     /// Sets the top margin
     pub fn set_margin_top(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -650,11 +716,13 @@ impl Tree {
 
     /// Gets the bottom margin
     pub fn margin_bottom(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_marginbottom(self._inner) as u32 }
     }
 
     /// Sets the bottom margin
     pub fn set_margin_bottom(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -664,11 +732,13 @@ impl Tree {
 
     /// Gets the line spacing
     pub fn line_spacing(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_linespacing(self._inner) as u32 }
     }
 
     /// Sets the line spacing
     pub fn set_line_spacing(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -678,11 +748,13 @@ impl Tree {
 
     /// Gets the open child bottom margin
     pub fn open_child_margin_bottom(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_openchild_marginbottom(self._inner) as u32 }
     }
 
     /// Sets the open child bottom margin
     pub fn set_open_child_margin_bottom(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -692,11 +764,13 @@ impl Tree {
 
     /// Gets the user icon left margin
     pub fn user_icon_margin_left(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_usericonmarginleft(self._inner) as u32 }
     }
 
     /// Sets the user icon left margin
     pub fn set_user_icon_margin_left(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -706,11 +780,13 @@ impl Tree {
 
     /// Gets the label's left margin
     pub fn label_margin_left(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_labelmarginleft(self._inner) as u32 }
     }
 
     /// Sets the label's left margin
     pub fn set_label_margin_left(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -720,11 +796,13 @@ impl Tree {
 
     /// Gets the widget's left margin
     pub fn widget_margin_left(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_widgetmarginleft(self._inner) as u32 }
     }
 
     /// Sets the widget's left margin
     pub fn set_widget_margin_left(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -734,11 +812,13 @@ impl Tree {
 
     /// Gets the connector's width
     pub fn connector_width(&self) -> u32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_connectorwidth(self._inner) as u32 }
     }
 
     /// Sets the connector's width
     pub fn set_connector_width(&mut self, val: u32) {
+        assert!(!self.was_deleted());
         debug_assert!(
             val <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
@@ -748,6 +828,7 @@ impl Tree {
 
     /// Gets the user icon
     pub fn user_icon(&self) -> Option<Image> {
+        assert!(!self.was_deleted());
         unsafe {
             let x = Fl_Tree_usericon(self._inner);
             if x.is_null() {
@@ -760,11 +841,13 @@ impl Tree {
 
     /// Sets the user icon
     pub fn set_user_icon<Img: ImageExt>(&mut self, val: &Img) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_usericon(self._inner, val.as_ptr()) }
     }
 
     /// Gets the opne icon
     pub fn open_icon(&self) -> Option<Image> {
+        assert!(!self.was_deleted());
         unsafe {
             let x = Fl_Tree_openicon(self._inner);
             if x.is_null() {
@@ -777,11 +860,13 @@ impl Tree {
 
     /// Sets the opne icon
     pub fn set_open_icon<Img: ImageExt>(&mut self, val: &Img) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_openicon(self._inner, val.as_ptr()) }
     }
 
     /// Gets the close icon
     pub fn close_icon(&self) -> Option<Image> {
+        assert!(!self.was_deleted());
         unsafe {
             let x = Fl_Tree_closeicon(self._inner);
             if x.is_null() {
@@ -794,11 +879,13 @@ impl Tree {
 
     /// Sets the opne icon
     pub fn set_close_icon<Img: ImageExt>(&mut self, val: &Img) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_closeicon(self._inner, val.as_ptr()) }
     }
 
     /// Returns true if the collapse icon is enabled, false if not.
     pub fn show_collapse(&self) -> bool {
+        assert!(!self.was_deleted());
         unsafe {
             match Fl_Tree_showcollapse(self._inner) {
                 0 => false,
@@ -809,11 +896,13 @@ impl Tree {
 
     /// Sets whether the collapse icon is enabled
     pub fn set_show_collapse(&mut self, flag: bool) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_showcollapse(self._inner, flag as i32) }
     }
 
     /// Returs whether the root is shown
     pub fn show_root(&self) -> bool {
+        assert!(!self.was_deleted());
         unsafe {
             match Fl_Tree_showroot(self._inner) {
                 0 => false,
@@ -824,86 +913,103 @@ impl Tree {
 
     /// Sets whether the root is shown
     pub fn set_show_root(&mut self, flag: bool) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_showroot(self._inner, flag as i32) }
     }
 
     /// Gets the connector style
     pub fn connector_style(&self) -> TreeConnectorStyle {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_connectorstyle(self._inner)) }
     }
 
     /// Sets the connector style
     pub fn set_connector_style(&mut self, val: TreeConnectorStyle) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_connectorstyle(self._inner, val as i32) }
     }
 
     /// Gets the sort order
     pub fn sort_order(&self) -> TreeSort {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_sortorder(self._inner)) }
     }
 
     /// Sets the sort order
     pub fn set_sort_order(&mut self, val: TreeSort) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_sortorder(self._inner, val as i32) }
     }
 
     /// Gets the select frame(Fl_Box)
     pub fn select_frame(&self) -> FrameType {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_selectbox(self._inner)) }
     }
 
     /// Sets the select frame(Fl_Box)
     pub fn set_select_frame(&mut self, val: FrameType) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_selectbox(self._inner, val as i32) }
     }
 
     /// Gets the Tree select mode
     pub fn select_mode(&self) -> TreeSelect {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_selectmode(self._inner)) }
     }
 
     /// Sets the Tree select mode
     pub fn set_select_mode(&mut self, val: TreeSelect) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_selectmode(self._inner, val as i32) }
     }
 
     /// Gets the Tree item's reselect mode
     pub fn item_reselect_mode(&self) -> TreeItemReselectMode {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_item_reselect_mode(self._inner)) }
     }
 
     /// Sets the Tree item's reselect mode
     pub fn set_item_reselect_mode(&mut self, mode: TreeItemReselectMode) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_reselect_mode(self._inner, mode as i32) }
     }
 
     /// Gets the Tree item's draw mode
     pub fn item_draw_mode(&self) -> TreeItemDrawMode {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_item_draw_mode(self._inner)) }
     }
 
     /// Sets the Tree item's draw mode
     pub fn set_item_draw_mode(&mut self, mode: TreeItemDrawMode) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_draw_mode(self._inner, mode as i32) }
     }
 
     /// Recalculate widget dimensions and scrollbar visibility, normally done automatically
     pub fn calc_dimensions(&mut self) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_calc_dimensions(self._inner) }
     }
 
     /// Recalculates the tree's sizes and scrollbar visibility, normally done automatically
     pub fn calc_tree(&mut self) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_calc_tree(self._inner) }
     }
 
     /// Recalculates the tree's sizes and scrollbar visibility, normally done automatically
     pub fn recalc_tree(&mut self) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_recalc_tree(self._inner) }
     }
 
     /// Returns whether an item is displayed
     pub fn displayed(&mut self, item: TreeItem) -> bool {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe {
             match Fl_Tree_displayed(self._inner, item._inner) {
@@ -915,56 +1021,66 @@ impl Tree {
 
     /// Shows an item
     pub fn show_item(&mut self, item: TreeItem, y_offset: i32) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_show_item(self._inner, item._inner, y_offset) }
     }
 
     /// Adjust the vertical scrollbar so that ```item``` is visible
     pub fn show_item_top(&mut self, item: TreeItem) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_show_item_top(self._inner, item._inner) }
     }
 
     /// Adjust the vertical scrollbar so that ```item``` is in the middle of the display
     pub fn show_item_middle(&mut self, item: TreeItem) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_show_item_middle(self._inner, item._inner) }
     }
 
     /// Adjust the vertical scrollbar so that the is at the bottom of the display.
     pub fn show_item_bottom(&mut self, item: TreeItem) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_show_item_bottom(self._inner, item._inner) }
     }
 
     /// Display the item
     pub fn display(&mut self, item: TreeItem) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_display(self._inner, item._inner) }
     }
 
     /// Gets the vertical position of the item
     pub fn vposition(&self) -> i32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_vposition(self._inner) }
     }
 
     /// Sets the vertical position of the item
     pub fn set_vposition(&mut self, pos: i32) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_vposition(self._inner, pos) }
     }
 
     /// Gets the horizontal position of the item
     pub fn hposition(&self) -> i32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_hposition(self._inner) }
     }
 
     /// Sets the horizontal position of the item
     pub fn set_hposition(&mut self, pos: i32) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_hposition(self._inner, pos) }
     }
 
     /// Returns whether the widget is a scrollbar
     pub fn is_scrollbar<W: WidgetExt>(&mut self, w: &W) -> bool {
+        assert!(!self.was_deleted());
         unsafe {
             match Fl_Tree_is_scrollbar(self._inner, w.as_widget_ptr() as *mut Fl_Widget) {
                 0 => false,
@@ -975,16 +1091,19 @@ impl Tree {
 
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> i32 {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_scrollbar_size(self._inner) }
     }
 
     /// Sets the scrollbar size
     pub fn set_scrollbar_size(&mut self, sz: u32) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_scrollbar_size(self._inner, sz as i32) }
     }
 
     /// Returns whether vertical scrolling is visible
     pub fn is_vscroll_visible(&self) -> bool {
+        assert!(!self.was_deleted());
         unsafe {
             match Fl_Tree_is_vscroll_visible(self._inner) {
                 0 => false,
@@ -995,6 +1114,7 @@ impl Tree {
 
     /// Returns whether horizontal scrolling is visible
     pub fn is_hscroll_visible(&self) -> bool {
+        assert!(!self.was_deleted());
         unsafe {
             match Fl_Tree_is_hscroll_visible(self._inner) {
                 0 => false,
@@ -1005,22 +1125,26 @@ impl Tree {
 
     /// Set the callback item
     pub fn set_callback_item(&mut self, item: TreeItem) {
+        assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_set_callback_item(self._inner, item._inner) }
     }
 
     /// Get the callback item
     pub fn callback_item(&mut self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_callback_item(self._inner)) }
     }
 
     /// Set the callback reason
     pub fn set_callback_reason(&mut self, reason: TreeReason) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_callback_reason(self._inner, reason as i32) }
     }
 
     /// Get the callback reason
     pub fn callback_reason(&self) -> TreeReason {
+        assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_callback_reason(self._inner)) }
     }
 }
