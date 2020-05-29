@@ -208,14 +208,14 @@ pub unsafe trait WidgetExt {
     fn visible_focus(&mut self, v: bool);
     /// Return whether the widget has visible focus
     fn has_visible_focus(&mut self) -> bool;
+    /// Manually delete a widget
+    unsafe fn delete(&mut self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
     /// Retakes ownership of the user callback data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     /// Retakes ownership of the user callback data
     unsafe fn raw_user_data(&self) -> *mut raw::c_void;
-    /// Manually delete a widget
-    unsafe fn delete(&mut self);
     /// Cleanup after widget deletion
     unsafe fn cleanup(&mut self);
 }

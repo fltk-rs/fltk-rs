@@ -699,10 +699,9 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             unsafe fn delete(&mut self) {
-                unsafe {
+                    assert!(!self.was_deleted());
                     #delete(self._inner);
                     self.cleanup();
-                }
             }
 
             fn take_focus(&mut self) -> Result<(), FltkError> {

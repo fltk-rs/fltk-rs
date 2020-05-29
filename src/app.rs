@@ -527,12 +527,14 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 //     }
 // }
 
-/// Deletes widgets and their children.
-pub unsafe fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
-    assert!(!wid.was_deleted());
-    Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-    wid.cleanup();
-}
+// /// Deletes widgets and their children.
+// pub(crate) fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
+//     assert!(!wid.was_deleted());
+//     unsafe {
+//         Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
+//         wid.cleanup();
+//     }
+// }
 
 fn register_images() {
     unsafe { fltk_sys::image::Fl_register_images() }
