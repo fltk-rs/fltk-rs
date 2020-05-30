@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Complete methods for the SimpleTerminal struct.
 
 ## [0.5.5] - 2020-05-30
 ### Changes
