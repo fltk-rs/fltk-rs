@@ -7,12 +7,6 @@ use std::{
     os::raw,
 };
 
-/// Creates a menu bar
-#[derive(WidgetExt, MenuExt, Debug)]
-struct Menu_ {
-    _inner: *mut Fl_Menu_,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
-}
 
 /// Creates a menu bar
 #[derive(WidgetExt, MenuExt, Debug)]
@@ -39,7 +33,7 @@ pub struct Choice {
 #[derive(Debug, Clone)]
 pub struct MenuItem {
     _inner: *mut Fl_Menu_Item,
-    _parent: *const Menu_,
+    _parent: *const MenuBar,
     _alloc: bool,
 }
 
@@ -72,7 +66,7 @@ impl MenuItem {
             assert!(!item_ptr.is_null());
             MenuItem {
                 _inner: item_ptr,
-                _parent: 0 as *const Menu_,
+                _parent: 0 as *const MenuBar,
                 _alloc: true,
             }
         }
@@ -88,7 +82,7 @@ impl MenuItem {
             } else {
                 let item = MenuItem {
                     _inner: item as *mut Fl_Menu_Item,
-                    _parent: 0 as *const Menu_,
+                    _parent: 0 as *const MenuBar,
                     _alloc: false,
                 };
                 Some(item)
@@ -320,7 +314,7 @@ impl MenuItem {
     /// Check if a menu item was deleted
     pub fn was_deleted(&self) -> bool {
         if !self._parent.is_null() {
-            let parent = unsafe { Fl_Menu__menu((*self._parent)._inner) };
+            let parent = unsafe { Fl_Menu_Bar_menu((*self._parent)._inner) };
             if parent.is_null() {
                 true
             } else {

@@ -36,10 +36,6 @@ extern "C" {
 
 typedef struct Fl_Menu_Item Fl_Menu_Item;
 
-WIDGET_DECLARE(Fl_Menu_)
-
-MENU_DECLARE(Fl_Menu_)
-
 WIDGET_DECLARE(Fl_Menu_Bar)
 
 MENU_DECLARE(Fl_Menu_Bar)

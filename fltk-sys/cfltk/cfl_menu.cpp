@@ -82,9 +82,6 @@
     }                                                                          \
     void widget##_remove(widget *self, int idx) { LOCK(self->remove(idx);) }
 
-WIDGET_DEFINE(Fl_Menu_)
-
-MENU_DEFINE(Fl_Menu_)
 
 WIDGET_DEFINE(Fl_Menu_Bar)
 
