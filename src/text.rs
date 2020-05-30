@@ -44,7 +44,7 @@ impl TextBuffer {
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
             let txt = CString::new(txt).unwrap();
-            Fl_Text_Buffer_set_text(self._inner, txt.as_ptr())
+            Fl_Text_Buffer_set_text(self._inner, txt.into_raw())
         }
     }
 
@@ -62,7 +62,7 @@ impl TextBuffer {
     /// Appends to the buffer
     pub fn append(&mut self, text: &str) {
         let text = CString::new(text).unwrap();
-        unsafe { Fl_Text_Buffer_append(self._inner, text.as_ptr()) }
+        unsafe { Fl_Text_Buffer_append(self._inner, text.into_raw()) }
     }
 
     /// Get the length of the buffer
@@ -603,7 +603,7 @@ impl TextDisplay {
 
 impl SimpleTerminal {
     /// Create an new SimpleTerminal widget
-    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> SimpleTerminal {
+    pub fn new(x: i32, y: i32, w: i32, h: i32) -> SimpleTerminal {
         let temp = CString::new("").unwrap();
         unsafe {
             let simple_terminal =
@@ -613,17 +613,15 @@ impl SimpleTerminal {
                 simple_terminal as *mut fltk_sys::fl::Fl_Widget,
             );
             assert!(!tracker.is_null());
-            let mut x = SimpleTerminal {
+            SimpleTerminal {
                 _inner: simple_terminal,
                 _tracker: tracker,
-            };
-            x.set_buffer(buf);
-            x
+            }
         }
     }
 
     /// Creates a default and zero initialized SimpleTerminal
-    pub fn default(buf: &mut TextBuffer) -> SimpleTerminal {
+    pub fn default() -> SimpleTerminal {
         let temp = CString::new("").unwrap();
         unsafe {
             let simple_terminal =
@@ -633,14 +631,79 @@ impl SimpleTerminal {
                 simple_terminal as *mut fltk_sys::fl::Fl_Widget,
             );
             assert!(!tracker.is_null());
-            let mut x = SimpleTerminal {
+            SimpleTerminal {
                 _inner: simple_terminal,
                 _tracker: tracker,
-            };
-            x.set_buffer(buf);
-            x
+            }
         }
     }
+
+    pub fn set_stay_at_bottom(&mut self, arg1: bool) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self._inner, arg1 as i32) }
+    }
+    
+    pub fn stay_at_bottom(&self) -> bool {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Simple_Terminal_stay_at_bottom(self._inner) != 0 }
+    }
+    
+    pub fn set_history_lines(&mut self, arg1: u32) {
+        assert!(!self.was_deleted());
+        debug_assert!(arg1 <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Simple_Terminal_set_history_lines(self._inner, arg1 as i32) }
+    }
+    
+    pub fn history_lines(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Simple_Terminal_history_lines(self._inner) as u32 }
+    }
+    
+    pub fn set_ansi(&mut self, val: bool) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Simple_Terminal_set_ansi(self._inner, val as i32) }
+    }
+    
+    pub fn ansi(&self) -> bool {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Simple_Terminal_ansi(self._inner) != 0 }
+    }
+    
+    pub fn append(&mut self, s: &str) {
+        let s = CString::new(s).unwrap().into_raw();
+        assert!(!self.was_deleted());
+        unsafe { Fl_Simple_Terminal_append(self._inner, s) }
+    }
+    
+    pub fn set_text(&mut self, s: &str) {
+        let s = CString::new(s).unwrap().into_raw();
+        assert!(!self.was_deleted());
+        unsafe { Fl_Simple_Terminal_set_text(self._inner, s) }
+    }
+    
+    pub fn text(&self) -> String {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Simple_Terminal_text(self._inner);
+            assert!(!ptr.is_null());
+            CString::from_raw(ptr as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
+        }
+    }
+    
+    pub fn clear(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Simple_Terminal_clear(self._inner) }
+    }
+    
+    pub fn remove_lines(&mut self, start: u32, count: u32) {
+        assert!(!self.was_deleted());
+        debug_assert!(start <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(count <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        unsafe { Fl_Simple_Terminal_remove_lines(self._inner, start as i32, count as i32) }
+    }
+    
 }
 
 #[cfg(test)]

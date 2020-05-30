@@ -1636,6 +1636,61 @@ extern "C" {
     pub fn Fl_Simple_Terminal_set_buffer(arg1: *mut Fl_Simple_Terminal, arg2: *mut Fl_Text_Buffer);
 }
 extern "C" {
+    pub fn Fl_Simple_Terminal_set_stay_at_bottom(
+        self_: *mut Fl_Simple_Terminal,
+        arg1: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_stay_at_bottom(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_history_lines(
+        self_: *mut Fl_Simple_Terminal,
+        arg1: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_history_lines(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_ansi(self_: *mut Fl_Simple_Terminal, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_ansi(self_: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_append(
+        self_: *mut Fl_Simple_Terminal,
+        s: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_text(
+        self_: *mut Fl_Simple_Terminal,
+        s: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_text(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_clear(self_: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_remove_lines(
+        self_: *mut Fl_Simple_Terminal,
+        start: ::std::os::raw::c_int,
+        count: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Simple_Terminal_text_font(arg1: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {

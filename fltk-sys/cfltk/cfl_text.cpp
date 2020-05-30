@@ -400,4 +400,47 @@ void Fl_Simple_Terminal_set_buffer(Fl_Simple_Terminal *self,
     LOCK(self->buffer(buf);)
 }
 
+void Fl_Simple_Terminal_set_stay_at_bottom(Fl_Simple_Terminal *self, int flag) {
+    LOCK(self->stay_at_bottom(flag);)
+}
+
+int Fl_Simple_Terminal_stay_at_bottom(const Fl_Simple_Terminal *self) {
+    return self->stay_at_bottom();
+}
+
+void Fl_Simple_Terminal_set_history_lines(Fl_Simple_Terminal *self, int cnt) {
+    LOCK(self->history_lines(cnt);)
+}
+
+int Fl_Simple_Terminal_history_lines(const Fl_Simple_Terminal *self) {
+    return self->history_lines();
+}
+
+void Fl_Simple_Terminal_set_ansi(Fl_Simple_Terminal *self, int val) {
+    LOCK(self->ansi(val);)
+}
+
+int Fl_Simple_Terminal_ansi(const Fl_Simple_Terminal *self) {
+    return self->ansi();
+}
+
+void Fl_Simple_Terminal_append(Fl_Simple_Terminal *self, const char *s) {
+    LOCK(self->append(s);)
+}
+
+void Fl_Simple_Terminal_set_text(Fl_Simple_Terminal *self, const char *s) {
+    LOCK(self->text(s);)
+}
+
+const char *Fl_Simple_Terminal_text(const Fl_Simple_Terminal *self) {
+    return self->text();
+}
+
+void Fl_Simple_Terminal_clear(Fl_Simple_Terminal *self) { LOCK(self->clear();) }
+
+void Fl_Simple_Terminal_remove_lines(Fl_Simple_Terminal *self, int start,
+                                     int count) {
+    LOCK(self->remove_lines(start, count);)
+}
+
 DISPLAY_DEFINE(Fl_Simple_Terminal)
