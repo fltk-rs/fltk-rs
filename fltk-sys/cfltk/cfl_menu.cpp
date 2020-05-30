@@ -79,7 +79,8 @@
     }                                                                          \
     const Fl_Menu_Item *widget##_menu(const widget *self) {                    \
         return self->menu();                                                   \
-    }
+    }                                                                          \
+    void widget##_remove(widget *self, int idx) { LOCK(self->remove(idx);) }
 
 WIDGET_DEFINE(Fl_Menu_)
 

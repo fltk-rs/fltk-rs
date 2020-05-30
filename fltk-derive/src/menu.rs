@@ -9,6 +9,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let ptr_name = Ident::new(format!("{}", name_str).as_str(), name.span());
     let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
     let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
+    let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
     let get_item = Ident::new(format!("{}_{}", name_str, "get_item").as_str(), name.span());
     let set_item = Ident::new(format!("{}_{}", name_str, "set_item").as_str(), name.span());
     let find_index = Ident::new(
@@ -102,6 +103,15 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let callback: Fl_Callback = Some(shim);
                     assert!(!self.was_deleted());
                     #insert(self._inner, idx as i32, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
+                }
+            }
+
+            fn remove(&mut self, idx: u32) {
+                assert!(!self.was_deleted());
+                assert!(idx < self.size());
+                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                unsafe {
+                    #remove(self._inner, idx as i32)
                 }
             }
 

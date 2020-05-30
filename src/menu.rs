@@ -117,7 +117,7 @@ impl MenuItem {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             let txt = CString::new(txt).unwrap();
-            Fl_Menu_Item_set_label(self._inner, txt.as_ptr());
+            Fl_Menu_Item_set_label(self._inner, txt.into_raw());
         }
     }
 
@@ -317,6 +317,7 @@ impl MenuItem {
         self.set_callback(Box::new(move || { /* do nothing */ }));
     }
 
+    /// Check if a menu item was deleted
     pub fn was_deleted(&self) -> bool {
         if !self._parent.is_null() {
             let parent = unsafe { Fl_Menu__menu((*self._parent)._inner) };
