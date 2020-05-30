@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add checks for menu clear and subclear operations.
 
 ## [0.5.4] - 2020-05-30
 ### Changes

@@ -124,6 +124,7 @@ fn main() {
 
         let dst = dst
             .profile("RELEASE")
+            .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("OPTION_ABI_VERSION:STRING", "10401")
             .define("OPTION_BUILD_EXAMPLES", "OFF")
             .define("OPTION_USE_THREADS", "ON")

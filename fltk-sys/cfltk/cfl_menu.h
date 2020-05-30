@@ -30,9 +30,14 @@ extern "C" {
     const Fl_Menu_Item *widget##_at(const widget *, int idx);                  \
     void widget##_set_mode(widget *self, int i, int fl);                       \
     int widget##_mode(const widget *self, int i);                              \
-    int widget##_find_index(const widget *self, const char *label);
+    int widget##_find_index(const widget *self, const char *label);            \
+    const Fl_Menu_Item *widget##_menu(const widget *self);
 
 typedef struct Fl_Menu_Item Fl_Menu_Item;
+
+WIDGET_DECLARE(Fl_Menu_)
+
+MENU_DECLARE(Fl_Menu_)
 
 WIDGET_DECLARE(Fl_Menu_Bar)
 

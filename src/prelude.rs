@@ -388,9 +388,9 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Set index into menu of the last item chosen,return true if the new value is different than the old one
     fn set_value(&mut self, v: i32) -> bool;
     /// Clears the items in a menu, effectively deleting them.
-    unsafe fn clear(&mut self);
+    fn clear(&mut self);
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
-    unsafe fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
+    fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
     /// Get the size of the menu widget
     fn size(&self) -> u32;
     /// Get the text label of the menu item at index idx

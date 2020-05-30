@@ -6,3 +6,5 @@ fltk-sys/build.rs~
 /.vscode
 temp.*
 .DS_Store
+compile_commands.json
+/.clangd
