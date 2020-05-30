@@ -219,6 +219,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
 }
+extern "C" {
+    pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Spinner {
@@ -419,6 +422,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Spinner_has_visible_focus(self_: *mut Fl_Spinner) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Spinner_set_user_data(arg1: *mut Fl_Spinner, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
@@ -666,6 +672,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Clock_has_visible_focus(self_: *mut Fl_Clock) -> ::std::os::raw::c_uint;
 }
+extern "C" {
+    pub fn Fl_Clock_set_user_data(arg1: *mut Fl_Clock, data: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -866,6 +875,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_has_visible_focus(self_: *mut Fl_Chart) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Chart_set_user_data(arg1: *mut Fl_Chart, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -1139,6 +1151,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_has_visible_focus(self_: *mut Fl_Progress) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Progress_set_user_data(arg1: *mut Fl_Progress, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;

@@ -24,7 +24,13 @@ extern "C" {
     int widget##_value(widget *);                                              \
     int widget##_set_value(widget *, int v);                                   \
     void widget##_clear(widget *);                                             \
-    int widget##_clear_submenu(widget *, int index);
+    int widget##_clear_submenu(widget *, int index);                           \
+    int widget##_size(const widget *);                                         \
+    const char *widget##_text(const widget *, int idx);                        \
+    const Fl_Menu_Item *widget##_at(const widget *, int idx);                  \
+    void widget##_set_mode(widget *self, int i, int fl);                       \
+    int widget##_mode(const widget *self, int i);                              \
+    int widget##_find_index(const widget *self, const char *label);
 
 typedef struct Fl_Menu_Item Fl_Menu_Item;
 
@@ -83,6 +89,16 @@ int Fl_Menu_Item_active(Fl_Menu_Item *);
 void Fl_Menu_Item_activate(Fl_Menu_Item *);
 
 void Fl_Menu_Item_deactivate(Fl_Menu_Item *);
+
+int Fl_Menu_Item_submenu(const Fl_Menu_Item *self);
+
+Fl_Menu_Item *Fl_Menu_Item_next(Fl_Menu_Item *self, int idx);
+
+void Fl_Menu_Item_callback(Fl_Menu_Item *self, Fl_Callback *c, void *p);
+
+void *Fl_Menu_Item_user_data(const Fl_Menu_Item *);
+
+void Fl_Menu_Item_set_user_data(Fl_Menu_Item *, void *data);
 
 #ifdef __cplusplus
 }

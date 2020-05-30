@@ -32,6 +32,7 @@ pub struct Choice {
 #[derive(Debug, Clone)]
 pub struct MenuItem {
     _inner: *mut Fl_Menu_Item,
+    _alloc: bool,
 }
 
 /// Defines the menu flag for any added menu items using the add() method
@@ -61,7 +62,10 @@ impl MenuItem {
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
-            MenuItem { _inner: item_ptr }
+            MenuItem {
+                _inner: item_ptr,
+                _alloc: true,
+            }
         }
     }
 
@@ -77,6 +81,7 @@ impl MenuItem {
             } else {
                 let item = MenuItem {
                     _inner: item as *mut Fl_Menu_Item,
+                    _alloc: false,
                 };
                 Some(item)
             }
@@ -85,6 +90,7 @@ impl MenuItem {
 
     /// Returns the label of the menu item
     pub fn label(&self) -> Option<String> {
+        assert!(!self._inner.is_null());
         if self._inner.is_null() {
             return None;
         }
@@ -217,6 +223,12 @@ impl MenuItem {
         unsafe { Fl_Menu_Item_deactivate(self._inner) }
     }
 
+    /// Returns whether a menu item is a submenu
+    pub fn is_submenu(&self) -> bool {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_Menu_Item_submenu(self._inner) != 0 }
+    }
+
     /// Shows the menu item
     pub fn show(&mut self) {
         assert!(!self._inner.is_null());
@@ -228,11 +240,89 @@ impl MenuItem {
         assert!(!self._inner.is_null());
         unsafe { Fl_Menu_Item_hide(self._inner) }
     }
+
+    /// Get the next menu item
+    pub fn next(&mut self, idx: u32) -> Option<MenuItem> {
+        assert!(!self._inner.is_null());
+        unsafe {
+            let ptr = Fl_Menu_Item_next(self._inner, idx as i32);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(MenuItem {
+                    _inner: ptr,
+                    _alloc: self._alloc,
+                })
+            }
+        }
+    }
+
+    /// Get the user data
+    pub unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
+        let ptr = Fl_Menu_Item_user_data(self._inner);
+        if ptr.is_null() {
+            None
+        } else {
+            let x = ptr as *mut Box<dyn FnMut()>;
+            let x = Box::from_raw(x);
+            Some(*x)
+        }
+    }
+
+    /// Manually set the user data
+    pub unsafe fn set_user_data(&mut self, data: *mut raw::c_void) {
+        Fl_Menu_Item_set_user_data(self._inner, data)
+    }
+
+    /// Set a callback for the menu item
+    pub fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
+        assert!(!self._inner.is_null());
+        unsafe {
+            unsafe extern "C" fn shim(
+                _wid: *mut fltk_sys::menu::Fl_Widget,
+                data: *mut raw::c_void,
+            ) {
+                let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                let f: &mut (dyn FnMut()) = &mut **a;
+                f();
+            }
+            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+            let data: *mut raw::c_void = mem::transmute(a);
+            let callback: fltk_sys::menu::Fl_Callback = Some(shim);
+            Fl_Menu_Item_callback(self._inner, callback, data);
+        }
+    }
+
+    /// Manually unset a callback
+    pub unsafe fn unset_callback(&mut self) {
+        let old_data = self.user_data();
+        if old_data.is_some() {
+            let _ = old_data.unwrap();
+            self.set_user_data(0 as *mut raw::c_void);
+        }
+    }
+
+    /// Delete the old callback and replace it with an empty one
+    pub fn safe_unset_callback(&mut self) {
+        assert!(!self._inner.is_null());
+        unsafe {
+            self.unset_callback();
+        }
+        self.set_callback(Box::new(move || { /* do nothing */ }));
+    }
 }
 
 unsafe impl Send for MenuItem {}
 
 unsafe impl Sync for MenuItem {}
+
+impl Drop for MenuItem {
+    fn drop(&mut self) {
+        if self._alloc {
+            unsafe { Fl_Menu_Item_delete(self._inner) }
+        }
+    }
+}
 
 #[cfg(test)]
 mod menu {

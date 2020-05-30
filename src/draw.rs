@@ -626,6 +626,7 @@ pub fn set_status(x: i32, y: i32, w: i32, h: i32) {
 /// Sets spot within the window
 pub fn set_spot<Win: WindowExt>(font: Font, size: u32, x: i32, y: i32, w: i32, h: i32, win: &Win) {
     unsafe {
+        assert!(!win.was_deleted());
         cfl_set_spot(
             font as i32,
             size as i32,
@@ -645,6 +646,7 @@ pub fn reset_spot() {
 
 /// Captures part of the window and returns raw data
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
+    assert!(!win.was_deleted());
     let cp = win.width() as u32 * win.height() as u32 * 3;
     win.show();
     unsafe {
@@ -666,6 +668,7 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
 //     w: i32,
 //     h: i32,
 // ) -> Vec<u8> {
+//     assert!(!widget.was_deleted());
 //     assert!(
 //         x + w <= win.width() && y + h <= win.height(),
 //         "Captures must be less than the parent window's size!"

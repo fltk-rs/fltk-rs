@@ -62,6 +62,20 @@
         int ret = 0;                                                           \
         LOCK(ret = self->clear_submenu(index));                                \
         return ret;                                                            \
+    }                                                                          \
+    int widget##_size(const widget *self) { return self->size(); }             \
+    const char *widget##_text(const widget *self, int idx) {                   \
+        return self->text(idx);                                                \
+    }                                                                          \
+    const Fl_Menu_Item *widget##_at(const widget *self, int idx) {             \
+        return &self->menu()[idx];                                             \
+    }                                                                          \
+    void widget##_set_mode(widget *self, int i, int fl) {                      \
+        LOCK(self->mode(fl);)                                                  \
+    }                                                                          \
+    int widget##_mode(const widget *self, int i) { return self->mode(i); }     \
+    int widget##_find_index(const widget *self, const char *label) {           \
+        return self->find_index(label);                                        \
     }
 
 WIDGET_DEFINE(Fl_Menu_Bar)
@@ -142,3 +156,21 @@ int Fl_Menu_Item_active(Fl_Menu_Item *self) { return self->active(); }
 void Fl_Menu_Item_activate(Fl_Menu_Item *self) { LOCK(self->activate();) }
 
 void Fl_Menu_Item_deactivate(Fl_Menu_Item *self) { LOCK(self->deactivate();) }
+
+int Fl_Menu_Item_submenu(const Fl_Menu_Item *self) { return self->submenu(); }
+
+Fl_Menu_Item *Fl_Menu_Item_next(Fl_Menu_Item *self, int idx) {
+    return self->next(idx);
+}
+
+void Fl_Menu_Item_callback(Fl_Menu_Item *self, Fl_Callback *c, void *p) {
+    LOCK(self->callback(c, p);)
+}
+
+void *Fl_Menu_Item_user_data(const Fl_Menu_Item *self) {
+    return self->user_data();
+}
+
+void Fl_Menu_Item_set_user_data(Fl_Menu_Item *self, void *data) {
+    self->user_data(data);
+}

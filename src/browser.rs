@@ -24,7 +24,7 @@ pub enum BrowserType {
     MultiBrowser = 3,
 }
 
-/// Creates a browser
+/// Creates a select browser
 #[derive(WidgetExt, BrowserExt, Debug)]
 pub struct SelectBrowser {
     _inner: *mut Fl_Select_Browser,

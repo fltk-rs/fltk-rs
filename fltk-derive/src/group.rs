@@ -36,6 +36,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
             fn find<Widget: WidgetExt>(&self, widget: &Widget) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(!widget.was_deleted());
                     #find(self._inner, widget.as_widget_ptr() as *mut raw::c_void) as u32
                 }
             }
@@ -43,6 +44,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
             fn add<Widget: WidgetExt>(&mut self, widget: &Widget) {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(!widget.was_deleted());
                     #add(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
                 }
             }
@@ -51,6 +53,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     debug_assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                     assert!(!self.was_deleted());
+                    assert!(!widget.was_deleted());
                     #insert(self._inner, widget.as_widget_ptr() as *mut raw::c_void, index as i32)
                 }
             }
@@ -58,6 +61,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
             fn remove<Widget: WidgetExt>(&mut self, widget: &Widget) {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(!widget.was_deleted());
                     #remove(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
                 }
             }
@@ -104,6 +108,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
             fn resizable<Widget: WidgetExt>(&self, widget: &mut Widget) {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(!widget.was_deleted());
                     #resizable(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
                 }
             }
