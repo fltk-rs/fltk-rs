@@ -76,7 +76,12 @@
     int widget##_mode(const widget *self, int i) { return self->mode(i); }     \
     int widget##_find_index(const widget *self, const char *label) {           \
         return self->find_index(label);                                        \
-    }
+    }                                                                          \
+    const Fl_Menu_Item *widget##_menu(const widget *self) {                    \
+        return self->menu();                                                   \
+    }                                                                          \
+    void widget##_remove(widget *self, int idx) { LOCK(self->remove(idx);) }
+
 
 WIDGET_DEFINE(Fl_Menu_Bar)
 

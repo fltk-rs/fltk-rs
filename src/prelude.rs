@@ -253,7 +253,7 @@ pub unsafe trait GroupExt: WidgetExt {
     fn add<Widget: WidgetExt>(&mut self, widget: &Widget);
     /// Insert a widget to a group at a certain index
     fn insert<Widget: WidgetExt>(&mut self, widget: &Widget, index: u32);
-    /// Remove a widget from a group
+    /// Remove a widget from a group, but does not delete it
     fn remove<Widget: WidgetExt>(&mut self, widget: &Widget);
     /// Clear a group from all widgets
     fn clear(&mut self);
@@ -379,6 +379,8 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         cb: Box<dyn FnMut()>,
     );
+    /// Remove a menu item by index
+    fn remove(&mut self, idx: u32);
     /// Adds a simple text option to the Choice and MenuButton widgets
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
@@ -388,9 +390,9 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Set index into menu of the last item chosen,return true if the new value is different than the old one
     fn set_value(&mut self, v: i32) -> bool;
     /// Clears the items in a menu, effectively deleting them.
-    unsafe fn clear(&mut self);
+    fn clear(&mut self);
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
-    unsafe fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
+    fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
     /// Get the size of the menu widget
     fn size(&self) -> u32;
     /// Get the text label of the menu item at index idx

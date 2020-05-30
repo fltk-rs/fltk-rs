@@ -5,6 +5,13 @@
 ### Changes
 - (None)
 
+## [0.5.5] - 2020-05-30
+### Changes
+- Add checks for menu clear and clear_submenu operations.
+- Add checks for tree clear operations.
+- Add MenuExt::remove.
+- Important fix to menu item set_label method.
+
 ## [0.5.4] - 2020-05-30
 ### Changes
 - Add more checks for widget deletion.

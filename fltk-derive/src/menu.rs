@@ -9,6 +9,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let ptr_name = Ident::new(format!("{}", name_str).as_str(), name.span());
     let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
     let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
+    let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
     let get_item = Ident::new(format!("{}_{}", name_str, "get_item").as_str(), name.span());
     let set_item = Ident::new(format!("{}_{}", name_str, "set_item").as_str(), name.span());
     let find_index = Ident::new(
@@ -105,6 +106,15 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn remove(&mut self, idx: u32) {
+                assert!(!self.was_deleted());
+                assert!(idx < self.size());
+                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                unsafe {
+                    #remove(self._inner, idx as i32)
+                }
+            }
+
             fn find_item(&self, name: &str) -> Option<MenuItem> {
                 let name = CString::new(name).unwrap().clone();
                 unsafe {
@@ -117,6 +127,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(MenuItem {
                             _inner: menu_item,
+                            _parent: self as *const _ as *const MenuBar,
                             _alloc: false,
                         })
                     }
@@ -217,7 +228,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn clear(&mut self) {
+            fn clear(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
                     let sz = self.size();
@@ -237,33 +248,37 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
-                assert!(!self.was_deleted());
-                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                let x = self.at(idx);
-                if x.is_none() {
-                    return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-                }
-                let x = x.unwrap();
-                if !x.is_submenu() {
-                    return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-                }
-                let mut i = idx;
-                loop {
-                    let mut item = self.at(i).unwrap();
-                    if item.label().is_none() {
-                        break;
-                    }
-                    item.unset_callback();
-                    i += 1;
-                }
+            fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
                 unsafe {
+                    assert!(!self.was_deleted());
+                    debug_assert!(
+                        idx <= std::i32::MAX as u32,
+                        "u32 entries have to be < std::i32::MAX for compatibility!"
+                    );
+                    let x = self.at(idx);
+                    if x.is_none() {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    let x = x.unwrap();
+                    if !x.is_submenu() {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                    }
+                    let mut i = idx;
+                    loop {
+                        let mut item = self.at(i).unwrap();
+                        if item.label().is_none() {
+                            break;
+                        }
+                        item.unset_callback();
+                        i += 1;
+                    }
                     match #clear_submenu(self._inner, idx as i32) {
                         0 => Ok(()),
                         _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                     }
                 }
             }
+            
 
             fn size(&self) -> u32 {
                 assert!(!self.was_deleted());
@@ -296,7 +311,9 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     if ptr.is_null() {
                         None
                     } else {
-                        Some(MenuItem { _inner: ptr,
+                        Some(MenuItem {
+                            _inner: ptr,
+                            _parent: self as *const _ as *const MenuBar,
                             _alloc: false,
                         })
                     }

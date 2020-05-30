@@ -540,6 +540,12 @@ extern "C" {
         label: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Bar_menu(self_: *const Fl_Menu_Bar) -> *const Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_remove(self_: *mut Fl_Menu_Bar, idx: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Button {
@@ -868,6 +874,12 @@ extern "C" {
         label: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Button_menu(self_: *const Fl_Menu_Button) -> *const Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_remove(self_: *mut Fl_Menu_Button, idx: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Choice {
@@ -1177,6 +1189,12 @@ extern "C" {
         self_: *const Fl_Choice,
         label: *const ::std::os::raw::c_char,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_menu(self_: *const Fl_Choice) -> *const Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Choice_remove(self_: *mut Fl_Choice, idx: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Menu_Item_new(

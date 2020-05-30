@@ -7,6 +7,7 @@ use std::{
     os::raw,
 };
 
+
 /// Creates a menu bar
 #[derive(WidgetExt, MenuExt, Debug)]
 pub struct MenuBar {
@@ -32,6 +33,7 @@ pub struct Choice {
 #[derive(Debug, Clone)]
 pub struct MenuItem {
     _inner: *mut Fl_Menu_Item,
+    _parent: *const MenuBar,
     _alloc: bool,
 }
 
@@ -64,6 +66,7 @@ impl MenuItem {
             assert!(!item_ptr.is_null());
             MenuItem {
                 _inner: item_ptr,
+                _parent: 0 as *const MenuBar,
                 _alloc: true,
             }
         }
@@ -71,9 +74,7 @@ impl MenuItem {
 
     /// Creates a popup menu at the specified coordinates and returns its choice
     pub fn popup(&mut self, x: i32, y: i32) -> Option<MenuItem> {
-        if self._inner.is_null() {
-            return None;
-        }
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             let item = Fl_Menu_Item_popup(self._inner, x, y);
             if item.is_null() {
@@ -81,6 +82,7 @@ impl MenuItem {
             } else {
                 let item = MenuItem {
                     _inner: item as *mut Fl_Menu_Item,
+                    _parent: 0 as *const MenuBar,
                     _alloc: false,
                 };
                 Some(item)
@@ -90,10 +92,7 @@ impl MenuItem {
 
     /// Returns the label of the menu item
     pub fn label(&self) -> Option<String> {
-        assert!(!self._inner.is_null());
-        if self._inner.is_null() {
-            return None;
-        }
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             let label_ptr = Fl_Menu_Item_label(self._inner);
             if label_ptr.is_null() {
@@ -109,22 +108,22 @@ impl MenuItem {
 
     /// Sets the label of the menu item
     pub fn set_label(&mut self, txt: &str) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             let txt = CString::new(txt).unwrap();
-            Fl_Menu_Item_set_label(self._inner, txt.as_ptr());
+            Fl_Menu_Item_set_label(self._inner, txt.into_raw());
         }
     }
 
     /// Returns the label type of the menu item
     pub fn label_type<T: WidgetType>(&self) -> T {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { T::from_i32(Fl_Menu_Item_label_type(self._inner)) }
     }
 
     /// Sets the label type of the menu item
     pub fn set_label_type<T: WidgetType>(&mut self, typ: T) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             Fl_Menu_Item_set_label_type(self._inner, typ.to_int());
         }
@@ -132,43 +131,43 @@ impl MenuItem {
 
     /// Returns the label color of the menu item
     pub fn label_color(&self) -> Color {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { mem::transmute(Fl_Menu_Item_label_color(self._inner)) }
     }
 
     /// Sets the label color of the menu item
     pub fn set_label_color(&mut self, color: Color) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_set_label_color(self._inner, color as u32) }
     }
 
     /// Returns the label font of the menu item
     pub fn label_font(&self) -> Font {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { mem::transmute(Fl_Menu_Item_label_font(self._inner)) }
     }
 
     /// Sets the label font of the menu item
     pub fn set_label_font(&mut self, font: Font) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_set_label_font(self._inner, font as i32) }
     }
 
     /// Returns the label size of the menu item
     pub fn label_size(&self) -> u32 {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_label_size(self._inner) as u32 }
     }
 
     /// Sets the label size of the menu item
     pub fn set_label_size(&mut self, sz: u32) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_set_label_size(self._inner, sz as i32) }
     }
 
     /// Returns the value of the menu item
     pub fn value(&self) -> bool {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             match Fl_Menu_Item_value(self._inner) {
                 0 => false,
@@ -179,19 +178,19 @@ impl MenuItem {
 
     /// Sets the menu item
     pub fn set(&mut self) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_set(self._inner) }
     }
 
     /// Clears the menu item
     pub fn clear(&mut self) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_clear(self._inner) }
     }
 
     /// Returns whether the menu item is visible or not
     pub fn visible(&self) -> bool {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             match Fl_Menu_Item_visible(self._inner) {
                 0 => false,
@@ -202,7 +201,7 @@ impl MenuItem {
 
     /// Returns whether the menu item is active
     pub fn active(&mut self) -> bool {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             match Fl_Menu_Item_active(self._inner) {
                 0 => false,
@@ -213,37 +212,37 @@ impl MenuItem {
 
     /// Activates the menu item
     pub fn activate(&mut self) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_activate(self._inner) }
     }
 
     /// Deactivates the menu item
     pub fn deactivate(&mut self) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_deactivate(self._inner) }
     }
 
     /// Returns whether a menu item is a submenu
     pub fn is_submenu(&self) -> bool {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_submenu(self._inner) != 0 }
     }
 
     /// Shows the menu item
     pub fn show(&mut self) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_show(self._inner) }
     }
 
     /// Hides the menu item
     pub fn hide(&mut self) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe { Fl_Menu_Item_hide(self._inner) }
     }
 
     /// Get the next menu item
     pub fn next(&mut self, idx: u32) -> Option<MenuItem> {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             let ptr = Fl_Menu_Item_next(self._inner, idx as i32);
             if ptr.is_null() {
@@ -251,6 +250,7 @@ impl MenuItem {
             } else {
                 Some(MenuItem {
                     _inner: ptr,
+                    _parent: self._parent,
                     _alloc: self._alloc,
                 })
             }
@@ -276,7 +276,7 @@ impl MenuItem {
 
     /// Set a callback for the menu item
     pub fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
                 _wid: *mut fltk_sys::menu::Fl_Widget,
@@ -304,11 +304,25 @@ impl MenuItem {
 
     /// Delete the old callback and replace it with an empty one
     pub fn safe_unset_callback(&mut self) {
-        assert!(!self._inner.is_null());
+        assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             self.unset_callback();
         }
         self.set_callback(Box::new(move || { /* do nothing */ }));
+    }
+
+    /// Check if a menu item was deleted
+    pub fn was_deleted(&self) -> bool {
+        if !self._parent.is_null() {
+            let parent = unsafe { Fl_Menu_Bar_menu((*self._parent)._inner) };
+            if parent.is_null() {
+                true
+            } else {
+                false
+            }
+        } else {
+            false
+        }
     }
 }
 
@@ -320,6 +334,7 @@ impl Drop for MenuItem {
     fn drop(&mut self) {
         if self._alloc {
             unsafe { Fl_Menu_Item_delete(self._inner) }
+            self._inner = 0 as *mut Fl_Menu_Item;
         }
     }
 }
