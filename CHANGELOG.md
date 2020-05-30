@@ -1,6 +1,11 @@
 # Changelog
 
+
 ## Unreleased
+### Changes
+- (None)
+
+## [0.5.4] - 2020-05-30
 ### Changes
 - Add more checks for widget deletion.
 - Add cleanup after menu deletion.
