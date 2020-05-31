@@ -17,11 +17,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *self, Fl_Callback *cb,
     }
 }
 
-class Fl_Widget_Derived : public Fl_Widget {
+struct Fl_Widget_Derived : public Fl_Widget {
     void *ev_data_ = NULL;
     void *draw_data_ = NULL;
-
-  public:
+    
     typedef int (*handler)(int, void *data);
     handler inner_handler = NULL;
     typedef void (*drawer)(void *data);
@@ -56,12 +55,6 @@ class Fl_Widget_Derived : public Fl_Widget {
     void draw() override {
         if (draw_data_ && inner_drawer)
             inner_drawer(draw_data_);
-    };
-    ~Fl_Widget_Derived() {
-        void *user_data_ = Fl_Widget::user_data();
-        free(user_data_);
-        free(ev_data_);
-        free(draw_data_);
     }
 };
 Fl_Widget *Fl_Widget_new(int x, int y, int width, int height,
@@ -240,4 +233,20 @@ unsigned int Fl_Widget_has_visible_focus(Fl_Widget *self) {
 
 void Fl_Widget_set_user_data(Fl_Widget *self, void *data) {
     LOCK(self->user_data(data);)
+}
+
+void *Fl_Widget_draw_data(const Fl_Widget *self) {
+    return ((Fl_Widget_Derived*)self)->draw_data_;
+}
+
+void *Fl_Widget_handle_data(const Fl_Widget *self) {
+    return ((Fl_Widget_Derived*)self)->ev_data_;
+}
+
+void Fl_Widget_set_draw_data(Fl_Widget *self, void *data) {
+    LOCK(((Fl_Widget_Derived*)self)->draw_data_ = data;)
+}
+
+void Fl_Widget_set_handle_data(Fl_Widget *self, void *data) {
+    LOCK(((Fl_Widget_Derived*)self)->ev_data_ = data;)
 }

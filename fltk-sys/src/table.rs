@@ -222,6 +222,18 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_draw_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_handle_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_draw_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
@@ -425,6 +437,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_set_user_data(arg1: *mut Fl_Group, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Group_draw_data(self_: *const Fl_Group) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Group_handle_data(self_: *const Fl_Group) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Group_set_draw_data(self_: *mut Fl_Group, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Group_set_handle_data(self_: *mut Fl_Group, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
@@ -668,6 +692,18 @@ extern "C" {
     pub fn Fl_Pack_set_user_data(arg1: *mut Fl_Pack, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Pack_draw_data(self_: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Pack_handle_data(self_: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Pack_set_draw_data(self_: *mut Fl_Pack, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Pack_set_handle_data(self_: *mut Fl_Pack, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
 }
 extern "C" {
@@ -907,6 +943,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_set_user_data(arg1: *mut Fl_Scroll, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Scroll_draw_data(self_: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_handle_data(self_: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_draw_data(self_: *mut Fl_Scroll, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Scroll_set_handle_data(self_: *mut Fl_Scroll, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Scroll_xposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
@@ -1169,6 +1217,18 @@ extern "C" {
     pub fn Fl_Tabs_set_user_data(arg1: *mut Fl_Tabs, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Tabs_draw_data(self_: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tabs_handle_data(self_: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_draw_data(self_: *mut Fl_Tabs, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Tabs_set_handle_data(self_: *mut Fl_Tabs, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -1410,6 +1470,18 @@ extern "C" {
     pub fn Fl_Tile_set_user_data(arg1: *mut Fl_Tile, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Tile_draw_data(self_: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tile_handle_data(self_: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tile_set_draw_data(self_: *mut Fl_Tile, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Tile_set_handle_data(self_: *mut Fl_Tile, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1649,6 +1721,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_set_user_data(arg1: *mut Fl_Wizard, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Wizard_draw_data(self_: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_handle_data(self_: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_set_draw_data(self_: *mut Fl_Wizard, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Wizard_set_handle_data(self_: *mut Fl_Wizard, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -1930,6 +2014,28 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Color_Chooser_draw_data(
+        self_: *const Fl_Color_Chooser,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_handle_data(
+        self_: *const Fl_Color_Chooser,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_draw_data(
+        self_: *mut Fl_Color_Chooser,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_handle_data(
+        self_: *mut Fl_Color_Chooser,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
 }
 extern "C" {
@@ -2190,6 +2296,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_set_user_data(arg1: *mut Fl_Table, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Table_draw_data(self_: *const Fl_Table) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_handle_data(self_: *const Fl_Table) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_set_draw_data(self_: *mut Fl_Table, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Table_set_handle_data(self_: *mut Fl_Table, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Table_begin(self_: *mut Fl_Table);
@@ -2626,6 +2744,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_Row_set_user_data(arg1: *mut Fl_Table_Row, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Table_Row_draw_data(self_: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_Row_handle_data(self_: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_draw_data(self_: *mut Fl_Table_Row, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_handle_data(
+        self_: *mut Fl_Table_Row,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Table_Row_begin(self_: *mut Fl_Table_Row);

@@ -78,14 +78,17 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     void widget##_clear_visible_focus(widget *self);                           \
     void widget##_visible_focus(widget *self, int v);                          \
     unsigned int widget##_has_visible_focus(widget *self);                     \
-    void widget##_set_user_data(widget *, void *data);
+    void widget##_set_user_data(widget *, void *data);                         \
+    void *widget##_draw_data(const widget *self);                              \
+    void *widget##_handle_data(const widget *self);                            \
+    void widget##_set_draw_data(widget *self, void *data);                     \
+    void widget##_set_handle_data(widget *self, void *data);
 
 #define WIDGET_DEFINE(widget)                                                  \
-    class widget##_Derived : public widget {                                   \
+    struct widget##_Derived : public widget {                                  \
         void *ev_data_ = NULL;                                                 \
         void *draw_data_ = NULL;                                               \
                                                                                \
-      public:                                                                  \
         typedef int (*handler)(int, void *data);                               \
         handler inner_handler = NULL;                                          \
         typedef void (*drawer)(void *data);                                    \
@@ -245,6 +248,18 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     }                                                                          \
     void widget##_set_user_data(widget *self, void *data) {                    \
         LOCK(self->user_data(data);)                                           \
+    }                                                                          \
+    void *widget##_draw_data(const widget *self) {                             \
+        return ((widget##_Derived *)self)->draw_data_;                         \
+    }                                                                          \
+    void *widget##_handle_data(const widget *self) {                           \
+        return ((widget##_Derived *)self)->ev_data_;                           \
+    }                                                                          \
+    void widget##_set_draw_data(widget *self, void *data) {                    \
+        LOCK(((widget##_Derived *)self)->draw_data_ = data;)                   \
+    }                                                                          \
+    void widget##_set_handle_data(widget *self, void *data) {                  \
+        LOCK(((widget##_Derived *)self)->ev_data_ = data;)                     \
     }
 
 WIDGET_DECLARE(Fl_Widget)

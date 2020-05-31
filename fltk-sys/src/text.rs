@@ -222,6 +222,18 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_draw_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_handle_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_draw_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
 pub type Fl_Text_Modify_Cb = ::std::option::Option<
     unsafe extern "C" fn(
         pos: ::std::os::raw::c_int,
@@ -640,6 +652,26 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_set_user_data(
         arg1: *mut Fl_Text_Display,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_draw_data(self_: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Display_handle_data(
+        self_: *const Fl_Text_Display,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_draw_data(
+        self_: *mut Fl_Text_Display,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_handle_data(
+        self_: *mut Fl_Text_Display,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1107,6 +1139,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_set_user_data(
         arg1: *mut Fl_Text_Editor,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_draw_data(self_: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_handle_data(self_: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_draw_data(
+        self_: *mut Fl_Text_Editor,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_handle_data(
+        self_: *mut Fl_Text_Editor,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1623,6 +1673,28 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_set_user_data(
         arg1: *mut Fl_Simple_Terminal,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_draw_data(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_handle_data(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_draw_data(
+        self_: *mut Fl_Simple_Terminal,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_handle_data(
+        self_: *mut Fl_Simple_Terminal,
         data: *mut ::std::os::raw::c_void,
     );
 }
