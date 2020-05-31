@@ -1,9 +1,13 @@
 # Changelog
 
-
 ## Unreleased
 ### Changes
 - (None)
+
+## [0.5.6] - 2020-05-31
+### Changes
+- Complete methods for the SimpleTerminal struct.
+- Add proper cleanup for draw callbacks
 
 ## [0.5.5] - 2020-05-30
 ### Changes

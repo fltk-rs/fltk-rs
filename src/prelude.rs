@@ -171,10 +171,6 @@ pub unsafe trait WidgetExt {
     fn image(&self) -> Option<Image>;
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback(&mut self, cb: Box<dyn FnMut()>);
-    /// Unset the defined callback
-    unsafe fn unset_callback(&mut self);
-    /// Delete the old callback and replace it with an empty one
-    fn safe_unset_callback(&mut self);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
     fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>);
@@ -214,14 +210,22 @@ pub unsafe trait WidgetExt {
     fn delete(&mut self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
-    /// Retakes ownership of the user callback data
+    /// INTERNAL: Retakes ownership of the user callback data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
-    /// Manually set the user data
+    /// INTERNAL: Manually set the user data
     unsafe fn set_user_data(&mut self, data: *mut raw::c_void);
-    /// Retakes ownership of the user callback data
+    /// INTERNAL: Retakes ownership of the user callback data
     unsafe fn raw_user_data(&self) -> *mut raw::c_void;
-    /// Cleanup after widget deletion
+    /// INTERNAL: Cleanup after widget deletion
     unsafe fn cleanup(&mut self);
+    /// INTERNAL: Unset the defined callback
+    unsafe fn unset_callback(&mut self);
+    /// INTERNAL: Retrieve the draw data
+    unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
+    /// INTERNAL: Manually set the draw data
+    unsafe fn set_draw_data(&mut self, data: *mut raw::c_void);
+    /// INTERNAL: Unset the draw callback
+    unsafe fn unset_draw_callback(&mut self);
 }
 
 /// Defines the methods implemented by all button widgets

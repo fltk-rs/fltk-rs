@@ -40,8 +40,8 @@ void cfl_rectf(int x, int y, int w, int h);
 
 void cfl_rectf_with_color(int x, int y, int w, int h, unsigned int c);
 
-void cfl_rectf_with_rgb(int x, int y, int w, int h, unsigned char r,
-                        unsigned char g, unsigned char b);
+void cfl_rectf_with_rgb(int x, int y, int w, int h, unsigned char r, unsigned char g,
+                        unsigned char b);
 
 void cfl_line(int x, int y, int x1, int y1);
 
@@ -83,8 +83,7 @@ void cfl_translate(double x, double y);
 
 void cfl_rotate(double d);
 
-void cfl_mult_matrix(double a, double b, double c, double d, double x,
-                     double y);
+void cfl_mult_matrix(double a, double b, double c, double d, double x, double y);
 
 void cfl_begin_points(void);
 
@@ -96,8 +95,8 @@ void cfl_begin_polygon(void);
 
 void cfl_vertex(double x, double y);
 
-void cfl_curve(double X0, double Y0, double X1, double Y1, double X2, double Y2,
-               double X3, double Y3);
+void cfl_curve(double X0, double Y0, double X1, double Y1, double X2, double Y2, double X3,
+               double Y3);
 
 void cfl_arc2(double x, double y, double r, double start, double end);
 
@@ -171,8 +170,8 @@ void cfl_rtl_draw(const char *str, int n, int x, int y);
 
 void cfl_measure(const char *str, int *x, int *y, int draw_symbols);
 
-void cfl_draw5(const char *str, int x, int y, int w, int h, int align,
-               void **img, int draw_symbols);
+void cfl_draw5(const char *str, int x, int y, int w, int h, int align, void **img,
+               int draw_symbols);
 
 void cfl_frame(const char *s, int x, int y, int w, int h);
 
@@ -180,16 +179,13 @@ void cfl_frame2(const char *s, int x, int y, int w, int h);
 
 void cfl_draw_box(int box_type, int x, int y, int w, int h, unsigned int);
 
-void cfl_draw_image(const unsigned char *buf, int X, int Y, int W, int H, int D,
-                    int L);
+void cfl_draw_image(const unsigned char *buf, int X, int Y, int W, int H, int D, int L);
 
-void cfl_draw_image_mono(const unsigned char *buf, int X, int Y, int W, int H,
-                         int D, int L);
+void cfl_draw_image_mono(const unsigned char *buf, int X, int Y, int W, int H, int D, int L);
 
 char cfl_can_do_alpha_blending(void);
 
-unsigned char *cfl_read_image(unsigned char *p, int X, int Y, int W, int H,
-                              int alpha);
+unsigned char *cfl_read_image(unsigned char *p, int X, int Y, int W, int H, int alpha);
 
 unsigned char *cfl_capture_window_part(void *win, int x, int y, int w, int h);
 
@@ -215,9 +211,8 @@ void cfl_set_cursor(int cursor);
 
 void cfl_set_cursor2(int cursor, int fg, int bg);
 
-const char *cfl_expand_text(const char *from, char *buf, int maxbuf,
-                            double maxw, int *n, double *width, int wrap,
-                            int draw_symbols);
+const char *cfl_expand_text(const char *from, char *buf, int maxbuf, double maxw, int *n,
+                            double *width, int wrap, int draw_symbols);
 
 void cfl_set_status(int X, int Y, int W, int H);
 
@@ -233,8 +228,7 @@ int cfl_raw_image_to_bmp(unsigned char *data, const char *fname, int w, int h);
 
 unsigned int Fl_show_colormap(unsigned int old_col);
 
-void cfl_copy_offscreen(int x, int y, int w, int h, void *pixmap, int srcx,
-                        int srcy);
+void cfl_copy_offscreen(int x, int y, int w, int h, void *pixmap, int srcx, int srcy);
 
 void *cfl_create_offscreen(int w, int h);
 

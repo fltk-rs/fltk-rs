@@ -6,11 +6,11 @@
 extern "C" {
 #endif
 
-#define BUTTON_DECLARE(widget)                                                 \
-    int widget##_shortcut(const widget *self);                                 \
-    void widget##_set_shortcut(widget *self, int shortcut);                    \
-    int widget##_clear(widget *self);                                          \
-    int widget##_value(widget *self);                                          \
+#define BUTTON_DECLARE(widget)                                                                     \
+    int widget##_shortcut(const widget *self);                                                     \
+    void widget##_set_shortcut(widget *self, int shortcut);                                        \
+    int widget##_clear(widget *self);                                                              \
+    int widget##_value(widget *self);                                                              \
     void widget##_set_value(widget *self, int flag);
 
 WIDGET_DECLARE(Fl_Button)

@@ -222,6 +222,18 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_draw_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_handle_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_draw_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Item {
@@ -430,6 +442,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_user_data(arg1: *mut Fl_Menu_Bar, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_draw_data(self_: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_handle_data(self_: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_draw_data(self_: *mut Fl_Menu_Bar, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_handle_data(self_: *mut Fl_Menu_Bar, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add(
@@ -763,6 +787,24 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Button_draw_data(self_: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_handle_data(self_: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_draw_data(
+        self_: *mut Fl_Menu_Button,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_handle_data(
+        self_: *mut Fl_Menu_Button,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
         name: *const ::std::os::raw::c_char,
@@ -1083,6 +1125,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_set_user_data(arg1: *mut Fl_Choice, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Choice_draw_data(self_: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Choice_handle_data(self_: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Choice_set_draw_data(self_: *mut Fl_Choice, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Choice_set_handle_data(self_: *mut Fl_Choice, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Choice_add(

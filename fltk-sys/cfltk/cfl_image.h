@@ -4,17 +4,16 @@
 extern "C" {
 #endif
 
-#define IMAGE_DECLARE(image)                                                   \
-    typedef struct image image;                                                \
-    void image##_draw(image *, int X, int Y, int W, int H);                    \
-    int image##_width(image *);                                                \
-    int image##_height(image *);                                               \
-    void image##_delete(image *);                                              \
-    int image##_count(image *self);                                            \
-    const char *const *image##_data(image *self);                              \
-    image *image##_copy(image *self);                                          \
-    void image##_scale(image *self, int width, int height, int proportional,   \
-                       int can_expand);                                        \
+#define IMAGE_DECLARE(image)                                                                       \
+    typedef struct image image;                                                                    \
+    void image##_draw(image *, int X, int Y, int W, int H);                                        \
+    int image##_width(image *);                                                                    \
+    int image##_height(image *);                                                                   \
+    void image##_delete(image *);                                                                  \
+    int image##_count(image *self);                                                                \
+    const char *const *image##_data(image *self);                                                  \
+    image *image##_copy(image *self);                                                              \
+    void image##_scale(image *self, int width, int height, int proportional, int can_expand);      \
     int image##_fail(image *self);
 
 IMAGE_DECLARE(Fl_Image)
@@ -51,8 +50,7 @@ Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data);
 
 IMAGE_DECLARE(Fl_RGB_Image)
 
-Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H,
-                               int depth);
+Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int depth);
 
 IMAGE_DECLARE(Fl_Shared_Image)
 
