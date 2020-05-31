@@ -10,34 +10,34 @@
 #include <FL/platform.H>
 #include <new>
 
-#define WINDOW_DEFINE(widget)                                                  \
-    void widget##_make_modal(widget *self, unsigned int boolean) {             \
-        LOCK(if (boolean) { self->set_modal(); } else {                        \
-            self->set_non_modal();                                             \
-        })                                                                     \
-    }                                                                          \
-    void widget##_fullscreen(widget *self, unsigned int boolean) {             \
-        LOCK(if (boolean) { self->fullscreen(); } else {                       \
-            self->fullscreen_off();                                            \
-        })                                                                     \
-    }                                                                          \
-    void widget##_make_current(widget *self) {                                 \
-        LOCK(((Fl_Window *)self)->make_current();)                             \
-    }                                                                          \
-    void widget##_set_icon(widget *self, const void *image) {                  \
-        LOCK(self->icon((const Fl_RGB_Image *)((Fl_Image *)image)->copy());)   \
-    }                                                                          \
-    void widget##_make_resizable(widget *self, void *wid) {                    \
-        LOCK(self->resizable((Fl_Widget *)wid);)                               \
-    }                                                                          \
-    void *widget##_icon(const widget *self) {                                  \
-        return (Fl_Image *)self->icon();                                       \
-    }                                                                          \
-    void widget##_set_cursor(widget *self, int cursor) {                       \
-        LOCK(self->cursor((Fl_Cursor)cursor);)                                 \
-    }                                                                          \
-    int widget##_shown(widget *self) { return self->shown(); }                 \
-    void *widget##_raw_handle(const widget *w) { return (void *)fl_xid_(w); }
+#define WINDOW_DEFINE(widget)                                                                      \
+    void widget##_make_modal(widget *self, unsigned int boolean) {                                 \
+        LOCK(if (boolean) { self->set_modal(); } else { self->set_non_modal(); })                  \
+    }                                                                                              \
+    void widget##_fullscreen(widget *self, unsigned int boolean) {                                 \
+        LOCK(if (boolean) { self->fullscreen(); } else { self->fullscreen_off(); })                \
+    }                                                                                              \
+    void widget##_make_current(widget *self) {                                                     \
+        LOCK(((Fl_Window *)self)->make_current();)                                                 \
+    }                                                                                              \
+    void widget##_set_icon(widget *self, const void *image) {                                      \
+        LOCK(self->icon((const Fl_RGB_Image *)((Fl_Image *)image)->copy());)                       \
+    }                                                                                              \
+    void widget##_make_resizable(widget *self, void *wid) {                                        \
+        LOCK(self->resizable((Fl_Widget *)wid);)                                                   \
+    }                                                                                              \
+    void *widget##_icon(const widget *self) {                                                      \
+        return (Fl_Image *)self->icon();                                                           \
+    }                                                                                              \
+    void widget##_set_cursor(widget *self, int cursor) {                                           \
+        LOCK(self->cursor((Fl_Cursor)cursor);)                                                     \
+    }                                                                                              \
+    int widget##_shown(widget *self) {                                                             \
+        return self->shown();                                                                      \
+    }                                                                                              \
+    void *widget##_raw_handle(const widget *w) {                                                   \
+        return (void *)fl_xid_(w);                                                                 \
+    }
 
 WIDGET_DEFINE(Fl_Window)
 
@@ -63,9 +63,13 @@ GROUP_DEFINE(Fl_Gl_Window)
 
 WINDOW_DEFINE(Fl_Gl_Window)
 
-void Fl_Gl_Window_flush(Fl_Gl_Window *self) { LOCK(self->flush();) }
+void Fl_Gl_Window_flush(Fl_Gl_Window *self) {
+    LOCK(self->flush();)
+}
 
-char Fl_Gl_Window_valid(const Fl_Gl_Window *self) { return self->valid(); }
+char Fl_Gl_Window_valid(const Fl_Gl_Window *self) {
+    return self->valid();
+}
 
 void Fl_Gl_Window_set_valid(Fl_Gl_Window *self, char v) {
     LOCK(self->valid(v);)
@@ -79,9 +83,13 @@ void Fl_Gl_Window_set_context_valid(Fl_Gl_Window *self, char v) {
     LOCK(self->context_valid(v);)
 }
 
-int Fl_Gl_Window_can_do(Fl_Gl_Window *self) { return self->can_do(); }
+int Fl_Gl_Window_can_do(Fl_Gl_Window *self) {
+    return self->can_do();
+}
 
-void *Fl_Gl_Window_context(const Fl_Gl_Window *self) { return self->context(); }
+void *Fl_Gl_Window_context(const Fl_Gl_Window *self) {
+    return self->context();
+}
 
 void Fl_Gl_Window_set_context(Fl_Gl_Window *self, void *ctx, int destroy_flag) {
     LOCK(self->context((GLContext)ctx, destroy_flag);)
@@ -91,7 +99,9 @@ void Fl_Gl_Window_swap_buffers(Fl_Gl_Window *self) {
     LOCK(self->swap_buffers();)
 }
 
-void Fl_Gl_Window_ortho(Fl_Gl_Window *self) { LOCK(self->ortho();) }
+void Fl_Gl_Window_ortho(Fl_Gl_Window *self) {
+    LOCK(self->ortho();)
+}
 
 int Fl_Gl_Window_can_do_overlay(Fl_Gl_Window *self) {
     return self->can_do_overlay();
@@ -113,10 +123,18 @@ float Fl_Gl_Window_pixels_per_unit(Fl_Gl_Window *self) {
     return self->pixels_per_unit();
 }
 
-int Fl_Gl_Window_pixel_w(Fl_Gl_Window *self) { return self->pixel_w(); }
+int Fl_Gl_Window_pixel_w(Fl_Gl_Window *self) {
+    return self->pixel_w();
+}
 
-int Fl_Gl_Window_pixel_h(Fl_Gl_Window *self) { return self->pixel_h(); }
+int Fl_Gl_Window_pixel_h(Fl_Gl_Window *self) {
+    return self->pixel_h();
+}
 
-int Fl_Gl_Window_mode(const Fl_Gl_Window *self) { return self->mode(); }
+int Fl_Gl_Window_mode(const Fl_Gl_Window *self) {
+    return self->mode();
+}
 
-void Fl_Gl_Window_set_mode(Fl_Gl_Window *self, int mode) { self->mode(mode); }
+void Fl_Gl_Window_set_mode(Fl_Gl_Window *self, int mode) {
+    self->mode(mode);
+}

@@ -21,9 +21,13 @@ GROUP_DEFINE(Fl_Pack)
 
 WIDGET_DEFINE(Fl_Scroll)
 
-int Fl_Scroll_xposition(const Fl_Scroll *self) { return self->xposition(); }
+int Fl_Scroll_xposition(const Fl_Scroll *self) {
+    return self->xposition();
+}
 
-int Fl_Scroll_yposition(const Fl_Scroll *self) { return self->yposition(); }
+int Fl_Scroll_yposition(const Fl_Scroll *self) {
+    return self->yposition();
+}
 
 void Fl_Scroll_scroll_to(Fl_Scroll *self, int x, int y) {
     LOCK(self->scroll_to(x, y);)
@@ -49,9 +53,13 @@ GROUP_DEFINE(Fl_Tile)
 
 WIDGET_DEFINE(Fl_Wizard)
 
-void Fl_Wizard_next(Fl_Wizard *self) { self->next(); }
+void Fl_Wizard_next(Fl_Wizard *self) {
+    self->next();
+}
 
-void Fl_Wizard_prev(Fl_Wizard *self) { self->prev(); }
+void Fl_Wizard_prev(Fl_Wizard *self) {
+    self->prev();
+}
 
 Fl_Widget *Fl_Wizard_value(Fl_Wizard *self) {
     return (Fl_Widget *)self->value();
@@ -65,11 +73,21 @@ GROUP_DEFINE(Fl_Wizard)
 
 WIDGET_DEFINE(Fl_Color_Chooser)
 
-double Fl_Color_Chooser_r(Fl_Color_Chooser *self) { return self->r(); }
-double Fl_Color_Chooser_g(Fl_Color_Chooser *self) { return self->g(); }
-double Fl_Color_Chooser_b(Fl_Color_Chooser *self) { return self->b(); }
+double Fl_Color_Chooser_r(Fl_Color_Chooser *self) {
+    return self->r();
+}
+double Fl_Color_Chooser_g(Fl_Color_Chooser *self) {
+    return self->g();
+}
+double Fl_Color_Chooser_b(Fl_Color_Chooser *self) {
+    return self->b();
+}
 
 GROUP_DEFINE(Fl_Color_Chooser)
 
-int Fl_Pack_spacing(Fl_Pack *self) { return self->spacing(); }
-void Fl_Pack_set_spacing(Fl_Pack *self, int spacing) { self->spacing(spacing); }
+int Fl_Pack_spacing(Fl_Pack *self) {
+    return self->spacing();
+}
+void Fl_Pack_set_spacing(Fl_Pack *self, int spacing) {
+    self->spacing(spacing);
+}

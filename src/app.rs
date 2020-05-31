@@ -230,6 +230,7 @@ where
             let f: &mut (dyn FnMut()) = &mut **a;
             f();
         }
+        widget.unset_callback();
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = mem::transmute(a);
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);

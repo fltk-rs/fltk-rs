@@ -46,11 +46,9 @@ void Fl_Chart_clear(Fl_Chart *self);
 
 void Fl_Chart_add(Fl_Chart *self, double val, const char *str, unsigned col);
 
-void Fl_Chart_insert(Fl_Chart *self, int ind, double val, const char *str,
-                     unsigned col);
+void Fl_Chart_insert(Fl_Chart *self, int ind, double val, const char *str, unsigned col);
 
-void Fl_Chart_replace(Fl_Chart *self, int ind, double val, const char *str,
-                      unsigned col);
+void Fl_Chart_replace(Fl_Chart *self, int ind, double val, const char *str, unsigned col);
 
 void Fl_Chart_set_bounds(Fl_Chart *self, double a, double b);
 
@@ -112,8 +110,7 @@ void Fl_Tooltip_disable(void);
 
 void (*Fl_Tooltip_enter)(Fl_Widget *w);
 
-void Fl_Tooltip_enter_area(Fl_Widget *w, int X, int Y, int W, int H,
-                           const char *tip);
+void Fl_Tooltip_enter_area(Fl_Widget *w, int X, int Y, int W, int H, const char *tip);
 
 void (*Fl_Tooltip_exit)(Fl_Widget *w);
 
