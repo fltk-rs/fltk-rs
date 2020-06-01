@@ -79,7 +79,6 @@
             stable[i] = {color[i], font[i], fontsz[i]};                                            \
         }                                                                                          \
         LOCK(self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);)                \
-        delete[] stable;                                                                           \
     }                                                                                              \
     void widget##_set_cursor_style(widget *self, int style) {                                      \
         LOCK(self->cursor_style(style);)                                                           \

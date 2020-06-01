@@ -487,7 +487,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn set_style_table_entry(
         &mut self,
         style_buffer: &mut TextBuffer,
-        entries: &Vec<StyleTableEntry>,
+        entries: Vec<StyleTableEntry>,
     );
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: CursorStyle);

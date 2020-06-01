@@ -9,6 +9,8 @@
 - Add support for windows-gnu fltk-bundled builds.
 - Update to latest FLTK.
 - Add positions to common dialogs which are now supported by FLTK.
+- Fixed typos in method names.
+- Fixed use-after-free of TextDisplay StyleTableEntry.
 
 ## [0.5.6] - 2020-05-31
 ### Changes
