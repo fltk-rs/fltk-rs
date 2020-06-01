@@ -169,40 +169,40 @@ impl Drop for FileDialog {
 }
 
 /// Displays a message box
-pub fn message(txt: &str) {
+pub fn message(x: i32, y: i32, txt: &str) {
     unsafe {
         let txt = CString::new(txt).unwrap();
-        cfl_message(txt.as_ptr())
+        cfl_message(x, y, txt.as_ptr())
     }
 }
 
 /// Displays an alert box
-pub fn alert(txt: &str) {
+pub fn alert(x: i32, y: i32, txt: &str) {
     unsafe {
         let txt = CString::new(txt).unwrap();
-        cfl_alert(txt.as_ptr())
+        cfl_alert(x, y, txt.as_ptr())
     }
 }
 
 /// Displays a choice box with upto three choices
 /// An empty choice will not be shown
-pub fn choice(txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
+pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
     unsafe {
         let txt = CString::new(txt).unwrap();
         let b0 = CString::new(b0).unwrap();
         let b1 = CString::new(b1).unwrap();
         let b2 = CString::new(b2).unwrap();
-        cfl_choice(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
+        cfl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
     }
 }
 
 /// Displays an input box, which returns the inputted string.
 /// Can be used for gui io
-pub fn input(txt: &str, deflt: &str) -> Option<String> {
+pub fn input(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::new(deflt.clone()).unwrap().as_ptr();
         let txt = CString::new(txt).unwrap();
-        let x = cfl_input(txt.as_ptr(), temp);
+        let x = cfl_input(x, y, txt.as_ptr(), temp);
         if x.is_null() {
             return None;
         } else {
@@ -216,11 +216,11 @@ pub fn input(txt: &str, deflt: &str) -> Option<String> {
 }
 
 /// Shows an input box, but with hidden string
-pub fn password(txt: &str, deflt: &str) -> Option<String> {
+pub fn password(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::new(deflt.clone()).unwrap().as_ptr();
         let txt = CString::new(txt).unwrap();
-        let x = cfl_password(txt.as_ptr(), temp);
+        let x = cfl_password(x, y, txt.as_ptr(), temp);
         if x.is_null() {
             return None;
         } else {

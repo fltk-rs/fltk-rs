@@ -55,7 +55,7 @@ impl Editor {
                     fs::write(&filename, self.editor.buffer().text()).unwrap();
                     *saved = true;
                 }
-                false => alert("Please specify a file!"),
+                false => alert(200, 200, "Please specify a file!"),
             }
         } else {
             match path::Path::new(&filename).exists() {
@@ -63,7 +63,7 @@ impl Editor {
                     fs::write(&filename, self.editor.buffer().text()).unwrap();
                     *saved = true;
                 }
-                false => alert("Please specify a file!"),
+                false => alert(200, 200, "Please specify a file!"),
             }
         }
     }
@@ -119,7 +119,7 @@ fn main() {
         MenuFlag::Normal,
         Box::new(move || {
             if editor_c.buffer().text() != "" {
-                let x = choice("File unsaved, Do you wish to continue?", "Yes", "No!", "");
+                let x = choice(200, 200, "File unsaved, Do you wish to continue?", "Yes", "No!", "");
                 if x == 0 {
                     editor_c.buffer().set_text("");
                 }
@@ -148,7 +148,7 @@ fn main() {
                         .unwrap()
                         .as_str(),
                 ),
-                false => alert("File does not exist!"),
+                false => alert(200, 200, "File does not exist!"),
             }
         }),
     );
@@ -176,7 +176,7 @@ fn main() {
         MenuFlag::Normal,
         Box::new(move || {
             if saved == false {
-                let x = choice("Would you like to save your work?", "Yes", "No", "");
+                let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
                 if x == 0 {
                     editor_c.save_file(&mut saved);
                     std::process::exit(0);
@@ -220,7 +220,7 @@ fn main() {
         Shortcut::None,
         MenuFlag::Normal,
         Box::new(move || {
-            message(
+            message(200, 200, 
                 "This is an example application written in Rust and using the FLTK Gui library.",
             );
         }),
@@ -233,7 +233,7 @@ fn main() {
     wind.set_callback(Box::new(move || {
         if fltk::app::event() == fltk::app::Event::Close {
             if saved == false {
-                let x = choice("Would you like to save your work?", "Yes", "No", "");
+                let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
                 if x == 0 {
                     editor.save_file(&mut saved);
                     std::process::exit(0);

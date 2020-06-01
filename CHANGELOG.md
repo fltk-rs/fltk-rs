@@ -4,6 +4,12 @@
 ### Changes
 - (None)
 
+## [0.5.7] - 2020-06-01
+### Changes
+- Add support for windows-gnu fltk-bundled builds.
+- Update to latest FLTK.
+- Add positions to common dialogs which are now supported by FLTK.
+
 ## [0.5.6] - 2020-05-31
 ### Changes
 - Complete methods for the SimpleTerminal struct.
