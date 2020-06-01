@@ -146,7 +146,7 @@ pub fn event_text() -> String {
         if text.is_null() {
             String::from("")
         } else {
-            CString::from_raw(text as *mut raw::c_char)
+            CStr::from_ptr(text as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
         }

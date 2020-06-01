@@ -39,8 +39,6 @@ impl Term {
 
         term.set_style_table_entry(&mut sbuf, styles);
 
-        term.set_ansi(false);
-
         Term {
             term: term,
             current_dir: current_dir,
