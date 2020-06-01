@@ -1,4 +1,5 @@
 use fltk::{app, text::*, window::*};
+use std::mem::ManuallyDrop;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
@@ -10,7 +11,7 @@ struct Term {
 }
 
 impl Term {
-    pub fn new(mut buf: &mut TextBuffer) -> Term {
+    pub fn new(mut buf: &mut ManuallyDrop<TextBuffer>) -> Term {
         let mut current_dir = std::env::current_dir()
             .unwrap()
             .to_string_lossy()

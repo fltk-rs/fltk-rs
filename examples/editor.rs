@@ -7,6 +7,7 @@ use fltk::{
 };
 use std::cell::RefCell;
 use std::ops::{Deref, DerefMut};
+use std::mem::ManuallyDrop;
 use std::rc::Rc;
 use std::{fs, path};
 
@@ -17,7 +18,7 @@ pub struct Editor {
 }
 
 impl Editor {
-    pub fn new(mut buf: &mut TextBuffer) -> Editor {
+    pub fn new(mut buf: &mut ManuallyDrop<TextBuffer>) -> Editor {
         Editor {
             editor: TextEditor::new(5, 40, 790, 555, &mut buf),
             filename: String::from(""),

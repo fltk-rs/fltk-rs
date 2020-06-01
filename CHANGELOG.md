@@ -2,15 +2,16 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Fixed typos in method names.
+- Fixed use-after-free of TextDisplay StyleTableEntry.
+- Make TextBuffer semantics clearer using ManuallyDrop for all methods taking and returning a TextBuffer.
+- Enable manual memory management of the style table entry when necessary.
 
 ## [0.5.7] - 2020-06-01
 ### Changes
 - Add support for windows-gnu fltk-bundled builds.
 - Update to latest FLTK.
 - Add positions to common dialogs which are now supported by FLTK.
-- Fixed typos in method names.
-- Fixed use-after-free of TextDisplay StyleTableEntry.
 
 ## [0.5.6] - 2020-05-31
 ### Changes

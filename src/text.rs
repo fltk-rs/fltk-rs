@@ -15,13 +15,13 @@ pub struct TextBuffer {
 
 impl TextBuffer {
     /// Initialized a default text buffer
-    pub fn default() -> Self {
+    pub fn default() -> mem::ManuallyDrop<TextBuffer> {
         unsafe {
             let text_buffer = Fl_Text_Buffer_new();
             assert!(!text_buffer.is_null());
-            TextBuffer {
+            mem::ManuallyDrop::new(TextBuffer {
                 _inner: text_buffer,
-            }
+            })
         }
     }
 
@@ -53,7 +53,7 @@ impl TextBuffer {
         unsafe {
             let text = Fl_Text_Buffer_text(self._inner);
             assert!(!text.is_null());
-            CString::from_raw(text as *mut raw::c_char)
+            CStr::from_ptr(text as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
         }
@@ -101,7 +101,7 @@ impl TextBuffer {
                 None
             } else {
                 Some(
-                    CString::from_raw(x as *mut raw::c_char)
+                    CStr::from_ptr(x as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
                 )
@@ -250,7 +250,7 @@ impl TextBuffer {
         unsafe {
             let x = Fl_Text_Buffer_selection_text(self._inner);
             assert!(!x.is_null());
-            CString::from_raw(x as *mut raw::c_char)
+            CStr::from_ptr(x as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
         }
@@ -315,7 +315,7 @@ impl TextBuffer {
         unsafe {
             let x = Fl_Text_Buffer_highlight_text(self._inner);
             assert!(!x.is_null());
-            CString::from_raw(x as *mut raw::c_char)
+            CStr::from_ptr(x as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
         }
@@ -330,7 +330,7 @@ impl TextBuffer {
         unsafe {
             let x = Fl_Text_Buffer_line_text(self._inner, pos as i32);
             assert!(!x.is_null());
-            CString::from_raw(x as *mut raw::c_char)
+            CStr::from_ptr(x as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
         }
@@ -451,17 +451,18 @@ unsafe impl Send for TextBuffer {}
 
 impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {
-        let mut temp = TextBuffer::default();
+        let temp = TextBuffer::default();
+        let mut temp = mem::ManuallyDrop::<TextBuffer>::into_inner(temp);
         temp.copy(self, 0, 0, self.length());
         temp
     }
 }
 
-// impl Drop for TextBuffer {
-//     fn drop(&mut self) {
-//         unsafe { Fl_Text_Buffer_delete(self._inner) }
-//     }
-// }
+impl Drop for TextBuffer {
+    fn drop(&mut self) {
+        unsafe { Fl_Text_Buffer_delete(self._inner) }
+    }
+}
 
 /// Creates a non-editable text display widget
 #[derive(WidgetExt, DisplayExt, Debug)]
@@ -491,9 +492,25 @@ pub struct StyleTableEntry {
     pub size: u32,
 }
 
+pub struct StyleTables {
+    _inner: *mut raw::c_void,
+}
+
+impl Drop for StyleTables {
+    fn drop(&mut self) {
+        unsafe { Fl_delete_stable(self._inner) }
+    }
+}
+
 impl TextEditor {
     /// Create an new TextEditor widget
-    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextEditor {
+    pub fn new(
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+        buf: &mut mem::ManuallyDrop<TextBuffer>,
+    ) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
@@ -511,7 +528,7 @@ impl TextEditor {
     }
 
     /// Creates a default and zero initialized TextEditor
-    pub fn default(buf: &mut TextBuffer) -> TextEditor {
+    pub fn default(buf: &mut mem::ManuallyDrop<TextBuffer>) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
@@ -563,7 +580,13 @@ impl TextEditor {
 
 impl TextDisplay {
     /// Create an new TextDisplay widget
-    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextDisplay {
+    pub fn new(
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+        buf: &mut mem::ManuallyDrop<TextBuffer>,
+    ) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display =
@@ -582,7 +605,7 @@ impl TextDisplay {
     }
 
     /// Creates a default and zero initialized TextDisplay
-    pub fn default(buf: &mut TextBuffer) -> TextDisplay {
+    pub fn default(buf: &mut mem::ManuallyDrop<TextBuffer>) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display =
@@ -642,68 +665,76 @@ impl SimpleTerminal {
         assert!(!self.was_deleted());
         unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self._inner, arg1 as i32) }
     }
-    
+
     pub fn stay_at_bottom(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe { Fl_Simple_Terminal_stay_at_bottom(self._inner) != 0 }
     }
-    
+
     pub fn set_history_lines(&mut self, arg1: u32) {
         assert!(!self.was_deleted());
-        debug_assert!(arg1 <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            arg1 <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Simple_Terminal_set_history_lines(self._inner, arg1 as i32) }
     }
-    
+
     pub fn history_lines(&self) -> u32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Simple_Terminal_history_lines(self._inner) as u32 }
     }
-    
+
     pub fn set_ansi(&mut self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Simple_Terminal_set_ansi(self._inner, val as i32) }
     }
-    
+
     pub fn ansi(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe { Fl_Simple_Terminal_ansi(self._inner) != 0 }
     }
-    
+
     pub fn append(&mut self, s: &str) {
         let s = CString::new(s).unwrap().into_raw();
         assert!(!self.was_deleted());
         unsafe { Fl_Simple_Terminal_append(self._inner, s) }
     }
-    
+
     pub fn set_text(&mut self, s: &str) {
         let s = CString::new(s).unwrap().into_raw();
         assert!(!self.was_deleted());
         unsafe { Fl_Simple_Terminal_set_text(self._inner, s) }
     }
-    
+
     pub fn text(&self) -> String {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Simple_Terminal_text(self._inner);
             assert!(!ptr.is_null());
-            CString::from_raw(ptr as *mut raw::c_char)
+            CStr::from_ptr(ptr as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
         }
     }
-    
+
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Simple_Terminal_clear(self._inner) }
     }
-    
+
     pub fn remove_lines(&mut self, start: u32, count: u32) {
         assert!(!self.was_deleted());
-        debug_assert!(start <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-        debug_assert!(count <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+        debug_assert!(
+            start <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
+        debug_assert!(
+            count <= std::i32::MAX as u32,
+            "u32 entries have to be < std::i32::MAX for compatibility!"
+        );
         unsafe { Fl_Simple_Terminal_remove_lines(self._inner, start as i32, count as i32) }
     }
-    
 }
 
 #[cfg(test)]
