@@ -484,7 +484,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_styly_table_entry(
+    fn set_style_table_entry(
         &mut self,
         style_buffer: &mut TextBuffer,
         entries: &Vec<StyleTableEntry>,
