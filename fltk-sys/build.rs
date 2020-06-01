@@ -17,11 +17,21 @@ fn main() {
 
     println!("cargo:rerun-if-changed=build.rs");
 
+    let mut platform = target_os.to_string();
+
+    if target_os.as_str() == "windows" {
+        if cfg!(target_env = "gnu") {
+            platform.push_str("-gnu");
+        } else {
+            platform.push_str("-msvc");
+        }   
+    }
+
     if cfg!(feature = "fltk-bundled") {
         let url = PathBuf::from(format!(
             "https://github.com/MoAlyousef/fltk-rs/releases/download/{}/lib_x64-{}.tar.gz",
             pkg_version,
-            target_os.as_str()
+            platform
         ));
 
         Command::new("curl")

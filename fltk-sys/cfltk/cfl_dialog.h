@@ -34,15 +34,15 @@ void Fl_Native_File_Chooser_set_preset_file(Fl_Native_File_Chooser *, const char
 
 const char *Fl_Native_File_Chooser_errmsg(Fl_Native_File_Chooser *);
 
-void cfl_message(const char *txt);
+void cfl_message(int x, int y, const char *txt);
 
-void cfl_alert(const char *txt);
+void cfl_alert(int x, int y, const char *txt);
 
-int cfl_choice(const char *txt, const char *b0, const char *b1, const char *b2);
+int cfl_choice(int x, int y, const char *txt, const char *b0, const char *b1, const char *b2);
 
-const char *cfl_input(const char *txt, const char *deflt);
+const char *cfl_input(int x, int y, const char *txt, const char *deflt);
 
-const char *cfl_password(const char *txt, const char *deflt);
+const char *cfl_password(int x, int y, const char *txt, const char *deflt);
 
 typedef struct Fl_Help_Dialog Fl_Help_Dialog;
 
