@@ -60,7 +60,7 @@ impl Term {
     fn run_command(&mut self) -> String {
         let args = self.cmd.clone();
         let args: Vec<&str> = args.split_whitespace().collect();
-        
+
         if args.len() > 0 {
             let mut cmd = Command::new(args[0]);
             if args.len() > 1 {
@@ -137,10 +137,8 @@ fn main() {
                 app::Key::BackSpace => {
                     if term.cmd.len() != 0 {
                         let text_len = term.term.text().len() as u32;
-                        term
-                            .term
-                            .buffer()
-                            .remove(text_len - 1, text_len as u32);
+                        term.term.buffer().remove(text_len - 1, text_len);
+                        term.sbuf.remove(text_len - 1, text_len);
                         term.cmd.pop().unwrap();
                         return true;
                     } else {
@@ -157,6 +155,6 @@ fn main() {
             _ => false,
         }
     }));
-    
+
     app.run().unwrap();
 }
