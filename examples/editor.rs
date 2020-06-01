@@ -33,7 +33,7 @@ impl Editor {
     }
 
     pub fn style(&mut self) {
-        self.editor.set_text_font(Font::Courrier);
+        self.editor.set_text_font(Font::Courier);
         self.editor.set_linenumber_width(18);
         self.editor
             .set_linenumber_fgcolor(Color::from_u32(0x8b8386));

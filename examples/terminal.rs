@@ -28,7 +28,7 @@ impl Term {
     pub fn style(&mut self) {
         self.term.set_color(Color::Black);
         self.term.set_text_color(Color::Green);
-        self.term.set_text_font(Font::Courrier);
+        self.term.set_text_font(Font::Courier);
         self.term.set_cursor_color(Color::Green);
         self.term.set_cursor_style(CursorStyle::BlockCursor);
         self.term.show_cursor(true);
