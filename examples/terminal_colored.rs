@@ -18,7 +18,7 @@ impl Term {
             .to_string_lossy()
             .to_string();
 
-        current_dir.push_str("/ $ ");
+        current_dir.push_str("$ ");
 
         let mut term = SimpleTerminal::new(5, 5, 630, 470);
 
@@ -37,7 +37,7 @@ impl Term {
                 size: 16,
             },
             StyleTableEntry {
-                color: Color::Blue,
+                color: Color::from_u32(0x8000ff),
                 font: Font::Courier,
                 size: 16,
             },

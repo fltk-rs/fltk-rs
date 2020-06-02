@@ -17,7 +17,7 @@ impl Term {
             .to_string_lossy()
             .to_string();
 
-        current_dir.push_str("/ $ ");
+        current_dir.push_str("$ ");
 
         Term {
             term: TextDisplay::new(5, 5, 630, 470, &mut buf),
