@@ -1,14 +1,14 @@
 use fltk::{app, text::*, window::*};
-use std::mem::ManuallyDrop;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
+
 
 #[derive(Debug, Clone)]
 struct Term {
     pub term: SimpleTerminal,
     current_dir: String,
     cmd: String,
-    sbuf: ManuallyDrop<TextBuffer>,
+    sbuf: TextBuffer,
 }
 
 impl Term {
@@ -102,7 +102,7 @@ impl Term {
                 .unwrap()
                 .to_string_lossy()
                 .to_string();
-            current_dir.push_str("/ $ ");
+            current_dir.push_str("$ ");
             self.current_dir = current_dir.clone();
             return String::from("");
         } else {

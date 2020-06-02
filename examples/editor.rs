@@ -6,7 +6,6 @@ use fltk::{
     window::Window,
 };
 use std::ops::{Deref, DerefMut};
-use std::mem::ManuallyDrop;
 use std::{fs, path};
 
 #[derive(Debug, Clone)]
@@ -16,7 +15,7 @@ pub struct Editor {
 }
 
 impl Editor {
-    pub fn new(buf: ManuallyDrop<TextBuffer>) -> Editor {
+    pub fn new(buf: &mut TextBuffer) -> Editor {
         Editor {
             editor: TextEditor::new(5, 40, 790, 555, buf),
             filename: String::from(""),
@@ -96,7 +95,7 @@ fn main() {
     let mut buf = TextBuffer::default();
     buf.set_tab_distance(4);
 
-    let mut editor = Editor::new(buf);
+    let mut editor = Editor::new(&mut buf);
 
     editor.style();
     wind.make_resizable(true);

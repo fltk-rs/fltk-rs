@@ -205,17 +205,18 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         unsafe impl DisplayExt for #name {
-            fn buffer<'a>(&'a self) -> &'a mut TextBuffer {
+            fn buffer(&self) -> &mut TextBuffer {
                 unsafe {
                     assert!(!self.was_deleted());
                     let buffer = #get_buffer(self._inner);
                     assert!(!buffer.is_null());
-                    let x = Box::from(TextBuffer::from_ptr(buffer));
+                    let mut x = TextBuffer::from_ptr(buffer);
+                    let x = Box::from(x);
                     &mut *Box::into_raw(x)
                 }
             }
 
-            fn set_buffer(&mut self, buffer: mem::ManuallyDrop<TextBuffer>) {
+            fn set_buffer(&mut self, mut buffer: &mut TextBuffer) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_buffer(self._inner, buffer.as_ptr())
@@ -360,7 +361,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_style_table_entry(&mut self, style_buffer: &mut TextBuffer, entries: Vec<StyleTableEntry>) -> mem::ManuallyDrop<crate::text::StyleTables> {
+            fn set_style_table_entry(&mut self, mut style_buffer: &mut TextBuffer, entries: Vec<StyleTableEntry>) -> crate::text::StyleTables {
                 let mut colors: Vec<u32> = vec![];
                 let mut fonts: Vec<i32> = vec![];
                 let mut sizes: Vec<i32> = vec![];
@@ -372,7 +373,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     let x = #set_style_table_entry(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
-                    mem::ManuallyDrop::new(StyleTables { _inner: x })
+                    StyleTables { _inner: x }
                 }
             }
 
