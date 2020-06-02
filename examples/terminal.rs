@@ -79,7 +79,7 @@ impl Term {
                 .unwrap()
                 .to_string_lossy()
                 .to_string();
-            current_dir.push_str("/ $ ");
+            current_dir.push_str("$ ");
             self.current_dir = current_dir.clone();
             return String::from("");
         } else {

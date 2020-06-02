@@ -205,16 +205,16 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         unsafe impl DisplayExt for #name {
-            fn buffer(&self) -> mem::ManuallyDrop<TextBuffer> {
+            fn buffer(&self) -> &mut TextBuffer {
                 unsafe {
                     assert!(!self.was_deleted());
                     let buffer = #get_buffer(self._inner);
                     assert!(!buffer.is_null());
                     let mut x = TextBuffer::from_ptr(buffer);
                     x._parent = self as *const _ as *const TextDisplay;
-                    // let x = Box::from(x);
-                    // &mut *Box::into_raw(x)
-                    mem::ManuallyDrop::new(x)
+                    let x = Box::from(x);
+                    &mut *Box::into_raw(x)
+                    // mem::ManuallyDrop::new(x)
                 }
             }
 

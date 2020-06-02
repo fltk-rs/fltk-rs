@@ -507,6 +507,13 @@ pub struct StyleTables {
     _parent: *const TextDisplay,
 }
 
+impl StyleTables {
+    /// Deletes the StyleTables
+    pub unsafe fn delete(&mut self) {
+        Fl_delete_stable(self._inner) 
+    }
+}
+
 impl Drop for StyleTables {
     fn drop(&mut self) {
         unsafe { 
