@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add checks prior to TextBuffer drop.
 
 ## [0.5.9] - 2020-06-02
 ### Changes

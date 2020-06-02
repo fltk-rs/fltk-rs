@@ -446,7 +446,7 @@ pub unsafe trait ValuatorExt: WidgetExt {
 /// Defines the methods implemented by TextDisplay and TextEditor
 pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
-    fn buffer<'a>(&'a self) -> &'a mut TextBuffer;
+    fn buffer(&self) -> mem::ManuallyDrop<TextBuffer>;
     /// Sets the associated TextBuffer
     fn set_buffer(&mut self, buffer: mem::ManuallyDrop<TextBuffer>);
     /// Return the text font

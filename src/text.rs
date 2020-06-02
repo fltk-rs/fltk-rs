@@ -11,6 +11,7 @@ use std::{
 #[derive(Debug)]
 pub struct TextBuffer {
     _inner: *mut Fl_Text_Buffer,
+    _parent: *const TextDisplay,
 }
 
 impl TextBuffer {
@@ -21,6 +22,7 @@ impl TextBuffer {
             assert!(!text_buffer.is_null());
             mem::ManuallyDrop::new(TextBuffer {
                 _inner: text_buffer,
+                _parent: 0 as *const TextDisplay,
             })
         }
     }
@@ -32,7 +34,10 @@ impl TextBuffer {
 
     /// Initialized a text buffer from a pointer
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
-        TextBuffer { _inner: ptr }
+        TextBuffer {
+            _inner: ptr,
+            _parent: 0 as *const TextDisplay,
+        }
     }
 
     /// Returns the inner pointer from a text buffer
@@ -460,7 +465,12 @@ impl Clone for TextBuffer {
 
 impl Drop for TextBuffer {
     fn drop(&mut self) {
-        unsafe { Fl_Text_Buffer_delete(self._inner) }
+        unsafe { 
+            if !self._parent.is_null() && !(*self._parent).was_deleted() {
+                return;
+            }
+            Fl_Text_Buffer_delete(self._inner) 
+        }
     }
 }
 
@@ -494,11 +504,17 @@ pub struct StyleTableEntry {
 
 pub struct StyleTables {
     _inner: *mut raw::c_void,
+    _parent: *const TextDisplay,
 }
 
 impl Drop for StyleTables {
     fn drop(&mut self) {
-        unsafe { Fl_delete_stable(self._inner) }
+        unsafe { 
+            if !self._parent.is_null() && !(*self._parent).was_deleted() {
+                return;
+            }
+            Fl_delete_stable(self._inner) 
+        }
     }
 }
 
@@ -698,17 +714,13 @@ impl SimpleTerminal {
     pub fn append(&mut self, s: &str) {
         let s = CString::new(s).unwrap().into_raw();
         assert!(!self.was_deleted());
-        unsafe { 
-            Fl_Simple_Terminal_append(self._inner, s) 
-        }
+        unsafe { Fl_Simple_Terminal_append(self._inner, s) }
     }
 
     pub fn set_text(&mut self, s: &str) {
         let s = CString::new(s).unwrap().into_raw();
         assert!(!self.was_deleted());
-        unsafe { 
-            Fl_Simple_Terminal_set_text(self._inner, s) 
-        }
+        unsafe { Fl_Simple_Terminal_set_text(self._inner, s) }
     }
 
     pub fn text(&self) -> String {
