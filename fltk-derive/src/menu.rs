@@ -145,7 +145,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn find_index(&self, label: &str) -> u32 {
                 assert!(!self.was_deleted());
-                let label = CString::new(label).unwrap().into_raw() as *mut raw::c_char;
+                let label = CString::new(label).unwrap().as_ptr() as *mut raw::c_char;
                 unsafe {
                     #find_index(self._inner, label) as u32
                 }

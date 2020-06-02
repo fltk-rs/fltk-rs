@@ -5,13 +5,14 @@ use std::process::{Command, Stdio};
 
 #[derive(Debug, Clone)]
 struct Term {
-    pub term: TextDisplay,
+    pub term: SimpleTerminal,
     current_dir: String,
     cmd: String,
+    sbuf: ManuallyDrop<TextBuffer>,
 }
 
 impl Term {
-    pub fn new(mut buf: &mut ManuallyDrop<TextBuffer>) -> Term {
+    pub fn new() -> Term {
         let mut current_dir = std::env::current_dir()
             .unwrap()
             .to_string_lossy()
@@ -19,35 +20,57 @@ impl Term {
 
         current_dir.push_str("$ ");
 
+        let mut term = SimpleTerminal::new(5, 5, 630, 470);
+
+        let mut sbuf = TextBuffer::default();
+
+        // Enable different colored text in TestDisplay
+        let styles: Vec<StyleTableEntry> = vec![
+            StyleTableEntry {
+                color: Color::Green,
+                font: Font::Courier,
+                size: 16,
+            },
+            StyleTableEntry {
+                color: Color::Red,
+                font: Font::Courier,
+                size: 16,
+            },
+            StyleTableEntry {
+                color: Color::from_u32(0x8000ff),
+                font: Font::Courier,
+                size: 16,
+            },
+        ];
+
+        term.set_style_table_entry(&mut sbuf, styles);
+
         Term {
-            term: TextDisplay::new(5, 5, 630, 470, &mut buf),
+            term: term,
             current_dir: current_dir,
             cmd: String::from(""),
+            sbuf: sbuf,
         }
     }
 
-    pub fn style(&mut self) {
-        self.term.set_color(Color::Black);
-        self.term.set_text_color(Color::Green);
-        self.term.set_text_font(Font::Courier);
-        self.term.set_cursor_color(Color::Green);
-        self.term.set_cursor_style(CursorStyle::BlockCursor);
-        self.term.show_cursor(true);
+    fn append(&mut self, txt: &str) {
+        self.term.append(txt);
+        if txt == self.current_dir.as_str() {
+            self.sbuf.append(&"C".repeat(txt.len()));
+        } else {
+            self.sbuf.append(&"A".repeat(txt.len()));
+        }
     }
 
-    fn append(&mut self, txt: &str) {
-        self.term.buffer().append(txt);
-        self.term.set_insert_position(self.term.buffer().length());
-        self.term.scroll(
-            self.term.count_lines(0, self.term.buffer().length(), true),
-            0,
-        );
+    fn append_error(&mut self, txt: &str) {
+        self.term.append(txt);
+        self.sbuf.append(&"B".repeat(txt.len()));
     }
 
     fn run_command(&mut self) -> String {
         let args = self.cmd.clone();
         let args: Vec<&str> = args.split_whitespace().collect();
-        
+
         if args.len() > 0 {
             let mut cmd = Command::new(args[0]);
             if args.len() > 1 {
@@ -90,11 +113,9 @@ impl Term {
 
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Plastic);
-    let mut wind = Window::new(100, 100, 640, 480, "Rusty Terminal");
-    let mut buf = TextBuffer::default();
+    let mut wind = Window::new(100, 100, 640, 480, "Color Terminal");
 
-    let mut term = Term::new(&mut buf);
-    term.style();
+    let mut term = Term::new();
 
     let dir = term.current_dir.clone();
     term.append(&dir);
@@ -113,7 +134,11 @@ fn main() {
                 app::Key::Enter => {
                     term.append("\n");
                     let out = term.run_command();
-                    term.append(&out);
+                    if out.contains("not found") {
+                        term.append_error(&out);
+                    } else {
+                        term.append(&out);
+                    }
                     let current_dir = term.current_dir.clone();
                     term.append(&current_dir);
                     term.cmd.clear();
@@ -121,11 +146,9 @@ fn main() {
                 }
                 app::Key::BackSpace => {
                     if term.cmd.len() != 0 {
-                        let text_len = term.term.buffer().text().len() as u32;
-                        term
-                            .term
-                            .buffer()
-                            .remove(text_len - 1, text_len as u32);
+                        let text_len = term.term.text().len() as u32;
+                        term.term.buffer().remove(text_len - 1, text_len);
+                        term.sbuf.remove(text_len - 1, text_len);
                         term.cmd.pop().unwrap();
                         return true;
                     } else {
@@ -142,6 +165,6 @@ fn main() {
             _ => false,
         }
     }));
-    
+
     app.run().unwrap();
 }

@@ -4,7 +4,7 @@ use crate::text::{StyleTableEntry, TextBuffer};
 use crate::widget::Widget;
 use crate::window::Window;
 use std::convert::From;
-use std::{fmt, io, os::raw};
+use std::{fmt, io, mem, os::raw};
 
 /// Error types returned by fltk-rs + wrappers of std::io errors
 #[derive(Debug)]
@@ -446,9 +446,9 @@ pub unsafe trait ValuatorExt: WidgetExt {
 /// Defines the methods implemented by TextDisplay and TextEditor
 pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
-    fn buffer<'a>(&'a self) -> &'a mut TextBuffer;
+    fn buffer(&self) -> mem::ManuallyDrop<TextBuffer>;
     /// Sets the associated TextBuffer
-    fn set_buffer<'a>(&'a mut self, buffer: &'a mut TextBuffer);
+    fn set_buffer(&mut self, buffer: &mut mem::ManuallyDrop<TextBuffer>);
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -484,11 +484,11 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_styly_table_entry(
+    fn set_style_table_entry(
         &mut self,
         style_buffer: &mut TextBuffer,
-        entries: &Vec<StyleTableEntry>,
-    );
+        entries: Vec<StyleTableEntry>,
+    ) -> mem::ManuallyDrop<crate::text::StyleTables>;
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: CursorStyle);
     /// Sets the cursor color

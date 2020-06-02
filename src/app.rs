@@ -1,5 +1,6 @@
 pub use crate::enums::*;
 use crate::prelude::*;
+use crate::window::*;
 use fltk_sys::fl::*;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
@@ -120,6 +121,11 @@ impl App {
             Fl_awake(callback, data);
         }
     }
+
+    /// Quit the application
+    pub fn quit(&self) {
+        quit()
+    }
 }
 
 /// Returns the latest captured event
@@ -146,7 +152,7 @@ pub fn event_text() -> String {
         if text.is_null() {
             String::from("")
         } else {
-            CString::from_raw(text as *mut raw::c_char)
+            CStr::from_ptr(text as *mut raw::c_char)
                 .to_string_lossy()
                 .to_string()
         }
@@ -408,14 +414,48 @@ pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
 }
 
 /// Returns the first window of the application
-pub fn first_window() -> Option<crate::window::Window> {
+fn first_window() -> Option<Window> {
     unsafe {
         let x = Fl_first_window();
         if x.is_null() {
             None
         } else {
-            let x = crate::window::Window::from_widget_ptr(x as *mut fltk_sys::widget::Fl_Widget);
+            let x = Window::from_widget_ptr(x as *mut fltk_sys::widget::Fl_Widget);
             Some(x)
+        }
+    }
+}
+
+/// Returns the next window in order
+fn next_window<W: WindowExt>(w: &W) -> Option<Window> {
+    unsafe {
+        let x = Fl_next_window(w.as_widget_ptr() as *const raw::c_void);
+        if x.is_null() {
+            None
+        } else {
+            let x = Window::from_widget_ptr(x as *mut fltk_sys::widget::Fl_Widget);
+            Some(x)
+        }
+    }
+}
+
+/// Quit the app
+fn quit() {
+    let mut v: Vec<Window> = vec![];
+    let first = first_window();
+    if first.is_none() {
+        return;
+    }
+    let first = first.unwrap();
+    v.push(first.clone());
+    let mut win = first;
+    while let Some(wind) = next_window(&win) {
+        v.push(wind.clone());
+        win = wind;
+    }
+    for mut i in v {
+        if i.shown() {
+            i.hide();
         }
     }
 }

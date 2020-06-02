@@ -215,7 +215,7 @@ To run the examples:
 $ cargo run --example editor
 $ cargo run --example calculator
 $ cargo run --example gallery
-$ cargo run --example terminal
+$ cargo run --example terminal_colored
 $ cargo run --example counter
 $ cargo run --example hello
 $ cargo run --example hello_button

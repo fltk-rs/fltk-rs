@@ -760,7 +760,7 @@ extern "C" {
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
         sz: ::std::os::raw::c_int,
-    );
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_cursor_style(
@@ -1245,7 +1245,7 @@ extern "C" {
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
         sz: ::std::os::raw::c_int,
-    );
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_cursor_style(arg1: *mut Fl_Text_Editor, style: ::std::os::raw::c_int);
@@ -1856,7 +1856,7 @@ extern "C" {
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
         sz: ::std::os::raw::c_int,
-    );
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_cursor_style(
@@ -2034,4 +2034,7 @@ extern "C" {
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_delete_stable(arg1: *mut ::std::os::raw::c_void);
 }

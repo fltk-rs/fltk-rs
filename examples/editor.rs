@@ -7,6 +7,7 @@ use fltk::{
 };
 use std::cell::RefCell;
 use std::ops::{Deref, DerefMut};
+use std::mem::ManuallyDrop;
 use std::rc::Rc;
 use std::{fs, path};
 
@@ -17,7 +18,7 @@ pub struct Editor {
 }
 
 impl Editor {
-    pub fn new(mut buf: &mut TextBuffer) -> Editor {
+    pub fn new(mut buf: &mut ManuallyDrop<TextBuffer>) -> Editor {
         Editor {
             editor: TextEditor::new(5, 40, 790, 555, &mut buf),
             filename: String::from(""),
@@ -33,7 +34,7 @@ impl Editor {
     }
 
     pub fn style(&mut self) {
-        self.editor.set_text_font(Font::Courrier);
+        self.editor.set_text_font(Font::Courier);
         self.editor.set_linenumber_width(18);
         self.editor
             .set_linenumber_fgcolor(Color::from_u32(0x8b8386));
@@ -179,12 +180,12 @@ fn main() {
                 let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
                 if x == 0 {
                     editor_c.save_file(&mut saved);
-                    std::process::exit(0);
+                    app.quit();
                 } else {
-                    std::process::exit(0);
+                    app.quit();
                 }
             } else {
-                std::process::exit(0);
+                app.quit();
             }
         }),
     );
@@ -230,18 +231,19 @@ fn main() {
     x.set_label_color(Color::Red);
 
     let mut editor = editor.clone();
-    wind.set_callback(Box::new(move || {
+    let mut wind_c = wind.clone();
+    wind_c.set_callback(Box::new(move || {
         if fltk::app::event() == fltk::app::Event::Close {
             if saved == false {
                 let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
                 if x == 0 {
                     editor.save_file(&mut saved);
-                    std::process::exit(0);
+                    app.quit();
                 } else {
-                    std::process::exit(0);
+                    app.quit();
                 }
             } else {
-                std::process::exit(0);
+                app.quit();
             }
         }
     }));
