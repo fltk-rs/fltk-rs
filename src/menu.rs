@@ -110,6 +110,10 @@ impl MenuItem {
     pub fn set_label(&mut self, txt: &str) {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
+            let ptr = Fl_Menu_Item_label(self._inner) as *mut raw::c_char;
+            if !ptr.is_null() {
+                let _ = CString::from_raw(ptr);
+            }
             let txt = CString::new(txt).unwrap();
             Fl_Menu_Item_set_label(self._inner, txt.into_raw());
         }

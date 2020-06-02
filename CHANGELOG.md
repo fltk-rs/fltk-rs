@@ -2,10 +2,15 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.5.8] - 2020-06-02
+### Changes
 - Fixed typos in method names.
 - Fixed use-after-free of TextDisplay StyleTableEntry.
 - Make TextBuffer semantics clearer using ManuallyDrop for all methods taking and returning a TextBuffer.
 - Enable manual memory management of the style table entry when necessary.
+- Add clean way to quit application using App::quit().
 
 ## [0.5.7] - 2020-06-01
 ### Changes

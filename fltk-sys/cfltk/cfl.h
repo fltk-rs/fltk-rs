@@ -70,6 +70,8 @@ int Fl_dnd(void);
 
 void *Fl_first_window(void);
 
+void *Fl_next_window(const void *);
+
 int Fl_should_program_quit(void);
 
 void Fl_program_should_quit(int flag);

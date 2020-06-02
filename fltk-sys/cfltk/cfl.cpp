@@ -126,6 +126,10 @@ void *Fl_first_window(void) {
     return (void *)Fl::first_window();
 }
 
+void *Fl_next_window(const void *prev) {
+    return (void *)Fl::next_window((Fl_Window *)prev);
+}
+
 int Fl_should_program_quit(void) {
     return Fl::program_should_quit();
 }

@@ -180,12 +180,12 @@ fn main() {
                 let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
                 if x == 0 {
                     editor_c.save_file(&mut saved);
-                    std::process::exit(0);
+                    app.quit();
                 } else {
-                    std::process::exit(0);
+                    app.quit();
                 }
             } else {
-                std::process::exit(0);
+                app.quit();
             }
         }),
     );
@@ -231,18 +231,19 @@ fn main() {
     x.set_label_color(Color::Red);
 
     let mut editor = editor.clone();
-    wind.set_callback(Box::new(move || {
+    let mut wind_c = wind.clone();
+    wind_c.set_callback(Box::new(move || {
         if fltk::app::event() == fltk::app::Event::Close {
             if saved == false {
                 let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
                 if x == 0 {
                     editor.save_file(&mut saved);
-                    std::process::exit(0);
+                    app.quit();
                 } else {
-                    std::process::exit(0);
+                    app.quit();
                 }
             } else {
-                std::process::exit(0);
+                app.quit();
             }
         }
     }));

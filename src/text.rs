@@ -44,7 +44,7 @@ impl TextBuffer {
     pub fn set_text(&mut self, txt: &str) {
         unsafe {
             let txt = CString::new(txt).unwrap();
-            Fl_Text_Buffer_set_text(self._inner, txt.into_raw())
+            Fl_Text_Buffer_set_text(self._inner, txt.as_ptr())
         }
     }
 
@@ -62,7 +62,7 @@ impl TextBuffer {
     /// Appends to the buffer
     pub fn append(&mut self, text: &str) {
         let text = CString::new(text).unwrap();
-        unsafe { Fl_Text_Buffer_append(self._inner, text.into_raw()) }
+        unsafe { Fl_Text_Buffer_append(self._inner, text.as_ptr()) }
     }
 
     /// Get the length of the buffer
@@ -698,13 +698,17 @@ impl SimpleTerminal {
     pub fn append(&mut self, s: &str) {
         let s = CString::new(s).unwrap().into_raw();
         assert!(!self.was_deleted());
-        unsafe { Fl_Simple_Terminal_append(self._inner, s) }
+        unsafe { 
+            Fl_Simple_Terminal_append(self._inner, s) 
+        }
     }
 
     pub fn set_text(&mut self, s: &str) {
         let s = CString::new(s).unwrap().into_raw();
         assert!(!self.was_deleted());
-        unsafe { Fl_Simple_Terminal_set_text(self._inner, s) }
+        unsafe { 
+            Fl_Simple_Terminal_set_text(self._inner, s) 
+        }
     }
 
     pub fn text(&self) -> String {
