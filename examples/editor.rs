@@ -5,10 +5,8 @@ use fltk::{
     text::{TextBuffer, TextEditor},
     window::Window,
 };
-use std::cell::RefCell;
 use std::ops::{Deref, DerefMut};
 use std::mem::ManuallyDrop;
-use std::rc::Rc;
 use std::{fs, path};
 
 #[derive(Debug, Clone)]
@@ -18,9 +16,9 @@ pub struct Editor {
 }
 
 impl Editor {
-    pub fn new(mut buf: &mut ManuallyDrop<TextBuffer>) -> Editor {
+    pub fn new(buf: ManuallyDrop<TextBuffer>) -> Editor {
         Editor {
-            editor: TextEditor::new(5, 40, 790, 555, &mut buf),
+            editor: TextEditor::new(5, 40, 790, 555, buf),
             filename: String::from(""),
         }
     }
@@ -95,11 +93,10 @@ fn main() {
     let mut menu = MenuBar::new(0, 0, 800, 40, "");
     menu.set_color(Color::Light2);
 
-    let buf = TextBuffer::default();
-    let buf = Rc::from(RefCell::from(buf));
-    buf.borrow_mut().set_tab_distance(4);
+    let mut buf = TextBuffer::default();
+    buf.set_tab_distance(4);
 
-    let mut editor = Editor::new(buf.borrow_mut().deref_mut());
+    let mut editor = Editor::new(buf);
 
     editor.style();
     wind.make_resizable(true);
