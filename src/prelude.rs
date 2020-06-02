@@ -4,7 +4,7 @@ use crate::text::{StyleTableEntry, TextBuffer};
 use crate::widget::Widget;
 use crate::window::Window;
 use std::convert::From;
-use std::{fmt, io, mem, os::raw};
+use std::{fmt, io, os::raw};
 
 /// Error types returned by fltk-rs + wrappers of std::io errors
 #[derive(Debug)]
@@ -448,7 +448,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
     fn buffer(&self) -> &mut TextBuffer;
     /// Sets the associated TextBuffer
-    fn set_buffer(&mut self, buffer: mem::ManuallyDrop<TextBuffer>);
+    fn set_buffer(&mut self, buffer: &mut TextBuffer);
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -488,7 +488,7 @@ pub unsafe trait DisplayExt: WidgetExt {
         &mut self,
         style_buffer: &mut TextBuffer,
         entries: Vec<StyleTableEntry>,
-    ) -> mem::ManuallyDrop<crate::text::StyleTables>;
+    ) -> crate::text::StyleTables;
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: CursorStyle);
     /// Sets the cursor color

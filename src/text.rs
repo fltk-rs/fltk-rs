@@ -11,19 +11,17 @@ use std::{
 #[derive(Debug)]
 pub struct TextBuffer {
     _inner: *mut Fl_Text_Buffer,
-    _parent: *const TextDisplay,
 }
 
 impl TextBuffer {
     /// Initialized a default text buffer
-    pub fn default() -> mem::ManuallyDrop<TextBuffer> {
+    pub fn default() -> TextBuffer {
         unsafe {
             let text_buffer = Fl_Text_Buffer_new();
             assert!(!text_buffer.is_null());
-            mem::ManuallyDrop::new(TextBuffer {
+            TextBuffer {
                 _inner: text_buffer,
-                _parent: 0 as *const TextDisplay,
-            })
+            }
         }
     }
 
@@ -36,7 +34,6 @@ impl TextBuffer {
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         TextBuffer {
             _inner: ptr,
-            _parent: 0 as *const TextDisplay,
         }
     }
 
@@ -456,21 +453,9 @@ unsafe impl Send for TextBuffer {}
 
 impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {
-        let temp = TextBuffer::default();
-        let mut temp = mem::ManuallyDrop::<TextBuffer>::into_inner(temp);
+        let mut temp = TextBuffer::default();
         temp.copy(self, 0, 0, self.length());
         temp
-    }
-}
-
-impl Drop for TextBuffer {
-    fn drop(&mut self) {
-        unsafe { 
-            if !self._parent.is_null() && !(*self._parent).was_deleted() {
-                return;
-            }
-            Fl_Text_Buffer_delete(self._inner) 
-        }
     }
 }
 
@@ -504,36 +489,18 @@ pub struct StyleTableEntry {
 
 pub struct StyleTables {
     _inner: *mut raw::c_void,
-    _parent: *const TextDisplay,
 }
 
 impl StyleTables {
     /// Deletes the StyleTables
     pub unsafe fn delete(&mut self) {
-        Fl_delete_stable(self._inner) 
-    }
-}
-
-impl Drop for StyleTables {
-    fn drop(&mut self) {
-        unsafe { 
-            if !self._parent.is_null() && !(*self._parent).was_deleted() {
-                return;
-            }
-            Fl_delete_stable(self._inner) 
-        }
+        Fl_delete_stable(self._inner)
     }
 }
 
 impl TextEditor {
     /// Create an new TextEditor widget
-    pub fn new(
-        x: i32,
-        y: i32,
-        w: i32,
-        h: i32,
-        buf: mem::ManuallyDrop<TextBuffer>,
-    ) -> TextEditor {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
@@ -551,7 +518,7 @@ impl TextEditor {
     }
 
     /// Creates a default and zero initialized TextEditor
-    pub fn default(buf: mem::ManuallyDrop<TextBuffer>) -> TextEditor {
+    pub fn default(buf: &mut TextBuffer) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
@@ -603,13 +570,7 @@ impl TextEditor {
 
 impl TextDisplay {
     /// Create an new TextDisplay widget
-    pub fn new(
-        x: i32,
-        y: i32,
-        w: i32,
-        h: i32,
-        buf: mem::ManuallyDrop<TextBuffer>,
-    ) -> TextDisplay {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display =
@@ -628,7 +589,7 @@ impl TextDisplay {
     }
 
     /// Creates a default and zero initialized TextDisplay
-    pub fn default(buf: mem::ManuallyDrop<TextBuffer>) -> TextDisplay {
+    pub fn default(buf: &mut TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display =

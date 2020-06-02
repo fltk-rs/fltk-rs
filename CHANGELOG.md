@@ -1,10 +1,19 @@
 # Changelog
 
+
 ## Unreleased
 ### Changes
-- Add checks prior to TextBuffer drop.
+- (None)
 
-## [0.5.9] - 2020-06-02
+## ## [0.5.10] - 2020-06-02
+### Changes
+- Fixed typos in method names.
+- Fixed use-after-free of TextDisplay StyleTableEntry.
+- Enable manual memory management of the style table entry when necessary.
+- Add clean way to quit application using App::quit().
+- Revert the DisplayExt buffer method to returning a reference.
+
+## [0.5.9] - 2020-06-02 -- YANKED
 ### Changes
 - Fixed typos in method names.
 - Fixed use-after-free of TextDisplay StyleTableEntry.

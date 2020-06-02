@@ -1,14 +1,14 @@
 use fltk::{app, text::*, window::*};
-use std::mem::ManuallyDrop;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
+
 
 #[derive(Debug, Clone)]
 struct Term {
     pub term: SimpleTerminal,
     current_dir: String,
     cmd: String,
-    sbuf: ManuallyDrop<TextBuffer>,
+    sbuf: TextBuffer,
 }
 
 impl Term {
