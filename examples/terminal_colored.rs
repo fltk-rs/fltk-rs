@@ -29,12 +29,17 @@ impl Term {
             StyleTableEntry {
                 color: Color::Green,
                 font: Font::Courier,
-                size: 18,
+                size: 16,
             },
             StyleTableEntry {
                 color: Color::Red,
                 font: Font::Courier,
-                size: 18,
+                size: 16,
+            },
+            StyleTableEntry {
+                color: Color::Blue,
+                font: Font::Courier,
+                size: 16,
             },
         ];
 
@@ -50,7 +55,11 @@ impl Term {
 
     fn append(&mut self, txt: &str) {
         self.term.append(txt);
-        self.sbuf.append(&"A".repeat(txt.len()));
+        if txt == self.current_dir.as_str() {
+            self.sbuf.append(&"C".repeat(txt.len()));
+        } else {
+            self.sbuf.append(&"A".repeat(txt.len()));
+        }
     }
 
     fn append_error(&mut self, txt: &str) {
