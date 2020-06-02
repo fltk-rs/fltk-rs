@@ -11,7 +11,7 @@ struct Term {
 }
 
 impl Term {
-    pub fn new(mut buf: &mut ManuallyDrop<TextBuffer>) -> Term {
+    pub fn new(buf: ManuallyDrop<TextBuffer>) -> Term {
         let mut current_dir = std::env::current_dir()
             .unwrap()
             .to_string_lossy()
@@ -20,7 +20,7 @@ impl Term {
         current_dir.push_str("$ ");
 
         Term {
-            term: TextDisplay::new(5, 5, 630, 470, &mut buf),
+            term: TextDisplay::new(5, 5, 630, 470, buf),
             current_dir: current_dir,
             cmd: String::from(""),
         }
@@ -91,9 +91,9 @@ impl Term {
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Plastic);
     let mut wind = Window::new(100, 100, 640, 480, "Rusty Terminal");
-    let mut buf = TextBuffer::default();
+    let buf = TextBuffer::default();
 
-    let mut term = Term::new(&mut buf);
+    let mut term = Term::new(buf);
     term.style();
 
     let dir = term.current_dir.clone();

@@ -509,7 +509,7 @@ impl TextEditor {
         y: i32,
         w: i32,
         h: i32,
-        buf: &mut mem::ManuallyDrop<TextBuffer>,
+        buf: mem::ManuallyDrop<TextBuffer>,
     ) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
@@ -528,7 +528,7 @@ impl TextEditor {
     }
 
     /// Creates a default and zero initialized TextEditor
-    pub fn default(buf: &mut mem::ManuallyDrop<TextBuffer>) -> TextEditor {
+    pub fn default(buf: mem::ManuallyDrop<TextBuffer>) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
@@ -585,7 +585,7 @@ impl TextDisplay {
         y: i32,
         w: i32,
         h: i32,
-        buf: &mut mem::ManuallyDrop<TextBuffer>,
+        buf: mem::ManuallyDrop<TextBuffer>,
     ) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
@@ -605,7 +605,7 @@ impl TextDisplay {
     }
 
     /// Creates a default and zero initialized TextDisplay
-    pub fn default(buf: &mut mem::ManuallyDrop<TextBuffer>) -> TextDisplay {
+    pub fn default(buf: mem::ManuallyDrop<TextBuffer>) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display =
