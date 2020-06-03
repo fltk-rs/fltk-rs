@@ -4,6 +4,7 @@
 ## Unreleased
 ### Changes
 - DisplayExt::buffer just returns a manually managed buffer.
+- Automatically export fltk::prelude and fltk::enums into the fltk namespace.
 
 ## ## [0.5.10] - 2020-06-02
 ### Changes

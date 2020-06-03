@@ -123,8 +123,8 @@ fn main() {
         // println!("{:?}", app::event_key());
         // println!("{:?}", app::event_text());
         match ev {
-            app::Event::KeyDown => match app::event_key() {
-                app::Key::Enter => {
+            Event::KeyDown => match app::event_key() {
+                Key::Enter => {
                     term.append("\n");
                     let out = term.run_command();
                     term.append(&out);
@@ -133,7 +133,7 @@ fn main() {
                     term.cmd.clear();
                     true
                 }
-                app::Key::BackSpace => {
+                Key::BackSpace => {
                     if term.cmd.len() != 0 {
                         let text_len = term.buffer().text().len() as u32;
                         term

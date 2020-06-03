@@ -188,7 +188,7 @@ fn main() {
     wind.show();
 
     wind.set_callback(Box::new(move || {
-        if fltk::app::event() == fltk::app::Event::Close {
+        if event() == Event::Close {
             s.send(Message::Quit);
         }
     }));

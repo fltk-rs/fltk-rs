@@ -38,7 +38,7 @@ fn main() {
         set_line_style(LineStyle::Solid, 3);
 
         match ev {
-            app::Event::Push => {
+            Event::Push => {
                 offs.borrow().begin();
                 let coords = app::event_coords();
                 x = coords.0;
@@ -48,7 +48,7 @@ fn main() {
                 frame.redraw();
                 true
             }
-            app::Event::Drag => {
+            Event::Drag => {
                 offs.borrow().begin();
                 let coords = app::event_coords();
                 draw_line(x, y, coords.0, coords.1);

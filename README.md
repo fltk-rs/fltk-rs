@@ -135,7 +135,7 @@ Another way is to use message passing:
 
 For custom event handling, the handle() method can be used:
 ```rust
-    some_widget.handle(Box::new(move |ev: app::Event| {
+    some_widget.handle(Box::new(move |ev: Event| {
         match ev {
             /* handle ev */
         }

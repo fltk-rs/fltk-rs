@@ -63,7 +63,7 @@ FLTK supports multithreaded and concurrent applications. See the examples direct
 This is the default behavior in FLTK. You can easily override it by setting a callback for your main window:
 ```rust
     wind.set_callback(Box::new(move || {
-        if fltk::app::event() == fltk::app::Event::Close {
+        if fltk::app::event() == fltk::Event::Close {
             app.quit(); // Which would close using the close button. You can also assign other keys to close the application
         }
     }));

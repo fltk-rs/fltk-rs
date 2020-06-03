@@ -1,7 +1,6 @@
 // Calque example of the FLTK docs
 
 use fltk::*;
-use fltk::prelude::*;
 
 fn callback() {
     println!("TICK");

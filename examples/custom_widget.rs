@@ -37,7 +37,7 @@ impl FlatButton {
     fn handle(&mut self) {
         let mut wid = self.wid.clone();
         self.wid.handle(Box::new(move |ev| match ev {
-            app::Event::Push => {
+            Event::Push => {
                 wid.do_callback();
                 true
             }
