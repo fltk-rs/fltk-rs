@@ -81,8 +81,25 @@ impl DerefMut for Editor {
     }
 }
 
+#[derive(Copy, Clone)]
+pub enum Message {
+    Changed,
+    New,
+    Open,
+    Save,
+    SaveAs,
+    Quit,
+    Cut,
+    Copy,
+    Paste,
+    About,
+}
+
 fn main() {
     let app = App::default().set_scheme(AppScheme::Gtk);
+
+    let (s, r) = channel::<Message>();
+    let mut saved = false;
 
     let mut wind = Window::default()
         .with_size(800, 600)
@@ -96,153 +113,140 @@ fn main() {
     buf.set_tab_distance(4);
 
     let mut editor = Editor::new(&mut buf);
-
     editor.style();
-    wind.make_resizable(true);
-    wind.end();
-    wind.show();
 
-    let mut saved = false;
+    editor.set_callback(Box::new(move || s.send(Message::Changed)));
 
-    let mut editor_c = editor.clone();
-    editor_c
-        .editor
-        .set_callback(Box::new(move || saved = false));
-
-    let editor_c = editor.clone();
     menu.add(
         "File/New...",
         Shortcut::Ctrl + 'n',
         MenuFlag::Normal,
-        Box::new(move || {
-            if editor_c.buffer().text() != "" {
-                let x = choice(200, 200, "File unsaved, Do you wish to continue?", "Yes", "No!", "");
-                if x == 0 {
-                    editor_c.buffer().set_text("");
-                }
-            }
-        }),
+        Box::new(move || s.send(Message::New)),
     );
 
-    let mut editor_c = editor.clone();
     menu.add(
         "File/Open...",
         Shortcut::Ctrl + 'o',
         MenuFlag::Normal,
-        Box::new(move || {
-            let mut dlg = FileDialog::new(FileDialogType::BrowseFile);
-            dlg.set_option(FileDialogOptions::NoOptions);
-            dlg.set_filter("*.txt");
-            dlg.show();
-            editor_c
-                .set_filename(&dlg.filename().to_string_lossy().to_string());
-            if editor_c.filename.is_empty() {
-                return;
-            }
-            match path::Path::new(&editor_c.filename()).exists() {
-                true => editor_c.buffer().set_text(
-                    fs::read_to_string(&editor_c.filename())
-                        .unwrap()
-                        .as_str(),
-                ),
-                false => alert(200, 200, "File does not exist!"),
-            }
-        }),
+        Box::new(move || s.send(Message::Open)),
     );
 
-    let mut editor_c = editor.clone();
     menu.add(
         "File/Save",
         Shortcut::Ctrl + 's',
         MenuFlag::Normal,
-        Box::new(move || editor_c.save_file(&mut saved)),
+        Box::new(move || s.send(Message::Save)),
     );
 
-    let mut editor_c = editor.clone();
     menu.add(
         "File/Save as...",
         Shortcut::None,
         MenuFlag::MenuDivider,
-        Box::new(move || editor_c.save_file(&mut saved)),
+        Box::new(move || s.send(Message::SaveAs)),
     );
 
-    let mut editor_c = editor.clone();
     menu.add(
         "File/Quit",
         Shortcut::None,
         MenuFlag::Normal,
-        Box::new(move || {
-            if saved == false {
-                let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
-                if x == 0 {
-                    editor_c.save_file(&mut saved);
-                    app.quit();
-                } else {
-                    app.quit();
-                }
-            } else {
-                app.quit();
-            }
-        }),
+        Box::new(move || s.send(Message::Quit)),
     );
 
-    let editor_c = editor.clone();
     menu.add(
         "Edit/Cut",
         Shortcut::Ctrl + 'x',
         MenuFlag::Normal,
-        Box::new(move || editor_c.cut()),
+        Box::new(move || s.send(Message::Cut)),
     );
 
-    let editor_c = editor.clone();
     menu.add(
         "Edit/Copy",
         Shortcut::Ctrl + 'c',
         MenuFlag::Normal,
-        Box::new(move || {
-            editor_c.copy();
-        }),
+        Box::new(move || s.send(Message::Copy)),
     );
 
-    let editor_c = editor.clone();
     menu.add(
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
-        Box::new(move || editor_c.paste()),
+        Box::new(move || s.send(Message::Paste)),
     );
 
     menu.add(
         "Help/About",
         Shortcut::None,
         MenuFlag::Normal,
-        Box::new(move || {
-            message(200, 200, 
-                "This is an example application written in Rust and using the FLTK Gui library.",
-            );
-        }),
+        Box::new(move || s.send(Message::About)),
     );
 
     let mut x = menu.find_item("File/Quit").unwrap();
     x.set_label_color(Color::Red);
 
-    let mut editor = editor.clone();
-    let mut wind_c = wind.clone();
-    wind_c.set_callback(Box::new(move || {
+    wind.make_resizable(true);
+    wind.end();
+    wind.show();
+
+    wind.set_callback(Box::new(move || {
         if fltk::app::event() == fltk::app::Event::Close {
-            if saved == false {
-                let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
-                if x == 0 {
-                    editor.save_file(&mut saved);
-                    app.quit();
-                } else {
-                    app.quit();
-                }
-            } else {
-                app.quit();
-            }
+            s.send(Message::Quit);
         }
     }));
 
-    app.run().expect("Couldn't run editor");
+    while app.wait().expect("Couldn't run editor!") {
+        use Message::*;
+        match r.recv() {
+            Some(msg) => match msg {
+                Changed => saved = false,
+                New => {
+                    if editor.buffer().text() != "" {
+                        let x = choice(200, 200, "File unsaved, Do you wish to continue?", "Yes", "No!", "");
+                        if x == 0 {
+                            editor.buffer().set_text("");
+                        }
+                    }
+                },
+                Open => {
+                    let mut dlg = FileDialog::new(FileDialogType::BrowseFile);
+                    dlg.set_option(FileDialogOptions::NoOptions);
+                    dlg.set_filter("*.txt");
+                    dlg.show();
+                    editor
+                        .set_filename(&dlg.filename().to_string_lossy().to_string());
+                    let filename = editor.filename.clone();
+                    if filename.is_empty() {
+                        return;
+                    }
+                    match path::Path::new(&editor.filename()).exists() {
+                        true => editor.buffer().set_text(
+                            fs::read_to_string(&editor.filename())
+                                .unwrap()
+                                .as_str(),
+                        ),
+                        false => alert(200, 200, "File does not exist!"),
+                    }
+                },
+                Save => editor.save_file(&mut saved),
+                SaveAs => editor.save_file(&mut saved),
+                Quit => {
+                    if saved == false {
+                        let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
+                        if x == 0 {
+                            editor.save_file(&mut saved);
+                            app.quit();
+                        } else {
+                            app.quit();
+                        }
+                    } else {
+                        app.quit();
+                    }
+                },
+                Cut => editor.cut(),
+                Copy => editor.copy(),
+                Paste => editor.paste(),
+                About => message(200, 200, "This is an example application written in Rust and using the FLTK Gui library.",),
+            },
+            _ => ()
+        }
+    }
 }
