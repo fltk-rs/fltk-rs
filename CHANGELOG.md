@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- DisplayExt::buffer just returns a manually managed buffer.
 
 ## ## [0.5.10] - 2020-06-02
 ### Changes
