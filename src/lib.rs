@@ -124,8 +124,8 @@
 //!     /* previous counter code */
 //!     let (s, r) = app::channel::<Message>();
 //!
-//!     but_inc.set_callback(Box::new(move || s.send(Message::Increment)));
-//!     but_dec.set_callback(Box::new(move || s.send(Message::Decrement)));
+//!     but_inc.emit(s, Message::Increment);
+//!     but_dec.emit(s, Message::Decrement);
 //!
 //!     while app.wait().unwrap() {
 //!         let label: i32 = frame.label().parse().unwrap();
@@ -139,7 +139,7 @@
 //!
 //! For custom event handling, the handle() method can be used:
 //! ```rust
-//!     some_widget.handle(Box::new(move |ev: app::Event| {
+//!     some_widget.handle(Box::new(move |ev: Event| {
 //!         match ev {
 //!             /* handle ev */
 //!         }
@@ -204,6 +204,9 @@ pub mod tree;
 pub mod valuator;
 pub mod widget;
 pub mod window;
+
+pub use prelude::*;
+pub use enums::*;
 
 #[macro_use]
 extern crate fltk_derive;

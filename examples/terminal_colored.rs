@@ -1,4 +1,5 @@
 use fltk::{app, text::*, window::*};
+use std::ops::{Deref, DerefMut};
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
@@ -111,6 +112,20 @@ impl Term {
     }
 }
 
+impl Deref for Term {
+    type Target = SimpleTerminal;
+
+    fn deref(&self) -> &Self::Target {
+        &self.term
+    }
+}
+
+impl DerefMut for Term {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.term
+    }
+}
+
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Plastic);
     let mut wind = Window::new(100, 100, 640, 480, "Color Terminal");
@@ -125,13 +140,13 @@ fn main() {
     wind.show();
 
     let mut term_c = term.clone();
-    term_c.term.handle(Box::new(move |ev| {
+    term_c.handle(Box::new(move |ev| {
         // println!("{:?}", app::event());
         // println!("{:?}", app::event_key());
         // println!("{:?}", app::event_text());
         match ev {
-            app::Event::KeyDown => match app::event_key() {
-                app::Key::Enter => {
+            Event::KeyDown => match app::event_key() {
+                Key::Enter => {
                     term.append("\n");
                     let out = term.run_command();
                     if out.contains("not found") {
@@ -144,10 +159,10 @@ fn main() {
                     term.cmd.clear();
                     true
                 }
-                app::Key::BackSpace => {
+                Key::BackSpace => {
                     if term.cmd.len() != 0 {
-                        let text_len = term.term.text().len() as u32;
-                        term.term.buffer().remove(text_len - 1, text_len);
+                        let text_len = term.text().len() as u32;
+                        term.buffer().remove(text_len - 1, text_len);
                         term.sbuf.remove(text_len - 1, text_len);
                         term.cmd.pop().unwrap();
                         return true;

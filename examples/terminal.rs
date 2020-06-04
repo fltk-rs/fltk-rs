@@ -1,4 +1,5 @@
 use fltk::{app, text::*, window::*};
+use std::ops::{Deref, DerefMut};
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 
@@ -87,6 +88,20 @@ impl Term {
     }
 }
 
+impl Deref for Term {
+    type Target = TextDisplay;
+
+    fn deref(&self) -> &Self::Target {
+        &self.term
+    }
+}
+
+impl DerefMut for Term {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.term
+    }
+}
+
 fn main() {
     let app = app::App::default().set_scheme(app::AppScheme::Plastic);
     let mut wind = Window::new(100, 100, 640, 480, "Rusty Terminal");
@@ -103,13 +118,13 @@ fn main() {
     wind.show();
 
     let mut term_c = term.clone();
-    term_c.term.handle(Box::new(move |ev| {
+    term_c.handle(Box::new(move |ev| {
         // println!("{:?}", app::event());
         // println!("{:?}", app::event_key());
         // println!("{:?}", app::event_text());
         match ev {
-            app::Event::KeyDown => match app::event_key() {
-                app::Key::Enter => {
+            Event::KeyDown => match app::event_key() {
+                Key::Enter => {
                     term.append("\n");
                     let out = term.run_command();
                     term.append(&out);
@@ -118,9 +133,9 @@ fn main() {
                     term.cmd.clear();
                     true
                 }
-                app::Key::BackSpace => {
+                Key::BackSpace => {
                     if term.cmd.len() != 0 {
-                        let text_len = term.term.buffer().text().len() as u32;
+                        let text_len = term.buffer().text().len() as u32;
                         term
                             .term
                             .buffer()
