@@ -221,6 +221,13 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn unset_buffer(&mut self) {
+                unsafe {
+                    assert!(!self.was_deleted());
+                    #set_buffer(self._inner, std::ptr::null_mut())
+                }
+            }
+
             fn text_font(&self) -> Font {
                 assert!(!self.was_deleted());
                 unsafe { mem::transmute(#text_font(self._inner)) }

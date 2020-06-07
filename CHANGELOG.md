@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add TextBuffer::unset_buffer() method.
 
 ## ## [0.5.11] - 2020-06-04
 ### Changes
