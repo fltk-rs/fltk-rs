@@ -3,6 +3,7 @@
 ## Unreleased
 ### Changes
 - Add TextBuffer::unset_buffer() method.
+- Deprecated DisplayExt::set_style_table_entry, use set_highlight_data instead.
 
 ## ## [0.5.11] - 2020-06-04
 ### Changes

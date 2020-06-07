@@ -44,7 +44,7 @@ impl Term {
             },
         ];
 
-        term.set_style_table_entry(&mut sbuf, styles);
+        term.set_highlight_data(&mut sbuf, styles);
 
         Term {
             term: term,
