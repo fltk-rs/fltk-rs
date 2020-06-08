@@ -1,15 +1,21 @@
 # Changelog
 
+
 ## Unreleased
 ### Changes
 - (None)
 
-## ## [0.5.11] - 2020-06-04
+## [0.5.12] - 2020-06-08
+### Changes
+- Add TextBuffer::unset_buffer() method.
+- Deprecated DisplayExt::set_style_table_entry, use set_highlight_data instead.
+
+## [0.5.11] - 2020-06-04
 ### Changes
 - DisplayExt::buffer just returns a manually managed buffer.
 - Automatically export fltk::prelude and fltk::enums into the fltk namespace.
 
-## ## [0.5.10] - 2020-06-02
+## [0.5.10] - 2020-06-02
 ### Changes
 - Fixed typos in method names.
 - Fixed use-after-free of TextDisplay StyleTableEntry.

@@ -221,6 +221,13 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn unset_buffer(&mut self) {
+                unsafe {
+                    assert!(!self.was_deleted());
+                    #set_buffer(self._inner, std::ptr::null_mut())
+                }
+            }
+
             fn text_font(&self) -> Font {
                 assert!(!self.was_deleted());
                 unsafe { mem::transmute(#text_font(self._inner)) }
@@ -356,6 +363,22 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     #show_cursor(self._inner, val as i32);
+                }
+            }
+
+            fn set_highlight_data(&mut self, mut style_buffer: &mut TextBuffer, entries: Vec<StyleTableEntry>) -> crate::text::StyleTables {
+                let mut colors: Vec<u32> = vec![];
+                let mut fonts: Vec<i32> = vec![];
+                let mut sizes: Vec<i32> = vec![];
+                for entry in entries.iter() {
+                    colors.push(entry.color as u32);
+                    fonts.push(entry.font as i32);
+                    sizes.push(entry.size as i32);
+                }
+                unsafe {
+                    assert!(!self.was_deleted());
+                    let x = #set_style_table_entry(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
+                    StyleTables { _inner: x }
                 }
             }
 

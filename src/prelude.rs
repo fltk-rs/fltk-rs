@@ -449,6 +449,8 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn buffer(&self) -> TextBuffer;
     /// Sets the associated TextBuffer
     fn set_buffer(&mut self, buffer: &mut TextBuffer);
+    /// Unsets the current text buffer
+    fn unset_buffer(&mut self);
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -484,7 +486,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_style_table_entry(
+    fn set_highlight_data(
         &mut self,
         style_buffer: &mut TextBuffer,
         entries: Vec<StyleTableEntry>,
@@ -555,6 +557,13 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn linenumber_align(&self) -> Align;
     /// Checks whether a pixel is within a text selection
     fn in_selection(&self, x: i32, y: i32) -> bool;
+    /// Deprecated: Sets the style of the text widget
+    #[deprecated = "Use set_highlight_data instead."]
+    fn set_style_table_entry(
+        &mut self,
+        style_buffer: &mut TextBuffer,
+        entries: Vec<StyleTableEntry>,
+    ) -> crate::text::StyleTables;
 }
 
 /// Defines the methods implemented by all browser types
