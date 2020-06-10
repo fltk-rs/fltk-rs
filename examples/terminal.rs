@@ -19,13 +19,11 @@ impl Term {
 
         current_dir.push_str("$ ");
 
-        let mut t = Term {
-            term: TextDisplay::new(5, 5, 630, 470, ""),
+        Term {
+            term: TextDisplay::new(5, 5, 630, 470, buf),
             current_dir: current_dir,
             cmd: String::from(""),
-        };
-        t.set_buffer(buf);
-        t
+        }
     }
 
     pub fn style(&mut self) {
@@ -49,7 +47,7 @@ impl Term {
     fn run_command(&mut self) -> String {
         let args = self.cmd.clone();
         let args: Vec<&str> = args.split_whitespace().collect();
-
+        
         if args.len() > 0 {
             let mut cmd = Command::new(args[0]);
             if args.len() > 1 {
@@ -138,7 +136,10 @@ fn main() {
                 Key::BackSpace => {
                     if term.cmd.len() != 0 {
                         let text_len = term.buffer().text().len() as u32;
-                        term.term.buffer().remove(text_len - 1, text_len as u32);
+                        term
+                            .term
+                            .buffer()
+                            .remove(text_len - 1, text_len as u32);
                         term.cmd.pop().unwrap();
                         return true;
                     } else {
@@ -155,6 +156,6 @@ fn main() {
             _ => false,
         }
     }));
-
+    
     app.run().unwrap();
 }

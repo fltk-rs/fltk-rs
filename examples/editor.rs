@@ -16,12 +16,10 @@ pub struct Editor {
 
 impl Editor {
     pub fn new(buf: &mut TextBuffer) -> Editor {
-        let mut e = Editor {
-            editor: TextEditor::new(5, 40, 790, 555, ""),
+        Editor {
+            editor: TextEditor::new(5, 40, 790, 555, buf),
             filename: String::from(""),
-        };
-        e.set_buffer(buf);
-        e
+        }
     }
 
     pub fn filename(&self) -> String {

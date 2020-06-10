@@ -21,7 +21,7 @@ impl Term {
 
         current_dir.push_str("$ ");
 
-        let mut term = SimpleTerminal::new(5, 5, 630, 470, "");
+        let mut term = SimpleTerminal::new(5, 5, 630, 470);
 
         let mut sbuf = TextBuffer::default();
 

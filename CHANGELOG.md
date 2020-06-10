@@ -5,7 +5,6 @@
 ### Changes
 - Initialize internal FLTK styles on application start.
 - Fix use of uninitialized data.
-- Remove specialized constructor for TextEditor and TextDisplay. An explicit call to set_buffer should be made.
 - Remove deprecate set_style_table_entry method, which was replaced by set_highlight_data.
 
 ## [0.5.12] - 2020-06-08

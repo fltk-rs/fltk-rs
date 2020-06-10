@@ -459,14 +459,6 @@ impl Clone for TextBuffer {
     }
 }
 
-// impl Drop for TextBuffer {
-//     fn drop(&mut self) {
-//         unsafe {
-//             Fl_Text_Buffer_delete(self._inner)
-//         }
-//     }
-// }
-
 /// Creates a non-editable text display widget
 #[derive(WidgetExt, DisplayExt, Debug)]
 pub struct TextDisplay {
@@ -508,6 +500,42 @@ impl StyleTables {
 }
 
 impl TextEditor {
+    /// Create an new TextEditor widget
+    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextEditor {
+        let temp = CString::new("").unwrap();
+        unsafe {
+            let text_editor = Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
+            assert!(!text_editor.is_null());
+            let tracker =
+                fltk_sys::fl::Fl_Widget_Tracker_new(text_editor as *mut fltk_sys::fl::Fl_Widget);
+            assert!(!tracker.is_null());
+            let mut x = TextEditor {
+                _inner: text_editor,
+                _tracker: tracker,
+            };
+            x.set_buffer(buf);
+            x
+        }
+    }
+
+    /// Creates a default and zero initialized TextEditor
+    pub fn default(buf: &mut TextBuffer) -> TextEditor {
+        let temp = CString::new("").unwrap();
+        unsafe {
+            let text_editor = Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
+            assert!(!text_editor.is_null());
+            let tracker =
+                fltk_sys::fl::Fl_Widget_Tracker_new(text_editor as *mut fltk_sys::fl::Fl_Widget);
+            assert!(!tracker.is_null());
+            let mut x = TextEditor {
+                _inner: text_editor,
+                _tracker: tracker,
+            };
+            x.set_buffer(buf);
+            x
+        }
+    }
+
     /// Copies the text within the TextEditor widget
     pub fn copy(&self) {
         assert!(!self.was_deleted());
@@ -541,7 +569,83 @@ impl TextEditor {
     }
 }
 
+impl TextDisplay {
+    /// Create an new TextDisplay widget
+    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextDisplay {
+        let temp = CString::new("").unwrap();
+        unsafe {
+            let text_display =
+                Fl_Text_Display_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
+            assert!(!text_display.is_null(),);
+            let tracker =
+                fltk_sys::fl::Fl_Widget_Tracker_new(text_display as *mut fltk_sys::fl::Fl_Widget);
+            assert!(!tracker.is_null());
+            let mut x = TextDisplay {
+                _inner: text_display,
+                _tracker: tracker,
+            };
+            x.set_buffer(buf);
+            x
+        }
+    }
+
+    /// Creates a default and zero initialized TextDisplay
+    pub fn default(buf: &mut TextBuffer) -> TextDisplay {
+        let temp = CString::new("").unwrap();
+        unsafe {
+            let text_display =
+                Fl_Text_Display_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
+            assert!(!text_display.is_null(),);
+            let tracker =
+                fltk_sys::fl::Fl_Widget_Tracker_new(text_display as *mut fltk_sys::fl::Fl_Widget);
+            assert!(!tracker.is_null());
+            let mut x = TextDisplay {
+                _inner: text_display,
+                _tracker: tracker,
+            };
+            x.set_buffer(buf);
+            x
+        }
+    }
+}
+
 impl SimpleTerminal {
+    /// Create an new SimpleTerminal widget
+    pub fn new(x: i32, y: i32, w: i32, h: i32) -> SimpleTerminal {
+        let temp = CString::new("").unwrap();
+        unsafe {
+            let simple_terminal =
+                Fl_Simple_Terminal_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
+            assert!(!simple_terminal.is_null(),);
+            let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(
+                simple_terminal as *mut fltk_sys::fl::Fl_Widget,
+            );
+            assert!(!tracker.is_null());
+            SimpleTerminal {
+                _inner: simple_terminal,
+                _tracker: tracker,
+            }
+        }
+    }
+
+    /// Creates a default and zero initialized SimpleTerminal
+    pub fn default() -> SimpleTerminal {
+        let temp = CString::new("").unwrap();
+        unsafe {
+            let simple_terminal =
+                Fl_Simple_Terminal_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
+            assert!(!simple_terminal.is_null(),);
+            let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(
+                simple_terminal as *mut fltk_sys::fl::Fl_Widget,
+            );
+            assert!(!tracker.is_null());
+            SimpleTerminal {
+                _inner: simple_terminal,
+                _tracker: tracker,
+            }
+        }
+    }
+
     pub fn set_stay_at_bottom(&mut self, arg1: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self._inner, arg1 as i32) }
