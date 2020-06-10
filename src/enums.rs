@@ -3,7 +3,7 @@ use fltk_sys::fl::Fl_get_color;
 
 /// Defines label types
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum LabelType {
     NormalLabel = 0,
     NoLabel,
@@ -18,7 +18,7 @@ pub enum LabelType {
 
 /// Defines the frame type, which can be set using the set_type() method
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum FrameType {
     NoBox = 0,
     FlatBox,

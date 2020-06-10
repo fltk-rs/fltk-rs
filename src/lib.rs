@@ -163,7 +163,7 @@
 //!
 //! These can be set using the App::set_scheme() function.
 //! Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait,
-//! such as set_color(), set_label_font(), set_frame_type() etc:
+//! such as set_color(), set_label_font(), set_frame() etc:
 //! ```rust
 //!     some_button.set_color(Color::Light1); //! You can use one of the provided colors in the fltk enums
 //!     some_button.set_color(Color::from_rgb(255, 0, 0)); //! Or you can specify a color by rgb or hex/u32 value

@@ -409,27 +409,27 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #set_label_size(self._inner, sz) }
             }
 
-            fn label_type<T: WidgetType>(&self) -> T {
+            fn label_type(&self) -> LabelType {
                 assert!(!self.was_deleted());
-                unsafe { T::from_i32(#label_type(self._inner)) }
+                unsafe { mem::transmute(#label_type(self._inner)) }
             }
 
-            fn set_label_type<T: WidgetType>(&mut self, typ: T) {
+            fn set_label_type(&mut self, typ: LabelType) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_label_type(self._inner, typ.to_int());
+                    #set_label_type(self._inner, typ as i32);
                 }
             }
 
-            fn frame<T: WidgetType>(&self) -> T {
+            fn frame(&self) -> FrameType {
                 assert!(!self.was_deleted());
-                unsafe { T::from_i32(#frame(self._inner)) }
+                unsafe { mem::transmute(#frame(self._inner)) }
             }
 
-            fn set_frame<T: WidgetType>(&mut self, typ: T) {
+            fn set_frame(&mut self, typ: FrameType) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_frame(self._inner, typ.to_int());
+                    #set_frame(self._inner, typ as i32);
                 }
             }
 
