@@ -15,7 +15,7 @@ pub struct Editor {
 }
 
 impl Editor {
-    pub fn new(buf: &mut TextBuffer) -> Editor {
+    pub fn new(buf: TextBuffer) -> Editor {
         Editor {
             editor: TextEditor::new(5, 40, 790, 555, buf),
             filename: String::from(""),
@@ -112,7 +112,7 @@ fn main() {
     let mut buf = TextBuffer::default();
     buf.set_tab_distance(4);
 
-    let mut editor = Editor::new(&mut buf);
+    let mut editor = Editor::new(buf);
     editor.style();
 
     editor.set_callback(Box::new(move || s.send(Message::Changed)));

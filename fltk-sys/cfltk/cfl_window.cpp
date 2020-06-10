@@ -37,6 +37,12 @@
     }                                                                                              \
     void *widget##_raw_handle(const widget *w) {                                                   \
         return (void *)fl_xid_(w);                                                                 \
+    }                                                                                              \
+    void widget##_set_border(widget *self, int flag) {                                             \
+        LOCK(self->border(flag);)                                                                  \
+    }                                                                                              \
+    int widget##_border(const widget *self) {                                                      \
+        return self->border();                                                                     \
     }
 
 WIDGET_DEFINE(Fl_Window)

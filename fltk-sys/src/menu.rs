@@ -1327,6 +1327,12 @@ extern "C" {
     pub fn Fl_Menu_Item_submenu(self_: *const Fl_Menu_Item) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Menu_Item_checkbox(self_: *const Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_radio(self_: *const Fl_Menu_Item) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Item_next(
         self_: *mut Fl_Menu_Item,
         idx: ::std::os::raw::c_int,

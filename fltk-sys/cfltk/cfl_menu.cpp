@@ -206,6 +206,14 @@ int Fl_Menu_Item_submenu(const Fl_Menu_Item *self) {
     return self->submenu();
 }
 
+int Fl_Menu_Item_checkbox(const Fl_Menu_Item *self) {
+    return self->checkbox();
+}
+
+int Fl_Menu_Item_radio(const Fl_Menu_Item *self) {
+    return self->radio();
+}
+
 Fl_Menu_Item *Fl_Menu_Item_next(Fl_Menu_Item *self, int idx) {
     return self->next(idx);
 }

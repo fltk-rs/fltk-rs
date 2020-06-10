@@ -21,6 +21,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     );
     let set_icon = Ident::new(format!("{}_{}", name_str, "set_icon").as_str(), name.span());
     let icon = Ident::new(format!("{}_{}", name_str, "icon").as_str(), name.span());
+    let set_border = Ident::new(format!("{}_{}", name_str, "set_border").as_str(), name.span());
+    let border = Ident::new(format!("{}_{}", name_str, "border").as_str(), name.span());
     let make_resizable = Ident::new(
         format!("{}_{}", name_str, "make_resizable").as_str(),
         name.span(),
@@ -102,6 +104,18 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                         0 => false,
                         _ => true,
                     }
+                }
+            }
+
+            fn set_border(&mut self, flag: bool) {
+                unsafe {
+                    #set_border(self._inner, flag as i32)
+                }
+            }
+    
+            fn border(&self) -> bool {
+                unsafe {
+                    #border(self._inner) != 0
                 }
             }
 

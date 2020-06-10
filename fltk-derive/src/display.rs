@@ -214,7 +214,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_buffer(&mut self, mut buffer: &mut TextBuffer) {
+            fn set_buffer(&mut self, mut buffer: TextBuffer) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_buffer(self._inner, buffer.as_ptr())

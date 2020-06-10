@@ -232,6 +232,22 @@ impl MenuItem {
         unsafe { Fl_Menu_Item_submenu(self._inner) != 0 }
     }
 
+    /// Returns whether a menu item is a checkbox
+    pub fn is_checkbox(&self) -> bool {
+        assert!(!self.was_deleted() && !self._inner.is_null());
+        unsafe {
+            Fl_Menu_Item_checkbox(self._inner) != 0
+        }
+    }
+
+    /// Returns whether a menu item is a radio item
+    pub fn is_radio(&self) -> bool {
+        assert!(!self.was_deleted() && !self._inner.is_null());
+        unsafe {
+            Fl_Menu_Item_radio(self._inner) != 0
+        }
+    }
+
     /// Shows the menu item
     pub fn show(&mut self) {
         assert!(!self.was_deleted() && !self._inner.is_null());

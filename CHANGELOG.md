@@ -3,9 +3,16 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.6.0] - 2020-06-10
+### Changes
 - Initialize internal FLTK styles on application start.
 - Fix use of uninitialized data.
 - Remove deprecate set_style_table_entry method, which was replaced by set_highlight_data.
+- Impl Copy for the TextBuffer.
+- Add WindowExt border and set_border methods.
+- Add is_radio and is_checkbox methods to MenuItem.
 
 ## [0.5.12] - 2020-06-08
 ### Changes
