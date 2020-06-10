@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Initialize internal FLTK styles on application start.
 
 ## [0.5.12] - 2020-06-08
 ### Changes

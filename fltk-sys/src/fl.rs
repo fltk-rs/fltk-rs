@@ -156,3 +156,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_Tracker_delete(self_: *mut Fl_Widget_Tracker);
 }
+extern "C" {
+    pub fn Fl_init_all();
+}

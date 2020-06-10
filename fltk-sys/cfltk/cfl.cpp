@@ -1,5 +1,6 @@
 #include "cfl.h"
 #include "cfl_widget.h"
+#include <FL/Enumerations.H>
 #include <FL/Fl.H>
 #include <FL/Fl_Widget.H>
 #include <new>
@@ -165,4 +166,23 @@ int Fl_Widget_Tracker_deleted(Fl_Widget_Tracker *self) {
 
 void Fl_Widget_Tracker_delete(Fl_Widget_Tracker *self) {
     delete self;
+}
+
+void Fl_init_all(void) {
+    fl_define_FL_ROUND_UP_BOX();
+    fl_define_FL_SHADOW_BOX();
+    fl_define_FL_ROUNDED_BOX();
+    fl_define_FL_RFLAT_BOX();
+    fl_define_FL_RSHADOW_BOX();
+    fl_define_FL_DIAMOND_BOX();
+    fl_define_FL_OVAL_BOX();
+    fl_define_FL_PLASTIC_UP_BOX();
+    fl_define_FL_GTK_UP_BOX();
+    fl_define_FL_GLEAM_UP_BOX();
+    fl_define_FL_SHADOW_LABEL();
+    fl_define_FL_ENGRAVED_LABEL();
+    fl_define_FL_EMBOSSED_LABEL();
+    fl_define_FL_MULTI_LABEL();
+    fl_define_FL_ICON_LABEL();
+    fl_define_FL_IMAGE_LABEL();
 }
