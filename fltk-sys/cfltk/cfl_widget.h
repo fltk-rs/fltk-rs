@@ -284,7 +284,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
         return self->user_data();                                                                  \
     }                                                                                              \
     int widget##_take_focus(widget *self) {                                                        \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->take_focus());                                                            \
         return ret;                                                                                \
     }                                                                                              \

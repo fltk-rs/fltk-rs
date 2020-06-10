@@ -459,6 +459,8 @@ impl Clone for TextBuffer {
     }
 }
 
+impl Copy for TextBuffer {}
+
 /// Creates a non-editable text display widget
 #[derive(WidgetExt, DisplayExt, Debug)]
 pub struct TextDisplay {
@@ -474,6 +476,7 @@ pub struct TextEditor {
 }
 
 /// Creates an editable text display widget
+/// SimpleTerminal already has an internal buffer
 #[derive(WidgetExt, DisplayExt, Debug)]
 pub struct SimpleTerminal {
     _inner: *mut Fl_Simple_Terminal,
@@ -500,7 +503,7 @@ impl StyleTables {
 
 impl TextEditor {
     /// Create an new TextEditor widget
-    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextEditor {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: TextBuffer) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(x, y, w, h, temp.into_raw() as *const raw::c_char);
@@ -518,7 +521,7 @@ impl TextEditor {
     }
 
     /// Creates a default and zero initialized TextEditor
-    pub fn default(buf: &mut TextBuffer) -> TextEditor {
+    pub fn default(buf: TextBuffer) -> TextEditor {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_editor = Fl_Text_Editor_new(0, 0, 0, 0, temp.into_raw() as *const raw::c_char);
@@ -570,7 +573,7 @@ impl TextEditor {
 
 impl TextDisplay {
     /// Create an new TextDisplay widget
-    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: &mut TextBuffer) -> TextDisplay {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, buf: TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display =
@@ -589,7 +592,7 @@ impl TextDisplay {
     }
 
     /// Creates a default and zero initialized TextDisplay
-    pub fn default(buf: &mut TextBuffer) -> TextDisplay {
+    pub fn default(buf: TextBuffer) -> TextDisplay {
         let temp = CString::new("").unwrap();
         unsafe {
             let text_display =

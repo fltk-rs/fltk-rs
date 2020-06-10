@@ -90,6 +90,8 @@ int Fl_Widget_Tracker_deleted(Fl_Widget_Tracker *self);
 
 void Fl_Widget_Tracker_delete(Fl_Widget_Tracker *self);
 
+void Fl_init_all(void);
+
 #ifdef __cplusplus
 }
 #endif

@@ -86,6 +86,7 @@ impl App {
     /// Instantiates an App type
     pub fn default() -> App {
         register_images();
+        init_all();
         App {}
     }
 
@@ -579,4 +580,8 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 
 fn register_images() {
     unsafe { fltk_sys::image::Fl_register_images() }
+}
+
+fn init_all() {
+    unsafe { fltk_sys::fl::Fl_init_all() }
 }

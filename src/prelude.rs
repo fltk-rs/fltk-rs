@@ -289,6 +289,10 @@ pub unsafe trait WindowExt: GroupExt {
     fn set_cursor(&mut self, cursor: CursorStyle);
     /// Returns whether a window is shown
     fn shown(&self) -> bool;
+    /// Sets whether the window has a border
+    fn set_border(&mut self, flag: bool);
+    /// Returns whether a window has a border
+    fn border(&self) -> bool;
     /// Get the raw system handle of the window
     /// void pointer to: (Windows: HWND, X11: Xid, MacOS: NSWindow)
     unsafe fn raw_handle(&self) -> *const raw::c_void;
@@ -448,7 +452,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
     fn buffer(&self) -> TextBuffer;
     /// Sets the associated TextBuffer
-    fn set_buffer(&mut self, buffer: &mut TextBuffer);
+    fn set_buffer(&mut self, buffer: TextBuffer);
     /// Unsets the current text buffer
     fn unset_buffer(&mut self);
     /// Return the text font
@@ -557,13 +561,6 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn linenumber_align(&self) -> Align;
     /// Checks whether a pixel is within a text selection
     fn in_selection(&self, x: i32, y: i32) -> bool;
-    /// Deprecated: Sets the style of the text widget
-    #[deprecated = "Use set_highlight_data instead."]
-    fn set_style_table_entry(
-        &mut self,
-        style_buffer: &mut TextBuffer,
-        entries: Vec<StyleTableEntry>,
-    ) -> crate::text::StyleTables;
 }
 
 /// Defines the methods implemented by all browser types
