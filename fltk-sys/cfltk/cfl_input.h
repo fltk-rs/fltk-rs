@@ -34,7 +34,7 @@ extern "C" {
 
 #define INPUT_DEFINE(widget)                                                                       \
     int widget##_set_value(widget *self, const char *t) {                                          \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->value(t));                                                                \
         return ret;                                                                                \
     }                                                                                              \
@@ -51,12 +51,12 @@ extern "C" {
         return self->position();                                                                   \
     }                                                                                              \
     int widget##_set_position(widget *self, int p) {                                               \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(self->position(p));                                                                   \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_set_mark(widget *self, int m) {                                                   \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(self->mark(m));                                                                       \
         return ret;                                                                                \
     }                                                                                              \
@@ -64,32 +64,32 @@ extern "C" {
         return self->mark();                                                                       \
     }                                                                                              \
     int widget##_replace(widget *self, int b, int e, const char *text, int ilen) {                 \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->replace(b, e, text, ilen));                                               \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_insert(widget *self, const char *t, int l) {                                      \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->insert(t, l));                                                            \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_append(widget *self, const char *t, int l, char keep_selection) {                 \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->append(t, l, keep_selection));                                            \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_copy(widget *self, int clipboard) {                                               \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->copy(clipboard));                                                         \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_undo(widget *self) {                                                              \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->undo());                                                                  \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_copy_cuts(widget *self) {                                                         \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->cut());                                                                   \
         return ret;                                                                                \
     }                                                                                              \

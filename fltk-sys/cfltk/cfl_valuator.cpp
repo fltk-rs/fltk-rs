@@ -52,27 +52,27 @@
         return self->value();                                                                      \
     }                                                                                              \
     int widget##_set_value(widget *self, double val) {                                             \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(self->value(val));                                                                    \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_format(widget *self, char *chr) {                                                 \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->format(chr));                                                             \
         return ret;                                                                                \
     }                                                                                              \
     double widget##_round(widget *self, double val) {                                              \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->round(val));                                                              \
         return ret;                                                                                \
     }                                                                                              \
     double widget##_clamp(widget *self, double val) {                                              \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->clamp(val));                                                              \
         return ret;                                                                                \
     }                                                                                              \
     double widget##_increment(widget *self, double a, int b) {                                     \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->increment(a, b));                                                         \
         return ret;                                                                                \
     }

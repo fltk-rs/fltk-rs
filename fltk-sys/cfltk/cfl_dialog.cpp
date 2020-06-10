@@ -52,7 +52,7 @@ const char *Fl_Native_File_Chooser_directory(Fl_Native_File_Chooser *self) {
 }
 
 int Fl_Native_File_Chooser_show(Fl_Native_File_Chooser *self) {
-    int ret;
+    int ret = 0;
     LOCK(ret = self->show());
     return ret;
 }
@@ -125,7 +125,7 @@ void Fl_Help_Dialog_hide(Fl_Help_Dialog *self) {
 }
 
 int Fl_Help_Dialog_load(Fl_Help_Dialog *self, const char *f) {
-    int ret;
+    int ret = 0;
     LOCK(ret = self->load(f));
     return ret;
 }

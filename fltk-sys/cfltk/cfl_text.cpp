@@ -8,11 +8,6 @@
 #include <FL/Fl_Widget.H>
 #include <new>
 
-struct StyleData {
-    Fl_Text_Display::Style_Table_Entry *table;
-    int sz;
-};
-
 #define DISPLAY_DEFINE(widget)                                                                     \
     int widget##_text_font(const widget *self) {                                                   \
         return self->textfont();                                                                   \
@@ -52,22 +47,22 @@ struct StyleData {
         return self->count_lines(start, end, start_pos_is_line_start);                             \
     }                                                                                              \
     int widget##_move_right(widget *self) {                                                        \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->move_right());                                                            \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_move_left(widget *self) {                                                         \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->move_left());                                                             \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_move_up(widget *self) {                                                           \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->move_up());                                                               \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_move_down(widget *self) {                                                         \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->move_down());                                                             \
         return ret;                                                                                \
     }                                                                                              \
@@ -84,8 +79,7 @@ struct StyleData {
             stable[i] = {color[i], font[i], fontsz[i]};                                            \
         }                                                                                          \
         LOCK(self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);)                \
-        StyleData *data = new StyleData{stable, sz};                                               \
-        return (void *)data;                                                                       \
+        return (void *)stable;                                                                     \
     }                                                                                              \
     void widget##_set_cursor_style(widget *self, int style) {                                      \
         LOCK(self->cursor_style(style);)                                                           \
@@ -124,12 +118,12 @@ struct StyleData {
         return self->line_end(startPos, startPosIsLineStart);                                      \
     }                                                                                              \
     int widget##_skip_lines(widget *self, int startPos, int nLines, int startPosIsLineStart) {     \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->skip_lines(startPos, nLines, startPosIsLineStart);)                       \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_rewind_lines(widget *self, int startPos, int nLines) {                            \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->rewind_lines(startPos, nLines);)                                          \
         return ret;                                                                                \
     }                                                                                              \
@@ -373,25 +367,25 @@ void Fl_Text_Editor_set_buffer(Fl_Text_Editor *self, Fl_Text_Buffer *buf) {
 DISPLAY_DEFINE(Fl_Text_Editor)
 
 int kf_copy(Fl_Text_Editor *e) {
-    int ret;
+    int ret = 0;
     LOCK(ret = Fl_Text_Editor::kf_copy(1, e));
     return ret;
 }
 
 int kf_cut(Fl_Text_Editor *e) {
-    int ret;
+    int ret = 0;
     LOCK(ret = Fl_Text_Editor::kf_cut(1, e));
     return ret;
 }
 
 int kf_paste(Fl_Text_Editor *e) {
-    int ret;
+    int ret = 0;
     LOCK(ret = Fl_Text_Editor::kf_paste(1, e));
     return ret;
 }
 
 int kf_undo(Fl_Text_Editor *e) {
-    int ret;
+    int ret = 0;
     LOCK(ret = Fl_Text_Editor::kf_undo(1, e));
     return ret;
 }
@@ -458,6 +452,5 @@ void Fl_Simple_Terminal_remove_lines(Fl_Simple_Terminal *self, int start, int co
 DISPLAY_DEFINE(Fl_Simple_Terminal)
 
 void Fl_delete_stable(void *stable) {
-    delete[]((StyleData *)stable)->table;
-    delete (StyleData *)stable;
+    delete[](Fl_Text_Display::Style_Table_Entry *) stable;
 }

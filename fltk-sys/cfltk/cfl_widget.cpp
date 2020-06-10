@@ -274,7 +274,7 @@ void *Fl_Widget_user_data(const Fl_Widget *self) {
 }
 
 int Fl_Widget_take_focus(Fl_Widget *self) {
-    int ret;
+    int ret = 0;
     LOCK(ret = self->take_focus());
     return ret;
 }

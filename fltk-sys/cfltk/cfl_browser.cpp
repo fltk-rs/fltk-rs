@@ -34,7 +34,7 @@
         LOCK(self->size(W, H);)                                                                    \
     }                                                                                              \
     int widget##_select(widget *self, int line) {                                                  \
-        int ret;                                                                                   \
+        int ret = 0;                                                                               \
         LOCK(ret = self->select(line));                                                            \
         return ret;                                                                                \
     }                                                                                              \

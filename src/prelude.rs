@@ -557,13 +557,6 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn linenumber_align(&self) -> Align;
     /// Checks whether a pixel is within a text selection
     fn in_selection(&self, x: i32, y: i32) -> bool;
-    /// Deprecated: Sets the style of the text widget
-    #[deprecated = "Use set_highlight_data instead."]
-    fn set_style_table_entry(
-        &mut self,
-        style_buffer: &mut TextBuffer,
-        entries: Vec<StyleTableEntry>,
-    ) -> crate::text::StyleTables;
 }
 
 /// Defines the methods implemented by all browser types
