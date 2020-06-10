@@ -1,22 +1,18 @@
-use fltk::{
-    app::*,
-    dialog::*,
-    frame::*,
-    enums::Font::*,
-    enums::LabelType::*,
-    enums::FrameType::*,
-    window::Window,
-};
+use fltk::{app::*, frame::*, image::*, window::*};
+use std::path::PathBuf;
 
 fn main() {
-    let app = App::default();
-    let  mut window:Window = Window::new(0,0,340,180,"Problem");
-    let mut frame:Frame = Frame::new(20,40,300,100, "Hello, World!");
-    frame.set_frame(UpBox);
-    frame.set_label_font(HelveticaBoldItalic);
-    frame.set_label_size(36);
-    frame.set_label_type(ShadowLabel);
-    window.end();
-    window.show();
+    let app = App::default().set_scheme(AppScheme::Gleam);
+    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    let mut frame = Frame::new(0, 0, 400, 300, "");
+
+    let mut image = SvgImage::load(&PathBuf::from("screenshots/RustLogo.svg")).unwrap();
+    image.scale(200, 200, true, true);
+    frame.set_image(&image);
+
+    wind.make_resizable(true);
+    wind.end();
+    wind.show();
+
     app.run().unwrap();
 }
