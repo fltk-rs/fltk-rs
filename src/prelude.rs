@@ -207,6 +207,7 @@ pub unsafe trait WidgetExt {
     /// Return whether the widget has visible focus
     fn has_visible_focus(&mut self) -> bool;
     /// Manually delete a widget
+    /// Use app::delete_widget instead
     fn delete(&mut self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
