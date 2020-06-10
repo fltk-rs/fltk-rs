@@ -3,7 +3,8 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Mark Widget::into<WidgetExt>() as unsafe.
+- Add App::windows() method which returs an optional Vector of the application's windows.
 
 ## [0.6.1] - 2020-06-10
 ### Changes

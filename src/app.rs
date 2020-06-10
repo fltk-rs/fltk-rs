@@ -123,6 +123,22 @@ impl App {
         }
     }
 
+    pub fn windows(&self) -> Option<Vec<Window>> {
+        let mut v: Vec<Window> = vec![];
+        let first = first_window();
+        if first.is_none() {
+            return None;
+        }
+        let first = first.unwrap();
+        v.push(first.clone());
+        let mut win = first;
+        while let Some(wind) = next_window(&win) {
+            v.push(wind.clone());
+            win = wind;
+        }
+        Some(v)
+    }
+
     /// Quit the application
     pub fn quit(&self) {
         quit()
