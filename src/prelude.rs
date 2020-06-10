@@ -146,13 +146,13 @@ pub unsafe trait WidgetExt {
     /// Sets the widget label's size
     fn set_label_size(&mut self, sz: i32);
     /// Returns the widget label's type
-    fn label_type<T: WidgetType>(&self) -> T;
+    fn label_type(&self) -> LabelType;
     /// Sets the widget label's type
-    fn set_label_type<T: WidgetType>(&mut self, typ: T);
+    fn set_label_type(&mut self, typ: LabelType);
     /// Returns the widget's frame type
-    fn frame<T: WidgetType>(&self) -> T;
+    fn frame(&self) -> FrameType;
     /// Sets the widget's frame type
-    fn set_frame<T: WidgetType>(&mut self, typ: T);
+    fn set_frame(&mut self, typ: FrameType);
     /// Returns whether the widget was changed
     fn changed(&self) -> bool;
     /// Mark the widget as changed

@@ -5,7 +5,7 @@
 ### Changes
 - (None)
 
-## [0.6.0] - 2020-06-10
+## [0.6.1] - 2020-06-10
 ### Changes
 - Initialize internal FLTK styles on application start.
 - Fix use of uninitialized data.
@@ -13,6 +13,7 @@
 - Impl Copy for the TextBuffer.
 - Add WindowExt border and set_border methods.
 - Add is_radio and is_checkbox methods to MenuItem.
+- Remove WidgetType trait from LabelType and FrameType.
 
 ## [0.5.12] - 2020-06-08
 ### Changes

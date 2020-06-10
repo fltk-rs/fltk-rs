@@ -120,16 +120,16 @@ impl MenuItem {
     }
 
     /// Returns the label type of the menu item
-    pub fn label_type<T: WidgetType>(&self) -> T {
+    pub fn label_type(&self) -> LabelType {
         assert!(!self.was_deleted() && !self._inner.is_null());
-        unsafe { T::from_i32(Fl_Menu_Item_label_type(self._inner)) }
+        unsafe { mem::transmute(Fl_Menu_Item_label_type(self._inner)) }
     }
 
     /// Sets the label type of the menu item
-    pub fn set_label_type<T: WidgetType>(&mut self, typ: T) {
+    pub fn set_label_type(&mut self, typ: LabelType) {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
-            Fl_Menu_Item_set_label_type(self._inner, typ.to_int());
+            Fl_Menu_Item_set_label_type(self._inner, typ as i32);
         }
     }
 
