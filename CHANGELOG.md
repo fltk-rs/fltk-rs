@@ -5,6 +5,8 @@
 ### Changes
 - Mark Widget::into<WidgetExt>() as unsafe.
 - Add App::windows() method which returs an optional Vector of the application's windows.
+- Widget deletion calls app::delete_widget instead of raw delete.
+- Add add_emit and insert_emit to MenuExt, also emit to MenuItem.
 
 ## [0.6.1] - 2020-06-10
 ### Changes

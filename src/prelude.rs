@@ -207,7 +207,6 @@ pub unsafe trait WidgetExt {
     /// Return whether the widget has visible focus
     fn has_visible_focus(&mut self) -> bool;
     /// Manually delete a widget
-    /// Use app::delete_widget instead
     fn delete(&mut self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
@@ -387,6 +386,25 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: Box<dyn FnMut()>,
+    );
+    /// Add a menu item along with an emit (sender and message)
+    fn add_emit<T: 'static + Copy + Send + Sync>(
+        &mut self,
+        name: &str,
+        shortcut: Shortcut,
+        flag: crate::menu::MenuFlag,
+        sender: crate::app::Sender<T>,
+        msg: T,
+    );
+    /// Inserts a menu item along with an emit (sender and message)
+    fn insert_emit<T: 'static + Copy + Send + Sync>(
+        &mut self,
+        idx: u32,
+        name: &str,
+        shortcut: Shortcut,
+        flag: crate::menu::MenuFlag,
+        sender: crate::app::Sender<T>,
+        msg: T,
     );
     /// Remove a menu item by index
     fn remove(&mut self, idx: u32);

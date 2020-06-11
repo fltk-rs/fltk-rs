@@ -509,8 +509,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     let old_data = self.user_data();
                     if old_data.is_some() {
-                        let old_data = old_data.unwrap();
                         self.set_user_data(0 as *mut raw::c_void);
+                        let old_data = old_data.unwrap();
                     }
                     // let callback: Option<unsafe extern "C" fn(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)> = None;
                     // fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, std::ptr::null_mut());
@@ -728,8 +728,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn delete(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #delete(self._inner);
-                    self.cleanup();
+                    crate::app::delete_widget(self);
                 }
             }
 
@@ -777,13 +776,15 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn was_deleted(&self) -> bool {
                 unsafe {
-                    return self._inner.is_null() || self._tracker.is_null() || fltk_sys::fl::Fl_Widget_Tracker_deleted(self._tracker) != 0;
+                    if self._inner.is_null() || self._tracker.is_null() {
+                        return true;
+                    } else {
+                        return fltk_sys::fl::Fl_Widget_Tracker_deleted(self._tracker) != 0;
+                    }
                 }
             }
 
             unsafe fn cleanup(&mut self) {
-                self.unset_callback();
-                self.unset_draw_callback();
                 self._inner = std::ptr::null_mut() as *mut #ptr_name;
                 fltk_sys::fl::Fl_Widget_Tracker_delete(self._tracker);
                 self._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
