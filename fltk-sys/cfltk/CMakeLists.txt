@@ -12,6 +12,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
 option(CFLTK_BUILD_SHARED "Builds a shared library" OFF)
 option(CFLTK_BUILD_TESTS "Builds C++ tests" OFF)
 option(USE_SYSTEM_FLTK "Finds and uses the installed FLTK library" OFF)
+option(CFLTK_USE_OPENGL "Uses OpenGL" ON)
 
 # If cmake can't find the installed fltk, you might have to set the FLTK_DIR enviromental variable,
 # export FLTK_DIR=/path/to/fltk
@@ -54,7 +55,12 @@ else()
     target_include_directories(cfltk PUBLIC fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk)
 endif()
 
-set(CFLTK_LIBS fltk fltk_images fltk_z fltk_jpeg fltk_png fltk_gl)
+set(CFLTK_LIBS fltk fltk_images fltk_z fltk_jpeg fltk_png)
+
+if (CFLTK_USE_OPENGL)
+    set(CFLTK_LIBS ${CFLTK_LIBS} fltk_gl)
+    target_compile_definitions(cfltk PUBLIC CFLTK_USE_GL)
+endif()
 
 if(CFLTK_BUILD_SHARED OR USE_SYSTEM_FLTK)
     target_link_libraries(cfltk PUBLIC ${CFLTK_LIBS})

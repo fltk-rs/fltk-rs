@@ -57,12 +57,14 @@ impl GlContext {
 }
 
 /// Creates a OpenGL window widget
+#[cfg(not(feature = "no-opengl"))]
 #[derive(WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct GlWindow {
     _inner: *mut Fl_Gl_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+#[cfg(not(feature = "no-opengl"))]
 impl GlWindow {
     /// Flush window content
     pub fn flush(&mut self) {
