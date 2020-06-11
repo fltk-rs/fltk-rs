@@ -123,6 +123,22 @@ impl App {
         }
     }
 
+    pub fn windows(&self) -> Option<Vec<Window>> {
+        let mut v: Vec<Window> = vec![];
+        let first = first_window();
+        if first.is_none() {
+            return None;
+        }
+        let first = first.unwrap();
+        v.push(first.clone());
+        let mut win = first;
+        while let Some(wind) = next_window(&win) {
+            v.push(wind.clone());
+            win = wind;
+        }
+        Some(v)
+    }
+
     /// Quit the application
     pub fn quit(&self) {
         quit()
@@ -569,14 +585,16 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 //     }
 // }
 
-// /// Deletes widgets and their children.
-// pub(crate) fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
-//     assert!(!wid.was_deleted());
-//     unsafe {
-//         Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-//         wid.cleanup();
-//     }
-// }
+/// Deletes widgets and their children.
+pub fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
+    assert!(!wid.was_deleted());
+    unsafe {
+        let _u = wid.user_data();
+        let _d = wid.draw_data();
+        Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
+        wid.cleanup();
+    }
+}
 
 fn register_images() {
     unsafe { fltk_sys::image::Fl_register_images() }

@@ -306,11 +306,17 @@ impl MenuItem {
                 let f: &mut (dyn FnMut()) = &mut **a;
                 f();
             }
+            self.unset_callback();
             let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
             let data: *mut raw::c_void = mem::transmute(a);
             let callback: fltk_sys::menu::Fl_Callback = Some(shim);
             Fl_Menu_Item_callback(self._inner, callback, data);
         }
+    }
+
+    /// Use a sender to send a message during callback
+    pub fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
+        self.set_callback(Box::new(move || sender.send(msg)));
     }
 
     /// Manually unset a callback

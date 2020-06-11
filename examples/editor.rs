@@ -115,69 +115,78 @@ fn main() {
     let mut editor = Editor::new(buf);
     editor.style();
 
-    editor.set_callback(Box::new(move || s.send(Message::Changed)));
+    editor.emit(s, Message::Changed);
 
-    menu.add(
+    menu.add_emit(
         "File/New...",
         Shortcut::Ctrl + 'n',
         MenuFlag::Normal,
-        Box::new(move || s.send(Message::New)),
+        s,
+        Message::New,
     );
 
-    menu.add(
+    menu.add_emit(
         "File/Open...",
         Shortcut::Ctrl + 'o',
         MenuFlag::Normal,
-        Box::new(move || s.send(Message::Open)),
+        s,
+        Message::Open,
     );
 
-    menu.add(
+    menu.add_emit(
         "File/Save",
         Shortcut::Ctrl + 's',
         MenuFlag::Normal,
-        Box::new(move || s.send(Message::Save)),
+        s,
+        Message::Save,
     );
 
-    menu.add(
+    menu.add_emit(
         "File/Save as...",
         Shortcut::None,
         MenuFlag::MenuDivider,
-        Box::new(move || s.send(Message::SaveAs)),
+        s,
+        Message::SaveAs,
     );
 
-    menu.add(
+    menu.add_emit(
         "File/Quit",
         Shortcut::None,
         MenuFlag::Normal,
-        Box::new(move || s.send(Message::Quit)),
+        s,
+        Message::Quit,
     );
 
-    menu.add(
+    menu.add_emit(
         "Edit/Cut",
         Shortcut::Ctrl + 'x',
         MenuFlag::Normal,
-        Box::new(move || s.send(Message::Cut)),
+        s,
+        Message::Cut,
     );
 
-    menu.add(
+    menu.add_emit(
         "Edit/Copy",
         Shortcut::Ctrl + 'c',
         MenuFlag::Normal,
-        Box::new(move || s.send(Message::Copy)),
+        s,
+        Message::Copy,
     );
 
-    menu.add(
+    menu.add_emit(
         "Edit/Paste",
         Shortcut::Ctrl + 'v',
         MenuFlag::Normal,
-        Box::new(move || s.send(Message::Paste)),
+        s,
+        Message::Paste,
     );
 
-    menu.add(
+    menu.add_emit(
         "Help/About",
         Shortcut::None,
         MenuFlag::Normal,
-        Box::new(move || s.send(Message::About)),
+        s,
+        Message::About,
     );
 
     let mut x = menu.find_item("File/Quit").unwrap();

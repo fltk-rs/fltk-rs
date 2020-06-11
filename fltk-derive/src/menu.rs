@@ -106,6 +106,29 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn add_emit<T: 'static + Copy + Send + Sync>(
+                &mut self,
+                name: &str,
+                shortcut: Shortcut,
+                flag: crate::menu::MenuFlag,
+                sender: crate::app::Sender<T>,
+                msg: T,
+            ) {
+                self.add(name, shortcut, flag, Box::new(move|| sender.send(msg)))
+            }
+            
+            fn insert_emit<T: 'static + Copy + Send + Sync>(
+                &mut self,
+                idx: u32,
+                name: &str,
+                shortcut: Shortcut,
+                flag: crate::menu::MenuFlag,
+                sender: crate::app::Sender<T>,
+                msg: T,
+            ) {
+                self.insert(idx, name, shortcut, flag, Box::new(move|| sender.send(msg)))
+            }
+
             fn remove(&mut self, idx: u32) {
                 assert!(!self.was_deleted());
                 assert!(idx < self.size());
@@ -232,19 +255,14 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     let sz = self.size();
-                    let mut v: Vec<MenuItem> = vec![];
                     if sz > 0 {
                         for i in 0..sz {
-                            v.push(self.at(i).unwrap());
+                            let mut c = self.at(i).unwrap();
+                            c.set_callback(Box::new(move || { /* Do nothing! */ }));
                         }
                     }
                     #clear(self._inner);
-                    if sz > 0 {
-                        for mut child in v {
-                            child.unset_callback();
-                            child._inner = 0 as *mut Fl_Menu_Item;
-                        }
-                    }
+                    self.redraw();
                 }
             }
 
@@ -269,7 +287,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                         if item.label().is_none() {
                             break;
                         }
-                        item.unset_callback();
+                        item.set_callback(Box::new(move || { /* Do nothing! */ }));
                         i += 1;
                     }
                     match #clear_submenu(self._inner, idx as i32) {
