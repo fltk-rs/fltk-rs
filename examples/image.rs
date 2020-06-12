@@ -55,7 +55,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 300, "");
 
-    let mut image = SharedImage::load(&PathBuf::from("screenshots/cailc.jpg"))?;
+    let mut image = SharedImage::load(&PathBuf::from("screenshots/calc.jpg"))?;
     image.scale(200, 200, true, true);
 
     frame.set_image(&image);

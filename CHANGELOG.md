@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Fix memory leak with set_image and set_icon methods.
 
 ## [0.6.2] - 2020-06-12
 ### Changes

@@ -280,9 +280,9 @@ pub unsafe trait WindowExt: GroupExt {
     /// Makes the window current
     fn make_current(&mut self);
     /// Sets the windows icon
-    fn set_icon<Image: ImageExt>(&mut self, image: &Image);
+    fn set_icon(&mut self, image: &crate::image::RgbImage);
     /// Returns the icon of the window
-    fn icon(&self) -> Option<Image>;
+    fn icon(&self) -> Option<crate::image::RgbImage>;
     /// Make the window resizable
     fn make_resizable(&mut self, val: bool);
     /// Sets the cursor style within the window
