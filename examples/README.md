@@ -1,7 +1,7 @@
 # Examples
 
-Each file is standalone executable with a main function. Examples vary from basic hello world simplicity to some more complex things. They may contain logic bugs, however their purpose is for demonstration and testing UI elements only. If you would like to contribute fixes, improvements or more example, you're welcome to do so.
-Some drawing primitives necessitate the usage of Quartz 2D drawing on MacOS and might not work there, such as the paint or pong examples.
+Each file is a standalone executable with its main function. Examples vary from basic hello world simplicity to some more complex things. They may contain logic bugs, however their purpose is for demonstration and for testing UI elements. If you would like to contribute fixes, improvements or more examples, you're very welcome to do so.
+Some examples using drawing primitives like (paint and pong) might not work on MacOS since MacOS requires drawing to be done using Quartz drawing primitives.
 
 To run the examples: 
 ```
