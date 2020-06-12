@@ -2,7 +2,12 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.6.3] - 2020-06-13
+### Changes
 - Fix memory leak with set_image and set_icon methods.
+- Mark Image::into<ImageExt>() as unsafe.
 
 ## [0.6.2] - 2020-06-12
 ### Changes
