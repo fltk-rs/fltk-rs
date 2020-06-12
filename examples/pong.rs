@@ -57,7 +57,7 @@ fn main() {
             *ball_y -= 5;
         }
         if *ball_y == 540 - 40
-            && (*ball_x > *paddle_c.borrow() && *ball_x < *paddle_c.borrow() + 160)
+            && (*ball_x > *paddle_c.borrow() - 40 && *ball_x < *paddle_c.borrow() + 160)
         {
             *y_positive = false;
         }
