@@ -4,10 +4,17 @@ use std::rc::Rc;
 use std::thread;
 use std::time::Duration;
 
+#[repr(i32)]
+#[derive(Copy, Clone)]
+enum Direction {
+    Positive = 1,
+    Negative = -1,
+}
+
 struct Ball {
     wid: valuator::FillDial,
     pos: (i32, i32),       // x and y positions
-    direction: (i32, i32), // x and y directions
+    dir: (Direction, Direction), // x and y directions
 }
 
 fn main() {
@@ -19,7 +26,7 @@ fn main() {
     let mut ball = Ball {
         wid: valuator::FillDial::new(0, 0, 40, 40, ""),
         pos: (0, 0),
-        direction: (1, 1),
+        dir: (Direction::Positive, Direction::Positive),
     };
     ball.wid.set_color(Color::White);
     wind.set_color(Color::Black);
@@ -45,27 +52,25 @@ fn main() {
     }));
 
     while app.wait().unwrap() {
-        ball.pos.0 += 10 * ball.direction.0;
-        ball.pos.1 += 10 * ball.direction.1;
+        ball.pos.0 += 10 * ball.dir.0 as i32;
+        ball.pos.1 += 10 * ball.dir.1 as i32;
         if ball.pos.1 == 540 - 40
             && (ball.pos.0 > *paddle_c.borrow() - 40 && ball.pos.0 < *paddle_c.borrow() + 160)
         {
-            ball.direction.1 = -1;
+            ball.dir.1 = Direction::Negative;
         }
         if ball.pos.1 == 0 {
-            ball.direction.1 = 1;
+            ball.dir.1 = Direction::Positive;
         }
         if ball.pos.0 == 800 - 40 {
-            ball.direction.0 = -1;
+            ball.dir.0 = Direction::Negative;
         }
         if ball.pos.0 == 0 {
-            ball.direction.0 = 1;
+            ball.dir.0 = Direction::Positive;
         }
         if ball.pos.1 > 600 {
-            ball.pos.0 = 0;
-            ball.pos.1 = 0;
-            ball.direction.0 = 1;
-            ball.direction.1 = 1;
+            ball.pos = (0, 0);
+            ball.dir = (Direction::Positive, Direction::Positive);
         }
         ball.wid.resize(ball.pos.0, ball.pos.1, 40, 40);
         wind.redraw();
