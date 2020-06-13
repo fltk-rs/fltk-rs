@@ -30,31 +30,27 @@ fn main() {
 
     wind.handle(Box::new(move |ev| {
         match ev {
-            enums::Event::KeyDown => {
-                match app::event_key() {
-                    enums::Key::Right => *paddle_pos.borrow_mut() += 30,
-                    enums::Key::Left => *paddle_pos.borrow_mut() -= 30,
-                    _ => (),
-                }
+            enums::Event::Move => {
+                *paddle_pos.borrow_mut() = app::event_coords().0 - 80; // Mouse's x position
                 wind_c.redraw();
                 true
             }
             _ => false,
         }
     }));
-
+    
     let x_positive = &mut true;
     let y_positive = &mut true;
     while app.wait().unwrap() {
         if *x_positive {
-            *ball_x += 5;
+            *ball_x += 10;
         } else {
-            *ball_x -= 5;
+            *ball_x -= 10;
         }
         if *y_positive {
-            *ball_y += 5;
+            *ball_y += 10;
         } else {
-            *ball_y -= 5;
+            *ball_y -= 10;
         }
         if *ball_y == 540 - 40
             && (*ball_x > *paddle_c.borrow() - 40 && *ball_x < *paddle_c.borrow() + 160)
@@ -71,7 +67,10 @@ fn main() {
             *x_positive = true;
         }
         if *ball_y > 600 {
-            app.quit();
+            *ball_x = 0;
+            *ball_y = 0;
+            *x_positive = true;
+            *y_positive = true;
         }
         ball.resize(*ball_x, *ball_y, 40, 40);
         wind.redraw();
