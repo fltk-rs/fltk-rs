@@ -13,7 +13,7 @@ enum Direction {
 
 struct Ball {
     wid: valuator::FillDial,
-    pos: (i32, i32),       // x and y positions
+    pos: (i32, i32),             // x and y positions
     dir: (Direction, Direction), // x and y directions
 }
 
