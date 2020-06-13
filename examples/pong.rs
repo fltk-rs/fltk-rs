@@ -26,13 +26,11 @@ fn main() {
     let ball_x = &mut 0;
     let ball_y = &mut 0;
     let paddle_c = paddle_pos.clone();
-    let mut wind_c = wind.clone();
 
     wind.handle(Box::new(move |ev| {
         match ev {
             enums::Event::Move => {
                 *paddle_pos.borrow_mut() = app::event_coords().0 - 80; // Mouse's x position
-                wind_c.redraw();
                 true
             }
             _ => false,
