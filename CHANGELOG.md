@@ -6,6 +6,7 @@
 - Add count method to ImageExt.
 - Modify visibility of internal image methods.
 - ImageExt::to_raw_rgb_data marked as unsafe.
+- Update FLTK to commit b831848.
 
 ## [0.6.3] - 2020-06-13
 ### Changes
