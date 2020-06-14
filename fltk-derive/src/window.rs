@@ -64,20 +64,20 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #make_current(self._inner) }
             }
 
-            fn set_icon(&mut self, image: &crate::image::RgbImage) {
+            fn set_icon<T: ImageExt>(&mut self, image: &T) {
                 assert!(!self.was_deleted());
                 let _ = self.icon();
                 unsafe { #set_icon(self._inner, image.as_ptr()) }
             }
 
-            fn icon(&self) -> Option<crate::image::RgbImage> {
+            fn icon(&self) -> Option<Image> {
                 unsafe {
                     assert!(!self.was_deleted());
                     let icon_ptr = #icon(self._inner);
                     if icon_ptr.is_null() {
                         None
                     } else {
-                        Some(Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image).into())
+                        Some(Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image))
                     }
                 }
             }

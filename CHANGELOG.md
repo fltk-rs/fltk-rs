@@ -2,7 +2,10 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Rename SharedImage::from_rgb to from_image.
+- Add count method to ImageExt.
+- Modify visibility of internal image methods.
+- ImageExt::to_raw_rgb_data marked as unsafe.
 
 ## [0.6.3] - 2020-06-13
 ### Changes

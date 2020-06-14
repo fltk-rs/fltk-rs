@@ -81,7 +81,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn to_rgb(&self) -> Vec<u8> {
+            unsafe fn to_raw_rgb_data(&self) -> Vec<u8> {
                 unsafe {
                     let ptr = #data(self._inner);
                     let cnt = #width(self._inner) * #height(self._inner) * 3;
@@ -93,6 +93,12 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
             fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {
                 unsafe {
                     #scale(self._inner, width, height, proportional as i32, can_expand as i32)
+                }
+            }
+
+            fn count(&self) -> u32 {
+                unsafe {
+                    #count(self._inner) as u32
                 }
             }
 

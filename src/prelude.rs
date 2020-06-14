@@ -280,9 +280,9 @@ pub unsafe trait WindowExt: GroupExt {
     /// Makes the window current
     fn make_current(&mut self);
     /// Sets the windows icon
-    fn set_icon(&mut self, image: &crate::image::RgbImage);
+    fn set_icon<T: ImageExt>(&mut self, image: &T);
     /// Returns the icon of the window
-    fn icon(&self) -> Option<crate::image::RgbImage>;
+    fn icon(&self) -> Option<Image>;
     /// Make the window resizable
     fn make_resizable(&mut self, val: bool);
     /// Sets the cursor style within the window
@@ -755,8 +755,10 @@ pub unsafe trait ImageExt {
     unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
     /// Transforms a raw image pointer to an image
     unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
-    /// Returns the raw underlying image data
-    fn to_rgb(&self) -> Vec<u8>;
+    /// Returns the raw underlying rgb image data
+    unsafe fn to_raw_rgb_data(&self) -> Vec<u8>;
     /// Scales the image
     fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool);
+    /// Return the count of an image
+    fn count(&self) -> u32;
 }
