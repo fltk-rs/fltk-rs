@@ -351,7 +351,7 @@ impl RgbImage {
     pub(crate) fn into_parts(self) -> (Vec<u8>, i32, i32) {
         let w = self.width();
         let h = self.height();
-        unsafe { (self.to_raw_rgb_data(), w, h) }
+        unsafe { (self.to_rgb_data(), w, h) }
     }
 
     /// Transforms the RgbImage to a PngImage

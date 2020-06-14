@@ -755,8 +755,10 @@ pub unsafe trait ImageExt {
     unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
     /// Transforms a raw image pointer to an image
     unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
-    /// Returns the raw underlying rgb image data
-    unsafe fn to_raw_rgb_data(&self) -> Vec<u8>;
+    /// Returns the underlying raw rgb image data
+    unsafe fn to_rgb_data(&self) -> Vec<u8>;
+    /// Transforms the image into an RgbImage
+    fn to_rgb_image(&self) -> crate::image::RgbImage;
     /// Scales the image
     fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool);
     /// Return the count of an image

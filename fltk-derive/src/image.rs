@@ -81,13 +81,20 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn to_raw_rgb_data(&self) -> Vec<u8> {
+            unsafe fn to_rgb_data(&self) -> Vec<u8> {
                 unsafe {
                     let ptr = #data(self._inner);
-                    let cnt = #width(self._inner) * #height(self._inner) * 3;
+                    assert!(!ptr.is_null());
+                    let cnt = #width(self._inner) * #height(self._inner) * self.count() as i32;
+                    assert!(cnt != 0);
                     let ret: &[u8] = std::slice::from_raw_parts(ptr as *const u8, cnt as usize);
                     ret.to_vec()
                 }
+            }
+
+            fn to_rgb_image(&self) -> crate::image::RgbImage {
+                let image = self.clone();
+                unsafe { RgbImage { _inner: mem::ManuallyDrop::new(image).as_image_ptr() as *mut Fl_RGB_Image } }
             }
 
             fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {
