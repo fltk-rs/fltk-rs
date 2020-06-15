@@ -3,7 +3,10 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Fix cmake invocation on Windows to build for release.
+- Add most ImageExt methods.
+- Change signature of draw::write_<image>_file to accept ImageExt trait.
+- SharedImage::from_image() can't take ownership of the image.
 
 ## [0.6.4] - 2020-06-15
 ### Changes

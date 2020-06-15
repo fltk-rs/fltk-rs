@@ -63,10 +63,10 @@ impl SharedImage {
     }
 
     /// Loads a SharedImage from an image
-    pub fn from_image<I: ImageExt>(image: &I, own_it: bool) -> Result<SharedImage, FltkError> {
+    pub fn from_image<I: ImageExt>(image: &I) -> Result<SharedImage, FltkError> {
         unsafe {
             let x =
-                Fl_Shared_Image_from_rgb(image.as_image_ptr() as *mut Fl_RGB_Image, own_it as i32);
+                Fl_Shared_Image_from_rgb(image.as_image_ptr() as *mut Fl_RGB_Image, 0);
             if x.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
@@ -323,18 +323,18 @@ pub struct RgbImage {
 
 impl RgbImage {
     /// Initializes a new raw RgbImage
-    pub fn new(data: &Vec<u8>, w: i32, h: i32, depth: u32) -> Result<RgbImage, FltkError> {
+    pub fn new(data: &Vec<u8>, w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
         if depth > 4 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
         let mut sz = w * h;
         if depth > 0 {
-            sz = sz * depth as i32;
+            sz = sz * depth;
         }
-        if sz > data.len() as i32 {
+        if sz > data.len() as u32 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
-        let img = unsafe { Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32) };
+        let img = unsafe { Fl_RGB_Image_new(data.as_ptr(), w as i32, h as i32, depth as i32) };
         if img.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         } else {
@@ -348,16 +348,16 @@ impl RgbImage {
     }
 
     /// Deconstructs a raw RgbImage into parts
-    pub(crate) fn into_parts(self) -> (Vec<u8>, i32, i32) {
-        let w = self.width();
-        let h = self.height();
-        unsafe { (self.to_rgb_data(), w, h) }
+    pub unsafe fn into_parts(self) -> (Vec<u8>, u32, u32) {
+        let w = self.data_w();
+        let h = self.data_h();
+        (self.to_rgb_data(), w, h)
     }
 
     /// Transforms the RgbImage to a PngImage
     pub fn into_png_image(self) -> Result<PngImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
-        let _ = write_to_png_file(self, &path)?;
+        let _ = write_to_png_file(&self, &path)?;
         let ret = PngImage::load(&path)?.copy();
         std::fs::remove_file(&path)?;
         Ok(ret)
@@ -366,7 +366,7 @@ impl RgbImage {
     /// Transforms the RgbImage to a JpegImage
     pub fn into_jpg_image(self) -> Result<JpegImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
-        let _ = write_to_jpg_file(self, &path)?;
+        let _ = write_to_jpg_file(&self, &path)?;
         let ret = JpegImage::load(&path)?.copy();
         std::fs::remove_file(&path)?;
         Ok(ret)
@@ -375,7 +375,7 @@ impl RgbImage {
     /// Transforms the RgbImage to a BmpImage
     pub fn into_bmp_image(self) -> Result<BmpImage, FltkError> {
         let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
-        let _ = write_to_bmp_file(self, &path)?;
+        let _ = write_to_bmp_file(&self, &path)?;
         let ret = BmpImage::load(&path)?.copy();
         std::fs::remove_file(&path)?;
         Ok(ret)

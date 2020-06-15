@@ -16,6 +16,11 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
     let data = Ident::new(format!("{}_{}", name_str, "data").as_str(), name.span());
     let copy = Ident::new(format!("{}_{}", name_str, "copy").as_str(), name.span());
     let scale = Ident::new(format!("{}_{}", name_str, "scale").as_str(), name.span());
+    let data_w = Ident::new(format!("{}_{}", name_str, "data_w").as_str(), name.span());
+    let data_h = Ident::new(format!("{}_{}", name_str, "data_h").as_str(), name.span());
+    let d = Ident::new(format!("{}_{}", name_str, "d").as_str(), name.span());
+    let ld = Ident::new(format!("{}_{}", name_str, "ld").as_str(), name.span());
+    let inactive = Ident::new(format!("{}_{}", name_str, "inactive").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Sync for #name {}
@@ -85,10 +90,16 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     let ptr = #data(self._inner);
                     assert!(!ptr.is_null());
-                    let cnt = #width(self._inner) * #height(self._inner) * self.count() as i32;
+                    let cnt = self.data_w() * self.data_h() * self.depth();
                     assert!(cnt != 0);
                     let ret: &[u8] = std::slice::from_raw_parts(ptr as *const u8, cnt as usize);
                     ret.to_vec()
+                }
+            }
+
+            unsafe fn to_raw_data(&self) -> *const *const u8 {
+                unsafe {
+                    #data(self._inner) as *const *const u8
                 }
             }
 
@@ -109,6 +120,35 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn data_w(&self) -> u32 {
+                unsafe {
+                    #data_w(self._inner) as u32
+                }
+            }
+            
+            fn data_h(&self) -> u32 {
+                unsafe {
+                    #data_h(self._inner) as u32
+                }
+            }
+            
+            fn depth(&self) -> u32 {
+                unsafe {
+                    #d(self._inner) as u32
+                }
+            }
+            
+            fn ld(&self) -> u32 {
+                unsafe {
+                    #ld(self._inner) as u32
+                }
+            }
+            
+            fn inactive(&mut self) {
+                unsafe {
+                    #inactive(self._inner)
+                }
+            }
         }
     };
     gen.into()
