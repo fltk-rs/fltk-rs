@@ -1,7 +1,10 @@
 # Changelog
 
-
 ## Unreleased
+### Changes
+- (None)
+
+## [0.6.5] - 2020-06-16
 ### Changes
 - Fix cmake invocation on Windows to build for release.
 - Add most ImageExt methods.
