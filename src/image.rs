@@ -1,4 +1,3 @@
-use crate::draw::*;
 pub use crate::prelude::*;
 use fltk_sys::image::*;
 use std::{ffi::CString, mem, os::raw};
@@ -124,6 +123,11 @@ impl JpegImage {
             }
         }
     }
+
+    /// Writes the JpegImage to a jpg file
+    pub fn write_to_file(&self, path: &std::path::Path) -> Result<(), FltkError> {
+        crate::draw::write_to_jpg_file(self, path)
+    }
 }
 
 /// Creates a struct holding a PNG image
@@ -170,6 +174,11 @@ impl PngImage {
                 }
             }
         }
+    }
+
+    /// Writes the PngImage to a png file
+    pub fn write_to_file(&self, path: &std::path::Path) -> Result<(), FltkError> {
+        crate::draw::write_to_png_file(self, path)
     }
 }
 
@@ -266,6 +275,11 @@ impl BmpImage {
             }
         }
     }
+
+    /// Writes the BmpImage to a bmp file
+    pub fn write_to_file(&self, path: &std::path::Path) -> Result<(), FltkError> {
+        crate::draw::write_to_bmp_file(self, path)
+    }
 }
 
 /// Creates a struct holding a GIF image
@@ -333,7 +347,7 @@ impl RgbImage {
         }
         if sz > data.len() as u32 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
-        }
+        } // TODO: Remove once Vec::into_raw_parts lands
         let img = unsafe { Fl_RGB_Image_new(data.as_ptr(), w as i32, h as i32, depth as i32) };
         if img.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
@@ -354,30 +368,30 @@ impl RgbImage {
         (self.to_rgb_data(), w, h)
     }
 
-    /// Transforms the RgbImage to a PngImage
-    pub fn into_png_image(self) -> Result<PngImage, FltkError> {
-        let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
-        let _ = write_to_png_file(&self, &path)?;
-        let ret = PngImage::load(&path)?.copy();
-        std::fs::remove_file(&path)?;
-        Ok(ret)
-    }
+    // /// Transforms the RgbImage to a PngImage
+    // pub fn into_png_image(self) -> Result<PngImage, FltkError> {
+    //     let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
+    //     let _ = write_to_png_file(&self, &path)?;
+    //     let ret = PngImage::load(&path)?.copy();
+    //     std::fs::remove_file(&path)?;
+    //     Ok(ret)
+    // }
 
-    /// Transforms the RgbImage to a JpegImage
-    pub fn into_jpg_image(self) -> Result<JpegImage, FltkError> {
-        let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
-        let _ = write_to_jpg_file(&self, &path)?;
-        let ret = JpegImage::load(&path)?.copy();
-        std::fs::remove_file(&path)?;
-        Ok(ret)
-    }
+    // /// Transforms the RgbImage to a JpegImage
+    // pub fn into_jpg_image(self) -> Result<JpegImage, FltkError> {
+    //     let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
+    //     let _ = write_to_jpg_file(&self, &path)?;
+    //     let ret = JpegImage::load(&path)?.copy();
+    //     std::fs::remove_file(&path)?;
+    //     Ok(ret)
+    // }
 
-    /// Transforms the RgbImage to a BmpImage
-    pub fn into_bmp_image(self) -> Result<BmpImage, FltkError> {
-        let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
-        let _ = write_to_bmp_file(&self, &path)?;
-        let ret = BmpImage::load(&path)?.copy();
-        std::fs::remove_file(&path)?;
-        Ok(ret)
-    }
+    // /// Transforms the RgbImage to a BmpImage
+    // pub fn into_bmp_image(self) -> Result<BmpImage, FltkError> {
+    //     let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
+    //     let _ = write_to_bmp_file(&self, &path)?;
+    //     let ret = BmpImage::load(&path)?.copy();
+    //     std::fs::remove_file(&path)?;
+    //     Ok(ret)
+    // }
 }

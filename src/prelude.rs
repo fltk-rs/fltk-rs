@@ -756,11 +756,11 @@ pub unsafe trait ImageExt {
     /// Transforms a raw image pointer to an image
     unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
     /// Returns the underlying raw rgb image data
-    unsafe fn to_rgb_data(&self) -> Vec<u8>;
+    fn to_rgb_data(&self) -> Vec<u8>;
     /// Returns the underlying raw image data
-    unsafe fn to_raw_data(&self) -> *const *const u8;
+    fn to_raw_data(&self) -> *const *const u8;
     /// Transforms the image into an RgbImage
-    fn to_rgb_image(&self) -> crate::image::RgbImage;
+    fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError>;
     /// Scales the image
     fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool);
     /// Return the count of an image
@@ -775,4 +775,10 @@ pub unsafe trait ImageExt {
     fn ld(&self) -> u32;
     /// Greys the image
     fn inactive(&mut self);
+    /// Transforms an image to a PngImage
+    fn into_png(self) -> Result<crate::image::PngImage, FltkError>;
+    /// Transforms an image to a JpegImage
+    fn into_jpeg(self) -> Result<crate::image::JpegImage, FltkError>;
+    /// Transforms an image to a BmpImage
+    fn into_bmp(self) -> Result<crate::image::BmpImage, FltkError>;
 }

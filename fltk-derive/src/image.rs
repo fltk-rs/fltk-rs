@@ -86,26 +86,27 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn to_rgb_data(&self) -> Vec<u8> {
+            fn to_rgb_data(&self) -> Vec<u8> {
                 unsafe {
                     let ptr = #data(self._inner);
                     assert!(!ptr.is_null());
+                    assert!(!(*ptr).is_null());
                     let cnt = self.data_w() * self.data_h() * self.depth();
                     assert!(cnt != 0);
-                    let ret: &[u8] = std::slice::from_raw_parts(ptr as *const u8, cnt as usize);
+                    let ret: &[u8] = std::slice::from_raw_parts(*ptr as *const u8, cnt as usize);
                     ret.to_vec()
                 }
             }
 
-            unsafe fn to_raw_data(&self) -> *const *const u8 {
+            fn to_raw_data(&self) -> *const *const u8 {
                 unsafe {
                     #data(self._inner) as *const *const u8
                 }
             }
 
-            fn to_rgb_image(&self) -> crate::image::RgbImage {
-                let image = self.clone();
-                unsafe { RgbImage { _inner: mem::ManuallyDrop::new(image).as_image_ptr() as *mut Fl_RGB_Image } }
+            fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError> {
+                let data = mem::ManuallyDrop::new(self.to_rgb_data()); // TODO: Remove once Vec::into_raw_parts lands
+                unsafe { RgbImage::new(&data, self.data_w(), self.data_h(), self.depth()) }
             }
 
             fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {
@@ -148,6 +149,30 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     #inactive(self._inner)
                 }
+            }
+
+            fn into_png(self) -> Result<PngImage, FltkError> {
+                let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
+                let _ = crate::draw::write_to_png_file(&self, &path)?;
+                let ret = PngImage::load(&path)?.copy();
+                std::fs::remove_file(&path)?;
+                Ok(ret)
+            }
+            
+            fn into_jpeg(self) -> Result<JpegImage, FltkError> {
+                let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
+                let _ = crate::draw::write_to_jpg_file(&self, &path)?;
+                let ret = JpegImage::load(&path)?.copy();
+                std::fs::remove_file(&path)?;
+                Ok(ret)
+            }
+            
+            fn into_bmp(self) -> Result<BmpImage, FltkError> {
+                let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
+                let _ = crate::draw::write_to_bmp_file(&self, &path)?;
+                let ret = BmpImage::load(&path)?.copy();
+                std::fs::remove_file(&path)?;
+                Ok(ret)
             }
         }
     };

@@ -7,6 +7,8 @@
 - Add most ImageExt methods.
 - Change signature of draw::write_<image>_file to accept ImageExt trait.
 - SharedImage::from_image() can't take ownership of the image.
+- Add BMP, Jpeg and PNG image conversion methods.
+- Update FLTK to commit 46b8968 which fixes Fl_SVG_Image to window icon issue.
 
 ## [0.6.4] - 2020-06-15
 ### Changes

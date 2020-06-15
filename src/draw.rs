@@ -654,8 +654,8 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
         if x.is_null() {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
-            let x = std::slice::from_raw_parts(x, cp as usize);
-            Ok(RgbImage::new(&x.to_vec(), win.width() as u32, win.height() as u32, 3)?)
+            let x = mem::ManuallyDrop::new(std::slice::from_raw_parts(x, cp as usize).to_vec());
+            Ok(RgbImage::new(&x, win.width() as u32, win.height() as u32, 3)?)
         }
     }
 }
@@ -685,7 +685,7 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
 /// Transforms raw data to png file
 pub fn write_to_png_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
     assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "SVG images are not supported!");
-    assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
+    // assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
     let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,
         "Could not convert path to string!",
@@ -705,7 +705,7 @@ pub fn write_to_png_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
 /// Transforms raw data to jpg file
 pub fn write_to_jpg_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
     assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "SVG images are not supported!");
-    assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
+    // assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
     let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,
         "Could not convert path to string!",
@@ -725,7 +725,7 @@ pub fn write_to_jpg_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
 /// Transforms raw data to bmp file
 pub fn write_to_bmp_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
     assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "SVG images are not supported!");
-    assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
+    // assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
     let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,
         "Could not convert path to string!",
