@@ -62,10 +62,11 @@ impl SharedImage {
         }
     }
 
-    /// Loads a SharedImage from an RgbImage
-    pub fn from_rgb(rgb: RgbImage, own_it: bool) -> Result<SharedImage, FltkError> {
+    /// Loads a SharedImage from an image
+    pub fn from_image<I: ImageExt>(image: &I, own_it: bool) -> Result<SharedImage, FltkError> {
         unsafe {
-            let x = Fl_Shared_Image_from_rgb(rgb._inner, own_it as i32);
+            let x =
+                Fl_Shared_Image_from_rgb(image.as_image_ptr() as *mut Fl_RGB_Image, own_it as i32);
             if x.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
@@ -347,10 +348,10 @@ impl RgbImage {
     }
 
     /// Deconstructs a raw RgbImage into parts
-    pub fn into_parts(self) -> (Vec<u8>, i32, i32) {
+    pub(crate) fn into_parts(self) -> (Vec<u8>, i32, i32) {
         let w = self.width();
         let h = self.height();
-        (self.to_rgb(), w, h)
+        unsafe { (self.to_rgb_data(), w, h) }
     }
 
     /// Transforms the RgbImage to a PngImage

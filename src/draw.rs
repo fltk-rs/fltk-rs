@@ -683,7 +683,7 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
 // }
 
 /// Transforms raw data to png file
-pub fn write_to_png_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
+pub(crate) fn write_to_png_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
     let (data, w, h) = rgb_image.into_parts();
     let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,
@@ -702,7 +702,7 @@ pub fn write_to_png_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<
 }
 
 /// Transforms raw data to jpg file
-pub fn write_to_jpg_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
+pub(crate) fn write_to_jpg_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
     let (data, w, h) = rgb_image.into_parts();
     let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,
@@ -721,7 +721,7 @@ pub fn write_to_jpg_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<
 }
 
 /// Transforms raw data to bmp file
-pub fn write_to_bmp_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
+pub(crate) fn write_to_bmp_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
     let (data, w, h) = rgb_image.into_parts();
     let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,

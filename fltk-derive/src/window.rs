@@ -21,7 +21,10 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     );
     let set_icon = Ident::new(format!("{}_{}", name_str, "set_icon").as_str(), name.span());
     let icon = Ident::new(format!("{}_{}", name_str, "icon").as_str(), name.span());
-    let set_border = Ident::new(format!("{}_{}", name_str, "set_border").as_str(), name.span());
+    let set_border = Ident::new(
+        format!("{}_{}", name_str, "set_border").as_str(),
+        name.span(),
+    );
     let border = Ident::new(format!("{}_{}", name_str, "border").as_str(), name.span());
     let make_resizable = Ident::new(
         format!("{}_{}", name_str, "make_resizable").as_str(),
@@ -64,20 +67,22 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #make_current(self._inner) }
             }
 
-            fn set_icon(&mut self, image: &crate::image::RgbImage) {
+            fn set_icon<T: ImageExt>(&mut self, image: &T) {
                 assert!(!self.was_deleted());
+                assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::SvgImage>(), "SVG icons are not supported!");
+                assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage icons are not supported!");
                 let _ = self.icon();
                 unsafe { #set_icon(self._inner, image.as_ptr()) }
             }
 
-            fn icon(&self) -> Option<crate::image::RgbImage> {
+            fn icon(&self) -> Option<Image> {
                 unsafe {
                     assert!(!self.was_deleted());
                     let icon_ptr = #icon(self._inner);
                     if icon_ptr.is_null() {
                         None
                     } else {
-                        Some(Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image).into())
+                        Some(Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image))
                     }
                 }
             }
@@ -113,7 +118,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     #set_border(self._inner, flag as i32)
                 }
             }
-    
+
             fn border(&self) -> bool {
                 unsafe {
                     #border(self._inner) != 0

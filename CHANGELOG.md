@@ -1,8 +1,19 @@
 # Changelog
 
+
 ## Unreleased
 ### Changes
 - (None)
+
+## [0.6.4] - 2020-06-15
+### Changes
+- Rename SharedImage::from_rgb to from_image.
+- Add count method to ImageExt.
+- Modify visibility of internal image methods.
+- ImageExt::to_rgb_data marked as unsafe.
+- Added ImageExt::to_rgb_image.
+- Update FLTK to commit b831848.
+- Add assert for WindowExt::set_icon() supported image types.
 
 ## [0.6.3] - 2020-06-13
 ### Changes
