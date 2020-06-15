@@ -206,3 +206,11 @@ int Fl_event_command(void) {
 int Fl_event_alt(void) {
     return Fl::event_alt();
 }
+
+void Fl_set_damage(int flag) {
+    Fl::damage(flag);
+}
+
+int Fl_damage(void) {
+    return Fl::damage();
+}
