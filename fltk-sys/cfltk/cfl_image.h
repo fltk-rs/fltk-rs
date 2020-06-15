@@ -14,7 +14,12 @@ extern "C" {
     const char *const *image##_data(image *self);                                                  \
     image *image##_copy(image *self);                                                              \
     void image##_scale(image *self, int width, int height, int proportional, int can_expand);      \
-    int image##_fail(image *self);
+    int image##_fail(image *self);                                                                 \
+    int image##_data_w(const image *self);                                                         \
+    int image##_data_h(const image *self);                                                         \
+    int image##_d(const image *self);                                                              \
+    int image##_ld(const image *self);                                                             \
+    void image##_inactive(image *self);
 
 IMAGE_DECLARE(Fl_Image)
 

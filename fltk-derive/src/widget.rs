@@ -177,6 +177,20 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_handle_data").as_str(),
         name.span(),
     );
+    let damage = Ident::new(format!("{}_{}", name_str, "damage").as_str(), name.span());
+    let set_damage = Ident::new(
+        format!("{}_{}", name_str, "set_damage").as_str(),
+        name.span(),
+    );
+    let clear_damage = Ident::new(
+        format!("{}_{}", name_str, "clear_damage").as_str(),
+        name.span(),
+    );
+    let as_window = Ident::new(
+        format!("{}_{}", name_str, "as_window").as_str(),
+        name.span(),
+    );
+    let as_group = Ident::new(format!("{}_{}", name_str, "as_group").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -809,7 +823,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     #set_draw_data(self._inner, data);
                 }
             }
-            
+
             unsafe fn unset_draw_callback(&mut self) {
                 unsafe {
                     let old_data = self.draw_data();
@@ -817,6 +831,49 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         let old_data = old_data.unwrap();
                         self.set_draw_data(0 as *mut raw::c_void);
                     }
+                }
+            }
+
+            fn damage(&self) -> bool {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #damage(self._inner) != 0
+                }
+            }
+
+            fn set_damage(&mut self, flag: bool) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #set_damage(self._inner, flag as raw::c_uchar)
+                }
+            }
+
+            fn clear_damage(&mut self) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #clear_damage(self._inner)
+                }
+            }
+
+            fn as_window(&mut self) -> Option<crate::window::Window> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let ptr = #as_window(self._inner);
+                    if ptr.is_null() {
+                        return None;
+                    }
+                    Some(crate::window::Window::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                }
+            }
+
+            fn as_group(&mut self) -> Option<crate::group::Group> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let ptr = #as_group(self._inner);
+                    if ptr.is_null() {
+                        return None;
+                    }
+                    Some(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
                 }
             }
         }

@@ -234,6 +234,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Box {
@@ -449,4 +464,19 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Box_set_handle_data(self_: *mut Fl_Box, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Box_damage(self_: *const Fl_Box) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Box_set_damage(self_: *mut Fl_Box, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Box_clear_damage(self_: *mut Fl_Box);
+}
+extern "C" {
+    pub fn Fl_Box_as_window(self_: *mut Fl_Box) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Box_as_group(self_: *mut Fl_Box) -> *mut ::std::os::raw::c_void;
 }

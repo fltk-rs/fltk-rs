@@ -123,6 +123,7 @@ impl App {
         }
     }
 
+    /// Returns the apps windows.
     pub fn windows(&self) -> Option<Vec<Window>> {
         let mut v: Vec<Window> = vec![];
         let first = first_window();
@@ -137,6 +138,21 @@ impl App {
             win = wind;
         }
         Some(v)
+    }
+
+    /// Redraws the app
+    pub fn redraw(&self) {
+        redraw()
+    }
+
+    /// Set the app as damaged to reschedule a redraw in the next event loop cycle
+    pub fn set_damage(&self, flag: bool) {
+        set_damage(flag)
+    }
+
+    /// Returns whether an app element is damaged
+    pub fn damage(&self) -> bool {
+        damage()
     }
 
     /// Quit the application
@@ -602,4 +618,50 @@ fn register_images() {
 
 fn init_all() {
     unsafe { fltk_sys::fl::Fl_init_all() }
+}
+
+fn redraw() {
+    unsafe {
+        Fl_redraw()
+    }
+}
+
+/// Returns whether the event is a shift press
+pub fn is_event_shift() -> bool {
+    unsafe {
+        Fl_event_shift() != 0
+    }
+}
+
+/// Returns whether the event is a control key press
+pub fn is_event_ctrl() -> bool {
+    unsafe {
+        Fl_event_ctrl() != 0
+    }
+}
+
+/// Returns whether the event is a command key press
+pub fn is_event_command() -> bool {
+    unsafe {
+        Fl_event_command() != 0
+    }
+}
+
+/// Returns whether the event is a alt key press
+pub fn is_event_alt() -> bool {
+    unsafe {
+        Fl_event_alt() != 0
+    }
+}
+
+fn set_damage(flag: bool) {
+    unsafe {
+        Fl_set_damage(flag as i32)
+    }
+}
+
+fn damage() -> bool {
+    unsafe {
+        Fl_damage() != 0
+    }
 }

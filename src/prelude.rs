@@ -210,6 +210,16 @@ pub unsafe trait WidgetExt {
     fn delete(&mut self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
+    /// Return whether the widget was damaged
+    fn damage(&self) -> bool;
+    /// Signal the widget as damaged and it should be redrawn in the next event loop cycle
+    fn set_damage(&mut self, flag: bool);
+    /// Clear the damaged flag
+    fn clear_damage(&mut self);
+    /// Return the widget as a window if it's a window
+    fn as_window(&mut self) -> Option<crate::window::Window>;
+    /// Return the widget as a group widget if it's a group widget
+    fn as_group(&mut self) -> Option<crate::group::Group>;
     /// INTERNAL: Retakes ownership of the user callback data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     /// INTERNAL: Manually set the user data
@@ -756,11 +766,29 @@ pub unsafe trait ImageExt {
     /// Transforms a raw image pointer to an image
     unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
     /// Returns the underlying raw rgb image data
-    unsafe fn to_rgb_data(&self) -> Vec<u8>;
+    fn to_rgb_data(&self) -> Vec<u8>;
+    /// Returns the underlying raw image data
+    fn to_raw_data(&self) -> *const *const u8;
     /// Transforms the image into an RgbImage
-    fn to_rgb_image(&self) -> crate::image::RgbImage;
+    fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError>;
     /// Scales the image
     fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool);
     /// Return the count of an image
     fn count(&self) -> u32;
+    /// Gets the image's data width
+    fn data_w(&self) -> u32;
+    /// Gets the image's data height
+    fn data_h(&self) -> u32;
+    /// Gets the image's depth
+    fn depth(&self) -> u32;
+    /// Gets the image's line data size
+    fn ld(&self) -> u32;
+    /// Greys the image
+    fn inactive(&mut self);
+    /// Transforms an image to a PngImage
+    fn into_png(self) -> Result<crate::image::PngImage, FltkError>;
+    /// Transforms an image to a JpegImage
+    fn into_jpeg(self) -> Result<crate::image::JpegImage, FltkError>;
+    /// Transforms an image to a BmpImage
+    fn into_bmp(self) -> Result<crate::image::BmpImage, FltkError>;
 }

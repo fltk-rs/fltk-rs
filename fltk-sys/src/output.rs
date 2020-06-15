@@ -234,6 +234,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Input {
@@ -449,6 +464,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_set_handle_data(self_: *mut Fl_Input, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Input_damage(self_: *const Fl_Input) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Input_set_damage(self_: *mut Fl_Input, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Input_clear_damage(self_: *mut Fl_Input);
+}
+extern "C" {
+    pub fn Fl_Input_as_window(self_: *mut Fl_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Input_as_group(self_: *mut Fl_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Input_set_value(
@@ -767,6 +797,21 @@ extern "C" {
         self_: *mut Fl_Int_Input,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Int_Input_damage(self_: *const Fl_Int_Input) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Int_Input_set_damage(self_: *mut Fl_Int_Input, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Int_Input_clear_damage(self_: *mut Fl_Int_Input);
+}
+extern "C" {
+    pub fn Fl_Int_Input_as_window(self_: *mut Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Int_Input_as_group(self_: *mut Fl_Int_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_value(
@@ -1100,6 +1145,21 @@ extern "C" {
         self_: *mut Fl_Float_Input,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Float_Input_damage(self_: *const Fl_Float_Input) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Float_Input_set_damage(self_: *mut Fl_Float_Input, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Float_Input_clear_damage(self_: *mut Fl_Float_Input);
+}
+extern "C" {
+    pub fn Fl_Float_Input_as_window(self_: *mut Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Float_Input_as_group(self_: *mut Fl_Float_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_value(
@@ -1481,6 +1541,28 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Multiline_Input_damage(self_: *const Fl_Multiline_Input) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_set_damage(
+        self_: *mut Fl_Multiline_Input,
+        flag: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_clear_damage(self_: *mut Fl_Multiline_Input);
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_as_window(
+        self_: *mut Fl_Multiline_Input,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_as_group(
+        self_: *mut Fl_Multiline_Input,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Multiline_Input_set_value(
         arg1: *mut Fl_Multiline_Input,
         arg2: *const ::std::os::raw::c_char,
@@ -1839,6 +1921,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Secret_Input_damage(self_: *const Fl_Secret_Input) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Secret_Input_set_damage(self_: *mut Fl_Secret_Input, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Secret_Input_clear_damage(self_: *mut Fl_Secret_Input);
+}
+extern "C" {
+    pub fn Fl_Secret_Input_as_window(self_: *mut Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Secret_Input_as_group(self_: *mut Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Secret_Input_set_value(
         arg1: *mut Fl_Secret_Input,
         arg2: *const ::std::os::raw::c_char,
@@ -2163,6 +2260,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_File_Input_damage(self_: *const Fl_File_Input) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_File_Input_set_damage(self_: *mut Fl_File_Input, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_File_Input_clear_damage(self_: *mut Fl_File_Input);
+}
+extern "C" {
+    pub fn Fl_File_Input_as_window(self_: *mut Fl_File_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Input_as_group(self_: *mut Fl_File_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_File_Input_set_value(
         arg1: *mut Fl_File_Input,
         arg2: *const ::std::os::raw::c_char,
@@ -2476,6 +2588,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Output_set_handle_data(self_: *mut Fl_Output, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Output_damage(self_: *const Fl_Output) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Output_set_damage(self_: *mut Fl_Output, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Output_clear_damage(self_: *mut Fl_Output);
+}
+extern "C" {
+    pub fn Fl_Output_as_window(self_: *mut Fl_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Output_as_group(self_: *mut Fl_Output) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Output_set_value(
@@ -2863,6 +2990,29 @@ extern "C" {
         self_: *mut Fl_Multiline_Output,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_damage(self_: *const Fl_Multiline_Output)
+        -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_set_damage(
+        self_: *mut Fl_Multiline_Output,
+        flag: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_clear_damage(self_: *mut Fl_Multiline_Output);
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_as_window(
+        self_: *mut Fl_Multiline_Output,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_as_group(
+        self_: *mut Fl_Multiline_Output,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_value(

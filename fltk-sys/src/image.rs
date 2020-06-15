@@ -44,6 +44,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Image_fail(self_: *mut Fl_Image) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Image_data_w(self_: *const Fl_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Image_data_h(self_: *const Fl_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Image_d(self_: *const Fl_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Image_ld(self_: *const Fl_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Image_inactive(self_: *mut Fl_Image);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_JPEG_Image {
@@ -87,6 +102,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_JPEG_Image_fail(self_: *mut Fl_JPEG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_JPEG_Image_data_w(self_: *const Fl_JPEG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_JPEG_Image_data_h(self_: *const Fl_JPEG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_JPEG_Image_d(self_: *const Fl_JPEG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_JPEG_Image_ld(self_: *const Fl_JPEG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_JPEG_Image_inactive(self_: *mut Fl_JPEG_Image);
 }
 extern "C" {
     pub fn Fl_JPEG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_JPEG_Image;
@@ -137,6 +167,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_PNG_Image_fail(self_: *mut Fl_PNG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_data_w(self_: *const Fl_PNG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_data_h(self_: *const Fl_PNG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_d(self_: *const Fl_PNG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_ld(self_: *const Fl_PNG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNG_Image_inactive(self_: *mut Fl_PNG_Image);
 }
 extern "C" {
     pub fn Fl_PNG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_PNG_Image;
@@ -192,6 +237,21 @@ extern "C" {
     pub fn Fl_SVG_Image_fail(self_: *mut Fl_SVG_Image) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_SVG_Image_data_w(self_: *const Fl_SVG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_SVG_Image_data_h(self_: *const Fl_SVG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_SVG_Image_d(self_: *const Fl_SVG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_SVG_Image_ld(self_: *const Fl_SVG_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_SVG_Image_inactive(self_: *mut Fl_SVG_Image);
+}
+extern "C" {
     pub fn Fl_SVG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_SVG_Image;
 }
 extern "C" {
@@ -240,6 +300,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_BMP_Image_fail(self_: *mut Fl_BMP_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_BMP_Image_data_w(self_: *const Fl_BMP_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_BMP_Image_data_h(self_: *const Fl_BMP_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_BMP_Image_d(self_: *const Fl_BMP_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_BMP_Image_ld(self_: *const Fl_BMP_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_BMP_Image_inactive(self_: *mut Fl_BMP_Image);
 }
 extern "C" {
     pub fn Fl_BMP_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_BMP_Image;
@@ -292,6 +367,21 @@ extern "C" {
     pub fn Fl_GIF_Image_fail(self_: *mut Fl_GIF_Image) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_GIF_Image_data_w(self_: *const Fl_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_GIF_Image_data_h(self_: *const Fl_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_GIF_Image_d(self_: *const Fl_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_GIF_Image_ld(self_: *const Fl_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_GIF_Image_inactive(self_: *mut Fl_GIF_Image);
+}
+extern "C" {
     pub fn Fl_GIF_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_GIF_Image;
 }
 extern "C" {
@@ -340,6 +430,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_RGB_Image_fail(self_: *mut Fl_RGB_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_data_w(self_: *const Fl_RGB_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_data_h(self_: *const Fl_RGB_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_d(self_: *const Fl_RGB_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_ld(self_: *const Fl_RGB_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_inactive(self_: *mut Fl_RGB_Image);
 }
 extern "C" {
     pub fn Fl_RGB_Image_new(
@@ -394,6 +499,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Shared_Image_fail(self_: *mut Fl_Shared_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_data_w(self_: *const Fl_Shared_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_data_h(self_: *const Fl_Shared_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_d(self_: *const Fl_Shared_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_ld(self_: *const Fl_Shared_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shared_Image_inactive(self_: *mut Fl_Shared_Image);
 }
 extern "C" {
     pub fn Fl_Shared_Image_get(

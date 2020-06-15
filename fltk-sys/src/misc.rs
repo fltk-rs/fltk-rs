@@ -234,6 +234,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Spinner {
@@ -449,6 +464,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Spinner_set_handle_data(self_: *mut Fl_Spinner, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Spinner_damage(self_: *const Fl_Spinner) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Spinner_set_damage(self_: *mut Fl_Spinner, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Spinner_clear_damage(self_: *mut Fl_Spinner);
+}
+extern "C" {
+    pub fn Fl_Spinner_as_window(self_: *mut Fl_Spinner) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Spinner_as_group(self_: *mut Fl_Spinner) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
@@ -711,6 +741,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Clock_set_handle_data(self_: *mut Fl_Clock, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Clock_damage(self_: *const Fl_Clock) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Clock_set_damage(self_: *mut Fl_Clock, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Clock_clear_damage(self_: *mut Fl_Clock);
+}
+extern "C" {
+    pub fn Fl_Clock_as_window(self_: *mut Fl_Clock) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Clock_as_group(self_: *mut Fl_Clock) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -926,6 +971,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_set_handle_data(self_: *mut Fl_Chart, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Chart_damage(self_: *const Fl_Chart) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Chart_set_damage(self_: *mut Fl_Chart, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Chart_clear_damage(self_: *mut Fl_Chart);
+}
+extern "C" {
+    pub fn Fl_Chart_as_window(self_: *mut Fl_Chart) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Chart_as_group(self_: *mut Fl_Chart) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -1214,6 +1274,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_set_handle_data(self_: *mut Fl_Progress, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Progress_damage(self_: *const Fl_Progress) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Progress_set_damage(self_: *mut Fl_Progress, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Progress_clear_damage(self_: *mut Fl_Progress);
+}
+extern "C" {
+    pub fn Fl_Progress_as_window(self_: *mut Fl_Progress) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Progress_as_group(self_: *mut Fl_Progress) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;

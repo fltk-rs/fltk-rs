@@ -234,6 +234,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
@@ -449,6 +464,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_set_handle_data(self_: *mut Fl_Group, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Group_damage(self_: *const Fl_Group) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Group_set_damage(self_: *mut Fl_Group, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Group_clear_damage(self_: *mut Fl_Group);
+}
+extern "C" {
+    pub fn Fl_Group_as_window(self_: *mut Fl_Group) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Group_as_group(self_: *mut Fl_Group) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
@@ -704,6 +734,21 @@ extern "C" {
     pub fn Fl_Pack_set_handle_data(self_: *mut Fl_Pack, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Pack_damage(self_: *const Fl_Pack) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Pack_set_damage(self_: *mut Fl_Pack, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Pack_clear_damage(self_: *mut Fl_Pack);
+}
+extern "C" {
+    pub fn Fl_Pack_as_window(self_: *mut Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Pack_as_group(self_: *mut Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
 }
 extern "C" {
@@ -955,6 +1000,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_set_handle_data(self_: *mut Fl_Scroll, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Scroll_damage(self_: *const Fl_Scroll) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_damage(self_: *mut Fl_Scroll, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Scroll_clear_damage(self_: *mut Fl_Scroll);
+}
+extern "C" {
+    pub fn Fl_Scroll_as_window(self_: *mut Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_as_group(self_: *mut Fl_Scroll) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Scroll_xposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
@@ -1229,6 +1289,21 @@ extern "C" {
     pub fn Fl_Tabs_set_handle_data(self_: *mut Fl_Tabs, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Tabs_damage(self_: *const Fl_Tabs) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_damage(self_: *mut Fl_Tabs, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Tabs_clear_damage(self_: *mut Fl_Tabs);
+}
+extern "C" {
+    pub fn Fl_Tabs_as_window(self_: *mut Fl_Tabs) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tabs_as_group(self_: *mut Fl_Tabs) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -1482,6 +1557,21 @@ extern "C" {
     pub fn Fl_Tile_set_handle_data(self_: *mut Fl_Tile, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Tile_damage(self_: *const Fl_Tile) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Tile_set_damage(self_: *mut Fl_Tile, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Tile_clear_damage(self_: *mut Fl_Tile);
+}
+extern "C" {
+    pub fn Fl_Tile_as_window(self_: *mut Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tile_as_group(self_: *mut Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1733,6 +1823,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_set_handle_data(self_: *mut Fl_Wizard, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Wizard_damage(self_: *const Fl_Wizard) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Wizard_set_damage(self_: *mut Fl_Wizard, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Wizard_clear_damage(self_: *mut Fl_Wizard);
+}
+extern "C" {
+    pub fn Fl_Wizard_as_window(self_: *mut Fl_Wizard) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_as_group(self_: *mut Fl_Wizard) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -2036,6 +2141,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Color_Chooser_damage(self_: *const Fl_Color_Chooser) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_damage(self_: *mut Fl_Color_Chooser, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_clear_damage(self_: *mut Fl_Color_Chooser);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_as_window(self_: *mut Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_as_group(self_: *mut Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
 }
 extern "C" {
@@ -2308,6 +2428,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_set_handle_data(self_: *mut Fl_Window, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Window_damage(self_: *const Fl_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Window_set_damage(self_: *mut Fl_Window, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Window_clear_damage(self_: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_as_window(self_: *mut Fl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Window_as_group(self_: *mut Fl_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
@@ -2632,6 +2767,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Double_Window_damage(self_: *const Fl_Double_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_damage(self_: *mut Fl_Double_Window, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Double_Window_clear_damage(self_: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_as_window(self_: *mut Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Double_Window_as_group(self_: *mut Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
 }
 extern "C" {
@@ -2954,6 +3104,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Window_damage(self_: *const Fl_Menu_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_damage(self_: *mut Fl_Menu_Window, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_clear_damage(self_: *mut Fl_Menu_Window);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_as_window(self_: *mut Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_as_group(self_: *mut Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
@@ -3247,6 +3412,21 @@ extern "C" {
         self_: *mut Fl_Gl_Window,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_damage(self_: *const Fl_Gl_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_damage(self_: *mut Fl_Gl_Window, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_clear_damage(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_as_window(self_: *mut Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_as_group(self_: *mut Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Gl_Window_begin(self_: *mut Fl_Gl_Window);

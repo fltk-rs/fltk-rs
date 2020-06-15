@@ -139,7 +139,7 @@ fn main() {
         }
 
         let dst = dst
-            .profile("RELEASE")
+            .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("OPTION_ABI_VERSION:STRING", "10401")
             .define("OPTION_BUILD_EXAMPLES", "OFF")

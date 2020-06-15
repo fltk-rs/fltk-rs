@@ -186,3 +186,31 @@ void Fl_init_all(void) {
     fl_define_FL_ICON_LABEL();
     fl_define_FL_IMAGE_LABEL();
 }
+
+void Fl_redraw(void) {
+    Fl::redraw();
+}
+
+int Fl_event_shift(void) {
+    return Fl::event_shift();
+}
+
+int Fl_event_ctrl(void) {
+    return Fl::event_ctrl();
+}
+
+int Fl_event_command(void) {
+    return Fl::event_command();
+}
+
+int Fl_event_alt(void) {
+    return Fl::event_alt();
+}
+
+void Fl_set_damage(int flag) {
+    Fl::damage(flag);
+}
+
+int Fl_damage(void) {
+    return Fl::damage();
+}

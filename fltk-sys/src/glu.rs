@@ -18675,3 +18675,9 @@ extern "C" {
         objW: *mut GLdouble,
     ) -> GLint;
 }
+extern "C" {
+    pub fn gl_start();
+}
+extern "C" {
+    pub fn gl_finish();
+}

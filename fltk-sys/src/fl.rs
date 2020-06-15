@@ -159,3 +159,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_init_all();
 }
+extern "C" {
+    pub fn Fl_redraw();
+}
+extern "C" {
+    pub fn Fl_event_shift() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_event_ctrl() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_event_command() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_event_alt() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_set_damage(flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_damage() -> ::std::os::raw::c_int;
+}

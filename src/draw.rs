@@ -654,8 +654,8 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
         if x.is_null() {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
-            let x = std::slice::from_raw_parts(x, cp as usize);
-            Ok(RgbImage::new(&x.to_vec(), win.width(), win.height(), 3)?)
+            let x = mem::ManuallyDrop::new(std::slice::from_raw_parts(x, cp as usize).to_vec());
+            Ok(RgbImage::new(&x, win.width() as u32, win.height() as u32, 3)?)
         }
     }
 }
@@ -683,15 +683,16 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
 // }
 
 /// Transforms raw data to png file
-pub(crate) fn write_to_png_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
-    let (data, w, h) = rgb_image.into_parts();
+pub fn write_to_png_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
+    assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "SVG images are not supported!");
+    // assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
     let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,
         "Could not convert path to string!",
     )))?;
     let path = std::ffi::CString::new(path)?;
     unsafe {
-        match cfl_raw_image_to_png(data.as_ptr() as *mut u8, path.as_ptr(), w, h) {
+        match cfl_raw_image_to_png(*image.to_raw_data() as *mut u8, path.as_ptr(), image.data_w() as i32, image.data_h() as i32) {
             -1 => Err(FltkError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not write image!",
@@ -702,15 +703,16 @@ pub(crate) fn write_to_png_file(rgb_image: RgbImage, path: &std::path::Path) -> 
 }
 
 /// Transforms raw data to jpg file
-pub(crate) fn write_to_jpg_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
-    let (data, w, h) = rgb_image.into_parts();
+pub fn write_to_jpg_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
+    assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "SVG images are not supported!");
+    // assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
     let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,
         "Could not convert path to string!",
     )))?;
     let path = std::ffi::CString::new(path)?;
     unsafe {
-        match cfl_raw_image_to_jpg(data.as_ptr() as *mut u8, path.as_ptr(), w, h) {
+        match cfl_raw_image_to_jpg(*image.to_raw_data() as *mut u8, path.as_ptr(), image.data_w() as i32, image.data_h() as i32) {
             -1 => Err(FltkError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not write image!",
@@ -721,15 +723,16 @@ pub(crate) fn write_to_jpg_file(rgb_image: RgbImage, path: &std::path::Path) -> 
 }
 
 /// Transforms raw data to bmp file
-pub(crate) fn write_to_bmp_file(rgb_image: RgbImage, path: &std::path::Path) -> Result<(), FltkError> {
-    let (data, w, h) = rgb_image.into_parts();
+pub fn write_to_bmp_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
+    assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "SVG images are not supported!");
+    // assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
     let path = path.to_str().ok_or(FltkError::IoError(std::io::Error::new(
         std::io::ErrorKind::Other,
         "Could not convert path to string!",
     )))?;
     let path = std::ffi::CString::new(path)?;
     unsafe {
-        match cfl_raw_image_to_bmp(data.as_ptr() as *mut u8, path.as_ptr(), w, h) {
+        match cfl_raw_image_to_bmp(*image.to_raw_data() as *mut u8, path.as_ptr(), image.data_w() as i32, image.data_h() as i32) {
             -1 => Err(FltkError::IoError(std::io::Error::new(
                 std::io::ErrorKind::Other,
                 "Could not write image!",

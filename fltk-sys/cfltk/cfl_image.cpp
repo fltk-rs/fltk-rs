@@ -45,6 +45,21 @@
     }                                                                                              \
     int image##_fail(image *self) {                                                                \
         return self->fail();                                                                       \
+    }                                                                                              \
+    int image##_data_w(const image *self) {                                                        \
+        return self->data_w();                                                                     \
+    }                                                                                              \
+    int image##_data_h(const image *self) {                                                        \
+        return self->data_h();                                                                     \
+    }                                                                                              \
+    int image##_d(const image *self) {                                                             \
+        return self->d();                                                                          \
+    }                                                                                              \
+    int image##_ld(const image *self) {                                                            \
+        return self->ld();                                                                         \
+    }                                                                                              \
+    void image##_inactive(image *self) {                                                           \
+        LOCK(self->inactive();)                                                                    \
     }
 
 IMAGE_DEFINE(Fl_JPEG_Image)
@@ -147,6 +162,26 @@ Fl_Shared_Image *Fl_Shared_Image_from_rgb(Fl_RGB_Image *rgb, int own_it) {
 
 int Fl_Shared_Image_fail(Fl_Shared_Image *self) {
     return self->fail();
+}
+
+int Fl_Shared_Image_data_w(const Fl_Shared_Image *self) {
+    return self->data_w();
+}
+
+int Fl_Shared_Image_data_h(const Fl_Shared_Image *self) {
+    return self->data_h();
+}
+
+int Fl_Shared_Image_d(const Fl_Shared_Image *self) {
+    return self->d();
+}
+
+int Fl_Shared_Image_ld(const Fl_Shared_Image *self) {
+    return self->ld();
+}
+
+void Fl_Shared_Image_inactive(Fl_Shared_Image *self) {
+    LOCK(self->inactive();)
 }
 
 void Fl_register_images() {

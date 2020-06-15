@@ -1,9 +1,19 @@
 # Changelog
 
-
 ## Unreleased
 ### Changes
 - (None)
+
+## [0.6.5] - 2020-06-16
+### Changes
+- Fix cmake invocation on Windows to build for release.
+- Add most ImageExt methods.
+- Change signature of draw::write_<image>_file to accept ImageExt trait.
+- SharedImage::from_image() can't take ownership of the image.
+- Add BMP, Jpeg and PNG image conversion methods.
+- Update FLTK to commit 46b8968 which fixes Fl_SVG_Image to window icon issue.
+- Add damage related methods to WidgetExt.
+- Add gl_start and gl_finish to enable gl drawing within widgets.
 
 ## [0.6.4] - 2020-06-15
 ### Changes

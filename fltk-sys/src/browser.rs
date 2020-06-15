@@ -234,6 +234,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Browser {
@@ -449,6 +464,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_set_handle_data(self_: *mut Fl_Browser, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Browser_damage(self_: *const Fl_Browser) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Browser_set_damage(self_: *mut Fl_Browser, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Browser_clear_damage(self_: *mut Fl_Browser);
+}
+extern "C" {
+    pub fn Fl_Browser_as_window(self_: *mut Fl_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Browser_as_group(self_: *mut Fl_Browser) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Browser_remove(arg1: *mut Fl_Browser, line: ::std::os::raw::c_int);
@@ -779,6 +809,21 @@ extern "C" {
         self_: *mut Fl_Hold_Browser,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_damage(self_: *const Fl_Hold_Browser) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_set_damage(self_: *mut Fl_Hold_Browser, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_clear_damage(self_: *mut Fl_Hold_Browser);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_as_window(self_: *mut Fl_Hold_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_as_group(self_: *mut Fl_Hold_Browser) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_remove(arg1: *mut Fl_Hold_Browser, line: ::std::os::raw::c_int);
@@ -1137,6 +1182,27 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Select_Browser_damage(self_: *const Fl_Select_Browser) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_set_damage(
+        self_: *mut Fl_Select_Browser,
+        flag: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Select_Browser_clear_damage(self_: *mut Fl_Select_Browser);
+}
+extern "C" {
+    pub fn Fl_Select_Browser_as_window(
+        self_: *mut Fl_Select_Browser,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_as_group(self_: *mut Fl_Select_Browser)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Select_Browser_remove(arg1: *mut Fl_Select_Browser, line: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1485,6 +1551,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_damage(self_: *const Fl_Multi_Browser) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_set_damage(self_: *mut Fl_Multi_Browser, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_clear_damage(self_: *mut Fl_Multi_Browser);
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_as_window(self_: *mut Fl_Multi_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_as_group(self_: *mut Fl_Multi_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Multi_Browser_remove(arg1: *mut Fl_Multi_Browser, line: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1819,6 +1900,21 @@ extern "C" {
         self_: *mut Fl_File_Browser,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_File_Browser_damage(self_: *const Fl_File_Browser) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_damage(self_: *mut Fl_File_Browser, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_File_Browser_clear_damage(self_: *mut Fl_File_Browser);
+}
+extern "C" {
+    pub fn Fl_File_Browser_as_window(self_: *mut Fl_File_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Browser_as_group(self_: *mut Fl_File_Browser) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_File_Browser_remove(arg1: *mut Fl_File_Browser, line: ::std::os::raw::c_int);
