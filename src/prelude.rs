@@ -210,6 +210,16 @@ pub unsafe trait WidgetExt {
     fn delete(&mut self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
+    /// Return whether the widget was damaged
+    fn damage(&self) -> bool;
+    /// Signal the widget as damaged and it should be redrawn in the next event loop cycle
+    fn set_damage(&mut self, flag: bool);
+    /// Clear the damaged flag
+    fn clear_damage(&mut self);
+    /// Return the widget as a window if it's a window
+    fn as_window(&mut self) -> Option<crate::window::Window>;
+    /// Return the widget as a group widget if it's a group widget
+    fn as_group(&mut self) -> Option<crate::group::Group>;
     /// INTERNAL: Retakes ownership of the user callback data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     /// INTERNAL: Manually set the user data

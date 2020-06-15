@@ -234,6 +234,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tree {
@@ -449,6 +464,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tree_set_handle_data(self_: *mut Fl_Tree, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Tree_damage(self_: *const Fl_Tree) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Tree_set_damage(self_: *mut Fl_Tree, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Tree_clear_damage(self_: *mut Fl_Tree);
+}
+extern "C" {
+    pub fn Fl_Tree_as_window(self_: *mut Fl_Tree) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tree_as_group(self_: *mut Fl_Tree) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

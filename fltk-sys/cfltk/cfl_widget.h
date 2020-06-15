@@ -80,7 +80,12 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     void *widget##_draw_data(const widget *self);                                                  \
     void *widget##_handle_data(const widget *self);                                                \
     void widget##_set_draw_data(widget *self, void *data);                                         \
-    void widget##_set_handle_data(widget *self, void *data);
+    void widget##_set_handle_data(widget *self, void *data);                                       \
+    unsigned char widget##_damage(const widget *self);                                             \
+    void widget##_set_damage(widget *self, unsigned char flag);                                    \
+    void widget##_clear_damage(widget *self);                                                      \
+    void *widget##_as_window(widget *self);                                                        \
+    void *widget##_as_group(widget *self);
 
 #define WIDGET_DEFINE(widget)                                                                      \
     struct widget##_Derived : public widget {                                                      \
@@ -314,6 +319,21 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     }                                                                                              \
     void widget##_set_handle_data(widget *self, void *data) {                                      \
         LOCK(((widget##_Derived *)self)->ev_data_ = data;)                                         \
+    }                                                                                              \
+    unsigned char widget##_damage(const widget *self) {                                            \
+        return self->damage();                                                                     \
+    }                                                                                              \
+    void widget##_set_damage(widget *self, unsigned char flag) {                                   \
+        LOCK(self->damage(flag);)                                                                  \
+    }                                                                                              \
+    void widget##_clear_damage(widget *self) {                                                     \
+        LOCK(self->clear_damage();)                                                                \
+    }                                                                                              \
+    void *widget##_as_window(widget *self) {                                                       \
+        return self->as_window();                                                                  \
+    }                                                                                              \
+    void *widget##_as_group(widget *self) {                                                        \
+        return self->as_group();                                                                   \
     }
 
 WIDGET_DECLARE(Fl_Widget)

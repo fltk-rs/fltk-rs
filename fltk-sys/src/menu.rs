@@ -234,6 +234,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Item {
@@ -454,6 +469,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_handle_data(self_: *mut Fl_Menu_Bar, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_damage(self_: *const Fl_Menu_Bar) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_damage(self_: *mut Fl_Menu_Bar, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_clear_damage(self_: *mut Fl_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_as_window(self_: *mut Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_as_group(self_: *mut Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add(
@@ -805,6 +835,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Button_damage(self_: *const Fl_Menu_Button) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_damage(self_: *mut Fl_Menu_Button, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Menu_Button_clear_damage(self_: *mut Fl_Menu_Button);
+}
+extern "C" {
+    pub fn Fl_Menu_Button_as_window(self_: *mut Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_as_group(self_: *mut Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
         name: *const ::std::os::raw::c_char,
@@ -1137,6 +1182,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_set_handle_data(self_: *mut Fl_Choice, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Choice_damage(self_: *const Fl_Choice) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Choice_set_damage(self_: *mut Fl_Choice, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Choice_clear_damage(self_: *mut Fl_Choice);
+}
+extern "C" {
+    pub fn Fl_Choice_as_window(self_: *mut Fl_Choice) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Choice_as_group(self_: *mut Fl_Choice) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Choice_add(

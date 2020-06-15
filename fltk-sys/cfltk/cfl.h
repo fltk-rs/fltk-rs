@@ -92,6 +92,20 @@ void Fl_Widget_Tracker_delete(Fl_Widget_Tracker *self);
 
 void Fl_init_all(void);
 
+void Fl_redraw(void);
+
+int Fl_event_shift(void);
+
+int Fl_event_ctrl(void);
+
+int Fl_event_command(void);
+
+int Fl_event_alt(void);
+
+void Fl_set_damage(int flag);
+
+int Fl_damage(void);
+
 #ifdef __cplusplus
 }
 #endif

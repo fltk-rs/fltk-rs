@@ -234,6 +234,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Slider {
@@ -449,6 +464,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Slider_set_handle_data(self_: *mut Fl_Slider, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Slider_damage(self_: *const Fl_Slider) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Slider_set_damage(self_: *mut Fl_Slider, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Slider_clear_damage(self_: *mut Fl_Slider);
+}
+extern "C" {
+    pub fn Fl_Slider_as_window(self_: *mut Fl_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Slider_as_group(self_: *mut Fl_Slider) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Slider_set_bounds(arg1: *mut Fl_Slider, a: f64, b: f64);
@@ -734,6 +764,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Nice_Slider_damage(self_: *const Fl_Nice_Slider) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Nice_Slider_set_damage(self_: *mut Fl_Nice_Slider, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Nice_Slider_clear_damage(self_: *mut Fl_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Nice_Slider_as_window(self_: *mut Fl_Nice_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Nice_Slider_as_group(self_: *mut Fl_Nice_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Nice_Slider_set_bounds(arg1: *mut Fl_Nice_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -1000,6 +1045,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Counter_set_handle_data(self_: *mut Fl_Counter, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Counter_damage(self_: *const Fl_Counter) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Counter_set_damage(self_: *mut Fl_Counter, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Counter_clear_damage(self_: *mut Fl_Counter);
+}
+extern "C" {
+    pub fn Fl_Counter_as_window(self_: *mut Fl_Counter) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Counter_as_group(self_: *mut Fl_Counter) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Counter_set_bounds(arg1: *mut Fl_Counter, a: f64, b: f64);
@@ -1270,6 +1330,21 @@ extern "C" {
     pub fn Fl_Dial_set_handle_data(self_: *mut Fl_Dial, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Dial_damage(self_: *const Fl_Dial) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Dial_set_damage(self_: *mut Fl_Dial, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Dial_clear_damage(self_: *mut Fl_Dial);
+}
+extern "C" {
+    pub fn Fl_Dial_as_window(self_: *mut Fl_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Dial_as_group(self_: *mut Fl_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Dial_set_bounds(arg1: *mut Fl_Dial, a: f64, b: f64);
 }
 extern "C" {
@@ -1535,6 +1610,21 @@ extern "C" {
         self_: *mut Fl_Line_Dial,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Line_Dial_damage(self_: *const Fl_Line_Dial) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Line_Dial_set_damage(self_: *mut Fl_Line_Dial, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Line_Dial_clear_damage(self_: *mut Fl_Line_Dial);
+}
+extern "C" {
+    pub fn Fl_Line_Dial_as_window(self_: *mut Fl_Line_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Line_Dial_as_group(self_: *mut Fl_Line_Dial) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_bounds(arg1: *mut Fl_Line_Dial, a: f64, b: f64);
@@ -1805,6 +1895,21 @@ extern "C" {
     pub fn Fl_Roller_set_handle_data(self_: *mut Fl_Roller, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
+    pub fn Fl_Roller_damage(self_: *const Fl_Roller) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Roller_set_damage(self_: *mut Fl_Roller, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Roller_clear_damage(self_: *mut Fl_Roller);
+}
+extern "C" {
+    pub fn Fl_Roller_as_window(self_: *mut Fl_Roller) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Roller_as_group(self_: *mut Fl_Roller) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Roller_set_bounds(arg1: *mut Fl_Roller, a: f64, b: f64);
 }
 extern "C" {
@@ -2071,6 +2176,21 @@ extern "C" {
         self_: *mut Fl_Scrollbar,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Scrollbar_damage(self_: *const Fl_Scrollbar) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_set_damage(self_: *mut Fl_Scrollbar, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Scrollbar_clear_damage(self_: *mut Fl_Scrollbar);
+}
+extern "C" {
+    pub fn Fl_Scrollbar_as_window(self_: *mut Fl_Scrollbar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_as_group(self_: *mut Fl_Scrollbar) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_bounds(arg1: *mut Fl_Scrollbar, a: f64, b: f64);
@@ -2365,6 +2485,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Value_Slider_damage(self_: *const Fl_Value_Slider) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Value_Slider_set_damage(self_: *mut Fl_Value_Slider, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Value_Slider_clear_damage(self_: *mut Fl_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Value_Slider_as_window(self_: *mut Fl_Value_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Slider_as_group(self_: *mut Fl_Value_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Value_Slider_set_bounds(arg1: *mut Fl_Value_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -2634,6 +2769,21 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Adjuster_set_handle_data(self_: *mut Fl_Adjuster, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Adjuster_damage(self_: *const Fl_Adjuster) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_damage(self_: *mut Fl_Adjuster, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Adjuster_clear_damage(self_: *mut Fl_Adjuster);
+}
+extern "C" {
+    pub fn Fl_Adjuster_as_window(self_: *mut Fl_Adjuster) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Adjuster_as_group(self_: *mut Fl_Adjuster) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Adjuster_set_bounds(arg1: *mut Fl_Adjuster, a: f64, b: f64);
@@ -2920,6 +3070,21 @@ extern "C" {
         self_: *mut Fl_Value_Input,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Value_Input_damage(self_: *const Fl_Value_Input) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_damage(self_: *mut Fl_Value_Input, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Value_Input_clear_damage(self_: *mut Fl_Value_Input);
+}
+extern "C" {
+    pub fn Fl_Value_Input_as_window(self_: *mut Fl_Value_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Input_as_group(self_: *mut Fl_Value_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Value_Input_set_bounds(arg1: *mut Fl_Value_Input, a: f64, b: f64);
@@ -3214,6 +3379,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Value_Output_damage(self_: *const Fl_Value_Output) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_damage(self_: *mut Fl_Value_Output, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Value_Output_clear_damage(self_: *mut Fl_Value_Output);
+}
+extern "C" {
+    pub fn Fl_Value_Output_as_window(self_: *mut Fl_Value_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Output_as_group(self_: *mut Fl_Value_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Value_Output_set_bounds(arg1: *mut Fl_Value_Output, a: f64, b: f64);
 }
 extern "C" {
@@ -3503,6 +3683,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Fill_Slider_damage(self_: *const Fl_Fill_Slider) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_damage(self_: *mut Fl_Fill_Slider, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_clear_damage(self_: *mut Fl_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_as_window(self_: *mut Fl_Fill_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_as_group(self_: *mut Fl_Fill_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Fill_Slider_set_bounds(arg1: *mut Fl_Fill_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -3772,6 +3967,21 @@ extern "C" {
         self_: *mut Fl_Fill_Dial,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_damage(self_: *const Fl_Fill_Dial) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_damage(self_: *mut Fl_Fill_Dial, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_clear_damage(self_: *mut Fl_Fill_Dial);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_as_window(self_: *mut Fl_Fill_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_as_group(self_: *mut Fl_Fill_Dial) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_bounds(arg1: *mut Fl_Fill_Dial, a: f64, b: f64);
@@ -4049,6 +4259,21 @@ extern "C" {
         self_: *mut Fl_Hor_Slider,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_damage(self_: *const Fl_Hor_Slider) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_damage(self_: *mut Fl_Hor_Slider, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_clear_damage(self_: *mut Fl_Hor_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_as_window(self_: *mut Fl_Hor_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_as_group(self_: *mut Fl_Hor_Slider) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_bounds(arg1: *mut Fl_Hor_Slider, a: f64, b: f64);
@@ -4381,6 +4606,28 @@ extern "C" {
         self_: *mut Fl_Hor_Fill_Slider,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_damage(self_: *const Fl_Hor_Fill_Slider) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_damage(
+        self_: *mut Fl_Hor_Fill_Slider,
+        flag: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_clear_damage(self_: *mut Fl_Hor_Fill_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_as_window(
+        self_: *mut Fl_Hor_Fill_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_as_group(
+        self_: *mut Fl_Hor_Fill_Slider,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_bounds(arg1: *mut Fl_Hor_Fill_Slider, a: f64, b: f64);
@@ -4723,6 +4970,28 @@ extern "C" {
         self_: *mut Fl_Hor_Nice_Slider,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_damage(self_: *const Fl_Hor_Nice_Slider) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_damage(
+        self_: *mut Fl_Hor_Nice_Slider,
+        flag: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_clear_damage(self_: *mut Fl_Hor_Nice_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_as_window(
+        self_: *mut Fl_Hor_Nice_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_as_group(
+        self_: *mut Fl_Hor_Nice_Slider,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_bounds(arg1: *mut Fl_Hor_Nice_Slider, a: f64, b: f64);
@@ -5073,6 +5342,29 @@ extern "C" {
         self_: *mut Fl_Hor_Value_Slider,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_damage(self_: *const Fl_Hor_Value_Slider)
+        -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_damage(
+        self_: *mut Fl_Hor_Value_Slider,
+        flag: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_clear_damage(self_: *mut Fl_Hor_Value_Slider);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_as_window(
+        self_: *mut Fl_Hor_Value_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_as_group(
+        self_: *mut Fl_Hor_Value_Slider,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_bounds(arg1: *mut Fl_Hor_Value_Slider, a: f64, b: f64);

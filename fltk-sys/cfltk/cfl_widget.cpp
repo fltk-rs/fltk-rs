@@ -314,3 +314,23 @@ void Fl_Widget_set_draw_data(Fl_Widget *self, void *data) {
 void Fl_Widget_set_handle_data(Fl_Widget *self, void *data) {
     LOCK(((Fl_Widget_Derived *)self)->ev_data_ = data;)
 }
+
+unsigned char Fl_Widget_damage(const Fl_Widget *self) {
+    return self->damage();
+}
+
+void Fl_Widget_set_damage(Fl_Widget *self, unsigned char flag) {
+    LOCK(self->damage(flag);)
+}
+
+void Fl_Widget_clear_damage(Fl_Widget *self) {
+    LOCK(self->clear_damage();)
+}
+
+void *Fl_Widget_as_window(Fl_Widget *self) {
+    return self->as_window();
+}
+
+void *Fl_Widget_as_group(Fl_Widget *self) {
+    return self->as_group();
+}
