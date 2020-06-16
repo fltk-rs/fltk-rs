@@ -240,6 +240,9 @@ void cfl_delete_offscreen(void *bitmap);
 
 void cfl_rescale_offscreen(void *ctx);
 
+void cfl_draw_text2(const char* str, int x, int y, int w, int h,
+                       int align);
+
 #ifdef __cplusplus
 }
 #endif

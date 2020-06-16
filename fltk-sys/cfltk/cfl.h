@@ -106,6 +106,16 @@ void Fl_set_damage(int flag);
 
 int Fl_damage(void);
 
+int Fl_visual(int);
+
+void Fl_own_colormap(void);
+
+// void *Fl_pushed(void);
+
+// void *Fl_focus(void);
+
+void Fl_set_focus(void *);
+
 #ifdef __cplusplus
 }
 #endif

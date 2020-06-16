@@ -195,6 +195,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "tab_cell_nav").as_str(),
         name.span(),
     );
+    let set_draw_cell = Ident::new(format!("{}_{}", name_str, "set_draw_cell").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl TableExt for #name {
@@ -584,6 +585,25 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     #tab_cell_nav(self._inner) as u32
+                }
+            }
+
+            fn draw_cell(&mut self, cb: Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>) {
+                assert!(!self.was_deleted());
+                pub type custom_draw_cell_callback =
+                    Option<unsafe extern "C" fn(ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void)>;
+                unsafe {
+                    unsafe extern "C" fn shim(ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void) {
+                        let ctx: TableContext = mem::transmute(ctx);
+                        let a: *mut Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = mem::transmute(data);
+                        let f: &mut (dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)) = &mut **a;
+                        f(ctx, arg2, arg3, arg4, arg5, arg6, arg7);
+                    }
+                    self.unset_draw_callback();
+                    let a: *mut Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = mem::transmute(a);
+                    let callback: custom_draw_cell_callback = Some(shim);
+                    #set_draw_cell(self._inner, callback, data);
                 }
             }
         }

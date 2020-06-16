@@ -15,6 +15,20 @@ pub struct Table {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Defines the TableContext
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum TableContext {
+    None = 0,
+    StartPage = 0x01,
+    EndPage = 0x02,
+    RowHeader = 0x04,
+    ColHeader = 0x08,
+    Cell = 0x10,
+    Table = 0x20,
+    RcResize = 0x40,
+}
+
 /// Creates a table row
 #[derive(WidgetExt, GroupExt, TableExt, Debug)]
 pub struct TableRow {

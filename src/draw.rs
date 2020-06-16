@@ -546,6 +546,21 @@ pub fn draw_text(txt: &str, x: i32, y: i32) {
     unsafe { cfl_draw(txt.as_ptr(), x, y) }
 }
 
+/// Draws a string starting at the given x, y location with width and height and alignment
+pub fn draw_text2(
+    s: &str,
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    align: Align,
+) {
+    let s = CString::new(s).unwrap();
+    unsafe {
+        cfl_draw_text2(s.as_ptr(), x, y, w, h, align as i32)
+    }
+}
+
 /// Draws a string starting at the given x, y location, rotated to an angle
 pub fn draw_text_angled(angle: i32, txt: &str, x: i32, y: i32) {
     let txt = CString::new(txt).unwrap();
@@ -609,12 +624,12 @@ pub fn overlay_clear() {
 }
 
 /// Sets the cursor style
-pub fn set_cursor(cursor: CursorStyle) {
+pub fn set_cursor(cursor: Cursor) {
     unsafe { cfl_set_cursor(cursor as i32) }
 }
 
 /// Sets the cursor style
-pub fn set_cursor_with_color(cursor: CursorStyle, fg: Color, bg: Color) {
+pub fn set_cursor_with_color(cursor: Cursor, fg: Color, bg: Color) {
     unsafe { cfl_set_cursor2(cursor as i32, fg as i32, bg as i32) }
 }
 
@@ -654,7 +669,7 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
         if x.is_null() {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
-            let x = mem::ManuallyDrop::new(std::slice::from_raw_parts(x, cp as usize).to_vec());
+            let x = std::slice::from_raw_parts(x, cp as usize).to_vec();
             Ok(RgbImage::new(&x, win.width() as u32, win.height() as u32, 3)?)
         }
     }

@@ -108,6 +108,11 @@ impl App {
         Ok(wait())
     }
 
+    /// Set the visual of the application
+    pub fn set_visual(&self, mode: Mode) -> Result<(), FltkError> {
+        set_visual(mode)
+    }
+
     /// Awakens the main UI thread with a callback
     pub fn awake(&self, cb: Box<dyn FnMut()>) {
         unsafe {
@@ -621,47 +626,76 @@ fn init_all() {
 }
 
 fn redraw() {
-    unsafe {
-        Fl_redraw()
-    }
+    unsafe { Fl_redraw() }
 }
 
 /// Returns whether the event is a shift press
 pub fn is_event_shift() -> bool {
-    unsafe {
-        Fl_event_shift() != 0
-    }
+    unsafe { Fl_event_shift() != 0 }
 }
 
 /// Returns whether the event is a control key press
 pub fn is_event_ctrl() -> bool {
-    unsafe {
-        Fl_event_ctrl() != 0
-    }
+    unsafe { Fl_event_ctrl() != 0 }
 }
 
 /// Returns whether the event is a command key press
 pub fn is_event_command() -> bool {
-    unsafe {
-        Fl_event_command() != 0
-    }
+    unsafe { Fl_event_command() != 0 }
 }
 
 /// Returns whether the event is a alt key press
 pub fn is_event_alt() -> bool {
-    unsafe {
-        Fl_event_alt() != 0
-    }
+    unsafe { Fl_event_alt() != 0 }
 }
 
 fn set_damage(flag: bool) {
-    unsafe {
-        Fl_set_damage(flag as i32)
-    }
+    unsafe { Fl_set_damage(flag as i32) }
 }
 
 fn damage() -> bool {
+    unsafe { Fl_damage() != 0 }
+}
+
+fn set_visual(mode: Mode) -> Result<(), FltkError> {
     unsafe {
-        Fl_damage() != 0
+        match Fl_visual(mode as i32) {
+            0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            _ => Ok(()),
+        }
     }
+}
+
+pub fn own_colormap() {
+    unsafe { Fl_own_colormap() }
+}
+
+// pub fn pushed() -> Option<crate::widget::Widget> {
+//     unsafe {
+//         let ptr = Fl_pushed();
+//         if ptr.is_null() {
+//             None
+//         } else {
+//             Some(crate::widget::Widget::from_raw(
+//                 ptr as *mut fltk_sys::widget::Fl_Widget,
+//             ))
+//         }
+//     }
+// }
+
+// pub fn focus() -> Option<crate::widget::Widget> {
+//     unsafe {
+//         let ptr = Fl_focus();
+//         if ptr.is_null() {
+//             None
+//         } else {
+//             Some(crate::widget::Widget::from_raw(
+//                 ptr as *mut fltk_sys::widget::Fl_Widget,
+//             ))
+//         }
+//     }
+// }
+
+pub fn set_focus<W: WidgetExt>(wid: &mut W) {
+    unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }

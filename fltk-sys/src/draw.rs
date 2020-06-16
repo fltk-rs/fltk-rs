@@ -688,3 +688,13 @@ extern "C" {
 extern "C" {
     pub fn cfl_rescale_offscreen(ctx: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn cfl_draw_text2(
+        str: *const ::std::os::raw::c_char,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+        align: ::std::os::raw::c_int,
+    );
+}

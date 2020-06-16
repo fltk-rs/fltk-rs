@@ -296,7 +296,8 @@ pub unsafe trait WindowExt: GroupExt {
     /// Make the window resizable
     fn make_resizable(&mut self, val: bool);
     /// Sets the cursor style within the window
-    fn set_cursor(&mut self, cursor: CursorStyle);
+    /// Needs to be called after the window is shown
+    fn set_cursor(&mut self, cursor: Cursor);
     /// Returns whether a window is shown
     fn shown(&self) -> bool;
     /// Sets whether the window has a border
@@ -525,7 +526,7 @@ pub unsafe trait DisplayExt: WidgetExt {
         entries: Vec<StyleTableEntry>,
     ) -> crate::text::StyleTables;
     /// Sets the cursor style
-    fn set_cursor_style(&mut self, style: CursorStyle);
+    fn set_cursor_style(&mut self, style: TextCursor);
     /// Sets the cursor color
     fn set_cursor_color(&mut self, color: Color);
     /// Sets the scrollbar width
@@ -535,7 +536,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Sets the scrollbar alignment
     fn set_scrollbar_align(&mut self, align: Align);
     /// Returns the cursor style
-    fn cursor_style(&self) -> CursorStyle;
+    fn cursor_style(&self) -> TextCursor;
     /// Returns the cursor color
     fn cursor_color(&self) -> Color;
     /// Returns the scrollback width
@@ -747,6 +748,9 @@ pub unsafe trait TableExt: GroupExt {
     fn set_tab_cell_nav(&mut self, val: u32);
     /// Returns the tab key cell navigation
     fn tab_cell_nav(&self) -> u32;
+    /// Override draw_cell
+    /// Additional args: Row, Column, X, Y, Width and Height
+    fn draw_cell(&mut self, cb: Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>);
 }
 
 /// Defines the methods implemented by all image types

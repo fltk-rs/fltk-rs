@@ -6,7 +6,3 @@
 #include <GL/glu.h>
 #endif
 
-void gl_start(void);
-
-void gl_finish(void);
-

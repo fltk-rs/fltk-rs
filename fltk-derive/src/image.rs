@@ -105,7 +105,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError> {
-                let data = mem::ManuallyDrop::new(self.to_rgb_data()); // TODO: Remove once Vec::into_raw_parts lands
+                let data = self.to_rgb_data();
                 unsafe { RgbImage::new(&data, self.data_w(), self.data_h(), self.depth()) }
             }
 
