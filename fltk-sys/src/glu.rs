@@ -18676,8 +18676,8 @@ extern "C" {
     ) -> GLint;
 }
 extern "C" {
-    pub fn gl_start();
+    pub fn cgl_start();
 }
 extern "C" {
-    pub fn gl_finish();
+    pub fn cgl_finish();
 }
