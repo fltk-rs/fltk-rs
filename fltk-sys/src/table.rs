@@ -2676,6 +2676,24 @@ extern "C" {
 extern "C" {
     pub fn Fl_Table_tab_cell_nav(self_: *const Fl_Table) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Table_set_draw_cell(
+        self_: *mut Fl_Table,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: ::std::os::raw::c_int,
+                arg2: ::std::os::raw::c_int,
+                arg3: ::std::os::raw::c_int,
+                arg4: ::std::os::raw::c_int,
+                arg5: ::std::os::raw::c_int,
+                arg6: ::std::os::raw::c_int,
+                arg7: ::std::os::raw::c_int,
+                arg8: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Table_Row {
@@ -3153,6 +3171,24 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_Row_tab_cell_nav(self_: *const Fl_Table_Row) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_draw_cell(
+        self_: *mut Fl_Table_Row,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: ::std::os::raw::c_int,
+                arg2: ::std::os::raw::c_int,
+                arg3: ::std::os::raw::c_int,
+                arg4: ::std::os::raw::c_int,
+                arg5: ::std::os::raw::c_int,
+                arg6: ::std::os::raw::c_int,
+                arg7: ::std::os::raw::c_int,
+                arg8: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Table_Row_row_selected(

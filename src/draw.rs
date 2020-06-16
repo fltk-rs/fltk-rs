@@ -546,6 +546,21 @@ pub fn draw_text(txt: &str, x: i32, y: i32) {
     unsafe { cfl_draw(txt.as_ptr(), x, y) }
 }
 
+/// Draws a string starting at the given x, y location with width and height and alignment
+pub fn draw_text2(
+    s: &str,
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    align: Align,
+) {
+    let s = CString::new(s).unwrap();
+    unsafe {
+        cfl_draw_text2(s.as_ptr(), x, y, w, h, align as i32)
+    }
+}
+
 /// Draws a string starting at the given x, y location, rotated to an angle
 pub fn draw_text_angled(angle: i32, txt: &str, x: i32, y: i32) {
     let txt = CString::new(txt).unwrap();

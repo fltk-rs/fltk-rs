@@ -59,7 +59,9 @@ extern "C" {
     int table##_scrollbar_size(const table *self);                                                 \
     void table##_set_scrollbar_size(table *self, int newSize);                                     \
     void table##_set_tab_cell_nav(table *self, int val);                                           \
-    int table##_tab_cell_nav(const table *self);
+    int table##_tab_cell_nav(const table *self);                                                   \
+    void table##_set_draw_cell(table *self, void (*)(int, int, int, int, int, int, int, void *),   \
+                               void *data);
 
 WIDGET_DECLARE(Fl_Table)
 

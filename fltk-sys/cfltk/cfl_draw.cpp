@@ -460,6 +460,10 @@ void cfl_rescale_offscreen(void *ctx) {
     fl_rescale_offscreen(*(Fl_Offscreen *)ctx);
 }
 
+void cfl_draw_text2(const char *str, int x, int y, int w, int h, int align) {
+    fl_draw(str, x, y, w, h, (Fl_Align)align, 0, 1);
+}
+
 // The following code was copied from stackoverflow
 int cfl_raw_image_to_png(unsigned char *data, const char *fname, int w, int h) {
     if (!data || !fname)

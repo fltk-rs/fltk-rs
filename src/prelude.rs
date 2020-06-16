@@ -748,6 +748,9 @@ pub unsafe trait TableExt: GroupExt {
     fn set_tab_cell_nav(&mut self, val: u32);
     /// Returns the tab key cell navigation
     fn tab_cell_nav(&self) -> u32;
+    /// Override draw_cell
+    /// Additional args: Row, Column, X, Y, Width and Height
+    fn draw_cell(&mut self, cb: Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>);
 }
 
 /// Defines the methods implemented by all image types
