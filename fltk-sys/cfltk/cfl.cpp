@@ -223,14 +223,14 @@ void Fl_own_colormap(void) {
     Fl::own_colormap();
 }
 
-Fl_Widget *Fl_pushed(void) {
-    return Fl::pushed();
+void *Fl_pushed(void) {
+    return (void *)Fl::pushed();
 }
 
-Fl_Widget *Fl_focus(void) {
-    return Fl::focus();
+void *Fl_focus(void) {
+    return (void *)Fl::focus();
 }
 
-void Fl_set_focus(Fl_Widget *wid) {
-    Fl::focus(wid);
+void Fl_set_focus(void *wid) {
+    Fl::focus((Fl_Widget *)wid);
 }

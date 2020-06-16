@@ -697,5 +697,5 @@ pub fn focus() -> Option<crate::widget::Widget> {
 }
 
 pub fn set_focus<W: WidgetExt>(wid: &mut W) {
-    unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut Fl_Widget) }
+    unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }

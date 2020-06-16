@@ -110,11 +110,11 @@ int Fl_visual(int);
 
 void Fl_own_colormap(void);
 
-Fl_Widget *Fl_pushed(void);
+void *Fl_pushed(void);
 
-Fl_Widget *Fl_focus(void);
+void *Fl_focus(void);
 
-void Fl_set_focus(Fl_Widget *);
+void Fl_set_focus(void *);
 
 #ifdef __cplusplus
 }
