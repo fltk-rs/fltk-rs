@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- RgbImage takes ownership of the underlying data.
 
 ## [0.6.5] - 2020-06-16
 ### Changes

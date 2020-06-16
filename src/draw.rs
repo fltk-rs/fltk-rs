@@ -654,7 +654,7 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
         if x.is_null() {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
-            let x = mem::ManuallyDrop::new(std::slice::from_raw_parts(x, cp as usize).to_vec());
+            let x = std::slice::from_raw_parts(x, cp as usize).to_vec();
             Ok(RgbImage::new(&x, win.width() as u32, win.height() as u32, 3)?)
         }
     }
