@@ -3,7 +3,7 @@
 ## Unreleased
 ### Changes
 - RgbImage takes ownership of the underlying data.
-- Fix linkage of gl_start and gl_finish.
+- Remove gl_start and gl_finish.
 
 ## [0.6.5] - 2020-06-16
 ### Changes
