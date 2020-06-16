@@ -670,31 +670,31 @@ pub fn own_colormap() {
     unsafe { Fl_own_colormap() }
 }
 
-pub fn pushed() -> Option<crate::widget::Widget> {
-    unsafe {
-        let ptr = Fl_pushed();
-        if ptr.is_null() {
-            None
-        } else {
-            Some(crate::widget::Widget::from_raw(
-                ptr as *mut fltk_sys::widget::Fl_Widget,
-            ))
-        }
-    }
-}
+// pub fn pushed() -> Option<crate::widget::Widget> {
+//     unsafe {
+//         let ptr = Fl_pushed();
+//         if ptr.is_null() {
+//             None
+//         } else {
+//             Some(crate::widget::Widget::from_raw(
+//                 ptr as *mut fltk_sys::widget::Fl_Widget,
+//             ))
+//         }
+//     }
+// }
 
-pub fn focus() -> Option<crate::widget::Widget> {
-    unsafe {
-        let ptr = Fl_focus();
-        if ptr.is_null() {
-            None
-        } else {
-            Some(crate::widget::Widget::from_raw(
-                ptr as *mut fltk_sys::widget::Fl_Widget,
-            ))
-        }
-    }
-}
+// pub fn focus() -> Option<crate::widget::Widget> {
+//     unsafe {
+//         let ptr = Fl_focus();
+//         if ptr.is_null() {
+//             None
+//         } else {
+//             Some(crate::widget::Widget::from_raw(
+//                 ptr as *mut fltk_sys::widget::Fl_Widget,
+//             ))
+//         }
+//     }
+// }
 
 pub fn set_focus<W: WidgetExt>(wid: &mut W) {
     unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }

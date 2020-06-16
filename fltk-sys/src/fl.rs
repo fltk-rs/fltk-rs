@@ -187,11 +187,5 @@ extern "C" {
     pub fn Fl_own_colormap();
 }
 extern "C" {
-    pub fn Fl_pushed() -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_focus() -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
     pub fn Fl_set_focus(arg1: *mut ::std::os::raw::c_void);
 }
