@@ -4,6 +4,9 @@
 ### Changes
 - RgbImage takes ownership of the underlying data.
 - Remove gl_start and gl_finish.
+- Add App::set_visual(Mode), app::own_colormap, app::focus, set_focus and pushed.
+- Fix Cursor naming.
+- Update FLTK to commit 5005d04 for further SVG fixes.
 
 ## [0.6.5] - 2020-06-16
 ### Changes

@@ -356,16 +356,43 @@ pub enum CallbackTrigger {
     EnterKeyChanged = 11,
 }
 
-/// Defines the Cursor styles supported by fltk
+/// Defines the text cursor styles supported by fltk
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub enum CursorStyle {
+pub enum TextCursor {
     NormalCursor,
     CaretCursor,
     DimCursor,
     BlockCursor,
     HeavyCursor,
     SimpleCursor,
+}
+
+/// Defines the cursor styles supported by fltk
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum Cursor {
+    Default = 0,
+    Arrow = 35,
+    Cross = 66,
+    Wait = 76,
+    Insert = 77,
+    Hand = 31,
+    Help = 47,
+    Move = 27,
+    NS = 78,
+    WE = 79,
+    NWSE = 80,
+    NESW = 81,
+    N = 70,
+    NE = 69,
+    E = 49,
+    SE = 8,
+    S = 9,
+    SW = 7,
+    W = 36,
+    NW = 68,
+    None = 255,
 }
 
 /// Defines the chart types supported by fltk

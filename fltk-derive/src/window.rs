@@ -95,7 +95,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_cursor(&mut self, cursor: CursorStyle) {
+            fn set_cursor(&mut self, cursor: Cursor) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_cursor(self._inner, cursor as i32)

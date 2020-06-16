@@ -214,3 +214,23 @@ void Fl_set_damage(int flag) {
 int Fl_damage(void) {
     return Fl::damage();
 }
+
+int Fl_visual(int mode) {
+    return Fl::visual(mode);
+}
+
+void Fl_own_colormap(void) {
+    Fl::own_colormap();
+}
+
+Fl_Widget *Fl_pushed(void) {
+    return Fl::pushed();
+}
+
+Fl_Widget *Fl_focus(void) {
+    return Fl::focus();
+}
+
+void Fl_set_focus(Fl_Widget *wid) {
+    Fl::focus(wid);
+}

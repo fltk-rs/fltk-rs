@@ -609,12 +609,12 @@ pub fn overlay_clear() {
 }
 
 /// Sets the cursor style
-pub fn set_cursor(cursor: CursorStyle) {
+pub fn set_cursor(cursor: Cursor) {
     unsafe { cfl_set_cursor(cursor as i32) }
 }
 
 /// Sets the cursor style
-pub fn set_cursor_with_color(cursor: CursorStyle, fg: Color, bg: Color) {
+pub fn set_cursor_with_color(cursor: Cursor, fg: Color, bg: Color) {
     unsafe { cfl_set_cursor2(cursor as i32, fg as i32, bg as i32) }
 }
 

@@ -180,3 +180,18 @@ extern "C" {
 extern "C" {
     pub fn Fl_damage() -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_visual(arg1: ::std::os::raw::c_int) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_own_colormap();
+}
+extern "C" {
+    pub fn Fl_pushed() -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_focus() -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_set_focus(arg1: *mut Fl_Widget);
+}
