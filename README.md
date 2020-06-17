@@ -247,6 +247,10 @@ Setting the scheme to Gtk
 
 ![alt_test](screenshots/terminal.jpg)
 
+![alt_test](screenshots/table.jpg)
+
+![alt_test](screenshots/pong.gif)
+
 ## Currently implemented widgets
 
 The most commonly widgets are implemented: 
