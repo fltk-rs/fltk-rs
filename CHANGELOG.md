@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Provide unsafe variant for widget deletion, which would delete user_data recursively for when needed.
 
 ## [0.6.6] - 2020-06-17
 ### Changes

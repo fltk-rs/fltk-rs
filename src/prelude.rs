@@ -208,6 +208,8 @@ pub unsafe trait WidgetExt {
     fn has_visible_focus(&mut self) -> bool;
     /// Manually delete a widget
     fn delete(&mut self);
+    /// Manually delete a widget and recursively force-cleans capturing callbacks
+    unsafe fn unsafe_delete(&mut self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
     /// Return whether the widget was damaged
@@ -271,6 +273,8 @@ pub unsafe trait GroupExt: WidgetExt {
     fn remove<Widget: WidgetExt>(&mut self, widget: &Widget);
     /// Clear a group from all widgets
     fn clear(&mut self);
+    /// Clear a group from all widgets and recursively force-cleans capturing callbacks
+    unsafe fn unsafe_clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> u32;
     /// Return child widget by index
@@ -431,6 +435,10 @@ pub unsafe trait MenuExt: WidgetExt {
     fn clear(&mut self);
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
     fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
+    /// Clears the items in a menu, effectively deleting them, and recursively force-cleans capturing callbacks
+    unsafe fn unsafe_clear(&mut self);
+    /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation. Also recursively force-cleans capturing callbacks
+    unsafe fn unsafe_clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
     /// Get the size of the menu widget
     fn size(&self) -> u32;
     /// Get the text label of the menu item at index idx
