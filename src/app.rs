@@ -617,11 +617,9 @@ pub fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
 
 pub unsafe fn unsafe_delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
     assert!(!wid.was_deleted());
-    unsafe {
-        let _u = wid.user_data();
-        Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-        wid.cleanup();
-    }
+    let _u = wid.user_data();
+    Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
+    wid.cleanup();
 }
 
 fn register_images() {
