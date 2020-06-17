@@ -610,11 +610,16 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 pub fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
     assert!(!wid.was_deleted());
     unsafe {
-        let _u = wid.user_data();
-        let _d = wid.draw_data();
         Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
         wid.cleanup();
     }
+}
+
+pub unsafe fn unsafe_delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
+    assert!(!wid.was_deleted());
+    let _u = wid.user_data();
+    Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
+    wid.cleanup();
 }
 
 fn register_images() {

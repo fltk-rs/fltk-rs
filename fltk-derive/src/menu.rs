@@ -254,16 +254,22 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn clear(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let sz = self.size();
-                    if sz > 0 {
-                        for i in 0..sz {
-                            let mut c = self.at(i).unwrap();
-                            c.set_callback(Box::new(move || { /* Do nothing! */ }));
-                        }
-                    }
                     #clear(self._inner);
                     self.redraw();
                 }
+            }
+
+            unsafe fn unsafe_clear(&mut self) {
+                assert!(!self.was_deleted());
+                let sz = self.size();
+                if sz > 0 {
+                    for i in 0..sz {
+                        let mut c = self.at(i).unwrap();
+                        c.set_callback(Box::new(move || { /* Do nothing! */ }));
+                    }
+                }
+                #clear(self._inner);
+                self.redraw();
             }
 
             fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
@@ -273,27 +279,39 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                         idx <= std::i32::MAX as u32,
                         "u32 entries have to be < std::i32::MAX for compatibility!"
                     );
-                    let x = self.at(idx);
-                    if x.is_none() {
-                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-                    }
-                    let x = x.unwrap();
-                    if !x.is_submenu() {
-                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-                    }
-                    let mut i = idx;
-                    loop {
-                        let mut item = self.at(i).unwrap();
-                        if item.label().is_none() {
-                            break;
-                        }
-                        item.set_callback(Box::new(move || { /* Do nothing! */ }));
-                        i += 1;
-                    }
                     match #clear_submenu(self._inner, idx as i32) {
                         0 => Ok(()),
                         _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                     }
+                }
+            }
+
+            unsafe fn unsafe_clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
+                assert!(!self.was_deleted());
+                debug_assert!(
+                    idx <= std::i32::MAX as u32,
+                    "u32 entries have to be < std::i32::MAX for compatibility!"
+                );
+                let x = self.at(idx);
+                if x.is_none() {
+                    return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                }
+                let x = x.unwrap();
+                if !x.is_submenu() {
+                    return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                }
+                let mut i = idx;
+                loop {
+                    let mut item = self.at(i).unwrap();
+                    if item.label().is_none() {
+                        break;
+                    }
+                    item.set_callback(Box::new(move || { /* Do nothing! */ }));
+                    i += 1;
+                }
+                match #clear_submenu(self._inner, idx as i32) {
+                    0 => Ok(()),
+                    _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                 }
             }
             

@@ -748,6 +748,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            unsafe fn unsafe_delete(&mut self) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    crate::app::unsafe_delete_widget(self);
+                }
+            }
+
             fn take_focus(&mut self) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
                 unsafe {

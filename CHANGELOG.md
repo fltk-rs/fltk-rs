@@ -4,6 +4,11 @@
 ### Changes
 - (None)
 
+## [0.6.7] - 2020-06-18
+### Changes
+- Provide unsafe variant for widget deletion, which would delete user_data recursively for when needed.
+- Improve docs about TableRow.
+
 ## [0.6.6] - 2020-06-17
 ### Changes
 - RgbImage takes ownership of the underlying data.
