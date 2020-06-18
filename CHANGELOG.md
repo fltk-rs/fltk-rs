@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Give image type specialized drop impls.
 
 ## [0.6.7] - 2020-06-18
 ### Changes

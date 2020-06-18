@@ -26,12 +26,6 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl Sync for #name {}
         unsafe impl Send for #name {}
 
-        impl Drop for #name {
-            fn drop(&mut self) {
-                unsafe { #delete(self._inner) }
-            }
-        }
-
         impl Clone for #name {
             fn clone(&self) -> Self {
                 self.copy()
