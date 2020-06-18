@@ -19,7 +19,7 @@ struct Ball {
 
 fn main() {
     let app = app::App::default();
-    let mut wind = window::Window::default()
+    let mut wind = window::DoubleWindow::default()
         .with_size(800, 600)
         .center_screen()
         .with_label("Pong!");
@@ -52,8 +52,8 @@ fn main() {
     }));
 
     while app.wait().unwrap() {
-        ball.pos.0 += 10 * ball.dir.0 as i32;
-        ball.pos.1 += 10 * ball.dir.1 as i32;
+        ball.pos.0 += 1 * ball.dir.0 as i32;
+        ball.pos.1 += 1 * ball.dir.1 as i32;
         if ball.pos.1 == 540 - 40
             && (ball.pos.0 > *paddle_c.borrow() - 40 && ball.pos.0 < *paddle_c.borrow() + 160)
         {
@@ -74,6 +74,8 @@ fn main() {
         }
         ball.wid.resize(ball.pos.0, ball.pos.1, 40, 40);
         wind.redraw();
-        thread::sleep(Duration::from_millis(16));
+        if !cfg!(windows) {
+            thread::sleep(Duration::from_millis(1));
+        }
     }
 }
