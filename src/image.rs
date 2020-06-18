@@ -8,6 +8,12 @@ pub struct Image {
     _inner: *mut Fl_Image,
 }
 
+impl Drop for Image {
+    fn drop(&mut self) {
+        unsafe { Fl_Image_delete(self._inner) }
+    }
+}
+
 // /// A conversion function for internal use
 // impl<I: ImageExt> From<I> for Image {
 //     fn from(s: I) -> Self {
@@ -38,6 +44,12 @@ impl Image {
 #[derive(ImageExt, Debug)]
 pub struct SharedImage {
     _inner: *mut Fl_Shared_Image,
+}
+
+impl Drop for SharedImage {
+    fn drop(&mut self) {
+        unsafe { Fl_Shared_Image_delete(self._inner) }
+    }
 }
 
 impl SharedImage {
@@ -82,6 +94,12 @@ impl SharedImage {
 #[derive(ImageExt, Debug)]
 pub struct JpegImage {
     _inner: *mut Fl_JPEG_Image,
+}
+
+impl Drop for JpegImage {
+    fn drop(&mut self) {
+        unsafe { Fl_JPEG_Image_delete(self._inner) }
+    }
 }
 
 impl JpegImage {
@@ -136,6 +154,12 @@ pub struct PngImage {
     _inner: *mut Fl_PNG_Image,
 }
 
+impl Drop for PngImage {
+    fn drop(&mut self) {
+        unsafe { Fl_PNG_Image_delete(self._inner) }
+    }
+}
+
 impl PngImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<PngImage, FltkError> {
@@ -188,6 +212,12 @@ pub struct SvgImage {
     _inner: *mut Fl_SVG_Image,
 }
 
+impl Drop for SvgImage {
+    fn drop(&mut self) {
+        unsafe { Fl_SVG_Image_delete(self._inner) }
+    }
+}
+
 impl SvgImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<SvgImage, FltkError> {
@@ -234,6 +264,12 @@ impl SvgImage {
 #[derive(ImageExt, Debug)]
 pub struct BmpImage {
     _inner: *mut Fl_BMP_Image,
+}
+
+impl Drop for BmpImage {
+    fn drop(&mut self) {
+        unsafe { Fl_BMP_Image_delete(self._inner) }
+    }
 }
 
 impl BmpImage {
@@ -288,6 +324,12 @@ pub struct GifImage {
     _inner: *mut Fl_GIF_Image,
 }
 
+impl Drop for GifImage {
+    fn drop(&mut self) {
+        unsafe { Fl_GIF_Image_delete(self._inner) }
+    }
+}
+
 impl GifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<GifImage, FltkError> {
@@ -333,6 +375,16 @@ impl GifImage {
 #[derive(ImageExt, Debug)]
 pub struct RgbImage {
     _inner: *mut Fl_RGB_Image,
+}
+
+impl Drop for RgbImage {
+    fn drop(&mut self) {
+        let mut data = mem::ManuallyDrop::new(self.to_rgb_data());
+        unsafe { 
+            mem::ManuallyDrop::drop(&mut data);
+            Fl_RGB_Image_delete(self._inner);
+        }
+    }
 }
 
 impl RgbImage {
@@ -401,3 +453,4 @@ impl RgbImage {
     //     Ok(ret)
     // }
 }
+
