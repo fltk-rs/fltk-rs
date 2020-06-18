@@ -47,6 +47,7 @@ jobs:
         tar -czvf ../../../../lib_x64-windows-msvc.tar.gz Release
         cd ../../../..
         fi
+      shell: bash
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
