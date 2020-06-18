@@ -1,3 +1,6 @@
+// For windows, you might want to change the window to a DoubleWindow and remove the sleep from the event loop.
+
+
 use fltk::{
     app::*,
     frame::*,
