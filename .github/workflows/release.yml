@@ -2,8 +2,6 @@ name: Release
 
 
 on:
-  push:
-    branches: [ stable ]
   pull_request:
     branches: [ stable ]
 
@@ -30,26 +28,9 @@ jobs:
       shell: bash
     - uses: actions/checkout@v2
     - name: Build
-      run: |
-        cargo build --release
-        if [ "$RUNNER_OS" == "Linux" ]; then
-        cd target/release/build/**/out
-        tar -czvf ../../../lib_x64-linux.tar.gz lib
-        cd ../../..
-        fi
-        if [ "$RUNNER_OS" == "macOS" ]; then
-        cd target/release/build/**/out
-        tar -czvf ../../../lib_x64-macos.tar.gz lib
-        cd ../../..
-        fi
-        if [ "$RUNNER_OS" == "Windows" ]; then
-        cd target/release/build/**/out/lib/
-        tar -czvf ../../../../lib_x64-windows-msvc.tar.gz Release
-        cd ../../../..
-        fi
-      shell: bash
+      run: cargo build --release
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: lib_${{ matrix.os }}
-        path: target/release/*.tar.gz
+        path: target/release/build/**/out/lib
