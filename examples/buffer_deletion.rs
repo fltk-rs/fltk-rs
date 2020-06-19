@@ -10,7 +10,7 @@ fn main() {
     win.set_callback(Box::new(move || {
         if app::event() == enums::Event::Close {
             println!("Closing, but deleting the buffer first!");
-            unsafe {
+            unsafe { // This is unsafe since the editor might outlive the buffer
                 buf.delete();
             }
             app.quit();

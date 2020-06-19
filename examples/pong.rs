@@ -35,6 +35,8 @@ fn main() {
 
     let paddle_pos = Rc::from(RefCell::from(320));
     let paddle_c = paddle_pos.clone();
+
+    // This is called whenever the window is draw and redrawn (in the event loop)
     wind.draw(Box::new(move || {
         draw::set_draw_color(Color::White);
         draw::draw_rectf(*paddle_c.borrow(), 540, 160, 20);
@@ -44,7 +46,8 @@ fn main() {
     wind.handle(Box::new(move |ev| {
         match ev {
             enums::Event::Move => {
-                *paddle_pos.borrow_mut() = app::event_coords().0 - 80; // Mouse's x position
+                // Mouse's x position relative to the paddle's center
+                *paddle_pos.borrow_mut() = app::event_coords().0 - 80; 
                 true
             }
             _ => false,
@@ -52,29 +55,29 @@ fn main() {
     }));
 
     while app.wait().unwrap() {
-        ball.pos.0 += 1 * ball.dir.0 as i32;
-        ball.pos.1 += 1 * ball.dir.1 as i32;
+        ball.pos.0 += 1 * ball.dir.0 as i32; // The increment in x position
+        ball.pos.1 += 1 * ball.dir.1 as i32; // The increment in y position
         if ball.pos.1 == 540 - 40
             && (ball.pos.0 > *paddle_c.borrow() - 40 && ball.pos.0 < *paddle_c.borrow() + 160)
         {
-            ball.dir.1 = Direction::Negative;
+            ball.dir.1 = Direction::Negative; // Reversal of motion when hitting the paddle
         }
         if ball.pos.1 == 0 {
-            ball.dir.1 = Direction::Positive;
+            ball.dir.1 = Direction::Positive; // Reversal of motion when hitting the top border
         }
         if ball.pos.0 == 800 - 40 {
-            ball.dir.0 = Direction::Negative;
+            ball.dir.0 = Direction::Negative; // Reversal of motion when hitting the right border
         }
         if ball.pos.0 == 0 {
-            ball.dir.0 = Direction::Positive;
+            ball.dir.0 = Direction::Positive; // Reversal of motion when hitting the left border
         }
-        if ball.pos.1 > 600 {
+        if ball.pos.1 > 600 { // Resetting the ball position after it bypasses the paddle
             ball.pos = (0, 0);
             ball.dir = (Direction::Positive, Direction::Positive);
         }
-        ball.wid.resize(ball.pos.0, ball.pos.1, 40, 40);
+        ball.wid.resize(ball.pos.0, ball.pos.1, 40, 40); // Moves the ball
         wind.redraw();
-        if !cfg!(windows) {
+        if !cfg!(windows) { // Window's event loop works differently
             thread::sleep(Duration::from_millis(1));
         }
     }
