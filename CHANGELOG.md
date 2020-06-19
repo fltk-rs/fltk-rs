@@ -2,7 +2,8 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Fix image deletion.
+- Add asserts to check if an image was deleted.
 
 ## [0.6.8] - 2020-06-18
 ### Changes

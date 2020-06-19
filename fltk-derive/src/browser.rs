@@ -180,11 +180,15 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_icon<Img: ImageExt>(&mut self, line: u32, image: &Img) {
+                assert!(!self.was_deleted());
                 assert!(line > 0);
-                let _ = self.icon(line);
+                assert!(!image.was_deleted());
+                let i = self.icon(line);
                 unsafe {
-                    assert!(!self.was_deleted());
-                    #set_icon(self._inner, line as i32, image.as_ptr())
+                    #set_icon(self._inner, line as i32, image.as_ptr());
+                    if i.is_some() {
+                        i.unwrap().delete();
+                    }
                 }
             }
 

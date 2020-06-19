@@ -803,4 +803,8 @@ pub unsafe trait ImageExt {
     fn into_jpeg(self) -> Result<crate::image::JpegImage, FltkError>;
     /// Transforms an image to a BmpImage
     fn into_bmp(self) -> Result<crate::image::BmpImage, FltkError>;
+    /// Deletes the image
+    unsafe fn delete(&mut self);
+    /// Checks if the image was deleted
+    fn was_deleted(&self) -> bool;
 }
