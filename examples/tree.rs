@@ -9,7 +9,7 @@ fn main() {
         .chars()
         .enumerate()
         .map(|(_, c)| match c {
-            '\\' => '/',
+            '\\' => '/', // change window paths to posix paths
             _ => c,
         })
         .collect();

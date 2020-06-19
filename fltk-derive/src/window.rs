@@ -69,9 +69,15 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_icon<T: ImageExt>(&mut self, image: &T) {
                 assert!(!self.was_deleted());
+                assert!(!image.was_deleted());
                 assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage icons are not supported!");
-                let _ = self.icon();
-                unsafe { #set_icon(self._inner, image.as_ptr()) }
+                let i = self.icon();
+                unsafe { 
+                    #set_icon(self._inner, image.as_ptr());
+                    if i.is_some() {
+                        i.unwrap().delete()
+                    } 
+                }
             }
 
             fn icon(&self) -> Option<Image> {

@@ -8,12 +8,6 @@ pub struct Image {
     _inner: *mut Fl_Image,
 }
 
-impl Drop for Image {
-    fn drop(&mut self) {
-        unsafe { Fl_Image_delete(self._inner) }
-    }
-}
-
 // /// A conversion function for internal use
 // impl<I: ImageExt> From<I> for Image {
 //     fn from(s: I) -> Self {
@@ -44,12 +38,6 @@ impl Image {
 #[derive(ImageExt, Debug)]
 pub struct SharedImage {
     _inner: *mut Fl_Shared_Image,
-}
-
-impl Drop for SharedImage {
-    fn drop(&mut self) {
-        unsafe { Fl_Shared_Image_delete(self._inner) }
-    }
 }
 
 impl SharedImage {
@@ -94,12 +82,6 @@ impl SharedImage {
 #[derive(ImageExt, Debug)]
 pub struct JpegImage {
     _inner: *mut Fl_JPEG_Image,
-}
-
-impl Drop for JpegImage {
-    fn drop(&mut self) {
-        unsafe { Fl_JPEG_Image_delete(self._inner) }
-    }
 }
 
 impl JpegImage {
@@ -154,12 +136,6 @@ pub struct PngImage {
     _inner: *mut Fl_PNG_Image,
 }
 
-impl Drop for PngImage {
-    fn drop(&mut self) {
-        unsafe { Fl_PNG_Image_delete(self._inner) }
-    }
-}
-
 impl PngImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<PngImage, FltkError> {
@@ -212,12 +188,6 @@ pub struct SvgImage {
     _inner: *mut Fl_SVG_Image,
 }
 
-impl Drop for SvgImage {
-    fn drop(&mut self) {
-        unsafe { Fl_SVG_Image_delete(self._inner) }
-    }
-}
-
 impl SvgImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<SvgImage, FltkError> {
@@ -264,12 +234,6 @@ impl SvgImage {
 #[derive(ImageExt, Debug)]
 pub struct BmpImage {
     _inner: *mut Fl_BMP_Image,
-}
-
-impl Drop for BmpImage {
-    fn drop(&mut self) {
-        unsafe { Fl_BMP_Image_delete(self._inner) }
-    }
 }
 
 impl BmpImage {
@@ -324,12 +288,6 @@ pub struct GifImage {
     _inner: *mut Fl_GIF_Image,
 }
 
-impl Drop for GifImage {
-    fn drop(&mut self) {
-        unsafe { Fl_GIF_Image_delete(self._inner) }
-    }
-}
-
 impl GifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn load(path: &std::path::Path) -> Result<GifImage, FltkError> {
@@ -377,18 +335,8 @@ pub struct RgbImage {
     _inner: *mut Fl_RGB_Image,
 }
 
-impl Drop for RgbImage {
-    fn drop(&mut self) {
-        let mut data = mem::ManuallyDrop::new(self.to_rgb_data());
-        unsafe { 
-            mem::ManuallyDrop::drop(&mut data);
-            Fl_RGB_Image_delete(self._inner);
-        }
-    }
-}
-
 impl RgbImage {
-    /// Initializes a new raw RgbImage
+    /// Initializes a new raw RgbImage, creates an internal copy of the data
     pub fn new(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
         let data = data.to_owned();
         let mut data = mem::ManuallyDrop::new(data);
@@ -425,32 +373,5 @@ impl RgbImage {
         let h = self.data_h();
         (self.to_rgb_data(), w, h)
     }
-
-    // /// Transforms the RgbImage to a PngImage
-    // pub fn into_png_image(self) -> Result<PngImage, FltkError> {
-    //     let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
-    //     let _ = write_to_png_file(&self, &path)?;
-    //     let ret = PngImage::load(&path)?.copy();
-    //     std::fs::remove_file(&path)?;
-    //     Ok(ret)
-    // }
-
-    // /// Transforms the RgbImage to a JpegImage
-    // pub fn into_jpg_image(self) -> Result<JpegImage, FltkError> {
-    //     let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
-    //     let _ = write_to_jpg_file(&self, &path)?;
-    //     let ret = JpegImage::load(&path)?.copy();
-    //     std::fs::remove_file(&path)?;
-    //     Ok(ret)
-    // }
-
-    // /// Transforms the RgbImage to a BmpImage
-    // pub fn into_bmp_image(self) -> Result<BmpImage, FltkError> {
-    //     let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
-    //     let _ = write_to_bmp_file(&self, &path)?;
-    //     let ret = BmpImage::load(&path)?.copy();
-    //     std::fs::remove_file(&path)?;
-    //     Ok(ret)
-    // }
 }
 
