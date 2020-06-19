@@ -1,12 +1,17 @@
 # Changelog
 
+
 ## Unreleased
+### Changes
+- (None)
+
+## [0.6.9] - 2020-06-20
 ### Changes
 - Fix image deletion.
 - Add asserts to check if an image was deleted.
 - Add note on image lifetimes in relation to widgets.
 
-## [0.6.8] - 2020-06-18
+## [0.6.8] - 2020-06-19
 ### Changes
 - Give image type specialized drop impls.
 
