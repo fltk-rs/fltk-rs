@@ -4,6 +4,7 @@
 ### Changes
 - Fix image deletion.
 - Add asserts to check if an image was deleted.
+- Add note on image lifetimes in relation to widgets.
 
 ## [0.6.8] - 2020-06-18
 ### Changes
