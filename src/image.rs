@@ -336,7 +336,7 @@ pub struct RgbImage {
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage
+    /// Initializes a new raw RgbImage, creates an internal copy of the data
     pub fn new(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
         let data = data.to_owned();
         let mut data = mem::ManuallyDrop::new(data);
