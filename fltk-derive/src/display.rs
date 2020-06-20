@@ -205,57 +205,63 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         unsafe impl DisplayExt for #name {
-            fn buffer(&self) -> TextBuffer {
+            fn buffer(&self) -> Option<TextBuffer> {
                 unsafe {
                     assert!(!self.was_deleted());
                     let buffer = #get_buffer(self._inner);
-                    assert!(!buffer.is_null());
-                    TextBuffer::from_ptr(buffer)
+                    if buffer.is_null() {
+                        None
+                    } else {
+                        Some(TextBuffer::from_ptr(buffer))
+                    }
                 }
             }
 
-            fn set_buffer(&mut self, mut buffer: TextBuffer) {
+            fn set_buffer(&mut self, buffer: Option<TextBuffer>) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_buffer(self._inner, buffer.as_ptr())
-                }
-            }
-
-            unsafe fn unset_buffer(&mut self) {
-                unsafe {
-                    assert!(!self.was_deleted());
-                    #set_buffer(self._inner, std::ptr::null_mut())
+                    if let Some(buffer) = buffer {
+                        #set_buffer(self._inner, buffer.as_ptr())
+                    } else {
+                        #set_buffer(self._inner, 0 as *mut Fl_Text_Buffer)
+                    }
                 }
             }
 
             fn text_font(&self) -> Font {
                 assert!(!self.was_deleted());
+                assert!(self.buffer().is_some());
                 unsafe { mem::transmute(#text_font(self._inner)) }
             }
 
             fn set_text_font(&mut self, font: Font) {
                 assert!(!self.was_deleted());
+                assert!(self.buffer().is_some());
                 unsafe { #set_text_font(self._inner, font as i32) }
             }
 
             fn text_color(&self) -> Color{
                 assert!(!self.was_deleted());
+                assert!(self.buffer().is_some());
                 unsafe { mem::transmute(#text_color(self._inner)) }
             }
 
             fn set_text_color(&mut self, color: Color){
                 assert!(!self.was_deleted());
+                assert!(self.buffer().is_some());
                 unsafe { #set_text_color(self._inner, color as u32) }
             }
 
             fn text_size(&self) -> u32{
                 assert!(!self.was_deleted());
+                assert!(self.buffer().is_some());
                 unsafe { #text_size(self._inner) as u32 }
             }
 
             fn set_text_size(&mut self, sz: u32) {
                 debug_assert!(sz <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 assert!(!self.was_deleted());
+                assert!(self.buffer().is_some());
                 unsafe { #set_text_size(self._inner, sz as i32) }
             }
 
@@ -264,6 +270,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     debug_assert!(topLineNum <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                     debug_assert!(horizOffset <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #scroll(self._inner, topLineNum as i32, horizOffset as i32)
                 }
             }
@@ -272,6 +279,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 let text = CString::new(text).unwrap();
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #insert(self._inner, text.as_ptr())
                 }
             }
@@ -280,6 +288,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     debug_assert!(newPos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #set_insert_position(self._inner, newPos as i32)
                 }
             }
@@ -287,6 +296,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn insert_position(&self) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #insert_position(self._inner) as u32
                 }
             }
@@ -297,6 +307,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     let mut x: i32 = 0;
                     let mut y: i32 = 0;
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #position_to_xy(self._inner, pos as i32, &mut x, &mut y);
                     (x as u32, y as u32)
                 }
@@ -311,6 +322,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(end <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #count_lines(self._inner, start as i32, end as i32, x) as u32
                 }
             }
@@ -318,6 +330,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn move_right(&mut self) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     let x = #move_right(self._inner);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
@@ -329,6 +342,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn move_left(&mut self) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     let x = #move_left(self._inner);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
@@ -340,6 +354,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn move_up(&mut self) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     let x = #move_up(self._inner);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
@@ -351,6 +366,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn move_down(&mut self) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     let x = #move_down(self._inner);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
@@ -366,7 +382,9 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_highlight_data(&mut self, mut style_buffer: &mut TextBuffer, entries: Vec<StyleTableEntry>) -> crate::text::StyleTables {
+            fn set_highlight_data(&mut self, mut style_buffer: TextBuffer, entries: Vec<StyleTableEntry>) -> crate::text::StyleTables {
+                assert!(!self.was_deleted());
+                assert!(self.buffer().is_some());
                 let mut colors: Vec<u32> = vec![];
                 let mut fonts: Vec<i32> = vec![];
                 let mut sizes: Vec<i32> = vec![];
@@ -376,7 +394,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     sizes.push(entry.size as i32);
                 }
                 unsafe {
-                    assert!(!self.was_deleted());
                     let x = #set_style_table_entry(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
                     StyleTables { _inner: x }
                 }
@@ -457,6 +474,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #line_start(self._inner, pos as i32) as u32
                 }
             }
@@ -465,6 +483,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(start_pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #line_end(self._inner, start_pos as i32, is_line_start as i32) as u32
                 }
             }
@@ -474,6 +493,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(lines <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #skip_lines(self._inner, start_pos as i32, lines as i32, is_line_start as i32) as u32
                 }
             }
@@ -483,6 +503,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(lines <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #rewind_lines(self._inner, start_pos as i32, lines as i32) as u32
                 }
             }
@@ -490,6 +511,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn next_word(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #next_word(self._inner)
                 }
             }
@@ -497,6 +519,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn previous_word(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #previous_word(self._inner)
                 }
             }
@@ -505,6 +528,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #word_start(self._inner, pos as i32) as u32
                 }
             }
@@ -513,6 +537,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #word_end(self._inner, pos as i32) as u32
                 }
             }
@@ -520,6 +545,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn x_to_col(&self, x: f64) -> f64 {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #x_to_col(self._inner, x)
                 }
             }
@@ -527,6 +553,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn col_to_x(&self, col: f64) -> f64 {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     #col_to_x(self._inner, col)
                 }
             }
@@ -619,6 +646,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn in_selection(&self, x: i32, y: i32) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(self.buffer().is_some());
                     match #in_selection(self._inner, x, y) {
                         0 => false,
                         _ => true,

@@ -6,7 +6,8 @@
 - Change interface for working with images. Now widgets take an Option<ImageExt>. This allows unsetting images.
 - Remove unnecessary copy when setting a widget image.
 - Add deimage and set_deimage methods to WidgetExt.
-- The DisplayExt::unset_buffer() has been marked unsafe.
+- The DisplayExt::set_buffer() takes an optional buffer, this allows unsetting the buffer.
+- The DisplayExt widgets have the same constructors as other widgets.
 
 ## [0.6.9] - 2020-06-20
 ### Changes

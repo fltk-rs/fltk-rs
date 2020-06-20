@@ -490,11 +490,9 @@ pub unsafe trait ValuatorExt: WidgetExt {
 /// Defines the methods implemented by TextDisplay and TextEditor
 pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
-    fn buffer(&self) -> TextBuffer;
+    fn buffer(&self) -> Option<TextBuffer>;
     /// Sets the associated TextBuffer
-    fn set_buffer(&mut self, buffer: TextBuffer);
-    /// Unsets the current text buffer
-    unsafe fn unset_buffer(&mut self);
+    fn set_buffer(&mut self, buffer: Option<TextBuffer>);
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -532,7 +530,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Sets the style of the text widget
     fn set_highlight_data(
         &mut self,
-        style_buffer: &mut TextBuffer,
+        style_buffer: TextBuffer,
         entries: Vec<StyleTableEntry>,
     ) -> crate::text::StyleTables;
     /// Sets the cursor style
