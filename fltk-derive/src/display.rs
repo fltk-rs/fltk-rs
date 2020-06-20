@@ -385,6 +385,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn set_highlight_data(&mut self, mut style_buffer: TextBuffer, entries: Vec<StyleTableEntry>) -> crate::text::StyleTables {
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
+                assert!(entries.len() < 29);
                 let mut colors: Vec<u32> = vec![];
                 let mut fonts: Vec<i32> = vec![];
                 let mut sizes: Vec<i32> = vec![];
