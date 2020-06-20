@@ -62,7 +62,7 @@ impl SharedImage {
     }
 
     /// Loads a SharedImage from an image
-    pub fn from_image<I: ImageExt>(image: &I) -> Result<SharedImage, FltkError> {
+    pub fn from_image<I: ImageExt>(image: I) -> Result<SharedImage, FltkError> {
         unsafe {
             let x =
                 Fl_Shared_Image_from_rgb(image.as_image_ptr() as *mut Fl_RGB_Image, 0);

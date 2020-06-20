@@ -843,9 +843,14 @@ impl Tree {
     }
 
     /// Sets the user icon
-    pub fn set_user_icon<Img: ImageExt>(&mut self, val: &Img) {
+    pub fn set_user_icon<Img: ImageExt>(&mut self, val: Option<Img>) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_set_usericon(self._inner, val.as_ptr()) }
+        if let Some(val) = val {
+            assert!(!val.was_deleted());
+            unsafe { Fl_Tree_set_usericon(self._inner, val.as_ptr()) }
+        } else {
+            unsafe { Fl_Tree_set_usericon(self._inner, 0 as *mut raw::c_void) }
+        }
     }
 
     /// Gets the opne icon
@@ -862,9 +867,14 @@ impl Tree {
     }
 
     /// Sets the opne icon
-    pub fn set_open_icon<Img: ImageExt>(&mut self, val: &Img) {
+    pub fn set_open_icon<Img: ImageExt>(&mut self, val: Option<Img>) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_set_openicon(self._inner, val.as_ptr()) }
+        if let Some(val) = val {
+            assert!(!val.was_deleted());
+            unsafe { Fl_Tree_set_openicon(self._inner, val.as_ptr()) }
+        } else {
+            unsafe { Fl_Tree_set_openicon(self._inner, 0 as *mut raw::c_void) }
+        }
     }
 
     /// Gets the close icon
@@ -881,9 +891,14 @@ impl Tree {
     }
 
     /// Sets the opne icon
-    pub fn set_close_icon<Img: ImageExt>(&mut self, val: &Img) {
+    pub fn set_close_icon<Img: ImageExt>(&mut self, val: Option<Img>) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_set_closeicon(self._inner, val.as_ptr()) }
+        if let Some(val) = val {
+            assert!(!val.was_deleted());
+            unsafe { Fl_Tree_set_closeicon(self._inner, val.as_ptr()) }
+        } else {
+            unsafe { Fl_Tree_set_closeicon(self._inner, 0 as *mut raw::c_void) }
+        }
     }
 
     /// Returns true if the collapse icon is enabled, false if not.

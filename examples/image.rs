@@ -57,11 +57,9 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let mut image = SharedImage::load(&PathBuf::from("screenshots/calc.jpg"))?;
     image.scale(200, 200, true, true);
-
-    frame.set_deimage(Some(image));
-    let v = frame.deimage().unwrap();
-    frame.set_image(Some(v));
     
+    frame.set_image(Some(image));
+
     // To remove an image
     // frame.set_image(Option::<SharedImage>::None);
 
