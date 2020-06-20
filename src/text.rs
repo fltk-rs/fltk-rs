@@ -184,8 +184,8 @@ impl TextBuffer {
         let path = CString::new(path)?;
         unsafe {
             match Fl_Text_Buffer_loadfile(self._inner, path.as_ptr(), 0) {
-                0 => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
-                _ => Ok(()),
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }
         }
     }
