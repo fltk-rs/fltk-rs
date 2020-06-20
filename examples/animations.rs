@@ -44,7 +44,7 @@ fn main() {
     let mut frame = Frame::new(-30, 200, 30, 30, "");
     let mut svg = SvgImage::from_data(&clock!()).unwrap();
     svg.scale(200, 200, true, true);
-    frame.set_image(&svg);
+    frame.set_image(Some(svg));
     wind.set_color(Color::White);
     wind.end();
     wind.show();

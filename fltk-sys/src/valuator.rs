@@ -147,14 +147,6 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_image_with_size(
-        arg1: *mut Fl_Widget,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_set_handler(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
@@ -248,6 +240,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -378,14 +376,6 @@ extern "C" {
     pub fn Fl_Slider_set_image(arg1: *mut Fl_Slider, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Slider_set_image_with_size(
-        arg1: *mut Fl_Slider,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Slider_set_handler(
         self_: *mut Fl_Slider,
         cb: custom_handler_callback,
@@ -479,6 +469,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Slider_as_group(self_: *mut Fl_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Slider_set_deimage(arg1: *mut Fl_Slider, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Slider_deimage(arg1: *const Fl_Slider) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Slider_set_bounds(arg1: *mut Fl_Slider, a: f64, b: f64);
@@ -664,14 +660,6 @@ extern "C" {
     pub fn Fl_Nice_Slider_set_image(arg1: *mut Fl_Nice_Slider, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Nice_Slider_set_image_with_size(
-        arg1: *mut Fl_Nice_Slider,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Nice_Slider_set_handler(
         self_: *mut Fl_Nice_Slider,
         cb: custom_handler_callback,
@@ -777,6 +765,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Nice_Slider_as_group(self_: *mut Fl_Nice_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Nice_Slider_set_deimage(arg1: *mut Fl_Nice_Slider, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Nice_Slider_deimage(arg1: *const Fl_Nice_Slider) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_bounds(arg1: *mut Fl_Nice_Slider, a: f64, b: f64);
@@ -959,14 +953,6 @@ extern "C" {
     pub fn Fl_Counter_set_image(arg1: *mut Fl_Counter, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Counter_set_image_with_size(
-        arg1: *mut Fl_Counter,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Counter_set_handler(
         self_: *mut Fl_Counter,
         cb: custom_handler_callback,
@@ -1060,6 +1046,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Counter_as_group(self_: *mut Fl_Counter) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Counter_set_deimage(arg1: *mut Fl_Counter, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Counter_deimage(arg1: *const Fl_Counter) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Counter_set_bounds(arg1: *mut Fl_Counter, a: f64, b: f64);
@@ -1242,14 +1234,6 @@ extern "C" {
     pub fn Fl_Dial_set_image(arg1: *mut Fl_Dial, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Dial_set_image_with_size(
-        arg1: *mut Fl_Dial,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Dial_set_handler(
         self_: *mut Fl_Dial,
         cb: custom_handler_callback,
@@ -1343,6 +1327,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Dial_as_group(self_: *mut Fl_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Dial_set_deimage(arg1: *mut Fl_Dial, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Dial_deimage(arg1: *const Fl_Dial) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Dial_set_bounds(arg1: *mut Fl_Dial, a: f64, b: f64);
@@ -1521,14 +1511,6 @@ extern "C" {
     pub fn Fl_Line_Dial_set_image(arg1: *mut Fl_Line_Dial, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Line_Dial_set_image_with_size(
-        arg1: *mut Fl_Line_Dial,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Line_Dial_set_handler(
         self_: *mut Fl_Line_Dial,
         cb: custom_handler_callback,
@@ -1625,6 +1607,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Line_Dial_as_group(self_: *mut Fl_Line_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Line_Dial_set_deimage(arg1: *mut Fl_Line_Dial, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Line_Dial_deimage(arg1: *const Fl_Line_Dial) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_bounds(arg1: *mut Fl_Line_Dial, a: f64, b: f64);
@@ -1807,14 +1795,6 @@ extern "C" {
     pub fn Fl_Roller_set_image(arg1: *mut Fl_Roller, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Roller_set_image_with_size(
-        arg1: *mut Fl_Roller,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Roller_set_handler(
         self_: *mut Fl_Roller,
         cb: custom_handler_callback,
@@ -1908,6 +1888,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Roller_as_group(self_: *mut Fl_Roller) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Roller_set_deimage(arg1: *mut Fl_Roller, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Roller_deimage(arg1: *const Fl_Roller) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Roller_set_bounds(arg1: *mut Fl_Roller, a: f64, b: f64);
@@ -2087,14 +2073,6 @@ extern "C" {
     pub fn Fl_Scrollbar_set_image(arg1: *mut Fl_Scrollbar, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Scrollbar_set_image_with_size(
-        arg1: *mut Fl_Scrollbar,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Scrollbar_set_handler(
         self_: *mut Fl_Scrollbar,
         cb: custom_handler_callback,
@@ -2191,6 +2169,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_as_group(self_: *mut Fl_Scrollbar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_set_deimage(arg1: *mut Fl_Scrollbar, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Scrollbar_deimage(arg1: *const Fl_Scrollbar) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_bounds(arg1: *mut Fl_Scrollbar, a: f64, b: f64);
@@ -2382,14 +2366,6 @@ extern "C" {
     pub fn Fl_Value_Slider_set_image(arg1: *mut Fl_Value_Slider, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Slider_set_image_with_size(
-        arg1: *mut Fl_Value_Slider,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Value_Slider_set_handler(
         self_: *mut Fl_Value_Slider,
         cb: custom_handler_callback,
@@ -2498,6 +2474,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Slider_as_group(self_: *mut Fl_Value_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Slider_set_deimage(
+        arg1: *mut Fl_Value_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Slider_deimage(arg1: *const Fl_Value_Slider) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_bounds(arg1: *mut Fl_Value_Slider, a: f64, b: f64);
@@ -2683,14 +2668,6 @@ extern "C" {
     pub fn Fl_Adjuster_set_image(arg1: *mut Fl_Adjuster, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Adjuster_set_image_with_size(
-        arg1: *mut Fl_Adjuster,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Adjuster_set_handler(
         self_: *mut Fl_Adjuster,
         cb: custom_handler_callback,
@@ -2784,6 +2761,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Adjuster_as_group(self_: *mut Fl_Adjuster) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_deimage(arg1: *mut Fl_Adjuster, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Adjuster_deimage(arg1: *const Fl_Adjuster) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Adjuster_set_bounds(arg1: *mut Fl_Adjuster, a: f64, b: f64);
@@ -2972,14 +2955,6 @@ extern "C" {
     pub fn Fl_Value_Input_set_image(arg1: *mut Fl_Value_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Input_set_image_with_size(
-        arg1: *mut Fl_Value_Input,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Value_Input_set_handler(
         self_: *mut Fl_Value_Input,
         cb: custom_handler_callback,
@@ -3085,6 +3060,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Input_as_group(self_: *mut Fl_Value_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_deimage(arg1: *mut Fl_Value_Input, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Value_Input_deimage(arg1: *const Fl_Value_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Value_Input_set_bounds(arg1: *mut Fl_Value_Input, a: f64, b: f64);
@@ -3276,14 +3257,6 @@ extern "C" {
     pub fn Fl_Value_Output_set_image(arg1: *mut Fl_Value_Output, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Value_Output_set_image_with_size(
-        arg1: *mut Fl_Value_Output,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Value_Output_set_handler(
         self_: *mut Fl_Value_Output,
         cb: custom_handler_callback,
@@ -3392,6 +3365,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Output_as_group(self_: *mut Fl_Value_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_deimage(
+        arg1: *mut Fl_Value_Output,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_deimage(arg1: *const Fl_Value_Output) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Value_Output_set_bounds(arg1: *mut Fl_Value_Output, a: f64, b: f64);
@@ -3583,14 +3565,6 @@ extern "C" {
     pub fn Fl_Fill_Slider_set_image(arg1: *mut Fl_Fill_Slider, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Slider_set_image_with_size(
-        arg1: *mut Fl_Fill_Slider,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Fill_Slider_set_handler(
         self_: *mut Fl_Fill_Slider,
         cb: custom_handler_callback,
@@ -3696,6 +3670,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Fill_Slider_as_group(self_: *mut Fl_Fill_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_deimage(arg1: *mut Fl_Fill_Slider, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_deimage(arg1: *const Fl_Fill_Slider) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Fill_Slider_set_bounds(arg1: *mut Fl_Fill_Slider, a: f64, b: f64);
@@ -3878,14 +3858,6 @@ extern "C" {
     pub fn Fl_Fill_Dial_set_image(arg1: *mut Fl_Fill_Dial, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Fill_Dial_set_image_with_size(
-        arg1: *mut Fl_Fill_Dial,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Fill_Dial_set_handler(
         self_: *mut Fl_Fill_Dial,
         cb: custom_handler_callback,
@@ -3982,6 +3954,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Fill_Dial_as_group(self_: *mut Fl_Fill_Dial) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_deimage(arg1: *mut Fl_Fill_Dial, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_deimage(arg1: *const Fl_Fill_Dial) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_bounds(arg1: *mut Fl_Fill_Dial, a: f64, b: f64);
@@ -4164,14 +4142,6 @@ extern "C" {
     pub fn Fl_Hor_Slider_set_image(arg1: *mut Fl_Hor_Slider, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Hor_Slider_set_image_with_size(
-        arg1: *mut Fl_Hor_Slider,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Hor_Slider_set_handler(
         self_: *mut Fl_Hor_Slider,
         cb: custom_handler_callback,
@@ -4274,6 +4244,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Slider_as_group(self_: *mut Fl_Hor_Slider) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_deimage(arg1: *mut Fl_Hor_Slider, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_deimage(arg1: *const Fl_Hor_Slider) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_bounds(arg1: *mut Fl_Hor_Slider, a: f64, b: f64);
@@ -4483,14 +4459,6 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Fill_Slider_set_image_with_size(
-        arg1: *mut Fl_Hor_Fill_Slider,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_handler(
         self_: *mut Fl_Hor_Fill_Slider,
         cb: custom_handler_callback,
@@ -4627,6 +4595,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_as_group(
         self_: *mut Fl_Hor_Fill_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_deimage(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_deimage(
+        arg1: *const Fl_Hor_Fill_Slider,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
@@ -4847,14 +4826,6 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Nice_Slider_set_image_with_size(
-        arg1: *mut Fl_Hor_Nice_Slider,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_handler(
         self_: *mut Fl_Hor_Nice_Slider,
         cb: custom_handler_callback,
@@ -4991,6 +4962,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_as_group(
         self_: *mut Fl_Hor_Nice_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_deimage(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_deimage(
+        arg1: *const Fl_Hor_Nice_Slider,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
@@ -5217,14 +5199,6 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Hor_Value_Slider_set_image_with_size(
-        arg1: *mut Fl_Hor_Value_Slider,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Hor_Value_Slider_set_handler(
         self_: *mut Fl_Hor_Value_Slider,
         cb: custom_handler_callback,
@@ -5364,6 +5338,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Hor_Value_Slider_as_group(
         self_: *mut Fl_Hor_Value_Slider,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_deimage(
+        arg1: *mut Fl_Hor_Value_Slider,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_deimage(
+        arg1: *const Fl_Hor_Value_Slider,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {

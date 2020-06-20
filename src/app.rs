@@ -413,8 +413,7 @@ impl<T: Copy + Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         let data: Option<Message<T>> = thread_msg();
-        if data.is_some() {
-            let data = data.unwrap();
+        if let Some(data) = data {
             if data.id == self.id && data.sz == self.sz && data.hash == self.hash {
                 Some(data.msg)
             } else {

@@ -147,14 +147,6 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_image_with_size(
-        arg1: *mut Fl_Widget,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_set_handler(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
@@ -248,6 +240,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -378,14 +376,6 @@ extern "C" {
     pub fn Fl_Browser_set_image(arg1: *mut Fl_Browser, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Browser_set_image_with_size(
-        arg1: *mut Fl_Browser,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Browser_set_handler(
         self_: *mut Fl_Browser,
         cb: custom_handler_callback,
@@ -479,6 +469,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_as_group(self_: *mut Fl_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Browser_set_deimage(arg1: *mut Fl_Browser, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Browser_deimage(arg1: *const Fl_Browser) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Browser_remove(arg1: *mut Fl_Browser, line: ::std::os::raw::c_int);
@@ -708,14 +704,6 @@ extern "C" {
     pub fn Fl_Hold_Browser_set_image(arg1: *mut Fl_Hold_Browser, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_set_image_with_size(
-        arg1: *mut Fl_Hold_Browser,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Hold_Browser_set_handler(
         self_: *mut Fl_Hold_Browser,
         cb: custom_handler_callback,
@@ -824,6 +812,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_as_group(self_: *mut Fl_Hold_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_set_deimage(
+        arg1: *mut Fl_Hold_Browser,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_deimage(arg1: *const Fl_Hold_Browser) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_remove(arg1: *mut Fl_Hold_Browser, line: ::std::os::raw::c_int);
@@ -1069,14 +1066,6 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_set_image_with_size(
-        arg1: *mut Fl_Select_Browser,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Select_Browser_set_handler(
         self_: *mut Fl_Select_Browser,
         cb: custom_handler_callback,
@@ -1200,6 +1189,16 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_as_group(self_: *mut Fl_Select_Browser)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_set_deimage(
+        arg1: *mut Fl_Select_Browser,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Select_Browser_deimage(arg1: *const Fl_Select_Browser)
         -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
@@ -1442,14 +1441,6 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_set_image_with_size(
-        arg1: *mut Fl_Multi_Browser,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Multi_Browser_set_handler(
         self_: *mut Fl_Multi_Browser,
         cb: custom_handler_callback,
@@ -1564,6 +1555,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multi_Browser_as_group(self_: *mut Fl_Multi_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_set_deimage(
+        arg1: *mut Fl_Multi_Browser,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_deimage(arg1: *const Fl_Multi_Browser) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_remove(arg1: *mut Fl_Multi_Browser, line: ::std::os::raw::c_int);
@@ -1799,14 +1799,6 @@ extern "C" {
     pub fn Fl_File_Browser_set_image(arg1: *mut Fl_File_Browser, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Browser_set_image_with_size(
-        arg1: *mut Fl_File_Browser,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_File_Browser_set_handler(
         self_: *mut Fl_File_Browser,
         cb: custom_handler_callback,
@@ -1915,6 +1907,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_as_group(self_: *mut Fl_File_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_deimage(
+        arg1: *mut Fl_File_Browser,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Browser_deimage(arg1: *const Fl_File_Browser) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_File_Browser_remove(arg1: *mut Fl_File_Browser, line: ::std::os::raw::c_int);

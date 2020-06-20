@@ -16,10 +16,12 @@ pub struct Editor {
 
 impl Editor {
     pub fn new(buf: TextBuffer) -> Editor {
-        Editor {
-            editor: TextEditor::new(5, 40, 790, 555, buf),
+        let mut e = Editor {
+            editor: TextEditor::new(5, 40, 790, 555, ""),
             filename: String::from(""),
-        }
+        };
+        e.editor.set_buffer(Some(buf));
+        e
     }
 
     pub fn filename(&self) -> String {
@@ -50,7 +52,7 @@ impl Editor {
             }
             match path::Path::new(&filename).exists() {
                 true => {
-                    fs::write(&filename, self.editor.buffer().text()).unwrap();
+                    fs::write(&filename, self.editor.buffer().unwrap().text()).unwrap();
                     *saved = true;
                 }
                 false => alert(200, 200, "Please specify a file!"),
@@ -58,7 +60,7 @@ impl Editor {
         } else {
             match path::Path::new(&filename).exists() {
                 true => {
-                    fs::write(&filename, self.editor.buffer().text()).unwrap();
+                    fs::write(&filename, self.editor.buffer().unwrap().text()).unwrap();
                     *saved = true;
                 }
                 false => alert(200, 200, "Please specify a file!"),
@@ -208,10 +210,10 @@ fn main() {
             Some(msg) => match msg {
                 Changed => saved = false,
                 New => {
-                    if editor.buffer().text() != "" {
+                    if editor.buffer().unwrap().text() != "" {
                         let x = choice(200, 200, "File unsaved, Do you wish to continue?", "Yes", "No!", "");
                         if x == 0 {
-                            editor.buffer().set_text("");
+                            editor.buffer().unwrap().set_text("");
                         }
                     }
                 },
@@ -227,7 +229,7 @@ fn main() {
                         return;
                     }
                     match path::Path::new(&editor.filename()).exists() {
-                        true => editor.buffer().set_text(
+                        true => editor.buffer().unwrap().set_text(
                             fs::read_to_string(&editor.filename())
                                 .unwrap()
                                 .as_str(),

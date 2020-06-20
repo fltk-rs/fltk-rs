@@ -147,14 +147,6 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_image_with_size(
-        arg1: *mut Fl_Widget,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_set_handler(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
@@ -248,6 +240,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -378,14 +376,6 @@ extern "C" {
     pub fn Fl_Input_set_image(arg1: *mut Fl_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Input_set_image_with_size(
-        arg1: *mut Fl_Input,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Input_set_handler(
         self_: *mut Fl_Input,
         cb: custom_handler_callback,
@@ -479,6 +469,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_as_group(self_: *mut Fl_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Input_set_deimage(arg1: *mut Fl_Input, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Input_deimage(arg1: *const Fl_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Input_set_value(
@@ -708,14 +704,6 @@ extern "C" {
     pub fn Fl_Int_Input_set_image(arg1: *mut Fl_Int_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_image_with_size(
-        arg1: *mut Fl_Int_Input,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Int_Input_set_handler(
         self_: *mut Fl_Int_Input,
         cb: custom_handler_callback,
@@ -812,6 +800,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_as_group(self_: *mut Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Int_Input_set_deimage(arg1: *mut Fl_Int_Input, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Int_Input_deimage(arg1: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_value(
@@ -1047,14 +1041,6 @@ extern "C" {
     pub fn Fl_Float_Input_set_image(arg1: *mut Fl_Float_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_image_with_size(
-        arg1: *mut Fl_Float_Input,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Float_Input_set_handler(
         self_: *mut Fl_Float_Input,
         cb: custom_handler_callback,
@@ -1160,6 +1146,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_as_group(self_: *mut Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Float_Input_set_deimage(arg1: *mut Fl_Float_Input, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Float_Input_deimage(arg1: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_value(
@@ -1416,14 +1408,6 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_image_with_size(
-        arg1: *mut Fl_Multiline_Input,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Multiline_Input_set_handler(
         self_: *mut Fl_Multiline_Input,
         cb: custom_handler_callback,
@@ -1560,6 +1544,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multiline_Input_as_group(
         self_: *mut Fl_Multiline_Input,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_set_deimage(
+        arg1: *mut Fl_Multiline_Input,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_deimage(
+        arg1: *const Fl_Multiline_Input,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
@@ -1818,14 +1813,6 @@ extern "C" {
     pub fn Fl_Secret_Input_set_image(arg1: *mut Fl_Secret_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_image_with_size(
-        arg1: *mut Fl_Secret_Input,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Secret_Input_set_handler(
         self_: *mut Fl_Secret_Input,
         cb: custom_handler_callback,
@@ -1934,6 +1921,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Secret_Input_as_group(self_: *mut Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Secret_Input_set_deimage(
+        arg1: *mut Fl_Secret_Input,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Secret_Input_deimage(arg1: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Secret_Input_set_value(
@@ -2163,14 +2159,6 @@ extern "C" {
     pub fn Fl_File_Input_set_image(arg1: *mut Fl_File_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Input_set_image_with_size(
-        arg1: *mut Fl_File_Input,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_File_Input_set_handler(
         self_: *mut Fl_File_Input,
         cb: custom_handler_callback,
@@ -2273,6 +2261,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Input_as_group(self_: *mut Fl_File_Input) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Input_set_deimage(arg1: *mut Fl_File_Input, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_File_Input_deimage(arg1: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_File_Input_set_value(
@@ -2502,14 +2496,6 @@ extern "C" {
     pub fn Fl_Output_set_image(arg1: *mut Fl_Output, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Output_set_image_with_size(
-        arg1: *mut Fl_Output,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Output_set_handler(
         self_: *mut Fl_Output,
         cb: custom_handler_callback,
@@ -2603,6 +2589,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Output_as_group(self_: *mut Fl_Output) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Output_set_deimage(arg1: *mut Fl_Output, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Output_deimage(arg1: *const Fl_Output) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Output_set_value(
@@ -2865,14 +2857,6 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Output_set_image_with_size(
-        arg1: *mut Fl_Multiline_Output,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Multiline_Output_set_handler(
         self_: *mut Fl_Multiline_Output,
         cb: custom_handler_callback,
@@ -3012,6 +2996,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multiline_Output_as_group(
         self_: *mut Fl_Multiline_Output,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_set_deimage(
+        arg1: *mut Fl_Multiline_Output,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_deimage(
+        arg1: *const Fl_Multiline_Output,
     ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {

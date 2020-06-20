@@ -211,12 +211,12 @@ void Fl_Widget_delete(Fl_Widget *self) {
     delete self;
 }
 
-void Fl_Widget_set_image_with_size(Fl_Widget *self, void *image, int w, int h) {
-    LOCK(self->image(((Fl_Image *)image)->copy(w, h)); self->redraw();)
+void Fl_Widget_set_image(Fl_Widget *self, void *image) {
+    LOCK(self->image(((Fl_Image *)image)))
 }
 
-void Fl_Widget_set_image(Fl_Widget *self, void *image) {
-    LOCK(self->image(((Fl_Image *)image)->copy()); self->redraw();)
+void *Fl_Widget_image(const Fl_Widget *self) {
+    return (Fl_Image *)self->image();
 }
 
 void Fl_Widget_set_handler(Fl_Widget *self, custom_handler_callback cb, void *data) {
@@ -226,10 +226,6 @@ void Fl_Widget_set_handler(Fl_Widget *self, custom_handler_callback cb, void *da
 
 void Fl_Widget_set_trigger(Fl_Widget *self, int val) {
     LOCK(self->when(val);)
-}
-
-void *Fl_Widget_image(const Fl_Widget *self) {
-    return (Fl_Image *)self->image();
 }
 
 void Fl_Widget_set_draw(Fl_Widget *self, custom_draw_callback cb, void *data) {
@@ -333,4 +329,12 @@ void *Fl_Widget_as_window(Fl_Widget *self) {
 
 void *Fl_Widget_as_group(Fl_Widget *self) {
     return self->as_group();
+}
+
+void Fl_Widget_set_deimage(Fl_Widget *self, void *image) {
+    LOCK(self->deimage(((Fl_Image *)image)))
+}
+
+void *Fl_Widget_deimage(const Fl_Widget *self) {
+    return (Fl_Image *)self->deimage();
 }

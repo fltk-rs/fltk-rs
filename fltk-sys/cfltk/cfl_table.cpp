@@ -380,12 +380,8 @@ void Fl_Table_delete(Fl_Table *self) {
     delete self;
 }
 
-void Fl_Table_set_image_with_size(Fl_Table *self, void *image, int w, int h) {
-    LOCK(self->image(((Fl_Image *)image)->copy(w, h)); self->redraw();)
-}
-
 void Fl_Table_set_image(Fl_Table *self, void *image) {
-    LOCK(self->image(((Fl_Image *)image)->copy()); self->redraw();)
+    LOCK(self->image(((Fl_Image *)image)))
 }
 
 void Fl_Table_set_handler(Fl_Table *self, custom_handler_callback cb, void *data) {
@@ -502,6 +498,14 @@ void *Fl_Table_as_window(Fl_Table *self) {
 
 void *Fl_Table_as_group(Fl_Table *self) {
     return self->as_group();
+}
+
+void Fl_Table_set_deimage(Fl_Table *self, void *image) {
+    LOCK(self->deimage(((Fl_Image *)image)))
+}
+
+void *Fl_Table_deimage(const Fl_Table *self) {
+    return (Fl_Image *)self->deimage();
 }
 
 GROUP_DEFINE(Fl_Table)
@@ -723,12 +727,8 @@ void Fl_Table_Row_delete(Fl_Table_Row *self) {
     delete self;
 }
 
-void Fl_Table_Row_set_image_with_size(Fl_Table_Row *self, void *image, int w, int h) {
-    LOCK(self->image(((Fl_Image *)image)->copy(w, h)); self->redraw();)
-}
-
 void Fl_Table_Row_set_image(Fl_Table_Row *self, void *image) {
-    LOCK(self->image(((Fl_Image *)image)->copy()); self->redraw();)
+    LOCK(self->image(((Fl_Image *)image)))
 }
 
 void Fl_Table_Row_set_handler(Fl_Table_Row *self, custom_handler_callback cb, void *data) {
@@ -845,6 +845,14 @@ void *Fl_Table_Row_as_window(Fl_Table_Row *self) {
 
 void *Fl_Table_Row_as_group(Fl_Table_Row *self) {
     return self->as_group();
+}
+
+void Fl_Table_Row_set_deimage(Fl_Table_Row *self, void *image) {
+    LOCK(self->deimage(((Fl_Image *)image)))
+}
+
+void *Fl_Table_Row_deimage(const Fl_Table_Row *self) {
+    return (Fl_Image *)self->deimage();
 }
 
 GROUP_DEFINE(Fl_Table_Row)

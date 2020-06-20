@@ -21,9 +21,9 @@ impl Term {
 
         current_dir.push_str("$ ");
 
-        let mut term = SimpleTerminal::new(5, 5, 630, 470);
+        let mut term = SimpleTerminal::new(5, 5, 630, 470, "");
 
-        let mut sbuf = TextBuffer::default();
+        let sbuf = TextBuffer::default();
 
         // Enable different colored text in TestDisplay
         let styles: Vec<StyleTableEntry> = vec![
@@ -44,7 +44,7 @@ impl Term {
             },
         ];
 
-        term.set_highlight_data(&mut sbuf, styles);
+        term.set_highlight_data(sbuf, styles);
 
         Term {
             term: term,
@@ -162,7 +162,7 @@ fn main() {
                 Key::BackSpace => {
                     if term.cmd.len() != 0 {
                         let text_len = term.text().len() as u32;
-                        term.buffer().remove(text_len - 1, text_len);
+                        term.buffer().unwrap().remove(text_len - 1, text_len);
                         term.sbuf.remove(text_len - 1, text_len);
                         term.cmd.pop().unwrap();
                         return true;
