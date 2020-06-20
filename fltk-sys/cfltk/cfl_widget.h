@@ -84,7 +84,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     void widget##_set_damage(widget *self, unsigned char flag);                                    \
     void widget##_clear_damage(widget *self);                                                      \
     void *widget##_as_window(widget *self);                                                        \
-    void *widget##_as_group(widget *self);
+    void *widget##_as_group(widget *self);                                                         \
+    void widget##_set_deimage(widget *, void *);                                                   \
+    void *widget##_deimage(const widget *);
 
 #define WIDGET_DEFINE(widget)                                                                      \
     struct widget##_Derived : public widget {                                                      \
@@ -330,6 +332,12 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     }                                                                                              \
     void *widget##_as_group(widget *self) {                                                        \
         return self->as_group();                                                                   \
+    }                                                                                              \
+    void widget##_set_deimage(widget *self, void *image) {                                         \
+        LOCK(self->deimage(((Fl_Image *)image)))                                                   \
+    }                                                                                              \
+    void *widget##_deimage(const widget *self) {                                                   \
+        return (Fl_Image *)self->deimage();                                                        \
     }
 
 WIDGET_DECLARE(Fl_Widget)

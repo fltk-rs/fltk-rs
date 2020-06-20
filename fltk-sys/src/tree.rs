@@ -241,6 +241,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tree {
@@ -463,6 +469,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tree_as_group(self_: *mut Fl_Tree) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Tree_set_deimage(arg1: *mut Fl_Tree, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Tree_deimage(arg1: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

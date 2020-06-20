@@ -241,6 +241,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Spinner {
@@ -463,6 +469,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Spinner_as_group(self_: *mut Fl_Spinner) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Spinner_set_deimage(arg1: *mut Fl_Spinner, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Spinner_deimage(arg1: *const Fl_Spinner) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
@@ -732,6 +744,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Clock_as_group(self_: *mut Fl_Clock) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Clock_set_deimage(arg1: *mut Fl_Clock, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Clock_deimage(arg1: *const Fl_Clock) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -954,6 +972,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_as_group(self_: *mut Fl_Chart) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Chart_set_deimage(arg1: *mut Fl_Chart, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Chart_deimage(arg1: *const Fl_Chart) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -1249,6 +1273,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_as_group(self_: *mut Fl_Progress) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Progress_set_deimage(arg1: *mut Fl_Progress, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Progress_deimage(arg1: *const Fl_Progress) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;

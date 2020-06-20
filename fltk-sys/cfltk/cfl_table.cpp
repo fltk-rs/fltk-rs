@@ -500,6 +500,14 @@ void *Fl_Table_as_group(Fl_Table *self) {
     return self->as_group();
 }
 
+void Fl_Table_set_deimage(Fl_Table *self, void *image) {
+    LOCK(self->deimage(((Fl_Image *)image)))
+}
+
+void *Fl_Table_deimage(const Fl_Table *self) {
+    return (Fl_Image *)self->deimage();
+}
+
 GROUP_DEFINE(Fl_Table)
 
 TABLE_DEFINE(Fl_Table)
@@ -837,6 +845,14 @@ void *Fl_Table_Row_as_window(Fl_Table_Row *self) {
 
 void *Fl_Table_Row_as_group(Fl_Table_Row *self) {
     return self->as_group();
+}
+
+void Fl_Table_Row_set_deimage(Fl_Table_Row *self, void *image) {
+    LOCK(self->deimage(((Fl_Image *)image)))
+}
+
+void *Fl_Table_Row_deimage(const Fl_Table_Row *self) {
+    return (Fl_Image *)self->deimage();
 }
 
 GROUP_DEFINE(Fl_Table_Row)

@@ -191,6 +191,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let as_group = Ident::new(format!("{}_{}", name_str, "as_group").as_str(), name.span());
+    let deimage = Ident::new(format!("{}_{}", name_str, "deimage").as_str(), name.span());
+    let set_deimage = Ident::new(format!("{}_{}", name_str, "set_deimage").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -491,6 +493,28 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     let image_ptr = #image(self._inner);
+                    if image_ptr.is_null() {
+                        None
+                    } else {
+                        Some(Image::from_raw(image_ptr as *mut fltk_sys::image::Fl_Image))
+                    }
+                }
+            }
+
+            fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
+                assert!(!self.was_deleted());
+                if let Some(image) = image {
+                    assert!(!image.was_deleted());
+                    unsafe { #set_deimage(self._inner, image.as_ptr()) }
+                } else {
+                    unsafe { #set_deimage(self._inner, 0 as *mut raw::c_void) }
+                }
+            }
+
+            fn deimage(&self) -> Option<Image> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let image_ptr = #deimage(self._inner);
                     if image_ptr.is_null() {
                         None
                     } else {

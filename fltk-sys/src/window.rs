@@ -241,6 +241,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
@@ -463,6 +469,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_as_group(self_: *mut Fl_Group) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Group_set_deimage(arg1: *mut Fl_Group, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Group_deimage(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
@@ -725,6 +737,12 @@ extern "C" {
     pub fn Fl_Pack_as_group(self_: *mut Fl_Pack) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Pack_set_deimage(arg1: *mut Fl_Pack, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Pack_deimage(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
 }
 extern "C" {
@@ -983,6 +1001,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_as_group(self_: *mut Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_deimage(arg1: *mut Fl_Scroll, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Scroll_deimage(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Scroll_xposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
@@ -1264,6 +1288,12 @@ extern "C" {
     pub fn Fl_Tabs_as_group(self_: *mut Fl_Tabs) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Tabs_set_deimage(arg1: *mut Fl_Tabs, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Tabs_deimage(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -1524,6 +1554,12 @@ extern "C" {
     pub fn Fl_Tile_as_group(self_: *mut Fl_Tile) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Tile_set_deimage(arg1: *mut Fl_Tile, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Tile_deimage(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1782,6 +1818,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_as_group(self_: *mut Fl_Wizard) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_set_deimage(arg1: *mut Fl_Wizard, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Wizard_deimage(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -2092,6 +2134,15 @@ extern "C" {
     pub fn Fl_Color_Chooser_as_group(self_: *mut Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Color_Chooser_set_deimage(
+        arg1: *mut Fl_Color_Chooser,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_deimage(arg1: *const Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
 }
 extern "C" {
@@ -2371,6 +2422,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_as_group(self_: *mut Fl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Window_set_deimage(arg1: *mut Fl_Window, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Window_deimage(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
@@ -2702,6 +2759,15 @@ extern "C" {
     pub fn Fl_Double_Window_as_group(self_: *mut Fl_Double_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Double_Window_set_deimage(
+        arg1: *mut Fl_Double_Window,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Double_Window_deimage(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
 }
 extern "C" {
@@ -3031,6 +3097,12 @@ extern "C" {
     pub fn Fl_Menu_Window_as_group(self_: *mut Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Menu_Window_set_deimage(arg1: *mut Fl_Menu_Window, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_deimage(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
@@ -3331,6 +3403,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_as_group(self_: *mut Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_deimage(arg1: *mut Fl_Gl_Window, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_deimage(arg1: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Gl_Window_begin(self_: *mut Fl_Gl_Window);

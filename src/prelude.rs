@@ -167,6 +167,10 @@ pub unsafe trait WidgetExt {
     fn set_image<I: ImageExt>(&mut self, image: Option<I>);
     /// Gets the image associated with the widget
     fn image(&self) -> Option<Image>;
+    /// Sets the image of the widget
+    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>);
+    /// Gets the image associated with the widget
+    fn deimage(&self) -> Option<Image>;
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback(&mut self, cb: Box<dyn FnMut()>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
