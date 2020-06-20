@@ -540,18 +540,21 @@ impl TextEditor {
 }
 
 impl SimpleTerminal {
+    /// Sets whether the terminal automatically stays at the bottom
     pub fn set_stay_at_bottom(&mut self, arg1: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self._inner, arg1 as i32) }
     }
 
+    /// Returns whether the terminal automatically stays at the bottom
     pub fn stay_at_bottom(&self) -> bool {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_stay_at_bottom(self._inner) != 0 }
     }
 
+    /// Sets the max lines allowed in history
     pub fn set_history_lines(&mut self, arg1: u32) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -562,24 +565,28 @@ impl SimpleTerminal {
         unsafe { Fl_Simple_Terminal_set_history_lines(self._inner, arg1 as i32) }
     }
 
+    /// Gets the max lines allowed in history
     pub fn history_lines(&self) -> u32 {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_history_lines(self._inner) as u32 }
     }
 
+    /// Enables ANSI sequences within the text to control text colors
     pub fn set_ansi(&mut self, val: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_set_ansi(self._inner, val as i32) }
     }
 
+    /// Returns whether ANSI sequences are enabled
     pub fn ansi(&self) -> bool {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_ansi(self._inner) != 0 }
     }
 
+    /// Appends text to the terminal buffer
     pub fn append(&mut self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -587,6 +594,7 @@ impl SimpleTerminal {
         unsafe { Fl_Simple_Terminal_append(self._inner, s) }
     }
 
+    /// Sets the text of the terminal buffer
     pub fn set_text(&mut self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -594,6 +602,7 @@ impl SimpleTerminal {
         unsafe { Fl_Simple_Terminal_set_text(self._inner, s) }
     }
 
+    /// Gets the text of the terminal buffer
     pub fn text(&self) -> String {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -606,12 +615,14 @@ impl SimpleTerminal {
         }
     }
 
+    /// Clears the terminal
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_clear(self._inner) }
     }
 
+    /// Removes `count` lines from `start`
     pub fn remove_lines(&mut self, start: u32, count: u32) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
