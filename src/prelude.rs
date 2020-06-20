@@ -494,7 +494,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Sets the associated TextBuffer
     fn set_buffer(&mut self, buffer: TextBuffer);
     /// Unsets the current text buffer
-    fn unset_buffer(&mut self);
+    unsafe fn unset_buffer(&mut self);
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font

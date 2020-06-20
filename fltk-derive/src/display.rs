@@ -221,7 +221,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn unset_buffer(&mut self) {
+            unsafe fn unset_buffer(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_buffer(self._inner, std::ptr::null_mut())
