@@ -12,7 +12,7 @@
 //     let (x, y) = img.dimensions();
 //     let rgb = RgbImage::new(&img.to_bytes(), x as i32, y as i32, 3);
 //
-//     frame.set_image(&rgb);
+//     frame.set_image(Some(rgb));
 //
 //     wind.show();
 //
@@ -37,7 +37,7 @@
 //     let img = Asset::get("image.jpg").unwrap();
 //     let jpg = JpegImage::from_data(&img).unwrap();
 //
-//     frame.set_image(&jpg);
+//     frame.set_image(Some(jpg));
 //
 //     wind.show();
 //
@@ -58,7 +58,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut image = SharedImage::load(&PathBuf::from("screenshots/RustLogo.svg"))?;
     image.scale(200, 200, true, true);
 
-    frame.set_image(&image);
+    frame.set_image(Some(image));
+    
+    // To remove an image
+    // frame.set_image(Option::<SharedImage>::None);
 
     wind.make_resizable(true);
     wind.show();

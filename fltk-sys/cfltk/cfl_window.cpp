@@ -21,7 +21,7 @@
         LOCK(((Fl_Window *)self)->make_current();)                                                 \
     }                                                                                              \
     void widget##_set_icon(widget *self, const void *image) {                                      \
-        LOCK(self->icon((const Fl_RGB_Image *)((Fl_Image *)image)->copy());)                       \
+        LOCK(self->icon((const Fl_RGB_Image *)((Fl_Image *)image));)                               \
     }                                                                                              \
     void widget##_make_resizable(widget *self, void *wid) {                                        \
         LOCK(self->resizable((Fl_Widget *)wid);)                                                   \

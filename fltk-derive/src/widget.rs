@@ -477,23 +477,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #set_align(self._inner, align as i32) }
             }
 
-            fn set_image<Image: ImageExt>(&mut self, image: &Image) {
+            fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
-                assert!(!image.was_deleted());
-                let i = self.image();
-                unsafe { #set_image(self._inner, image.as_ptr()) }
-                if let Some(mut i) = i {
-                    unsafe { i.delete(); }
-                }
-            }
-
-            fn set_image_with_size<Image: ImageExt>(&mut self, image: &Image, w: i32, h: i32) {
-                assert!(!self.was_deleted());
-                assert!(!image.was_deleted());
-                let i = self.image();
-                unsafe { #set_image_with_size(self._inner, image.as_ptr(), w, h) }
-                if let Some(mut i) = i {
-                    unsafe { i.delete(); }
+                if let Some(image) = image {
+                    assert!(!image.was_deleted());
+                    unsafe { #set_image(self._inner, image.as_ptr()) }
+                } else {
+                    unsafe { #set_image(self._inner, 0 as *mut raw::c_void) }
                 }
             }
 

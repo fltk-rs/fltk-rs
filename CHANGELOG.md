@@ -3,7 +3,8 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Change interface for working with images. Now widgets take an Option<ImageExt>. This allows unsetting images.
+- Remove unnecessary copy when setting a widget image.
 
 ## [0.6.9] - 2020-06-20
 ### Changes

@@ -211,12 +211,8 @@ void Fl_Widget_delete(Fl_Widget *self) {
     delete self;
 }
 
-void Fl_Widget_set_image_with_size(Fl_Widget *self, void *image, int w, int h) {
-    LOCK(self->image(((Fl_Image *)image)->copy(w, h)); self->redraw();)
-}
-
 void Fl_Widget_set_image(Fl_Widget *self, void *image) {
-    LOCK(self->image(((Fl_Image *)image)->copy()); self->redraw();)
+    LOCK(self->image(((Fl_Image *)image)))
 }
 
 void Fl_Widget_set_handler(Fl_Widget *self, custom_handler_callback cb, void *data) {

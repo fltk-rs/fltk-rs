@@ -57,7 +57,7 @@
         LOCK(self->textsize(s);)                                                                   \
     }                                                                                              \
     void widget##_set_icon(widget *self, int line, void *icon) {                                   \
-        LOCK(self->icon(line, ((Fl_Image *)icon)->copy());)                                        \
+        LOCK(self->icon(line, ((Fl_Image *)icon));)                                                \
     }                                                                                              \
     void *widget##_icon(const widget *self, int line) {                                            \
         return (Fl_Image *)self->icon(line);                                                       \

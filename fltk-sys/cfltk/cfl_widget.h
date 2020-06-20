@@ -57,7 +57,6 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     void widget##_set_align(widget *, int typ);                                                    \
     void widget##_delete(widget *);                                                                \
     void widget##_set_image(widget *, void *);                                                     \
-    void widget##_set_image_with_size(widget *, void *, int, int);                                 \
     void widget##_set_handler(widget *self, custom_handler_callback cb, void *data);               \
     void widget##_set_draw(widget *self, custom_draw_callback cb, void *data);                     \
     void widget##_set_trigger(widget *, int);                                                      \
@@ -241,11 +240,8 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     void widget##_delete(widget *self) {                                                           \
         delete ((widget##_Derived *)self);                                                         \
     }                                                                                              \
-    void widget##_set_image_with_size(widget *self, void *image, int w, int h) {                   \
-        LOCK(self->image(((Fl_Image *)image)->copy(w, h)); self->redraw();)                        \
-    }                                                                                              \
     void widget##_set_image(widget *self, void *image) {                                           \
-        LOCK(self->image(((Fl_Image *)image)->copy()); self->redraw();)                            \
+        LOCK(self->image(((Fl_Image *)image)))                                                     \
     }                                                                                              \
     void widget##_set_handler(widget *self, custom_handler_callback cb, void *data) {              \
         LOCK(((widget##_Derived *)self)->set_handler_data(data);                                   \

@@ -147,14 +147,6 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_image_with_size(
-        arg1: *mut Fl_Widget,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_set_handler(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
@@ -381,14 +373,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_image(arg1: *mut Fl_Menu_Bar, arg2: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Menu_Bar_set_image_with_size(
-        arg1: *mut Fl_Menu_Bar,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_handler(
@@ -733,14 +717,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_image(arg1: *mut Fl_Menu_Button, arg2: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Menu_Button_set_image_with_size(
-        arg1: *mut Fl_Menu_Button,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_handler(
@@ -1094,14 +1070,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_set_image(arg1: *mut Fl_Choice, arg2: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Choice_set_image_with_size(
-        arg1: *mut Fl_Choice,
-        arg2: *mut ::std::os::raw::c_void,
-        arg3: ::std::os::raw::c_int,
-        arg4: ::std::os::raw::c_int,
-    );
 }
 extern "C" {
     pub fn Fl_Choice_set_handler(

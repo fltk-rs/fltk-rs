@@ -29,12 +29,6 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
         impl Clone for #name {
             fn clone(&self) -> Self {
-                self.copy()
-            }
-        }
-
-        unsafe impl ImageExt for #name {
-            fn copy(&self) -> Self {
                 assert!(!self.was_deleted());
                 unsafe {
                     let img = #copy(self._inner);
@@ -44,7 +38,11 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
+        }
 
+        impl Copy for #name {}
+
+        unsafe impl ImageExt for #name {
             fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
                 assert!(!self.was_deleted());
                 unsafe { #draw(self._inner, arg2, arg3, arg4, arg5) }
@@ -166,7 +164,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
                 let _ = crate::draw::write_to_png_file(&self, &path)?;
-                let ret = PngImage::load(&path)?.copy();
+                let ret = PngImage::load(&path)?.clone();
                 std::fs::remove_file(&path)?;
                 Ok(ret)
             }
@@ -175,7 +173,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
                 let _ = crate::draw::write_to_jpg_file(&self, &path)?;
-                let ret = JpegImage::load(&path)?.copy();
+                let ret = JpegImage::load(&path)?.clone();
                 std::fs::remove_file(&path)?;
                 Ok(ret)
             }
@@ -184,7 +182,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
                 let _ = crate::draw::write_to_bmp_file(&self, &path)?;
-                let ret = BmpImage::load(&path)?.copy();
+                let ret = BmpImage::load(&path)?.clone();
                 std::fs::remove_file(&path)?;
                 Ok(ret)
             }

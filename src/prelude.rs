@@ -164,9 +164,7 @@ pub unsafe trait WidgetExt {
     /// Sets the alignment of the widget
     fn set_align(&mut self, align: Align);
     /// Sets the image of the widget
-    fn set_image<Image: ImageExt>(&mut self, image: &Image);
-    /// Sets the resized image of the widget
-    fn set_image_with_size<Image: ImageExt>(&mut self, image: &Image, w: i32, h: i32);
+    fn set_image<I: ImageExt>(&mut self, image: Option<I>);
     /// Gets the image associated with the widget
     fn image(&self) -> Option<Image>;
     /// Sets the callback when the widget is triggered (clicks for example)
@@ -294,7 +292,7 @@ pub unsafe trait WindowExt: GroupExt {
     /// Makes the window current
     fn make_current(&mut self);
     /// Sets the windows icon
-    fn set_icon<T: ImageExt>(&mut self, image: &T);
+    fn set_icon<T: ImageExt>(&mut self, image: Option<T>);
     /// Returns the icon of the window
     fn icon(&self) -> Option<Image>;
     /// Make the window resizable
@@ -634,7 +632,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Sets the text size
     fn set_text_size(&mut self, sz: u32);
     /// Sets the icon for browser elements
-    fn set_icon<Img: ImageExt>(&mut self, line: u32, image: &Img);
+    fn set_icon<Img: ImageExt>(&mut self, line: u32, image: Option<Img>);
     /// Returns the icon of a browser element
     fn icon(&self, line: u32) -> Option<Image>;
     /// Removes the icon of a browser element
@@ -763,8 +761,6 @@ pub unsafe trait TableExt: GroupExt {
 
 /// Defines the methods implemented by all image types
 pub unsafe trait ImageExt {
-    /// Creates a copy of the image
-    fn copy(&self) -> Self;
     /// Draws the image at the presupplied coordinates and size
     fn draw(&mut self, x: i32, y: i32, width: i32, height: i32);
     /// Return the width of the image
