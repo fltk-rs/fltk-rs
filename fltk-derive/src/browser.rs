@@ -186,8 +186,8 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 let i = self.icon(line);
                 unsafe {
                     #set_icon(self._inner, line as i32, image.as_ptr());
-                    if i.is_some() {
-                        i.unwrap().delete();
+                    if let Some(mut i) = i {
+                        unsafe { i.delete(); }
                     }
                 }
             }

@@ -74,9 +74,9 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 let i = self.icon();
                 unsafe { 
                     #set_icon(self._inner, image.as_ptr());
-                    if i.is_some() {
-                        i.unwrap().delete()
-                    } 
+                    if let Some(mut i) = i {
+                        unsafe { i.delete(); }
+                    }
                 }
             }
 

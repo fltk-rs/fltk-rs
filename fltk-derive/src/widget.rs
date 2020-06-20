@@ -482,8 +482,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!image.was_deleted());
                 let i = self.image();
                 unsafe { #set_image(self._inner, image.as_ptr()) }
-                if i.is_some() {
-                    unsafe { i.unwrap().delete(); }
+                if let Some(mut i) = i {
+                    unsafe { i.delete(); }
                 }
             }
 
@@ -492,8 +492,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!image.was_deleted());
                 let i = self.image();
                 unsafe { #set_image_with_size(self._inner, image.as_ptr(), w, h) }
-                if i.is_some() {
-                    unsafe { i.unwrap().delete(); }
+                if let Some(mut i) = i {
+                    unsafe { i.delete(); }
                 }
             }
 
