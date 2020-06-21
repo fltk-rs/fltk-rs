@@ -33,10 +33,10 @@ fn main() {
     wind.end();
     wind.show();
 
-    let paddle_pos = Rc::from(RefCell::from(320));
+    let paddle_pos = Rc::from(RefCell::from(320)); // paddle's starting x position
     let paddle_c = paddle_pos.clone();
 
-    // This is called whenever the window is draw and redrawn (in the event loop)
+    // This is called whenever the window is drawn and redrawn (in the event loop)
     wind.draw(Box::new(move || {
         draw::set_draw_color(Color::White);
         draw::draw_rectf(*paddle_c.borrow(), 540, 160, 20);
