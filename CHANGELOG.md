@@ -4,6 +4,10 @@
 ### Changes
 - (None)
 
+## [0.7.1] - 2020-06-22
+### Changes
+- Add asserts around TextBuffer operations.
+
 ## [0.7.0] - 2020-06-21
 ### Changes
 - Change interface for working with images. Now widgets take an Option<ImageExt>. This allows unsetting images.
