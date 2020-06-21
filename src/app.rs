@@ -282,7 +282,7 @@ where
     }
 }
 
-/// Initializes loaded fonts of a certain patter ```name```
+/// Initializes loaded fonts of a certain pattern ```name```
 fn set_fonts(name: &str) -> u8 {
     let name = CString::new(name).unwrap();
     unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
