@@ -2,6 +2,10 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.7.1] - 2020-06-22
+### Changes
 - Add asserts around TextBuffer operations.
 
 ## [0.7.0] - 2020-06-21
