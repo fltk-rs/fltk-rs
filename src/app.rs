@@ -725,3 +725,13 @@ pub fn own_colormap() {
 pub fn set_focus<W: WidgetExt>(wid: &mut W) {
     unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }
+
+pub fn delay(millis: u128) {
+    let now = std::time::Instant::now();
+    loop {
+        let after = std::time::Instant::now();
+        if after.duration_since(now).as_millis() > millis {
+            break;
+        }
+    }
+}

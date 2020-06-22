@@ -1,8 +1,6 @@
 use fltk::*;
 use std::cell::RefCell;
 use std::rc::Rc;
-use std::thread;
-use std::time::Duration;
 
 #[repr(i32)]
 #[derive(Copy, Clone)]
@@ -55,8 +53,8 @@ fn main() {
     }));
 
     while app.wait().unwrap() {
-        ball.pos.0 += 1 * ball.dir.0 as i32; // The increment in x position
-        ball.pos.1 += 1 * ball.dir.1 as i32; // The increment in y position
+        ball.pos.0 += 10 * ball.dir.0 as i32; // The increment in x position
+        ball.pos.1 += 10 * ball.dir.1 as i32; // The increment in y position
         if ball.pos.1 == 540 - 40
             && (ball.pos.0 > *paddle_c.borrow() - 40 && ball.pos.0 < *paddle_c.borrow() + 160)
         {
@@ -77,8 +75,6 @@ fn main() {
         }
         ball.wid.resize(ball.pos.0, ball.pos.1, 40, 40); // Moves the ball
         wind.redraw();
-        if !cfg!(windows) { // Window's event loop works differently
-            thread::sleep(Duration::from_millis(1));
-        }
+        app::delay(8);
     }
 }

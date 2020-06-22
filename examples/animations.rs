@@ -37,7 +37,7 @@ macro_rules! clock {() => ("<?xml version=\"1.0\" encoding=\"utf-8\"?>
 
 fn main() {
     let app = App::default().set_scheme(AppScheme::Gleam);
-    let mut wind = Window::default()
+    let mut wind = DoubleWindow::default()
         .with_label("svg test")
         .with_size(720, 486)
         .center_screen();

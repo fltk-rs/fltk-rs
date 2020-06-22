@@ -2,7 +2,6 @@
 
 Each file is a standalone executable with its main function. Examples vary from basic hello world simplicity to some more complex things. They may contain logic bugs, however their purpose is for demonstration and for testing UI elements. If you would like to contribute fixes, improvements or more examples, you're very welcome to do so.
 Some examples using drawing primitives like (paint and pong) might not work on MacOS since MacOS requires drawing to be done using Quartz drawing primitives.
-Regarding animations, the buffering and event loops work differently on Windows than on other systems, so switching to a DoubleWindow and removing the sleep in the examples works better on windows.
 
 To run the examples: 
 ```

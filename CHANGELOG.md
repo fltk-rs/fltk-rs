@@ -3,6 +3,7 @@
 ## Unreleased
 ### Changes
 - Clean up fonts interface. Add example on how to use system fonts.
+- Add app::delay() which delays the exectution of the application.
 
 ## [0.7.1] - 2020-06-22
 ### Changes

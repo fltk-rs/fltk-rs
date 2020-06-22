@@ -251,8 +251,6 @@ Setting the scheme to Gtk
 
 ![alt_test](screenshots/pong.gif)
 
-P.S. The buffering and event loops work differently on Windows than on other systems, so for animations, switching to a DoubleWindow and removing the sleep works better on windows.
-
 ## Currently implemented widgets
 
 The most commonly widgets are implemented: 
