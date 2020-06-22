@@ -10,6 +10,8 @@ use std::{
     os::raw,
 };
 
+pub(crate) static mut FONTS: Option<Vec<String>> = None;
+
 /// Runs the event loop
 fn run() -> Result<(), FltkError> {
     unsafe {
@@ -106,6 +108,14 @@ impl App {
     pub fn wait(&self) -> Result<bool, FltkError> {
         lock()?;
         Ok(wait())
+    }
+
+    /// Loads system fonts
+    pub fn load_system_fonts(self) -> Self {
+        unsafe {
+            FONTS = Some(get_font_names());
+        }
+        self
     }
 
     /// Set the visual of the application
@@ -288,48 +298,60 @@ fn set_fonts(name: &str) -> u8 {
     unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
 
-/// Returns the number of fonts available to the application
-pub fn get_font_count() -> u8 {
-    set_fonts("*")
-}
 
 /// Gets the name of a font through its index
-pub fn get_font_name(idx: u8) -> Option<String> {
+pub fn font_name(idx: usize) -> Option<String> {
     unsafe {
-        let font = Fl_get_font(idx as i32);
-        if font.is_null() {
-            None
+        if let Some(f) = &FONTS {
+            Some(f[idx].clone())
         } else {
-            Some(
-                CStr::from_ptr(font as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string(),
-            )
+            None
         }
     }
 }
 
 /// Returns a list of available fonts to the application
-pub fn get_font_names() -> Vec<String> {
+fn get_font_names() -> Vec<String> {
     let mut vec: Vec<String> = vec![];
-    let cnt = get_font_count();
+    let cnt = set_fonts("*") as usize;
     for i in 0..cnt {
-        vec.push(get_font_name(i).unwrap());
+        let temp = unsafe {
+            CStr::from_ptr(Fl_get_font(i as i32))
+                .to_string_lossy()
+                .to_string()
+        };
+        vec.push(temp);
     }
     vec
 }
 
 /// Finds the index of a font through its name
-pub fn get_font_index(name: &str) -> Option<u8> {
-    let cnt = set_fonts("*");
-    let mut ret: Option<u8> = None;
-    for i in 0..cnt {
-        if name == get_font_name(i).unwrap() {
-            ret = Some(i);
-            break;
+pub fn font_index(name: &str) -> Option<usize> {
+    unsafe {
+        if let Some(f) = &FONTS {
+            f.iter().position(|i| i == name)
+        } else {
+            None
         }
     }
-    ret
+}
+
+/// Gets the number of loaded fonts
+pub fn font_count() -> usize {
+    unsafe {
+        if let Some(f) = &FONTS {
+            f.len()
+        } else {
+            0
+        }
+    }
+}
+
+/// Gets a Vector<String> of loaded fonts
+pub fn fonts() -> Vec<String> {
+    unsafe {
+        FONTS.clone().unwrap().clone()
+    }
 }
 
 /// Adds a custom handler for unhandled events
@@ -653,14 +675,17 @@ pub fn is_event_alt() -> bool {
     unsafe { Fl_event_alt() != 0 }
 }
 
+/// Sets the damage to true or false, illiciting a redraw by the application
 fn set_damage(flag: bool) {
     unsafe { Fl_set_damage(flag as i32) }
 }
 
+/// Returns whether any of the widgets were damaged
 fn damage() -> bool {
     unsafe { Fl_damage() != 0 }
 }
 
+/// Sets the visual mode of the application
 fn set_visual(mode: Mode) -> Result<(), FltkError> {
     unsafe {
         match Fl_visual(mode as i32) {
@@ -670,6 +695,7 @@ fn set_visual(mode: Mode) -> Result<(), FltkError> {
     }
 }
 
+/// Makes FLTK use its own colormap. This may make FLTK display better
 pub fn own_colormap() {
     unsafe { Fl_own_colormap() }
 }
@@ -700,6 +726,18 @@ pub fn own_colormap() {
 //     }
 // }
 
+/// Sets the widget which has focus
 pub fn set_focus<W: WidgetExt>(wid: &mut W) {
     unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
+}
+
+/// Delays the current thread by millis. Because std::thread::sleep isn't accurate on windows!
+pub fn delay(millis: u128) {
+    let now = std::time::Instant::now();
+    loop {
+        let after = std::time::Instant::now();
+        if after.duration_since(now).as_millis() > millis {
+            break;
+        }
+    }
 }
