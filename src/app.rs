@@ -675,14 +675,17 @@ pub fn is_event_alt() -> bool {
     unsafe { Fl_event_alt() != 0 }
 }
 
+/// Sets the damage to true or false, illiciting a redraw by the application
 fn set_damage(flag: bool) {
     unsafe { Fl_set_damage(flag as i32) }
 }
 
+/// Returns whether any of the widgets were damaged
 fn damage() -> bool {
     unsafe { Fl_damage() != 0 }
 }
 
+/// Sets the visual mode of the application
 fn set_visual(mode: Mode) -> Result<(), FltkError> {
     unsafe {
         match Fl_visual(mode as i32) {
@@ -692,6 +695,7 @@ fn set_visual(mode: Mode) -> Result<(), FltkError> {
     }
 }
 
+/// Makes FLTK use its own colormap. This may make FLTK display better
 pub fn own_colormap() {
     unsafe { Fl_own_colormap() }
 }
@@ -722,10 +726,12 @@ pub fn own_colormap() {
 //     }
 // }
 
+/// Sets the widget which has focus
 pub fn set_focus<W: WidgetExt>(wid: &mut W) {
     unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }
 
+/// Delays the current thread by millis. Because std::thread::sleep isn't accurate on windows!
 pub fn delay(millis: u128) {
     let now = std::time::Instant::now();
     loop {
