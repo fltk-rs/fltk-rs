@@ -347,6 +347,13 @@ pub fn font_count() -> usize {
     }
 }
 
+/// Gets a Vector<String> of loaded fonts
+pub fn fonts() -> Vec<String> {
+    unsafe {
+        FONTS.clone().unwrap().clone()
+    }
+}
+
 /// Adds a custom handler for unhandled events
 pub fn add_handler(cb: fn(Event) -> bool) {
     unsafe {

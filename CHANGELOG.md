@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Clean up fonts interface. Add example on how to use system fonts.
 
 ## [0.7.1] - 2020-06-22
 ### Changes
