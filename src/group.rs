@@ -22,6 +22,14 @@ pub struct Pack {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Defines pack types
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum PackType {
+    Vertical = 0,
+    Horizontal = 1,
+}
+
 /// Creates a scroll group
 #[derive(WidgetExt, GroupExt, Debug)]
 pub struct Scroll {

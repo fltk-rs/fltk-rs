@@ -4,6 +4,10 @@
 ### Changes
 - (None)
 
+## [0.7.3] - 2020-06-24
+### Changes
+- Added PackType which can be used with the Pack widget.
+
 ## [0.7.2] - 2020-06-23
 ### Changes
 - Clean up fonts interface. Add example on how to use system fonts.
