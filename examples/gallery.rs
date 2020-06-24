@@ -14,7 +14,7 @@ fn draw_gallery() {
     let tab = Tabs::new(10, 10, 500 - 20, 400 - 20, "");
     
     let grp1 = Group::new(10, 35, 500 - 20, 400 - 45, "Tab1");
-    
+
     let _but1 = Button::new(50, 60, 90, 25, "Button");
     
     let _but2 = RoundButton::new(50, 90, 90, 25, "Round");
