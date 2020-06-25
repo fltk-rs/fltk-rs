@@ -53,8 +53,8 @@ fn main() {
     }));
 
     while app.wait().unwrap() {
-        ball.pos.0 += 10 * ball.dir.0 as i32; // The increment in x position
-        ball.pos.1 += 10 * ball.dir.1 as i32; // The increment in y position
+        ball.pos.0 += 2 * ball.dir.0 as i32; // The increment in x position
+        ball.pos.1 += 2 * ball.dir.1 as i32; // The increment in y position
         if ball.pos.1 == 540 - 40
             && (ball.pos.0 > *paddle_c.borrow() - 40 && ball.pos.0 < *paddle_c.borrow() + 160)
         {
@@ -75,6 +75,8 @@ fn main() {
         }
         ball.wid.resize(ball.pos.0, ball.pos.1, 40, 40); // Moves the ball
         wind.redraw();
-        app::delay(8);
+        if !cfg!(windows) {
+            std::thread::sleep(std::time::Duration::from_millis(1));
+        }
     }
 }
