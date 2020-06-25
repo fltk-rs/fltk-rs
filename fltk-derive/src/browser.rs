@@ -310,14 +310,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
         
             fn set_column_widths(&mut self, arr: &[i32]) {
                 assert!(!self.was_deleted());
-                let mut old = self.column_widths();
+                let mut old = mem::ManuallyDrop::new(self.column_widths());
                 unsafe {
                     let mut v = arr.to_vec();
                     v.push(0);
                     let v = mem::ManuallyDrop::new(v);
                     #set_column_widths(self._inner, v.as_ptr());
+                    mem::ManuallyDrop::drop(&mut old);
                 }
-                drop(old);
             }
         
             fn displayed(&self, line: u32,) -> bool {

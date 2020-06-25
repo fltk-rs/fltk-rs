@@ -1,3 +1,5 @@
+// Slightly modified translation of https://github.com/fltk/fltk/blob/master/examples/table-simple.cxx
+
 use fltk::*;
 
 fn main() {
