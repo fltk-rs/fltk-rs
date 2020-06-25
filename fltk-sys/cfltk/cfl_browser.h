@@ -24,7 +24,29 @@ extern "C" {
     void widget##_set_text_size(widget *, int s);                                                  \
     void widget##_set_icon(widget *, int line, void *icon);                                        \
     void *widget##_icon(const widget *, int line);                                                 \
-    void widget##_remove_icon(widget *, int line);
+    void widget##_remove_icon(widget *, int line);                                                 \
+    void widget##_topline(widget *self, int line);                                                 \
+    void widget##_bottomline(widget *self, int line);                                              \
+    void widget##_middleline(widget *self, int line);                                              \
+    char widget##_format_char(const widget *self);                                                 \
+    void widget##_set_format_char(widget *self, char c);                                           \
+    char widget##_column_char(const widget *self);                                                 \
+    void widget##_set_column_char(widget *self, char c);                                           \
+    const int *widget##_column_widths(const widget *self);                                         \
+    void widget##_set_column_widths(widget *self, const int *arr);                                 \
+    int widget##_displayed(const widget *self, int line);                                          \
+    void widget##_make_visible(widget *self, int line);                                            \
+    int widget##_position(const widget *self);                                                     \
+    void widget##_set_position(widget *self, int pos);                                             \
+    int widget##_hposition(const widget *self);                                                    \
+    void widget##_set_hposition(widget *self, int);                                                \
+    unsigned char widget##_has_scrollbar(const widget *self);                                      \
+    void widget##_set_has_scrollbar(widget *self, unsigned char mode);                             \
+    int widget##_scrollbar_size(const widget *self);                                               \
+    void widget##_set_scrollbar_size(widget *self, int newSize);                                   \
+    int widget##_scrollbar_width(const widget *self);                                              \
+    void widget##_set_scrollbar_width(widget *self, int width);                                    \
+    void widget##_sort(widget *self);
 
 WIDGET_DECLARE(Fl_Browser)
 

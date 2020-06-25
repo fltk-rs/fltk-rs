@@ -24,6 +24,19 @@ pub enum BrowserType {
     MultiBrowser = 3,
 }
 
+/// Defines the type of ScrollBar associated with the browser
+#[repr(u8)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum BrowserScrollBar {                     
+    Horizontal = 1,        
+    Vertical = 2,          
+    Both = 3,              
+    AlwaysOn = 4,                        
+    HorizontalAlways = 5, 
+    VerticalAlways = 6,   
+    BothAlways = 7        
+}
+
 /// Creates a select browser
 #[derive(WidgetExt, BrowserExt, Debug)]
 pub struct SelectBrowser {

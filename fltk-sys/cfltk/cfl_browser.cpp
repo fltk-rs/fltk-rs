@@ -64,6 +64,72 @@
     }                                                                                              \
     void widget##_remove_icon(widget *self, int l) {                                               \
         LOCK(self->remove_icon(l);)                                                                \
+    }                                                                                              \
+    void widget##_topline(widget *self, int line) {                                                \
+        LOCK(self->topline(line);)                                                                 \
+    }                                                                                              \
+    void widget##_bottomline(widget *self, int line) {                                             \
+        LOCK(self->bottomline(line);)                                                              \
+    }                                                                                              \
+    void widget##_middleline(widget *self, int line) {                                             \
+        LOCK(self->middleline(line);)                                                              \
+    }                                                                                              \
+    char widget##_format_char(const widget *self) {                                                \
+        return self->format_char();                                                                \
+    }                                                                                              \
+    void widget##_set_format_char(widget *self, char c) {                                          \
+        LOCK(self->format_char(c);)                                                                \
+    }                                                                                              \
+    char widget##_column_char(const widget *self) {                                                \
+        return self->column_char();                                                                \
+    }                                                                                              \
+    void widget##_set_column_char(widget *self, char c) {                                          \
+        LOCK(self->column_char(c);)                                                                \
+    }                                                                                              \
+    const int *widget##_column_widths(const widget *self) {                                        \
+        return self->column_widths();                                                              \
+    }                                                                                              \
+    void widget##_set_column_widths(widget *self, const int *arr) {                                \
+        LOCK(self->column_widths(arr);)                                                            \
+    }                                                                                              \
+    int widget##_displayed(const widget *self, int line) {                                         \
+        return self->displayed(line);                                                              \
+    }                                                                                              \
+    void widget##_make_visible(widget *self, int line) {                                           \
+        LOCK(self->make_visible(line);)                                                            \
+    }                                                                                              \
+    int widget##_position(const widget *self) {                                                    \
+        return self->position();                                                                   \
+    }                                                                                              \
+    void widget##_set_position(widget *self, int pos) {                                            \
+        LOCK(self->position(pos);)                                                                 \
+    }                                                                                              \
+    int widget##_hposition(const widget *self) {                                                   \
+        return self->hposition();                                                                  \
+    }                                                                                              \
+    void widget##_set_hposition(widget *self, int pos) {                                           \
+        LOCK(self->hposition(pos);)                                                                \
+    }                                                                                              \
+    unsigned char widget##_has_scrollbar(const widget *self) {                                     \
+        return self->has_scrollbar();                                                              \
+    }                                                                                              \
+    void widget##_set_has_scrollbar(widget *self, unsigned char mode) {                            \
+        LOCK(self->has_scrollbar(mode);)                                                           \
+    }                                                                                              \
+    int widget##_scrollbar_size(const widget *self) {                                              \
+        return self->scrollbar_size();                                                             \
+    }                                                                                              \
+    void widget##_set_scrollbar_size(widget *self, int newSize) {                                  \
+        LOCK(self->scrollbar_size(newSize);)                                                       \
+    }                                                                                              \
+    int widget##_scrollbar_width(const widget *self) {                                             \
+        return self->scrollbar_width();                                                            \
+    }                                                                                              \
+    void widget##_set_scrollbar_width(widget *self, int width) {                                   \
+        LOCK(self->scrollbar_width(width);)                                                        \
+    }                                                                                              \
+    void widget##_sort(widget *self) {                                                             \
+        LOCK(self->sort();)                                                                        \
     }
 
 WIDGET_DEFINE(Fl_Browser)

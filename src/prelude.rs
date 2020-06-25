@@ -639,6 +639,50 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn icon(&self, line: u32) -> Option<Image>;
     /// Removes the icon of a browser element
     fn remove_icon(&mut self, line: u32);
+
+    fn topline(&mut self, line: u32);
+    
+    fn bottomline(&mut self, line: u32);
+    
+    fn middleline(&mut self, line: u32);
+    
+    fn format_char(&self) -> char;
+    
+    fn set_format_char(&mut self, c: char);
+    
+    fn column_char(&self) -> char;
+    
+    fn set_column_char(&mut self, c: char);
+    
+    fn column_widths(&self) -> Vec<i32>;
+    
+    fn set_column_widths(&mut self, arr: &[i32]);
+    
+    fn displayed(&self, line: u32,) -> bool;
+    
+    fn make_visible(&mut self, line: u32);
+    
+    fn position(&self) -> u32;
+    
+    fn set_position(&mut self, pos: u32);
+    
+    fn hposition(&self) -> u32;
+    
+    fn set_hposition(&mut self, pos: u32);
+    
+    fn has_scrollbar(&self) -> crate::browser::BrowserScrollBar;
+    
+    fn set_has_scrollbar(&mut self, mode: crate::browser::BrowserScrollBar);
+    
+    fn scrollbar_size(&self) -> u32;
+    
+    fn set_scrollbar_size(&mut self, new_size: u32);
+    
+    fn scrollbar_width(&self) -> i32;
+    
+    fn set_scrollbar_width(&mut self, width: i32);
+    
+    fn sort(&mut self);
 }
 
 /// Defines the methods implemented by table types

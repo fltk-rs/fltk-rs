@@ -1,8 +1,13 @@
 # Changelog
 
+
 ## Unreleased
 ### Changes
 - (None)
+
+## [0.7.4] - 2020-06-25
+### Changes
+- Add several missing methods to BrowserExt methods.
 
 ## [0.7.3] - 2020-06-24
 ### Changes
