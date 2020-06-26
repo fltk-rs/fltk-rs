@@ -86,7 +86,7 @@ impl GlWindow {
     /// Mark the OpeGL context as still valid
     pub fn set_valid(&mut self, v: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Gl_Window_set_valid(self._inner, v as i8) }
+        unsafe { Fl_Gl_Window_set_valid(self._inner, v as raw::c_char) }
     }
 
     /// Returns whether the context is valid upon creation
@@ -103,7 +103,7 @@ impl GlWindow {
     /// Mark the context as valid upon creation
     pub fn set_context_valid(&mut self, v: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Gl_Window_set_context_valid(self._inner, v as i8) }
+        unsafe { Fl_Gl_Window_set_context_valid(self._inner, v as raw::c_char) }
     }
 
     /// Returns the GlContext

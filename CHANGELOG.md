@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Change char flags to return raw::c_char instead of i8/u8.
 
 ## [0.7.4] - 2020-06-25
 ### Changes
