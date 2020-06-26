@@ -49,7 +49,7 @@ fn draw_gallery() {
     
     let mut scrl2 = Scrollbar::new(180, 300, 150, 25, "");
     
-    scrl2.set_type(ScrollBarType::HorizontalNiceScrollBar);
+    scrl2.set_type(ScrollbarType::HorizontalNice);
     
     let _frame = Frame::new(270, 335, 90, 30, "Examples!");
     

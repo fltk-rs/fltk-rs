@@ -18,9 +18,9 @@ pub struct Input {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum InputType {
-    NormalInput = 0,
-    FloatInput = 1,
-    IntInput = 2,
+    Normal = 0,
+    Float = 1,
+    Int = 2,
     Multiline = 4,
     Secret = 5,
     InputType = 7,

@@ -18,10 +18,10 @@ pub struct Button {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ButtonType {
-    NormalButton = 0,
-    ToggleButton = 1,
-    RadioButton = 102,
-    HiddenButton = 3,
+    Normal = 0,
+    Toggle = 1,
+    Radio = 102,
+    Hidden = 3,
 }
 
 /// Creates a radio button

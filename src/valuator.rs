@@ -25,12 +25,12 @@ pub struct NiceSlider {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum SliderType {
-    VerticalSlider = 0,
-    HorizontalSlider = 1,
-    VerticalFillSlider = 2,
-    HorizontalFillSlider = 3,
-    VerticalNiceSlider = 4,
-    HorizontalNiceSlider = 5,
+    Vertical = 0,
+    Horizontal = 1,
+    VerticalFill = 2,
+    HorizontalFill = 3,
+    VerticalNice = 4,
+    HorizontalNice = 5,
 }
 
 /// Creates a dial widget
@@ -51,9 +51,9 @@ pub struct LineDial {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum DialType {
-    NormalDial = 0,
-    LineDial = 1,
-    FillDial = 2,
+    Normal = 0,
+    Line = 1,
+    Fill = 2,
 }
 
 /// Creates a counter widget
@@ -67,8 +67,8 @@ pub struct Counter {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum CounterType {
-    NormalCounter = 0,
-    SimpleCounter = 1,
+    Normal = 0,
+    Simple = 1,
 }
 
 /// Creates a scrollbar widget
@@ -81,13 +81,13 @@ pub struct Scrollbar {
 /// Defines scrollbar types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
-pub enum ScrollBarType {
-    VerticalScrollBar = 0,
-    HorizontalScrollBar = 1,
-    VerticalFillScrollBar = 2,
-    HorizontalFillScrollBar = 3,
-    VerticalNiceScrollBar = 4,
-    HorizontalNiceScrollBar = 5,
+pub enum ScrollbarType {
+    Vertical = 0,
+    Horizontal = 1,
+    VerticalFill = 2,
+    HorizontalFill = 3,
+    VerticalNice = 4,
+    HorizontalNice = 5,
 }
 
 /// Creates a roller widget

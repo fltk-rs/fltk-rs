@@ -20,8 +20,8 @@ pub struct Window {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum WindowType {
-    NormalWindow = 240,
-    DoubleWindow = 241,
+    Normal = 240,
+    Double = 241,
 }
 
 /// Creates a double window widget
