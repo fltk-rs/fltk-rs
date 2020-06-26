@@ -5,15 +5,15 @@ use fltk_sys::fl::Fl_get_color;
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum LabelType {
-    NormalLabel = 0,
-    NoLabel,
-    ShadowLabel,
-    EngravedLabel,
-    EmbossedLabel,
-    MultiLabel,
-    IconLabel,
-    ImageLabel,
-    FreeLabelType,
+    Normal = 0,
+    None,
+    Shadow,
+    Engraved,
+    Embossed,
+    Multi,
+    Icon,
+    Image,
+    FreeType,
 }
 
 /// Defines the frame type, which can be set using the set_type() method
@@ -367,12 +367,12 @@ pub enum CallbackTrigger {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TextCursor {
-    NormalCursor,
-    CaretCursor,
-    DimCursor,
-    BlockCursor,
-    HeavyCursor,
-    SimpleCursor,
+    Normal,
+    Caret,
+    Dim,
+    Block,
+    Heavy,
+    Simple,
 }
 
 /// Defines the cursor styles supported by fltk
@@ -406,21 +406,21 @@ pub enum Cursor {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ChartType {
-    BarChart = 0,
-    HorizontalBarChart = 1,
-    LineChart = 2,
-    FillChart = 3,
-    SpikeChart = 4,
-    PieChart = 5,
-    SpecialPieChart = 6,
+    Bar = 0,
+    HorizontalBar = 1,
+    Line = 2,
+    Fill = 3,
+    Spike = 4,
+    Pie = 5,
+    SpecialPie = 6,
 }
 
 /// Defines the clock types supported by fltk
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ClockType {
-    SquareClock = 0,
-    RoundClock = 1,
+    Square = 0,
+    Round = 1,
 }
 
 /// Defines the clock types supported by fltk

@@ -34,7 +34,7 @@ impl Term {
         self.term.set_text_color(Color::Green);
         self.term.set_text_font(Font::Courier);
         self.term.set_cursor_color(Color::Green);
-        self.term.set_cursor_style(TextCursor::BlockCursor);
+        self.term.set_cursor_style(TextCursor::Block);
         self.term.show_cursor(true);
     }
 

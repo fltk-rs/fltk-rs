@@ -18,16 +18,17 @@ pub struct Browser {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum BrowserType {
-    NormalBrowser = 0,
-    SelectBrowser = 1,
-    HoldBrowser = 2,
-    MultiBrowser = 3,
+    Normal = 0,
+    Select = 1,
+    Hold = 2,
+    Multi = 3,
 }
 
-/// Defines the type of ScrollBar associated with the browser
+/// Defines the type of Scrollbar associated with the browser
 #[repr(u8)]
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub enum BrowserScrollBar {                     
+pub enum BrowserScrollbar {
+    None = 0,                     
     Horizontal = 1,        
     Vertical = 2,          
     Both = 3,              

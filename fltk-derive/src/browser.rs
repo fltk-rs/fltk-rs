@@ -274,6 +274,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
         
             fn set_format_char(&mut self, c: char) {
                 assert!(!self.was_deleted());
+                assert!(c.is_ascii());
                 unsafe {
                     #set_format_char(self._inner, c as raw::c_char)
                 }
@@ -288,6 +289,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
         
             fn set_column_char(&mut self, c: char) {
                 assert!(!self.was_deleted());
+                assert!(c.is_ascii());
                 unsafe {
                     #set_column_char(self._inner, c as raw::c_char)
                 }
@@ -368,14 +370,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
         
-            fn has_scrollbar(&self) -> BrowserScrollBar {
+            fn has_scrollbar(&self) -> BrowserScrollbar {
                 assert!(!self.was_deleted());
                 unsafe {
                     mem::transmute(#has_scrollbar(self._inner))
                 }
             }
         
-            fn set_has_scrollbar(&mut self, mode: BrowserScrollBar) {
+            fn set_has_scrollbar(&mut self, mode: BrowserScrollbar) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #set_has_scrollbar(self._inner, mode as raw::c_uchar)

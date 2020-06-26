@@ -1,9 +1,18 @@
 # Changelog
 
-
 ## Unreleased
 ### Changes
 - (None)
+
+
+## [0.7.5] - 2020-06-26
+### Changes
+- Change char flags to return raw::c_char instead of i8/u8.
+- Add is_ascii assert for set_column_char and set_format_char.
+- Add missing docs for BrowserExt methods.
+- Add None to BrowserScrollbar Enum.
+- Rename BrowserScrollBar to BrowserScrollbar.
+- Remove redundancies in WidgetType enum values.
 
 ## [0.7.4] - 2020-06-25
 ### Changes

@@ -185,7 +185,7 @@ impl TextBuffer {
     /// Sets whether the buffer can undo
     pub fn can_undo(&mut self, flag: bool) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_Text_Buffer_canUndo(self._inner, flag as i8) }
+        unsafe { Fl_Text_Buffer_canUndo(self._inner, flag as raw::c_char) }
     }
 
     /// Loads a file into the buffer

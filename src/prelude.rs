@@ -639,49 +639,50 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn icon(&self, line: u32) -> Option<Image>;
     /// Removes the icon of a browser element
     fn remove_icon(&mut self, line: u32);
-
+    /// Scrolls the browser so the top item in the browser is showing the specified line
     fn topline(&mut self, line: u32);
-    
+    /// Scrolls the browser so the bottom item in the browser is showing the specified line
     fn bottomline(&mut self, line: u32);
-    
+    /// Scrolls the browser so the middle item in the browser is showing the specified line
     fn middleline(&mut self, line: u32);
-    
+    /// Gets the current format code prefix character, which by default is '\@'
+    /// More info here: https://www.fltk.org/doc-1.3/classFl__Browser.html#a129dca59d64baf166503ba59341add69
     fn format_char(&self) -> char;
-    
+    /// Sets the current format code prefix character to \p c. The default prefix is '\@
     fn set_format_char(&mut self, c: char);
-    
+    /// Gets the current column separator character. The default is '\t'
     fn column_char(&self) -> char;
-    
+    /// Sets the column separator to c. This will only have an effect if you also use set_column_widths()
     fn set_column_char(&mut self, c: char);
-    
+    /// Gets the current column width array
     fn column_widths(&self) -> Vec<i32>;
-    
+    /// Sets the current column width array
     fn set_column_widths(&mut self, arr: &[i32]);
-    
+    /// Returns whether a certain line is displayed
     fn displayed(&self, line: u32,) -> bool;
-    
+    /// Makes a specified line visible
     fn make_visible(&mut self, line: u32);
-    
+    /// Gets the vertical scroll position of the list as a pixel position
     fn position(&self) -> u32;
-    
+    /// Sets the vertical scroll position of the list as a pixel position
     fn set_position(&mut self, pos: u32);
-    
+    /// Gets the horizontal scroll position of the list as a pixel position
     fn hposition(&self) -> u32;
-    
+    /// Sets the horizontal scroll position of the list as a pixel position
     fn set_hposition(&mut self, pos: u32);
-    
-    fn has_scrollbar(&self) -> crate::browser::BrowserScrollBar;
-    
-    fn set_has_scrollbar(&mut self, mode: crate::browser::BrowserScrollBar);
-    
+    /// Returns the type of scrollbar associated with the browser
+    fn has_scrollbar(&self) -> crate::browser::BrowserScrollbar;
+    /// Sets the type of scrollbar associated with the browser
+    fn set_has_scrollbar(&mut self, mode: crate::browser::BrowserScrollbar);
+    /// Gets the scrollbar size
     fn scrollbar_size(&self) -> u32;
-    
+    /// Sets the scrollbar size
     fn set_scrollbar_size(&mut self, new_size: u32);
-    
+    /// Gets the scrollbar width
     fn scrollbar_width(&self) -> i32;
-    
+    /// Sets the scrollbar width
     fn set_scrollbar_width(&mut self, width: i32);
-    
+    /// Sorts the items of the browser
     fn sort(&mut self);
 }
 
