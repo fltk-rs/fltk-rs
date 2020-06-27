@@ -1,6 +1,11 @@
 # Changelog
 
+
 ## Unreleased
+### Changes
+- (None)
+
+## [0.7.6] - 2020-06-27
 ### Changes
 - Deprecate App::set_scheme in favor of App::with_scheme.
 
