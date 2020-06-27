@@ -2,7 +2,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Deprecate App::set_scheme in favor of App::with_scheme.
 
 
 ## [0.7.5] - 2020-06-26

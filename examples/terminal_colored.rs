@@ -127,7 +127,7 @@ impl DerefMut for Term {
 }
 
 fn main() {
-    let app = app::App::default().set_scheme(app::AppScheme::Plastic);
+    let app = app::App::default().with_scheme(app::AppScheme::Plastic);
     let mut wind = Window::new(100, 100, 640, 480, "Color Terminal");
 
     let mut term = Term::new();

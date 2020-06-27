@@ -36,7 +36,7 @@ macro_rules! clock {() => ("<?xml version=\"1.0\" encoding=\"utf-8\"?>
 </svg>")}
 
 fn main() {
-    let app = App::default().set_scheme(AppScheme::Gleam);
+    let app = App::default().with_scheme(AppScheme::Gleam);
     let mut wind = DoubleWindow::default()
         .with_label("svg test")
         .with_size(720, 486)
