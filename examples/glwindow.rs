@@ -6,7 +6,7 @@ const W: i32 = 600;
 const H: i32 = 400;
 
 pub fn main() {
-    let app = App::default().set_scheme(AppScheme::Gleam);
+    let app = App::default().with_scheme(AppScheme::Gleam);
     let mut wind = GlWindow::new(100, 100, W, H, "Rotate me!");
 
     wind.end();

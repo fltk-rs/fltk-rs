@@ -93,7 +93,14 @@ impl App {
     }
 
     /// Sets the scheme of the application
+    #[deprecated = "Use with_scheme() instead!"]
     pub fn set_scheme(self, scheme: AppScheme) -> App {
+        set_scheme(scheme);
+        self
+    }
+
+    /// Sets the scheme of the application
+    pub fn with_scheme(self, scheme: AppScheme) -> App {
         set_scheme(scheme);
         self
     }

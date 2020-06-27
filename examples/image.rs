@@ -51,7 +51,7 @@ use std::error::Error;
 use std::path::PathBuf;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let app = App::default().set_scheme(AppScheme::Gleam);
+    let app = App::default().with_scheme(AppScheme::Gleam);
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 300, "");
 

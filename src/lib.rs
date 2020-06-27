@@ -11,8 +11,6 @@
 //!
 //! The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
 //!
-//! This crate is still in active development and is not production ready. However, you can still try it out and give valuable feedback.
-//!
 //! Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 //!
 //! - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
@@ -161,7 +159,10 @@
 //! - Gleam
 //! - Plastic
 //!
-//! These can be set using the App::set_scheme() function.
+//! These can be set using the App::with_scheme() function.
+//! ```rust
+//! let app = App::default().with_scheme(AppScheme::Gleam);
+//! ```
 //! Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait,
 //! such as set_color(), set_label_font(), set_frame() etc:
 //! ```rust
