@@ -30,6 +30,13 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
         impl Clone for #name {
             fn clone(&self) -> Self {
                 assert!(!self.was_deleted());
+                #name { _inner: self._inner }
+            }
+        }
+
+        unsafe impl ImageExt for #name {
+            fn copy(&self) -> Self {
+                assert!(!self.was_deleted());
                 unsafe {
                     let img = #copy(self._inner);
                     assert!(!img.is_null());
@@ -38,11 +45,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
-        }
 
-        impl Copy for #name {}
-
-        unsafe impl ImageExt for #name {
             fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
                 assert!(!self.was_deleted());
                 unsafe { #draw(self._inner, arg2, arg3, arg4, arg5) }

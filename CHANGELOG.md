@@ -5,6 +5,11 @@
 ### Changes
 - (None)
 
+## [0.7.7] - 2020-06-28
+### Changes
+- Remove Copy trait from TextBuffer and Images since it was potentially unsound.
+- Rename TextBuffer::copy to copy_from to avoid conflict with copy method which does a deep copy.
+
 ## [0.7.6] - 2020-06-27
 ### Changes
 - Deprecate App::set_scheme in favor of App::with_scheme.
