@@ -1,7 +1,8 @@
+#include <FL/Fl.H> // Has to be the first include!
+
 #include "cfl.h"
 #include "cfl_widget.h"
 #include <FL/Enumerations.H>
-#include <FL/Fl.H>
 #include <FL/Fl_Widget.H>
 #include <new>
 #include <random>
@@ -150,7 +151,7 @@ int Fl_event_inside(int x, int y, int w, int h) {
     return Fl::event_inside(x, y, w, h);
 }
 
-// Fl_Widget *Fl_belowmouse() { return Fl::belowmouse(); }
+Fl_Widget *Fl_belowmouse() { return Fl::belowmouse(); }
 
 void Fl_delete_widget(Fl_Widget *w) {
     Fl::delete_widget(w);
@@ -223,14 +224,26 @@ void Fl_own_colormap(void) {
     Fl::own_colormap();
 }
 
-// void *Fl_pushed(void) {
-//     return (void *)Fl::pushed();
-// }
+Fl_Widget *Fl_pushed(void) {
+    return Fl::pushed();
+}
 
-// void *Fl_focus(void) {
-//     return (void *)Fl::focus();
-// }
+Fl_Widget *Fl_focus(void) {
+    return Fl::focus();
+}
 
 void Fl_set_focus(void *wid) {
     Fl::focus((Fl_Widget *)wid);
+}
+
+double Fl_version(void) {
+    return Fl::version();
+}
+
+int Fl_api_version(void) {
+    return Fl::api_version();
+}
+
+int Fl_abi_version(void) {
+    return Fl::abi_version();
 }

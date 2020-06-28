@@ -145,6 +145,9 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_belowmouse() -> *mut Fl_Widget;
+}
+extern "C" {
     pub fn Fl_delete_widget(w: *mut Fl_Widget);
 }
 extern "C" {
@@ -187,5 +190,20 @@ extern "C" {
     pub fn Fl_own_colormap();
 }
 extern "C" {
+    pub fn Fl_pushed() -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_focus() -> *mut Fl_Widget;
+}
+extern "C" {
     pub fn Fl_set_focus(arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_version() -> f64;
+}
+extern "C" {
+    pub fn Fl_api_version() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_abi_version() -> ::std::os::raw::c_int;
 }

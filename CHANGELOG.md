@@ -5,6 +5,11 @@
 ### Changes
 - (None)
 
+## [0.7.8] - 2020-06-29
+### Changes
+- Add app::belowmouse, pushed and focus functions.
+- Add functions to query FLTK's api and abi versions.
+
 ## [0.7.7] - 2020-06-28
 ### Changes
 - Remove Copy trait from TextBuffer and Images since it was potentially unsound.
