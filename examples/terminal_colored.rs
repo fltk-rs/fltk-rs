@@ -44,7 +44,7 @@ impl Term {
             },
         ];
 
-        term.set_highlight_data(sbuf, styles);
+        term.set_highlight_data(sbuf.clone(), styles);
 
         Term {
             term: term,

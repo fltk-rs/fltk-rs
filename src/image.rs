@@ -339,9 +339,7 @@ impl RgbImage {
     /// Initializes a new raw RgbImage, creates an internal copy of the data
     pub fn new(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
         let data = data.to_owned();
-        let mut data = mem::ManuallyDrop::new(data);
         if depth > 4 {
-            unsafe { mem::ManuallyDrop::drop(&mut data); }
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
         let mut sz = w * h;
@@ -349,17 +347,14 @@ impl RgbImage {
             sz = sz * depth;
         }
         if sz > data.len() as u32 {
-            unsafe { mem::ManuallyDrop::drop(&mut data); }
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
-        let img = unsafe { Fl_RGB_Image_new(data.as_ptr(), w as i32, h as i32, depth as i32) };
+        let img = unsafe { Fl_RGB_Image_new(mem::ManuallyDrop::new(data).as_ptr(), w as i32, h as i32, depth as i32) };
         if img.is_null() {
-            unsafe { mem::ManuallyDrop::drop(&mut data); }
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         } else {
             unsafe {
                 if Fl_RGB_Image_fail(img) < 0 {
-                    mem::ManuallyDrop::drop(&mut data);
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
             }

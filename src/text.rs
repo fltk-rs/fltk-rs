@@ -146,7 +146,7 @@ impl TextBuffer {
     }
 
     /// Copies text from a source buffer into the current buffer
-    pub fn copy(&mut self, source_buf: &TextBuffer, start: u32, end: u32, to: u32) {
+    pub fn copy_from(&mut self, source_buf: &TextBuffer, start: u32, end: u32, to: u32) {
         assert!(!self._inner.is_null());
         debug_assert!(
             start <= std::i32::MAX as u32,
@@ -169,6 +169,14 @@ impl TextBuffer {
                 to as i32,
             )
         }
+    }
+
+    /// Copies whole text from a source buffer into a new buffer
+    pub fn copy(&self) -> TextBuffer {
+        assert!(!self._inner.is_null());
+        let mut temp = TextBuffer::default();
+        temp.copy_from(self, 0, 0, self.length());
+        temp
     }
 
     /// Performs an undo operation on the buffer
@@ -490,13 +498,12 @@ unsafe impl Send for TextBuffer {}
 impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {
         assert!(!self._inner.is_null());
-        let mut temp = TextBuffer::default();
-        temp.copy(self, 0, 0, self.length());
-        temp
+        // let mut temp = TextBuffer::default();
+        // temp.copy(self, 0, 0, self.length());
+        // temp
+        TextBuffer { _inner: self._inner }
     }
 }
-
-impl Copy for TextBuffer {}
 
 /// Creates a non-editable text display widget
 #[derive(WidgetExt, DisplayExt, Debug)]

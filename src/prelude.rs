@@ -808,6 +808,8 @@ pub unsafe trait TableExt: GroupExt {
 
 /// Defines the methods implemented by all image types
 pub unsafe trait ImageExt {
+    /// Performs a deep copy of the image
+    fn copy(&self) -> Self;
     /// Draws the image at the presupplied coordinates and size
     fn draw(&mut self, x: i32, y: i32, width: i32, height: i32);
     /// Return the width of the image
