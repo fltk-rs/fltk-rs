@@ -80,7 +80,7 @@ unsigned int Fl_rand(void);
 
 int Fl_event_inside(int, int, int, int);
 
-// Fl_Widget *Fl_belowmouse(void);
+Fl_Widget *Fl_belowmouse(void);
 
 void Fl_delete_widget(Fl_Widget *w);
 
@@ -110,11 +110,17 @@ int Fl_visual(int);
 
 void Fl_own_colormap(void);
 
-// void *Fl_pushed(void);
+Fl_Widget *Fl_pushed(void);
 
-// void *Fl_focus(void);
+Fl_Widget *Fl_focus(void);
 
 void Fl_set_focus(void *);
+
+double Fl_version(void);
+
+int Fl_api_version(void);
+
+int Fl_abi_version(void);
 
 #ifdef __cplusplus
 }

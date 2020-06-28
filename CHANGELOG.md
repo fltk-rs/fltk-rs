@@ -3,7 +3,8 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add app::belowmouse, pushed and focus functions.
+- Add functions to query FLTK's api and abi versions.
 
 ## [0.7.7] - 2020-06-28
 ### Changes

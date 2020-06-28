@@ -623,16 +623,17 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     }
 }
 
-// pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
-//     unsafe {
-//         let x = Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
-//         if x.is_null() {
-//             None
-//         } else {
-//             Some(crate::widget::Widget::from_widget_ptr(x as *mut fltk_sys::widget::Fl_Widget))
-//         }
-//     }
-// }
+/// Gets the widget that is below the mouse cursor
+pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
+    unsafe {
+        let x = Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
+        if x.is_null() {
+            None
+        } else {
+            Some(crate::widget::Widget::from_widget_ptr(x as *mut fltk_sys::widget::Fl_Widget))
+        }
+    }
+}
 
 /// Deletes widgets and their children.
 pub fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
@@ -643,6 +644,7 @@ pub fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
     }
 }
 
+/// Deletes widgets and their children recursively deleting their user data
 pub unsafe fn unsafe_delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
     assert!(!wid.was_deleted());
     let _u = wid.user_data();
@@ -707,31 +709,33 @@ pub fn own_colormap() {
     unsafe { Fl_own_colormap() }
 }
 
-// pub fn pushed() -> Option<crate::widget::Widget> {
-//     unsafe {
-//         let ptr = Fl_pushed();
-//         if ptr.is_null() {
-//             None
-//         } else {
-//             Some(crate::widget::Widget::from_raw(
-//                 ptr as *mut fltk_sys::widget::Fl_Widget,
-//             ))
-//         }
-//     }
-// }
+/// Gets the widget which was pushed
+pub fn pushed() -> Option<crate::widget::Widget> {
+    unsafe {
+        let ptr = Fl_pushed();
+        if ptr.is_null() {
+            None
+        } else {
+            Some(crate::widget::Widget::from_raw(
+                ptr as *mut fltk_sys::widget::Fl_Widget,
+            ))
+        }
+    }
+}
 
-// pub fn focus() -> Option<crate::widget::Widget> {
-//     unsafe {
-//         let ptr = Fl_focus();
-//         if ptr.is_null() {
-//             None
-//         } else {
-//             Some(crate::widget::Widget::from_raw(
-//                 ptr as *mut fltk_sys::widget::Fl_Widget,
-//             ))
-//         }
-//     }
-// }
+/// Gets the widget which has focus
+pub fn focus() -> Option<crate::widget::Widget> {
+    unsafe {
+        let ptr = Fl_focus();
+        if ptr.is_null() {
+            None
+        } else {
+            Some(crate::widget::Widget::from_raw(
+                ptr as *mut fltk_sys::widget::Fl_Widget,
+            ))
+        }
+    }
+}
 
 /// Sets the widget which has focus
 pub fn set_focus<W: WidgetExt>(wid: &mut W) {
@@ -747,4 +751,30 @@ pub fn delay(millis: u128) {
             break;
         }
     }
+}
+
+/// Gets FLTK version
+pub fn version() -> f64 {
+    unsafe {
+        Fl_version()
+    }
+}
+
+/// Gets FLTK API version
+pub fn api_version() -> i32 {
+    unsafe {
+        Fl_api_version()
+    }
+}
+
+/// Gets FLTK ABI version
+pub fn abi_version() -> i32 {
+    unsafe {
+        Fl_abi_version()
+    }
+}
+
+/// Gets FLTK crate version
+pub fn crate_version() -> &'static str {
+    env!("CARGO_PKG_VERSION")
 }
