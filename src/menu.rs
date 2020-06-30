@@ -304,7 +304,7 @@ impl MenuItem {
             ) {
                 let a: *mut Box<dyn FnMut()> = mem::transmute(data);
                 let f: &mut (dyn FnMut()) = &mut **a;
-                f();
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
             self.unset_callback();
             let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));

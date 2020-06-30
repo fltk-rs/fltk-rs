@@ -5,6 +5,10 @@
 ### Changes
 - (None)
 
+## [0.7.9] - 2020-06-30
+### Changes
+- Add exception checks in callbacks.
+
 ## [0.7.8] - 2020-06-29
 ### Changes
 - Add app::belowmouse, pushed and focus functions.

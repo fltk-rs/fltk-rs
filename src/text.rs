@@ -34,9 +34,7 @@ impl TextBuffer {
     /// Initialized a text buffer from a pointer
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         assert!(!ptr.is_null());
-        TextBuffer {
-            _inner: ptr,
-        }
+        TextBuffer { _inner: ptr }
     }
 
     /// Returns the inner pointer from a text buffer
@@ -443,13 +441,15 @@ impl TextBuffer {
                 }
                 let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = mem::transmute(data);
                 let f: &mut (dyn FnMut(u32, u32, u32, u32, &str)) = &mut **a;
-                f(
-                    pos as u32,
-                    inserted as u32,
-                    deleted as u32,
-                    restyled as u32,
-                    &temp,
-                )
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                    f(
+                        pos as u32,
+                        inserted as u32,
+                        deleted as u32,
+                        restyled as u32,
+                        &temp,
+                    )
+                }));
             }
             let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
             let data: *mut raw::c_void = mem::transmute(a);
@@ -476,13 +476,15 @@ impl TextBuffer {
                 }
                 let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = mem::transmute(data);
                 let f: &mut (dyn FnMut(u32, u32, u32, u32, &str)) = &mut **a;
-                f(
-                    pos as u32,
-                    inserted as u32,
-                    deleted as u32,
-                    restyled as u32,
-                    &temp,
-                )
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                    f(
+                        pos as u32,
+                        inserted as u32,
+                        deleted as u32,
+                        restyled as u32,
+                        &temp,
+                    )
+                }));
             }
             let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
             let data: *mut raw::c_void = mem::transmute(a);
@@ -501,7 +503,9 @@ impl Clone for TextBuffer {
         // let mut temp = TextBuffer::default();
         // temp.copy(self, 0, 0, self.length());
         // temp
-        TextBuffer { _inner: self._inner }
+        TextBuffer {
+            _inner: self._inner,
+        }
     }
 }
 

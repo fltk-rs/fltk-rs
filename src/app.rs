@@ -71,7 +71,7 @@ pub fn awake(cb: Box<dyn FnMut()>) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
             let f: &mut (dyn FnMut()) = &mut **a;
-            f();
+            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = mem::transmute(a);
@@ -136,7 +136,7 @@ impl App {
             unsafe extern "C" fn shim(data: *mut raw::c_void) {
                 let a: *mut Box<dyn FnMut()> = mem::transmute(data);
                 let f: &mut (dyn FnMut()) = &mut **a;
-                f();
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
             let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
             let data: *mut raw::c_void = mem::transmute(a);
@@ -289,7 +289,7 @@ where
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
             let f: &mut (dyn FnMut()) = &mut **a;
-            f();
+            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         widget.unset_callback();
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
@@ -304,7 +304,6 @@ fn set_fonts(name: &str) -> u8 {
     let name = CString::new(name).unwrap();
     unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
-
 
 /// Gets the name of a font through its index
 pub fn font_name(idx: usize) -> Option<String> {
@@ -356,9 +355,7 @@ pub fn font_count() -> usize {
 
 /// Gets a Vector<String> of loaded fonts
 pub fn fonts() -> Vec<String> {
-    unsafe {
-        FONTS.clone().unwrap().clone()
-    }
+    unsafe { FONTS.clone().unwrap().clone() }
 }
 
 /// Adds a custom handler for unhandled events
@@ -366,7 +363,7 @@ pub fn add_handler(cb: fn(Event) -> bool) {
     unsafe {
         let callback: Option<unsafe extern "C" fn(ev: raw::c_int) -> raw::c_int> =
             Some(mem::transmute(move |ev| {
-                cb(ev) as i32;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| cb(ev) as i32));
             }));
         Fl_add_handler(callback);
     }
@@ -537,7 +534,7 @@ pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
             let f: &mut (dyn FnMut()) = &mut **a;
-            f();
+            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = mem::transmute(a);
@@ -559,7 +556,7 @@ pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
             let f: &mut (dyn FnMut()) = &mut **a;
-            f();
+            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = mem::transmute(a);
@@ -574,7 +571,7 @@ pub fn remove_timeout(cb: Box<dyn FnMut()>) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = mem::transmute(data);
             let f: &mut (dyn FnMut()) = &mut **a;
-            f();
+            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = mem::transmute(a);
@@ -630,7 +627,9 @@ pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
         if x.is_null() {
             None
         } else {
-            Some(crate::widget::Widget::from_widget_ptr(x as *mut fltk_sys::widget::Fl_Widget))
+            Some(crate::widget::Widget::from_widget_ptr(
+                x as *mut fltk_sys::widget::Fl_Widget,
+            ))
         }
     }
 }
@@ -755,23 +754,17 @@ pub fn delay(millis: u128) {
 
 /// Gets FLTK version
 pub fn version() -> f64 {
-    unsafe {
-        Fl_version()
-    }
+    unsafe { Fl_version() }
 }
 
 /// Gets FLTK API version
 pub fn api_version() -> i32 {
-    unsafe {
-        Fl_api_version()
-    }
+    unsafe { Fl_api_version() }
 }
 
 /// Gets FLTK ABI version
 pub fn abi_version() -> i32 {
-    unsafe {
-        Fl_abi_version()
-    }
+    unsafe { Fl_abi_version() }
 }
 
 /// Gets FLTK crate version
