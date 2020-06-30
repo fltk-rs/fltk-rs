@@ -76,7 +76,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
                         let f: &mut (dyn FnMut()) = &mut **a;
-                        f();
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
                     }
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);
@@ -96,7 +96,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
                         let f: &mut (dyn FnMut()) = &mut **a;
-                        f();
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
                     }
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = mem::transmute(a);

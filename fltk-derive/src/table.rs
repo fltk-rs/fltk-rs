@@ -597,7 +597,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                         let ctx: TableContext = mem::transmute(ctx);
                         let a: *mut Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = mem::transmute(data);
                         let f: &mut (dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)) = &mut **a;
-                        f(ctx, arg2, arg3, arg4, arg5, arg6, arg7);
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(ctx, arg2, arg3, arg4, arg5, arg6, arg7)));
                     }
                     self.unset_draw_callback();
                     let a: *mut Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(cb));

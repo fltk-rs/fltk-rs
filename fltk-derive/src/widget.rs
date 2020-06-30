@@ -192,7 +192,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     );
     let as_group = Ident::new(format!("{}_{}", name_str, "as_group").as_str(), name.span());
     let deimage = Ident::new(format!("{}_{}", name_str, "deimage").as_str(), name.span());
-    let set_deimage = Ident::new(format!("{}_{}", name_str, "set_deimage").as_str(), name.span());
+    let set_deimage = Ident::new(
+        format!("{}_{}", name_str, "set_deimage").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -533,7 +536,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
                         let f: &mut (dyn FnMut()) = &mut **a;
-                        f();
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
                     }
                     self.unset_callback();
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
@@ -567,9 +570,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         let ev: Event = mem::transmute(_ev);
                         let a: *mut Box<dyn FnMut(Event) -> bool> = mem::transmute(data);
                         let f: &mut (dyn FnMut(Event) -> bool) = &mut **a;
-                        match f(ev) {
+                        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(ev) {
                             true => return 1,
                             false => return 0,
+                        }));
+                        if let Ok(ret) = result {
+                            ret
+                        } else {
+                            0
                         }
                     }
                     let a: *mut Box<dyn FnMut(Event) -> bool> = Box::into_raw(Box::new(cb));
@@ -589,7 +597,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     unsafe extern "C" fn shim(data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = mem::transmute(data);
                         let f: &mut (dyn FnMut()) = &mut **a;
-                        f();
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
                     }
                     self.unset_draw_callback();
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
