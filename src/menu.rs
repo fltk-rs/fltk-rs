@@ -55,11 +55,11 @@ pub enum MenuFlag {
 
 impl MenuItem {
     /// Initializes a new window, useful for popup menus
-    pub fn new(choices: Vec<&str>) -> MenuItem {
+    pub fn new(choices: &[&str]) -> MenuItem {
         unsafe {
             let sz = choices.len();
             let mut temp: Vec<*mut raw::c_char> = vec![];
-            for choice in choices {
+            for &choice in choices {
                 temp.push(CString::new(choice).unwrap().into_raw());
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
