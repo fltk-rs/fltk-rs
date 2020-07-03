@@ -3,6 +3,10 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.7.10] - 2020-07-03
+### Changes
 - MenuItem::new now takes a slice instead of a vector.
 
 ## [0.7.9] - 2020-06-30
