@@ -10,7 +10,7 @@ fn main() {
 
     but.set_callback(Box::new(move || {
         let v = vec!["1st val", "2nd val", "3rd val"];
-        let mut x = MenuItem::new(v);
+        let mut x = MenuItem::new(&v);
         match x.popup(100, 100) {
             None => println!("No value was chosen!"),
             Some(val) => println!("{}", val.label().unwrap()),
