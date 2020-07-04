@@ -223,7 +223,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     if let Some(buffer) = buffer {
                         #set_buffer(self._inner, buffer.as_ptr())
                     } else {
-                        #set_buffer(self._inner, 0 as *mut Fl_Text_Buffer)
+                        #set_buffer(self._inner, std::ptr::null_mut() as *mut Fl_Text_Buffer)
                     }
                 }
             }

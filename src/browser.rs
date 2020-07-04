@@ -28,14 +28,14 @@ pub enum BrowserType {
 #[repr(u8)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum BrowserScrollbar {
-    None = 0,                     
-    Horizontal = 1,        
-    Vertical = 2,          
-    Both = 3,              
-    AlwaysOn = 4,                        
-    HorizontalAlways = 5, 
-    VerticalAlways = 6,   
-    BothAlways = 7        
+    None = 0,
+    Horizontal = 1,
+    Vertical = 2,
+    Both = 3,
+    AlwaysOn = 4,
+    HorizontalAlways = 5,
+    VerticalAlways = 6,
+    BothAlways = 7,
 }
 
 /// Creates a select browser

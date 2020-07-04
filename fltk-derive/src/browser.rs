@@ -38,26 +38,83 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let topline = Ident::new(format!("{}_{}", name_str, "topline").as_str(), name.span());
-    let middleline = Ident::new(format!("{}_{}", name_str, "middleline").as_str(), name.span());
-    let bottomline = Ident::new(format!("{}_{}", name_str, "bottomline").as_str(), name.span());
-    let format_char = Ident::new(format!("{}_{}", name_str, "format_char").as_str(), name.span());
-    let set_format_char = Ident::new(format!("{}_{}", name_str, "set_format_char").as_str(), name.span());
-    let column_char = Ident::new(format!("{}_{}", name_str, "column_char").as_str(), name.span());
-    let set_column_char = Ident::new(format!("{}_{}", name_str, "set_column_char").as_str(), name.span());
-    let column_widths = Ident::new(format!("{}_{}", name_str, "column_widths").as_str(), name.span());
-    let set_column_widths = Ident::new(format!("{}_{}", name_str, "set_column_widths").as_str(), name.span());
-    let displayed = Ident::new(format!("{}_{}", name_str, "displayed").as_str(), name.span());
-    let make_visible = Ident::new(format!("{}_{}", name_str, "make_visible").as_str(), name.span());
+    let middleline = Ident::new(
+        format!("{}_{}", name_str, "middleline").as_str(),
+        name.span(),
+    );
+    let bottomline = Ident::new(
+        format!("{}_{}", name_str, "bottomline").as_str(),
+        name.span(),
+    );
+    let format_char = Ident::new(
+        format!("{}_{}", name_str, "format_char").as_str(),
+        name.span(),
+    );
+    let set_format_char = Ident::new(
+        format!("{}_{}", name_str, "set_format_char").as_str(),
+        name.span(),
+    );
+    let column_char = Ident::new(
+        format!("{}_{}", name_str, "column_char").as_str(),
+        name.span(),
+    );
+    let set_column_char = Ident::new(
+        format!("{}_{}", name_str, "set_column_char").as_str(),
+        name.span(),
+    );
+    let column_widths = Ident::new(
+        format!("{}_{}", name_str, "column_widths").as_str(),
+        name.span(),
+    );
+    let set_column_widths = Ident::new(
+        format!("{}_{}", name_str, "set_column_widths").as_str(),
+        name.span(),
+    );
+    let displayed = Ident::new(
+        format!("{}_{}", name_str, "displayed").as_str(),
+        name.span(),
+    );
+    let make_visible = Ident::new(
+        format!("{}_{}", name_str, "make_visible").as_str(),
+        name.span(),
+    );
     let position = Ident::new(format!("{}_{}", name_str, "position").as_str(), name.span());
-    let set_position = Ident::new(format!("{}_{}", name_str, "set_position").as_str(), name.span());
-    let hposition = Ident::new(format!("{}_{}", name_str, "hposition").as_str(), name.span());
-    let set_hposition = Ident::new(format!("{}_{}", name_str, "set_hposition").as_str(), name.span());
-    let has_scrollbar = Ident::new(format!("{}_{}", name_str, "has_scrollbar").as_str(), name.span());
-    let set_has_scrollbar = Ident::new(format!("{}_{}", name_str, "set_has_scrollbar").as_str(), name.span());
-    let scrollbar_size = Ident::new(format!("{}_{}", name_str, "scrollbar_size").as_str(), name.span());
-    let set_scrollbar_size = Ident::new(format!("{}_{}", name_str, "set_scrollbar_size").as_str(), name.span());
-    let scrollbar_width = Ident::new(format!("{}_{}", name_str, "scrollbar_width").as_str(), name.span());
-    let set_scrollbar_width = Ident::new(format!("{}_{}", name_str, "set_scrollbar_width").as_str(), name.span());
+    let set_position = Ident::new(
+        format!("{}_{}", name_str, "set_position").as_str(),
+        name.span(),
+    );
+    let hposition = Ident::new(
+        format!("{}_{}", name_str, "hposition").as_str(),
+        name.span(),
+    );
+    let set_hposition = Ident::new(
+        format!("{}_{}", name_str, "set_hposition").as_str(),
+        name.span(),
+    );
+    let has_scrollbar = Ident::new(
+        format!("{}_{}", name_str, "has_scrollbar").as_str(),
+        name.span(),
+    );
+    let set_has_scrollbar = Ident::new(
+        format!("{}_{}", name_str, "set_has_scrollbar").as_str(),
+        name.span(),
+    );
+    let scrollbar_size = Ident::new(
+        format!("{}_{}", name_str, "scrollbar_size").as_str(),
+        name.span(),
+    );
+    let set_scrollbar_size = Ident::new(
+        format!("{}_{}", name_str, "set_scrollbar_size").as_str(),
+        name.span(),
+    );
+    let scrollbar_width = Ident::new(
+        format!("{}_{}", name_str, "scrollbar_width").as_str(),
+        name.span(),
+    );
+    let set_scrollbar_width = Ident::new(
+        format!("{}_{}", name_str, "set_scrollbar_width").as_str(),
+        name.span(),
+    );
     let sort = Ident::new(format!("{}_{}", name_str, "sort").as_str(), name.span());
 
     let gen = quote! {
@@ -211,7 +268,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!image.was_deleted());
                     unsafe { #set_icon(self._inner, line as i32, image.as_ptr()) }
                 } else {
-                    unsafe { #set_icon(self._inner, line as i32, 0 as *mut raw::c_void) }
+                    unsafe { #set_icon(self._inner, line as i32, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 
@@ -246,7 +303,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #topline(self._inner, line as i32)
                 }
             }
-        
+
             fn bottomline(&mut self, line: u32) {
                 assert!(!self.was_deleted());
                 assert!(line > 0);
@@ -255,7 +312,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #bottomline(self._inner, line as i32)
                 }
             }
-        
+
             fn middleline(&mut self, line: u32) {
                 assert!(!self.was_deleted());
                 assert!(line > 0);
@@ -264,14 +321,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #middleline(self._inner, line as i32)
                 }
             }
-        
+
             fn format_char(&self) -> char {
                 assert!(!self.was_deleted());
                 unsafe {
                     #format_char(self._inner) as u8 as char
                 }
             }
-        
+
             fn set_format_char(&mut self, c: char) {
                 assert!(!self.was_deleted());
                 assert!(c.is_ascii());
@@ -279,14 +336,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #set_format_char(self._inner, c as raw::c_char)
                 }
             }
-        
+
             fn column_char(&self) -> char {
                 assert!(!self.was_deleted());
                 unsafe {
                     #column_char(self._inner) as u8 as char
                 }
             }
-        
+
             fn set_column_char(&mut self, c: char) {
                 assert!(!self.was_deleted());
                 assert!(c.is_ascii());
@@ -294,7 +351,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #set_column_char(self._inner, c as raw::c_char)
                 }
             }
-        
+
             fn column_widths(&self) -> Vec<i32> {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -309,7 +366,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     v
                 }
             }
-        
+
             fn set_column_widths(&mut self, arr: &[i32]) {
                 assert!(!self.was_deleted());
                 let mut old = mem::ManuallyDrop::new(self.column_widths());
@@ -321,7 +378,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     mem::ManuallyDrop::drop(&mut old);
                 }
             }
-        
+
             fn displayed(&self, line: u32,) -> bool {
                 assert!(!self.was_deleted());
                 assert!(line > 0);
@@ -330,7 +387,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #displayed(self._inner, line as i32,) != 0
                 }
             }
-        
+
             fn make_visible(&mut self, line: u32) {
                 assert!(!self.was_deleted());
                 assert!(line > 0);
@@ -339,14 +396,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #make_visible(self._inner, line as i32)
                 }
             }
-        
+
             fn position(&self) -> u32 {
                 assert!(!self.was_deleted());
                 unsafe {
                     #position(self._inner) as u32
                 }
             }
-        
+
             fn set_position(&mut self, pos: u32) {
                 assert!(!self.was_deleted());
                 debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -354,14 +411,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #set_position(self._inner, pos as i32)
                 }
             }
-        
+
             fn hposition(&self) -> u32 {
                 assert!(!self.was_deleted());
                 unsafe {
                     #hposition(self._inner) as u32
                 }
             }
-        
+
             fn set_hposition(&mut self, pos: u32) {
                 assert!(!self.was_deleted());
                 debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -369,28 +426,28 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #set_hposition(self._inner, pos as i32)
                 }
             }
-        
+
             fn has_scrollbar(&self) -> BrowserScrollbar {
                 assert!(!self.was_deleted());
                 unsafe {
                     mem::transmute(#has_scrollbar(self._inner))
                 }
             }
-        
+
             fn set_has_scrollbar(&mut self, mode: BrowserScrollbar) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #set_has_scrollbar(self._inner, mode as raw::c_uchar)
                 }
             }
-        
+
             fn scrollbar_size(&self) -> u32 {
                 assert!(!self.was_deleted());
                 unsafe {
                     #scrollbar_size(self._inner) as u32
                 }
             }
-        
+
             fn set_scrollbar_size(&mut self, new_size: u32) {
                 assert!(!self.was_deleted());
                 debug_assert!(new_size <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
@@ -398,21 +455,21 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     #set_scrollbar_size(self._inner, new_size as i32)
                 }
             }
-        
+
             fn scrollbar_width(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
                     #scrollbar_width(self._inner)
                 }
             }
-        
+
             fn set_scrollbar_width(&mut self, width: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #set_scrollbar_width(self._inner, width)
                 }
             }
-        
+
             fn sort(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {

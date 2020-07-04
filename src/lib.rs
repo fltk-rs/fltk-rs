@@ -49,22 +49,19 @@
 //! An example hello world application:
 //!
 //! ```rust
-//! use fltk::{app::*, window::*};
+//!     use fltk::{app::*, window::*};
 //!
-//! fn main() {
 //!     let app = App::default();
 //!     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //!     wind.end();
 //!     wind.show();
 //!     app.run().unwrap();
-//! }
 //! ```
 //!
 //! Another example showing the basic callback functionality:
 //! ```rust
-//! use fltk::{app::*, button::*, frame::*, window::*};
-
-//! fn main() {
+//!     use fltk::{app::*, button::*, frame::*, window::*};
+//!
 //!     let app = App::default();
 //!     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //!     let mut frame = Frame::new(0, 0, 400, 200, "");
@@ -73,7 +70,6 @@
 //!     wind.show();
 //!     but.set_callback(Box::new(move || frame.set_label("Hello World!")));
 //!     app.run().unwrap();
-//! }
 //! ```
 //! Please check the examples directory for more examples.
 //! You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, as well as the width and height of the widget. Most widgets, except the TextDisplay and TextEditor, also take a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
@@ -89,7 +85,6 @@
 //!
 //! An example of a counter showing use of the builder pattern:
 //! ```rust
-//! fn main() {
 //!     let app = app::App::default();
 //!     let mut wind = Window::default()
 //!         .with_size(160, 200)
@@ -111,7 +106,6 @@
 //!     wind.end();
 //!     wind.show();
 //!     /* Event handling */
-//! }
 //! ```
 //!
 //! ### Events
@@ -212,8 +206,8 @@ pub mod valuator;
 pub mod widget;
 pub mod window;
 
-pub use prelude::*;
 pub use enums::*;
+pub use prelude::*;
 
 #[macro_use]
 extern crate fltk_derive;

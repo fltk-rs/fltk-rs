@@ -7,7 +7,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
     let name_str = get_fl_name(name.to_string());
-    let ptr_name = Ident::new(format!("{}", name_str).as_str(), name.span());
+    let ptr_name = Ident::new(name_str.as_str(), name.span());
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
     let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
     let x = Ident::new(format!("{}_{}", name_str, "x").as_str(), name.span());
@@ -317,7 +317,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
-                unsafe { mem::transmute(self._inner) }
+                unsafe { self._inner as *mut fltk_sys::widget::Fl_Widget }
             }
 
             unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
@@ -326,7 +326,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
                     assert!(!tracker.is_null());
                     #name {
-                        _inner: mem::transmute(ptr),
+                        _inner: ptr as *mut #ptr_name,
                         _tracker: tracker,
                     }
                 }
@@ -488,7 +488,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!image.was_deleted());
                     unsafe { #set_image(self._inner, image.as_ptr()) }
                 } else {
-                    unsafe { #set_image(self._inner, 0 as *mut raw::c_void) }
+                    unsafe { #set_image(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 
@@ -510,7 +510,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!image.was_deleted());
                     unsafe { #set_deimage(self._inner, image.as_ptr()) }
                 } else {
-                    unsafe { #set_deimage(self._inner, 0 as *mut raw::c_void) }
+                    unsafe { #set_deimage(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 
@@ -534,13 +534,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 // );
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
                         let f: &mut (dyn FnMut()) = &mut **a;
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
                     }
                     self.unset_callback();
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-                    let data: *mut raw::c_void = mem::transmute(a);
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: fltk_sys::widget::Fl_Callback = Some(shim);
                     fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
                 }
@@ -550,7 +550,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     let old_data = self.user_data();
                     if old_data.is_some() {
-                        self.set_user_data(0 as *mut raw::c_void);
+                        self.set_user_data(std::ptr::null_mut() as *mut raw::c_void);
                         let old_data = old_data.unwrap();
                     }
                     // let callback: Option<unsafe extern "C" fn(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)> = None;
@@ -568,7 +568,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     unsafe extern "C" fn shim(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let ev: Event = mem::transmute(_ev);
-                        let a: *mut Box<dyn FnMut(Event) -> bool> = mem::transmute(data);
+                        let a: *mut Box<dyn FnMut(Event) -> bool> = data as *mut Box<dyn FnMut(Event) -> bool>;
                         let f: &mut (dyn FnMut(Event) -> bool) = &mut **a;
                         let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(ev) {
                             true => return 1,
@@ -581,7 +581,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         }
                     }
                     let a: *mut Box<dyn FnMut(Event) -> bool> = Box::into_raw(Box::new(cb));
-                    let data: *mut raw::c_void = mem::transmute(a);
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_handler_callback = Some(shim);
                     #set_handler(self._inner, callback, data);
                 }
@@ -595,13 +595,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 // );
                 unsafe {
                     unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
                         let f: &mut (dyn FnMut()) = &mut **a;
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
                     }
                     self.unset_draw_callback();
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-                    let data: *mut raw::c_void = mem::transmute(a);
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_callback = Some(shim);
                     #set_draw(self._inner, callback, data);
                 }
@@ -866,7 +866,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let old_data = self.draw_data();
                     if old_data.is_some() {
                         let old_data = old_data.unwrap();
-                        self.set_draw_data(0 as *mut raw::c_void);
+                        self.set_draw_data(std::ptr::null_mut() as *mut raw::c_void);
                     }
                 }
             }

@@ -57,9 +57,11 @@ fn main() {
         } // Column titles
         table::TableContext::RowHeader => draw_header(&format!("{}", row + 1), x, y, w, h), // Row titles
         table::TableContext::Cell => {
-            if table_c.is_selected(row, col) { cell_c.borrow_mut().select(row, col, x, y, w, h); }
+            if table_c.is_selected(row, col) {
+                cell_c.borrow_mut().select(row, col, x, y, w, h);
+            }
             draw_data(
-                &format!("{}", data_c.borrow()[row as usize][col as usize]),
+                &data_c.borrow()[row as usize][col as usize].to_string(),
                 x,
                 y,
                 w,
@@ -81,7 +83,7 @@ fn main() {
                 inp_c.show();
                 return true;
             }
-            return false;
+            false
         }
         _ => false,
     }));
@@ -97,7 +99,7 @@ fn main() {
                 return true;
             }
             false
-        },
+        }
         _ => false,
     }));
 

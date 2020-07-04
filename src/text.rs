@@ -26,18 +26,27 @@ impl TextBuffer {
     }
 
     /// Deletes the TextBuffer
+    /// # Safety
+    ///
+    /// This function should not be called before the horsemen are ready.
     pub unsafe fn delete(&mut self) {
         Fl_Text_Buffer_delete(self._inner);
-        self._inner = 0 as *mut Fl_Text_Buffer;
+        self._inner = std::ptr::null_mut::<Fl_Text_Buffer>();
     }
 
     /// Initialized a text buffer from a pointer
+    /// # Safety
+    ///
+    /// This function should not be called before the horsemen are ready.
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         assert!(!ptr.is_null());
         TextBuffer { _inner: ptr }
     }
 
     /// Returns the inner pointer from a text buffer
+    /// # Safety
+    ///
+    /// This function should not be called before the horsemen are ready.
     pub unsafe fn as_ptr(&self) -> *mut Fl_Text_Buffer {
         self._inner
     }
@@ -435,11 +444,13 @@ impl TextBuffer {
                 deleted_text: *const raw::c_char,
                 data: *mut raw::c_void,
             ) {
-                let mut temp = String::from("");
-                if !deleted_text.is_null() {
-                    temp = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
-                }
-                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = mem::transmute(data);
+                let temp = if !deleted_text.is_null() {
+                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
+                } else {
+                    String::from("")
+                };
+                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
+                    data as *mut Box<dyn for<'r> FnMut(u32, u32, u32, u32, &'r str)>;
                 let f: &mut (dyn FnMut(u32, u32, u32, u32, &str)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                     f(
@@ -452,7 +463,7 @@ impl TextBuffer {
                 }));
             }
             let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
-            let data: *mut raw::c_void = mem::transmute(a);
+            let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_add_modify_callback(self._inner, callback, data);
         }
@@ -470,11 +481,13 @@ impl TextBuffer {
                 deleted_text: *const raw::c_char,
                 data: *mut raw::c_void,
             ) {
-                let mut temp = String::from("");
-                if !deleted_text.is_null() {
-                    temp = CStr::from_ptr(deleted_text).to_string_lossy().to_string();
-                }
-                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = mem::transmute(data);
+                let temp = if !deleted_text.is_null() {
+                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
+                } else {
+                    String::from("")
+                };
+                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
+                    data as *mut Box<dyn for<'r> FnMut(u32, u32, u32, u32, &'r str)>;
                 let f: &mut (dyn FnMut(u32, u32, u32, u32, &str)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                     f(
@@ -487,7 +500,7 @@ impl TextBuffer {
                 }));
             }
             let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
-            let data: *mut raw::c_void = mem::transmute(a);
+            let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_remove_modify_callback(self._inner, callback, data);
         }
@@ -544,9 +557,12 @@ pub struct StyleTables {
 
 impl StyleTables {
     /// Deletes the StyleTables
+    /// # Safety
+    ///
+    /// This function should not be called before the horsemen are ready.
     pub unsafe fn delete(&mut self) {
         Fl_delete_stable(self._inner);
-        self._inner = 0 as *mut raw::c_void;
+        self._inner = std::ptr::null_mut::<raw::c_void>();
     }
 }
 

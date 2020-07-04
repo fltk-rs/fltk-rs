@@ -25,9 +25,18 @@ fn main() {
     // Called when the table is drawn then when it's redrawn due to events
     table.draw_cell(Box::new(move |ctx, row, col, x, y, w, h| match ctx {
         table::TableContext::StartPage => draw::set_font(Font::Helvetica, 14),
-        table::TableContext::ColHeader => draw_header(&format!("{}", (col + 65) as u8 as char), x, y, w, h), // Column titles
+        table::TableContext::ColHeader => {
+            draw_header(&format!("{}", (col + 65) as u8 as char), x, y, w, h)
+        } // Column titles
         table::TableContext::RowHeader => draw_header(&format!("{}", row + 1), x, y, w, h), // Row titles
-        table::TableContext::Cell => draw_data(&format!("{}", row + col), x, y, w, h, table_c.is_selected(row, col)), // Data in cells
+        table::TableContext::Cell => draw_data(
+            &format!("{}", row + col),
+            x,
+            y,
+            w,
+            h,
+            table_c.is_selected(row, col),
+        ), // Data in cells
         _ => (),
     }));
 

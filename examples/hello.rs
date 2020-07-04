@@ -9,7 +9,7 @@ fn main() {
     let mut image = SvgImage::load(&PathBuf::from("screenshots/RustLogo.svg")).unwrap();
     image.scale(200, 200, true, true);
     frame.set_image(Some(image));
-    
+
     wind.make_resizable(true);
     wind.end();
     wind.show();

@@ -240,7 +240,7 @@ fn main() {
                 Save => editor.save_file(&mut saved),
                 SaveAs => editor.save_file(&mut saved),
                 Quit => {
-                    if saved == false {
+                    if !saved {
                         let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
                         if x == 0 {
                             editor.save_file(&mut saved);

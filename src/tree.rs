@@ -99,6 +99,9 @@ struct TreeItemArray {
 
 impl Tree {
     /// Creates a Tree from a raw Fl_Tree pointer
+    /// # Safety
+    ///
+    /// This function should not be called before the horsemen are ready.
     pub unsafe fn from_raw(ptr: *mut Fl_Tree) -> Option<Tree> {
         if ptr.is_null() {
             None
@@ -849,7 +852,7 @@ impl Tree {
             assert!(!val.was_deleted());
             unsafe { Fl_Tree_set_usericon(self._inner, val.as_ptr()) }
         } else {
-            unsafe { Fl_Tree_set_usericon(self._inner, 0 as *mut raw::c_void) }
+            unsafe { Fl_Tree_set_usericon(self._inner, std::ptr::null_mut::<raw::c_void>()) }
         }
     }
 
@@ -873,7 +876,7 @@ impl Tree {
             assert!(!val.was_deleted());
             unsafe { Fl_Tree_set_openicon(self._inner, val.as_ptr()) }
         } else {
-            unsafe { Fl_Tree_set_openicon(self._inner, 0 as *mut raw::c_void) }
+            unsafe { Fl_Tree_set_openicon(self._inner, std::ptr::null_mut::<raw::c_void>()) }
         }
     }
 
@@ -897,7 +900,7 @@ impl Tree {
             assert!(!val.was_deleted());
             unsafe { Fl_Tree_set_closeicon(self._inner, val.as_ptr()) }
         } else {
-            unsafe { Fl_Tree_set_closeicon(self._inner, 0 as *mut raw::c_void) }
+            unsafe { Fl_Tree_set_closeicon(self._inner, std::ptr::null_mut::<raw::c_void>()) }
         }
     }
 
@@ -1170,6 +1173,9 @@ impl Tree {
 
 impl TreeItem {
     /// Create a TreeItem from a raw pointer
+    /// # Safety
+    ///
+    /// This function should not be called before the horsemen are ready.
     pub unsafe fn from_raw(ptr: *mut Fl_Tree_Item) -> Option<TreeItem> {
         if ptr.is_null() {
             None
@@ -1545,11 +1551,11 @@ impl TreeItem {
         unsafe { TreeItem::from_raw(Fl_Tree_Item_prev(self._inner)) }
     }
 
-    /// Gets the next item
-    pub fn next(&mut self) -> Option<TreeItem> {
-        assert!(!self.was_deleted());
-        unsafe { TreeItem::from_raw(Fl_Tree_Item_next(self._inner)) }
-    }
+    // /// Gets the next item
+    // pub fn next(&mut self) -> Option<TreeItem> {
+    //     assert!(!self.was_deleted());
+    //     unsafe { TreeItem::from_raw(Fl_Tree_Item_next(self._inner)) }
+    // }
 
     /// Gets the next sibling
     pub fn next_sibling(&mut self) -> Option<TreeItem> {
@@ -1741,11 +1747,20 @@ impl TreeItem {
                 return true;
             }
             if is_root {
-                return self._tree.root().is_none() || self._inner.is_null();
+                self._tree.root().is_none() || self._inner.is_null()
             } else {
-                return Fl_Tree_Item_children(parent) == 0 || self._inner.is_null();
+                Fl_Tree_Item_children(parent) == 0 || self._inner.is_null()
             }
         }
+    }
+}
+
+impl Iterator for TreeItem {
+    type Item = TreeItem;
+    /// Gets the next item
+    fn next(&mut self) -> Option<Self::Item> {
+        assert!(!self.was_deleted());
+        unsafe { TreeItem::from_raw(Fl_Tree_Item_next(self._inner)) }
     }
 }
 
@@ -1833,9 +1848,7 @@ impl TreeItemArray {
         } else {
             for i in 0..c {
                 let val = self.at(i);
-                if val.is_none() {
-                    return None;
-                }
+                val.as_ref()?;
                 v.push(val.unwrap());
             }
             Some(v)

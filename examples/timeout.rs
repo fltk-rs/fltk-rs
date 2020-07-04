@@ -13,6 +13,6 @@ fn main() {
     wind.show();
 
     app::add_timeout(1.0, Box::new(callback));
-    
+
     app.run().unwrap();
 }

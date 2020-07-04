@@ -17,7 +17,7 @@ fn run() -> Result<(), FltkError> {
     unsafe {
         match Fl_run() {
             0 => Ok(()),
-            _ => return Err(FltkError::Internal(FltkErrorKind::FailedToRun)),
+            _ => Err(FltkError::Internal(FltkErrorKind::FailedToRun)),
         }
     }
 }
@@ -27,7 +27,7 @@ pub fn lock() -> Result<(), FltkError> {
     unsafe {
         match Fl_lock() {
             0 => Ok(()),
-            _ => return Err(FltkError::Internal(FltkErrorKind::FailedToLock)),
+            _ => Err(FltkError::Internal(FltkErrorKind::FailedToLock)),
         }
     }
 }
@@ -69,12 +69,12 @@ pub fn unlock() {
 pub fn awake(cb: Box<dyn FnMut()>) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-        let data: *mut raw::c_void = mem::transmute(a);
+        let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Fl_Awake_Handler = Some(shim);
         Fl_awake(callback, data);
     }
@@ -108,7 +108,7 @@ impl App {
     /// Runs the event loop
     pub fn run(&self) -> Result<(), FltkError> {
         lock()?;
-        return run();
+        run()
     }
 
     /// Wait for incoming messages
@@ -134,12 +134,12 @@ impl App {
     pub fn awake(&self, cb: Box<dyn FnMut()>) {
         unsafe {
             unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
                 let f: &mut (dyn FnMut()) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
             let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-            let data: *mut raw::c_void = mem::transmute(a);
+            let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: Fl_Awake_Handler = Some(shim);
             Fl_awake(callback, data);
         }
@@ -149,9 +149,7 @@ impl App {
     pub fn windows(&self) -> Option<Vec<Window>> {
         let mut v: Vec<Window> = vec![];
         let first = first_window();
-        if first.is_none() {
-            return None;
-        }
+        first.as_ref()?;
         let first = first.unwrap();
         v.push(first.clone());
         let mut win = first;
@@ -256,12 +254,7 @@ pub fn event_state() -> Shortcut {
 
 /// Returns a pair of the width and height of the screen
 pub fn screen_size() -> (f64, f64) {
-    unsafe {
-        (
-            (Fl_screen_w() as f64 / 0.96).into(),
-            (Fl_screen_h() as f64 / 0.96).into(),
-        )
-    }
+    unsafe { ((Fl_screen_w() as f64 / 0.96), (Fl_screen_h() as f64 / 0.96)) }
 }
 
 /// Used for widgets implementing the InputExt, pastes content from the clipboard
@@ -287,13 +280,13 @@ where
     // );
     unsafe {
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         widget.unset_callback();
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-        let data: *mut raw::c_void = mem::transmute(a);
+        let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
         fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
     }
@@ -355,7 +348,7 @@ pub fn font_count() -> usize {
 
 /// Gets a Vector<String> of loaded fonts
 pub fn fonts() -> Vec<String> {
-    unsafe { FONTS.clone().unwrap().clone() }
+    unsafe { FONTS.clone().unwrap() }
 }
 
 /// Adds a custom handler for unhandled events
@@ -532,12 +525,12 @@ pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
     // );
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-        let data: *mut raw::c_void = mem::transmute(a);
+        let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         fltk_sys::fl::Fl_add_timeout(tm, callback, data);
     }
@@ -554,12 +547,12 @@ pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
     // );
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-        let data: *mut raw::c_void = mem::transmute(a);
+        let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         fltk_sys::fl::Fl_repeat_timeout(tm, callback, data);
     }
@@ -569,12 +562,12 @@ pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
 pub fn remove_timeout(cb: Box<dyn FnMut()>) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-        let data: *mut raw::c_void = mem::transmute(a);
+        let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         fltk_sys::fl::Fl_remove_timeout(callback, data);
     }
@@ -644,6 +637,9 @@ pub fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
 }
 
 /// Deletes widgets and their children recursively deleting their user data
+/// # Safety
+///
+/// This function should not be called before the horsemen are ready.
 pub unsafe fn unsafe_delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
     assert!(!wid.was_deleted());
     let _u = wid.user_data();

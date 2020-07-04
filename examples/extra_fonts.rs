@@ -17,8 +17,8 @@
 // - ScreenBold,
 // - Zapfdingbats,
 //
-// The system fonts depend on the system, and are not loaded by default. 
-// These can be loaded using the App::load_system_fonts() method. 
+// The system fonts depend on the system, and are not loaded by default.
+// These can be loaded using the App::load_system_fonts() method.
 // The fonts can then be aquired using the app::fonts() function
 // or be queried using the app::font_count(), app::font_name() and app::font_index() functions.
 // And the can be used using the Font::by_index() or Font::by_name() methods.
@@ -37,7 +37,7 @@ fn main() {
     println!("The system has {} fonts!\nStarting slideshow!", fonts.len());
     let mut i = 0;
     while app.wait().unwrap() {
-        frame.set_label(&format!("[{}]",fonts[i]));
+        frame.set_label(&format!("[{}]", fonts[i]));
         frame.set_label_font(Font::by_index(i));
         std::thread::sleep(std::time::Duration::from_millis(500));
         i += 1;

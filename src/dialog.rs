@@ -69,7 +69,7 @@ impl FileDialog {
             let cnt = Fl_Native_File_Chooser_count(self._inner);
             let mut names: Vec<std::path::PathBuf> = vec![];
             if cnt == 0 {
-                return names;
+                names
             } else {
                 for i in 0..cnt {
                     let x = Fl_Native_File_Chooser_filenames(self._inner, i);
@@ -102,12 +102,8 @@ impl FileDialog {
 
     /// Sets the starting directory
     pub fn set_directory(&mut self, dir: &std::path::Path) {
-        unsafe {
-            Fl_Native_File_Chooser_set_directory(
-                self._inner,
-                CString::new(dir.to_str().unwrap()).unwrap().as_ptr(),
-            )
-        }
+        let dir = CString::new(dir.to_str().unwrap()).unwrap();
+        unsafe { Fl_Native_File_Chooser_set_directory(self._inner, dir.as_ptr()) }
     }
 
     /// Shows the file dialog
@@ -200,11 +196,11 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
 /// Can be used for gui io
 pub fn input(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     unsafe {
-        let temp = CString::new(deflt.clone()).unwrap().as_ptr();
+        let temp = CString::new(deflt).unwrap();
         let txt = CString::new(txt).unwrap();
-        let x = cfl_input(x, y, txt.as_ptr(), temp);
+        let x = cfl_input(x, y, txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
-            return None;
+            None
         } else {
             Some(
                 CStr::from_ptr(x as *const raw::c_char)
@@ -218,11 +214,11 @@ pub fn input(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
 /// Shows an input box, but with hidden string
 pub fn password(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     unsafe {
-        let temp = CString::new(deflt.clone()).unwrap().as_ptr();
+        let temp = CString::new(deflt).unwrap();
         let txt = CString::new(txt).unwrap();
-        let x = cfl_password(x, y, txt.as_ptr(), temp);
+        let x = cfl_password(x, y, txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
-            return None;
+            None
         } else {
             Some(
                 CStr::from_ptr(x as *const raw::c_char)

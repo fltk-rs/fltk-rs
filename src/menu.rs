@@ -7,7 +7,6 @@ use std::{
     os::raw,
 };
 
-
 /// Creates a menu bar
 #[derive(WidgetExt, MenuExt, Debug)]
 pub struct MenuBar {
@@ -66,7 +65,7 @@ impl MenuItem {
             assert!(!item_ptr.is_null());
             MenuItem {
                 _inner: item_ptr,
-                _parent: 0 as *const MenuBar,
+                _parent: std::ptr::null::<MenuBar>(),
                 _alloc: true,
             }
         }
@@ -82,7 +81,7 @@ impl MenuItem {
             } else {
                 let item = MenuItem {
                     _inner: item as *mut Fl_Menu_Item,
-                    _parent: 0 as *const MenuBar,
+                    _parent: std::ptr::null::<MenuBar>(),
                     _alloc: false,
                 };
                 Some(item)
@@ -235,17 +234,13 @@ impl MenuItem {
     /// Returns whether a menu item is a checkbox
     pub fn is_checkbox(&self) -> bool {
         assert!(!self.was_deleted() && !self._inner.is_null());
-        unsafe {
-            Fl_Menu_Item_checkbox(self._inner) != 0
-        }
+        unsafe { Fl_Menu_Item_checkbox(self._inner) != 0 }
     }
 
     /// Returns whether a menu item is a radio item
     pub fn is_radio(&self) -> bool {
         assert!(!self.was_deleted() && !self._inner.is_null());
-        unsafe {
-            Fl_Menu_Item_radio(self._inner) != 0
-        }
+        unsafe { Fl_Menu_Item_radio(self._inner) != 0 }
     }
 
     /// Shows the menu item
@@ -278,6 +273,9 @@ impl MenuItem {
     }
 
     /// Get the user data
+    /// # Safety
+    ///
+    /// This function should not be called before the horsemen are ready.
     pub unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
         let ptr = Fl_Menu_Item_user_data(self._inner);
         if ptr.is_null() {
@@ -290,6 +288,9 @@ impl MenuItem {
     }
 
     /// Manually set the user data
+    /// # Safety
+    ///
+    /// This function should not be called before the horsemen are ready.
     pub unsafe fn set_user_data(&mut self, data: *mut raw::c_void) {
         Fl_Menu_Item_set_user_data(self._inner, data)
     }
@@ -302,13 +303,13 @@ impl MenuItem {
                 _wid: *mut fltk_sys::menu::Fl_Widget,
                 data: *mut raw::c_void,
             ) {
-                let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
                 let f: &mut (dyn FnMut()) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
             self.unset_callback();
             let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-            let data: *mut raw::c_void = mem::transmute(a);
+            let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: fltk_sys::menu::Fl_Callback = Some(shim);
             Fl_Menu_Item_callback(self._inner, callback, data);
         }
@@ -320,11 +321,14 @@ impl MenuItem {
     }
 
     /// Manually unset a callback
+    /// # Safety
+    ///
+    /// This function should not be called before the horsemen are ready.
     pub unsafe fn unset_callback(&mut self) {
         let old_data = self.user_data();
-        if old_data.is_some() {
-            let _ = old_data.unwrap();
-            self.set_user_data(0 as *mut raw::c_void);
+        if let Some(old_data) = old_data {
+            let _ = old_data;
+            self.set_user_data(std::ptr::null_mut::<raw::c_void>());
         }
     }
 
@@ -341,11 +345,7 @@ impl MenuItem {
     pub fn was_deleted(&self) -> bool {
         if !self._parent.is_null() {
             let parent = unsafe { Fl_Menu_Bar_menu((*self._parent)._inner) };
-            if parent.is_null() {
-                true
-            } else {
-                false
-            }
+            parent.is_null()
         } else {
             false
         }
@@ -360,7 +360,7 @@ impl Drop for MenuItem {
     fn drop(&mut self) {
         if self._alloc {
             unsafe { Fl_Menu_Item_delete(self._inner) }
-            self._inner = 0 as *mut Fl_Menu_Item;
+            self._inner = std::ptr::null_mut::<Fl_Menu_Item>();
         }
     }
 }

@@ -46,8 +46,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "center_screen requires the size of the widget to be known!");
                 let (mut x, mut y) = screen_size();
-                x = x - self.width() as f64;
-                y = y - self.height() as f64;
+                x -= self.width() as f64;
+                y -= self.height() as f64;
                 self.resize((x / 2.0) as i32, (y / 2.0) as i32, self.width(), self.height());
                 self
             }
@@ -74,7 +74,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!image.was_deleted());
                     unsafe { #set_icon(self._inner, image.as_ptr()) }
                 } else {
-                    unsafe { #set_icon(self._inner, 0 as *mut raw::c_void) }
+                    unsafe { #set_icon(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 
