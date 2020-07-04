@@ -5,6 +5,10 @@
 ### Changes
 - (None)
 
+## [0.7.11] - 2020-07-04
+### Changes
+- Fixed Chart colors.
+
 ## [0.7.10] - 2020-07-03
 ### Changes
 - MenuItem::new now takes a slice instead of a vector.
