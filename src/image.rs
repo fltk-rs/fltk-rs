@@ -341,7 +341,9 @@ pub struct RgbImage {
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage, creates an internal copy of the data
+    /// Initializes a new raw RgbImage, gives the slice static lifetime
+    /// If you need to work with RGB data,
+    /// it's suggested to use the Image crate https://crates.io/crates/image
     pub fn new(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
         let data = data.to_owned();
         if depth > 4 {
