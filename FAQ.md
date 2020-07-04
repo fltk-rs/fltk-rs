@@ -72,19 +72,27 @@ This is the default behavior in FLTK. You can easily override it by setting a ca
 ## Panics
 
 ### My app panics when I try to handle events, how can I fix it?
-This is due to a debug_assert which checks that the involved widget and the window are capable of handling events. Although most events would be handled correctly, some events require that the aforementioned conditions be met. Thus it is advisable to place your event handling code after the main drawing is done, i.e after calling your main window's show() method. Another point is that event handling and drawing should be done in the main thread.
+This is due to a debug_assert which checks that the involved widget and the window are capable of handling events. Although most events would be handled correctly, some events require that the aforementioned conditions be met. Thus it is advisable to place your event handling code after the main drawing is done, i.e after calling your main window's show() method. Another point is that event handling and drawing should be done in the main thread. Panics accross FFI boundaries are undefined behavior, as such, the wrapper never throws. Furthermore, all panics which might arise in callbacks are caught on the Rust side using catch_unwind.
 
 ## Memory and unsafety
 
 ### How memory-safe is fltk-rs?
-FLTK manages it's own memory. Any widget is automatically owned by a parent which does the book-keeping as well and deletion, this is the enclosing widget implementing GroupExt such as windws etc. This is done in the C++ FLTK library itself. Any constructed widget calls the current() method which detects the enclosing group widget, and calls its add() method rending ownership to the group widget. Upon destruction of the group widget, all owned widgets are freed. Also all widgets are wrapped in a mutex for all mutating methods, and their lifetimes are tracked using an Fl_Widget_Tracker, That means widgets have interior mutability as if wrapped in an Arc<Mutex<widget>>. Cloning a widget performs a memcpy of the underlying pointer and allows for interior mutability; it does not create a new widget.
-SharedImages are reference-counted by FLTK and cloning an image does create a new image. All mutating methods are wrapped in locks, however images don't offer interior mutability, and would require manual wrapping with Arc<Mutex>> in the Rust side for multi-threaded applications.
+The callback mechanism consists of boxing a closure as a void pointer with a shim which dereferences the void pointer into a function pointer and calls the function. This is technically undefined behavior, however most implementations permit it and it's the method used by most wrappers to handle callbacks across FFI boundaries.
+As stated before, panics accross FFI boundaries are undefined behavior, as such, the C++ wrapper never throws. Furthermore, all panics which might arise in callbacks are caught on the Rust side using catch_unwind.
+
+FLTK manages it's own memory. Any widget is automatically owned by a parent which does the book-keeping as well and deletion, this is the enclosing widget implementing GroupExt such as windws etc. This is done in the C++ FLTK library itself. Any constructed widget calls the current() method which detects the enclosing group widget, and calls its add() method rending ownership to the group widget. Upon destruction of the group widget, all owned widgets are freed. Also all widgets are wrapped in a mutex for all mutating methods, and their lifetimes are tracked using an Fl_Widget_Tracker, That means widgets have interior mutability as if wrapped in an Arc<Mutex<widget>> and have a tracking pointer to detect deletion. Cloning a widget performs a memcpy of the underlying pointer and allows for interior mutability; it does not create a new widget.
+SharedImages are reference-counted by FLTK. All mutating methods are wrapped in locks.
 This locking might lead to some performance degradation as compared to the original FLTK library, it does allow for multithreaded applications, and is necessary in an FLTK (C++) application if it also required threading.
+
 So while FLTK widgets don't leak, this might create lifetime issues with certain widgets, namely the TextEditor and TextDisplay widgets. These 2 widgets require a TextBuffer, which might point to a file, and which might get destroyed/freed before the destruction of these widgets. As such the buffers require manual resource management if they happen to outlive the TextDisplay or TextEditor widgets, similarly, images might require explicit management if they happen to outlive the widget they were used in and are no longer needed in the program.
+
 Overriding drawing methods will box data to be sent to the C++ library, so the data should optimally be limited to widgets or plain old data types to avoid unnecessary leaks if a custom drawn widget might be deleted during the lifetime of the program.
+
 Deleting a widget or its parent in that callback's widget can be done safely using the safe method variants of delete() and clear(). If recursive deletion of capturing callbacks is needed, there are the unsafe variants unsafe_delete and unsafe_clear. It's preferable to use channels in this case when dealing with widgets that might be deleted since these are copy types and don't leak.
-That said, fltk-rs is still in active development, and has not yet been fuzzed nor thouroughly tested for memory safety issues.
+
 The 2 internal traits fltk-sys and fltk-derive are supposed to remain internal, and not be exposed into the public api, and are thus marked unsafe.
+
+That said, fltk-rs is still in active development, and has not yet been fuzzed nor thouroughly tested for memory safety issues.
 
 ### Why is fltk-rs using so much unsafe code?
 Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so the unsafe keyword is needed.
