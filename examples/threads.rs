@@ -14,7 +14,7 @@ fn main() {
 
     but.set_callback(Box::new(move || {
         let mut frame = frame.clone();
-        thread::spawn(move|| {
+        thread::spawn(move || {
             for i in 0..1000 {
                 thread::sleep(time::Duration::from_millis(10));
                 frame.set_label(format!("Hello {}", i).as_str());

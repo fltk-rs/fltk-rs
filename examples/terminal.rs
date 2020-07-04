@@ -21,7 +21,7 @@ impl Term {
 
         let mut t = Term {
             term: TextDisplay::new(5, 5, 630, 470, ""),
-            current_dir: current_dir,
+            current_dir,
             cmd: String::from(""),
         };
 
@@ -53,7 +53,7 @@ impl Term {
         let args = self.cmd.clone();
         let args: Vec<&str> = args.split_whitespace().collect();
 
-        if args.len() > 0 {
+        if !args.is_empty() {
             let mut cmd = Command::new(args[0]);
             if args.len() > 1 {
                 if args[0] == "cd" {
@@ -66,14 +66,14 @@ impl Term {
             let out = cmd.stdout(Stdio::piped()).stderr(Stdio::piped()).output();
             if out.is_err() {
                 let msg = format!("{}: command not found!\n", self.cmd);
-                return msg;
+                msg
             } else {
                 let stdout = out.unwrap().stdout;
                 let stdout = String::from_utf8_lossy(&stdout).to_string();
-                return stdout;
+                stdout
             }
         } else {
-            return String::from("");
+            String::from("")
         }
     }
 
@@ -85,10 +85,10 @@ impl Term {
                 .to_string_lossy()
                 .to_string();
             current_dir.push_str("$ ");
-            self.current_dir = current_dir.clone();
-            return String::from("");
+            self.current_dir = current_dir;
+            String::from("")
         } else {
-            return String::from("Path does not exist!\n");
+            String::from("Path does not exist!\n")
         }
     }
 }
@@ -139,16 +139,16 @@ fn main() {
                     true
                 }
                 Key::BackSpace => {
-                    if term.cmd.len() != 0 {
+                    if !term.cmd.is_empty() {
                         let text_len = term.buffer().unwrap().text().len() as u32;
                         term.term
                             .buffer()
                             .unwrap()
                             .remove(text_len - 1, text_len as u32);
                         term.cmd.pop().unwrap();
-                        return true;
+                        true
                     } else {
-                        return false;
+                        false
                     }
                 }
                 _ => {

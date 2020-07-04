@@ -110,8 +110,12 @@ pub unsafe trait WidgetExt {
     /// Returns the label of the widget
     fn label(&self) -> String;
     /// transforms a widget to a base Fl_Widget, for internal use
+    /// # Safety
+    /// Can return multiple mutable pointers to the same widget
     unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
     /// transforms a widget pointer to a Widget, for internal use
+    /// # Safety
+    /// The pointer must be valid
     unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
     /// Activates the widget
     fn activate(&mut self);
@@ -211,6 +215,8 @@ pub unsafe trait WidgetExt {
     /// Manually delete a widget
     fn delete(&mut self);
     /// Manually delete a widget and recursively force-cleans capturing callbacks
+    /// # Safety
+    /// Deletes user_data and any captured objects in the callback
     unsafe fn unsafe_delete(&mut self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
@@ -225,20 +231,36 @@ pub unsafe trait WidgetExt {
     /// Return the widget as a group widget if it's a group widget
     fn as_group(&mut self) -> Option<crate::group::Group>;
     /// INTERNAL: Retakes ownership of the user callback data
+    /// # Safety
+    /// Can return multiple mutable references to the user_data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     /// INTERNAL: Manually set the user data
+    /// # Safety
+    /// The data must be valid, and it cannot be checked since it's opaque
     unsafe fn set_user_data(&mut self, data: *mut raw::c_void);
     /// INTERNAL: Retakes ownership of the user callback data
+    /// # Safety
+    /// Can return multiple mutable references to the user_data
     unsafe fn raw_user_data(&self) -> *mut raw::c_void;
     /// INTERNAL: Cleanup after widget deletion
+    /// # Safety
+    /// The widget tracker is destroyed along the widget, so widget tracking is lost
     unsafe fn cleanup(&mut self);
     /// INTERNAL: Unset the defined callback
+    /// # Safety
+    /// Can be unsafe if a callback is invoked after unsetting it
     unsafe fn unset_callback(&mut self);
     /// INTERNAL: Retrieve the draw data
+    /// # Safety
+    /// Can return multiple mutable references to the draw_data
     unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
     /// INTERNAL: Manually set the draw data
+    /// # Safety
+    /// The data must be valid, and it cannot be checked since it's opaque
     unsafe fn set_draw_data(&mut self, data: *mut raw::c_void);
     /// INTERNAL: Unset the draw callback
+    /// # Safety
+    /// Can be unsafe if the draw() method is called after being unset
     unsafe fn unset_draw_callback(&mut self);
 }
 
@@ -276,6 +298,8 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Clear a group from all widgets
     fn clear(&mut self);
     /// Clear a group from all widgets and recursively force-cleans capturing callbacks
+    /// # Safety
+    /// Deletes user_data and any captured objects in the callback
     unsafe fn unsafe_clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> u32;
@@ -312,6 +336,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn border(&self) -> bool;
     /// Get the raw system handle of the window
     /// void pointer to: (Windows: HWND, X11: Xid, MacOS: NSWindow)
+    /// # Safety
+    /// Can return multiple mutable pointers for the window
     unsafe fn raw_handle(&self) -> *const raw::c_void;
 }
 
@@ -438,8 +464,12 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
     fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
     /// Clears the items in a menu, effectively deleting them, and recursively force-cleans capturing callbacks
+    /// # Safety
+    /// Deletes user_data and any captured objects in the callback
     unsafe fn unsafe_clear(&mut self);
     /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation. Also recursively force-cleans capturing callbacks
+    /// # Safety
+    /// Deletes user_data and any captured objects in the callback
     unsafe fn unsafe_clear_submenu(&mut self, idx: u32) -> Result<(), FltkError>;
     /// Get the size of the menu widget
     fn size(&self) -> u32;
@@ -657,9 +687,10 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Gets the current column width array
     fn column_widths(&self) -> Vec<i32>;
     /// Sets the current column width array
+    /// Gives the slice a static lifetime
     fn set_column_widths(&mut self, arr: &[i32]);
     /// Returns whether a certain line is displayed
-    fn displayed(&self, line: u32,) -> bool;
+    fn displayed(&self, line: u32) -> bool;
     /// Makes a specified line visible
     fn make_visible(&mut self, line: u32);
     /// Gets the vertical scroll position of the list as a pixel position
@@ -803,7 +834,10 @@ pub unsafe trait TableExt: GroupExt {
     fn tab_cell_nav(&self) -> u32;
     /// Override draw_cell
     /// Additional args: Row, Column, X, Y, Width and Height
-    fn draw_cell(&mut self, cb: Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>);
+    fn draw_cell(
+        &mut self,
+        cb: Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>,
+    );
 }
 
 /// Defines the methods implemented by all image types
@@ -817,10 +851,16 @@ pub unsafe trait ImageExt {
     /// Return the height of the image
     fn height(&self) -> i32;
     /// Returns a void pointer of the image, for internal use
+    /// # Safety
+    /// Can return multiple mutable pointers to the image
     unsafe fn as_ptr(&self) -> *mut raw::c_void;
     /// Retunrs a pointer of the image
+    /// # Safety
+    /// Can return multiple mutable pointers to the image
     unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
     /// Transforms a raw image pointer to an image
+    /// # Safety
+    /// The pointer must be valid
     unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
     /// Returns the underlying raw rgb image data
     fn to_rgb_data(&self) -> Vec<u8>;
@@ -849,6 +889,8 @@ pub unsafe trait ImageExt {
     /// Transforms an image to a BmpImage
     fn into_bmp(self) -> Result<crate::image::BmpImage, FltkError>;
     /// Deletes the image
+    /// # Safety
+    /// An image shouldn't be deleted while it's being used by a widget
     unsafe fn delete(&mut self);
     /// Checks if the image was deleted
     fn was_deleted(&self) -> bool;

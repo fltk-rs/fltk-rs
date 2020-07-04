@@ -6,7 +6,7 @@ use syn::*;
 pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
-    let ptr_name = Ident::new(format!("{}", name_str).as_str(), name.span());
+    let ptr_name = Ident::new(name_str.as_str(), name.span());
     let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
     let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
     let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
@@ -74,12 +74,12 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
                         let f: &mut (dyn FnMut()) = &mut **a;
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
                     }
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-                    let data: *mut raw::c_void = mem::transmute(a);
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
                     assert!(!self.was_deleted());
                     #add(self._inner, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
@@ -94,12 +94,12 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = mem::transmute(data);
+                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
                         let f: &mut (dyn FnMut()) = &mut **a;
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
                     }
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-                    let data: *mut raw::c_void = mem::transmute(a);
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
                     assert!(!self.was_deleted());
                     #insert(self._inner, idx as i32, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
@@ -116,7 +116,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             ) {
                 self.add(name, shortcut, flag, Box::new(move|| sender.send(msg)))
             }
-            
+
             fn insert_emit<T: 'static + Copy + Send + Sync>(
                 &mut self,
                 idx: u32,
@@ -314,7 +314,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                 }
             }
-            
+
 
             fn size(&self) -> u32 {
                 assert!(!self.was_deleted());

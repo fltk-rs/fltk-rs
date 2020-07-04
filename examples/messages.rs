@@ -7,7 +7,7 @@ pub enum Message {
 }
 
 fn inc_frame(frame: &mut Frame, val: &mut i32, step: i32) {
-    *val = *val + step;
+    *val += step;
     frame.set_label(&val.to_string());
 }
 
@@ -29,7 +29,7 @@ fn main() {
 
     while app.wait().unwrap() {
         let msg = r.recv();
-        
+
         match msg {
             Some(Message::Increment(step)) => inc_frame(&mut frame, &mut val, step),
             _ => (),

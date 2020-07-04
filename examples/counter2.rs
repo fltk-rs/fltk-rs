@@ -22,7 +22,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     while app.wait()? {
         let label: i32 = frame.label().parse()?;
-        
+
         match r.recv() {
             Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
             Some(Message::Decrement) => frame.set_label(&(label - 1).to_string()),

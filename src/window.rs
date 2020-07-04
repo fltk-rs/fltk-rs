@@ -46,11 +46,15 @@ pub struct GlContext {
 
 impl GlContext {
     /// Create a GlContext from an opaque gl context pointer
+    /// # Safety
+    /// The pointer must be valid
     pub unsafe fn from_raw(ptr: *mut raw::c_void) -> GlContext {
         GlContext { _inner: ptr }
     }
 
     /// Returns the underlying pointer
+    /// # Safety
+    /// Can return multiple mutable pointers to the same object
     pub unsafe fn into_raw(self) -> *mut raw::c_void {
         self._inner
     }

@@ -45,7 +45,7 @@ fn main() {
         match ev {
             enums::Event::Move => {
                 // Mouse's x position relative to the paddle's center
-                *paddle_pos.borrow_mut() = app::event_coords().0 - 80; 
+                *paddle_pos.borrow_mut() = app::event_coords().0 - 80;
                 true
             }
             _ => false,
@@ -69,7 +69,8 @@ fn main() {
         if ball.pos.0 == 0 {
             ball.dir.0 = Direction::Positive; // Reversal of motion when hitting the left border
         }
-        if ball.pos.1 > 600 { // Resetting the ball position after it bypasses the paddle
+        if ball.pos.1 > 600 {
+            // Resetting the ball position after it bypasses the paddle
             ball.pos = (0, 0);
             ball.dir = (Direction::Positive, Direction::Positive);
         }

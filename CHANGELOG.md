@@ -5,6 +5,13 @@
 ### Changes
 - (None)
 
+## [0.7.12] - 2020-07-05
+### Changes
+- Refactoring.
+- Add ``` # Safety``` to docs.
+- Add to readme and faq.
+- Fix "save as" in the editor example.
+
 ## [0.7.11] - 2020-07-04
 ### Changes
 - Fixed Chart colors.

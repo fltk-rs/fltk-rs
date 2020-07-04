@@ -1,11 +1,14 @@
+// Basically a table where the cell contents can be modified
+
 use fltk::*;
 use std::cell::RefCell;
 use std::rc::Rc;
 
+// Needed to store cell information during the draw_cell call
 #[derive(Default)]
 struct CellData {
-    _r: i32,
-    _c: i32,
+    _r: i32, // row
+    _c: i32, // column
     _x: i32,
     _y: i32,
     _w: i32,
@@ -14,8 +17,8 @@ struct CellData {
 
 impl CellData {
     pub fn select(&mut self, r: i32, c: i32, x: i32, y: i32, w: i32, h: i32) {
-        self._r = r; // row
-        self._c = c; // column
+        self._r = r;
+        self._c = c;
         self._x = x;
         self._y = y;
         self._w = w;
@@ -27,6 +30,7 @@ fn main() {
     let app = app::App::default().with_scheme(app::AppScheme::Gtk);
     let mut wind = window::Window::new(100, 100, 800, 600, "Spreadsheet");
     let mut table = table::Table::new(5, 5, 790, 590, "");
+    // We need an input widget
     let mut inp = input::Input::new(0, 0, 0, 0, "");
     inp.hide();
     let data = Rc::from(RefCell::from(vec![vec![String::from(""); 26]; 28]));
@@ -57,9 +61,11 @@ fn main() {
         } // Column titles
         table::TableContext::RowHeader => draw_header(&format!("{}", row + 1), x, y, w, h), // Row titles
         table::TableContext::Cell => {
-            if table_c.is_selected(row, col) { cell_c.borrow_mut().select(row, col, x, y, w, h); }
+            if table_c.is_selected(row, col) {
+                cell_c.borrow_mut().select(row, col, x, y, w, h); // Captures the cell information
+            }
             draw_data(
-                &format!("{}", data_c.borrow()[row as usize][col as usize]),
+                &data_c.borrow()[row as usize][col as usize].to_string(),
                 x,
                 y,
                 w,
@@ -75,20 +81,20 @@ fn main() {
 
     table.handle(Box::new(move |ev| match ev {
         Event::Push => {
-            if app::event_clicks() {
+            if app::event_clicks() { // double clicks
                 let c = cell_c.borrow();
                 inp_c.resize(c._x, c._y, c._w, c._h);
                 inp_c.show();
                 return true;
             }
-            return false;
+            false
         }
         _ => false,
     }));
 
     wind.handle(Box::new(move |ev| match ev {
         Event::KeyDown => {
-            if app::event_key() == Key::Enter {
+            if app::event_key() == Key::Enter { // Press enter to store the data into the cell
                 let c = cell.borrow();
                 data.borrow_mut()[c._r as usize][c._c as usize] = inp.value();
                 inp.set_value("");
@@ -97,12 +103,12 @@ fn main() {
                 return true;
             }
             false
-        },
+        }
         _ => false,
     }));
 
     wind.set_callback(Box::new(move || {
-        if app::event() == Event::Close {
+        if app::event() == Event::Close { // Close only when the close button is clicked
             app.quit();
         }
     }));

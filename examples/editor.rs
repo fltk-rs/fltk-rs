@@ -42,7 +42,32 @@ impl Editor {
 
     pub fn save_file(&mut self, saved: &mut bool) {
         let mut filename = self.filename.clone();
-        if filename.is_empty() {
+        if *saved {
+            if filename.is_empty() {
+                let mut dlg = FileDialog::new(FileDialogType::BrowseSaveFile);
+                dlg.set_option(FileDialogOptions::SaveAsConfirm);
+                dlg.show();
+                filename = dlg.filename().to_string_lossy().to_string();
+                if filename.is_empty() {
+                    return;
+                }
+                match path::Path::new(&filename).exists() {
+                    true => {
+                        fs::write(&filename, self.editor.buffer().unwrap().text()).unwrap();
+                        *saved = true;
+                    }
+                    false => alert(200, 200, "Please specify a file!"),
+                }
+            } else {
+                match path::Path::new(&filename).exists() {
+                    true => {
+                        fs::write(&filename, self.editor.buffer().unwrap().text()).unwrap();
+                        *saved = true;
+                    }
+                    false => alert(200, 200, "Please specify a file!"),
+                }
+            }
+        } else {
             let mut dlg = FileDialog::new(FileDialogType::BrowseSaveFile);
             dlg.set_option(FileDialogOptions::SaveAsConfirm);
             dlg.show();
@@ -50,14 +75,6 @@ impl Editor {
             if filename.is_empty() {
                 return;
             }
-            match path::Path::new(&filename).exists() {
-                true => {
-                    fs::write(&filename, self.editor.buffer().unwrap().text()).unwrap();
-                    *saved = true;
-                }
-                false => alert(200, 200, "Please specify a file!"),
-            }
-        } else {
             match path::Path::new(&filename).exists() {
                 true => {
                     fs::write(&filename, self.editor.buffer().unwrap().text()).unwrap();
@@ -238,9 +255,9 @@ fn main() {
                     }
                 },
                 Save => editor.save_file(&mut saved),
-                SaveAs => editor.save_file(&mut saved),
+                SaveAs => editor.save_file(&mut false),
                 Quit => {
-                    if saved == false {
+                    if !saved {
                         let x = choice(200, 200, "Would you like to save your work?", "Yes", "No", "");
                         if x == 0 {
                             editor.save_file(&mut saved);

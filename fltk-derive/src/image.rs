@@ -6,7 +6,7 @@ use syn::*;
 pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
-    let ptr_name = Ident::new(format!("{}", name_str).as_str(), name.span());
+    let ptr_name = Ident::new(name_str.as_str(), name.span());
 
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
     let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
@@ -68,14 +68,14 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
             unsafe fn as_ptr(&self) -> *mut raw::c_void {
                 assert!(!self.was_deleted());
                 unsafe {
-                    mem::transmute(self._inner)
+                    self._inner as *mut raw::c_void
                 }
             }
 
             unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                 assert!(!self.was_deleted());
                 unsafe {
-                    mem::transmute(self._inner)
+                    self._inner as *mut fltk_sys::image::Fl_Image
                 }
             }
 
@@ -83,7 +83,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!ptr.is_null());
                     #name {
-                        _inner: mem::transmute(ptr),
+                        _inner: ptr as *mut #ptr_name,
                     }
                 }
             }
@@ -134,28 +134,28 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     #data_w(self._inner) as u32
                 }
             }
-            
+
             fn data_h(&self) -> u32 {
                 assert!(!self.was_deleted());
                 unsafe {
                     #data_h(self._inner) as u32
                 }
             }
-            
+
             fn depth(&self) -> u32 {
                 assert!(!self.was_deleted());
                 unsafe {
                     #d(self._inner) as u32
                 }
             }
-            
+
             fn ld(&self) -> u32 {
                 assert!(!self.was_deleted());
                 unsafe {
                     #ld(self._inner) as u32
                 }
             }
-            
+
             fn inactive(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -171,7 +171,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 std::fs::remove_file(&path)?;
                 Ok(ret)
             }
-            
+
             fn into_jpeg(self) -> Result<JpegImage, FltkError> {
                 assert!(!self.was_deleted());
                 let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
@@ -180,7 +180,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 std::fs::remove_file(&path)?;
                 Ok(ret)
             }
-            
+
             fn into_bmp(self) -> Result<BmpImage, FltkError> {
                 assert!(!self.was_deleted());
                 let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
@@ -194,7 +194,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self._inner.is_null());
                 unsafe {
                     #delete(self._inner);
-                    self._inner = 0 as *mut #ptr_name;
+                    self._inner = std::ptr::null_mut() as *mut #ptr_name;
                 }
             }
 

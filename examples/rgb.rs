@@ -5,7 +5,6 @@ fn main() {
     let mut wind = window::Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = frame::Frame::new(0, 0, 400, 300, "");
     let v: Vec<u32> = (0..128 * 128)
-        .into_iter()
         .map(|i| {
             let x = i % 128;
             let y = i / 128;
