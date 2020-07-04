@@ -27,8 +27,7 @@ impl TextBuffer {
 
     /// Deletes the TextBuffer
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// The buffer shouldn't be deleted while the Display widget still needs it
     pub unsafe fn delete(&mut self) {
         Fl_Text_Buffer_delete(self._inner);
         self._inner = std::ptr::null_mut::<Fl_Text_Buffer>();
@@ -36,8 +35,7 @@ impl TextBuffer {
 
     /// Initialized a text buffer from a pointer
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// The pointer must be valid
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         assert!(!ptr.is_null());
         TextBuffer { _inner: ptr }
@@ -45,8 +43,7 @@ impl TextBuffer {
 
     /// Returns the inner pointer from a text buffer
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Can return multiple mutable pointers to the same buffer
     pub unsafe fn as_ptr(&self) -> *mut Fl_Text_Buffer {
         self._inner
     }
@@ -558,8 +555,7 @@ pub struct StyleTables {
 impl StyleTables {
     /// Deletes the StyleTables
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// The buffer shouldn't be deleted while the Display widget is still using it
     pub unsafe fn delete(&mut self) {
         Fl_delete_stable(self._inner);
         self._inner = std::ptr::null_mut::<raw::c_void>();

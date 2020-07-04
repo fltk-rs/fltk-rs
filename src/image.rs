@@ -20,24 +20,21 @@ pub struct Image {
 impl Image {
     /// Returns the internal pointer of Image
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Can lead to multiple mutable pointers of the same image
     pub unsafe fn as_ptr(&self) -> *mut Fl_Image {
         self._inner
     }
 
     /// Initialize an Image base from a raw pointer
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Can be unsafe if given an invalid pointer
     pub unsafe fn from_raw(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
         Image { _inner: ptr }
     }
 
     /// Transforms an Image base into another Image
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Can be unsafe if used to downcast to an image of different format
     pub unsafe fn into<I: ImageExt>(self) -> I {
         I::from_image_ptr(self._inner)
     }
@@ -379,8 +376,7 @@ impl RgbImage {
 
     /// Deconstructs a raw RgbImage into parts
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Destructures the image into its raw elements
     pub unsafe fn into_parts(self) -> (Vec<u8>, u32, u32) {
         let w = self.data_w();
         let h = self.data_h();

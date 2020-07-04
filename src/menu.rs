@@ -274,8 +274,7 @@ impl MenuItem {
 
     /// Get the user data
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Can return multiple mutable instances of the user data, which has a different lifetime than the object
     pub unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
         let ptr = Fl_Menu_Item_user_data(self._inner);
         if ptr.is_null() {
@@ -289,8 +288,7 @@ impl MenuItem {
 
     /// Manually set the user data
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Manually set the user data, the data validity can't be checked since it's opaque
     pub unsafe fn set_user_data(&mut self, data: *mut raw::c_void) {
         Fl_Menu_Item_set_user_data(self._inner, data)
     }
@@ -322,8 +320,7 @@ impl MenuItem {
 
     /// Manually unset a callback
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Invoking the callback after being unset is undefined
     pub unsafe fn unset_callback(&mut self) {
         let old_data = self.user_data();
         if let Some(old_data) = old_data {

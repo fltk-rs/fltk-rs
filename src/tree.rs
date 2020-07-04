@@ -100,8 +100,7 @@ struct TreeItemArray {
 impl Tree {
     /// Creates a Tree from a raw Fl_Tree pointer
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// The pointer must be valid
     pub unsafe fn from_raw(ptr: *mut Fl_Tree) -> Option<Tree> {
         if ptr.is_null() {
             None
@@ -1174,8 +1173,7 @@ impl Tree {
 impl TreeItem {
     /// Create a TreeItem from a raw pointer
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// The pointer must be valid
     pub unsafe fn from_raw(ptr: *mut Fl_Tree_Item) -> Option<TreeItem> {
         if ptr.is_null() {
             None

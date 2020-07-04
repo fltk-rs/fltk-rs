@@ -638,8 +638,7 @@ pub fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
 
 /// Deletes widgets and their children recursively deleting their user data
 /// # Safety
-///
-/// This function should not be called before the horsemen are ready.
+/// Deletes user_data and any captured objects in the callback
 pub unsafe fn unsafe_delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
     assert!(!wid.was_deleted());
     let _u = wid.user_data();

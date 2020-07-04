@@ -23,8 +23,7 @@ pub struct Widget {
 impl Widget {
     /// Initialize a Widget base from a pointer
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// The pointer must be valid
     pub unsafe fn from_raw(ptr: *mut Fl_Widget) -> Self {
         assert!(!ptr.is_null());
         let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
@@ -37,16 +36,14 @@ impl Widget {
 
     /// Returns the inner pointer
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Can return multiple mutable pointers to the widget
     pub unsafe fn as_ptr(&self) -> *mut Fl_Widget {
         self._inner
     }
 
     /// Transform Widget base to another Widget
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Can be if used to downcast to an incorrect widget type
     pub unsafe fn into<W: WidgetExt>(self) -> W {
         assert!(!self.was_deleted());
         W::from_widget_ptr(self._inner)

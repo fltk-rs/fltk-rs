@@ -40,8 +40,7 @@ impl Offscreen {
 
     /// Creates an uninitialized offscreen type
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// Leaves the offscreen in an uninitialized state
     pub unsafe fn uninit() -> Offscreen {
         Offscreen {
             _inner: std::ptr::null_mut(),
@@ -80,8 +79,7 @@ impl Offscreen {
 
     /// Performs a shallow copy of the offscreen
     /// # Safety
-    ///
-    /// This function should not be called before the horsemen are ready.
+    /// This can lead to multiple mutable references to the same offscreen
     pub unsafe fn memcpy(&self) -> Offscreen {
         assert!(!self._inner.is_null());
         Offscreen {
