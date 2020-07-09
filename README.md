@@ -369,3 +369,6 @@ The most commonly widgets are implemented:
     - TreeItem
 - Drawing primitives
 
+## Tutorials
+
+- [Rust FLTK gui tutorial](https://www.youtube.com/watch?v=ygP4egJtmzw)
