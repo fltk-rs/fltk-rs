@@ -5,6 +5,11 @@
 ### Changes
 - (None)
 
+## [0.7.13] - 2020-07-10
+### Changes
+- Add missing stdint.h header at cfl.cpp.
+- Expose unsafe TableExt::draw_cell_data() and set_draw_cell_data() methods.
+
 ## [0.7.12] - 2020-07-05
 ### Changes
 - Refactoring.

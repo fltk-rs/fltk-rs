@@ -838,6 +838,18 @@ pub unsafe trait TableExt: GroupExt {
         &mut self,
         cb: Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>,
     );
+    /// INTERNAL: Retrieve the draw cell data
+    /// # Safety
+    /// Can return multiple mutable references to the draw_cell_data
+    unsafe fn draw_cell_data(&self) -> Option<Box<dyn FnMut()>>;
+    /// INTERNAL: Manually set the draw data
+    /// # Safety
+    /// The data must be valid, and it cannot be checked since it's opaque
+    unsafe fn set_draw_cell_data(&mut self, data: *mut raw::c_void);
+    /// INTERNAL: Unset the draw callback
+    /// # Safety
+    /// Can be unsafe if the draw() method is called after being unset
+    unsafe fn unset_draw_cell_callback(&mut self);
 }
 
 /// Defines the methods implemented by all image types
