@@ -2679,6 +2679,12 @@ extern "C" {
         data: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Table_draw_cell_data(self_: *const Fl_Table) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_set_draw_cell_data(self_: *mut Fl_Table, data: *mut ::std::os::raw::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Table_Row {
@@ -3170,6 +3176,15 @@ extern "C" {
                 arg8: *mut ::std::os::raw::c_void,
             ),
         >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_Row_draw_cell_data(self_: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_draw_cell_data(
+        self_: *mut Fl_Table_Row,
         data: *mut ::std::os::raw::c_void,
     );
 }

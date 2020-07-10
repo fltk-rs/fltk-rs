@@ -5,7 +5,7 @@ use std::rc::Rc;
 fn main() {
     let app = app::App::default().with_scheme(app::AppScheme::Gtk);
 
-    let mut wind = Window::new(100, 100, 800, 600, "RustyPainter");
+    let mut wind = DoubleWindow::new(100, 100, 800, 600, "RustyPainter");
     let mut frame = Frame::new(5, 5, 790, 590, "");
     frame.set_color(Color::White);
     frame.set_frame(FrameType::DownBox);

@@ -163,6 +163,12 @@
                                void *data) {                                                       \
         LOCK(((table##_Derived *)self)->set_cell_drawer_data(data);                                \
              ((table##_Derived *)self)->set_cell_drawer(cb);)                                      \
+    }                                                                                              \
+    void *table##_draw_cell_data(const table *self) {                                              \
+        return ((table##_Derived *)self)->draw_cell_data_;                                         \
+    }                                                                                              \
+    void table##_set_draw_cell_data(table *self, void *data) {                                     \
+        LOCK(((table##_Derived *)self)->draw_cell_data_ = data)                                    \
     }
 
 struct Fl_Table_Derived : public Fl_Table {

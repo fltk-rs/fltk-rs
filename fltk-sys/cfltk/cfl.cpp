@@ -6,6 +6,7 @@
 #include <FL/Fl_Widget.H>
 #include <new>
 #include <random>
+#include <stdint.h>
 #include <string.h>
 
 int Fl_run(void) {

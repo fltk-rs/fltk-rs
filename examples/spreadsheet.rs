@@ -28,7 +28,7 @@ impl CellData {
 
 fn main() {
     let app = app::App::default().with_scheme(app::AppScheme::Gtk);
-    let mut wind = window::Window::new(100, 100, 800, 600, "Spreadsheet");
+    let mut wind = window::DoubleWindow::new(100, 100, 800, 600, "Spreadsheet");
     let mut table = table::Table::new(5, 5, 790, 590, "");
     // We need an input widget
     let mut inp = input::Input::new(0, 0, 0, 0, "");
