@@ -45,7 +45,7 @@ fn main() {
             }
             None => (),
         }
-        std::thread::sleep(std::time::Duration::from_millis(30));
+        std::thread::sleep(std::time::Duration::from_millis(16));
     }
 }
 
