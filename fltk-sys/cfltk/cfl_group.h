@@ -60,6 +60,10 @@ GROUP_DECLARE(Fl_Pack)
 
 WIDGET_DECLARE(Fl_Scroll)
 
+void *Fl_Scroll_scrollbar(Fl_Scroll *self);
+
+void *Fl_Scroll_hscrollbar(Fl_Scroll *self);
+
 int Fl_Scroll_xposition(const Fl_Scroll *self);
 
 int Fl_Scroll_yposition(const Fl_Scroll *self);

@@ -5,6 +5,14 @@
 ### Changes
 - (None)
 
+## [0.7.14] - 2020-07-12
+### Changes
+- FLTK update.
+- Add ScrollType enum.
+- Update versions of syn, quote and cmake.
+- Add Scroll::scrollbar() and Scroll::hscrollbar().
+- Add BrowserExt::scrollbar() and BrowserExt::hscrollbar().
+
 ## [0.7.13] - 2020-07-10
 ### Changes
 - Add missing stdint.h header at cfl.cpp.

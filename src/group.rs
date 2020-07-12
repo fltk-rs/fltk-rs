@@ -37,7 +37,41 @@ pub struct Scroll {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Defines Scroll types
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum ScrollType {
+    None = 0,
+    Horizontal = 1,
+    Vertical = 2,
+    Both = 3,
+    AlwaysOn = 4,
+    HorizontalAlways = 5,
+    VerticalAlways = 6,
+    BothAlways = 7,
+}
+
 impl Scroll {
+    /// Returns the vertical scrollbar
+    pub fn scrollbar(&self) -> crate::valuator::Scrollbar {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Scroll_scrollbar(self._inner);
+            assert!(!ptr.is_null());
+            crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
+        }
+    }
+
+    /// Returns the horizontal scrollbar
+    pub fn hscrollbar(&self) -> crate::valuator::Scrollbar {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Scroll_hscrollbar(self._inner);
+            assert!(!ptr.is_null());
+            crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
+        }
+    }
+
     /// Returns the x position
     pub fn xposition(&self) -> u32 {
         assert!(!self.was_deleted());

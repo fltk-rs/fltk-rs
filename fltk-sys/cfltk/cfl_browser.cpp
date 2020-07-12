@@ -130,6 +130,12 @@
     }                                                                                              \
     void widget##_sort(widget *self) {                                                             \
         LOCK(self->sort();)                                                                        \
+    }                                                                                              \
+    void *widget##_scrollbar(widget *self) {                                                       \
+        return &self->scrollbar;                                                                   \
+    }                                                                                              \
+    void *widget##_hscrollbar(widget *self) {                                                      \
+        return &self->hscrollbar;                                                                  \
     }
 
 WIDGET_DEFINE(Fl_Browser)

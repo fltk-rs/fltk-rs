@@ -21,6 +21,16 @@ GROUP_DEFINE(Fl_Pack)
 
 WIDGET_DEFINE(Fl_Scroll)
 
+void *Fl_Scroll_scrollbar(Fl_Scroll *self) {
+    return &self->scrollbar;
+}
+
+void *Fl_Scroll_hscrollbar(Fl_Scroll *self) {
+    return &self->hscrollbar;
+}
+
+void *Fl_Scroll_hscrollbar(const Fl_Scroll *self);
+
 int Fl_Scroll_xposition(const Fl_Scroll *self) {
     return self->xposition();
 }

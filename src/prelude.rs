@@ -715,6 +715,10 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn set_scrollbar_width(&mut self, width: i32);
     /// Sorts the items of the browser
     fn sort(&mut self);
+    /// Returns the vertical scrollbar
+    fn scrollbar(&self) -> crate::valuator::Scrollbar;
+    /// Returns the horizontal scrollbar
+    fn hscrollbar(&self) -> crate::valuator::Scrollbar;
 }
 
 /// Defines the methods implemented by table types

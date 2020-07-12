@@ -1009,6 +1009,12 @@ extern "C" {
     pub fn Fl_Scroll_deimage(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Scroll_scrollbar(self_: *mut Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_hscrollbar(self_: *mut Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Scroll_xposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
 }
 extern "C" {
