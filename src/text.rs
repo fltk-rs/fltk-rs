@@ -541,6 +541,7 @@ pub struct SimpleTerminal {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Defines the styles used in the set_highlight_data, which is used with style buffers
 #[derive(Debug, Clone, Copy)]
 pub struct StyleTableEntry {
     pub color: Color,
@@ -548,6 +549,7 @@ pub struct StyleTableEntry {
     pub size: u32,
 }
 
+/// Opaque data containing the style entries
 pub struct StyleTables {
     _inner: *mut raw::c_void,
 }

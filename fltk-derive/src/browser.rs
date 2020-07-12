@@ -116,6 +116,8 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let sort = Ident::new(format!("{}_{}", name_str, "sort").as_str(), name.span());
+    let scrollbar = Ident::new(format!("{}_{}", name_str, "scrollbar").as_str(), name.span());
+    let hscrollbar = Ident::new(format!("{}_{}", name_str, "hscrollbar").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl BrowserExt for #name {
@@ -472,6 +474,24 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #sort(self._inner)
+                }
+            }
+
+            fn scrollbar(&self) -> crate::valuator::Scrollbar {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let ptr = #scrollbar(self._inner);
+                    assert!(!ptr.is_null());
+                    crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
+                }
+            }
+        
+            fn hscrollbar(&self) -> crate::valuator::Scrollbar {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let ptr = #hscrollbar(self._inner);
+                    assert!(!ptr.is_null());
+                    crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
                 }
             }
         }

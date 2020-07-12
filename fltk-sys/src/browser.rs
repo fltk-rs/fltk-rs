@@ -635,6 +635,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Browser_sort(self_: *mut Fl_Browser);
 }
+extern "C" {
+    pub fn Fl_Browser_scrollbar(self_: *mut Fl_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Browser_hscrollbar(self_: *mut Fl_Browser) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Hold_Browser {
@@ -1066,6 +1072,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_sort(self_: *mut Fl_Hold_Browser);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_scrollbar(self_: *mut Fl_Hold_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_hscrollbar(self_: *mut Fl_Hold_Browser) -> *mut ::std::os::raw::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1555,6 +1567,16 @@ extern "C" {
 extern "C" {
     pub fn Fl_Select_Browser_sort(self_: *mut Fl_Select_Browser);
 }
+extern "C" {
+    pub fn Fl_Select_Browser_scrollbar(
+        self_: *mut Fl_Select_Browser,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_hscrollbar(
+        self_: *mut Fl_Select_Browser,
+    ) -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Multi_Browser {
@@ -2016,6 +2038,13 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multi_Browser_sort(self_: *mut Fl_Multi_Browser);
 }
+extern "C" {
+    pub fn Fl_Multi_Browser_scrollbar(self_: *mut Fl_Multi_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_hscrollbar(self_: *mut Fl_Multi_Browser)
+        -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_File_Browser {
@@ -2447,4 +2476,10 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_sort(self_: *mut Fl_File_Browser);
+}
+extern "C" {
+    pub fn Fl_File_Browser_scrollbar(self_: *mut Fl_File_Browser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Browser_hscrollbar(self_: *mut Fl_File_Browser) -> *mut ::std::os::raw::c_void;
 }

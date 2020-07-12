@@ -72,6 +72,7 @@ if(USE_SYSTEM_FLTK)
         )
 endif()
 
+
 if(CFLTK_BUILD_TESTS)
     enable_testing()
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/tests)
