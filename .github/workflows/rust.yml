@@ -18,7 +18,7 @@ jobs:
     - name: Download deps
       run: |
          if [ "$RUNNER_OS" == "Linux" ]; then
-          sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
+          sudo apt-get update && sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
          fi
       shell: bash
     - uses: actions/checkout@v2
