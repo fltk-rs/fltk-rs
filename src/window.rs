@@ -9,11 +9,63 @@ use std::{
     os::raw,
 };
 
+/// Defines a raw window handle
+#[derive(Debug)]
+pub struct RawWindowHandle {
+    _inner: *mut raw::c_void,
+}
+
+impl RawWindowHandle {
+    /// Get the inner pointer of raw system handle of the window
+    /// void pointer to: (Windows: *mut HWND, X11: *mut Xid (u64), MacOS: *mut NSWindow)
+    /// # Safety
+    /// Can return multiple mutable pointers for the window
+    pub unsafe fn inner(&self) -> *mut raw::c_void {
+        self._inner
+    }
+
+    /// Get the RawWindowHandle from an external handle
+    /// # Safety
+    /// The pointer needs to be valid
+    pub unsafe fn from_external_handle(handle: *mut raw::c_void) -> RawWindowHandle {
+        assert!(!handle.is_null());
+        let ptr = Fl_Window_from_raw_handle(handle);
+        assert!(!ptr.is_null());
+        let win = Window::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget);
+        RawWindowHandle {
+            _inner: win.raw_handle().inner(),
+        }
+    }
+
+    /// Release the memory of the inner pointer.
+    /// # Safety
+    /// The pointer must be valid
+    pub unsafe fn release(&mut self) {
+        free_xid(self._inner)
+    }
+}
+
 /// Creates a window widget
 #[derive(WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct Window {
     _inner: *mut Fl_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl Window {
+    /// Get the window associated with a raw handle.
+    /// void pointer to: (Windows: *mut HWND, X11: *mut Xid (u64), MacOS: *mut NSWindow)
+    /// # Safety
+    /// The data must be valid and is OS-dependent.
+    pub unsafe fn from_raw_handle(handle: &RawWindowHandle) -> Option<Window> {
+        assert!(!handle._inner.is_null());
+        let ptr = Fl_Window_from_raw_handle(handle._inner);
+        if ptr.is_null() {
+            None
+        } else {
+            Some(Window::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+        }
+    }
 }
 
 /// Defines the window type, can be set dynamically using the set_type() method

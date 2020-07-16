@@ -373,3 +373,4 @@ The most commonly widgets are implemented:
 
 - [Rust FLTK gui tutorial](https://www.youtube.com/watch?v=ygP4egJtmzw)
 - [FLTK Rust tutorial: user input](https://youtu.be/rIq2O4vg9fQ)
+- [FLTK Rust tutorial: Client-side web todo app](https://youtu.be/tdfFXi4-Yrw)

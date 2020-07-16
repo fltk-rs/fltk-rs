@@ -1009,6 +1009,12 @@ extern "C" {
     pub fn Fl_Scroll_deimage(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Scroll_scrollbar(self_: *mut Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_hscrollbar(self_: *mut Fl_Scroll) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Scroll_xposition(self_: *const Fl_Scroll) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -2498,6 +2504,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_border(arg1: *const Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_from_raw_handle(handle: *mut ::std::os::raw::c_void) -> *mut Fl_Window;
+}
+extern "C" {
+    pub fn free_xid(xid: *mut ::std::os::raw::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

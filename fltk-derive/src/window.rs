@@ -128,10 +128,11 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn raw_handle(&self) -> *const raw::c_void {
+            fn raw_handle(&self) -> RawWindowHandle {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #raw_handle(self._inner)
+                    let ptr = #raw_handle(self._inner);
+                    RawWindowHandle { _inner: ptr, }
                 }
             }
         }
