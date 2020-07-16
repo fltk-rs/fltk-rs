@@ -36,7 +36,10 @@
         return self->shown();                                                                      \
     }                                                                                              \
     void *widget##_raw_handle(const widget *w) {                                                   \
-        return (void *)fl_xid_(w);                                                                 \
+        Window *xid = (Window *)malloc(sizeof(Window));                                            \
+        Window temp = fl_xid(w);                                                                   \
+        memcpy(xid, &temp, sizeof(Window));                                                        \
+        return xid;                                                                                \
     }                                                                                              \
     void widget##_set_border(widget *self, int flag) {                                             \
         LOCK(self->border(flag);)                                                                  \
@@ -50,6 +53,14 @@ WIDGET_DEFINE(Fl_Window)
 GROUP_DEFINE(Fl_Window)
 
 WINDOW_DEFINE(Fl_Window)
+
+Fl_Window *Fl_Window_from_raw_handle(void *handle) {
+    return fl_find(*(Window *)handle);
+}
+
+void free_xid(void *xid) {
+    free((Window *)xid);
+}
 
 WIDGET_DEFINE(Fl_Double_Window)
 

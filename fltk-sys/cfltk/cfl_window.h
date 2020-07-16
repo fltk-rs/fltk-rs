@@ -26,6 +26,10 @@ GROUP_DECLARE(Fl_Window)
 
 WINDOW_DECLARE(Fl_Window)
 
+Fl_Window *Fl_Window_from_raw_handle(void *handle);
+
+void free_xid(void *xid);
+
 WIDGET_DECLARE(Fl_Double_Window)
 
 GROUP_DECLARE(Fl_Double_Window)

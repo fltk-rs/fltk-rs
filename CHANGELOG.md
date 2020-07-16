@@ -5,6 +5,11 @@
 ### Changes
 - (None)
 
+## [0.7.15] - 2020-07-16
+### Changes
+- Add fl_find(Window xid) as Window::from_raw_handle().
+- Add RawWindowHandle as a wrapper around an opaque type.
+
 ## [0.7.14] - 2020-07-12
 ### Changes
 - FLTK update.
