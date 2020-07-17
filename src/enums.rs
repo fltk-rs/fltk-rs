@@ -458,14 +458,6 @@ pub enum Mode {
     Opengl3 = 1024,
 }
 
-/// Defines the Fl_Pack Directions supported by fltk
-#[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
-pub enum PackDirection {
-    Vertical = 0,
-    Horizontal = 1,
-}
-
 pub trait WidgetType {
     fn to_int(self) -> i32;
     fn from_i32(val: i32) -> Self;
