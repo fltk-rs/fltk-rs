@@ -65,7 +65,7 @@ Fl_Window *Fl_Window_find_by_handle(void *handle) {
 
 winid resolve_raw_handle(void *handle) {
     winid w;
-#if defined(_WIN32) || defined(_APPLE_) || defined(__ANDROID__)
+#if defined(_WIN32) || defined(__APPLE__) || defined(__ANDROID__)
     w.opaque = *(Window *)handle;
 #else
     w.x_id = *(Window *)handle;
