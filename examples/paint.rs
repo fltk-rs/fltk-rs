@@ -34,6 +34,8 @@ fn main() {
 
     frame_c.handle(Box::new(move |ev| {
         // println!("{:?}", ev);
+        // println!("coords {:?}", app::event_coords());
+        // println!("get mouse {:?}", app::get_mouse());
         set_draw_color(Color::Red);
         set_line_style(LineStyle::Solid, 3);
 

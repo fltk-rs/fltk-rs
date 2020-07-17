@@ -1,3 +1,5 @@
+#define FL_LIBRARY
+
 #include "cfl_window.h"
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
@@ -46,6 +48,9 @@
     }                                                                                              \
     int widget##_border(const widget *self) {                                                      \
         return self->border();                                                                     \
+    }                                                                                              \
+    void widget##_set_raw_handle(widget *self, void *handle) {                                     \
+        LOCK(Window h = *(Window *)handle; Fl_X *i = Fl_X::i(self); i->xid = h;)                   \
     }
 
 WIDGET_DEFINE(Fl_Window)
@@ -54,12 +59,19 @@ GROUP_DEFINE(Fl_Window)
 
 WINDOW_DEFINE(Fl_Window)
 
-Fl_Window *Fl_Window_from_raw_handle(void *handle) {
+Fl_Window *Fl_Window_find_by_handle(void *handle) {
     return fl_find(*(Window *)handle);
 }
 
-void free_xid(void *xid) {
-    free((Window *)xid);
+winid resolve_raw_handle(void *handle) {
+    winid w;
+#if defined(_WIN32) || defined(_APPLE_) || defined(__ANDROID__)
+    w.opaque = *(Window *)handle;
+#else
+    w.x_id = *(Window *)handle;
+#endif
+    free(handle);
+    return w;
 }
 
 WIDGET_DEFINE(Fl_Double_Window)

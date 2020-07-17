@@ -5,6 +5,12 @@
 ### Changes
 - (None)
 
+## [0.7.16] - 2020-07-17
+### Changes
+- Change interface of raw handles to return and accept RawHandle (HWND on windows, NSWindow on macos, Xid on X11).
+- Rename Window::from_raw_handle() to Window::find_by_handle().
+- Add event coordinate getters relative to the screen position of the cursor.
+
 ## [0.7.15] - 2020-07-16
 ### Changes
 - Add fl_find(Window xid) as Window::from_raw_handle().

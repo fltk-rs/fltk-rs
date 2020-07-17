@@ -8,19 +8,10 @@ fn main() {
     wind.show();
 
     unsafe {
-        let mut h = wind.raw_handle();
-        let mut w = Window::from_raw_handle(&h).unwrap();
-
-        // Or to get the raw handle from an external source use RawWindowHandle::from_external_handle
-        // Note:
-        // For xid on X11, the u32 value needs to be boxed if using from_external_handle
-        // i.e:
-        // let handle = some_xid_getting_function();
-        // let handle = Box::new(handle);
-        // let t = RawWindowHandle::from_external_handle(Box::into_raw(handle) as *mut std::os::raw::c_void);
-        // let mut w = Window::from_raw_handle(&t).unwrap();
-
+        let h = wind.raw_handle();
+        let mut w = Window::find_by_handle(h).unwrap();
         w.set_color(Color::White);
+        // wind.set_raw_handle(h);
     }
 
     app.run().unwrap();

@@ -7,6 +7,11 @@
 extern "C" {
 #endif
 
+typedef union {
+    unsigned long x_id;
+    void *opaque;
+} winid;
+
 #define WINDOW_DECLARE(widget)                                                                     \
     void widget##_make_modal(widget *, unsigned int boolean);                                      \
     void widget##_fullscreen(widget *, unsigned int boolean);                                      \
@@ -17,8 +22,9 @@ extern "C" {
     void widget##_set_cursor(widget *self, int cursor);                                            \
     int widget##_shown(widget *self);                                                              \
     void *widget##_raw_handle(const widget *w);                                                    \
-    void widget##_set_border(widget *, int flag);\
-    int widget##_border(const widget *);
+    void widget##_set_border(widget *, int flag);                                                  \
+    int widget##_border(const widget *);                                                           \
+    void widget##_set_raw_handle(widget *self, void *handle);
 
 WIDGET_DECLARE(Fl_Window)
 
@@ -26,9 +32,9 @@ GROUP_DECLARE(Fl_Window)
 
 WINDOW_DECLARE(Fl_Window)
 
-Fl_Window *Fl_Window_from_raw_handle(void *handle);
+Fl_Window *Fl_Window_find_by_handle(void *handle);
 
-void free_xid(void *xid);
+winid resolve_raw_handle(void *handle);
 
 WIDGET_DECLARE(Fl_Double_Window)
 

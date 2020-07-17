@@ -336,7 +336,12 @@ pub unsafe trait WindowExt: GroupExt {
     /// Returns whether a window has a border
     fn border(&self) -> bool;
     /// Get the raw system handle of the window
-    fn raw_handle(&self) -> crate::window::RawWindowHandle;
+    fn raw_handle(&self) -> crate::window::RawHandle;
+    /// Set the window associated with a raw handle.
+    /// RawHandle is a void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
+    /// # Safety
+    /// The data must be valid and is OS-dependent. The window must be shown.
+    unsafe fn set_raw_handle(&mut self, handle: crate::window::RawHandle);
 }
 
 /// Defines the methods implemented by all input and output widgets

@@ -2207,6 +2207,46 @@ extern "C" {
     pub fn Fl_Pack_set_spacing(self_: *mut Fl_Pack, spacing: ::std::os::raw::c_int);
 }
 #[repr(C)]
+#[derive(Copy, Clone)]
+pub union winid {
+    pub x_id: ::std::os::raw::c_ulong,
+    pub opaque: *mut ::std::os::raw::c_void,
+    _bindgen_union_align: u64,
+}
+#[test]
+fn bindgen_test_layout_winid() {
+    assert_eq!(
+        ::std::mem::size_of::<winid>(),
+        8usize,
+        concat!("Size of: ", stringify!(winid))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<winid>(),
+        8usize,
+        concat!("Alignment of ", stringify!(winid))
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<winid>())).x_id as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(winid),
+            "::",
+            stringify!(x_id)
+        )
+    );
+    assert_eq!(
+        unsafe { &(*(::std::ptr::null::<winid>())).opaque as *const _ as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(winid),
+            "::",
+            stringify!(opaque)
+        )
+    );
+}
+#[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Window {
     _unused: [u8; 0],
@@ -2506,10 +2546,13 @@ extern "C" {
     pub fn Fl_Window_border(arg1: *const Fl_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_from_raw_handle(handle: *mut ::std::os::raw::c_void) -> *mut Fl_Window;
+    pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn free_xid(xid: *mut ::std::os::raw::c_void);
+    pub fn Fl_Window_find_by_handle(handle: *mut ::std::os::raw::c_void) -> *mut Fl_Window;
+}
+extern "C" {
+    pub fn resolve_raw_handle(handle: *mut ::std::os::raw::c_void) -> winid;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2867,6 +2910,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Double_Window_border(arg1: *const Fl_Double_Window) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Double_Window_set_raw_handle(
+        self_: *mut Fl_Double_Window,
+        handle: *mut ::std::os::raw::c_void,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -3190,6 +3239,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Window_border(arg1: *const Fl_Menu_Window) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Window_set_raw_handle(
+        self_: *mut Fl_Menu_Window,
+        handle: *mut ::std::os::raw::c_void,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Gl_Window {
@@ -3494,6 +3549,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_border(arg1: *const Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_raw_handle(
+        self_: *mut Fl_Gl_Window,
+        handle: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);
