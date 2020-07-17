@@ -93,10 +93,8 @@ impl App {
     }
 
     /// Sets the scheme of the application
-    #[deprecated = "Use with_scheme() instead!"]
-    pub fn set_scheme(self, scheme: AppScheme) -> App {
+    pub fn set_scheme(&mut self, scheme: AppScheme) {
         set_scheme(scheme);
-        self
     }
 
     /// Sets the scheme of the application
@@ -224,6 +222,58 @@ pub fn event_clicks() -> bool {
             0 => false,
             _ => true,
         }
+    }
+}
+
+/// Gets the x coordinate of the mouse in the window
+pub fn event_x() -> i32 {
+    unsafe {
+        Fl_event_x()
+    }
+}
+
+/// Gets the y coordinate of the mouse in the window
+pub fn event_y() -> i32 {
+    unsafe {
+        Fl_event_y()
+    }
+}
+
+/// Gets the x coordinate of the mouse in the screen
+pub fn event_x_root() -> i32 {
+    unsafe {
+        Fl_event_x_root()
+    }
+}
+
+/// Gets the y coordinate of the mouse in the screen
+pub fn event_y_root() -> i32 {
+    unsafe {
+        Fl_event_y_root()
+    }
+}
+
+/// Gets the difference in x axis of the mouse coordinates from the screen to the window
+pub fn event_dx() -> i32 {
+    unsafe {
+        Fl_event_dx()
+    }
+}
+
+/// Gets the difference in y axis of the mouse coordinates from the screen to the window
+pub fn event_dy() -> i32 {
+    unsafe {
+        Fl_event_dy()
+    }
+}
+
+/// Gets the mouse coordinates relative to the screen
+pub fn get_mouse() -> (i32, i32) {
+    unsafe {
+        let mut x: i32 = 0;
+        let mut y: i32 = 0;
+        Fl_get_mouse(&mut x, &mut y);
+        (x, y)
     }
 }
 

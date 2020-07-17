@@ -32,6 +32,16 @@ int Fl_event_x(void);
 
 int Fl_event_y(void);
 
+int Fl_event_x_root(void);
+
+int Fl_event_y_root(void);
+
+int Fl_event_dx(void);
+
+int Fl_event_dy(void);
+
+void Fl_get_mouse(int *, int *);
+
 int Fl_event_is_click(void);
 
 int Fl_event_length(void);

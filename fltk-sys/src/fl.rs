@@ -49,6 +49,21 @@ extern "C" {
     pub fn Fl_event_y() -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_event_x_root() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_event_y_root() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_event_dx() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_event_dy() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_get_mouse(arg1: *mut ::std::os::raw::c_int, arg2: *mut ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_event_is_click() -> ::std::os::raw::c_int;
 }
 extern "C" {

@@ -53,6 +53,25 @@ int Fl_event_y(void) {
     return Fl::event_y();
 }
 
+int Fl_event_x_root(void){
+    return Fl::event_x_root();
+}
+
+int Fl_event_y_root(void){
+    return Fl::event_y_root();
+}
+int Fl_event_dx(void){
+    return Fl::event_dx();
+}
+
+int Fl_event_dy(void){
+    return Fl::event_dy();
+}
+
+void Fl_get_mouse(int *x, int *y) {
+    Fl::get_mouse(*x, *y);
+}
+
 int Fl_event_is_click(void) {
     return Fl::event_is_click();
 }

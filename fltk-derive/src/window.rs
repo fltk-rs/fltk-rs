@@ -39,6 +39,10 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "raw_handle").as_str(),
         name.span(),
     );
+    let set_raw_handle = Ident::new(
+        format!("{}_{}", name_str, "set_raw_handle").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl WindowExt for #name {
@@ -128,12 +132,28 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn raw_handle(&self) -> RawWindowHandle {
+            fn raw_handle(&self) -> RawHandle {
                 unsafe {
                     assert!(!self.was_deleted());
                     let ptr = #raw_handle(self._inner);
-                    RawWindowHandle { _inner: ptr, }
+                    assert!(!ptr.is_null());
+                    let winid = resolve_raw_handle(ptr);
+
+                    #[cfg(any(target_os = "windows", target_os = "macos", target_os = "android", target_os = "ios"))]
+                    return winid.opaque;
+
+                    #[cfg(any(
+                        target_os = "linux",
+                        target_os = "dragonfly",
+                        target_os = "freebsd",
+                        target_os = "netbsd",
+                        target_os = "openbsd",
+                    ))]
+                    return winid.x_id;
                 }
+            }
+            unsafe fn set_raw_handle(&mut self, handle: RawHandle) {
+                #set_raw_handle(self._inner, mem::transmute(&handle));
             }
         }
     };
