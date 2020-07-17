@@ -56,7 +56,7 @@ void Fl_paste(Fl_Widget *, int src);
 
 void Fl_set_scheme(const char *scheme);
 
-unsigned int Fl_get_color(unsigned char r, unsigned char g, unsigned char b);
+unsigned int Fl_get_rgb_color(unsigned char r, unsigned char g, unsigned char b);
 
 const char *Fl_get_font(int idx);
 

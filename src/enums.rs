@@ -1,5 +1,5 @@
 use crate::app::*;
-use fltk_sys::fl::Fl_get_color;
+use fltk_sys::fl::Fl_get_rgb_color;
 
 /// Defines label types
 #[repr(i32)]
@@ -173,7 +173,7 @@ pub enum Color {
 impl Color {
     /// Returns a color from RGB
     pub fn from_rgb(r: u8, g: u8, b: u8) -> Color {
-        unsafe { std::mem::transmute(Fl_get_color(r, g, b)) }
+        unsafe { std::mem::transmute(Fl_get_rgb_color(r, g, b)) }
     }
 
     /// Returns a color from hex or decimal
