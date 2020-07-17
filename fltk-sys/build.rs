@@ -46,7 +46,6 @@ fn main() {
             .status()
             .unwrap();
     } else {
-        println!("cargo:rerun-if-changed=cfltk/cfl_enums.h");
         println!("cargo:rerun-if-changed=cfltk/cfl.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_widget.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_group.h");
