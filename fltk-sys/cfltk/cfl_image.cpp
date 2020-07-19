@@ -5,9 +5,13 @@
 #include <FL/Fl_Image.H>
 #include <FL/Fl_JPEG_Image.H>
 #include <FL/Fl_PNG_Image.H>
+#include <FL/Fl_PNM_Image.H>
 #include <FL/Fl_RGB_Image.H>
 #include <FL/Fl_SVG_Image.H>
 #include <FL/Fl_Shared_Image.H>
+#include <FL/Fl_Tiled_Image.H>
+#include <FL/Fl_XBM_Image.H>
+#include <FL/Fl_XPM_Image.H>
 #include <new>
 
 #ifndef LOCK
@@ -112,6 +116,30 @@ Fl_GIF_Image *Fl_GIF_Image_new(const char *filename) {
 
 Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data) {
     return new (std::nothrow) Fl_GIF_Image(NULL, data);
+}
+
+IMAGE_DEFINE(Fl_XPM_Image)
+
+Fl_XPM_Image *Fl_XPM_Image_new(const char *filename) {
+    return new (std::nothrow) Fl_XPM_Image(filename);
+}
+
+IMAGE_DEFINE(Fl_XBM_Image)
+
+Fl_XBM_Image *Fl_XBM_Image_new(const char *filename) {
+    return new (std::nothrow) Fl_XBM_Image(filename);
+}
+
+IMAGE_DEFINE(Fl_PNM_Image)
+
+Fl_PNM_Image *Fl_PNM_Image_new(const char *filename) {
+    return new (std::nothrow) Fl_PNM_Image(filename);
+}
+
+IMAGE_DEFINE(Fl_Tiled_Image)
+
+Fl_Tiled_Image *Fl_Tiled_Image_new(Fl_Image *i, int w, int h) {
+    return new (std::nothrow) Fl_Tiled_Image(i, w, h);
 }
 
 IMAGE_DEFINE(Fl_RGB_Image)

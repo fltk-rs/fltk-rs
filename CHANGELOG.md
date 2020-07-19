@@ -5,6 +5,12 @@
 ### Changes
 - (None)
 
+## [0.7.17] - 2020-07-19
+### Changes
+- Add several more image types.
+- Add SysMenuBar widget.
+- Add WindowExt::region and set_region methods.
+
 ## [0.7.16] - 2020-07-17
 ### Changes
 - Change interface of raw handles to return and accept RawHandle (HWND on windows, NSWindow on macos, Xid on X11).

@@ -76,21 +76,21 @@ extern "C" {
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn cfl_message(
+    pub fn Fl_message(
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
         txt: *const ::std::os::raw::c_char,
     );
 }
 extern "C" {
-    pub fn cfl_alert(
+    pub fn Fl_alert(
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
         txt: *const ::std::os::raw::c_char,
     );
 }
 extern "C" {
-    pub fn cfl_choice(
+    pub fn Fl_choice(
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
         txt: *const ::std::os::raw::c_char,
@@ -100,7 +100,7 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn cfl_input(
+    pub fn Fl_input(
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
         txt: *const ::std::os::raw::c_char,
@@ -108,7 +108,7 @@ extern "C" {
     ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn cfl_password(
+    pub fn Fl_password(
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
         txt: *const ::std::os::raw::c_char,

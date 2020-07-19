@@ -99,7 +99,7 @@ let but2 = Button::default()
 An example of a counter showing use of the builder pattern:
 ```rust
 fn main() {
-    let app = app::App::default();
+    let app = App::default();
     let mut wind = Window::default()
         .with_size(160, 200)
         .center_screen()
@@ -281,6 +281,10 @@ The most commonly widgets are implemented:
     - PngImage
     - SvgImage
     - RgbImage
+    - XpmImage
+    - XbmImage
+    - PnmImage
+    - TiledImage
 - Buttons
     - Button
     - RadioButton
@@ -331,6 +335,7 @@ The most commonly widgets are implemented:
     - MenuBar
     - MenuItem
     - Choice (dropdown list)
+    - SysMenuBar (MacOS menu bar which appears at the top of the screen)
 - Valuator widgets
     - Slider
     - NiceSlider

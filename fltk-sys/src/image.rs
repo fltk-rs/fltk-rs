@@ -389,6 +389,258 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct Fl_XPM_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_XPM_Image_draw(
+        arg1: *mut Fl_XPM_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_XPM_Image_width(arg1: *mut Fl_XPM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_height(arg1: *mut Fl_XPM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_delete(arg1: *mut Fl_XPM_Image);
+}
+extern "C" {
+    pub fn Fl_XPM_Image_count(self_: *mut Fl_XPM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_data(self_: *mut Fl_XPM_Image) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_copy(self_: *mut Fl_XPM_Image) -> *mut Fl_XPM_Image;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_scale(
+        self_: *mut Fl_XPM_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_XPM_Image_fail(self_: *mut Fl_XPM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_data_w(self_: *const Fl_XPM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_data_h(self_: *const Fl_XPM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_d(self_: *const Fl_XPM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_ld(self_: *const Fl_XPM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XPM_Image_inactive(self_: *mut Fl_XPM_Image);
+}
+extern "C" {
+    pub fn Fl_XPM_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_XPM_Image;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_XBM_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_XBM_Image_draw(
+        arg1: *mut Fl_XBM_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_XBM_Image_width(arg1: *mut Fl_XBM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_height(arg1: *mut Fl_XBM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_delete(arg1: *mut Fl_XBM_Image);
+}
+extern "C" {
+    pub fn Fl_XBM_Image_count(self_: *mut Fl_XBM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_data(self_: *mut Fl_XBM_Image) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_copy(self_: *mut Fl_XBM_Image) -> *mut Fl_XBM_Image;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_scale(
+        self_: *mut Fl_XBM_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_XBM_Image_fail(self_: *mut Fl_XBM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_data_w(self_: *const Fl_XBM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_data_h(self_: *const Fl_XBM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_d(self_: *const Fl_XBM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_ld(self_: *const Fl_XBM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_XBM_Image_inactive(self_: *mut Fl_XBM_Image);
+}
+extern "C" {
+    pub fn Fl_XBM_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_XBM_Image;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_PNM_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_PNM_Image_draw(
+        arg1: *mut Fl_PNM_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_PNM_Image_width(arg1: *mut Fl_PNM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_height(arg1: *mut Fl_PNM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_delete(arg1: *mut Fl_PNM_Image);
+}
+extern "C" {
+    pub fn Fl_PNM_Image_count(self_: *mut Fl_PNM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_data(self_: *mut Fl_PNM_Image) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_copy(self_: *mut Fl_PNM_Image) -> *mut Fl_PNM_Image;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_scale(
+        self_: *mut Fl_PNM_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_PNM_Image_fail(self_: *mut Fl_PNM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_data_w(self_: *const Fl_PNM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_data_h(self_: *const Fl_PNM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_d(self_: *const Fl_PNM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_ld(self_: *const Fl_PNM_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_PNM_Image_inactive(self_: *mut Fl_PNM_Image);
+}
+extern "C" {
+    pub fn Fl_PNM_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_PNM_Image;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Tiled_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_draw(
+        arg1: *mut Fl_Tiled_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_width(arg1: *mut Fl_Tiled_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_height(arg1: *mut Fl_Tiled_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_delete(arg1: *mut Fl_Tiled_Image);
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_count(self_: *mut Fl_Tiled_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_data(self_: *mut Fl_Tiled_Image) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_copy(self_: *mut Fl_Tiled_Image) -> *mut Fl_Tiled_Image;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_scale(
+        self_: *mut Fl_Tiled_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_fail(self_: *mut Fl_Tiled_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_data_w(self_: *const Fl_Tiled_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_data_h(self_: *const Fl_Tiled_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_d(self_: *const Fl_Tiled_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_ld(self_: *const Fl_Tiled_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_inactive(self_: *mut Fl_Tiled_Image);
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_new(
+        i: *mut Fl_Image,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+    ) -> *mut Fl_Tiled_Image;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct Fl_RGB_Image {
     _unused: [u8; 0],
 }

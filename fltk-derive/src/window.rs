@@ -43,6 +43,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_raw_handle").as_str(),
         name.span(),
     );
+    let region = Ident::new(format!("{}_{}", name_str, "region").as_str(), name.span());
+    let set_region = Ident::new(format!("{}_{}", name_str, "set_region").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl WindowExt for #name {
@@ -152,8 +154,19 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     return winid.x_id;
                 }
             }
+
             unsafe fn set_raw_handle(&mut self, handle: RawHandle) {
                 #set_raw_handle(self._inner, mem::transmute(&handle));
+            }
+
+            fn region(&self) -> crate::draw::Region {
+                unsafe {
+                    #region(self._inner)
+                }
+            }
+
+            unsafe fn set_region(&mut self, region: crate::draw::Region) {
+                #set_region(self._inner, region)
             }
         }
     };

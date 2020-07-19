@@ -20,6 +20,15 @@ pub fn get_fl_name(txt: String) -> String {
     if txt == "RgbImage" {
         return String::from("Fl_RGB_Image");
     }
+    if txt == "XpmImage" {
+        return String::from("Fl_XPM_Image");
+    }
+    if txt == "XbmImage" {
+        return String::from("Fl_XBM_Image");
+    }
+    if txt == "PnmImage" {
+        return String::from("Fl_PNM_Image");
+    }
 
     let mut fl_name = String::from("Fl");
     for c in txt.chars() {

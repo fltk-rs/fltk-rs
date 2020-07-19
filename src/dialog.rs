@@ -168,7 +168,7 @@ impl Drop for FileDialog {
 pub fn message(x: i32, y: i32, txt: &str) {
     unsafe {
         let txt = CString::new(txt).unwrap();
-        cfl_message(x, y, txt.as_ptr())
+        Fl_message(x, y, txt.as_ptr())
     }
 }
 
@@ -176,7 +176,7 @@ pub fn message(x: i32, y: i32, txt: &str) {
 pub fn alert(x: i32, y: i32, txt: &str) {
     unsafe {
         let txt = CString::new(txt).unwrap();
-        cfl_alert(x, y, txt.as_ptr())
+        Fl_alert(x, y, txt.as_ptr())
     }
 }
 
@@ -188,7 +188,7 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
         let b0 = CString::new(b0).unwrap();
         let b1 = CString::new(b1).unwrap();
         let b2 = CString::new(b2).unwrap();
-        cfl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
+        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
     }
 }
 
@@ -198,7 +198,7 @@ pub fn input(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::new(deflt).unwrap();
         let txt = CString::new(txt).unwrap();
-        let x = cfl_input(x, y, txt.as_ptr(), temp.as_ptr());
+        let x = Fl_input(x, y, txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
             None
         } else {
@@ -216,7 +216,7 @@ pub fn password(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::new(deflt).unwrap();
         let txt = CString::new(txt).unwrap();
-        let x = cfl_password(x, y, txt.as_ptr(), temp.as_ptr());
+        let x = Fl_password(x, y, txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
             None
         } else {

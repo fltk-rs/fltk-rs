@@ -81,29 +81,29 @@ const char *Fl_Native_File_Chooser_errmsg(Fl_Native_File_Chooser *self) {
     return self->errmsg();
 }
 
-void cfl_message(int x, int y, const char *txt) {
+void Fl_message(int x, int y, const char *txt) {
     fl_message_position(x, y, 0);
     fl_message("%s", txt);
 }
 
-void cfl_alert(int x, int y, const char *txt) {
+void Fl_alert(int x, int y, const char *txt) {
     fl_message_position(x, y, 0);
     fl_alert("%s", txt);
 }
 
-int cfl_choice(int x, int y, const char *txt, const char *b0, const char *b1, const char *b2) {
+int Fl_choice(int x, int y, const char *txt, const char *b0, const char *b1, const char *b2) {
     fl_message_position(x, y, 0);
     if (strlen(b2) == 0)
         b2 = NULL;
     return fl_choice("%s", b0, b1, b2, txt);
 }
 
-const char *cfl_input(int x, int y, const char *txt, const char *deflt) {
+const char *Fl_input(int x, int y, const char *txt, const char *deflt) {
     fl_message_position(x, y, 0);
     return fl_input("%s", deflt, txt);
 }
 
-const char *cfl_password(int x, int y, const char *txt, const char *deflt) {
+const char *Fl_password(int x, int y, const char *txt, const char *deflt) {
     fl_message_position(x, y, 0);
     return fl_password("%s", deflt, txt);
 }

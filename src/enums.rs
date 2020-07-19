@@ -1,5 +1,5 @@
 use crate::app::*;
-use fltk_sys::fl::Fl_get_color;
+use fltk_sys::fl::Fl_get_rgb_color;
 
 /// Defines label types
 #[repr(i32)]
@@ -173,7 +173,7 @@ pub enum Color {
 impl Color {
     /// Returns a color from RGB
     pub fn from_rgb(r: u8, g: u8, b: u8) -> Color {
-        unsafe { std::mem::transmute(Fl_get_color(r, g, b)) }
+        unsafe { std::mem::transmute(Fl_get_rgb_color(r, g, b)) }
     }
 
     /// Returns a color from hex or decimal
@@ -456,14 +456,6 @@ pub enum Mode {
     Stereo = 256,
     FakeSingle = 512, // Fake single buffered windows using double-buffer
     Opengl3 = 1024,
-}
-
-/// Defines the Fl_Pack Directions supported by fltk
-#[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
-pub enum PackDirection {
-    Vertical = 0,
-    Horizontal = 1,
 }
 
 pub trait WidgetType {

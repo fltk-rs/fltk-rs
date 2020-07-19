@@ -100,7 +100,7 @@ void Fl_set_scheme(const char *scheme) {
     Fl::scheme(scheme);
 }
 
-unsigned int Fl_get_color(unsigned char r, unsigned char g, unsigned char b) {
+unsigned int Fl_get_rgb_color(unsigned char r, unsigned char g, unsigned char b) {
     return fl_rgb_color(r, g, b);
 }
 

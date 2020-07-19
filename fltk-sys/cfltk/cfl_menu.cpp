@@ -5,6 +5,7 @@
 #include <FL/Fl_Menu_Bar.H>
 #include <FL/Fl_Menu_Button.H>
 #include <FL/Fl_Menu_Item.H>
+#include "FL/Fl_Sys_Menu_Bar.H"
 #include <new>
 
 #define MENU_DEFINE(widget)                                                                        \
@@ -106,6 +107,10 @@ MENU_DEFINE(Fl_Menu_Button)
 WIDGET_DEFINE(Fl_Choice)
 
 MENU_DEFINE(Fl_Choice)
+
+WIDGET_DEFINE(Fl_Sys_Menu_Bar)
+
+MENU_DEFINE(Fl_Sys_Menu_Bar)
 
 Fl_Menu_Item *Fl_Menu_Item_new(char **args, int sz) {
     Fl_Menu_Item *items = new (std::nothrow) Fl_Menu_Item[sz + 1];
