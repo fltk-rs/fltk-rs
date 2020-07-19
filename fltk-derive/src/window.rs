@@ -156,16 +156,31 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             unsafe fn set_raw_handle(&mut self, handle: RawHandle) {
+                #[cfg(any(target_os = "windows", target_os = "macos", target_os = "android", target_os = "ios"))]
+                assert!(!handle.is_null());
+
+                #[cfg(any(
+                    target_os = "linux",
+                    target_os = "dragonfly",
+                    target_os = "freebsd",
+                    target_os = "netbsd",
+                    target_os = "openbsd",
+                ))]
+                assert!(handle != 0);
+                
                 #set_raw_handle(self._inner, mem::transmute(&handle));
             }
 
             fn region(&self) -> crate::draw::Region {
                 unsafe {
-                    #region(self._inner)
+                    let ptr = #region(self._inner);
+                    assert!(!ptr.is_null());
+                    ptr
                 }
             }
 
             unsafe fn set_region(&mut self, region: crate::draw::Region) {
+                assert!(!region.is_null());
                 #set_region(self._inner, region)
             }
         }
