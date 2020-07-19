@@ -334,6 +334,109 @@ impl GifImage {
     }
 }
 
+/// Creates a struct holding a XPM image
+#[derive(ImageExt, Debug)]
+pub struct XpmImage {
+    _inner: *mut Fl_XPM_Image,
+}
+
+impl XpmImage {
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    pub fn load(path: &std::path::Path) -> Result<XpmImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        unsafe {
+            let temp = path.to_str().unwrap();
+            let temp = CString::new(temp)?;
+            let image_ptr = Fl_XPM_Image_new(temp.as_ptr());
+            if image_ptr.is_null() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                if Fl_XPM_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(XpmImage { _inner: image_ptr })
+            }
+        }
+    }
+}
+
+/// Creates a struct holding a XBM image
+#[derive(ImageExt, Debug)]
+pub struct XbmImage {
+    _inner: *mut Fl_XBM_Image,
+}
+
+impl XbmImage {
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    pub fn load(path: &std::path::Path) -> Result<XbmImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        unsafe {
+            let temp = path.to_str().unwrap();
+            let temp = CString::new(temp)?;
+            let image_ptr = Fl_XBM_Image_new(temp.as_ptr());
+            if image_ptr.is_null() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                if Fl_XBM_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(XbmImage { _inner: image_ptr })
+            }
+        }
+    }
+}
+
+/// Creates a struct holding a PNM image
+#[derive(ImageExt, Debug)]
+pub struct PnmImage {
+    _inner: *mut Fl_PNM_Image,
+}
+
+impl PnmImage {
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    pub fn load(path: &std::path::Path) -> Result<PnmImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        unsafe {
+            let temp = path.to_str().unwrap();
+            let temp = CString::new(temp)?;
+            let image_ptr = Fl_PNM_Image_new(temp.as_ptr());
+            if image_ptr.is_null() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                if Fl_PNM_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(PnmImage { _inner: image_ptr })
+            }
+        }
+    }
+}
+
+/// Creates a struct holding a tiled image
+#[derive(ImageExt, Debug)]
+pub struct TiledImage {
+    _inner: *mut Fl_Tiled_Image,
+}
+
+impl TiledImage {
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    pub fn new<Img: ImageExt>(img: Img, w: i32, h: i32) -> TiledImage {
+        unsafe {
+            let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
+            assert!(!ptr.is_null());
+            TiledImage {
+                _inner: ptr,
+            }
+        }
+    }
+}
+
 /// Creates a struct holding a raw RGB image
 #[derive(ImageExt, Debug)]
 pub struct RgbImage {

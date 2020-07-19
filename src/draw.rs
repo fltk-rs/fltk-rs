@@ -6,14 +6,7 @@ use std::mem;
 use std::os::raw;
 
 /// Opaque type around Fl_Region
-#[derive(Debug)]
-pub struct Region {
-    _inner: *mut raw::c_void,
-}
-
-unsafe impl Sync for Region {}
-
-unsafe impl Send for Region {}
+pub type Region = *mut raw::c_void;
 
 /// Opaque type around Fl_Offscreen
 #[derive(Debug)]
@@ -200,19 +193,17 @@ pub fn pop_clip() {
 }
 
 /// Sets the clip region
-pub fn set_clip_region(r: &Region) {
-    unsafe { Fl_set_clip_region(r._inner) }
+pub fn set_clip_region(r: Region) {
+    assert!(!r.is_null());
+    unsafe { Fl_set_clip_region(r) }
 }
 
 /// Gets the clip region
-pub fn clip_region() -> Option<Region> {
+pub fn clip_region() -> Region {
     unsafe {
-        let x = Fl_clip_region();
-        if x.is_null() {
-            None
-        } else {
-            Some(Region { _inner: x })
-        }
+        let ptr = Fl_clip_region();
+        assert!(!ptr.is_null());
+        ptr
     }
 }
 

@@ -1,4 +1,4 @@
-#define FL_LIBRARY
+#define FL_INTERNALS
 
 #include "cfl_window.h"
 #include <FL/Fl.H>
@@ -51,6 +51,13 @@
     }                                                                                              \
     void widget##_set_raw_handle(widget *self, void *handle) {                                     \
         LOCK(Window h = *(Window *)handle; Fl_X *i = Fl_X::i(self); i->xid = h;)                   \
+    }                                                                                              \
+    void *widget##_region(const widget *self) {                                                    \
+        Fl_X *t = Fl_X::i(self);                                                                   \
+        return t->region;                                                                          \
+    }                                                                                              \
+    void widget##_set_region(widget *self, void *r) {                                              \
+        LOCK(Fl_X *t = Fl_X::i(self); t->region = (Fl_Region)r;)                                   \
     }
 
 WIDGET_DEFINE(Fl_Window)

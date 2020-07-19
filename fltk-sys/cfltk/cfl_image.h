@@ -53,6 +53,22 @@ Fl_GIF_Image *Fl_GIF_Image_new(const char *filename);
 
 Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data);
 
+IMAGE_DECLARE(Fl_XPM_Image)
+
+Fl_XPM_Image *Fl_XPM_Image_new(const char *filename);
+
+IMAGE_DECLARE(Fl_XBM_Image)
+
+Fl_XBM_Image *Fl_XBM_Image_new(const char *filename);
+
+IMAGE_DECLARE(Fl_PNM_Image)
+
+Fl_PNM_Image *Fl_PNM_Image_new(const char *filename);
+
+IMAGE_DECLARE(Fl_Tiled_Image)
+
+Fl_Tiled_Image *Fl_Tiled_Image_new(Fl_Image *i, int w, int h);
+
 IMAGE_DECLARE(Fl_RGB_Image)
 
 Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int depth);

@@ -342,6 +342,12 @@ pub unsafe trait WindowExt: GroupExt {
     /// # Safety
     /// The data must be valid and is OS-dependent. The window must be shown.
     unsafe fn set_raw_handle(&mut self, handle: crate::window::RawHandle);
+    /// Get the graphical draw region of the window
+    fn region(&self) -> crate::draw::Region;
+    /// Set the graphical draw region of the window
+    /// # Safety
+    /// The data must be valid.
+    unsafe fn set_region(&mut self, region: crate::draw::Region);
 }
 
 /// Defines the methods implemented by all input and output widgets

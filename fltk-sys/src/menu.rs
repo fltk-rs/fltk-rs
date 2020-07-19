@@ -1302,6 +1302,380 @@ extern "C" {
 extern "C" {
     pub fn Fl_Choice_remove(self_: *mut Fl_Choice, idx: ::std::os::raw::c_int);
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Sys_Menu_Bar {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Sys_Menu_Bar;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_x(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_y(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_width(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_height(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_label(arg1: *mut Fl_Sys_Menu_Bar) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_label(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_redraw(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_show(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_hide(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_activate(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_deactivate(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_redraw_label(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_resize(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_tooltip(arg1: *mut Fl_Sys_Menu_Bar) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_tooltip(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_get_type(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_type(arg1: *mut Fl_Sys_Menu_Bar, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_color(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_color(arg1: *mut Fl_Sys_Menu_Bar, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_label_color(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_label_color(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_label_font(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_label_font(arg1: *mut Fl_Sys_Menu_Bar, font: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_label_size(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_label_size(arg1: *mut Fl_Sys_Menu_Bar, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_label_type(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_label_type(arg1: *mut Fl_Sys_Menu_Bar, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_box(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_box(arg1: *mut Fl_Sys_Menu_Bar, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_changed(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_changed(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_clear_changed(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_align(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_align(arg1: *mut Fl_Sys_Menu_Bar, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_delete(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_image(arg1: *mut Fl_Sys_Menu_Bar, arg2: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_handler(
+        self_: *mut Fl_Sys_Menu_Bar,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_draw(
+        self_: *mut Fl_Sys_Menu_Bar,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_trigger(arg1: *mut Fl_Sys_Menu_Bar, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_image(arg1: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_parent(self_: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_selection_color(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_selection_color(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_do_callback(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_inside(
+        self_: *const Fl_Sys_Menu_Bar,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_window(arg1: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_top_window(arg1: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_takes_events(arg1: *const Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_user_data(arg1: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_take_focus(self_: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_visible_focus(self_: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_clear_visible_focus(self_: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_visible_focus(self_: *mut Fl_Sys_Menu_Bar, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_has_visible_focus(self_: *mut Fl_Sys_Menu_Bar)
+        -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_user_data(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_draw_data(self_: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_handle_data(
+        self_: *const Fl_Sys_Menu_Bar,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_draw_data(
+        self_: *mut Fl_Sys_Menu_Bar,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_handle_data(
+        self_: *mut Fl_Sys_Menu_Bar,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_damage(self_: *const Fl_Sys_Menu_Bar) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_damage(self_: *mut Fl_Sys_Menu_Bar, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_clear_damage(self_: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_as_window(self_: *mut Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_as_group(self_: *mut Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_deimage(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_deimage(arg1: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_add(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        name: *const ::std::os::raw::c_char,
+        shortcut: ::std::os::raw::c_int,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_insert(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        index: ::std::os::raw::c_int,
+        name: *const ::std::os::raw::c_char,
+        shortcut: ::std::os::raw::c_int,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+        arg4: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_get_item(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        name: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_item(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        item: *mut Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_text_font(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_text_font(arg1: *mut Fl_Sys_Menu_Bar, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_text_size(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_text_size(arg1: *mut Fl_Sys_Menu_Bar, c: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_text_color(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_text_color(arg1: *mut Fl_Sys_Menu_Bar, c: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_add_choice(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_get_choice(arg1: *mut Fl_Sys_Menu_Bar) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_value(arg1: *mut Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_value(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        v: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_clear(arg1: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_clear_submenu(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        index: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_size(arg1: *const Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_text(
+        arg1: *const Fl_Sys_Menu_Bar,
+        idx: ::std::os::raw::c_int,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_at(
+        arg1: *const Fl_Sys_Menu_Bar,
+        idx: ::std::os::raw::c_int,
+    ) -> *const Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_mode(
+        self_: *mut Fl_Sys_Menu_Bar,
+        i: ::std::os::raw::c_int,
+        fl: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_mode(
+        self_: *const Fl_Sys_Menu_Bar,
+        i: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_find_index(
+        self_: *const Fl_Sys_Menu_Bar,
+        label: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_menu(self_: *const Fl_Sys_Menu_Bar) -> *const Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_remove(self_: *mut Fl_Sys_Menu_Bar, idx: ::std::os::raw::c_int);
+}
 extern "C" {
     pub fn Fl_Menu_Item_new(
         args: *mut *mut ::std::os::raw::c_char,

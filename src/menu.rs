@@ -28,6 +28,13 @@ pub struct Choice {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Creates a MacOS system menu bar
+#[derive(WidgetExt, MenuExt, Debug)]
+pub struct SysMenuBar {
+    _inner: *mut Fl_Sys_Menu_Bar,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
 /// Creates a menu item
 #[derive(Debug, Clone)]
 pub struct MenuItem {

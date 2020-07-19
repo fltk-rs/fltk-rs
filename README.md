@@ -281,6 +281,10 @@ The most commonly widgets are implemented:
     - PngImage
     - SvgImage
     - RgbImage
+    - XpmImage
+    - XbmImage
+    - PnmImage
+    - TiledImage
 - Buttons
     - Button
     - RadioButton
@@ -331,6 +335,7 @@ The most commonly widgets are implemented:
     - MenuBar
     - MenuItem
     - Choice (dropdown list)
+    - SysMenuBar (MacOS menu bar which appears at the top of the screen)
 - Valuator widgets
     - Slider
     - NiceSlider
