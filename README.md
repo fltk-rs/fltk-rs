@@ -99,7 +99,7 @@ let but2 = Button::default()
 An example of a counter showing use of the builder pattern:
 ```rust
 fn main() {
-    let app = app::App::default();
+    let app = App::default();
     let mut wind = Window::default()
         .with_size(160, 200)
         .center_screen()
