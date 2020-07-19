@@ -97,15 +97,7 @@ void *Fl_display(void) {
 }
 
 void *Fl_gc(void) {
-#ifdef _WIN32
-    int *v = (int*)malloc(sizeof(int));
-    if (!v) return NULL;
-    int t = fl_gc;
-    memcpy(v, &t, sizeof(int));
-    return (void *)v;
-#else
     return fl_gc;
-#endif
 }
 
 WIDGET_DEFINE(Fl_Double_Window)
