@@ -816,3 +816,48 @@ pub fn abi_version() -> i32 {
 pub fn crate_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
+
+extern "C" {
+    pub fn free(ptr: *mut raw::c_void);
+}
+
+/// The current graphics context of the app, fl_gc
+/// HDC on Windows, CGContextRef on MacOS, _XGC on X11
+#[cfg(not(target_os = "windows"))]
+pub type GraphicsContext = *mut raw::c_void;
+
+/// The current graphics context of the app, fl_gc
+/// HDC on Windows, CGContextRef on MacOS, _XGC on X11
+#[cfg(target_os = "windows")]
+pub type GraphicsContext = i32;
+
+/// Get the graphics context, fl_gc
+pub fn graphics_context() -> GraphicsContext {
+    unsafe {
+        let ctx = fltk_sys::window::Fl_gc();
+        assert!(!ctx.is_null());
+        #[cfg(not(target_os = "windows"))]
+        return ctx;
+
+        #[cfg(target_os = "windows")]
+        let val = *(ctx as *mut i32);
+        #[cfg(target_os = "windows")]
+        free(ctx);
+        #[cfg(target_os = "windows")]
+        return val;
+    }
+}
+
+/// The display global variable, fl_display
+/// _XDisplay on X11, HINSTANCE on Windows. 
+pub type Display = *mut raw::c_void;
+
+/// Gets the display global variable, fl_display
+/// _XDisplay on X11, HINSTANCE on Windows.
+pub fn dispaly() -> Display {
+    unsafe {
+        let disp = fltk_sys::window::Fl_display();
+        assert!(!disp.is_null());
+        return disp;
+    }
+}

@@ -38,6 +38,10 @@ Fl_Window *Fl_Window_find_by_handle(void *handle);
 
 winid resolve_raw_handle(void *handle);
 
+void *Fl_display(void);
+
+void *Fl_gc(void);
+
 WIDGET_DECLARE(Fl_Double_Window)
 
 GROUP_DECLARE(Fl_Double_Window)

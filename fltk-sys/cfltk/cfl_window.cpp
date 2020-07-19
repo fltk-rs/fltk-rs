@@ -88,6 +88,26 @@ winid resolve_raw_handle(void *handle) {
     return w;
 }
 
+void *Fl_display(void) {
+#ifdef __APPLE__
+    return 0;
+#else
+    return fl_display;
+#endif
+}
+
+void *Fl_gc(void) {
+#ifdef _WIN32
+    int *v = (int*)malloc(sizeof(int));
+    if (!v) return NULL;
+    int t = fl_gc;
+    memcpy(v, &t, sizeof(int));
+    return (void *)v;
+#else
+    return fl_gc;
+#endif
+}
+
 WIDGET_DEFINE(Fl_Double_Window)
 
 GROUP_DEFINE(Fl_Double_Window)

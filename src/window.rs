@@ -10,9 +10,11 @@ use std::{
 };
 
 /// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
+/// XID (u64) raw window handle for X11
 #[cfg(any(target_os = "windows", target_os = "macos", target_os = "ios", target_os = "android"))]
 pub type RawHandle = *mut raw::c_void;
 
+/// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
 /// XID (u64) raw window handle for X11
 #[cfg(any(
     target_os = "linux",

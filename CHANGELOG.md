@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Allow getting the fl_display and fl_gc globabl variables.
 
 ## [0.7.17] - 2020-07-19
 ### Changes
