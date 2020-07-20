@@ -39,7 +39,11 @@
     }                                                                                              \
     void *widget##_raw_handle(const widget *w) {                                                   \
         Window *xid = (Window *)malloc(sizeof(Window));                                            \
+        if (!xid)                                                                                  \
+            return NULL;                                                                           \
         Window temp = fl_xid(w);                                                                   \
+        if (!temp)                                                                                 \
+            return NULL;                                                                           \
         memcpy(xid, &temp, sizeof(Window));                                                        \
         return xid;                                                                                \
     }                                                                                              \
@@ -50,14 +54,17 @@
         return self->border();                                                                     \
     }                                                                                              \
     void widget##_set_raw_handle(widget *self, void *handle) {                                     \
-        LOCK(Window h = *(Window *)handle; Fl_X *i = Fl_X::i(self); i->xid = h;)                   \
+        LOCK(if (!handle) return; Window h = *(Window *)handle; Fl_X *i = Fl_X::i(self);           \
+             if (!i) return; i->xid = h;)                                                          \
     }                                                                                              \
     void *widget##_region(const widget *self) {                                                    \
         Fl_X *t = Fl_X::i(self);                                                                   \
+        if (!t)                                                                                    \
+            return NULL;                                                                           \
         return t->region;                                                                          \
     }                                                                                              \
     void widget##_set_region(widget *self, void *r) {                                              \
-        LOCK(Fl_X *t = Fl_X::i(self); t->region = (Fl_Region)r;)                                   \
+        LOCK(Fl_X *t = Fl_X::i(self); if (!t) return; t->region = (Fl_Region)r;)                   \
     }
 
 WIDGET_DEFINE(Fl_Window)
@@ -79,6 +86,18 @@ winid resolve_raw_handle(void *handle) {
 #endif
     free(handle);
     return w;
+}
+
+void *Fl_display(void) {
+#ifdef __APPLE__
+    return 0;
+#else
+    return fl_display;
+#endif
+}
+
+void *Fl_gc(void) {
+    return fl_gc;
 }
 
 WIDGET_DEFINE(Fl_Double_Window)

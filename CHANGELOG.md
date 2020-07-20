@@ -5,6 +5,11 @@
 ### Changes
 - (None)
 
+## [0.7.18] - 2020-07-20
+### Changes
+- Allow getting the fl_display and fl_gc globabl variables.
+- Add null checks for methods acquiring and requiring raw handles.
+
 ## [0.7.17] - 2020-07-19
 ### Changes
 - Add several more image types.

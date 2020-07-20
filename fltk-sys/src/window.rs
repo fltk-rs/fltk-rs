@@ -2560,6 +2560,12 @@ extern "C" {
 extern "C" {
     pub fn resolve_raw_handle(handle: *mut ::std::os::raw::c_void) -> winid;
 }
+extern "C" {
+    pub fn Fl_display() -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_gc() -> *mut ::std::os::raw::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {

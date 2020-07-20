@@ -816,3 +816,30 @@ pub fn abi_version() -> i32 {
 pub fn crate_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
+
+/// The current graphics context of the app, fl_gc
+/// *mut c_void to HDC on Windows, CGContextRef on MacOS, _XGC on X11
+pub type GraphicsContext = *mut raw::c_void;
+
+/// Get the graphics context, fl_gc
+pub fn graphics_context() -> GraphicsContext {
+    unsafe {
+        let ctx = fltk_sys::window::Fl_gc();
+        assert!(!ctx.is_null());
+        return ctx;
+    }
+}
+
+/// The display global variable, fl_display
+/// _XDisplay on X11, HINSTANCE on Windows. 
+pub type Display = *mut raw::c_void;
+
+/// Gets the display global variable, fl_display
+/// _XDisplay on X11, HINSTANCE on Windows.
+pub fn dispaly() -> Display {
+    unsafe {
+        let disp = fltk_sys::window::Fl_display();
+        assert!(!disp.is_null());
+        return disp;
+    }
+}
