@@ -7,6 +7,8 @@ struct MyFrame {
 impl MyFrame {
     pub fn new(idx: i32) -> MyFrame {
         let mut f = MyFrame { f: frame::Frame::default().with_size(150, 75), };
+        // Normally you would use the FrameType enum, for example:
+        // some_widget.set_frame(FrameType::DownBox);
         f.f.set_frame(unsafe { std::mem::transmute(idx + 1) });
         f.f.set_color(Color::Cyan);
         let f_name = format!("{:?}", f.f.frame());
