@@ -11,7 +11,7 @@ Rust bindings for the FLTK Graphical User Interface library.
 The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
 
 Why choose FLTK?
-- Lightweight. Small binary, around 1mb after stripping. Small memory footprint.
+- Lightweight. Small binary, around 1mb after stripping. [Small memory footprint](https://szibele.com/memory-footprint-of-gui-toolkits/).
 - Speed. Fast to install, fast to build, fast at startup and fast at runtime. 
 - Single executable. No dlls to deploy.
 - Supports old architectures. 
