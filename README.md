@@ -270,6 +270,10 @@ Setting the scheme to Gtk
 
 ![alt_test](screenshots/pong.gif)
 
+![alt_test](screenshots/frames.jpg)
+
+Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
+
 ## Currently implemented widgets
 
 The most commonly widgets are implemented: 
