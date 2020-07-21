@@ -17,7 +17,8 @@ Why choose FLTK?
 - Supports old architectures. 
 - FLTK's permissive license which allows static linking for closed-source applications.
 - Themability (4 supported themes: Base, GTK, Plastic and Gleam).
-- Provides around 80 customizable widgets. Has inbuilt image support.
+- Provides around 80 customizable widgets. 
+- Has inbuilt image support.
 
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 
