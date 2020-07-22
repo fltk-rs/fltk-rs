@@ -5,6 +5,15 @@
 ### Changes
 - (None)
 
+## [0.7.19] - 2020-07-22
+### Changes
+- Add Pixmap.
+- Use high res GL on MacOS by default when OpenGL is supported.
+- Add more Tabs methods.
+- Add rest of TextEditor methods.
+- Move LineStyle to draw module.
+- Move ChartType to misc module.
+
 ## [0.7.18] - 2020-07-20
 ### Changes
 - Allow getting the fl_display and fl_gc globabl variables.

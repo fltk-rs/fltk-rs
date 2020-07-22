@@ -5,6 +5,30 @@ use std::ffi::{CStr, CString};
 use std::mem;
 use std::os::raw;
 
+/// Defines the line styles supported by fltk
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum LineStyle {
+    Solid = 0,
+    Dash,
+    Dot,
+    DashDot,
+    DashDotDot,
+    CapFlat = 100,
+    CapRound = 200,
+    CapSquare = 300,
+    JoinMiter = 1000,
+    JoinRound = 2000,
+    JoinBevel = 3000,
+}
+
+impl std::ops::BitOr<LineStyle> for LineStyle {
+    type Output = LineStyle;
+    fn bitor(self, rhs: LineStyle) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
 /// Opaque type around Fl_Region
 pub type Region = *mut raw::c_void;
 

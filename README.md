@@ -11,13 +11,14 @@ Rust bindings for the FLTK Graphical User Interface library.
 The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
 
 Why choose FLTK?
-- Lightweight. Small binary, around 1mb after stripping. Small memory footprint.
+- Lightweight. Small binary, around 1mb after stripping. [Small memory footprint](https://szibele.com/memory-footprint-of-gui-toolkits/).
 - Speed. Fast to install, fast to build, fast at startup and fast at runtime. 
-- Single executable. No dlls to deploy.
+- Single executable. No DLLs to deploy.
 - Supports old architectures. 
 - FLTK's permissive license which allows static linking for closed-source applications.
 - Themability (4 supported themes: Base, GTK, Plastic and Gleam).
-- Provides around 80 widgets. Has inbuilt image support.
+- Provides around 80 customizable widgets. 
+- Has inbuilt image support.
 
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 
@@ -270,6 +271,10 @@ Setting the scheme to Gtk
 
 ![alt_test](screenshots/pong.gif)
 
+![alt_test](screenshots/frames.jpg)
+
+Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
+
 ## Currently implemented widgets
 
 The most commonly widgets are implemented: 
@@ -280,6 +285,7 @@ The most commonly widgets are implemented:
     - GifImage
     - PngImage
     - SvgImage
+    - Pixmap
     - RgbImage
     - XpmImage
     - XbmImage
@@ -362,7 +368,7 @@ The most commonly widgets are implemented:
     - FileBrowser
 - Miscelaneous widgets
     - Spinner
-    - Clock
+    - Clock (Round and Square)
     - Chart (several chart types are available)
     - Progress (progress bar)
     - Tooltip

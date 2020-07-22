@@ -1300,6 +1300,33 @@ extern "C" {
     pub fn Fl_Tabs_deimage(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Tabs_value(self_: *mut Fl_Tabs) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_value(self_: *mut Fl_Tabs, w: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_push(self_: *const Fl_Tabs) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_push(self_: *mut Fl_Tabs, w: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_client_area(
+        self_: *mut Fl_Tabs,
+        rx: *mut ::std::os::raw::c_int,
+        ry: *mut ::std::os::raw::c_int,
+        rw: *mut ::std::os::raw::c_int,
+        rh: *mut ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Tabs_set_tab_align(self_: *mut Fl_Tabs, a: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tabs_tab_align(self_: *const Fl_Tabs) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {

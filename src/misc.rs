@@ -9,6 +9,27 @@ use std::{
     os::raw,
 };
 
+/// Defines the chart types supported by fltk
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum ChartType {
+    Bar = 0,
+    HorizontalBar = 1,
+    Line = 2,
+    Fill = 3,
+    Spike = 4,
+    Pie = 5,
+    SpecialPie = 6,
+}
+
+/// Defines the clock types supported by fltk
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum ClockType {
+    Square = 0,
+    Round = 1,
+}
+
 /// Creates a spinner widget
 #[derive(WidgetExt, Debug)]
 pub struct Spinner {

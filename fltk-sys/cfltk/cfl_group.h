@@ -78,6 +78,20 @@ GROUP_DECLARE(Fl_Scroll)
 
 WIDGET_DECLARE(Fl_Tabs)
 
+Fl_Widget *Fl_Tabs_value(Fl_Tabs *self);
+
+int Fl_Tabs_set_value(Fl_Tabs *self, Fl_Widget *w);
+
+Fl_Widget *Fl_Tabs_push(const Fl_Tabs *self);
+
+int Fl_Tabs_set_push(Fl_Tabs *self, Fl_Widget *w);
+
+void Fl_Tabs_client_area(Fl_Tabs *self, int *rx, int *ry, int *rw, int *rh);
+
+void Fl_Tabs_set_tab_align(Fl_Tabs *self, int a);
+
+int Fl_Tabs_tab_align(const Fl_Tabs *self);
+
 GROUP_DECLARE(Fl_Tabs)
 
 WIDGET_DECLARE(Fl_Tile)

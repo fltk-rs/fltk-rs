@@ -206,6 +206,11 @@ void Fl_init_all(void) {
     fl_define_FL_MULTI_LABEL();
     fl_define_FL_ICON_LABEL();
     fl_define_FL_IMAGE_LABEL();
+
+#if defined(__APPLE__) && defined(CFLTK_USE_GL)
+    Fl::use_high_res_GL(1);
+#endif
+
 }
 
 void Fl_redraw(void) {

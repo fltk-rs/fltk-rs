@@ -4,7 +4,7 @@ fn main() {
     let app = app::App::default().with_scheme(app::AppScheme::Gtk);
     let mut win = window::Window::new(100, 100, 800, 600, "Charts");
     let mut chart = misc::Chart::new(0, 0, 800, 600, "");
-    chart.set_type(ChartType::Pie);
+    chart.set_type(misc::ChartType::Pie);
     chart.set_bounds(0.0, 100.0);
     chart.set_text_size(18);
     chart.add(88.4, "Rust", Color::from_u32(0xcc9c59));

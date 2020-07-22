@@ -55,6 +55,34 @@ GROUP_DEFINE(Fl_Scroll)
 
 WIDGET_DEFINE(Fl_Tabs)
 
+Fl_Widget *Fl_Tabs_value(Fl_Tabs *self) {
+    return self->value();
+}
+
+int Fl_Tabs_set_value(Fl_Tabs *self, Fl_Widget *w) {
+    int ret = 0; LOCK(ret = self->value(w)); return ret;
+}
+
+Fl_Widget *Fl_Tabs_push(const Fl_Tabs *self) {
+    return self->push();
+}
+
+int Fl_Tabs_set_push(Fl_Tabs *self, Fl_Widget *w) {
+    int ret = 0; LOCK(ret = self->push(w)); return ret;
+}
+
+void Fl_Tabs_client_area(Fl_Tabs *self, int *rx, int *ry, int *rw, int *rh) {
+    return self->client_area(*rx, *ry, *rw, *rh);
+}
+
+void Fl_Tabs_set_tab_align(Fl_Tabs *self, int a) {
+    LOCK(self->tab_align(a);)
+}
+
+int Fl_Tabs_tab_align(const Fl_Tabs *self) {
+    return self->tab_align();
+}
+
 GROUP_DEFINE(Fl_Tabs)
 
 WIDGET_DEFINE(Fl_Tile)

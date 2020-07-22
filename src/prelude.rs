@@ -849,7 +849,7 @@ pub unsafe trait TableExt: GroupExt {
     /// Additional args: Row, Column, X, Y, Width and Height
     fn draw_cell(
         &mut self,
-        cb: Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>,
+        cb: crate::table::DrawCellData,
     );
     /// INTERNAL: Retrieve the draw cell data
     /// # Safety

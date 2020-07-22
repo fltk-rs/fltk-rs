@@ -437,6 +437,27 @@ impl TiledImage {
     }
 }
 
+/// Creates a struct holding a pixmap image
+#[derive(ImageExt, Debug)]
+pub struct Pixmap {
+    _inner: *mut Fl_Pixmap,
+}
+
+impl Pixmap {
+    /// Creates an new Pixmap image
+    pub fn new(data: &[u8]) -> Pixmap {
+        unsafe {
+            let data = data.to_owned();
+            let data = Box::new(data.as_ptr());
+            let ptr = Fl_Pixmap_new(Box::into_raw(data));
+            assert!(!ptr.is_null());
+            Pixmap {
+                _inner: ptr,
+            }
+        }
+    }
+}
+
 /// Creates a struct holding a raw RGB image
 #[derive(ImageExt, Debug)]
 pub struct RgbImage {

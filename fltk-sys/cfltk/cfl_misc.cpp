@@ -5,7 +5,6 @@
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Progress.H>
 #include <FL/Fl_Spinner.H>
-#include <FL/Fl_Timer.H>
 #include <FL/Fl_Tooltip.H>
 #include <new>
 

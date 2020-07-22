@@ -129,7 +129,12 @@ impl FileDialog {
         unsafe { Fl_Native_File_Chooser_set_title(self._inner, title.as_ptr()) }
     }
 
-    /// Sets the filter for the dialog
+    /// Sets the filter for the dialog, can be:
+    /// A single wildcard (eg. "*.txt")
+    /// Multiple wildcards (eg. "*.{cxx,h,H}")
+    /// A descriptive name followed by a "\t" and a wildcard (eg. "Text Files\t*.txt")
+    /// A list of separate wildcards with a "\n" between each (eg. "*.{cxx,H}\n*.txt")
+    /// A list of descriptive names and wildcards (eg. "C++ Files\t*.{cxx,H}\nTxt Files\t*.txt")
     pub fn set_filter(&mut self, f: &str) {
         let f = CString::new(f).unwrap();
         unsafe { Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr()) }
