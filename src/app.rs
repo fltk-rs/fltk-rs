@@ -57,6 +57,19 @@ fn set_scheme(scheme: AppScheme) {
     unsafe { Fl_set_scheme(name_str.as_ptr()) }
 }
 
+fn scheme() -> AppScheme {
+    unsafe {
+        use AppScheme::*;
+        match Fl_scheme() {
+            0 => Base,
+            1 => Gtk,
+            2 => Gleam,
+            3 => Plastic,
+            _ => unreachable!(),
+        }
+    }
+}
+
 /// Unlocks the main UI thread
 #[allow(dead_code)]
 pub fn unlock() {
@@ -101,6 +114,11 @@ impl App {
     pub fn with_scheme(self, scheme: AppScheme) -> App {
         set_scheme(scheme);
         self
+    }
+
+    /// Gets the scheme of the application
+    pub fn scheme(&self) -> AppScheme {
+        scheme()
     }
 
     /// Runs the event loop
@@ -841,5 +859,12 @@ pub fn dispaly() -> Display {
         let disp = fltk_sys::window::Fl_display();
         assert!(!disp.is_null());
         disp
+    }
+}
+
+/// Initiate dnd action
+pub fn dnd() {
+    unsafe {
+        Fl_dnd();
     }
 }

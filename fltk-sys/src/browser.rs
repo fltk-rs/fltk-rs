@@ -2302,6 +2302,27 @@ extern "C" {
     pub fn Fl_File_Browser_deimage(arg1: *const Fl_File_Browser) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_File_Browser_iconsize(self_: *const Fl_File_Browser) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_iconsize(self_: *mut Fl_File_Browser, s: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_filter(
+        self_: *mut Fl_File_Browser,
+        pattern: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Browser_filter(self_: *const Fl_File_Browser) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_File_Browser_filetype(self_: *const Fl_File_Browser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_filetype(self_: *mut Fl_File_Browser, t: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_File_Browser_remove(arg1: *mut Fl_File_Browser, line: ::std::os::raw::c_int);
 }
 extern "C" {

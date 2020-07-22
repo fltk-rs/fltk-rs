@@ -85,6 +85,9 @@ extern "C" {
     pub fn Fl_set_scheme(scheme: *const ::std::os::raw::c_char);
 }
 extern "C" {
+    pub fn Fl_scheme() -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_get_rgb_color(
         r: ::std::os::raw::c_uchar,
         g: ::std::os::raw::c_uchar,

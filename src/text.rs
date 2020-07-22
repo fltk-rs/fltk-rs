@@ -629,6 +629,7 @@ impl TextEditor {
         }
     }
 
+    /// Inserts the text associated with key 'c'
     pub fn kf_default(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -637,6 +638,7 @@ impl TextEditor {
         }
     }
 
+    /// Ignores the key 'c' in editor
     pub fn kf_ignore(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -645,6 +647,7 @@ impl TextEditor {
         }
     }
 
+    /// Does a backspace
     pub fn kf_backspace(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -653,6 +656,7 @@ impl TextEditor {
         }
     }
 
+    /// Inserts a new line
     pub fn kf_enter(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -661,6 +665,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the cursor in the direction indicated by the key
     pub fn kf_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -669,6 +674,7 @@ impl TextEditor {
         }
     }
 
+    /// Extends the current selection in the direction of key 'c'
     pub fn kf_shift_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -677,6 +683,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the current text cursor in the direction indicated by control key 'c' 
     pub fn kf_ctrl_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -685,6 +692,7 @@ impl TextEditor {
         }
     }
 
+    /// Extends the current selection in the direction indicated by control key 'c' 
     pub fn kf_c_s_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -693,6 +701,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the current text cursor in the direction indicated by meta key 'c' 
     pub fn kf_meta_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -701,6 +710,7 @@ impl TextEditor {
         }
     }
 
+    /// Extends the current selection in the direction indicated by meta key 'c'
     pub fn kf_m_s_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -709,6 +719,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the text cursor to the beginning of the current line
     pub fn kf_home(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -717,6 +728,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the text cursor to the end of the current line
     pub fn kf_end(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -725,6 +737,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the text cursor one character to the left
     pub fn kf_left(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -733,6 +746,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the text cursor one line up 
     pub fn kf_up(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -741,6 +755,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the text cursor one character to the right
     pub fn kf_right(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -749,6 +764,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the text cursor one line down 
     pub fn kf_down(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -757,6 +773,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the text cursor up one page
     pub fn kf_page_up(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -765,6 +782,7 @@ impl TextEditor {
         }
     }
 
+    /// Moves the text cursor down one page
     pub fn kf_page_down(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -773,6 +791,7 @@ impl TextEditor {
         }
     }
 
+    /// Toggles the insert mode for the editor
     pub fn kf_insert(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -781,6 +800,7 @@ impl TextEditor {
         }
     }
 
+    /// Does a delete of selected text or the current character in the current buffer
     pub fn kf_delete(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -789,6 +809,7 @@ impl TextEditor {
         }
     }
 
+    /// Selects all text in the associated buffer
     pub fn kf_select_all(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());

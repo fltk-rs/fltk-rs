@@ -5,6 +5,12 @@
 ### Changes
 - (None)
 
+## [0.7.20] - 2020-07-23
+### Changes
+- Add missing docs for new TextEditor functions.
+- Add SingleWindow widget.
+- Add more FileBrowser methods.
+
 ## [0.7.19] - 2020-07-22
 ### Changes
 - Add Pixmap.

@@ -55,7 +55,14 @@ pub enum WindowType {
     Double = 241,
 }
 
-/// Creates a double window widget
+/// Creates a single (buffered) window widget
+#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
+pub struct SingleWindow {
+    _inner: *mut Fl_Single_Window,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+/// Creates a double (buffered) window widget
 #[derive(WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct DoubleWindow {
     _inner: *mut Fl_Double_Window,
