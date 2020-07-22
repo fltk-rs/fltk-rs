@@ -42,6 +42,12 @@ void *Fl_display(void);
 
 void *Fl_gc(void);
 
+WIDGET_DECLARE(Fl_Single_Window)
+
+GROUP_DECLARE(Fl_Single_Window)
+
+WINDOW_DECLARE(Fl_Single_Window)
+
 WIDGET_DECLARE(Fl_Double_Window)
 
 GROUP_DECLARE(Fl_Double_Window)

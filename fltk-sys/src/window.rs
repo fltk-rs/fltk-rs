@@ -1300,6 +1300,33 @@ extern "C" {
     pub fn Fl_Tabs_deimage(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_Tabs_value(self_: *mut Fl_Tabs) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_value(self_: *mut Fl_Tabs, w: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_push(self_: *const Fl_Tabs) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_push(self_: *mut Fl_Tabs, w: *mut Fl_Widget) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_client_area(
+        self_: *mut Fl_Tabs,
+        rx: *mut ::std::os::raw::c_int,
+        ry: *mut ::std::os::raw::c_int,
+        rw: *mut ::std::os::raw::c_int,
+        rh: *mut ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Tabs_set_tab_align(self_: *mut Fl_Tabs, a: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Tabs_tab_align(self_: *const Fl_Tabs) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -2565,6 +2592,377 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_gc() -> *mut ::std::os::raw::c_void;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Single_Window {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Single_Window_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Single_Window;
+}
+extern "C" {
+    pub fn Fl_Single_Window_x(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_y(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_width(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_height(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_label(arg1: *mut Fl_Single_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_label(
+        arg1: *mut Fl_Single_Window,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_redraw(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_show(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_hide(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_activate(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_deactivate(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_redraw_label(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_resize(
+        arg1: *mut Fl_Single_Window,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_tooltip(arg1: *mut Fl_Single_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_tooltip(
+        arg1: *mut Fl_Single_Window,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_get_type(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_type(arg1: *mut Fl_Single_Window, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_color(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_color(arg1: *mut Fl_Single_Window, color: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_Single_Window_label_color(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_label_color(
+        arg1: *mut Fl_Single_Window,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_label_font(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_label_font(
+        arg1: *mut Fl_Single_Window,
+        font: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_label_size(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_label_size(arg1: *mut Fl_Single_Window, sz: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_label_type(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_label_type(arg1: *mut Fl_Single_Window, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_box(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_box(arg1: *mut Fl_Single_Window, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_changed(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_changed(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_clear_changed(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_align(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_align(arg1: *mut Fl_Single_Window, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_delete(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_image(
+        arg1: *mut Fl_Single_Window,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_handler(
+        self_: *mut Fl_Single_Window,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_draw(
+        self_: *mut Fl_Single_Window,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_trigger(arg1: *mut Fl_Single_Window, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_image(arg1: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_parent(self_: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_selection_color(arg1: *mut Fl_Single_Window) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_selection_color(
+        arg1: *mut Fl_Single_Window,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_do_callback(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_inside(
+        self_: *const Fl_Single_Window,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_window(arg1: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_top_window(
+        arg1: *const Fl_Single_Window,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_takes_events(arg1: *const Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_user_data(arg1: *const Fl_Single_Window)
+        -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_take_focus(self_: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_visible_focus(self_: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_clear_visible_focus(self_: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_visible_focus(self_: *mut Fl_Single_Window, v: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_has_visible_focus(
+        self_: *mut Fl_Single_Window,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_user_data(
+        arg1: *mut Fl_Single_Window,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_draw_data(
+        self_: *const Fl_Single_Window,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_handle_data(
+        self_: *const Fl_Single_Window,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_draw_data(
+        self_: *mut Fl_Single_Window,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_handle_data(
+        self_: *mut Fl_Single_Window,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_damage(self_: *const Fl_Single_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_damage(self_: *mut Fl_Single_Window, flag: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Single_Window_clear_damage(self_: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_as_window(self_: *mut Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_as_group(self_: *mut Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_deimage(
+        arg1: *mut Fl_Single_Window,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_deimage(arg1: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_begin(self_: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_end(self_: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_find(
+        self_: *mut Fl_Single_Window,
+        arg1: *const ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_add(self_: *mut Fl_Single_Window, arg1: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Single_Window_insert(
+        self_: *mut Fl_Single_Window,
+        arg1: *mut ::std::os::raw::c_void,
+        pos: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_remove(self_: *mut Fl_Single_Window, wid: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Single_Window_clear(self_: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_children(self_: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_child(
+        arg1: *mut Fl_Single_Window,
+        index: ::std::os::raw::c_int,
+    ) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Single_Window_resizable(
+        self_: *mut Fl_Single_Window,
+        arg1: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_make_modal(
+        arg1: *mut Fl_Single_Window,
+        boolean: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_fullscreen(
+        arg1: *mut Fl_Single_Window,
+        boolean: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_make_current(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_icon(
+        arg1: *mut Fl_Single_Window,
+        arg2: *const ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_icon(arg1: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_make_resizable(
+        self_: *mut Fl_Single_Window,
+        arg1: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_cursor(self_: *mut Fl_Single_Window, cursor: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_shown(self_: *mut Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_raw_handle(w: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_border(arg1: *mut Fl_Single_Window, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_border(arg1: *const Fl_Single_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_raw_handle(
+        self_: *mut Fl_Single_Window,
+        handle: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_region(self_: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_region(
+        self_: *mut Fl_Single_Window,
+        r: *mut ::std::os::raw::c_void,
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

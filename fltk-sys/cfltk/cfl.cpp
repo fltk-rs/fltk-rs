@@ -100,6 +100,19 @@ void Fl_set_scheme(const char *scheme) {
     Fl::scheme(scheme);
 }
 
+int Fl_scheme(void) {
+    const char *v = Fl::scheme();
+    if (!strcmp(v, "base")) {
+        return 0;
+    } else if (!strcmp(v, "gtk+")) {
+        return 1;
+    } else if (!strcmp(v, "gleam")) {
+        return 2;
+    } else {
+        return 3;
+    }
+}
+
 unsigned int Fl_get_rgb_color(unsigned char r, unsigned char g, unsigned char b) {
     return fl_rgb_color(r, g, b);
 }

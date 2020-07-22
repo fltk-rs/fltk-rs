@@ -312,6 +312,7 @@ The most commonly widgets are implemented:
 - Frame (Fl_Box)
 - Windows
     - Window
+    - SingleWindow
     - DoubleWindow
     - MenuWindow
     - GlWindow

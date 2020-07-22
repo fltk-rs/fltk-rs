@@ -68,6 +68,18 @@ BROWSER_DECLARE(Fl_Multi_Browser)
 
 WIDGET_DECLARE(Fl_File_Browser)
 
+unsigned Fl_File_Browser_iconsize(const Fl_File_Browser *self);
+
+void Fl_File_Browser_set_iconsize(Fl_File_Browser *self, unsigned s);
+
+void Fl_File_Browser_set_filter(Fl_File_Browser *self, const char *pattern);
+
+const char *Fl_File_Browser_filter(const Fl_File_Browser *self);
+
+int Fl_File_Browser_filetype(const Fl_File_Browser *self);
+
+void Fl_File_Browser_set_filetype(Fl_File_Browser *self, int t);
+
 BROWSER_DECLARE(Fl_File_Browser)
 
 #ifdef __cplusplus

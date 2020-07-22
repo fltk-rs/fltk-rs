@@ -100,6 +100,12 @@ void *Fl_gc(void) {
     return fl_gc;
 }
 
+WIDGET_DEFINE(Fl_Single_Window)
+
+GROUP_DEFINE(Fl_Single_Window)
+
+WINDOW_DEFINE(Fl_Single_Window)
+
 WIDGET_DEFINE(Fl_Double_Window)
 
 GROUP_DEFINE(Fl_Double_Window)
