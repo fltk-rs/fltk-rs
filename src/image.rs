@@ -449,7 +449,7 @@ impl Pixmap {
         unsafe {
             let data = data.to_owned();
             let data = mem::ManuallyDrop::new(data);
-            let ptr = Fl_Pixmap_from(data.as_ptr());
+            let ptr = Fl_Pixmap_new(data.as_ptr());
             assert!(!ptr.is_null());
             Pixmap {
                 _inner: ptr,

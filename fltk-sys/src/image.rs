@@ -447,7 +447,7 @@ extern "C" {
     pub fn Fl_Pixmap_inactive(self_: *mut Fl_Pixmap);
 }
 extern "C" {
-    pub fn Fl_Pixmap_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_Pixmap;
+    pub fn Fl_Pixmap_new(D: *const *const ::std::os::raw::c_uchar) -> *mut Fl_Pixmap;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
