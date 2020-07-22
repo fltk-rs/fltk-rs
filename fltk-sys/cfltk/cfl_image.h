@@ -53,6 +53,10 @@ Fl_GIF_Image *Fl_GIF_Image_new(const char *filename);
 
 Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data);
 
+IMAGE_DECLARE(Fl_Pixmap)
+
+Fl_Pixmap *Fl_Pixmap_from(const unsigned char *data);
+
 IMAGE_DECLARE(Fl_XPM_Image)
 
 Fl_XPM_Image *Fl_XPM_Image_new(const char *filename);

@@ -285,6 +285,7 @@ The most commonly widgets are implemented:
     - GifImage
     - PngImage
     - SvgImage
+    - Pixmap
     - RgbImage
     - XpmImage
     - XbmImage
@@ -367,7 +368,7 @@ The most commonly widgets are implemented:
     - FileBrowser
 - Miscelaneous widgets
     - Spinner
-    - Clock
+    - Clock (Round and Square)
     - Chart (several chart types are available)
     - Progress (progress bar)
     - Tooltip

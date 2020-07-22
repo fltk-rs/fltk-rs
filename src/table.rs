@@ -29,6 +29,9 @@ pub enum TableContext {
     RcResize = 0x40,
 }
 
+/// Declaration of the type of the draw_cell callback
+pub type DrawCellData = Box<dyn FnMut(TableContext, i32, i32, i32, i32, i32, i32)>;
+
 /// Creates a table row
 #[derive(WidgetExt, GroupExt, TableExt, Debug)]
 pub struct TableRow {

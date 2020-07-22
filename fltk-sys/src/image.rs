@@ -389,6 +389,68 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct Fl_Pixmap {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Pixmap_draw(
+        arg1: *mut Fl_Pixmap,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Pixmap_width(arg1: *mut Fl_Pixmap) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pixmap_height(arg1: *mut Fl_Pixmap) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pixmap_delete(arg1: *mut Fl_Pixmap);
+}
+extern "C" {
+    pub fn Fl_Pixmap_count(self_: *mut Fl_Pixmap) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pixmap_data(self_: *mut Fl_Pixmap) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Pixmap_copy(self_: *mut Fl_Pixmap) -> *mut Fl_Pixmap;
+}
+extern "C" {
+    pub fn Fl_Pixmap_scale(
+        self_: *mut Fl_Pixmap,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Pixmap_fail(self_: *mut Fl_Pixmap) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pixmap_data_w(self_: *const Fl_Pixmap) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pixmap_data_h(self_: *const Fl_Pixmap) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pixmap_d(self_: *const Fl_Pixmap) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pixmap_ld(self_: *const Fl_Pixmap) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Pixmap_inactive(self_: *mut Fl_Pixmap);
+}
+extern "C" {
+    pub fn Fl_Pixmap_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_Pixmap;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct Fl_XPM_Image {
     _unused: [u8; 0],
 }

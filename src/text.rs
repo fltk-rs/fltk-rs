@@ -565,12 +565,40 @@ impl StyleTables {
 }
 
 impl TextEditor {
+    /// Set to insert mode
+    pub fn set_insert_mode(&mut self, b: bool) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe { Fl_Text_Editor_set_insert_mode(self._inner, b as i32) }
+    }
+
+    /// Returns whether insert mode is set
+    pub fn insert_mode(&self) -> bool {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe { Fl_Text_Editor_insert_mode(self._inner) != 0 }
+    }
+
+    /// Set tab navigation
+    pub fn set_tab_nav(&mut self, val: bool) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe { Fl_Text_Editor_set_tab_nav(self._inner, val as i32) }
+    }
+
+    /// Returns whether tab navigation is set
+    pub fn tab_nav(&self) -> bool {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe { Fl_Text_Editor_tab_nav(self._inner) != 0 }
+    }
+
     /// Copies the text within the TextEditor widget
     pub fn copy(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            kf_copy(self._inner);
+            Fl_Text_Editor_kf_copy(self._inner);
         }
     }
 
@@ -579,7 +607,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            kf_cut(self._inner);
+            Fl_Text_Editor_kf_cut(self._inner);
         }
     }
 
@@ -588,7 +616,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            kf_paste(self._inner);
+            Fl_Text_Editor_kf_paste(self._inner);
         }
     }
 
@@ -597,7 +625,175 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            kf_undo(self._inner);
+            Fl_Text_Editor_kf_undo(self._inner);
+        }
+    }
+
+    pub fn kf_default(&mut self, c: Key) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_default(c as i32, self._inner);
+        }
+    }
+
+    pub fn kf_ignore(&mut self, c: Key) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_ignore(c as i32, self._inner);
+        }
+    }
+
+    pub fn kf_backspace(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_backspace(self._inner);
+        }
+    }
+
+    pub fn kf_enter(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_enter(self._inner);
+        }
+    }
+
+    pub fn kf_move(&mut self, c: Key) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_move(c as i32, self._inner);
+        }
+    }
+
+    pub fn kf_shift_move(&mut self, c: Key) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_shift_move(c as i32, self._inner);
+        }
+    }
+
+    pub fn kf_ctrl_move(&mut self, c: Key) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_ctrl_move(c as i32, self._inner);
+        }
+    }
+
+    pub fn kf_c_s_move(&mut self, c: Key) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_c_s_move(c as i32, self._inner);
+        }
+    }
+
+    pub fn kf_meta_move(&mut self, c: Key) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_meta_move(c as i32, self._inner);
+        }
+    }
+
+    pub fn kf_m_s_move(&mut self, c: Key) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_m_s_move(c as i32, self._inner);
+        }
+    }
+
+    pub fn kf_home(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_home(self._inner);
+        }
+    }
+
+    pub fn kf_end(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_end(self._inner);
+        }
+    }
+
+    pub fn kf_left(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_left(self._inner);
+        }
+    }
+
+    pub fn kf_up(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_up(self._inner);
+        }
+    }
+
+    pub fn kf_right(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_right(self._inner);
+        }
+    }
+
+    pub fn kf_down(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_down(self._inner);
+        }
+    }
+
+    pub fn kf_page_up(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_page_up(self._inner);
+        }
+    }
+
+    pub fn kf_page_down(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_page_down(self._inner);
+        }
+    }
+
+    pub fn kf_insert(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_insert(self._inner);
+        }
+    }
+
+    pub fn kf_delete(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_delete(self._inner);
+        }
+    }
+
+    pub fn kf_select_all(&mut self) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        unsafe {
+            Fl_Text_Editor_kf_select_all(self._inner);
         }
     }
 }

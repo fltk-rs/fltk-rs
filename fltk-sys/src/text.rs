@@ -1449,16 +1449,115 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+    pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn kf_cut(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+    pub fn Fl_Text_Editor_kf_cut(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn kf_paste(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+    pub fn Fl_Text_Editor_kf_paste(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn kf_undo(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+    pub fn Fl_Text_Editor_kf_undo(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_default(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_ignore(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_backspace(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_enter(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_shift_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_ctrl_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_c_s_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_meta_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_m_s_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_home(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_end(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_left(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_up(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_right(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_down(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_page_up(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_page_down(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_insert(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_delete(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_kf_select_all(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_insert_mode(self_: *mut Fl_Text_Editor, b: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_insert_mode(self_: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_tab_nav(self_: *mut Fl_Text_Editor, val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_tab_nav(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

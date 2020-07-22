@@ -826,7 +826,7 @@ pub fn graphics_context() -> GraphicsContext {
     unsafe {
         let ctx = fltk_sys::window::Fl_gc();
         assert!(!ctx.is_null());
-        return ctx;
+        ctx
     }
 }
 
@@ -840,6 +840,6 @@ pub fn dispaly() -> Display {
     unsafe {
         let disp = fltk_sys::window::Fl_display();
         assert!(!disp.is_null());
-        return disp;
+        disp
     }
 }

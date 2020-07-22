@@ -122,6 +122,78 @@ pub struct Tabs {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+impl Tabs {
+    /// Gets the currently visible group
+    pub fn value(&mut self) -> Option<Group> {
+        unsafe {
+            let ptr = Fl_Tabs_value(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+            }
+        }
+    }
+
+    /// Sets the currently visible group
+    pub fn set_value<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
+        unsafe {
+            match Fl_Tabs_set_value(self._inner, w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget) {
+                0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+                _ => Ok(()),
+            }
+        }
+    }
+
+    /// Returns the tab group for the tab the user has currently down-clicked
+    pub fn push(&self) -> Option<Group> {
+        unsafe {
+            let ptr = Fl_Tabs_push(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+            }
+        }
+    }
+
+    /// This is called by the tab widget's handle() method to set the tab group widget the user last pushed
+    pub fn set_push<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
+        unsafe {
+            match Fl_Tabs_set_push(self._inner, w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget) {
+                0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+                _ => Ok(()),
+            }
+        }
+    }
+
+    /// Returns the position and size available to be used by its children
+    pub fn client_area(&mut self) -> (i32, i32, i32, i32) {
+        unsafe {
+            let mut i1 = 0;
+            let mut i2 = 0;
+            let mut i3 = 0;
+            let mut i4 = 0;
+            Fl_Tabs_client_area(self._inner, &mut i1, &mut i2, &mut i3, &mut i4);
+            (i1, i2, i3, i4)
+        }
+    }
+
+    /// Sets the tab label alignment
+    pub fn set_tab_align(&mut self, a: Align) {
+        unsafe {
+            Fl_Tabs_set_tab_align(self._inner, a as i32)
+        }
+    }
+
+    /// Gets the tab label alignment.
+    pub fn tab_align(&self) -> Align {
+        unsafe {
+            mem::transmute(Fl_Tabs_tab_align(self._inner))
+        }
+    }
+}
+
 /// Creates a tile which can contain widgets
 #[derive(WidgetExt, GroupExt, Debug)]
 pub struct Tile {

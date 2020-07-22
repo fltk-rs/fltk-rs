@@ -366,28 +366,172 @@ void Fl_Text_Editor_set_buffer(Fl_Text_Editor *self, Fl_Text_Buffer *buf) {
 
 DISPLAY_DEFINE(Fl_Text_Editor)
 
-int kf_copy(Fl_Text_Editor *e) {
+int Fl_Text_Editor_kf_copy(Fl_Text_Editor *e) {
     int ret = 0;
     LOCK(ret = Fl_Text_Editor::kf_copy(1, e));
     return ret;
 }
 
-int kf_cut(Fl_Text_Editor *e) {
+int Fl_Text_Editor_kf_cut(Fl_Text_Editor *e) {
     int ret = 0;
     LOCK(ret = Fl_Text_Editor::kf_cut(1, e));
     return ret;
 }
 
-int kf_paste(Fl_Text_Editor *e) {
+int Fl_Text_Editor_kf_paste(Fl_Text_Editor *e) {
     int ret = 0;
     LOCK(ret = Fl_Text_Editor::kf_paste(1, e));
     return ret;
 }
 
-int kf_undo(Fl_Text_Editor *e) {
+int Fl_Text_Editor_kf_undo(Fl_Text_Editor *e) {
     int ret = 0;
     LOCK(ret = Fl_Text_Editor::kf_undo(1, e));
     return ret;
+}
+
+int Fl_Text_Editor_kf_default(int c, Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_default(c, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_ignore(int c, Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_ignore(c, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_backspace(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_backspace(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_enter(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_enter(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_move(int c, Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_move(c, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_shift_move(int c, Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_shift_move(c, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_ctrl_move(int c, Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_ctrl_move(c, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_c_s_move(int c, Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_c_s_move(c, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_meta_move(int c, Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_meta_move(c, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_m_s_move(int c, Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_m_s_move(c, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_home(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_home(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_end(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_end(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_left(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_left(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_up(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_up(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_right(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_right(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_down(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_down(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_page_up(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_page_up(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_page_down(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_page_down(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_insert(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_insert(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_delete(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_delete(0, e));
+    return ret;
+}
+
+int Fl_Text_Editor_kf_select_all(Fl_Text_Editor *e) {
+    int ret = 0;
+    LOCK(ret = Fl_Text_Editor::kf_select_all(0, e));
+    return ret;
+}
+
+void Fl_Text_Editor_set_insert_mode(Fl_Text_Editor *self, int b) {
+    LOCK(self->insert_mode(b);)
+}
+
+int Fl_Text_Editor_insert_mode(Fl_Text_Editor *self) {
+    int ret = 0;
+    LOCK(ret = self->insert_mode());
+    return ret;
+}
+
+void Fl_Text_Editor_set_tab_nav(Fl_Text_Editor *self, int val) {
+    LOCK(self->tab_nav(val);)
+}
+
+int Fl_Text_Editor_tab_nav(const Fl_Text_Editor *self) {
+    return self->tab_nav();
 }
 
 WIDGET_DEFINE(Fl_Simple_Terminal)

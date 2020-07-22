@@ -184,9 +184,13 @@ impl Color {
         let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
         Color::from_rgb(r, g, b)
     }
+
+    /// Returns the hex/u32 value of a color
     pub fn to_u32(&self) -> u32 {
         *self as u32
     }
+
+    /// Returns the rgb values of a color
     pub fn to_rgb(&self) -> (u8, u8, u8) {
         let x = *self as u32;
         let hex = format!("{:06x}", x);
@@ -278,7 +282,13 @@ pub enum Key {
 }
 
 impl Key {
+    /// Gets a Key from an i32
     pub fn from_i32(val: i32) -> Key {
+        unsafe { std::mem::transmute(val) }
+    }
+    
+    /// Gets a Key from a char
+    pub fn from_char(val: char) -> Key {
         unsafe { std::mem::transmute(val) }
     }
 }
@@ -344,6 +354,7 @@ pub enum Shortcut {
 }
 
 impl Shortcut {
+    /// Create a shortcut from a char
     pub fn from_char(c: char) -> Shortcut {
         Shortcut::None + c
     }
@@ -400,44 +411,6 @@ pub enum Cursor {
     W = 36,
     NW = 68,
     None = 255,
-}
-
-/// Defines the chart types supported by fltk
-#[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
-pub enum ChartType {
-    Bar = 0,
-    HorizontalBar = 1,
-    Line = 2,
-    Fill = 3,
-    Spike = 4,
-    Pie = 5,
-    SpecialPie = 6,
-}
-
-/// Defines the clock types supported by fltk
-#[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
-pub enum ClockType {
-    Square = 0,
-    Round = 1,
-}
-
-/// Defines the clock types supported by fltk
-#[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
-pub enum LineStyle {
-    Solid = 0,
-    Dash,
-    Dot,
-    DashDot,
-    DashDotDot,
-    CapFlat = 100,
-    CapRound = 200,
-    CapSquare = 300,
-    JoinMiter = 1000,
-    JoinRound = 2000,
-    JoinBevel = 3000,
 }
 
 /// Defines Fl_Mode types
@@ -508,13 +481,6 @@ impl std::ops::BitOr<Event> for Event {
 impl std::ops::BitOr<Key> for Key {
     type Output = Key;
     fn bitor(self, rhs: Key) -> Self::Output {
-        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
-    }
-}
-
-impl std::ops::BitOr<LineStyle> for LineStyle {
-    type Output = LineStyle;
-    fn bitor(self, rhs: LineStyle) -> Self::Output {
         unsafe { std::mem::transmute(self as i32 | rhs as i32) }
     }
 }

@@ -237,7 +237,7 @@ fn main() {
                 Open => {
                     let mut dlg = FileDialog::new(FileDialogType::BrowseFile);
                     dlg.set_option(FileDialogOptions::NoOptions);
-                    dlg.set_filter("*.txt");
+                    dlg.set_filter("*.{txt,rs,toml}");
                     dlg.show();
                     editor
                         .set_filename(&dlg.filename().to_string_lossy().to_string());
