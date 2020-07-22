@@ -4,9 +4,9 @@
 #include <FL/Fl_GIF_Image.H>
 #include <FL/Fl_Image.H>
 #include <FL/Fl_JPEG_Image.H>
-#include <FL/Fl_Pixmap.H>
 #include <FL/Fl_PNG_Image.H>
 #include <FL/Fl_PNM_Image.H>
+#include <FL/Fl_Pixmap.H>
 #include <FL/Fl_RGB_Image.H>
 #include <FL/Fl_SVG_Image.H>
 #include <FL/Fl_Shared_Image.H>
@@ -121,7 +121,7 @@ Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data) {
 
 IMAGE_DEFINE(Fl_Pixmap)
 
-Fl_Pixmap *Fl_Pixmap_new(const unsigned char* const * D) {
+Fl_Pixmap *Fl_Pixmap_new(const unsigned char *const *D) {
     return new (std::nothrow) Fl_Pixmap(D);
 }
 

@@ -448,8 +448,8 @@ impl Pixmap {
     pub fn new(data: &[u8]) -> Pixmap {
         unsafe {
             let data = data.to_owned();
-            let data = mem::ManuallyDrop::new(data);
-            let ptr = Fl_Pixmap_new(data.as_ptr());
+            let data = Box::new(data.as_ptr());
+            let ptr = Fl_Pixmap_new(Box::into_raw(data));
             assert!(!ptr.is_null());
             Pixmap {
                 _inner: ptr,
