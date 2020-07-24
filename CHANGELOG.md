@@ -3,6 +3,10 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.7.21] - 2020-07-24
+### Changes
 - Add Window::show_with_args() and show_with_env_args() for FLTK specific command-line arguments.
 - Add some missing asserts.
 
