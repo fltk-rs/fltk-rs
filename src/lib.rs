@@ -29,6 +29,10 @@
 //! [dependencies]
 //! fltk = { version = "^0.7", features = ["fltk-bundled"] }
 //! ```
+//! Since these are pre-built libraries using the Github actions CI, the currently supported operating systems are:
+//! - Windows 10 x64 (msvc and gnu).
+//! - MacOS 10.15 x64.
+//! - Ubuntu 18.04 or later, x64.
 //! The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 //! ```toml
 //! [dependencies.fltk]

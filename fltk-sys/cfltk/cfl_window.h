@@ -42,6 +42,8 @@ void *Fl_display(void);
 
 void *Fl_gc(void);
 
+void Fl_Window_show_with_args(Fl_Window *w, int argc, char **argv);
+
 WIDGET_DECLARE(Fl_Single_Window)
 
 GROUP_DECLARE(Fl_Single_Window)

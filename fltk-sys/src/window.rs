@@ -2593,6 +2593,13 @@ extern "C" {
 extern "C" {
     pub fn Fl_gc() -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_Window_show_with_args(
+        w: *mut Fl_Window,
+        argc: ::std::os::raw::c_int,
+        argv: *mut *mut ::std::os::raw::c_char,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Single_Window {

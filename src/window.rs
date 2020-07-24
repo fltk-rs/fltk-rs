@@ -11,7 +11,12 @@ use std::{
 
 /// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
 /// XID (u64) raw window handle for X11
-#[cfg(any(target_os = "windows", target_os = "macos", target_os = "ios", target_os = "android"))]
+#[cfg(any(
+    target_os = "windows",
+    target_os = "macos",
+    target_os = "ios",
+    target_os = "android"
+))]
 pub type RawHandle = *mut raw::c_void;
 
 /// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
@@ -42,7 +47,74 @@ impl Window {
         if ptr.is_null() {
             None
         } else {
-            Some(Window::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+            Some(Window::from_widget_ptr(
+                ptr as *mut fltk_sys::widget::Fl_Widget,
+            ))
+        }
+    }
+
+    /// Use FLTK specific arguments for the application:
+    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// The options are:
+    /// -bg2 color
+    /// -bg color
+    /// -di[splay] host:n.n
+    /// -dn[d]
+    /// -fg color
+    /// -g[eometry] WxH+X+Y
+    /// -i[conic]
+    /// -k[bd]
+    /// -na[me] classname
+    /// -nod[nd]
+    /// -nok[bd]
+    /// -not[ooltips]
+    /// -s[cheme] scheme
+    /// -ti[tle] windowtitle
+    /// -to[oltips]
+    pub fn show_with_env_args(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            let args: Vec<String> = std::env::args().collect();
+            let len = args.len() as i32;
+            let mut v: Vec<*mut raw::c_char> = vec![];
+            for arg in args {
+                v.push(CString::new(arg.as_str()).unwrap().into_raw() as *mut raw::c_char);
+            }
+            let mut v = mem::ManuallyDrop::new(v);
+            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
+        }
+    }
+
+    /// Use FLTK specific arguments for the application:
+    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// The options are:
+    /// -bg2 color
+    /// -bg color
+    /// -di[splay] host:n.n
+    /// -dn[d]
+    /// -fg color
+    /// -g[eometry] WxH+X+Y
+    /// -i[conic]
+    /// -k[bd]
+    /// -na[me] classname
+    /// -nod[nd]
+    /// -nok[bd]
+    /// -not[ooltips]
+    /// -s[cheme] scheme
+    /// -ti[tle] windowtitle
+    /// -to[oltips]
+    pub fn show_with_args(&mut self, args: &[&str]) {
+        assert!(!self.was_deleted());
+        unsafe {
+            let mut temp = vec![""];
+            temp.extend(args);
+            let len = temp.len() as i32;
+            let mut v: Vec<*mut raw::c_char> = vec![];
+            for arg in temp {
+                v.push(CString::new(arg).unwrap().into_raw() as *mut raw::c_char);
+            }
+            let mut v = mem::ManuallyDrop::new(v);
+            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
         }
     }
 }
@@ -62,11 +134,145 @@ pub struct SingleWindow {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+impl SingleWindow {
+    /// Use FLTK specific arguments for the application:
+    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// The options are:
+    /// -bg2 color
+    /// -bg color
+    /// -di[splay] host:n.n
+    /// -dn[d]
+    /// -fg color
+    /// -g[eometry] WxH+X+Y
+    /// -i[conic]
+    /// -k[bd]
+    /// -na[me] classname
+    /// -nod[nd]
+    /// -nok[bd]
+    /// -not[ooltips]
+    /// -s[cheme] scheme
+    /// -ti[tle] windowtitle
+    /// -to[oltips]
+    pub fn show_with_env_args(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            let args: Vec<String> = std::env::args().collect();
+            let len = args.len() as i32;
+            let mut v: Vec<*mut raw::c_char> = vec![];
+            for arg in args {
+                v.push(CString::new(arg.as_str()).unwrap().into_raw() as *mut raw::c_char);
+            }
+            let mut v = mem::ManuallyDrop::new(v);
+            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
+        }
+    }
+
+    /// Use FLTK specific arguments for the application:
+    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// The options are:
+    /// -bg2 color
+    /// -bg color
+    /// -di[splay] host:n.n
+    /// -dn[d]
+    /// -fg color
+    /// -g[eometry] WxH+X+Y
+    /// -i[conic]
+    /// -k[bd]
+    /// -na[me] classname
+    /// -nod[nd]
+    /// -nok[bd]
+    /// -not[ooltips]
+    /// -s[cheme] scheme
+    /// -ti[tle] windowtitle
+    /// -to[oltips]
+    pub fn show_with_args(&mut self, args: &[&str]) {
+        assert!(!self.was_deleted());
+        unsafe {
+            let mut temp = vec![""];
+            temp.extend(args);
+            let len = temp.len() as i32;
+            let mut v: Vec<*mut raw::c_char> = vec![];
+            for arg in temp {
+                v.push(CString::new(arg).unwrap().into_raw() as *mut raw::c_char);
+            }
+            let mut v = mem::ManuallyDrop::new(v);
+            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
+        }
+    }
+}
+
 /// Creates a double (buffered) window widget
 #[derive(WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct DoubleWindow {
     _inner: *mut Fl_Double_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl DoubleWindow {
+    /// Use FLTK specific arguments for the application:
+    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// The options are:
+    /// -bg2 color
+    /// -bg color
+    /// -di[splay] host:n.n
+    /// -dn[d]
+    /// -fg color
+    /// -g[eometry] WxH+X+Y
+    /// -i[conic]
+    /// -k[bd]
+    /// -na[me] classname
+    /// -nod[nd]
+    /// -nok[bd]
+    /// -not[ooltips]
+    /// -s[cheme] scheme
+    /// -ti[tle] windowtitle
+    /// -to[oltips]
+    pub fn show_with_env_args(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            let args: Vec<String> = std::env::args().collect();
+            let len = args.len() as i32;
+            let mut v: Vec<*mut raw::c_char> = vec![];
+            for arg in args {
+                v.push(CString::new(arg.as_str()).unwrap().into_raw() as *mut raw::c_char);
+            }
+            let mut v = mem::ManuallyDrop::new(v);
+            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
+        }
+    }
+
+    /// Use FLTK specific arguments for the application:
+    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// The options are:
+    /// -bg2 color
+    /// -bg color
+    /// -di[splay] host:n.n
+    /// -dn[d]
+    /// -fg color
+    /// -g[eometry] WxH+X+Y
+    /// -i[conic]
+    /// -k[bd]
+    /// -na[me] classname
+    /// -nod[nd]
+    /// -nok[bd]
+    /// -not[ooltips]
+    /// -s[cheme] scheme
+    /// -ti[tle] windowtitle
+    /// -to[oltips]
+    pub fn show_with_args(&mut self, args: &[&str]) {
+        assert!(!self.was_deleted());
+        unsafe {
+            let mut temp = vec![""];
+            temp.extend(args);
+            let len = temp.len() as i32;
+            let mut v: Vec<*mut raw::c_char> = vec![];
+            for arg in temp {
+                v.push(CString::new(arg).unwrap().into_raw() as *mut raw::c_char);
+            }
+            let mut v = mem::ManuallyDrop::new(v);
+            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
+        }
+    }
 }
 
 /// Creates a Menu window widget
