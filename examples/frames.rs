@@ -5,11 +5,11 @@ struct MyFrame {
 }
 
 impl MyFrame {
-    pub fn new(idx: i32) -> MyFrame {
+    pub fn new(idx: usize) -> MyFrame {
         let mut f = MyFrame { f: frame::Frame::default().with_size(150, 75), };
         // Normally you would use the FrameType enum, for example:
         // some_widget.set_frame(FrameType::DownBox);
-        f.f.set_frame(unsafe { std::mem::transmute(idx) });
+        f.f.set_frame(FrameType::by_index(idx));
         f.f.set_color(Color::from_u32(0x7FFFD4));
         let f_name = format!("{:?}", f.f.frame());
         f.f.set_label(&f_name);

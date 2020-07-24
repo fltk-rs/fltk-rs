@@ -131,19 +131,19 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn add(&mut self, item: &str) {
+                assert!(!self.was_deleted());
                 let item = CString::new(item).unwrap();
                 unsafe {
-                    assert!(!self.was_deleted());
                     #add(self._inner, item.as_ptr())
                 }
             }
 
             fn insert(&mut self, line: u32, item: &str) {
                 assert!(line > 0);
+                assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 let item = CString::new(item).unwrap();
                 unsafe {
-                    assert!(!self.was_deleted());
                     #insert(self._inner, line as i32, item.as_ptr())
                 }
             }
@@ -151,8 +151,8 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn move_item(&mut self, to: u32, from: u32) {
                 debug_assert!(to <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 debug_assert!(from <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                assert!(!self.was_deleted());
                 unsafe {
-                    assert!(!self.was_deleted());
                     #move_item(self._inner, to as i32, from as i32)
                 }
             }
@@ -160,8 +160,8 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn swap(&mut self, a: u32, b: u32) {
                 debug_assert!(a <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 debug_assert!(b <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                assert!(!self.was_deleted());
                 unsafe {
-                    assert!(!self.was_deleted());
                     #swap(self._inner, a as i32, b as i32)
                 }
             }
@@ -189,9 +189,9 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn select(&mut self, line: u32) {
                 assert!(line > 0);
+                assert!(!self.was_deleted());
                 if line < self.size() {
                     unsafe {
-                        assert!(!self.was_deleted());
                         #select(self._inner, line as i32);
                     }
                 }
@@ -199,9 +199,9 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn selected(&self, line: u32) -> bool {
                 assert!(line > 0);
+                assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
-                    assert!(!self.was_deleted());
                     match #selected(self._inner, line as i32) {
                         0 => false,
                         _ => true,
@@ -211,9 +211,9 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn text(&self, line: u32) -> Option<String> {
                 assert!(line > 0);
+                assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
-                    assert!(!self.was_deleted());
                     let text = #text(self._inner, line as i32);
                     if text.is_null() {
                         None
@@ -226,30 +226,30 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn set_text(&mut self, line: u32, txt: &str) {
                 assert!(line > 0);
                 assert!(line <= self.size());
+                assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 let txt = CString::new(txt).unwrap();
                 unsafe {
-                    assert!(!self.was_deleted());
                     #set_text(self._inner, line as i32, txt.as_ptr())
                 }
             }
 
             fn load(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
+                assert!(!self.was_deleted());
                 if !path.exists() {
                     return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
                 }
                 let path = path.to_str().unwrap();
                 let path = CString::new(path)?;
                 unsafe {
-                    assert!(!self.was_deleted());
                     #load_file(self._inner, path.as_ptr());
                     Ok(())
                 }
             }
 
             fn text_size(&self) -> u32 {
+                assert!(!self.was_deleted());
                 unsafe {
-                    assert!(!self.was_deleted());
                     #text_size(self._inner) as u32
                 }
             }

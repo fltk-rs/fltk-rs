@@ -125,6 +125,7 @@ pub struct Tabs {
 impl Tabs {
     /// Gets the currently visible group
     pub fn value(&mut self) -> Option<Group> {
+        assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tabs_value(self._inner);
             if ptr.is_null() {
@@ -137,6 +138,7 @@ impl Tabs {
 
     /// Sets the currently visible group
     pub fn set_value<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_value(self._inner, w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget) {
                 0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -147,6 +149,7 @@ impl Tabs {
 
     /// Returns the tab group for the tab the user has currently down-clicked
     pub fn push(&self) -> Option<Group> {
+        assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tabs_push(self._inner);
             if ptr.is_null() {
@@ -159,6 +162,7 @@ impl Tabs {
 
     /// This is called by the tab widget's handle() method to set the tab group widget the user last pushed
     pub fn set_push<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_push(self._inner, w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget) {
                 0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -169,6 +173,7 @@ impl Tabs {
 
     /// Returns the position and size available to be used by its children
     pub fn client_area(&mut self) -> (i32, i32, i32, i32) {
+        assert!(!self.was_deleted());
         unsafe {
             let mut i1 = 0;
             let mut i2 = 0;
@@ -181,6 +186,7 @@ impl Tabs {
 
     /// Sets the tab label alignment
     pub fn set_tab_align(&mut self, a: Align) {
+        assert!(!self.was_deleted());
         unsafe {
             Fl_Tabs_set_tab_align(self._inner, a as i32)
         }
@@ -188,6 +194,7 @@ impl Tabs {
 
     /// Gets the tab label alignment.
     pub fn tab_align(&self) -> Align {
+        assert!(!self.was_deleted());
         unsafe {
             mem::transmute(Fl_Tabs_tab_align(self._inner))
         }
@@ -259,6 +266,7 @@ impl ColorChooser {
         }
     }
     pub fn hex_color(&self) -> u32 {
+        assert!(!self.was_deleted());
         let c = self.rgb_color();
         let x = Color::from_rgb(c.0, c.1, c.2);
         x.to_u32()

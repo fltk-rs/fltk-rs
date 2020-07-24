@@ -71,6 +71,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
+                assert!(!self.was_deleted());
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -81,7 +82,6 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    assert!(!self.was_deleted());
                     #add(self._inner, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
                 }
             }
@@ -91,6 +91,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 //     self.top_window().unwrap().takes_events() && self.takes_events(),
                 //     "Handling events requires that the window and widget be active!"
                 // );
+                assert!(!self.was_deleted());
                 let temp = CString::new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -101,7 +102,6 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    assert!(!self.was_deleted());
                     #insert(self._inner, idx as i32, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
                 }
             }
@@ -139,9 +139,9 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn find_item(&self, name: &str) -> Option<MenuItem> {
+                assert!(!self.was_deleted());
                 let name = CString::new(name).unwrap().clone();
                 unsafe {
-                    assert!(!self.was_deleted());
                     let menu_item = #get_item(
                         self._inner,
                         name.as_ptr());
@@ -219,8 +219,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn add_choice(&mut self, text: &str) {
                 unsafe {
-                    let arg2 = CString::new(text).unwrap();
                     assert!(!self.was_deleted());
+                    let arg2 = CString::new(text).unwrap();
                     #add_choice(self._inner, arg2.as_ptr() as *mut raw::c_char)
                 }
             }
