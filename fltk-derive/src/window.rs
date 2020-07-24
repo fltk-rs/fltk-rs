@@ -97,24 +97,24 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn make_resizable(&mut self, val: bool) {
+                assert!(!self.was_deleted());
                 if val {
                     unsafe {
-                        assert!(!self.was_deleted());
                         #make_resizable(self._inner, self._inner as *mut raw::c_void)
                     }
                 }
             }
 
             fn set_cursor(&mut self, cursor: Cursor) {
+                assert!(!self.was_deleted());
                 unsafe {
-                    assert!(!self.was_deleted());
                     #set_cursor(self._inner, cursor as i32)
                 }
             }
 
             fn shown(&self) -> bool {
+                assert!(!self.was_deleted());
                 unsafe {
-                    assert!(!self.was_deleted());
                     match #shown(self._inner) {
                         0 => false,
                         _ => true,
@@ -123,20 +123,22 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_border(&mut self, flag: bool) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #set_border(self._inner, flag as i32)
                 }
             }
 
             fn border(&self) -> bool {
+                assert!(!self.was_deleted());
                 unsafe {
                     #border(self._inner) != 0
                 }
             }
 
             fn raw_handle(&self) -> RawHandle {
+                assert!(!self.was_deleted());
                 unsafe {
-                    assert!(!self.was_deleted());
                     let ptr = #raw_handle(self._inner);
                     assert!(!ptr.is_null());
                     let winid = resolve_raw_handle(ptr);
@@ -156,6 +158,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             unsafe fn set_raw_handle(&mut self, handle: RawHandle) {
+                assert!(!self.was_deleted());
+
                 #[cfg(any(target_os = "windows", target_os = "macos", target_os = "android", target_os = "ios"))]
                 assert!(!handle.is_null());
 
@@ -172,6 +176,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn region(&self) -> crate::draw::Region {
+                assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #region(self._inner);
                     assert!(!ptr.is_null());
@@ -180,6 +185,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             unsafe fn set_region(&mut self, region: crate::draw::Region) {
+                assert!(!self.was_deleted());
                 assert!(!region.is_null());
                 #set_region(self._inner, region)
             }

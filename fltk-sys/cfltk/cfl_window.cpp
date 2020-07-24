@@ -100,6 +100,10 @@ void *Fl_gc(void) {
     return fl_gc;
 }
 
+void Fl_Window_show_with_args(Fl_Window *w, int argc, char **argv) {
+    LOCK(w->show(argc, argv); for (int i = 0; i < argc; ++i) free(argv[i]);)
+}
+
 WIDGET_DEFINE(Fl_Single_Window)
 
 GROUP_DEFINE(Fl_Single_Window)

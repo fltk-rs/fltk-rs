@@ -79,6 +79,14 @@ pub enum FrameType {
     FreeBoxType,
 }
 
+impl FrameType {
+    /// Gets the Frame type by index
+    pub fn by_index(idx: usize) -> FrameType {
+        assert!(idx < 57);
+        unsafe { std::mem::transmute(idx as i32) }
+    }
+}
+
 /// Defines alignment rules used by FLTK for labels
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]

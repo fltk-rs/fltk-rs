@@ -22,7 +22,7 @@ fn main() {
         .with_label("-");
     wind.make_resizable(true);
     wind.end();
-    wind.show();
+    wind.show_with_args(&["-nokbd"]); // -nokbd is akin to .clear_visible_focus() on all widgets
 
     let mut frame1 = frame.clone();
     but_inc.set_callback(Box::new(move || {
@@ -40,12 +40,14 @@ fn main() {
     wind.set_color(Color::from_u32(0xffebee));
     but_inc.set_color(Color::from_u32(0x304FFE));
     but_inc.set_selection_color(Color::Green);
-    but_inc.set_label_size(18);
-    but_inc.set_frame(FrameType::RoundUpBox);
+    but_inc.set_label_size(20);
+    but_inc.set_frame(FrameType::RFlatBox);
+    but_inc.set_label_color(Color::White);
     but_dec.set_color(Color::from_u32(0x2962FF));
     but_dec.set_selection_color(Color::Red);
-    but_dec.set_frame(FrameType::RoundUpBox);
-    but_dec.set_label_size(18);
+    but_dec.set_frame(FrameType::RFlatBox);
+    but_dec.set_label_size(20);
+    but_dec.set_label_color(Color::White);
     // End theming
 
     app.run().unwrap();

@@ -160,8 +160,8 @@ impl Chart {
 
     /// Adds an entry
     pub fn add(&mut self, val: f64, txt: &str, col: Color) {
-        let txt = std::ffi::CString::new(txt).unwrap();
         assert!(!self.was_deleted());
+        let txt = std::ffi::CString::new(txt).unwrap();
         unsafe { Fl_Chart_add(self._inner, val, txt.as_ptr(), col as u32) }
     }
 
@@ -171,8 +171,8 @@ impl Chart {
             idx <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
-        let txt = std::ffi::CString::new(txt).unwrap();
         assert!(!self.was_deleted());
+        let txt = std::ffi::CString::new(txt).unwrap();
         unsafe { Fl_Chart_insert(self._inner, idx as i32, val, txt.as_ptr(), col as u32) }
     }
 
@@ -182,8 +182,8 @@ impl Chart {
             idx <= std::i32::MAX as u32,
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
-        let txt = std::ffi::CString::new(txt).unwrap();
         assert!(!self.was_deleted());
+        let txt = std::ffi::CString::new(txt).unwrap();
         unsafe { Fl_Chart_replace(self._inner, idx as i32, val, txt.as_ptr(), col as u32) }
     }
 

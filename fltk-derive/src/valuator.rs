@@ -127,8 +127,8 @@ pub fn impl_valuator_trait(ast: &DeriveInput) -> TokenStream {
 
             fn format(&mut self, arg2: &str) -> Result<(), FltkError> {
                 unsafe {
-                    let arg2 = CString::new(arg2).unwrap();
                     assert!(!self.was_deleted());
+                    let arg2 = CString::new(arg2).unwrap();
                     let x = #format(self._inner, arg2.as_ptr() as *mut raw::c_char);
                     if x < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));

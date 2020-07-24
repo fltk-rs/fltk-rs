@@ -86,7 +86,7 @@ fn main() {
 }
 ```
 Please check the examples directory for more examples.
-You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, as well as the width and height of the widget. Most widgets, except the TextDisplay and TextEditor, also take a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
+You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 
 ```rust
 let but1 = Button::new(10, 10, 80, 40, "Button 1");
@@ -249,9 +249,9 @@ $ cargo run --example glwindow
 
 ![alt_test](screenshots/hello.jpg)
 
-![alt_test](screenshots/gallery.jpg)
+Setting the scheme to Gtk:
 
-Setting the scheme to Gtk.
+![alt_test](screenshots/gallery.jpg)
 
 ![alt_test](screenshots/calc.jpg)
 
@@ -259,9 +259,9 @@ Setting the scheme to Gtk.
 
 Check the full [code](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter.rs) for the custom theming.
 
-![alt_test](screenshots/editor.jpg)
+Setting the scheme to Gtk:
 
-Setting the scheme to Gtk
+![alt_test](screenshots/editor.jpg)
 
 ![alt_test](screenshots/terminal.jpg)
 

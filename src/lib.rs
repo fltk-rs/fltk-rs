@@ -29,6 +29,10 @@
 //! [dependencies]
 //! fltk = { version = "^0.7", features = ["fltk-bundled"] }
 //! ```
+//! Since these are pre-built libraries using the Github actions CI, the currently supported operating systems are:
+//! - Windows 10 x64 (msvc and gnu).
+//! - MacOS 10.15 x64.
+//! - Ubuntu 18.04 or later, x64.
 //! The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 //! ```toml
 //! [dependencies.fltk]
@@ -72,7 +76,7 @@
 //!     app.run().unwrap();
 //! ```
 //! Please check the examples directory for more examples.
-//! You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, as well as the width and height of the widget. Most widgets, except the TextDisplay and TextEditor, also take a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
+//! You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 //!
 //! ```rust
 //! let but1 = Button::new(10, 10, 80, 40, "Button 1");
