@@ -42,7 +42,7 @@ fn main() {
     but_inc.set_selection_color(Color::Green);
     but_inc.set_label_size(20);
     but_inc.set_frame(FrameType::RFlatBox);
-	but_inc.clear_visible_focus();
+    but_inc.clear_visible_focus();
     but_inc.set_label_color(Color::White);
     but_dec.set_color(Color::from_u32(0x2962FF));
     but_dec.set_selection_color(Color::Red);
