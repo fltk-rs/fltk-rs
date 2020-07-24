@@ -249,9 +249,9 @@ $ cargo run --example glwindow
 
 ![alt_test](screenshots/hello.jpg)
 
-![alt_test](screenshots/gallery.jpg)
+Setting the scheme to Gtk:
 
-Setting the scheme to Gtk.
+![alt_test](screenshots/gallery.jpg)
 
 ![alt_test](screenshots/calc.jpg)
 
@@ -259,9 +259,9 @@ Setting the scheme to Gtk.
 
 Check the full [code](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter.rs) for the custom theming.
 
-![alt_test](screenshots/editor.jpg)
+Setting the scheme to Gtk:
 
-Setting the scheme to Gtk
+![alt_test](screenshots/editor.jpg)
 
 ![alt_test](screenshots/terminal.jpg)
 

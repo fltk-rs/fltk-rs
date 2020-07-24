@@ -21,7 +21,7 @@ enum Message {
 }
 
 fn main() {
-    let app = app::App::default().with_scheme(app::AppScheme::Gleam);
+    let app = app::App::default().with_scheme(app::AppScheme::Gtk);
     let border = 20;
     let but_width = 90;
     let but_height = 60;
