@@ -451,6 +451,13 @@ impl std::ops::Add<char> for Shortcut {
     }
 }
 
+impl std::ops::Add<Key> for Shortcut {
+    type Output = Shortcut;
+    fn add(self, other: Key) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 + other as i32) }
+    }
+}
+
 impl std::ops::BitOr<CallbackTrigger> for CallbackTrigger {
     type Output = CallbackTrigger;
     fn bitor(self, rhs: CallbackTrigger) -> Self::Output {

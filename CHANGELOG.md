@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add impl std::ops::Add<Key> for Shortcut.
 
 ## [0.7.21] - 2020-07-24
 ### Changes

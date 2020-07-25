@@ -27,7 +27,33 @@ struct MyButton {
 
 impl MyButton {
     pub fn new(title: &str) -> MyButton {
-        MyButton { btn: Button::new(0, 0, 90, 60, title) }
+        let mut b = MyButton {
+            btn: Button::new(0, 0, 90, 60, title),
+        };
+        match title {
+            "0" => {
+                b.resize(0, 0, 90 * 2, 60);
+                b.set_color(Color::Light2);
+                b.set_shortcut(Shortcut::None + '0');
+            }
+            "CE" => b.set_color(Color::Red),
+            "x" | "/" | "+" | "-" | "=" | "C" | "@<-" => {
+                b.set_color(Color::Yellow);
+                let shortcut = if title == "x" { '*' } else { title.chars().nth(0).unwrap() };
+                b.set_shortcut(Shortcut::None + shortcut);
+                if shortcut == '@' {
+                    b.set_shortcut(Shortcut::None + Key::BackSpace);
+                }
+                if shortcut == '=' {
+                    b.set_shortcut(Shortcut::None + Key::Enter);
+                }
+            },
+            _ => {
+                b.set_color(Color::Light2);
+                b.set_shortcut(Shortcut::None + title.chars().nth(0).unwrap());
+            },
+        }
+        b
     }
 }
 
@@ -71,53 +97,51 @@ fn main() {
 
     let mut hpack = Pack::new(0, 0, 90, 60, "");
     let but_ce = MyButton::new("CE");
-    let but_c = MyButton::new( "C");
+    let but_c = MyButton::new("C");
     let but_back = MyButton::new("@<-");
-    let but_div = MyButton::new( "/");
+    let but_div = MyButton::new("/");
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
     let mut hpack = Pack::new(0, 0, 90, 60, "");
-    let mut but7 = MyButton::new( "7");
-    let mut but8 = MyButton::new( "8");
-    let mut but9 = MyButton::new( "9");
-    let but_mul = MyButton::new( "x");
+    let mut but7 = MyButton::new("7");
+    let mut but8 = MyButton::new("8");
+    let mut but9 = MyButton::new("9");
+    let but_mul = MyButton::new("x");
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
     let mut hpack = Pack::new(0, 0, 90, 60, "");
-    let mut but4 = MyButton::new( "4");
-    let mut but5 = MyButton::new( "5");
-    let mut but6 = MyButton::new( "6");
-    let but_sub = MyButton::new( "-");
+    let mut but4 = MyButton::new("4");
+    let mut but5 = MyButton::new("5");
+    let mut but6 = MyButton::new("6");
+    let but_sub = MyButton::new("-");
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
     let mut hpack = Pack::new(0, 0, 90, 60, "");
-    let mut but1 = MyButton::new( "1");
-    let mut but2 = MyButton::new( "2");
-    let mut but3 = MyButton::new( "3");
-    let but_add = MyButton::new( "+");
+    let mut but1 = MyButton::new("1");
+    let mut but2 = MyButton::new("2");
+    let mut but3 = MyButton::new("3");
+    let but_add = MyButton::new("+");
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
     let mut hpack = Pack::new(0, 0, 90, 60, "");
-    let mut but_dot = MyButton::new( ".");
-    let mut but0 = MyButton::new( "0");
-    let but_eq = MyButton::new( "=");
+    let mut but_dot = MyButton::new(".");
+    let mut but0 = MyButton::new("0");
+    let but_eq = MyButton::new("=");
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
     vpack.end();
     vpack.set_type(PackType::Vertical);
 
-    but0.resize(0, 0, 90 * 2, 60);
-
-    but_dot.set_color(Color::Light2);
-
     wind.make_resizable(false);
     wind.end();
     wind.show_with_args(&["-scheme", "gtk+"]);
+
+    app::set_focus(&mut *but1);
 
     let but_vec = vec![
         &mut but1, &mut but2, &mut but3, &mut but4, &mut but5, &mut but6, &mut but7, &mut but8,
@@ -131,18 +155,12 @@ fn main() {
     let (s, r) = app::channel::<Message>();
 
     for but in but_vec {
-        but.set_color(Color::Light2);
         let label = but.label();
         but.emit(s, Message::Number(label.parse().unwrap()));
     }
 
     for mut but in but_op_vec {
         let label = but.label().clone();
-        if label.as_str() == "CE" {
-            but.set_color(Color::Red);
-        } else {
-            but.set_color(Color::Yellow);
-        }
         let op = match label.as_str() {
             "+" => Ops::Add,
             "-" => Ops::Sub,
@@ -158,7 +176,6 @@ fn main() {
     }
 
     but_dot.emit(s, Message::Dot);
-    
 
     while app.wait().unwrap() {
         match r.recv() {
