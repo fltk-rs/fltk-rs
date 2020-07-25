@@ -5,9 +5,16 @@
 ### Changes
 - (None)
 
+## [0.7.22] - 2020-07-25
+### Changes
+- Add impl BitOr<Key> for Shortcut.
+- Change impl Add to impl BitOr for Shortcut.
+- Add Shortcut::from_key() and Shortcut::from_i32().
+
 ## [0.7.21] - 2020-07-24
 ### Changes
 - Add Window::show_with_args() and show_with_env_args() for FLTK specific command-line arguments.
+- Add FrameType::by_index().
 - Add some missing asserts.
 
 ## [0.7.20] - 2020-07-23

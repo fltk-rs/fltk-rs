@@ -1,4 +1,5 @@
-use fltk::{app, button::*, output::*, window::*};
+use fltk::{app, button::*, group::*, output::*, window::*};
+use std::ops::{Deref, DerefMut};
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 enum Ops {
@@ -20,20 +21,62 @@ enum Message {
     Dot,
 }
 
+struct MyButton {
+    btn: Button,
+}
+
+impl MyButton {
+    pub fn new(title: &str) -> MyButton {
+        let mut b = MyButton {
+            btn: Button::new(0, 0, 90, 60, title),
+        };
+        match title {
+            "0" => {
+                b.resize(0, 0, 90 * 2, 60);
+                b.set_color(Color::Light2);
+                b.set_shortcut(Shortcut::None | '0');
+            }
+            "CE" => b.set_color(Color::Red),
+            "x" | "/" | "+" | "-" | "=" | "C" | "@<-" => {
+                b.set_color(Color::Yellow);
+                let shortcut = if title == "x" { '*' } else { title.chars().nth(0).unwrap() };
+                b.set_shortcut(Shortcut::None | shortcut);
+                if shortcut == '@' {
+                    b.set_shortcut(Shortcut::None | Key::BackSpace);
+                }
+                if shortcut == '=' {
+                    b.set_shortcut(Shortcut::None | Key::Enter);
+                }
+            },
+            _ => {
+                b.set_color(Color::Light2);
+                b.set_shortcut(Shortcut::None | title.chars().nth(0).unwrap());
+            },
+        }
+        b
+    }
+}
+
+impl Deref for MyButton {
+    type Target = Button;
+
+    fn deref(&self) -> &Self::Target {
+        &self.btn
+    }
+}
+
+impl DerefMut for MyButton {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.btn
+    }
+}
+
 fn main() {
-    let app = app::App::default().with_scheme(app::AppScheme::Gtk);
+    let app = app::App::default();
+    let win_w = 400;
+    let win_h = 500;
     let border = 20;
-    let but_width = 90;
-    let but_height = 60;
-    let column1 = border;
-    let column2 = but_width + border;
-    let column3 = but_width * 2 + border;
-    let column4 = but_width * 3 + border;
-    let row1 = 180;
-    let row2 = but_height + 180;
-    let row3 = but_height * 2 + 180;
-    let row4 = but_height * 3 + 180;
-    let row5 = but_height * 4 + 180;
+    let but_row = 180;
 
     let mut operation = Ops::None;
     let mut txt = String::from("0");
@@ -42,40 +85,63 @@ fn main() {
 
     let mut wind = Window::default()
         .with_label("FLTK Calc")
-        .with_size(400, 500)
+        .with_size(win_w, win_h)
         .center_screen();
     wind.set_color(Color::Light2);
 
-    let mut out = Output::new(border, border, 360, 140, "");
+    let mut out = Output::new(border, border, win_w - 40, 140, "");
     out.set_text_size(30);
     out.set_value("0");
 
-    let but_ce = Button::new(column1, row1, but_width, but_height, "CE");
-    let but_c = Button::new(column2, row1, but_width, but_height, "C");
-    let but_back = Button::new(column3, row1, but_width, but_height, "@<-");
-    let but_div = Button::new(column4, row1, but_width, but_height, "/");
-    let but_mul = Button::new(column4, row2, but_width, but_height, "x");
-    let but_sub = Button::new(column4, row3, but_width, but_height, "-");
-    let but_add = Button::new(column4, row4, but_width, but_height, "+");
-    let but_eq = Button::new(column4, row5, but_width, but_height, "=");
+    let mut vpack = Pack::new(border, but_row, win_w - 40, 300, "");
 
-    let mut but7 = Button::new(column1, row2, but_width, but_height, "7");
-    let mut but8 = Button::new(column2, row2, but_width, but_height, "8");
-    let mut but9 = Button::new(column3, row2, but_width, but_height, "9");
-    let mut but4 = Button::new(column1, row3, but_width, but_height, "4");
-    let mut but5 = Button::new(column2, row3, but_width, but_height, "5");
-    let mut but6 = Button::new(column3, row3, but_width, but_height, "6");
-    let mut but1 = Button::new(column1, row4, but_width, but_height, "1");
-    let mut but2 = Button::new(column2, row4, but_width, but_height, "2");
-    let mut but3 = Button::new(column3, row4, but_width, but_height, "3");
-    let mut but_dot = Button::new(column1, row5, but_width, but_height, ".");
-    let mut but0 = Button::new(column2, row5, but_width * 2, but_height, "0");
+    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let but_ce = MyButton::new("CE");
+    let but_c = MyButton::new("C");
+    let but_back = MyButton::new("@<-");
+    let but_div = MyButton::new("/");
+    hpack.end();
+    hpack.set_type(PackType::Horizontal);
 
-    but_dot.set_color(Color::Light2);
+    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let mut but7 = MyButton::new("7");
+    let mut but8 = MyButton::new("8");
+    let mut but9 = MyButton::new("9");
+    let but_mul = MyButton::new("x");
+    hpack.end();
+    hpack.set_type(PackType::Horizontal);
+
+    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let mut but4 = MyButton::new("4");
+    let mut but5 = MyButton::new("5");
+    let mut but6 = MyButton::new("6");
+    let but_sub = MyButton::new("-");
+    hpack.end();
+    hpack.set_type(PackType::Horizontal);
+
+    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let mut but1 = MyButton::new("1");
+    let mut but2 = MyButton::new("2");
+    let mut but3 = MyButton::new("3");
+    let but_add = MyButton::new("+");
+    hpack.end();
+    hpack.set_type(PackType::Horizontal);
+
+    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let mut but_dot = MyButton::new(".");
+    let mut but0 = MyButton::new("0");
+    let but_eq = MyButton::new("=");
+    hpack.end();
+    hpack.set_type(PackType::Horizontal);
+
+    vpack.end();
+    vpack.set_type(PackType::Vertical);
 
     wind.make_resizable(false);
     wind.end();
-    wind.show();
+    wind.show_with_args(&["-scheme", "gtk+"]);
+
+    app::set_focus(&mut *but1);
 
     let but_vec = vec![
         &mut but1, &mut but2, &mut but3, &mut but4, &mut but5, &mut but6, &mut but7, &mut but8,
@@ -89,18 +155,12 @@ fn main() {
     let (s, r) = app::channel::<Message>();
 
     for but in but_vec {
-        but.set_color(Color::Light2);
         let label = but.label();
         but.emit(s, Message::Number(label.parse().unwrap()));
     }
 
     for mut but in but_op_vec {
         let label = but.label().clone();
-        if label.as_str() == "CE" {
-            but.set_color(Color::Red);
-        } else {
-            but.set_color(Color::Yellow);
-        }
         let op = match label.as_str() {
             "+" => Ops::Add,
             "-" => Ops::Sub,
