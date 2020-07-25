@@ -34,23 +34,23 @@ impl MyButton {
             "0" => {
                 b.resize(0, 0, 90 * 2, 60);
                 b.set_color(Color::Light2);
-                b.set_shortcut(Shortcut::None + '0');
+                b.set_shortcut(Shortcut::None | '0');
             }
             "CE" => b.set_color(Color::Red),
             "x" | "/" | "+" | "-" | "=" | "C" | "@<-" => {
                 b.set_color(Color::Yellow);
                 let shortcut = if title == "x" { '*' } else { title.chars().nth(0).unwrap() };
-                b.set_shortcut(Shortcut::None + shortcut);
+                b.set_shortcut(Shortcut::None | shortcut);
                 if shortcut == '@' {
-                    b.set_shortcut(Shortcut::None + Key::BackSpace);
+                    b.set_shortcut(Shortcut::None | Key::BackSpace);
                 }
                 if shortcut == '=' {
-                    b.set_shortcut(Shortcut::None + Key::Enter);
+                    b.set_shortcut(Shortcut::None | Key::Enter);
                 }
             },
             _ => {
                 b.set_color(Color::Light2);
-                b.set_shortcut(Shortcut::None + title.chars().nth(0).unwrap());
+                b.set_shortcut(Shortcut::None | title.chars().nth(0).unwrap());
             },
         }
         b

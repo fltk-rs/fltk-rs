@@ -364,7 +364,17 @@ pub enum Shortcut {
 impl Shortcut {
     /// Create a shortcut from a char
     pub fn from_char(c: char) -> Shortcut {
-        Shortcut::None + c
+        Shortcut::None | c
+    }
+
+    /// Create a shortcut from a key
+    pub fn from_key(k: Key) -> Shortcut {
+        Shortcut::None | k
+    }
+
+    /// Create a shortcut from an i32
+    pub fn from_i32(v: i32) -> Shortcut {
+        Shortcut::None | Key::from_i32(v)
     }
 }
 
@@ -444,17 +454,17 @@ pub trait WidgetType {
     fn from_i32(val: i32) -> Self;
 }
 
-impl std::ops::Add<char> for Shortcut {
+impl std::ops::BitOr<char> for Shortcut {
     type Output = Shortcut;
-    fn add(self, other: char) -> Self::Output {
-        unsafe { std::mem::transmute(self as i32 + other as i32) }
+    fn bitor(self, other: char) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | other as i32) }
     }
 }
 
-impl std::ops::Add<Key> for Shortcut {
+impl std::ops::BitOr<Key> for Shortcut {
     type Output = Shortcut;
-    fn add(self, other: Key) -> Self::Output {
-        unsafe { std::mem::transmute(self as i32 + other as i32) }
+    fn bitor(self, other: Key) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | other as i32) }
     }
 }
 
