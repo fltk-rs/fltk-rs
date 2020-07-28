@@ -345,3 +345,27 @@ extern "C" {
 extern "C" {
     pub fn Fl_File_Chooser_visible(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_dir_chooser(
+        message: *const ::std::os::raw::c_char,
+        fname: *const ::std::os::raw::c_char,
+        relative: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_file_chooser(
+        message: *const ::std::os::raw::c_char,
+        pat: *const ::std::os::raw::c_char,
+        fname: *const ::std::os::raw::c_char,
+        relative: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_color_chooser(
+        name: *const ::std::os::raw::c_char,
+        r: *mut ::std::os::raw::c_uchar,
+        g: *mut ::std::os::raw::c_uchar,
+        b: *mut ::std::os::raw::c_uchar,
+        cmode: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}

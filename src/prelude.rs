@@ -76,6 +76,10 @@ pub unsafe trait WidgetExt {
     fn with_pos(self, x: i32, y: i32) -> Self;
     /// Initialilze to dimensions width and height
     fn with_size(self, width: i32, height: i32) -> Self;
+    /// Set to position x, y
+    fn set_pos(&mut self, x: i32, y: i32);
+    /// Set to dimensions width and height
+    fn set_size(&mut self, width: i32, height: i32);
     /// Initialize with label/title
     fn with_label(self, title: &str) -> Self;
     /// Sets the initial alignment of the widget

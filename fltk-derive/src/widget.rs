@@ -253,6 +253,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
+            fn set_pos(&mut self, x: i32, y: i32) {
+                self.resize(x, y, self.width(), self.height());
+            }
+
+            fn set_size(&mut self, width: i32, height: i32) {
+                self.resize(self.x(), self.y(), width, height);
+            }
+
             fn with_label(mut self, title: &str) -> Self {
                 self.set_label(title);
                 self

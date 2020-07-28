@@ -5,6 +5,14 @@
 ### Changes
 - (None)
 
+## [0.7.24] - 2020-07-29
+### Changes
+- Add convenience functions dialog::file_chooser() and dialog::dir_chooser().
+- Add color_chooser() convenience function.
+- Add dialog::FileChooser::window().
+- impl BitOr for dialog::FileChooserType.
+- Add WidgetExt::set_pos and WidgetExt::set_size.
+
 ## [0.7.23] - 2020-07-28
 ### Changes
 - Add Fltk's own FileChooser. In addition to the already available native FileDialog.

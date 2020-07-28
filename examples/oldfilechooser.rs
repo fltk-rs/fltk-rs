@@ -10,40 +10,47 @@ fn main() {
     wind.show();
 
     but.set_callback(Box::new(move || {
-        let mut chooser = FileChooser::new(
-            ".",                    // directory
-            "*",                    // filter or pattern
-            FileChooserType::Multi, // chooser type
-            "Title Of Chooser",     // title
-        );
+        let file = file_chooser("Choose File", "*.rs", ".", true).unwrap();
+        println!("{}", file);
 
-        chooser.show();
+        // OR
 
-        // Block until user picks something.
-        //     (The other way to do this is to use a callback())
-        //
-        while chooser.shown() {
-            app.wait().unwrap();
-        }
+        // let mut chooser = FileChooser::new(
+        //     ".",                    // directory
+        //     "*",                    // filter or pattern
+        //     FileChooserType::Multi, // chooser type
+        //     "Title Of Chooser",     // title
+        // );
 
-        // User hit cancel?
-        if chooser.value(1).is_none() {
-            println!("(User hit 'Cancel')");
-            return;
-        }
+        // chooser.show();
+        
+        // chooser.window().set_pos(300, 300);
 
-        // Print what the user picked
-        println!("--------------------");
-        println!("DIRECTORY: '{}'", chooser.directory().unwrap());
-        println!("    VALUE: '{}'", chooser.value(1).unwrap()); // value starts at 1!
-        println!("    COUNT: {} files selected", chooser.count());
+        // // Block until user picks something.
+        // //     (The other way to do this is to use a callback())
+        // //
+        // while chooser.shown() {
+        //     app.wait().unwrap();
+        // }
 
-        // Multiple files? Show all of them
-        if chooser.count() > 1 {
-            for t in 1..=chooser.count() {
-                println!(" VALUE[{}]: '{}'", t, chooser.value(t).unwrap());
-            }
-        }
+        // // User hit cancel?
+        // if chooser.value(1).is_none() {
+        //     println!("(User hit 'Cancel')");
+        //     return;
+        // }
+
+        // // Print what the user picked
+        // println!("--------------------");
+        // println!("DIRECTORY: '{}'", chooser.directory().unwrap());
+        // println!("    VALUE: '{}'", chooser.value(1).unwrap()); // value starts at 1!
+        // println!("    COUNT: {} files selected", chooser.count());
+
+        // // Multiple files? Show all of them
+        // if chooser.count() > 1 {
+        //     for t in 1..=chooser.count() {
+        //         println!(" VALUE[{}]: '{}'", t, chooser.value(t).unwrap());
+        //     }
+        // }
     }));
 
     app.run().unwrap();
