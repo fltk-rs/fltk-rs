@@ -762,3 +762,9 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_visible(self._inner) != 0 }
     }
 }
+
+impl Drop for FileChooser {
+    fn drop(&mut self) {
+        unsafe { Fl_File_Chooser_delete(self._inner) }
+    }
+}
