@@ -358,7 +358,7 @@ impl Drop for HelpDialog {
 
 /// Defines the type of beep to be passed to the beep function
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum BeepType {
     Default = 0,
     Message,
@@ -371,4 +371,400 @@ pub enum BeepType {
 /// Emits a beep
 pub fn beep(tp: BeepType) {
     unsafe { Fl_beep(tp as i32) }
+}
+
+/// FLTK's own FileChooser. Which differs for the Native FileDialog
+pub struct FileChooser {
+    _inner: *mut Fl_File_Chooser,
+}
+
+/// The types of FileChooser
+#[repr(i32)]
+#[derive(Copy, Clone, Debug, PartialOrd, PartialEq)]
+pub enum FileChooserType {
+    Single = 0,
+    Multi = 1,
+    Create = 2,
+    Directory = 4,
+}
+
+impl FileChooser {
+    /// Instantiates a new FileChooser
+    pub fn new(dir: &str, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
+        let dir = CString::new(dir).unwrap();
+        let pattern = CString::new(pattern).unwrap();
+        let title = CString::new(title).unwrap();
+        unsafe {
+            let ptr =
+                Fl_File_Chooser_new(dir.as_ptr(), pattern.as_ptr(), typ as i32, title.as_ptr());
+            assert!(!ptr.is_null());
+            FileChooser { _inner: ptr }
+        }
+    }
+
+    /// Deletes a FileChooser
+    /// # Safety
+    /// Can invalidate the underlying pointer
+    pub unsafe fn delete(&mut self) {
+        Fl_File_Chooser_delete(self._inner)
+    }
+
+    /// Gets the new button of the FileChooser
+    pub fn new_button(&mut self) -> Option<crate::button::Button> {
+        assert!(!self._inner.is_null());
+        unsafe {
+            let ptr = Fl_File_Chooser_newButton(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(crate::button::Button::from_widget_ptr(
+                    ptr as *mut fltk_sys::widget::Fl_Widget,
+                ))
+            }
+        }
+    }
+
+    /// Gets the preview button of the FileChooser
+    pub fn preview_button(&mut self) -> Option<crate::button::CheckButton> {
+        assert!(!self._inner.is_null());
+        unsafe {
+            let ptr = Fl_File_Chooser_previewButton(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(crate::button::CheckButton::from_widget_ptr(
+                    ptr as *mut fltk_sys::widget::Fl_Widget,
+                ))
+            }
+        }
+    }
+
+    /// Gets the show hidden button of the FileChooser
+    pub fn show_hidden_button(&mut self) -> Option<crate::button::CheckButton> {
+        assert!(!self._inner.is_null());
+        unsafe {
+            let ptr = Fl_File_Chooser_showHiddenButton(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(crate::button::CheckButton::from_widget_ptr(
+                    ptr as *mut fltk_sys::widget::Fl_Widget,
+                ))
+            }
+        }
+    }
+
+    /// Sets the callback of the FileChooser
+    pub fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
+        assert!(!self._inner.is_null());
+        unsafe {
+            unsafe extern "C" fn shim(_arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
+                let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+                let f: &mut (dyn FnMut()) = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+            }
+            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+            let data: *mut raw::c_void = a as *mut raw::c_void;
+            let callback: Option<
+                unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
+            > = Some(shim);
+            Fl_File_Chooser_callback(self._inner, callback, data)
+        }
+    }
+
+    /// Sets the color of the FileChooser
+    pub fn set_color(&mut self, c: Color) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_set_color(self._inner, c as u32) }
+    }
+
+    /// Gets the color of the FileChooser
+    pub fn color(&mut self) -> Color {
+        assert!(!self._inner.is_null());
+        unsafe { mem::transmute(Fl_File_Chooser_color(self._inner)) }
+    }
+
+    /// Gets the count of chosen items
+    pub fn count(&mut self) -> u32 {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_count(self._inner) as u32 }
+    }
+
+    /// Sets the directory of the FileChooser
+    pub fn set_directory(&mut self, dir: &str) {
+        assert!(!self._inner.is_null());
+        let dir = CString::new(dir).unwrap();
+        unsafe { Fl_File_Chooser_set_directory(self._inner, dir.as_ptr()) }
+    }
+
+    /// Gets the directory of the FileChooser
+    pub fn directory(&mut self) -> Option<String> {
+        assert!(!self._inner.is_null());
+        unsafe {
+            let ptr = Fl_File_Chooser_directory(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
+            }
+        }
+    }
+
+    /// Sets the filter of the FileChooser
+    pub fn set_filter(&mut self, pattern: &str) {
+        assert!(!self._inner.is_null());
+        let pattern = CString::new(pattern).unwrap();
+        unsafe { Fl_File_Chooser_set_filter(self._inner, pattern.as_ptr()) }
+    }
+
+    /// Gets the filter of the FileChooser
+    pub fn filter(&mut self) -> Option<String> {
+        assert!(!self._inner.is_null());
+        unsafe {
+            let ptr = Fl_File_Chooser_filter(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
+            }
+        }
+    }
+
+    /// Gets the current filename filter selection
+    pub fn filter_value(&mut self) -> u32 {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_filter_value(self._inner) as u32 }
+    }
+
+    /// Sets the current filename filter selection
+    pub fn set_filter_value(&mut self, f: u32) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_set_filter_value(self._inner, f as i32) }
+    }
+
+    /// Hides the File chooser
+    pub fn hide(&mut self) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_hide(self._inner) }
+    }
+
+    /// Sets the icon size of the FileChooser
+    pub fn set_iconsize(&mut self, s: u8) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_set_iconsize(self._inner, s) }
+    }
+
+    /// Gets the icon size of the FileChooser
+    pub fn iconsize(&mut self) -> u8 {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_iconsize(self._inner) }
+    }
+
+    /// Sets the label of the FileChooser
+    pub fn set_label(&mut self, l: &str) {
+        assert!(!self._inner.is_null());
+        let l = CString::new(l).unwrap();
+        unsafe { Fl_File_Chooser_set_label(self._inner, l.as_ptr()) }
+    }
+
+    /// Gets the label of the FileChooser
+    pub fn label(&mut self) -> Option<String> {
+        assert!(!self._inner.is_null());
+        unsafe {
+            let ptr = Fl_File_Chooser_label(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
+            }
+        }
+    }
+
+    /// Sets the label of the Ok button
+    pub fn set_ok_label(&mut self, l: &str) {
+        assert!(!self._inner.is_null());
+        let l = CString::new(l).unwrap();
+        unsafe { Fl_File_Chooser_set_ok_label(self._inner, l.as_ptr()) }
+    }
+
+    /// Gets the label of the Ok button
+    pub fn ok_label(&mut self) -> Option<String> {
+        assert!(!self._inner.is_null());
+        unsafe {
+            let ptr = Fl_File_Chooser_ok_label(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
+            }
+        }
+    }
+
+    /// Add preview to the FileChooser
+    pub fn set_preview(&mut self, e: bool) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_set_preview(self._inner, e as i32) }
+    }
+
+    /// Returns whether preview is enabled for the FileChooser
+    pub fn preview(&self) -> bool {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_preview(self._inner) != 0 }
+    }
+
+    /// Rescan the directory
+    pub fn rescan(&mut self) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_rescan(self._inner) }
+    }
+
+    /// Rescan the directory while keeping the file name
+    pub fn rescan_keep_filename(&mut self) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_rescan_keep_filename(self._inner) }
+    }
+
+    /// Shows the File Chooser
+    pub fn show(&mut self) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_show(self._inner) }
+    }
+
+    /// Returns whether the file chooser is shown
+    pub fn shown(&mut self) -> bool {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_shown(self._inner) != 0 }
+    }
+
+    /// Sets the text color of the file chooser
+    pub fn set_textcolor(&mut self, c: Color) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_set_textcolor(self._inner, c as u32) }
+    }
+
+    /// Gets the text color of the file chooser
+    pub fn textcolor(&mut self) -> Color {
+        assert!(!self._inner.is_null());
+        unsafe { mem::transmute(Fl_File_Chooser_textcolor(self._inner)) }
+    }
+
+    /// Sets the text font of the file chooser
+    pub fn set_textfont(&mut self, f: Font) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_set_textfont(self._inner, f as i32) }
+    }
+
+    /// Gets the text font of the file chooser
+    pub fn textfont(&mut self) -> Font {
+        assert!(!self._inner.is_null());
+        unsafe { mem::transmute(Fl_File_Chooser_textfont(self._inner)) }
+    }
+
+    /// Sets the text size of the file chooser
+    pub fn set_textsize(&mut self, s: u32) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_set_textsize(self._inner, s as i32) }
+    }
+
+    /// Gets the text size of the file chooser
+    pub fn textsize(&mut self) -> u32 {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_textsize(self._inner) as u32 }
+    }
+
+    /// Sets the type of the FileChooser
+    pub fn set_type(&mut self, t: FileChooserType) {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_set_type(self._inner, t as i32) }
+    }
+
+    /// Gets the type of the FileChooser
+    pub fn get_type(&mut self) -> FileChooserType {
+        assert!(!self._inner.is_null());
+        unsafe { mem::transmute(Fl_File_Chooser_type(self._inner)) }
+    }
+
+    /// Gets the user data of the FileChooser
+    /// # Safety
+    /// Can invalidate the user data while the FileChooser is in use
+    pub unsafe fn raw_user_data(&self) -> *mut raw::c_void {
+        Fl_File_Chooser_user_data(self._inner)
+    }
+
+    /// Gets the user data of the FileChooser
+    /// # Safety
+    /// Can invalidate the user data while the FileChooser is in use
+    pub unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
+        let ptr = Fl_File_Chooser_user_data(self._inner);
+        if ptr.is_null() {
+            None
+        } else {
+            let x = ptr as *mut Box<dyn FnMut()>;
+            let x = Box::from_raw(x);
+            Some(*x)
+        }
+    }
+
+    /// Sets the user data of the FileChooser
+    /// # Safety
+    /// Can invalidate the user data while the FileChooser is in use
+    pub unsafe fn set_user_data(&mut self, d: *mut raw::c_void) {
+        Fl_File_Chooser_set_user_data(self._inner, d)
+    }
+
+    /// Gets the file or dir name chosen by the FileChooser
+    pub fn value(&mut self, f: u32) -> Option<String> {
+        assert!(!self._inner.is_null());
+        let mut f = f;
+        if f == 0 {
+            f = 1;
+        }
+        unsafe {
+            let ptr = Fl_File_Chooser_value(self._inner, f as i32);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
+            }
+        }
+    }
+
+    /// Sets the file or dir name chosen by the FileChooser
+    pub fn set_value(&mut self, filename: &str) {
+        assert!(!self._inner.is_null());
+        let filename = CString::new(filename).unwrap();
+        unsafe { Fl_File_Chooser_set_value(self._inner, filename.as_ptr()) }
+    }
+
+    /// Returns whether the FileChooser is visible or not
+    pub fn visible(&mut self) -> bool {
+        assert!(!self._inner.is_null());
+        unsafe { Fl_File_Chooser_visible(self._inner) != 0 }
+    }
+}
+
+impl Drop for FileChooser {
+    fn drop(&mut self) {
+        unsafe { Fl_File_Chooser_delete(self._inner) }
+    }
 }

@@ -141,6 +141,10 @@ int Fl_wait(void) {
     return Fl::wait();
 }
 
+double Fl_wait_for(double dur) {
+    return Fl::wait(dur);
+}
+
 void Fl_add_timeout(double t, void (*timeout_h)(void *), void *data) {
     Fl::add_timeout(t, timeout_h, data);
 }

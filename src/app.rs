@@ -430,11 +430,23 @@ pub fn add_handler(cb: fn(Event) -> bool) {
     }
 }
 
-fn wait() -> bool {
+/// Starts waiting for events
+pub fn wait() -> bool {
     unsafe {
         match Fl_wait() {
             0 => false,
             _ => true,
+        }
+    }
+}
+
+/// Waits a maximum of `dur` seconds or until "something happens".
+pub fn wait_for(dur: f64) -> Result<(), FltkError> {
+    unsafe {
+        if Fl_wait_for(dur) >= 0.0 {
+            Ok(())
+        } else {
+            Err(FltkError::Unknown(String::from("An unknown error occured!")))
         }
     }
 }
@@ -800,7 +812,7 @@ pub fn focus() -> Option<crate::widget::Widget> {
 }
 
 /// Sets the widget which has focus
-pub fn set_focus<W: WidgetExt>(wid: &mut W) {
+pub fn set_focus<W: WidgetExt>(wid: &W) {
     unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }
 

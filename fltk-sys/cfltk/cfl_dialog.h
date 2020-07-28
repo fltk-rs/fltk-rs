@@ -80,6 +80,91 @@ int Fl_Help_Dialog_y(Fl_Help_Dialog *);
 
 void Fl_beep(int type);
 
+typedef struct Fl_File_Chooser Fl_File_Chooser;
+
+Fl_File_Chooser *Fl_File_Chooser_new(const char *d, const char *p, int t, const char *title);
+
+void Fl_File_Chooser_delete(Fl_File_Chooser *self);
+
+void *Fl_File_Chooser_newButton(Fl_File_Chooser *self);
+
+void *Fl_File_Chooser_previewButton(Fl_File_Chooser *self);
+
+void *Fl_File_Chooser_showHiddenButton(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_callback(Fl_File_Chooser *self, void (*cb)(Fl_File_Chooser *, void *),
+                              void *d);
+
+void Fl_File_Chooser_set_color(Fl_File_Chooser *self, unsigned int c);
+
+unsigned int Fl_File_Chooser_color(Fl_File_Chooser *self);
+
+int Fl_File_Chooser_count(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_directory(Fl_File_Chooser *self, const char *d);
+
+char *Fl_File_Chooser_directory(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_filter(Fl_File_Chooser *self, const char *p);
+
+const char *Fl_File_Chooser_filter(Fl_File_Chooser *self);
+
+int Fl_File_Chooser_filter_value(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_filter_value(Fl_File_Chooser *self, int f);
+
+void Fl_File_Chooser_hide(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_iconsize(Fl_File_Chooser *self, unsigned char s);
+
+unsigned char Fl_File_Chooser_iconsize(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_label(Fl_File_Chooser *self, const char *l);
+
+const char *Fl_File_Chooser_label(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_ok_label(Fl_File_Chooser *self, const char *l);
+
+const char *Fl_File_Chooser_ok_label(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_preview(Fl_File_Chooser *self, int e);
+
+int Fl_File_Chooser_preview(const Fl_File_Chooser *self);
+
+void Fl_File_Chooser_rescan(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_rescan_keep_filename(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_show(Fl_File_Chooser *self);
+
+int Fl_File_Chooser_shown(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_textcolor(Fl_File_Chooser *self, unsigned int c);
+
+unsigned int Fl_File_Chooser_textcolor(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_textfont(Fl_File_Chooser *self, int f);
+
+int Fl_File_Chooser_textfont(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_textsize(Fl_File_Chooser *self, int s);
+
+int Fl_File_Chooser_textsize(Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_type(Fl_File_Chooser *self, int t);
+
+int Fl_File_Chooser_type(Fl_File_Chooser *self);
+
+void *Fl_File_Chooser_user_data(const Fl_File_Chooser *self);
+
+void Fl_File_Chooser_set_user_data(Fl_File_Chooser *self, void *d);
+
+const char *Fl_File_Chooser_value(Fl_File_Chooser *self, int f);
+
+void Fl_File_Chooser_set_value(Fl_File_Chooser *self, const char *filename);
+
+int Fl_File_Chooser_visible(Fl_File_Chooser *self);
+
 #ifdef __cplusplus
 }
 #endif

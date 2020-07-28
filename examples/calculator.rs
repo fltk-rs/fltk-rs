@@ -36,7 +36,10 @@ impl MyButton {
                 b.set_color(Color::Light2);
                 b.set_shortcut(Shortcut::None | '0');
             }
-            "CE" => b.set_color(Color::Red),
+            "CE" => {
+                b.set_color(Color::Red);
+                b.set_shortcut(Shortcut::None | Key::Delete);
+            },
             "x" | "/" | "+" | "-" | "=" | "C" | "@<-" => {
                 b.set_color(Color::Yellow);
                 let shortcut = if title == "x" { '*' } else { title.chars().nth(0).unwrap() };
@@ -93,9 +96,9 @@ fn main() {
     out.set_text_size(30);
     out.set_value("0");
 
-    let mut vpack = Pack::new(border, but_row, win_w - 40, 300, "");
+    let vpack = Pack::new(border, but_row, win_w - 40, 300, "");
 
-    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
     let but_ce = MyButton::new("CE");
     let but_c = MyButton::new("C");
     let but_back = MyButton::new("@<-");
@@ -103,7 +106,7 @@ fn main() {
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
     let mut but7 = MyButton::new("7");
     let mut but8 = MyButton::new("8");
     let mut but9 = MyButton::new("9");
@@ -111,7 +114,7 @@ fn main() {
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
     let mut but4 = MyButton::new("4");
     let mut but5 = MyButton::new("5");
     let mut but6 = MyButton::new("6");
@@ -119,7 +122,7 @@ fn main() {
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
     let mut but1 = MyButton::new("1");
     let mut but2 = MyButton::new("2");
     let mut but3 = MyButton::new("3");
@@ -127,7 +130,7 @@ fn main() {
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, 90, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
     let mut but_dot = MyButton::new(".");
     let mut but0 = MyButton::new("0");
     let but_eq = MyButton::new("=");
@@ -135,13 +138,12 @@ fn main() {
     hpack.set_type(PackType::Horizontal);
 
     vpack.end();
-    vpack.set_type(PackType::Vertical);
 
     wind.make_resizable(false);
     wind.end();
-    wind.show_with_args(&["-scheme", "gtk+"]);
+    wind.show_with_args(&["-scheme", "gtk+", "-nokbd"]);
 
-    app::set_focus(&mut *but1);
+    app::set_focus(&*but1);
 
     let but_vec = vec![
         &mut but1, &mut but2, &mut but3, &mut but4, &mut but5, &mut but6, &mut but7, &mut but8,

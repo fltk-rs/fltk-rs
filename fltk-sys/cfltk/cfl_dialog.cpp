@@ -2,6 +2,7 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Help_Dialog.H>
 #include <FL/Fl_Image.H>
+#include <FL/Fl_File_Chooser.H>
 #include <FL/Fl_Native_File_Chooser.H>
 #include <FL/fl_ask.H>
 #include <new>
@@ -177,5 +178,171 @@ int Fl_Help_Dialog_y(Fl_Help_Dialog *self) {
 void Fl_beep(int type) {
     fl_beep(type);
 }
+
+Fl_File_Chooser *Fl_File_Chooser_new(const char *d, const char *p, int t, const char *title) {
+    return new (std::nothrow) Fl_File_Chooser(d, p, t, title);
+}
+
+void Fl_File_Chooser_delete(Fl_File_Chooser *self) {
+    delete self;
+}
+
+void *Fl_File_Chooser_newButton(Fl_File_Chooser *self) {
+    return self->newButton;
+}
+
+void *Fl_File_Chooser_previewButton(Fl_File_Chooser *self) {
+    return self->previewButton;
+}
+
+void *Fl_File_Chooser_showHiddenButton(Fl_File_Chooser *self) {
+    return self->showHiddenButton;
+}
+
+void Fl_File_Chooser_callback(Fl_File_Chooser *self, void (*cb)(Fl_File_Chooser *, void *),
+                              void *d) {
+    LOCK(self->callback(cb, d);)
+}
+
+void Fl_File_Chooser_set_color(Fl_File_Chooser *self, unsigned int c) {
+    LOCK(self->color(c);)
+}
+
+unsigned int Fl_File_Chooser_color(Fl_File_Chooser *self) {
+    return self->color();
+}
+
+int Fl_File_Chooser_count(Fl_File_Chooser *self) {
+    return self->count();
+}
+
+void Fl_File_Chooser_set_directory(Fl_File_Chooser *self, const char *d) {
+    LOCK(self->directory(d);)
+}
+
+char *Fl_File_Chooser_directory(Fl_File_Chooser *self) {
+    return self->directory();
+}
+
+void Fl_File_Chooser_set_filter(Fl_File_Chooser *self, const char *p) {
+    LOCK(self->filter(p);)
+}
+
+const char *Fl_File_Chooser_filter(Fl_File_Chooser *self) {
+    return self->filter();
+}
+
+int Fl_File_Chooser_filter_value(Fl_File_Chooser *self) {
+    return self->filter_value();
+}
+
+void Fl_File_Chooser_set_filter_value(Fl_File_Chooser *self, int f) {
+    LOCK(self->filter_value(f);)
+}
+
+void Fl_File_Chooser_hide(Fl_File_Chooser *self) {
+    LOCK(self->hide();)
+}
+
+void Fl_File_Chooser_set_iconsize(Fl_File_Chooser *self, unsigned char s) {
+    LOCK(self->iconsize(s);)
+}
+
+unsigned char Fl_File_Chooser_iconsize(Fl_File_Chooser *self) {
+    return self->iconsize();
+}
+
+void Fl_File_Chooser_set_label(Fl_File_Chooser *self, const char *l) {
+    LOCK(self->label(l);)
+}
+
+const char *Fl_File_Chooser_label(Fl_File_Chooser *self) {
+    return self->label();
+}
+
+void Fl_File_Chooser_set_ok_label(Fl_File_Chooser *self, const char *l) {
+    LOCK(self->ok_label(l);)
+}
+
+const char *Fl_File_Chooser_ok_label(Fl_File_Chooser *self) {
+    return self->ok_label();
+}
+
+void Fl_File_Chooser_set_preview(Fl_File_Chooser *self, int e) {
+    LOCK(self->preview(e);)
+}
+
+int Fl_File_Chooser_preview(const Fl_File_Chooser *self) {
+    return self->preview();
+}
+
+void Fl_File_Chooser_rescan(Fl_File_Chooser *self) {
+    LOCK(self->rescan();)
+}
+
+void Fl_File_Chooser_rescan_keep_filename(Fl_File_Chooser *self) {
+    LOCK(self->rescan_keep_filename();)
+}
+
+void Fl_File_Chooser_show(Fl_File_Chooser *self) {
+    LOCK(self->show();)
+}
+
+int Fl_File_Chooser_shown(Fl_File_Chooser *self) {
+    return self->shown();
+}
+
+void Fl_File_Chooser_set_textcolor(Fl_File_Chooser *self, unsigned int c) {
+    LOCK(self->textcolor(c);)
+}
+
+unsigned int Fl_File_Chooser_textcolor(Fl_File_Chooser *self) {
+    return self->textcolor();
+}
+
+void Fl_File_Chooser_set_textfont(Fl_File_Chooser *self, int f) {
+    LOCK(self->textfont(f);)
+}
+
+int Fl_File_Chooser_textfont(Fl_File_Chooser *self) {
+    return self->textfont();
+}
+
+void Fl_File_Chooser_set_textsize(Fl_File_Chooser *self, int s) {
+    LOCK(self->textsize(s);)
+}
+
+int Fl_File_Chooser_textsize(Fl_File_Chooser *self) {
+    return self->textsize();
+}
+
+void Fl_File_Chooser_set_type(Fl_File_Chooser *self, int t) {
+    LOCK(self->type(t);)
+}
+
+int Fl_File_Chooser_type(Fl_File_Chooser *self) {
+    return self->type();
+}
+
+void *Fl_File_Chooser_user_data(const Fl_File_Chooser *self) {
+    return self->user_data();
+}
+
+void Fl_File_Chooser_set_user_data(Fl_File_Chooser *self, void *d) {
+    LOCK(self->user_data(d);)
+}
+
+const char *Fl_File_Chooser_value(Fl_File_Chooser *self, int f) {
+    return self->value(f);
+}
+
+void Fl_File_Chooser_set_value(Fl_File_Chooser *self, const char *filename) {
+    LOCK(self->value(filename);)
+}
+
+int Fl_File_Chooser_visible(Fl_File_Chooser *self) {
+    return self->visible();
+}
+
 
 #undef LOCK
