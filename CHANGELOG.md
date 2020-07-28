@@ -3,6 +3,10 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.7.24] - 2020-07-29
+### Changes
 - Add convenience functions dialog::file_chooser() and dialog::dir_chooser().
 - Add color_chooser() convenience function.
 - Add dialog::FileChooser::window().
