@@ -2,6 +2,7 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Help_Dialog.H>
 #include <FL/Fl_Image.H>
+#include <FL/Fl_Color_Chooser.H>
 #include <FL/Fl_File_Chooser.H>
 #include <FL/Fl_Native_File_Chooser.H>
 #include <FL/fl_ask.H>
@@ -352,5 +353,8 @@ char *Fl_file_chooser(const char *message, const char *pat, const char *fname, i
     return fl_file_chooser(message, pat, fname, relative);
 }
 
+int Fl_color_chooser(const char *name, unsigned char *r, unsigned char *g, unsigned char *b, int cmode) {
+    return fl_color_chooser(name, *r, *g, *b, cmode);
+}
 
 #undef LOCK

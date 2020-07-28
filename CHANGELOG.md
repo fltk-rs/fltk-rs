@@ -3,9 +3,10 @@
 
 ## Unreleased
 ### Changes
-- Add convenience functions file_chooser() and dir_chooser().
-- Add FileChooser::window().
-- impl BitOr for FileChooserType.
+- Add convenience functions dialog::file_chooser() and dialog::dir_chooser().
+- Add color_chooser() convenience function.
+- Add dialog::FileChooser::window().
+- impl BitOr for dialog::FileChooserType.
 - Add WidgetExt::set_pos and WidgetExt::set_size.
 
 ## [0.7.23] - 2020-07-28

@@ -360,3 +360,12 @@ extern "C" {
         relative: ::std::os::raw::c_int,
     ) -> *mut ::std::os::raw::c_char;
 }
+extern "C" {
+    pub fn Fl_color_chooser(
+        name: *const ::std::os::raw::c_char,
+        r: *mut ::std::os::raw::c_uchar,
+        g: *mut ::std::os::raw::c_uchar,
+        b: *mut ::std::os::raw::c_uchar,
+        cmode: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}

@@ -310,6 +310,7 @@ The most commonly widgets are implemented:
     - Password dialog
     - Choice dialog
     - Input dialog
+    - ColorChooser dialog
 - Frame (Fl_Box)
 - Windows
     - Window
