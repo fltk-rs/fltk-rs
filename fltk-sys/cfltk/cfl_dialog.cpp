@@ -344,5 +344,13 @@ int Fl_File_Chooser_visible(Fl_File_Chooser *self) {
     return self->visible();
 }
 
+char *Fl_dir_chooser(const char *message, const char *fname, int relative) {
+    return fl_dir_chooser(message, fname, relative);
+}
+
+char *Fl_file_chooser(const char *message, const char *pat, const char *fname, int relative) {
+    return fl_file_chooser(message, pat, fname, relative);
+}
+
 
 #undef LOCK

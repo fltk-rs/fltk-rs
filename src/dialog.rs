@@ -12,6 +12,9 @@ pub struct FileDialog {
     _inner: *mut Fl_Native_File_Chooser,
 }
 
+/// Re-alias FileDialog to NativeFileChooser (Fl_Native_File_Chooser)
+pub type NativeFileChooser = FileDialog;
+
 /// Defines the type of dialog, which can be changed dynamically using the set_type() method
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
@@ -24,6 +27,8 @@ pub enum FileDialogType {
     BrowseSaveDir,
 }
 
+pub type NativeFileChooserType = FileDialogType;
+
 /// Defines the File dialog options, which can be set using the set_option() method.
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
@@ -33,6 +38,15 @@ pub enum FileDialogOptions {
     NewFolder = 2,
     Preview = 4,
     UseFilterExt = 8,
+}
+
+pub type NativeFileChooserOptions = FileDialogOptions;
+
+impl std::ops::BitOr<FileDialogOptions> for FileDialogOptions {
+    type Output = FileDialogOptions;
+    fn bitor(self, other: FileDialogOptions) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | other as i32) }
+    }
 }
 
 impl FileDialog {
@@ -380,12 +394,19 @@ pub struct FileChooser {
 
 /// The types of FileChooser
 #[repr(i32)]
-#[derive(Copy, Clone, Debug, PartialOrd, PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum FileChooserType {
     Single = 0,
     Multi = 1,
     Create = 2,
     Directory = 4,
+}
+
+impl std::ops::BitOr<FileChooserType> for FileChooserType {
+    type Output = FileChooserType;
+    fn bitor(self, other: FileChooserType) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | other as i32) }
+    }
 }
 
 impl FileChooser {
@@ -576,18 +597,16 @@ impl FileChooser {
     }
 
     /// Gets the label of the FileChooser
-    pub fn label(&mut self) -> Option<String> {
+    pub fn label(&mut self) -> String {
         assert!(!self._inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_label(self._inner);
             if ptr.is_null() {
-                None
+                String::from("")
             } else {
-                Some(
-                    CStr::from_ptr(ptr as *mut raw::c_char)
-                        .to_string_lossy()
-                        .to_string(),
-                )
+                CStr::from_ptr(ptr as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string()
             }
         }
     }
@@ -600,18 +619,16 @@ impl FileChooser {
     }
 
     /// Gets the label of the Ok button
-    pub fn ok_label(&mut self) -> Option<String> {
+    pub fn ok_label(&mut self) -> String {
         assert!(!self._inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_ok_label(self._inner);
             if ptr.is_null() {
-                None
+                String::from("")
             } else {
-                Some(
-                    CStr::from_ptr(ptr as *mut raw::c_char)
-                        .to_string_lossy()
-                        .to_string(),
-                )
+                CStr::from_ptr(ptr as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string()
             }
         }
     }
@@ -761,10 +778,51 @@ impl FileChooser {
         assert!(!self._inner.is_null());
         unsafe { Fl_File_Chooser_visible(self._inner) != 0 }
     }
+
+    pub fn window(&mut self) -> crate::window::Window {
+        unsafe { self.new_button().unwrap().parent().unwrap().parent().unwrap().into() }
+    }
 }
 
 impl Drop for FileChooser {
     fn drop(&mut self) {
         unsafe { Fl_File_Chooser_delete(self._inner) }
+    }
+}
+
+/// Shows a directory chooser returning a String
+pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String> {
+    unsafe {
+        let message = CString::new(message).unwrap();
+        let fname = CString::new(fname).unwrap();
+        let ptr = Fl_dir_chooser(message.as_ptr(), fname.as_ptr(), relative as i32);
+        if ptr.is_null() {
+            None
+        } else {
+            Some(
+                CStr::from_ptr(ptr as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
+        }
+    }
+}
+
+/// Shows a file chooser returning a String
+pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> Option<String> {
+    let message = CString::new(message).unwrap();
+    let pattern = CString::new(pattern).unwrap();
+    let dir = CString::new(dir).unwrap();
+    unsafe {
+        let ptr = Fl_file_chooser(message.as_ptr(), pattern.as_ptr(), dir.as_ptr(), relative as i32);
+        if ptr.is_null() {
+            None
+        } else {
+            Some(
+                CStr::from_ptr(ptr as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
+        }
     }
 }

@@ -165,6 +165,10 @@ void Fl_File_Chooser_set_value(Fl_File_Chooser *self, const char *filename);
 
 int Fl_File_Chooser_visible(Fl_File_Chooser *self);
 
+char *Fl_dir_chooser(const char *message, const char *fname, int relative);
+
+char *Fl_file_chooser(const char *message, const char *pat, const char *fname, int relative);
+
 #ifdef __cplusplus
 }
 #endif

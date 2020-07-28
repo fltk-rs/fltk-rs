@@ -18,6 +18,8 @@ fn main() {
         );
 
         chooser.show();
+        
+        chooser.window().set_pos(300, 300);
 
         // Block until user picks something.
         //     (The other way to do this is to use a callback())
@@ -44,6 +46,11 @@ fn main() {
                 println!(" VALUE[{}]: '{}'", t, chooser.value(t).unwrap());
             }
         }
+
+        // OR 
+
+        let file = file_chooser("Choose", "*", "..", true).unwrap();
+        println!("{}", file);
     }));
 
     app.run().unwrap();

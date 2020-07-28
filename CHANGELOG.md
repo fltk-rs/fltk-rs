@@ -3,7 +3,10 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add convenience functions file_chooser() and dir_chooser().
+- Add FileChooser::window().
+- impl BitOr for FileChooserType.
+- Add WidgetExt::set_pos and WidgetExt::set_size.
 
 ## [0.7.23] - 2020-07-28
 ### Changes
