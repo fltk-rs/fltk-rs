@@ -303,6 +303,7 @@ The most commonly widgets are implemented:
     - RadioRoundButton
 - Dialogs
     - Native FileDialog
+    - FileChooser
     - HelpDialog
     - Message dialog
     - Alert dialog

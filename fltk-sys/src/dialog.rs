@@ -184,3 +184,164 @@ extern "C" {
 extern "C" {
     pub fn Fl_beep(type_: ::std::os::raw::c_int);
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_File_Chooser {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_File_Chooser_new(
+        d: *const ::std::os::raw::c_char,
+        p: *const ::std::os::raw::c_char,
+        t: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_File_Chooser;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_delete(self_: *mut Fl_File_Chooser);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_newButton(self_: *mut Fl_File_Chooser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_previewButton(
+        self_: *mut Fl_File_Chooser,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_showHiddenButton(
+        self_: *mut Fl_File_Chooser,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_callback(
+        self_: *mut Fl_File_Chooser,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, arg2: *mut ::std::os::raw::c_void),
+        >,
+        d: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_color(self_: *mut Fl_File_Chooser, c: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_color(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_count(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_directory(
+        self_: *mut Fl_File_Chooser,
+        d: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Chooser_directory(self_: *mut Fl_File_Chooser) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_filter(
+        self_: *mut Fl_File_Chooser,
+        p: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Chooser_filter(self_: *mut Fl_File_Chooser) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_filter_value(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_filter_value(self_: *mut Fl_File_Chooser, f: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_hide(self_: *mut Fl_File_Chooser);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_iconsize(self_: *mut Fl_File_Chooser, s: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_iconsize(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_label(self_: *mut Fl_File_Chooser, l: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_label(self_: *mut Fl_File_Chooser) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_ok_label(
+        self_: *mut Fl_File_Chooser,
+        l: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Chooser_ok_label(self_: *mut Fl_File_Chooser) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_preview(self_: *mut Fl_File_Chooser, e: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_preview(self_: *const Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_rescan(self_: *mut Fl_File_Chooser);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_rescan_keep_filename(self_: *mut Fl_File_Chooser);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_show(self_: *mut Fl_File_Chooser);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_shown(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_textcolor(self_: *mut Fl_File_Chooser, c: ::std::os::raw::c_uint);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_textcolor(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_textfont(self_: *mut Fl_File_Chooser, f: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_textfont(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_textsize(self_: *mut Fl_File_Chooser, s: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_textsize(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_type(self_: *mut Fl_File_Chooser, t: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_type(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_user_data(self_: *const Fl_File_Chooser) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_user_data(
+        self_: *mut Fl_File_Chooser,
+        d: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Chooser_value(
+        self_: *mut Fl_File_Chooser,
+        f: ::std::os::raw::c_int,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_value(
+        self_: *mut Fl_File_Chooser,
+        filename: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Chooser_visible(self_: *mut Fl_File_Chooser) -> ::std::os::raw::c_int;
+}

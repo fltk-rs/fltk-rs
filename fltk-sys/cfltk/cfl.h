@@ -72,6 +72,8 @@ void *Fl_thread_msg(void);
 
 int Fl_wait(void);
 
+double Fl_wait_for(double);
+
 void Fl_add_timeout(double t, void (*)(void *), void *);
 
 void Fl_repeat_timeout(double t, void (*)(void *), void *);

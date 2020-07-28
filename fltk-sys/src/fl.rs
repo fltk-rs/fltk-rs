@@ -117,6 +117,9 @@ extern "C" {
     pub fn Fl_wait() -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_wait_for(arg1: f64) -> f64;
+}
+extern "C" {
     pub fn Fl_add_timeout(
         t: f64,
         arg1: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,

@@ -143,7 +143,7 @@ fn main() {
     wind.end();
     wind.show_with_args(&["-scheme", "gtk+", "-nokbd"]);
 
-    app::set_focus(&mut *but1);
+    app::set_focus(&*but1);
 
     let but_vec = vec![
         &mut but1, &mut but2, &mut but3, &mut but4, &mut but5, &mut but6, &mut but7, &mut but8,

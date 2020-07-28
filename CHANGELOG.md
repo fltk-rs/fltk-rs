@@ -5,6 +5,11 @@
 ### Changes
 - (None)
 
+## [0.7.23] - 2020-07-28
+### Changes
+- Add Fltk's own FileChooser. In addition to the already available native FileDialog.
+- Add app::wait_for(dur: f64).
+
 ## [0.7.22] - 2020-07-25
 ### Changes
 - Add impl BitOr<Key> for Shortcut.
