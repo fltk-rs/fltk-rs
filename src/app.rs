@@ -13,7 +13,7 @@ use std::{
 pub(crate) static mut FONTS: Option<Vec<String>> = None;
 
 /// Runs the event loop
-fn run() -> Result<(), FltkError> {
+pub fn run() -> Result<(), FltkError> {
     unsafe {
         match Fl_run() {
             0 => Ok(()),
@@ -727,11 +727,13 @@ pub unsafe fn unsafe_delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
     wid.cleanup();
 }
 
-fn register_images() {
+/// Registers all images supported by SharedImage
+pub fn register_images() {
     unsafe { fltk_sys::image::Fl_register_images() }
 }
 
-fn init_all() {
+/// Inits all styles available to FLTK
+pub fn init_all() {
     unsafe { fltk_sys::fl::Fl_init_all() }
 }
 
