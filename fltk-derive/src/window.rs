@@ -153,7 +153,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                         target_os = "netbsd",
                         target_os = "openbsd",
                     ))]
-                    return winid.x_id;
+                    return winid.x_id as RawHandle;
                 }
             }
 

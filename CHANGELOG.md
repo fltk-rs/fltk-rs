@@ -5,6 +5,11 @@
 ### Changes
 - (None)
 
+## [0.7.25] - 2020-07-30
+### Changes
+- Fix WindowExt::raw_handle() method on systems where `unsigned long int` is u32.
+- Make several free functions in the app module public.
+
 ## [0.7.24] - 2020-07-29
 ### Changes
 - Add convenience functions dialog::file_chooser() and dialog::dir_chooser().
