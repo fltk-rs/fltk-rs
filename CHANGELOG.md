@@ -4,6 +4,7 @@
 ## Unreleased
 ### Changes
 - Fix WindowExt::raw_handle() method on systems where `unsigned long int` is u32.
+- Make several free functions in the app module public.
 
 ## [0.7.24] - 2020-07-29
 ### Changes

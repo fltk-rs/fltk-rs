@@ -46,7 +46,7 @@ pub enum AppScheme {
 }
 
 /// sets the scheme of the application
-fn set_scheme(scheme: AppScheme) {
+pub fn set_scheme(scheme: AppScheme) {
     let name_str = match scheme {
         AppScheme::Base => "base",
         AppScheme::Gtk => "gtk+",
@@ -57,7 +57,8 @@ fn set_scheme(scheme: AppScheme) {
     unsafe { Fl_set_scheme(name_str.as_ptr()) }
 }
 
-fn scheme() -> AppScheme {
+/// Gets the scheme of the application
+pub fn scheme() -> AppScheme {
     unsafe {
         use AppScheme::*;
         match Fl_scheme() {
@@ -361,7 +362,7 @@ where
 }
 
 /// Initializes loaded fonts of a certain pattern ```name```
-fn set_fonts(name: &str) -> u8 {
+pub fn set_fonts(name: &str) -> u8 {
     let name = CString::new(name).unwrap();
     unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
@@ -378,7 +379,7 @@ pub fn font_name(idx: usize) -> Option<String> {
 }
 
 /// Returns a list of available fonts to the application
-fn get_font_names() -> Vec<String> {
+pub fn get_font_names() -> Vec<String> {
     let mut vec: Vec<String> = vec![];
     let cnt = set_fonts("*") as usize;
     for i in 0..cnt {
@@ -550,7 +551,7 @@ pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
 }
 
 /// Returns the first window of the application
-fn first_window() -> Option<Window> {
+pub fn first_window() -> Option<Window> {
     unsafe {
         let x = Fl_first_window();
         if x.is_null() {
@@ -563,7 +564,7 @@ fn first_window() -> Option<Window> {
 }
 
 /// Returns the next window in order
-fn next_window<W: WindowExt>(w: &W) -> Option<Window> {
+pub fn next_window<W: WindowExt>(w: &W) -> Option<Window> {
     unsafe {
         let x = Fl_next_window(w.as_widget_ptr() as *const raw::c_void);
         if x.is_null() {
@@ -576,7 +577,7 @@ fn next_window<W: WindowExt>(w: &W) -> Option<Window> {
 }
 
 /// Quit the app
-fn quit() {
+pub fn quit() {
     let mut v: Vec<Window> = vec![];
     let first = first_window();
     if first.is_none() {
@@ -734,7 +735,8 @@ fn init_all() {
     unsafe { fltk_sys::fl::Fl_init_all() }
 }
 
-fn redraw() {
+/// Redraws everything
+pub fn redraw() {
     unsafe { Fl_redraw() }
 }
 
@@ -759,17 +761,17 @@ pub fn is_event_alt() -> bool {
 }
 
 /// Sets the damage to true or false, illiciting a redraw by the application
-fn set_damage(flag: bool) {
+pub fn set_damage(flag: bool) {
     unsafe { Fl_set_damage(flag as i32) }
 }
 
 /// Returns whether any of the widgets were damaged
-fn damage() -> bool {
+pub fn damage() -> bool {
     unsafe { Fl_damage() != 0 }
 }
 
 /// Sets the visual mode of the application
-fn set_visual(mode: Mode) -> Result<(), FltkError> {
+pub fn set_visual(mode: Mode) -> Result<(), FltkError> {
     unsafe {
         match Fl_visual(mode as i32) {
             0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
