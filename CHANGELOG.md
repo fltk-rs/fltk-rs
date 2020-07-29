@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Fix WindowExt::raw_handle() method on systems where `long` is u32.
 
 ## [0.7.24] - 2020-07-29
 ### Changes
