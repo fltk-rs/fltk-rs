@@ -1,7 +1,7 @@
 use fltk::*;
 
 fn main() {
-    let app = app::App::default().with_scheme(app::AppScheme::Gleam);
+    let app = app::App::default().with_scheme(app::Scheme::Gleam);
     let mut win = window::Window::new(200, 200, 150, 200, "");
     let pack = group::Pack::new(0, 0, 150, 250, "");
     let _frame1 = frame::Frame::new(0, 0, 0, 50, "Celcius");

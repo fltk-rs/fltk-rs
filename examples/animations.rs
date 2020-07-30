@@ -30,7 +30,7 @@ macro_rules! clock {() => ("<?xml version=\"1.0\" encoding=\"utf-8\"?>
 </svg>")}
 
 fn main() {
-    let app = App::default();
+    let app = App::default().with_scheme(Scheme::Gtk);
     let mut wind = DoubleWindow::default()
         .with_label("svg test")
         .with_size(720, 486)

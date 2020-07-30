@@ -1,7 +1,7 @@
 use fltk::{app, button::*, frame::*, window::*};
 
 fn main() {
-    let app = app::App::default().with_scheme(app::AppScheme::Gtk);
+    let app = app::App::default().with_scheme(app::Scheme::Gtk);
 
     let mut wind = Window::default()
         .with_size(160, 200)

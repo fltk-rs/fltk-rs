@@ -34,7 +34,7 @@ pub fn lock() -> Result<(), FltkError> {
 
 /// Set the app scheme
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub enum AppScheme {
+pub enum Scheme {
     /// Base fltk scheming
     Base,
     /// inspired by the Aqua user interface on Mac OS X
@@ -46,21 +46,21 @@ pub enum AppScheme {
 }
 
 /// sets the scheme of the application
-pub fn set_scheme(scheme: AppScheme) {
+pub fn set_scheme(scheme: Scheme) {
     let name_str = match scheme {
-        AppScheme::Base => "base",
-        AppScheme::Gtk => "gtk+",
-        AppScheme::Gleam => "gleam",
-        AppScheme::Plastic => "plastic",
+        Scheme::Base => "base",
+        Scheme::Gtk => "gtk+",
+        Scheme::Gleam => "gleam",
+        Scheme::Plastic => "plastic",
     };
     let name_str = CString::new(name_str).unwrap();
     unsafe { Fl_set_scheme(name_str.as_ptr()) }
 }
 
 /// Gets the scheme of the application
-pub fn scheme() -> AppScheme {
+pub fn scheme() -> Scheme {
     unsafe {
-        use AppScheme::*;
+        use Scheme::*;
         match Fl_scheme() {
             0 => Base,
             1 => Gtk,
@@ -70,6 +70,9 @@ pub fn scheme() -> AppScheme {
         }
     }
 }
+
+/// Alias Scheme to AppScheme
+pub type AppScheme = Scheme;
 
 /// Unlocks the main UI thread
 #[allow(dead_code)]
@@ -107,18 +110,18 @@ impl App {
     }
 
     /// Sets the scheme of the application
-    pub fn set_scheme(&mut self, scheme: AppScheme) {
+    pub fn set_scheme(&mut self, scheme: Scheme) {
         set_scheme(scheme);
     }
 
     /// Sets the scheme of the application
-    pub fn with_scheme(self, scheme: AppScheme) -> App {
+    pub fn with_scheme(self, scheme: Scheme) -> App {
         set_scheme(scheme);
         self
     }
 
     /// Gets the scheme of the application
-    pub fn scheme(&self) -> AppScheme {
+    pub fn scheme(&self) -> Scheme {
         scheme()
     }
 

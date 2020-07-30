@@ -161,7 +161,7 @@
 //!
 //! These can be set using the App::with_scheme() function.
 //! ```rust
-//! let app = App::default().with_scheme(AppScheme::Gleam);
+//! let app = App::default().with_scheme(Scheme::Gleam);
 //! ```
 //! Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait,
 //! such as set_color(), set_label_font(), set_frame() etc:

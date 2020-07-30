@@ -3,7 +3,8 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add alias Scheme to AppScheme.
+
 
 ## [0.7.25] - 2020-07-30
 ### Changes
