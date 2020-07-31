@@ -17,9 +17,13 @@ pub struct Editor {
 impl Editor {
     pub fn new(buf: TextBuffer) -> Editor {
         let mut e = Editor {
-            editor: TextEditor::new(5, 40, 790, 555, ""),
+            editor: TextEditor::new(5, 35, 790, 560, ""),
             filename: String::from(""),
         };
+
+        #[cfg(target_os = "macos")]
+        e.editor.resize(5, 5, 790, 590);
+
         e.editor.set_buffer(Some(buf));
         e
     }
@@ -118,14 +122,14 @@ fn main() {
     let app = App::default().with_scheme(AppScheme::Gtk);
 
     let (s, r) = channel::<Message>();
-    let mut saved = false;
+    let mut saved = true;
 
     let mut wind = Window::default()
         .with_size(800, 600)
         .center_screen()
         .with_label("RustyEd");
 
-    let mut menu = MenuBar::new(0, 0, 800, 40, "");
+    let mut menu = SysMenuBar::new(0, 0, 800, 35, "");
     menu.set_color(Color::Light2);
 
     let mut buf = TextBuffer::default();
@@ -136,8 +140,23 @@ fn main() {
 
     editor.emit(s, Message::Changed);
 
+    let mut buf = editor.buffer().unwrap();
+    editor.handle(Box::new(move |ev| match ev {
+        Event::DndEnter => true,
+        Event::DndDrag => true,
+        Event::DndRelease => true,
+        Event::Paste => {
+            let path = event_text();
+            let path = std::path::PathBuf::from(path);
+            assert!(path.exists());
+            buf.load_file(&path).unwrap();
+            true
+        }
+        _ => false,
+    }));
+
     menu.add_emit(
-        "File/New...",
+        "&File/New...\t",
         Shortcut::Ctrl | 'n',
         MenuFlag::Normal,
         s,
@@ -145,7 +164,7 @@ fn main() {
     );
 
     menu.add_emit(
-        "File/Open...",
+        "&File/Open...\t",
         Shortcut::Ctrl | 'o',
         MenuFlag::Normal,
         s,
@@ -153,7 +172,7 @@ fn main() {
     );
 
     menu.add_emit(
-        "File/Save",
+        "&File/Save\t",
         Shortcut::Ctrl | 's',
         MenuFlag::Normal,
         s,
@@ -161,7 +180,7 @@ fn main() {
     );
 
     menu.add_emit(
-        "File/Save as...",
+        "&File/Save as...\t",
         Shortcut::None,
         MenuFlag::MenuDivider,
         s,
@@ -169,7 +188,7 @@ fn main() {
     );
 
     menu.add_emit(
-        "File/Quit",
+        "&File/Quit\t",
         Shortcut::None,
         MenuFlag::Normal,
         s,
@@ -177,7 +196,7 @@ fn main() {
     );
 
     menu.add_emit(
-        "Edit/Cut",
+        "&Edit/Cut\t",
         Shortcut::Ctrl | 'x',
         MenuFlag::Normal,
         s,
@@ -185,7 +204,7 @@ fn main() {
     );
 
     menu.add_emit(
-        "Edit/Copy",
+        "&Edit/Copy\t",
         Shortcut::Ctrl | 'c',
         MenuFlag::Normal,
         s,
@@ -193,7 +212,7 @@ fn main() {
     );
 
     menu.add_emit(
-        "Edit/Paste",
+        "&Edit/Paste\t",
         Shortcut::Ctrl | 'v',
         MenuFlag::Normal,
         s,
@@ -201,14 +220,14 @@ fn main() {
     );
 
     menu.add_emit(
-        "Help/About",
+        "&Help/About\t",
         Shortcut::None,
         MenuFlag::Normal,
         s,
         Message::About,
     );
 
-    let mut x = menu.find_item("File/Quit").unwrap();
+    let mut x = menu.find_item("&File/Quit\t").unwrap();
     x.set_label_color(Color::Red);
 
     wind.make_resizable(true);
