@@ -824,6 +824,7 @@ pub fn set_focus<W: WidgetExt>(wid: &W) {
 }
 
 /// Delays the current thread by millis. Because std::thread::sleep isn't accurate on windows!
+/// Caution: It's a busy wait!
 pub fn delay(millis: u128) {
     let now = std::time::Instant::now();
     loop {
