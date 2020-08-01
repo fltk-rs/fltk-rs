@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "0.7.26"
+version = "0.8.0"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 build = "build.rs"
 edition = "2018"
@@ -12,6 +12,9 @@ license = "MIT"
 [lib]
 name = "fltk_sys"
 path = "src/lib.rs"
+
+[dependencies]
+libc = "0.2.74"
 
 [build-dependencies]
 cmake = "^0.1.44"
@@ -26,6 +29,6 @@ system-libjpeg = []
 system-zlib = []
 legacy-opengl = []
 fltk-bundled = []
-no-opengl = []
+enable-glwindow = []
 cpp-testing = [] # for C++ testing
 

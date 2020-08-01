@@ -118,6 +118,10 @@ WINDOW_DEFINE(Fl_Single_Window)
 
 WIDGET_DEFINE(Fl_Double_Window)
 
+void Fl_Double_Window_flush(Fl_Double_Window *w) {
+    LOCK(w->flush());
+}
+
 GROUP_DEFINE(Fl_Double_Window)
 
 WINDOW_DEFINE(Fl_Double_Window)

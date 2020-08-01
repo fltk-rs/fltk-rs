@@ -5,50 +5,46 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback = ::std::option::Option<
-    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
->;
-pub type custom_handler_callback = ::std::option::Option<
-    unsafe extern "C" fn(
-        arg1: ::std::os::raw::c_int,
-        arg2: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int,
+pub type Fl_Callback =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
+pub type custom_handler_callback = ::core::option::Option<
+    unsafe extern "C" fn(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int,
 >;
 pub type custom_draw_callback =
-    ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>;
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
 extern "C" {
     pub fn Fl_Widget_callback_with_captures(
         arg1: *mut Fl_Widget,
         cb: Fl_Callback,
-        arg2: *mut ::std::os::raw::c_void,
+        arg2: *mut libc::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Widget_new(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        title: *const ::std::os::raw::c_char,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+        title: *const libc::c_char,
     ) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Widget_x(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_x(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_y(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_y(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_width(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_width(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_height(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_height(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_label(arg1: *mut Fl_Widget) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Widget_label(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label(arg1: *mut Fl_Widget, title: *const ::std::os::raw::c_char);
+    pub fn Fl_Widget_set_label(arg1: *mut Fl_Widget, title: *const libc::c_char);
 }
 extern "C" {
     pub fn Fl_Widget_redraw(arg1: *mut Fl_Widget);
@@ -71,62 +67,62 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_resize(
         arg1: *mut Fl_Widget,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Widget_set_tooltip(arg1: *mut Fl_Widget, txt: *const ::std::os::raw::c_char);
+    pub fn Fl_Widget_set_tooltip(arg1: *mut Fl_Widget, txt: *const libc::c_char);
 }
 extern "C" {
-    pub fn Fl_Widget_get_type(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_get_type(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_type(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+    pub fn Fl_Widget_set_type(arg1: *mut Fl_Widget, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+    pub fn Fl_Widget_color(arg1: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
+    pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+    pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
+    pub fn Fl_Widget_set_label_color(arg1: *mut Fl_Widget, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Widget_label_font(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_label_font(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label_font(arg1: *mut Fl_Widget, font: ::std::os::raw::c_int);
+    pub fn Fl_Widget_set_label_font(arg1: *mut Fl_Widget, font: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_label_size(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_label_size(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label_size(arg1: *mut Fl_Widget, sz: ::std::os::raw::c_int);
+    pub fn Fl_Widget_set_label_size(arg1: *mut Fl_Widget, sz: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_label_type(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_label_type(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label_type(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+    pub fn Fl_Widget_set_label_type(arg1: *mut Fl_Widget, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_box(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_box(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_box(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+    pub fn Fl_Widget_set_box(arg1: *mut Fl_Widget, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_changed(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_changed(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_set_changed(arg1: *mut Fl_Widget);
@@ -135,69 +131,66 @@ extern "C" {
     pub fn Fl_Widget_clear_changed(arg1: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_align(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_align(arg1: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_align(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
+    pub fn Fl_Widget_set_align(arg1: *mut Fl_Widget, typ: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Widget_delete(arg1: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Widget_set_handler(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Widget_set_draw(
         self_: *mut Fl_Widget,
         cb: custom_draw_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: ::std::os::raw::c_int);
+    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_parent(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_parent(self_: *const Fl_Widget) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_selection_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+    pub fn Fl_Widget_selection_color(arg1: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Widget_set_selection_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
+    pub fn Fl_Widget_set_selection_color(arg1: *mut Fl_Widget, color: libc::c_uint);
 }
 extern "C" {
     pub fn Fl_Widget_do_callback(arg1: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_inside(
-        self_: *const Fl_Widget,
-        arg1: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_inside(self_: *const Fl_Widget, arg1: *mut libc::c_void) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_window(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_window(arg1: *const Fl_Widget) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_top_window(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_top_window(arg1: *const Fl_Widget) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_take_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_int;
+    pub fn Fl_Widget_take_focus(self_: *mut Fl_Widget) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_set_visible_focus(self_: *mut Fl_Widget);
@@ -206,46 +199,46 @@ extern "C" {
     pub fn Fl_Widget_clear_visible_focus(self_: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_visible_focus(self_: *mut Fl_Widget, v: ::std::os::raw::c_int);
+    pub fn Fl_Widget_visible_focus(self_: *mut Fl_Widget, v: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
+    pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+    pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_draw_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_draw_data(self_: *const Fl_Widget) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_handle_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_handle_data(self_: *const Fl_Widget) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+    pub fn Fl_Widget_set_draw_data(self_: *mut Fl_Widget, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
+    pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> libc::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: libc::c_uchar);
 }
 extern "C" {
     pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut libc::c_void;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -254,30 +247,30 @@ pub struct Fl_Input {
 }
 extern "C" {
     pub fn Fl_Input_new(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        title: *const ::std::os::raw::c_char,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+        title: *const libc::c_char,
     ) -> *mut Fl_Input;
 }
 extern "C" {
-    pub fn Fl_Input_x(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_x(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_y(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_y(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_width(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_width(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_height(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_height(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_label(arg1: *mut Fl_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Input_label(arg1: *mut Fl_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Input_set_label(arg1: *mut Fl_Input, title: *const ::std::os::raw::c_char);
+    pub fn Fl_Input_set_label(arg1: *mut Fl_Input, title: *const libc::c_char);
 }
 extern "C" {
     pub fn Fl_Input_redraw(arg1: *mut Fl_Input);
@@ -300,62 +293,62 @@ extern "C" {
 extern "C" {
     pub fn Fl_Input_resize(
         arg1: *mut Fl_Input,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Input_tooltip(arg1: *mut Fl_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Input_tooltip(arg1: *mut Fl_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Input_set_tooltip(arg1: *mut Fl_Input, txt: *const ::std::os::raw::c_char);
+    pub fn Fl_Input_set_tooltip(arg1: *mut Fl_Input, txt: *const libc::c_char);
 }
 extern "C" {
-    pub fn Fl_Input_get_type(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_get_type(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_type(arg1: *mut Fl_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_type(arg1: *mut Fl_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Input_color(arg1: *mut Fl_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Input_set_color(arg1: *mut Fl_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_Input_set_color(arg1: *mut Fl_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Input_label_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Input_label_color(arg1: *mut Fl_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Input_set_label_color(arg1: *mut Fl_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_Input_set_label_color(arg1: *mut Fl_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Input_label_font(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_label_font(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_label_font(arg1: *mut Fl_Input, font: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_label_font(arg1: *mut Fl_Input, font: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_label_size(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_label_size(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_label_size(arg1: *mut Fl_Input, sz: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_label_size(arg1: *mut Fl_Input, sz: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_label_type(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_label_type(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_label_type(arg1: *mut Fl_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_label_type(arg1: *mut Fl_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_box(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_box(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_box(arg1: *mut Fl_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_box(arg1: *mut Fl_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_changed(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_changed(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Input_set_changed(arg1: *mut Fl_Input);
@@ -364,69 +357,66 @@ extern "C" {
     pub fn Fl_Input_clear_changed(arg1: *mut Fl_Input);
 }
 extern "C" {
-    pub fn Fl_Input_align(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_align(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_align(arg1: *mut Fl_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_align(arg1: *mut Fl_Input, typ: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Input_delete(arg1: *mut Fl_Input);
 }
 extern "C" {
-    pub fn Fl_Input_set_image(arg1: *mut Fl_Input, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Input_set_image(arg1: *mut Fl_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Input_set_handler(
         self_: *mut Fl_Input,
         cb: custom_handler_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Input_set_draw(
         self_: *mut Fl_Input,
         cb: custom_draw_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Input_set_trigger(arg1: *mut Fl_Input, arg2: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_trigger(arg1: *mut Fl_Input, arg2: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_image(arg1: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_image(arg1: *const Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_parent(self_: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_parent(self_: *const Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_selection_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Input_selection_color(arg1: *mut Fl_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Input_set_selection_color(arg1: *mut Fl_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_Input_set_selection_color(arg1: *mut Fl_Input, color: libc::c_uint);
 }
 extern "C" {
     pub fn Fl_Input_do_callback(arg1: *mut Fl_Input);
 }
 extern "C" {
-    pub fn Fl_Input_inside(
-        self_: *const Fl_Input,
-        arg1: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_inside(self_: *const Fl_Input, arg1: *mut libc::c_void) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_window(arg1: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_window(arg1: *const Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_top_window(arg1: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_top_window(arg1: *const Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_takes_events(arg1: *const Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_takes_events(arg1: *const Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_user_data(arg1: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_user_data(arg1: *const Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_take_focus(self_: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_take_focus(self_: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Input_set_visible_focus(self_: *mut Fl_Input);
@@ -435,145 +425,133 @@ extern "C" {
     pub fn Fl_Input_clear_visible_focus(self_: *mut Fl_Input);
 }
 extern "C" {
-    pub fn Fl_Input_visible_focus(self_: *mut Fl_Input, v: ::std::os::raw::c_int);
+    pub fn Fl_Input_visible_focus(self_: *mut Fl_Input, v: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_has_visible_focus(self_: *mut Fl_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Input_has_visible_focus(self_: *mut Fl_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Input_set_user_data(arg1: *mut Fl_Input, data: *mut ::std::os::raw::c_void);
+    pub fn Fl_Input_set_user_data(arg1: *mut Fl_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Input_draw_data(self_: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_draw_data(self_: *const Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_handle_data(self_: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_handle_data(self_: *const Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_set_draw_data(self_: *mut Fl_Input, data: *mut ::std::os::raw::c_void);
+    pub fn Fl_Input_set_draw_data(self_: *mut Fl_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Input_set_handle_data(self_: *mut Fl_Input, data: *mut ::std::os::raw::c_void);
+    pub fn Fl_Input_set_handle_data(self_: *mut Fl_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Input_damage(self_: *const Fl_Input) -> ::std::os::raw::c_uchar;
+    pub fn Fl_Input_damage(self_: *const Fl_Input) -> libc::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Input_set_damage(self_: *mut Fl_Input, flag: ::std::os::raw::c_uchar);
+    pub fn Fl_Input_set_damage(self_: *mut Fl_Input, flag: libc::c_uchar);
 }
 extern "C" {
     pub fn Fl_Input_clear_damage(self_: *mut Fl_Input);
 }
 extern "C" {
-    pub fn Fl_Input_as_window(self_: *mut Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_as_window(self_: *mut Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_as_group(self_: *mut Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_as_group(self_: *mut Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_set_deimage(arg1: *mut Fl_Input, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Input_set_deimage(arg1: *mut Fl_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Input_deimage(arg1: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_deimage(arg1: *const Fl_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_set_value(
-        arg1: *mut Fl_Input,
-        arg2: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_set_value(arg1: *mut Fl_Input, arg2: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_value(arg1: *mut Fl_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Input_value(arg1: *mut Fl_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Input_maximum_size(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_maximum_size(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_maximum_size(arg1: *mut Fl_Input, m: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_maximum_size(arg1: *mut Fl_Input, m: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_position(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_position(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_position(
-        arg1: *mut Fl_Input,
-        p: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_set_position(arg1: *mut Fl_Input, p: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_mark(
-        arg1: *mut Fl_Input,
-        m: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_set_mark(arg1: *mut Fl_Input, m: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_mark(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_mark(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Input_replace(
         arg1: *mut Fl_Input,
-        b: ::std::os::raw::c_int,
-        e: ::std::os::raw::c_int,
-        text: *const ::std::os::raw::c_char,
-        ilen: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        b: libc::c_int,
+        e: libc::c_int,
+        text: *const libc::c_char,
+        ilen: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Input_insert(
         arg1: *mut Fl_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Input_append(
         arg1: *mut Fl_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-        keep_selection: ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+        keep_selection: libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_copy(
-        arg1: *mut Fl_Input,
-        clipboard: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_copy(arg1: *mut Fl_Input, clipboard: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_undo(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_undo(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_copy_cuts(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_copy_cuts(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_text_font(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_text_font(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_text_font(arg1: *mut Fl_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_text_font(arg1: *mut Fl_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_text_color(arg1: *mut Fl_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Input_text_color(arg1: *mut Fl_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Input_set_text_color(arg1: *mut Fl_Input, s: ::std::os::raw::c_uint);
+    pub fn Fl_Input_set_text_color(arg1: *mut Fl_Input, s: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Input_text_size(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_text_size(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_text_size(arg1: *mut Fl_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_text_size(arg1: *mut Fl_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_readonly(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_readonly(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_readonly(arg1: *mut Fl_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_readonly(arg1: *mut Fl_Input, boolean: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_wrap(arg1: *mut Fl_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Input_wrap(arg1: *mut Fl_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_set_wrap(arg1: *mut Fl_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_Input_set_wrap(arg1: *mut Fl_Input, boolean: libc::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -582,30 +560,30 @@ pub struct Fl_Int_Input {
 }
 extern "C" {
     pub fn Fl_Int_Input_new(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        title: *const ::std::os::raw::c_char,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+        title: *const libc::c_char,
     ) -> *mut Fl_Int_Input;
 }
 extern "C" {
-    pub fn Fl_Int_Input_x(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_x(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_y(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_y(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_width(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_width(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_height(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_height(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_label(arg1: *mut Fl_Int_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Int_Input_label(arg1: *mut Fl_Int_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_label(arg1: *mut Fl_Int_Input, title: *const ::std::os::raw::c_char);
+    pub fn Fl_Int_Input_set_label(arg1: *mut Fl_Int_Input, title: *const libc::c_char);
 }
 extern "C" {
     pub fn Fl_Int_Input_redraw(arg1: *mut Fl_Int_Input);
@@ -628,62 +606,62 @@ extern "C" {
 extern "C" {
     pub fn Fl_Int_Input_resize(
         arg1: *mut Fl_Int_Input,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Int_Input_tooltip(arg1: *mut Fl_Int_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Int_Input_tooltip(arg1: *mut Fl_Int_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_tooltip(arg1: *mut Fl_Int_Input, txt: *const ::std::os::raw::c_char);
+    pub fn Fl_Int_Input_set_tooltip(arg1: *mut Fl_Int_Input, txt: *const libc::c_char);
 }
 extern "C" {
-    pub fn Fl_Int_Input_get_type(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_get_type(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_type(arg1: *mut Fl_Int_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_type(arg1: *mut Fl_Int_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Int_Input_color(arg1: *mut Fl_Int_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_color(arg1: *mut Fl_Int_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_Int_Input_set_color(arg1: *mut Fl_Int_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Int_Input_label_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Int_Input_label_color(arg1: *mut Fl_Int_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_label_color(arg1: *mut Fl_Int_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_Int_Input_set_label_color(arg1: *mut Fl_Int_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Int_Input_label_font(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_label_font(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_label_font(arg1: *mut Fl_Int_Input, font: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_label_font(arg1: *mut Fl_Int_Input, font: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_label_size(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_label_size(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_label_size(arg1: *mut Fl_Int_Input, sz: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_label_size(arg1: *mut Fl_Int_Input, sz: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_label_type(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_label_type(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_label_type(arg1: *mut Fl_Int_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_label_type(arg1: *mut Fl_Int_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_box(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_box(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_box(arg1: *mut Fl_Int_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_box(arg1: *mut Fl_Int_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_changed(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_changed(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_changed(arg1: *mut Fl_Int_Input);
@@ -692,69 +670,66 @@ extern "C" {
     pub fn Fl_Int_Input_clear_changed(arg1: *mut Fl_Int_Input);
 }
 extern "C" {
-    pub fn Fl_Int_Input_align(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_align(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_align(arg1: *mut Fl_Int_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_align(arg1: *mut Fl_Int_Input, typ: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Int_Input_delete(arg1: *mut Fl_Int_Input);
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_image(arg1: *mut Fl_Int_Input, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Int_Input_set_image(arg1: *mut Fl_Int_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Int_Input_set_handler(
         self_: *mut Fl_Int_Input,
         cb: custom_handler_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Int_Input_set_draw(
         self_: *mut Fl_Int_Input,
         cb: custom_draw_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_trigger(arg1: *mut Fl_Int_Input, arg2: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_trigger(arg1: *mut Fl_Int_Input, arg2: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_image(arg1: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_image(arg1: *const Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Int_Input_parent(self_: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_parent(self_: *const Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Int_Input_selection_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Int_Input_selection_color(arg1: *mut Fl_Int_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_selection_color(arg1: *mut Fl_Int_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_Int_Input_set_selection_color(arg1: *mut Fl_Int_Input, color: libc::c_uint);
 }
 extern "C" {
     pub fn Fl_Int_Input_do_callback(arg1: *mut Fl_Int_Input);
 }
 extern "C" {
-    pub fn Fl_Int_Input_inside(
-        self_: *const Fl_Int_Input,
-        arg1: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_inside(self_: *const Fl_Int_Input, arg1: *mut libc::c_void) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_window(arg1: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_window(arg1: *const Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Int_Input_top_window(arg1: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_top_window(arg1: *const Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Int_Input_takes_events(arg1: *const Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_takes_events(arg1: *const Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_user_data(arg1: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_user_data(arg1: *const Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Int_Input_take_focus(self_: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_take_focus(self_: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_visible_focus(self_: *mut Fl_Int_Input);
@@ -763,148 +738,136 @@ extern "C" {
     pub fn Fl_Int_Input_clear_visible_focus(self_: *mut Fl_Int_Input);
 }
 extern "C" {
-    pub fn Fl_Int_Input_visible_focus(self_: *mut Fl_Int_Input, v: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_visible_focus(self_: *mut Fl_Int_Input, v: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_has_visible_focus(self_: *mut Fl_Int_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Int_Input_has_visible_focus(self_: *mut Fl_Int_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_user_data(arg1: *mut Fl_Int_Input, data: *mut ::std::os::raw::c_void);
+    pub fn Fl_Int_Input_set_user_data(arg1: *mut Fl_Int_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Int_Input_draw_data(self_: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_draw_data(self_: *const Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Int_Input_handle_data(self_: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_handle_data(self_: *const Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_draw_data(self_: *mut Fl_Int_Input, data: *mut ::std::os::raw::c_void);
+    pub fn Fl_Int_Input_set_draw_data(self_: *mut Fl_Int_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_handle_data(
-        self_: *mut Fl_Int_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Int_Input_set_handle_data(self_: *mut Fl_Int_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Int_Input_damage(self_: *const Fl_Int_Input) -> ::std::os::raw::c_uchar;
+    pub fn Fl_Int_Input_damage(self_: *const Fl_Int_Input) -> libc::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_damage(self_: *mut Fl_Int_Input, flag: ::std::os::raw::c_uchar);
+    pub fn Fl_Int_Input_set_damage(self_: *mut Fl_Int_Input, flag: libc::c_uchar);
 }
 extern "C" {
     pub fn Fl_Int_Input_clear_damage(self_: *mut Fl_Int_Input);
 }
 extern "C" {
-    pub fn Fl_Int_Input_as_window(self_: *mut Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_as_window(self_: *mut Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Int_Input_as_group(self_: *mut Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_as_group(self_: *mut Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_deimage(arg1: *mut Fl_Int_Input, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Int_Input_set_deimage(arg1: *mut Fl_Int_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Int_Input_deimage(arg1: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_deimage(arg1: *const Fl_Int_Input) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_value(
         arg1: *mut Fl_Int_Input,
-        arg2: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        arg2: *const libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_value(arg1: *mut Fl_Int_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Int_Input_value(arg1: *mut Fl_Int_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Int_Input_maximum_size(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_maximum_size(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_maximum_size(arg1: *mut Fl_Int_Input, m: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_maximum_size(arg1: *mut Fl_Int_Input, m: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_position(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_position(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_position(
-        arg1: *mut Fl_Int_Input,
-        p: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_set_position(arg1: *mut Fl_Int_Input, p: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_mark(
-        arg1: *mut Fl_Int_Input,
-        m: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_set_mark(arg1: *mut Fl_Int_Input, m: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_mark(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_mark(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Int_Input_replace(
         arg1: *mut Fl_Int_Input,
-        b: ::std::os::raw::c_int,
-        e: ::std::os::raw::c_int,
-        text: *const ::std::os::raw::c_char,
-        ilen: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        b: libc::c_int,
+        e: libc::c_int,
+        text: *const libc::c_char,
+        ilen: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Int_Input_insert(
         arg1: *mut Fl_Int_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Int_Input_append(
         arg1: *mut Fl_Int_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-        keep_selection: ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+        keep_selection: libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_copy(
-        arg1: *mut Fl_Int_Input,
-        clipboard: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_copy(arg1: *mut Fl_Int_Input, clipboard: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_undo(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_undo(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_copy_cuts(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_copy_cuts(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_text_font(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_text_font(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_text_font(arg1: *mut Fl_Int_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_text_font(arg1: *mut Fl_Int_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_text_color(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Int_Input_text_color(arg1: *mut Fl_Int_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_text_color(arg1: *mut Fl_Int_Input, s: ::std::os::raw::c_uint);
+    pub fn Fl_Int_Input_set_text_color(arg1: *mut Fl_Int_Input, s: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Int_Input_text_size(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_text_size(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_text_size(arg1: *mut Fl_Int_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_text_size(arg1: *mut Fl_Int_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_readonly(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_readonly(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_readonly(arg1: *mut Fl_Int_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_readonly(arg1: *mut Fl_Int_Input, boolean: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Int_Input_wrap(arg1: *mut Fl_Int_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Int_Input_wrap(arg1: *mut Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_wrap(arg1: *mut Fl_Int_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_Int_Input_set_wrap(arg1: *mut Fl_Int_Input, boolean: libc::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -913,33 +876,30 @@ pub struct Fl_Float_Input {
 }
 extern "C" {
     pub fn Fl_Float_Input_new(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        title: *const ::std::os::raw::c_char,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+        title: *const libc::c_char,
     ) -> *mut Fl_Float_Input;
 }
 extern "C" {
-    pub fn Fl_Float_Input_x(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_x(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_y(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_y(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_width(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_width(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_height(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_height(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_label(arg1: *mut Fl_Float_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Float_Input_label(arg1: *mut Fl_Float_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_label(
-        arg1: *mut Fl_Float_Input,
-        title: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Float_Input_set_label(arg1: *mut Fl_Float_Input, title: *const libc::c_char);
 }
 extern "C" {
     pub fn Fl_Float_Input_redraw(arg1: *mut Fl_Float_Input);
@@ -962,65 +922,62 @@ extern "C" {
 extern "C" {
     pub fn Fl_Float_Input_resize(
         arg1: *mut Fl_Float_Input,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Float_Input_tooltip(arg1: *mut Fl_Float_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Float_Input_tooltip(arg1: *mut Fl_Float_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_tooltip(
-        arg1: *mut Fl_Float_Input,
-        txt: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Float_Input_set_tooltip(arg1: *mut Fl_Float_Input, txt: *const libc::c_char);
 }
 extern "C" {
-    pub fn Fl_Float_Input_get_type(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_get_type(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_type(arg1: *mut Fl_Float_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_type(arg1: *mut Fl_Float_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Float_Input_color(arg1: *mut Fl_Float_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_color(arg1: *mut Fl_Float_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_Float_Input_set_color(arg1: *mut Fl_Float_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Float_Input_label_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Float_Input_label_color(arg1: *mut Fl_Float_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_label_color(arg1: *mut Fl_Float_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_Float_Input_set_label_color(arg1: *mut Fl_Float_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Float_Input_label_font(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_label_font(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_label_font(arg1: *mut Fl_Float_Input, font: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_label_font(arg1: *mut Fl_Float_Input, font: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_label_size(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_label_size(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_label_size(arg1: *mut Fl_Float_Input, sz: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_label_size(arg1: *mut Fl_Float_Input, sz: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_label_type(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_label_type(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_label_type(arg1: *mut Fl_Float_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_label_type(arg1: *mut Fl_Float_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_box(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_box(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_box(arg1: *mut Fl_Float_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_box(arg1: *mut Fl_Float_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_changed(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_changed(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_changed(arg1: *mut Fl_Float_Input);
@@ -1029,48 +986,45 @@ extern "C" {
     pub fn Fl_Float_Input_clear_changed(arg1: *mut Fl_Float_Input);
 }
 extern "C" {
-    pub fn Fl_Float_Input_align(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_align(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_align(arg1: *mut Fl_Float_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_align(arg1: *mut Fl_Float_Input, typ: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Float_Input_delete(arg1: *mut Fl_Float_Input);
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_image(arg1: *mut Fl_Float_Input, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Float_Input_set_image(arg1: *mut Fl_Float_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Float_Input_set_handler(
         self_: *mut Fl_Float_Input,
         cb: custom_handler_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Float_Input_set_draw(
         self_: *mut Fl_Float_Input,
         cb: custom_draw_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_trigger(arg1: *mut Fl_Float_Input, arg2: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_trigger(arg1: *mut Fl_Float_Input, arg2: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_image(arg1: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_image(arg1: *const Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Float_Input_parent(self_: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_parent(self_: *const Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Float_Input_selection_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Float_Input_selection_color(arg1: *mut Fl_Float_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_selection_color(
-        arg1: *mut Fl_Float_Input,
-        color: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Float_Input_set_selection_color(arg1: *mut Fl_Float_Input, color: libc::c_uint);
 }
 extern "C" {
     pub fn Fl_Float_Input_do_callback(arg1: *mut Fl_Float_Input);
@@ -1078,23 +1032,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Float_Input_inside(
         self_: *const Fl_Float_Input,
-        arg1: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
+        arg1: *mut libc::c_void,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_window(arg1: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_window(arg1: *const Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Float_Input_top_window(arg1: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_top_window(arg1: *const Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Float_Input_takes_events(arg1: *const Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_takes_events(arg1: *const Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_user_data(arg1: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_user_data(arg1: *const Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Float_Input_take_focus(self_: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_take_focus(self_: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_visible_focus(self_: *mut Fl_Float_Input);
@@ -1103,154 +1057,136 @@ extern "C" {
     pub fn Fl_Float_Input_clear_visible_focus(self_: *mut Fl_Float_Input);
 }
 extern "C" {
-    pub fn Fl_Float_Input_visible_focus(self_: *mut Fl_Float_Input, v: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_visible_focus(self_: *mut Fl_Float_Input, v: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_has_visible_focus(self_: *mut Fl_Float_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Float_Input_has_visible_focus(self_: *mut Fl_Float_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_user_data(
-        arg1: *mut Fl_Float_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Float_Input_set_user_data(arg1: *mut Fl_Float_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Float_Input_draw_data(self_: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_draw_data(self_: *const Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Float_Input_handle_data(self_: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_handle_data(self_: *const Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_draw_data(
-        self_: *mut Fl_Float_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Float_Input_set_draw_data(self_: *mut Fl_Float_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_handle_data(
-        self_: *mut Fl_Float_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Float_Input_set_handle_data(self_: *mut Fl_Float_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Float_Input_damage(self_: *const Fl_Float_Input) -> ::std::os::raw::c_uchar;
+    pub fn Fl_Float_Input_damage(self_: *const Fl_Float_Input) -> libc::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_damage(self_: *mut Fl_Float_Input, flag: ::std::os::raw::c_uchar);
+    pub fn Fl_Float_Input_set_damage(self_: *mut Fl_Float_Input, flag: libc::c_uchar);
 }
 extern "C" {
     pub fn Fl_Float_Input_clear_damage(self_: *mut Fl_Float_Input);
 }
 extern "C" {
-    pub fn Fl_Float_Input_as_window(self_: *mut Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_as_window(self_: *mut Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Float_Input_as_group(self_: *mut Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_as_group(self_: *mut Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_deimage(arg1: *mut Fl_Float_Input, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Float_Input_set_deimage(arg1: *mut Fl_Float_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Float_Input_deimage(arg1: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_deimage(arg1: *const Fl_Float_Input) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_value(
         arg1: *mut Fl_Float_Input,
-        arg2: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        arg2: *const libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_value(arg1: *mut Fl_Float_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Float_Input_value(arg1: *mut Fl_Float_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Float_Input_maximum_size(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_maximum_size(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_maximum_size(arg1: *mut Fl_Float_Input, m: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_maximum_size(arg1: *mut Fl_Float_Input, m: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_position(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_position(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_position(
-        arg1: *mut Fl_Float_Input,
-        p: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_set_position(arg1: *mut Fl_Float_Input, p: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_mark(
-        arg1: *mut Fl_Float_Input,
-        m: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_set_mark(arg1: *mut Fl_Float_Input, m: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_mark(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_mark(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Float_Input_replace(
         arg1: *mut Fl_Float_Input,
-        b: ::std::os::raw::c_int,
-        e: ::std::os::raw::c_int,
-        text: *const ::std::os::raw::c_char,
-        ilen: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        b: libc::c_int,
+        e: libc::c_int,
+        text: *const libc::c_char,
+        ilen: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Float_Input_insert(
         arg1: *mut Fl_Float_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Float_Input_append(
         arg1: *mut Fl_Float_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-        keep_selection: ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+        keep_selection: libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_copy(
-        arg1: *mut Fl_Float_Input,
-        clipboard: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_copy(arg1: *mut Fl_Float_Input, clipboard: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_undo(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_undo(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_copy_cuts(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_copy_cuts(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_text_font(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_text_font(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_text_font(arg1: *mut Fl_Float_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_text_font(arg1: *mut Fl_Float_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_text_color(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Float_Input_text_color(arg1: *mut Fl_Float_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_text_color(arg1: *mut Fl_Float_Input, s: ::std::os::raw::c_uint);
+    pub fn Fl_Float_Input_set_text_color(arg1: *mut Fl_Float_Input, s: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Float_Input_text_size(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_text_size(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_text_size(arg1: *mut Fl_Float_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_text_size(arg1: *mut Fl_Float_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_readonly(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_readonly(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_readonly(arg1: *mut Fl_Float_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_readonly(arg1: *mut Fl_Float_Input, boolean: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Float_Input_wrap(arg1: *mut Fl_Float_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Float_Input_wrap(arg1: *mut Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_wrap(arg1: *mut Fl_Float_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_Float_Input_set_wrap(arg1: *mut Fl_Float_Input, boolean: libc::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1259,34 +1195,30 @@ pub struct Fl_Multiline_Input {
 }
 extern "C" {
     pub fn Fl_Multiline_Input_new(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        title: *const ::std::os::raw::c_char,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+        title: *const libc::c_char,
     ) -> *mut Fl_Multiline_Input;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_x(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_x(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_y(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_y(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_width(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_width(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_height(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_height(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_label(arg1: *mut Fl_Multiline_Input)
-        -> *const ::std::os::raw::c_char;
+    pub fn Fl_Multiline_Input_label(arg1: *mut Fl_Multiline_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_label(
-        arg1: *mut Fl_Multiline_Input,
-        title: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Multiline_Input_set_label(arg1: *mut Fl_Multiline_Input, title: *const libc::c_char);
 }
 extern "C" {
     pub fn Fl_Multiline_Input_redraw(arg1: *mut Fl_Multiline_Input);
@@ -1309,82 +1241,62 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multiline_Input_resize(
         arg1: *mut Fl_Multiline_Input,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_tooltip(
-        arg1: *mut Fl_Multiline_Input,
-    ) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Multiline_Input_tooltip(arg1: *mut Fl_Multiline_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_tooltip(
-        arg1: *mut Fl_Multiline_Input,
-        txt: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Multiline_Input_set_tooltip(arg1: *mut Fl_Multiline_Input, txt: *const libc::c_char);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_get_type(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_get_type(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_type(arg1: *mut Fl_Multiline_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Multiline_Input_set_type(arg1: *mut Fl_Multiline_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_color(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Multiline_Input_color(arg1: *mut Fl_Multiline_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_color(
-        arg1: *mut Fl_Multiline_Input,
-        color: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Multiline_Input_set_color(arg1: *mut Fl_Multiline_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_label_color(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Multiline_Input_label_color(arg1: *mut Fl_Multiline_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_label_color(
-        arg1: *mut Fl_Multiline_Input,
-        color: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Multiline_Input_set_label_color(arg1: *mut Fl_Multiline_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_label_font(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_label_font(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_label_font(
-        arg1: *mut Fl_Multiline_Input,
-        font: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_set_label_font(arg1: *mut Fl_Multiline_Input, font: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_label_size(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_label_size(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_label_size(
-        arg1: *mut Fl_Multiline_Input,
-        sz: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_set_label_size(arg1: *mut Fl_Multiline_Input, sz: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_label_type(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_label_type(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_label_type(
-        arg1: *mut Fl_Multiline_Input,
-        typ: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_set_label_type(arg1: *mut Fl_Multiline_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_box(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_box(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_box(arg1: *mut Fl_Multiline_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Multiline_Input_set_box(arg1: *mut Fl_Multiline_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_changed(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_changed(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_changed(arg1: *mut Fl_Multiline_Input);
@@ -1393,58 +1305,47 @@ extern "C" {
     pub fn Fl_Multiline_Input_clear_changed(arg1: *mut Fl_Multiline_Input);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_align(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_align(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_align(arg1: *mut Fl_Multiline_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Multiline_Input_set_align(arg1: *mut Fl_Multiline_Input, typ: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Multiline_Input_delete(arg1: *mut Fl_Multiline_Input);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_image(
-        arg1: *mut Fl_Multiline_Input,
-        arg2: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Multiline_Input_set_image(arg1: *mut Fl_Multiline_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_handler(
         self_: *mut Fl_Multiline_Input,
         cb: custom_handler_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_draw(
         self_: *mut Fl_Multiline_Input,
         cb: custom_draw_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_trigger(
-        arg1: *mut Fl_Multiline_Input,
-        arg2: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_set_trigger(arg1: *mut Fl_Multiline_Input, arg2: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_image(arg1: *const Fl_Multiline_Input)
-        -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_image(arg1: *const Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_parent(
-        self_: *const Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_parent(self_: *const Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_selection_color(
-        arg1: *mut Fl_Multiline_Input,
-    ) -> ::std::os::raw::c_uint;
+    pub fn Fl_Multiline_Input_selection_color(arg1: *mut Fl_Multiline_Input) -> libc::c_uint;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_selection_color(
         arg1: *mut Fl_Multiline_Input,
-        color: ::std::os::raw::c_uint,
+        color: libc::c_uint,
     );
 }
 extern "C" {
@@ -1453,31 +1354,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multiline_Input_inside(
         self_: *const Fl_Multiline_Input,
-        arg1: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
+        arg1: *mut libc::c_void,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_window(
-        arg1: *const Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_window(arg1: *const Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_top_window(
-        arg1: *const Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_top_window(arg1: *const Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_takes_events(
-        arg1: *const Fl_Multiline_Input,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_takes_events(arg1: *const Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_user_data(
-        arg1: *const Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_user_data(arg1: *const Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_take_focus(self_: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_take_focus(self_: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_visible_focus(self_: *mut Fl_Multiline_Input);
@@ -1486,194 +1379,151 @@ extern "C" {
     pub fn Fl_Multiline_Input_clear_visible_focus(self_: *mut Fl_Multiline_Input);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_visible_focus(
-        self_: *mut Fl_Multiline_Input,
-        v: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_visible_focus(self_: *mut Fl_Multiline_Input, v: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_has_visible_focus(
-        self_: *mut Fl_Multiline_Input,
-    ) -> ::std::os::raw::c_uint;
+    pub fn Fl_Multiline_Input_has_visible_focus(self_: *mut Fl_Multiline_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_user_data(
-        arg1: *mut Fl_Multiline_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Multiline_Input_set_user_data(arg1: *mut Fl_Multiline_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_draw_data(
-        self_: *const Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_draw_data(self_: *const Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_handle_data(
-        self_: *const Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_handle_data(self_: *const Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_draw_data(
         self_: *mut Fl_Multiline_Input,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_handle_data(
         self_: *mut Fl_Multiline_Input,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_damage(self_: *const Fl_Multiline_Input) -> ::std::os::raw::c_uchar;
+    pub fn Fl_Multiline_Input_damage(self_: *const Fl_Multiline_Input) -> libc::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_damage(
-        self_: *mut Fl_Multiline_Input,
-        flag: ::std::os::raw::c_uchar,
-    );
+    pub fn Fl_Multiline_Input_set_damage(self_: *mut Fl_Multiline_Input, flag: libc::c_uchar);
 }
 extern "C" {
     pub fn Fl_Multiline_Input_clear_damage(self_: *mut Fl_Multiline_Input);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_as_window(
-        self_: *mut Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_as_window(self_: *mut Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_as_group(
-        self_: *mut Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_as_group(self_: *mut Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_deimage(
-        arg1: *mut Fl_Multiline_Input,
-        arg2: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Multiline_Input_set_deimage(arg1: *mut Fl_Multiline_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_deimage(
-        arg1: *const Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_deimage(arg1: *const Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_value(
         arg1: *mut Fl_Multiline_Input,
-        arg2: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        arg2: *const libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_value(arg1: *mut Fl_Multiline_Input)
-        -> *const ::std::os::raw::c_char;
+    pub fn Fl_Multiline_Input_value(arg1: *mut Fl_Multiline_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_maximum_size(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_maximum_size(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_maximum_size(
-        arg1: *mut Fl_Multiline_Input,
-        m: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_set_maximum_size(arg1: *mut Fl_Multiline_Input, m: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_position(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_position(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_position(
         arg1: *mut Fl_Multiline_Input,
-        p: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        p: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_mark(
         arg1: *mut Fl_Multiline_Input,
-        m: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        m: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_mark(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_mark(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_replace(
         arg1: *mut Fl_Multiline_Input,
-        b: ::std::os::raw::c_int,
-        e: ::std::os::raw::c_int,
-        text: *const ::std::os::raw::c_char,
-        ilen: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        b: libc::c_int,
+        e: libc::c_int,
+        text: *const libc::c_char,
+        ilen: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_insert(
         arg1: *mut Fl_Multiline_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_append(
         arg1: *mut Fl_Multiline_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-        keep_selection: ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+        keep_selection: libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_copy(
         arg1: *mut Fl_Multiline_Input,
-        clipboard: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        clipboard: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_undo(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_undo(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_copy_cuts(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_copy_cuts(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_text_font(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_text_font(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_text_font(
-        arg1: *mut Fl_Multiline_Input,
-        s: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_set_text_font(arg1: *mut Fl_Multiline_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_text_color(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Multiline_Input_text_color(arg1: *mut Fl_Multiline_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_text_color(
-        arg1: *mut Fl_Multiline_Input,
-        s: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Multiline_Input_set_text_color(arg1: *mut Fl_Multiline_Input, s: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_text_size(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_text_size(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_text_size(
-        arg1: *mut Fl_Multiline_Input,
-        s: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_set_text_size(arg1: *mut Fl_Multiline_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_readonly(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_readonly(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_readonly(
-        arg1: *mut Fl_Multiline_Input,
-        boolean: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_set_readonly(arg1: *mut Fl_Multiline_Input, boolean: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_wrap(arg1: *mut Fl_Multiline_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Multiline_Input_wrap(arg1: *mut Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_wrap(
-        arg1: *mut Fl_Multiline_Input,
-        boolean: ::std::os::raw::c_int,
-    );
+    pub fn Fl_Multiline_Input_set_wrap(arg1: *mut Fl_Multiline_Input, boolean: libc::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1682,33 +1532,30 @@ pub struct Fl_Secret_Input {
 }
 extern "C" {
     pub fn Fl_Secret_Input_new(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        title: *const ::std::os::raw::c_char,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+        title: *const libc::c_char,
     ) -> *mut Fl_Secret_Input;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_x(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_x(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_y(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_y(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_width(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_width(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_height(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_height(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_label(arg1: *mut Fl_Secret_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Secret_Input_label(arg1: *mut Fl_Secret_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_label(
-        arg1: *mut Fl_Secret_Input,
-        title: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Secret_Input_set_label(arg1: *mut Fl_Secret_Input, title: *const libc::c_char);
 }
 extern "C" {
     pub fn Fl_Secret_Input_redraw(arg1: *mut Fl_Secret_Input);
@@ -1731,68 +1578,62 @@ extern "C" {
 extern "C" {
     pub fn Fl_Secret_Input_resize(
         arg1: *mut Fl_Secret_Input,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Secret_Input_tooltip(arg1: *mut Fl_Secret_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Secret_Input_tooltip(arg1: *mut Fl_Secret_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_tooltip(
-        arg1: *mut Fl_Secret_Input,
-        txt: *const ::std::os::raw::c_char,
-    );
+    pub fn Fl_Secret_Input_set_tooltip(arg1: *mut Fl_Secret_Input, txt: *const libc::c_char);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_get_type(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_get_type(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_type(arg1: *mut Fl_Secret_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_type(arg1: *mut Fl_Secret_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Secret_Input_color(arg1: *mut Fl_Secret_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_color(arg1: *mut Fl_Secret_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_Secret_Input_set_color(arg1: *mut Fl_Secret_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_label_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Secret_Input_label_color(arg1: *mut Fl_Secret_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_label_color(
-        arg1: *mut Fl_Secret_Input,
-        color: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Secret_Input_set_label_color(arg1: *mut Fl_Secret_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_label_font(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_label_font(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_label_font(arg1: *mut Fl_Secret_Input, font: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_label_font(arg1: *mut Fl_Secret_Input, font: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_label_size(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_label_size(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_label_size(arg1: *mut Fl_Secret_Input, sz: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_label_size(arg1: *mut Fl_Secret_Input, sz: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_label_type(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_label_type(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_label_type(arg1: *mut Fl_Secret_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_label_type(arg1: *mut Fl_Secret_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_box(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_box(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_box(arg1: *mut Fl_Secret_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_box(arg1: *mut Fl_Secret_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_changed(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_changed(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Secret_Input_set_changed(arg1: *mut Fl_Secret_Input);
@@ -1801,48 +1642,45 @@ extern "C" {
     pub fn Fl_Secret_Input_clear_changed(arg1: *mut Fl_Secret_Input);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_align(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_align(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_align(arg1: *mut Fl_Secret_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_align(arg1: *mut Fl_Secret_Input, typ: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Secret_Input_delete(arg1: *mut Fl_Secret_Input);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_image(arg1: *mut Fl_Secret_Input, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_Secret_Input_set_image(arg1: *mut Fl_Secret_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Secret_Input_set_handler(
         self_: *mut Fl_Secret_Input,
         cb: custom_handler_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Secret_Input_set_draw(
         self_: *mut Fl_Secret_Input,
         cb: custom_draw_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_trigger(arg1: *mut Fl_Secret_Input, arg2: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_trigger(arg1: *mut Fl_Secret_Input, arg2: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_image(arg1: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_image(arg1: *const Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_parent(self_: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_parent(self_: *const Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_selection_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Secret_Input_selection_color(arg1: *mut Fl_Secret_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_selection_color(
-        arg1: *mut Fl_Secret_Input,
-        color: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_Secret_Input_set_selection_color(arg1: *mut Fl_Secret_Input, color: libc::c_uint);
 }
 extern "C" {
     pub fn Fl_Secret_Input_do_callback(arg1: *mut Fl_Secret_Input);
@@ -1850,23 +1688,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Secret_Input_inside(
         self_: *const Fl_Secret_Input,
-        arg1: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
+        arg1: *mut libc::c_void,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_window(arg1: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_window(arg1: *const Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_top_window(arg1: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_top_window(arg1: *const Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_takes_events(arg1: *const Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_takes_events(arg1: *const Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_user_data(arg1: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_user_data(arg1: *const Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_take_focus(self_: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_take_focus(self_: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Secret_Input_set_visible_focus(self_: *mut Fl_Secret_Input);
@@ -1875,160 +1713,136 @@ extern "C" {
     pub fn Fl_Secret_Input_clear_visible_focus(self_: *mut Fl_Secret_Input);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_visible_focus(self_: *mut Fl_Secret_Input, v: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_visible_focus(self_: *mut Fl_Secret_Input, v: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_has_visible_focus(self_: *mut Fl_Secret_Input)
-        -> ::std::os::raw::c_uint;
+    pub fn Fl_Secret_Input_has_visible_focus(self_: *mut Fl_Secret_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_user_data(
-        arg1: *mut Fl_Secret_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Secret_Input_set_user_data(arg1: *mut Fl_Secret_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_draw_data(self_: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_draw_data(self_: *const Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_handle_data(
-        self_: *const Fl_Secret_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_handle_data(self_: *const Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_draw_data(
-        self_: *mut Fl_Secret_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Secret_Input_set_draw_data(self_: *mut Fl_Secret_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_handle_data(
-        self_: *mut Fl_Secret_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Secret_Input_set_handle_data(self_: *mut Fl_Secret_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_damage(self_: *const Fl_Secret_Input) -> ::std::os::raw::c_uchar;
+    pub fn Fl_Secret_Input_damage(self_: *const Fl_Secret_Input) -> libc::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_damage(self_: *mut Fl_Secret_Input, flag: ::std::os::raw::c_uchar);
+    pub fn Fl_Secret_Input_set_damage(self_: *mut Fl_Secret_Input, flag: libc::c_uchar);
 }
 extern "C" {
     pub fn Fl_Secret_Input_clear_damage(self_: *mut Fl_Secret_Input);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_as_window(self_: *mut Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_as_window(self_: *mut Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_as_group(self_: *mut Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_as_group(self_: *mut Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_deimage(
-        arg1: *mut Fl_Secret_Input,
-        arg2: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_Secret_Input_set_deimage(arg1: *mut Fl_Secret_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_deimage(arg1: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_deimage(arg1: *const Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn Fl_Secret_Input_set_value(
         arg1: *mut Fl_Secret_Input,
-        arg2: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        arg2: *const libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_value(arg1: *mut Fl_Secret_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_Secret_Input_value(arg1: *mut Fl_Secret_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_maximum_size(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_maximum_size(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_maximum_size(arg1: *mut Fl_Secret_Input, m: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_maximum_size(arg1: *mut Fl_Secret_Input, m: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_position(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_position(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_position(
-        arg1: *mut Fl_Secret_Input,
-        p: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_set_position(arg1: *mut Fl_Secret_Input, p: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_mark(
-        arg1: *mut Fl_Secret_Input,
-        m: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_set_mark(arg1: *mut Fl_Secret_Input, m: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_mark(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_mark(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Secret_Input_replace(
         arg1: *mut Fl_Secret_Input,
-        b: ::std::os::raw::c_int,
-        e: ::std::os::raw::c_int,
-        text: *const ::std::os::raw::c_char,
-        ilen: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        b: libc::c_int,
+        e: libc::c_int,
+        text: *const libc::c_char,
+        ilen: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Secret_Input_insert(
         arg1: *mut Fl_Secret_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Secret_Input_append(
         arg1: *mut Fl_Secret_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-        keep_selection: ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+        keep_selection: libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_copy(
-        arg1: *mut Fl_Secret_Input,
-        clipboard: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_copy(arg1: *mut Fl_Secret_Input, clipboard: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_undo(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_undo(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_copy_cuts(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_copy_cuts(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_text_font(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_text_font(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_text_font(arg1: *mut Fl_Secret_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_text_font(arg1: *mut Fl_Secret_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_text_color(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_Secret_Input_text_color(arg1: *mut Fl_Secret_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_text_color(arg1: *mut Fl_Secret_Input, s: ::std::os::raw::c_uint);
+    pub fn Fl_Secret_Input_set_text_color(arg1: *mut Fl_Secret_Input, s: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_text_size(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_text_size(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_text_size(arg1: *mut Fl_Secret_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_text_size(arg1: *mut Fl_Secret_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_readonly(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_readonly(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_readonly(arg1: *mut Fl_Secret_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_readonly(arg1: *mut Fl_Secret_Input, boolean: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_wrap(arg1: *mut Fl_Secret_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_Secret_Input_wrap(arg1: *mut Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_wrap(arg1: *mut Fl_Secret_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_Secret_Input_set_wrap(arg1: *mut Fl_Secret_Input, boolean: libc::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2037,30 +1851,30 @@ pub struct Fl_File_Input {
 }
 extern "C" {
     pub fn Fl_File_Input_new(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        title: *const ::std::os::raw::c_char,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+        title: *const libc::c_char,
     ) -> *mut Fl_File_Input;
 }
 extern "C" {
-    pub fn Fl_File_Input_x(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_x(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_y(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_y(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_width(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_width(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_height(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_height(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_label(arg1: *mut Fl_File_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_File_Input_label(arg1: *mut Fl_File_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_label(arg1: *mut Fl_File_Input, title: *const ::std::os::raw::c_char);
+    pub fn Fl_File_Input_set_label(arg1: *mut Fl_File_Input, title: *const libc::c_char);
 }
 extern "C" {
     pub fn Fl_File_Input_redraw(arg1: *mut Fl_File_Input);
@@ -2083,62 +1897,62 @@ extern "C" {
 extern "C" {
     pub fn Fl_File_Input_resize(
         arg1: *mut Fl_File_Input,
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_File_Input_tooltip(arg1: *mut Fl_File_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_File_Input_tooltip(arg1: *mut Fl_File_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_tooltip(arg1: *mut Fl_File_Input, txt: *const ::std::os::raw::c_char);
+    pub fn Fl_File_Input_set_tooltip(arg1: *mut Fl_File_Input, txt: *const libc::c_char);
 }
 extern "C" {
-    pub fn Fl_File_Input_get_type(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_get_type(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_type(arg1: *mut Fl_File_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_type(arg1: *mut Fl_File_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_File_Input_color(arg1: *mut Fl_File_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_color(arg1: *mut Fl_File_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_File_Input_set_color(arg1: *mut Fl_File_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_File_Input_label_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_File_Input_label_color(arg1: *mut Fl_File_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_label_color(arg1: *mut Fl_File_Input, color: ::std::os::raw::c_uint);
+    pub fn Fl_File_Input_set_label_color(arg1: *mut Fl_File_Input, color: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_File_Input_label_font(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_label_font(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_label_font(arg1: *mut Fl_File_Input, font: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_label_font(arg1: *mut Fl_File_Input, font: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_label_size(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_label_size(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_label_size(arg1: *mut Fl_File_Input, sz: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_label_size(arg1: *mut Fl_File_Input, sz: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_label_type(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_label_type(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_label_type(arg1: *mut Fl_File_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_label_type(arg1: *mut Fl_File_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_box(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_box(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_box(arg1: *mut Fl_File_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_box(arg1: *mut Fl_File_Input, typ: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_changed(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_changed(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_File_Input_set_changed(arg1: *mut Fl_File_Input);
@@ -2147,48 +1961,45 @@ extern "C" {
     pub fn Fl_File_Input_clear_changed(arg1: *mut Fl_File_Input);
 }
 extern "C" {
-    pub fn Fl_File_Input_align(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_align(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_align(arg1: *mut Fl_File_Input, typ: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_align(arg1: *mut Fl_File_Input, typ: libc::c_int);
 }
 extern "C" {
     pub fn Fl_File_Input_delete(arg1: *mut Fl_File_Input);
 }
 extern "C" {
-    pub fn Fl_File_Input_set_image(arg1: *mut Fl_File_Input, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_File_Input_set_image(arg1: *mut Fl_File_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_File_Input_set_handler(
         self_: *mut Fl_File_Input,
         cb: custom_handler_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
     pub fn Fl_File_Input_set_draw(
         self_: *mut Fl_File_Input,
         cb: custom_draw_callback,
-        data: *mut ::std::os::raw::c_void,
+        data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_File_Input_set_trigger(arg1: *mut Fl_File_Input, arg2: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_trigger(arg1: *mut Fl_File_Input, arg2: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_image(arg1: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_image(arg1: *const Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Input_parent(self_: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_parent(self_: *const Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Input_selection_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_File_Input_selection_color(arg1: *mut Fl_File_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_selection_color(
-        arg1: *mut Fl_File_Input,
-        color: ::std::os::raw::c_uint,
-    );
+    pub fn Fl_File_Input_set_selection_color(arg1: *mut Fl_File_Input, color: libc::c_uint);
 }
 extern "C" {
     pub fn Fl_File_Input_do_callback(arg1: *mut Fl_File_Input);
@@ -2196,23 +2007,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_File_Input_inside(
         self_: *const Fl_File_Input,
-        arg1: *mut ::std::os::raw::c_void,
-    ) -> ::std::os::raw::c_int;
+        arg1: *mut libc::c_void,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_window(arg1: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_window(arg1: *const Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Input_top_window(arg1: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_top_window(arg1: *const Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Input_takes_events(arg1: *const Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_takes_events(arg1: *const Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_user_data(arg1: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_user_data(arg1: *const Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Input_take_focus(self_: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_take_focus(self_: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_File_Input_set_visible_focus(self_: *mut Fl_File_Input);
@@ -2221,149 +2032,134 @@ extern "C" {
     pub fn Fl_File_Input_clear_visible_focus(self_: *mut Fl_File_Input);
 }
 extern "C" {
-    pub fn Fl_File_Input_visible_focus(self_: *mut Fl_File_Input, v: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_visible_focus(self_: *mut Fl_File_Input, v: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_has_visible_focus(self_: *mut Fl_File_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_File_Input_has_visible_focus(self_: *mut Fl_File_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_user_data(arg1: *mut Fl_File_Input, data: *mut ::std::os::raw::c_void);
+    pub fn Fl_File_Input_set_user_data(arg1: *mut Fl_File_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Input_draw_data(self_: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_draw_data(self_: *const Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Input_handle_data(self_: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_handle_data(self_: *const Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_draw_data(
-        self_: *mut Fl_File_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_File_Input_set_draw_data(self_: *mut Fl_File_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Input_set_handle_data(
-        self_: *mut Fl_File_Input,
-        data: *mut ::std::os::raw::c_void,
-    );
+    pub fn Fl_File_Input_set_handle_data(self_: *mut Fl_File_Input, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Input_damage(self_: *const Fl_File_Input) -> ::std::os::raw::c_uchar;
+    pub fn Fl_File_Input_damage(self_: *const Fl_File_Input) -> libc::c_uchar;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_damage(self_: *mut Fl_File_Input, flag: ::std::os::raw::c_uchar);
+    pub fn Fl_File_Input_set_damage(self_: *mut Fl_File_Input, flag: libc::c_uchar);
 }
 extern "C" {
     pub fn Fl_File_Input_clear_damage(self_: *mut Fl_File_Input);
 }
 extern "C" {
-    pub fn Fl_File_Input_as_window(self_: *mut Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_as_window(self_: *mut Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Input_as_group(self_: *mut Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_as_group(self_: *mut Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_deimage(arg1: *mut Fl_File_Input, arg2: *mut ::std::os::raw::c_void);
+    pub fn Fl_File_Input_set_deimage(arg1: *mut Fl_File_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Input_deimage(arg1: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_deimage(arg1: *const Fl_File_Input) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn Fl_File_Input_set_value(
         arg1: *mut Fl_File_Input,
-        arg2: *const ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        arg2: *const libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_value(arg1: *mut Fl_File_Input) -> *const ::std::os::raw::c_char;
+    pub fn Fl_File_Input_value(arg1: *mut Fl_File_Input) -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_File_Input_maximum_size(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_maximum_size(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_maximum_size(arg1: *mut Fl_File_Input, m: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_maximum_size(arg1: *mut Fl_File_Input, m: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_position(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_position(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_position(
-        arg1: *mut Fl_File_Input,
-        p: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_set_position(arg1: *mut Fl_File_Input, p: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_mark(
-        arg1: *mut Fl_File_Input,
-        m: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_set_mark(arg1: *mut Fl_File_Input, m: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_mark(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_mark(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_File_Input_replace(
         arg1: *mut Fl_File_Input,
-        b: ::std::os::raw::c_int,
-        e: ::std::os::raw::c_int,
-        text: *const ::std::os::raw::c_char,
-        ilen: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        b: libc::c_int,
+        e: libc::c_int,
+        text: *const libc::c_char,
+        ilen: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_File_Input_insert(
         arg1: *mut Fl_File_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_File_Input_append(
         arg1: *mut Fl_File_Input,
-        t: *const ::std::os::raw::c_char,
-        l: ::std::os::raw::c_int,
-        keep_selection: ::std::os::raw::c_char,
-    ) -> ::std::os::raw::c_int;
+        t: *const libc::c_char,
+        l: libc::c_int,
+        keep_selection: libc::c_char,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_copy(
-        arg1: *mut Fl_File_Input,
-        clipboard: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_copy(arg1: *mut Fl_File_Input, clipboard: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_undo(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_undo(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_copy_cuts(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_copy_cuts(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_text_font(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_text_font(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_text_font(arg1: *mut Fl_File_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_text_font(arg1: *mut Fl_File_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_text_color(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_uint;
+    pub fn Fl_File_Input_text_color(arg1: *mut Fl_File_Input) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_text_color(arg1: *mut Fl_File_Input, s: ::std::os::raw::c_uint);
+    pub fn Fl_File_Input_set_text_color(arg1: *mut Fl_File_Input, s: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_File_Input_text_size(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_text_size(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_text_size(arg1: *mut Fl_File_Input, s: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_text_size(arg1: *mut Fl_File_Input, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_readonly(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_readonly(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_readonly(arg1: *mut Fl_File_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_readonly(arg1: *mut Fl_File_Input, boolean: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Input_wrap(arg1: *mut Fl_File_Input) -> ::std::os::raw::c_int;
+    pub fn Fl_File_Input_wrap(arg1: *mut Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_set_wrap(arg1: *mut Fl_File_Input, boolean: ::std::os::raw::c_int);
+    pub fn Fl_File_Input_set_wrap(arg1: *mut Fl_File_Input, boolean: libc::c_int);
 }

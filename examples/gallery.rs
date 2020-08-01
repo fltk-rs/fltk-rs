@@ -1,5 +1,5 @@
 use fltk::{
-    app::{App, AppScheme},
+    app::{App, Scheme},
     button::*,
     frame::*,
     group::*,
@@ -63,7 +63,7 @@ fn draw_gallery() {
 }
 
 fn main() {
-    let app = App::default().with_scheme(AppScheme::Gtk);
+    let app = App::default().with_scheme(Scheme::Gtk);
 
     let (screen_width, screen_height) = fltk::app::screen_size();
     let mut wind = Window::new(

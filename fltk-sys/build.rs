@@ -61,7 +61,6 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/cfl_image.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_draw.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_table.h");
-        println!("cargo:rerun-if-changed=cfltk/cfl_gl.h");
         println!("cargo:rerun-if-changed=cfltk/cfl.cpp");
         println!("cargo:rerun-if-changed=cfltk/cfl_widget.cpp");
         println!("cargo:rerun-if-changed=cfltk/cfl_group.cpp");
@@ -128,10 +127,10 @@ fn main() {
             dst.define("OpenGL_GL_PREFERENCE", "GLVND");
         }
 
-        if cfg!(feature = "no-opengl") {
-            dst.define("CFLTK_USE_OPENGL", "OFF");
-        } else {
+        if cfg!(feature = "enable-glwindow") {
             dst.define("CFLTK_USE_OPENGL", "ON");
+        } else {
+            dst.define("CFLTK_USE_OPENGL", "OFF");
         }
 
         if cfg!(feature = "cpp-testing") {
@@ -175,8 +174,8 @@ fn main() {
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
         println!("cargo:rustc-link-lib=static=fltk_images");
-        
-        if !cfg!(feature = "no-opengl") {
+
+        if cfg!(feature = "enable-glwindow") {
             println!("cargo:rustc-link-lib=static=fltk_gl");
         }
 
@@ -204,9 +203,6 @@ fn main() {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
-                if !cfg!(feature = "no-opengl") {
-                    println!("cargo:rustc-link-lib=framework=OpenGL");
-                }
             }
             "windows" => {
                 if cfg!(target_env = "gnu") {
@@ -225,10 +221,6 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=user32");
                 println!("cargo:rustc-link-lib=dylib=kernel32");
                 println!("cargo:rustc-link-lib=dylib=odbc32");
-                if !cfg!(feature = "no-opengl") {
-                    println!("cargo:rustc-link-lib=dylib=opengl32");
-                    println!("cargo:rustc-link-lib=dylib=glu32");
-                }
             }
             _ => {
                 println!("cargo:rustc-link-lib=dylib=stdc++");
@@ -241,10 +233,6 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=Xfixes");
                 println!("cargo:rustc-link-lib=dylib=Xft");
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
-                if !cfg!(feature = "no-opengl") {
-                    println!("cargo:rustc-link-lib=dylib=GL");
-                    println!("cargo:rustc-link-lib=dylib=GLU");
-                }
             }
         }
     }

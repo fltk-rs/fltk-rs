@@ -475,7 +475,6 @@ fn thread_msg<T>() -> Option<T> {
 
 #[repr(C)]
 struct Message<T: Copy + Send + Sync> {
-    id: u32,
     hash: u64,
     sz: usize,
     msg: T,
@@ -485,7 +484,6 @@ struct Message<T: Copy + Send + Sync> {
 #[derive(Debug, Clone, Copy)]
 pub struct Sender<T: Copy + Send + Sync> {
     data: std::marker::PhantomData<T>,
-    id: u32,
     hash: u64,
     sz: usize,
 }
@@ -494,7 +492,6 @@ impl<T: Copy + Send + Sync> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
         let msg = Message {
-            id: self.id,
             hash: self.hash,
             sz: self.sz,
             msg: val,
@@ -507,7 +504,6 @@ impl<T: Copy + Send + Sync> Sender<T> {
 #[derive(Debug, Clone, Copy)]
 pub struct Receiver<T: Copy + Send + Sync> {
     data: std::marker::PhantomData<T>,
-    id: u32,
     hash: u64,
     sz: usize,
 }
@@ -517,7 +513,7 @@ impl<T: Copy + Send + Sync> Receiver<T> {
     pub fn recv(&self) -> Option<T> {
         let data: Option<Message<T>> = thread_msg();
         if let Some(data) = data {
-            if data.id == self.id && data.sz == self.sz && data.hash == self.hash {
+            if data.sz == self.sz && data.hash == self.hash {
                 Some(data.msg)
             } else {
                 None
@@ -532,7 +528,6 @@ impl<T: Copy + Send + Sync> Receiver<T> {
 // The implementation could really use generic statics
 pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
     let msg_sz = std::mem::size_of::<T>();
-    let rnd = unsafe { Fl_rand() };
     let type_name = std::any::type_name::<T>();
     let mut hasher = DefaultHasher::new();
     type_name.hash(&mut hasher);
@@ -540,13 +535,11 @@ pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
 
     let s = Sender {
         data: std::marker::PhantomData,
-        id: rnd,
         hash: type_hash,
         sz: msg_sz,
     };
     let r = Receiver {
         data: std::marker::PhantomData,
-        id: rnd,
         hash: type_hash,
         sz: msg_sz,
     };

@@ -1,7 +1,7 @@
 use fltk::*;
 
 fn main() {
-    let app = app::App::default().with_scheme(app::AppScheme::Gtk);
+    let app = app::App::default().with_scheme(app::Scheme::Gtk);
     let mut win = window::Window::new(100, 100, 800, 600, "Charts");
     let mut chart = misc::Chart::new(0, 0, 800, 600, "");
     chart.set_type(misc::ChartType::Pie);
