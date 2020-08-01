@@ -65,6 +65,12 @@
     }                                                                                              \
     void widget##_set_region(widget *self, void *r) {                                              \
         LOCK(Fl_X *t = Fl_X::i(self); if (!t) return; t->region = (Fl_Region)r;)                   \
+    }                                                                                              \
+    void widget##_iconize(widget *self) {                                                          \
+        LOCK(self->iconize())                                                                      \
+    }                                                                                              \
+    unsigned int widget##_fullscreen_active(const widget *self) {                                  \
+        return self->fullscreen_active();                                                          \
     }
 
 WIDGET_DEFINE(Fl_Window)

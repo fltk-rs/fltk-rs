@@ -3,7 +3,13 @@
 
 ## Unreleased
 ### Changes
+- (None)
+
+## [0.7.26] - 2020-08-01
+### Changes
 - Add alias Scheme to AppScheme.
+- Add WindowExt::fullscreen_active() and WindowExt::iconize().
+- Update FLTK.
 
 
 ## [0.7.25] - 2020-07-30
