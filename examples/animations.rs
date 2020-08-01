@@ -30,7 +30,7 @@ macro_rules! clock {() => ("<?xml version=\"1.0\" encoding=\"utf-8\"?>
 </svg>")}
 
 fn main() {
-    let app = App::default();
+    let app = App::default().with_scheme(AppScheme::Gtk);
     let mut wind = DoubleWindow::default()
         .with_label("svg test")
         .with_size(720, 486)
@@ -56,3 +56,36 @@ fn main() {
         std::thread::sleep(std::time::Duration::from_millis(16));
     }
 }
+
+// // Another way is using app::add_timeout and app::repeat_timout
+
+// fn move_image(mut frm: Frame) {
+//     let (x, y) = (frm.x(), frm.y());
+//     frm.set_pos(x + 5, y);
+//     redraw();
+//     repeat_timeout(0.016, Box::new(move || {
+//         let frm = frm.clone();
+//         move_image(frm);
+//     }));
+// }
+
+// fn main() {
+//     let app = App::default();
+//     let mut wind = DoubleWindow::default()
+//         .with_label("svg test")
+//         .with_size(720, 486)
+//         .center_screen();
+//     let mut frame = Frame::new(-30, 200, 30, 30, "");
+//     let mut svg = SvgImage::from_data(&clock!()).unwrap();
+//     svg.scale(200, 200, true, true);
+//     frame.set_image(Some(svg));
+//     wind.set_color(Color::White);
+//     wind.end();
+//     wind.show_with_env_args();
+
+//     add_timeout(0.016, Box::new(move || {
+//         let frame = frame.clone();
+//         move_image(frame);
+//     }));
+//     app.run().unwrap();
+// }

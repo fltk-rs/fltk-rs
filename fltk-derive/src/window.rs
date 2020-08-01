@@ -45,6 +45,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     );
     let region = Ident::new(format!("{}_{}", name_str, "region").as_str(), name.span());
     let set_region = Ident::new(format!("{}_{}", name_str, "set_region").as_str(), name.span());
+    let iconize = Ident::new(format!("{}_{}", name_str, "iconize").as_str(), name.span());
+    let fullscreen_active = Ident::new(format!("{}_{}", name_str, "fullscreen_active").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl WindowExt for #name {
@@ -188,6 +190,20 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 assert!(!region.is_null());
                 #set_region(self._inner, region)
+            }
+
+            fn iconize(&mut self) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #iconize(self._inner)
+                }
+            }
+            
+            fn fullscreen_active(&self) -> bool {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #fullscreen_active(self._inner) != 0
+                }
             }
         }
     };

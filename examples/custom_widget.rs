@@ -61,7 +61,7 @@ impl DerefMut for FlatButton {
 }
 
 fn main() {
-    let app = app::App::default().with_scheme(app::AppScheme::Gtk);
+    let app = app::App::default().with_scheme(app::Scheme::Gtk);
 
     let mut wind = Window::new(200, 100, 400, 300, "Custom Widget");
     wind.set_color(Color::from_u32(0x6D4C41));
