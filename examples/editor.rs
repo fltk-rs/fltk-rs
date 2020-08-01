@@ -1,3 +1,5 @@
+// The code could certainly be refactored into several source files!
+
 use fltk::{
     app::*,
     dialog::*,
@@ -141,18 +143,39 @@ fn main() {
     editor.emit(s, Message::Changed);
 
     let mut buf = editor.buffer().unwrap();
-    editor.handle(Box::new(move |ev| match ev {
-        Event::DndEnter => true,
-        Event::DndDrag => true,
-        Event::DndRelease => true,
-        Event::Paste => {
-            let path = event_text();
-            let path = std::path::PathBuf::from(path);
-            assert!(path.exists());
-            buf.load_file(&path).unwrap();
-            true
+    let mut dnd = false;
+    let mut released = false;
+    editor.handle(Box::new(move |ev| {
+        match ev {
+            Event::DndEnter => {
+                dnd = true;
+                true
+            }
+            Event::DndDrag => true,
+            Event::DndRelease => {
+                released = true;
+                true
+            }
+            Event::Paste => {
+                if dnd && released {
+                    let path = event_text();
+                    let path = std::path::PathBuf::from(path);
+                    assert!(path.exists());
+                    buf.load_file(&path).unwrap();
+                    dnd = false;
+                    released = false;
+                    true
+                } else {
+                    false
+                }
+            }
+            Event::DndLeave => {
+                dnd = false;
+                released = false;
+                true
+            },
+            _ => false,
         }
-        _ => false,
     }));
 
     menu.add_emit(
