@@ -31,12 +31,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.7"
+fltk = "^0.8"
 ```
 The library offers prebuilt static cfltk and fltk libraries, which can be added using the "fltk-bundled" flag:
 ```toml
 [dependencies]
-fltk = { version = "^0.7", features = ["fltk-bundled"] }
+fltk = { version = "^0.8", features = ["fltk-bundled"] }
 ```
 Since these are pre-built libraries using the Github actions CI, the currently supported operating systems are:
 - Windows 10 x64 (msvc and gnu).
@@ -46,7 +46,7 @@ Since these are pre-built libraries using the Github actions CI, the currently s
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
 [dependencies]
-fltk = { version = "^0.7", features = ["fltk-shared"] }
+fltk = { version = "^0.8", features = ["fltk-shared"] }
 ```
 You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the system-fltk feature, but note that this crate uses the latest FLTK (1.40).
 
@@ -195,7 +195,7 @@ The following are the features offered by the crate:
 - system-zlib: Uses the system zlib
 - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
 - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms
-- no-opengl: Support for systems without OpenGL.
+- enable-glwindow: Support for systems without OpenGL.
 
 ## Dependencies
 

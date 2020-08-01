@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "0.7.26"
+version = "0.8.0"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
@@ -24,8 +24,8 @@ members = [
 ]
 
 [dependencies]
-fltk-sys = { path = "fltk-sys", version = "^0.7.26" }
-fltk-derive = { path = "fltk-derive", version = "^0.7.26" }
+fltk-sys = { path = "fltk-sys", version = "^0.8.0" }
+fltk-derive = { path = "fltk-derive", version = "^0.8.0" }
 
 [features]
 default = []
@@ -37,5 +37,5 @@ system-libjpeg = ["fltk-sys/system-libjpeg"] # Uses the system libjpeg
 system-zlib = ["fltk-sys/system-zlib"] # Uses the system zlib
 legacy-opengl = ["fltk-sys/legacy-opengl"] # Support of Lagacy OpenGL
 fltk-bundled = ["fltk-sys/fltk-bundled"] # Support for bundled versions of cfltk and fltk
-no-opengl = ["fltk-sys/no-opengl"] # Support for systems without OpenGL
+enable-glwindow = ["fltk-sys/enable-glwindow"] # Support for systems without OpenGL
 cpp-testing = ["fltk-sys/cpp-testing"] # For internal C++ testing

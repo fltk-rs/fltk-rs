@@ -5,6 +5,12 @@
 ### Changes
 - (None)
 
+## [0.8.0] - 2020-08-02
+### Changes
+- Add feature flag "enable-glwindow".
+- Remove feature flag "no-opengl".
+- Separate raw opengl functions into their own crate "glu-sys".
+
 ## [0.7.26] - 2020-08-01
 ### Changes
 - Add alias Scheme to AppScheme.

@@ -283,36 +283,17 @@ pub struct MenuWindow {
 }
 
 /// A wrapper around a raw OpenGL context
-#[derive(Debug)]
-pub struct GlContext {
-    _inner: *mut raw::c_void,
-}
-
-impl GlContext {
-    /// Create a GlContext from an opaque gl context pointer
-    /// # Safety
-    /// The pointer must be valid
-    pub unsafe fn from_raw(ptr: *mut raw::c_void) -> GlContext {
-        GlContext { _inner: ptr }
-    }
-
-    /// Returns the underlying pointer
-    /// # Safety
-    /// Can return multiple mutable pointers to the same object
-    pub unsafe fn into_raw(self) -> *mut raw::c_void {
-        self._inner
-    }
-}
+pub type GlContext = *mut raw::c_void;
 
 /// Creates a OpenGL window widget
-#[cfg(not(feature = "no-opengl"))]
+#[cfg(feature = "enable-glwindow")]
 #[derive(WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct GlWindow {
     _inner: *mut Fl_Gl_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-#[cfg(not(feature = "no-opengl"))]
+#[cfg(feature = "enable-glwindow")]
 impl GlWindow {
     /// Flush window content
     pub fn flush(&mut self) {
@@ -358,11 +339,11 @@ impl GlWindow {
     pub fn context(&self) -> Option<GlContext> {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Gl_Window_context(self._inner);
-            if x.is_null() {
+            let ctx = Fl_Gl_Window_context(self._inner);
+            if ctx.is_null() {
                 None
             } else {
-                Some(GlContext { _inner: x })
+                Some(ctx)
             }
         }
     }
@@ -370,7 +351,8 @@ impl GlWindow {
     /// Sets the GlContext
     pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Gl_Window_set_context(self._inner, ctx._inner, destroy_flag as i32) }
+        assert!(!ctx.is_null());
+        unsafe { Fl_Gl_Window_set_context(self._inner, ctx, destroy_flag as i32) }
     }
 
     /// Swaps the back and front buffers

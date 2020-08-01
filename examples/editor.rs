@@ -119,7 +119,7 @@ pub enum Message {
 }
 
 fn main() {
-    let app = App::default().with_scheme(AppScheme::Gtk);
+    let app = App::default().with_scheme(Scheme::Gtk);
 
     let (s, r) = channel::<Message>();
     let mut saved = true;
