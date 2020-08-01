@@ -273,6 +273,12 @@ impl DoubleWindow {
             Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
         }
     }
+
+    /// Forces the window to be drawn, this window is also made current and calls draw()
+    pub fn flush(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Double_Window_flush(self._inner) }
+    }
 }
 
 /// Creates a Menu window widget
@@ -295,7 +301,7 @@ pub struct GlWindow {
 
 #[cfg(feature = "enable-glwindow")]
 impl GlWindow {
-    /// Flush window content
+    /// Forces the window to be drawn, this window is also made current and calls draw()
     pub fn flush(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Gl_Window_flush(self._inner) }

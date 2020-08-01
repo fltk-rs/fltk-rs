@@ -13,6 +13,9 @@ license = "MIT"
 name = "fltk_sys"
 path = "src/lib.rs"
 
+[dependencies]
+libc = "0.2.74"
+
 [build-dependencies]
 cmake = "^0.1.44"
 
