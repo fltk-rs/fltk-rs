@@ -10,7 +10,7 @@ The first tutorial uses the fltk-bundled feature flag, which is only supported f
 If you're not running one of the aforementioned platforms, you'll have to remove the fltk-bundled feature flag in your Cargo.toml file:
 ```toml
 [dependencies]
-fltk = "^0.7"
+fltk = "^0.8"
 ```
 
 ### Build fails on windows, why can't CMake find my toolchain?
@@ -22,7 +22,7 @@ If you're building for the GNU toolchain, make sure that Make is also installed,
 If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048, it should work by using the fltk-shared feature. Which would also generate a dynamic library which would need to be deployed with your application.
 ```toml
 [dependencies]
-fltk = { version = "^0.7", features = ["fltk-shared"] }
+fltk = { version = "^0.8", features = ["fltk-shared"] }
 ```
 
 ### How do I force CMake to use a certain C++ compiler?
