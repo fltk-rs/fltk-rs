@@ -317,7 +317,7 @@ The most commonly widgets are implemented:
     - SingleWindow
     - DoubleWindow
     - MenuWindow
-    - GlWindow
+    - GlWindow (requires the "enable-glwindow" flag)
 - Groups
     - Group
     - Pack
@@ -385,7 +385,9 @@ The most commonly widgets are implemented:
 
 ## Tutorials
 
-- [Rust FLTK gui tutorial](https://www.youtube.com/watch?v=ygP4egJtmzw)
-- [FLTK Rust tutorial: user input](https://youtu.be/rIq2O4vg9fQ)
-- [FLTK Rust tutorial: Client-side web todo app](https://youtu.be/tdfFXi4-Yrw)
-- [FLTK Rust tutorial: Create a media player using the vlc crate](https://youtu.be/enxqU3bhCEs)
+- [Basics](https://www.youtube.com/watch?v=ygP4egJtmzw)
+- [User input](https://youtu.be/rIq2O4vg9fQ)
+- [Client-side web todo app](https://youtu.be/tdfFXi4-Yrw)
+- [Create a media player using the vlc crate](https://youtu.be/enxqU3bhCEs)
+- [Custom dialogs](https://youtu.be/tXeXHoKG6-I)
+- [Add drag and drop to the editor example](https://www.youtube.com/watch?v=qp5hnRvSxAg)

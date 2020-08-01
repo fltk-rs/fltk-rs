@@ -7,11 +7,11 @@
 
 ## [0.8.0] - 2020-08-02
 ### Changes
+- Make fltk-sys no_std.
 - Add feature flag "enable-glwindow".
 - Remove feature flag "no-opengl".
 - Separate raw opengl functions into their own crate "glu-sys".
 - Add DoubleWindow::flush().
-- Make fltk-sys no_std.
 - Update dependencies (syn to 1.0.36).
 
 ## [0.7.26] - 2020-08-01
