@@ -243,8 +243,6 @@ $ cargo run --example terminal_colored
 $ cargo run --example counter
 $ cargo run --example hello
 $ cargo run --example hello_button
-$ cargo run --example paint
-$ cargo run --example glwindow
 ```
 
 ![alt_test](screenshots/hello.jpg)

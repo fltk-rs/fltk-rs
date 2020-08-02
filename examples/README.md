@@ -13,7 +13,6 @@ $ cargo run --example counter
 $ cargo run --example hello
 $ cargo run --example hello_button
 $ cargo run --example paint
-$ cargo run --example glwindow
 $ cargo run --example pong
 $ cargo run --example <filename>
 ```
