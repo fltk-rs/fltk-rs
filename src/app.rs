@@ -10,6 +10,9 @@ use std::{
     os::raw,
 };
 
+pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
+
+/// The fonts associated with the application
 pub(crate) static mut FONTS: Option<Vec<String>> = None;
 
 /// Runs the event loop
@@ -362,6 +365,15 @@ where
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
         fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
     }
+}
+
+pub unsafe fn set_raw_callback<W>(widget: &mut W, cb: Option<unsafe fn(WidgetPtr, *mut raw::c_void)>, data: *mut raw::c_void)
+where
+    W: WidgetExt,
+{
+    assert!(!widget.was_deleted());
+    let cb: Option<unsafe extern "C" fn(WidgetPtr, *mut raw::c_void)> = mem::transmute(cb);
+    fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), cb, data);
 }
 
 /// Initializes loaded fonts of a certain pattern ```name```
