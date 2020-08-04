@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add app::set_raw_callback().
 
 ## [0.8.0] - 2020-08-02
 ### Changes
