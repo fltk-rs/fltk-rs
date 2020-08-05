@@ -1,3 +1,7 @@
+// This is an example of using c_style callbacks. 
+// This is inherently unsafe
+// The advantage is that boxing can be avoided
+
 use fltk::*;
 use std::os::raw::*;
 

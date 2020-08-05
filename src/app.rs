@@ -367,6 +367,9 @@ where
     }
 }
 
+/// Set a widget callback using a C style API, when boxing is not desired
+/// # Safety
+/// Requires an unsafe fn() and raw pointers
 pub unsafe fn set_raw_callback<W>(widget: &mut W, cb: Option<unsafe fn(WidgetPtr, *mut raw::c_void)>, data: *mut raw::c_void)
 where
     W: WidgetExt,
