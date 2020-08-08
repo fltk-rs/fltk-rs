@@ -896,24 +896,3 @@ pub fn dnd() {
         Fl_dnd();
     }
 }
-
-pub fn set_error(cb: fn(&str)) {
-    unsafe {
-        let cb: unsafe extern "C" fn(arg1: *const raw::c_char, ...) = mem::transmute(cb);
-        Fl_set_error(Some(cb));
-    }
-}
-
-pub fn set_warning(cb: fn(&str)) {
-    unsafe {
-        let cb: unsafe extern "C" fn(arg1: *const raw::c_char, ...) = mem::transmute(cb);
-        Fl_set_warning(Some(cb));
-    }
-}
-
-pub fn set_fatal(cb: fn(&str)) {
-    unsafe {
-        let cb: unsafe extern "C" fn(arg1: *const raw::c_char, ...) = mem::transmute(cb);
-        Fl_set_fatal(Some(cb));
-    }
-}
