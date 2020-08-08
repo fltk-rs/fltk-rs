@@ -5,6 +5,7 @@
 #include <FL/Enumerations.H>
 #include <FL/Fl_Widget.H>
 #include <new>
+#include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -287,4 +288,16 @@ int Fl_api_version(void) {
 
 int Fl_abi_version(void) {
     return Fl::abi_version();
+}
+
+void Fl_set_error(void (*error)(const char *, ...)) {
+    Fl::error = error;
+}
+
+void Fl_set_warning(void (*error)(const char *, ...)) {
+    Fl::warning = error;
+}
+
+void Fl_set_fatal(void (*error)(const char *, ...)) {
+    Fl::fatal = error;
 }
