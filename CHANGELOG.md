@@ -3,7 +3,8 @@
 
 ## Unreleased
 ### Changes
-- Add app::set_raw_callback().
+- Add app::set_raw_callback() which avoids boxing callbacks.
+- Update FLTK to commit 0da41da.
 
 ## [0.8.0] - 2020-08-02
 ### Changes
