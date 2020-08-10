@@ -430,6 +430,8 @@ impl TextBuffer {
     }
 
     /// Adds a modify callback
+    /// callback args:
+    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
     pub fn add_modify_callback(&mut self, cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>) {
         assert!(!self._inner.is_null());
         unsafe {
@@ -467,6 +469,8 @@ impl TextBuffer {
     }
 
     /// Removes a modify callback
+    /// callback args:
+    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
     pub fn remove_modify_callback(&mut self, cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>) {
         assert!(!self._inner.is_null());
         unsafe {

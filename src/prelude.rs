@@ -854,7 +854,7 @@ pub unsafe trait TableExt: GroupExt {
     /// Returns the tab key cell navigation
     fn tab_cell_nav(&self) -> u32;
     /// Override draw_cell
-    /// Additional args: Row, Column, X, Y, Width and Height
+    /// callback args: TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
     fn draw_cell(
         &mut self,
         cb: crate::table::DrawCellData,

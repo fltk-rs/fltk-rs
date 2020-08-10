@@ -9,7 +9,7 @@ fn main() {
     wind.end();
     wind.show();
 
-    but.set_callback(Box::new(move || {
+    but.set_callback(Box::new(|| {
         let file = file_chooser("Choose File", "*.rs", ".", true).unwrap();
         println!("{}", file);
 

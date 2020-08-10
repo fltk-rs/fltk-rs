@@ -107,9 +107,9 @@ fn main() {
         _ => false,
     }));
 
-    wind.set_callback(Box::new(move || {
+    wind.set_callback(Box::new(|| {
         if app::event() == Event::Close { // Close only when the close button is clicked
-            app.quit();
+            app::quit();
         }
     }));
 
