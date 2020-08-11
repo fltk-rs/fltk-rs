@@ -7,6 +7,7 @@
 - Update FLTK to commit cd26829 which adds MacOS 11.0 support.
 - Add missing docs for callback arguments.
 - Add TextBuffer::save_file().
+- Use expect() in the build script to give meaningful messages on missing dependencies.
 
 ## [0.8.0] - 2020-08-02
 ### Changes

@@ -195,7 +195,7 @@ The following are the features offered by the crate:
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
-- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms
+- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
 - enable-glwindow: Support for systems without OpenGL.
 
 ## Dependencies

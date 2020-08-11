@@ -41,6 +41,11 @@
 //! # or
 //! [dependencies]
 //! fltk = { version = "^0.8", features = ["fltk-shared"] }
+//! Since these are pre-built libraries using the Github actions CI, the currently supported operating systems are:
+//! - Windows 10 x64 (msvc and gnu).
+//! - MacOS 10.15 x64.
+//! - Ubuntu 18.04 or later, x64.
+//! This also assumes you have curl and tar installed (for Windows, they're available in the Native Tools Command Prompt).
 //! ```
 //! You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
 //!
@@ -183,7 +188,7 @@
 //! - system-libjpeg: Uses the system libjpeg
 //! - system-zlib: Uses the system zlib
 //! - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
-//! - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms
+//! - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
 //! - enable-glwindow: Support for systems without OpenGL.
 //!
 //! ## FAQ
