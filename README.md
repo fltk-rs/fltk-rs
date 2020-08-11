@@ -42,6 +42,7 @@ Since these are pre-built libraries using the Github actions CI, the currently s
 - Windows 10 x64 (msvc and gnu).
 - MacOS 10.15 x64.
 - Ubuntu 18.04 or later, x64.
+This also assumes you have curl and tar installed (for Windows, they're available in the Native Tools Command Prompt).
 
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml

@@ -317,7 +317,12 @@ extern "C" {
     pub fn Fl_Text_Buffer_loadfile(
         self_: *mut Fl_Text_Buffer,
         file: *const libc::c_char,
-        buflen: libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_savefile(
+        self_: *mut Fl_Text_Buffer,
+        file: *const libc::c_char,
     ) -> libc::c_int;
 }
 extern "C" {

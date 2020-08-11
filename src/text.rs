@@ -209,7 +209,20 @@ impl TextBuffer {
         let path = path.to_str().unwrap();
         let path = CString::new(path)?;
         unsafe {
-            match Fl_Text_Buffer_loadfile(self._inner, path.as_ptr(), 0) {
+            match Fl_Text_Buffer_loadfile(self._inner, path.as_ptr()) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
+            }
+        }
+    }
+
+    /// Saves a buffer into a file
+    pub fn save_file(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
+        assert!(!self._inner.is_null());
+        let path = path.to_str().unwrap();
+        let path = CString::new(path)?;
+        unsafe {
+            match Fl_Text_Buffer_savefile(self._inner, path.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }
