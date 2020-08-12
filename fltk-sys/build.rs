@@ -84,13 +84,13 @@ fn main() {
             .args(&["submodule", "update", "--init"])
             .current_dir(manifest_dir.clone())
             .status()
-            .expect("Git is needed to initialize the fltk repo!");
+            .expect("Git is needed to retrieve the fltk source files!");
 
         Command::new("git")
             .args(&["checkout", "master"])
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
-            .expect("Git is needed to initialize the fltk repo!");
+            .expect("Git is needed to retrieve the fltk source files!");
 
         if cfg!(feature = "fltk-shared") {
             dst.define("CFLTK_BUILD_SHARED", "ON");
