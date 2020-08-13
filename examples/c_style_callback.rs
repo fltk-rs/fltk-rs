@@ -1,5 +1,6 @@
 // This is an example of using c_style callbacks. 
 // The advantage is that boxing can be avoided
+// Available since 0.8.1
 
 use fltk::*;
 use std::os::raw::*;
