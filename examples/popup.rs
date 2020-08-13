@@ -8,7 +8,7 @@ fn main() {
     wind.end();
     wind.show();
 
-    but.set_callback(Box::new(move || {
+    but.set_callback(Box::new(|| {
         let v = vec!["1st val", "2nd val", "3rd val"];
         let mut x = MenuItem::new(&v);
         match x.popup(100, 100) {

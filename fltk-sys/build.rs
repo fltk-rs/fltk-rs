@@ -38,13 +38,14 @@ fn main() {
             .args(&["-LOk", url.to_str().unwrap()])
             .current_dir(out_dir.clone())
             .status()
-            .unwrap();
+            .expect("Curl and Tar are needed to download and upack the bundled libraries!");
 
         Command::new("tar")
             .args(&["-xzvf", url.file_name().unwrap().to_str().unwrap()])
             .current_dir(out_dir.clone())
             .status()
-            .unwrap();
+            .expect("Curl and Tar are needed to download and upack the bundled libraries!");
+            
     } else {
         println!("cargo:rerun-if-changed=cfltk/cfl.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_widget.h");
@@ -83,13 +84,13 @@ fn main() {
             .args(&["submodule", "update", "--init"])
             .current_dir(manifest_dir.clone())
             .status()
-            .unwrap();
+            .expect("Git is needed to retrieve the fltk source files!");
 
         Command::new("git")
             .args(&["checkout", "master"])
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
-            .unwrap();
+            .expect("Git is needed to retrieve the fltk source files!");
 
         if cfg!(feature = "fltk-shared") {
             dst.define("CFLTK_BUILD_SHARED", "ON");

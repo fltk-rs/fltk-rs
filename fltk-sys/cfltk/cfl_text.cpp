@@ -238,8 +238,12 @@ void Fl_Text_Buffer_canUndo(Fl_Text_Buffer *self, char flag) {
     LOCK(self->canUndo(flag);)
 }
 
-int Fl_Text_Buffer_loadfile(Fl_Text_Buffer *self, const char *file, int buflen) {
-    return self->loadfile(file, 128 * 1024);
+int Fl_Text_Buffer_loadfile(Fl_Text_Buffer *self, const char *file) {
+    return self->loadfile(file);
+}
+
+int Fl_Text_Buffer_savefile(Fl_Text_Buffer *self, const char *file) {
+    return self->savefile(file);
 }
 
 int Fl_Text_Buffer_tab_distance(const Fl_Text_Buffer *self) {

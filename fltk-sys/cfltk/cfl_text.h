@@ -92,7 +92,9 @@ int Fl_Text_Buffer_undo(Fl_Text_Buffer *self, int *cp);
 
 void Fl_Text_Buffer_canUndo(Fl_Text_Buffer *self, char flag);
 
-int Fl_Text_Buffer_loadfile(Fl_Text_Buffer *self, const char *file, int buflen);
+int Fl_Text_Buffer_loadfile(Fl_Text_Buffer *self, const char *file);
+
+int Fl_Text_Buffer_savefile(Fl_Text_Buffer *self, const char *file);
 
 int Fl_Text_Buffer_tab_distance(const Fl_Text_Buffer *self);
 

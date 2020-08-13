@@ -9,11 +9,7 @@ void Fl_Widget_callback(Fl_Widget *self, Fl_Callback *cb) {
 }
 
 void Fl_Widget_callback_with_captures(Fl_Widget *self, Fl_Callback *cb, void *data) {
-    if (cb && data) {
-        LOCK(self->callback(cb, data);)
-    } else {
-        return;
-    }
+    LOCK(self->callback(cb, data);)
 }
 
 struct Fl_Widget_Derived : public Fl_Widget {

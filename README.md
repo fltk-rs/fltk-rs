@@ -42,6 +42,7 @@ Since these are pre-built libraries using the Github actions CI, the currently s
 - Windows 10 x64 (msvc and gnu).
 - MacOS 10.15 x64.
 - Ubuntu 18.04 or later, x64.
+This also assumes you have curl and tar installed (for Windows, they're available in the Native Tools Command Prompt).
 
 The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
 ```toml
@@ -194,12 +195,12 @@ The following are the features offered by the crate:
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
-- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms
+- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
 - enable-glwindow: Support for systems without OpenGL.
 
 ## Dependencies
 
-Rust version > 1.38. CMake and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag. 
+Rust version > 1.38. CMake and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag (which requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: No dependencies.
 - MacOS: No dependencies.
@@ -243,8 +244,6 @@ $ cargo run --example terminal_colored
 $ cargo run --example counter
 $ cargo run --example hello
 $ cargo run --example hello_button
-$ cargo run --example paint
-$ cargo run --example glwindow
 ```
 
 ![alt_test](screenshots/hello.jpg)
