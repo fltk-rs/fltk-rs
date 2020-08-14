@@ -7,6 +7,7 @@ The first tutorial uses the fltk-bundled feature flag, which is only supported f
 - Windows 10 x64 (msvc and gnu).
 - MacOS 10.15 x64.
 - Ubuntu 18.04 or later, x64.
+
 If you're not running one of the aforementioned platforms, you'll have to remove the fltk-bundled feature flag in your Cargo.toml file:
 ```toml
 [dependencies]
