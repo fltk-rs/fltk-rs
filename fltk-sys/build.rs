@@ -174,28 +174,31 @@ fn main() {
 
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
-        println!("cargo:rustc-link-lib=static=fltk_images");
+
+        if !cfg!(features = "no-images") {
+            println!("cargo:rustc-link-lib=static=fltk_images");
+            
+            if cfg!(feature = "system-libpng") {
+                println!("cargo:rustc-link-lib=dylib=png");
+            } else {
+                println!("cargo:rustc-link-lib=static=fltk_png");
+            }
+    
+            if cfg!(feature = "system-libjpeg") {
+                println!("cargo:rustc-link-lib=dylib=jpeg");
+            } else {
+                println!("cargo:rustc-link-lib=static=fltk_jpeg");
+            }
+    
+            if cfg!(feature = "system-zlib") {
+                println!("cargo:rustc-link-lib=dylib=z");
+            } else {
+                println!("cargo:rustc-link-lib=static=fltk_z");
+            }
+        }
 
         if cfg!(feature = "enable-glwindow") {
             println!("cargo:rustc-link-lib=static=fltk_gl");
-        }
-
-        if cfg!(feature = "system-libpng") {
-            println!("cargo:rustc-link-lib=dylib=png");
-        } else {
-            println!("cargo:rustc-link-lib=static=fltk_png");
-        }
-
-        if cfg!(feature = "system-libjpeg") {
-            println!("cargo:rustc-link-lib=dylib=jpeg");
-        } else {
-            println!("cargo:rustc-link-lib=static=fltk_jpeg");
-        }
-
-        if cfg!(feature = "system-zlib") {
-            println!("cargo:rustc-link-lib=dylib=z");
-        } else {
-            println!("cargo:rustc-link-lib=static=fltk_z");
         }
 
         match target_os.as_str() {

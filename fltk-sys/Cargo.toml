@@ -30,5 +30,6 @@ system-zlib = []
 legacy-opengl = []
 fltk-bundled = []
 enable-glwindow = []
+no-images = []
 cpp-testing = [] # for C++ testing
 

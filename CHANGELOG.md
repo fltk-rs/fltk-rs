@@ -3,7 +3,7 @@
 
 ## Unreleased
 ### Changes
-- (None)
+- Add experimental no-images feature flag.
 
 ## [0.8.1] - 2020-08-13
 ### Changes
