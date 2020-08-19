@@ -205,11 +205,15 @@ fn main() {
 
         match target_os.as_str() {
             "macos" => {
+                println!("cargo:rustc-link-lib=dylib=c++");
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
             }
             "windows" => {
+                if cfg!(target_env = "gnu") {	
+                    println!("cargo:rustc-link-lib=dylib=stdc++");	
+                }
                 println!("cargo:rustc-link-lib=dylib=ws2_32");
                 println!("cargo:rustc-link-lib=dylib=comctl32");
                 println!("cargo:rustc-link-lib=dylib=gdi32");
@@ -225,6 +229,7 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=odbc32");
             }
             _ => {
+                println!("cargo:rustc-link-lib=dylib=stdc++");
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 println!("cargo:rustc-link-lib=dylib=X11");
                 println!("cargo:rustc-link-lib=dylib=Xext");
