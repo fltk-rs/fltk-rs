@@ -1,12 +1,13 @@
 #include "cfl_text.h"
 #include <FL/Fl.H>
+
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Simple_Terminal.H>
 #include <FL/Fl_Text_Buffer.H>
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Text_Editor.H>
 #include <FL/Fl_Widget.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 #define DISPLAY_DEFINE(widget)                                                                     \
     int widget##_text_font(const widget *self) {                                                   \
@@ -71,8 +72,7 @@
     }                                                                                              \
     void *widget##_set_style_table_entry(widget *self, void *sbuff, unsigned int *color,           \
                                          int *font, int *fontsz, int sz) {                         \
-        Fl_Text_Display::Style_Table_Entry *stable =                                               \
-            new (std::nothrow) Fl_Text_Display::Style_Table_Entry[sz];                             \
+        Fl_Text_Display::Style_Table_Entry *stable = new Fl_Text_Display::Style_Table_Entry[sz];   \
         if (!stable)                                                                               \
             return NULL;                                                                           \
         for (int i = 0; i < sz; ++i) {                                                             \
@@ -186,7 +186,7 @@
     }
 
 Fl_Text_Buffer *Fl_Text_Buffer_new(void) {
-    return new (std::nothrow) Fl_Text_Buffer;
+    return new Fl_Text_Buffer;
 }
 
 void Fl_Text_Buffer_delete(Fl_Text_Buffer *self) {
@@ -339,7 +339,7 @@ void Fl_Text_Buffer_call_modify_callbacks(Fl_Text_Buffer *self) {
 WIDGET_DEFINE(Fl_Text_Display)
 
 void Fl_Text_Display_init(Fl_Text_Display *self) {
-    Fl_Text_Buffer *buff = new (std::nothrow) Fl_Text_Buffer();
+    Fl_Text_Buffer *buff = new Fl_Text_Buffer();
     self->buffer(buff);
 }
 
@@ -356,7 +356,7 @@ DISPLAY_DEFINE(Fl_Text_Display)
 WIDGET_DEFINE(Fl_Text_Editor)
 
 void Fl_Text_Editor_init(Fl_Text_Editor *self) {
-    Fl_Text_Buffer *buff = new (std::nothrow) Fl_Text_Buffer();
+    Fl_Text_Buffer *buff = new Fl_Text_Buffer();
     self->buffer(buff);
 }
 
@@ -541,7 +541,7 @@ int Fl_Text_Editor_tab_nav(const Fl_Text_Editor *self) {
 WIDGET_DEFINE(Fl_Simple_Terminal)
 
 void Fl_Simple_Terminal_init(Fl_Simple_Terminal *self) {
-    Fl_Text_Buffer *buff = new (std::nothrow) Fl_Text_Buffer();
+    Fl_Text_Buffer *buff = new Fl_Text_Buffer();
     self->buffer(buff);
 }
 

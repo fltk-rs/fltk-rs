@@ -135,7 +135,7 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
         }                                                                                          \
     };                                                                                             \
     widget *widget##_new(int x, int y, int width, int height, const char *title) {                 \
-        return new (std::nothrow) widget##_Derived(x, y, width, height, title);                    \
+        return new widget##_Derived(x, y, width, height, title);                                   \
     }                                                                                              \
     int widget##_x(widget *self) {                                                                 \
         return self->x();                                                                          \

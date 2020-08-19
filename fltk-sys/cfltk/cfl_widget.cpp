@@ -1,8 +1,9 @@
 #include "cfl_widget.h"
 #include <FL/Fl.H>
+
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Widget.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 void Fl_Widget_callback(Fl_Widget *self, Fl_Callback *cb) {
     self->callback(cb);
@@ -64,7 +65,7 @@ struct Fl_Widget_Derived : public Fl_Widget {
     }
 };
 Fl_Widget *Fl_Widget_new(int x, int y, int width, int height, const char *title) {
-    return new (std::nothrow) Fl_Widget_Derived(x, y, width, height, title);
+    return new Fl_Widget_Derived(x, y, width, height, title);
 }
 
 int Fl_Widget_x(Fl_Widget *self) {

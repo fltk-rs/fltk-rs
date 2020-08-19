@@ -13,7 +13,7 @@
 #include <FL/Fl_Toggle_Button.H>
 #include <FL/Fl_Toggle_Light_Button.H>
 #include <FL/Fl_Toggle_Round_Button.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 #define BUTTON_DEFINE(widget)                                                                      \
     int widget##_shortcut(const widget *self) {                                                    \

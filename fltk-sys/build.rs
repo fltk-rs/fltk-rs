@@ -47,6 +47,7 @@ fn main() {
             .expect("Curl and Tar are needed to download and upack the bundled libraries!");
             
     } else {
+        println!("cargo:rerun-if-changed=cfltk/cfl_new.hpp");
         println!("cargo:rerun-if-changed=cfltk/cfl.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_widget.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_group.h");
@@ -62,6 +63,7 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/cfl_image.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_draw.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_table.h");
+        println!("cargo:rerun-if-changed=cfltk/cfl_new.cpp");
         println!("cargo:rerun-if-changed=cfltk/cfl.cpp");
         println!("cargo:rerun-if-changed=cfltk/cfl_widget.cpp");
         println!("cargo:rerun-if-changed=cfltk/cfl_group.cpp");
@@ -203,15 +205,11 @@ fn main() {
 
         match target_os.as_str() {
             "macos" => {
-                println!("cargo:rustc-link-lib=dylib=c++");
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
             }
             "windows" => {
-                if cfg!(target_env = "gnu") {
-                    println!("cargo:rustc-link-lib=dylib=stdc++");
-                }
                 println!("cargo:rustc-link-lib=dylib=ws2_32");
                 println!("cargo:rustc-link-lib=dylib=comctl32");
                 println!("cargo:rustc-link-lib=dylib=gdi32");
@@ -227,7 +225,6 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=odbc32");
             }
             _ => {
-                println!("cargo:rustc-link-lib=dylib=stdc++");
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 println!("cargo:rustc-link-lib=dylib=X11");
                 println!("cargo:rustc-link-lib=dylib=Xext");

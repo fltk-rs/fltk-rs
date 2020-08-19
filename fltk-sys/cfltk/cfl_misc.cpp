@@ -6,7 +6,7 @@
 #include <FL/Fl_Progress.H>
 #include <FL/Fl_Spinner.H>
 #include <FL/Fl_Tooltip.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 WIDGET_DEFINE(Fl_Spinner)
 

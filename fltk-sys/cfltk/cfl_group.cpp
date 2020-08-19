@@ -9,7 +9,7 @@
 #include <FL/Fl_Tile.H>
 #include <FL/Fl_Widget.H>
 #include <FL/Fl_Wizard.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 WIDGET_DEFINE(Fl_Group)
 

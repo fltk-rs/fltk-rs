@@ -1,12 +1,13 @@
 #include "cfl_menu.h"
 #include <FL/Fl.H>
+
+#include "FL/Fl_Sys_Menu_Bar.H"
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Menu_Bar.H>
 #include <FL/Fl_Menu_Button.H>
 #include <FL/Fl_Menu_Item.H>
-#include "FL/Fl_Sys_Menu_Bar.H"
-#include <new>
+ #include "cfl_new.hpp"
 
 #define MENU_DEFINE(widget)                                                                        \
     void widget##_add(widget *self, const char *name, int shortcut, Fl_Callback *cb, void *data,   \
@@ -113,7 +114,7 @@ WIDGET_DEFINE(Fl_Sys_Menu_Bar)
 MENU_DEFINE(Fl_Sys_Menu_Bar)
 
 Fl_Menu_Item *Fl_Menu_Item_new(char **args, int sz) {
-    Fl_Menu_Item *items = new (std::nothrow) Fl_Menu_Item[sz + 1];
+    Fl_Menu_Item *items = new Fl_Menu_Item[sz + 1];
     if (!items)
         return NULL;
     for (int i = 0; i < sz; i++) {

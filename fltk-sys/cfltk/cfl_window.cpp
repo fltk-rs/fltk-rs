@@ -10,7 +10,7 @@
 #include <FL/Fl_Single_Window.H>
 #include <FL/Fl_Window.H>
 #include <FL/platform.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 #define WINDOW_DEFINE(widget)                                                                      \
     void widget##_make_modal(widget *self, unsigned int boolean) {                                 \

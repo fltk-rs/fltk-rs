@@ -1,11 +1,12 @@
 #include "cfl_tree.h"
 #include <FL/Fl.H>
+
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Tree.H>
 #include <FL/Fl_Tree_Item.H>
 #include <FL/Fl_Tree_Item_Array.H>
 #include <FL/Fl_Widget.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 WIDGET_DEFINE(Fl_Tree)
 
@@ -137,7 +138,7 @@ int Fl_Tree_get_selected_items(Fl_Tree *self, Fl_Tree_Item_Array **arr) {
         c++;
     if (c == 0)
         return 0;
-    *arr = new (std::nothrow) Fl_Tree_Item_Array(c);
+    *arr = new Fl_Tree_Item_Array(c);
     int ret = self->get_selected_items(**arr);
     return ret;
 }
@@ -148,7 +149,7 @@ int Fl_Tree_get_items(Fl_Tree *self, Fl_Tree_Item_Array **arr) {
         c++;
     if (c == 0)
         return 0;
-    *arr = new (std::nothrow) Fl_Tree_Item_Array(c);
+    *arr = new Fl_Tree_Item_Array(c);
     for (Fl_Tree_Item *i = self->first(); i; i = self->next_item(i))
         (*arr)->add(i);
     return c;
