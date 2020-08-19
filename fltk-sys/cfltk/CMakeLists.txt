@@ -6,6 +6,10 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# if(CMAKE_C_COMPILER MATCHES ".*musl-gcc")
+#     add_definitions(-D_ALL_SOURCE -Dstrlcpy=strncpy -Dstrlcat=strncat)
+# endif()
+
 if(MSVC)
 	string(REGEX REPLACE "/GR" "/GR-" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
     string(REGEX REPLACE "/EHsc" "/EHs-c-" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
