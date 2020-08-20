@@ -1,10 +1,6 @@
-#![allow(unused_imports, dead_code, unused_variables)]
-
-extern crate cmake;
-
 use std::{
     env,
-    path::{Path, PathBuf},
+    path::PathBuf,
     process::Command,
 };
 
@@ -124,6 +120,12 @@ fn main() {
             dst.define("OPTION_USE_SYSTEM_ZLIB", "OFF");
         }
 
+        if cfg!(feature = "no-images") {
+            dst.define("CFLTK_LINK_IMAGES", "OFF");
+        } else {
+            dst.define("CFLTK_LINK_IMAGES", "ON");
+        }
+
         if cfg!(feature = "legacy-opengl") {
             dst.define("OpenGL_GL_PREFERENCE", "LEGACY");
         } else {
@@ -141,7 +143,7 @@ fn main() {
             dst.define("CFLTK_BUILD_TESTS", "ON");
         }
 
-        let dst = dst
+        let _dst = dst
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("OPTION_ABI_VERSION:STRING", "10401")
