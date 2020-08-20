@@ -122,7 +122,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl BrowserExt for #name {
             fn remove(&mut self, line: u32) {
-                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
@@ -139,7 +138,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn insert(&mut self, line: u32, item: &str) {
-                assert!(line > 0);
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 let item = CString::new(item).unwrap();
@@ -188,7 +186,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn select(&mut self, line: u32) {
-                assert!(line > 0);
                 assert!(!self.was_deleted());
                 if line < self.size() {
                     unsafe {
@@ -198,7 +195,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn selected(&self, line: u32) -> bool {
-                assert!(line > 0);
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
@@ -210,7 +206,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn text(&self, line: u32) -> Option<String> {
-                assert!(line > 0);
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
@@ -224,8 +219,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_text(&mut self, line: u32, txt: &str) {
-                assert!(line > 0);
-                assert!(line <= self.size());
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 let txt = CString::new(txt).unwrap();
@@ -264,7 +257,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_icon<Img: ImageExt>(&mut self, line: u32, image: Option<Img>) {
                 assert!(!self.was_deleted());
-                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 if let Some(image) = image {
                     assert!(!image.was_deleted());
@@ -275,7 +267,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn icon(&self, line: u32) -> Option<Image> {
-                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
@@ -289,7 +280,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn remove_icon(&mut self, line: u32) {
-                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
@@ -299,7 +289,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn topline(&mut self, line: u32) {
                 assert!(!self.was_deleted());
-                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #topline(self._inner, line as i32)
@@ -308,7 +297,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn bottomline(&mut self, line: u32) {
                 assert!(!self.was_deleted());
-                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #bottomline(self._inner, line as i32)
@@ -317,7 +305,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn middleline(&mut self, line: u32) {
                 assert!(!self.was_deleted());
-                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #middleline(self._inner, line as i32)
@@ -358,6 +345,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     let widths = #column_widths(self._inner);
+                    // Should never throw
                     assert!(!widths.is_null());
                     let mut v: Vec<i32> = vec![];
                     let mut i = 0;
@@ -381,7 +369,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn displayed(&self, line: u32,) -> bool {
                 assert!(!self.was_deleted());
-                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #displayed(self._inner, line as i32,) != 0
@@ -390,7 +377,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn make_visible(&mut self, line: u32) {
                 assert!(!self.was_deleted());
-                assert!(line > 0);
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #make_visible(self._inner, line as i32)
