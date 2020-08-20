@@ -21,7 +21,7 @@ If you're building using the MSVC toolchain, make sure you run you're build (at 
 If you're building for the GNU toolchain, make sure that Make is also installed, which usually comes installed in MSYS2 and Cygwin.
 
 ### Why do I get a Link error while using the mingw toolchain on windows?
-If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048, it should work by using the fltk-shared feature. Which would also generate a dynamic library which would need to be deployed with your application.
+If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048, it should work by using the fltk-shared feature (an issue with older compilers). Which would also generate a dynamic library which would need to be deployed with your application.
 ```toml
 [dependencies]
 fltk = { version = "^0.8", features = ["fltk-shared"] }

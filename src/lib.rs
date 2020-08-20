@@ -33,14 +33,8 @@
 //! - Windows 10 x64 (msvc and gnu).
 //! - MacOS 10.15 x64.
 //! - Ubuntu 18.04 or later, x64.
-//! The library is automatically statically linked to your binary. If however you would prefer dynamic linking, you can use the fltk-shared feature:
-//! ```toml
-//! [dependencies.fltk]
-//! version = "^0.8"
-//! features = ["fltk-shared"]
-//! # or
-//! [dependencies]
-//! fltk = { version = "^0.8", features = ["fltk-shared"] }
+//! The library is automatically statically linked to your binary. 
+//!
 //! Since these are pre-built libraries using the Github actions CI, the currently supported operating systems are:
 //! - Windows 10 x64 (msvc and gnu).
 //! - MacOS 10.15 x64.
@@ -182,16 +176,12 @@
 //! ## Features
 //!
 //! The following are the features offered by the crate:
-//! - fltk-shared: Builds a shared lib of fltk
 //! - use-ninja:  If you have ninja build installed, it builds faster than make or VS
-//! - system-fltk: If you would like to use the installed fltk library, should be FLTK 1.4
 //! - system-libpng: Uses the system libpng
 //! - system-libjpeg: Uses the system libjpeg
 //! - system-zlib: Uses the system zlib
-//! - legacy-opengl: Support of Lagacy OpenGL, the crate uses GLVND by default
 //! - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
 //! - enable-glwindow: Support for systems without OpenGL.
-//! - no-images: (Experimental) Reduce binary size if your application doesn't use images.
 //!
 //! ## FAQ
 //!
