@@ -1,6 +1,7 @@
 #define FL_INTERNALS
 
 #include "cfl_window.h"
+#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
 #include <FL/Fl_Gl_Window.H>
@@ -10,7 +11,6 @@
 #include <FL/Fl_Single_Window.H>
 #include <FL/Fl_Window.H>
 #include <FL/platform.H>
- #include "cfl_new.hpp"
 
 #define WINDOW_DEFINE(widget)                                                                      \
     void widget##_make_modal(widget *self, unsigned int boolean) {                                 \
@@ -52,10 +52,6 @@
     }                                                                                              \
     int widget##_border(const widget *self) {                                                      \
         return self->border();                                                                     \
-    }                                                                                              \
-    void widget##_set_raw_handle(widget *self, void *handle) {                                     \
-        LOCK(if (!handle) return; Window h = *(Window *)handle; Fl_X *i = Fl_X::i(self);           \
-             if (!i) return; i->xid = h;)                                                          \
     }                                                                                              \
     void *widget##_region(const widget *self) {                                                    \
         Fl_X *t = Fl_X::i(self);                                                                   \
@@ -108,6 +104,28 @@ void *Fl_gc(void) {
 
 void Fl_Window_show_with_args(Fl_Window *w, int argc, char **argv) {
     LOCK(w->show(argc, argv); for (int i = 0; i < argc; ++i) free(argv[i]);)
+}
+
+void Fl_Window_set_raw_handle(Fl_Window *self, void *handle) {
+    if (!handle)
+        return;
+#if !defined(_WIN32) && !defined(__APPLE__)
+    LOCK(Fl_X::set_xid(self, *(Window *)handle);)
+#else
+    LOCK(Fl_X *xp = new Fl_X;
+    if (!xp)
+        return;
+    Window h = *(Window *)handle;
+    xp->xid = h;
+    xp->w = self;
+    xp->next = Fl_X::first;
+    xp->region = 0;
+    Fl_X *i = Fl_X::i(self);
+    if (!i)
+        return;
+    i = xp;
+    Fl_X::first = xp;)
+#endif
 }
 
 WIDGET_DEFINE(Fl_Single_Window)

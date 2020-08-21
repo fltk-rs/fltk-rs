@@ -39,10 +39,6 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "raw_handle").as_str(),
         name.span(),
     );
-    let set_raw_handle = Ident::new(
-        format!("{}_{}", name_str, "set_raw_handle").as_str(),
-        name.span(),
-    );
     let region = Ident::new(format!("{}_{}", name_str, "region").as_str(), name.span());
     let set_region = Ident::new(format!("{}_{}", name_str, "set_region").as_str(), name.span());
     let iconize = Ident::new(format!("{}_{}", name_str, "iconize").as_str(), name.span());
@@ -174,7 +170,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 ))]
                 assert!(handle != 0);
                 
-                #set_raw_handle(self._inner, mem::transmute(&handle));
+                Fl_Window_set_raw_handle(self._inner as *mut Fl_Window, mem::transmute(&handle));
             }
 
             fn region(&self) -> crate::draw::Region {

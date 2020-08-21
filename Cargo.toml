@@ -16,13 +16,6 @@ exclude = ["/screenshots", "/.github", "/examples"]
 name = "fltk"
 path = "src/lib.rs"
 
-[workspace]
-members = [
-    ".",
-    "fltk-sys",
-    "fltk-derive",
-]
-
 [dependencies]
 fltk-sys = { path = "fltk-sys", version = "^0.8.1" }
 fltk-derive = { path = "fltk-derive", version = "^0.8.1" }
