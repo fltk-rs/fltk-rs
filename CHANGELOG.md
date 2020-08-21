@@ -1,7 +1,10 @@
 # Changelog
 
-
 ## Unreleased
+### Changes
+- (None)
+
+## [0.8.2] - 2020-08-21
 ### Changes
 - Add experimental no-images feature flag.
 - cfltk and fltk are compiled with no-rtti and no-exceptions.
