@@ -8,9 +8,9 @@ repository = "https://github.com/MoAlyousef/fltk-rs"
 documentation = "https://docs.rs/fltk"
 keywords = ["gui", "bindings", "graphics"]
 categories = ["gui"]
-readme = "README.md"
+readme = "../README.md"
 license = "MIT"
-exclude = ["/screenshots", "/.github", "/examples"]
+exclude = ["/.github", "./examples"]
 
 [lib]
 name = "fltk"
