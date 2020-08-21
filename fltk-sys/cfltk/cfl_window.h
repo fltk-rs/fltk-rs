@@ -24,7 +24,6 @@ typedef union {
     void *widget##_raw_handle(const widget *w);                                                    \
     void widget##_set_border(widget *, int flag);                                                  \
     int widget##_border(const widget *);                                                           \
-    void widget##_set_raw_handle(widget *self, void *handle);                                      \
     void *widget##_region(const widget *self);                                                     \
     void widget##_set_region(widget *self, void *r);                                               \
     void widget##_iconize(widget *self);                                                           \
@@ -45,6 +44,8 @@ void *Fl_display(void);
 void *Fl_gc(void);
 
 void Fl_Window_show_with_args(Fl_Window *w, int argc, char **argv);
+
+void Fl_Window_set_raw_handle(Fl_Window *self, void *handle);
 
 WIDGET_DECLARE(Fl_Single_Window)
 

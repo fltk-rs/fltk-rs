@@ -8,7 +8,7 @@
 #include <FL/Fl_Multiline_Input.H>
 #include <FL/Fl_Secret_Input.H>
 #include <FL/Fl_Spinner.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 WIDGET_DEFINE(Fl_Input)
 

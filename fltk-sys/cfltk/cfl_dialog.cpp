@@ -1,12 +1,13 @@
 #include "cfl_dialog.h"
 #include <FL/Fl.H>
-#include <FL/Fl_Help_Dialog.H>
-#include <FL/Fl_Image.H>
+
 #include <FL/Fl_Color_Chooser.H>
 #include <FL/Fl_File_Chooser.H>
+#include <FL/Fl_Help_Dialog.H>
+#include <FL/Fl_Image.H>
 #include <FL/Fl_Native_File_Chooser.H>
 #include <FL/fl_ask.H>
-#include <new>
+ #include "cfl_new.hpp"
 #include <string.h>
 
 #ifndef LOCK
@@ -18,7 +19,7 @@
 #endif
 
 Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
-    return new (std::nothrow) Fl_Native_File_Chooser(val);
+    return new Fl_Native_File_Chooser(val);
 }
 
 void Fl_Native_File_Chooser_delete(Fl_Native_File_Chooser *self) {
@@ -111,7 +112,7 @@ const char *Fl_password(int x, int y, const char *txt, const char *deflt) {
 }
 
 Fl_Help_Dialog *Fl_Help_Dialog_new(void) {
-    return new (std::nothrow) Fl_Help_Dialog();
+    return new Fl_Help_Dialog();
 }
 
 void Fl_Help_Dialog_delete(Fl_Help_Dialog *self) {
@@ -181,7 +182,7 @@ void Fl_beep(int type) {
 }
 
 Fl_File_Chooser *Fl_File_Chooser_new(const char *d, const char *p, int t, const char *title) {
-    return new (std::nothrow) Fl_File_Chooser(d, p, t, title);
+    return new Fl_File_Chooser(d, p, t, title);
 }
 
 void Fl_File_Chooser_delete(Fl_File_Chooser *self) {
@@ -353,7 +354,8 @@ char *Fl_file_chooser(const char *message, const char *pat, const char *fname, i
     return fl_file_chooser(message, pat, fname, relative);
 }
 
-int Fl_color_chooser(const char *name, unsigned char *r, unsigned char *g, unsigned char *b, int cmode) {
+int Fl_color_chooser(const char *name, unsigned char *r, unsigned char *g, unsigned char *b,
+                     int cmode) {
     return fl_color_chooser(name, *r, *g, *b, cmode);
 }
 

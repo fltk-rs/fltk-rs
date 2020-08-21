@@ -1,9 +1,19 @@
 # Changelog
 
-
 ## Unreleased
 ### Changes
 - (None)
+
+## [0.8.2] - 2020-08-21
+### Changes
+- Add experimental no-images feature flag.
+- cfltk and fltk are compiled with no-rtti and no-exceptions.
+- Override placement new in cfltk.
+- Add note on exception-safety in FAQ.
+- mark app::set_raw_callback as unsafe.
+- Add static widget, buffer and image deletion functions.
+- Fixed typo app::dispaly -> app::display (Thanks @DBLouis).
+- Remove default linkage to C++ std library.
 
 ## [0.8.1] - 2020-08-13
 ### Changes

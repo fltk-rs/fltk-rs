@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "0.8.1"
+version = "0.8.2"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 build = "build.rs"
 edition = "2018"
@@ -30,5 +30,6 @@ system-zlib = []
 legacy-opengl = []
 fltk-bundled = []
 enable-glwindow = []
+no-images = []
 cpp-testing = [] # for C++ testing
 

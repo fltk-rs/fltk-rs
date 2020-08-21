@@ -7,6 +7,7 @@ The first tutorial uses the fltk-bundled feature flag, which is only supported f
 - Windows 10 x64 (msvc and gnu).
 - MacOS 10.15 x64.
 - Ubuntu 18.04 or later, x64.
+
 If you're not running one of the aforementioned platforms, you'll have to remove the fltk-bundled feature flag in your Cargo.toml file:
 ```toml
 [dependencies]
@@ -20,7 +21,7 @@ If you're building using the MSVC toolchain, make sure you run you're build (at 
 If you're building for the GNU toolchain, make sure that Make is also installed, which usually comes installed in MSYS2 and Cygwin.
 
 ### Why do I get a Link error while using the mingw toolchain on windows?
-If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048, it should work by using the fltk-shared feature. Which would also generate a dynamic library which would need to be deployed with your application.
+If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048, it should work by using the fltk-shared feature (an issue with older compilers). Which would also generate a dynamic library which would need to be deployed with your application.
 ```toml
 [dependencies]
 fltk = { version = "^0.8", features = ["fltk-shared"] }
@@ -108,6 +109,10 @@ That said, fltk-rs is still in active development, and has not yet been fuzzed n
 
 ### Why is fltk-rs using so much unsafe code?
 Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so the unsafe keyword is needed.
+
+### Is fltk-rs exception-safe?
+FLTK (C++) doesn't throw exceptions, neither do the C wrapper (cfltk) nor the fltk-sys crate. The higher level fltk crate, which wraps fltk-sys, is not exception-safe since it uses asserts internally after various operations to ensure memory-safety. An example is a widget constructor which checks that the returned pointer (from the C++ side) is not null.
+Also any function sending a string across FFI is checked for interal null bytes. For such functions, the developer can perform a sanity check on passed strings to make sure they're valid UTF-8 strings. That said, all functions passed as callbacks to be handled by the C++ side are exception-safe.
 
 ## Contributing
 Please refer to the [CONTRIBUTING](https://github.com/MoAlyousef/fltk-rs/blob/master/CONTRIBUTING.md) page for further information.

@@ -1,10 +1,6 @@
-#![allow(unused_imports, dead_code, unused_variables)]
-
-extern crate cmake;
-
 use std::{
     env,
-    path::{Path, PathBuf},
+    path::PathBuf,
     process::Command,
 };
 
@@ -47,6 +43,7 @@ fn main() {
             .expect("Curl and Tar are needed to download and upack the bundled libraries!");
             
     } else {
+        println!("cargo:rerun-if-changed=cfltk/cfl_new.hpp");
         println!("cargo:rerun-if-changed=cfltk/cfl.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_widget.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_group.h");
@@ -62,6 +59,7 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/cfl_image.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_draw.h");
         println!("cargo:rerun-if-changed=cfltk/cfl_table.h");
+        println!("cargo:rerun-if-changed=cfltk/cfl_new.cpp");
         println!("cargo:rerun-if-changed=cfltk/cfl.cpp");
         println!("cargo:rerun-if-changed=cfltk/cfl_widget.cpp");
         println!("cargo:rerun-if-changed=cfltk/cfl_group.cpp");
@@ -122,6 +120,12 @@ fn main() {
             dst.define("OPTION_USE_SYSTEM_ZLIB", "OFF");
         }
 
+        if cfg!(feature = "no-images") {
+            dst.define("CFLTK_LINK_IMAGES", "OFF");
+        } else {
+            dst.define("CFLTK_LINK_IMAGES", "ON");
+        }
+
         if cfg!(feature = "legacy-opengl") {
             dst.define("OpenGL_GL_PREFERENCE", "LEGACY");
         } else {
@@ -139,7 +143,7 @@ fn main() {
             dst.define("CFLTK_BUILD_TESTS", "ON");
         }
 
-        let dst = dst
+        let _dst = dst
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("OPTION_ABI_VERSION:STRING", "10401")
@@ -174,41 +178,40 @@ fn main() {
 
     if !cfg!(feature = "fltk-shared") {
         println!("cargo:rustc-link-lib=static=fltk");
-        println!("cargo:rustc-link-lib=static=fltk_images");
+
+        if !cfg!(features = "no-images") {
+            println!("cargo:rustc-link-lib=static=fltk_images");
+            
+            if cfg!(feature = "system-libpng") {
+                println!("cargo:rustc-link-lib=dylib=png");
+            } else {
+                println!("cargo:rustc-link-lib=static=fltk_png");
+            }
+    
+            if cfg!(feature = "system-libjpeg") {
+                println!("cargo:rustc-link-lib=dylib=jpeg");
+            } else {
+                println!("cargo:rustc-link-lib=static=fltk_jpeg");
+            }
+    
+            if cfg!(feature = "system-zlib") {
+                println!("cargo:rustc-link-lib=dylib=z");
+            } else {
+                println!("cargo:rustc-link-lib=static=fltk_z");
+            }
+        }
 
         if cfg!(feature = "enable-glwindow") {
             println!("cargo:rustc-link-lib=static=fltk_gl");
         }
 
-        if cfg!(feature = "system-libpng") {
-            println!("cargo:rustc-link-lib=dylib=png");
-        } else {
-            println!("cargo:rustc-link-lib=static=fltk_png");
-        }
-
-        if cfg!(feature = "system-libjpeg") {
-            println!("cargo:rustc-link-lib=dylib=jpeg");
-        } else {
-            println!("cargo:rustc-link-lib=static=fltk_jpeg");
-        }
-
-        if cfg!(feature = "system-zlib") {
-            println!("cargo:rustc-link-lib=dylib=z");
-        } else {
-            println!("cargo:rustc-link-lib=static=fltk_z");
-        }
-
         match target_os.as_str() {
             "macos" => {
-                println!("cargo:rustc-link-lib=dylib=c++");
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
             }
             "windows" => {
-                if cfg!(target_env = "gnu") {
-                    println!("cargo:rustc-link-lib=dylib=stdc++");
-                }
                 println!("cargo:rustc-link-lib=dylib=ws2_32");
                 println!("cargo:rustc-link-lib=dylib=comctl32");
                 println!("cargo:rustc-link-lib=dylib=gdi32");
@@ -224,7 +227,6 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=odbc32");
             }
             _ => {
-                println!("cargo:rustc-link-lib=dylib=stdc++");
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 println!("cargo:rustc-link-lib=dylib=X11");
                 println!("cargo:rustc-link-lib=dylib=Xext");

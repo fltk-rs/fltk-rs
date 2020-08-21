@@ -10,7 +10,7 @@
 //
 //     let img = image::open("./examples/image.jpg").unwrap();
 //     let (x, y) = img.dimensions();
-//     let rgb = RgbImage::new(&img.to_bytes(), x as i32, y as i32, 3);
+//     let rgb = RgbImage::new(&img.to_bytes(), x, y, 3).unwrap();
 //
 //     frame.set_image(Some(rgb));
 //

@@ -4,7 +4,7 @@
 #include "cfl_widget.h"
 #include <FL/Enumerations.H>
 #include <FL/Fl_Widget.H>
-#include <new>
+ #include "cfl_new.hpp"
 #include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
@@ -53,18 +53,18 @@ int Fl_event_y(void) {
     return Fl::event_y();
 }
 
-int Fl_event_x_root(void){
+int Fl_event_x_root(void) {
     return Fl::event_x_root();
 }
 
-int Fl_event_y_root(void){
+int Fl_event_y_root(void) {
     return Fl::event_y_root();
 }
-int Fl_event_dx(void){
+int Fl_event_dx(void) {
     return Fl::event_dx();
 }
 
-int Fl_event_dy(void){
+int Fl_event_dy(void) {
     return Fl::event_dy();
 }
 
@@ -188,14 +188,16 @@ int Fl_event_inside(int x, int y, int w, int h) {
     return Fl::event_inside(x, y, w, h);
 }
 
-Fl_Widget *Fl_belowmouse() { return Fl::belowmouse(); }
+Fl_Widget *Fl_belowmouse() {
+    return Fl::belowmouse();
+}
 
 void Fl_delete_widget(Fl_Widget *w) {
     Fl::delete_widget(w);
 }
 
 Fl_Widget_Tracker *Fl_Widget_Tracker_new(Fl_Widget *w) {
-    return new (std::nothrow) Fl_Widget_Tracker(w);
+    return new Fl_Widget_Tracker(w);
 }
 
 int Fl_Widget_Tracker_deleted(Fl_Widget_Tracker *self) {
@@ -227,7 +229,6 @@ void Fl_init_all(void) {
 #if defined(__APPLE__) && defined(CFLTK_USE_GL)
     Fl::use_high_res_GL(1);
 #endif
-
 }
 
 void Fl_redraw(void) {

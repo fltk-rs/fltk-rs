@@ -651,14 +651,18 @@ pub unsafe trait DisplayExt: WidgetExt {
 /// Defines the methods implemented by all browser types
 pub unsafe trait BrowserExt: WidgetExt {
     /// Removes the specified line
+    /// Lines start at 1
     fn remove(&mut self, line: u32);
     /// Adds an item
     fn add(&mut self, item: &str);
     /// Inserts an item at an index
+    /// Lines start at 1
     fn insert(&mut self, line: u32, item: &str);
     /// Moves an item
+    /// Lines start at 1
     fn move_item(&mut self, to: u32, from: u32);
     /// Swaps 2 items
+    /// Lines start at 1
     fn swap(&mut self, a: u32, b: u32);
     /// Clears the browser widget
     fn clear(&mut self);
@@ -667,39 +671,52 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Set the number of items
     fn set_size(&mut self, w: i32, h: i32);
     /// Select an item at the specified line
+    /// Lines start at 1
     fn select(&mut self, line: u32);
     /// Returns whether the item is selected
+    /// Lines start at 1
     fn selected(&self, line: u32) -> bool;
     /// Returns the text of the selected item
+    /// Lines start at 1
     fn text(&self, line: u32) -> Option<String>;
     /// Sets the text of the selected item
+    /// Lines start at 1
     fn set_text(&mut self, line: u32, txt: &str);
     /// Load a file
     fn load(&mut self, path: &std::path::Path) -> Result<(), FltkError>;
     /// Return the text size
     fn text_size(&self) -> u32;
     /// Sets the text size
+    /// Lines start at 1
     fn set_text_size(&mut self, sz: u32);
     /// Sets the icon for browser elements
+    /// Lines start at 1
     fn set_icon<Img: ImageExt>(&mut self, line: u32, image: Option<Img>);
     /// Returns the icon of a browser element
+    /// Lines start at 1
     fn icon(&self, line: u32) -> Option<Image>;
     /// Removes the icon of a browser element
+    /// Lines start at 1
     fn remove_icon(&mut self, line: u32);
     /// Scrolls the browser so the top item in the browser is showing the specified line
+    /// Lines start at 1
     fn topline(&mut self, line: u32);
     /// Scrolls the browser so the bottom item in the browser is showing the specified line
+    /// Lines start at 1
     fn bottomline(&mut self, line: u32);
     /// Scrolls the browser so the middle item in the browser is showing the specified line
+    /// Lines start at 1
     fn middleline(&mut self, line: u32);
     /// Gets the current format code prefix character, which by default is '\@'
     /// More info here: https://www.fltk.org/doc-1.3/classFl__Browser.html#a129dca59d64baf166503ba59341add69
     fn format_char(&self) -> char;
     /// Sets the current format code prefix character to \p c. The default prefix is '\@
+    /// Panics if the char is non-ascii
     fn set_format_char(&mut self, c: char);
     /// Gets the current column separator character. The default is '\t'
     fn column_char(&self) -> char;
     /// Sets the column separator to c. This will only have an effect if you also use set_column_widths()
+    /// Panics if the char is non-ascii
     fn set_column_char(&mut self, c: char);
     /// Gets the current column width array
     fn column_widths(&self) -> Vec<i32>;

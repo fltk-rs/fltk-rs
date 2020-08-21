@@ -18,7 +18,7 @@
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Value_Output.H>
 #include <FL/Fl_Value_Slider.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 #define VALUATOR_DEFINE(widget)                                                                    \
     void widget##_set_bounds(widget *self, double a, double b) {                                   \

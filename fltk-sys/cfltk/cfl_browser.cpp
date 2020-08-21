@@ -6,7 +6,7 @@
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Multi_Browser.H>
 #include <FL/Fl_Select_Browser.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 #define BROWSER_DEFINE(widget)                                                                     \
     void widget##_remove(widget *self, int line) {                                                 \

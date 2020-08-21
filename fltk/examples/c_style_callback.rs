@@ -29,8 +29,8 @@ fn main() {
     unsafe {
         // If no data needs to be passed, you can pass 0 as *mut _
         app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(cb));
-        // Using a closure also works
-        app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")}));
+        // // Using a closure also works
+        // app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")}));
     }
     
     

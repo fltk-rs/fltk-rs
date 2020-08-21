@@ -1,10 +1,11 @@
 #include "cfl_table.h"
 #include "cfl_group.h"
 #include <FL/Fl.H>
+
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Table.H>
 #include <FL/Fl_Table_Row.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 #define TABLE_DEFINE(table)                                                                        \
     void table##_set_table_box(table *self, int val) {                                             \
@@ -243,7 +244,7 @@ struct Fl_Table_Derived : public Fl_Table {
     }
 };
 Fl_Table *Fl_Table_new(int x, int y, int width, int height, const char *title) {
-    return new (std::nothrow) Fl_Table_Derived(x, y, width, height, title);
+    return new Fl_Table_Derived(x, y, width, height, title);
 }
 
 int Fl_Table_x(Fl_Table *self) {
@@ -590,7 +591,7 @@ struct Fl_Table_Row_Derived : public Fl_Table_Row {
     }
 };
 Fl_Table_Row *Fl_Table_Row_new(int x, int y, int width, int height, const char *title) {
-    return new (std::nothrow) Fl_Table_Row_Derived(x, y, width, height, title);
+    return new Fl_Table_Row_Derived(x, y, width, height, title);
 }
 
 int Fl_Table_Row_x(Fl_Table_Row *self) {

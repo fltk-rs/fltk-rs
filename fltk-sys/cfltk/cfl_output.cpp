@@ -5,7 +5,7 @@
 #include <FL/Fl_Output.H>
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Value_Output.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 WIDGET_DEFINE(Fl_Output)
 

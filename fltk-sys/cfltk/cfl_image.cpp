@@ -1,5 +1,6 @@
 #include "cfl_image.h"
 #include <FL/Fl.H>
+
 #include <FL/Fl_BMP_Image.H>
 #include <FL/Fl_GIF_Image.H>
 #include <FL/Fl_Image.H>
@@ -13,7 +14,7 @@
 #include <FL/Fl_Tiled_Image.H>
 #include <FL/Fl_XBM_Image.H>
 #include <FL/Fl_XPM_Image.H>
-#include <new>
+ #include "cfl_new.hpp"
 
 #ifndef LOCK
 #define LOCK(x)                                                                                    \
@@ -70,11 +71,11 @@
 IMAGE_DEFINE(Fl_JPEG_Image)
 
 Fl_JPEG_Image *Fl_JPEG_Image_new(const char *filename) {
-    return new (std::nothrow) Fl_JPEG_Image(filename);
+    return new Fl_JPEG_Image(filename);
 }
 
 Fl_JPEG_Image *Fl_JPEG_Image_from(const unsigned char *data) {
-    return new (std::nothrow) Fl_JPEG_Image(NULL, data);
+    return new Fl_JPEG_Image(NULL, data);
 }
 
 IMAGE_DEFINE(Fl_Image)
@@ -82,76 +83,76 @@ IMAGE_DEFINE(Fl_Image)
 IMAGE_DEFINE(Fl_PNG_Image)
 
 Fl_PNG_Image *Fl_PNG_Image_new(const char *filename) {
-    return new (std::nothrow) Fl_PNG_Image(filename);
+    return new Fl_PNG_Image(filename);
 }
 
 Fl_PNG_Image *Fl_PNG_Image_from(const unsigned char *data, int size) {
-    return new (std::nothrow) Fl_PNG_Image(NULL, data, size);
+    return new Fl_PNG_Image(NULL, data, size);
 }
 
 IMAGE_DEFINE(Fl_SVG_Image)
 
 Fl_SVG_Image *Fl_SVG_Image_new(const char *filename) {
-    return new (std::nothrow) Fl_SVG_Image(filename);
+    return new Fl_SVG_Image(filename);
 }
 
 Fl_SVG_Image *Fl_SVG_Image_from(const char *data) {
-    return new (std::nothrow) Fl_SVG_Image(NULL, data);
+    return new Fl_SVG_Image(NULL, data);
 }
 
 IMAGE_DEFINE(Fl_BMP_Image)
 
 Fl_BMP_Image *Fl_BMP_Image_new(const char *filename) {
-    return new (std::nothrow) Fl_BMP_Image(filename);
+    return new Fl_BMP_Image(filename);
 }
 
 Fl_BMP_Image *Fl_BMP_Image_from(const unsigned char *data) {
-    return new (std::nothrow) Fl_BMP_Image(NULL, data);
+    return new Fl_BMP_Image(NULL, data);
 }
 
 IMAGE_DEFINE(Fl_GIF_Image)
 
 Fl_GIF_Image *Fl_GIF_Image_new(const char *filename) {
-    return new (std::nothrow) Fl_GIF_Image(filename);
+    return new Fl_GIF_Image(filename);
 }
 
 Fl_GIF_Image *Fl_GIF_Image_from(const unsigned char *data) {
-    return new (std::nothrow) Fl_GIF_Image(NULL, data);
+    return new Fl_GIF_Image(NULL, data);
 }
 
 IMAGE_DEFINE(Fl_Pixmap)
 
 Fl_Pixmap *Fl_Pixmap_new(const unsigned char *const *D) {
-    return new (std::nothrow) Fl_Pixmap(D);
+    return new Fl_Pixmap(D);
 }
 
 IMAGE_DEFINE(Fl_XPM_Image)
 
 Fl_XPM_Image *Fl_XPM_Image_new(const char *filename) {
-    return new (std::nothrow) Fl_XPM_Image(filename);
+    return new Fl_XPM_Image(filename);
 }
 
 IMAGE_DEFINE(Fl_XBM_Image)
 
 Fl_XBM_Image *Fl_XBM_Image_new(const char *filename) {
-    return new (std::nothrow) Fl_XBM_Image(filename);
+    return new Fl_XBM_Image(filename);
 }
 
 IMAGE_DEFINE(Fl_PNM_Image)
 
 Fl_PNM_Image *Fl_PNM_Image_new(const char *filename) {
-    return new (std::nothrow) Fl_PNM_Image(filename);
+    return new Fl_PNM_Image(filename);
 }
 
 IMAGE_DEFINE(Fl_Tiled_Image)
 
 Fl_Tiled_Image *Fl_Tiled_Image_new(Fl_Image *i, int w, int h) {
-    return new (std::nothrow) Fl_Tiled_Image(i, w, h);
+    return new Fl_Tiled_Image(i, w, h);
 }
 
 IMAGE_DEFINE(Fl_RGB_Image)
 Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int depth) {
-    return new (std::nothrow) Fl_RGB_Image(bits, W, H, depth);
+    return new Fl_RGB_Image(bits, W, H, depth);
 }
 
 void Fl_Shared_Image_draw(Fl_Shared_Image *self, int X, int Y, int W, int H) {
