@@ -386,4 +386,4 @@ The most commonly widgets are implemented:
 - [Custom dialogs](https://youtu.be/tXeXHoKG6-I)
 - [Add drag and drop to the editor example](https://www.youtube.com/watch?v=qp5hnRvSxAg)
 
-Playlist [here](https://www.youtube.com/playlist?list=PLHqrrowPLkDu9U-uk60sGM-YWLOJFfLoE).
+More videos in the playlist [here](https://www.youtube.com/playlist?list=PLHqrrowPLkDu9U-uk60sGM-YWLOJFfLoE).
