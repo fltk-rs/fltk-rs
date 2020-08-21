@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+void *__gxx_personality_v0 = 0;
+
 void *operator new(size_t size) {
     return malloc(size);
 }

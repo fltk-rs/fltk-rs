@@ -19,5 +19,3 @@ extern "C" void __cxa_pure_virtual();
 extern "C" void __cxa_guard_abort(long *);
 
 extern "C" void __cxa_atexit();
-
-extern void *__gxx_personality_v0;
