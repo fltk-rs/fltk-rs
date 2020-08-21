@@ -368,15 +368,15 @@ where
 }
 
 /// Set a widget callback using a C style API, when boxing is not desired
-pub fn set_raw_callback<W>(widget: &mut W, data: *mut raw::c_void, cb: Option<fn(WidgetPtr, *mut raw::c_void)>)
+/// # Safety
+/// The function involves dereferencing externally provided raw pointers
+pub unsafe fn set_raw_callback<W>(widget: &mut W, data: *mut raw::c_void, cb: Option<fn(WidgetPtr, *mut raw::c_void)>)
 where
     W: WidgetExt,
 {
     assert!(!widget.was_deleted());
-    unsafe {
-        let cb: Option<unsafe extern "C" fn(WidgetPtr, *mut raw::c_void)> = mem::transmute(cb);
-        fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), cb, data);
-    }
+    let cb: Option<unsafe extern "C" fn(WidgetPtr, *mut raw::c_void)> = mem::transmute(cb);
+    fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), cb, data);
 }
 
 /// Initializes loaded fonts of a certain pattern ```name```

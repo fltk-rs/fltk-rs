@@ -38,6 +38,13 @@ impl Image {
     pub unsafe fn into<I: ImageExt>(self) -> I {
         I::from_image_ptr(self._inner)
     }
+
+    /// Deletes an image
+    /// # Safety
+    /// An image shouldn't be deleted while it's being used by a widget
+    pub unsafe fn delete<I: ImageExt>(mut img: I) {
+        img.delete()
+    }
 }
 
 /// Creates a struct holding a shared image

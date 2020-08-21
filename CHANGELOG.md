@@ -7,6 +7,8 @@
 - cfltk and fltk are compiled with no-rtti and no-exceptions.
 - Override placement new in cfltk.
 - Add note on exception-safety in FAQ.
+- mark app::set_raw_callback as unsafe.
+- Add static widget, buffer and image deletion functions.
 
 ## [0.8.1] - 2020-08-13
 ### Changes

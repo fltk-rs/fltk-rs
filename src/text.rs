@@ -33,6 +33,14 @@ impl TextBuffer {
         self._inner = std::ptr::null_mut::<Fl_Text_Buffer>();
     }
 
+    /// Deletes the TextBuffer
+    /// # Safety
+    /// The buffer shouldn't be deleted while the Display widget still needs it
+    pub unsafe fn delete_buffer(mut buf: TextBuffer) {
+        Fl_Text_Buffer_delete(buf._inner);
+        buf._inner = std::ptr::null_mut::<Fl_Text_Buffer>();
+    }
+
     /// Initialized a text buffer from a pointer
     /// # Safety
     /// The pointer must be valid

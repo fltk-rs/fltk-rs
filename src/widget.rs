@@ -48,4 +48,9 @@ impl Widget {
         assert!(!self.was_deleted());
         W::from_widget_ptr(self._inner)
     }
+
+    /// Deletes a widget
+    pub fn delete<W: WidgetExt>(mut wid: W) {
+        wid.delete()
+    }
 }
