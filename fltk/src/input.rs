@@ -23,7 +23,7 @@ pub enum InputType {
     Int = 2,
     Multiline = 4,
     Secret = 5,
-    InputType = 7,
+    Input = 7,
     Readonly = 8,
     Wrap = 16,
 }

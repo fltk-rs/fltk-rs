@@ -11,6 +11,7 @@
 - Clean up examples.
 - Add fltk-sys example.
 - Restructure C wrapper.
+- Rename enum InputType field value InputType to Input.
 
 ## [0.8.2] - 2020-08-21
 ### Changes
