@@ -35,25 +35,25 @@ else()
 endif()
 
 set(CFLTK_SRCS
-    cfl_new.cpp
-    cfl.cpp 
-    cfl_window.cpp 
-    cfl_button.cpp 
-    cfl_widget.cpp 
-    cfl_group.cpp 
-    cfl_text.cpp
-    cfl_box.cpp 
-    cfl_input.cpp 
-    cfl_output.cpp
-    cfl_menu.cpp
-    cfl_dialog.cpp
-    cfl_valuator.cpp
-    cfl_browser.cpp
-    cfl_misc.cpp
-    cfl_image.cpp
-    cfl_draw.cpp
-    cfl_table.cpp
-    cfl_tree.cpp
+    src/cfl_new.cpp
+    src/cfl.cpp 
+    src/cfl_window.cpp 
+    src/cfl_button.cpp 
+    src/cfl_widget.cpp 
+    src/cfl_group.cpp 
+    src/cfl_text.cpp
+    src/cfl_box.cpp 
+    src/cfl_input.cpp 
+    src/cfl_output.cpp
+    src/cfl_menu.cpp
+    src/cfl_dialog.cpp
+    src/cfl_valuator.cpp
+    src/cfl_browser.cpp
+    src/cfl_misc.cpp
+    src/cfl_image.cpp
+    src/cfl_draw.cpp
+    src/cfl_table.cpp
+    src/cfl_tree.cpp
     )
 
 if(CFLTK_BUILD_SHARED)
@@ -63,9 +63,9 @@ else()
 endif()
 
 if(USE_SYSTEM_FLTK)
-    target_include_directories(cfltk PUBLIC ${FLTK_INCLUDE_DIRS})
+    target_include_directories(cfltk PUBLIC include ${FLTK_INCLUDE_DIRS})
 else()
-    target_include_directories(cfltk PUBLIC fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk)
+    target_include_directories(cfltk PUBLIC include fltk ${CMAKE_CURRENT_BINARY_DIR}/fltk)
 endif()
 
 set(CFLTK_LIBS fltk)
