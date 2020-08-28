@@ -35,17 +35,13 @@ fn main() {
             inp2.value().parse().unwrap_or(0.0)
         };
 
-        match r.recv() {
-            Some(msg) => {
-                if msg {
-                    inp2.set_value(&format!("{:.4}", c_to_f(inp1_val)));
-                } else {
-                    inp1.set_value(&format!("{:.4}", f_to_c(inp2_val)));
-                }
+        if let Some(msg) = r.recv() {
+            if msg {
+                inp2.set_value(&format!("{:.4}", c_to_f(inp1_val)));
+            } else {
+                inp1.set_value(&format!("{:.4}", f_to_c(inp2_val)));
             }
-            None => (),
         }
-        std::thread::sleep(std::time::Duration::from_millis(16));
     }
 }
 

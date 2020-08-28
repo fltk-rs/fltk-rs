@@ -64,13 +64,12 @@ impl Term {
                 }
             }
             let out = cmd.stdout(Stdio::piped()).stderr(Stdio::piped()).output();
-            if out.is_err() {
+            if let Ok(out) = out {
+                let stdout = out.stdout;
+                String::from_utf8_lossy(&stdout).to_string()
+            } else {
                 let msg = format!("{}: command not found!\n", self.cmd);
                 msg
-            } else {
-                let stdout = out.unwrap().stdout;
-                let stdout = String::from_utf8_lossy(&stdout).to_string();
-                stdout
             }
         } else {
             String::from("")
