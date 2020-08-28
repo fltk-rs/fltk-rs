@@ -7,8 +7,8 @@ use std::rc::Rc;
 // Needed to store cell information during the draw_cell call
 #[derive(Default)]
 struct CellData {
-    _r: i32, // row
-    _c: i32, // column
+    _row: i32, // row
+    _col: i32, // column
     _x: i32,
     _y: i32,
     _w: i32,
@@ -16,9 +16,9 @@ struct CellData {
 }
 
 impl CellData {
-    pub fn select(&mut self, r: i32, c: i32, x: i32, y: i32, w: i32, h: i32) {
-        self._r = r;
-        self._c = c;
+    pub fn select(&mut self, row: i32, col: i32, x: i32, y: i32, w: i32, h: i32) {
+        self._row = row;
+        self._col = col;
         self._x = x;
         self._y = y;
         self._w = w;
@@ -96,7 +96,7 @@ fn main() {
         Event::KeyDown => {
             if app::event_key() == Key::Enter { // Press enter to store the data into the cell
                 let c = cell.borrow();
-                data.borrow_mut()[c._r as usize][c._c as usize] = inp.value();
+                data.borrow_mut()[c._row as usize][c._col as usize] = inp.value();
                 inp.set_value("");
                 inp.hide();
                 table.redraw();
@@ -116,16 +116,16 @@ fn main() {
     app.run().unwrap();
 }
 
-fn draw_header(s: &str, x: i32, y: i32, w: i32, h: i32) {
+fn draw_header(txt: &str, x: i32, y: i32, w: i32, h: i32) {
     draw::push_clip(x, y, w, h);
     draw::draw_box(FrameType::ThinUpBox, x, y, w, h, Color::FrameDefault);
     draw::set_draw_color(Color::Black);
-    draw::draw_text2(s, x, y, w, h, Align::Center);
+    draw::draw_text2(txt, x, y, w, h, Align::Center);
     draw::pop_clip();
 }
 
 // The selected flag sets the color of the cell to a grayish color, otherwise white
-fn draw_data(s: &str, x: i32, y: i32, w: i32, h: i32, selected: bool) {
+fn draw_data(txt: &str, x: i32, y: i32, w: i32, h: i32, selected: bool) {
     draw::push_clip(x, y, w, h);
     if selected {
         draw::set_draw_color(Color::from_u32(0xD3D3D3));
@@ -134,7 +134,7 @@ fn draw_data(s: &str, x: i32, y: i32, w: i32, h: i32, selected: bool) {
     }
     draw::draw_rectf(x, y, w, h);
     draw::set_draw_color(Color::Gray0);
-    draw::draw_text2(s, x, y, w, h, Align::Center);
+    draw::draw_text2(txt, x, y, w, h, Align::Center);
     draw::draw_rect(x, y, w, h);
     draw::pop_clip();
 }

@@ -4,6 +4,13 @@
 ### Changes
 - (None)
 
+## [0.8.3] - 2020-08-21
+### Changes
+- Update FLTK.
+- Update syn.
+- Clean up examples.
+- Add fltk-sys example.
+
 ## [0.8.2] - 2020-08-21
 ### Changes
 - Add experimental no-images feature flag.

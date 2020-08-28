@@ -265,8 +265,8 @@ fn main() {
 
     while app.wait().expect("Couldn't run editor!") {
         use Message::*;
-        match r.recv() {
-            Some(msg) => match msg {
+        if let Some(msg) = r.recv() {
+            match msg {
                 Changed => saved = false,
                 New => {
                     if editor.buffer().unwrap().text() != "" {
@@ -315,8 +315,7 @@ fn main() {
                 Copy => editor.copy(),
                 Paste => editor.paste(),
                 About => message(200, 200, "This is an example application written in Rust and using the FLTK Gui library.",),
-            },
-            _ => ()
+            }
         }
     }
 }

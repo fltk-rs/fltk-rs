@@ -84,7 +84,7 @@ fn main() {
     app.run().unwrap();
 }
 ```
-Please check the examples directory for more examples.
+Please check the fltk/examples directory for more examples.
 You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 
 ```rust
@@ -160,7 +160,7 @@ For custom event handling, the handle() method can be used:
         }
     }));
 ```
-Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the examples directory.
+Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the fltk/examples directory.
 
 ### Theming
 
@@ -239,6 +239,7 @@ $ cargo run --example terminal_colored
 $ cargo run --example counter
 $ cargo run --example hello
 $ cargo run --example hello_button
+...
 ```
 
 ![alt_test](screenshots/hello.jpg)
