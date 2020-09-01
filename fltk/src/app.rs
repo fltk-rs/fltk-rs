@@ -56,7 +56,7 @@ pub fn set_scheme(scheme: Scheme) {
         Scheme::Gleam => "gleam",
         Scheme::Plastic => "plastic",
     };
-    let name_str = CString::new(name_str).unwrap();
+    let name_str = CString::safe_new(name_str).unwrap();
     unsafe { Fl_set_scheme(name_str.as_ptr()) }
 }
 
@@ -173,7 +173,7 @@ impl App {
         let mut v: Vec<Window> = vec![];
         let first = first_window();
         first.as_ref()?;
-        let first = first.unwrap();
+        let first = first?;
         v.push(first.clone());
         let mut win = first;
         while let Some(wind) = next_window(&win) {
@@ -349,10 +349,6 @@ where
     W: WidgetExt,
 {
     assert!(!widget.was_deleted());
-    // debug_assert!(
-    //     widget.top_window().unwrap().takes_events() && widget.takes_events(),
-    //     "Handling events requires that the window and widget be active!"
-    // );
     unsafe {
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -381,7 +377,7 @@ where
 
 /// Initializes loaded fonts of a certain pattern ```name```
 pub fn set_fonts(name: &str) -> u8 {
-    let name = CString::new(name).unwrap();
+    let name = CString::safe_new(name).unwrap();
     unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
 
@@ -435,6 +431,7 @@ pub fn font_count() -> usize {
 
 /// Gets a Vector<String> of loaded fonts
 pub fn fonts() -> Vec<String> {
+    // Shouldn't fail
     unsafe { FONTS.clone().unwrap() }
 }
 
@@ -610,11 +607,6 @@ pub fn quit() {
 
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
 pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
-    // let main_win = first_window();
-    // debug_assert!(
-    //     main_win.is_some() && main_win.unwrap().takes_events(),
-    //     "Main Window is unable to take events!"
-    // );
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -632,11 +624,6 @@ pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
 /// You may only call this method inside a timeout callback.
 /// The timeout duration `tm` is indicated in seconds
 pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
-    // let main_win = first_window();
-    // debug_assert!(
-    //     main_win.is_some() && main_win.unwrap().takes_events(),
-    //     "Main Window is unable to take events!"
-    // );
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;

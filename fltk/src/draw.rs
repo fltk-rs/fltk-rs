@@ -524,13 +524,13 @@ pub fn descent() -> i32 {
 
 /// Returns the typographical width of a string
 pub fn width(txt: &str) -> f64 {
-    let txt = CString::new(txt).unwrap();
+    let txt = CString::safe_new(txt).unwrap();
     unsafe { Fl_width(txt.as_ptr()) }
 }
 
 /// Returns the typographical width of a sequence of n characters
 pub fn width2(txt: &str, n: i32) -> f64 {
-    let txt = CString::new(txt).unwrap();
+    let txt = CString::safe_new(txt).unwrap();
     unsafe { Fl_width2(txt.as_ptr(), n) }
 }
 
@@ -541,7 +541,7 @@ pub fn char_width(c: char) -> f64 {
 
 /// Converts text from Windows/X11 latin1 character set to local encoding
 pub fn latin1_to_local(txt: &str, n: i32) -> String {
-    let txt = CString::new(txt).unwrap();
+    let txt = CString::safe_new(txt).unwrap();
     unsafe {
         let x = Fl_latin1_to_local(txt.as_ptr(), n);
         assert!(!x.is_null());
@@ -553,7 +553,7 @@ pub fn latin1_to_local(txt: &str, n: i32) -> String {
 
 /// Converts text from local encoding to Windowx/X11 latin1 character set
 pub fn local_to_latin1(txt: &str, n: i32) -> String {
-    let txt = CString::new(txt).unwrap();
+    let txt = CString::safe_new(txt).unwrap();
     unsafe {
         let x = Fl_local_to_latin1(txt.as_ptr(), n);
         assert!(!x.is_null());
@@ -565,39 +565,39 @@ pub fn local_to_latin1(txt: &str, n: i32) -> String {
 
 /// Draws a string starting at the given x, y location
 pub fn draw_text(txt: &str, x: i32, y: i32) {
-    let txt = CString::new(txt).unwrap();
+    let txt = CString::safe_new(txt).unwrap();
     unsafe { Fl_draw(txt.as_ptr(), x, y) }
 }
 
 /// Draws a string starting at the given x, y location with width and height and alignment
 pub fn draw_text2(string: &str, x: i32, y: i32, width: i32, height: i32, align: Align) {
-    let s = CString::new(string).unwrap();
+    let s = CString::safe_new(string).unwrap();
     unsafe { Fl_draw_text2(s.as_ptr(), x, y, width, height, align as i32) }
 }
 
 /// Draws a string starting at the given x, y location, rotated to an angle
 pub fn draw_text_angled(angle: i32, txt: &str, x: i32, y: i32) {
-    let txt = CString::new(txt).unwrap();
+    let txt = CString::safe_new(txt).unwrap();
     unsafe { Fl_draw2(angle, txt.as_ptr(), x, y) }
 }
 
 /// Draws a UTF-8 string right to left starting at the given x, y location
 pub fn rtl_draw(txt: &str, x: i32, y: i32) {
     let n = txt.len() as i32;
-    let txt = CString::new(txt).unwrap();
+    let txt = CString::safe_new(txt).unwrap();
     unsafe { Fl_rtl_draw(txt.as_ptr(), n, x, y) }
 }
 
 /// Draws a frame with text
 pub fn draw_frame(string: &str, x: i32, y: i32, width: i32, height: i32) {
-    let s = CString::new(string).unwrap();
+    let s = CString::safe_new(string).unwrap();
     unsafe { Fl_frame(s.as_ptr(), x, y, width, height) }
 }
 
 /// Draws a frame with text.
 /// Differs from frame() by the order of the line segments
 pub fn draw_frame2(string: &str, x: i32, y: i32, width: i32, height: i32) {
-    let s = CString::new(string).unwrap();
+    let s = CString::safe_new(string).unwrap();
     unsafe { Fl_frame2(s.as_ptr(), x, y, width, height) }
 }
 
@@ -730,7 +730,7 @@ pub fn write_to_png_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
             "Could not convert path to string!",
         )));
     }
-    let path = std::ffi::CString::new(path.unwrap())?;
+    let path = std::ffi::CString::safe_new(path.unwrap())?;
     unsafe {
         match Fl_raw_image_to_png(
             *image.to_raw_data() as *mut u8,
@@ -761,7 +761,7 @@ pub fn write_to_jpg_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
             "Could not convert path to string!",
         )));
     }
-    let path = std::ffi::CString::new(path.unwrap())?;
+    let path = std::ffi::CString::safe_new(path.unwrap())?;
     unsafe {
         match Fl_raw_image_to_jpg(
             *image.to_raw_data() as *mut u8,
@@ -792,7 +792,7 @@ pub fn write_to_bmp_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
             "Could not convert path to string!",
         )));
     }
-    let path = std::ffi::CString::new(path.unwrap())?;
+    let path = std::ffi::CString::safe_new(path.unwrap())?;
     unsafe {
         match Fl_raw_image_to_bmp(
             *image.to_raw_data() as *mut u8,

@@ -81,6 +81,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 let mut v: Vec<Option<Box<dyn FnMut()>>> = vec![];
                 if sz > 0 {
                     for i in 0..sz {
+                        // Shouldn't fail
                         v.push(self.child(i).unwrap().user_data());
                     }
                 }

@@ -67,12 +67,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl MenuExt for #name {
             fn add(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: Box<dyn FnMut()>) {
-                // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(),
-                //     "Handling events requires that the window and widget be active!"
-                // );
                 assert!(!self.was_deleted());
-                let temp = CString::new(name).unwrap();
+                let temp = CString::safe_new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -87,12 +83,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn insert(&mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut()>) {
-                // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(),
-                //     "Handling events requires that the window and widget be active!"
-                // );
                 assert!(!self.was_deleted());
-                let temp = CString::new(name).unwrap();
+                let temp = CString::safe_new(name).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -140,7 +132,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn find_item(&self, name: &str) -> Option<MenuItem> {
                 assert!(!self.was_deleted());
-                let name = CString::new(name).unwrap().clone();
+                let name = CString::safe_new(name).unwrap();
                 unsafe {
                     let menu_item = #get_item(
                         self._inner,
@@ -168,9 +160,9 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn find_index(&self, label: &str) -> u32 {
                 assert!(!self.was_deleted());
-                let label = CString::new(label).unwrap().as_ptr() as *mut raw::c_char;
+                let label = CString::safe_new(label).unwrap();
                 unsafe {
-                    #find_index(self._inner, label) as u32
+                    #find_index(self._inner, label.as_ptr()) as u32
                 }
             }
 
@@ -220,7 +212,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn add_choice(&mut self, text: &str) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let arg2 = CString::new(text).unwrap();
+                    let arg2 = CString::safe_new(text).unwrap();
                     #add_choice(self._inner, arg2.as_ptr() as *mut raw::c_char)
                 }
             }
@@ -264,6 +256,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 let sz = self.size();
                 if sz > 0 {
                     for i in 0..sz {
+                        // Shouldn't fail
                         let mut c = self.at(i).unwrap();
                         c.set_callback(Box::new(move || { /* Do nothing! */ }));
                     }
@@ -302,6 +295,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
                 let mut i = idx;
                 loop {
+                    // Shouldn't fail
                     let mut item = self.at(i).unwrap();
                     if item.label().is_none() {
                         break;
