@@ -954,9 +954,9 @@ impl FlString for std::ffi::CString {
     fn safe_new(txt: &str) -> Result<std::ffi::CString, FltkError> {
         if let Some(val) = txt.find('\0') {
             let (x, _y) = txt.split_at(val);
-            Ok(std::ffi::CString::safe_new(x)?)
+            Ok(std::ffi::CString::new(x)?)
         } else {
-            Ok(std::ffi::CString::safe_new(txt)?)
+            Ok(std::ffi::CString::new(txt)?)
         }
     }
 }
