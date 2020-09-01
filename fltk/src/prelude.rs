@@ -945,3 +945,18 @@ pub unsafe trait ImageExt {
     /// Checks if the image was deleted
     fn was_deleted(&self) -> bool;
 }
+
+pub(crate) trait FlString {
+    fn safe_new(txt: &str) -> Result<std::ffi::CString, FltkError>;
+}
+
+impl FlString for std::ffi::CString {
+    fn safe_new(txt: &str) -> Result<std::ffi::CString, FltkError> {
+        if let Some(val) = txt.find('\0') {
+            let (x, _y) = txt.split_at(val);
+            Ok(std::ffi::CString::safe_new(x)?)
+        } else {
+            Ok(std::ffi::CString::safe_new(txt)?)
+        }
+    }
+}

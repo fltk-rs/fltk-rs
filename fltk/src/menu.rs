@@ -66,7 +66,7 @@ impl MenuItem {
             let sz = choices.len();
             let mut temp: Vec<*mut raw::c_char> = vec![];
             for &choice in choices {
-                temp.push(CString::new(choice).unwrap().into_raw());
+                temp.push(CString::safe_new(choice).unwrap().into_raw());
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
@@ -120,7 +120,7 @@ impl MenuItem {
             if !ptr.is_null() {
                 let _ = CString::from_raw(ptr);
             }
-            let txt = CString::new(txt).unwrap();
+            let txt = CString::safe_new(txt).unwrap();
             Fl_Menu_Item_set_label(self._inner, txt.into_raw());
         }
     }

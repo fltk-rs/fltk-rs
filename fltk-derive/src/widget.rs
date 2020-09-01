@@ -209,7 +209,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
         unsafe impl WidgetExt for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                let temp = CString::new(title).unwrap();
+                let temp = CString::safe_new(title).unwrap();
                 unsafe {
                     let widget_ptr = #new(x, y, width, height, std::ptr::null() as *const raw::c_char);
                     assert!(!widget_ptr.is_null());
@@ -224,7 +224,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn default() -> Self {
-                let temp = CString::new("").unwrap();
+                let temp = CString::safe_new("").unwrap();
                 unsafe {
                     let widget_ptr = #new(
                         0,
@@ -273,7 +273,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_label(&mut self, title: &str) {
                 assert!(!self.was_deleted());
-                let temp = CString::new(title).unwrap();
+                let temp = CString::safe_new(title).unwrap();
                 unsafe {
                     #set_label(
                         self._inner,
@@ -377,7 +377,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_tooltip(&mut self, txt: &str) {
                 assert!(!self.was_deleted());
-                let txt = CString::new(txt).unwrap();
+                let txt = CString::safe_new(txt).unwrap();
                 unsafe {
                     #set_tooltip(
                         self._inner,
@@ -538,10 +538,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
                 assert!(!self.was_deleted());
-                // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(),
-                //     "Handling events requires that the window and widget be active!"
-                // );
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -563,18 +559,11 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         self.set_user_data(std::ptr::null_mut() as *mut raw::c_void);
                         let old_data = old_data.unwrap();
                     }
-                    // let callback: Option<unsafe extern "C" fn(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void)> = None;
-                    // fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, std::ptr::null_mut());
-                    // self.set_callback(Box::new(move || {/* do nothing! */} ));
                 }
             }
 
             fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>) {
                 assert!(!self.was_deleted());
-                // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(),
-                //     "Handling events requires that the window and widget be active!"
-                // );
                 unsafe {
                     unsafe extern "C" fn shim(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let ev: Event = mem::transmute(_ev);
@@ -599,10 +588,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn draw(&mut self, cb: Box<dyn FnMut()>) {
                 assert!(!self.was_deleted());
-                // debug_assert!(
-                //     self.top_window().unwrap().takes_events() && self.takes_events(),
-                //     "Handling events requires that the window and widget be active!"
-                // );
                 unsafe {
                     unsafe extern "C" fn shim(data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
