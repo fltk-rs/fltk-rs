@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.8.4] - 2020-08-21
+## [0.8.4] - 2020-09-01
 ### Changes
 - Remove potentially failing internal unwraps.
 
