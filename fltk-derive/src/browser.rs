@@ -320,7 +320,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_format_char(&mut self, c: char) {
                 assert!(!self.was_deleted());
-                assert!(c.is_ascii());
+                let c = if c as i32 > 128 { 128 as char } else { c };
                 unsafe {
                     #set_format_char(self._inner, c as raw::c_char)
                 }
@@ -335,7 +335,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_column_char(&mut self, c: char) {
                 assert!(!self.was_deleted());
-                assert!(c.is_ascii());
+                let c = if c as i32 > 128 { 128 as char } else { c };
                 unsafe {
                     #set_column_char(self._inner, c as raw::c_char)
                 }

@@ -82,7 +82,7 @@ pub enum FrameType {
 impl FrameType {
     /// Gets the Frame type by index
     pub fn by_index(idx: usize) -> FrameType {
-        assert!(idx < 57);
+        let idx = if idx > 56 { 56 } else { idx };
         unsafe { std::mem::transmute(idx as i32) }
     }
 }
