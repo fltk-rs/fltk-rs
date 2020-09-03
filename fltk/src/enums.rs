@@ -118,19 +118,14 @@ pub enum Font {
     Screen = 13,
     ScreenBold = 14,
     Zapfdingbats = 15,
-    Freefont = 16,
 }
 
 impl Font {
     /// Returns a font by index, can be queried via the app::get_font_names()
     pub fn by_index(idx: usize) -> Font {
         unsafe {
-            if let Some(f) = &FONTS {
-                if idx < f.len() {
-                    std::mem::transmute(idx as i32)
-                } else {
-                    Font::Helvetica
-                }
+            if idx < 17 {
+                std::mem::transmute(idx as i32)
             } else {
                 Font::Helvetica
             }

@@ -13,7 +13,7 @@ use std::{
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
 /// The fonts associated with the application
-pub(crate) static mut FONTS: Option<Vec<String>> = None;
+pub(crate) static mut FONTS: Vec<&str> = vec![];
 
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
@@ -109,6 +109,26 @@ impl App {
     pub fn default() -> App {
         register_images();
         init_all();
+        unsafe {
+            FONTS = vec![
+                "Helvetica",
+                "HelveticaBold",
+                "HelveticaItalic",
+                "HelveticaBoldItalic",
+                "Courier",
+                "CourierBold",
+                "CourierItalic",
+                "CourierBoldItalic",
+                "Times",
+                "TimesBold",
+                "TimesItalic",
+                "TimesBoldItalic",
+                "Symbol",
+                "Screen",
+                "ScreenBold",
+                "Zapfdingbats",
+            ];
+        }
         App {}
     }
 
@@ -143,7 +163,8 @@ impl App {
     /// Loads system fonts
     pub fn load_system_fonts(self) -> Self {
         unsafe {
-            FONTS = Some(get_font_names());
+            let mut temp = get_font_names();
+            FONTS.append(&mut temp);
         }
         self
     }
@@ -382,25 +403,20 @@ pub fn set_fonts(name: &str) -> u8 {
 }
 
 /// Gets the name of a font through its index
-pub fn font_name(idx: usize) -> Option<String> {
+pub fn font_name(idx: usize) -> Option<&'static str> {
     unsafe {
-        if let Some(f) = &FONTS {
-            Some(f[idx].clone())
-        } else {
-            None
-        }
+        Some(FONTS[idx])
     }
 }
 
 /// Returns a list of available fonts to the application
-pub fn get_font_names() -> Vec<String> {
-    let mut vec: Vec<String> = vec![];
+pub fn get_font_names() -> Vec<&'static str> {
+    let mut vec: Vec<&str> = vec![];
     let cnt = set_fonts("*") as usize;
-    for i in 0..cnt {
+    for i in 16..cnt {
         let temp = unsafe {
             CStr::from_ptr(Fl_get_font(i as i32))
-                .to_string_lossy()
-                .to_string()
+                .to_str().unwrap()
         };
         vec.push(temp);
     }
@@ -410,29 +426,20 @@ pub fn get_font_names() -> Vec<String> {
 /// Finds the index of a font through its name
 pub fn font_index(name: &str) -> Option<usize> {
     unsafe {
-        if let Some(f) = &FONTS {
-            f.iter().position(|i| i == name)
-        } else {
-            None
-        }
+        FONTS.iter().position(|&i| i == name)
     }
 }
 
 /// Gets the number of loaded fonts
 pub fn font_count() -> usize {
     unsafe {
-        if let Some(f) = &FONTS {
-            f.len()
-        } else {
-            0
-        }
+        FONTS.len()
     }
 }
 
 /// Gets a Vector<String> of loaded fonts
-pub fn fonts() -> Vec<String> {
-    // Shouldn't fail
-    unsafe { FONTS.clone().unwrap() }
+pub fn fonts() -> Vec<&'static str> {
+    unsafe { FONTS.clone() }
 }
 
 /// Adds a custom handler for unhandled events
@@ -883,3 +890,9 @@ pub fn dnd() {
         Fl_dnd();
     }
 }
+
+// pub fn load_font(path: &std::path::Path) {
+//     unsafe {
+//         // FONTS.append("".to_owned());
+//     }
+// }
