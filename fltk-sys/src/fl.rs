@@ -216,5 +216,8 @@ extern "C" {
     pub fn Fl_abi_version() -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_load_font(path: *const libc::c_char, name: *const libc::c_char, idx: libc::c_uint);
+    pub fn Fl_load_font(path: *const libc::c_char, name: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_unload_font(path: *const libc::c_char);
 }

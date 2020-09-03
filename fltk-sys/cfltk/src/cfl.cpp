@@ -367,9 +367,14 @@ if (fontURL) CFRelease (fontURL);
 
 #endif
 
-void Fl_load_font(const char *path, const char *name, unsigned int idx) {
+void Fl_load_font(const char *path, const char *name) {
     auto ret = i_load_private_font(path);
+    auto f = 16;
     if (ret) {
-        Fl::set_font(idx, name);
+        Fl::set_font(f, name);
     }
+}
+
+void Fl_unload_font(const char *path) {
+    v_unload_private_font(path);
 }

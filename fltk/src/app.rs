@@ -13,7 +13,7 @@ use std::{
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
 /// The fonts associated with the application
-pub(crate) static mut FONTS: Vec<&str> = vec![];
+pub(crate) static mut FONTS: Vec<String> = Vec::new();
 
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
@@ -111,22 +111,22 @@ impl App {
         init_all();
         unsafe {
             FONTS = vec![
-                "Helvetica",
-                "HelveticaBold",
-                "HelveticaItalic",
-                "HelveticaBoldItalic",
-                "Courier",
-                "CourierBold",
-                "CourierItalic",
-                "CourierBoldItalic",
-                "Times",
-                "TimesBold",
-                "TimesItalic",
-                "TimesBoldItalic",
-                "Symbol",
-                "Screen",
-                "ScreenBold",
-                "Zapfdingbats",
+                "Helvetica".to_owned(),
+                "HelveticaBold".to_owned(),
+                "HelveticaItalic".to_owned(),
+                "HelveticaBoldItalic".to_owned(),
+                "Courier".to_owned(),
+                "CourierBold".to_owned(),
+                "CourierItalic".to_owned(),
+                "CourierBoldItalic".to_owned(),
+                "Times".to_owned(),
+                "TimesBold".to_owned(),
+                "TimesItalic".to_owned(),
+                "TimesBoldItalic".to_owned(),
+                "Symbol".to_owned(),
+                "Screen".to_owned(),
+                "ScreenBold".to_owned(),
+                "Zapfdingbats".to_owned(),
             ];
         }
         App {}
@@ -163,8 +163,7 @@ impl App {
     /// Loads system fonts
     pub fn load_system_fonts(self) -> Self {
         unsafe {
-            let mut temp = get_font_names();
-            FONTS.append(&mut temp);
+            FONTS = get_font_names();
         }
         self
     }
@@ -403,20 +402,20 @@ pub fn set_fonts(name: &str) -> u8 {
 }
 
 /// Gets the name of a font through its index
-pub fn font_name(idx: usize) -> Option<&'static str> {
+pub fn font_name(idx: usize) -> Option<String> {
     unsafe {
-        Some(FONTS[idx])
+        Some(FONTS[idx].clone())
     }
 }
 
 /// Returns a list of available fonts to the application
-pub fn get_font_names() -> Vec<&'static str> {
-    let mut vec: Vec<&str> = vec![];
+pub fn get_font_names() -> Vec<String> {
+    let mut vec: Vec<String> = vec![];
     let cnt = set_fonts("*") as usize;
-    for i in 16..cnt {
+    for i in 0..cnt {
         let temp = unsafe {
             CStr::from_ptr(Fl_get_font(i as i32))
-                .to_str().unwrap()
+                .to_string_lossy().to_string()
         };
         vec.push(temp);
     }
@@ -426,7 +425,7 @@ pub fn get_font_names() -> Vec<&'static str> {
 /// Finds the index of a font through its name
 pub fn font_index(name: &str) -> Option<usize> {
     unsafe {
-        FONTS.iter().position(|&i| i == name)
+        FONTS.iter().position(|i| i == name)
     }
 }
 
@@ -438,7 +437,7 @@ pub fn font_count() -> usize {
 }
 
 /// Gets a Vector<String> of loaded fonts
-pub fn fonts() -> Vec<&'static str> {
+pub fn fonts() -> Vec<String> {
     unsafe { FONTS.clone() }
 }
 
@@ -896,8 +895,26 @@ pub fn load_font(path: &str, name: &'static str) -> Result<(), FltkError> {
     unsafe {
         let path = CString::new(path)?;
         let name_cstr = CString::new(name)?;
-        Fl_load_font(path.as_ptr(), name_cstr.as_ptr(), FONTS.len() as u32);
-        FONTS.push(name);
+        Fl_load_font(path.as_ptr(), name_cstr.into_raw());
+        if FONTS.len() < 17 {
+            FONTS.push(name.to_owned());
+        } else {
+            FONTS[16] = name.to_owned();
+        }
+        Ok(())
+    }
+}
+
+/// Unload a loaded font
+pub fn unload_font(path: &str, name: &'static str) -> Result<(), FltkError> {
+    unsafe {
+        let path = CString::new(path)?;
+        Fl_unload_font(path.as_ptr());
+        if FONTS.len() > 17 {
+            if FONTS[16].as_str() == name {
+                FONTS.remove(16);
+            }
+        }
         Ok(())
     }
 }
