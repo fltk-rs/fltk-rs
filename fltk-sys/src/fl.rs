@@ -216,17 +216,5 @@ extern "C" {
     pub fn Fl_abi_version() -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_set_error(
-        error: ::core::option::Option<unsafe extern "C" fn(arg1: *const libc::c_char, ...)>,
-    );
-}
-extern "C" {
-    pub fn Fl_set_warning(
-        error: ::core::option::Option<unsafe extern "C" fn(arg1: *const libc::c_char, ...)>,
-    );
-}
-extern "C" {
-    pub fn Fl_set_fatal(
-        error: ::core::option::Option<unsafe extern "C" fn(arg1: *const libc::c_char, ...)>,
-    );
+    pub fn Fl_load_font(path: *const libc::c_char, name: *const libc::c_char, idx: libc::c_uint);
 }

@@ -1,3 +1,13 @@
+#ifdef _WIN32
+# define _WIN32_WINNT 0x0501 /* need at least WinXP for this API, I think */
+# include <windows.h>
+#elif __APPLE__
+# include <ApplicationServices/ApplicationServices.h>
+#else /* Assume X11 with XFT/fontconfig - this will break on systems using legacy Xlib fonts */
+# include <fontconfig/fontconfig.h>
+# define USE_XFT 1
+#endif
+
 #include <FL/Fl.H> // Has to be the first include!
 
 #include "cfl.h"
@@ -302,3 +312,64 @@ int Fl_abi_version(void) {
 // void Fl_set_fatal(void (*error)(const char *, ...)) {
 //     Fl::fatal = error;
 // }
+
+#ifdef _WIN32
+
+# define i_load_private_font(PATH) AddFontResourceEx((PATH),FR_PRIVATE,0)
+# define v_unload_private_font(PATH) RemoveFontResourceEx((PATH),FR_PRIVATE,0)
+
+#elif __APPLE__
+# include <stdio.h> // I use printf for error reporting in the Apple specific code!
+/* For the Apple case, we need to do a bit more work, since we need to convert
+* the PATH into a CFURLRef before we can call CTFontManagerRegisterFontsForURL()
+* with it.
+* Otherwise, all three systems would have basically the same structure here! */
+static int i_load_private_font (const char *pf)
+{
+int result = 0;
+CFErrorRef err;
+// Make a URL from the font name given
+CFURLRef fontURL = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault,
+(const UInt8*)pf,
+strlen(pf),
+false);
+// Try to load the font file
+if (CTFontManagerRegisterFontsForURL(fontURL, kCTFontManagerScopeProcess, &err))
+{
+result = 1; // OK, we loaded the font, set this non-zero
+}
+else
+{
+printf ("Failed loading font: %s\n", pf);
+}
+// discard the fontURL
+if (fontURL) CFRelease (fontURL);
+return result;
+} // i_load_private_font
+
+static void v_unload_private_font (const char *pf)
+{
+CFErrorRef err;
+// Make a URL from the font name given
+CFURLRef fontURL = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault,
+(const UInt8*)pf,
+strlen(pf),
+false);
+// Try to unregister the font
+CTFontManagerUnregisterFontsForURL(fontURL, kCTFontManagerScopeProcess, &err);
+if (fontURL) CFRelease (fontURL);
+} // v_unload_private_font
+
+#else /* Assume X11 with XFT/fontconfig - will break on systems using legacy Xlib fonts */
+
+# define i_load_private_font(PATH) (int)FcConfigAppFontAddFile(NULL,(const FcChar8 *)(PATH))
+# define v_unload_private_font(PATH) FcConfigAppFontClear(NULL)
+
+#endif
+
+void Fl_load_font(const char *path, const char *name, unsigned int idx) {
+    auto ret = i_load_private_font(path);
+    if (ret) {
+        Fl::set_font(idx, name);
+    }
+}

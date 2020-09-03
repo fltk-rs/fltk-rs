@@ -891,8 +891,13 @@ pub fn dnd() {
     }
 }
 
-// pub fn load_font(path: &std::path::Path) {
-//     unsafe {
-//         // FONTS.append("".to_owned());
-//     }
-// }
+/// Load a font from a file
+pub fn load_font(path: &str, name: &'static str) -> Result<(), FltkError> {
+    unsafe {
+        let path = CString::new(path)?;
+        let name_cstr = CString::new(name)?;
+        Fl_load_font(path.as_ptr(), name_cstr.as_ptr(), FONTS.len() as u32);
+        FONTS.push(name);
+        Ok(())
+    }
+}
