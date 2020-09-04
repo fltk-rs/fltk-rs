@@ -364,9 +364,8 @@ static void v_unload_private_font(const char *pf) {
 
 #endif
 
-unsigned char ttf_buffer[1 << 25];
-
 const char *Fl_load_font(const char *path) {
+    unsigned char *ttf_buffer = (unsigned char *)malloc(1 << 25);
     stbtt_fontinfo font;
     FILE *fptr = fopen(path, "rb");
     if (!fptr)
@@ -383,6 +382,7 @@ const char *Fl_load_font(const char *path) {
     if (ret) {
         Fl::set_font(f, str);
     }
+    free(ttf_buffer);
     return str;
 }
 
