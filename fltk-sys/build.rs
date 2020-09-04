@@ -84,12 +84,6 @@ fn main() {
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
 
-        Command::new("git")
-            .args(&["checkout", "master"])
-            .current_dir(manifest_dir.join("cfltk").join("fltk"))
-            .status()
-            .expect("Git is needed to retrieve the fltk source files!");
-
         if cfg!(feature = "fltk-shared") {
             dst.define("CFLTK_BUILD_SHARED", "ON");
         }
@@ -147,7 +141,8 @@ fn main() {
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("OPTION_ABI_VERSION:STRING", "10401")
-            .define("OPTION_BUILD_EXAMPLES", "OFF")
+            .define("FLTK_BUILD_EXAMPLES", "OFF")
+            .define("FLTK_BUILD_TEST", "OFF")
             .define("OPTION_USE_THREADS", "ON")
             .define("OPTION_LARGE_FILE", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
