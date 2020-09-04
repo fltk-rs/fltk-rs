@@ -15,6 +15,8 @@ pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 /// The fonts associated with the application
 pub(crate) static mut FONTS: Vec<String> = Vec::new();
 
+static mut LOADED_FONT: Option<&str> = None;
+
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
     unsafe {
@@ -592,6 +594,12 @@ pub fn next_window<W: WindowExt>(w: &W) -> Option<Window> {
 
 /// Quit the app
 pub fn quit() {
+    unsafe {
+        if let Some(loaded_font) = LOADED_FONT {
+            // Shouldn't fail
+            unload_font(loaded_font).unwrap_or(());
+        }
+    }
     let mut v: Vec<Window> = vec![];
     let first = first_window();
     if first.is_none() {
@@ -895,6 +903,9 @@ pub fn load_font(path: &str, name: &'static str) -> Result<(), FltkError> {
     unsafe {
         let path = CString::new(path)?;
         let name_cstr = CString::new(name)?;
+        if let Some(load_font) = &LOADED_FONT {
+            unload_font(load_font).unwrap_or(());
+        }
         Fl_load_font(path.as_ptr(), name_cstr.into_raw());
         if FONTS.len() < 17 {
             FONTS.push(name.to_owned());
@@ -906,15 +917,10 @@ pub fn load_font(path: &str, name: &'static str) -> Result<(), FltkError> {
 }
 
 /// Unload a loaded font
-pub fn unload_font(path: &str, name: &'static str) -> Result<(), FltkError> {
+fn unload_font(path: &str) -> Result<(), FltkError> {
     unsafe {
         let path = CString::new(path)?;
         Fl_unload_font(path.as_ptr());
-        if FONTS.len() > 17 {
-            if FONTS[16].as_str() == name {
-                FONTS.remove(16);
-            }
-        }
         Ok(())
     }
 }
