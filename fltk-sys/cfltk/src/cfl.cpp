@@ -376,6 +376,10 @@ const char *Fl_load_font(const char *path) {
     auto fsize = ftell(fptr);
     rewind(fptr);
     unsigned char *buffer = (unsigned char *)malloc(fsize);
+    if (!buffer) {
+        fclose(fptr);
+        return nullptr;
+    }
     auto sz = fread(buffer, 1, fsize, fptr);
     fclose(fptr);
     if (sz != fsize) {
