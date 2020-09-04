@@ -365,13 +365,28 @@ static void v_unload_private_font(const char *pf) {
 #endif
 
 const char *Fl_load_font(const char *path) {
-    unsigned char *ttf_buffer = (unsigned char *)malloc(1 << 25);
     stbtt_fontinfo font;
     FILE *fptr = fopen(path, "rb");
     if (!fptr)
         return nullptr;
-    fread(ttf_buffer, 1, 1 << 25, fptr);
-    stbtt_InitFont(&font, ttf_buffer, stbtt_GetFontOffsetForIndex(ttf_buffer, 0));
+    if (fseek(fptr, 0, SEEK_END)) {
+        fclose(fptr);
+        return nullptr;
+    }
+    auto fsize = ftell(fptr);
+    rewind(fptr);
+    unsigned char *buffer = (unsigned char *)malloc(fsize);
+    auto sz = fread(buffer, 1, fsize, fptr);
+    fclose(fptr);
+    if (sz != fsize) {
+        free(buffer);
+        return nullptr;
+    }
+    auto init_ret = stbtt_InitFont(&font, buffer, stbtt_GetFontOffsetForIndex(buffer, 0));
+    if (!init_ret) {
+        free(buffer);
+        return nullptr;
+    }
     int length = 0;
     auto info = stbtt_GetFontNameString(&font, &length, STBTT_PLATFORM_ID_MAC,
                                         STBTT_UNICODE_EID_UNICODE_1_0, STBTT_MAC_EID_ROMAN, 1);
@@ -382,7 +397,7 @@ const char *Fl_load_font(const char *path) {
     if (ret) {
         Fl::set_font(f, str);
     }
-    free(ttf_buffer);
+    free(buffer);
     return str;
 }
 
