@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.8.5] - Unreleased
+## [0.8.5] - 2020-09-04
 ### Changes
 - Add App::load_font() to load a font from a path.
 - Update build.rs to reflect latest FLTK cmake options.
