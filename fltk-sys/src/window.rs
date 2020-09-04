@@ -2438,9 +2438,6 @@ extern "C" {
     pub fn Fl_Window_border(arg1: *const Fl_Window) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut libc::c_void);
-}
-extern "C" {
     pub fn Fl_Window_region(self_: *const Fl_Window) -> *mut libc::c_void;
 }
 extern "C" {
@@ -2470,6 +2467,9 @@ extern "C" {
         argc: libc::c_int,
         argv: *mut *mut libc::c_char,
     );
+}
+extern "C" {
+    pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut libc::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2772,9 +2772,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Single_Window_border(arg1: *const Fl_Single_Window) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Single_Window_set_raw_handle(self_: *mut Fl_Single_Window, handle: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Single_Window_region(self_: *const Fl_Single_Window) -> *mut libc::c_void;
@@ -3094,9 +3091,6 @@ extern "C" {
     pub fn Fl_Double_Window_border(arg1: *const Fl_Double_Window) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_raw_handle(self_: *mut Fl_Double_Window, handle: *mut libc::c_void);
-}
-extern "C" {
     pub fn Fl_Double_Window_region(self_: *const Fl_Double_Window) -> *mut libc::c_void;
 }
 extern "C" {
@@ -3408,9 +3402,6 @@ extern "C" {
     pub fn Fl_Menu_Window_border(arg1: *const Fl_Menu_Window) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_raw_handle(self_: *mut Fl_Menu_Window, handle: *mut libc::c_void);
-}
-extern "C" {
     pub fn Fl_Menu_Window_region(self_: *const Fl_Menu_Window) -> *mut libc::c_void;
 }
 extern "C" {
@@ -3710,9 +3701,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_border(arg1: *const Fl_Gl_Window) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Gl_Window_set_raw_handle(self_: *mut Fl_Gl_Window, handle: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Gl_Window_region(self_: *const Fl_Gl_Window) -> *mut libc::c_void;

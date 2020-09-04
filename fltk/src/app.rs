@@ -170,6 +170,19 @@ impl App {
         self
     }
 
+    /// Loads a font from a path
+    pub fn load_font(&self, path: &std::path::Path) -> Result<String, FltkError> {
+        if !path.exists() {
+            return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        if let Some(p) = path.to_str() {
+            let name = load_font(p)?;
+            Ok(name)
+        } else {
+            Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+        }
+    }
+
     /// Set the visual of the application
     pub fn set_visual(&self, mode: Mode) -> Result<(), FltkError> {
         set_visual(mode)
@@ -899,24 +912,24 @@ pub fn dnd() {
 }
 
 /// Load a font from a file
-pub fn load_font(path: &str, name: &'static str) -> Result<(), FltkError> {
+fn load_font(path: &str) -> Result<String, FltkError> {
     unsafe {
-        let check = std::path::PathBuf::from(path);
-        if !check.exists() {
-            return Err::<(), FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
-        }
         let path = CString::new(path)?;
-        let name_cstr = CString::new(name)?;
         if let Some(load_font) = &LOADED_FONT {
             unload_font(load_font).unwrap_or(());
         }
-        Fl_load_font(path.as_ptr(), name_cstr.into_raw());
-        if FONTS.len() < 17 {
-            FONTS.push(name.to_owned());
+        let ptr = Fl_load_font(path.as_ptr());
+        if ptr.is_null() {
+            return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation));
         } else {
-            FONTS[16] = name.to_owned();
+            let name = CString::from_raw(ptr as *mut _).to_string_lossy().to_string();
+            if FONTS.len() < 17 {
+                FONTS.push(name.clone());
+            } else {
+                FONTS[16] = name.clone();
+            }
+            Ok(name)
         }
-        Ok(())
     }
 }
 
