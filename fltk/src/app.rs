@@ -901,6 +901,10 @@ pub fn dnd() {
 /// Load a font from a file
 pub fn load_font(path: &str, name: &'static str) -> Result<(), FltkError> {
     unsafe {
+        let check = std::path::PathBuf::from(path);
+        if !check.exists() {
+            return Err::<(), FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
         let path = CString::new(path)?;
         let name_cstr = CString::new(name)?;
         if let Some(load_font) = &LOADED_FONT {
@@ -919,6 +923,10 @@ pub fn load_font(path: &str, name: &'static str) -> Result<(), FltkError> {
 /// Unload a loaded font
 fn unload_font(path: &str) -> Result<(), FltkError> {
     unsafe {
+        let check = std::path::PathBuf::from(path);
+        if !check.exists() {
+            return Err::<(), FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
         let path = CString::new(path)?;
         Fl_unload_font(path.as_ptr());
         Ok(())
