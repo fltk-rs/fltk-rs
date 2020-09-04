@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.8.5] - Unreleased
+### Changes
+- Add App::load_font() to load a font from a path.
+
 ## [0.8.4] - 2020-09-01
 ### Changes
 - Remove potentially failing internal unwraps.

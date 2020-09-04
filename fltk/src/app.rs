@@ -170,7 +170,18 @@ impl App {
         self
     }
 
-    /// Loads a font from a path
+    /// Loads a font from a path.
+    /// On success, returns a String with the ttf Font Family name. The font's index is always 16.
+    /// As such only one font can be loaded at a time.
+    /// The font name can be used with Font::by_name, and index with Font::by_index.
+    /// # Examples
+    /// ```
+    /// use fltk::*;
+    /// let app = app::App::default();
+    /// let font = app.load_font(&std::path::Path::new("font.ttf")).unwrap();
+    /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
+    /// frame.set_label_font(Font::by_name(&font));
+    /// ```
     pub fn load_font(&self, path: &std::path::Path) -> Result<String, FltkError> {
         if !path.exists() {
             return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -915,12 +926,12 @@ pub fn dnd() {
 fn load_font(path: &str) -> Result<String, FltkError> {
     unsafe {
         let path = CString::new(path)?;
-        if let Some(load_font) = &LOADED_FONT {
-            unload_font(load_font).unwrap_or(());
+        if let Some(load_font) = LOADED_FONT {
+            unload_font(load_font)?;
         }
         let ptr = Fl_load_font(path.as_ptr());
         if ptr.is_null() {
-            return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation));
+            Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let name = CString::from_raw(ptr as *mut _).to_string_lossy().to_string();
             if FONTS.len() < 17 {

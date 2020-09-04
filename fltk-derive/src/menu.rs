@@ -289,6 +289,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 if x.is_none() {
                     return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                 }
+                // Shouldn't fail
                 let x = x.unwrap();
                 if !x.is_submenu() {
                     return Err(FltkError::Internal(FltkErrorKind::FailedOperation));

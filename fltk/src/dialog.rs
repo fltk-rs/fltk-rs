@@ -116,7 +116,7 @@ impl FileDialog {
 
     /// Sets the starting directory
     pub fn set_directory(&mut self, dir: &std::path::Path) -> Result<(), FltkError> {
-        let dir = CString::safe_new(dir.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?)?;
+        let dir = CString::safe_new(dir.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?)?;
         unsafe { Fl_Native_File_Chooser_set_directory(self._inner, dir.as_ptr()) }
         Ok(())
     }
@@ -281,7 +281,7 @@ impl HelpDialog {
 
     /// Loads a file for the help dialog
     pub fn load(&mut self, file: &std::path::Path) -> Result<(), FltkError> {
-        let f = file.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+        let f = file.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let f = CString::safe_new(f)?;
         unsafe {
             match Fl_Help_Dialog_load(self._inner, f.as_ptr()) {
