@@ -711,12 +711,12 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// More info here: https://www.fltk.org/doc-1.3/classFl__Browser.html#a129dca59d64baf166503ba59341add69
     fn format_char(&self) -> char;
     /// Sets the current format code prefix character to \p c. The default prefix is '\@
-    /// Panics if the char is non-ascii
+    /// c should be ascii
     fn set_format_char(&mut self, c: char);
     /// Gets the current column separator character. The default is '\t'
     fn column_char(&self) -> char;
     /// Sets the column separator to c. This will only have an effect if you also use set_column_widths()
-    /// Panics if the char is non-ascii
+    /// c should be ascii
     fn set_column_char(&mut self, c: char);
     /// Gets the current column width array
     fn column_widths(&self) -> Vec<i32>;

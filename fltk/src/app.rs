@@ -13,7 +13,9 @@ use std::{
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
 /// The fonts associated with the application
-pub(crate) static mut FONTS: Option<Vec<String>> = None;
+pub(crate) static mut FONTS: Vec<String> = Vec::new();
+
+static mut LOADED_FONT: Option<&str> = None;
 
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
@@ -109,6 +111,26 @@ impl App {
     pub fn default() -> App {
         register_images();
         init_all();
+        unsafe {
+            FONTS = vec![
+                "Helvetica".to_owned(),
+                "HelveticaBold".to_owned(),
+                "HelveticaItalic".to_owned(),
+                "HelveticaBoldItalic".to_owned(),
+                "Courier".to_owned(),
+                "CourierBold".to_owned(),
+                "CourierItalic".to_owned(),
+                "CourierBoldItalic".to_owned(),
+                "Times".to_owned(),
+                "TimesBold".to_owned(),
+                "TimesItalic".to_owned(),
+                "TimesBoldItalic".to_owned(),
+                "Symbol".to_owned(),
+                "Screen".to_owned(),
+                "ScreenBold".to_owned(),
+                "Zapfdingbats".to_owned(),
+            ];
+        }
         App {}
     }
 
@@ -143,9 +165,33 @@ impl App {
     /// Loads system fonts
     pub fn load_system_fonts(self) -> Self {
         unsafe {
-            FONTS = Some(get_font_names());
+            FONTS = get_font_names();
         }
         self
+    }
+
+    /// Loads a font from a path.
+    /// On success, returns a String with the ttf Font Family name. The font's index is always 16.
+    /// As such only one font can be loaded at a time.
+    /// The font name can be used with Font::by_name, and index with Font::by_index.
+    /// # Examples
+    /// ```
+    /// use fltk::*;
+    /// let app = app::App::default();
+    /// let font = app.load_font(&std::path::Path::new("font.ttf")).unwrap();
+    /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
+    /// frame.set_label_font(Font::by_name(&font));
+    /// ```
+    pub fn load_font(&self, path: &std::path::Path) -> Result<String, FltkError> {
+        if !path.exists() {
+            return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        if let Some(p) = path.to_str() {
+            let name = load_font(p)?;
+            Ok(name)
+        } else {
+            Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+        }
     }
 
     /// Set the visual of the application
@@ -384,11 +430,7 @@ pub fn set_fonts(name: &str) -> u8 {
 /// Gets the name of a font through its index
 pub fn font_name(idx: usize) -> Option<String> {
     unsafe {
-        if let Some(f) = &FONTS {
-            Some(f[idx].clone())
-        } else {
-            None
-        }
+        Some(FONTS[idx].clone())
     }
 }
 
@@ -399,8 +441,7 @@ pub fn get_font_names() -> Vec<String> {
     for i in 0..cnt {
         let temp = unsafe {
             CStr::from_ptr(Fl_get_font(i as i32))
-                .to_string_lossy()
-                .to_string()
+                .to_string_lossy().to_string()
         };
         vec.push(temp);
     }
@@ -410,29 +451,20 @@ pub fn get_font_names() -> Vec<String> {
 /// Finds the index of a font through its name
 pub fn font_index(name: &str) -> Option<usize> {
     unsafe {
-        if let Some(f) = &FONTS {
-            f.iter().position(|i| i == name)
-        } else {
-            None
-        }
+        FONTS.iter().position(|i| i == name)
     }
 }
 
 /// Gets the number of loaded fonts
 pub fn font_count() -> usize {
     unsafe {
-        if let Some(f) = &FONTS {
-            f.len()
-        } else {
-            0
-        }
+        FONTS.len()
     }
 }
 
 /// Gets a Vector<String> of loaded fonts
 pub fn fonts() -> Vec<String> {
-    // Shouldn't fail
-    unsafe { FONTS.clone().unwrap() }
+    unsafe { FONTS.clone() }
 }
 
 /// Adds a custom handler for unhandled events
@@ -586,6 +618,12 @@ pub fn next_window<W: WindowExt>(w: &W) -> Option<Window> {
 
 /// Quit the app
 pub fn quit() {
+    unsafe {
+        if let Some(loaded_font) = LOADED_FONT {
+            // Shouldn't fail
+            unload_font(loaded_font).unwrap_or(());
+        }
+    }
     let mut v: Vec<Window> = vec![];
     let first = first_window();
     if first.is_none() {
@@ -881,5 +919,40 @@ pub fn display() -> Display {
 pub fn dnd() {
     unsafe {
         Fl_dnd();
+    }
+}
+
+/// Load a font from a file
+fn load_font(path: &str) -> Result<String, FltkError> {
+    unsafe {
+        let path = CString::new(path)?;
+        if let Some(load_font) = LOADED_FONT {
+            unload_font(load_font)?;
+        }
+        let ptr = Fl_load_font(path.as_ptr());
+        if ptr.is_null() {
+            Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
+        } else {
+            let name = CString::from_raw(ptr as *mut _).to_string_lossy().to_string();
+            if FONTS.len() < 17 {
+                FONTS.push(name.clone());
+            } else {
+                FONTS[16] = name.clone();
+            }
+            Ok(name)
+        }
+    }
+}
+
+/// Unload a loaded font
+fn unload_font(path: &str) -> Result<(), FltkError> {
+    unsafe {
+        let check = std::path::PathBuf::from(path);
+        if !check.exists() {
+            return Err::<(), FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        let path = CString::new(path)?;
+        Fl_unload_font(path.as_ptr());
+        Ok(())
     }
 }

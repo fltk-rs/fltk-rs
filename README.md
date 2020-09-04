@@ -84,7 +84,7 @@ fn main() {
     app.run().unwrap();
 }
 ```
-Please check the fltk/examples directory for more examples.
+Please check the [examples](fltk/examples) directory for more examples.
 You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 
 ```rust
@@ -149,8 +149,7 @@ Another way is to use message passing:
         }
     }
 ```
-For the remainder of the code, check the full example here:
-https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter2.rs
+For the remainder of the code, check the full example [here](fltk/examples/counter2.rs).
 
 For custom event handling, the handle() method can be used:
 ```rust
@@ -217,7 +216,7 @@ If you have ninja-build installed, you can enable it using the "use-ninja" featu
 
 ## FAQ
 
-please check the [FAQ](https://github.com/MoAlyousef/fltk-rs/blob/master/FAQ.md) page for frequently asked questions, encountered issues, guides on deployment, and contribution.
+please check the [FAQ](FAQ.md) page for frequently asked questions, encountered issues, guides on deployment, and contribution.
 
 ## Building
 
@@ -252,7 +251,7 @@ Setting the scheme to Gtk:
 
 <img alt="Counter" width=240 height=300 src="screenshots/counter.jpg">
 
-Check the full [code](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter.rs) for the custom theming.
+Check the full [code](fltk/examples/counter.rs) for the custom theming.
 
 Setting the scheme to Gtk:
 

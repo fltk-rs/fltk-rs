@@ -142,6 +142,10 @@ int Fl_abi_version(void);
 
 // void Fl_set_fatal(void (*error)(const char *, ...));
 
+const char *Fl_load_font(const char *path);
+
+void Fl_unload_font(const char *path);
+
 #ifdef __cplusplus
 }
 #endif

@@ -27,7 +27,9 @@ use fltk::*;
 
 fn main() {
     let app = app::App::default().load_system_fonts();
+    // app::load_font("/opt/X11/share/fonts/TTF/luximr.ttf", "LuxiMono").unwrap();
     let fonts = app::fonts();
+    // println!("{:?}", fonts);
     let mut wind = window::Window::new(300, 200, 400, 300, "Fonts");
     let mut frame = frame::Frame::new(0, 0, 400, 300, "");
     frame.set_label_size(30);
@@ -37,12 +39,12 @@ fn main() {
     println!("The system has {} fonts!\nStarting slideshow!", fonts.len());
     let mut i = 0;
     while app.wait().unwrap() {
+        if i == fonts.len() {
+            i = 0;
+        }
         frame.set_label(&format!("[{}]", fonts[i]));
         frame.set_label_font(Font::by_index(i));
         std::thread::sleep(std::time::Duration::from_millis(500));
         i += 1;
-        if i == fonts.len() {
-            i = 0;
-        }
     }
 }

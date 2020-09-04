@@ -123,7 +123,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn remove(&mut self, idx: u32) {
                 assert!(!self.was_deleted());
-                assert!(idx < self.size());
+                let idx = if idx < self.size() { idx } else { self.size() - 1 };
                 debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     #remove(self._inner, idx as i32)
@@ -289,6 +289,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 if x.is_none() {
                     return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                 }
+                // Shouldn't fail
                 let x = x.unwrap();
                 if !x.is_submenu() {
                     return Err(FltkError::Internal(FltkErrorKind::FailedOperation));

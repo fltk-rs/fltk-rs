@@ -60,7 +60,7 @@ impl SharedImage {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
             let temp = CString::safe_new(temp)?;
             let x = Fl_Shared_Image_get(temp.as_ptr(), 0, 0);
             if x.is_null() {
@@ -103,7 +103,7 @@ impl JpegImage {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
             let temp = CString::safe_new(temp)?;
             let image_ptr = Fl_JPEG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -155,7 +155,7 @@ impl PngImage {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
             let temp = CString::safe_new(temp)?;
             let image_ptr = Fl_PNG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -207,7 +207,7 @@ impl SvgImage {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
             let temp = CString::safe_new(temp)?;
             let image_ptr = Fl_SVG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -255,7 +255,7 @@ impl BmpImage {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
             let temp = CString::safe_new(temp)?;
             let image_ptr = Fl_BMP_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -307,7 +307,7 @@ impl GifImage {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
             let temp = CString::safe_new(temp)?;
             let image_ptr = Fl_GIF_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -354,7 +354,7 @@ impl XpmImage {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
             let temp = CString::safe_new(temp)?;
             let image_ptr = Fl_XPM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -382,7 +382,7 @@ impl XbmImage {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
             let temp = CString::safe_new(temp)?;
             let image_ptr = Fl_XBM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -410,7 +410,7 @@ impl PnmImage {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
             let temp = CString::safe_new(temp)?;
             let image_ptr = Fl_PNM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {

@@ -722,7 +722,6 @@ pub fn write_to_png_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
         std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
         "SVG images are not supported!"
     );
-    // assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
     let path = path.to_str();
     if path.is_none() {
         return Err(FltkError::IoError(std::io::Error::new(
@@ -753,7 +752,6 @@ pub fn write_to_jpg_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
         std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
         "SVG images are not supported!"
     );
-    // assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
     let path = path.to_str();
     if path.is_none() {
         return Err(FltkError::IoError(std::io::Error::new(
@@ -784,7 +782,6 @@ pub fn write_to_bmp_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
         std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
         "SVG images are not supported!"
     );
-    // assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage images are not supported!");
     let path = path.to_str();
     if path.is_none() {
         return Err(FltkError::IoError(std::io::Error::new(
