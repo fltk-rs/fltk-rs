@@ -7,7 +7,8 @@
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Native_File_Chooser.H>
 #include <FL/fl_ask.H>
- #include "cfl_new.hpp"
+#include <FL/platform.H>
+#include "cfl_new.hpp"
 #include <string.h>
 
 #ifndef LOCK
@@ -56,7 +57,7 @@ const char *Fl_Native_File_Chooser_directory(Fl_Native_File_Chooser *self) {
 
 int Fl_Native_File_Chooser_show(Fl_Native_File_Chooser *self) {
     int ret = 0;
-    LOCK(ret = self->show());
+    LOCK(fl_open_display(); ret = self->show());
     return ret;
 }
 
