@@ -127,8 +127,10 @@ fn main() {
         }
 
         if cfg!(feature = "enable-glwindow") {
+            dst.define("OPTION_USE_GL", "ON");
             dst.define("CFLTK_USE_OPENGL", "ON");
         } else {
+            dst.define("OPTION_USE_GL", "OFF");
             dst.define("CFLTK_USE_OPENGL", "OFF");
         }
 
