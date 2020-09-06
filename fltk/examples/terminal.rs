@@ -1,6 +1,6 @@
 use fltk::{app, text::*, window::*};
 use std::ops::{Deref, DerefMut};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::{Command, Stdio};
 
 #[derive(Debug, Clone)]
@@ -58,7 +58,7 @@ impl Term {
             if args.len() > 1 {
                 if args[0] == "cd" {
                     let path = args[1];
-                    return self.change_dir(&PathBuf::from(path));
+                    return self.change_dir(&Path::new(path));
                 } else {
                     cmd.args(&args[1..]);
                 }

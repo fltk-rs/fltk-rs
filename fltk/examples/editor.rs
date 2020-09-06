@@ -159,7 +159,7 @@ fn main() {
             Event::Paste => {
                 if dnd && released {
                     let path = event_text();
-                    let path = std::path::PathBuf::from(path);
+                    let path = std::path::Path::new(&path);
                     assert!(path.exists());
                     buf.load_file(&path).unwrap();
                     dnd = false;

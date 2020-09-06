@@ -947,7 +947,7 @@ fn load_font(path: &str) -> Result<String, FltkError> {
 /// Unload a loaded font
 fn unload_font(path: &str) -> Result<(), FltkError> {
     unsafe {
-        let check = std::path::PathBuf::from(path);
+        let check = std::path::Path::new(path);
         if !check.exists() {
             return Err::<(), FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
