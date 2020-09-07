@@ -223,6 +223,14 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=kernel32");
                 println!("cargo:rustc-link-lib=dylib=odbc32");
             }
+            "android" => {
+                // Experimental, not tried yet!
+            }
+            "ios" => {
+                // Also experimental
+                println!("cargo:rustc-link-lib=framework=Cocoa");
+                println!("cargo:rustc-link-lib=framework=UIKit");
+            }
             _ => {
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 println!("cargo:rustc-link-lib=dylib=X11");
