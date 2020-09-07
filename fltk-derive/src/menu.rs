@@ -82,9 +82,9 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn insert(&mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut()>) {
+            fn insert(&mut self, idx: u32, label: &str, shortcut: Shortcut, flag: MenuFlag, cb: Box<dyn FnMut()>) {
                 assert!(!self.was_deleted());
-                let temp = CString::safe_new(name).unwrap();
+                let temp = CString::safe_new(label).unwrap();
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -100,25 +100,25 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn add_emit<T: 'static + Copy + Send + Sync>(
                 &mut self,
-                name: &str,
+                label: &str,
                 shortcut: Shortcut,
                 flag: crate::menu::MenuFlag,
                 sender: crate::app::Sender<T>,
                 msg: T,
             ) {
-                self.add(name, shortcut, flag, Box::new(move|| sender.send(msg)))
+                self.add(label, shortcut, flag, Box::new(move|| sender.send(msg)))
             }
 
             fn insert_emit<T: 'static + Copy + Send + Sync>(
                 &mut self,
                 idx: u32,
-                name: &str,
+                label: &str,
                 shortcut: Shortcut,
                 flag: crate::menu::MenuFlag,
                 sender: crate::app::Sender<T>,
                 msg: T,
             ) {
-                self.insert(idx, name, shortcut, flag, Box::new(move|| sender.send(msg)))
+                self.insert(idx, label, shortcut, flag, Box::new(move|| sender.send(msg)))
             }
 
             fn remove(&mut self, idx: u32) {
