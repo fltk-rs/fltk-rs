@@ -228,7 +228,6 @@ fn main() {
             }
             "ios" => {
                 // Also experimental
-                println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=UIKit");
             }
             _ => {
