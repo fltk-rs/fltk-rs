@@ -431,36 +431,44 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Sets the text color
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
+    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     fn add(
         &mut self,
-        name: &str,
+        label: &str,
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: Box<dyn FnMut()>,
     );
     /// Inserts a menu item at an index along with its callback
+    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     fn insert(
         &mut self,
         idx: u32,
-        name: &str,
+        label: &str,
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: Box<dyn FnMut()>,
     );
     /// Add a menu item along with an emit (sender and message)
+    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     fn add_emit<T: 'static + Copy + Send + Sync>(
         &mut self,
-        name: &str,
+        label: &str,
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
     );
     /// Inserts a menu item along with an emit (sender and message)
+    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     fn insert_emit<T: 'static + Copy + Send + Sync>(
         &mut self,
         idx: u32,
-        name: &str,
+        label: &str,
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
@@ -872,10 +880,7 @@ pub unsafe trait TableExt: GroupExt {
     fn tab_cell_nav(&self) -> u32;
     /// Override draw_cell
     /// callback args: TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
-    fn draw_cell(
-        &mut self,
-        cb: crate::table::DrawCellData,
-    );
+    fn draw_cell(&mut self, cb: crate::table::DrawCellData);
     /// INTERNAL: Retrieve the draw cell data
     /// # Safety
     /// Can return multiple mutable references to the draw_cell_data

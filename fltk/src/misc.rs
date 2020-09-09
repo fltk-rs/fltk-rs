@@ -161,7 +161,7 @@ impl Chart {
     /// Adds an entry
     pub fn add(&mut self, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
-        let txt = std::ffi::CString::safe_new(txt).unwrap();
+        let txt = std::ffi::CString::new(txt).unwrap();
         unsafe { Fl_Chart_add(self._inner, val, txt.as_ptr(), col as u32) }
     }
 
@@ -172,7 +172,7 @@ impl Chart {
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        let txt = std::ffi::CString::safe_new(txt).unwrap();
+        let txt = std::ffi::CString::new(txt).unwrap();
         unsafe { Fl_Chart_insert(self._inner, idx as i32, val, txt.as_ptr(), col as u32) }
     }
 
@@ -183,7 +183,7 @@ impl Chart {
             "u32 entries have to be < std::i32::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        let txt = std::ffi::CString::safe_new(txt).unwrap();
+        let txt = std::ffi::CString::new(txt).unwrap();
         unsafe { Fl_Chart_replace(self._inner, idx as i32, val, txt.as_ptr(), col as u32) }
     }
 
@@ -392,7 +392,7 @@ impl Tooltip {
     /// Defines the area of the tooltip
     pub fn enter_area<W: WidgetExt>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
         assert!(!widget.was_deleted());
-        let tip = CString::safe_new(tip).unwrap();
+        let tip = CString::new(tip).unwrap();
         unsafe {
             Fl_Tooltip_enter_area(
                 widget.as_widget_ptr() as *mut Fl_Widget,

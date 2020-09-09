@@ -209,7 +209,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
         unsafe impl WidgetExt for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                let temp = CString::safe_new(title).unwrap();
+                let temp = CString::new(title).unwrap();
                 unsafe {
                     let widget_ptr = #new(x, y, width, height, std::ptr::null() as *const raw::c_char);
                     assert!(!widget_ptr.is_null());
@@ -224,7 +224,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn default() -> Self {
-                let temp = CString::safe_new("").unwrap();
+                let temp = CString::new("").unwrap();
                 unsafe {
                     let widget_ptr = #new(
                         0,
@@ -273,7 +273,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_label(&mut self, title: &str) {
                 assert!(!self.was_deleted());
-                let temp = CString::safe_new(title).unwrap();
+                let temp = CString::new(title).unwrap();
                 unsafe {
                     #set_label(
                         self._inner,
@@ -377,7 +377,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_tooltip(&mut self, txt: &str) {
                 assert!(!self.was_deleted());
-                let txt = CString::safe_new(txt).unwrap();
+                let txt = CString::new(txt).unwrap();
                 unsafe {
                     #set_tooltip(
                         self._inner,

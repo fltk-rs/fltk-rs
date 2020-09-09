@@ -80,7 +80,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_value(&self, val: &str) {
                 assert!(!self.was_deleted());
-                let temp = CString::safe_new(val).unwrap();
+                let temp = CString::new(val).unwrap();
                 unsafe {
                     #set_value(self._inner, temp.as_ptr());
                 }
@@ -140,7 +140,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn replace(&mut self, beg: u32, end: u32, val: &str) -> Result<(), FltkError> {
                 debug_assert!(beg <= std::i32::MAX as u32 && end <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 assert!(!self.was_deleted());
-                let val = CString::safe_new(val).unwrap();
+                let val = CString::new(val).unwrap();
                 unsafe {
                     let x = #replace(self._inner, beg as i32, end as i32, val.as_ptr(), 0);
                     if x == 0 {
@@ -152,7 +152,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
 
             fn insert(&mut self, txt: &str) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
-                let txt = CString::safe_new(txt).unwrap();
+                let txt = CString::new(txt).unwrap();
                 unsafe {
                     let x = #insert(self._inner, txt.as_ptr(), 0);
                     if x == 0 {
@@ -164,7 +164,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
 
             fn append(&mut self, txt: &str) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
-                let txt = CString::safe_new(txt).unwrap();
+                let txt = CString::new(txt).unwrap();
                 unsafe {
                     let x = #append(self._inner,  txt.as_ptr(), 0, 0);
                     if x == 0 {

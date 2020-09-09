@@ -159,7 +159,7 @@ fn main() {
             Event::Paste => {
                 if dnd && released {
                     let path = event_text();
-                    let path = std::path::PathBuf::from(path);
+                    let path = std::path::Path::new(&path);
                     assert!(path.exists());
                     buf.load_file(&path).unwrap();
                     dnd = false;
@@ -284,16 +284,15 @@ fn main() {
                     editor
                         .set_filename(&dlg.filename().to_string_lossy().to_string());
                     let filename = editor.filename.clone();
-                    if filename.is_empty() {
-                        return;
-                    }
-                    match path::Path::new(&editor.filename()).exists() {
-                        true => editor.buffer().unwrap().set_text(
-                            fs::read_to_string(&editor.filename())
-                                .unwrap()
-                                .as_str(),
-                        ),
-                        false => alert(200, 200, "File does not exist!"),
+                    if !filename.is_empty() {
+                        match path::Path::new(&editor.filename()).exists() {
+                            true => editor.buffer().unwrap().set_text(
+                                fs::read_to_string(&editor.filename())
+                                    .unwrap()
+                                    .as_str(),
+                            ),
+                            false => alert(200, 200, "File does not exist!"),
+                        }
                     }
                 },
                 Save => editor.save_file(&mut saved),

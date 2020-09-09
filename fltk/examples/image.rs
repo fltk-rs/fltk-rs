@@ -48,14 +48,14 @@
 
 use fltk::{app::*, frame::*, image::*, window::*};
 use std::error::Error;
-use std::path::PathBuf;
+use std::path::*;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let app = App::default().with_scheme(Scheme::Gleam);
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 300, "");
 
-    let mut image = SharedImage::load(&PathBuf::from("screenshots/calc.jpg"))?;
+    let mut image = SharedImage::load(&Path::new("screenshots/calc.jpg"))?;
     image.scale(200, 200, true, true);
 
     frame.set_image(Some(image));

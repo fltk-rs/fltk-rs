@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.6] - 2020-09-09
+### Changes
+- Add null check on C++ side when loading fonts.
+- Update FLTK.
+- Add doc comments on MenuExt::add() labels.
+
 ## [0.8.5] - 2020-09-04
 ### Changes
 - Add App::load_font() to load a font from a path.
