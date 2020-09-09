@@ -97,7 +97,7 @@ impl FileBrowser {
     /// x all other characters must be matched exactly.
     pub fn set_filter(&mut self, pattern: &str) {
         assert!(!self.was_deleted());
-        let pattern = CString::safe_new(pattern).unwrap();
+        let pattern = CString::new(pattern).unwrap();
         unsafe {         
             // This is deleted on the C++ side
             Fl_File_Browser_set_filter(self._inner, pattern.into_raw()) 

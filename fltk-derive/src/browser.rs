@@ -131,7 +131,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn add(&mut self, item: &str) {
                 assert!(!self.was_deleted());
-                let item = CString::safe_new(item).unwrap();
+                let item = CString::new(item).unwrap();
                 unsafe {
                     #add(self._inner, item.as_ptr())
                 }
@@ -140,7 +140,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn insert(&mut self, line: u32, item: &str) {
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                let item = CString::safe_new(item).unwrap();
+                let item = CString::new(item).unwrap();
                 unsafe {
                     #insert(self._inner, line as i32, item.as_ptr())
                 }
@@ -221,7 +221,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn set_text(&mut self, line: u32, txt: &str) {
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                let txt = CString::safe_new(txt).unwrap();
+                let txt = CString::new(txt).unwrap();
                 unsafe {
                     #set_text(self._inner, line as i32, txt.as_ptr())
                 }
@@ -233,7 +233,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
                 }
                 let path = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
-                let path = CString::safe_new(path)?;
+                let path = CString::new(path)?;
                 unsafe {
                     #load_file(self._inner, path.as_ptr());
                     Ok(())

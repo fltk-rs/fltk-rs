@@ -60,7 +60,7 @@ impl TextBuffer {
     pub fn set_text(&mut self, txt: &str) {
         assert!(!self._inner.is_null());
         unsafe {
-            let txt = CString::safe_new(txt).unwrap();
+            let txt = CString::new(txt).unwrap();
             Fl_Text_Buffer_set_text(self._inner, txt.as_ptr())
         }
     }
@@ -80,7 +80,7 @@ impl TextBuffer {
     /// Appends to the buffer
     pub fn append(&mut self, text: &str) {
         assert!(!self._inner.is_null());
-        let text = CString::safe_new(text).unwrap();
+        let text = CString::new(text).unwrap();
         unsafe { Fl_Text_Buffer_append(self._inner, text.as_ptr()) }
     }
 
@@ -138,7 +138,7 @@ impl TextBuffer {
             pos <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        let text = CString::safe_new(text).unwrap();
+        let text = CString::new(text).unwrap();
         unsafe { Fl_Text_Buffer_insert(self._inner, pos as i32, text.as_ptr()) }
     }
 
@@ -153,7 +153,7 @@ impl TextBuffer {
             end <= std::i32::MAX as u32,
             "u32 entries must be < std::i32::MAX for compatibility!"
         );
-        let text = CString::safe_new(text).unwrap();
+        let text = CString::new(text).unwrap();
         unsafe { Fl_Text_Buffer_replace(self._inner, start as i32, end as i32, text.as_ptr()) }
     }
 
@@ -215,7 +215,7 @@ impl TextBuffer {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         let path = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
-        let path = CString::safe_new(path)?;
+        let path = CString::new(path)?;
         unsafe {
             match Fl_Text_Buffer_loadfile(self._inner, path.as_ptr()) {
                 0 => Ok(()),
@@ -228,7 +228,7 @@ impl TextBuffer {
     pub fn save_file(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
         assert!(!self._inner.is_null());
         let path = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
-        let path = CString::safe_new(path)?;
+        let path = CString::new(path)?;
         unsafe {
             match Fl_Text_Buffer_savefile(self._inner, path.as_ptr()) {
                 0 => Ok(()),
@@ -321,7 +321,7 @@ impl TextBuffer {
     /// Replaces selection
     pub fn replace_selection(&mut self, text: &str) {
         assert!(!self._inner.is_null());
-        let text = CString::safe_new(text).unwrap();
+        let text = CString::new(text).unwrap();
         unsafe { Fl_Text_Buffer_replace_selection(self._inner, text.as_ptr()) }
     }
 
@@ -895,7 +895,7 @@ impl SimpleTerminal {
     pub fn append(&mut self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
-        let s = CString::safe_new(s).unwrap();
+        let s = CString::new(s).unwrap();
         unsafe { Fl_Simple_Terminal_append(self._inner, s.into_raw()) }
     }
 
@@ -903,7 +903,7 @@ impl SimpleTerminal {
     pub fn set_text(&mut self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
-        let s = CString::safe_new(s).unwrap();
+        let s = CString::new(s).unwrap();
         unsafe { Fl_Simple_Terminal_set_text(self._inner, s.into_raw()) }
     }
 

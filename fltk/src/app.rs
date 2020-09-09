@@ -58,7 +58,7 @@ pub fn set_scheme(scheme: Scheme) {
         Scheme::Gleam => "gleam",
         Scheme::Plastic => "plastic",
     };
-    let name_str = CString::safe_new(name_str).unwrap();
+    let name_str = CString::new(name_str).unwrap();
     unsafe { Fl_set_scheme(name_str.as_ptr()) }
 }
 
@@ -423,7 +423,7 @@ where
 
 /// Initializes loaded fonts of a certain pattern ```name```
 pub fn set_fonts(name: &str) -> u8 {
-    let name = CString::safe_new(name).unwrap();
+    let name = CString::new(name).unwrap();
     unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
 
