@@ -385,5 +385,7 @@ The most commonly widgets are implemented:
 - [Create a media player using the vlc crate](https://youtu.be/enxqU3bhCEs)
 - [Custom dialogs](https://youtu.be/tXeXHoKG6-I)
 - [Add drag and drop to the editor example](https://www.youtube.com/watch?v=qp5hnRvSxAg)
+- [Drawing things with fltk](https://www.youtube.com/watch?v=r9MOpvfBPWs)
+- [Working with images](https://www.youtube.com/watch?v=Rn2sjfAX4WI)
 
 More videos in the playlist [here](https://www.youtube.com/playlist?list=PLHqrrowPLkDu9U-uk60sGM-YWLOJFfLoE).

@@ -691,7 +691,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Lines start at 1
     fn set_text(&mut self, line: u32, txt: &str);
     /// Load a file
-    fn load(&mut self, path: &std::path::Path) -> Result<(), FltkError>;
+    fn load<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError>;
     /// Return the text size
     fn text_size(&self) -> u32;
     /// Sets the text size

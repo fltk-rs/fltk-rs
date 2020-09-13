@@ -209,12 +209,12 @@ impl TextBuffer {
     }
 
     /// Loads a file into the buffer
-    pub fn load_file(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
+    pub fn load_file<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
         assert!(!self._inner.is_null());
-        if !path.exists() {
+        if !path.as_ref().exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
-        let path = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+        let path = path.as_ref().to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let path = CString::new(path)?;
         unsafe {
             match Fl_Text_Buffer_loadfile(self._inner, path.as_ptr()) {
@@ -225,9 +225,9 @@ impl TextBuffer {
     }
 
     /// Saves a buffer into a file
-    pub fn save_file(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
+    pub fn save_file<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
         assert!(!self._inner.is_null());
-        let path = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+        let path = path.as_ref().to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let path = CString::new(path)?;
         unsafe {
             match Fl_Text_Buffer_savefile(self._inner, path.as_ptr()) {

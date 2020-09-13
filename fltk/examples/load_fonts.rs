@@ -2,7 +2,7 @@ use fltk::*;
 
 fn main() {
     let app = app::App::default();
-    let font = app.load_font(&std::path::Path::new("font.ttf")).unwrap();
+    let font = app.load_font("font.ttf").unwrap();
     let mut wind = window::Window::new(300, 200, 400, 300, "Fonts");
     let mut frame = frame::Frame::new(0, 0, 400, 100, &font);
     frame.set_label_size(30);

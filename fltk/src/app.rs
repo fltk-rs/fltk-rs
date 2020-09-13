@@ -178,11 +178,15 @@ impl App {
     /// ```
     /// use fltk::*;
     /// let app = app::App::default();
-    /// let font = app.load_font(&std::path::Path::new("font.ttf")).unwrap();
+    /// let font = app.load_font("font.ttf").unwrap();
     /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
     /// frame.set_label_font(Font::by_name(&font));
     /// ```
-    pub fn load_font(&self, path: &std::path::Path) -> Result<String, FltkError> {
+    pub fn load_font<P: AsRef<std::path::Path>>(&self, path: P) -> Result<String, FltkError> {
+        self.load_font_(path.as_ref())
+    }
+    
+    fn load_font_(&self, path: &std::path::Path) -> Result<String, FltkError> {
         if !path.exists() {
             return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }

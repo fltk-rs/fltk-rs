@@ -227,12 +227,12 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn load(&mut self, path: &std::path::Path) -> Result<(), FltkError> {
+            fn load<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
-                if !path.exists() {
+                if !path.as_ref().exists() {
                     return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
                 }
-                let path = path.to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
+                let path = path.as_ref().to_str().ok_or(FltkError::Unknown(String::from("Failed to convert path to string")))?;
                 let path = CString::new(path)?;
                 unsafe {
                     #load_file(self._inner, path.as_ptr());

@@ -717,7 +717,11 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
 // }
 
 /// Transforms raw data to png file
-pub fn write_to_png_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
+pub fn write_to_png_file<I: ImageExt, P: AsRef<std::path::Path>>(image: &I, path: P) -> Result<(), FltkError> {
+    write_to_png_file_(image, path.as_ref())
+}
+
+fn write_to_png_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
     assert!(
         std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
         "SVG images are not supported!"
@@ -747,7 +751,11 @@ pub fn write_to_png_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
 }
 
 /// Transforms raw data to jpg file
-pub fn write_to_jpg_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
+pub fn write_to_jpg_file<I: ImageExt, P: AsRef<std::path::Path>>(image: &I, path: P) -> Result<(), FltkError> {
+    write_to_jpg_file_(image, path.as_ref())
+}
+
+fn write_to_jpg_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
     assert!(
         std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
         "SVG images are not supported!"
@@ -777,7 +785,11 @@ pub fn write_to_jpg_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Resu
 }
 
 /// Transforms raw data to bmp file
-pub fn write_to_bmp_file<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
+pub fn write_to_bmp_file<I: ImageExt, P: AsRef<std::path::Path>>(image: &I, path: P) -> Result<(), FltkError> {
+    write_to_bmp_file_(image, path.as_ref())
+}
+
+fn write_to_bmp_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
     assert!(
         std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
         "SVG images are not supported!"

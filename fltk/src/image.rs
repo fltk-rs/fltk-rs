@@ -55,7 +55,11 @@ pub struct SharedImage {
 
 impl SharedImage {
     /// Loads a SharedImage from a path
-    pub fn load(path: &std::path::Path) -> Result<SharedImage, FltkError> {
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<SharedImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+    
+    fn load_(path: &std::path::Path) -> Result<SharedImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -98,7 +102,11 @@ pub struct JpegImage {
 
 impl JpegImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn load(path: &std::path::Path) -> Result<JpegImage, FltkError> {
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<JpegImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+    
+    fn load_(path: &std::path::Path) -> Result<JpegImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -150,7 +158,11 @@ pub struct PngImage {
 
 impl PngImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn load(path: &std::path::Path) -> Result<PngImage, FltkError> {
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<PngImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+    
+    fn load_(path: &std::path::Path) -> Result<PngImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -202,7 +214,11 @@ pub struct SvgImage {
 
 impl SvgImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn load(path: &std::path::Path) -> Result<SvgImage, FltkError> {
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<SvgImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+    
+    fn load_(path: &std::path::Path) -> Result<SvgImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -250,7 +266,11 @@ pub struct BmpImage {
 
 impl BmpImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn load(path: &std::path::Path) -> Result<BmpImage, FltkError> {
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<BmpImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+    
+    fn load_(path: &std::path::Path) -> Result<BmpImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -302,7 +322,11 @@ pub struct GifImage {
 
 impl GifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn load(path: &std::path::Path) -> Result<GifImage, FltkError> {
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<GifImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+    
+    fn load_(path: &std::path::Path) -> Result<GifImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -349,7 +373,11 @@ pub struct XpmImage {
 
 impl XpmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn load(path: &std::path::Path) -> Result<XpmImage, FltkError> {
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<XpmImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+    
+    fn load_(path: &std::path::Path) -> Result<XpmImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -377,7 +405,11 @@ pub struct XbmImage {
 
 impl XbmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn load(path: &std::path::Path) -> Result<XbmImage, FltkError> {
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<XbmImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+    
+    fn load_(path: &std::path::Path) -> Result<XbmImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -405,7 +437,11 @@ pub struct PnmImage {
 
 impl PnmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn load(path: &std::path::Path) -> Result<PnmImage, FltkError> {
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<PnmImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+    
+    fn load_(path: &std::path::Path) -> Result<PnmImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
