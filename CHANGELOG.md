@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.7] - 2020-09-14
+### Changes
+- Accept AsRef<Path> where &Path was previously required.
+- Update FLTK.
+- Update deps.
+
 ## [0.8.6] - 2020-09-09
 ### Changes
 - Add null check on C++ side when loading fonts.
