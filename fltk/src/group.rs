@@ -8,14 +8,14 @@ use std::{
     os::raw,
 };
 
-/// Creates an widget group
+/// Creates a widget group
 #[derive(WidgetExt, GroupExt, Debug)]
 pub struct Group {
     _inner: *mut Fl_Group,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Creates an widget pack
+/// Creates a widget pack
 #[derive(WidgetExt, GroupExt, Debug)]
 pub struct Pack {
     _inner: *mut Fl_Pack,
