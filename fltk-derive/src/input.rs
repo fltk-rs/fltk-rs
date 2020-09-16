@@ -101,17 +101,18 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn position(&self) -> i32 {
+            fn position(&self) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #position(self._inner)
+                    #position(self._inner) as u32
                 }
             }
 
-            fn set_position(&mut self, val: i32) -> Result<(), FltkError> {
+            fn set_position(&mut self, val: u32) -> Result<(), FltkError> {
+                debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
-                    let x = #set_position(self._inner, val);
+                    let x = #set_position(self._inner, val as i32);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -119,17 +120,18 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn mark(&self) -> i32 {
+            fn mark(&self) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #mark(self._inner)
+                    #mark(self._inner) as u32
                 }
             }
 
-            fn set_mark(&mut self, val: i32) -> Result<(), FltkError> {
+            fn set_mark(&mut self, val: u32) -> Result<(), FltkError> {
+                debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
-                    let x = #set_mark(self._inner, val);
+                    let x = #set_mark(self._inner, val as i32);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }

@@ -369,13 +369,13 @@ pub unsafe trait InputExt: WidgetExt {
     /// Sets the maximum size (in bytes) accepted by an input/output widget
     fn set_maximum_size(&mut self, val: u32);
     /// Returns the postion inside an input/output widget
-    fn position(&self) -> i32;
+    fn position(&self) -> u32;
     /// Sets the postion inside an input/output widget
-    fn set_position(&mut self, val: i32) -> Result<(), FltkError>;
+    fn set_position(&mut self, val: u32) -> Result<(), FltkError>;
     /// Returns the mark inside an input/output widget
-    fn mark(&self) -> i32;
+    fn mark(&self) -> u32;
     /// Sets the mark inside an input/output widget
-    fn set_mark(&mut self, val: i32) -> Result<(), FltkError>;
+    fn set_mark(&mut self, val: u32) -> Result<(), FltkError>;
     /// Replace content with a &str
     fn replace(&mut self, beg: u32, end: u32, val: &str) -> Result<(), FltkError>;
     /// Insert a &str

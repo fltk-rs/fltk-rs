@@ -47,6 +47,8 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/include/cfl.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_widget.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_group.h");
+        println!("cargo:rerun-if-changed=cfltk/include/cfl_input.h");
+        println!("cargo:rerun-if-changed=cfltk/include/cfl_output.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_window.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_button.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_box.h");
@@ -73,6 +75,8 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/src/cfl_misc.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_text.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_image.cpp");
+        println!("cargo:rerun-if-changed=cfltk/src/cfl_input.cpp");
+        println!("cargo:rerun-if-changed=cfltk/src/cfl_output.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_draw.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_table.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_tree.cpp");
