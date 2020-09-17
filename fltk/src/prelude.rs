@@ -15,6 +15,9 @@ pub enum FltkError {
     Unknown(String),
 }
 
+unsafe impl Send for FltkError {}
+unsafe impl Sync for FltkError {}
+
 /// Error kinds enum for FltkError
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum FltkErrorKind {

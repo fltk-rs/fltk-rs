@@ -6,7 +6,7 @@
 - Add DisplayExt::style_buffer().
 - Fix wrapper bug which ignored return values.
 - Update FLTK.
-
+- Impl Send and Sync for FltkError.
 
 ## [0.8.7] - 2020-09-14
 ### Changes
