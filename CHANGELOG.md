@@ -4,6 +4,7 @@
 ### Changes
 - Fix typos, thanks @nicolasbauw 
 - Add DisplayExt::style_buffer().
+- Fix wrapper bug which ignored return values.
 - Update FLTK.
 
 

@@ -1,4 +1,5 @@
 #include "cfl_valuator.h"
+#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Adjuster.H>
 #include <FL/Fl_Counter.H>
@@ -18,7 +19,6 @@
 #include <FL/Fl_Value_Input.H>
 #include <FL/Fl_Value_Output.H>
 #include <FL/Fl_Value_Slider.H>
- #include "cfl_new.hpp"
 
 #define VALUATOR_DEFINE(widget)                                                                    \
     void widget##_set_bounds(widget *self, double a, double b) {                                   \
@@ -53,7 +53,7 @@
     }                                                                                              \
     int widget##_set_value(widget *self, double val) {                                             \
         int ret = 0;                                                                               \
-        LOCK(self->value(val));                                                                    \
+        LOCK(ret = self->value(val));                                                              \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_format(widget *self, char *chr) {                                                 \

@@ -52,12 +52,12 @@ extern "C" {
     }                                                                                              \
     int widget##_set_position(widget *self, int p) {                                               \
         int ret = 0;                                                                               \
-        LOCK(self->position(p));                                                                   \
+        LOCK(ret = self->position(p));                                                             \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_set_mark(widget *self, int m) {                                                   \
         int ret = 0;                                                                               \
-        LOCK(self->mark(m));                                                                       \
+        LOCK(ret = self->mark(m));                                                                 \
         return ret;                                                                                \
     }                                                                                              \
     int widget##_mark(widget *self) {                                                              \
