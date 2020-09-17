@@ -351,6 +351,10 @@ void Fl_Text_Display_set_buffer(Fl_Text_Display *self, Fl_Text_Buffer *buf) {
     LOCK(self->buffer(buf);)
 }
 
+Fl_Text_Buffer *Fl_Text_Display_get_style_buffer(Fl_Text_Display *self) {
+    return self->style_buffer();
+}
+
 DISPLAY_DEFINE(Fl_Text_Display)
 
 WIDGET_DEFINE(Fl_Text_Editor)
@@ -366,6 +370,10 @@ Fl_Text_Buffer *Fl_Text_Editor_get_buffer(Fl_Text_Editor *self) {
 
 void Fl_Text_Editor_set_buffer(Fl_Text_Editor *self, Fl_Text_Buffer *buf) {
     LOCK(self->buffer(buf);)
+}
+
+Fl_Text_Buffer *Fl_Text_Editor_get_style_buffer(Fl_Text_Editor *self) {
+    return self->style_buffer();
 }
 
 DISPLAY_DEFINE(Fl_Text_Editor)
@@ -551,6 +559,10 @@ Fl_Text_Buffer *Fl_Simple_Terminal_get_buffer(Fl_Simple_Terminal *self) {
 
 void Fl_Simple_Terminal_set_buffer(Fl_Simple_Terminal *self, Fl_Text_Buffer *buf) {
     LOCK(self->buffer(buf);)
+}
+
+Fl_Text_Buffer *Fl_Simple_Terminal_get_style_buffer(Fl_Simple_Terminal *self) {
+    return self->style_buffer();
 }
 
 void Fl_Simple_Terminal_set_stay_at_bottom(Fl_Simple_Terminal *self, int flag) {

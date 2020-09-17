@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.8] - Unreleased
+### Changes
+- Fix typos, thanks @nicolasbauw 
+- Add DisplayExt::style_buffer().
+- Update FLTK.
+
+
 ## [0.8.7] - 2020-09-14
 ### Changes
 - Accept AsRef<Path> where &Path was previously required.

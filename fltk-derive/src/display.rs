@@ -15,6 +15,10 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_buffer").as_str(),
         name.span(),
     );
+    let get_style_buffer = Ident::new(
+        format!("{}_{}", name_str, "get_style_buffer").as_str(),
+        name.span(),
+    );
     let text_font = Ident::new(
         format!("{}_{}", name_str, "text_font").as_str(),
         name.span(),
@@ -224,6 +228,18 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                         #set_buffer(self._inner, buffer.as_ptr())
                     } else {
                         #set_buffer(self._inner, std::ptr::null_mut() as *mut Fl_Text_Buffer)
+                    }
+                }
+            }
+
+            fn style_buffer(&self) -> Option<TextBuffer> {
+                unsafe {
+                    assert!(!self.was_deleted());
+                    let buffer = #get_style_buffer(self._inner);
+                    if buffer.is_null() {
+                        None
+                    } else {
+                        Some(TextBuffer::from_ptr(buffer))
                     }
                 }
             }

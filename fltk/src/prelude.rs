@@ -548,6 +548,8 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn buffer(&self) -> Option<TextBuffer>;
     /// Sets the associated TextBuffer
     fn set_buffer(&mut self, buffer: Option<TextBuffer>);
+    /// Get the associated style TextBuffer
+    fn style_buffer(&self) -> Option<TextBuffer>;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font

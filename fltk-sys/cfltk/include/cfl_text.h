@@ -150,6 +150,8 @@ Fl_Text_Buffer *Fl_Text_Display_get_buffer(Fl_Text_Display *);
 
 void Fl_Text_Display_set_buffer(Fl_Text_Display *, Fl_Text_Buffer *);
 
+Fl_Text_Buffer *Fl_Text_Display_get_style_buffer(Fl_Text_Display *);
+
 DISPLAY_DECLARE(Fl_Text_Display)
 
 WIDGET_DECLARE(Fl_Text_Editor)
@@ -159,6 +161,8 @@ void Fl_Text_Editor_init(Fl_Text_Editor *);
 Fl_Text_Buffer *Fl_Text_Editor_get_buffer(Fl_Text_Editor *);
 
 void Fl_Text_Editor_set_buffer(Fl_Text_Editor *, Fl_Text_Buffer *);
+
+Fl_Text_Buffer *Fl_Text_Editor_get_style_buffer(Fl_Text_Editor *);
 
 DISPLAY_DECLARE(Fl_Text_Editor)
 
@@ -170,47 +174,47 @@ int Fl_Text_Editor_kf_paste(Fl_Text_Editor *e);
 
 int Fl_Text_Editor_kf_undo(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_default(int c, Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_default(int c, Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_ignore(int c, Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_ignore(int c, Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_backspace(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_backspace(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_enter(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_enter(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_move(int c, Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_move(int c, Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_shift_move(int c, Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_shift_move(int c, Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_ctrl_move(int c, Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_ctrl_move(int c, Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_c_s_move(int c, Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_c_s_move(int c, Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_meta_move(int c, Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_meta_move(int c, Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_m_s_move(int c, Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_m_s_move(int c, Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_home(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_home(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_end(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_end(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_left(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_left(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_up(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_up(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_right(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_right(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_down(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_down(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_page_up(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_page_up(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_page_down(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_page_down(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_insert(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_insert(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_delete(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_delete(Fl_Text_Editor *e);
 
-int Fl_Text_Editor_kf_select_all(Fl_Text_Editor* e);
+int Fl_Text_Editor_kf_select_all(Fl_Text_Editor *e);
 
 void Fl_Text_Editor_set_insert_mode(Fl_Text_Editor *self, int b);
 
@@ -227,6 +231,8 @@ void Fl_Simple_Terminal_init(Fl_Simple_Terminal *);
 Fl_Text_Buffer *Fl_Simple_Terminal_get_buffer(Fl_Simple_Terminal *);
 
 void Fl_Simple_Terminal_set_buffer(Fl_Simple_Terminal *, Fl_Text_Buffer *);
+
+Fl_Text_Buffer *Fl_Simple_Terminal_get_style_buffer(Fl_Simple_Terminal *);
 
 void Fl_Simple_Terminal_set_stay_at_bottom(Fl_Simple_Terminal *self, int);
 
