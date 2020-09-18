@@ -592,7 +592,7 @@ pub unsafe trait DisplayExt: WidgetExt {
         &mut self,
         style_buffer: TextBuffer,
         entries: Vec<StyleTableEntry>,
-    ) -> crate::text::StyleTables;
+    );
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: TextCursor);
     /// Sets the cursor color
@@ -734,8 +734,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Gets the current column width array
     fn column_widths(&self) -> Vec<i32>;
     /// Sets the current column width array
-    /// Gives the slice a static lifetime
-    fn set_column_widths(&mut self, arr: &[i32]);
+    fn set_column_widths(&mut self, arr: &'static [i32]);
     /// Returns whether a certain line is displayed
     fn displayed(&self, line: u32) -> bool;
     /// Makes a specified line visible

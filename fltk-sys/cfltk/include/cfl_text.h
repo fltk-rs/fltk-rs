@@ -24,8 +24,8 @@ extern "C" {
     int widget##_move_up(widget *);                                                                \
     int widget##_move_down(widget *);                                                              \
     void widget##_show_cursor(widget *, int boolean);                                              \
-    void *widget##_set_style_table_entry(widget *self, void *sbuf, unsigned int *color, int *font, \
-                                         int *fontsz, int sz);                                     \
+    void widget##_set_style_table_entry(widget *self, void *sbuf, unsigned int *color, int *font,  \
+                                        int *fontsz, int sz);                                      \
     void widget##_set_cursor_style(widget *, int style);                                           \
     void widget##_set_cursor_color(widget *, unsigned int color);                                  \
     void widget##_set_scrollbar_width(widget *, int width);                                        \

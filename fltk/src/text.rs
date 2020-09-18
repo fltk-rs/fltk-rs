@@ -574,21 +574,6 @@ pub struct StyleTableEntry {
     pub size: u32,
 }
 
-/// Opaque data containing the style entries
-pub struct StyleTables {
-    _inner: *mut raw::c_void,
-}
-
-impl StyleTables {
-    /// Deletes the StyleTables
-    /// # Safety
-    /// The buffer shouldn't be deleted while the Display widget is still using it
-    pub unsafe fn delete(&mut self) {
-        Fl_delete_stable(self._inner);
-        self._inner = std::ptr::null_mut::<raw::c_void>();
-    }
-}
-
 impl TextEditor {
     /// Set to insert mode
     pub fn set_insert_mode(&mut self, b: bool) {

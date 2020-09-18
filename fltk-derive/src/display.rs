@@ -398,7 +398,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_highlight_data(&mut self, mut style_buffer: TextBuffer, entries: Vec<StyleTableEntry>) -> crate::text::StyleTables {
+            fn set_highlight_data(&mut self, mut style_buffer: TextBuffer, entries: Vec<StyleTableEntry>) {
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
                 assert!(entries.len() < 29);
@@ -411,8 +411,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     sizes.push(entry.size as i32);
                 }
                 unsafe {
-                    let x = #set_style_table_entry(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32);
-                    StyleTables { _inner: x }
+                    #set_style_table_entry(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32)
                 }
             }
 

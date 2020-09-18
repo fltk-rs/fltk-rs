@@ -7,6 +7,8 @@
 - Fix wrapper bug which ignored return values.
 - Update FLTK.
 - Impl Send and Sync for FltkError.
+- Remove opaque type StyleTables.
+- BrowserExt::set_column_widths() takes a static slice.
 
 ## [0.8.7] - 2020-09-14
 ### Changes
