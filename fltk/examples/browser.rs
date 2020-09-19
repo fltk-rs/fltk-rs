@@ -7,8 +7,8 @@ fn main() {
     let app = app::App::default();
     let mut win = window::Window::new(200, 200, 900, 300, "");
     let mut b = browser::MultiBrowser::new(10, 10, 900 - 20, 300 - 20, "");
-    let widths = vec![50, 50, 50, 70, 70, 40, 40, 70, 70, 50];
-    b.set_column_widths(&widths);
+    let widths = &[50, 50, 50, 70, 70, 40, 40, 70, 70, 50];
+    b.set_column_widths(widths);
     b.set_column_char('\t');
     b.add("USER\tPID\t%CPU\t%MEM\tVSZ\tRSS\tTTY\tSTAT\tSTART\tTIME\tCOMMAND");
     b.add("root\t2888\t0.0\t0.0\t1352\t0\ttty3\tSW\tAug15\t0:00\t@b@f/sbin/mingetty tty3");

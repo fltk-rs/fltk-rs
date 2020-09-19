@@ -15,6 +15,9 @@ pub enum FltkError {
     Unknown(String),
 }
 
+unsafe impl Send for FltkError {}
+unsafe impl Sync for FltkError {}
+
 /// Error kinds enum for FltkError
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum FltkErrorKind {
@@ -368,14 +371,14 @@ pub unsafe trait InputExt: WidgetExt {
     fn maximum_size(&self) -> u32;
     /// Sets the maximum size (in bytes) accepted by an input/output widget
     fn set_maximum_size(&mut self, val: u32);
-    /// Returns the postion inside an input/output widget
-    fn position(&self) -> i32;
-    /// Sets the postion inside an input/output widget
-    fn set_position(&mut self, val: i32) -> Result<(), FltkError>;
-    /// Returns the mark inside an input/output widget
-    fn mark(&self) -> i32;
-    /// Sets the mark inside an input/output widget
-    fn set_mark(&mut self, val: i32) -> Result<(), FltkError>;
+    /// Returns the index position inside an input/output widget
+    fn position(&self) -> u32;
+    /// Sets the index postion inside an input/output widget
+    fn set_position(&mut self, val: u32) -> Result<(), FltkError>;
+    /// Returns the index mark inside an input/output widget
+    fn mark(&self) -> u32;
+    /// Sets the index mark inside an input/output widget
+    fn set_mark(&mut self, val: u32) -> Result<(), FltkError>;
     /// Replace content with a &str
     fn replace(&mut self, beg: u32, end: u32, val: &str) -> Result<(), FltkError>;
     /// Insert a &str
@@ -548,6 +551,8 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn buffer(&self) -> Option<TextBuffer>;
     /// Sets the associated TextBuffer
     fn set_buffer(&mut self, buffer: Option<TextBuffer>);
+    /// Get the associated style TextBuffer
+    fn style_buffer(&self) -> Option<TextBuffer>;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -587,7 +592,7 @@ pub unsafe trait DisplayExt: WidgetExt {
         &mut self,
         style_buffer: TextBuffer,
         entries: Vec<StyleTableEntry>,
-    ) -> crate::text::StyleTables;
+    );
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: TextCursor);
     /// Sets the cursor color
@@ -729,8 +734,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Gets the current column width array
     fn column_widths(&self) -> Vec<i32>;
     /// Sets the current column width array
-    /// Gives the slice a static lifetime
-    fn set_column_widths(&mut self, arr: &[i32]);
+    fn set_column_widths(&mut self, arr: &'static [i32]);
     /// Returns whether a certain line is displayed
     fn displayed(&self, line: u32) -> bool;
     /// Makes a specified line visible

@@ -357,7 +357,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_column_widths(&mut self, arr: &[i32]) {
+            fn set_column_widths(&mut self, arr: &'static [i32]) {
                 assert!(!self.was_deleted());
                 unsafe {
                     let mut v = arr.to_vec();

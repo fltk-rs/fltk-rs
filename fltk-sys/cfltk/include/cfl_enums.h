@@ -174,7 +174,6 @@ enum Font {
     Font_Screen = 13,
     Font_ScreenBold = 14,
     Font_Zapfdingbats = 15,
-    Font_Freefont = 16,
 };
 
 enum Color {

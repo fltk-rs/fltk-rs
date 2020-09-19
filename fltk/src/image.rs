@@ -58,13 +58,15 @@ impl SharedImage {
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<SharedImage, FltkError> {
         Self::load_(path.as_ref())
     }
-    
+
     fn load_(path: &std::path::Path) -> Result<SharedImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
             let temp = CString::new(temp)?;
             let x = Fl_Shared_Image_get(temp.as_ptr(), 0, 0);
             if x.is_null() {
@@ -105,13 +107,15 @@ impl JpegImage {
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<JpegImage, FltkError> {
         Self::load_(path.as_ref())
     }
-    
+
     fn load_(path: &std::path::Path) -> Result<JpegImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
             let temp = CString::new(temp)?;
             let image_ptr = Fl_JPEG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -161,13 +165,15 @@ impl PngImage {
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<PngImage, FltkError> {
         Self::load_(path.as_ref())
     }
-    
+
     fn load_(path: &std::path::Path) -> Result<PngImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
             let temp = CString::new(temp)?;
             let image_ptr = Fl_PNG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -217,13 +223,15 @@ impl SvgImage {
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<SvgImage, FltkError> {
         Self::load_(path.as_ref())
     }
-    
+
     fn load_(path: &std::path::Path) -> Result<SvgImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
             let temp = CString::new(temp)?;
             let image_ptr = Fl_SVG_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -269,13 +277,15 @@ impl BmpImage {
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<BmpImage, FltkError> {
         Self::load_(path.as_ref())
     }
-    
+
     fn load_(path: &std::path::Path) -> Result<BmpImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
             let temp = CString::new(temp)?;
             let image_ptr = Fl_BMP_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -325,13 +335,15 @@ impl GifImage {
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<GifImage, FltkError> {
         Self::load_(path.as_ref())
     }
-    
+
     fn load_(path: &std::path::Path) -> Result<GifImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
             let temp = CString::new(temp)?;
             let image_ptr = Fl_GIF_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -376,13 +388,15 @@ impl XpmImage {
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<XpmImage, FltkError> {
         Self::load_(path.as_ref())
     }
-    
+
     fn load_(path: &std::path::Path) -> Result<XpmImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
             let temp = CString::new(temp)?;
             let image_ptr = Fl_XPM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -408,13 +422,15 @@ impl XbmImage {
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<XbmImage, FltkError> {
         Self::load_(path.as_ref())
     }
-    
+
     fn load_(path: &std::path::Path) -> Result<XbmImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
             let temp = CString::new(temp)?;
             let image_ptr = Fl_XBM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -440,13 +456,15 @@ impl PnmImage {
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<PnmImage, FltkError> {
         Self::load_(path.as_ref())
     }
-    
+
     fn load_(path: &std::path::Path) -> Result<PnmImage, FltkError> {
         if !path.exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         unsafe {
-            let temp = path.to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
             let temp = CString::new(temp)?;
             let image_ptr = Fl_PNM_Image_new(temp.as_ptr());
             if image_ptr.is_null() {
@@ -473,9 +491,7 @@ impl TiledImage {
         unsafe {
             let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
             assert!(!ptr.is_null());
-            TiledImage {
-                _inner: ptr,
-            }
+            TiledImage { _inner: ptr }
         }
     }
 }
@@ -494,9 +510,7 @@ impl Pixmap {
             let data = Box::new(data.as_ptr());
             let ptr = Fl_Pixmap_new(Box::into_raw(data));
             assert!(!ptr.is_null());
-            Pixmap {
-                _inner: ptr,
-            }
+            Pixmap { _inner: ptr }
         }
     }
 }
@@ -508,11 +522,10 @@ pub struct RgbImage {
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage, gives the slice static lifetime
+    /// Initializes a new raw RgbImage, leaks data for the lifetime of the image
     /// If you need to work with RGB data,
     /// it's suggested to use the Image crate https://crates.io/crates/image
     pub fn new(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
-        let data = data.to_owned();
         if depth > 4 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
@@ -523,23 +536,20 @@ impl RgbImage {
         if sz > data.len() as u32 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
-        let img = unsafe {
-            Fl_RGB_Image_new(
-                mem::ManuallyDrop::new(data).as_ptr(),
+        unsafe {
+            let mut data = mem::ManuallyDrop::new(data);
+            let img = Fl_RGB_Image_new(
+                data.as_ptr(),
                 w as i32,
                 h as i32,
                 depth as i32,
-            )
-        };
-        if img.is_null() {
-            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-        } else {
-            unsafe {
-                if Fl_RGB_Image_fail(img) < 0 {
-                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
-                }
+            );
+            if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+                mem::ManuallyDrop::drop(&mut data);
+                Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+            } else {
+                Ok(RgbImage { _inner: img })
             }
-            Ok(RgbImage { _inner: img })
         }
     }
 

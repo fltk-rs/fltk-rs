@@ -1,13 +1,13 @@
 #include "cfl_text.h"
 #include <FL/Fl.H>
 
+#include "cfl_new.hpp"
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Simple_Terminal.H>
 #include <FL/Fl_Text_Buffer.H>
 #include <FL/Fl_Text_Display.H>
 #include <FL/Fl_Text_Editor.H>
 #include <FL/Fl_Widget.H>
- #include "cfl_new.hpp"
 
 #define DISPLAY_DEFINE(widget)                                                                     \
     int widget##_text_font(const widget *self) {                                                   \
@@ -70,16 +70,15 @@
     void widget##_show_cursor(widget *self, int boolean) {                                         \
         LOCK(if (boolean) self->show_cursor(); else self->hide_cursor();)                          \
     }                                                                                              \
-    void *widget##_set_style_table_entry(widget *self, void *sbuff, unsigned int *color,           \
-                                         int *font, int *fontsz, int sz) {                         \
+    void widget##_set_style_table_entry(widget *self, void *sbuff, unsigned int *color, int *font, \
+                                        int *fontsz, int sz) {                                     \
         Fl_Text_Display::Style_Table_Entry *stable = new Fl_Text_Display::Style_Table_Entry[sz];   \
         if (!stable)                                                                               \
-            return NULL;                                                                           \
+            return;                                                                                \
         for (int i = 0; i < sz; ++i) {                                                             \
             stable[i] = {color[i], font[i], fontsz[i]};                                            \
         }                                                                                          \
         LOCK(self->highlight_data((Fl_Text_Buffer *)sbuff, stable, sz, 'A', 0, 0);)                \
-        return (void *)stable;                                                                     \
     }                                                                                              \
     void widget##_set_cursor_style(widget *self, int style) {                                      \
         LOCK(self->cursor_style(style);)                                                           \
@@ -351,6 +350,10 @@ void Fl_Text_Display_set_buffer(Fl_Text_Display *self, Fl_Text_Buffer *buf) {
     LOCK(self->buffer(buf);)
 }
 
+Fl_Text_Buffer *Fl_Text_Display_get_style_buffer(Fl_Text_Display *self) {
+    return self->style_buffer();
+}
+
 DISPLAY_DEFINE(Fl_Text_Display)
 
 WIDGET_DEFINE(Fl_Text_Editor)
@@ -366,6 +369,10 @@ Fl_Text_Buffer *Fl_Text_Editor_get_buffer(Fl_Text_Editor *self) {
 
 void Fl_Text_Editor_set_buffer(Fl_Text_Editor *self, Fl_Text_Buffer *buf) {
     LOCK(self->buffer(buf);)
+}
+
+Fl_Text_Buffer *Fl_Text_Editor_get_style_buffer(Fl_Text_Editor *self) {
+    return self->style_buffer();
 }
 
 DISPLAY_DEFINE(Fl_Text_Editor)
@@ -551,6 +558,10 @@ Fl_Text_Buffer *Fl_Simple_Terminal_get_buffer(Fl_Simple_Terminal *self) {
 
 void Fl_Simple_Terminal_set_buffer(Fl_Simple_Terminal *self, Fl_Text_Buffer *buf) {
     LOCK(self->buffer(buf);)
+}
+
+Fl_Text_Buffer *Fl_Simple_Terminal_get_style_buffer(Fl_Simple_Terminal *self) {
+    return self->style_buffer();
 }
 
 void Fl_Simple_Terminal_set_stay_at_bottom(Fl_Simple_Terminal *self, int flag) {

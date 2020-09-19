@@ -659,6 +659,9 @@ extern "C" {
     pub fn Fl_Text_Display_set_buffer(arg1: *mut Fl_Text_Display, arg2: *mut Fl_Text_Buffer);
 }
 extern "C" {
+    pub fn Fl_Text_Display_get_style_buffer(arg1: *mut Fl_Text_Display) -> *mut Fl_Text_Buffer;
+}
+extern "C" {
     pub fn Fl_Text_Display_text_font(arg1: *const Fl_Text_Display) -> libc::c_int;
 }
 extern "C" {
@@ -731,7 +734,7 @@ extern "C" {
         font: *mut libc::c_int,
         fontsz: *mut libc::c_int,
         sz: libc::c_int,
-    ) -> *mut libc::c_void;
+    );
 }
 extern "C" {
     pub fn Fl_Text_Display_set_cursor_style(arg1: *mut Fl_Text_Display, style: libc::c_int);
@@ -1095,6 +1098,9 @@ extern "C" {
     pub fn Fl_Text_Editor_set_buffer(arg1: *mut Fl_Text_Editor, arg2: *mut Fl_Text_Buffer);
 }
 extern "C" {
+    pub fn Fl_Text_Editor_get_style_buffer(arg1: *mut Fl_Text_Editor) -> *mut Fl_Text_Buffer;
+}
+extern "C" {
     pub fn Fl_Text_Editor_text_font(arg1: *const Fl_Text_Editor) -> libc::c_int;
 }
 extern "C" {
@@ -1167,7 +1173,7 @@ extern "C" {
         font: *mut libc::c_int,
         fontsz: *mut libc::c_int,
         sz: libc::c_int,
-    ) -> *mut libc::c_void;
+    );
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_cursor_style(arg1: *mut Fl_Text_Editor, style: libc::c_int);
@@ -1622,6 +1628,11 @@ extern "C" {
     pub fn Fl_Simple_Terminal_set_buffer(arg1: *mut Fl_Simple_Terminal, arg2: *mut Fl_Text_Buffer);
 }
 extern "C" {
+    pub fn Fl_Simple_Terminal_get_style_buffer(
+        arg1: *mut Fl_Simple_Terminal,
+    ) -> *mut Fl_Text_Buffer;
+}
+extern "C" {
     pub fn Fl_Simple_Terminal_set_stay_at_bottom(self_: *mut Fl_Simple_Terminal, arg1: libc::c_int);
 }
 extern "C" {
@@ -1734,7 +1745,7 @@ extern "C" {
         font: *mut libc::c_int,
         fontsz: *mut libc::c_int,
         sz: libc::c_int,
-    ) -> *mut libc::c_void;
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_cursor_style(arg1: *mut Fl_Simple_Terminal, style: libc::c_int);
