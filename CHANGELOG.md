@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.8.8] - Unreleased
+## [0.8.8] - 2020-09-19
 ### Changes
 - Fix typos, thanks @nicolasbauw 
 - Add DisplayExt::style_buffer().
