@@ -1,0 +1,39 @@
+diff --git a/CMake/export.cmake b/CMake/export.cmake
+index 6e8bc5dd6..c3d01df9a 100644
+--- a/CMake/export.cmake
++++ b/CMake/export.cmake
+@@ -33,9 +33,11 @@ if (CMAKE_CROSSCOMPILING)
+     PROPERTIES IMPORTED_LOCATION ${FLUID_PATH}
+   )
+ else ()
+-  add_subdirectory(fluid)
+-  set (FLTK_FLUID_EXECUTABLE fluid)
+-  set (FLUID fluid) # export
++  if(FLTK_BUILD_FLUID)
++    add_subdirectory(fluid)
++    set (FLTK_FLUID_EXECUTABLE fluid)
++    set (FLUID fluid) # export
++  endif(FLTK_BUILD_FLUID)
+ endif (CMAKE_CROSSCOMPILING)
+ 
+ add_subdirectory(src)
+diff --git a/CMake/options.cmake b/CMake/options.cmake
+index ac7fa5bb6..aeb953e99 100644
+--- a/CMake/options.cmake
++++ b/CMake/options.cmake
+@@ -115,7 +115,7 @@ option (OPTION_BUILD_SHARED_LIBS
+ #######################################################################
+ option (OPTION_PRINT_SUPPORT "allow print support" ON)
+ option (OPTION_FILESYSTEM_SUPPORT "allow file system support" ON)
+-
++option (FLTK_BUILD_FLUID "Build fluid RAD tool" ON)
+ option (FLTK_BUILD_TEST     "Build test/demo programs" ON)
+ option (FLTK_BUILD_EXAMPLES "Build example programs"   OFF)
+ 
+diff --git a/VERSION b/VERSION
+deleted file mode 100644
+index 88c5fb891..000000000
+--- a/VERSION
++++ /dev/null
+@@ -1 +0,0 @@
+-1.4.0
