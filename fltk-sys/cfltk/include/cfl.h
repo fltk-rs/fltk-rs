@@ -142,9 +142,13 @@ int Fl_abi_version(void);
 
 // void Fl_set_fatal(void (*error)(const char *, ...));
 
+#if !defined(__ANDROID__)
+
 const char *Fl_load_font(const char *path);
 
 void Fl_unload_font(const char *path);
+
+#endif
 
 #ifdef __cplusplus
 }

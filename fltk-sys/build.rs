@@ -149,6 +149,10 @@ fn main() {
             dst.define("CFLTK_BUILD_TESTS", "ON");
         }
 
+        if let Ok(toolchain) = env::var("FLTK_TOOLCHAIN") {
+            dst.define("CMAKE_TOOLCHAIN_FILE", toolchain);
+        }
+
         let _dst = dst
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")

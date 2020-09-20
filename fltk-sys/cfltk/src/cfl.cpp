@@ -4,6 +4,8 @@
 #include <windows.h>
 #elif __APPLE__
 #include <ApplicationServices/ApplicationServices.h>
+#elif __ANDROID__
+// Do nothing!
 #else /* Assume X11 with XFT/fontconfig - this will break on systems using legacy Xlib fonts */
 #include <fontconfig/fontconfig.h>
 #define USE_XFT 1
@@ -357,12 +359,18 @@ static void v_unload_private_font(const char *pf) {
         CFRelease(fontURL);
 } // v_unload_private_font
 
+#elif __ANDROID__
+
+// Nothing!
+
 #else /* Assume X11 with XFT/fontconfig - will break on systems using legacy Xlib fonts */
 
 #define i_load_private_font(PATH) (int)FcConfigAppFontAddFile(NULL, (const FcChar8 *)(PATH))
 #define v_unload_private_font(PATH) FcConfigAppFontClear(NULL)
 
 #endif
+
+#if !defined(__ANDROID__)
 
 const char *Fl_load_font(const char *path) {
     stbtt_fontinfo font;
@@ -408,3 +416,5 @@ const char *Fl_load_font(const char *path) {
 void Fl_unload_font(const char *path) {
     v_unload_private_font(path);
 }
+
+#endif
