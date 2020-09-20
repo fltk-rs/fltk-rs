@@ -9,6 +9,7 @@ llvm which has some build issues on windows last time I tried it.
 C89 was chosen for the headers since bindgen works best with them. 
 It's possible to contribute by directly modifying the .rs files in the fltk-sys directory. 
 For the C/C++ code, the supplied clang-format formatting is used. 
+Building the wrapper applies a patch to FLTK which disables building fluid and deletes the VERSION file which might throw-off the clang compiler on some platforms. Prior to creating a pull request, discard all changes done to the FLTK submodule.
 
 ### Contributing to the bindings
 The Rust code shouldn't use nightly or unstable features. Avoid pulling other dependencies. 

@@ -155,8 +155,12 @@ fn main() {
             dst.define("CFLTK_BUILD_TESTS", "ON");
         }
 
-        if let Ok(toolchain) = env::var("FLTK_TOOLCHAIN") {
+        if let Ok(toolchain) = env::var("FLTK_TOOLCHAIN_FILE") {
             dst.define("CMAKE_TOOLCHAIN_FILE", toolchain);
+        }
+
+        if let Ok(platform) = env::var("FLTK_ANDROID_PLATFORM") {
+            dst.define("ANDROID_PLATFORM", platform);
         }
 
         let _dst = dst
