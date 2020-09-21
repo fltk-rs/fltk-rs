@@ -2,8 +2,6 @@
 
 #include <stdlib.h>
 
-void *__gxx_personality_v0 = 0;
-
 void *operator new(size_t size) {
     return malloc(size);
 }
@@ -19,6 +17,10 @@ void operator delete(void *val) noexcept {
 void operator delete[](void *val) noexcept {
     free(val);
 }
+
+#ifndef __ANDROID__
+void *__gxx_personality_v0 = 0;
+#endif
 
 extern "C" int __cxa_guard_acquire(long *g) {
     return !*(char *)(g);

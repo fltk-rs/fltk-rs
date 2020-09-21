@@ -1,4 +1,4 @@
-#include <cstdio>
+#include <stdio.h>
 #ifdef _WIN32
 #define _WIN32_WINNT 0x0501 /* need at least WinXP for this API, I think */
 #include <windows.h>
@@ -21,9 +21,6 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
-
-#define STB_TRUETYPE_IMPLEMENTATION
-#include "stb_truetype.h"
 
 int Fl_run(void) {
     return Fl::run();
@@ -325,11 +322,6 @@ int Fl_abi_version(void) {
 #define v_unload_private_font(PATH) RemoveFontResourceEx((PATH), FR_PRIVATE, 0)
 
 #elif __APPLE__
-#include <stdio.h> // I use printf for error reporting in the Apple specific code!
-/* For the Apple case, we need to do a bit more work, since we need to convert
- * the PATH into a CFURLRef before we can call CTFontManagerRegisterFontsForURL()
- * with it.
- * Otherwise, all three systems would have basically the same structure here! */
 static int i_load_private_font(const char *pf) {
     int result = 0;
     CFErrorRef err;
@@ -370,9 +362,12 @@ static void v_unload_private_font(const char *pf) {
 
 #endif
 
+const char *Fl_load_font(const char *path) {
 #if !defined(__ANDROID__)
 
-const char *Fl_load_font(const char *path) {
+#define STB_TRUETYPE_IMPLEMENTATION
+#include "stb_truetype.h"
+
     stbtt_fontinfo font;
     FILE *fptr = fopen(path, "rb");
     if (!fptr)
@@ -411,10 +406,13 @@ const char *Fl_load_font(const char *path) {
     }
     free(buffer);
     return str;
+#else
+    return NULL;
+#endif
 }
 
 void Fl_unload_font(const char *path) {
+#if !defined(__ANDROID__)
     v_unload_private_font(path);
-}
-
 #endif
+}
