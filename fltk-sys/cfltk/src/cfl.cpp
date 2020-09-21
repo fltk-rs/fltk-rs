@@ -362,12 +362,13 @@ static void v_unload_private_font(const char *pf) {
 
 #endif
 
-const char *Fl_load_font(const char *path) {
 #if !defined(__ANDROID__)
-
 #define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_truetype.h"
+#endif
 
+const char *Fl_load_font(const char *path) {
+#if !defined(__ANDROID__)
     stbtt_fontinfo font;
     FILE *fptr = fopen(path, "rb");
     if (!fptr)
