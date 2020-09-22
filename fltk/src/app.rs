@@ -152,13 +152,11 @@ impl App {
 
     /// Runs the event loop
     pub fn run(&self) -> Result<(), FltkError> {
-        lock()?;
         run()
     }
 
     /// Wait for incoming messages
     pub fn wait(&self) -> Result<bool, FltkError> {
-        lock()?;
         Ok(wait())
     }
 

@@ -159,10 +159,6 @@ fn main() {
             dst.define("CMAKE_TOOLCHAIN_FILE", toolchain);
         }
 
-        if let Ok(platform) = env::var("FLTK_ANDROID_PLATFORM") {
-            dst.define("ANDROID_PLATFORM", platform);
-        }
-
         let _dst = dst
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
