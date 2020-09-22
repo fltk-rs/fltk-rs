@@ -211,9 +211,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::new(title).unwrap();
                 unsafe {
-                    let widget_ptr = #new(x, y, width, height, std::ptr::null() as *const raw::c_char);
+                    let widget_ptr = #new(x, y, width, height, temp.into_raw());
                     assert!(!widget_ptr.is_null());
-                    #set_label(widget_ptr, temp.as_ptr());
                     let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
                     assert!(!tracker.is_null());
                     #name {
@@ -231,9 +230,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         0,
                         0,
                         0,
-                        std::ptr::null() as *const raw::c_char);
+                        temp.into_raw());
                         assert!(!widget_ptr.is_null());
-                        #set_label(widget_ptr, temp.as_ptr());
                         let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
                         assert!(!tracker.is_null());
                     #name {
