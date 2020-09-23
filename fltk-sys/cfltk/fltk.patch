@@ -37,3 +37,15 @@ index 88c5fb891..000000000
 +++ /dev/null
 @@ -1 +0,0 @@
 -1.4.0
+diff --git a/src/Fl_Preferences.cxx b/src/Fl_Preferences.cxx
+index 11851c0de..716461769 100644
+--- a/src/Fl_Preferences.cxx
++++ b/src/Fl_Preferences.cxx
+@@ -1340,6 +1340,7 @@ char Fl_Preferences::Node::deleteEntry( const char *name ) {
+ // - this method will always return a valid node (except for memory allocation problems)
+ // - if the node was not found, 'find' will create the required branch
+ Fl_Preferences::Node *Fl_Preferences::Node::find( const char *path ) {
++  if (!path_) return this;
+   int len = (int) strlen( path_ );
+   if ( strncmp( path, path_, len ) == 0 ) {
+     if ( path[ len ] == 0 )

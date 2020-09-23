@@ -445,9 +445,11 @@ pub struct AndroidWindow {
 impl AndroidWindow {
     pub fn default() -> Self {
         let (w, h) = screen_size();
-        AndroidWindow {
+        let mut w = AndroidWindow {
             win: Window::new(0, 30, w as i32, h as i32 - 30, ""),
-        }
+        };
+        w.win.set_color(Color::White);
+        w
     }
 }
 

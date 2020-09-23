@@ -7,6 +7,7 @@ use std::{
 fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
+    let target_triple = env::var("TARGET").unwrap();
     let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
     let pkg_version = env::var("CARGO_PKG_VERSION").unwrap();
     let mut dst = cmake::Config::new("cfltk");
@@ -155,8 +156,12 @@ fn main() {
             dst.define("CFLTK_BUILD_TESTS", "ON");
         }
 
-        if let Ok(toolchain) = env::var("FLTK_TOOLCHAIN_FILE") {
+        if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN_FILE") {
             dst.define("CMAKE_TOOLCHAIN_FILE", toolchain);
+        }
+
+        if target_triple.contains("android") {
+            handle_android(&target_triple, &mut dst);
         }
 
         let _dst = dst
@@ -263,5 +268,35 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
             }
         }
+    }
+}
+
+fn handle_android(triple: &str, dst: &mut cmake::Config) {
+    let ndk = PathBuf::from(env::var("NDK_HOME").expect("NDK_HOME should be set!"));
+
+    dst.define("CMAKE_SYSTEM_NAME", "Android");
+    dst.define("CMAKE_SYSTEM_VERSION", "16");
+    dst.define("ANDROID_PLATFORM", "android-21");
+    dst.define("CMAKE_ANDROID_NDK", &ndk);
+    dst.define("ANDROID_NDK", &ndk);
+
+    match triple {
+        "i686-linux-android" => {
+            dst.define("ANDROID_ABI", "x86");
+            dst.define("CMAKE_ANDROID_ARCH_ABI", "x86");
+        },
+        "aarch64-linux-android" => {
+            dst.define("ANDROID_ABI", "arm64-v8a");
+            dst.define("CMAKE_ANDROID_ARCH_ABI", "arm64-v8a");
+        },
+        "armv7-linux-androideabi" => {
+            dst.define("ANDROID_ABI", "armeabi-v7a");
+            dst.define("CMAKE_ANDROID_ARCH_ABI", "armeabi-v7a");
+        },
+        "x86_64-linux-android" => {
+            dst.define("ANDROID_ABI", "x86_64");
+            dst.define("CMAKE_ANDROID_ARCH_ABI", "x86_64");
+        },
+        _ => panic!("Unknown android triple"),
     }
 }
