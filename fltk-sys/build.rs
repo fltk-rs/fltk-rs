@@ -275,7 +275,7 @@ fn handle_android(triple: &str, dst: &mut cmake::Config) {
     let ndk = PathBuf::from(env::var("NDK_HOME").expect("NDK_HOME should be set!"));
 
     dst.define("CMAKE_SYSTEM_NAME", "Android");
-    dst.define("CMAKE_SYSTEM_VERSION", "16");
+    dst.define("CMAKE_SYSTEM_VERSION", "21");
     dst.define("ANDROID_PLATFORM", "android-21");
     dst.define("CMAKE_ANDROID_NDK", &ndk);
     dst.define("ANDROID_NDK", &ndk);
