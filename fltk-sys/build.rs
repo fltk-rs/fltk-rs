@@ -1,4 +1,4 @@
-use std::{env, fs, path::PathBuf, process::Command};
+use std::{env, path::PathBuf, process::Command};
 
 fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
@@ -151,10 +151,7 @@ fn main() {
         }
 
         if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN_FILE") {
-            dst.define(
-                "CMAKE_TOOLCHAIN_FILE",
-                fs::canonicalize(toolchain).expect("Failed to canonicalize toolchain path!"),
-            );
+            dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
         }
 
         if target_triple.contains("android") {
@@ -275,8 +272,7 @@ fn main() {
 }
 
 fn handle_android(triple: &str, dst: &mut cmake::Config) {
-    let ndk = env::var("NDK_HOME").expect("NDK_HOME should be set!");
-    let ndk = fs::canonicalize(ndk).expect("Failed to canonicalize ndk path");
+    let ndk = PathBuf::from(env::var("NDK_HOME").expect("NDK_HOME should be set!"));
 
     dst.define("CMAKE_SYSTEM_NAME", "Android");
     dst.define("CMAKE_SYSTEM_VERSION", "16");
