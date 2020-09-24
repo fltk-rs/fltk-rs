@@ -263,7 +263,7 @@ fn main() {
         }
     }));
 
-    while app.wait().expect("Couldn't run editor!") {
+    while app.wait() {
         use Message::*;
         if let Some(msg) = r.recv() {
             match msg {

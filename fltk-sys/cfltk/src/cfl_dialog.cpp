@@ -1,6 +1,7 @@
 #include "cfl_dialog.h"
 #include <FL/Fl.H>
 
+#include "cfl_new.hpp"
 #include <FL/Fl_Color_Chooser.H>
 #include <FL/Fl_File_Chooser.H>
 #include <FL/Fl_Help_Dialog.H>
@@ -8,7 +9,6 @@
 #include <FL/Fl_Native_File_Chooser.H>
 #include <FL/fl_ask.H>
 #include <FL/platform.H>
-#include "cfl_new.hpp"
 #include <string.h>
 
 #ifndef LOCK
@@ -20,7 +20,11 @@
 #endif
 
 Fl_Native_File_Chooser *Fl_Native_File_Chooser_new(int val) {
+#ifndef __ANDROID__
     return new Fl_Native_File_Chooser(val);
+#else
+    return NULL;
+#endif
 }
 
 void Fl_Native_File_Chooser_delete(Fl_Native_File_Chooser *self) {

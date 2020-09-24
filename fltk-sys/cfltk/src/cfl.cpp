@@ -1,9 +1,11 @@
-#include <cstdio>
+#include <stdio.h>
 #ifdef _WIN32
 #define _WIN32_WINNT 0x0501 /* need at least WinXP for this API, I think */
 #include <windows.h>
 #elif __APPLE__
 #include <ApplicationServices/ApplicationServices.h>
+#elif __ANDROID__
+// Do nothing!
 #else /* Assume X11 with XFT/fontconfig - this will break on systems using legacy Xlib fonts */
 #include <fontconfig/fontconfig.h>
 #define USE_XFT 1
@@ -19,9 +21,6 @@
 #include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
-
-#define STB_TRUETYPE_IMPLEMENTATION
-#include "stb_truetype.h"
 
 int Fl_run(void) {
     return Fl::run();
@@ -323,11 +322,6 @@ int Fl_abi_version(void) {
 #define v_unload_private_font(PATH) RemoveFontResourceEx((PATH), FR_PRIVATE, 0)
 
 #elif __APPLE__
-#include <stdio.h> // I use printf for error reporting in the Apple specific code!
-/* For the Apple case, we need to do a bit more work, since we need to convert
- * the PATH into a CFURLRef before we can call CTFontManagerRegisterFontsForURL()
- * with it.
- * Otherwise, all three systems would have basically the same structure here! */
 static int i_load_private_font(const char *pf) {
     int result = 0;
     CFErrorRef err;
@@ -357,6 +351,10 @@ static void v_unload_private_font(const char *pf) {
         CFRelease(fontURL);
 } // v_unload_private_font
 
+#elif __ANDROID__
+
+// Nothing!
+
 #else /* Assume X11 with XFT/fontconfig - will break on systems using legacy Xlib fonts */
 
 #define i_load_private_font(PATH) (int)FcConfigAppFontAddFile(NULL, (const FcChar8 *)(PATH))
@@ -364,7 +362,13 @@ static void v_unload_private_font(const char *pf) {
 
 #endif
 
+#if !defined(__ANDROID__)
+#define STB_TRUETYPE_IMPLEMENTATION
+#include "stb_truetype.h"
+#endif
+
 const char *Fl_load_font(const char *path) {
+#if !defined(__ANDROID__)
     stbtt_fontinfo font;
     FILE *fptr = fopen(path, "rb");
     if (!fptr)
@@ -403,8 +407,13 @@ const char *Fl_load_font(const char *path) {
     }
     free(buffer);
     return str;
+#else
+    return NULL;
+#endif
 }
 
 void Fl_unload_font(const char *path) {
+#if !defined(__ANDROID__)
     v_unload_private_font(path);
+#endif
 }

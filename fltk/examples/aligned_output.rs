@@ -10,17 +10,17 @@ struct MyOutput {
 }
 
 impl MyOutput {
-    pub fn new(x: i32, y: i32, w: i32, h: i32, align: Align) -> Self {
+    pub fn new(x: i32, y: i32, width: i32, height: i32, align: Align) -> Self {
         let mut o = MyOutput {
-            f: frame::Frame::new(x, y, w, h, ""),
+            f: frame::Frame::new(x, y, width, height, ""),
             val: Rc::from(RefCell::from(String::from(""))),
         };
         let v = o.val.clone();
         o.f.draw(Box::new(move || {
-            draw::push_clip(x, y, w, h);
-            draw::draw_box(FrameType::DownBox, x, y, w, h, Color::White);
+            draw::push_clip(x, y, width, height);
+            draw::draw_box(FrameType::DownBox, x, y, width, height, Color::White);
             draw::set_draw_color(Color::Black);
-            draw::draw_text2(&v.borrow(), x, y, w, h, align);
+            draw::draw_text2(&v.borrow(), x, y, width, height, align);
             draw::pop_clip();
         }));
         o

@@ -1,12 +1,9 @@
-use std::{
-    env,
-    path::PathBuf,
-    process::Command,
-};
+use std::{env, path::PathBuf, process::Command};
 
 fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
+    let target_triple = env::var("TARGET").unwrap();
     let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
     let pkg_version = env::var("CARGO_PKG_VERSION").unwrap();
     let mut dst = cmake::Config::new("cfltk");
@@ -20,14 +17,13 @@ fn main() {
             platform.push_str("-gnu");
         } else {
             platform.push_str("-msvc");
-        }   
+        }
     }
 
     if cfg!(feature = "fltk-bundled") {
         let url = PathBuf::from(format!(
             "https://github.com/MoAlyousef/fltk-rs/releases/download/{}/lib_x64-{}.tar.gz",
-            pkg_version,
-            platform
+            pkg_version, platform
         ));
 
         Command::new("curl")
@@ -41,7 +37,6 @@ fn main() {
             .current_dir(out_dir.clone())
             .status()
             .expect("Curl and Tar are needed to download and upack the bundled libraries!");
-            
     } else {
         println!("cargo:rerun-if-changed=cfltk/include/cfl_new.hpp");
         println!("cargo:rerun-if-changed=cfltk/include/cfl.h");
@@ -88,10 +83,16 @@ fn main() {
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
 
-        Command::new("git")	
-            .args(&["checkout", "master"])	
-            .current_dir(manifest_dir.join("cfltk").join("fltk"))	
-            .status()	
+        Command::new("git")
+            .args(&["checkout", "master"])
+            .current_dir(manifest_dir.join("cfltk").join("fltk"))
+            .status()
+            .expect("Git is needed to retrieve the fltk source files!");
+
+        Command::new("git")
+            .args(&["apply", "../fltk.patch"])
+            .current_dir(manifest_dir.join("cfltk").join("fltk"))
+            .status()
             .expect("Git is needed to retrieve the fltk source files!");
 
         if cfg!(feature = "fltk-shared") {
@@ -149,18 +150,33 @@ fn main() {
             dst.define("CFLTK_BUILD_TESTS", "ON");
         }
 
+        if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN") {
+            dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
+        }
+
+        if target_triple.contains("android") {
+            handle_android(&target_triple, &mut dst);
+        }
+
         let _dst = dst
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("OPTION_ABI_VERSION:STRING", "10401")
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
+            .define("FLTK_BUILD_FLUID", "OFF")
             .define("OPTION_USE_THREADS", "ON")
             .define("OPTION_LARGE_FILE", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
             .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
             .build();
     }
+
+    Command::new("git")
+        .args(&["reset", "--hard", "origin/master"])
+        .current_dir(manifest_dir.join("cfltk").join("fltk"))
+        .status()
+        .expect("Git is needed to retrieve the fltk source files!");
 
     println!(
         "cargo:rustc-link-search=native={}",
@@ -188,19 +204,19 @@ fn main() {
 
         if !cfg!(features = "no-images") {
             println!("cargo:rustc-link-lib=static=fltk_images");
-            
+
             if cfg!(feature = "system-libpng") {
                 println!("cargo:rustc-link-lib=dylib=png");
             } else {
                 println!("cargo:rustc-link-lib=static=fltk_png");
             }
-    
+
             if cfg!(feature = "system-libjpeg") {
                 println!("cargo:rustc-link-lib=dylib=jpeg");
             } else {
                 println!("cargo:rustc-link-lib=static=fltk_jpeg");
             }
-    
+
             if cfg!(feature = "system-zlib") {
                 println!("cargo:rustc-link-lib=dylib=z");
             } else {
@@ -252,5 +268,36 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
             }
         }
+    }
+}
+
+fn handle_android(triple: &str, dst: &mut cmake::Config) {
+    let ndk = PathBuf::from(env::var("NDK_HOME").expect("NDK_HOME should be set!"));
+
+    dst.define("CMAKE_SYSTEM_NAME", "Android");
+    dst.define("CMAKE_SYSTEM_VERSION", "21");
+    dst.define("ANDROID_PLATFORM", "android-21");
+    dst.define("CMAKE_ANDROID_NDK", &ndk);
+    dst.define("ANDROID_NDK", &ndk);
+    dst.define("CMAKE_TOOLCHAIN_FILE", ndk.join("build").join("cmake").join("android.toolchain.cmake"));
+
+    match triple {
+        "i686-linux-android" => {
+            dst.define("ANDROID_ABI", "x86");
+            dst.define("CMAKE_ANDROID_ARCH_ABI", "x86");
+        }
+        "aarch64-linux-android" => {
+            dst.define("ANDROID_ABI", "arm64-v8a");
+            dst.define("CMAKE_ANDROID_ARCH_ABI", "arm64-v8a");
+        }
+        "armv7-linux-androideabi" => {
+            dst.define("ANDROID_ABI", "armeabi-v7a");
+            dst.define("CMAKE_ANDROID_ARCH_ABI", "armeabi-v7a");
+        }
+        "x86_64-linux-android" => {
+            dst.define("ANDROID_ABI", "x86_64");
+            dst.define("CMAKE_ANDROID_ARCH_ABI", "x86_64");
+        }
+        _ => panic!("Unknown android triple"),
     }
 }

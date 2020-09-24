@@ -91,7 +91,7 @@ winid resolve_raw_handle(void *handle) {
 }
 
 void *Fl_display(void) {
-#ifdef __APPLE__
+#if defined(__APPLE__) || defined(__ANDROID__)
     return 0;
 #else
     return fl_display;
@@ -99,7 +99,10 @@ void *Fl_display(void) {
 }
 
 void *Fl_gc(void) {
+#if !defined(__ANDROID__)
     return fl_gc;
+#endif
+    return NULL;
 }
 
 void Fl_Window_show_with_args(Fl_Window *w, int argc, char **argv) {
@@ -109,22 +112,12 @@ void Fl_Window_show_with_args(Fl_Window *w, int argc, char **argv) {
 void Fl_Window_set_raw_handle(Fl_Window *self, void *handle) {
     if (!handle)
         return;
-#if !defined(_WIN32) && !defined(__APPLE__)
+#if !defined(_WIN32) && !defined(__APPLE__) && !defined(__ANDROID__)
     LOCK(Fl_X::set_xid(self, *(Window *)handle);)
 #else
-    LOCK(Fl_X *xp = new Fl_X;
-    if (!xp)
-        return;
-    Window h = *(Window *)handle;
-    xp->xid = h;
-    xp->w = self;
-    xp->next = Fl_X::first;
-    xp->region = 0;
-    Fl_X *i = Fl_X::i(self);
-    if (!i)
-        return;
-    i = xp;
-    Fl_X::first = xp;)
+    LOCK(Fl_X *xp = new Fl_X; if (!xp) return; Window h = *(Window *)handle; xp->xid = h;
+         xp->w = self; xp->next = Fl_X::first; xp->region = 0; Fl_X *i = Fl_X::i(self);
+         if (!i) return; i = xp; Fl_X::first = xp;)
 #endif
 }
 

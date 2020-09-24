@@ -8,7 +8,7 @@ Bindgen is used on the header files using bind.sh script. It's not added as depe
 llvm which has some build issues on windows last time I tried it. 
 C89 was chosen for the headers since bindgen works best with them. 
 It's possible to contribute by directly modifying the .rs files in the fltk-sys directory. 
-For the C/C++ code, the supplied clang-format formatting is used. 
+For the C/C++ code, the supplied clang-format formatting is used.
 
 ### Contributing to the bindings
 The Rust code shouldn't use nightly or unstable features. Avoid pulling other dependencies. 

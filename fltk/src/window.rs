@@ -6,6 +6,7 @@ use fltk_sys::window::*;
 use std::{
     ffi::{CStr, CString},
     mem,
+    ops::{Deref, DerefMut},
     os::raw,
 };
 
@@ -433,5 +434,36 @@ impl GlWindow {
         unsafe {
             Fl_Gl_Window_set_mode(self._inner, mode as i32);
         }
+    }
+}
+
+/// An Android window
+pub struct AndroidWindow {
+    win: Window,
+}
+
+impl AndroidWindow {
+    /// Creates a default initialized Android Window
+    pub fn default() -> Self {
+        let (w, h) = screen_size();
+        let mut w = AndroidWindow {
+            win: Window::new(0, 30, w as i32, h as i32 - 30, ""),
+        };
+        w.win.set_color(Color::White);
+        w
+    }
+}
+
+impl Deref for AndroidWindow {
+    type Target = Window;
+
+    fn deref(&self) -> &Self::Target {
+        &self.win
+    }
+}
+
+impl DerefMut for AndroidWindow {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.win
     }
 }
