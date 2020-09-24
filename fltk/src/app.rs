@@ -156,8 +156,8 @@ impl App {
     }
 
     /// Wait for incoming messages
-    pub fn wait(&self) -> Result<bool, FltkError> {
-        Ok(wait())
+    pub fn wait(&self) -> bool {
+        wait()
     }
 
     /// Loads system fonts

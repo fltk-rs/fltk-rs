@@ -150,7 +150,7 @@ fn main() {
             dst.define("CFLTK_BUILD_TESTS", "ON");
         }
 
-        if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN_FILE") {
+        if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN") {
             dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
         }
 

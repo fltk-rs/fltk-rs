@@ -443,6 +443,7 @@ pub struct AndroidWindow {
 }
 
 impl AndroidWindow {
+    /// Creates a default initialized Android Window
     pub fn default() -> Self {
         let (w, h) = screen_size();
         let mut w = AndroidWindow {

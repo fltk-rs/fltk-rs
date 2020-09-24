@@ -31,29 +31,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.8"
+fltk = "^0.9"
 ```
-The library offers prebuilt static cfltk and fltk libraries, which can be added using the "fltk-bundled" flag:
-```toml
-[dependencies]
-fltk = { version = "^0.8", features = ["fltk-bundled"] }
-```
-Since these are pre-built libraries using the Github actions CI, the currently supported operating systems are:
-- Windows 10 x64 (msvc and gnu).
-- MacOS 10.15 x64.
-- Ubuntu 18.04 or later, x64.
 
-This also assumes you have curl and tar installed (for Windows, they're available in the Native Tools Command Prompt).
+The library is automatically built and statically linked to your binary. 
 
-The library is automatically statically linked to your binary. 
-
-You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the system-fltk feature, but note that this crate uses the latest FLTK (1.40).
-
-To use the master branch in your project, you can use:
-```toml
-[dependencies]
-fltk = { git = "https://github.com/MoAlyousef/fltk-rs" }
-```
+You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature.
 
 An example hello world application:
 
@@ -140,7 +123,7 @@ Another way is to use message passing:
     but_inc.emit(s, Message::Increment);
     but_dec.emit(s, Message::Decrement);
     
-    while app.wait().unwrap() {
+    while app.wait() {
         let label: i32 = frame.label().parse().unwrap();
         match r.recv() {
             Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
@@ -190,7 +173,7 @@ The following are the features offered by the crate:
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
-- enable-glwindow: Support for systems without OpenGL.
+- enable-glwindow: Support for drawing using OpenGL functions.
 
 ## Dependencies
 
