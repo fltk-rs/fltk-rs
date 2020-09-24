@@ -87,12 +87,12 @@ impl Scroll {
     /// Scrolls from ```from``` to ```to```
     pub fn scroll_to(&mut self, from: u32, to: u32) {
         debug_assert!(
-            from <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            from <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            to <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            to <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
         unsafe { Fl_Scroll_scroll_to(self._inner, from as i32, to as i32) }
@@ -107,8 +107,8 @@ impl Scroll {
     /// Sets the scrollbar size
     pub fn set_scrollbar_size(&mut self, new_size: u32) {
         debug_assert!(
-            new_size <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            new_size <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
         unsafe { Fl_Scroll_set_scrollbar_size(self._inner, new_size as i32) }

@@ -189,8 +189,8 @@ impl Tree {
             return None;
         }
         debug_assert!(
-            pos <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            pos <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         let name = CString::new(name).unwrap();
         unsafe {
@@ -645,8 +645,8 @@ impl Tree {
     pub fn set_item_label_size(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_item_labelsize(self._inner, val as i32) }
     }
@@ -697,8 +697,8 @@ impl Tree {
     pub fn set_margin_left(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_marginleft(self._inner, val as i32) }
     }
@@ -713,8 +713,8 @@ impl Tree {
     pub fn set_margin_top(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_margintop(self._inner, val as i32) }
     }
@@ -729,8 +729,8 @@ impl Tree {
     pub fn set_margin_bottom(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_marginbottom(self._inner, val as i32) }
     }
@@ -745,8 +745,8 @@ impl Tree {
     pub fn set_line_spacing(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_linespacing(self._inner, val as i32) }
     }
@@ -761,8 +761,8 @@ impl Tree {
     pub fn set_open_child_margin_bottom(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_openchild_marginbottom(self._inner, val as i32) }
     }
@@ -777,8 +777,8 @@ impl Tree {
     pub fn set_user_icon_margin_left(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_usericonmarginleft(self._inner, val as i32) }
     }
@@ -793,8 +793,8 @@ impl Tree {
     pub fn set_label_margin_left(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_labelmarginleft(self._inner, val as i32) }
     }
@@ -809,8 +809,8 @@ impl Tree {
     pub fn set_widget_margin_left(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_widgetmarginleft(self._inner, val as i32) }
     }
@@ -825,8 +825,8 @@ impl Tree {
     pub fn set_connector_width(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_set_connectorwidth(self._inner, val as i32) }
     }
@@ -1292,8 +1292,8 @@ impl TreeItem {
     pub fn set_label_size(&mut self, val: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            val <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_Item_set_labelsize(self._inner, val as i32) }
     }
@@ -1365,8 +1365,8 @@ impl TreeItem {
     pub fn child(&self, idx: u32) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         debug_assert!(
-            idx <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            idx <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe {
             TreeItem::from_raw(Fl_Tree_Item_child(self._inner, idx as i32) as *mut Fl_Tree_Item)
@@ -1460,8 +1460,8 @@ impl TreeItem {
     pub fn deparent(&mut self, index: u32) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         debug_assert!(
-            index <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            index <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { TreeItem::from_raw(Fl_Tree_Item_deparent(self._inner, index as i32)) }
     }
@@ -1470,8 +1470,8 @@ impl TreeItem {
     pub fn reparent(&mut self, new_child: TreeItem, index: u32) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !new_child.was_deleted());
         debug_assert!(
-            index <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            index <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe {
             match Fl_Tree_Item_reparent(self._inner, new_child._inner, index as i32) {
@@ -1485,12 +1485,12 @@ impl TreeItem {
     pub fn move_item(&mut self, to: u32, from: u32) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         debug_assert!(
-            to <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            to <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            from <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            from <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe {
             match Fl_Tree_Item_move(self._inner, to as i32, from as i32) {
@@ -1526,8 +1526,8 @@ impl TreeItem {
     pub fn move_into(&mut self, item: TreeItem, pos: u32) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !item.was_deleted());
         debug_assert!(
-            pos <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            pos <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe {
             match Fl_Tree_Item_move_into(self._inner, item._inner, pos as i32) {
@@ -1571,8 +1571,8 @@ impl TreeItem {
     pub fn update_prev_next(&mut self, index: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            index <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            index <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_Item_update_prev_next(self._inner, index as i32) }
     }
@@ -1639,8 +1639,8 @@ impl TreeItem {
     pub fn select(&mut self, index: u32) {
         assert!(!self.was_deleted());
         debug_assert!(
-            index <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            index <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tree_Item_select(self._inner, index as i32) }
     }
@@ -1831,8 +1831,8 @@ impl TreeItemArray {
     /// Gets the item at idx
     fn at(&self, idx: u32) -> Option<TreeItem> {
         debug_assert!(
-            idx <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            idx <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { TreeItem::from_raw(Fl_Tree_Item_Array_at(self._inner, idx as i32)) }
     }

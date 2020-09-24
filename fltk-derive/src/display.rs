@@ -275,7 +275,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_text_size(&mut self, sz: u32) {
-                debug_assert!(sz <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(sz <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
                 unsafe { #set_text_size(self._inner, sz as i32) }
@@ -283,8 +283,8 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
 
             fn scroll(&mut self, topLineNum: u32, horizOffset: u32) {
                 unsafe {
-                    debug_assert!(topLineNum <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                    debug_assert!(horizOffset <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    debug_assert!(topLineNum <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+                    debug_assert!(horizOffset <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
                     #scroll(self._inner, topLineNum as i32, horizOffset as i32)
@@ -302,7 +302,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_insert_position(&mut self, newPos: u32) {
                 unsafe {
-                    debug_assert!(newPos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    debug_assert!(newPos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
                     #set_insert_position(self._inner, newPos as i32)
@@ -318,7 +318,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn position_to_xy(&self, pos: u32) -> (u32, u32) {
-                debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     let mut x: i32 = 0;
                     let mut y: i32 = 0;
@@ -334,8 +334,8 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     true => 1,
                     false => 0,
                 };
-                debug_assert!(start <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                debug_assert!(end <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(start <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+                debug_assert!(end <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
@@ -437,7 +437,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_scrollbar_size(&mut self, size: u32){
-                debug_assert!(size <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_scrollbar_size(self._inner, size as i32)
@@ -487,7 +487,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn line_start(&self, pos: u32) -> u32 {
-                debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
@@ -496,7 +496,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn line_end(&self, start_pos: u32, is_line_start: bool) -> u32 {
-                debug_assert!(start_pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(start_pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
@@ -505,8 +505,8 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn skip_lines(&mut self, start_pos: u32, lines: u32, is_line_start: bool) -> u32 {
-                debug_assert!(start_pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                debug_assert!(lines <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(start_pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+                debug_assert!(lines <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
@@ -515,8 +515,8 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn rewind_lines(&mut self, start_pos: u32, lines: u32) -> u32 {
-                debug_assert!(start_pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                debug_assert!(lines <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(start_pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+                debug_assert!(lines <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
@@ -541,7 +541,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn word_start(&self, pos: u32) -> u32 {
-                debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
@@ -550,7 +550,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn word_end(&self, pos: u32) -> u32 {
-                debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
@@ -603,7 +603,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_linenumber_size(&mut self, size: u32) {
-                debug_assert!(size <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_linenumber_size(self._inner, size as i32)

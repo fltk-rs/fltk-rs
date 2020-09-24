@@ -232,7 +232,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_rows(&mut self, val: u32) {
-                debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_rows(self._inner, val as i32)
@@ -247,7 +247,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_cols(&mut self, val: u32) {
-                debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_cols(self._inner, val as i32)
@@ -320,7 +320,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_col_resize_min(&mut self, val: u32) {
-                debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_col_resize_min(self._inner, val as i32)
@@ -335,7 +335,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_row_resize_min(&mut self, val: u32) {
-                debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_row_resize_min(self._inner, val as i32)
@@ -577,7 +577,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_scrollbar_size(&mut self, new_size: u32) {
-                debug_assert!(new_size <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(new_size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_scrollbar_size(self._inner, new_size as i32)
@@ -585,7 +585,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_tab_cell_nav(&mut self, val: u32) {
-                debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_tab_cell_nav(self._inner, val as i32)

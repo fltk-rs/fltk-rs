@@ -51,7 +51,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
 
             fn insert<Widget: WidgetExt>(&mut self, widget: &Widget, index: u32) {
                 unsafe {
-                    debug_assert!(index <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    debug_assert!(index <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
                     #insert(self._inner, widget.as_widget_ptr() as *mut raw::c_void, index as i32)
@@ -100,7 +100,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
 
             fn child(&self, idx: u32) -> Option<Widget> {
                 unsafe {
-                    debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     let child_widget = #child(self._inner, idx as i32);
                     if child_widget.is_null() {
