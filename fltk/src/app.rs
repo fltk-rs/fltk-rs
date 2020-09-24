@@ -21,7 +21,7 @@ static mut LOADED_FONT: Option<&str> = None;
 pub fn run() -> Result<(), FltkError> {
     #[cfg(not(target_os = "android"))]
     lock()?;
-    
+
     unsafe {
         match Fl_run() {
             0 => Ok(()),
