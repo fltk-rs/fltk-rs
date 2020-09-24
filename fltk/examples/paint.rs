@@ -54,7 +54,6 @@ fn main() {
                 offs.borrow().begin();
                 let coords = app::event_coords();
                 draw_line(x, y, coords.0, coords.1);
-                draw_line2(Coord(x, y), Coord(0, 0), Coord(0, 0));
                 x = coords.0;
                 y = coords.1;
                 offs.borrow().end();

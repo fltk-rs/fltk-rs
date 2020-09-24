@@ -1,9 +1,8 @@
 # Changelog
 
-## [0.9.0] - 2020-09-24
+## [0.9.1] - 2020-09-24
 ### Changes
 - Breaking:
-    - App::wait() returns bool instead of a Result.
     - Some draw functions now take a Coord struct:
         - draw_polygon2()
         - draw_curve()

@@ -30,7 +30,7 @@ fn main() {
         // //     (The other way to do this is to use a callback())
         // //
         // while chooser.shown() {
-        //     app.wait();
+        //     app.wait().unwrap();
         // }
 
         // // User hit cancel?

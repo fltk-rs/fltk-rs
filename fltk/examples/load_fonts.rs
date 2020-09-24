@@ -10,5 +10,5 @@ fn main() {
     wind.set_color(Color::White);
     wind.end();
     wind.show();
-    while app.wait() {}
+    while app.wait().unwrap() {}
 }

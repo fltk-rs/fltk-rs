@@ -27,7 +27,7 @@ fn main() {
         s.send(Message::Increment(2));
     });
 
-    while app.wait() {
+    while app.wait().unwrap() {
         if let Some(msg) = r.recv() {
             if let Message::Increment(step) = msg {
                 inc_frame(&mut frame, &mut val, step)

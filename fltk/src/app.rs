@@ -19,6 +19,9 @@ static mut LOADED_FONT: Option<&str> = None;
 
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
+    #[cfg(not(target_os = "android"))]
+    lock()?;
+
     unsafe {
         match Fl_run() {
             0 => Ok(()),
@@ -156,7 +159,7 @@ impl App {
     }
 
     /// Wait for incoming messages
-    pub fn wait(&self) -> bool {
+    pub fn wait(&self) -> Result<bool, FltkError> {
         wait()
     }
 
@@ -481,12 +484,12 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 }
 
 /// Starts waiting for events
-pub fn wait() -> bool {
+pub fn wait() -> Result<bool, FltkError> {
+    #[cfg(not(target_os = "android"))]
+    lock()?;
+
     unsafe {
-        match Fl_wait() {
-            0 => false,
-            _ => true,
-        }
+        Ok(Fl_wait() != 0)
     }
 }
 

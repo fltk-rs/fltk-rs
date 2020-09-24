@@ -38,7 +38,7 @@ fn main() {
     wind.show();
     println!("The system has {} fonts!\nStarting slideshow!", fonts.len());
     let mut i = 0;
-    while app.wait() {
+    while app.wait().unwrap() {
         if i == fonts.len() {
             i = 0;
         }

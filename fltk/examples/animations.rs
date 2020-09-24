@@ -43,7 +43,7 @@ fn main() {
     wind.end();
     wind.show_with_env_args();
 
-    while app.wait() {
+    while app.wait().unwrap() {
         let x = frame.x();
         let y = frame.y();
         let w = frame.width();

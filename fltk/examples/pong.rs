@@ -52,7 +52,7 @@ fn main() {
         }
     }));
 
-    while app.wait() {
+    while app.wait().unwrap() {
         ball.pos.0 += 2 * ball.dir.0 as i32; // The increment in x position
         ball.pos.1 += 2 * ball.dir.1 as i32; // The increment in y position
         if ball.pos.1 == 540 - 40

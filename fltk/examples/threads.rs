@@ -50,7 +50,7 @@ fn main() {
 //         });
 //     }));
 
-//     while app.wait() {
+//     while app.wait().unwrap() {
 //         let msg = r.recv();
 //         match msg {
 //             Some(val) => frame.set_label(format!("Hello {}", val).as_str()),

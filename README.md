@@ -123,7 +123,7 @@ Another way is to use message passing:
     but_inc.emit(s, Message::Increment);
     but_dec.emit(s, Message::Decrement);
     
-    while app.wait() {
+    while app.wait().unwrap() {
         let label: i32 = frame.label().parse().unwrap();
         match r.recv() {
             Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
