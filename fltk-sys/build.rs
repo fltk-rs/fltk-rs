@@ -279,6 +279,7 @@ fn handle_android(triple: &str, dst: &mut cmake::Config) {
     dst.define("ANDROID_PLATFORM", "android-21");
     dst.define("CMAKE_ANDROID_NDK", &ndk);
     dst.define("ANDROID_NDK", &ndk);
+    dst.define("CMAKE_TOOLCHAIN_FILE", ndk.join("build").join("cmake").join("android.toolchain.cmake"));
 
     match triple {
         "i686-linux-android" => {
