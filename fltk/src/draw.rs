@@ -5,6 +5,10 @@ use std::ffi::{CStr, CString};
 use std::mem;
 use std::os::raw;
 
+/// Defines a coordinate of x and y
+#[derive(Copy, Clone, Debug)]
+pub struct Coord<T: Copy>(pub T, pub T);
+
 /// Defines the line styles supported by fltk
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
@@ -97,7 +101,7 @@ impl Offscreen {
     /// Performs a shallow copy of the offscreen
     /// # Safety
     /// This can lead to multiple mutable references to the same offscreen
-    pub unsafe fn memcpy(&self) -> Offscreen {
+    pub unsafe fn shallow_copy(&self) -> Offscreen {
         assert!(!self._inner.is_null());
         Offscreen {
             _inner: self._inner,
@@ -133,9 +137,19 @@ pub fn draw_line(x1: i32, y1: i32, x2: i32, y2: i32) {
     }
 }
 
+/// Draws a line from (x,y) to (x1,y1) and another from (x1,y1) to (x2,y2)
+pub fn draw_line2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
+    unsafe { Fl_line2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+}
+
 /// Draws a point
 pub fn draw_point(x: i32, y: i32) {
     unsafe { Fl_point(x, y) }
+}
+
+/// Draws a point
+pub fn draw_point2(pos: Coord<i32>) {
+    unsafe { Fl_point(pos.0, pos.1) }
 }
 
 /// Draws a rectangle
@@ -148,11 +162,21 @@ pub fn draw_rect_with_color(x: i32, y: i32, w: i32, h: i32, color: Color) {
     unsafe { Fl_rect_with_color(x, y, w, h, color as u32) }
 }
 
-/// Draws a loop
+/// Draws a non-filled 3-sided polygon
 pub fn draw_loop(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
     unsafe {
         Fl_loop(x1, y1, x2, y2, x3, y3);
     }
+}
+
+/// Draws a non-filled 3-sided polygon
+pub fn draw_loop2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
+    unsafe { Fl_loop(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+}
+
+/// Draws a non-filled 4-sided polygon
+pub fn draw_loop3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+    unsafe { Fl_loop2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1) }
 }
 
 /// Draws a filled rectangle
@@ -182,6 +206,11 @@ pub fn draw_arc(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
     unsafe {
         Fl_arc(x, y, width, height, a, b);
     }
+}
+
+/// Draws an arc
+pub fn draw_arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
+    unsafe { Fl_arc2(x, y, r, start, end) }
 }
 
 /// Draws a filled pie
@@ -251,44 +280,6 @@ pub fn restore_clip() {
     unsafe { Fl_restore_clip() }
 }
 
-/// Copies the offscreen
-#[allow(dead_code)]
-fn copy_offscreen(x: i32, y: i32, w: i32, h: i32, pixmap: &Offscreen, srcx: i32, srcy: i32) {
-    unsafe { Fl_copy_offscreen(x, y, w, h, pixmap._inner, srcx, srcy) }
-}
-
-/// Creates an offscreen
-pub fn create_offscreen(w: i32, h: i32) -> Offscreen {
-    unsafe {
-        let x = Fl_create_offscreen(w, h);
-        assert!(!x.is_null());
-        Offscreen { _inner: x }
-    }
-}
-
-/// Begins the offscreen
-#[allow(dead_code)]
-fn begin_offscreen(b: &Offscreen) {
-    unsafe { Fl_begin_offscreen(b._inner) }
-}
-
-/// Ends the offscreen
-pub fn end_offscreen() {
-    unsafe { Fl_end_offscreen() }
-}
-
-/// Deletes the offscreen
-#[allow(dead_code)]
-fn delete_offscreen(bitmap: &mut Offscreen) {
-    unsafe { Fl_delete_offscreen(bitmap._inner) }
-}
-
-/// Rescales the offscreen
-#[allow(dead_code)]
-fn rescale_offscreen(ctx: &mut Offscreen) {
-    unsafe { Fl_rescale_offscreen(ctx._inner) }
-}
-
 /// Transforms coordinate using the current transformation matrix
 pub fn transform_x(x: f64, y: f64) -> f64 {
     unsafe { Fl_transform_x(x, y) }
@@ -332,34 +323,24 @@ pub fn draw_rectf_with_rgb(
     unsafe { Fl_rectf_with_rgb(x, y, width, height, color_r, color_g, color_b) }
 }
 
-/// Draws a line from (x,y) to (x1,y1) and another from (x1,y1) to (x2,y2)
-pub fn draw_line2(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
-    unsafe { Fl_line2(x, y, x1, y1, x2, y2) }
-}
-
-/// Outlines a 4-sided polygon with lines
-pub fn draw_loop2(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
-    unsafe { Fl_loop2(x, y, x1, y1, x2, y2, x3, y3) }
-}
-
 /// Fills a 3-sided polygon. The polygon must be convex
 pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
     unsafe { Fl_polygon(x, y, x1, y1, x2, y2) }
 }
 
+/// Fills a 3-sided polygon. The polygon must be convex
+pub fn draw_polygon2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
+    unsafe { Fl_polygon(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+}
+
 /// Fills a 4-sided polygon. The polygon must be convex
-pub fn draw_polygon2(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
-    unsafe { Fl_polygon2(x, y, x1, y1, x2, y2, x3, y3) }
+pub fn draw_polygon3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+    unsafe { Fl_polygon2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1) }
 }
 
 /// Adds a series of points on a Bezier curve to the path
-pub fn draw_curve(x0: f64, y0: f64, x1: f64, y1: f64, x2: f64, y2: f64, x3: f64, y3: f64) {
-    unsafe { Fl_curve(x0, y0, x1, y1, x2, y2, x3, y3) }
-}
-
-/// Draws an arc
-pub fn draw_arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
-    unsafe { Fl_arc2(x, y, r, start, end) }
+pub fn draw_curve(pos1: Coord<f64>, pos2: Coord<f64>, pos3: Coord<f64>, pos4: Coord<f64>) {
+    unsafe { Fl_curve(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1) }
 }
 
 /// Draws a horizontal line from (x,y) to (x1,y)

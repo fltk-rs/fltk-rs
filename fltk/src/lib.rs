@@ -22,33 +22,11 @@
 //!
 //! ```toml
 //! [dependencies]
-//! fltk = "^0.8"
+//! fltk = "^0.9"
 //! ```
-//! The library offers prebuilt static cfltk and fltk libraries, which can be added using the "fltk-bundled" flag:
-//! ```toml
-//! [dependencies]
-//! fltk = { version = "^0.8", features = ["fltk-bundled"] }
-//! ```
-//! Since these are pre-built libraries using the Github actions CI, the currently supported operating systems are:
-//! - Windows 10 x64 (msvc and gnu).
-//! - MacOS 10.15 x64.
-//! - Ubuntu 18.04 or later, x64.
-//! The library is automatically statically linked to your binary. 
+//! The library is automatically built and statically linked to your binary. 
 //!
-//! Since these are pre-built libraries using the Github actions CI, the currently supported operating systems are:
-//! - Windows 10 x64 (msvc and gnu).
-//! - MacOS 10.15 x64.
-//! - Ubuntu 18.04 or later, x64.
-//!
-//! This also assumes you have curl and tar installed (for Windows, they're available in the Native Tools Command Prompt).
-//! ```
-//! You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature. Or if you have fltk already installed, you can use the fltk-system feature.
-//!
-//! To use the master branch in your project, you can use:
-//! ```toml
-//! [dependencies]
-//! fltk = { git = "https://github.com/MoAlyousef/fltk-rs" }
-//! ```
+//! You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature.
 //!
 //! An example hello world application:
 //!
@@ -181,7 +159,7 @@
 //! - system-libjpeg: Uses the system libjpeg
 //! - system-zlib: Uses the system zlib
 //! - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
-//! - enable-glwindow: Support for systems without OpenGL.
+//! - enable-glwindow: Support for drawing using OpenGL functions.
 //!
 //! ## FAQ
 //!

@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.9.1] - Unreleased
+### Changes
+- Breaking:
+    - Some draw functions now take a Coord struct:
+        - draw_polygon2()
+        - draw_curve()
+- Add prelim alpha support for Android, this requires:
+    - Android NDK to be installed.
+    - NDK_HOME to be set.
+- Add support for passing cmake toolchain files via env var CFLTK_TOOLCHAIN.
+- Add struct AndroidWindow.
+- Update FLTK.
+- Update syn.
+- Add a [roadmap](./ROADMAP.md) for the project.
+
+
 ## [0.8.8] - 2020-09-19
 ### Changes
 - Fix typos, thanks @nicolasbauw 
