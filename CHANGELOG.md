@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.9.1] - Unreleased
+## [0.9.1] - 2020-09-24
 ### Changes
 - Breaking:
     - Some draw functions now take a Coord struct:
