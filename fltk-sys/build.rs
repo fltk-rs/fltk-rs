@@ -272,14 +272,30 @@ fn main() {
 }
 
 fn handle_android(triple: &str, dst: &mut cmake::Config) {
-    let ndk = PathBuf::from(env::var("NDK_HOME").expect("NDK_HOME should be set!"));
+    let mut ndk: Option<PathBuf> = None;
+    if let Ok(root) = env::var("ANDROID_NDK_ROOT") {
+        ndk = Some(PathBuf::from(root));
+    }
+    // fallback to NDK_HOME
+    if ndk.is_none() {
+        ndk = Some(PathBuf::from(
+            env::var("NDK_HOME").expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!"),
+        ));
+    }
+
+    let ndk = ndk.expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!");
 
     dst.define("CMAKE_SYSTEM_NAME", "Android");
     dst.define("CMAKE_SYSTEM_VERSION", "21");
     dst.define("ANDROID_PLATFORM", "android-21");
     dst.define("CMAKE_ANDROID_NDK", &ndk);
     dst.define("ANDROID_NDK", &ndk);
-    dst.define("CMAKE_TOOLCHAIN_FILE", ndk.join("build").join("cmake").join("android.toolchain.cmake"));
+    dst.define(
+        "CMAKE_TOOLCHAIN_FILE",
+        ndk.join("build")
+            .join("cmake")
+            .join("android.toolchain.cmake"),
+    );
 
     match triple {
         "i686-linux-android" => {
