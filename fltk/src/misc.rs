@@ -89,8 +89,8 @@ impl Spinner {
     /// Sets the maximum size supported by the spinner widget
     pub fn set_maximum_size(&mut self, s: u32) {
         debug_assert!(
-            s <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_maxsize(self._inner, s as i32) }
@@ -117,8 +117,8 @@ impl Spinner {
     /// Sets the text size
     pub fn set_text_size(&mut self, s: u32) {
         debug_assert!(
-            s <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_textsize(self._inner, s as i32) }
@@ -168,8 +168,8 @@ impl Chart {
     /// Inserts an entry at an index
     pub fn insert(&mut self, idx: u32, val: f64, txt: &str, col: Color) {
         debug_assert!(
-            idx <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            idx <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
         let txt = std::ffi::CString::new(txt).unwrap();
@@ -179,8 +179,8 @@ impl Chart {
     /// Replaces an entry at an index
     pub fn replace(&mut self, idx: u32, val: f64, txt: &str, col: Color) {
         debug_assert!(
-            idx <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            idx <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
         let txt = std::ffi::CString::new(txt).unwrap();
@@ -202,12 +202,12 @@ impl Chart {
     /// Sets the size of the chart
     pub fn set_size(&mut self, w: u32, h: u32) {
         debug_assert!(
-            w <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            w <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            h <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            h <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_size(self._inner, w as i32, h as i32) }
@@ -222,8 +222,8 @@ impl Chart {
     /// Sets the maximum supported size of the chart
     pub fn set_maximum_size(&mut self, s: u32) {
         debug_assert!(
-            s <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_maxsize(self._inner, s as i32) }
@@ -250,8 +250,8 @@ impl Chart {
     /// Sets the text size
     pub fn set_text_size(&mut self, s: u32) {
         debug_assert!(
-            s <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_textsize(self._inner, s as i32) }
@@ -438,8 +438,8 @@ impl Tooltip {
     /// Sets the tooltip's font size
     pub fn set_font_size(s: u32) {
         debug_assert!(
-            s <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tooltip_set_font_size(s as i32) }
     }
@@ -472,8 +472,8 @@ impl Tooltip {
     /// Sets the margin width
     pub fn set_margin_width(v: u32) {
         debug_assert!(
-            v <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            v <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tooltip_set_margin_width(v as i32) }
     }
@@ -486,8 +486,8 @@ impl Tooltip {
     /// Sets the margin height
     pub fn set_margin_height(v: u32) {
         debug_assert!(
-            v <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            v <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tooltip_set_margin_height(v as i32) }
     }
@@ -500,8 +500,8 @@ impl Tooltip {
     /// Sets the wrap width
     pub fn set_wrap_width(v: u32) {
         debug_assert!(
-            v <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            v <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Tooltip_set_wrap_width(v as i32) }
     }

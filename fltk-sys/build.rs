@@ -1,4 +1,8 @@
-use std::{env, path::PathBuf, process::Command};
+use std::{
+    env, fs,
+    path::{Path, PathBuf},
+    process::Command,
+};
 
 fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
@@ -250,7 +254,9 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=odbc32");
             }
             "android" => {
-                // Experimental, not tried yet!
+                println!("cargo:rustc-link-lib=log");
+                println!("cargo:rustc-link-lib=android");
+                println!("cargo:rustc-link-lib=c++_shared");
             }
             "ios" => {
                 // Also experimental
@@ -272,14 +278,37 @@ fn main() {
 }
 
 fn handle_android(triple: &str, dst: &mut cmake::Config) {
-    let ndk = PathBuf::from(env::var("NDK_HOME").expect("NDK_HOME should be set!"));
+    let sdk =
+        PathBuf::from(env::var("ANDROID_SDK_ROOT").expect("ANDROID_SDK_ROOT needs to be set!"));
+    let mut ndk: Option<PathBuf> = None;
+    if let Ok(root) = env::var("ANDROID_NDK_ROOT") {
+        ndk = Some(PathBuf::from(root));
+    }
+    // fallback to NDK_HOME
+    if ndk.is_none() {
+        ndk = Some(PathBuf::from(
+            env::var("NDK_HOME").expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!"),
+        ));
+    }
 
+    let ndk = ndk.expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!");
+
+    dst.generator("Ninja");
     dst.define("CMAKE_SYSTEM_NAME", "Android");
     dst.define("CMAKE_SYSTEM_VERSION", "21");
     dst.define("ANDROID_PLATFORM", "android-21");
     dst.define("CMAKE_ANDROID_NDK", &ndk);
     dst.define("ANDROID_NDK", &ndk);
-    dst.define("CMAKE_TOOLCHAIN_FILE", ndk.join("build").join("cmake").join("android.toolchain.cmake"));
+    dst.define(
+        "CMAKE_MAKE_PROGRAM",
+        find_ninja(&sdk).expect("Couldn't find NDK ninja!"),
+    );
+    dst.define(
+        "CMAKE_TOOLCHAIN_FILE",
+        ndk.join("build")
+            .join("cmake")
+            .join("android.toolchain.cmake"),
+    );
 
     match triple {
         "i686-linux-android" => {
@@ -300,4 +329,28 @@ fn handle_android(triple: &str, dst: &mut cmake::Config) {
         }
         _ => panic!("Unknown android triple"),
     }
+}
+
+fn find_ninja(sdk_path: &Path) -> Option<PathBuf> {
+    let cmk = sdk_path.join("cmake");
+    for subdir in fs::read_dir(cmk).unwrap() {
+        let subdir = subdir
+            .unwrap() // Shouldn't fail!
+            .path()
+            .file_name()
+            .unwrap()
+            .to_str()
+            .unwrap()
+            .to_owned();
+        if subdir.starts_with("3.") {
+            return Some(
+                sdk_path
+                    .join("cmake")
+                    .join(subdir)
+                    .join("bin")
+                    .join("ninja"),
+            );
+        }
+    }
+    None
 }

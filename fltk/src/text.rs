@@ -94,12 +94,12 @@ impl TextBuffer {
     pub fn remove(&mut self, start: u32, end: u32) {
         assert!(!self._inner.is_null());
         debug_assert!(
-            start <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            start <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            end <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            end <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe {
             Fl_Text_Buffer_remove(self._inner, start as i32, end as i32);
@@ -110,12 +110,12 @@ impl TextBuffer {
     pub fn text_range(&self, start: u32, end: u32) -> Option<String> {
         assert!(!self._inner.is_null());
         debug_assert!(
-            start <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            start <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            end <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            end <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe {
             let x = Fl_Text_Buffer_text_range(self._inner, start as i32, end as i32);
@@ -135,8 +135,8 @@ impl TextBuffer {
     pub fn insert(&mut self, pos: u32, text: &str) {
         assert!(!self._inner.is_null());
         debug_assert!(
-            pos <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            pos <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         let text = CString::new(text).unwrap();
         unsafe { Fl_Text_Buffer_insert(self._inner, pos as i32, text.as_ptr()) }
@@ -146,12 +146,12 @@ impl TextBuffer {
     pub fn replace(&mut self, start: u32, end: u32, text: &str) {
         assert!(!self._inner.is_null());
         debug_assert!(
-            start <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            start <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            end <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            end <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         let text = CString::new(text).unwrap();
         unsafe { Fl_Text_Buffer_replace(self._inner, start as i32, end as i32, text.as_ptr()) }
@@ -161,16 +161,16 @@ impl TextBuffer {
     pub fn copy_from(&mut self, source_buf: &TextBuffer, start: u32, end: u32, to: u32) {
         assert!(!self._inner.is_null());
         debug_assert!(
-            start <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            start <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            end <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            end <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            to <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            to <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe {
             Fl_Text_Buffer_copy(
@@ -247,8 +247,8 @@ impl TextBuffer {
     pub fn set_tab_distance(&mut self, tab_dist: u32) {
         assert!(!self._inner.is_null());
         debug_assert!(
-            tab_dist <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            tab_dist <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Text_Buffer_set_tab_distance(self._inner, tab_dist as i32) }
     }
@@ -257,12 +257,12 @@ impl TextBuffer {
     pub fn select(&mut self, start: u32, end: u32) {
         assert!(!self._inner.is_null());
         debug_assert!(
-            start <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            start <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            end <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            end <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Text_Buffer_select(self._inner, start as i32, end as i32) }
     }
@@ -329,12 +329,12 @@ impl TextBuffer {
     pub fn highlight(&mut self, start: u32, end: u32) {
         assert!(!self._inner.is_null());
         debug_assert!(
-            start <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            start <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            end <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            end <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Text_Buffer_highlight(self._inner, start as i32, end as i32) }
     }
@@ -388,8 +388,8 @@ impl TextBuffer {
     pub fn line_text(&self, pos: u32) -> String {
         assert!(!self._inner.is_null());
         debug_assert!(
-            pos <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            pos <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe {
             let x = Fl_Text_Buffer_line_text(self._inner, pos as i32);
@@ -404,8 +404,8 @@ impl TextBuffer {
     pub fn line_start(&self, pos: u32) -> u32 {
         assert!(!self._inner.is_null());
         debug_assert!(
-            pos <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            pos <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Text_Buffer_line_start(self._inner, pos as i32) as u32 }
     }
@@ -414,8 +414,8 @@ impl TextBuffer {
     pub fn word_start(&self, pos: u32) -> u32 {
         assert!(!self._inner.is_null());
         debug_assert!(
-            pos <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            pos <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Text_Buffer_word_start(self._inner, pos as i32) as u32 }
     }
@@ -424,8 +424,8 @@ impl TextBuffer {
     pub fn word_end(&self, pos: u32) -> u32 {
         assert!(!self._inner.is_null());
         debug_assert!(
-            pos <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            pos <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Text_Buffer_word_end(self._inner, pos as i32) as u32 }
     }
@@ -434,12 +434,12 @@ impl TextBuffer {
     pub fn count_lines(&self, start: u32, end: u32) -> u32 {
         assert!(!self._inner.is_null());
         debug_assert!(
-            start <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            start <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            end <= std::i32::MAX as u32,
-            "u32 entries must be < std::i32::MAX for compatibility!"
+            end <= std::isize::MAX as u32,
+            "u32 entries must be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Text_Buffer_count_lines(self._inner, start as i32, end as i32) as u32 }
     }
@@ -849,8 +849,8 @@ impl SimpleTerminal {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         debug_assert!(
-            arg1 <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            arg1 <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Simple_Terminal_set_history_lines(self._inner, arg1 as i32) }
     }
@@ -917,12 +917,12 @@ impl SimpleTerminal {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         debug_assert!(
-            start <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            start <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         debug_assert!(
-            count <= std::i32::MAX as u32,
-            "u32 entries have to be < std::i32::MAX for compatibility!"
+            count <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         unsafe { Fl_Simple_Terminal_remove_lines(self._inner, start as i32, count as i32) }
     }

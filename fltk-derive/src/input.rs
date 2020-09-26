@@ -95,7 +95,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_maximum_size(&mut self, val: u32) {
                 unsafe {
-                    debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     #set_maximum_size(self._inner, val as i32)
                 }
@@ -109,7 +109,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_position(&mut self, val: u32) -> Result<(), FltkError> {
-                debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     let x = #set_position(self._inner, val as i32);
@@ -128,7 +128,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_mark(&mut self, val: u32) -> Result<(), FltkError> {
-                debug_assert!(val <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     let x = #set_mark(self._inner, val as i32);
@@ -140,7 +140,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn replace(&mut self, beg: u32, end: u32, val: &str) -> Result<(), FltkError> {
-                debug_assert!(beg <= std::i32::MAX as u32 && end <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(beg <= std::isize::MAX as u32 && end <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 assert!(!self.was_deleted());
                 let val = CString::new(val).unwrap();
                 unsafe {
@@ -246,7 +246,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_text_size(&mut self, sz: u32) {
                 unsafe {
-                    debug_assert!(sz <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    debug_assert!(sz <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     #set_text_size(self._inner, sz as i32)
                 }

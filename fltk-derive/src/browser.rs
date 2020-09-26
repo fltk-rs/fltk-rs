@@ -122,7 +122,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl BrowserExt for #name {
             fn remove(&mut self, line: u32) {
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #remove(self._inner, line as i32)
@@ -139,7 +139,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn insert(&mut self, line: u32, item: &str) {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 let item = CString::new(item).unwrap();
                 unsafe {
                     #insert(self._inner, line as i32, item.as_ptr())
@@ -147,8 +147,8 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn move_item(&mut self, to: u32, from: u32) {
-                debug_assert!(to <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                debug_assert!(from <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(to <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+                debug_assert!(from <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 assert!(!self.was_deleted());
                 unsafe {
                     #move_item(self._inner, to as i32, from as i32)
@@ -156,8 +156,8 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn swap(&mut self, a: u32, b: u32) {
-                debug_assert!(a <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
-                debug_assert!(b <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(a <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+                debug_assert!(b <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 assert!(!self.was_deleted());
                 unsafe {
                     #swap(self._inner, a as i32, b as i32)
@@ -196,7 +196,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn selected(&self, line: u32) -> bool {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     match #selected(self._inner, line as i32) {
                         0 => false,
@@ -207,7 +207,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn text(&self, line: u32) -> Option<String> {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     let text = #text(self._inner, line as i32);
                     if text.is_null() {
@@ -220,7 +220,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_text(&mut self, line: u32, txt: &str) {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 let txt = CString::new(txt).unwrap();
                 unsafe {
                     #set_text(self._inner, line as i32, txt.as_ptr())
@@ -248,7 +248,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn set_text_size(&mut self, c: u32) {
-                debug_assert!(c <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(c <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_text_size(self._inner, c as i32)
@@ -257,7 +257,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_icon<Img: ImageExt>(&mut self, line: u32, image: Option<Img>) {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 if let Some(image) = image {
                     assert!(!image.was_deleted());
                     unsafe { #set_icon(self._inner, line as i32, image.as_ptr()) }
@@ -267,7 +267,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn icon(&self, line: u32) -> Option<Image> {
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     let icon_ptr = #icon(self._inner, line as i32);
@@ -280,7 +280,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn remove_icon(&mut self, line: u32) {
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     #remove_icon(self._inner, line as i32)
@@ -289,7 +289,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn topline(&mut self, line: u32) {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #topline(self._inner, line as i32)
                 }
@@ -297,7 +297,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn bottomline(&mut self, line: u32) {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #bottomline(self._inner, line as i32)
                 }
@@ -305,7 +305,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn middleline(&mut self, line: u32) {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #middleline(self._inner, line as i32)
                 }
@@ -369,7 +369,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn displayed(&self, line: u32,) -> bool {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #displayed(self._inner, line as i32,) != 0
                 }
@@ -377,7 +377,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn make_visible(&mut self, line: u32) {
                 assert!(!self.was_deleted());
-                debug_assert!(line <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #make_visible(self._inner, line as i32)
                 }
@@ -392,7 +392,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_position(&mut self, pos: u32) {
                 assert!(!self.was_deleted());
-                debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #set_position(self._inner, pos as i32)
                 }
@@ -407,7 +407,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_hposition(&mut self, pos: u32) {
                 assert!(!self.was_deleted());
-                debug_assert!(pos <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #set_hposition(self._inner, pos as i32)
                 }
@@ -436,7 +436,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_scrollbar_size(&mut self, new_size: u32) {
                 assert!(!self.was_deleted());
-                debug_assert!(new_size <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(new_size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #set_scrollbar_size(self._inner, new_size as i32)
                 }

@@ -19,7 +19,6 @@ static mut LOADED_FONT: Option<&str> = None;
 
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
-    #[cfg(not(target_os = "android"))]
     lock()?;
 
     unsafe {
@@ -485,7 +484,6 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 
 /// Starts waiting for events
 pub fn wait() -> Result<bool, FltkError> {
-    #[cfg(not(target_os = "android"))]
     lock()?;
 
     unsafe {

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.2] - 2020-09-26
+### Changes
+- Require ANDROID_SDK_ROOT, which has cmake and ninja.
+- No need to specify use-ninja feature for Android.
+- Require ANDROID_NDK_ROOT. Still uses NDK_HOME for back-compat.
+- Fix channels on Android.
+
 ## [0.9.1] - 2020-09-24
 ### Changes
 - Breaking:

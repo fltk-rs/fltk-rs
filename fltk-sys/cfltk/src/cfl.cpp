@@ -5,7 +5,8 @@
 #elif __APPLE__
 #include <ApplicationServices/ApplicationServices.h>
 #elif __ANDROID__
-// Do nothing!
+#include <queue>
+#include <thread>
 #else /* Assume X11 with XFT/fontconfig - this will break on systems using legacy Xlib fonts */
 #include <fontconfig/fontconfig.h>
 #define USE_XFT 1
@@ -142,12 +143,51 @@ void Fl_add_handler(int (*ev_handler)(int ev)) {
     Fl::add_handler(ev_handler);
 }
 
+#ifdef __ANDROID__
+
+class Buffer {
+  private:
+    using item = void *;
+    std::queue<item> queue_;
+    std::mutex m_;
+    std::condition_variable cv_;
+
+  public:
+    void send(const item &i) {
+        std::unique_lock<std::mutex> lock(m_);
+        queue_.push(i);
+        cv_.notify_one();
+    }
+
+    item recv() {
+        if (!queue_.empty()) {
+            std::unique_lock<std::mutex> lock(m_);
+            cv_.wait(lock, [&]() { return !queue_.empty(); });
+            item result = queue_.front();
+            queue_.pop();
+            return result;
+        } else {
+            return nullptr;
+        }
+    }
+} android_buffer;
+
+#endif
+
 void Fl_awake_msg(void *msg) {
+#ifndef __ANDROID__
     Fl::awake(msg);
+#else
+    android_buffer.send(msg);
+#endif
 }
 
 void *Fl_thread_msg(void) {
+#ifndef __ANDROID__
     return Fl::thread_message();
+#else
+    return android_buffer.recv();
+#endif
 }
 
 int Fl_wait(void) {

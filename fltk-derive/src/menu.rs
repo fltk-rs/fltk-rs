@@ -124,7 +124,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn remove(&mut self, idx: u32) {
                 assert!(!self.was_deleted());
                 let idx = if idx < self.size() { idx } else { self.size() - 1 };
-                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #remove(self._inner, idx as i32)
                 }
@@ -189,7 +189,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_text_size(&mut self, c: u32) {
                 unsafe {
-                    debug_assert!(c <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                    debug_assert!(c <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     #set_text_size(self._inner, c as i32)
                 }
@@ -269,8 +269,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     debug_assert!(
-                        idx <= std::i32::MAX as u32,
-                        "u32 entries have to be < std::i32::MAX for compatibility!"
+                        idx <= std::isize::MAX as u32,
+                        "u32 entries have to be < std::isize::MAX for compatibility!"
                     );
                     match #clear_submenu(self._inner, idx as i32) {
                         0 => Ok(()),
@@ -282,8 +282,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             unsafe fn unsafe_clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
                 debug_assert!(
-                    idx <= std::i32::MAX as u32,
-                    "u32 entries have to be < std::i32::MAX for compatibility!"
+                    idx <= std::isize::MAX as u32,
+                    "u32 entries have to be < std::isize::MAX for compatibility!"
                 );
                 let x = self.at(idx);
                 if x.is_none() {
@@ -320,7 +320,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn text(&self, idx: u32) -> Option<String> {
                 assert!(!self.was_deleted());
-                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     let text = #text(self._inner, idx as i32);
                     if text.is_null() {
@@ -333,7 +333,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn at(&self, idx: u32) -> Option<crate::menu::MenuItem> {
                 assert!(!self.was_deleted());
-                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 if idx >= self.size() {
                     return None;
                 }
@@ -353,7 +353,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn mode(&self, idx: u32) -> crate::menu::MenuFlag {
                 assert!(!self.was_deleted());
-                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     mem::transmute(#mode(self._inner, idx as i32))
                 }
@@ -361,7 +361,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_mode(&mut self, idx: u32, flag: crate::menu::MenuFlag) {
                 assert!(!self.was_deleted());
-                debug_assert!(idx <= std::i32::MAX as u32, "u32 entries have to be < std::i32::MAX for compatibility!");
+                debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #set_mode(self._inner, idx as i32, flag as i32)
                 }
