@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.9.3] - Unreleased
+### Changes
+- Add app::set_scrollbar_size(u32) and app::scrollbar_size().
+
 ## [0.9.2] - 2020-09-26
 ### Changes
 - Require ANDROID_SDK_ROOT, which has cmake and ninja.
