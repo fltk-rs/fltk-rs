@@ -214,7 +214,10 @@ impl TextBuffer {
         if !path.as_ref().exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
-        let path = path.as_ref().to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+        let path = path
+            .as_ref()
+            .to_str()
+            .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let path = CString::new(path)?;
         unsafe {
             match Fl_Text_Buffer_loadfile(self._inner, path.as_ptr()) {
@@ -227,7 +230,10 @@ impl TextBuffer {
     /// Saves a buffer into a file
     pub fn save_file<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
         assert!(!self._inner.is_null());
-        let path = path.as_ref().to_str().ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
+        let path = path
+            .as_ref()
+            .to_str()
+            .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let path = CString::new(path)?;
         unsafe {
             match Fl_Text_Buffer_savefile(self._inner, path.as_ptr()) {
@@ -544,6 +550,27 @@ impl Clone for TextBuffer {
     }
 }
 
+/// Defines wrap modes
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum WrapMode {
+    None,
+    AtColumn,
+    AtPixel,
+    AtBounds,
+}
+
+/// Defines drag types
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum DragType {
+    DragNone = -2,
+    DragStartDnd = -1,
+    DragChar = 0,
+    DragWord = 1,
+    DragLine = 2,
+  }
+
 /// Creates a non-editable text display widget
 #[derive(WidgetExt, DisplayExt, Debug)]
 pub struct TextDisplay {
@@ -693,7 +720,7 @@ impl TextEditor {
         }
     }
 
-    /// Moves the current text cursor in the direction indicated by control key 'c' 
+    /// Moves the current text cursor in the direction indicated by control key 'c'
     pub fn kf_ctrl_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -702,7 +729,7 @@ impl TextEditor {
         }
     }
 
-    /// Extends the current selection in the direction indicated by control key 'c' 
+    /// Extends the current selection in the direction indicated by control key 'c'
     pub fn kf_c_s_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -711,7 +738,7 @@ impl TextEditor {
         }
     }
 
-    /// Moves the current text cursor in the direction indicated by meta key 'c' 
+    /// Moves the current text cursor in the direction indicated by meta key 'c'
     pub fn kf_meta_move(&mut self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -756,7 +783,7 @@ impl TextEditor {
         }
     }
 
-    /// Moves the text cursor one line up 
+    /// Moves the text cursor one line up
     pub fn kf_up(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -774,7 +801,7 @@ impl TextEditor {
         }
     }
 
-    /// Moves the text cursor one line down 
+    /// Moves the text cursor one line down
     pub fn kf_down(&mut self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());

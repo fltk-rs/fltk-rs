@@ -58,7 +58,10 @@ extern "C" {
     unsigned int widget##_linenumber_bgcolor(const widget *self);                                  \
     void widget##_set_linenumber_align(widget *self, int val);                                     \
     int widget##_linenumber_align(const widget *self);                                             \
-    int widget##_in_selection(const widget *self, int x, int y);
+    int widget##_in_selection(const widget *self, int x, int y);                                   \
+    void widget##_wrap_mode(widget *self, int wrap, int wrap_margin);                              \
+    int widget##_wrapped_column(const widget *self, int row, int column);                          \
+    int widget##_wrapped_row(const widget *self, int row);
 
 typedef void (*Fl_Text_Modify_Cb)(int pos, int nInserted, int nDeleted, int nRestyled,
                                   const char *deletedText, void *cbArg);

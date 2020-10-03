@@ -3,6 +3,7 @@
 ## [0.9.3] - Unreleased
 ### Changes
 - Add app::set_scrollbar_size(u32) and app::scrollbar_size().
+- Add wrapping methods to DisplayExt as well the text::WrapMode enum.
 
 ## [0.9.2] - 2020-09-26
 ### Changes

@@ -859,6 +859,26 @@ extern "C" {
         y: libc::c_int,
     ) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Text_Display_wrap_mode(
+        self_: *mut Fl_Text_Display,
+        wrap: libc::c_int,
+        wrap_margin: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_wrapped_column(
+        self_: *const Fl_Text_Display,
+        row: libc::c_int,
+        column: libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_wrapped_row(
+        self_: *const Fl_Text_Display,
+        row: libc::c_int,
+    ) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Editor {
@@ -1291,6 +1311,26 @@ extern "C" {
         self_: *const Fl_Text_Editor,
         x: libc::c_int,
         y: libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_wrap_mode(
+        self_: *mut Fl_Text_Editor,
+        wrap: libc::c_int,
+        wrap_margin: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_wrapped_column(
+        self_: *const Fl_Text_Editor,
+        row: libc::c_int,
+        column: libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_wrapped_row(
+        self_: *const Fl_Text_Editor,
+        row: libc::c_int,
     ) -> libc::c_int;
 }
 extern "C" {
@@ -1891,6 +1931,26 @@ extern "C" {
         self_: *const Fl_Simple_Terminal,
         x: libc::c_int,
         y: libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_wrap_mode(
+        self_: *mut Fl_Simple_Terminal,
+        wrap: libc::c_int,
+        wrap_margin: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_wrapped_column(
+        self_: *const Fl_Simple_Terminal,
+        row: libc::c_int,
+        column: libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_wrapped_row(
+        self_: *const Fl_Simple_Terminal,
+        row: libc::c_int,
     ) -> libc::c_int;
 }
 extern "C" {

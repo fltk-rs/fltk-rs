@@ -206,6 +206,18 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "in_selection").as_str(),
         name.span(),
     );
+    let wrap_mode = Ident::new(
+        format!("{}_{}", name_str, "wrap_mode").as_str(),
+        name.span(),
+    );
+    let wrapped_column = Ident::new(
+        format!("{}_{}", name_str, "wrapped_column").as_str(),
+        name.span(),
+    );
+    let wrapped_row = Ident::new(
+        format!("{}_{}", name_str, "wrapped_row").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl DisplayExt for #name {
@@ -667,6 +679,29 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                         0 => false,
                         _ => true,
                     }
+                }
+            }
+
+            fn wrap_mode(&mut self, wrap: crate::text::WrapMode, wrap_margin: i32) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #wrap_mode(self._inner, wrap as i32, wrap_margin)
+                }
+            }
+
+            fn wrapped_column(&self, row: i32, column: i32) -> i32 {
+                assert!(!self.was_deleted());
+                assert!(self.buffer().is_some());
+                unsafe {
+                    #wrapped_column(self._inner, row, column)
+                }
+            }
+
+            fn wrapped_row(&self, row: i32) -> i32 {
+                assert!(!self.was_deleted());
+                assert!(self.buffer().is_some());
+                unsafe {
+                    #wrapped_row(self._inner, row)
                 }
             }
         }

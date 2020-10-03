@@ -659,6 +659,15 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn linenumber_align(&self) -> Align;
     /// Checks whether a pixel is within a text selection
     fn in_selection(&self, x: i32, y: i32) -> bool;
+    /// Sets the wrap mode of the Display widget
+    /// If the wrap mode is AtColumn, wrap_margin is the column.
+    /// If the wrap mode is AtPixel, wrap_margin is the pixel
+    /// For more info: https://www.fltk.org/doc-1.4/classFl__Text__Display.html#ab9378d48b949f8fc7da04c6be4142c54
+    fn wrap_mode(&mut self, wrap: crate::text::WrapMode, wrap_margin: i32);
+    /// Correct a column number based on an unconstrained position
+    fn wrapped_column(&self, row: i32, column: i32) -> i32;
+    /// Correct a row number from an unconstrained position
+    fn wrapped_row(&self, row: i32) -> i32;
 }
 
 /// Defines the methods implemented by all browser types

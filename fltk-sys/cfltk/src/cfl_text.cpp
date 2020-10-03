@@ -182,6 +182,15 @@
     }                                                                                              \
     int widget##_in_selection(const widget *self, int x, int y) {                                  \
         return self->in_selection(x, y);                                                           \
+    }                                                                                              \
+    void widget##_wrap_mode(widget *self, int wrap, int wrap_margin) {                             \
+        LOCK(self->wrap_mode(wrap, wrap_margin))                                                   \
+    }                                                                                              \
+    int widget##_wrapped_column(const widget *self, int row, int column) {                         \
+        return self->wrapped_column(row, column);                                                  \
+    }                                                                                              \
+    int widget##_wrapped_row(const widget *self, int row) {                                        \
+        return self->wrapped_row(row);                                                             \
     }
 
 Fl_Text_Buffer *Fl_Text_Buffer_new(void) {
