@@ -508,6 +508,7 @@ pub fn wait() -> Result<bool, FltkError> {
 
 /// Waits a maximum of `dur` seconds or until "something happens".
 pub fn wait_for(dur: f64) -> Result<(), FltkError> {
+    lock()?;
     unsafe {
         if Fl_wait_for(dur) >= 0.0 {
             Ok(())
