@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.9.4] - Unreleased
+### Changes
+- Add locking for app::wait_for
+
 ## [0.9.3] - 2020-10-04
 ### Changes
 - Add app::set_scrollbar_size(u32) and app::scrollbar_size().
