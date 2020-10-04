@@ -254,6 +254,21 @@ impl App {
     }
 }
 
+/// Set the application's scrollbar size
+pub fn set_scrollbar_size(sz: u32) {
+    debug_assert!(sz < std::u32::MAX);
+    unsafe {
+        Fl_set_scrollbar_size(sz as i32)
+    }
+}
+
+/// Get the app's scrollbar size
+pub fn scrollbar_size() -> u32 {
+    unsafe {
+        Fl_scrollbar_size() as u32
+    }
+}
+
 /// Returns the latest captured event
 pub fn event() -> Event {
     unsafe {

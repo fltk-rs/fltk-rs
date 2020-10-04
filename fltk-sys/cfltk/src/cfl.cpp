@@ -39,6 +39,14 @@ int Fl_awake(Fl_Awake_Handler handler, void *data) {
     return Fl::awake(handler, data);
 }
 
+void Fl_set_scrollbar_size(int v) {
+    Fl::scrollbar_size(v);
+}
+
+int Fl_scrollbar_size(void) {
+    return Fl::scrollbar_size();
+}
+
 int Fl_event(void) {
     return Fl::event();
 }

@@ -40,7 +40,7 @@ impl Editor {
 
     pub fn style(&mut self) {
         self.editor.set_text_font(Font::Courier);
-        self.editor.set_linenumber_width(18);
+        self.editor.set_linenumber_width(32);
         self.editor
             .set_linenumber_fgcolor(Color::from_u32(0x8b8386));
         self.editor.set_trigger(CallbackTrigger::Changed);
@@ -121,6 +121,7 @@ pub enum Message {
 }
 
 fn main() {
+    let args: Vec<String> = std::env::args().collect();
     let app = App::default().with_scheme(Scheme::Gtk);
 
     let (s, r) = channel::<Message>();
@@ -143,6 +144,13 @@ fn main() {
     editor.emit(s, Message::Changed);
 
     let mut buf = editor.buffer().unwrap();
+
+    if args.len() > 1 {
+        buf.load_file(&args[1]).unwrap();
+        editor.set_filename(&args[1]);
+    }
+
+    // Handle drag and drop
     let mut dnd = false;
     let mut released = false;
     editor.handle(Box::new(move |ev| {
@@ -204,7 +212,7 @@ fn main() {
 
     menu.add_emit(
         "&File/Save as...\t",
-        Shortcut::None,
+        Shortcut::Ctrl | 'w',
         MenuFlag::MenuDivider,
         s,
         Message::SaveAs,
@@ -212,7 +220,7 @@ fn main() {
 
     menu.add_emit(
         "&File/Quit\t",
-        Shortcut::None,
+        Shortcut::Ctrl | 'q',
         MenuFlag::Normal,
         s,
         Message::Quit,

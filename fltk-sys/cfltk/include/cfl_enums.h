@@ -489,3 +489,18 @@ enum WindowType {
     WindowType_Normal = 240,
     WindowType_Double = 241,
 };
+
+enum WrapMode {
+    WrapNone,
+    WrapAtColumn,
+    WrapAtPixel,
+    WrapAtBounds,
+};
+
+enum DragType {
+    DragNone = -2,
+    DragStartDnd = -1,
+    DragChar = 0,
+    DragWord = 1,
+    DragLine = 2,
+};

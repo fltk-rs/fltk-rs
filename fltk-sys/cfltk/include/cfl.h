@@ -18,6 +18,10 @@ void Fl_unlock(void);
 
 int Fl_awake(Fl_Awake_Handler handler, void *data);
 
+void Fl_set_scrollbar_size(int);
+
+int Fl_scrollbar_size(void);
+
 int Fl_event(void);
 
 int Fl_event_key(void);
