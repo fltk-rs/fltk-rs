@@ -57,6 +57,22 @@ index d5eee5dc8..96108dad5 100644
      drivers/Android/Fl_Android_System_Driver.H
      drivers/Android/Fl_Android_Screen_Driver.H
      drivers/Android/Fl_Android_Window_Driver.H
+diff --git a/src/Fl_Native_File_Chooser_MAC.mm b/src/Fl_Native_File_Chooser_MAC.mm
+index 8cbd3bb52..b7a131ac2 100644
+--- a/src/Fl_Native_File_Chooser_MAC.mm
++++ b/src/Fl_Native_File_Chooser_MAC.mm
+@@ -631,7 +631,10 @@ int Fl_Quartz_Native_File_Chooser_Driver::runmodal()
+       while ([_panel isVisible]) Fl::wait(100); // loop until end of file dialog
+       retval = complete;
+     } else {
+-      retval = [_panel runModal];
++      while (true) { 
++        retval = [_panel runModal];
++        if (retval >= 0) break;
++      }
+     }
+   }
+   else
 diff --git a/src/Fl_lock.cxx b/src/Fl_lock.cxx
 index a98be46ec..07999a0a0 100644
 --- a/src/Fl_lock.cxx
