@@ -19,8 +19,6 @@ static mut LOADED_FONT: Option<&str> = None;
 
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
-    lock()?;
-
     unsafe {
         match Fl_run() {
             0 => Ok(()),
@@ -82,7 +80,6 @@ pub fn scheme() -> Scheme {
 pub type AppScheme = Scheme;
 
 /// Unlocks the main UI thread
-#[allow(dead_code)]
 pub fn unlock() {
     unsafe {
         Fl_unlock();
@@ -133,6 +130,7 @@ impl App {
                 "Zapfdingbats".to_owned(),
             ];
         }
+        lock().expect("fltk-rs requires threading support!");
         App {}
     }
 
@@ -499,16 +497,16 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 
 /// Starts waiting for events
 pub fn wait() -> Result<bool, FltkError> {
-    lock()?;
-
     unsafe {
-        Ok(Fl_wait() != 0)
+        match Fl_wait() {
+            0 => Err(FltkError::Unknown(String::from("An unknown error occured!"))),
+            _ => Ok(true)
+        }
     }
 }
 
 /// Waits a maximum of `dur` seconds or until "something happens".
 pub fn wait_for(dur: f64) -> Result<(), FltkError> {
-    lock()?;
     unsafe {
         if Fl_wait_for(dur) >= 0.0 {
             Ok(())
