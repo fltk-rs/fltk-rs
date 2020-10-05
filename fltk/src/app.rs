@@ -130,6 +130,7 @@ impl App {
                 "Zapfdingbats".to_owned(),
             ];
         }
+        // This should never appear!
         lock().expect("fltk-rs requires threading support!");
         App {}
     }
