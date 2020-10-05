@@ -1,3 +1,12 @@
+// fltk-rs surrounds all mutating calls to widgets with a lock on the C++ wrapper side. 
+// Normally you wouldn't have to call app::lock() and app::unlock(). 
+// This depends however on the support of recursive mutexes in your system. 
+// If you notice haning in multithreaded applications, 
+// you might have to initialize threads (like xlib threads) by calling app::lock() once in your main thread. 
+// In that case, you can wrap widgets in an Arc<Mutex> 
+// or surround widget-mutating functions/methods with an app::lock and app::unlock. 
+// But that should rarely be required.
+
 use fltk::{app::*, button::*, frame::*, window::*};
 use std::{thread, time};
 

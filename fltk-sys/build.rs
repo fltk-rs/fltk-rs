@@ -177,7 +177,7 @@ fn main() {
     }
 
     Command::new("git")
-        .args(&["reset", "--hard", "origin/master"])
+        .args(&["reset", "--hard", "master"])
         .current_dir(manifest_dir.join("cfltk").join("fltk"))
         .status()
         .expect("Git is needed to retrieve the fltk source files!");

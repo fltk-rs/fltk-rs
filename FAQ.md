@@ -70,6 +70,13 @@ FLTK has some known issues with text alignment and right-to-left language suppor
 ### Do you plan on supporting multithreading or async/await?
 FLTK supports multithreaded and concurrent applications. See the examples directory for examples on usage with threads, messages, async_std and tokio.
 
+### Should I explicitly call app::lock() and app::unlock()?
+fltk-rs surrounds all mutating calls to widgets with a lock on the C++ wrapper side. Normally you wouldn't have to call app::lock() and app::unlock(). 
+This depends however on the support of recursive mutexes in your system. 
+If you notice haning in multithreaded applications, you might have to initialize threads (like xlib threads) by calling app::lock() once in your main thread. 
+In that case, you can wrap widgets in an Arc<Mutex> or surround widget-mutating functions/methods with an app::lock and app::unlock. 
+But that should rarely be required.
+
 ## Windowing
 
 ### Why does FLTK exit when I hit the escape key?
