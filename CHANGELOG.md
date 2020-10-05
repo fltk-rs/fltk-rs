@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.9.4] - Unreleased
+## [0.9.4] - 2020-10-05
 ### Changes
 - Move threads initialization to occur on App initialization.
 - Pull NSOpenPanel fix from FLTK.

@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "0.9.3"
+version = "0.9.4"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 build = "build.rs"
 edition = "2018"
@@ -14,7 +14,7 @@ name = "fltk_sys"
 path = "src/lib.rs"
 
 [dependencies]
-libc = "0.2.77"
+libc = "0.2.79"
 
 [build-dependencies]
 cmake = "^0.1.44"
