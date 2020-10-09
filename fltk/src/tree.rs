@@ -169,7 +169,7 @@ impl Tree {
     }
 
     /// Inserts a TreeItem above another tree item
-    pub fn insert_above(&mut self, above: TreeItem, name: &str) -> Option<TreeItem> {
+    pub fn insert_above(&mut self, above: &TreeItem, name: &str) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if above._inner.is_null() {
             return None;
@@ -183,7 +183,7 @@ impl Tree {
     }
 
     /// Inserts a TreeItem at a position ```pos```
-    pub fn insert(&mut self, item: TreeItem, name: &str, pos: u32) -> Option<TreeItem> {
+    pub fn insert(&mut self, item: &TreeItem, name: &str, pos: u32) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if item._inner.is_null() {
             return None;
@@ -302,7 +302,7 @@ impl Tree {
     }
 
     /// Gets the next visible tree item
-    pub fn next_visible_item(&mut self, start: TreeItem, direction_key: Key) -> Option<TreeItem> {
+    pub fn next_visible_item(&mut self, start: &TreeItem, direction_key: Key) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if start._inner.is_null() {
             return None;
@@ -331,7 +331,7 @@ impl Tree {
     /// Gets the next tree item, direction_key is by default Key::Down
     pub fn next_item(
         &mut self,
-        item: TreeItem,
+        item: &TreeItem,
         direction_key: Key,
         visible: bool,
     ) -> Option<TreeItem> {
@@ -350,7 +350,7 @@ impl Tree {
     }
 
     /// Gets the next selected tree item, direction_key is by default Key::Down
-    pub fn next_selected_item(&mut self, item: TreeItem, direction_key: Key) -> Option<TreeItem> {
+    pub fn next_selected_item(&mut self, item: &TreeItem, direction_key: Key) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if item._inner.is_null() {
             return None;
@@ -414,7 +414,7 @@ impl Tree {
     }
 
     /// Toggle the open state
-    pub fn open_toggle(&mut self, item: TreeItem, do_callback: bool) {
+    pub fn open_toggle(&mut self, item: &TreeItem, do_callback: bool) {
         assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_open_toggle(self._inner, item._inner, do_callback as i32) }
@@ -477,7 +477,7 @@ impl Tree {
     }
 
     /// Toggle the select state of the specified
-    pub fn select_toggle(&mut self, item: TreeItem, do_callback: bool) {
+    pub fn select_toggle(&mut self, item: &TreeItem, do_callback: bool) {
         assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_select_toggle(self._inner, item._inner, do_callback as i32) }
@@ -499,7 +499,7 @@ impl Tree {
     }
 
     /// Deselect all items
-    pub fn deselect_all(&mut self, item: TreeItem, do_callback: bool) -> Result<(), FltkError> {
+    pub fn deselect_all(&mut self, item: &TreeItem, do_callback: bool) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         if item._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
@@ -515,7 +515,7 @@ impl Tree {
     /// Select only the specified item, deselecting all others that might be selected.
     pub fn select_only(
         &mut self,
-        selected_item: TreeItem,
+        selected_item: &TreeItem,
         do_callback: bool,
     ) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
@@ -531,7 +531,7 @@ impl Tree {
     }
 
     /// Select all items
-    pub fn select_all(&mut self, item: TreeItem, do_callback: bool) -> Result<(), FltkError> {
+    pub fn select_all(&mut self, item: &TreeItem, do_callback: bool) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         if item._inner.is_null() {
             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
@@ -547,8 +547,8 @@ impl Tree {
     /// Extend the selection between and including ```from``` and ```to``` in a certain direction
     pub fn extend_selection_dir(
         &mut self,
-        from: TreeItem,
-        to: TreeItem,
+        from: &TreeItem,
+        to: &TreeItem,
         direction_key: Key,
         val: TreeItemSelect,
         visible: bool,
@@ -575,8 +575,8 @@ impl Tree {
     /// Extend the selection between and including ```from``` and ```to```
     pub fn extend_selection(
         &mut self,
-        from: TreeItem,
-        to: TreeItem,
+        from: &TreeItem,
+        to: &TreeItem,
         val: TreeItemSelect,
         visible: bool,
     ) -> Result<(), FltkError> {
@@ -1040,7 +1040,7 @@ impl Tree {
     }
 
     /// Shows an item
-    pub fn show_item(&mut self, item: TreeItem, y_offset: i32) {
+    pub fn show_item(&mut self, item: &TreeItem, y_offset: i32) {
         assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe { Fl_Tree_show_item(self._inner, item._inner, y_offset) }
@@ -1417,7 +1417,7 @@ impl TreeItem {
     }
 
     /// Swap children a and b
-    pub fn swap_children(&mut self, a: TreeItem, b: TreeItem) -> Result<(), FltkError> {
+    pub fn swap_children(&mut self, a: &TreeItem, b: TreeItem) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !a.was_deleted() && !b.was_deleted());
         unsafe {
             match Fl_Tree_Item_swap_children(self._inner, a._inner, b._inner) {
@@ -1445,7 +1445,7 @@ impl TreeItem {
     }
 
     /// Replace a child
-    pub fn replace_child(&mut self, old_item: TreeItem, new_item: TreeItem) -> Option<TreeItem> {
+    pub fn replace_child(&mut self, old_item: &TreeItem, new_item: TreeItem) -> Option<TreeItem> {
         assert!(!self.was_deleted() && !old_item.was_deleted() && !new_item.was_deleted());
         unsafe {
             TreeItem::from_raw(Fl_Tree_Item_replace_child(
@@ -1467,7 +1467,7 @@ impl TreeItem {
     }
 
     /// Reparent a child by index
-    pub fn reparent(&mut self, new_child: TreeItem, index: u32) -> Result<(), FltkError> {
+    pub fn reparent(&mut self, new_child: &TreeItem, index: u32) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !new_child.was_deleted());
         debug_assert!(
             index <= std::isize::MAX as u32,
@@ -1523,7 +1523,7 @@ impl TreeItem {
     }
 
     /// Move item into another item
-    pub fn move_into(&mut self, item: TreeItem, pos: u32) -> Result<(), FltkError> {
+    pub fn move_into(&mut self, item: &TreeItem, pos: u32) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !item.was_deleted());
         debug_assert!(
             pos <= std::isize::MAX as u32,
@@ -1788,7 +1788,7 @@ impl TreeItemArray {
 
     /// Reparent item
     #[allow(dead_code)]
-    fn reparent(&mut self, item: TreeItem, newparent: TreeItem, pos: i32) -> i32 {
+    fn reparent(&mut self, item: &TreeItem, newparent: &TreeItem, pos: i32) -> i32 {
         unsafe { Fl_Tree_Item_Array_reparent(self._inner, item._inner, newparent._inner, pos) }
     }
 

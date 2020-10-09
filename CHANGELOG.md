@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.9.5] - 2020-10-09
+### Changes
+- Change Tree methods to take immutable borrows of tree items.
+- Pull fixes from FLTK.
+
 ## [0.9.4] - 2020-10-05
 ### Changes
 - Move threads initialization to occur on App initialization.
