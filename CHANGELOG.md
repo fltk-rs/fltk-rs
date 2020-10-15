@@ -4,6 +4,7 @@
 ### Changes
 - Update FLTK.
 - Internal refactoring.
+- Fix app::wait erroneously result.
 
 ## [0.9.5] - 2020-10-09
 ### Changes
