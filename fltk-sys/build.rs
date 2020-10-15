@@ -165,7 +165,6 @@ fn main() {
         let _dst = dst
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
-            .define("OPTION_ABI_VERSION:STRING", "10401")
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
             .define("FLTK_BUILD_FLUID", "OFF")
@@ -173,6 +172,7 @@ fn main() {
             .define("OPTION_LARGE_FILE", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
             .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
+            // .define("OPTION_ABI_VERSION:STRING", "10401")
             .build();
     }
 
