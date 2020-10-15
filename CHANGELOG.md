@@ -1,10 +1,10 @@
 # Changelog
 
-## [0.9.6] - Unreleased
+## [0.9.6] - 2020-10-15
 ### Changes
 - Update FLTK.
 - Internal refactoring.
-- Fix app::wait erroneously result.
+- Fix app::wait erroneous result.
 
 ## [0.9.5] - 2020-10-09
 ### Changes
