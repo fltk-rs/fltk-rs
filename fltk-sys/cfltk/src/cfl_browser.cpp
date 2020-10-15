@@ -1,4 +1,5 @@
 #include "cfl_browser.h"
+#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Browser.H>
 #include <FL/Fl_File_Browser.H>
@@ -6,7 +7,6 @@
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Multi_Browser.H>
 #include <FL/Fl_Select_Browser.H>
- #include "cfl_new.hpp"
 
 #define BROWSER_DEFINE(widget)                                                                     \
     void widget##_remove(widget *self, int line) {                                                 \
@@ -138,21 +138,31 @@
         return &self->hscrollbar;                                                                  \
     }
 
+WIDGET_CLASS(Fl_Browser)
+
 WIDGET_DEFINE(Fl_Browser)
 
 BROWSER_DEFINE(Fl_Browser)
+
+WIDGET_CLASS(Fl_Hold_Browser)
 
 WIDGET_DEFINE(Fl_Hold_Browser)
 
 BROWSER_DEFINE(Fl_Hold_Browser)
 
+WIDGET_CLASS(Fl_Select_Browser)
+
 WIDGET_DEFINE(Fl_Select_Browser)
 
 BROWSER_DEFINE(Fl_Select_Browser)
 
+WIDGET_CLASS(Fl_Multi_Browser)
+
 WIDGET_DEFINE(Fl_Multi_Browser)
 
 BROWSER_DEFINE(Fl_Multi_Browser)
+
+WIDGET_CLASS(Fl_File_Browser)
 
 WIDGET_DEFINE(Fl_File_Browser)
 

@@ -2,12 +2,12 @@
 #include <FL/Fl.H>
 
 #include "FL/Fl_Sys_Menu_Bar.H"
+#include "cfl_new.hpp"
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Menu_Bar.H>
 #include <FL/Fl_Menu_Button.H>
 #include <FL/Fl_Menu_Item.H>
- #include "cfl_new.hpp"
 
 #define MENU_DEFINE(widget)                                                                        \
     void widget##_add(widget *self, const char *name, int shortcut, Fl_Callback *cb, void *data,   \
@@ -97,17 +97,25 @@
         LOCK(self->remove(idx);)                                                                   \
     }
 
+WIDGET_CLASS(Fl_Menu_Bar)
+
 WIDGET_DEFINE(Fl_Menu_Bar)
 
 MENU_DEFINE(Fl_Menu_Bar)
+
+WIDGET_CLASS(Fl_Menu_Button)
 
 WIDGET_DEFINE(Fl_Menu_Button)
 
 MENU_DEFINE(Fl_Menu_Button)
 
+WIDGET_CLASS(Fl_Choice)
+
 WIDGET_DEFINE(Fl_Choice)
 
 MENU_DEFINE(Fl_Choice)
+
+WIDGET_CLASS(Fl_Sys_Menu_Bar)
 
 WIDGET_DEFINE(Fl_Sys_Menu_Bar)
 

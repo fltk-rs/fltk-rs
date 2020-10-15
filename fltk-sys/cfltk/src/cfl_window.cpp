@@ -69,6 +69,8 @@
         return self->fullscreen_active();                                                          \
     }
 
+WIDGET_CLASS(Fl_Window)
+
 WIDGET_DEFINE(Fl_Window)
 
 GROUP_DEFINE(Fl_Window)
@@ -121,11 +123,15 @@ void Fl_Window_set_raw_handle(Fl_Window *self, void *handle) {
 #endif
 }
 
+WIDGET_CLASS(Fl_Single_Window)
+
 WIDGET_DEFINE(Fl_Single_Window)
 
 GROUP_DEFINE(Fl_Single_Window)
 
 WINDOW_DEFINE(Fl_Single_Window)
+
+WIDGET_CLASS(Fl_Double_Window)
 
 WIDGET_DEFINE(Fl_Double_Window)
 
@@ -137,6 +143,8 @@ GROUP_DEFINE(Fl_Double_Window)
 
 WINDOW_DEFINE(Fl_Double_Window)
 
+WIDGET_CLASS(Fl_Menu_Window)
+
 WIDGET_DEFINE(Fl_Menu_Window)
 
 GROUP_DEFINE(Fl_Menu_Window)
@@ -144,6 +152,8 @@ GROUP_DEFINE(Fl_Menu_Window)
 WINDOW_DEFINE(Fl_Menu_Window)
 
 #ifdef CFLTK_USE_GL
+
+WIDGET_CLASS(Fl_Gl_Window)
 
 WIDGET_DEFINE(Fl_Gl_Window)
 

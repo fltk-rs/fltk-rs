@@ -13,13 +13,6 @@ pub type custom_handler_callback = ::core::option::Option<
 pub type custom_draw_callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
 extern "C" {
-    pub fn Fl_Widget_callback_with_captures(
-        arg1: *mut Fl_Widget,
-        cb: Fl_Callback,
-        arg2: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_new(
         x: libc::c_int,
         y: libc::c_int,
@@ -239,6 +232,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -465,6 +461,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_deimage(arg1: *const Fl_Group) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Group_set_callback(arg1: *mut Fl_Group, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
@@ -717,6 +716,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_deimage(arg1: *const Fl_Pack) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Pack_set_callback(arg1: *mut Fl_Pack, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
@@ -973,6 +975,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_deimage(arg1: *const Fl_Scroll) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_callback(arg1: *mut Fl_Scroll, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Scroll_scrollbar(self_: *mut Fl_Scroll) -> *mut libc::c_void;
@@ -1246,6 +1251,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_deimage(arg1: *const Fl_Tabs) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_callback(arg1: *mut Fl_Tabs, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Tabs_value(self_: *mut Fl_Tabs) -> *mut Fl_Widget;
@@ -1527,6 +1535,9 @@ extern "C" {
     pub fn Fl_Tile_deimage(arg1: *const Fl_Tile) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Tile_set_callback(arg1: *mut Fl_Tile, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1781,6 +1792,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_deimage(arg1: *const Fl_Wizard) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Wizard_set_callback(arg1: *mut Fl_Wizard, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -2052,6 +2066,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_deimage(arg1: *const Fl_Color_Chooser) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_callback(
+        arg1: *mut Fl_Color_Chooser,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
@@ -2333,6 +2354,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_deimage(arg1: *const Fl_Table) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_set_callback(arg1: *mut Fl_Table, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Table_begin(self_: *mut Fl_Table);
@@ -2794,6 +2818,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_Row_deimage(arg1: *const Fl_Table_Row) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_callback(
+        arg1: *mut Fl_Table_Row,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Table_Row_begin(self_: *mut Fl_Table_Row);

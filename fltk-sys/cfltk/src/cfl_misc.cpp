@@ -1,4 +1,5 @@
 #include "cfl_misc.h"
+#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Chart.H>
 #include <FL/Fl_Clock.H>
@@ -6,7 +7,8 @@
 #include <FL/Fl_Progress.H>
 #include <FL/Fl_Spinner.H>
 #include <FL/Fl_Tooltip.H>
- #include "cfl_new.hpp"
+
+WIDGET_CLASS(Fl_Spinner)
 
 WIDGET_DEFINE(Fl_Spinner)
 
@@ -70,7 +72,11 @@ void Fl_Spinner_set_text_color(Fl_Spinner *self, unsigned int n) {
     LOCK(self->textcolor(n);)
 }
 
+WIDGET_CLASS(Fl_Clock)
+
 WIDGET_DEFINE(Fl_Clock)
+
+WIDGET_CLASS(Fl_Chart)
 
 WIDGET_DEFINE(Fl_Chart)
 
@@ -141,6 +147,8 @@ int Fl_Chart_is_autosize(const Fl_Chart *self) {
 void Fl_Chart_make_autosize(Fl_Chart *self, int n) {
     LOCK(self->autosize(n);)
 }
+
+WIDGET_CLASS(Fl_Progress)
 
 WIDGET_DEFINE(Fl_Progress)
 

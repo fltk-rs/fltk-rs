@@ -1,4 +1,5 @@
 #include "cfl_group.h"
+#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Color_Chooser.H>
 #include <FL/Fl_Group.H>
@@ -9,15 +10,20 @@
 #include <FL/Fl_Tile.H>
 #include <FL/Fl_Widget.H>
 #include <FL/Fl_Wizard.H>
- #include "cfl_new.hpp"
+
+WIDGET_CLASS(Fl_Group)
 
 WIDGET_DEFINE(Fl_Group)
 
 GROUP_DEFINE(Fl_Group)
 
+WIDGET_CLASS(Fl_Pack)
+
 WIDGET_DEFINE(Fl_Pack)
 
 GROUP_DEFINE(Fl_Pack)
+
+WIDGET_CLASS(Fl_Scroll)
 
 WIDGET_DEFINE(Fl_Scroll)
 
@@ -53,6 +59,8 @@ void Fl_Scroll_set_scrollbar_size(Fl_Scroll *self, int newSize) {
 
 GROUP_DEFINE(Fl_Scroll)
 
+WIDGET_CLASS(Fl_Tabs)
+
 WIDGET_DEFINE(Fl_Tabs)
 
 Fl_Widget *Fl_Tabs_value(Fl_Tabs *self) {
@@ -60,7 +68,9 @@ Fl_Widget *Fl_Tabs_value(Fl_Tabs *self) {
 }
 
 int Fl_Tabs_set_value(Fl_Tabs *self, Fl_Widget *w) {
-    int ret = 0; LOCK(ret = self->value(w)); return ret;
+    int ret = 0;
+    LOCK(ret = self->value(w));
+    return ret;
 }
 
 Fl_Widget *Fl_Tabs_push(const Fl_Tabs *self) {
@@ -68,7 +78,9 @@ Fl_Widget *Fl_Tabs_push(const Fl_Tabs *self) {
 }
 
 int Fl_Tabs_set_push(Fl_Tabs *self, Fl_Widget *w) {
-    int ret = 0; LOCK(ret = self->push(w)); return ret;
+    int ret = 0;
+    LOCK(ret = self->push(w));
+    return ret;
 }
 
 void Fl_Tabs_client_area(Fl_Tabs *self, int *rx, int *ry, int *rw, int *rh) {
@@ -85,9 +97,13 @@ int Fl_Tabs_tab_align(const Fl_Tabs *self) {
 
 GROUP_DEFINE(Fl_Tabs)
 
+WIDGET_CLASS(Fl_Tile)
+
 WIDGET_DEFINE(Fl_Tile)
 
 GROUP_DEFINE(Fl_Tile)
+
+WIDGET_CLASS(Fl_Wizard)
 
 WIDGET_DEFINE(Fl_Wizard)
 
@@ -108,6 +124,8 @@ void Fl_Wizard_set_value(Fl_Wizard *self, Fl_Widget *wid) {
 }
 
 GROUP_DEFINE(Fl_Wizard)
+
+WIDGET_CLASS(Fl_Color_Chooser)
 
 WIDGET_DEFINE(Fl_Color_Chooser)
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.9.6] - Unreleased
+### Changes
+- Update FLTK.
+- Internal refactoring.
+
 ## [0.9.5] - 2020-10-09
 ### Changes
 - Change Tree methods to take immutable borrows of tree items.

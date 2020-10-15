@@ -196,6 +196,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_deimage").as_str(),
         name.span(),
     );
+    let set_callback = Ident::new(
+        format!("{}_{}", name_str, "set_callback").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -537,7 +541,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+                    unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
                         let f: &mut (dyn FnMut()) = &mut **a;
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
@@ -545,8 +549,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     self.unset_callback();
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: fltk_sys::widget::Fl_Callback = Some(shim);
-                    fltk_sys::widget::Fl_Widget_callback_with_captures(self.as_widget_ptr(), callback, data);
+                    let callback: Fl_Callback = Some(shim);
+                    #set_callback(self._inner, callback, data);
                 }
             }
 

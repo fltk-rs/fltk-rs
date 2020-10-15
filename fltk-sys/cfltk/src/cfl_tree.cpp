@@ -1,12 +1,14 @@
 #include "cfl_tree.h"
 #include <FL/Fl.H>
 
+#include "cfl_new.hpp"
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Tree.H>
 #include <FL/Fl_Tree_Item.H>
 #include <FL/Fl_Tree_Item_Array.H>
 #include <FL/Fl_Widget.H>
- #include "cfl_new.hpp"
+
+WIDGET_CLASS(Fl_Tree)
 
 WIDGET_DEFINE(Fl_Tree)
 

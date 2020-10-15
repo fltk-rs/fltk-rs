@@ -423,7 +423,7 @@ where
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
-        fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
+        fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), callback, data);
     }
 }
 
@@ -436,7 +436,7 @@ where
 {
     assert!(!widget.was_deleted());
     let cb: Option<unsafe extern "C" fn(WidgetPtr, *mut raw::c_void)> = mem::transmute(cb);
-    fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), cb, data);
+    fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), cb, data);
 }
 
 /// Initializes loaded fonts of a certain pattern ```name```

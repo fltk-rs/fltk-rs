@@ -77,69 +77,103 @@
         return ret;                                                                                \
     }
 
+WIDGET_CLASS(Fl_Slider)
+
 WIDGET_DEFINE(Fl_Slider)
 
 VALUATOR_DEFINE(Fl_Slider)
+
+WIDGET_CLASS(Fl_Nice_Slider)
 
 WIDGET_DEFINE(Fl_Nice_Slider)
 
 VALUATOR_DEFINE(Fl_Nice_Slider)
 
+WIDGET_CLASS(Fl_Counter)
+
 WIDGET_DEFINE(Fl_Counter)
 
 VALUATOR_DEFINE(Fl_Counter)
+
+WIDGET_CLASS(Fl_Dial)
 
 WIDGET_DEFINE(Fl_Dial)
 
 VALUATOR_DEFINE(Fl_Dial)
 
+WIDGET_CLASS(Fl_Line_Dial)
+
 WIDGET_DEFINE(Fl_Line_Dial)
 
 VALUATOR_DEFINE(Fl_Line_Dial)
+
+WIDGET_CLASS(Fl_Roller)
 
 WIDGET_DEFINE(Fl_Roller)
 
 VALUATOR_DEFINE(Fl_Roller)
 
+WIDGET_CLASS(Fl_Scrollbar)
+
 WIDGET_DEFINE(Fl_Scrollbar)
 
 VALUATOR_DEFINE(Fl_Scrollbar)
+
+WIDGET_CLASS(Fl_Value_Slider)
 
 WIDGET_DEFINE(Fl_Value_Slider)
 
 VALUATOR_DEFINE(Fl_Value_Slider)
 
+WIDGET_CLASS(Fl_Adjuster)
+
 WIDGET_DEFINE(Fl_Adjuster)
 
 VALUATOR_DEFINE(Fl_Adjuster)
+
+WIDGET_CLASS(Fl_Value_Input)
 
 WIDGET_DEFINE(Fl_Value_Input)
 
 VALUATOR_DEFINE(Fl_Value_Input)
 
+WIDGET_CLASS(Fl_Value_Output)
+
 WIDGET_DEFINE(Fl_Value_Output)
 
 VALUATOR_DEFINE(Fl_Value_Output)
+
+WIDGET_CLASS(Fl_Fill_Slider)
 
 WIDGET_DEFINE(Fl_Fill_Slider)
 
 VALUATOR_DEFINE(Fl_Fill_Slider)
 
+WIDGET_CLASS(Fl_Fill_Dial)
+
 WIDGET_DEFINE(Fl_Fill_Dial)
 
 VALUATOR_DEFINE(Fl_Fill_Dial)
+
+WIDGET_CLASS(Fl_Hor_Slider)
 
 WIDGET_DEFINE(Fl_Hor_Slider)
 
 VALUATOR_DEFINE(Fl_Hor_Slider)
 
+WIDGET_CLASS(Fl_Hor_Fill_Slider)
+
 WIDGET_DEFINE(Fl_Hor_Fill_Slider)
 
 VALUATOR_DEFINE(Fl_Hor_Fill_Slider)
 
+WIDGET_CLASS(Fl_Hor_Nice_Slider)
+
 WIDGET_DEFINE(Fl_Hor_Nice_Slider)
 
 VALUATOR_DEFINE(Fl_Hor_Nice_Slider)
+
+WIDGET_CLASS(Fl_Hor_Value_Slider)
 
 WIDGET_DEFINE(Fl_Hor_Value_Slider)
 

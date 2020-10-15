@@ -13,13 +13,6 @@ pub type custom_handler_callback = ::core::option::Option<
 pub type custom_draw_callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
 extern "C" {
-    pub fn Fl_Widget_callback_with_captures(
-        arg1: *mut Fl_Widget,
-        cb: Fl_Callback,
-        arg2: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_new(
         x: libc::c_int,
         y: libc::c_int,
@@ -239,6 +232,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -465,6 +461,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_deimage(arg1: *const Fl_Input) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Input_set_callback(arg1: *mut Fl_Input, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Input_set_value(arg1: *mut Fl_Input, arg2: *const libc::c_char) -> libc::c_int;
@@ -778,6 +777,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_deimage(arg1: *const Fl_Int_Input) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Int_Input_set_callback(
+        arg1: *mut Fl_Int_Input,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Int_Input_set_value(
@@ -1097,6 +1103,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_deimage(arg1: *const Fl_Float_Input) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Float_Input_set_callback(
+        arg1: *mut Fl_Float_Input,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Float_Input_set_value(
@@ -1427,6 +1440,13 @@ extern "C" {
     pub fn Fl_Multiline_Input_deimage(arg1: *const Fl_Multiline_Input) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Multiline_Input_set_callback(
+        arg1: *mut Fl_Multiline_Input,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Multiline_Input_set_value(
         arg1: *mut Fl_Multiline_Input,
         arg2: *const libc::c_char,
@@ -1755,6 +1775,13 @@ extern "C" {
     pub fn Fl_Secret_Input_deimage(arg1: *const Fl_Secret_Input) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Secret_Input_set_callback(
+        arg1: *mut Fl_Secret_Input,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Secret_Input_set_value(
         arg1: *mut Fl_Secret_Input,
         arg2: *const libc::c_char,
@@ -2072,6 +2099,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Input_deimage(arg1: *const Fl_File_Input) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Input_set_callback(
+        arg1: *mut Fl_File_Input,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_File_Input_set_value(
