@@ -1,7 +1,7 @@
-use fltk::{app::*, button::*, dialog::*, window::*};
+use fltk::{app, button::*, dialog::*, window::*};
 
 fn main() {
-    let app = App::default();
+    let app = app::App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
@@ -30,7 +30,7 @@ fn main() {
         // //     (The other way to do this is to use a callback())
         // //
         // while chooser.shown() {
-        //     app.wait().unwrap();
+        //     app::wait().unwrap();
         // }
 
         // // User hit cancel?

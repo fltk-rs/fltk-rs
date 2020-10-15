@@ -344,6 +344,8 @@ void Fl_Text_Buffer_call_modify_callbacks(Fl_Text_Buffer *self) {
     LOCK(self->call_modify_callbacks();)
 }
 
+WIDGET_CLASS(Fl_Text_Display)
+
 WIDGET_DEFINE(Fl_Text_Display)
 
 void Fl_Text_Display_init(Fl_Text_Display *self) {
@@ -364,6 +366,8 @@ Fl_Text_Buffer *Fl_Text_Display_get_style_buffer(Fl_Text_Display *self) {
 }
 
 DISPLAY_DEFINE(Fl_Text_Display)
+
+WIDGET_CLASS(Fl_Text_Editor)
 
 WIDGET_DEFINE(Fl_Text_Editor)
 
@@ -553,6 +557,8 @@ void Fl_Text_Editor_set_tab_nav(Fl_Text_Editor *self, int val) {
 int Fl_Text_Editor_tab_nav(const Fl_Text_Editor *self) {
     return self->tab_nav();
 }
+
+WIDGET_CLASS(Fl_Simple_Terminal)
 
 WIDGET_DEFINE(Fl_Simple_Terminal)
 

@@ -16,7 +16,6 @@ typedef struct Fl_Widget Fl_Widget;
 typedef void(Fl_Callback)(Fl_Widget *, void *);
 typedef int (*custom_handler_callback)(int, void *);
 typedef void (*custom_draw_callback)(void *);
-void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
 
 #define WIDGET_DECLARE(widget)                                                                     \
     typedef struct widget widget;                                                                  \
@@ -86,9 +85,10 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     void *widget##_as_window(widget *self);                                                        \
     void *widget##_as_group(widget *self);                                                         \
     void widget##_set_deimage(widget *, void *);                                                   \
-    void *widget##_deimage(const widget *);
+    void *widget##_deimage(const widget *);                                                        \
+    void widget##_set_callback(widget *, Fl_Callback *, void *);
 
-#define WIDGET_DEFINE(widget)                                                                      \
+#define WIDGET_CLASS(widget)                                                                       \
     struct widget##_Derived : public widget {                                                      \
         void *ev_data_ = NULL;                                                                     \
         void *draw_data_ = NULL;                                                                   \
@@ -133,7 +133,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
             if (draw_data_ && inner_drawer)                                                        \
                 inner_drawer(draw_data_);                                                          \
         }                                                                                          \
-    };                                                                                             \
+    };
+
+#define WIDGET_DEFINE(widget)                                                                      \
     widget *widget##_new(int x, int y, int width, int height, const char *title) {                 \
         return new widget##_Derived(x, y, width, height, title);                                   \
     }                                                                                              \
@@ -338,6 +340,9 @@ void Fl_Widget_callback_with_captures(Fl_Widget *, Fl_Callback *cb, void *);
     }                                                                                              \
     void *widget##_deimage(const widget *self) {                                                   \
         return (Fl_Image *)self->deimage();                                                        \
+    }                                                                                              \
+    void widget##_set_callback(widget *self, Fl_Callback *cb, void *data) {                        \
+        LOCK(self->callback(cb, data);)                                                            \
     }
 
 WIDGET_DECLARE(Fl_Widget)

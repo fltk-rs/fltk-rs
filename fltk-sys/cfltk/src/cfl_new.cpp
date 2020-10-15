@@ -35,7 +35,7 @@ extern "C" void __cxa_pure_virtual() {
 }
 
 extern "C" void __cxa_guard_abort(long *) {
-   // Do nothing
+    // Do nothing
 }
 
 extern "C" void __cxa_atexit() {

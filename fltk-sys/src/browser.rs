@@ -13,13 +13,6 @@ pub type custom_handler_callback = ::core::option::Option<
 pub type custom_draw_callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
 extern "C" {
-    pub fn Fl_Widget_callback_with_captures(
-        arg1: *mut Fl_Widget,
-        cb: Fl_Callback,
-        arg2: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_new(
         x: libc::c_int,
         y: libc::c_int,
@@ -239,6 +232,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -465,6 +461,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_deimage(arg1: *const Fl_Browser) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Browser_set_callback(
+        arg1: *mut Fl_Browser,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Browser_remove(arg1: *mut Fl_Browser, line: libc::c_int);
@@ -828,6 +831,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_deimage(arg1: *const Fl_Hold_Browser) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_set_callback(
+        arg1: *mut Fl_Hold_Browser,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_remove(arg1: *mut Fl_Hold_Browser, line: libc::c_int);
@@ -1208,6 +1218,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_deimage(arg1: *const Fl_Select_Browser) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_set_callback(
+        arg1: *mut Fl_Select_Browser,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Select_Browser_remove(arg1: *mut Fl_Select_Browser, line: libc::c_int);
@@ -1596,6 +1613,13 @@ extern "C" {
     pub fn Fl_Multi_Browser_deimage(arg1: *const Fl_Multi_Browser) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_set_callback(
+        arg1: *mut Fl_Multi_Browser,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Multi_Browser_remove(arg1: *mut Fl_Multi_Browser, line: libc::c_int);
 }
 extern "C" {
@@ -1976,6 +2000,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_deimage(arg1: *const Fl_File_Browser) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_callback(
+        arg1: *mut Fl_File_Browser,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_File_Browser_iconsize(self_: *const Fl_File_Browser) -> libc::c_uint;

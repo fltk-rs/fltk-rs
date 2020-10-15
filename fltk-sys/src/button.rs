@@ -13,13 +13,6 @@ pub type custom_handler_callback = ::core::option::Option<
 pub type custom_draw_callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
 extern "C" {
-    pub fn Fl_Widget_callback_with_captures(
-        arg1: *mut Fl_Widget,
-        cb: Fl_Callback,
-        arg2: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_new(
         x: libc::c_int,
         y: libc::c_int,
@@ -239,6 +232,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -465,6 +461,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Button_deimage(arg1: *const Fl_Button) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Button_set_callback(arg1: *mut Fl_Button, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Button_shortcut(self_: *const Fl_Button) -> libc::c_int;
@@ -709,6 +708,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_deimage(arg1: *const Fl_Check_Button) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Check_Button_set_callback(
+        arg1: *mut Fl_Check_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> libc::c_int;
@@ -961,6 +967,13 @@ extern "C" {
     pub fn Fl_Radio_Button_deimage(arg1: *const Fl_Radio_Button) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Radio_Button_set_callback(
+        arg1: *mut Fl_Radio_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Radio_Button_is_toggled(arg1: *mut Fl_Radio_Button) -> libc::c_int;
 }
 extern "C" {
@@ -1211,6 +1224,13 @@ extern "C" {
     pub fn Fl_Toggle_Button_deimage(arg1: *const Fl_Toggle_Button) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Toggle_Button_set_callback(
+        arg1: *mut Fl_Toggle_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Toggle_Button_is_toggled(arg1: *mut Fl_Toggle_Button) -> libc::c_int;
 }
 extern "C" {
@@ -1459,6 +1479,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Round_Button_deimage(arg1: *const Fl_Round_Button) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Round_Button_set_callback(
+        arg1: *mut Fl_Round_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Round_Button_is_toggled(arg1: *mut Fl_Round_Button) -> libc::c_int;
@@ -1748,6 +1775,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_deimage(arg1: *const Fl_Radio_Round_Button) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_set_callback(
+        arg1: *mut Fl_Radio_Round_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_is_toggled(arg1: *mut Fl_Radio_Round_Button) -> libc::c_int;
@@ -2042,6 +2076,13 @@ extern "C" {
     pub fn Fl_Radio_Light_Button_deimage(arg1: *const Fl_Radio_Light_Button) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Radio_Light_Button_set_callback(
+        arg1: *mut Fl_Radio_Light_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Radio_Light_Button_is_toggled(arg1: *mut Fl_Radio_Light_Button) -> libc::c_int;
 }
 extern "C" {
@@ -2295,6 +2336,13 @@ extern "C" {
     pub fn Fl_Light_Button_deimage(arg1: *const Fl_Light_Button) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Light_Button_set_callback(
+        arg1: *mut Fl_Light_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Light_Button_is_on(arg1: *mut Fl_Light_Button) -> libc::c_int;
 }
 extern "C" {
@@ -2545,6 +2593,13 @@ extern "C" {
     pub fn Fl_Repeat_Button_deimage(arg1: *const Fl_Repeat_Button) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Repeat_Button_set_callback(
+        arg1: *mut Fl_Repeat_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Repeat_Button_shortcut(self_: *const Fl_Repeat_Button) -> libc::c_int;
 }
 extern "C" {
@@ -2787,6 +2842,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_deimage(arg1: *const Fl_Return_Button) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Return_Button_set_callback(
+        arg1: *mut Fl_Return_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Return_Button_shortcut(self_: *const Fl_Return_Button) -> libc::c_int;

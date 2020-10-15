@@ -13,13 +13,6 @@ pub type custom_handler_callback = ::core::option::Option<
 pub type custom_draw_callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
 extern "C" {
-    pub fn Fl_Widget_callback_with_captures(
-        arg1: *mut Fl_Widget,
-        cb: Fl_Callback,
-        arg2: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_new(
         x: libc::c_int,
         y: libc::c_int,
@@ -239,6 +232,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -465,6 +461,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Spinner_deimage(arg1: *const Fl_Spinner) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Spinner_set_callback(
+        arg1: *mut Fl_Spinner,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
@@ -737,6 +740,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Clock_deimage(arg1: *const Fl_Clock) -> *mut libc::c_void;
 }
+extern "C" {
+    pub fn Fl_Clock_set_callback(arg1: *mut Fl_Clock, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -962,6 +968,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_deimage(arg1: *const Fl_Chart) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Chart_set_callback(arg1: *mut Fl_Chart, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -1256,6 +1265,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_deimage(arg1: *const Fl_Progress) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Progress_set_callback(
+        arg1: *mut Fl_Progress,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;

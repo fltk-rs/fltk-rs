@@ -13,13 +13,6 @@ pub type custom_handler_callback = ::core::option::Option<
 pub type custom_draw_callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
 extern "C" {
-    pub fn Fl_Widget_callback_with_captures(
-        arg1: *mut Fl_Widget,
-        cb: Fl_Callback,
-        arg2: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_new(
         x: libc::c_int,
         y: libc::c_int,
@@ -239,6 +232,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -461,6 +457,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tree_deimage(arg1: *const Fl_Tree) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Tree_set_callback(arg1: *mut Fl_Tree, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

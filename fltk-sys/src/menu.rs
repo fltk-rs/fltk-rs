@@ -13,13 +13,6 @@ pub type custom_handler_callback = ::core::option::Option<
 pub type custom_draw_callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
 extern "C" {
-    pub fn Fl_Widget_callback_with_captures(
-        arg1: *mut Fl_Widget,
-        cb: Fl_Callback,
-        arg2: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_new(
         x: libc::c_int,
         y: libc::c_int,
@@ -239,6 +232,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -470,6 +466,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_deimage(arg1: *const Fl_Menu_Bar) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_callback(
+        arg1: *mut Fl_Menu_Bar,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add(
@@ -792,6 +795,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Button_deimage(arg1: *const Fl_Menu_Button) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_callback(
+        arg1: *mut Fl_Menu_Button,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Menu_Button_add(
@@ -1122,6 +1132,9 @@ extern "C" {
     pub fn Fl_Choice_deimage(arg1: *const Fl_Choice) -> *mut libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Choice_set_callback(arg1: *mut Fl_Choice, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
+extern "C" {
     pub fn Fl_Choice_add(
         arg1: *mut Fl_Choice,
         name: *const libc::c_char,
@@ -1438,6 +1451,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_deimage(arg1: *const Fl_Sys_Menu_Bar) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_callback(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(

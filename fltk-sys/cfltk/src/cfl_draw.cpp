@@ -81,7 +81,7 @@ void Fl_rectf_with_color(int x, int y, int w, int h, unsigned int c) {
 }
 
 void Fl_rectf_with_rgb(int x, int y, int w, int h, unsigned char r, unsigned char g,
-                        unsigned char b) {
+                       unsigned char b) {
     fl_rectf(x, y, w, h, r, g, b);
 }
 
@@ -190,7 +190,7 @@ void Fl_vertex(double x, double y) {
 }
 
 void Fl_curve(double X0, double Y0, double X1, double Y1, double X2, double Y2, double X3,
-               double Y3) {
+              double Y3) {
     fl_curve(X0, Y0, X1, Y1, X2, Y2, X3, Y3);
 }
 
@@ -335,7 +335,7 @@ void Fl_measure(const char *str, int *x, int *y, int draw_symbols) {
 }
 
 void Fl_draw5(const char *str, int x, int y, int w, int h, int align, void **img,
-               int draw_symbols) {
+              int draw_symbols) {
     fl_draw(str, x, y, w, h, align, (Fl_Image *)*img, draw_symbols);
 }
 
@@ -416,7 +416,7 @@ void Fl_set_cursor2(int cursor, int fg, int bg) {
 }
 
 const char *Fl_expand_text(const char *from, char *buf, int maxbuf, double maxw, int *n,
-                            double *width, int wrap, int draw_symbols) {
+                           double *width, int wrap, int draw_symbols) {
     return fl_expand_text(from, buf, maxbuf, maxw, *n, *width, wrap, draw_symbols);
 }
 

@@ -150,7 +150,6 @@ const char *Fl_load_font(const char *path);
 
 void Fl_unload_font(const char *path);
 
-
 #ifdef __cplusplus
 }
 #endif

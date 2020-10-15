@@ -184,7 +184,7 @@ impl App {
     pub fn load_font<P: AsRef<std::path::Path>>(&self, path: P) -> Result<String, FltkError> {
         self.load_font_(path.as_ref())
     }
-    
+
     fn load_font_(&self, path: &std::path::Path) -> Result<String, FltkError> {
         if !path.exists() {
             return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -256,16 +256,12 @@ impl App {
 /// Set the application's scrollbar size
 pub fn set_scrollbar_size(sz: u32) {
     debug_assert!(sz < std::u32::MAX);
-    unsafe {
-        Fl_set_scrollbar_size(sz as i32)
-    }
+    unsafe { Fl_set_scrollbar_size(sz as i32) }
 }
 
 /// Get the app's scrollbar size
 pub fn scrollbar_size() -> u32 {
-    unsafe {
-        Fl_scrollbar_size() as u32
-    }
+    unsafe { Fl_scrollbar_size() as u32 }
 }
 
 /// Returns the latest captured event
@@ -316,44 +312,32 @@ pub fn event_clicks() -> bool {
 
 /// Gets the x coordinate of the mouse in the window
 pub fn event_x() -> i32 {
-    unsafe {
-        Fl_event_x()
-    }
+    unsafe { Fl_event_x() }
 }
 
 /// Gets the y coordinate of the mouse in the window
 pub fn event_y() -> i32 {
-    unsafe {
-        Fl_event_y()
-    }
+    unsafe { Fl_event_y() }
 }
 
 /// Gets the x coordinate of the mouse in the screen
 pub fn event_x_root() -> i32 {
-    unsafe {
-        Fl_event_x_root()
-    }
+    unsafe { Fl_event_x_root() }
 }
 
 /// Gets the y coordinate of the mouse in the screen
 pub fn event_y_root() -> i32 {
-    unsafe {
-        Fl_event_y_root()
-    }
+    unsafe { Fl_event_y_root() }
 }
 
 /// Gets the difference in x axis of the mouse coordinates from the screen to the window
 pub fn event_dx() -> i32 {
-    unsafe {
-        Fl_event_dx()
-    }
+    unsafe { Fl_event_dx() }
 }
 
 /// Gets the difference in y axis of the mouse coordinates from the screen to the window
 pub fn event_dy() -> i32 {
-    unsafe {
-        Fl_event_dy()
-    }
+    unsafe { Fl_event_dy() }
 }
 
 /// Gets the mouse coordinates relative to the screen
@@ -423,20 +407,23 @@ where
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
-        fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), callback, data);
+        fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), callback, data);
     }
 }
 
 /// Set a widget callback using a C style API, when boxing is not desired
 /// # Safety
 /// The function involves dereferencing externally provided raw pointers
-pub unsafe fn set_raw_callback<W>(widget: &mut W, data: *mut raw::c_void, cb: Option<fn(WidgetPtr, *mut raw::c_void)>)
-where
+pub unsafe fn set_raw_callback<W>(
+    widget: &mut W,
+    data: *mut raw::c_void,
+    cb: Option<fn(WidgetPtr, *mut raw::c_void)>,
+) where
     W: WidgetExt,
 {
     assert!(!widget.was_deleted());
     let cb: Option<unsafe extern "C" fn(WidgetPtr, *mut raw::c_void)> = mem::transmute(cb);
-    fltk_sys::widget::Fl_Widget_callback_with_captures(widget.as_widget_ptr(), cb, data);
+    fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), cb, data);
 }
 
 /// Initializes loaded fonts of a certain pattern ```name```
@@ -447,9 +434,7 @@ pub fn set_fonts(name: &str) -> u8 {
 
 /// Gets the name of a font through its index
 pub fn font_name(idx: usize) -> Option<String> {
-    unsafe {
-        Some(FONTS[idx].clone())
-    }
+    unsafe { Some(FONTS[idx].clone()) }
 }
 
 /// Returns a list of available fonts to the application
@@ -459,7 +444,8 @@ pub fn get_font_names() -> Vec<String> {
     for i in 0..cnt {
         let temp = unsafe {
             CStr::from_ptr(Fl_get_font(i as i32))
-                .to_string_lossy().to_string()
+                .to_string_lossy()
+                .to_string()
         };
         vec.push(temp);
     }
@@ -468,16 +454,12 @@ pub fn get_font_names() -> Vec<String> {
 
 /// Finds the index of a font through its name
 pub fn font_index(name: &str) -> Option<usize> {
-    unsafe {
-        FONTS.iter().position(|i| i == name)
-    }
+    unsafe { FONTS.iter().position(|i| i == name) }
 }
 
 /// Gets the number of loaded fonts
 pub fn font_count() -> usize {
-    unsafe {
-        FONTS.len()
-    }
+    unsafe { FONTS.len() }
 }
 
 /// Gets a Vector<String> of loaded fonts
@@ -499,10 +481,10 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 /// Starts waiting for events
 pub fn wait() -> Result<bool, FltkError> {
     unsafe {
-        match Fl_wait() {
-            0 => Err(FltkError::Unknown(String::from("An unknown error occured!"))),
-            _ => Ok(true)
-        }
+        Ok(match Fl_wait() {
+            0 => false,
+            _ => true,
+        })
     }
 }
 
@@ -512,7 +494,9 @@ pub fn wait_for(dur: f64) -> Result<(), FltkError> {
         if Fl_wait_for(dur) >= 0.0 {
             Ok(())
         } else {
-            Err(FltkError::Unknown(String::from("An unknown error occured!")))
+            Err(FltkError::Unknown(String::from(
+                "An unknown error occured!",
+            )))
         }
     }
 }
@@ -920,7 +904,7 @@ pub fn graphics_context() -> GraphicsContext {
 }
 
 /// The display global variable, fl_display
-/// _XDisplay on X11, HINSTANCE on Windows. 
+/// _XDisplay on X11, HINSTANCE on Windows.
 pub type Display = *mut raw::c_void;
 
 /// Gets the display global variable, fl_display
@@ -951,7 +935,9 @@ fn load_font(path: &str) -> Result<String, FltkError> {
         if ptr.is_null() {
             Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
-            let name = CString::from_raw(ptr as *mut _).to_string_lossy().to_string();
+            let name = CString::from_raw(ptr as *mut _)
+                .to_string_lossy()
+                .to_string();
             if FONTS.len() < 17 {
                 FONTS.push(name.clone());
             } else {

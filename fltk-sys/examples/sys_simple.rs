@@ -1,7 +1,7 @@
 use fltk_sys::*;
 use std::os::raw::*;
 
-unsafe extern "C" fn cb(_wid: *mut widget::Fl_Widget, data: *mut c_void) {
+unsafe extern "C" fn cb(_wid: *mut button::Fl_Widget, data: *mut c_void) {
     let frame = data as *mut frame::Fl_Box;
     frame::Fl_Box_set_label(frame, "Hello World\0".as_ptr() as *const _);
 }
@@ -17,7 +17,7 @@ fn main() {
         window::Fl_Window_end(win);
         window::Fl_Window_show(win);
 
-        widget::Fl_Widget_callback_with_captures(but as *mut _, Some(cb), frame as *mut _);
+        button::Fl_Button_set_callback(but, Some(cb), frame as *mut _);
 
         fl::Fl_run();
     }

@@ -1,4 +1,5 @@
 #include "cfl_button.h"
+#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Check_Button.H>
@@ -13,7 +14,6 @@
 #include <FL/Fl_Toggle_Button.H>
 #include <FL/Fl_Toggle_Light_Button.H>
 #include <FL/Fl_Toggle_Round_Button.H>
- #include "cfl_new.hpp"
 
 #define BUTTON_DEFINE(widget)                                                                      \
     int widget##_shortcut(const widget *self) {                                                    \
@@ -34,9 +34,13 @@
         LOCK(self->value(flag);)                                                                   \
     }
 
+WIDGET_CLASS(Fl_Button)
+
 WIDGET_DEFINE(Fl_Button)
 
 BUTTON_DEFINE(Fl_Button)
+
+WIDGET_CLASS(Fl_Check_Button)
 
 WIDGET_DEFINE(Fl_Check_Button)
 
@@ -50,6 +54,8 @@ void Fl_Check_Button_set_checked(Fl_Check_Button *self, int checked) {
 
 BUTTON_DEFINE(Fl_Check_Button)
 
+WIDGET_CLASS(Fl_Radio_Button)
+
 WIDGET_DEFINE(Fl_Radio_Button)
 
 int Fl_Radio_Button_is_toggled(Fl_Radio_Button *self) {
@@ -61,6 +67,8 @@ void Fl_Radio_Button_toggle(Fl_Radio_Button *self, int boolean) {
 }
 
 BUTTON_DEFINE(Fl_Radio_Button)
+
+WIDGET_CLASS(Fl_Toggle_Button)
 
 WIDGET_DEFINE(Fl_Toggle_Button)
 
@@ -74,31 +82,7 @@ void Fl_Toggle_Button_toggle(Fl_Toggle_Button *self, int boolean) {
 
 BUTTON_DEFINE(Fl_Toggle_Button)
 
-// WIDGET_DEFINE(Fl_Toggle_Round_Button)
-
-// int Fl_Toggle_Round_Button_is_toggled(Fl_Toggle_Round_Button *self) {
-//     return self->value();
-// }
-
-// void Fl_Toggle_Round_Button_toggle(Fl_Toggle_Round_Button *self, int boolean)
-// {
-//     LOCK(self->value(boolean);)
-// }
-
-// BUTTON_DEFINE(Fl_Toggle_Round_Button)
-
-// WIDGET_DEFINE(Fl_Toggle_Light_Button)
-
-// int Fl_Toggle_Light_Button_is_toggled(Fl_Toggle_Light_Button *self) {
-//     return self->value();
-// }
-
-// void Fl_Toggle_Light_Button_toggle(Fl_Toggle_Light_Button *self, int boolean)
-// {
-//     LOCK(self->value(boolean);)
-// }
-
-// BUTTON_DEFINE(Fl_Toggle_Light_Button)
+WIDGET_CLASS(Fl_Round_Button)
 
 WIDGET_DEFINE(Fl_Round_Button)
 
@@ -112,6 +96,8 @@ void Fl_Round_Button_toggle(Fl_Round_Button *self, int boolean) {
 
 BUTTON_DEFINE(Fl_Round_Button)
 
+WIDGET_CLASS(Fl_Radio_Round_Button)
+
 WIDGET_DEFINE(Fl_Radio_Round_Button)
 
 int Fl_Radio_Round_Button_is_toggled(Fl_Radio_Round_Button *self) {
@@ -123,6 +109,8 @@ void Fl_Radio_Round_Button_toggle(Fl_Radio_Round_Button *self, int boolean) {
 }
 
 BUTTON_DEFINE(Fl_Radio_Round_Button)
+
+WIDGET_CLASS(Fl_Radio_Light_Button)
 
 WIDGET_DEFINE(Fl_Radio_Light_Button)
 
@@ -136,6 +124,8 @@ void Fl_Radio_Light_Button_toggle(Fl_Radio_Light_Button *self, int boolean) {
 
 BUTTON_DEFINE(Fl_Radio_Light_Button)
 
+WIDGET_CLASS(Fl_Light_Button)
+
 WIDGET_DEFINE(Fl_Light_Button)
 
 int Fl_Light_Button_is_on(Fl_Light_Button *self) {
@@ -148,9 +138,13 @@ void Fl_Light_Button_turn_on(Fl_Light_Button *self, int boolean) {
 
 BUTTON_DEFINE(Fl_Light_Button)
 
+WIDGET_CLASS(Fl_Repeat_Button)
+
 WIDGET_DEFINE(Fl_Repeat_Button)
 
 BUTTON_DEFINE(Fl_Repeat_Button)
+
+WIDGET_CLASS(Fl_Return_Button)
 
 WIDGET_DEFINE(Fl_Return_Button)
 
