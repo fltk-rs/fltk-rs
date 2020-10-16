@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.9.7] - Unreleased
+### Changes
+- Add doc comment on MenuExt::value() which might return -1 when no choice is made.
+
 ## [0.9.6] - 2020-10-15
 ### Changes
 - Update FLTK.

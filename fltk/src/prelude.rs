@@ -483,7 +483,7 @@ pub unsafe trait MenuExt: WidgetExt {
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
     fn choice(&self) -> Option<String>;
-    /// Get index into menu of the last item chosen
+    /// Get index into menu of the last item chosen, returns -1 if no item was chosen
     fn value(&self) -> i32;
     /// Set index into menu of the last item chosen,return true if the new value is different than the old one
     fn set_value(&mut self, v: i32) -> bool;

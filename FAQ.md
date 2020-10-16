@@ -117,9 +117,9 @@ That said, fltk-rs is still in active development, and has not yet been fuzzed n
 ### Why is fltk-rs using so much unsafe code?
 Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so the unsafe keyword is needed.
 
-### Is fltk-rs exception-safe?
-FLTK (C++) doesn't throw exceptions, neither do the C wrapper (cfltk) nor the fltk-sys crate. The higher level fltk crate, which wraps fltk-sys, is not exception-safe since it uses asserts internally after various operations to ensure memory-safety. An example is a widget constructor which checks that the returned pointer (from the C++ side) is not null.
-Also any function sending a string across FFI is checked for interal null bytes. For such functions, the developer can perform a sanity check on passed strings to make sure they're valid UTF-8 strings. That said, all functions passed as callbacks to be handled by the C++ side are exception-safe.
+### Is fltk-rs panic/exception-safe?
+FLTK (C++) doesn't throw exceptions, neither do the C wrapper (cfltk) nor the fltk-sys crate. The higher level fltk crate, which wraps fltk-sys, is not exception-safe since it uses asserts internally after various operations to ensure memory-safety. An example is a widget constructor which checks that the returned pointer (from the C++ side) is not null from allocation failure. It also asserts all widget reads/writes are happening on valid (not deleted) widgets.
+Also any function sending a string across FFI is checked for interal null bytes. For such functions, the developer can perform a sanity check on passed strings to make sure they're valid UTF-8 strings, or check that a widget was not deleted prior to accessing a widget. That said, all functions passed as callbacks to be handled by the C++ side are exception-safe.
 
 ## Contributing
 Please refer to the [CONTRIBUTING](https://github.com/MoAlyousef/fltk-rs/blob/master/CONTRIBUTING.md) page for further information.
