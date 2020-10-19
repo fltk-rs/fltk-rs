@@ -554,6 +554,22 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn set_callback2(&mut self, cb: Box<dyn FnMut(Self)>) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let a = data as *mut Box<dyn FnMut(*mut Fl_Widget)>;
+                        let f: &mut (dyn FnMut(*mut Fl_Widget)) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(wid)));
+                    }
+                    self.unset_callback();
+                    let a: *mut Box<dyn FnMut(Self)> = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: Fl_Callback = Some(shim);
+                    #set_callback(self._inner, callback, data);
+                }
+            }
+
             unsafe fn unset_callback(&mut self) {
                 unsafe {
                     let old_data = self.user_data();
@@ -567,8 +583,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    unsafe extern "C" fn shim(_ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
-                        let ev: Event = mem::transmute(_ev);
+                    unsafe extern "C" fn shim(ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
+                        let ev: Event = mem::transmute(ev);
                         let a: *mut Box<dyn FnMut(Event) -> bool> = data as *mut Box<dyn FnMut(Event) -> bool>;
                         let f: &mut (dyn FnMut(Event) -> bool) = &mut **a;
                         let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(ev) {
