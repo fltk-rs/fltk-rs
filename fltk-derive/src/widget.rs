@@ -554,16 +554,17 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_callback2(&mut self, cb: Box<dyn FnMut(Self)>) {
+            fn set_callback2(&mut self, cb: Box<dyn FnMut(&mut Self)>) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let a = data as *mut Box<dyn FnMut(*mut Fl_Widget)>;
-                        let f: &mut (dyn FnMut(*mut Fl_Widget)) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(wid)));
+                        let mut wid = #name::from_widget_ptr(wid as *mut _);
+                        let a = data as *mut Box<dyn FnMut(&mut #name)>;
+                        let f: &mut (dyn FnMut(&mut #name)) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                     }
                     self.unset_callback();
-                    let a: *mut Box<dyn FnMut(Self)> = Box::into_raw(Box::new(cb));
+                    let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(cb));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
                     #set_callback(self._inner, callback, data);

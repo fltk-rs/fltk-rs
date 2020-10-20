@@ -187,7 +187,7 @@ pub unsafe trait WidgetExt {
     fn set_callback(&mut self, cb: Box<dyn FnMut()>);
     /// Sets the callback when the widget is triggered (clicks for example)
     /// takes the widget as a closure argument
-    fn set_callback2(&mut self, cb: Box<dyn FnMut(Self)>);
+    fn set_callback2(&mut self, cb: Box<dyn FnMut(&mut Self)>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
     fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>);
