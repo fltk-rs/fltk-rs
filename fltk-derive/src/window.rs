@@ -40,9 +40,15 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let region = Ident::new(format!("{}_{}", name_str, "region").as_str(), name.span());
-    let set_region = Ident::new(format!("{}_{}", name_str, "set_region").as_str(), name.span());
+    let set_region = Ident::new(
+        format!("{}_{}", name_str, "set_region").as_str(),
+        name.span(),
+    );
     let iconize = Ident::new(format!("{}_{}", name_str, "iconize").as_str(), name.span());
-    let fullscreen_active = Ident::new(format!("{}_{}", name_str, "fullscreen_active").as_str(), name.span());
+    let fullscreen_active = Ident::new(
+        format!("{}_{}", name_str, "fullscreen_active").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl WindowExt for #name {
@@ -169,7 +175,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     target_os = "openbsd",
                 ))]
                 assert!(handle != 0);
-                
+
                 Fl_Window_set_raw_handle(self._inner as *mut Fl_Window, mem::transmute(&handle));
             }
 
@@ -194,7 +200,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     #iconize(self._inner)
                 }
             }
-            
+
             fn fullscreen_active(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {

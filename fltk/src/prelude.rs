@@ -185,6 +185,9 @@ pub unsafe trait WidgetExt {
     fn deimage(&self) -> Option<Image>;
     /// Sets the callback when the widget is triggered (clicks for example)
     fn set_callback(&mut self, cb: Box<dyn FnMut()>);
+    /// Sets the callback when the widget is triggered (clicks for example)
+    /// takes the widget as a closure argument
+    fn set_callback2(&mut self, cb: Box<dyn FnMut(&mut Self)>);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
     fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>);
@@ -483,7 +486,7 @@ pub unsafe trait MenuExt: WidgetExt {
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
     fn choice(&self) -> Option<String>;
-    /// Get index into menu of the last item chosen
+    /// Get index into menu of the last item chosen, returns -1 if no item was chosen
     fn value(&self) -> i32;
     /// Set index into menu of the last item chosen,return true if the new value is different than the old one
     fn set_value(&mut self, v: i32) -> bool;
@@ -964,17 +967,3 @@ pub unsafe trait ImageExt {
     fn was_deleted(&self) -> bool;
 }
 
-pub(crate) trait FlString {
-    fn safe_new(txt: &str) -> Result<std::ffi::CString, FltkError>;
-}
-
-impl FlString for std::ffi::CString {
-    fn safe_new(txt: &str) -> Result<std::ffi::CString, FltkError> {
-        if let Some(val) = txt.find('\0') {
-            let (x, _y) = txt.split_at(val);
-            Ok(std::ffi::CString::new(x)?)
-        } else {
-            Ok(std::ffi::CString::new(txt)?)
-        }
-    }
-}
