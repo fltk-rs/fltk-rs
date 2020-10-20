@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.9.7] - Unreleased
+## [0.9.7] - 2020-10-20
 ### Changes
 - Add doc comment on MenuExt::value() which might return -1 when no choice is made.
 - Add WidgetExt::set_callback2 which exposes the widget in the closure arguments.
