@@ -17,8 +17,7 @@ impl FlatButton {
 
     // Overrides the draw function
     fn draw(&mut self) {
-        let b = self.wid.clone();
-        self.wid.draw(Box::new(move || {
+        self.wid.draw2(move |b| {
             draw::draw_box(
                 FrameType::GtkDownBox,
                 b.x(),
@@ -29,20 +28,20 @@ impl FlatButton {
             );
             draw::set_draw_color(Color::Black);
             draw::draw_text_angled(-15, &b.label(), b.x() + 2, b.y() + 15);
-        }));
+        });
     }
 
     // Overrides the handle function.
     // Notice the do_callback which allows the set_callback method to work
     fn handle(&mut self) {
         let mut wid = self.wid.clone();
-        self.wid.handle(Box::new(move |ev| match ev {
+        self.wid.handle(move |ev| match ev {
             Event::Push => {
                 wid.do_callback();
                 true
             }
             _ => false,
-        }));
+        });
     }
 }
 
@@ -72,9 +71,9 @@ fn main() {
     wind.end();
     wind.show();
 
-    but.set_callback(Box::new(move || {
+    but.set_callback(move || {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
-    }));
+    });
 
     app.run().unwrap();
 }

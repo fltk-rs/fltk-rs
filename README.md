@@ -20,6 +20,10 @@ Why choose FLTK?
 - Provides around 80 customizable widgets. 
 - Has inbuilt image support.
 
+Known issues:
+- Non-native look and feel.
+- Poor RTL language support.
+
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 
 - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
@@ -31,7 +35,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.9"
+fltk = "^0.10"
 ```
 
 The library is automatically built and statically linked to your binary. 
@@ -63,7 +67,7 @@ fn main() {
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
     wind.end();
     wind.show();
-    but.set_callback(Box::new(move || frame.set_label("Hello World!")));
+    but.set_callback(move || frame.set_label("Hello World!"));
     app.run().unwrap();
 }
 ```
@@ -112,7 +116,7 @@ fn main() {
 Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
 ```rust
     /* previous hello world code */
-    but.set_callback(Box::new(move || frame.set_label("Hello World!")));
+    but.set_callback(move || frame.set_label("Hello World!"));
     app.run().unwrap();
 ```
 Another way is to use message passing:
@@ -123,7 +127,7 @@ Another way is to use message passing:
     but_inc.emit(s, Message::Increment);
     but_dec.emit(s, Message::Decrement);
     
-    while app.wait().unwrap() {
+    while app.wait() {
         let label: i32 = frame.label().parse().unwrap();
         match r.recv() {
             Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
@@ -136,11 +140,11 @@ For the remainder of the code, check the full example [here](fltk/examples/count
 
 For custom event handling, the handle() method can be used:
 ```rust
-    some_widget.handle(Box::new(move |ev: Event| {
+    some_widget.handle(move |ev: Event| {
         match ev {
             /* handle ev */
         }
-    }));
+    });
 ```
 Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the fltk/examples directory.
 

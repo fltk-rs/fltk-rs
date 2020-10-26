@@ -21,7 +21,7 @@ fn main() {
 
     wind.show();
 
-    but.set_callback(Box::new(move || {
+    but.set_callback(move || {
         let mut frame = frame.clone();
         thread::spawn(move || {
             for i in 0..1000 {
@@ -29,7 +29,7 @@ fn main() {
                 frame.set_label(format!("Hello {}", i).as_str());
             }
         });
-    }));
+    });
 
     app.run().unwrap();
 }
@@ -48,7 +48,7 @@ fn main() {
 
 //     let (s, r) = channel::<i32>();
 
-//     but.set_callback(Box::new(move || {
+//     but.set_callback(move || {
 //         // let mut frame = frame.clone();
 //         thread::spawn(move|| {
 //             for i in 0..1000 {
@@ -57,9 +57,9 @@ fn main() {
 //                 s.send(i);
 //             }
 //         });
-//     }));
+//     });
 
-//     while app.wait().unwrap() {
+//     while app.wait() {
 //         let msg = r.recv();
 //         match msg {
 //             Some(val) => frame.set_label(format!("Hello {}", val).as_str()),
@@ -79,7 +79,7 @@ fn main() {
 //     use std::sync::{Arc, Mutex};
 //     let frame = Arc::from(Mutex::from(Frame::new(0, 0, 400, 200, "")));
 //     wind.show();
-//     but.set_callback(Box::new(move || {
+//     but.set_callback(move || {
 //         let frame = frame.clone();
 //         thread::spawn(move|| {
 //             for i in 0..1000 {
@@ -88,6 +88,6 @@ fn main() {
 //                 frame.set_label(format!("Hello {}", i).as_str());
 //             }
 //         });
-//     }));
+//     });
 //     app.run().unwrap();
 // }

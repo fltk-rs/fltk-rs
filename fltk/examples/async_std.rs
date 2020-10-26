@@ -22,14 +22,14 @@
 //
 //     let frame = Arc::from(Mutex::from(frame));
 //
-//     but.set_callback(Box::new(move || {
+//     but.set_callback(move || {
 //         let frame = frame.clone();
 //         task::spawn(async move {
 //             let msg = hello().await;
 //             let mut frame = frame.lock().await;
 //             frame.set_label(&msg);
 //         });
-//     }));
+//     });
 //
 //     app.run().unwrap();
 // }
@@ -62,15 +62,15 @@
 //
 //     let (s, mut r) = channel::<Message>(10);
 //
-//     but.set_callback(Box::new(move || {
+//     but.set_callback(move || {
 //         let mut s = s.clone();
 //         task::spawn(async move {
 //             let v = inc_val().await;
 //             s.try_send(Message::Inc(v)).unwrap();
 //         });
-//     }));
+//     });
 //
-//     while app.wait().unwrap() {
+//     while app.wait() {
 //         match r.try_next() {
 //             Ok(Some(Message::Inc(v))) => frame.set_label(&format!("increments by {}", v)),
 //             _ => (),

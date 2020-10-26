@@ -43,7 +43,7 @@ fn main() {
     wind.end();
     wind.show_with_env_args();
 
-    while app.wait().unwrap() {
+    while app.wait() {
         let x = frame.x();
         let y = frame.y();
         let w = frame.width();
@@ -63,10 +63,10 @@ fn main() {
 //     let (x, y) = (frm.x(), frm.y());
 //     frm.set_pos(x + 5, y);
 //     redraw();
-//     repeat_timeout(0.016, Box::new(move || {
+//     repeat_timeout(0.016, move || {
 //         let frm = frm.clone();
 //         move_image(frm);
-//     }));
+//     });
 // }
 
 // fn main() {
@@ -83,9 +83,9 @@ fn main() {
 //     wind.end();
 //     wind.show_with_env_args();
 
-//     add_timeout(0.016, Box::new(move || {
+//     add_timeout(0.016, move || {
 //         let frame = frame.clone();
 //         move_image(frame);
-//     }));
+//     });
 //     app.run().unwrap();
 // }

@@ -206,7 +206,7 @@ void *Fl_File_Chooser_showHiddenButton(Fl_File_Chooser *self) {
     return self->showHiddenButton;
 }
 
-void Fl_File_Chooser_callback(Fl_File_Chooser *self, void (*cb)(Fl_File_Chooser *, void *),
+void Fl_File_Chooser_set_callback(Fl_File_Chooser *self, void (*cb)(Fl_File_Chooser *, void *),
                               void *d) {
     LOCK(self->callback(cb, d);)
 }

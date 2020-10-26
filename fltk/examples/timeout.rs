@@ -4,7 +4,7 @@ use fltk::*;
 
 fn callback() {
     println!("TICK");
-    app::repeat_timeout(1.0, Box::new(callback));
+    app::repeat_timeout(1.0, callback);
 }
 
 fn main() {
@@ -12,7 +12,7 @@ fn main() {
     let mut wind = window::Window::new(100, 100, 400, 300, "");
     wind.show();
 
-    app::add_timeout(1.0, Box::new(callback));
+    app::add_timeout(1.0, callback);
 
     app.run().unwrap();
 }

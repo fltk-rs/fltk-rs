@@ -153,7 +153,7 @@ fn main() {
     // Handle drag and drop
     let mut dnd = false;
     let mut released = false;
-    editor.handle(Box::new(move |ev| {
+    editor.handle(move |ev| {
         match ev {
             Event::DndEnter => {
                 dnd = true;
@@ -184,7 +184,7 @@ fn main() {
             },
             _ => false,
         }
-    }));
+    });
 
     menu.add_emit(
         "&File/New...\t",
@@ -265,13 +265,13 @@ fn main() {
     wind.end();
     wind.show();
 
-    wind.set_callback(Box::new(move || {
+    wind.set_callback(move || {
         if event() == Event::Close {
             s.send(Message::Quit);
         }
-    }));
+    });
 
-    while app.wait().expect("Couldn't run editor!") {
+    while app.wait() {
         use Message::*;
         if let Some(msg) = r.recv() {
             match msg {

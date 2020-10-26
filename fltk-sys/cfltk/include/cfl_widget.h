@@ -15,7 +15,9 @@ extern "C" {
 typedef struct Fl_Widget Fl_Widget;
 typedef void(Fl_Callback)(Fl_Widget *, void *);
 typedef int (*custom_handler_callback)(int, void *);
+typedef int (*custom_handler_callback2)(Fl_Widget *, int, void *);
 typedef void (*custom_draw_callback)(void *);
+typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
 
 #define WIDGET_DECLARE(widget)                                                                     \
     typedef struct widget widget;                                                                  \
@@ -57,7 +59,9 @@ typedef void (*custom_draw_callback)(void *);
     void widget##_delete(widget *);                                                                \
     void widget##_set_image(widget *, void *);                                                     \
     void widget##_set_handler(widget *self, custom_handler_callback cb, void *data);               \
+    void widget##_set_handler2(widget *self, custom_handler_callback2 cb, void *data);             \
     void widget##_set_draw(widget *self, custom_draw_callback cb, void *data);                     \
+    void widget##_set_draw2(widget *self, custom_draw_callback2 cb, void *data);                   \
     void widget##_set_trigger(widget *, int);                                                      \
     void *widget##_image(const widget *);                                                          \
     void *widget##_parent(const widget *self);                                                     \
@@ -86,7 +90,8 @@ typedef void (*custom_draw_callback)(void *);
     void *widget##_as_group(widget *self);                                                         \
     void widget##_set_deimage(widget *, void *);                                                   \
     void *widget##_deimage(const widget *);                                                        \
-    void widget##_set_callback(widget *, Fl_Callback *, void *);
+    void widget##_set_callback(widget *, Fl_Callback *, void *);                                   \
+    void widget##_set_deleter(widget *, void (*)(void *));
 
 #define WIDGET_CLASS(widget)                                                                       \
     struct widget##_Derived : public widget {                                                      \
@@ -95,8 +100,14 @@ typedef void (*custom_draw_callback)(void *);
                                                                                                    \
         typedef int (*handler)(int, void *data);                                                   \
         handler inner_handler = NULL;                                                              \
+        typedef int (*handler2)(Fl_Widget *, int, void *data);                                     \
+        handler2 inner_handler2 = NULL;                                                            \
         typedef void (*drawer)(void *data);                                                        \
         drawer inner_drawer = NULL;                                                                \
+        typedef void (*drawer2)(Fl_Widget *, void *data);                                          \
+        drawer2 inner_drawer2 = NULL;                                                              \
+        typedef void (*deleter_fp)(void *);                                                        \
+        deleter_fp deleter = NULL;                                                                 \
         widget##_Derived(int x, int y, int w, int h, const char *title = 0)                        \
             : widget(x, y, w, h, title) {                                                          \
         }                                                                                          \
@@ -105,6 +116,9 @@ typedef void (*custom_draw_callback)(void *);
         }                                                                                          \
         void set_handler(handler h) {                                                              \
             inner_handler = h;                                                                     \
+        }                                                                                          \
+        void set_handler2(handler2 h) {                                                            \
+            inner_handler2 = h;                                                                    \
         }                                                                                          \
         void set_handler_data(void *data) {                                                        \
             ev_data_ = data;                                                                       \
@@ -118,12 +132,21 @@ typedef void (*custom_draw_callback)(void *);
                     return ret;                                                                    \
                 else                                                                               \
                     return local;                                                                  \
+            } else if (ev_data_ && inner_handler2) {                                               \
+                local = inner_handler2(this, event, ev_data_);                                     \
+                if (local == 0)                                                                    \
+                    return ret;                                                                    \
+                else                                                                               \
+                    return local;                                                                  \
             } else {                                                                               \
                 return ret;                                                                        \
             }                                                                                      \
         }                                                                                          \
         void set_drawer(drawer h) {                                                                \
             inner_drawer = h;                                                                      \
+        }                                                                                          \
+        void set_drawer2(drawer2 h) {                                                              \
+            inner_drawer2 = h;                                                                     \
         }                                                                                          \
         void set_drawer_data(void *data) {                                                         \
             draw_data_ = data;                                                                     \
@@ -132,6 +155,26 @@ typedef void (*custom_draw_callback)(void *);
             widget::draw();                                                                        \
             if (draw_data_ && inner_drawer)                                                        \
                 inner_drawer(draw_data_);                                                          \
+            else if (draw_data_ && inner_drawer2)                                                  \
+                inner_drawer2(this, draw_data_);                                                   \
+            else {                                                                                 \
+            }                                                                                      \
+        }                                                                                          \
+        ~widget##_Derived() {                                                                      \
+            if (ev_data_)                                                                          \
+                deleter(ev_data_);                                                                 \
+            ev_data_ = NULL;                                                                       \
+            inner_handler = NULL;                                                                  \
+            inner_handler2 = NULL;                                                                 \
+            if (draw_data_)                                                                        \
+                deleter(draw_data_);                                                               \
+            draw_data_ = NULL;                                                                     \
+            inner_drawer = NULL;                                                                   \
+            inner_drawer2 = NULL;                                                                  \
+            if (user_data())                                                                       \
+                deleter(user_data());                                                              \
+            user_data(NULL);                                                                       \
+            callback((void (*)(Fl_Widget *, void *))NULL);                                         \
         }                                                                                          \
     };
 
@@ -251,6 +294,10 @@ typedef void (*custom_draw_callback)(void *);
         LOCK(((widget##_Derived *)self)->set_handler_data(data);                                   \
              ((widget##_Derived *)self)->set_handler(cb);)                                         \
     }                                                                                              \
+    void widget##_set_handler2(widget *self, custom_handler_callback2 cb, void *data) {            \
+        LOCK(((widget##_Derived *)self)->set_handler_data(data);                                   \
+             ((widget##_Derived *)self)->set_handler2(cb);)                                        \
+    }                                                                                              \
     void widget##_set_trigger(widget *self, int val) {                                             \
         LOCK(self->when(val);)                                                                     \
     }                                                                                              \
@@ -260,6 +307,10 @@ typedef void (*custom_draw_callback)(void *);
     void widget##_set_draw(widget *self, custom_draw_callback cb, void *data) {                    \
         LOCK(((widget##_Derived *)self)->set_drawer_data(data);                                    \
              ((widget##_Derived *)self)->set_drawer(cb);)                                          \
+    }                                                                                              \
+    void widget##_set_draw2(widget *self, custom_draw_callback2 cb, void *data) {                  \
+        LOCK(((widget##_Derived *)self)->set_drawer_data(data);                                    \
+             ((widget##_Derived *)self)->set_drawer2(cb);)                                         \
     }                                                                                              \
     void *widget##_parent(const widget *self) {                                                    \
         return (Fl_Group *)self->parent();                                                         \
@@ -343,6 +394,9 @@ typedef void (*custom_draw_callback)(void *);
     }                                                                                              \
     void widget##_set_callback(widget *self, Fl_Callback *cb, void *data) {                        \
         LOCK(self->callback(cb, data);)                                                            \
+    }                                                                                              \
+    void widget##_set_deleter(widget *self, void (*deleter)(void *)) {                             \
+        LOCK(((widget##_Derived *)self)->deleter = deleter;)                                       \
     }
 
 WIDGET_DECLARE(Fl_Widget)

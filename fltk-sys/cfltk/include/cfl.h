@@ -94,8 +94,6 @@ int Fl_should_program_quit(void);
 
 void Fl_program_should_quit(int flag);
 
-// unsigned int Fl_rand(void);
-
 int Fl_event_inside(int, int, int, int);
 
 Fl_Widget *Fl_belowmouse(void);
@@ -139,12 +137,6 @@ double Fl_version(void);
 int Fl_api_version(void);
 
 int Fl_abi_version(void);
-
-// void Fl_set_error(void (*error)(const char *, ...));
-
-// void Fl_set_warning(void (*error)(const char *, ...));
-
-// void Fl_set_fatal(void (*error)(const char *, ...));
 
 const char *Fl_load_font(const char *path);
 

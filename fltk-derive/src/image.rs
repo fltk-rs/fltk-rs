@@ -95,7 +95,6 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!ptr.is_null());
                     assert!(!(*ptr).is_null());
                     let cnt = self.data_w() * self.data_h() * self.depth();
-                    // assert!(cnt != 0);
                     let ret: &[u8] = std::slice::from_raw_parts(*ptr as *const u8, cnt as usize);
                     ret.to_vec()
                 }

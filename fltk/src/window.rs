@@ -79,7 +79,8 @@ impl Window {
             let len = args.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in args {
-                v.push(CString::new(arg.as_str()).unwrap().into_raw() as *mut raw::c_char);
+                let c = CString::safe_new(arg.as_str());
+                v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
             Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
@@ -112,7 +113,8 @@ impl Window {
             let len = temp.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in temp {
-                v.push(CString::new(arg).unwrap().into_raw() as *mut raw::c_char);
+                let c = CString::safe_new(arg);
+                v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
             Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
@@ -161,7 +163,8 @@ impl SingleWindow {
             let len = args.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in args {
-                v.push(CString::new(arg.as_str()).unwrap().into_raw() as *mut raw::c_char);
+                let c = CString::safe_new(arg.as_str());
+                v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
             Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
@@ -194,7 +197,8 @@ impl SingleWindow {
             let len = temp.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in temp {
-                v.push(CString::new(arg).unwrap().into_raw() as *mut raw::c_char);
+                                let c = CString::safe_new(arg);
+                v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
             Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
@@ -235,7 +239,8 @@ impl DoubleWindow {
             let len = args.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in args {
-                v.push(CString::new(arg.as_str()).unwrap().into_raw() as *mut raw::c_char);
+                let c = CString::safe_new(arg.as_str());
+                v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
             Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
@@ -268,7 +273,8 @@ impl DoubleWindow {
             let len = temp.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in temp {
-                v.push(CString::new(arg).unwrap().into_raw() as *mut raw::c_char);
+                                let c = CString::safe_new(arg);
+                v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
             Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())

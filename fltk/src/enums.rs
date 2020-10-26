@@ -289,7 +289,7 @@ impl Key {
     pub fn from_i32(val: i32) -> Key {
         unsafe { std::mem::transmute(val) }
     }
-    
+
     /// Gets a Key from a char
     pub fn from_char(val: char) -> Key {
         unsafe { std::mem::transmute(val) }

@@ -131,7 +131,9 @@ impl Tabs {
             if ptr.is_null() {
                 None
             } else {
-                Some(Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                Some(Group::from_widget_ptr(
+                    ptr as *mut fltk_sys::widget::Fl_Widget,
+                ))
             }
         }
     }
@@ -140,7 +142,10 @@ impl Tabs {
     pub fn set_value<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tabs_set_value(self._inner, w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget) {
+            match Fl_Tabs_set_value(
+                self._inner,
+                w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
+            ) {
                 0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                 _ => Ok(()),
             }
@@ -155,7 +160,9 @@ impl Tabs {
             if ptr.is_null() {
                 None
             } else {
-                Some(Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                Some(Group::from_widget_ptr(
+                    ptr as *mut fltk_sys::widget::Fl_Widget,
+                ))
             }
         }
     }
@@ -164,7 +171,10 @@ impl Tabs {
     pub fn set_push<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tabs_set_push(self._inner, w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget) {
+            match Fl_Tabs_set_push(
+                self._inner,
+                w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
+            ) {
                 0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                 _ => Ok(()),
             }
@@ -187,17 +197,13 @@ impl Tabs {
     /// Sets the tab label alignment
     pub fn set_tab_align(&mut self, a: Align) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tabs_set_tab_align(self._inner, a as i32)
-        }
+        unsafe { Fl_Tabs_set_tab_align(self._inner, a as i32) }
     }
 
     /// Gets the tab label alignment.
     pub fn tab_align(&self) -> Align {
         assert!(!self.was_deleted());
-        unsafe {
-            mem::transmute(Fl_Tabs_tab_align(self._inner))
-        }
+        unsafe { mem::transmute(Fl_Tabs_tab_align(self._inner)) }
     }
 }
 

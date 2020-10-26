@@ -20,7 +20,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     but_inc.emit(s, Message::Increment);
     but_dec.emit(s, Message::Decrement);
 
-    while app.wait()? {
+    while app.wait() {
         let label: i32 = frame.label().parse()?;
 
         match r.recv() {

@@ -66,7 +66,8 @@ impl MenuItem {
             let sz = choices.len();
             let mut temp: Vec<*mut raw::c_char> = vec![];
             for &choice in choices {
-                temp.push(CString::new(choice).unwrap().into_raw());
+                let c = CString::safe_new(choice);
+                temp.push(c.into_raw());
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
@@ -120,7 +121,7 @@ impl MenuItem {
             if !ptr.is_null() {
                 let _ = CString::from_raw(ptr);
             }
-            let txt = CString::new(txt).unwrap();
+            let txt = CString::safe_new(txt);
             Fl_Menu_Item_set_label(self._inner, txt.into_raw());
         }
     }
@@ -289,6 +290,7 @@ impl MenuItem {
         } else {
             let x = ptr as *mut Box<dyn FnMut()>;
             let x = Box::from_raw(x);
+            Fl_Menu_Item_set_callback(self._inner, None, std::ptr::null_mut());
             Some(*x)
         }
     }
@@ -301,7 +303,7 @@ impl MenuItem {
     }
 
     /// Set a callback for the menu item
-    pub fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
+    pub fn set_callback<F: FnMut() + 'static>(&mut self, cb: F) {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
@@ -313,16 +315,37 @@ impl MenuItem {
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
             self.unset_callback();
-            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: fltk_sys::menu::Fl_Callback = Some(shim);
-            Fl_Menu_Item_callback(self._inner, callback, data);
+            Fl_Menu_Item_set_callback(self._inner, callback, data);
+        }
+    }
+
+    /// Set a callback for the menu item
+    pub fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+        assert!(!self.was_deleted() && !self._inner.is_null());
+        unsafe {
+            unsafe extern "C" fn shim(
+                wid: *mut fltk_sys::menu::Fl_Widget,
+                data: *mut raw::c_void,
+            ) {
+                let mut wid = crate::widget::Widget::from_raw(wid as *mut _);
+                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> = data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+            }
+            self.unset_callback();
+            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut raw::c_void = a as *mut std::ffi::c_void;
+            let callback: fltk_sys::menu::Fl_Callback = Some(shim);
+            Fl_Menu_Item_set_callback(self._inner, callback, data);
         }
     }
 
     /// Use a sender to send a message during callback
     pub fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
-        self.set_callback(Box::new(move || sender.send(msg)));
+        self.set_callback(move || sender.send(msg));
     }
 
     /// Manually unset a callback
@@ -334,15 +357,6 @@ impl MenuItem {
             let _ = old_data;
             self.set_user_data(std::ptr::null_mut::<raw::c_void>());
         }
-    }
-
-    /// Delete the old callback and replace it with an empty one
-    pub fn safe_unset_callback(&mut self) {
-        assert!(!self.was_deleted() && !self._inner.is_null());
-        unsafe {
-            self.unset_callback();
-        }
-        self.set_callback(Box::new(move || { /* do nothing */ }));
     }
 
     /// Check if a menu item was deleted

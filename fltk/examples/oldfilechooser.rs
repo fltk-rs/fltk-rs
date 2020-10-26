@@ -9,7 +9,7 @@ fn main() {
     wind.end();
     wind.show();
 
-    but.set_callback(Box::new(|| {
+    but.set_callback(|| {
         let file = file_chooser("Choose File", "*.rs", ".", true).unwrap();
         println!("{}", file);
 
@@ -30,7 +30,7 @@ fn main() {
         // //     (The other way to do this is to use a callback())
         // //
         // while chooser.shown() {
-        //     app::wait().unwrap();
+        //     app::wait();
         // }
 
         // // User hit cancel?
@@ -51,7 +51,7 @@ fn main() {
         //         println!(" VALUE[{}]: '{}'", t, chooser.value(t).unwrap());
         //     }
         // }
-    }));
+    });
 
     app.run().unwrap();
 }

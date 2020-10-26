@@ -34,10 +34,10 @@ fn main() {
     wind.make_resizable(true);
     wind.show();
 
-    but.set_callback(Box::new(move || match tree2.get_selected_items() {
+    but.set_callback(move || match tree2.get_selected_items() {
         None => println!("No items selected"),
         Some(vals) => println!("{} items selected", vals.as_slice()[0].label().unwrap()),
-    }));
+    });
 
     app.run().unwrap();
 }

@@ -465,6 +465,7 @@ void Fl_draw_text2(const char *str, int x, int y, int w, int h, int align) {
 }
 
 // The following code was copied from stackoverflow
+// https://stackoverflow.com/questions/1821806/how-to-encode-png-to-buffer-using-libpng/
 int Fl_raw_image_to_png(unsigned char *data, const char *fname, int w, int h) {
     if (!data || !fname)
         return -1;

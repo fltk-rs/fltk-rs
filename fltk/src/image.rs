@@ -8,14 +8,6 @@ pub struct Image {
     _inner: *mut Fl_Image,
 }
 
-// /// A conversion function for internal use
-// impl<I: ImageExt> From<I> for Image {
-//     fn from(s: I) -> Self {
-//         let img: *mut Fl_Image = s.as_image_ptr();
-//         Image { _inner: img }
-//     }
-// }
-
 /// A conversion function for internal use
 impl Image {
     /// Returns the internal pointer of Image
@@ -250,7 +242,7 @@ impl SvgImage {
         if data.is_empty() {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
         } else {
-            let data = CString::new(data).unwrap();
+            let data = CString::safe_new(data);
             unsafe {
                 let x = Fl_SVG_Image_from(data.as_ptr());
                 if x.is_null() {
@@ -522,7 +514,7 @@ pub struct RgbImage {
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage, leaks data for the lifetime of the image
+    /// Initializes a new raw RgbImage
     /// If you need to work with RGB data,
     /// it's suggested to use the Image crate https://crates.io/crates/image
     pub fn new(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
@@ -537,15 +529,9 @@ impl RgbImage {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
         unsafe {
-            let mut data = mem::ManuallyDrop::new(data);
-            let img = Fl_RGB_Image_new(
-                data.as_ptr(),
-                w as i32,
-                h as i32,
-                depth as i32,
-            );
+            // data is deleted on the C++ side
+            let img = Fl_RGB_Image_new(mem::ManuallyDrop::new(data.to_owned()).as_ptr(), w as i32, h as i32, depth as i32);
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
-                mem::ManuallyDrop::drop(&mut data);
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
             } else {
                 Ok(RgbImage { _inner: img })

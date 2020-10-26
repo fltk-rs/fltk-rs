@@ -60,7 +60,7 @@ impl TextBuffer {
     pub fn set_text(&mut self, txt: &str) {
         assert!(!self._inner.is_null());
         unsafe {
-            let txt = CString::new(txt).unwrap();
+            let txt = CString::safe_new(txt);
             Fl_Text_Buffer_set_text(self._inner, txt.as_ptr())
         }
     }
@@ -80,7 +80,7 @@ impl TextBuffer {
     /// Appends to the buffer
     pub fn append(&mut self, text: &str) {
         assert!(!self._inner.is_null());
-        let text = CString::new(text).unwrap();
+        let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_append(self._inner, text.as_ptr()) }
     }
 
@@ -138,7 +138,7 @@ impl TextBuffer {
             pos <= std::isize::MAX as u32,
             "u32 entries must be < std::isize::MAX for compatibility!"
         );
-        let text = CString::new(text).unwrap();
+        let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_insert(self._inner, pos as i32, text.as_ptr()) }
     }
 
@@ -153,7 +153,7 @@ impl TextBuffer {
             end <= std::isize::MAX as u32,
             "u32 entries must be < std::isize::MAX for compatibility!"
         );
-        let text = CString::new(text).unwrap();
+        let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_replace(self._inner, start as i32, end as i32, text.as_ptr()) }
     }
 
@@ -327,7 +327,7 @@ impl TextBuffer {
     /// Replaces selection
     pub fn replace_selection(&mut self, text: &str) {
         assert!(!self._inner.is_null());
-        let text = CString::new(text).unwrap();
+        let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_replace_selection(self._inner, text.as_ptr()) }
     }
 
@@ -459,7 +459,7 @@ impl TextBuffer {
     /// Adds a modify callback
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
-    pub fn add_modify_callback(&mut self, cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>) {
+    pub fn add_modify_callback<F: FnMut(u32, u32, u32, u32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
@@ -488,7 +488,7 @@ impl TextBuffer {
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_add_modify_callback(self._inner, callback, data);
@@ -498,7 +498,7 @@ impl TextBuffer {
     /// Removes a modify callback
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
-    pub fn remove_modify_callback(&mut self, cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>) {
+    pub fn remove_modify_callback<F: FnMut(u32, u32, u32, u32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
@@ -527,7 +527,7 @@ impl TextBuffer {
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_remove_modify_callback(self._inner, callback, data);
@@ -541,9 +541,6 @@ unsafe impl Send for TextBuffer {}
 impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {
         assert!(!self._inner.is_null());
-        // let mut temp = TextBuffer::default();
-        // temp.copy(self, 0, 0, self.length());
-        // temp
         TextBuffer {
             _inner: self._inner,
         }
@@ -569,7 +566,7 @@ pub enum DragType {
     DragChar = 0,
     DragWord = 1,
     DragLine = 2,
-  }
+}
 
 /// Creates a non-editable text display widget
 #[derive(WidgetExt, DisplayExt, Debug)]
@@ -907,7 +904,7 @@ impl SimpleTerminal {
     pub fn append(&mut self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
-        let s = CString::new(s).unwrap();
+        let s = CString::safe_new(s);
         unsafe { Fl_Simple_Terminal_append(self._inner, s.into_raw()) }
     }
 
@@ -915,7 +912,7 @@ impl SimpleTerminal {
     pub fn set_text(&mut self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
-        let s = CString::new(s).unwrap();
+        let s = CString::safe_new(s);
         unsafe { Fl_Simple_Terminal_set_text(self._inner, s.into_raw()) }
     }
 
