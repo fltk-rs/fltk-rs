@@ -250,7 +250,13 @@ impl SvgImage {
         if data.is_empty() {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
         } else {
-            let data = CString::new(data).unwrap();
+            let data = match CString::new(data) {
+                Ok(v) => v,
+                Err(r) => {
+                    let i = r.nul_position();
+                    CString::new(&r.into_vec()[0..i]).unwrap()
+                }
+            };
             unsafe {
                 let x = Fl_SVG_Image_from(data.as_ptr());
                 if x.is_null() {
@@ -538,12 +544,7 @@ impl RgbImage {
         }
         unsafe {
             let mut data = mem::ManuallyDrop::new(data);
-            let img = Fl_RGB_Image_new(
-                data.as_ptr(),
-                w as i32,
-                h as i32,
-                depth as i32,
-            );
+            let img = Fl_RGB_Image_new(data.as_ptr(), w as i32, h as i32, depth as i32);
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
                 mem::ManuallyDrop::drop(&mut data);
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))

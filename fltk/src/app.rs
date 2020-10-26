@@ -428,7 +428,13 @@ pub unsafe fn set_raw_callback<W>(
 
 /// Initializes loaded fonts of a certain pattern ```name```
 pub fn set_fonts(name: &str) -> u8 {
-    let name = CString::new(name).unwrap();
+    let name = match CString::new(name) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
 

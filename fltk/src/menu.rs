@@ -120,7 +120,13 @@ impl MenuItem {
             if !ptr.is_null() {
                 let _ = CString::from_raw(ptr);
             }
-            let txt = CString::new(txt).unwrap();
+            let txt = match CString::new(txt) {
+                Ok(v) => v,
+                Err(r) => {
+                    let i = r.nul_position();
+                    CString::new(&r.into_vec()[0..i]).unwrap()
+                }
+            };
             Fl_Menu_Item_set_label(self._inner, txt.into_raw());
         }
     }

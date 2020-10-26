@@ -24,7 +24,7 @@
 //! [dependencies]
 //! fltk = "^0.9"
 //! ```
-//! The library is automatically built and statically linked to your binary. 
+//! The library is automatically built and statically linked to your binary.
 //!
 //! You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature.
 //!

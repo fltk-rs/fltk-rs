@@ -114,7 +114,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
-    let set_draw2 = Ident::new(format!("{}_{}", name_str, "set_draw2").as_str(), name.span());
+    let set_draw2 = Ident::new(
+        format!("{}_{}", name_str, "set_draw2").as_str(),
+        name.span(),
+    );
     let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
     let selection_color = Ident::new(
         format!("{}_{}", name_str, "selection_color").as_str(),
@@ -218,7 +221,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
         unsafe impl WidgetExt for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                let temp = CString::new(title).unwrap();
+                let temp = match CString::new(title) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
                 unsafe {
                     let widget_ptr = #new(x, y, width, height, temp.into_raw());
                     assert!(!widget_ptr.is_null());
@@ -280,7 +283,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_label(&mut self, title: &str) {
                 assert!(!self.was_deleted());
-                let temp = CString::new(title).unwrap();
+                let temp = match CString::new(title) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
                 unsafe {
                     #set_label(
                         self._inner,
@@ -384,7 +387,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_tooltip(&mut self, txt: &str) {
                 assert!(!self.was_deleted());
-                let txt = CString::new(txt).unwrap();
+                let txt = match CString::new(txt) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
                 unsafe {
                     #set_tooltip(
                         self._inner,

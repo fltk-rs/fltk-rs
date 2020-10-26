@@ -176,7 +176,11 @@ pub fn draw_loop2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
 
 /// Draws a non-filled 4-sided polygon
 pub fn draw_loop3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
-    unsafe { Fl_loop2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1) }
+    unsafe {
+        Fl_loop2(
+            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+        )
+    }
 }
 
 /// Draws a filled rectangle
@@ -335,12 +339,20 @@ pub fn draw_polygon2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
 
 /// Fills a 4-sided polygon. The polygon must be convex
 pub fn draw_polygon3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
-    unsafe { Fl_polygon2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1) }
+    unsafe {
+        Fl_polygon2(
+            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+        )
+    }
 }
 
 /// Adds a series of points on a Bezier curve to the path
 pub fn draw_curve(pos1: Coord<f64>, pos2: Coord<f64>, pos3: Coord<f64>, pos4: Coord<f64>) {
-    unsafe { Fl_curve(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1) }
+    unsafe {
+        Fl_curve(
+            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+        )
+    }
 }
 
 /// Draws a horizontal line from (x,y) to (x1,y)
@@ -505,13 +517,25 @@ pub fn descent() -> i32 {
 
 /// Returns the typographical width of a string
 pub fn width(txt: &str) -> f64 {
-    let txt = CString::new(txt).unwrap();
+    let txt = match CString::new(txt) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe { Fl_width(txt.as_ptr()) }
 }
 
 /// Returns the typographical width of a sequence of n characters
 pub fn width2(txt: &str, n: i32) -> f64 {
-    let txt = CString::new(txt).unwrap();
+    let txt = match CString::new(txt) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe { Fl_width2(txt.as_ptr(), n) }
 }
 
@@ -522,7 +546,13 @@ pub fn char_width(c: char) -> f64 {
 
 /// Converts text from Windows/X11 latin1 character set to local encoding
 pub fn latin1_to_local(txt: &str, n: i32) -> String {
-    let txt = CString::new(txt).unwrap();
+    let txt = match CString::new(txt) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe {
         let x = Fl_latin1_to_local(txt.as_ptr(), n);
         assert!(!x.is_null());
@@ -534,7 +564,13 @@ pub fn latin1_to_local(txt: &str, n: i32) -> String {
 
 /// Converts text from local encoding to Windowx/X11 latin1 character set
 pub fn local_to_latin1(txt: &str, n: i32) -> String {
-    let txt = CString::new(txt).unwrap();
+    let txt = match CString::new(txt) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe {
         let x = Fl_local_to_latin1(txt.as_ptr(), n);
         assert!(!x.is_null());
@@ -546,39 +582,75 @@ pub fn local_to_latin1(txt: &str, n: i32) -> String {
 
 /// Draws a string starting at the given x, y location
 pub fn draw_text(txt: &str, x: i32, y: i32) {
-    let txt = CString::new(txt).unwrap();
+    let txt = match CString::new(txt) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe { Fl_draw(txt.as_ptr(), x, y) }
 }
 
 /// Draws a string starting at the given x, y location with width and height and alignment
 pub fn draw_text2(string: &str, x: i32, y: i32, width: i32, height: i32, align: Align) {
-    let s = CString::new(string).unwrap();
+    let s = match CString::new(string) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe { Fl_draw_text2(s.as_ptr(), x, y, width, height, align as i32) }
 }
 
 /// Draws a string starting at the given x, y location, rotated to an angle
 pub fn draw_text_angled(angle: i32, txt: &str, x: i32, y: i32) {
-    let txt = CString::new(txt).unwrap();
+    let txt = match CString::new(txt) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe { Fl_draw2(angle, txt.as_ptr(), x, y) }
 }
 
 /// Draws a UTF-8 string right to left starting at the given x, y location
 pub fn rtl_draw(txt: &str, x: i32, y: i32) {
     let n = txt.len() as i32;
-    let txt = CString::new(txt).unwrap();
+    let txt = match CString::new(txt) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe { Fl_rtl_draw(txt.as_ptr(), n, x, y) }
 }
 
 /// Draws a frame with text
 pub fn draw_frame(string: &str, x: i32, y: i32, width: i32, height: i32) {
-    let s = CString::new(string).unwrap();
+    let s = match CString::new(string) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe { Fl_frame(s.as_ptr(), x, y, width, height) }
 }
 
 /// Draws a frame with text.
 /// Differs from frame() by the order of the line segments
 pub fn draw_frame2(string: &str, x: i32, y: i32, width: i32, height: i32) {
-    let s = CString::new(string).unwrap();
+    let s = match CString::new(string) {
+        Ok(v) => v,
+        Err(r) => {
+            let i = r.nul_position();
+            CString::new(&r.into_vec()[0..i]).unwrap()
+        }
+    };
     unsafe { Fl_frame2(s.as_ptr(), x, y, width, height) }
 }
 
@@ -698,7 +770,10 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
 // }
 
 /// Transforms raw data to png file
-pub fn write_to_png_file<I: ImageExt, P: AsRef<std::path::Path>>(image: &I, path: P) -> Result<(), FltkError> {
+pub fn write_to_png_file<I: ImageExt, P: AsRef<std::path::Path>>(
+    image: &I,
+    path: P,
+) -> Result<(), FltkError> {
     write_to_png_file_(image, path.as_ref())
 }
 
@@ -732,7 +807,10 @@ fn write_to_png_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<
 }
 
 /// Transforms raw data to jpg file
-pub fn write_to_jpg_file<I: ImageExt, P: AsRef<std::path::Path>>(image: &I, path: P) -> Result<(), FltkError> {
+pub fn write_to_jpg_file<I: ImageExt, P: AsRef<std::path::Path>>(
+    image: &I,
+    path: P,
+) -> Result<(), FltkError> {
     write_to_jpg_file_(image, path.as_ref())
 }
 
@@ -766,7 +844,10 @@ fn write_to_jpg_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<
 }
 
 /// Transforms raw data to bmp file
-pub fn write_to_bmp_file<I: ImageExt, P: AsRef<std::path::Path>>(image: &I, path: P) -> Result<(), FltkError> {
+pub fn write_to_bmp_file<I: ImageExt, P: AsRef<std::path::Path>>(
+    image: &I,
+    path: P,
+) -> Result<(), FltkError> {
     write_to_bmp_file_(image, path.as_ref())
 }
 

@@ -97,10 +97,16 @@ impl FileBrowser {
     /// x all other characters must be matched exactly.
     pub fn set_filter(&mut self, pattern: &str) {
         assert!(!self.was_deleted());
-        let pattern = CString::new(pattern).unwrap();
-        unsafe {         
+        let pattern = match CString::new(pattern) {
+            Ok(v) => v,
+            Err(r) => {
+                let i = r.nul_position();
+                CString::new(&r.into_vec()[0..i]).unwrap()
+            }
+        };
+        unsafe {
             // This is deleted on the C++ side
-            Fl_File_Browser_set_filter(self._inner, pattern.into_raw()) 
+            Fl_File_Browser_set_filter(self._inner, pattern.into_raw())
         }
     }
 
@@ -112,9 +118,11 @@ impl FileBrowser {
             if ptr.is_null() {
                 None
             } else {
-                Some(CStr::from_ptr(ptr as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string())
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
             }
         }
     }
