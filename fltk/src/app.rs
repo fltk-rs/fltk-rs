@@ -392,8 +392,9 @@ where
 }
 
 /// Sets the callback of a widget
-pub fn set_callback<W>(widget: &mut W, cb: Box<dyn FnMut()>)
+pub fn set_callback<F, W>(widget: &mut W, cb: F)
 where
+    F: FnMut(),
     W: WidgetExt,
 {
     assert!(!widget.was_deleted());
@@ -404,7 +405,7 @@ where
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
         widget.unset_callback();
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
         fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), callback, data);
