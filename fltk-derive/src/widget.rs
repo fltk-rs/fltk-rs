@@ -105,11 +105,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_handler").as_str(),
         name.span(),
     );
+    let set_handler2 = Ident::new(
+        format!("{}_{}", name_str, "set_handler2").as_str(),
+        name.span(),
+    );
     let set_trigger = Ident::new(
         format!("{}_{}", name_str, "set_trigger").as_str(),
         name.span(),
     );
     let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
+    let set_draw2 = Ident::new(format!("{}_{}", name_str, "set_draw2").as_str(), name.span());
     let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
     let selection_color = Ident::new(
         format!("{}_{}", name_str, "selection_color").as_str(),
@@ -605,6 +610,31 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn handle2(&mut self, cb: Box<dyn FnMut(&mut Self, Event) -> bool>) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
+                        let mut wid = #name::from_widget_ptr(wid as *mut _);
+                        let ev: Event = mem::transmute(ev);
+                        let a: *mut Box<dyn FnMut(&mut #name, Event) -> bool> = data as *mut Box<dyn FnMut(&mut #name, Event) -> bool>;
+                        let f: &mut (dyn FnMut(&mut #name, Event) -> bool) = &mut **a;
+                        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(&mut wid, ev) {
+                            true => return 1,
+                            false => return 0,
+                        }));
+                        if let Ok(ret) = result {
+                            ret
+                        } else {
+                            0
+                        }
+                    }
+                    let a: *mut Box<dyn FnMut(&mut Self, Event) -> bool> = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: custom_handler_callback2 = Some(shim);
+                    #set_handler2(self._inner, callback, data);
+                }
+            }
+
             fn draw(&mut self, cb: Box<dyn FnMut()>) {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -618,6 +648,23 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_callback = Some(shim);
                     #set_draw(self._inner, callback, data);
+                }
+            }
+
+            fn draw2(&mut self, cb: Box<dyn FnMut(&mut Self)>) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let mut wid = #name::from_widget_ptr(wid as *mut _);
+                        let a: *mut Box<dyn FnMut(&mut #name)> = data as *mut Box<dyn FnMut(&mut #name)>;
+                        let f: &mut (dyn FnMut(&mut #name)) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                    }
+                    self.unset_draw_callback();
+                    let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: custom_draw_callback2 = Some(shim);
+                    #set_draw2(self._inner, callback, data);
                 }
             }
 

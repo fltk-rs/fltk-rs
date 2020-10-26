@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.9.8] - Unreleased
+### Changes
+- Add WidgetExt::draw2() and ::handle2() both of which expose the widget in the closure arguments.
+
 ## [0.9.7] - 2020-10-20
 ### Changes
 - Add doc comment on MenuExt::value() which might return -1 when no choice is made.

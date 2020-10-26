@@ -191,10 +191,17 @@ pub unsafe trait WidgetExt {
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
     fn handle(&mut self, cb: Box<dyn FnMut(Event) -> bool>);
+    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
+    /// Handled or ignored events shoult return true, unhandled events should return false
+    /// takes the widget as a closure argument
+    fn handle2(&mut self, cb: Box<dyn FnMut(&mut Self, Event) -> bool>);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
     /// Set a custom draw method
     fn draw(&mut self, cb: Box<dyn FnMut()>);
+    /// Set a custom draw method
+    /// takes the widget as a closure argument
+    fn draw2(&mut self, cb: Box<dyn FnMut(&mut Self)>);
     /// Returns the parent of the widget
     fn parent(&self) -> Option<Widget>;
     /// Gets the selection color of the widget
@@ -591,11 +598,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_highlight_data(
-        &mut self,
-        style_buffer: TextBuffer,
-        entries: Vec<StyleTableEntry>,
-    );
+    fn set_highlight_data(&mut self, style_buffer: TextBuffer, entries: Vec<StyleTableEntry>);
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: TextCursor);
     /// Sets the cursor color
@@ -966,4 +969,3 @@ pub unsafe trait ImageExt {
     /// Checks if the image was deleted
     fn was_deleted(&self) -> bool;
 }
-

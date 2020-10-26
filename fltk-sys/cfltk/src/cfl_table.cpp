@@ -179,10 +179,14 @@ struct Fl_Table_Derived : public Fl_Table {
 
     typedef int (*handler)(int, void *data);
     handler inner_handler = NULL;
+    typedef int (*handler2)(Fl_Widget *, int, void *data);
+    handler2 inner_handler2 = NULL;
     typedef void (*drawer)(void *data);
     typedef void (*cell_drawer)(int, int, int, int, int, int, int, void *data);
     drawer inner_drawer = NULL;
     cell_drawer inner_cell_drawer = NULL;
+    typedef void (*drawer2)(Fl_Widget *, void *data);
+    drawer2 inner_drawer2 = NULL;
     Fl_Table_Derived(int x, int y, int w, int h, const char *title = 0)
         : Fl_Table(x, y, w, h, title) {
     }
@@ -193,6 +197,10 @@ struct Fl_Table_Derived : public Fl_Table {
 
     void set_handler(handler h) {
         inner_handler = h;
+    }
+
+    void set_handler2(handler2 h) {
+        inner_handler2 = h;
     }
 
     void set_handler_data(void *data) {
@@ -208,6 +216,12 @@ struct Fl_Table_Derived : public Fl_Table {
                 return ret;
             else
                 return local;
+        } else if (ev_data_ && inner_handler2) {
+            local = inner_handler2(this, event, ev_data_);
+            if (local == 0)
+                return ret;
+            else
+                return local;
         } else {
             return ret;
         }
@@ -215,6 +229,10 @@ struct Fl_Table_Derived : public Fl_Table {
 
     void set_drawer(drawer h) {
         inner_drawer = h;
+    }
+
+    void set_drawer2(drawer2 h) {
+        inner_drawer2 = h;
     }
 
     void set_drawer_data(void *data) {
@@ -234,6 +252,10 @@ struct Fl_Table_Derived : public Fl_Table {
 
         if (draw_data_ && inner_drawer)
             inner_drawer(draw_data_);
+        else if (draw_data_ && inner_drawer2)
+            inner_drawer2(this, draw_data_);
+        else {
+        }
     }
 
     void draw_cell(TableContext context, int R, int C, int X, int Y, int W, int H) override {
@@ -257,10 +279,14 @@ struct Fl_Table_Row_Derived : public Fl_Table_Row {
 
     typedef int (*handler)(int, void *data);
     handler inner_handler = NULL;
+    typedef int (*handler2)(Fl_Widget *, int, void *data);
+    handler2 inner_handler2 = NULL;
     typedef void (*drawer)(void *data);
     typedef void (*cell_drawer)(int, int, int, int, int, int, int, void *data);
     drawer inner_drawer = NULL;
     cell_drawer inner_cell_drawer = NULL;
+    typedef void (*drawer2)(Fl_Widget *, void *data);
+    drawer2 inner_drawer2 = NULL;
     Fl_Table_Row_Derived(int x, int y, int w, int h, const char *title = 0)
         : Fl_Table_Row(x, y, w, h, title) {
     }
@@ -271,6 +297,10 @@ struct Fl_Table_Row_Derived : public Fl_Table_Row {
 
     void set_handler(handler h) {
         inner_handler = h;
+    }
+
+    void set_handler2(handler2 h) {
+        inner_handler2 = h;
     }
 
     void set_handler_data(void *data) {
@@ -286,6 +316,12 @@ struct Fl_Table_Row_Derived : public Fl_Table_Row {
                 return ret;
             else
                 return local;
+        } else if (ev_data_ && inner_handler2) {
+            local = inner_handler2(this, event, ev_data_);
+            if (local == 0)
+                return ret;
+            else
+                return local;
         } else {
             return ret;
         }
@@ -293,6 +329,10 @@ struct Fl_Table_Row_Derived : public Fl_Table_Row {
 
     void set_drawer(drawer h) {
         inner_drawer = h;
+    }
+
+    void set_drawer2(drawer2 h) {
+        inner_drawer2 = h;
     }
 
     void set_drawer_data(void *data) {
@@ -312,6 +352,10 @@ struct Fl_Table_Row_Derived : public Fl_Table_Row {
 
         if (draw_data_ && inner_drawer)
             inner_drawer(draw_data_);
+        else if (draw_data_ && inner_drawer2)
+            inner_drawer2(this, draw_data_);
+        else {
+        }
     }
 
     void draw_cell(TableContext context, int R, int C, int X, int Y, int W, int H) override {

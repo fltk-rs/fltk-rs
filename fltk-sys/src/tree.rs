@@ -10,8 +10,17 @@ pub type Fl_Callback =
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int,
 >;
+pub type custom_handler_callback2 = ::core::option::Option<
+    unsafe extern "C" fn(
+        arg1: *mut Fl_Widget,
+        arg2: libc::c_int,
+        arg3: *mut libc::c_void,
+    ) -> libc::c_int,
+>;
 pub type custom_draw_callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
+pub type custom_draw_callback2 =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
 extern "C" {
     pub fn Fl_Widget_new(
         x: libc::c_int,
@@ -143,9 +152,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_set_handler2(
+        self_: *mut Fl_Widget,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_set_draw(
         self_: *mut Fl_Widget,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_set_draw2(
+        self_: *mut Fl_Widget,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -372,7 +395,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Tree_set_handler2(
+        self_: *mut Fl_Tree,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Tree_set_draw(self_: *mut Fl_Tree, cb: custom_draw_callback, data: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Tree_set_draw2(
+        self_: *mut Fl_Tree,
+        cb: custom_draw_callback2,
+        data: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Tree_set_trigger(arg1: *mut Fl_Tree, arg2: libc::c_int);

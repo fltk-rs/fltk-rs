@@ -10,8 +10,17 @@ pub type Fl_Callback =
 pub type custom_handler_callback = ::core::option::Option<
     unsafe extern "C" fn(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int,
 >;
+pub type custom_handler_callback2 = ::core::option::Option<
+    unsafe extern "C" fn(
+        arg1: *mut Fl_Widget,
+        arg2: libc::c_int,
+        arg3: *mut libc::c_void,
+    ) -> libc::c_int,
+>;
 pub type custom_draw_callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
+pub type custom_draw_callback2 =
+    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
 extern "C" {
     pub fn Fl_Widget_new(
         x: libc::c_int,
@@ -143,9 +152,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_set_handler2(
+        self_: *mut Fl_Widget,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_set_draw(
         self_: *mut Fl_Widget,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Widget_set_draw2(
+        self_: *mut Fl_Widget,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -372,9 +395,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Slider_set_handler2(
+        self_: *mut Fl_Slider,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Slider_set_draw(
         self_: *mut Fl_Slider,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Slider_set_draw2(
+        self_: *mut Fl_Slider,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -646,9 +683,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Nice_Slider_set_handler2(
+        self_: *mut Fl_Nice_Slider,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Nice_Slider_set_draw(
         self_: *mut Fl_Nice_Slider,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Nice_Slider_set_draw2(
+        self_: *mut Fl_Nice_Slider,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -929,9 +980,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Counter_set_handler2(
+        self_: *mut Fl_Counter,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Counter_set_draw(
         self_: *mut Fl_Counter,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Counter_set_draw2(
+        self_: *mut Fl_Counter,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -1207,7 +1272,21 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Dial_set_handler2(
+        self_: *mut Fl_Dial,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Dial_set_draw(self_: *mut Fl_Dial, cb: custom_draw_callback, data: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Dial_set_draw2(
+        self_: *mut Fl_Dial,
+        cb: custom_draw_callback2,
+        data: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Dial_set_trigger(arg1: *mut Fl_Dial, arg2: libc::c_int);
@@ -1477,9 +1556,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Line_Dial_set_handler2(
+        self_: *mut Fl_Line_Dial,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Line_Dial_set_draw(
         self_: *mut Fl_Line_Dial,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Line_Dial_set_draw2(
+        self_: *mut Fl_Line_Dial,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -1755,9 +1848,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Roller_set_handler2(
+        self_: *mut Fl_Roller,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Roller_set_draw(
         self_: *mut Fl_Roller,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Roller_set_draw2(
+        self_: *mut Fl_Roller,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2029,9 +2136,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Scrollbar_set_handler2(
+        self_: *mut Fl_Scrollbar,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Scrollbar_set_draw(
         self_: *mut Fl_Scrollbar,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Scrollbar_set_draw2(
+        self_: *mut Fl_Scrollbar,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2307,9 +2428,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Value_Slider_set_handler2(
+        self_: *mut Fl_Value_Slider,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Value_Slider_set_draw(
         self_: *mut Fl_Value_Slider,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Slider_set_draw2(
+        self_: *mut Fl_Value_Slider,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2595,9 +2730,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Adjuster_set_handler2(
+        self_: *mut Fl_Adjuster,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Adjuster_set_draw(
         self_: *mut Fl_Adjuster,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Adjuster_set_draw2(
+        self_: *mut Fl_Adjuster,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2873,9 +3022,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Value_Input_set_handler2(
+        self_: *mut Fl_Value_Input,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Value_Input_set_draw(
         self_: *mut Fl_Value_Input,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Input_set_draw2(
+        self_: *mut Fl_Value_Input,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -3156,9 +3319,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Value_Output_set_handler2(
+        self_: *mut Fl_Value_Output,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Value_Output_set_draw(
         self_: *mut Fl_Value_Output,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_set_draw2(
+        self_: *mut Fl_Value_Output,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -3444,9 +3621,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Fill_Slider_set_handler2(
+        self_: *mut Fl_Fill_Slider,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Fill_Slider_set_draw(
         self_: *mut Fl_Fill_Slider,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Slider_set_draw2(
+        self_: *mut Fl_Fill_Slider,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -3727,9 +3918,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Fill_Dial_set_handler2(
+        self_: *mut Fl_Fill_Dial,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Fill_Dial_set_draw(
         self_: *mut Fl_Fill_Dial,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_set_draw2(
+        self_: *mut Fl_Fill_Dial,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -4005,9 +4210,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Hor_Slider_set_handler2(
+        self_: *mut Fl_Hor_Slider,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Hor_Slider_set_draw(
         self_: *mut Fl_Hor_Slider,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_set_draw2(
+        self_: *mut Fl_Hor_Slider,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -4286,9 +4505,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_handler2(
+        self_: *mut Fl_Hor_Fill_Slider,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_draw(
         self_: *mut Fl_Hor_Fill_Slider,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_set_draw2(
+        self_: *mut Fl_Hor_Fill_Slider,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -4583,9 +4816,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_handler2(
+        self_: *mut Fl_Hor_Nice_Slider,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_draw(
         self_: *mut Fl_Hor_Nice_Slider,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_set_draw2(
+        self_: *mut Fl_Hor_Nice_Slider,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -4886,9 +5133,23 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_handler2(
+        self_: *mut Fl_Hor_Value_Slider,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Hor_Value_Slider_set_draw(
         self_: *mut Fl_Hor_Value_Slider,
         cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_set_draw2(
+        self_: *mut Fl_Hor_Value_Slider,
+        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
