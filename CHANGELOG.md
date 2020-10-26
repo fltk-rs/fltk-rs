@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.10.0] - Unreleased
+## [0.10.0] - 2020-10-26
 ### Changes
 - BREAKING: App::wait() returns bool instead of Result since it doesn't error out.
 - Add WidgetExt::draw2(), WidgetExt::handle2() and TableExt::draw_cell2() all of which expose the widget in the closure arguments.
