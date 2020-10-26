@@ -90,7 +90,8 @@ typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
     void *widget##_as_group(widget *self);                                                         \
     void widget##_set_deimage(widget *, void *);                                                   \
     void *widget##_deimage(const widget *);                                                        \
-    void widget##_set_callback(widget *, Fl_Callback *, void *);
+    void widget##_set_callback(widget *, Fl_Callback *, void *);                                   \
+    void widget##_set_deleter(widget *, void (*)(void *));
 
 #define WIDGET_CLASS(widget)                                                                       \
     struct widget##_Derived : public widget {                                                      \
@@ -105,6 +106,8 @@ typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
         drawer inner_drawer = NULL;                                                                \
         typedef void (*drawer2)(Fl_Widget *, void *data);                                          \
         drawer2 inner_drawer2 = NULL;                                                              \
+        typedef void (*deleter_fp)(void *);                                                        \
+        deleter_fp deleter = NULL;                                                                 \
         widget##_Derived(int x, int y, int w, int h, const char *title = 0)                        \
             : widget(x, y, w, h, title) {                                                          \
         }                                                                                          \
@@ -156,6 +159,22 @@ typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
                 inner_drawer2(this, draw_data_);                                                   \
             else {                                                                                 \
             }                                                                                      \
+        }                                                                                          \
+        ~widget##_Derived() {                                                                      \
+            if (ev_data_)                                                                          \
+                deleter(ev_data_);                                                                 \
+            ev_data_ = NULL;                                                                       \
+            inner_handler = NULL;                                                                  \
+            inner_handler2 = NULL;                                                                 \
+            if (draw_data_)                                                                        \
+                deleter(draw_data_);                                                               \
+            draw_data_ = NULL;                                                                     \
+            inner_drawer = NULL;                                                                   \
+            inner_drawer2 = NULL;                                                                  \
+            if (user_data())                                                                       \
+                deleter(user_data());                                                              \
+            user_data(NULL);                                                                       \
+            callback((void (*)(Fl_Widget *, void *))NULL);                                         \
         }                                                                                          \
     };
 
@@ -375,6 +394,9 @@ typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
     }                                                                                              \
     void widget##_set_callback(widget *self, Fl_Callback *cb, void *data) {                        \
         LOCK(self->callback(cb, data);)                                                            \
+    }                                                                                              \
+    void widget##_set_deleter(widget *self, void (*deleter)(void *)) {                             \
+        LOCK(((widget##_Derived *)self)->deleter = deleter;)                                       \
     }
 
 WIDGET_DECLARE(Fl_Widget)

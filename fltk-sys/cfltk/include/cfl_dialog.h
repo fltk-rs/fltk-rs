@@ -92,7 +92,7 @@ void *Fl_File_Chooser_previewButton(Fl_File_Chooser *self);
 
 void *Fl_File_Chooser_showHiddenButton(Fl_File_Chooser *self);
 
-void Fl_File_Chooser_callback(Fl_File_Chooser *self, void (*cb)(Fl_File_Chooser *, void *),
+void Fl_File_Chooser_set_callback(Fl_File_Chooser *self, void (*cb)(Fl_File_Chooser *, void *),
                               void *d);
 
 void Fl_File_Chooser_set_color(Fl_File_Chooser *self, unsigned int c);

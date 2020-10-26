@@ -259,6 +259,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_set_deleter(
+        arg1: *mut Fl_Widget,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Item {
@@ -509,6 +515,12 @@ extern "C" {
         arg1: *mut Fl_Menu_Bar,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_deleter(
+        arg1: *mut Fl_Menu_Bar,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -852,6 +864,12 @@ extern "C" {
         arg1: *mut Fl_Menu_Button,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_deleter(
+        arg1: *mut Fl_Menu_Button,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -1200,6 +1218,12 @@ extern "C" {
     pub fn Fl_Choice_set_callback(arg1: *mut Fl_Choice, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
+    pub fn Fl_Choice_set_deleter(
+        arg1: *mut Fl_Choice,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
+extern "C" {
     pub fn Fl_Choice_add(
         arg1: *mut Fl_Choice,
         name: *const libc::c_char,
@@ -1539,6 +1563,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_deleter(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
+extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(
         arg1: *mut Fl_Sys_Menu_Bar,
         name: *const libc::c_char,
@@ -1726,7 +1756,11 @@ extern "C" {
     pub fn Fl_Menu_Item_next(self_: *mut Fl_Menu_Item, idx: libc::c_int) -> *mut Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_callback(self_: *mut Fl_Menu_Item, c: Fl_Callback, p: *mut libc::c_void);
+    pub fn Fl_Menu_Item_set_callback(
+        self_: *mut Fl_Menu_Item,
+        c: Fl_Callback,
+        p: *mut libc::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Menu_Item_user_data(arg1: *const Fl_Menu_Item) -> *mut libc::c_void;

@@ -208,6 +208,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_callback").as_str(),
         name.span(),
     );
+    let set_deleter = Ident::new(
+        format!("{}_{}", name_str, "set_deleter").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -227,6 +231,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!widget_ptr.is_null());
                     let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
                     assert!(!tracker.is_null());
+                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                        if !data.is_null() {
+                            let x = data as *mut Box<dyn FnMut()>;
+                            let x = Box::from_raw(x);
+                        }
+                    }
+                    #set_deleter(widget_ptr, Some(shim));
                     #name {
                         _inner: widget_ptr,
                         _tracker: tracker,
@@ -246,6 +257,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         assert!(!widget_ptr.is_null());
                         let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
                         assert!(!tracker.is_null());
+                        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                            if !data.is_null() {
+                                let x = data as *mut Box<dyn FnMut()>;
+                                let x = Box::from_raw(x);
+                            }
+                        }
+                        #set_deleter(widget_ptr, Some(shim));
                     #name {
                         _inner: widget_ptr,
                         _tracker: tracker,
@@ -584,7 +602,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let old_data = self.user_data();
                     if old_data.is_some() {
                         self.set_user_data(std::ptr::null_mut() as *mut raw::c_void);
-                        let old_data = old_data.unwrap();
+                        #set_callback(self._inner, None, std::ptr::null_mut());
+                        let _old_data = old_data.unwrap();
                     }
                 }
             }
@@ -830,10 +849,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn set_user_data(&mut self, data: *mut raw::c_void) {
                 unsafe { #set_user_data(self._inner, data) }
-            }
-
-            unsafe fn raw_user_data(&self) -> *mut raw::c_void {
-                #user_data(self._inner)
             }
 
             fn delete(&mut self) {

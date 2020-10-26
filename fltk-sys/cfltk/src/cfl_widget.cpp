@@ -17,7 +17,9 @@ struct Fl_Widget_Derived : public Fl_Widget {
     drawer inner_drawer = NULL;
     typedef void (*drawer2)(Fl_Widget *, void *data);
     drawer2 inner_drawer2 = NULL;
-    
+    typedef void (*deleter_fp)(void *);
+    deleter_fp deleter = NULL;
+
     Fl_Widget_Derived(int x, int y, int w, int h, const char *title = 0)
         : Fl_Widget(x, y, w, h, title) {
     }
@@ -77,6 +79,23 @@ struct Fl_Widget_Derived : public Fl_Widget {
             inner_drawer2(this, draw_data_);
         else {
         }
+    }
+
+    ~Fl_Widget_Derived() {
+        if (ev_data_)
+            deleter(ev_data_);
+        ev_data_ = NULL;
+        inner_handler = NULL;
+        inner_handler2 = NULL;
+        if (draw_data_)
+            deleter(draw_data_);
+        draw_data_ = NULL;
+        inner_drawer = NULL;
+        inner_drawer2 = NULL;
+        if (user_data())
+            deleter(user_data());
+        user_data(NULL);
+        callback((void (*)(Fl_Widget *, void *))NULL);
     }
 };
 

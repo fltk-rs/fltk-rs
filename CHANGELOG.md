@@ -6,6 +6,7 @@
 - Add WidgetExt::draw2(), WidgetExt::handle2() and TableExt::draw_cell2() all of which expose the widget in the closure arguments.
 - Remove the requirement to box callbacks.
 - Passing CString to C/C++ should not panic on inner null characters.
+- Removed several unused internal methods from the public interface.
 
 ## [0.9.7] - 2020-10-20
 ### Changes

@@ -259,6 +259,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_set_deleter(
+        arg1: *mut Fl_Widget,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Spinner {
@@ -504,6 +510,12 @@ extern "C" {
         arg1: *mut Fl_Spinner,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Spinner_set_deleter(
+        arg1: *mut Fl_Spinner,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -794,6 +806,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Clock_set_callback(arg1: *mut Fl_Clock, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
+extern "C" {
+    pub fn Fl_Clock_set_deleter(
+        arg1: *mut Fl_Clock,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -1036,6 +1054,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_set_callback(arg1: *mut Fl_Chart, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Chart_set_deleter(
+        arg1: *mut Fl_Chart,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -1350,6 +1374,12 @@ extern "C" {
         arg1: *mut Fl_Progress,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Progress_set_deleter(
+        arg1: *mut Fl_Progress,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {

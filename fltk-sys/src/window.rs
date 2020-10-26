@@ -259,6 +259,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_set_deleter(
+        arg1: *mut Fl_Widget,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
@@ -501,6 +507,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_set_callback(arg1: *mut Fl_Group, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Group_set_deleter(
+        arg1: *mut Fl_Group,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
 }
 extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
@@ -770,6 +782,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_set_callback(arg1: *mut Fl_Pack, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Pack_set_deleter(
+        arg1: *mut Fl_Pack,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
 }
 extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
@@ -1043,6 +1061,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_set_callback(arg1: *mut Fl_Scroll, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Scroll_set_deleter(
+        arg1: *mut Fl_Scroll,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
 }
 extern "C" {
     pub fn Fl_Scroll_scrollbar(self_: *mut Fl_Scroll) -> *mut libc::c_void;
@@ -1333,6 +1357,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_set_callback(arg1: *mut Fl_Tabs, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Tabs_set_deleter(
+        arg1: *mut Fl_Tabs,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
 }
 extern "C" {
     pub fn Fl_Tabs_value(self_: *mut Fl_Tabs) -> *mut Fl_Widget;
@@ -1631,6 +1661,12 @@ extern "C" {
     pub fn Fl_Tile_set_callback(arg1: *mut Fl_Tile, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
 extern "C" {
+    pub fn Fl_Tile_set_deleter(
+        arg1: *mut Fl_Tile,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1902,6 +1938,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_set_callback(arg1: *mut Fl_Wizard, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Wizard_set_deleter(
+        arg1: *mut Fl_Wizard,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -2193,6 +2235,12 @@ extern "C" {
         arg1: *mut Fl_Color_Chooser,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_deleter(
+        arg1: *mut Fl_Color_Chooser,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -2532,6 +2580,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_set_callback(arg1: *mut Fl_Window, arg2: Fl_Callback, arg3: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Window_set_deleter(
+        arg1: *mut Fl_Window,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
 }
 extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
@@ -2881,6 +2935,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Single_Window_set_deleter(
+        arg1: *mut Fl_Single_Window,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
+extern "C" {
     pub fn Fl_Single_Window_begin(self_: *mut Fl_Single_Window);
 }
 extern "C" {
@@ -3213,6 +3273,12 @@ extern "C" {
         arg1: *mut Fl_Double_Window,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_deleter(
+        arg1: *mut Fl_Double_Window,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -3554,6 +3620,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Window_set_deleter(
+        arg1: *mut Fl_Menu_Window,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
@@ -3880,6 +3952,12 @@ extern "C" {
         arg1: *mut Fl_Gl_Window,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_deleter(
+        arg1: *mut Fl_Gl_Window,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {

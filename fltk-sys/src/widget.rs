@@ -259,3 +259,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_set_deleter(
+        arg1: *mut Fl_Widget,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}

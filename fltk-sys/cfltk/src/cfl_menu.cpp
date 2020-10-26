@@ -232,7 +232,7 @@ Fl_Menu_Item *Fl_Menu_Item_next(Fl_Menu_Item *self, int idx) {
     return self->next(idx);
 }
 
-void Fl_Menu_Item_callback(Fl_Menu_Item *self, Fl_Callback *c, void *p) {
+void Fl_Menu_Item_set_callback(Fl_Menu_Item *self, Fl_Callback *c, void *p) {
     LOCK(self->callback(c, p);)
 }
 

@@ -1,7 +1,7 @@
 pub use crate::enums::*;
-pub(crate) use crate::utils::*;
 use crate::image::Image;
 use crate::text::{StyleTableEntry, TextBuffer};
+pub(crate) use crate::utils::*;
 use crate::widget::Widget;
 use crate::window::Window;
 use std::convert::From;
@@ -257,10 +257,6 @@ pub unsafe trait WidgetExt {
     /// # Safety
     /// The data must be valid, and it cannot be checked since it's opaque
     unsafe fn set_user_data(&mut self, data: *mut raw::c_void);
-    /// INTERNAL: Retakes ownership of the user callback data
-    /// # Safety
-    /// Can return multiple mutable references to the user_data
-    unsafe fn raw_user_data(&self) -> *mut raw::c_void;
     /// INTERNAL: Cleanup after widget deletion
     /// # Safety
     /// The widget tracker is destroyed along the widget, so widget tracking is lost
@@ -316,10 +312,6 @@ pub unsafe trait GroupExt: WidgetExt {
     fn remove<Widget: WidgetExt>(&mut self, widget: &Widget);
     /// Clear a group from all widgets
     fn clear(&mut self);
-    /// Clear a group from all widgets and recursively force-cleans capturing callbacks
-    /// # Safety
-    /// Deletes user_data and any captured objects in the callback
-    unsafe fn unsafe_clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> u32;
     /// Return child widget by index
@@ -454,6 +446,17 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         cb: F,
     );
+    /// Add a menu item along with its callback
+    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
+    /// Takes the menu item as a closure argument
+    fn add2<F: FnMut(&mut Self) + 'static>(
+        &mut self,
+        name: &str,
+        shortcut: Shortcut,
+        flag: crate::menu::MenuFlag,
+        cb: F,
+    );
     /// Inserts a menu item at an index along with its callback
     /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -461,6 +464,18 @@ pub unsafe trait MenuExt: WidgetExt {
         &mut self,
         idx: u32,
         label: &str,
+        shortcut: Shortcut,
+        flag: crate::menu::MenuFlag,
+        cb: F,
+    );
+    /// Inserts a menu item at an index along with its callback
+    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
+    /// Takes the menu item as a closure argument
+    fn insert2<F: FnMut(&mut Self) + 'static>(
+        &mut self,
+        idx: u32,
+        name: &str,
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
@@ -900,11 +915,19 @@ pub unsafe trait TableExt: GroupExt {
     fn tab_cell_nav(&self) -> u32;
     /// Override draw_cell
     /// callback args: TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
-    fn draw_cell<F: FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
+    fn draw_cell<F: FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(
+        &mut self,
+        cb: F,
+    );
     /// Override draw_cell
     /// callback args: &mut self, TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
     /// takes the widget as a closure argument
-    fn draw_cell2<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
+    fn draw_cell2<
+        F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static,
+    >(
+        &mut self,
+        cb: F,
+    );
     /// INTERNAL: Retrieve the draw cell data
     /// # Safety
     /// Can return multiple mutable references to the draw_cell_data

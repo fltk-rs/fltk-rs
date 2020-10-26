@@ -24,6 +24,8 @@
         cell_drawer inner_cell_drawer = NULL;                                                      \
         typedef void (*cell_drawer2)(Fl_Widget *, int, int, int, int, int, int, int, void *data);  \
         cell_drawer2 inner_cell_drawer2 = NULL;                                                    \
+        typedef void (*deleter_fp)(void *);                                                        \
+        deleter_fp deleter = NULL;                                                                 \
         table##_Derived(int x, int y, int w, int h, const char *title = 0)                         \
             : table(x, y, w, h, title) {                                                           \
         }                                                                                          \
@@ -93,6 +95,22 @@
                 inner_cell_drawer2(this, context, R, C, X, Y, W, H, draw_cell_data_);              \
             else {                                                                                 \
             }                                                                                      \
+        }                                                                                          \
+        ~table##_Derived() {                                                                       \
+            if (ev_data_)                                                                          \
+                deleter(ev_data_);                                                                 \
+            ev_data_ = NULL;                                                                       \
+            inner_handler = NULL;                                                                  \
+            inner_handler2 = NULL;                                                                 \
+            if (draw_data_)                                                                        \
+                deleter(draw_data_);                                                               \
+            draw_data_ = NULL;                                                                     \
+            inner_drawer = NULL;                                                                   \
+            inner_drawer2 = NULL;                                                                  \
+            if (user_data())                                                                       \
+                deleter(user_data());                                                              \
+            user_data(NULL);                                                                       \
+            callback((void (*)(Fl_Widget *, void *))NULL);                                         \
         }                                                                                          \
     };
 

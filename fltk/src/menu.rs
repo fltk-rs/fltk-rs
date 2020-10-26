@@ -290,7 +290,7 @@ impl MenuItem {
         } else {
             let x = ptr as *mut Box<dyn FnMut()>;
             let x = Box::from_raw(x);
-            Fl_Menu_Item_callback(self._inner, None, std::ptr::null_mut());
+            Fl_Menu_Item_set_callback(self._inner, None, std::ptr::null_mut());
             Some(*x)
         }
     }
@@ -318,7 +318,28 @@ impl MenuItem {
             let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: fltk_sys::menu::Fl_Callback = Some(shim);
-            Fl_Menu_Item_callback(self._inner, callback, data);
+            Fl_Menu_Item_set_callback(self._inner, callback, data);
+        }
+    }
+
+    /// Set a callback for the menu item
+    pub fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+        assert!(!self.was_deleted() && !self._inner.is_null());
+        unsafe {
+            unsafe extern "C" fn shim(
+                wid: *mut fltk_sys::menu::Fl_Widget,
+                data: *mut raw::c_void,
+            ) {
+                let mut wid = crate::widget::Widget::from_raw(wid as *mut _);
+                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> = data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+            }
+            self.unset_callback();
+            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut raw::c_void = a as *mut std::ffi::c_void;
+            let callback: fltk_sys::menu::Fl_Callback = Some(shim);
+            Fl_Menu_Item_set_callback(self._inner, callback, data);
         }
     }
 
@@ -336,15 +357,6 @@ impl MenuItem {
             let _ = old_data;
             self.set_user_data(std::ptr::null_mut::<raw::c_void>());
         }
-    }
-
-    /// Delete the old callback and replace it with an empty one
-    pub fn safe_unset_callback(&mut self) {
-        assert!(!self.was_deleted() && !self._inner.is_null());
-        unsafe {
-            self.unset_callback();
-        }
-        self.set_callback(move || { /* do nothing */ });
     }
 
     /// Check if a menu item was deleted

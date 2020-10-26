@@ -70,24 +70,6 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     #clear(self._inner);
-                    if let Some(mut p) = self.parent() {
-                        p.redraw();
-                    }
-                }
-            }
-
-            unsafe fn unsafe_clear(&mut self) {
-                let sz = self.children();
-                let mut v: Vec<Option<Box<dyn FnMut()>>> = vec![];
-                if sz > 0 {
-                    for i in 0..sz {
-                        // Shouldn't fail
-                        v.push(self.child(i).unwrap().user_data());
-                    }
-                }
-                #clear(self._inner);
-                if let Some(mut p) = self.parent() {
-                    p.redraw();
                 }
             }
 

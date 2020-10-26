@@ -82,6 +82,23 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn add2<F: FnMut(&mut Self) + 'static>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
+                assert!(!self.was_deleted());
+                let temp = CString::safe_new(name);
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let mut wid = crate::widget::Widget::from_raw(wid as *mut _);
+                        let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> = data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                        let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                    }
+                    let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: Fl_Callback = Some(shim);
+                    #add(self._inner, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
+                }
+            }
+
             fn insert<F: FnMut() + 'static>(&mut self, idx: u32, label: &str, shortcut: Shortcut, flag: MenuFlag, cb: F) {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(label);
@@ -92,6 +109,23 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
                     }
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: Fl_Callback = Some(shim);
+                    #insert(self._inner, idx as i32, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
+                }
+            }
+
+            fn insert2<F: FnMut(&mut Self) + 'static>(&mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
+                assert!(!self.was_deleted());
+                let temp = CString::safe_new(name);
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let mut wid = crate::widget::Widget::from_raw(wid as *mut _);
+                        let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> = data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                        let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                    }
+                    let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
                     #insert(self._inner, idx as i32, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
@@ -247,7 +281,6 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     #clear(self._inner);
-                    self.redraw();
                 }
             }
 
@@ -258,11 +291,10 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     for i in 0..sz {
                         // Shouldn't fail
                         let mut c = self.at(i).unwrap();
-                        c.set_callback(|| { /* Do nothing! */ });
+                        c.unset_callback();
                     }
                 }
                 #clear(self._inner);
-                self.redraw();
             }
 
             fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
@@ -301,7 +333,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     if item.label().is_none() {
                         break;
                     }
-                    item.set_callback(|| { /* Do nothing! */ });
+                    item.unset_callback();
                     i += 1;
                 }
                 match #clear_submenu(self._inner, idx as i32) {

@@ -259,6 +259,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_set_deleter(
+        arg1: *mut Fl_Widget,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Browser {
@@ -504,6 +510,12 @@ extern "C" {
         arg1: *mut Fl_Browser,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Browser_set_deleter(
+        arg1: *mut Fl_Browser,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -888,6 +900,12 @@ extern "C" {
         arg1: *mut Fl_Hold_Browser,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_set_deleter(
+        arg1: *mut Fl_Hold_Browser,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -1289,6 +1307,12 @@ extern "C" {
         arg1: *mut Fl_Select_Browser,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Select_Browser_set_deleter(
+        arg1: *mut Fl_Select_Browser,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -1699,6 +1723,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_set_deleter(
+        arg1: *mut Fl_Multi_Browser,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
+extern "C" {
     pub fn Fl_Multi_Browser_remove(arg1: *mut Fl_Multi_Browser, line: libc::c_int);
 }
 extern "C" {
@@ -2099,6 +2129,12 @@ extern "C" {
         arg1: *mut Fl_File_Browser,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Browser_set_deleter(
+        arg1: *mut Fl_File_Browser,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {

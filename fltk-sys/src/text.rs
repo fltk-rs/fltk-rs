@@ -259,6 +259,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
 }
+extern "C" {
+    pub fn Fl_Widget_set_deleter(
+        arg1: *mut Fl_Widget,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
 pub type Fl_Text_Modify_Cb = ::core::option::Option<
     unsafe extern "C" fn(
         pos: libc::c_int,
@@ -687,6 +693,12 @@ extern "C" {
         arg1: *mut Fl_Text_Display,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_deleter(
+        arg1: *mut Fl_Text_Display,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -1167,6 +1179,12 @@ extern "C" {
         arg1: *mut Fl_Text_Editor,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_deleter(
+        arg1: *mut Fl_Text_Editor,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {
@@ -1738,6 +1756,12 @@ extern "C" {
         arg1: *mut Fl_Simple_Terminal,
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_deleter(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
 extern "C" {

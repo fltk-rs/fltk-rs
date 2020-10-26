@@ -103,7 +103,7 @@ int Fl_Menu_Item_radio(const Fl_Menu_Item *self);
 
 Fl_Menu_Item *Fl_Menu_Item_next(Fl_Menu_Item *self, int idx);
 
-void Fl_Menu_Item_callback(Fl_Menu_Item *self, Fl_Callback *c, void *p);
+void Fl_Menu_Item_set_callback(Fl_Menu_Item *self, Fl_Callback *c, void *p);
 
 void *Fl_Menu_Item_user_data(const Fl_Menu_Item *);
 

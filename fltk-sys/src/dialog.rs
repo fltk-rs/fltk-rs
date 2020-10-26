@@ -186,7 +186,7 @@ extern "C" {
     pub fn Fl_File_Chooser_showHiddenButton(self_: *mut Fl_File_Chooser) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_File_Chooser_callback(
+    pub fn Fl_File_Chooser_set_callback(
         self_: *mut Fl_File_Chooser,
         cb: ::core::option::Option<
             unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, arg2: *mut libc::c_void),
