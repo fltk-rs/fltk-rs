@@ -140,12 +140,6 @@ int Fl_api_version(void);
 
 int Fl_abi_version(void);
 
-// void Fl_set_error(void (*error)(const char *, ...));
-
-// void Fl_set_warning(void (*error)(const char *, ...));
-
-// void Fl_set_fatal(void (*error)(const char *, ...));
-
 const char *Fl_load_font(const char *path);
 
 void Fl_unload_font(const char *path);

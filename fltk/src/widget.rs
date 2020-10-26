@@ -12,14 +12,6 @@ pub struct Widget {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-// /// A conversion function for internal use
-// impl<W: WidgetExt> From<W> for Widget {
-//     fn from(s: W) -> Self {
-//         let widg: *mut Fl_Widget = s.as_widget_ptr();
-//         Widget { _inner: widg }
-//     }
-// }
-
 impl Widget {
     /// Initialize a Widget base from a pointer
     /// # Safety

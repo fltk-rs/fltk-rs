@@ -747,28 +747,6 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
     }
 }
 
-// /// Captures part of the window, returns a raw RGB data
-// pub fn capture_window_part<Win: WindowExt>(
-//     win: &Win,
-//     x: i32,
-//     y: i32,
-//     w: i32,
-//     h: i32,
-// ) -> Vec<u8> {
-//     assert!(!widget.was_deleted());
-//     assert!(
-//         x + w <= win.width() && y + h <= win.height(),
-//         "Captures must be less than the parent window's size!"
-//     );
-//     unsafe {
-//         let x = Fl_capture_window_part(win.as_widget_ptr() as *mut raw::c_void, x, y, w, h);
-//         assert!(!x.is_null());
-//         let cp = w as u32 * h as u32 * 3;
-//         let x = std::slice::from_raw_parts(x, cp as usize);
-//         x.to_vec()
-//     }
-// }
-
 /// Transforms raw data to png file
 pub fn write_to_png_file<I: ImageExt, P: AsRef<std::path::Path>>(
     image: &I,

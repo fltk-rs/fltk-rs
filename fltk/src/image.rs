@@ -8,14 +8,6 @@ pub struct Image {
     _inner: *mut Fl_Image,
 }
 
-// /// A conversion function for internal use
-// impl<I: ImageExt> From<I> for Image {
-//     fn from(s: I) -> Self {
-//         let img: *mut Fl_Image = s.as_image_ptr();
-//         Image { _inner: img }
-//     }
-// }
-
 /// A conversion function for internal use
 impl Image {
     /// Returns the internal pointer of Image

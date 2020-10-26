@@ -12,8 +12,6 @@
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Round_Button.H>
 #include <FL/Fl_Toggle_Button.H>
-#include <FL/Fl_Toggle_Light_Button.H>
-#include <FL/Fl_Toggle_Round_Button.H>
 
 #define BUTTON_DEFINE(widget)                                                                      \
     int widget##_shortcut(const widget *self) {                                                    \

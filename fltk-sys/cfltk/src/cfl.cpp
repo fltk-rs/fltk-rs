@@ -238,13 +238,6 @@ void Fl_program_should_quit(int flag) {
     Fl::program_should_quit(flag);
 }
 
-// unsigned int Fl_rand(void) {
-//     std::mt19937 rng;
-//     std::uniform_int_distribution<std::mt19937::result_type> dist(0, UINT_FAST32_MAX);
-//     rng.seed(std::random_device()());
-//     return dist(rng);
-// }
-
 int Fl_event_inside(int x, int y, int w, int h) {
     return Fl::event_inside(x, y, w, h);
 }
@@ -351,18 +344,6 @@ int Fl_api_version(void) {
 int Fl_abi_version(void) {
     return Fl::abi_version();
 }
-
-// void Fl_set_error(void (*error)(const char *, ...)) {
-//     Fl::error = error;
-// }
-
-// void Fl_set_warning(void (*error)(const char *, ...)) {
-//     Fl::warning = error;
-// }
-
-// void Fl_set_fatal(void (*error)(const char *, ...)) {
-//     Fl::fatal = error;
-// }
 
 #ifdef _WIN32
 

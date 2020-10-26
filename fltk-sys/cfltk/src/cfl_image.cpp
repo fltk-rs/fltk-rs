@@ -224,22 +224,3 @@ void Fl_register_images() {
     fl_register_images();
 }
 
-// void Fl_RGB_Image_draw(Fl_RGB_Image *self, int X, int Y, int W, int H) {
-//   self->draw(X, Y, W, H);
-// }
-
-// int Fl_RGB_Image_width(Fl_RGB_Image *self) { return self->w(); }
-
-// int Fl_RGB_Image_height(Fl_RGB_Image *self) { return self->h(); }
-
-// void Fl_RGB_Image_delete(Fl_RGB_Image *self) { delete self; }
-
-// int Fl_RGB_Image_count(Fl_RGB_Image *self) { return self->count(); }
-
-// const char *const *Fl_RGB_Image_data(Fl_RGB_Image *self) {
-//   return self->data();
-// }
-
-// Fl_RGB_Image *Fl_RGB_Image_copy(Fl_RGB_Image *self) {
-//   return (Fl_RGB_Image *)self->copy();
-// }
