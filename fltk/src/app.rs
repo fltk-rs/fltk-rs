@@ -415,7 +415,7 @@ where
     }
 }
 
-/// Set a widget callback using a C style API, when boxing is not desired
+/// Set a widget callback using a C style API
 /// # Safety
 /// The function involves dereferencing externally provided raw pointers
 pub unsafe fn set_raw_callback<W>(

@@ -20,6 +20,10 @@ Why choose FLTK?
 - Provides around 80 customizable widgets. 
 - Has inbuilt image support.
 
+Known issues:
+- Non-native look and feel.
+- Poor RTL language support.
+
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 
 - [Link](https://github.com/fltk/fltk) to the official FLTK repository.

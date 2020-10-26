@@ -151,8 +151,11 @@ Fl_Tiled_Image *Fl_Tiled_Image_new(Fl_Image *i, int w, int h) {
 }
 
 IMAGE_DEFINE(Fl_RGB_Image)
+
 Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int depth) {
-    return new Fl_RGB_Image(bits, W, H, depth);
+    auto img = new Fl_RGB_Image(bits, W, H, depth);
+    img->alloc_array = 1;
+    return img;
 }
 
 void Fl_Shared_Image_draw(Fl_Shared_Image *self, int X, int Y, int W, int H) {
