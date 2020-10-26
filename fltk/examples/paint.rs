@@ -18,21 +18,20 @@ fn main() {
     set_draw_color(Color::White);
     draw_rectf(0, 0, 790, 590);
     offs.end();
-
-    let mut frame_c = frame.clone();
+    
     let offs = Rc::from(RefCell::from(offs));
     let offs_rc = offs.clone();
 
-    frame.draw(Box::new(move || {
+    frame.draw(move || {
         if offs_rc.borrow().is_valid() {
             offs_rc.borrow().copy(5, 5, 790, 590, 0, 0);
         }
-    }));
+    });
 
     let mut x = 0;
     let mut y = 0;
 
-    frame_c.handle(Box::new(move |ev| {
+    frame.handle2(move |f, ev| {
         // println!("{:?}", ev);
         // println!("coords {:?}", app::event_coords());
         // println!("get mouse {:?}", app::get_mouse());
@@ -47,7 +46,7 @@ fn main() {
                 y = coords.1;
                 draw_point(x, y);
                 offs.borrow().end();
-                frame.redraw();
+                f.redraw();
                 true
             }
             Event::Drag => {
@@ -57,12 +56,12 @@ fn main() {
                 x = coords.0;
                 y = coords.1;
                 offs.borrow().end();
-                frame.redraw();
+                f.redraw();
                 true
             }
             _ => false,
         }
-    }));
+    });
 
     app.run().unwrap();
 }

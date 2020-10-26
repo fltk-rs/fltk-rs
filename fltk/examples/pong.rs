@@ -35,13 +35,13 @@ fn main() {
     let paddle_c = paddle_pos.clone();
 
     // This is called whenever the window is drawn and redrawn (in the event loop)
-    wind.draw(Box::new(move || {
+    wind.draw(move || {
         draw::set_draw_color(Color::White);
         draw::draw_rectf(*paddle_c.borrow(), 540, 160, 20);
-    }));
+    });
 
     let paddle_c = paddle_pos.clone();
-    wind.handle(Box::new(move |ev| {
+    wind.handle(move |ev| {
         match ev {
             enums::Event::Move => {
                 // Mouse's x position relative to the paddle's center
@@ -50,9 +50,9 @@ fn main() {
             }
             _ => false,
         }
-    }));
+    });
 
-    while app.wait().unwrap() {
+    while app.wait() {
         ball.pos.0 += 2 * ball.dir.0 as i32; // The increment in x position
         ball.pos.1 += 2 * ball.dir.1 as i32; // The increment in y position
         if ball.pos.1 == 540 - 40

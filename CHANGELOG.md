@@ -1,8 +1,11 @@
 # Changelog
 
-## [0.9.8] - Unreleased
+## [0.10.0] - Unreleased
 ### Changes
 - Add WidgetExt::draw2() and ::handle2() both of which expose the widget in the closure arguments.
+- Remove the requirement to box callbacks.
+- Passing CString to C/C++ should not panic on inner null characters.
+- App::wait() returns bool instead of Result since it doesn't error out.
 
 ## [0.9.7] - 2020-10-20
 ### Changes

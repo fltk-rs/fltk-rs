@@ -66,7 +66,14 @@ impl MenuItem {
             let sz = choices.len();
             let mut temp: Vec<*mut raw::c_char> = vec![];
             for &choice in choices {
-                temp.push(CString::new(choice).unwrap().into_raw());
+                let c = match CString::new(choice) {
+                    Ok(v) => v,
+                    Err(r) => {
+                        let i = r.nul_position();
+                        CString::new(&r.into_vec()[0..i]).unwrap()
+                    }
+                };
+                temp.push(c.into_raw());
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
@@ -295,6 +302,7 @@ impl MenuItem {
         } else {
             let x = ptr as *mut Box<dyn FnMut()>;
             let x = Box::from_raw(x);
+            Fl_Menu_Item_set_user_data(self._inner, std::ptr::null_mut());
             Some(*x)
         }
     }
@@ -307,7 +315,7 @@ impl MenuItem {
     }
 
     /// Set a callback for the menu item
-    pub fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
+    pub fn set_callback<F: FnMut()>(&mut self, cb: F) {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
@@ -319,7 +327,7 @@ impl MenuItem {
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
             self.unset_callback();
-            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: fltk_sys::menu::Fl_Callback = Some(shim);
             Fl_Menu_Item_callback(self._inner, callback, data);
@@ -328,7 +336,7 @@ impl MenuItem {
 
     /// Use a sender to send a message during callback
     pub fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
-        self.set_callback(Box::new(move || sender.send(msg)));
+        self.set_callback(move || sender.send(msg));
     }
 
     /// Manually unset a callback
@@ -348,7 +356,7 @@ impl MenuItem {
         unsafe {
             self.unset_callback();
         }
-        self.set_callback(Box::new(move || { /* do nothing */ }));
+        self.set_callback(move || { /* do nothing */ });
     }
 
     /// Check if a menu item was deleted

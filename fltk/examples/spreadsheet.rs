@@ -54,7 +54,7 @@ fn main() {
     let data_c = data.clone();
 
     // Called when the table is drawn then when it's redrawn due to events
-    table.draw_cell(Box::new(move |ctx, row, col, x, y, w, h| match ctx {
+    table.draw_cell(move |ctx, row, col, x, y, w, h| match ctx {
         table::TableContext::StartPage => draw::set_font(Font::Helvetica, 14),
         table::TableContext::ColHeader => {
             draw_header(&format!("{}", (col + 65) as u8 as char), x, y, w, h)
@@ -74,12 +74,12 @@ fn main() {
             );
         }
         _ => (),
-    }));
+    });
 
     let cell_c = cell.clone();
     let mut inp_c = inp.clone();
 
-    table.handle(Box::new(move |ev| match ev {
+    table.handle(move |ev| match ev {
         Event::Push => {
             if app::event_clicks() { // double clicks
                 let c = cell_c.borrow();
@@ -90,9 +90,9 @@ fn main() {
             false
         }
         _ => false,
-    }));
+    });
 
-    wind.handle(Box::new(move |ev| match ev {
+    wind.handle(move |ev| match ev {
         Event::KeyDown => {
             if app::event_key() == Key::Enter { // Press enter to store the data into the cell
                 let c = cell.borrow();
@@ -105,13 +105,13 @@ fn main() {
             false
         }
         _ => false,
-    }));
+    });
 
-    wind.set_callback(Box::new(|| {
+    wind.set_callback(|| {
         if app::event() == Event::Close { // Close only when the close button is clicked
             app::quit();
         }
-    }));
+    });
 
     app.run().unwrap();
 }

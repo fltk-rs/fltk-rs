@@ -23,7 +23,7 @@ fn main() {
     inp1.emit(s, true);
     inp2.emit(s, false);
 
-    while app.wait().unwrap() {
+    while app.wait() {
         let inp1_val: f64 = if inp1.value().is_empty() {
             0.0
         } else {

@@ -179,7 +179,7 @@ fn main() {
 
     but_dot.emit(s, Message::Dot);
 
-    while app.wait().unwrap() {
+    while app.wait() {
         if let Some(val) = r.recv(){
             match val {
                 Message::Number(num) => {

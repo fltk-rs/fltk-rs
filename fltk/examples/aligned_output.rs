@@ -16,13 +16,13 @@ impl MyOutput {
             val: Rc::from(RefCell::from(String::from(""))),
         };
         let v = o.val.clone();
-        o.f.draw(Box::new(move || {
+        o.f.draw(move || {
             draw::push_clip(x, y, width, height);
             draw::draw_box(FrameType::DownBox, x, y, width, height, Color::White);
             draw::set_draw_color(Color::Black);
             draw::draw_text2(&v.borrow(), x, y, width, height, align);
             draw::pop_clip();
-        }));
+        });
         o
     }
     pub fn set_value(&mut self, val: &str) {
@@ -52,8 +52,8 @@ fn main() {
     let mut but = button::Button::new(160, 200, 80, 40, "Click Me!");
     win.end();
     win.show();
-    but.set_callback(Box::new(move || {
+    but.set_callback(move || {
         out.set_value("Clicked!");
-    }));
+    });
     app.run().unwrap();
 }

@@ -15,6 +15,7 @@ pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 /// The fonts associated with the application
 pub(crate) static mut FONTS: Vec<String> = Vec::new();
 
+/// Currently loaded fonts
 static mut LOADED_FONT: Option<&str> = None;
 
 /// Runs the event loop
@@ -58,7 +59,7 @@ pub fn set_scheme(scheme: Scheme) {
         Scheme::Gleam => "gleam",
         Scheme::Plastic => "plastic",
     };
-    let name_str = CString::new(name_str).unwrap();
+    let name_str = match CString::new(name_str) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
     unsafe { Fl_set_scheme(name_str.as_ptr()) }
 }
 
@@ -87,14 +88,14 @@ pub fn unlock() {
 }
 
 /// Awakens the main UI thread with a callback
-pub fn awake(cb: Box<dyn FnMut()>) {
+pub fn awake<F: FnMut()>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Fl_Awake_Handler = Some(shim);
         Fl_awake(callback, data);
@@ -107,6 +108,8 @@ pub struct App {}
 
 impl App {
     /// Instantiates an App type
+    /// # Panics
+    /// If the current environment lacks threading support. Practically this should never happen!
     pub fn default() -> App {
         register_images();
         init_all();
@@ -157,7 +160,7 @@ impl App {
     }
 
     /// Wait for incoming messages
-    pub fn wait(&self) -> Result<bool, FltkError> {
+    pub fn wait(&self) -> bool {
         wait()
     }
 
@@ -203,14 +206,14 @@ impl App {
     }
 
     /// Awakens the main UI thread with a callback
-    pub fn awake(&self, cb: Box<dyn FnMut()>) {
+    pub fn awake<F: FnMut()>(&self, cb: F) {
         unsafe {
             unsafe extern "C" fn shim(data: *mut raw::c_void) {
                 let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
                 let f: &mut (dyn FnMut()) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
-            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: Fl_Awake_Handler = Some(shim);
             Fl_awake(callback, data);
@@ -486,12 +489,9 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 }
 
 /// Starts waiting for events
-pub fn wait() -> Result<bool, FltkError> {
+pub fn wait() -> bool {
     unsafe {
-        Ok(match Fl_wait() {
-            0 => false,
-            _ => true,
-        })
+        Fl_wait() != 0
     }
 }
 
@@ -653,14 +653,14 @@ pub fn quit() {
 }
 
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
-pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
+pub fn add_timeout<F: FnMut()>(tm: f64, cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         fltk_sys::fl::Fl_add_timeout(tm, callback, data);
@@ -670,14 +670,14 @@ pub fn add_timeout(tm: f64, cb: Box<dyn FnMut()>) {
 /// Repeats a timeout callback from the expiration of the previous timeout
 /// You may only call this method inside a timeout callback.
 /// The timeout duration `tm` is indicated in seconds
-pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
+pub fn repeat_timeout<F: FnMut()>(tm: f64, cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         fltk_sys::fl::Fl_repeat_timeout(tm, callback, data);
@@ -685,14 +685,14 @@ pub fn repeat_timeout(tm: f64, cb: Box<dyn FnMut()>) {
 }
 
 /// Removes a timeout callback
-pub fn remove_timeout(cb: Box<dyn FnMut()>) {
+pub fn remove_timeout<F: FnMut()>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         fltk_sys::fl::Fl_remove_timeout(callback, data);

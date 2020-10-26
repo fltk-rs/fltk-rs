@@ -138,7 +138,7 @@ impl Tree {
     /// Sets the root label
     pub fn set_root_label(&mut self, new_label: &str) {
         assert!(!self.was_deleted());
-        let new_label = CString::new(new_label).unwrap();
+        let new_label = match CString::new(new_label) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
         unsafe { Fl_Tree_root_label(self._inner, new_label.as_ptr()) }
     }
 
@@ -1485,7 +1485,7 @@ impl TreeItem {
     /// Remove child using its name
     pub fn remove_child(&mut self, new_label: &str) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
-        let new_label = CString::new(new_label).unwrap();
+        let new_label = match CString::new(new_label) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
         unsafe {
             match Fl_Tree_Item_remove_child(self._inner, new_label.as_ptr()) {
                 0 => Ok(()),

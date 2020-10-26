@@ -247,9 +247,9 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
                 CString::new(&r.into_vec()[0..i]).unwrap()
             }
         };
-        let b0 = CString::new(b0).unwrap();
-        let b1 = CString::new(b1).unwrap();
-        let b2 = CString::new(b2).unwrap();
+        let b0 = match CString::new(b0) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+        let b1 = match CString::new(b1) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+        let b2 = match CString::new(b2) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
         Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
     }
 }
@@ -573,7 +573,7 @@ impl FileChooser {
     }
 
     /// Sets the callback of the FileChooser
-    pub fn set_callback(&mut self, cb: Box<dyn FnMut()>) {
+    pub fn set_callback<F: FnMut()>(&mut self, cb: F) {
         assert!(!self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(_arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
@@ -581,7 +581,7 @@ impl FileChooser {
                 let f: &mut (dyn FnMut()) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
-            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: Option<
                 unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
@@ -855,6 +855,7 @@ impl FileChooser {
         } else {
             let x = ptr as *mut Box<dyn FnMut()>;
             let x = Box::from_raw(x);
+            Fl_File_Chooser_set_user_data(self._inner, std::ptr::null_mut());
             Some(*x)
         }
     }

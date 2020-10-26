@@ -25,16 +25,16 @@ fn main() {
     wind.show_with_args(&["-nokbd"]); // -nokbd is akin to .clear_visible_focus() on all widgets
 
     let mut frame1 = frame.clone();
-    but_inc.set_callback(Box::new(move || {
+    but_inc.set_callback(move || {
         let label = (frame1.label().parse::<i32>().unwrap() + 1).to_string();
         frame1.set_label(&label);
-    }));
+    });
 
     let mut frame1 = frame;
-    but_dec.set_callback(Box::new(move || {
+    but_dec.set_callback(move || {
         let label = (frame1.label().parse::<i32>().unwrap() - 1).to_string();
         frame1.set_label(&label);
-    }));
+    });
 
     // Theming
     wind.set_color(Color::from_u32(0xffebee));

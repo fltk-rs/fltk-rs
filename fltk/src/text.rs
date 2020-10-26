@@ -489,7 +489,7 @@ impl TextBuffer {
     /// Adds a modify callback
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
-    pub fn add_modify_callback(&mut self, cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>) {
+    pub fn add_modify_callback<F: FnMut(u32, u32, u32, u32, &str)>(&mut self, cb: F) {
         assert!(!self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
@@ -518,7 +518,7 @@ impl TextBuffer {
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_add_modify_callback(self._inner, callback, data);
@@ -528,7 +528,7 @@ impl TextBuffer {
     /// Removes a modify callback
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
-    pub fn remove_modify_callback(&mut self, cb: Box<dyn FnMut(u32, u32, u32, u32, &str)>) {
+    pub fn remove_modify_callback<F: FnMut(u32, u32, u32, u32, &str)>(&mut self, cb: F) {
         assert!(!self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
@@ -557,7 +557,7 @@ impl TextBuffer {
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(cb));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_remove_modify_callback(self._inner, callback, data);
