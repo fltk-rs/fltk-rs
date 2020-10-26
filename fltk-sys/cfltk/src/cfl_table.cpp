@@ -7,6 +7,95 @@
 #include <FL/Fl_Table.H>
 #include <FL/Fl_Table_Row.H>
 
+#define TABLE_CLASS(table)                                                                         \
+    struct table##_Derived : public table {                                                        \
+        void *ev_data_ = NULL;                                                                     \
+        void *draw_data_ = NULL;                                                                   \
+        void *draw_cell_data_ = NULL;                                                              \
+        typedef int (*handler)(int, void *data);                                                   \
+        handler inner_handler = NULL;                                                              \
+        typedef int (*handler2)(Fl_Widget *, int, void *data);                                     \
+        handler2 inner_handler2 = NULL;                                                            \
+        typedef void (*drawer)(void *data);                                                        \
+        drawer inner_drawer = NULL;                                                                \
+        typedef void (*drawer2)(Fl_Widget *, void *data);                                          \
+        drawer2 inner_drawer2 = NULL;                                                              \
+        typedef void (*cell_drawer)(int, int, int, int, int, int, int, void *data);                \
+        cell_drawer inner_cell_drawer = NULL;                                                      \
+        typedef void (*cell_drawer2)(Fl_Widget *, int, int, int, int, int, int, int, void *data);  \
+        cell_drawer2 inner_cell_drawer2 = NULL;                                                    \
+        table##_Derived(int x, int y, int w, int h, const char *title = 0)                         \
+            : table(x, y, w, h, title) {                                                           \
+        }                                                                                          \
+        operator table *() {                                                                       \
+            return (table *)this;                                                                  \
+        }                                                                                          \
+        void set_handler(handler h) {                                                              \
+            inner_handler = h;                                                                     \
+        }                                                                                          \
+        void set_handler2(handler2 h) {                                                            \
+            inner_handler2 = h;                                                                    \
+        }                                                                                          \
+        void set_handler_data(void *data) {                                                        \
+            ev_data_ = data;                                                                       \
+        }                                                                                          \
+        int handle(int event) override {                                                           \
+            int ret = table::handle(event);                                                        \
+            int local = 0;                                                                         \
+            if (ev_data_ && inner_handler) {                                                       \
+                local = inner_handler(event, ev_data_);                                            \
+                if (local == 0)                                                                    \
+                    return ret;                                                                    \
+                else                                                                               \
+                    return local;                                                                  \
+            } else if (ev_data_ && inner_handler2) {                                               \
+                local = inner_handler2(this, event, ev_data_);                                     \
+                if (local == 0)                                                                    \
+                    return ret;                                                                    \
+                else                                                                               \
+                    return local;                                                                  \
+            } else {                                                                               \
+                return ret;                                                                        \
+            }                                                                                      \
+        }                                                                                          \
+        void set_drawer(drawer h) {                                                                \
+            inner_drawer = h;                                                                      \
+        }                                                                                          \
+        void set_drawer2(drawer2 h) {                                                              \
+            inner_drawer2 = h;                                                                     \
+        }                                                                                          \
+        void set_drawer_data(void *data) {                                                         \
+            draw_data_ = data;                                                                     \
+        }                                                                                          \
+        void set_cell_drawer(cell_drawer h) {                                                      \
+            inner_cell_drawer = h;                                                                 \
+        }                                                                                          \
+        void set_cell_drawer2(cell_drawer2 h) {                                                    \
+            inner_cell_drawer2 = h;                                                                \
+        }                                                                                          \
+        void set_cell_drawer_data(void *data) {                                                    \
+            draw_cell_data_ = data;                                                                \
+        }                                                                                          \
+        void draw() override {                                                                     \
+            table::draw();                                                                         \
+            if (draw_data_ && inner_drawer)                                                        \
+                inner_drawer(draw_data_);                                                          \
+            else if (draw_data_ && inner_drawer2)                                                  \
+                inner_drawer2(this, draw_data_);                                                   \
+            else {                                                                                 \
+            }                                                                                      \
+        }                                                                                          \
+        void draw_cell(TableContext context, int R, int C, int X, int Y, int W, int H) override {  \
+            table::draw_cell(context, R, C, X, Y, W, H);                                           \
+            if (draw_cell_data_ && inner_cell_drawer)                                              \
+                inner_cell_drawer(context, R, C, X, Y, W, H, draw_cell_data_);                     \
+            else if (draw_cell_data_ && inner_cell_drawer2)                                        \
+                inner_cell_drawer2(this, context, R, C, X, Y, W, H, draw_cell_data_);              \
+            else {                                                                                 \
+            }                                                                                      \
+        }                                                                                          \
+    };
+
 #define TABLE_DEFINE(table)                                                                        \
     void table##_set_table_box(table *self, int val) {                                             \
         LOCK(self->table_box((Fl_Boxtype)val);)                                                    \
@@ -165,6 +254,12 @@
         LOCK(((table##_Derived *)self)->set_cell_drawer_data(data);                                \
              ((table##_Derived *)self)->set_cell_drawer(cb);)                                      \
     }                                                                                              \
+    void table##_set_draw_cell2(                                                                   \
+        table *self, void (*cb)(Fl_Widget *, int, int, int, int, int, int, int, void *),           \
+        void *data) {                                                                              \
+        LOCK(((table##_Derived *)self)->set_cell_drawer_data(data);                                \
+             ((table##_Derived *)self)->set_cell_drawer2(cb);)                                     \
+    }                                                                                              \
     void *table##_draw_cell_data(const table *self) {                                              \
         return ((table##_Derived *)self)->draw_cell_data_;                                         \
     }                                                                                              \
@@ -172,99 +267,7 @@
         LOCK(((table##_Derived *)self)->draw_cell_data_ = data)                                    \
     }
 
-struct Fl_Table_Derived : public Fl_Table {
-    void *ev_data_ = NULL;
-    void *draw_data_ = NULL;
-    void *draw_cell_data_ = NULL;
-
-    typedef int (*handler)(int, void *data);
-    handler inner_handler = NULL;
-    typedef int (*handler2)(Fl_Widget *, int, void *data);
-    handler2 inner_handler2 = NULL;
-    typedef void (*drawer)(void *data);
-    typedef void (*cell_drawer)(int, int, int, int, int, int, int, void *data);
-    drawer inner_drawer = NULL;
-    cell_drawer inner_cell_drawer = NULL;
-    typedef void (*drawer2)(Fl_Widget *, void *data);
-    drawer2 inner_drawer2 = NULL;
-    Fl_Table_Derived(int x, int y, int w, int h, const char *title = 0)
-        : Fl_Table(x, y, w, h, title) {
-    }
-
-    operator Fl_Table *() {
-        return (Fl_Table *)this;
-    }
-
-    void set_handler(handler h) {
-        inner_handler = h;
-    }
-
-    void set_handler2(handler2 h) {
-        inner_handler2 = h;
-    }
-
-    void set_handler_data(void *data) {
-        ev_data_ = data;
-    }
-
-    int handle(int event) override {
-        int ret = Fl_Table::handle(event);
-        int local = 0;
-        if (ev_data_ && inner_handler) {
-            local = inner_handler(event, ev_data_);
-            if (local == 0)
-                return ret;
-            else
-                return local;
-        } else if (ev_data_ && inner_handler2) {
-            local = inner_handler2(this, event, ev_data_);
-            if (local == 0)
-                return ret;
-            else
-                return local;
-        } else {
-            return ret;
-        }
-    }
-
-    void set_drawer(drawer h) {
-        inner_drawer = h;
-    }
-
-    void set_drawer2(drawer2 h) {
-        inner_drawer2 = h;
-    }
-
-    void set_drawer_data(void *data) {
-        draw_data_ = data;
-    }
-
-    void set_cell_drawer(cell_drawer h) {
-        inner_cell_drawer = h;
-    }
-
-    void set_cell_drawer_data(void *data) {
-        draw_cell_data_ = data;
-    }
-
-    void draw() override {
-        Fl_Table::draw();
-
-        if (draw_data_ && inner_drawer)
-            inner_drawer(draw_data_);
-        else if (draw_data_ && inner_drawer2)
-            inner_drawer2(this, draw_data_);
-        else {
-        }
-    }
-
-    void draw_cell(TableContext context, int R, int C, int X, int Y, int W, int H) override {
-        Fl_Table::draw_cell(context, R, C, X, Y, W, H);
-
-        if (draw_cell_data_ && inner_cell_drawer)
-            inner_cell_drawer(context, R, C, X, Y, W, H, draw_cell_data_);
-    }
-};
+TABLE_CLASS(Fl_Table)
 
 WIDGET_DEFINE(Fl_Table)
 
@@ -272,99 +275,7 @@ GROUP_DEFINE(Fl_Table)
 
 TABLE_DEFINE(Fl_Table)
 
-struct Fl_Table_Row_Derived : public Fl_Table_Row {
-    void *ev_data_ = NULL;
-    void *draw_data_ = NULL;
-    void *draw_cell_data_ = NULL;
-
-    typedef int (*handler)(int, void *data);
-    handler inner_handler = NULL;
-    typedef int (*handler2)(Fl_Widget *, int, void *data);
-    handler2 inner_handler2 = NULL;
-    typedef void (*drawer)(void *data);
-    typedef void (*cell_drawer)(int, int, int, int, int, int, int, void *data);
-    drawer inner_drawer = NULL;
-    cell_drawer inner_cell_drawer = NULL;
-    typedef void (*drawer2)(Fl_Widget *, void *data);
-    drawer2 inner_drawer2 = NULL;
-    Fl_Table_Row_Derived(int x, int y, int w, int h, const char *title = 0)
-        : Fl_Table_Row(x, y, w, h, title) {
-    }
-
-    operator Fl_Table_Row *() {
-        return (Fl_Table_Row *)this;
-    }
-
-    void set_handler(handler h) {
-        inner_handler = h;
-    }
-
-    void set_handler2(handler2 h) {
-        inner_handler2 = h;
-    }
-
-    void set_handler_data(void *data) {
-        ev_data_ = data;
-    }
-
-    int handle(int event) override {
-        int ret = Fl_Table_Row::handle(event);
-        int local = 0;
-        if (ev_data_ && inner_handler) {
-            local = inner_handler(event, ev_data_);
-            if (local == 0)
-                return ret;
-            else
-                return local;
-        } else if (ev_data_ && inner_handler2) {
-            local = inner_handler2(this, event, ev_data_);
-            if (local == 0)
-                return ret;
-            else
-                return local;
-        } else {
-            return ret;
-        }
-    }
-
-    void set_drawer(drawer h) {
-        inner_drawer = h;
-    }
-
-    void set_drawer2(drawer2 h) {
-        inner_drawer2 = h;
-    }
-
-    void set_drawer_data(void *data) {
-        draw_data_ = data;
-    }
-
-    void set_cell_drawer(cell_drawer h) {
-        inner_cell_drawer = h;
-    }
-
-    void set_cell_drawer_data(void *data) {
-        draw_cell_data_ = data;
-    }
-
-    void draw() override {
-        Fl_Table_Row::draw();
-
-        if (draw_data_ && inner_drawer)
-            inner_drawer(draw_data_);
-        else if (draw_data_ && inner_drawer2)
-            inner_drawer2(this, draw_data_);
-        else {
-        }
-    }
-
-    void draw_cell(TableContext context, int R, int C, int X, int Y, int W, int H) override {
-        Fl_Table::draw_cell(context, R, C, X, Y, W, H);
-
-        if (draw_cell_data_ && inner_cell_drawer)
-            inner_cell_drawer(context, R, C, X, Y, W, H, draw_cell_data_);
-    }
-};
+TABLE_CLASS(Fl_Table_Row)
 
 WIDGET_DEFINE(Fl_Table_Row)
 

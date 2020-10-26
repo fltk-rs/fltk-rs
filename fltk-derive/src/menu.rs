@@ -68,7 +68,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl MenuExt for #name {
             fn add<F: FnMut()>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
                 assert!(!self.was_deleted());
-                let temp = match CString::new(name) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let temp = CString::safe_new(name);
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -84,7 +84,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn insert<F: FnMut()>(&mut self, idx: u32, label: &str, shortcut: Shortcut, flag: MenuFlag, cb: F) {
                 assert!(!self.was_deleted());
-                let temp = match CString::new(label) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let temp = CString::safe_new(label);
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -132,7 +132,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn find_item(&self, name: &str) -> Option<MenuItem> {
                 assert!(!self.was_deleted());
-                let name = match CString::new(name) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let name = CString::safe_new(name);
                 unsafe {
                     let menu_item = #get_item(
                         self._inner,
@@ -160,7 +160,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn find_index(&self, label: &str) -> u32 {
                 assert!(!self.was_deleted());
-                let label = match CString::new(label) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let label = CString::safe_new(label);
                 unsafe {
                     #find_index(self._inner, label.as_ptr()) as u32
                 }
@@ -212,7 +212,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn add_choice(&mut self, text: &str) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let arg2 = match CString::new(text) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                    let arg2 = CString::safe_new(text);
                     #add_choice(self._inner, arg2.as_ptr() as *mut raw::c_char)
                 }
             }

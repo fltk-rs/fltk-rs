@@ -221,7 +221,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
         unsafe impl WidgetExt for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                let temp = match CString::new(title) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let temp = CString::safe_new(title);
                 unsafe {
                     let widget_ptr = #new(x, y, width, height, temp.into_raw());
                     assert!(!widget_ptr.is_null());
@@ -283,7 +283,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_label(&mut self, title: &str) {
                 assert!(!self.was_deleted());
-                let temp = match CString::new(title) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let temp = CString::safe_new(title);
                 unsafe {
                     #set_label(
                         self._inner,
@@ -387,7 +387,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_tooltip(&mut self, txt: &str) {
                 assert!(!self.was_deleted());
-                let txt = match CString::new(txt) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let txt = CString::safe_new(txt);
                 unsafe {
                     #set_tooltip(
                         self._inner,

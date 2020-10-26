@@ -49,19 +49,18 @@ fn main() {
     wind.end();
     wind.show();
 
-    let table_c = table.clone();
     let cell_c = cell.clone();
     let data_c = data.clone();
 
     // Called when the table is drawn then when it's redrawn due to events
-    table.draw_cell(move |ctx, row, col, x, y, w, h| match ctx {
+    table.draw_cell2(move |t, ctx, row, col, x, y, w, h| match ctx {
         table::TableContext::StartPage => draw::set_font(Font::Helvetica, 14),
         table::TableContext::ColHeader => {
             draw_header(&format!("{}", (col + 65) as u8 as char), x, y, w, h)
         } // Column titles
         table::TableContext::RowHeader => draw_header(&format!("{}", row + 1), x, y, w, h), // Row titles
         table::TableContext::Cell => {
-            if table_c.is_selected(row, col) {
+            if t.is_selected(row, col) {
                 cell_c.borrow_mut().select(row, col, x, y, w, h); // Captures the cell information
             }
             draw_data(
@@ -70,7 +69,7 @@ fn main() {
                 y,
                 w,
                 h,
-                table_c.is_selected(row, col),
+                t.is_selected(row, col),
             );
         }
         _ => (),

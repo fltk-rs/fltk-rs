@@ -304,7 +304,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn insert(&self, text: &str) {
-                let text = match CString::new(text) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let text = CString::safe_new(text);
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());

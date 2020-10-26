@@ -1,4 +1,5 @@
 pub use crate::enums::*;
+pub(crate) use crate::utils::*;
 use crate::image::Image;
 use crate::text::{StyleTableEntry, TextBuffer};
 use crate::widget::Widget;
@@ -900,6 +901,10 @@ pub unsafe trait TableExt: GroupExt {
     /// Override draw_cell
     /// callback args: TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
     fn draw_cell<F: FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>(&mut self, cb: F);
+    /// Override draw_cell
+    /// callback args: &mut self, TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
+    /// takes the widget as a closure argument
+    fn draw_cell2<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)>(&mut self, cb: F);
     /// INTERNAL: Retrieve the draw cell data
     /// # Safety
     /// Can return multiple mutable references to the draw_cell_data

@@ -146,13 +146,7 @@ impl FileDialog {
 
     /// Sets the title for the dialog
     pub fn set_title(&mut self, title: &str) {
-        let title = match CString::new(title) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let title = CString::safe_new(title);
         unsafe { Fl_Native_File_Chooser_set_title(self._inner, title.as_ptr()) }
     }
 
@@ -163,25 +157,13 @@ impl FileDialog {
     /// A list of separate wildcards with a "\n" between each (eg. "*.{cxx,H}\n*.txt")
     /// A list of descriptive names and wildcards (eg. "C++ Files\t*.{cxx,H}\nTxt Files\t*.txt")
     pub fn set_filter(&mut self, f: &str) {
-        let f = match CString::new(f) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let f = CString::safe_new(f);
         unsafe { Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr()) }
     }
 
     /// Sets the preset filter for the dialog
     pub fn set_preset_file(&mut self, f: &str) {
-        let f = match CString::new(f) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let f = CString::safe_new(f);
         unsafe { Fl_Native_File_Chooser_set_preset_file(self._inner, f.as_ptr()) }
     }
 
@@ -211,13 +193,7 @@ impl Drop for FileDialog {
 /// Displays a message box
 pub fn message(x: i32, y: i32, txt: &str) {
     unsafe {
-        let txt = match CString::new(txt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let txt = CString::safe_new(txt);
         Fl_message(x, y, txt.as_ptr())
     }
 }
@@ -225,13 +201,7 @@ pub fn message(x: i32, y: i32, txt: &str) {
 /// Displays an alert box
 pub fn alert(x: i32, y: i32, txt: &str) {
     unsafe {
-        let txt = match CString::new(txt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let txt = CString::safe_new(txt);
         Fl_alert(x, y, txt.as_ptr())
     }
 }
@@ -240,16 +210,10 @@ pub fn alert(x: i32, y: i32, txt: &str) {
 /// An empty choice will not be shown
 pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
     unsafe {
-        let txt = match CString::new(txt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
-        let b0 = match CString::new(b0) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
-        let b1 = match CString::new(b1) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
-        let b2 = match CString::new(b2) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+        let txt = CString::safe_new(txt);
+        let b0 = CString::safe_new(b0);
+        let b1 = CString::safe_new(b1);
+        let b2 = CString::safe_new(b2);
         Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
     }
 }
@@ -258,20 +222,8 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
 /// Can be used for gui io
 pub fn input(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     unsafe {
-        let temp = match CString::new(deflt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
-        let txt = match CString::new(txt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let temp = CString::safe_new(deflt);
+        let txt = CString::safe_new(txt);
         let x = Fl_input(x, y, txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
             None
@@ -288,20 +240,8 @@ pub fn input(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
 /// Shows an input box, but with hidden string
 pub fn password(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     unsafe {
-        let temp = match CString::new(deflt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
-        let txt = match CString::new(txt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let temp = CString::safe_new(deflt);
+        let txt = CString::safe_new(txt);
         let x = Fl_password(x, y, txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
             None
@@ -390,13 +330,7 @@ impl HelpDialog {
 
     /// Sets the value of the help dialog
     pub fn set_value(&mut self, f: &str) {
-        let f = match CString::new(f) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let f = CString::safe_new(f);
         unsafe { Fl_Help_Dialog_set_value(self._inner, f.as_ptr()) }
     }
 
@@ -491,27 +425,9 @@ impl std::ops::BitOr<FileChooserType> for FileChooserType {
 impl FileChooser {
     /// Instantiates a new FileChooser
     pub fn new(dir: &str, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
-        let dir = match CString::new(dir) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
-        let pattern = match CString::new(pattern) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
-        let title = match CString::new(title) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let dir = CString::safe_new(dir);
+        let pattern = CString::safe_new(pattern);
+        let title = CString::safe_new(title);
         unsafe {
             let ptr =
                 Fl_File_Chooser_new(dir.as_ptr(), pattern.as_ptr(), typ as i32, title.as_ptr());
@@ -611,13 +527,7 @@ impl FileChooser {
     /// Sets the directory of the FileChooser
     pub fn set_directory(&mut self, dir: &str) {
         assert!(!self._inner.is_null());
-        let dir = match CString::new(dir) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let dir = CString::safe_new(dir);
         unsafe { Fl_File_Chooser_set_directory(self._inner, dir.as_ptr()) }
     }
 
@@ -641,13 +551,7 @@ impl FileChooser {
     /// Sets the filter of the FileChooser
     pub fn set_filter(&mut self, pattern: &str) {
         assert!(!self._inner.is_null());
-        let pattern = match CString::new(pattern) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let pattern = CString::safe_new(pattern);
         unsafe { Fl_File_Chooser_set_filter(self._inner, pattern.as_ptr()) }
     }
 
@@ -701,13 +605,7 @@ impl FileChooser {
     /// Sets the label of the FileChooser
     pub fn set_label(&mut self, l: &str) {
         assert!(!self._inner.is_null());
-        let l = match CString::new(l) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let l = CString::safe_new(l);
         unsafe { Fl_File_Chooser_set_label(self._inner, l.as_ptr()) }
     }
 
@@ -729,13 +627,7 @@ impl FileChooser {
     /// Sets the label of the Ok button
     pub fn set_ok_label(&mut self, l: &str) {
         assert!(!self._inner.is_null());
-        let l = match CString::new(l) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let l = CString::safe_new(l);
         unsafe { Fl_File_Chooser_set_ok_label(self._inner, l.as_ptr()) }
     }
 
@@ -891,13 +783,7 @@ impl FileChooser {
     /// Sets the file or dir name chosen by the FileChooser
     pub fn set_value(&mut self, filename: &str) {
         assert!(!self._inner.is_null());
-        let filename = match CString::new(filename) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let filename = CString::safe_new(filename);
         unsafe { Fl_File_Chooser_set_value(self._inner, filename.as_ptr()) }
     }
 
@@ -930,20 +816,8 @@ impl Drop for FileChooser {
 /// Shows a directory chooser returning a String
 pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String> {
     unsafe {
-        let message = match CString::new(message) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
-        let fname = match CString::new(fname) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let message = CString::safe_new(message);
+        let fname = CString::safe_new(fname);
         let ptr = Fl_dir_chooser(message.as_ptr(), fname.as_ptr(), relative as i32);
         if ptr.is_null() {
             None
@@ -959,27 +833,9 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
 
 /// Shows a file chooser returning a String
 pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> Option<String> {
-    let message = match CString::new(message) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
-    let pattern = match CString::new(pattern) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
-    let dir = match CString::new(dir) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let message = CString::safe_new(message);
+    let pattern = CString::safe_new(pattern);
+    let dir = CString::safe_new(dir);
     unsafe {
         let ptr = Fl_file_chooser(
             message.as_ptr(),
@@ -1002,13 +858,7 @@ pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> 
 /// Spawns a color_chooser dialog. `cmode`: Optional mode for color chooser. Default is -1 if rgb mode.
 pub fn color_chooser(name: &str, cmode: i32) -> Option<(u8, u8, u8)> {
     unsafe {
-        let name = match CString::new(name) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let name = CString::safe_new(name);
         let mut r = 0;
         let mut g = 0;
         let mut b = 0;

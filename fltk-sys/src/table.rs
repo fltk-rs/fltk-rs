@@ -2723,6 +2723,25 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Table_set_draw_cell2(
+        self_: *mut Fl_Table,
+        arg1: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                arg2: libc::c_int,
+                arg3: libc::c_int,
+                arg4: libc::c_int,
+                arg5: libc::c_int,
+                arg6: libc::c_int,
+                arg7: libc::c_int,
+                arg8: libc::c_int,
+                arg9: *mut libc::c_void,
+            ),
+        >,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Table_draw_cell_data(self_: *const Fl_Table) -> *mut libc::c_void;
 }
 extern "C" {
@@ -3207,6 +3226,25 @@ extern "C" {
                 arg6: libc::c_int,
                 arg7: libc::c_int,
                 arg8: *mut libc::c_void,
+            ),
+        >,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_draw_cell2(
+        self_: *mut Fl_Table_Row,
+        arg1: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                arg2: libc::c_int,
+                arg3: libc::c_int,
+                arg4: libc::c_int,
+                arg5: libc::c_int,
+                arg6: libc::c_int,
+                arg7: libc::c_int,
+                arg8: libc::c_int,
+                arg9: *mut libc::c_void,
             ),
         >,
         data: *mut libc::c_void,

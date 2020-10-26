@@ -185,6 +185,7 @@ pub mod tree;
 pub mod valuator;
 pub mod widget;
 pub mod window;
+pub(crate) mod utils;
 
 pub use enums::*;
 pub use prelude::*;

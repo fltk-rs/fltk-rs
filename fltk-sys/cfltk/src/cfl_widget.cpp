@@ -17,6 +17,7 @@ struct Fl_Widget_Derived : public Fl_Widget {
     drawer inner_drawer = NULL;
     typedef void (*drawer2)(Fl_Widget *, void *data);
     drawer2 inner_drawer2 = NULL;
+    
     Fl_Widget_Derived(int x, int y, int w, int h, const char *title = 0)
         : Fl_Widget(x, y, w, h, title) {
     }

@@ -79,13 +79,7 @@ impl Window {
             let len = args.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in args {
-                let c = match CString::new(arg.as_str()) {
-                    Ok(v) => v,
-                    Err(r) => {
-                        let i = r.nul_position();
-                        CString::new(&r.into_vec()[0..i]).unwrap()
-                    }
-                };
+                let c = CString::safe_new(arg.as_str());
                 v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
@@ -119,13 +113,7 @@ impl Window {
             let len = temp.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in temp {
-                let c = match CString::new(arg) {
-                    Ok(v) => v,
-                    Err(r) => {
-                        let i = r.nul_position();
-                        CString::new(&r.into_vec()[0..i]).unwrap()
-                    }
-                };
+                let c = CString::safe_new(arg);
                 v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
@@ -175,13 +163,7 @@ impl SingleWindow {
             let len = args.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in args {
-                let c = match CString::new(arg.as_str()) {
-                    Ok(v) => v,
-                    Err(r) => {
-                        let i = r.nul_position();
-                        CString::new(&r.into_vec()[0..i]).unwrap()
-                    }
-                };
+                let c = CString::safe_new(arg.as_str());
                 v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
@@ -215,13 +197,7 @@ impl SingleWindow {
             let len = temp.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in temp {
-                                let c = match CString::new(arg) {
-                    Ok(v) => v,
-                    Err(r) => {
-                        let i = r.nul_position();
-                        CString::new(&r.into_vec()[0..i]).unwrap()
-                    }
-                };
+                                let c = CString::safe_new(arg);
                 v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
@@ -263,13 +239,7 @@ impl DoubleWindow {
             let len = args.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in args {
-                let c = match CString::new(arg.as_str()) {
-                    Ok(v) => v,
-                    Err(r) => {
-                        let i = r.nul_position();
-                        CString::new(&r.into_vec()[0..i]).unwrap()
-                    }
-                };
+                let c = CString::safe_new(arg.as_str());
                 v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);
@@ -303,13 +273,7 @@ impl DoubleWindow {
             let len = temp.len() as i32;
             let mut v: Vec<*mut raw::c_char> = vec![];
             for arg in temp {
-                                let c = match CString::new(arg) {
-                    Ok(v) => v,
-                    Err(r) => {
-                        let i = r.nul_position();
-                        CString::new(&r.into_vec()[0..i]).unwrap()
-                    }
-                };
+                                let c = CString::safe_new(arg);
                 v.push(c.into_raw() as *mut raw::c_char);
             }
             let mut v = mem::ManuallyDrop::new(v);

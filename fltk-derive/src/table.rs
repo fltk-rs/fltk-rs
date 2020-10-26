@@ -199,6 +199,10 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_draw_cell").as_str(),
         name.span(),
     );
+    let set_draw_cell2 = Ident::new(
+        format!("{}_{}", name_str, "set_draw_cell2").as_str(),
+        name.span(),
+    );
     let draw_cell_data = Ident::new(
         format!("{}_{}", name_str, "draw_cell_data").as_str(),
         name.span(),
@@ -615,6 +619,26 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_cell_callback = Some(shim);
                     #set_draw_cell(self._inner, callback, data);
+                }
+            }
+
+            fn draw_cell2<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)>(&mut self, cb: F) {
+                assert!(!self.was_deleted());
+                pub type custom_draw_cell_callback2 =
+                    Option<unsafe extern "C" fn(wid: *mut Fl_Widget, ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void)>;
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void) {
+                        let mut wid = #name::from_widget_ptr(wid as *mut _);
+                        let ctx: TableContext = mem::transmute(ctx);
+                        let a: *mut Box<dyn FnMut(&mut #name, crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = data as *mut Box<dyn FnMut(&mut #name, crate::table::TableContext, i32, i32, i32, i32, i32, i32)>;
+                        let f: &mut (dyn FnMut(&mut #name, crate::table::TableContext, i32, i32, i32, i32, i32, i32)) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid, ctx, arg2, arg3, arg4, arg5, arg6, arg7)));
+                    }
+                    self.unset_draw_cell_callback();
+                    let a: *mut Box<dyn FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: custom_draw_cell_callback2 = Some(shim);
+                    #set_draw_cell2(self._inner, callback, data);
                 }
             }
 

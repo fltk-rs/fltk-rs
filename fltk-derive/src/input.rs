@@ -80,7 +80,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_value(&self, val: &str) {
                 assert!(!self.was_deleted());
-                let temp = match CString::new(val) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let temp = CString::safe_new(val);
                 unsafe {
                     #set_value(self._inner, temp.as_ptr());
                 }
@@ -142,7 +142,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn replace(&mut self, beg: u32, end: u32, val: &str) -> Result<(), FltkError> {
                 debug_assert!(beg <= std::isize::MAX as u32 && end <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 assert!(!self.was_deleted());
-                let val = match CString::new(val) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let val = CString::safe_new(val);
                 unsafe {
                     let x = #replace(self._inner, beg as i32, end as i32, val.as_ptr(), 0);
                     if x == 0 {
@@ -154,7 +154,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
 
             fn insert(&mut self, txt: &str) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
-                let txt = match CString::new(txt) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let txt = CString::safe_new(txt);
                 unsafe {
                     let x = #insert(self._inner, txt.as_ptr(), 0);
                     if x == 0 {
@@ -166,7 +166,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
 
             fn append(&mut self, txt: &str) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
-                let txt = match CString::new(txt) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+                let txt = CString::safe_new(txt);
                 unsafe {
                     let x = #append(self._inner,  txt.as_ptr(), 0, 0);
                     if x == 0 {

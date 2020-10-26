@@ -517,25 +517,13 @@ pub fn descent() -> i32 {
 
 /// Returns the typographical width of a string
 pub fn width(txt: &str) -> f64 {
-    let txt = match CString::new(txt) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let txt = CString::safe_new(txt);
     unsafe { Fl_width(txt.as_ptr()) }
 }
 
 /// Returns the typographical width of a sequence of n characters
 pub fn width2(txt: &str, n: i32) -> f64 {
-    let txt = match CString::new(txt) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let txt = CString::safe_new(txt);
     unsafe { Fl_width2(txt.as_ptr(), n) }
 }
 
@@ -546,13 +534,7 @@ pub fn char_width(c: char) -> f64 {
 
 /// Converts text from Windows/X11 latin1 character set to local encoding
 pub fn latin1_to_local(txt: &str, n: i32) -> String {
-    let txt = match CString::new(txt) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let txt = CString::safe_new(txt);
     unsafe {
         let x = Fl_latin1_to_local(txt.as_ptr(), n);
         assert!(!x.is_null());
@@ -564,13 +546,7 @@ pub fn latin1_to_local(txt: &str, n: i32) -> String {
 
 /// Converts text from local encoding to Windowx/X11 latin1 character set
 pub fn local_to_latin1(txt: &str, n: i32) -> String {
-    let txt = match CString::new(txt) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let txt = CString::safe_new(txt);
     unsafe {
         let x = Fl_local_to_latin1(txt.as_ptr(), n);
         assert!(!x.is_null());
@@ -582,75 +558,39 @@ pub fn local_to_latin1(txt: &str, n: i32) -> String {
 
 /// Draws a string starting at the given x, y location
 pub fn draw_text(txt: &str, x: i32, y: i32) {
-    let txt = match CString::new(txt) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let txt = CString::safe_new(txt);
     unsafe { Fl_draw(txt.as_ptr(), x, y) }
 }
 
 /// Draws a string starting at the given x, y location with width and height and alignment
 pub fn draw_text2(string: &str, x: i32, y: i32, width: i32, height: i32, align: Align) {
-    let s = match CString::new(string) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let s = CString::safe_new(string);
     unsafe { Fl_draw_text2(s.as_ptr(), x, y, width, height, align as i32) }
 }
 
 /// Draws a string starting at the given x, y location, rotated to an angle
 pub fn draw_text_angled(angle: i32, txt: &str, x: i32, y: i32) {
-    let txt = match CString::new(txt) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let txt = CString::safe_new(txt);
     unsafe { Fl_draw2(angle, txt.as_ptr(), x, y) }
 }
 
 /// Draws a UTF-8 string right to left starting at the given x, y location
 pub fn rtl_draw(txt: &str, x: i32, y: i32) {
-    let n = txt.len() as i32;
-    let txt = match CString::new(txt) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
-    unsafe { Fl_rtl_draw(txt.as_ptr(), n, x, y) }
+    let len = txt.len() as i32;
+    let txt = CString::safe_new(txt);
+    unsafe { Fl_rtl_draw(txt.as_ptr(), len, x, y) }
 }
 
 /// Draws a frame with text
 pub fn draw_frame(string: &str, x: i32, y: i32, width: i32, height: i32) {
-    let s = match CString::new(string) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let s = CString::safe_new(string);
     unsafe { Fl_frame(s.as_ptr(), x, y, width, height) }
 }
 
 /// Draws a frame with text.
 /// Differs from frame() by the order of the line segments
 pub fn draw_frame2(string: &str, x: i32, y: i32, width: i32, height: i32) {
-    let s = match CString::new(string) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let s = CString::safe_new(string);
     unsafe { Fl_frame2(s.as_ptr(), x, y, width, height) }
 }
 

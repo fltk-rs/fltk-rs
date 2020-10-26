@@ -60,13 +60,7 @@ impl TextBuffer {
     pub fn set_text(&mut self, txt: &str) {
         assert!(!self._inner.is_null());
         unsafe {
-            let txt = match CString::new(txt) {
-                Ok(v) => v,
-                Err(r) => {
-                    let i = r.nul_position();
-                    CString::new(&r.into_vec()[0..i]).unwrap()
-                }
-            };
+            let txt = CString::safe_new(txt);
             Fl_Text_Buffer_set_text(self._inner, txt.as_ptr())
         }
     }
@@ -86,13 +80,7 @@ impl TextBuffer {
     /// Appends to the buffer
     pub fn append(&mut self, text: &str) {
         assert!(!self._inner.is_null());
-        let text = match CString::new(text) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_append(self._inner, text.as_ptr()) }
     }
 
@@ -150,13 +138,7 @@ impl TextBuffer {
             pos <= std::isize::MAX as u32,
             "u32 entries must be < std::isize::MAX for compatibility!"
         );
-        let text = match CString::new(text) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_insert(self._inner, pos as i32, text.as_ptr()) }
     }
 
@@ -171,13 +153,7 @@ impl TextBuffer {
             end <= std::isize::MAX as u32,
             "u32 entries must be < std::isize::MAX for compatibility!"
         );
-        let text = match CString::new(text) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_replace(self._inner, start as i32, end as i32, text.as_ptr()) }
     }
 
@@ -351,13 +327,7 @@ impl TextBuffer {
     /// Replaces selection
     pub fn replace_selection(&mut self, text: &str) {
         assert!(!self._inner.is_null());
-        let text = match CString::new(text) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_replace_selection(self._inner, text.as_ptr()) }
     }
 
@@ -571,9 +541,6 @@ unsafe impl Send for TextBuffer {}
 impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {
         assert!(!self._inner.is_null());
-        // let mut temp = TextBuffer::default();
-        // temp.copy(self, 0, 0, self.length());
-        // temp
         TextBuffer {
             _inner: self._inner,
         }
@@ -937,13 +904,7 @@ impl SimpleTerminal {
     pub fn append(&mut self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
-        let s = match CString::new(s) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let s = CString::safe_new(s);
         unsafe { Fl_Simple_Terminal_append(self._inner, s.into_raw()) }
     }
 
@@ -951,13 +912,7 @@ impl SimpleTerminal {
     pub fn set_text(&mut self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
-        let s = match CString::new(s) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let s = CString::safe_new(s);
         unsafe { Fl_Simple_Terminal_set_text(self._inner, s.into_raw()) }
     }
 

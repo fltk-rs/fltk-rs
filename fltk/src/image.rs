@@ -242,13 +242,7 @@ impl SvgImage {
         if data.is_empty() {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
         } else {
-            let data = match CString::new(data) {
-                Ok(v) => v,
-                Err(r) => {
-                    let i = r.nul_position();
-                    CString::new(&r.into_vec()[0..i]).unwrap()
-                }
-            };
+            let data = CString::safe_new(data);
             unsafe {
                 let x = Fl_SVG_Image_from(data.as_ptr());
                 if x.is_null() {

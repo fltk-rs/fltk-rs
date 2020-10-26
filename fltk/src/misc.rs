@@ -161,13 +161,7 @@ impl Chart {
     /// Adds an entry
     pub fn add(&mut self, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
-        let txt = match CString::new(txt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_add(self._inner, val, txt.as_ptr(), col as u32) }
     }
 
@@ -178,13 +172,7 @@ impl Chart {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        let txt = match CString::new(txt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_insert(self._inner, idx as i32, val, txt.as_ptr(), col as u32) }
     }
 
@@ -195,13 +183,7 @@ impl Chart {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        let txt = match CString::new(txt) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_replace(self._inner, idx as i32, val, txt.as_ptr(), col as u32) }
     }
 
@@ -410,13 +392,7 @@ impl Tooltip {
     /// Defines the area of the tooltip
     pub fn enter_area<W: WidgetExt>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
         assert!(!widget.was_deleted());
-        let tip = match CString::new(tip) {
-            Ok(v) => v,
-            Err(r) => {
-                let i = r.nul_position();
-                CString::new(&r.into_vec()[0..i]).unwrap()
-            }
-        };
+        let tip = CString::safe_new(tip);
         unsafe {
             Fl_Tooltip_enter_area(
                 widget.as_widget_ptr() as *mut Fl_Widget,

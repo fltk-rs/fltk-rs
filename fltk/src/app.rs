@@ -59,7 +59,7 @@ pub fn set_scheme(scheme: Scheme) {
         Scheme::Gleam => "gleam",
         Scheme::Plastic => "plastic",
     };
-    let name_str = match CString::new(name_str) { Ok(v) => v, Err(r) => { let i = r.nul_position(); CString::new(&r.into_vec()[0..i]).unwrap() },};
+    let name_str = CString::safe_new(name_str);
     unsafe { Fl_set_scheme(name_str.as_ptr()) }
 }
 
@@ -432,13 +432,7 @@ pub unsafe fn set_raw_callback<W>(
 
 /// Initializes loaded fonts of a certain pattern ```name```
 pub fn set_fonts(name: &str) -> u8 {
-    let name = match CString::new(name) {
-        Ok(v) => v,
-        Err(r) => {
-            let i = r.nul_position();
-            CString::new(&r.into_vec()[0..i]).unwrap()
-        }
-    };
+    let name = CString::safe_new(name);
     unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
 
