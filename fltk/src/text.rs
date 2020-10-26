@@ -459,7 +459,7 @@ impl TextBuffer {
     /// Adds a modify callback
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
-    pub fn add_modify_callback<F: FnMut(u32, u32, u32, u32, &str)>(&mut self, cb: F) {
+    pub fn add_modify_callback<F: FnMut(u32, u32, u32, u32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
@@ -498,7 +498,7 @@ impl TextBuffer {
     /// Removes a modify callback
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
-    pub fn remove_modify_callback<F: FnMut(u32, u32, u32, u32, &str)>(&mut self, cb: F) {
+    pub fn remove_modify_callback<F: FnMut(u32, u32, u32, u32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(

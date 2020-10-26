@@ -88,7 +88,7 @@ pub fn unlock() {
 }
 
 /// Awakens the main UI thread with a callback
-pub fn awake<F: FnMut()>(cb: F) {
+pub fn awake<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -206,7 +206,7 @@ impl App {
     }
 
     /// Awakens the main UI thread with a callback
-    pub fn awake<F: FnMut()>(&self, cb: F) {
+    pub fn awake<F: FnMut() + 'static>(&self, cb: F) {
         unsafe {
             unsafe extern "C" fn shim(data: *mut raw::c_void) {
                 let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -647,7 +647,7 @@ pub fn quit() {
 }
 
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
-pub fn add_timeout<F: FnMut()>(tm: f64, cb: F) {
+pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -664,7 +664,7 @@ pub fn add_timeout<F: FnMut()>(tm: f64, cb: F) {
 /// Repeats a timeout callback from the expiration of the previous timeout
 /// You may only call this method inside a timeout callback.
 /// The timeout duration `tm` is indicated in seconds
-pub fn repeat_timeout<F: FnMut()>(tm: f64, cb: F) {
+pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -679,7 +679,7 @@ pub fn repeat_timeout<F: FnMut()>(tm: f64, cb: F) {
 }
 
 /// Removes a timeout callback
-pub fn remove_timeout<F: FnMut()>(cb: F) {
+pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;

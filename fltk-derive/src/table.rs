@@ -603,7 +603,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn draw_cell<F: FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>(&mut self, cb: F) {
+            fn draw_cell<F: FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 pub type custom_draw_cell_callback =
                     Option<unsafe extern "C" fn(ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void)>;
@@ -622,7 +622,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn draw_cell2<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)>(&mut self, cb: F) {
+            fn draw_cell2<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 pub type custom_draw_cell_callback2 =
                     Option<unsafe extern "C" fn(wid: *mut Fl_Widget, ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void)>;

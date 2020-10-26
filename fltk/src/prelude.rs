@@ -185,24 +185,24 @@ pub unsafe trait WidgetExt {
     /// Gets the image associated with the widget
     fn deimage(&self) -> Option<Image>;
     /// Sets the callback when the widget is triggered (clicks for example)
-    fn set_callback<F: FnMut()>(&mut self, cb: F);
+    fn set_callback<F: FnMut() + 'static>(&mut self, cb: F);
     /// Sets the callback when the widget is triggered (clicks for example)
     /// takes the widget as a closure argument
-    fn set_callback2<F: FnMut(&mut Self)>(&mut self, cb: F);
+    fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
-    fn handle<F: FnMut(Event) -> bool>(&mut self, cb: F);
+    fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
     /// takes the widget as a closure argument
-    fn handle2<F: FnMut(&mut Self, Event) -> bool>(&mut self, cb: F);
+    fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
     /// Set a custom draw method
-    fn draw<F: FnMut()>(&mut self, cb: F);
+    fn draw<F: FnMut() + 'static>(&mut self, cb: F);
     /// Set a custom draw method
     /// takes the widget as a closure argument
-    fn draw2<F: FnMut(&mut Self)>(&mut self, cb: F);
+    fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
     /// Returns the parent of the widget
     fn parent(&self) -> Option<Widget>;
     /// Gets the selection color of the widget
@@ -447,7 +447,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Add a menu item along with its callback
     /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
-    fn add<F: FnMut()>(
+    fn add<F: FnMut() + 'static>(
         &mut self,
         label: &str,
         shortcut: Shortcut,
@@ -457,7 +457,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Inserts a menu item at an index along with its callback
     /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
-    fn insert<F: FnMut()>(
+    fn insert<F: FnMut() + 'static>(
         &mut self,
         idx: u32,
         label: &str,
@@ -900,11 +900,11 @@ pub unsafe trait TableExt: GroupExt {
     fn tab_cell_nav(&self) -> u32;
     /// Override draw_cell
     /// callback args: TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
-    fn draw_cell<F: FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>(&mut self, cb: F);
+    fn draw_cell<F: FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
     /// Override draw_cell
     /// callback args: &mut self, TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
     /// takes the widget as a closure argument
-    fn draw_cell2<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)>(&mut self, cb: F);
+    fn draw_cell2<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
     /// INTERNAL: Retrieve the draw cell data
     /// # Safety
     /// Can return multiple mutable references to the draw_cell_data

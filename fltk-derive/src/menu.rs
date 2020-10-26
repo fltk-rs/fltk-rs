@@ -66,7 +66,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         unsafe impl MenuExt for #name {
-            fn add<F: FnMut()>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
+            fn add<F: FnMut() + 'static>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(name);
                 unsafe {
@@ -82,7 +82,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn insert<F: FnMut()>(&mut self, idx: u32, label: &str, shortcut: Shortcut, flag: MenuFlag, cb: F) {
+            fn insert<F: FnMut() + 'static>(&mut self, idx: u32, label: &str, shortcut: Shortcut, flag: MenuFlag, cb: F) {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(label);
                 unsafe {

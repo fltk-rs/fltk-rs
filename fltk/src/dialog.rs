@@ -489,7 +489,7 @@ impl FileChooser {
     }
 
     /// Sets the callback of the FileChooser
-    pub fn set_callback<F: FnMut()>(&mut self, cb: F) {
+    pub fn set_callback<F: FnMut() + 'static>(&mut self, cb: F) {
         assert!(!self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(_arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {

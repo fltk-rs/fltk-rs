@@ -303,7 +303,7 @@ impl MenuItem {
     }
 
     /// Set a callback for the menu item
-    pub fn set_callback<F: FnMut()>(&mut self, cb: F) {
+    pub fn set_callback<F: FnMut() + 'static>(&mut self, cb: F) {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(

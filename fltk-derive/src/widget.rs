@@ -546,7 +546,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_callback<F: FnMut()>(&mut self, cb: F) {
+            fn set_callback<F: FnMut() + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -562,7 +562,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_callback2<F: FnMut(&mut Self)>(&mut self, cb: F) {
+            fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -589,7 +589,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn handle<F: FnMut(Event) -> bool>(&mut self, cb: F) {
+            fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
@@ -613,7 +613,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn handle2<F: FnMut(&mut Self, Event) -> bool>(&mut self, cb: F) {
+            fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
@@ -638,7 +638,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn draw<F: FnMut()>(&mut self, cb: F) {
+            fn draw<F: FnMut() + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(data: *mut raw::c_void) {
@@ -654,7 +654,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn draw2<F: FnMut(&mut Self)>(&mut self, cb: F) {
+            fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
