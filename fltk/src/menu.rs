@@ -290,7 +290,7 @@ impl MenuItem {
         } else {
             let x = ptr as *mut Box<dyn FnMut()>;
             let x = Box::from_raw(x);
-            Fl_Menu_Item_set_user_data(self._inner, std::ptr::null_mut());
+            Fl_Menu_Item_callback(self._inner, None, std::ptr::null_mut());
             Some(*x)
         }
     }

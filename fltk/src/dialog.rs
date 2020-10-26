@@ -747,7 +747,7 @@ impl FileChooser {
         } else {
             let x = ptr as *mut Box<dyn FnMut()>;
             let x = Box::from_raw(x);
-            Fl_File_Chooser_set_user_data(self._inner, std::ptr::null_mut());
+            Fl_File_Chooser_callback(self._inner, None, std::ptr::null_mut());
             Some(*x)
         }
     }

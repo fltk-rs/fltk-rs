@@ -823,7 +823,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 } else {
                     let x = ptr as *mut Box<dyn FnMut()>;
                     let x = Box::from_raw(x);
-                    #set_user_data(self._inner, std::ptr::null_mut());
+                    #set_callback(self._inner, None, std::ptr::null_mut());
                     Some(*x)
                 }
             }
@@ -916,7 +916,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     }
                     let data = ptr as *mut Box<dyn FnMut()>;
                     let data = Box::from_raw(data);
-                    #set_draw_data(self._inner, std::ptr::null_mut());
+                    #set_draw(self._inner, None, std::ptr::null_mut());
                     Some(*data)
                 }
             }
