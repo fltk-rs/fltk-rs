@@ -248,7 +248,7 @@ void Fl_Tree_set_callback_reason(Fl_Tree *self, int reason);
 
 int Fl_Tree_callback_reason(const Fl_Tree *self);
 
-// TreeItems
+/* TreeItems */
 
 int Fl_Tree_Item_x(const Fl_Tree_Item *self);
 
@@ -381,7 +381,7 @@ void Fl_Tree_Item_activate(Fl_Tree_Item *self, int val);
 
 char Fl_Tree_Item_is_selected(const Fl_Tree_Item *self);
 
-// TreeItemArray
+/* TreeItemArray */
 
 int Fl_Tree_Item_Array_total(const Fl_Tree_Item_Array *self);
 

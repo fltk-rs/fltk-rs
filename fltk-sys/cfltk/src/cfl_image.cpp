@@ -226,4 +226,3 @@ void Fl_Shared_Image_inactive(Fl_Shared_Image *self) {
 void Fl_register_images() {
     fl_register_images();
 }
-
