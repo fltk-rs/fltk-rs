@@ -266,7 +266,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 if let Some(image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { #set_icon(self._inner, line as i32, image.as_ptr()) }
+                    unsafe { #set_icon(self._inner, line as i32, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_icon(self._inner, line as i32, std::ptr::null_mut() as *mut raw::c_void) }
                 }

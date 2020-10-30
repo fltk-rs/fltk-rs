@@ -407,7 +407,7 @@ where
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
         }
-        widget.unset_callback();
+        let _old_data = widget.user_data();
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
@@ -748,22 +748,9 @@ pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
 }
 
 /// Deletes widgets and their children.
-pub fn delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
+pub fn delete_widget<Wid: WidgetExt>(wid: Wid) {
     assert!(!wid.was_deleted());
-    unsafe {
-        Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-        wid.cleanup();
-    }
-}
-
-/// Deletes widgets and their children recursively deleting their user data
-/// # Safety
-/// Deletes user_data and any captured objects in the callback
-pub unsafe fn unsafe_delete_widget<Wid: WidgetExt>(wid: &mut Wid) {
-    assert!(!wid.was_deleted());
-    let _u = wid.user_data();
-    Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-    wid.cleanup();
+    WidgetExt::delete(wid)
 }
 
 /// Registers all images supported by SharedImage

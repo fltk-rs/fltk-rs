@@ -439,8 +439,8 @@ impl FileChooser {
     /// Deletes a FileChooser
     /// # Safety
     /// Can invalidate the underlying pointer
-    pub unsafe fn delete(&mut self) {
-        Fl_File_Chooser_delete(self._inner)
+    pub unsafe fn delete(dlg: Self) {
+        Fl_File_Chooser_delete(dlg._inner)
     }
 
     /// Gets the new button of the FileChooser
@@ -497,6 +497,7 @@ impl FileChooser {
                 let f: &mut (dyn FnMut()) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
+            let _old_data = self.user_data();
             let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: Option<
@@ -516,6 +517,7 @@ impl FileChooser {
                     let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
                     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                 }
+                let _old_data = self.user_data();
                 let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                 let data: *mut raw::c_void = a as *mut raw::c_void;
                 let callback: Option<
@@ -761,24 +763,6 @@ impl FileChooser {
             let x = Box::from_raw(x);
             Fl_File_Chooser_set_callback(self._inner, None, std::ptr::null_mut());
             Some(*x)
-        }
-    }
-
-    /// Sets the user data of the FileChooser
-    /// # Safety
-    /// Can invalidate the user data while the FileChooser is in use
-    pub unsafe fn set_user_data(&mut self, d: *mut raw::c_void) {
-        Fl_File_Chooser_set_user_data(self._inner, d)
-    }
-
-    /// Manually unset a callback
-    /// # Safety
-    /// Invoking the callback after being unset is undefined
-    pub unsafe fn unset_callback(&mut self) {
-        let old_data = self.user_data();
-        if old_data.is_some() {
-            self.set_user_data(std::ptr::null_mut() as *mut raw::c_void);
-            let _old_data = old_data.unwrap();
         }
     }
 

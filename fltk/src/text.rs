@@ -28,9 +28,9 @@ impl TextBuffer {
     /// Deletes the TextBuffer
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
-    pub unsafe fn delete(&mut self) {
-        Fl_Text_Buffer_delete(self._inner);
-        self._inner = std::ptr::null_mut::<Fl_Text_Buffer>();
+    pub unsafe fn delete(mut buf: Self) {
+        Fl_Text_Buffer_delete(buf._inner);
+        buf._inner = std::ptr::null_mut::<Fl_Text_Buffer>();
     }
 
     /// Deletes the TextBuffer

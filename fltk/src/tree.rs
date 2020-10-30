@@ -849,7 +849,7 @@ impl Tree {
         assert!(!self.was_deleted());
         if let Some(val) = val {
             assert!(!val.was_deleted());
-            unsafe { Fl_Tree_set_usericon(self._inner, val.as_ptr()) }
+            unsafe { Fl_Tree_set_usericon(self._inner, val.as_image_ptr() as *mut _) }
         } else {
             unsafe { Fl_Tree_set_usericon(self._inner, std::ptr::null_mut::<raw::c_void>()) }
         }
@@ -873,7 +873,7 @@ impl Tree {
         assert!(!self.was_deleted());
         if let Some(val) = val {
             assert!(!val.was_deleted());
-            unsafe { Fl_Tree_set_openicon(self._inner, val.as_ptr()) }
+            unsafe { Fl_Tree_set_openicon(self._inner, val.as_image_ptr() as *mut _) }
         } else {
             unsafe { Fl_Tree_set_openicon(self._inner, std::ptr::null_mut::<raw::c_void>()) }
         }
@@ -897,7 +897,7 @@ impl Tree {
         assert!(!self.was_deleted());
         if let Some(val) = val {
             assert!(!val.was_deleted());
-            unsafe { Fl_Tree_set_closeicon(self._inner, val.as_ptr()) }
+            unsafe { Fl_Tree_set_closeicon(self._inner, val.as_image_ptr() as *mut _) }
         } else {
             unsafe { Fl_Tree_set_closeicon(self._inner, std::ptr::null_mut::<raw::c_void>()) }
         }
