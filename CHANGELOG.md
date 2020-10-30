@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.1] - 2020-10-30
+### Changes
+- Use pango on linux distros.
+- Update docs regarding build dependencies.
+
 ## [0.10.0] - 2020-10-26
 ### Changes
 - BREAKING: App::wait() returns bool instead of Result since it doesn't error out.

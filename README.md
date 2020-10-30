@@ -189,7 +189,7 @@ Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to b
 
 For Debian-based GUI distributions, that means running:
 ```
-$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libgl1-mesa-dev libglu1-mesa-dev
+$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev
 ```
 For RHEL-based GUI distributions, that means running:
 ```
@@ -197,7 +197,7 @@ $ sudo yum groupinstall "X Software Development"
 ```
 For Arch-based GUI distributions, that means running:
 ```
-$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes libgl mesa --needed
+$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango libgl mesa --needed
 ```
 If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
 

@@ -162,6 +162,10 @@ fn main() {
             handle_android(&target_triple, &mut dst);
         }
 
+        if target_triple.contains("linux" ) && !target_triple.contains("android") {
+            dst.define("OPTION_USE_PANGO", "ON");
+        }
+
         let _dst = dst
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
@@ -272,6 +276,8 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=Xfixes");
                 println!("cargo:rustc-link-lib=dylib=Xft");
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
+                println!("cargo:rustc-link-lib=dylib=pango-1.0");
+                println!("cargo:rustc-link-lib=dylib=pangoxft-1.0");
             }
         }
     }
