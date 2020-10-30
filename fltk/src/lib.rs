@@ -167,7 +167,7 @@
 //! 
 //! - Windows: No dependencies.
 //! - MacOS: No dependencies.
-//! - Linux: X11 and OpenGL development headers need to be installed for development. 
+//! - Linux: X11 and OpenGL development headers need to be installed for development. The libraries themselves are available on linux distros with a graphical user interface.
 //! 
 //! For Debian-based GUI distributions, that means running:
 //! ```

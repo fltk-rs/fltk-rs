@@ -65,13 +65,6 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn as_ptr(&self) -> *mut raw::c_void {
-                assert!(!self.was_deleted());
-                unsafe {
-                    self._inner as *mut raw::c_void
-                }
-            }
-
             unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -189,11 +182,11 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 Ok(ret)
             }
 
-            unsafe fn delete(&mut self) {
-                assert!(!self._inner.is_null());
+            unsafe fn delete(mut img: Self) {
+                assert!(!img._inner.is_null());
                 unsafe {
-                    #delete(self._inner);
-                    self._inner = std::ptr::null_mut() as *mut #ptr_name;
+                    #delete(img._inner);
+                    img._inner = std::ptr::null_mut() as *mut #ptr_name;
                 }
             }
 

@@ -207,10 +207,6 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "draw_cell_data").as_str(),
         name.span(),
     );
-    let set_draw_cell_data = Ident::new(
-        format!("{}_{}", name_str, "set_draw_cell_data").as_str(),
-        name.span(),
-    );
 
     let gen = quote! {
         unsafe impl TableExt for #name {
@@ -614,7 +610,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                         let f: &mut (dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)) = &mut **a;
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(ctx, arg2, arg3, arg4, arg5, arg6, arg7)));
                     }
-                    self.unset_draw_cell_callback();
+                    let _old_data = self.draw_cell_data();
                     let a: *mut Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_cell_callback = Some(shim);
@@ -634,7 +630,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                         let f: &mut (dyn FnMut(&mut #name, crate::table::TableContext, i32, i32, i32, i32, i32, i32)) = &mut **a;
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid, ctx, arg2, arg3, arg4, arg5, arg6, arg7)));
                     }
-                    self.unset_draw_cell_callback();
+                    let _old_data = self.draw_cell_data();
                     let a: *mut Box<dyn FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_cell_callback2 = Some(shim);
@@ -650,22 +646,6 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                     let data = ptr as *mut Box<dyn FnMut()>;
                     let data = Box::from_raw(data);
                     Some(*data)
-                }
-            }
-
-            unsafe fn set_draw_cell_data(&mut self, data: *mut raw::c_void) {
-                unsafe {
-                    #set_draw_cell_data(self._inner, data);
-                }
-            }
-
-            unsafe fn unset_draw_cell_callback(&mut self) {
-                unsafe {
-                    let old_data = self.draw_cell_data();
-                    if old_data.is_some() {
-                        let old_data = old_data.unwrap();
-                        self.set_draw_cell_data(std::ptr::null_mut() as *mut raw::c_void);
-                    }
                 }
             }
         }

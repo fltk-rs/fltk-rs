@@ -295,13 +295,6 @@ impl MenuItem {
         }
     }
 
-    /// Manually set the user data
-    /// # Safety
-    /// Manually set the user data, the data validity can't be checked since it's opaque
-    pub unsafe fn set_user_data(&mut self, data: *mut raw::c_void) {
-        Fl_Menu_Item_set_user_data(self._inner, data)
-    }
-
     /// Set a callback for the menu item
     pub fn set_callback<F: FnMut() + 'static>(&mut self, cb: F) {
         assert!(!self.was_deleted() && !self._inner.is_null());
@@ -314,7 +307,7 @@ impl MenuItem {
                 let f: &mut (dyn FnMut()) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
             }
-            self.unset_callback();
+            let _old_data = self.user_data();
             let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: fltk_sys::menu::Fl_Callback = Some(shim);
@@ -335,7 +328,7 @@ impl MenuItem {
                 let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
-            self.unset_callback();
+            let _old_data = self.user_data();
             let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: fltk_sys::menu::Fl_Callback = Some(shim);
@@ -346,17 +339,6 @@ impl MenuItem {
     /// Use a sender to send a message during callback
     pub fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
         self.set_callback(move || sender.send(msg));
-    }
-
-    /// Manually unset a callback
-    /// # Safety
-    /// Invoking the callback after being unset is undefined
-    pub unsafe fn unset_callback(&mut self) {
-        let old_data = self.user_data();
-        if let Some(old_data) = old_data {
-            let _ = old_data;
-            self.set_user_data(std::ptr::null_mut::<raw::c_void>());
-        }
     }
 
     /// Check if a menu item was deleted

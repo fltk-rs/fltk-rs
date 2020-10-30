@@ -20,10 +20,6 @@ Why choose FLTK?
 - Provides around 80 customizable widgets. 
 - Has inbuilt image support.
 
-Known issues:
-- Non-native look and feel.
-- Poor RTL language support.
-
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
 
 - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
@@ -185,7 +181,7 @@ Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to b
 
 - Windows: No dependencies.
 - MacOS: No dependencies.
-- Linux: X11 and OpenGL development headers need to be installed for development. 
+- Linux: X11 and OpenGL development headers need to be installed for development. The libraries themselves are available on linux distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:
 ```

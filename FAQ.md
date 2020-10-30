@@ -108,8 +108,6 @@ So while FLTK widgets don't leak, this might create lifetime issues with certain
 
 Overriding drawing methods will box data to be sent to the C++ library, so the data should optimally be limited to widgets or plain old data types to avoid unnecessary leaks if a custom drawn widget might be deleted during the lifetime of the program.
 
-Deleting a widget or its parent in that callback's widget can be done safely using the safe method variants of delete() and clear(). If recursive deletion of capturing callbacks is needed, there are the unsafe variants unsafe_delete and unsafe_clear. It's preferable to use channels in this case when dealing with widgets that might be deleted since these are copy types and don't leak.
-
 The 2 internal traits fltk-sys and fltk-derive are supposed to remain internal, and not be exposed into the public api, and are thus marked unsafe.
 
 That said, fltk-rs is still in active development, and has not yet been fuzzed nor thouroughly tested for memory safety issues.

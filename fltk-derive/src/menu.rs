@@ -291,7 +291,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     for i in 0..sz {
                         // Shouldn't fail
                         let mut c = self.at(i).unwrap();
-                        c.unset_callback();
+                        let _ = c.user_data();
                     }
                 }
                 #clear(self._inner);
@@ -333,7 +333,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     if item.label().is_none() {
                         break;
                     }
-                    item.unset_callback();
+                    let _ = item.user_data();
                     i += 1;
                 }
                 match #clear_submenu(self._inner, idx as i32) {

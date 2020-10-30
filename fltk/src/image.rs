@@ -1,6 +1,6 @@
 pub use crate::prelude::*;
 use fltk_sys::image::*;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::CString, mem};
 
 /// Wrapper around Fl_Image, used to wrap other image types
 #[derive(ImageExt, Debug)]
@@ -34,8 +34,8 @@ impl Image {
     /// Deletes an image
     /// # Safety
     /// An image shouldn't be deleted while it's being used by a widget
-    pub unsafe fn delete<I: ImageExt>(mut img: I) {
-        img.delete()
+    pub unsafe fn delete<I: ImageExt>(img: I) {
+        ImageExt::delete(img);
     }
 }
 

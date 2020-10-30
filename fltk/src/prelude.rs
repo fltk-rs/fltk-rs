@@ -5,7 +5,7 @@ pub(crate) use crate::utils::*;
 use crate::widget::Widget;
 use crate::window::Window;
 use std::convert::From;
-use std::{fmt, io, os::raw};
+use std::{fmt, io};
 
 /// Error types returned by fltk-rs + wrappers of std::io errors
 #[derive(Debug)]
@@ -231,12 +231,8 @@ pub unsafe trait WidgetExt {
     fn visible_focus(&mut self, v: bool);
     /// Return whether the widget has visible focus
     fn has_visible_focus(&mut self) -> bool;
-    /// Manually delete a widget
-    fn delete(&mut self);
-    /// Manually delete a widget and recursively force-cleans capturing callbacks
-    /// # Safety
-    /// Deletes user_data and any captured objects in the callback
-    unsafe fn unsafe_delete(&mut self);
+    /// Deletes widgets and their children.
+    fn delete(wid: Self);
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
     /// Return whether the widget was damaged
@@ -253,30 +249,14 @@ pub unsafe trait WidgetExt {
     /// # Safety
     /// Can return multiple mutable references to the user_data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
-    /// INTERNAL: Manually set the user data
-    /// # Safety
-    /// The data must be valid, and it cannot be checked since it's opaque
-    unsafe fn set_user_data(&mut self, data: *mut raw::c_void);
-    /// INTERNAL: Cleanup after widget deletion
-    /// # Safety
-    /// The widget tracker is destroyed along the widget, so widget tracking is lost
-    unsafe fn cleanup(&mut self);
-    /// INTERNAL: Unset the defined callback
-    /// # Safety
-    /// Can be unsafe if a callback is invoked after unsetting it
-    unsafe fn unset_callback(&mut self);
     /// INTERNAL: Retrieve the draw data
     /// # Safety
     /// Can return multiple mutable references to the draw_data
     unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
-    /// INTERNAL: Manually set the draw data
+    /// INTERNAL: Retrieve the handle data
     /// # Safety
-    /// The data must be valid, and it cannot be checked since it's opaque
-    unsafe fn set_draw_data(&mut self, data: *mut raw::c_void);
-    /// INTERNAL: Unset the draw callback
-    /// # Safety
-    /// Can be unsafe if the draw() method is called after being unset
-    unsafe fn unset_draw_callback(&mut self);
+    /// Can return multiple mutable references to the handle_data
+    unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
 }
 
 /// Defines the methods implemented by all button widgets
@@ -932,14 +912,6 @@ pub unsafe trait TableExt: GroupExt {
     /// # Safety
     /// Can return multiple mutable references to the draw_cell_data
     unsafe fn draw_cell_data(&self) -> Option<Box<dyn FnMut()>>;
-    /// INTERNAL: Manually set the draw data
-    /// # Safety
-    /// The data must be valid, and it cannot be checked since it's opaque
-    unsafe fn set_draw_cell_data(&mut self, data: *mut raw::c_void);
-    /// INTERNAL: Unset the draw callback
-    /// # Safety
-    /// Can be unsafe if the draw() method is called after being unset
-    unsafe fn unset_draw_cell_callback(&mut self);
 }
 
 /// Defines the methods implemented by all image types
@@ -952,10 +924,6 @@ pub unsafe trait ImageExt {
     fn width(&self) -> i32;
     /// Return the height of the image
     fn height(&self) -> i32;
-    /// Returns a void pointer of the image, for internal use
-    /// # Safety
-    /// Can return multiple mutable pointers to the image
-    unsafe fn as_ptr(&self) -> *mut raw::c_void;
     /// Retunrs a pointer of the image
     /// # Safety
     /// Can return multiple mutable pointers to the image
@@ -993,7 +961,7 @@ pub unsafe trait ImageExt {
     /// Deletes the image
     /// # Safety
     /// An image shouldn't be deleted while it's being used by a widget
-    unsafe fn delete(&mut self);
+    unsafe fn delete(img: Self);
     /// Checks if the image was deleted
     fn was_deleted(&self) -> bool;
 }
