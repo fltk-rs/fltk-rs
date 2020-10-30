@@ -3,7 +3,7 @@
 ## [0.10.1] - 2020-10-30
 ### Changes
 - BREAKING: App::wait() returns bool instead of Result since it doesn't error out.
-- BREAKING: Require pango headers on linux distros for rtl unicode support.
+- BREAKING: Require pango headers on linux distros for rtl and cjk unicode support.
 - BREAKING: Deletion static methods take ownership of widgets and images.
 - Update docs regarding build dependencies.
 - Add WidgetExt::draw2(), WidgetExt::handle2() and TableExt::draw_cell2() all of which expose the widget in the closure arguments.
