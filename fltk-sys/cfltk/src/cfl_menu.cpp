@@ -1,8 +1,6 @@
 #include "cfl_menu.h"
 #include <FL/Fl.H>
-
 #include "FL/Fl_Sys_Menu_Bar.H"
-#include "cfl_new.hpp"
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Menu_Bar.H>

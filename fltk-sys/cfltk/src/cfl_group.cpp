@@ -1,5 +1,4 @@
 #include "cfl_group.h"
-#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Color_Chooser.H>
 #include <FL/Fl_Group.H>

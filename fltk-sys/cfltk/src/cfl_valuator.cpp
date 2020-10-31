@@ -1,5 +1,4 @@
 #include "cfl_valuator.h"
-#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Adjuster.H>
 #include <FL/Fl_Counter.H>

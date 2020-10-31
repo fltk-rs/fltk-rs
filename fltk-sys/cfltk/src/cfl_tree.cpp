@@ -1,7 +1,5 @@
 #include "cfl_tree.h"
 #include <FL/Fl.H>
-
-#include "cfl_new.hpp"
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Tree.H>
 #include <FL/Fl_Tree_Item.H>

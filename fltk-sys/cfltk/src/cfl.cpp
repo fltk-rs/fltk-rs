@@ -15,7 +15,6 @@
 #include <FL/Fl.H> // Has to be the first include!
 
 #include "cfl.h"
-#include "cfl_new.hpp"
 #include "cfl_widget.h"
 #include <FL/Enumerations.H>
 #include <FL/Fl_Widget.H>

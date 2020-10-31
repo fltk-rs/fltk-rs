@@ -1,5 +1,4 @@
 #include "cfl_browser.h"
-#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Browser.H>
 #include <FL/Fl_File_Browser.H>

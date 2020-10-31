@@ -42,7 +42,6 @@ fn main() {
             .status()
             .expect("Curl and Tar are needed to download and upack the bundled libraries!");
     } else {
-        println!("cargo:rerun-if-changed=cfltk/include/cfl_new.hpp");
         println!("cargo:rerun-if-changed=cfltk/include/cfl.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_widget.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_group.h");

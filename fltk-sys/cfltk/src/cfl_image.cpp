@@ -1,7 +1,5 @@
 #include "cfl_image.h"
 #include <FL/Fl.H>
-
-#include "cfl_new.hpp"
 #include <FL/Fl_BMP_Image.H>
 #include <FL/Fl_GIF_Image.H>
 #include <FL/Fl_Image.H>

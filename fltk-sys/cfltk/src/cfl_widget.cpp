@@ -1,7 +1,5 @@
 #include "cfl_widget.h"
 #include <FL/Fl.H>
-
-#include "cfl_new.hpp"
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Widget.H>
 

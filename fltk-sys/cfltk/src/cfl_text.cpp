@@ -1,7 +1,5 @@
 #include "cfl_text.h"
 #include <FL/Fl.H>
-
-#include "cfl_new.hpp"
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Simple_Terminal.H>
 #include <FL/Fl_Text_Buffer.H>

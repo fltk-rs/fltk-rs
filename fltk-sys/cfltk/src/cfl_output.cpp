@@ -1,5 +1,4 @@
 #include "cfl_output.h"
-#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Image.H>
 #include <FL/Fl_Multiline_Output.H>
