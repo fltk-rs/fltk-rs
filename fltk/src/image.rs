@@ -514,10 +514,10 @@ pub struct RgbImage {
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage
+    /// Initializes a new raw RgbImage, takes ownership of the data
     /// If you need to work with RGB data,
     /// it's suggested to use the Image crate https://crates.io/crates/image
-    pub fn new(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
+    pub fn new(data: Vec<u8>, w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
         if depth > 4 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
@@ -531,6 +531,31 @@ impl RgbImage {
         unsafe {
             // data is deleted on the C++ side
             let img = Fl_RGB_Image_new(mem::ManuallyDrop::new(data.to_owned()).as_ptr(), w as i32, h as i32, depth as i32);
+            if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+                Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+            } else {
+                Ok(RgbImage { _inner: img })
+            }
+        }
+    }
+
+    /// Initializes a new raw RgbImage from static data
+    /// If you need to work with RGB data,
+    /// it's suggested to use the Image crate https://crates.io/crates/image
+    pub fn from_data(data: &'static [u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
+        if depth > 4 {
+            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+        }
+        let mut sz = w * h;
+        if depth > 0 {
+            sz *= depth;
+        }
+        if sz > data.len() as u32 {
+            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+        }
+        unsafe {
+            // data is deleted on the C++ side
+            let img = Fl_RGB_Image_from_data(data.as_ptr(), w as i32, h as i32, depth as i32);
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
             } else {

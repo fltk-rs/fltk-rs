@@ -158,6 +158,12 @@ Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int dept
     return img;
 }
 
+Fl_RGB_Image *Fl_RGB_Image_from_data(const unsigned char *bits, int W, int H, int depth) {
+    auto img = new Fl_RGB_Image(bits, W, H, depth);
+    img->alloc_array = 0;
+    return img;
+}
+
 void Fl_Shared_Image_draw(Fl_Shared_Image *self, int X, int Y, int W, int H) {
     LOCK(self->draw(X, Y, W, H);)
 }

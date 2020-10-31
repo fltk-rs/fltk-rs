@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.10.2] - Unreleased
+### Changes
+- Add RgbImage::from_data() which takes static source of data.
+
 ## [0.10.1] - 2020-10-30
 ### Changes
 - BREAKING: App::wait() returns bool instead of Result since it doesn't error out.
