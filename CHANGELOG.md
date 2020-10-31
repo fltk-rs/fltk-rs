@@ -3,7 +3,6 @@
 ## [0.10.2] - Unreleased
 ### Changes
 - Add RgbImage::from_data() which takes a &'static source of data.
-- RgbImage::new() takes ownership of the data.
 
 ## [0.10.1] - 2020-10-30
 ### Changes

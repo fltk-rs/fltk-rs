@@ -514,10 +514,10 @@ pub struct RgbImage {
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage, takes ownership of the data
+    /// Initializes a new raw RgbImage, copies the data and handles its lifetime
     /// If you need to work with RGB data,
     /// it's suggested to use the Image crate https://crates.io/crates/image
-    pub fn new(data: Vec<u8>, w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
+    pub fn new(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
         if depth > 4 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
@@ -539,7 +539,7 @@ impl RgbImage {
         }
     }
 
-    /// Initializes a new raw RgbImage from static data
+    /// Initializes a new raw RgbImage from shared static data
     /// If you need to work with RGB data,
     /// it's suggested to use the Image crate https://crates.io/crates/image
     pub fn from_data(data: &'static [u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {

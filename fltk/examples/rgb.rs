@@ -14,7 +14,7 @@ fn main() {
                 })
                 .collect();
             let v: Vec<u8> = v.into_iter().map(|i| i as u8).collect();
-            image::RgbImage::new(v, 128, 128, 1).unwrap()
+            image::RgbImage::new(&v, 128, 128, 1).unwrap()
         };
         image.scale(400, 400, false, true);
         image.draw(f.x(), f.y(), f.width(), f.height());
