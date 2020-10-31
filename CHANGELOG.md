@@ -4,6 +4,7 @@
 ### Changes
 - Add unsafe RgbImage::from_data() which creates an RgbImage from non-owned data.
 - <image type>Image::write_to_file has an AsRef<std::path::Path> parameter.
+- Add SurfaceDevice trait and ImageSurface type.
 
 ## [0.10.1] - 2020-10-30
 ### Changes

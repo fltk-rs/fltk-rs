@@ -16,3 +16,4 @@ bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_draw.h -o flt
 bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_table.h -o fltk-sys/src/table.rs
 bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_tree.h -o fltk-sys/src/tree.rs
 bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl.h -o fltk-sys/src/fl.rs
+bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_surface.h -o fltk-sys/src/surface.rs

@@ -965,3 +965,11 @@ pub unsafe trait ImageExt {
     /// Checks if the image was deleted
     fn was_deleted(&self) -> bool;
 }
+
+pub trait SurfaceDevice {
+    fn set_current(&mut self);
+    fn is_current(&self) -> bool;
+    fn surface() -> Self;
+    fn push_current(new_current: &Self);
+    fn pop_current();
+}

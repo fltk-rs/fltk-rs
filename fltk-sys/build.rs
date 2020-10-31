@@ -59,6 +59,7 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/include/cfl_image.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_draw.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_table.h");
+        println!("cargo:rerun-if-changed=cfltk/include/cfl_surface.h");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_new.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_widget.cpp");
@@ -78,6 +79,7 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/src/cfl_draw.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_table.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_tree.cpp");
+        println!("cargo:rerun-if-changed=cfltk/src/cfl_surface.cpp");
         println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
 
         Command::new("git")
