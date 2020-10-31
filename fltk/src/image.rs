@@ -554,7 +554,6 @@ impl RgbImage {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
         unsafe {
-            // data is deleted on the C++ side
             let img = Fl_RGB_Image_from_data(data.as_ptr(), w as i32, h as i32, depth as i32);
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
