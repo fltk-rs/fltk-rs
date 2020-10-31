@@ -539,10 +539,10 @@ impl RgbImage {
         }
     }
 
-    /// Initializes a new raw RgbImage from shared static data
-    /// If you need to work with RGB data,
-    /// it's suggested to use the Image crate https://crates.io/crates/image
-    pub fn from_data(data: &'static [u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
+    /// Initializes a new raw RgbImage from shared data, doesn't handle the data's lifetime
+    /// # Safety
+    /// The data must be valid for the lifetime of the image
+    pub unsafe fn from_data(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
         if depth > 4 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
@@ -553,13 +553,11 @@ impl RgbImage {
         if sz > data.len() as u32 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
-        unsafe {
-            let img = Fl_RGB_Image_from_data(data.as_ptr(), w as i32, h as i32, depth as i32);
-            if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
-                Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-            } else {
-                Ok(RgbImage { _inner: img })
-            }
+        let img = Fl_RGB_Image_from_data(data.as_ptr(), w as i32, h as i32, depth as i32);
+        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+        } else {
+            Ok(RgbImage { _inner: img })
         }
     }
 
