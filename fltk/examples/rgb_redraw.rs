@@ -31,6 +31,7 @@ fn main() {
                 DATA[i] = 255;
             }
         }
+        std::thread::sleep(std::time::Duration::from_millis(30));
         frame.redraw();
         i += 1;
     }
