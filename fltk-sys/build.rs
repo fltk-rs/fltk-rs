@@ -167,7 +167,7 @@ fn main() {
             dst.define("OPTION_USE_PANGO", "ON");
         }
 
-        if target_triple.contains("musl") {
+        if target_triple.contains("unknown-linux-musl") {
             dst.define("CMAKE_C_COMPILER", "musl-gcc");
             dst.define("CMAKE_CXX_COMPILER", "musl-gcc");
             dst.define("HAVE_STRLCPY", "False");

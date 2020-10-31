@@ -195,6 +195,10 @@ For Arch-based GUI distributions, that means running:
 ```
 $ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango libgl mesa --needed
 ```
+For Alpine linux:
+```
+$ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev
+```
 If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
 
 ## FAQ
