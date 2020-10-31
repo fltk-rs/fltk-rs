@@ -141,7 +141,11 @@ impl JpegImage {
     }
 
     /// Writes the JpegImage to a jpg file
-    pub fn write_to_file(&self, path: &std::path::Path) -> Result<(), FltkError> {
+    pub fn write_to_file<P: AsRef<std::path::Path>>(&self, path: P) -> Result<(), FltkError> {
+        self.write_to_file_(path.as_ref())
+    }
+
+    fn write_to_file_(&self, path: &std::path::Path) -> Result<(), FltkError> {
         crate::draw::write_to_jpg_file(self, path)
     }
 }
@@ -199,7 +203,11 @@ impl PngImage {
     }
 
     /// Writes the PngImage to a png file
-    pub fn write_to_file(&self, path: &std::path::Path) -> Result<(), FltkError> {
+    pub fn write_to_file<P: AsRef<std::path::Path>>(&self, path: P) -> Result<(), FltkError> {
+        self.write_to_file_(path.as_ref())
+    }
+
+    fn write_to_file_(&self, path: &std::path::Path) -> Result<(), FltkError> {
         crate::draw::write_to_png_file(self, path)
     }
 }
@@ -311,7 +319,11 @@ impl BmpImage {
     }
 
     /// Writes the BmpImage to a bmp file
-    pub fn write_to_file(&self, path: &std::path::Path) -> Result<(), FltkError> {
+    pub fn write_to_file<P: AsRef<std::path::Path>>(&self, path: P) -> Result<(), FltkError> {
+        self.write_to_file_(path.as_ref())
+    }
+
+    fn write_to_file_(&self, path: &std::path::Path) -> Result<(), FltkError> {
         crate::draw::write_to_bmp_file(self, path)
     }
 }

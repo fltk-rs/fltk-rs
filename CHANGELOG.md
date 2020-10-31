@@ -2,7 +2,8 @@
 
 ## [0.10.2] - Unreleased
 ### Changes
-- Add RgbImage::from_data() which takes a &'static source of data.
+- Add unsafe RgbImage::from_data() which creates an RgbImage from non-owned data.
+- <image type>Image::write_to_file has an AsRef<std::path::Path> parameter.
 
 ## [0.10.1] - 2020-10-30
 ### Changes
