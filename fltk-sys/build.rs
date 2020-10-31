@@ -163,8 +163,15 @@ fn main() {
             handle_android(&target_triple, &mut dst);
         }
 
-        if target_triple.contains("linux" ) && !target_triple.contains("android") {
+        if target_triple.contains("linux") && !target_triple.contains("android") {
             dst.define("OPTION_USE_PANGO", "ON");
+        }
+
+        if target_triple.contains("musl") {
+            dst.define("CMAKE_C_COMPILER", "musl-gcc");
+            dst.define("CMAKE_CXX_COMPILER", "musl-gcc");
+            dst.define("HAVE_STRLCPY", "False");
+            dst.define("HAVE_STRLCAT", "False");
         }
 
         let _dst = dst
@@ -177,7 +184,6 @@ fn main() {
             .define("OPTION_LARGE_FILE", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
             .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
-            // .define("OPTION_ABI_VERSION:STRING", "10401")
             .build();
     }
 
