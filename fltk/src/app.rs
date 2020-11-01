@@ -267,6 +267,30 @@ pub fn scrollbar_size() -> u32 {
     unsafe { Fl_scrollbar_size() as u32 }
 }
 
+/// Get the grabbed window
+pub fn grab() -> Option<Window> {
+    unsafe {
+        let ptr = Fl_grab();
+        if ptr.is_null() {
+            None
+        } else {
+            Some(crate::window::Window::from_widget_ptr(ptr as *mut _))
+        }
+    }
+}
+
+
+/// Set the current grab
+pub fn set_grab(win: Option<Window>) {
+    unsafe {
+        if let Some(w) = win {
+            Fl_set_grab(w.as_widget_ptr() as *mut _)
+        } else {
+            Fl_set_grab(std::ptr::null_mut())
+        }
+    }
+}
+
 /// Returns the latest captured event
 pub fn event() -> Event {
     unsafe {

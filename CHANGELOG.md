@@ -8,6 +8,7 @@
 - Add Printer type for native print support.
 - Prelim support for musl builds.
 - Remove back-compat SurfaceDevice::set_current().
+- Enable window grabbing.
 
 ## [0.10.1] - 2020-10-30
 ### Changes

@@ -86,6 +86,10 @@ void Fl_remove_timeout(void (*)(void *), void *);
 
 int Fl_dnd(void);
 
+void *Fl_grab(void);
+
+void Fl_set_grab(void *);
+
 void *Fl_first_window(void);
 
 void *Fl_next_window(const void *);

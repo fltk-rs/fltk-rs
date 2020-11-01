@@ -18,6 +18,7 @@
 #include "cfl_widget.h"
 #include <FL/Enumerations.H>
 #include <FL/Fl_Widget.H>
+#include <FL/Fl_Window.H>
 #include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
@@ -44,6 +45,14 @@ void Fl_set_scrollbar_size(int v) {
 
 int Fl_scrollbar_size(void) {
     return Fl::scrollbar_size();
+}
+
+void *Fl_grab(void) {
+    return Fl::grab();
+}
+
+void Fl_set_grab(void *v) {
+    Fl::grab((Fl_Window *)v);
 }
 
 int Fl_event(void) {
