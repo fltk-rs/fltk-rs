@@ -80,7 +80,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn child(&self, idx: u32) -> Option<Widget> {
+            unsafe fn child(&self, idx: u32) -> Option<Widget> {
                 unsafe {
                     debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());

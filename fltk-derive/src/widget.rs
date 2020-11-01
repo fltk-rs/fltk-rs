@@ -615,6 +615,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                             0
                         }
                     }
+                    let _old_data = self.handle_data();
                     let a: *mut Box<dyn FnMut(Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_handler_callback = Some(shim);
@@ -640,6 +641,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                             0
                         }
                     }
+                    let _old_data = self.handle_data();
                     let a: *mut Box<dyn FnMut(&mut Self, Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_handler_callback2 = Some(shim);

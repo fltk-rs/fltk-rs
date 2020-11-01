@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.10.3] - Unreleased
+### Changes
+- Mark GroupExt::child(idx) as unsafe.
+
 ## [0.10.2] - 2020-11-02
 ### Changes
 - Add unsafe RgbImage::from_data() which creates an RgbImage from non-owned data.

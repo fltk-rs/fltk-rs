@@ -296,7 +296,9 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Return the number of children in a group
     fn children(&self) -> u32;
     /// Return child widget by index
-    fn child(&self, idx: u32) -> Option<Widget>;
+    /// # Safety
+    /// Can return multiple objects referring to an already existing widget
+    unsafe fn child(&self, idx: u32) -> Option<Widget>;
     /// Make the passed widget resizable
     fn resizable<Widget: WidgetExt>(&self, widget: &mut Widget);
 }
