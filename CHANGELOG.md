@@ -5,6 +5,7 @@
 - Add unsafe RgbImage::from_data() which creates an RgbImage from non-owned data.
 - <image type>Image::write_to_file has an AsRef<std::path::Path> parameter.
 - Add SurfaceDevice trait and ImageSurface type.
+- Add Printer type for native print support.
 - Prelim support for musl builds.
 - Remove back-compat SurfaceDevice::set_current().
 

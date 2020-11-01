@@ -42,6 +42,7 @@ fn main() {
             .status()
             .expect("Curl and Tar are needed to download and upack the bundled libraries!");
     } else {
+        println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
         println!("cargo:rerun-if-changed=cfltk/include/cfl.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_widget.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_group.h");
@@ -60,6 +61,7 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/include/cfl_draw.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_table.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_surface.h");
+        println!("cargo:rerun-if-changed=cfltk/include/cfl_printer.h");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_new.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_widget.cpp");
@@ -80,7 +82,7 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/src/cfl_table.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_tree.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_surface.cpp");
-        println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
+        println!("cargo:rerun-if-changed=cfltk/src/cfl_printer.cpp");
 
         Command::new("git")
             .args(&["submodule", "update", "--init"])
@@ -285,6 +287,9 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
                 println!("cargo:rustc-link-lib=dylib=pango-1.0");
                 println!("cargo:rustc-link-lib=dylib=pangoxft-1.0");
+                println!("cargo:rustc-link-lib=dylib=gobject-2.0");
+                println!("cargo:rustc-link-lib=dylib=cairo");
+                println!("cargo:rustc-link-lib=dylib=pangocairo-1.0");
             }
         }
     }

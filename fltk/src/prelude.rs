@@ -29,6 +29,7 @@ pub enum FltkErrorKind {
     ResourceNotFound,
     ImageFormatError,
     TableError,
+    PrintError,
 }
 
 impl std::error::Error for FltkError {
@@ -966,6 +967,7 @@ pub unsafe trait ImageExt {
     fn was_deleted(&self) -> bool;
 }
 
+/// Defines the methods implemented by all surface types, currently ImageSurface
 pub trait SurfaceDevice {
     /// Checks whether this surface is the current surface
     fn is_current(&self) -> bool;

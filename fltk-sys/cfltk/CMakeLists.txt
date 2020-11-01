@@ -53,6 +53,7 @@ set(CFLTK_SRCS
     src/cfl_table.cpp
     src/cfl_tree.cpp
     src/cfl_surface.cpp
+    src/cfl_printer.cpp
     )
 
 if(CFLTK_BUILD_SHARED)

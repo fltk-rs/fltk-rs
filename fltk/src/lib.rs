@@ -212,6 +212,7 @@ pub mod valuator;
 pub mod widget;
 pub mod window;
 pub mod surface;
+pub mod printer;
 pub(crate) mod utils;
 
 pub use enums::*;

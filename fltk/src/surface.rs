@@ -1,6 +1,7 @@
-use crate::prelude::*;
+pub use crate::prelude::*;
 use fltk_sys::surface::*;
 
+/// An image surface object
 pub struct ImageSurface {
     _inner: *mut Fl_Image_Surface,
 }
