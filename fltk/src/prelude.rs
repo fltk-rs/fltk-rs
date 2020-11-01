@@ -967,9 +967,12 @@ pub unsafe trait ImageExt {
 }
 
 pub trait SurfaceDevice {
-    fn set_current(&mut self);
+    /// Checks whether this surface is the current surface
     fn is_current(&self) -> bool;
+    /// Get the current surface
     fn surface() -> Self;
+    /// Push a surface as a current surface
     fn push_current(new_current: &Self);
+    /// Pop the current surface
     fn pop_current();
 }

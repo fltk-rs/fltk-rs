@@ -6,10 +6,6 @@ pub struct ImageSurface {
 }
 
 impl SurfaceDevice for ImageSurface {
-    fn set_current(&mut self) {
-        unsafe { Fl_Surface_Device_set_current(self._inner as *mut _) }
-    }
-
     fn is_current(&self) -> bool {
         unsafe { Fl_Surface_Device_is_current(self._inner as *mut _) != 0 }
     }
@@ -36,6 +32,7 @@ impl SurfaceDevice for ImageSurface {
 }
 
 impl ImageSurface {
+    /// Creates a new image surface
     pub fn new(w: i32, h: i32, high_res: bool) -> ImageSurface {
         unsafe {
             let ptr = Fl_Image_Surface_new(w, h, high_res as i32);
@@ -44,10 +41,12 @@ impl ImageSurface {
         }
     }
 
+    /// Deletes an image surface
     pub unsafe fn delete(surf: ImageSurface) {
         Fl_Image_Surface_delete(surf._inner)
     }
 
+    /// Gets the image of an image surface as an rgb image
     pub fn image(&self) -> Option<crate::image::RgbImage> {
         unsafe {
             let ptr = Fl_Image_Surface_image(self._inner);
@@ -59,6 +58,7 @@ impl ImageSurface {
         }
     }
 
+    /// Gets the high resolution image of an image surface as a shared image
     pub fn highres_image(&self) -> Option<crate::image::SharedImage> {
         unsafe {
             let ptr = Fl_Image_Surface_highres_image(self._inner);
@@ -70,6 +70,7 @@ impl ImageSurface {
         }
     }
 
+    /// Gets the origin coordinates of an image surface
     pub fn origin(&self) -> (i32, i32) {
         unsafe {
             let mut x = 0;
@@ -79,14 +80,17 @@ impl ImageSurface {
         }
     }
 
+    /// Set the origin coordinates of an image surface
     pub fn set_origin(&mut self, x: i32, y: i32) {
         unsafe { Fl_Image_Surface_set_origin(self._inner, x, y) }
     }
 
+    /// Rescale an image surface
     pub fn rescale(&mut self) {
         unsafe { Fl_Image_Surface_rescale(self._inner) }
     }
 
+    /// Draw a widget on the image surface
     pub fn draw<W: WidgetExt>(&self, widget: &W, delta_x: i32, delta_y: i32) {
         unsafe {
             Fl_Image_Surface_draw(
