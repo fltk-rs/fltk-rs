@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.10.2] - Unreleased
+## [0.10.2] - 2020-11-02
 ### Changes
 - Add unsafe RgbImage::from_data() which creates an RgbImage from non-owned data.
 - <image type>Image::write_to_file has an AsRef<std::path::Path> parameter.
