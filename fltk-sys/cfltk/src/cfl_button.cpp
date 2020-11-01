@@ -1,5 +1,4 @@
 #include "cfl_button.h"
-#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Check_Button.H>

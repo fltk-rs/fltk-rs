@@ -141,7 +141,11 @@ impl JpegImage {
     }
 
     /// Writes the JpegImage to a jpg file
-    pub fn write_to_file(&self, path: &std::path::Path) -> Result<(), FltkError> {
+    pub fn write_to_file<P: AsRef<std::path::Path>>(&self, path: P) -> Result<(), FltkError> {
+        self.write_to_file_(path.as_ref())
+    }
+
+    fn write_to_file_(&self, path: &std::path::Path) -> Result<(), FltkError> {
         crate::draw::write_to_jpg_file(self, path)
     }
 }
@@ -199,7 +203,11 @@ impl PngImage {
     }
 
     /// Writes the PngImage to a png file
-    pub fn write_to_file(&self, path: &std::path::Path) -> Result<(), FltkError> {
+    pub fn write_to_file<P: AsRef<std::path::Path>>(&self, path: P) -> Result<(), FltkError> {
+        self.write_to_file_(path.as_ref())
+    }
+
+    fn write_to_file_(&self, path: &std::path::Path) -> Result<(), FltkError> {
         crate::draw::write_to_png_file(self, path)
     }
 }
@@ -311,7 +319,11 @@ impl BmpImage {
     }
 
     /// Writes the BmpImage to a bmp file
-    pub fn write_to_file(&self, path: &std::path::Path) -> Result<(), FltkError> {
+    pub fn write_to_file<P: AsRef<std::path::Path>>(&self, path: P) -> Result<(), FltkError> {
+        self.write_to_file_(path.as_ref())
+    }
+
+    fn write_to_file_(&self, path: &std::path::Path) -> Result<(), FltkError> {
         crate::draw::write_to_bmp_file(self, path)
     }
 }
@@ -514,7 +526,7 @@ pub struct RgbImage {
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage
+    /// Initializes a new raw RgbImage, copies the data and handles its lifetime
     /// If you need to work with RGB data,
     /// it's suggested to use the Image crate https://crates.io/crates/image
     pub fn new(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
@@ -536,6 +548,28 @@ impl RgbImage {
             } else {
                 Ok(RgbImage { _inner: img })
             }
+        }
+    }
+
+    /// Initializes a new raw RgbImage from shared data, doesn't handle the data's lifetime
+    /// # Safety
+    /// The data must be valid for the lifetime of the image
+    pub unsafe fn from_data(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
+        if depth > 4 {
+            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+        }
+        let mut sz = w * h;
+        if depth > 0 {
+            sz *= depth;
+        }
+        if sz > data.len() as u32 {
+            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+        }
+        let img = Fl_RGB_Image_from_data(data.as_ptr(), w as i32, h as i32, depth as i32);
+        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+        } else {
+            Ok(RgbImage { _inner: img })
         }
     }
 

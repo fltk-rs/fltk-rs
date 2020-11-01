@@ -181,6 +181,10 @@
 //! ```
 //! $ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango libgl mesa --needed
 //! ```
+//! For Alpine linux:
+//! ```
+//! $ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev
+//! ```
 //! If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
 //!
 //! ## FAQ
@@ -207,6 +211,8 @@ pub mod tree;
 pub mod valuator;
 pub mod widget;
 pub mod window;
+pub mod surface;
+pub mod printer;
 pub(crate) mod utils;
 
 pub use enums::*;

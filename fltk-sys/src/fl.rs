@@ -139,6 +139,12 @@ extern "C" {
     pub fn Fl_dnd() -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_grab() -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_set_grab(arg1: *mut libc::c_void);
+}
+extern "C" {
     pub fn Fl_first_window() -> *mut libc::c_void;
 }
 extern "C" {

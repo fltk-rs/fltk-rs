@@ -1,7 +1,5 @@
 #include "cfl_image.h"
 #include <FL/Fl.H>
-
-#include "cfl_new.hpp"
 #include <FL/Fl_BMP_Image.H>
 #include <FL/Fl_GIF_Image.H>
 #include <FL/Fl_Image.H>
@@ -155,6 +153,12 @@ IMAGE_DEFINE(Fl_RGB_Image)
 Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int depth) {
     auto img = new Fl_RGB_Image(bits, W, H, depth);
     img->alloc_array = 1;
+    return img;
+}
+
+Fl_RGB_Image *Fl_RGB_Image_from_data(const unsigned char *bits, int W, int H, int depth) {
+    auto img = new Fl_RGB_Image(bits, W, H, depth);
+    img->alloc_array = 0;
     return img;
 }
 

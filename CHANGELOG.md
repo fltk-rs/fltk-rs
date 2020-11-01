@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.10.2] - 2020-11-02
+### Changes
+- Add unsafe RgbImage::from_data() which creates an RgbImage from non-owned data.
+- <image type>Image::write_to_file has an AsRef<std::path::Path> parameter.
+- Add SurfaceDevice trait and ImageSurface type.
+- Add Printer type for native print support.
+- Prelim support for musl builds.
+- Remove back-compat SurfaceDevice::set_current().
+- Enable window grabbing.
+
 ## [0.10.1] - 2020-10-30
 ### Changes
 - BREAKING: App::wait() returns bool instead of Result since it doesn't error out.

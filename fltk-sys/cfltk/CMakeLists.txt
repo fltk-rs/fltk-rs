@@ -15,10 +15,6 @@ else()
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti -fno-exceptions")
 endif()
 
-if(UNIX AND NOT APPLE)
-    add_definitions(-D_ALL_SOURCE)
-endif()
-
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib)
 
@@ -56,6 +52,8 @@ set(CFLTK_SRCS
     src/cfl_draw.cpp
     src/cfl_table.cpp
     src/cfl_tree.cpp
+    src/cfl_surface.cpp
+    src/cfl_printer.cpp
     )
 
 if(CFLTK_BUILD_SHARED)

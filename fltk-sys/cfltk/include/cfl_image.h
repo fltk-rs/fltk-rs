@@ -77,6 +77,8 @@ IMAGE_DECLARE(Fl_RGB_Image)
 
 Fl_RGB_Image *Fl_RGB_Image_new(const unsigned char *bits, int W, int H, int depth);
 
+Fl_RGB_Image *Fl_RGB_Image_from_data(const unsigned char *bits, int W, int H, int depth);
+
 IMAGE_DECLARE(Fl_Shared_Image)
 
 Fl_Shared_Image *Fl_Shared_Image_get(const char *name, int W, int H);

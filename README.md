@@ -177,7 +177,7 @@ The following are the features offered by the crate:
 
 ## Dependencies
 
-Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag (which requires curl and tar to download and unpack the bundled libraries).
+Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag (which requires curl and tar to download and unpack the bundled libraries). If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
 
 - Windows: No dependencies.
 - MacOS: No dependencies.
@@ -195,7 +195,11 @@ For Arch-based GUI distributions, that means running:
 ```
 $ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango libgl mesa --needed
 ```
-If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
+For Alpine linux:
+```
+$ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev
+```
+- Android: Android Studio, Android Sdk, Android Ndk.
 
 ## FAQ
 

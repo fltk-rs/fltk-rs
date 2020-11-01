@@ -1,7 +1,5 @@
 #include "cfl_dialog.h"
 #include <FL/Fl.H>
-
-#include "cfl_new.hpp"
 #include <FL/Fl_Color_Chooser.H>
 #include <FL/Fl_File_Chooser.H>
 #include <FL/Fl_Help_Dialog.H>

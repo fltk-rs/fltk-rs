@@ -765,6 +765,14 @@ extern "C" {
         depth: libc::c_int,
     ) -> *mut Fl_RGB_Image;
 }
+extern "C" {
+    pub fn Fl_RGB_Image_from_data(
+        bits: *const libc::c_uchar,
+        W: libc::c_int,
+        H: libc::c_int,
+        depth: libc::c_int,
+    ) -> *mut Fl_RGB_Image;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Shared_Image {

@@ -1,5 +1,4 @@
 #include "cfl_misc.h"
-#include "cfl_new.hpp"
 #include <FL/Fl.H>
 #include <FL/Fl_Chart.H>
 #include <FL/Fl_Clock.H>
