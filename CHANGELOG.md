@@ -4,6 +4,8 @@
 ### Changes
 - Mark GroupExt::child(idx) as unsafe.
 - Fix support for msvc 2013 and lower.
+- Change WidgetExt::parent to return Group.
+- Add WidgetBase trait.
 
 ## [0.10.2] - 2020-11-02
 ### Changes

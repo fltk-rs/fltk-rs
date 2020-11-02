@@ -6,7 +6,7 @@ use std::mem;
 use std::os::raw;
 
 /// An abstract type, shouldn't be instantiated in user code
-#[derive(WidgetExt, Debug)]
+#[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Widget {
     _inner: *mut Fl_Widget,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -24,6 +24,13 @@ impl Widget {
             _inner: ptr,
             _tracker: tracker,
         }
+    }
+
+    /// Get a widget from base widget
+    /// # Safety
+    /// The underlying object must be valid
+    pub unsafe fn from_base<W: WidgetBase>(w: W) -> Self {
+        Widget::from_raw(w.as_widget_ptr())
     }
 
     /// Returns the inner pointer

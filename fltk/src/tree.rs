@@ -76,7 +76,7 @@ pub enum TreeItemDrawMode {
 }
 
 /// Defines a tree widget
-#[derive(WidgetExt, Debug)]
+#[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Tree {
     _inner: *mut Fl_Tree,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -1099,7 +1099,7 @@ impl Tree {
     }
 
     /// Returns whether the widget is a scrollbar
-    pub fn is_scrollbar<W: WidgetExt>(&mut self, w: &W) -> bool {
+    pub fn is_scrollbar<W: WidgetBase>(&mut self, w: &W) -> bool {
         assert!(!w.was_deleted());
         assert!(!self.was_deleted());
         unsafe {
@@ -1341,17 +1341,17 @@ impl TreeItem {
     }
 
     /// Sets the item's associated widget
-    pub fn set_widget<W: WidgetExt>(&mut self, val: &W) {
+    pub fn set_widget<W: WidgetBase>(&mut self, val: &W) {
         assert!(!val.was_deleted());
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_widget(self._inner, val.as_widget_ptr() as *mut Fl_Widget) }
     }
 
     /// Gets the item's associated widget
-    pub fn widget(&self) -> Widget {
+    pub fn widget(&self) -> Box<dyn WidgetBase> {
         assert!(!self.was_deleted());
         unsafe {
-            Widget::from_raw(Fl_Tree_Item_widget(self._inner) as *mut fltk_sys::widget::Fl_Widget)
+            Box::new(Widget::from_raw(Fl_Tree_Item_widget(self._inner) as *mut fltk_sys::widget::Fl_Widget))
         }
     }
 

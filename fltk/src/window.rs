@@ -32,7 +32,7 @@ pub type RawHandle = *mut raw::c_void;
 pub type RawHandle = u64;
 
 /// Creates a window widget
-#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct Window {
     _inner: *mut Fl_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -131,7 +131,7 @@ pub enum WindowType {
 }
 
 /// Creates a single (buffered) window widget
-#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct SingleWindow {
     _inner: *mut Fl_Single_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -207,7 +207,7 @@ impl SingleWindow {
 }
 
 /// Creates a double (buffered) window widget
-#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct DoubleWindow {
     _inner: *mut Fl_Double_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -289,7 +289,7 @@ impl DoubleWindow {
 }
 
 /// Creates a Menu window widget
-#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct MenuWindow {
     _inner: *mut Fl_Menu_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -300,7 +300,7 @@ pub type GlContext = *mut raw::c_void;
 
 /// Creates a OpenGL window widget
 #[cfg(feature = "enable-glwindow")]
-#[derive(WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct GlWindow {
     _inner: *mut Fl_Gl_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

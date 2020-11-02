@@ -507,25 +507,26 @@ impl FileChooser {
         }
     }
 
-        /// Sets the callback of the FileChooser
-        pub fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
-            assert!(!self._inner.is_null());
-            unsafe {
-                unsafe extern "C" fn shim(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
-                    let mut wid = FileChooser { _inner: arg1 };
-                    let a: *mut Box<dyn FnMut(&mut FileChooser)> = data as *mut Box<dyn FnMut(&mut FileChooser)>;
-                    let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
-                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
-                }
-                let _old_data = self.user_data();
-                let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
-                let data: *mut raw::c_void = a as *mut raw::c_void;
-                let callback: Option<
-                    unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
-                > = Some(shim);
-                Fl_File_Chooser_set_callback(self._inner, callback, data)
+    /// Sets the callback of the FileChooser
+    pub fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+        assert!(!self._inner.is_null());
+        unsafe {
+            unsafe extern "C" fn shim(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
+                let mut wid = FileChooser { _inner: arg1 };
+                let a: *mut Box<dyn FnMut(&mut FileChooser)> =
+                    data as *mut Box<dyn FnMut(&mut FileChooser)>;
+                let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
+            let _old_data = self.user_data();
+            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut raw::c_void = a as *mut raw::c_void;
+            let callback: Option<
+                unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
+            > = Some(shim);
+            Fl_File_Chooser_set_callback(self._inner, callback, data)
         }
+    }
 
     /// Sets the color of the FileChooser
     pub fn set_color(&mut self, c: Color) {
@@ -803,13 +804,15 @@ impl FileChooser {
     pub fn window(&mut self) -> crate::window::Window {
         // Shouldn't fail
         unsafe {
-            self.new_button()
+            let win_ptr = self
+                .new_button()
                 .unwrap()
                 .parent()
                 .unwrap()
                 .parent()
                 .unwrap()
-                .into()
+                .as_widget_ptr();
+            crate::window::Window::from_widget_ptr(win_ptr)
         }
     }
 }

@@ -569,14 +569,14 @@ pub enum DragType {
 }
 
 /// Creates a non-editable text display widget
-#[derive(WidgetExt, DisplayExt, Debug)]
+#[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
 pub struct TextDisplay {
     _inner: *mut Fl_Text_Display,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates an editable text display widget
-#[derive(WidgetExt, DisplayExt, Debug)]
+#[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
 pub struct TextEditor {
     _inner: *mut Fl_Text_Editor,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -584,7 +584,7 @@ pub struct TextEditor {
 
 /// Creates an editable text display widget
 /// SimpleTerminal already has an internal buffer
-#[derive(WidgetExt, DisplayExt, Debug)]
+#[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
 pub struct SimpleTerminal {
     _inner: *mut Fl_Simple_Terminal,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

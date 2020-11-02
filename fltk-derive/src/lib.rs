@@ -33,6 +33,12 @@ use crate::widget::*;
 use crate::window::impl_window_trait;
 use proc_macro::TokenStream;
 
+#[proc_macro_derive(WidgetBase)]
+pub fn base_widget_trait_macro(input: TokenStream) -> TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_widget_base_trait(&ast)
+}
+
 #[proc_macro_derive(WidgetExt)]
 pub fn widget_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();

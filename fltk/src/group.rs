@@ -9,14 +9,14 @@ use std::{
 };
 
 /// Creates a widget group
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Group {
     _inner: *mut Fl_Group,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a widget pack
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Pack {
     _inner: *mut Fl_Pack,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -31,7 +31,7 @@ pub enum PackType {
 }
 
 /// Creates a scroll group
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Scroll {
     _inner: *mut Fl_Scroll,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -116,7 +116,7 @@ impl Scroll {
 }
 
 /// Creates a tab which can contain widgets
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Tabs {
     _inner: *mut Fl_Tabs,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -208,14 +208,14 @@ impl Tabs {
 }
 
 /// Creates a tile which can contain widgets
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Tile {
     _inner: *mut Fl_Tile,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a wizard widget
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Wizard {
     _inner: *mut Fl_Wizard,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -235,15 +235,15 @@ impl Wizard {
     }
 
     /// Gets the underlying widget of the current view
-    pub fn current_widget(&mut self) -> Widget {
+    pub fn current_widget(&mut self) -> Box<dyn WidgetBase> {
         unsafe {
             assert!(!self.was_deleted());
-            Widget::from_raw(Fl_Wizard_value(self._inner) as *mut fltk_sys::widget::Fl_Widget)
+            Box::new(Widget::from_raw(Fl_Wizard_value(self._inner) as *mut fltk_sys::widget::Fl_Widget))
         }
     }
 
     /// Sets the underlying widget of the current view
-    pub fn set_current_widget<W: WidgetExt>(&mut self, w: &W) {
+    pub fn set_current_widget<W: WidgetBase>(&mut self, w: &W) {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Wizard_set_value(
@@ -255,7 +255,7 @@ impl Wizard {
 }
 
 /// Creates a color chooser widget
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct ColorChooser {
     _inner: *mut Fl_Color_Chooser,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

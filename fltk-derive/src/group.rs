@@ -33,7 +33,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #end(self._inner) }
             }
 
-            fn find<Widget: WidgetExt>(&self, widget: &Widget) -> u32 {
+            fn find<Widget: WidgetBase>(&self, widget: &Widget) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
@@ -41,7 +41,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn add<Widget: WidgetExt>(&mut self, widget: &Widget) {
+            fn add<Widget: WidgetBase>(&mut self, widget: &Widget) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
@@ -49,7 +49,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn insert<Widget: WidgetExt>(&mut self, widget: &Widget, index: u32) {
+            fn insert<Widget: WidgetBase>(&mut self, widget: &Widget, index: u32) {
                 unsafe {
                     debug_assert!(index <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
@@ -58,7 +58,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn remove<Widget: WidgetExt>(&mut self, widget: &Widget) {
+            fn remove<Widget: WidgetBase>(&mut self, widget: &Widget) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
@@ -80,7 +80,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn child(&self, idx: u32) -> Option<Widget> {
+            fn child(&self, idx: u32) -> Option<Box<dyn WidgetBase>> {
                 unsafe {
                     debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
@@ -88,12 +88,12 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     if child_widget.is_null() {
                         None
                     } else {
-                        Some(Widget::from_raw(child_widget as *mut fltk_sys::widget::Fl_Widget))
+                        Some(Box::new(Widget::from_raw(child_widget as *mut fltk_sys::widget::Fl_Widget)))
                     }
                 }
             }
 
-            fn resizable<Widget: WidgetExt>(&self, widget: &mut Widget) {
+            fn resizable<Widget: WidgetBase>(&self, widget: &mut Widget) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());

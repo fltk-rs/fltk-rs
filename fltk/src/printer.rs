@@ -147,7 +147,7 @@ impl Printer {
     }
 
     /// Print a widget
-    pub fn print_widget<W: WidgetExt>(&self, widget : &W, delta_x : i32, delta_y : i32) {
+    pub fn print_widget<W: WidgetBase>(&self, widget : &W, delta_x : i32, delta_y : i32) {
         unsafe {
             Fl_Printer_print_widget(self._inner, widget.as_widget_ptr() as *mut _, delta_x, delta_y)
         }

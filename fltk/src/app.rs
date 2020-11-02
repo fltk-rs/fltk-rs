@@ -733,7 +733,7 @@ pub fn program_should_quit(flag: bool) {
 }
 
 /// Returns whether an event occured within a widget
-pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
+pub fn event_inside_widget<Wid: WidgetBase>(wid: &Wid) -> bool {
     assert!(!wid.was_deleted());
     let x = wid.x();
     let y = wid.y();
@@ -758,7 +758,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 }
 
 /// Gets the widget that is below the mouse cursor
-pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
+pub fn belowmouse<Wid: WidgetBase>() -> Option<impl WidgetBase> {
     unsafe {
         let x = Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
         if x.is_null() {
@@ -838,21 +838,21 @@ pub fn own_colormap() {
 }
 
 /// Gets the widget which was pushed
-pub fn pushed() -> Option<crate::widget::Widget> {
+pub fn pushed() -> Option<impl WidgetBase> {
     unsafe {
         let ptr = Fl_pushed();
         if ptr.is_null() {
             None
         } else {
-            Some(crate::widget::Widget::from_raw(
-                ptr as *mut fltk_sys::widget::Fl_Widget,
+            Some(crate::widget::Widget::from_widget_ptr(
+                ptr as *mut _,
             ))
         }
     }
 }
 
 /// Gets the widget which has focus
-pub fn focus() -> Option<crate::widget::Widget> {
+pub fn focus() -> Option<impl WidgetBase>  {
     unsafe {
         let ptr = Fl_focus();
         if ptr.is_null() {
@@ -866,7 +866,7 @@ pub fn focus() -> Option<crate::widget::Widget> {
 }
 
 /// Sets the widget which has focus
-pub fn set_focus<W: WidgetExt>(wid: &W) {
+pub fn set_focus<W: WidgetBase>(wid: &W) {
     unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }
 

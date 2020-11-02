@@ -8,7 +8,7 @@ use std::{
 };
 
 /// Creates a normal button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct Button {
     _inner: *mut Fl_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -25,7 +25,7 @@ pub enum ButtonType {
 }
 
 /// Creates a radio button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RadioButton {
     _inner: *mut Fl_Radio_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -51,7 +51,7 @@ impl RadioButton {
 }
 
 /// Creates a radio round button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RadioRoundButton {
     _inner: *mut Fl_Radio_Round_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -77,7 +77,7 @@ impl RadioRoundButton {
 }
 
 /// Creates a radio light button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RadioLightButton {
     _inner: *mut Fl_Radio_Light_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -103,7 +103,7 @@ impl RadioLightButton {
 }
 
 /// Creates a round button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RoundButton {
     _inner: *mut Fl_Round_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -129,7 +129,7 @@ impl RoundButton {
 }
 
 /// Creates a check button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct CheckButton {
     _inner: *mut Fl_Check_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -157,7 +157,7 @@ impl CheckButton {
 }
 
 /// Creates a toggle button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct ToggleButton {
     _inner: *mut Fl_Toggle_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -183,7 +183,7 @@ impl ToggleButton {
 }
 
 /// Creates a light button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct LightButton {
     _inner: *mut Fl_Light_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -209,14 +209,14 @@ impl LightButton {
 }
 
 /// Creates a repeat button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RepeatButton {
     _inner: *mut Fl_Repeat_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a return button
-#[derive(WidgetExt, ButtonExt, Debug)]
+#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct ReturnButton {
     _inner: *mut Fl_Return_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

@@ -8,28 +8,28 @@ use std::{
 };
 
 /// Creates a menu bar
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct MenuBar {
     _inner: *mut Fl_Menu_Bar,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a menu button
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct MenuButton {
     _inner: *mut Fl_Menu_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a menu choice
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct Choice {
     _inner: *mut Fl_Choice,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a MacOS system menu bar
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct SysMenuBar {
     _inner: *mut Fl_Sys_Menu_Bar,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
