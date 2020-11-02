@@ -3,6 +3,7 @@
 ## [0.10.3] - Unreleased
 ### Changes
 - Mark GroupExt::child(idx) as unsafe.
+- Fix support for msvc 2013 and lower.
 
 ## [0.10.2] - 2020-11-02
 ### Changes
