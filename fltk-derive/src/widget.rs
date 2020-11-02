@@ -8,7 +8,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
 
     let name_str = get_fl_name(name.to_string());
     let ptr_name = Ident::new(name_str.as_str(), name.span());
-    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
     let x = Ident::new(format!("{}_{}", name_str, "x").as_str(), name.span());
     let y = Ident::new(format!("{}_{}", name_str, "y").as_str(), name.span());
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
@@ -36,8 +35,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_tooltip").as_str(),
         name.span(),
     );
-    let get_type = Ident::new(format!("{}_{}", name_str, "get_type").as_str(), name.span());
-    let set_type = Ident::new(format!("{}_{}", name_str, "set_type").as_str(), name.span());
     let color = Ident::new(format!("{}_{}", name_str, "color").as_str(), name.span());
     let set_color = Ident::new(
         format!("{}_{}", name_str, "set_color").as_str(),
@@ -91,30 +88,8 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_align").as_str(),
         name.span(),
     );
-    let set_image = Ident::new(
-        format!("{}_{}", name_str, "set_image").as_str(),
-        name.span(),
-    );
-    let set_image_with_size = Ident::new(
-        format!("{}_{}", name_str, "set_image_with_size").as_str(),
-        name.span(),
-    );
-    let image = Ident::new(format!("{}_{}", name_str, "image").as_str(), name.span());
-    let set_handler = Ident::new(
-        format!("{}_{}", name_str, "set_handler").as_str(),
-        name.span(),
-    );
-    let set_handler2 = Ident::new(
-        format!("{}_{}", name_str, "set_handler2").as_str(),
-        name.span(),
-    );
     let set_trigger = Ident::new(
         format!("{}_{}", name_str, "set_trigger").as_str(),
-        name.span(),
-    );
-    let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
-    let set_draw2 = Ident::new(
-        format!("{}_{}", name_str, "set_draw2").as_str(),
         name.span(),
     );
     let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
@@ -140,16 +115,12 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "takes_events").as_str(),
         name.span(),
     );
+    let set_callback = Ident::new(
+        format!("{}_{}", name_str, "set_callback").as_str(),
+        name.span(),
+    );
     let user_data = Ident::new(
         format!("{}_{}", name_str, "user_data").as_str(),
-        name.span(),
-    );
-    let handle_data = Ident::new(
-        format!("{}_{}", name_str, "handle_data").as_str(),
-        name.span(),
-    );
-    let draw_data = Ident::new(
-        format!("{}_{}", name_str, "draw_data").as_str(),
         name.span(),
     );
     let take_focus = Ident::new(
@@ -190,19 +161,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let as_group = Ident::new(format!("{}_{}", name_str, "as_group").as_str(), name.span());
-    let deimage = Ident::new(format!("{}_{}", name_str, "deimage").as_str(), name.span());
-    let set_deimage = Ident::new(
-        format!("{}_{}", name_str, "set_deimage").as_str(),
-        name.span(),
-    );
-    let set_callback = Ident::new(
-        format!("{}_{}", name_str, "set_callback").as_str(),
-        name.span(),
-    );
-    let set_deleter = Ident::new(
-        format!("{}_{}", name_str, "set_deleter").as_str(),
-        name.span(),
-    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -427,14 +385,14 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn parent(&self) -> Option<crate::group::Group> {
+            fn parent(&self) -> Option<Box<dyn WidgetBase>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let x = #parent(self._inner);
                     if x.is_null() {
                         None
                     } else {
-                        Some(crate::group::Group::from_widget_ptr(x as *mut _))
+                        Some(Box::new(crate::widget::Widget::from_widget_ptr(x as *mut _)))
                     }
                 }
             }
@@ -502,6 +460,22 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                         0 => false,
                         _ => true,
                     }
+                }
+            }
+
+            fn set_boxed_callback(&mut self, cb: Box<dyn FnMut()>) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+                        let f: &mut (dyn FnMut()) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+                    }
+                    let _old_data = self.user_data();
+                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: Fl_Callback = Some(shim);
+                    #set_callback(self._inner, callback, data);
                 }
             }
 
@@ -589,6 +563,32 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     #clear_damage(self._inner)
                 }
             }
+
+            unsafe fn as_window(&mut self) -> Option<crate::window::Window> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let ptr = #as_window(self._inner);
+                    if ptr.is_null() {
+                        return None;
+                    }
+                    Some(crate::window::Window::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                }
+            }
+
+            unsafe fn as_group(&mut self) -> Option<crate::group::Group> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let ptr = #as_group(self._inner);
+                    if ptr.is_null() {
+                        return None;
+                    }
+                    Some(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                }
+            }
+
+            unsafe fn upcast(&self) -> crate::widget::Widget {
+                crate::widget::Widget::from_raw(self.as_widget_ptr() as *mut _)
+            }
         }
     };
     gen.into()
@@ -600,88 +600,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let name_str = get_fl_name(name.to_string());
     let ptr_name = Ident::new(name_str.as_str(), name.span());
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
-    let x = Ident::new(format!("{}_{}", name_str, "x").as_str(), name.span());
-    let y = Ident::new(format!("{}_{}", name_str, "y").as_str(), name.span());
-    let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
-    let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
-    let label = Ident::new(format!("{}_{}", name_str, "label").as_str(), name.span());
-    let set_label = Ident::new(
-        format!("{}_{}", name_str, "set_label").as_str(),
-        name.span(),
-    );
-    let redraw = Ident::new(format!("{}_{}", name_str, "redraw").as_str(), name.span());
-    let show = Ident::new(format!("{}_{}", name_str, "show").as_str(), name.span());
-    let hide = Ident::new(format!("{}_{}", name_str, "hide").as_str(), name.span());
-    let activate = Ident::new(format!("{}_{}", name_str, "activate").as_str(), name.span());
-    let deactivate = Ident::new(
-        format!("{}_{}", name_str, "deactivate").as_str(),
-        name.span(),
-    );
-    let redraw_label = Ident::new(
-        format!("{}_{}", name_str, "redraw_label").as_str(),
-        name.span(),
-    );
-    let resize = Ident::new(format!("{}_{}", name_str, "resize").as_str(), name.span());
-    let tooltip = Ident::new(format!("{}_{}", name_str, "tooltip").as_str(), name.span());
-    let set_tooltip = Ident::new(
-        format!("{}_{}", name_str, "set_tooltip").as_str(),
-        name.span(),
-    );
     let get_type = Ident::new(format!("{}_{}", name_str, "get_type").as_str(), name.span());
     let set_type = Ident::new(format!("{}_{}", name_str, "set_type").as_str(), name.span());
-    let color = Ident::new(format!("{}_{}", name_str, "color").as_str(), name.span());
-    let set_color = Ident::new(
-        format!("{}_{}", name_str, "set_color").as_str(),
-        name.span(),
-    );
-    let label_color = Ident::new(
-        format!("{}_{}", name_str, "label_color").as_str(),
-        name.span(),
-    );
-    let set_label_color = Ident::new(
-        format!("{}_{}", name_str, "set_label_color").as_str(),
-        name.span(),
-    );
-    let label_font = Ident::new(
-        format!("{}_{}", name_str, "label_font").as_str(),
-        name.span(),
-    );
-    let set_label_font = Ident::new(
-        format!("{}_{}", name_str, "set_label_font").as_str(),
-        name.span(),
-    );
-    let label_size = Ident::new(
-        format!("{}_{}", name_str, "label_size").as_str(),
-        name.span(),
-    );
-    let set_label_size = Ident::new(
-        format!("{}_{}", name_str, "set_label_size").as_str(),
-        name.span(),
-    );
-    let label_type = Ident::new(
-        format!("{}_{}", name_str, "label_type").as_str(),
-        name.span(),
-    );
-    let set_label_type = Ident::new(
-        format!("{}_{}", name_str, "set_label_type").as_str(),
-        name.span(),
-    );
-    let frame = Ident::new(format!("{}_{}", name_str, "box").as_str(), name.span());
-    let set_frame = Ident::new(format!("{}_{}", name_str, "set_box").as_str(), name.span());
-    let changed = Ident::new(format!("{}_{}", name_str, "changed").as_str(), name.span());
-    let set_changed = Ident::new(
-        format!("{}_{}", name_str, "set_changed").as_str(),
-        name.span(),
-    );
-    let clear_changed = Ident::new(
-        format!("{}_{}", name_str, "clear_changed").as_str(),
-        name.span(),
-    );
-    let align = Ident::new(format!("{}_{}", name_str, "align").as_str(), name.span());
-    let set_align = Ident::new(
-        format!("{}_{}", name_str, "set_align").as_str(),
-        name.span(),
-    );
     let set_image = Ident::new(
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
@@ -699,40 +619,9 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_handler2").as_str(),
         name.span(),
     );
-    let set_trigger = Ident::new(
-        format!("{}_{}", name_str, "set_trigger").as_str(),
-        name.span(),
-    );
     let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
     let set_draw2 = Ident::new(
         format!("{}_{}", name_str, "set_draw2").as_str(),
-        name.span(),
-    );
-    let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
-    let selection_color = Ident::new(
-        format!("{}_{}", name_str, "selection_color").as_str(),
-        name.span(),
-    );
-    let set_selection_color = Ident::new(
-        format!("{}_{}", name_str, "set_selection_color").as_str(),
-        name.span(),
-    );
-    let do_callback = Ident::new(
-        format!("{}_{}", name_str, "do_callback").as_str(),
-        name.span(),
-    );
-    let inside = Ident::new(format!("{}_{}", name_str, "inside").as_str(), name.span());
-    let window = Ident::new(format!("{}_{}", name_str, "window").as_str(), name.span());
-    let top_window = Ident::new(
-        format!("{}_{}", name_str, "top_window").as_str(),
-        name.span(),
-    );
-    let takes_events = Ident::new(
-        format!("{}_{}", name_str, "takes_events").as_str(),
-        name.span(),
-    );
-    let user_data = Ident::new(
-        format!("{}_{}", name_str, "user_data").as_str(),
         name.span(),
     );
     let handle_data = Ident::new(
@@ -743,44 +632,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "draw_data").as_str(),
         name.span(),
     );
-    let take_focus = Ident::new(
-        format!("{}_{}", name_str, "take_focus").as_str(),
-        name.span(),
-    );
-    let set_visible_focus = Ident::new(
-        format!("{}_{}", name_str, "set_visible_focus").as_str(),
-        name.span(),
-    );
-    let clear_visible_focus = Ident::new(
-        format!("{}_{}", name_str, "clear_visible_focus").as_str(),
-        name.span(),
-    );
-    let visible_focus = Ident::new(
-        format!("{}_{}", name_str, "visible_focus").as_str(),
-        name.span(),
-    );
-    let has_visible_focus = Ident::new(
-        format!("{}_{}", name_str, "has_visible_focus").as_str(),
-        name.span(),
-    );
     let set_handle_data = Ident::new(
         format!("{}_{}", name_str, "set_handle_data").as_str(),
         name.span(),
     );
-    let damage = Ident::new(format!("{}_{}", name_str, "damage").as_str(), name.span());
-    let set_damage = Ident::new(
-        format!("{}_{}", name_str, "set_damage").as_str(),
-        name.span(),
-    );
-    let clear_damage = Ident::new(
-        format!("{}_{}", name_str, "clear_damage").as_str(),
-        name.span(),
-    );
-    let as_window = Ident::new(
-        format!("{}_{}", name_str, "as_window").as_str(),
-        name.span(),
-    );
-    let as_group = Ident::new(format!("{}_{}", name_str, "as_group").as_str(), name.span());
     let deimage = Ident::new(format!("{}_{}", name_str, "deimage").as_str(), name.span());
     let set_deimage = Ident::new(
         format!("{}_{}", name_str, "set_deimage").as_str(),
@@ -1119,7 +974,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
-            
+
 
             unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
                 unsafe {
@@ -1144,28 +999,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let data = Box::from_raw(data);
                     #set_handler(self._inner, None, std::ptr::null_mut());
                     Some(*data)
-                }
-            }
-
-            fn as_window(&mut self) -> Option<crate::window::Window> {
-                assert!(!self.was_deleted());
-                unsafe {
-                    let ptr = #as_window(self._inner);
-                    if ptr.is_null() {
-                        return None;
-                    }
-                    Some(crate::window::Window::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
-                }
-            }
-
-            fn as_group(&mut self) -> Option<crate::group::Group> {
-                assert!(!self.was_deleted());
-                unsafe {
-                    let ptr = #as_group(self._inner);
-                    if ptr.is_null() {
-                        return None;
-                    }
-                    Some(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
                 }
             }
         }

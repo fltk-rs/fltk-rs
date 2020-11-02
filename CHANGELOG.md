@@ -3,9 +3,8 @@
 ## [0.10.3] - Unreleased
 ### Changes
 - Fix support for msvc 2013 and lower.
-- Change WidgetExt::parent to return Group.
 - Add WidgetBase trait.
-- Non-constructor methods and functions returning an instance of Widget now return a boxed WidgetBase trait object. 
+- Non-constructor methods and functions returning an instance of Widget now return a safer boxed WidgetBase trait object. 
 
 ## [0.10.2] - 2020-11-02
 ### Changes

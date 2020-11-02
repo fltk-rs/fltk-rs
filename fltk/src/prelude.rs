@@ -140,7 +140,7 @@ pub unsafe trait WidgetBase {
     /// Sets the alignment of the widget
     fn set_align(&mut self, align: Align);
     /// Returns the parent of the widget
-    fn parent(&self) -> Option<crate::group::Group>;
+    fn parent(&self) -> Option<Box<dyn WidgetBase>>;
     /// Gets the selection color of the widget
     fn selection_color(&mut self) -> Color;
     /// Sets the selection color of the widget
@@ -175,10 +175,24 @@ pub unsafe trait WidgetBase {
     fn clear_damage(&mut self);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
+    /// Sets a boxed callback when the widget is triggered (clicks for example)
+    fn set_boxed_callback(&mut self, cb: Box<dyn FnMut()>);
     /// INTERNAL: Retakes ownership of the user callback data
     /// # Safety
     /// Can return multiple mutable references to the user_data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
+    /// Return the widget as a window if it's a window
+    /// # Safety
+    /// Casts the widget as a window type
+    unsafe fn as_window(&mut self) -> Option<crate::window::Window>;
+    /// Return the widget as a group widget if it's a group widget
+    /// # Safety
+    /// Casts the widget as a group type
+    unsafe fn as_group(&mut self) -> Option<crate::group::Group>;
+    /// Upcast a WidgetBase to a Widget
+    /// # Safety
+    /// May fail in non-compatible underlying pointer types
+    unsafe fn upcast(&self) -> crate::widget::Widget;
 }
 
 /// Defines the extended methods implemented by all widgets
@@ -250,10 +264,6 @@ pub unsafe trait WidgetExt: WidgetBase {
     fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
     /// Deletes widgets and their children.
     fn delete(wid: Self);
-    /// Return the widget as a window if it's a window
-    fn as_window(&mut self) -> Option<crate::window::Window>;
-    /// Return the widget as a group widget if it's a group widget
-    fn as_group(&mut self) -> Option<crate::group::Group>;
     /// INTERNAL: Retrieve the draw data
     /// # Safety
     /// Can return multiple mutable references to the draw_data
