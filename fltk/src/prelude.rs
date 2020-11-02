@@ -275,7 +275,7 @@ pub unsafe trait WidgetExt: WidgetBase {
 }
 
 /// Defines the methods implemented by all button widgets
-pub unsafe trait ButtonExt: WidgetBase + WidgetExt {
+pub unsafe trait ButtonExt: WidgetBase {
     /// Gets the shortcut associated with a button
     fn shortcut(&self) -> Shortcut;
     /// Sets the shortcut associated with a button
