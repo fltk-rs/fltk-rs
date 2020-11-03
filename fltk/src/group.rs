@@ -9,14 +9,14 @@ use std::{
 };
 
 /// Creates a widget group
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Group {
     _inner: *mut Fl_Group,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a widget pack
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Pack {
     _inner: *mut Fl_Pack,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -31,7 +31,7 @@ pub enum PackType {
 }
 
 /// Creates a scroll group
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Scroll {
     _inner: *mut Fl_Scroll,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -53,7 +53,7 @@ pub enum ScrollType {
 
 impl Scroll {
     /// Returns the vertical scrollbar
-    pub fn scrollbar(&self) -> crate::valuator::Scrollbar {
+    pub fn scrollbar(&self) -> impl ValuatorExt {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Scroll_scrollbar(self._inner);
@@ -63,7 +63,7 @@ impl Scroll {
     }
 
     /// Returns the horizontal scrollbar
-    pub fn hscrollbar(&self) -> crate::valuator::Scrollbar {
+    pub fn hscrollbar(&self) -> impl ValuatorExt {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Scroll_hscrollbar(self._inner);
@@ -116,7 +116,7 @@ impl Scroll {
 }
 
 /// Creates a tab which can contain widgets
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Tabs {
     _inner: *mut Fl_Tabs,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -124,7 +124,7 @@ pub struct Tabs {
 
 impl Tabs {
     /// Gets the currently visible group
-    pub fn value(&mut self) -> Option<Group> {
+    pub fn value(&mut self) -> Option<impl GroupExt> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tabs_value(self._inner);
@@ -153,7 +153,7 @@ impl Tabs {
     }
 
     /// Returns the tab group for the tab the user has currently down-clicked
-    pub fn push(&self) -> Option<Group> {
+    pub fn push(&self) -> Option<impl GroupExt> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tabs_push(self._inner);
@@ -208,14 +208,14 @@ impl Tabs {
 }
 
 /// Creates a tile which can contain widgets
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Tile {
     _inner: *mut Fl_Tile,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a wizard widget
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Wizard {
     _inner: *mut Fl_Wizard,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -235,10 +235,12 @@ impl Wizard {
     }
 
     /// Gets the underlying widget of the current view
-    pub fn current_widget(&mut self) -> Widget {
+    pub fn current_widget(&mut self) -> Box<dyn WidgetExt> {
         unsafe {
             assert!(!self.was_deleted());
-            Widget::from_raw(Fl_Wizard_value(self._inner) as *mut fltk_sys::widget::Fl_Widget)
+            Box::new(Widget::from_widget_ptr(
+                Fl_Wizard_value(self._inner) as *mut fltk_sys::widget::Fl_Widget
+            ))
         }
     }
 
@@ -255,7 +257,7 @@ impl Wizard {
 }
 
 /// Creates a color chooser widget
-#[derive(WidgetExt, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct ColorChooser {
     _inner: *mut Fl_Color_Chooser,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

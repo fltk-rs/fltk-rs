@@ -19,8 +19,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "make_current").as_str(),
         name.span(),
     );
-    let set_icon = Ident::new(format!("{}_{}", name_str, "set_icon").as_str(), name.span());
     let icon = Ident::new(format!("{}_{}", name_str, "icon").as_str(), name.span());
+    let set_icon = Ident::new(format!("{}_{}", name_str, "set_icon").as_str(), name.span());
     let set_border = Ident::new(
         format!("{}_{}", name_str, "set_border").as_str(),
         name.span(),
@@ -77,26 +77,26 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #make_current(self._inner) }
             }
 
-            fn set_icon<T: ImageExt>(&mut self, image: Option<T>) {
-                assert!(!self.was_deleted());
-                assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage icons are not supported!");
-                if let Some(image) = image {
-                    assert!(!image.was_deleted());
-                    unsafe { #set_icon(self._inner, image.as_image_ptr() as *mut _) }
-                } else {
-                    unsafe { #set_icon(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
-                }
-            }
-
-            fn icon(&self) -> Option<Image> {
+            fn icon(&self) -> Option<Box<dyn ImageExt>> {
                 unsafe {
                     assert!(!self.was_deleted());
                     let icon_ptr = #icon(self._inner);
                     if icon_ptr.is_null() {
                         None
                     } else {
-                        Some(Image::from_raw(icon_ptr as *mut fltk_sys::image::Fl_Image))
+                        Some(Box::new(Image::from_image_ptr(icon_ptr as *mut fltk_sys::image::Fl_Image)))
                     }
+                }
+            }
+
+            fn set_icon<T: ImageExt>(&mut self, image: Option<T>) {
+                assert!(!self.was_deleted());
+                assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage icons are not supported!");
+                if let Some(mut image) = image {
+                    assert!(!image.was_deleted());
+                    unsafe { image.increment_arc(); #set_icon(self._inner, image.as_image_ptr() as *mut _) }
+                } else {
+                    unsafe { #set_icon(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 

@@ -80,7 +80,8 @@ fn main() {
 
     table.handle(move |ev| match ev {
         Event::Push => {
-            if app::event_clicks() { // double clicks
+            if app::event_clicks() {
+                // double clicks
                 let c = cell_c.borrow();
                 inp_c.resize(c._x, c._y, c._w, c._h);
                 inp_c.show();
@@ -93,7 +94,8 @@ fn main() {
 
     wind.handle(move |ev| match ev {
         Event::KeyDown => {
-            if app::event_key() == Key::Enter { // Press enter to store the data into the cell
+            if app::event_key() == Key::Enter {
+                // Press enter to store the data into the cell
                 let c = cell.borrow();
                 data.borrow_mut()[c._row as usize][c._col as usize] = inp.value();
                 inp.set_value("");
@@ -107,7 +109,8 @@ fn main() {
     });
 
     wind.set_callback(|| {
-        if app::event() == Event::Close { // Close only when the close button is clicked
+        if app::event() == Event::Close {
+            // Close only when the close button is clicked
             app::quit();
         }
     });

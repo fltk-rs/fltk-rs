@@ -8,7 +8,7 @@ use std::{
 };
 
 /// Creates a normal browser
-#[derive(WidgetExt, BrowserExt, Debug)]
+#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
 pub struct Browser {
     _inner: *mut Fl_Browser,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -39,28 +39,28 @@ pub enum BrowserScrollbar {
 }
 
 /// Creates a select browser
-#[derive(WidgetExt, BrowserExt, Debug)]
+#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
 pub struct SelectBrowser {
     _inner: *mut Fl_Select_Browser,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a multi-browser
-#[derive(WidgetExt, BrowserExt, Debug)]
+#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
 pub struct MultiBrowser {
     _inner: *mut Fl_Multi_Browser,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a hold browser
-#[derive(WidgetExt, BrowserExt, Debug)]
+#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
 pub struct HoldBrowser {
     _inner: *mut Fl_Hold_Browser,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a file browser
-#[derive(WidgetExt, BrowserExt, Debug)]
+#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
 pub struct FileBrowser {
     _inner: *mut Fl_File_Browser,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

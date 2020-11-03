@@ -1,4 +1,15 @@
+#include <FL/Fl.H> // Has to be the first include!
+
+#include "cfl.h"
+#include "cfl_widget.h"
+#include <FL/Enumerations.H>
+#include <FL/Fl_Widget.H>
+#include <FL/Fl_Window.H>
+#include <stdarg.h>
+#include <stdint.h>
 #include <stdio.h>
+#include <string.h>
+
 #ifdef _WIN32
 #define _WIN32_WINNT 0x0501 /* need at least WinXP for this API, I think */
 #include <windows.h>
@@ -12,16 +23,9 @@
 #define USE_XFT 1
 #endif
 
-#include <FL/Fl.H> // Has to be the first include!
-
-#include "cfl.h"
-#include "cfl_widget.h"
-#include <FL/Enumerations.H>
-#include <FL/Fl_Widget.H>
-#include <FL/Fl_Window.H>
-#include <stdarg.h>
-#include <stdint.h>
-#include <string.h>
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#define snprintf _snprintf
+#endif
 
 int Fl_run(void) {
     return Fl::run();

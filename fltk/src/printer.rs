@@ -147,16 +147,26 @@ impl Printer {
     }
 
     /// Print a widget
-    pub fn print_widget<W: WidgetExt>(&self, widget : &W, delta_x : i32, delta_y : i32) {
+    pub fn print_widget<W: WidgetExt>(&self, widget: &W, delta_x: i32, delta_y: i32) {
         unsafe {
-            Fl_Printer_print_widget(self._inner, widget.as_widget_ptr() as *mut _, delta_x, delta_y)
+            Fl_Printer_print_widget(
+                self._inner,
+                widget.as_widget_ptr() as *mut _,
+                delta_x,
+                delta_y,
+            )
         }
     }
-    
+
     /// Print a window
-    pub fn print_window<W: WindowExt>(&self, win : &W, x_offset : i32, y_offset : i32) {
+    pub fn print_window<W: WindowExt>(&self, win: &W, x_offset: i32, y_offset: i32) {
         unsafe {
-            Fl_Printer_print_window(self._inner, win.as_widget_ptr() as *mut _, x_offset, y_offset)
+            Fl_Printer_print_window(
+                self._inner,
+                win.as_widget_ptr() as *mut _,
+                x_offset,
+                y_offset,
+            )
         }
     }
 }

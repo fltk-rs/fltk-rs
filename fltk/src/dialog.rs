@@ -444,22 +444,20 @@ impl FileChooser {
     }
 
     /// Gets the new button of the FileChooser
-    pub fn new_button(&mut self) -> Option<crate::button::Button> {
+    pub fn new_button(&mut self) -> Option<impl ButtonExt> {
         assert!(!self._inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_newButton(self._inner);
             if ptr.is_null() {
                 None
             } else {
-                Some(crate::button::Button::from_widget_ptr(
-                    ptr as *mut fltk_sys::widget::Fl_Widget,
-                ))
+                Some(crate::button::Button::from_widget_ptr(ptr as *mut _))
             }
         }
     }
 
     /// Gets the preview button of the FileChooser
-    pub fn preview_button(&mut self) -> Option<crate::button::CheckButton> {
+    pub fn preview_button(&mut self) -> Option<impl ButtonExt> {
         assert!(!self._inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_previewButton(self._inner);
@@ -474,7 +472,7 @@ impl FileChooser {
     }
 
     /// Gets the show hidden button of the FileChooser
-    pub fn show_hidden_button(&mut self) -> Option<crate::button::CheckButton> {
+    pub fn show_hidden_button(&mut self) -> Option<impl ButtonExt> {
         assert!(!self._inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_showHiddenButton(self._inner);
@@ -507,25 +505,26 @@ impl FileChooser {
         }
     }
 
-        /// Sets the callback of the FileChooser
-        pub fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
-            assert!(!self._inner.is_null());
-            unsafe {
-                unsafe extern "C" fn shim(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
-                    let mut wid = FileChooser { _inner: arg1 };
-                    let a: *mut Box<dyn FnMut(&mut FileChooser)> = data as *mut Box<dyn FnMut(&mut FileChooser)>;
-                    let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
-                    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
-                }
-                let _old_data = self.user_data();
-                let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
-                let data: *mut raw::c_void = a as *mut raw::c_void;
-                let callback: Option<
-                    unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
-                > = Some(shim);
-                Fl_File_Chooser_set_callback(self._inner, callback, data)
+    /// Sets the callback of the FileChooser
+    pub fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+        assert!(!self._inner.is_null());
+        unsafe {
+            unsafe extern "C" fn shim(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
+                let mut wid = FileChooser { _inner: arg1 };
+                let a: *mut Box<dyn FnMut(&mut FileChooser)> =
+                    data as *mut Box<dyn FnMut(&mut FileChooser)>;
+                let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
+            let _old_data = self.user_data();
+            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut raw::c_void = a as *mut raw::c_void;
+            let callback: Option<
+                unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
+            > = Some(shim);
+            Fl_File_Chooser_set_callback(self._inner, callback, data)
         }
+    }
 
     /// Sets the color of the FileChooser
     pub fn set_color(&mut self, c: Color) {
@@ -800,16 +799,18 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_visible(self._inner) != 0 }
     }
 
-    pub fn window(&mut self) -> crate::window::Window {
+    pub fn window(&mut self) -> impl WindowExt {
         // Shouldn't fail
         unsafe {
-            self.new_button()
+            let win_ptr = self
+                .new_button()
                 .unwrap()
                 .parent()
                 .unwrap()
                 .parent()
                 .unwrap()
-                .into()
+                .as_widget_ptr();
+            crate::window::Window::from_widget_ptr(win_ptr)
         }
     }
 }

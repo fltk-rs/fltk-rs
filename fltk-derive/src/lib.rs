@@ -20,18 +20,24 @@ mod valuator;
 mod widget;
 mod window;
 
-use crate::browser::impl_browser_trait;
-use crate::button::impl_button_trait;
-use crate::display::impl_display_trait;
-use crate::group::impl_group_trait;
-use crate::image::impl_image_trait;
-use crate::input::impl_input_trait;
-use crate::menu::impl_menu_trait;
-use crate::table::impl_table_trait;
-use crate::valuator::impl_valuator_trait;
+use crate::browser::*;
+use crate::button::*;
+use crate::display::*;
+use crate::group::*;
+use crate::image::*;
+use crate::input::*;
+use crate::menu::*;
+use crate::table::*;
+use crate::valuator::*;
 use crate::widget::*;
-use crate::window::impl_window_trait;
+use crate::window::*;
 use proc_macro::TokenStream;
+
+#[proc_macro_derive(WidgetBase)]
+pub fn base_widget_trait_macro(input: TokenStream) -> TokenStream {
+    let ast = syn::parse(input).unwrap();
+    impl_widget_base_trait(&ast)
+}
 
 #[proc_macro_derive(WidgetExt)]
 pub fn widget_trait_macro(input: TokenStream) -> TokenStream {

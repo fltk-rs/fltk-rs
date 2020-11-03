@@ -1,48 +1,23 @@
 pub use crate::prelude::*;
 use fltk_sys::image::*;
-use std::{ffi::CString, mem};
+use std::{
+    ffi::CString,
+    mem,
+    sync::{Arc, Mutex},
+};
 
 /// Wrapper around Fl_Image, used to wrap other image types
 #[derive(ImageExt, Debug)]
 pub struct Image {
     _inner: *mut Fl_Image,
-}
-
-/// A conversion function for internal use
-impl Image {
-    /// Returns the internal pointer of Image
-    /// # Safety
-    /// Can lead to multiple mutable pointers of the same image
-    pub unsafe fn as_ptr(&self) -> *mut Fl_Image {
-        self._inner
-    }
-
-    /// Initialize an Image base from a raw pointer
-    /// # Safety
-    /// Can be unsafe if given an invalid pointer
-    pub unsafe fn from_raw(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
-        Image { _inner: ptr }
-    }
-
-    /// Transforms an Image base into another Image
-    /// # Safety
-    /// Can be unsafe if used to downcast to an image of different format
-    pub unsafe fn into<I: ImageExt>(self) -> I {
-        I::from_image_ptr(self._inner)
-    }
-
-    /// Deletes an image
-    /// # Safety
-    /// An image shouldn't be deleted while it's being used by a widget
-    pub unsafe fn delete<I: ImageExt>(img: I) {
-        ImageExt::delete(img);
-    }
+    _refcount: Arc<Mutex<usize>>,
 }
 
 /// Creates a struct holding a shared image
 #[derive(ImageExt, Debug)]
 pub struct SharedImage {
     _inner: *mut Fl_Shared_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl SharedImage {
@@ -67,7 +42,10 @@ impl SharedImage {
                 if Fl_Shared_Image_fail(x) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(SharedImage { _inner: x })
+                Ok(SharedImage {
+                    _inner: x,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -82,7 +60,10 @@ impl SharedImage {
                 if Fl_Shared_Image_fail(x) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(SharedImage { _inner: x })
+                Ok(SharedImage {
+                    _inner: x,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -92,6 +73,7 @@ impl SharedImage {
 #[derive(ImageExt, Debug)]
 pub struct JpegImage {
     _inner: *mut Fl_JPEG_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl JpegImage {
@@ -116,7 +98,10 @@ impl JpegImage {
                 if Fl_JPEG_Image_fail(image_ptr) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(JpegImage { _inner: image_ptr })
+                Ok(JpegImage {
+                    _inner: image_ptr,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -134,7 +119,10 @@ impl JpegImage {
                     if Fl_JPEG_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(JpegImage { _inner: x })
+                    Ok(JpegImage {
+                        _inner: x,
+                        _refcount: Arc::from(Mutex::from(1)),
+                    })
                 }
             }
         }
@@ -154,6 +142,7 @@ impl JpegImage {
 #[derive(ImageExt, Debug)]
 pub struct PngImage {
     _inner: *mut Fl_PNG_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl PngImage {
@@ -178,7 +167,10 @@ impl PngImage {
                 if Fl_PNG_Image_fail(image_ptr) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(PngImage { _inner: image_ptr })
+                Ok(PngImage {
+                    _inner: image_ptr,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -196,7 +188,10 @@ impl PngImage {
                     if Fl_PNG_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(PngImage { _inner: x })
+                    Ok(PngImage {
+                        _inner: x,
+                        _refcount: Arc::from(Mutex::from(1)),
+                    })
                 }
             }
         }
@@ -216,6 +211,7 @@ impl PngImage {
 #[derive(ImageExt, Debug)]
 pub struct SvgImage {
     _inner: *mut Fl_SVG_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl SvgImage {
@@ -240,7 +236,10 @@ impl SvgImage {
                 if Fl_SVG_Image_fail(image_ptr) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(SvgImage { _inner: image_ptr })
+                Ok(SvgImage {
+                    _inner: image_ptr,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -259,7 +258,10 @@ impl SvgImage {
                     if Fl_SVG_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(SvgImage { _inner: x })
+                    Ok(SvgImage {
+                        _inner: x,
+                        _refcount: Arc::from(Mutex::from(1)),
+                    })
                 }
             }
         }
@@ -270,6 +272,7 @@ impl SvgImage {
 #[derive(ImageExt, Debug)]
 pub struct BmpImage {
     _inner: *mut Fl_BMP_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl BmpImage {
@@ -294,7 +297,10 @@ impl BmpImage {
                 if Fl_BMP_Image_fail(image_ptr) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(BmpImage { _inner: image_ptr })
+                Ok(BmpImage {
+                    _inner: image_ptr,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -312,7 +318,10 @@ impl BmpImage {
                     if Fl_BMP_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(BmpImage { _inner: x })
+                    Ok(BmpImage {
+                        _inner: x,
+                        _refcount: Arc::from(Mutex::from(1)),
+                    })
                 }
             }
         }
@@ -332,6 +341,7 @@ impl BmpImage {
 #[derive(ImageExt, Debug)]
 pub struct GifImage {
     _inner: *mut Fl_GIF_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl GifImage {
@@ -356,7 +366,10 @@ impl GifImage {
                 if Fl_GIF_Image_fail(image_ptr) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(GifImage { _inner: image_ptr })
+                Ok(GifImage {
+                    _inner: image_ptr,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -374,7 +387,10 @@ impl GifImage {
                     if Fl_GIF_Image_fail(x) < 0 {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
-                    Ok(GifImage { _inner: x })
+                    Ok(GifImage {
+                        _inner: x,
+                        _refcount: Arc::from(Mutex::from(1)),
+                    })
                 }
             }
         }
@@ -385,6 +401,7 @@ impl GifImage {
 #[derive(ImageExt, Debug)]
 pub struct XpmImage {
     _inner: *mut Fl_XPM_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl XpmImage {
@@ -409,7 +426,10 @@ impl XpmImage {
                 if Fl_XPM_Image_fail(image_ptr) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(XpmImage { _inner: image_ptr })
+                Ok(XpmImage {
+                    _inner: image_ptr,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -419,6 +439,7 @@ impl XpmImage {
 #[derive(ImageExt, Debug)]
 pub struct XbmImage {
     _inner: *mut Fl_XBM_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl XbmImage {
@@ -443,7 +464,10 @@ impl XbmImage {
                 if Fl_XBM_Image_fail(image_ptr) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(XbmImage { _inner: image_ptr })
+                Ok(XbmImage {
+                    _inner: image_ptr,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -453,6 +477,7 @@ impl XbmImage {
 #[derive(ImageExt, Debug)]
 pub struct PnmImage {
     _inner: *mut Fl_PNM_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl PnmImage {
@@ -477,7 +502,10 @@ impl PnmImage {
                 if Fl_PNM_Image_fail(image_ptr) < 0 {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
-                Ok(PnmImage { _inner: image_ptr })
+                Ok(PnmImage {
+                    _inner: image_ptr,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -487,6 +515,7 @@ impl PnmImage {
 #[derive(ImageExt, Debug)]
 pub struct TiledImage {
     _inner: *mut Fl_Tiled_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl TiledImage {
@@ -495,7 +524,10 @@ impl TiledImage {
         unsafe {
             let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
             assert!(!ptr.is_null());
-            TiledImage { _inner: ptr }
+            TiledImage {
+                _inner: ptr,
+                _refcount: Arc::from(Mutex::from(1)),
+            }
         }
     }
 }
@@ -504,6 +536,7 @@ impl TiledImage {
 #[derive(ImageExt, Debug)]
 pub struct Pixmap {
     _inner: *mut Fl_Pixmap,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl Pixmap {
@@ -514,7 +547,10 @@ impl Pixmap {
             let data = Box::new(data.as_ptr());
             let ptr = Fl_Pixmap_new(Box::into_raw(data));
             assert!(!ptr.is_null());
-            Pixmap { _inner: ptr }
+            Pixmap {
+                _inner: ptr,
+                _refcount: Arc::from(Mutex::from(1)),
+            }
         }
     }
 }
@@ -523,6 +559,7 @@ impl Pixmap {
 #[derive(ImageExt, Debug)]
 pub struct RgbImage {
     _inner: *mut Fl_RGB_Image,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl RgbImage {
@@ -542,11 +579,19 @@ impl RgbImage {
         }
         unsafe {
             // data is deleted on the C++ side
-            let img = Fl_RGB_Image_new(mem::ManuallyDrop::new(data.to_owned()).as_ptr(), w as i32, h as i32, depth as i32);
+            let img = Fl_RGB_Image_new(
+                mem::ManuallyDrop::new(data.to_owned()).as_ptr(),
+                w as i32,
+                h as i32,
+                depth as i32,
+            );
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
             } else {
-                Ok(RgbImage { _inner: img })
+                Ok(RgbImage {
+                    _inner: img,
+                    _refcount: Arc::from(Mutex::from(1)),
+                })
             }
         }
     }
@@ -554,7 +599,12 @@ impl RgbImage {
     /// Initializes a new raw RgbImage from shared data, doesn't handle the data's lifetime
     /// # Safety
     /// The data must be valid for the lifetime of the image
-    pub unsafe fn from_data(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
+    pub unsafe fn from_data(
+        data: &[u8],
+        w: u32,
+        h: u32,
+        depth: u32,
+    ) -> Result<RgbImage, FltkError> {
         if depth > 4 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
@@ -569,7 +619,10 @@ impl RgbImage {
         if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
             Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
         } else {
-            Ok(RgbImage { _inner: img })
+            Ok(RgbImage {
+                _inner: img,
+                _refcount: Arc::from(Mutex::from(1)),
+            })
         }
     }
 

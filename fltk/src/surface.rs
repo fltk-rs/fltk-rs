@@ -42,11 +42,6 @@ impl ImageSurface {
         }
     }
 
-    /// Deletes an image surface
-    pub unsafe fn delete(surf: ImageSurface) {
-        Fl_Image_Surface_delete(surf._inner)
-    }
-
     /// Gets the image of an image surface as an rgb image
     pub fn image(&self) -> Option<crate::image::RgbImage> {
         unsafe {

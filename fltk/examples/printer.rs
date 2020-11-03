@@ -7,7 +7,6 @@ fn main() {
     win.end();
     win.show();
 
-    
     but.set_callback2(|widget| {
         let mut printer = printer::Printer::default();
         if printer.begin_job(1).is_ok() {

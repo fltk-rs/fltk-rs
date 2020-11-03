@@ -1,5 +1,9 @@
 #include <stdlib.h>
 
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#define noexcept
+#endif
+
 void *operator new(size_t size) {
     return malloc(size);
 }

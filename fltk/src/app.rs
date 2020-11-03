@@ -15,12 +15,18 @@ pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 /// The fonts associated with the application
 pub(crate) static mut FONTS: Vec<String> = Vec::new();
 
+/// Basically a check for global locking
+pub(crate) static mut IS_INIT: bool = false;
+
 /// Currently loaded fonts
 static mut LOADED_FONT: Option<&str> = None;
 
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
     unsafe {
+        if !IS_INIT {
+            init_all();
+        }
         match Fl_run() {
             0 => Ok(()),
             _ => Err(FltkError::Internal(FltkErrorKind::FailedToRun)),
@@ -108,33 +114,8 @@ pub struct App {}
 
 impl App {
     /// Instantiates an App type
-    /// # Panics
-    /// If the current environment lacks threading support. Practically this should never happen!
     pub fn default() -> App {
-        register_images();
         init_all();
-        unsafe {
-            FONTS = vec![
-                "Helvetica".to_owned(),
-                "HelveticaBold".to_owned(),
-                "HelveticaItalic".to_owned(),
-                "HelveticaBoldItalic".to_owned(),
-                "Courier".to_owned(),
-                "CourierBold".to_owned(),
-                "CourierItalic".to_owned(),
-                "CourierBoldItalic".to_owned(),
-                "Times".to_owned(),
-                "TimesBold".to_owned(),
-                "TimesItalic".to_owned(),
-                "TimesBoldItalic".to_owned(),
-                "Symbol".to_owned(),
-                "Screen".to_owned(),
-                "ScreenBold".to_owned(),
-                "Zapfdingbats".to_owned(),
-            ];
-        }
-        // This should never appear!
-        lock().expect("fltk-rs requires threading support!");
         App {}
     }
 
@@ -220,21 +201,6 @@ impl App {
         }
     }
 
-    /// Returns the apps windows.
-    pub fn windows(&self) -> Option<Vec<Window>> {
-        let mut v: Vec<Window> = vec![];
-        let first = first_window();
-        first.as_ref()?;
-        let first = first?;
-        v.push(first.clone());
-        let mut win = first;
-        while let Some(wind) = next_window(&win) {
-            v.push(wind.clone());
-            win = wind;
-        }
-        Some(v)
-    }
-
     /// Redraws the app
     pub fn redraw(&self) {
         redraw()
@@ -268,7 +234,7 @@ pub fn scrollbar_size() -> u32 {
 }
 
 /// Get the grabbed window
-pub fn grab() -> Option<Window> {
+pub fn grab() -> Option<impl WindowExt> {
     unsafe {
         let ptr = Fl_grab();
         if ptr.is_null() {
@@ -279,9 +245,8 @@ pub fn grab() -> Option<Window> {
     }
 }
 
-
 /// Set the current grab
-pub fn set_grab(win: Option<Window>) {
+pub fn set_grab<W: WindowExt>(win: Option<W>) {
     unsafe {
         if let Some(w) = win {
             Fl_set_grab(w.as_widget_ptr() as *mut _)
@@ -410,7 +375,7 @@ pub fn screen_size() -> (f64, f64) {
 /// Used for widgets implementing the InputExt, pastes content from the clipboard
 pub fn paste<T>(widget: &T)
 where
-    T: WidgetExt + InputExt,
+    T: WidgetBase + InputExt,
 {
     assert!(!widget.was_deleted());
     unsafe {
@@ -509,6 +474,9 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 /// Starts waiting for events
 pub fn wait() -> bool {
     unsafe {
+        if !IS_INIT {
+            init_all();
+        }
         Fl_wait() != 0
     }
 }
@@ -516,6 +484,9 @@ pub fn wait() -> bool {
 /// Waits a maximum of `dur` seconds or until "something happens".
 pub fn wait_for(dur: f64) -> Result<(), FltkError> {
     unsafe {
+        if !IS_INIT {
+            init_all();
+        }
         if Fl_wait_for(dur) >= 0.0 {
             Ok(())
         } else {
@@ -618,7 +589,7 @@ pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
 }
 
 /// Returns the first window of the application
-pub fn first_window() -> Option<Window> {
+pub fn first_window() -> Option<impl WindowExt> {
     unsafe {
         let x = Fl_first_window();
         if x.is_null() {
@@ -631,7 +602,7 @@ pub fn first_window() -> Option<Window> {
 }
 
 /// Returns the next window in order
-pub fn next_window<W: WindowExt>(w: &W) -> Option<Window> {
+pub fn next_window<W: WindowExt>(w: &W) -> Option<impl WindowExt> {
     unsafe {
         let x = Fl_next_window(w.as_widget_ptr() as *const raw::c_void);
         if x.is_null() {
@@ -651,21 +622,11 @@ pub fn quit() {
             unload_font(loaded_font).unwrap_or(());
         }
     }
-    let mut v: Vec<Window> = vec![];
-    let first = first_window();
-    if first.is_none() {
-        return;
-    }
-    let first = first.unwrap();
-    v.push(first.clone());
-    let mut win = first;
-    while let Some(wind) = next_window(&win) {
-        v.push(wind.clone());
-        win = wind;
-    }
-    for mut i in v {
-        if i.shown() {
-            i.hide();
+    if let Some(wins) = windows() {
+        for mut i in wins {
+            if i.shown() {
+                i.hide();
+            }
         }
     }
 }
@@ -782,9 +743,38 @@ pub fn register_images() {
     unsafe { fltk_sys::image::Fl_register_images() }
 }
 
-/// Inits all styles available to FLTK
+/// Inits all styles, fonts and images available to FLTK
+/// Also initializes global locking
+/// # Panics
+/// If the current environment lacks threading support. Practically this should never happen!
 pub fn init_all() {
-    unsafe { fltk_sys::fl::Fl_init_all() }
+    unsafe {
+        fltk_sys::fl::Fl_init_all();
+        lock().expect("fltk-rs requires threading support!");
+        register_images();
+        // This should never appear!
+        FONTS = vec![
+            "Helvetica".to_owned(),
+            "HelveticaBold".to_owned(),
+            "HelveticaItalic".to_owned(),
+            "HelveticaBoldItalic".to_owned(),
+            "Courier".to_owned(),
+            "CourierBold".to_owned(),
+            "CourierItalic".to_owned(),
+            "CourierBoldItalic".to_owned(),
+            "Times".to_owned(),
+            "TimesBold".to_owned(),
+            "TimesItalic".to_owned(),
+            "TimesBoldItalic".to_owned(),
+            "Symbol".to_owned(),
+            "Screen".to_owned(),
+            "ScreenBold".to_owned(),
+            "Zapfdingbats".to_owned(),
+        ];
+        if !IS_INIT {
+            IS_INIT = true;
+        }
+    }
 }
 
 /// Redraws everything
@@ -838,27 +828,25 @@ pub fn own_colormap() {
 }
 
 /// Gets the widget which was pushed
-pub fn pushed() -> Option<crate::widget::Widget> {
+pub fn pushed() -> Option<impl WidgetExt> {
     unsafe {
         let ptr = Fl_pushed();
         if ptr.is_null() {
             None
         } else {
-            Some(crate::widget::Widget::from_raw(
-                ptr as *mut fltk_sys::widget::Fl_Widget,
-            ))
+            Some(crate::widget::Widget::from_widget_ptr(ptr as *mut _))
         }
     }
 }
 
 /// Gets the widget which has focus
-pub fn focus() -> Option<crate::widget::Widget> {
+pub fn focus() -> Option<impl WidgetExt> {
     unsafe {
         let ptr = Fl_focus();
         if ptr.is_null() {
             None
         } else {
-            Some(crate::widget::Widget::from_raw(
+            Some(crate::widget::Widget::from_widget_ptr(
                 ptr as *mut fltk_sys::widget::Fl_Widget,
             ))
         }
@@ -971,4 +959,18 @@ fn unload_font(path: &str) -> Result<(), FltkError> {
         Fl_unload_font(path.as_ptr());
         Ok(())
     }
+}
+
+/// Returns the apps windows.
+pub fn windows() -> Option<Vec<impl WindowExt>> {
+    let mut v: Vec<Window> = vec![];
+    let first: Window = first_window().unwrap().into_widget();
+    v.push(first.clone());
+    let mut win = first;
+    while let Some(wind) = next_window(&win) {
+        let w = wind.into_widget::<Window>();
+        v.push(w.clone());
+        win = w;
+    }
+    Some(v)
 }

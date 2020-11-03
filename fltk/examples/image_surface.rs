@@ -19,6 +19,6 @@ fn main() {
     surface::ImageSurface::pop_current();
 
     frame.set_image(Some(img));
-    
+
     app.run().unwrap();
 }

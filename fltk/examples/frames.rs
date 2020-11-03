@@ -6,7 +6,9 @@ struct MyFrame {
 
 impl MyFrame {
     pub fn new(idx: usize) -> MyFrame {
-        let mut f = MyFrame { f: frame::Frame::default().with_size(150, 75), };
+        let mut f = MyFrame {
+            f: frame::Frame::default().with_size(150, 75),
+        };
         // Normally you would use the FrameType enum, for example:
         // some_widget.set_frame(FrameType::DownBox);
         f.f.set_frame(FrameType::by_index(idx));

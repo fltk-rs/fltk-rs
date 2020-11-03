@@ -5,12 +5,14 @@ use std::{
     ffi::{CStr, CString},
     mem,
     os::raw,
+    sync::{Arc, Mutex},
 };
 
 /// Wraps a text buffer, Cloning a text buffer invalidates the underlying pointer, thus the no derive(Clone)
 #[derive(Debug)]
 pub struct TextBuffer {
     _inner: *mut Fl_Text_Buffer,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl TextBuffer {
@@ -21,6 +23,7 @@ impl TextBuffer {
             assert!(!text_buffer.is_null());
             TextBuffer {
                 _inner: text_buffer,
+                _refcount: Arc::from(Mutex::from(1)),
             }
         }
     }
@@ -46,7 +49,10 @@ impl TextBuffer {
     /// The pointer must be valid
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         assert!(!ptr.is_null());
-        TextBuffer { _inner: ptr }
+        TextBuffer {
+            _inner: ptr,
+            _refcount: Arc::from(Mutex::from(2)),
+        }
     }
 
     /// Returns the inner pointer from a text buffer
@@ -488,7 +494,8 @@ impl TextBuffer {
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
+                Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_add_modify_callback(self._inner, callback, data);
@@ -527,7 +534,8 @@ impl TextBuffer {
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
+                Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_remove_modify_callback(self._inner, callback, data);
@@ -541,8 +549,25 @@ unsafe impl Send for TextBuffer {}
 impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {
         assert!(!self._inner.is_null());
+        let mut x = self._refcount.lock().unwrap();
+        *x += 1;
         TextBuffer {
             _inner: self._inner,
+            _refcount: Arc::from(Mutex::from(*x)),
+        }
+    }
+}
+
+impl Drop for TextBuffer {
+    fn drop(&mut self) {
+        assert!(!self._inner.is_null());
+        let mut x = self._refcount.lock().unwrap();
+        *x -= 1;
+        if *x == 0 {
+            unsafe {
+                Fl_Text_Buffer_delete(self._inner);
+            }
+            self._inner = std::ptr::null_mut();
         }
     }
 }
@@ -569,14 +594,14 @@ pub enum DragType {
 }
 
 /// Creates a non-editable text display widget
-#[derive(WidgetExt, DisplayExt, Debug)]
+#[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
 pub struct TextDisplay {
     _inner: *mut Fl_Text_Display,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates an editable text display widget
-#[derive(WidgetExt, DisplayExt, Debug)]
+#[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
 pub struct TextEditor {
     _inner: *mut Fl_Text_Editor,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -584,7 +609,7 @@ pub struct TextEditor {
 
 /// Creates an editable text display widget
 /// SimpleTerminal already has an internal buffer
-#[derive(WidgetExt, DisplayExt, Debug)]
+#[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
 pub struct SimpleTerminal {
     _inner: *mut Fl_Simple_Terminal,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

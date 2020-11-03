@@ -8,28 +8,28 @@ use std::{
 };
 
 /// Creates a menu bar
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct MenuBar {
     _inner: *mut Fl_Menu_Bar,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a menu button
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct MenuButton {
     _inner: *mut Fl_Menu_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a menu choice
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct Choice {
     _inner: *mut Fl_Choice,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a MacOS system menu bar
-#[derive(WidgetExt, MenuExt, Debug)]
+#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct SysMenuBar {
     _inner: *mut Fl_Sys_Menu_Bar,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -319,12 +319,10 @@ impl MenuItem {
     pub fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
-            unsafe extern "C" fn shim(
-                wid: *mut fltk_sys::menu::Fl_Widget,
-                data: *mut raw::c_void,
-            ) {
-                let mut wid = crate::widget::Widget::from_raw(wid as *mut _);
-                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> = data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+            unsafe extern "C" fn shim(wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
+                let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
+                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
+                    data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
                 let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }

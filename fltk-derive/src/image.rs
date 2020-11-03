@@ -30,7 +30,24 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
         impl Clone for #name {
             fn clone(&self) -> Self {
                 assert!(!self.was_deleted());
-                #name { _inner: self._inner }
+                let mut x = self._refcount.lock().unwrap();
+                *x += 1;
+                #name { _inner: self._inner, _refcount: Arc::from(Mutex::from(*x)) }
+            }
+        }
+
+        impl Drop for #name {
+            fn drop(&mut self) {
+                if !self.was_deleted() {
+                    let mut x = self._refcount.lock().unwrap();
+                    *x -= 1;
+                    if *x == 0 {
+                        unsafe {
+                            #delete(self._inner);
+                            self._inner = std::ptr::null_mut();
+                        }
+                    }
+                }
             }
         }
 
@@ -42,6 +59,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!img.is_null());
                     #name {
                         _inner: img,
+                        _refcount: Arc::from(Mutex::from(1))
                     }
                 }
             }
@@ -77,6 +95,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!ptr.is_null());
                     #name {
                         _inner: ptr as *mut #ptr_name,
+                        _refcount: Arc::from(Mutex::from(2))
                     }
                 }
             }
@@ -190,8 +209,17 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            unsafe fn increment_arc(&mut self) {
+                assert!(!self.was_deleted());
+                *self._refcount.lock().unwrap() += 1;
+            }
+
             fn was_deleted(&self) -> bool {
                 self._inner.is_null()
+            }
+
+            unsafe fn into_image<I: ImageExt>(self) -> I {
+                I::from_image_ptr(self._inner as *mut _)
             }
         }
     };

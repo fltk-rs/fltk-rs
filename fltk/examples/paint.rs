@@ -18,7 +18,7 @@ fn main() {
     set_draw_color(Color::White);
     draw_rectf(0, 0, 790, 590);
     offs.end();
-    
+
     let offs = Rc::from(RefCell::from(offs));
     let offs_rc = offs.clone();
 

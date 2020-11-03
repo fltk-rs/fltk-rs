@@ -31,7 +31,7 @@ pub enum ClockType {
 }
 
 /// Creates a spinner widget
-#[derive(WidgetExt, Debug)]
+#[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Spinner {
     _inner: *mut Fl_Spinner,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -138,14 +138,14 @@ impl Spinner {
 }
 
 /// Creates a clock widget
-#[derive(WidgetExt, Debug)]
+#[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Clock {
     _inner: *mut Fl_Clock,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a chart widget
-#[derive(WidgetExt, Debug)]
+#[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Chart {
     _inner: *mut Fl_Chart,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -288,7 +288,7 @@ impl Chart {
 }
 
 /// Creates a progress bar
-#[derive(WidgetExt, Debug)]
+#[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Progress {
     _inner: *mut Fl_Progress,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -406,11 +406,13 @@ impl Tooltip {
     }
 
     /// Returns the current widget under the tooltip
-    pub fn current_widget() -> Widget {
+    pub fn current_widget() -> Box<dyn WidgetExt> {
         unsafe {
             let widget_ptr = Fl_Tooltip_current_widget();
             assert!(!widget_ptr.is_null());
-            Widget::from_raw(widget_ptr as *mut fltk_sys::widget::Fl_Widget)
+            Box::new(Widget::from_widget_ptr(
+                widget_ptr as *mut fltk_sys::widget::Fl_Widget,
+            ))
         }
     }
 
@@ -507,7 +509,7 @@ impl Tooltip {
     }
 
     /// Returns the current window
-    pub fn current_window<W: WindowExt>() -> Window {
+    pub fn current_window() -> impl WindowExt {
         unsafe {
             let wind = Fl_Tooltip_current_window();
             assert!(!wind.is_null());

@@ -153,37 +153,35 @@ fn main() {
     // Handle drag and drop
     let mut dnd = false;
     let mut released = false;
-    editor.handle(move |ev| {
-        match ev {
-            Event::DndEnter => {
-                dnd = true;
-                true
-            }
-            Event::DndDrag => true,
-            Event::DndRelease => {
-                released = true;
-                true
-            }
-            Event::Paste => {
-                if dnd && released {
-                    let path = event_text();
-                    let path = std::path::Path::new(&path);
-                    assert!(path.exists());
-                    buf.load_file(&path).unwrap();
-                    dnd = false;
-                    released = false;
-                    true
-                } else {
-                    false
-                }
-            }
-            Event::DndLeave => {
+    editor.handle(move |ev| match ev {
+        Event::DndEnter => {
+            dnd = true;
+            true
+        }
+        Event::DndDrag => true,
+        Event::DndRelease => {
+            released = true;
+            true
+        }
+        Event::Paste => {
+            if dnd && released {
+                let path = event_text();
+                let path = std::path::Path::new(&path);
+                assert!(path.exists());
+                buf.load_file(&path).unwrap();
                 dnd = false;
                 released = false;
                 true
-            },
-            _ => false,
+            } else {
+                false
+            }
         }
+        Event::DndLeave => {
+            dnd = false;
+            released = false;
+            true
+        }
+        _ => false,
     });
 
     menu.add_emit(
