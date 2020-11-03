@@ -9,7 +9,7 @@ use std::{
 };
 
 /// Creates a table
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, TableExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, TableExt, Debug)]
 pub struct Table {
     _inner: *mut Fl_Table,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -30,7 +30,7 @@ pub enum TableContext {
 }
 
 /// Creates a table row
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, TableExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, TableExt, Debug)]
 pub struct TableRow {
     _inner: *mut Fl_Table_Row,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

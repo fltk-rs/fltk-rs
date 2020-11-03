@@ -234,7 +234,7 @@ pub fn scrollbar_size() -> u32 {
 }
 
 /// Get the grabbed window
-pub fn grab() -> Option<impl WindowBase> {
+pub fn grab() -> Option<impl WindowExt> {
     unsafe {
         let ptr = Fl_grab();
         if ptr.is_null() {
@@ -246,7 +246,7 @@ pub fn grab() -> Option<impl WindowBase> {
 }
 
 /// Set the current grab
-pub fn set_grab<W: WindowBase>(win: Option<W>) {
+pub fn set_grab<W: WindowExt>(win: Option<W>) {
     unsafe {
         if let Some(w) = win {
             Fl_set_grab(w.as_widget_ptr() as *mut _)
@@ -589,7 +589,7 @@ pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
 }
 
 /// Returns the first window of the application
-pub fn first_window() -> Option<impl WindowBase> {
+pub fn first_window() -> Option<impl WindowExt> {
     unsafe {
         let x = Fl_first_window();
         if x.is_null() {
@@ -602,7 +602,7 @@ pub fn first_window() -> Option<impl WindowBase> {
 }
 
 /// Returns the next window in order
-pub fn next_window<W: WindowBase>(w: &W) -> Option<impl WindowBase> {
+pub fn next_window<W: WindowExt>(w: &W) -> Option<impl WindowExt> {
     unsafe {
         let x = Fl_next_window(w.as_widget_ptr() as *const raw::c_void);
         if x.is_null() {
@@ -962,7 +962,7 @@ fn unload_font(path: &str) -> Result<(), FltkError> {
 }
 
 /// Returns the apps windows.
-pub fn windows() -> Option<Vec<impl WindowBase>> {
+pub fn windows() -> Option<Vec<impl WindowExt>> {
     unsafe {
         let mut v: Vec<Window> = vec![];
         let first: Window = first_window().unwrap().upcast().into();

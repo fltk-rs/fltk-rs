@@ -646,7 +646,7 @@ pub fn set_status(x: i32, y: i32, w: i32, h: i32) {
 }
 
 /// Sets spot within the window
-pub fn set_spot<Win: WindowBase>(font: Font, size: u32, x: i32, y: i32, w: i32, h: i32, win: &Win) {
+pub fn set_spot<Win: WindowExt>(font: Font, size: u32, x: i32, y: i32, w: i32, h: i32, win: &Win) {
     unsafe {
         assert!(!win.was_deleted());
         Fl_set_spot(
@@ -667,7 +667,7 @@ pub fn reset_spot() {
 }
 
 /// Captures part of the window and returns raw data
-pub fn capture_window<Win: WindowBase>(win: &mut Win) -> Result<RgbImage, FltkError> {
+pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     assert!(!win.was_deleted());
     let cp = win.width() as u32 * win.height() as u32 * 3;
     win.show();

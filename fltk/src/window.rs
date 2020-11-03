@@ -32,7 +32,7 @@ pub type RawHandle = *mut raw::c_void;
 pub type RawHandle = u64;
 
 /// Creates a window widget
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, WindowBase, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct Window {
     _inner: *mut Fl_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -43,7 +43,7 @@ impl Window {
     /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
     /// # Safety
     /// The data must be valid and is OS-dependent.
-    pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowBase> {
+    pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
         let ptr = Fl_Window_find_by_handle(mem::transmute(&handle));
         if ptr.is_null() {
             None
@@ -131,7 +131,7 @@ pub enum WindowType {
 }
 
 /// Creates a single (buffered) window widget
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, WindowBase, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct SingleWindow {
     _inner: *mut Fl_Single_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -207,7 +207,7 @@ impl SingleWindow {
 }
 
 /// Creates a double (buffered) window widget
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, WindowBase, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct DoubleWindow {
     _inner: *mut Fl_Double_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -289,7 +289,7 @@ impl DoubleWindow {
 }
 
 /// Creates a Menu window widget
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, WindowBase, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct MenuWindow {
     _inner: *mut Fl_Menu_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -300,7 +300,7 @@ pub type GlContext = *mut raw::c_void;
 
 /// Creates a OpenGL window widget
 #[cfg(feature = "enable-glwindow")]
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, WindowBase, WindowExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct GlWindow {
     _inner: *mut Fl_Gl_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

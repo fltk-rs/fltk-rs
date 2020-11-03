@@ -160,6 +160,27 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let as_group = Ident::new(format!("{}_{}", name_str, "as_group").as_str(), name.span());
+    let inside = Ident::new(format!("{}_{}", name_str, "inside").as_str(), name.span());
+    let get_type = Ident::new(format!("{}_{}", name_str, "get_type").as_str(), name.span());
+    let set_type = Ident::new(format!("{}_{}", name_str, "set_type").as_str(), name.span());
+    let set_image = Ident::new(
+        format!("{}_{}", name_str, "set_image").as_str(),
+        name.span(),
+    );
+    let set_image_with_size = Ident::new(
+        format!("{}_{}", name_str, "set_image_with_size").as_str(),
+        name.span(),
+    );
+    let image = Ident::new(format!("{}_{}", name_str, "image").as_str(), name.span());
+    let deimage = Ident::new(format!("{}_{}", name_str, "deimage").as_str(), name.span());
+    let set_deimage = Ident::new(
+        format!("{}_{}", name_str, "set_deimage").as_str(),
+        name.span(),
+    );
+    let set_callback = Ident::new(
+        format!("{}_{}", name_str, "set_callback").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -417,7 +438,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn window(&self) -> Option<Box<dyn WindowBase>> {
+            fn window(&self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let wind_ptr = #window(self._inner);
@@ -429,7 +450,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn top_window(&self) -> Option<Box<dyn WindowBase>> {
+            fn top_window(&self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let wind_ptr = #top_window(self._inner);
@@ -448,22 +469,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                         0 => false,
                         _ => true,
                     }
-                }
-            }
-
-            fn set_boxed_callback(&mut self, cb: Box<dyn FnMut()>) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-                        let f: &mut (dyn FnMut()) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
-                    }
-                    let _old_data = self.user_data();
-                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(cb));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: Fl_Callback = Some(shim);
-                    #set_callback(self._inner, callback, data);
                 }
             }
 
@@ -552,7 +557,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn as_window(&mut self) -> Option<Box<dyn WindowBase>> {
+            fn as_window(&mut self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #as_window(self._inner);
@@ -563,7 +568,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn as_group(&mut self) -> Option<Box<dyn GroupBase>> {
+            fn as_group(&mut self) -> Option<Box<dyn GroupExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #as_group(self._inner);
@@ -574,127 +579,69 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn upcast(&self) -> crate::widget::Widget {
-                crate::widget::Widget::from_raw(self.as_widget_ptr() as *mut _)
-            }
-        }
-    };
-    gen.into()
-}
-
-pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
-    let name = &ast.ident;
-
-    let name_str = get_fl_name(name.to_string());
-    let ptr_name = Ident::new(name_str.as_str(), name.span());
-    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
-    let inside = Ident::new(format!("{}_{}", name_str, "inside").as_str(), name.span());
-    let get_type = Ident::new(format!("{}_{}", name_str, "get_type").as_str(), name.span());
-    let set_type = Ident::new(format!("{}_{}", name_str, "set_type").as_str(), name.span());
-    let set_image = Ident::new(
-        format!("{}_{}", name_str, "set_image").as_str(),
-        name.span(),
-    );
-    let set_image_with_size = Ident::new(
-        format!("{}_{}", name_str, "set_image_with_size").as_str(),
-        name.span(),
-    );
-    let image = Ident::new(format!("{}_{}", name_str, "image").as_str(), name.span());
-    let set_handler = Ident::new(
-        format!("{}_{}", name_str, "set_handler").as_str(),
-        name.span(),
-    );
-    let set_handler2 = Ident::new(
-        format!("{}_{}", name_str, "set_handler2").as_str(),
-        name.span(),
-    );
-    let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
-    let set_draw2 = Ident::new(
-        format!("{}_{}", name_str, "set_draw2").as_str(),
-        name.span(),
-    );
-    let handle_data = Ident::new(
-        format!("{}_{}", name_str, "handle_data").as_str(),
-        name.span(),
-    );
-    let draw_data = Ident::new(
-        format!("{}_{}", name_str, "draw_data").as_str(),
-        name.span(),
-    );
-    let set_handle_data = Ident::new(
-        format!("{}_{}", name_str, "set_handle_data").as_str(),
-        name.span(),
-    );
-    let deimage = Ident::new(format!("{}_{}", name_str, "deimage").as_str(), name.span());
-    let set_deimage = Ident::new(
-        format!("{}_{}", name_str, "set_deimage").as_str(),
-        name.span(),
-    );
-    let set_callback = Ident::new(
-        format!("{}_{}", name_str, "set_callback").as_str(),
-        name.span(),
-    );
-    let set_deleter = Ident::new(
-        format!("{}_{}", name_str, "set_deleter").as_str(),
-        name.span(),
-    );
-
-    let gen = quote! {
-        unsafe impl WidgetExt for #name {
-            fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                let temp = CString::safe_new(title);
-                unsafe {
-                    let widget_ptr = #new(x, y, width, height, temp.into_raw());
-                    assert!(!widget_ptr.is_null());
-                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
-                    assert!(!tracker.is_null());
-                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                        if !data.is_null() {
-                            let x = data as *mut Box<dyn FnMut()>;
-                            let x = Box::from_raw(x);
-                        }
-                    }
-                    #set_deleter(widget_ptr, Some(shim));
-                    #name {
-                        _inner: widget_ptr,
-                        _tracker: tracker,
-                    }
-                }
+            fn below_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(self.width() != 0 && self.height() != 0, "below_of requires the size of the widget to be known!");
+                self.resize(w.x(), w.y() + w.height() + padding, self.width(), self.height());
+                self
             }
 
-            fn default() -> Self {
-                let temp = CString::new("").unwrap();;
-                unsafe {
-                    let widget_ptr = #new(
-                        0,
-                        0,
-                        0,
-                        0,
-                        temp.into_raw());
-                        assert!(!widget_ptr.is_null());
-                        let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
-                        assert!(!tracker.is_null());
-                        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                            if !data.is_null() {
-                                let x = data as *mut Box<dyn FnMut()>;
-                                let x = Box::from_raw(x);
-                            }
-                        }
-                        #set_deleter(widget_ptr, Some(shim));
-                    #name {
-                        _inner: widget_ptr,
-                        _tracker: tracker,
-                    }
-                }
+            fn above_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(self.width() != 0 && self.height() != 0, "above_of requires the size of the widget to be known!");
+                self.resize(w.x(), w.y() - padding - self.height(), self.width(), self.height());
+                self
             }
 
-            fn delete(mut wid: Self) {
+            fn right_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
+                self.resize(w.x() + self.width() + padding, w.y(), self.width(), self.height());
+                self
+            }
+
+            fn left_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(self.width() != 0 && self.height() != 0, "left_of requires the size of the widget to be known!");
+                self.resize(w.x() - self.width() - padding, w.y(), self.width(), self.height());
+                self
+            }
+
+            fn center_of<W: WidgetBase>(mut self, w: &W) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
+                let mut sw = self.width() as f64;
+                let mut sh = self.height() as f64;
+                let mut ww = w.width() as f64;
+                let mut wh = w.height() as f64;
+                let mut x = (ww - sw) / 2.0;
+                let mut y = (wh - sh) / 2.0;
+                self.resize(x as i32, y as i32, self.width(), self.height());
+                self.redraw();
+                self
+            }
+
+            fn size_of<W: WidgetBase>(mut self, w: &W) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
+                self.resize(self.x(), self. y(), w.width(), w.height());
+                self
+            }
+
+            fn inside<W: WidgetBase>(&self, wid: &W) -> bool {
+                assert!(!self.was_deleted());
                 assert!(!wid.was_deleted());
                 unsafe {
-                    fltk_sys::fl::Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-                    wid._inner = std::ptr::null_mut() as *mut _;
-                    fltk_sys::fl::Fl_Widget_Tracker_delete(wid._tracker);
-                    wid._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
+                    match #inside(self._inner, wid.as_widget_ptr() as *mut raw::c_void) {
+                        0 => false,
+                        _ => true,
+                    }
                 }
             }
 
@@ -716,18 +663,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn with_align(mut self, align: Align) -> Self {
                 self.set_align(align);
                 self
-            }
-
-            unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
-                assert!(!ptr.is_null());
-                unsafe {
-                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
-                    assert!(!tracker.is_null());
-                    #name {
-                        _inner: ptr as *mut #ptr_name,
-                        _tracker: tracker,
-                    }
-                }
             }
 
             fn get_type<T: WidgetType>(&self) -> T {
@@ -824,6 +759,121 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 self.set_callback(move || sender.send(msg))
             }
 
+            unsafe fn upcast(&self) -> crate::widget::Widget {
+                crate::widget::Widget::from_raw(self.as_widget_ptr() as *mut _)
+            }
+        }
+    };
+    gen.into()
+}
+
+pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+
+    let name_str = get_fl_name(name.to_string());
+    let ptr_name = Ident::new(name_str.as_str(), name.span());
+    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
+    let set_handler = Ident::new(
+        format!("{}_{}", name_str, "set_handler").as_str(),
+        name.span(),
+    );
+    let set_handler2 = Ident::new(
+        format!("{}_{}", name_str, "set_handler2").as_str(),
+        name.span(),
+    );
+    let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
+    let set_draw2 = Ident::new(
+        format!("{}_{}", name_str, "set_draw2").as_str(),
+        name.span(),
+    );
+    let handle_data = Ident::new(
+        format!("{}_{}", name_str, "handle_data").as_str(),
+        name.span(),
+    );
+    let draw_data = Ident::new(
+        format!("{}_{}", name_str, "draw_data").as_str(),
+        name.span(),
+    );
+    let set_handle_data = Ident::new(
+        format!("{}_{}", name_str, "set_handle_data").as_str(),
+        name.span(),
+    );
+    let set_deleter = Ident::new(
+        format!("{}_{}", name_str, "set_deleter").as_str(),
+        name.span(),
+    );
+
+    let gen = quote! {
+        unsafe impl WidgetExt for #name {
+            fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
+                let temp = CString::safe_new(title);
+                unsafe {
+                    let widget_ptr = #new(x, y, width, height, temp.into_raw());
+                    assert!(!widget_ptr.is_null());
+                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
+                    assert!(!tracker.is_null());
+                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                        if !data.is_null() {
+                            let x = data as *mut Box<dyn FnMut()>;
+                            let x = Box::from_raw(x);
+                        }
+                    }
+                    #set_deleter(widget_ptr, Some(shim));
+                    #name {
+                        _inner: widget_ptr,
+                        _tracker: tracker,
+                    }
+                }
+            }
+
+            fn default() -> Self {
+                let temp = CString::new("").unwrap();;
+                unsafe {
+                    let widget_ptr = #new(
+                        0,
+                        0,
+                        0,
+                        0,
+                        temp.into_raw());
+                        assert!(!widget_ptr.is_null());
+                        let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
+                        assert!(!tracker.is_null());
+                        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                            if !data.is_null() {
+                                let x = data as *mut Box<dyn FnMut()>;
+                                let x = Box::from_raw(x);
+                            }
+                        }
+                        #set_deleter(widget_ptr, Some(shim));
+                    #name {
+                        _inner: widget_ptr,
+                        _tracker: tracker,
+                    }
+                }
+            }
+
+            unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
+                assert!(!ptr.is_null());
+                unsafe {
+                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
+                    assert!(!tracker.is_null());
+                    #name {
+                        _inner: ptr as *mut #ptr_name,
+                        _tracker: tracker,
+                    }
+                }
+            }
+
+            fn delete(mut wid: Self) {
+                assert!(!wid.was_deleted());
+                unsafe {
+                    fltk_sys::fl::Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
+                    wid._inner = std::ptr::null_mut() as *mut _;
+                    fltk_sys::fl::Fl_Widget_Tracker_delete(wid._tracker);
+                    wid._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
+                }
+            }
+
             fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -905,72 +955,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_callback2 = Some(shim);
                     #set_draw2(self._inner, callback, data);
-                }
-            }
-
-            fn below_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(self.width() != 0 && self.height() != 0, "below_of requires the size of the widget to be known!");
-                self.resize(w.x(), w.y() + w.height() + padding, self.width(), self.height());
-                self
-            }
-
-            fn above_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(self.width() != 0 && self.height() != 0, "above_of requires the size of the widget to be known!");
-                self.resize(w.x(), w.y() - padding - self.height(), self.width(), self.height());
-                self
-            }
-
-            fn right_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
-                self.resize(w.x() + self.width() + padding, w.y(), self.width(), self.height());
-                self
-            }
-
-            fn left_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(self.width() != 0 && self.height() != 0, "left_of requires the size of the widget to be known!");
-                self.resize(w.x() - self.width() - padding, w.y(), self.width(), self.height());
-                self
-            }
-
-            fn center_of<W: WidgetBase>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
-                let mut sw = self.width() as f64;
-                let mut sh = self.height() as f64;
-                let mut ww = w.width() as f64;
-                let mut wh = w.height() as f64;
-                let mut x = (ww - sw) / 2.0;
-                let mut y = (wh - sh) / 2.0;
-                self.resize(x as i32, y as i32, self.width(), self.height());
-                self.redraw();
-                self
-            }
-
-            fn size_of<W: WidgetBase>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
-                self.resize(self.x(), self. y(), w.width(), w.height());
-                self
-            }
-
-            fn inside<W: WidgetBase>(&self, wid: &W) -> bool {
-                assert!(!self.was_deleted());
-                assert!(!wid.was_deleted());
-                unsafe {
-                    match #inside(self._inner, wid.as_widget_ptr() as *mut raw::c_void) {
-                        0 => false,
-                        _ => true,
-                    }
                 }
             }
 

@@ -57,22 +57,10 @@ pub fn button_trait_macro(input: TokenStream) -> TokenStream {
     impl_button_trait(&ast)
 }
 
-#[proc_macro_derive(GroupBase)]
-pub fn base_group_trait_macro(input: TokenStream) -> TokenStream {
-    let ast = syn::parse(input).unwrap();
-    impl_group_base_trait(&ast)
-}
-
 #[proc_macro_derive(GroupExt)]
 pub fn group_trait_macro(input: TokenStream) -> TokenStream {
     let ast = syn::parse(input).unwrap();
     impl_group_trait(&ast)
-}
-
-#[proc_macro_derive(WindowBase)]
-pub fn base_window_trait_macro(input: TokenStream) -> TokenStream {
-    let ast = syn::parse(input).unwrap();
-    impl_window_base_trait(&ast)
 }
 
 #[proc_macro_derive(WindowExt)]

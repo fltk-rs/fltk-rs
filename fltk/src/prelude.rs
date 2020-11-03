@@ -91,6 +91,47 @@ pub unsafe trait WidgetBase {
     /// # Safety
     /// Can return multiple mutable pointers to the same widget
     unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
+    /// Initialize to position x, y
+    fn with_pos(self, x: i32, y: i32) -> Self where Self: Sized;
+    /// Initialilze to dimensions width and height
+    fn with_size(self, width: i32, height: i32) -> Self where Self: Sized;
+    /// Initialize with label/title
+    fn with_label(self, title: &str) -> Self where Self: Sized;
+    /// Sets the initial alignment of the widget
+    fn with_align(self, align: Align) -> Self where Self: Sized;
+    /// Positions the widget below w
+    fn below_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    /// Positions the widget above w
+    fn above_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    /// Positions the widget to the right of w
+    fn right_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    /// Positions the widget to the left of w
+    fn left_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    /// Positions the widget to the center of w
+    fn center_of<W: WidgetBase>(self, w: &W) -> Self where Self: Sized;
+    /// Takes the size of w
+    fn size_of<W: WidgetBase>(self, w: &W) -> Self where Self: Sized;
+    /// Checks whether the self widget is inside another widget
+    fn inside<W: WidgetBase>(&self, wid: &W) -> bool where Self: Sized;
+    /// Returns the widget type when applicable
+    fn get_type<T: WidgetType>(&self) -> T where Self: Sized;
+    /// Sets the widget type
+    fn set_type<T: WidgetType>(&mut self, typ: T) where Self: Sized;
+    /// Sets the image of the widget
+    fn set_image<I: ImageExt>(&mut self, image: Option<I>) where Self: Sized;
+    /// Gets the image associated with the widget
+    fn image(&self) -> Option<Image> where Self: Sized;
+    /// Sets the image of the widget
+    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) where Self: Sized;
+    /// Gets the image associated with the widget
+    fn deimage(&self) -> Option<Image> where Self: Sized;
+    /// Sets the callback when the widget is triggered (clicks for example)
+    fn set_callback<F: FnMut() + 'static>(&mut self, cb: F) where Self: Sized;
+    /// Sets the callback when the widget is triggered (clicks for example)
+    /// takes the widget as a closure argument
+    fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) where Self: Sized;
+    /// Emits a message on callback using a sender
+    fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) where Self: Sized;
     /// Activates the widget
     fn activate(&mut self);
     /// Deactivates the widget
@@ -146,9 +187,9 @@ pub unsafe trait WidgetBase {
     /// Runs the already registered callback
     fn do_callback(&mut self);
     /// Returns the direct window holding the widget
-    fn window(&self) -> Option<Box<dyn WindowBase>>;
+    fn window(&self) -> Option<Box<dyn WindowExt>>;
     /// Returns the topmost window holding the widget
-    fn top_window(&self) -> Option<Box<dyn WindowBase>>;
+    fn top_window(&self) -> Option<Box<dyn WindowExt>>;
     /// Checks whether a widget is capable of taking events
     fn takes_events(&self) -> bool;
     /// Make the widget take focus
@@ -171,12 +212,10 @@ pub unsafe trait WidgetBase {
     fn clear_damage(&mut self);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
-    /// Sets a boxed callback when the widget is triggered (clicks for example)
-    fn set_boxed_callback(&mut self, cb: Box<dyn FnMut()>);
     /// Return the widget as a window if it's a window
-    fn as_window(&mut self) -> Option<Box<dyn WindowBase>>;
+    fn as_window(&mut self) -> Option<Box<dyn WindowExt>>;
     /// Return the widget as a group widget if it's a group widget
-    fn as_group(&mut self) -> Option<Box<dyn GroupBase>>;
+    fn as_group(&mut self) -> Option<Box<dyn GroupExt>>;
     /// INTERNAL: Retakes ownership of the user callback data
     /// # Safety
     /// Can return multiple mutable references to the user_data
@@ -203,47 +242,6 @@ pub unsafe trait WidgetExt: WidgetBase {
     /// # Safety
     /// The pointer must be valid
     unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
-    /// Initialize to position x, y
-    fn with_pos(self, x: i32, y: i32) -> Self;
-    /// Initialilze to dimensions width and height
-    fn with_size(self, width: i32, height: i32) -> Self;
-    /// Initialize with label/title
-    fn with_label(self, title: &str) -> Self;
-    /// Sets the initial alignment of the widget
-    fn with_align(self, align: Align) -> Self;
-    /// Positions the widget below w
-    fn below_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self;
-    /// Positions the widget above w
-    fn above_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self;
-    /// Positions the widget to the right of w
-    fn right_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self;
-    /// Positions the widget to the left of w
-    fn left_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self;
-    /// Positions the widget to the center of w
-    fn center_of<W: WidgetBase>(self, w: &W) -> Self;
-    /// Takes the size of w
-    fn size_of<W: WidgetBase>(self, w: &W) -> Self;
-    /// Checks whether the self widget is inside another widget
-    fn inside<W: WidgetBase>(&self, wid: &W) -> bool;
-    /// Returns the widget type when applicable
-    fn get_type<T: WidgetType>(&self) -> T;
-    /// Sets the widget type
-    fn set_type<T: WidgetType>(&mut self, typ: T);
-    /// Sets the image of the widget
-    fn set_image<I: ImageExt>(&mut self, image: Option<I>);
-    /// Gets the image associated with the widget
-    fn image(&self) -> Option<Image>;
-    /// Sets the image of the widget
-    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>);
-    /// Gets the image associated with the widget
-    fn deimage(&self) -> Option<Image>;
-    /// Sets the callback when the widget is triggered (clicks for example)
-    fn set_callback<F: FnMut() + 'static>(&mut self, cb: F);
-    /// Sets the callback when the widget is triggered (clicks for example)
-    /// takes the widget as a closure argument
-    fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
-    /// Emits a message on callback using a sender
-    fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T);
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
     fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F);
@@ -286,7 +284,7 @@ pub unsafe trait ButtonExt: WidgetBase {
 }
 
 /// Defines the methods implemented by all group widgets
-pub unsafe trait GroupBase: WidgetBase {
+pub unsafe trait GroupExt: WidgetBase {
     /// Begins a group, used for widgets implementing the group trait
     fn begin(&self);
     /// Ends a group, used for widgets implementing the group trait
@@ -296,27 +294,23 @@ pub unsafe trait GroupBase: WidgetBase {
     /// Return the number of children in a group
     fn children(&self) -> u32;
     /// Return child widget by index
-    /// # Safety
-    /// Can return multiple objects referring to an already existing widget
     fn child(&self, idx: u32) -> Option<Box<dyn WidgetBase>>;
-}
-
-/// Defines the methods implemented by all group widgets
-pub unsafe trait GroupExt: GroupBase {
     /// Find a widget within a group and return its index
-    fn find<W: WidgetBase>(&self, widget: &W) -> u32;
+    fn find<W: WidgetBase>(&self, widget: &W) -> u32 where Self: Sized;
     /// Add a widget to a group
-    fn add<W: WidgetBase>(&mut self, widget: &W);
+    fn add<W: WidgetBase>(&mut self, widget: &W) where Self: Sized;
     /// Insert a widget to a group at a certain index
-    fn insert<W: WidgetBase>(&mut self, widget: &W, index: u32);
+    fn insert<W: WidgetBase>(&mut self, widget: &W, index: u32) where Self: Sized;
     /// Remove a widget from a group, but does not delete it
-    fn remove<W: WidgetBase>(&mut self, widget: &W);
+    fn remove<W: WidgetBase>(&mut self, widget: &W) where Self: Sized;
     /// Make the passed widget resizable
-    fn resizable<W: WidgetBase>(&self, widget: &mut W);
+    fn resizable<W: WidgetBase>(&self, widget: &mut W) where Self: Sized;
 }
 
 /// Defines the methods implemented by all window widgets
-pub unsafe trait WindowBase: GroupBase {
+pub unsafe trait WindowExt: GroupExt {
+    /// Positions the window to the center of the screen
+    fn center_screen(self) -> Self where Self: Sized;
     /// Makes a window modal
     fn make_modal(&mut self, val: bool);
     /// Makes a window fullscreen
@@ -325,6 +319,8 @@ pub unsafe trait WindowBase: GroupBase {
     fn make_current(&mut self);
     /// Returns the icon of the window
     fn icon(&self) -> Option<Image>;
+    /// Sets the windows icon
+    fn set_icon<T: ImageExt>(&mut self, image: Option<T>) where Self: Sized;
     /// Make the window resizable
     fn make_resizable(&mut self, val: bool);
     /// Sets the cursor style within the window
@@ -353,14 +349,6 @@ pub unsafe trait WindowBase: GroupBase {
     fn iconize(&mut self);
     /// Returns whether the window is fullscreen or not
     fn fullscreen_active(&self) -> bool;
-}
-
-/// Defines the methods implemented by all window widgets
-pub unsafe trait WindowExt: WindowBase {
-    /// Positions the window to the center of the screen
-    fn center_screen(self) -> Self;
-    /// Sets the windows icon
-    fn set_icon<T: ImageExt>(&mut self, image: Option<T>);
 }
 
 /// Defines the methods implemented by all input and output widgets
@@ -798,7 +786,7 @@ pub unsafe trait BrowserExt: WidgetBase {
 }
 
 /// Defines the methods implemented by table types
-pub unsafe trait TableExt: GroupBase {
+pub unsafe trait TableExt: GroupExt {
     /// Clears the table
     fn clear(&mut self);
     /// Sets the table frame, table_box

@@ -3,7 +3,7 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-pub fn impl_group_base_trait(ast: &DeriveInput) -> TokenStream {
+pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
     let name_str = get_fl_name(name.to_string());
 
@@ -12,9 +12,18 @@ pub fn impl_group_base_trait(ast: &DeriveInput) -> TokenStream {
     let clear = Ident::new(format!("{}_{}", name_str, "clear").as_str(), name.span());
     let children = Ident::new(format!("{}_{}", name_str, "children").as_str(), name.span());
     let child = Ident::new(format!("{}_{}", name_str, "child").as_str(), name.span());
+    let find = Ident::new(format!("{}_{}", name_str, "find").as_str(), name.span());
+    let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
+    let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
+    let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
+    let resizable = Ident::new(
+        format!("{}_{}", name_str, "resizable").as_str(),
+        name.span(),
+    );
+    
 
     let gen = quote! {
-        unsafe impl GroupBase for #name {
+        unsafe impl GroupExt for #name {
             fn begin(&self) {
                 assert!(!self.was_deleted());
                 unsafe { #begin(self._inner) }
@@ -51,26 +60,7 @@ pub fn impl_group_base_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
-        }
-    };
-    gen.into()
-}
 
-pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
-    let name = &ast.ident;
-    let name_str = get_fl_name(name.to_string());
-
-    let find = Ident::new(format!("{}_{}", name_str, "find").as_str(), name.span());
-    let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
-    let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
-    let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
-    let resizable = Ident::new(
-        format!("{}_{}", name_str, "resizable").as_str(),
-        name.span(),
-    );
-
-    let gen = quote! {
-        unsafe impl GroupExt for #name {
             fn find<W: WidgetBase>(&self, widget: &W) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
@@ -78,7 +68,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     #find(self._inner, widget.as_widget_ptr() as *mut raw::c_void) as u32
                 }
             }
-
+            
             fn add<W: WidgetBase>(&mut self, widget: &W) {
                 unsafe {
                     assert!(!self.was_deleted());

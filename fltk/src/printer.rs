@@ -159,7 +159,7 @@ impl Printer {
     }
 
     /// Print a window
-    pub fn print_window<W: WindowBase>(&self, win: &W, x_offset: i32, y_offset: i32) {
+    pub fn print_window<W: WindowExt>(&self, win: &W, x_offset: i32, y_offset: i32) {
         unsafe {
             Fl_Printer_print_window(
                 self._inner,

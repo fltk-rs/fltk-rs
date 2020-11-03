@@ -3,7 +3,7 @@
 ## [0.10.3] - Unreleased
 ### Changes
 - Fix support for msvc 2013 and lower.
-- Add WidgetBase, GroupBase and WindowBase traits.
+- Add WidgetBase trait.
 - BREAKING (Security update): Methods and functions returning widget instances now return a safer boxed trait object. Since these might not be constructed by user code (like in dialogs).
 
 ## [0.10.2] - 2020-11-02

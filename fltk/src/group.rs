@@ -9,14 +9,14 @@ use std::{
 };
 
 /// Creates a widget group
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Group {
     _inner: *mut Fl_Group,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a widget pack
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Pack {
     _inner: *mut Fl_Pack,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -31,7 +31,7 @@ pub enum PackType {
 }
 
 /// Creates a scroll group
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Scroll {
     _inner: *mut Fl_Scroll,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -116,7 +116,7 @@ impl Scroll {
 }
 
 /// Creates a tab which can contain widgets
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Tabs {
     _inner: *mut Fl_Tabs,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -124,7 +124,7 @@ pub struct Tabs {
 
 impl Tabs {
     /// Gets the currently visible group
-    pub fn value(&mut self) -> Option<impl GroupBase> {
+    pub fn value(&mut self) -> Option<impl GroupExt> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tabs_value(self._inner);
@@ -139,7 +139,7 @@ impl Tabs {
     }
 
     /// Sets the currently visible group
-    pub fn set_value<Grp: GroupBase>(&mut self, w: &Grp) -> Result<(), FltkError> {
+    pub fn set_value<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_value(
@@ -153,7 +153,7 @@ impl Tabs {
     }
 
     /// Returns the tab group for the tab the user has currently down-clicked
-    pub fn push(&self) -> Option<impl GroupBase> {
+    pub fn push(&self) -> Option<impl GroupExt> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tabs_push(self._inner);
@@ -168,7 +168,7 @@ impl Tabs {
     }
 
     /// This is called by the tab widget's handle() method to set the tab group widget the user last pushed
-    pub fn set_push<Grp: GroupBase>(&mut self, w: &Grp) -> Result<(), FltkError> {
+    pub fn set_push<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_push(
@@ -208,14 +208,14 @@ impl Tabs {
 }
 
 /// Creates a tile which can contain widgets
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Tile {
     _inner: *mut Fl_Tile,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a wizard widget
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Wizard {
     _inner: *mut Fl_Wizard,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -257,7 +257,7 @@ impl Wizard {
 }
 
 /// Creates a color chooser widget
-#[derive(WidgetBase, WidgetExt, GroupBase, GroupExt, Debug)]
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct ColorChooser {
     _inner: *mut Fl_Color_Chooser,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
