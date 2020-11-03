@@ -509,7 +509,7 @@ impl Tooltip {
     }
 
     /// Returns the current window
-    pub fn current_window<W: WindowExt>() -> impl WindowExt {
+    pub fn current_window() -> impl WindowBase {
         unsafe {
             let wind = Fl_Tooltip_current_window();
             assert!(!wind.is_null());

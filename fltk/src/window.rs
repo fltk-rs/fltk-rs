@@ -43,7 +43,7 @@ impl Window {
     /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
     /// # Safety
     /// The data must be valid and is OS-dependent.
-    pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
+    pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowBase> {
         let ptr = Fl_Window_find_by_handle(mem::transmute(&handle));
         if ptr.is_null() {
             None
