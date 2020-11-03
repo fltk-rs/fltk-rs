@@ -63,48 +63,6 @@ impl From<std::ffi::NulError> for FltkError {
     }
 }
 
-/// Defines the extended methods implemented by all widgets
-pub unsafe trait WidgetBase {
-    /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
-    /// # Arguments
-    /// * `x` - The x coordinate in the screen
-    /// * `y` - The y coordinate in the screen
-    /// * `width` - The width of the widget
-    /// * `heigth` - The height of the widget
-    /// * `title` - The title or label of the widget
-    fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
-    /// Creates a default and zero initialized widget
-    fn default() -> Self;
-    /// transforms a widget pointer to a Widget, for internal use
-    /// # Safety
-    /// The pointer must be valid
-    unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
-    /// Get a widget from base widget
-    /// # Safety
-    /// The underlying object must be valid
-    unsafe fn from_widget<W: WidgetExt>(w: W) -> Self;
-    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
-    /// Handled or ignored events shoult return true, unhandled events should return false
-    fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F);
-    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
-    /// Handled or ignored events shoult return true, unhandled events should return false
-    /// takes the widget as a closure argument
-    fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
-    /// Set a custom draw method
-    fn draw<F: FnMut() + 'static>(&mut self, cb: F);
-    /// Set a custom draw method
-    /// takes the widget as a closure argument
-    fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
-    /// INTERNAL: Retrieve the draw data
-    /// # Safety
-    /// Can return multiple mutable references to the draw_data
-    unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
-    /// INTERNAL: Retrieve the handle data
-    /// # Safety
-    /// Can return multiple mutable references to the handle_data
-    unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
-}
-
 /// Defines the methods implemented by all widgets
 pub unsafe trait WidgetExt {
     /// Set to position x, y
@@ -266,6 +224,48 @@ pub unsafe trait WidgetExt {
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     /// Upcast a WidgetExt to a Widget
     fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized;
+}
+
+/// Defines the extended methods implemented by all widgets
+pub unsafe trait WidgetBase: WidgetExt {
+    /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
+    /// # Arguments
+    /// * `x` - The x coordinate in the screen
+    /// * `y` - The y coordinate in the screen
+    /// * `width` - The width of the widget
+    /// * `heigth` - The height of the widget
+    /// * `title` - The title or label of the widget
+    fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
+    /// Creates a default and zero initialized widget
+    fn default() -> Self;
+    /// transforms a widget pointer to a Widget, for internal use
+    /// # Safety
+    /// The pointer must be valid
+    unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
+    /// Get a widget from base widget
+    /// # Safety
+    /// The underlying object must be valid
+    unsafe fn from_widget<W: WidgetExt>(w: W) -> Self;
+    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
+    /// Handled or ignored events shoult return true, unhandled events should return false
+    fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F);
+    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
+    /// Handled or ignored events shoult return true, unhandled events should return false
+    /// takes the widget as a closure argument
+    fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
+    /// Set a custom draw method
+    fn draw<F: FnMut() + 'static>(&mut self, cb: F);
+    /// Set a custom draw method
+    /// takes the widget as a closure argument
+    fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
+    /// INTERNAL: Retrieve the draw data
+    /// # Safety
+    /// Can return multiple mutable references to the draw_data
+    unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
+    /// INTERNAL: Retrieve the handle data
+    /// # Safety
+    /// Can return multiple mutable references to the handle_data
+    unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
 }
 
 /// Defines the methods implemented by all button widgets
