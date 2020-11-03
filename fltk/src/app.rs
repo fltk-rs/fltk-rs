@@ -375,7 +375,7 @@ pub fn screen_size() -> (f64, f64) {
 /// Used for widgets implementing the InputExt, pastes content from the clipboard
 pub fn paste<T>(widget: &T)
 where
-    T: WidgetExt + InputExt,
+    T: WidgetBase + InputExt,
 {
     assert!(!widget.was_deleted());
     unsafe {
@@ -694,7 +694,7 @@ pub fn program_should_quit(flag: bool) {
 }
 
 /// Returns whether an event occured within a widget
-pub fn event_inside_widget<Wid: WidgetBase>(wid: &Wid) -> bool {
+pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
     assert!(!wid.was_deleted());
     let x = wid.x();
     let y = wid.y();
@@ -719,7 +719,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 }
 
 /// Gets the widget that is below the mouse cursor
-pub fn belowmouse<Wid: WidgetBase>() -> Option<impl WidgetBase> {
+pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
     unsafe {
         let x = Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
         if x.is_null() {
@@ -828,7 +828,7 @@ pub fn own_colormap() {
 }
 
 /// Gets the widget which was pushed
-pub fn pushed() -> Option<impl WidgetBase> {
+pub fn pushed() -> Option<impl WidgetExt> {
     unsafe {
         let ptr = Fl_pushed();
         if ptr.is_null() {
@@ -840,13 +840,13 @@ pub fn pushed() -> Option<impl WidgetBase> {
 }
 
 /// Gets the widget which has focus
-pub fn focus() -> Option<impl WidgetBase> {
+pub fn focus() -> Option<impl WidgetExt> {
     unsafe {
         let ptr = Fl_focus();
         if ptr.is_null() {
             None
         } else {
-            Some(crate::widget::Widget::from_raw(
+            Some(crate::widget::Widget::from_widget_ptr(
                 ptr as *mut fltk_sys::widget::Fl_Widget,
             ))
         }
@@ -854,7 +854,7 @@ pub fn focus() -> Option<impl WidgetBase> {
 }
 
 /// Sets the widget which has focus
-pub fn set_focus<W: WidgetBase>(wid: &W) {
+pub fn set_focus<W: WidgetExt>(wid: &W) {
     unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }
 
@@ -963,16 +963,14 @@ fn unload_font(path: &str) -> Result<(), FltkError> {
 
 /// Returns the apps windows.
 pub fn windows() -> Option<Vec<impl WindowExt>> {
-    unsafe {
-        let mut v: Vec<Window> = vec![];
-        let first: Window = first_window().unwrap().upcast().into();
-        v.push(first.clone());
-        let mut win = first;
-        while let Some(wind) = next_window(&win) {
-            let w = wind.upcast().into::<Window>();
-            v.push(w.clone());
-            win = w;
-        }
-        Some(v)
+    let mut v: Vec<Window> = vec![];
+    let first: Window = first_window().unwrap().into_widget();
+    v.push(first.clone());
+    let mut win = first;
+    while let Some(wind) = next_window(&win) {
+        let w = wind.into_widget::<Window>();
+        v.push(w.clone());
+        win = w;
     }
+    Some(v)
 }

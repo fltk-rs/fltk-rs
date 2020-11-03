@@ -3,7 +3,223 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
+
 pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
+    let name = &ast.ident;
+
+    let name_str = get_fl_name(name.to_string());
+    let ptr_name = Ident::new(name_str.as_str(), name.span());
+    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
+    let set_handler = Ident::new(
+        format!("{}_{}", name_str, "set_handler").as_str(),
+        name.span(),
+    );
+    let set_handler2 = Ident::new(
+        format!("{}_{}", name_str, "set_handler2").as_str(),
+        name.span(),
+    );
+    let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
+    let set_draw2 = Ident::new(
+        format!("{}_{}", name_str, "set_draw2").as_str(),
+        name.span(),
+    );
+    let handle_data = Ident::new(
+        format!("{}_{}", name_str, "handle_data").as_str(),
+        name.span(),
+    );
+    let draw_data = Ident::new(
+        format!("{}_{}", name_str, "draw_data").as_str(),
+        name.span(),
+    );
+    let set_handle_data = Ident::new(
+        format!("{}_{}", name_str, "set_handle_data").as_str(),
+        name.span(),
+    );
+    let set_deleter = Ident::new(
+        format!("{}_{}", name_str, "set_deleter").as_str(),
+        name.span(),
+    );
+
+    let gen = quote! {
+        unsafe impl WidgetBase for #name {
+            fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
+                let temp = CString::safe_new(title);
+                unsafe {
+                    let widget_ptr = #new(x, y, width, height, temp.into_raw());
+                    assert!(!widget_ptr.is_null());
+                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
+                    assert!(!tracker.is_null());
+                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                        if !data.is_null() {
+                            let x = data as *mut Box<dyn FnMut()>;
+                            let x = Box::from_raw(x);
+                        }
+                    }
+                    #set_deleter(widget_ptr, Some(shim));
+                    #name {
+                        _inner: widget_ptr,
+                        _tracker: tracker,
+                    }
+                }
+            }
+
+            fn default() -> Self {
+                let temp = CString::new("").unwrap();;
+                unsafe {
+                    let widget_ptr = #new(
+                        0,
+                        0,
+                        0,
+                        0,
+                        temp.into_raw());
+                        assert!(!widget_ptr.is_null());
+                        let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
+                        assert!(!tracker.is_null());
+                        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                            if !data.is_null() {
+                                let x = data as *mut Box<dyn FnMut()>;
+                                let x = Box::from_raw(x);
+                            }
+                        }
+                        #set_deleter(widget_ptr, Some(shim));
+                    #name {
+                        _inner: widget_ptr,
+                        _tracker: tracker,
+                    }
+                }
+            }
+
+            unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
+                assert!(!ptr.is_null());
+                unsafe {
+                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
+                    assert!(!tracker.is_null());
+                    #name {
+                        _inner: ptr as *mut #ptr_name,
+                        _tracker: tracker,
+                    }
+                }
+            }
+
+            unsafe fn from_widget<W: WidgetExt>(w: W) -> Self {
+                Self::from_widget_ptr(w.as_widget_ptr() as *mut _)
+            }
+
+            fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    unsafe extern "C" fn shim(ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
+                        let ev: Event = mem::transmute(ev);
+                        let a: *mut Box<dyn FnMut(Event) -> bool> = data as *mut Box<dyn FnMut(Event) -> bool>;
+                        let f: &mut (dyn FnMut(Event) -> bool) = &mut **a;
+                        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(ev) {
+                            true => return 1,
+                            false => return 0,
+                        }));
+                        if let Ok(ret) = result {
+                            ret
+                        } else {
+                            0
+                        }
+                    }
+                    let _old_data = self.handle_data();
+                    let a: *mut Box<dyn FnMut(Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: custom_handler_callback = Some(shim);
+                    #set_handler(self._inner, callback, data);
+                }
+            }
+
+            fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
+                        let mut wid = #name::from_widget_ptr(wid as *mut _);
+                        let ev: Event = mem::transmute(ev);
+                        let a: *mut Box<dyn FnMut(&mut #name, Event) -> bool> = data as *mut Box<dyn FnMut(&mut #name, Event) -> bool>;
+                        let f: &mut (dyn FnMut(&mut #name, Event) -> bool) = &mut **a;
+                        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(&mut wid, ev) {
+                            true => return 1,
+                            false => return 0,
+                        }));
+                        if let Ok(ret) = result {
+                            ret
+                        } else {
+                            0
+                        }
+                    }
+                    let _old_data = self.handle_data();
+                    let a: *mut Box<dyn FnMut(&mut Self, Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: custom_handler_callback2 = Some(shim);
+                    #set_handler2(self._inner, callback, data);
+                }
+            }
+
+            fn draw<F: FnMut() + 'static>(&mut self, cb: F) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+                        let f: &mut (dyn FnMut()) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+                    }
+                    let _old_data = self.draw_data();
+                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: custom_draw_callback = Some(shim);
+                    #set_draw(self._inner, callback, data);
+                }
+            }
+
+            fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let mut wid = #name::from_widget_ptr(wid as *mut _);
+                        let a: *mut Box<dyn FnMut(&mut #name)> = data as *mut Box<dyn FnMut(&mut #name)>;
+                        let f: &mut (dyn FnMut(&mut #name)) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                    }
+                    let _old_data = self.draw_data();
+                    let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: custom_draw_callback2 = Some(shim);
+                    #set_draw2(self._inner, callback, data);
+                }
+            }
+
+            unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
+                unsafe {
+                    let ptr = #draw_data(self._inner);
+                    if ptr.is_null() {
+                        return None;
+                    }
+                    let data = ptr as *mut Box<dyn FnMut()>;
+                    let data = Box::from_raw(data);
+                    #set_draw(self._inner, None, std::ptr::null_mut());
+                    Some(*data)
+                }
+            }
+
+            unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
+                unsafe {
+                    let ptr = #handle_data(self._inner);
+                    if ptr.is_null() {
+                        return None;
+                    }
+                    let data = ptr as *mut Box<dyn FnMut(Event) -> bool>;
+                    let data = Box::from_raw(data);
+                    #set_handler(self._inner, None, std::ptr::null_mut());
+                    Some(*data)
+                }
+            }
+        }
+    };
+    gen.into()
+}
+
+pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
     let name_str = get_fl_name(name.to_string());
@@ -192,7 +408,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
             }
         }
 
-        unsafe impl WidgetBase for #name {
+        unsafe impl WidgetExt for #name {
             fn set_pos(&mut self, x: i32, y: i32) {
                 self.resize(x, y, self.width(), self.height());
             }
@@ -405,7 +621,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn parent(&self) -> Option<Box<dyn WidgetBase>> {
+            fn parent(&self) -> Option<Box<dyn WidgetExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let x = #parent(self._inner);
@@ -536,6 +752,16 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn delete(mut wid: Self) {
+                assert!(!wid.was_deleted());
+                unsafe {
+                    fltk_sys::fl::Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
+                    wid._inner = std::ptr::null_mut() as *mut _;
+                    fltk_sys::fl::Fl_Widget_Tracker_delete(wid._tracker);
+                    wid._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
+                }
+            }
+
             fn damage(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -579,7 +805,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn below_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
+            fn below_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "below_of requires the size of the widget to be known!");
@@ -587,7 +813,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
-            fn above_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
+            fn above_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "above_of requires the size of the widget to be known!");
@@ -595,7 +821,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
-            fn right_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
+            fn right_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
@@ -603,7 +829,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
-            fn left_of<W: WidgetBase>(mut self, w: &W, padding: i32) -> Self {
+            fn left_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "left_of requires the size of the widget to be known!");
@@ -611,7 +837,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
-            fn center_of<W: WidgetBase>(mut self, w: &W) -> Self {
+            fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
@@ -626,7 +852,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
-            fn size_of<W: WidgetBase>(mut self, w: &W) -> Self {
+            fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
@@ -634,7 +860,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
-            fn inside<W: WidgetBase>(&self, wid: &W) -> bool {
+            fn inside<W: WidgetExt>(&self, wid: &W) -> bool {
                 assert!(!self.was_deleted());
                 assert!(!wid.was_deleted());
                 unsafe {
@@ -759,229 +985,8 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 self.set_callback(move || sender.send(msg))
             }
 
-            unsafe fn upcast(&self) -> crate::widget::Widget {
-                crate::widget::Widget::from_raw(self.as_widget_ptr() as *mut _)
-            }
-        }
-    };
-    gen.into()
-}
-
-pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
-    let name = &ast.ident;
-
-    let name_str = get_fl_name(name.to_string());
-    let ptr_name = Ident::new(name_str.as_str(), name.span());
-    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
-    let set_handler = Ident::new(
-        format!("{}_{}", name_str, "set_handler").as_str(),
-        name.span(),
-    );
-    let set_handler2 = Ident::new(
-        format!("{}_{}", name_str, "set_handler2").as_str(),
-        name.span(),
-    );
-    let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
-    let set_draw2 = Ident::new(
-        format!("{}_{}", name_str, "set_draw2").as_str(),
-        name.span(),
-    );
-    let handle_data = Ident::new(
-        format!("{}_{}", name_str, "handle_data").as_str(),
-        name.span(),
-    );
-    let draw_data = Ident::new(
-        format!("{}_{}", name_str, "draw_data").as_str(),
-        name.span(),
-    );
-    let set_handle_data = Ident::new(
-        format!("{}_{}", name_str, "set_handle_data").as_str(),
-        name.span(),
-    );
-    let set_deleter = Ident::new(
-        format!("{}_{}", name_str, "set_deleter").as_str(),
-        name.span(),
-    );
-
-    let gen = quote! {
-        unsafe impl WidgetExt for #name {
-            fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                let temp = CString::safe_new(title);
-                unsafe {
-                    let widget_ptr = #new(x, y, width, height, temp.into_raw());
-                    assert!(!widget_ptr.is_null());
-                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
-                    assert!(!tracker.is_null());
-                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                        if !data.is_null() {
-                            let x = data as *mut Box<dyn FnMut()>;
-                            let x = Box::from_raw(x);
-                        }
-                    }
-                    #set_deleter(widget_ptr, Some(shim));
-                    #name {
-                        _inner: widget_ptr,
-                        _tracker: tracker,
-                    }
-                }
-            }
-
-            fn default() -> Self {
-                let temp = CString::new("").unwrap();;
-                unsafe {
-                    let widget_ptr = #new(
-                        0,
-                        0,
-                        0,
-                        0,
-                        temp.into_raw());
-                        assert!(!widget_ptr.is_null());
-                        let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
-                        assert!(!tracker.is_null());
-                        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                            if !data.is_null() {
-                                let x = data as *mut Box<dyn FnMut()>;
-                                let x = Box::from_raw(x);
-                            }
-                        }
-                        #set_deleter(widget_ptr, Some(shim));
-                    #name {
-                        _inner: widget_ptr,
-                        _tracker: tracker,
-                    }
-                }
-            }
-
-            unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
-                assert!(!ptr.is_null());
-                unsafe {
-                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
-                    assert!(!tracker.is_null());
-                    #name {
-                        _inner: ptr as *mut #ptr_name,
-                        _tracker: tracker,
-                    }
-                }
-            }
-
-            fn delete(mut wid: Self) {
-                assert!(!wid.was_deleted());
-                unsafe {
-                    fltk_sys::fl::Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-                    wid._inner = std::ptr::null_mut() as *mut _;
-                    fltk_sys::fl::Fl_Widget_Tracker_delete(wid._tracker);
-                    wid._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
-                }
-            }
-
-            fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    unsafe extern "C" fn shim(ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
-                        let ev: Event = mem::transmute(ev);
-                        let a: *mut Box<dyn FnMut(Event) -> bool> = data as *mut Box<dyn FnMut(Event) -> bool>;
-                        let f: &mut (dyn FnMut(Event) -> bool) = &mut **a;
-                        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(ev) {
-                            true => return 1,
-                            false => return 0,
-                        }));
-                        if let Ok(ret) = result {
-                            ret
-                        } else {
-                            0
-                        }
-                    }
-                    let _old_data = self.handle_data();
-                    let a: *mut Box<dyn FnMut(Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_handler_callback = Some(shim);
-                    #set_handler(self._inner, callback, data);
-                }
-            }
-
-            fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
-                        let mut wid = #name::from_widget_ptr(wid as *mut _);
-                        let ev: Event = mem::transmute(ev);
-                        let a: *mut Box<dyn FnMut(&mut #name, Event) -> bool> = data as *mut Box<dyn FnMut(&mut #name, Event) -> bool>;
-                        let f: &mut (dyn FnMut(&mut #name, Event) -> bool) = &mut **a;
-                        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(&mut wid, ev) {
-                            true => return 1,
-                            false => return 0,
-                        }));
-                        if let Ok(ret) = result {
-                            ret
-                        } else {
-                            0
-                        }
-                    }
-                    let _old_data = self.handle_data();
-                    let a: *mut Box<dyn FnMut(&mut Self, Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_handler_callback2 = Some(shim);
-                    #set_handler2(self._inner, callback, data);
-                }
-            }
-
-            fn draw<F: FnMut() + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-                        let f: &mut (dyn FnMut()) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
-                    }
-                    let _old_data = self.draw_data();
-                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_draw_callback = Some(shim);
-                    #set_draw(self._inner, callback, data);
-                }
-            }
-
-            fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let mut wid = #name::from_widget_ptr(wid as *mut _);
-                        let a: *mut Box<dyn FnMut(&mut #name)> = data as *mut Box<dyn FnMut(&mut #name)>;
-                        let f: &mut (dyn FnMut(&mut #name)) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
-                    }
-                    let _old_data = self.draw_data();
-                    let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_draw_callback2 = Some(shim);
-                    #set_draw2(self._inner, callback, data);
-                }
-            }
-
-            unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
-                unsafe {
-                    let ptr = #draw_data(self._inner);
-                    if ptr.is_null() {
-                        return None;
-                    }
-                    let data = ptr as *mut Box<dyn FnMut()>;
-                    let data = Box::from_raw(data);
-                    #set_draw(self._inner, None, std::ptr::null_mut());
-                    Some(*data)
-                }
-            }
-
-            unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
-                unsafe {
-                    let ptr = #handle_data(self._inner);
-                    if ptr.is_null() {
-                        return None;
-                    }
-                    let data = ptr as *mut Box<dyn FnMut(Event) -> bool>;
-                    let data = Box::from_raw(data);
-                    #set_handler(self._inner, None, std::ptr::null_mut());
-                    Some(*data)
-                }
+            fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {
+                unsafe { W::from_widget_ptr(self.as_widget_ptr() as *mut _) }
             }
         }
     };

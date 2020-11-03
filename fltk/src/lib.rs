@@ -141,7 +141,7 @@
 //! ```rust
 //! let app = App::default().with_scheme(AppScheme::Gleam);
 //! ```
-//! Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait,
+//! Themes of individual widgets can be optionally modified using the provided methods in the WidgetBase trait,
 //! such as set_color(), set_label_font(), set_frame() etc:
 //! ```rust
 //!     some_button.set_color(Color::Light1); //! You can use one of the provided colors in the fltk enums

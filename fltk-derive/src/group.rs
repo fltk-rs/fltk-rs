@@ -48,7 +48,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn child(&self, idx: u32) -> Option<Box<dyn WidgetBase>> {
+            fn child(&self, idx: u32) -> Option<Box<dyn WidgetExt>> {
                 unsafe {
                     debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
@@ -56,12 +56,12 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     if child_widget.is_null() {
                         None
                     } else {
-                        Some(Box::new(Widget::from_raw(child_widget as *mut fltk_sys::widget::Fl_Widget)))
+                        Some(Box::new(Widget::from_widget_ptr(child_widget as *mut fltk_sys::widget::Fl_Widget)))
                     }
                 }
             }
 
-            fn find<W: WidgetBase>(&self, widget: &W) -> u32 {
+            fn find<W: WidgetExt>(&self, widget: &W) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
@@ -69,7 +69,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
             
-            fn add<W: WidgetBase>(&mut self, widget: &W) {
+            fn add<W: WidgetExt>(&mut self, widget: &W) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
@@ -77,7 +77,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn insert<W: WidgetBase>(&mut self, widget: &W, index: u32) {
+            fn insert<W: WidgetExt>(&mut self, widget: &W, index: u32) {
                 unsafe {
                     debug_assert!(index <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
@@ -86,7 +86,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn remove<W: WidgetBase>(&mut self, widget: &W) {
+            fn remove<W: WidgetExt>(&mut self, widget: &W) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
@@ -94,7 +94,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn resizable<W: WidgetBase>(&self, widget: &mut W) {
+            fn resizable<W: WidgetExt>(&self, widget: &mut W) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());

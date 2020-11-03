@@ -6,12 +6,11 @@ use std::os::raw::*;
 // data can be anything, even a different widget
 fn cb(w: app::WidgetPtr, data: *mut c_void) {
     // To access the button
-    let btn = unsafe { widget::Widget::from_raw(w) }; // Gets a Widget
-    let mut btn: button::Button = unsafe { btn.into() }; // Turns the widget to a button, not really needed if only using WidgetExt methods
+    let mut btn = unsafe { button::Button::from_widget_ptr(w) }; // Gets a Widget
     btn.set_label("Works!");
 
     // To access the frame
-    let mut frm = unsafe { widget::Widget::from_raw(data as app::WidgetPtr) };
+    let mut frm = unsafe { widget::Widget::from_widget_ptr(data as app::WidgetPtr) };
     frm.set_label("Works!");
 }
 

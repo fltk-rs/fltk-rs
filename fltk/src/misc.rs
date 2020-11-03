@@ -390,7 +390,7 @@ impl Tooltip {
     }
 
     /// Defines the area of the tooltip
-    pub fn enter_area<W: WidgetBase>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
+    pub fn enter_area<W: WidgetExt>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
         assert!(!widget.was_deleted());
         let tip = CString::safe_new(tip);
         unsafe {
@@ -406,18 +406,18 @@ impl Tooltip {
     }
 
     /// Returns the current widget under the tooltip
-    pub fn current_widget() -> Box<dyn WidgetBase> {
+    pub fn current_widget() -> Box<dyn WidgetExt> {
         unsafe {
             let widget_ptr = Fl_Tooltip_current_widget();
             assert!(!widget_ptr.is_null());
-            Box::new(Widget::from_raw(
+            Box::new(Widget::from_widget_ptr(
                 widget_ptr as *mut fltk_sys::widget::Fl_Widget,
             ))
         }
     }
 
     /// Sets the current widget associated with the tooltip
-    pub fn current<W: WidgetBase>(w: &W) {
+    pub fn current<W: WidgetExt>(w: &W) {
         assert!(!w.was_deleted());
         unsafe { Fl_Tooltip_current(w.as_widget_ptr() as *mut Fl_Widget) }
     }

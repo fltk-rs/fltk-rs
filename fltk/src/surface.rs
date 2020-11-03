@@ -87,7 +87,7 @@ impl ImageSurface {
     }
 
     /// Draw a widget on the image surface
-    pub fn draw<W: WidgetBase>(&self, widget: &W, delta_x: i32, delta_y: i32) {
+    pub fn draw<W: WidgetExt>(&self, widget: &W, delta_x: i32, delta_y: i32) {
         unsafe {
             Fl_Image_Surface_draw(
                 self._inner,

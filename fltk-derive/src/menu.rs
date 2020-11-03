@@ -87,7 +87,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 let temp = CString::safe_new(name);
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let mut wid = crate::widget::Widget::from_raw(wid as *mut _);
+                        let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
                         let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> = data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
                         let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
@@ -120,7 +120,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 let temp = CString::safe_new(name);
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let mut wid = crate::widget::Widget::from_raw(wid as *mut _);
+                        let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
                         let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> = data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
                         let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
                         let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));

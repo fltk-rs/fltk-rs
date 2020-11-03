@@ -63,8 +63,50 @@ impl From<std::ffi::NulError> for FltkError {
     }
 }
 
-/// Defines the methods implemented by all widgets
+/// Defines the extended methods implemented by all widgets
 pub unsafe trait WidgetBase {
+    /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
+    /// # Arguments
+    /// * `x` - The x coordinate in the screen
+    /// * `y` - The y coordinate in the screen
+    /// * `width` - The width of the widget
+    /// * `heigth` - The height of the widget
+    /// * `title` - The title or label of the widget
+    fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
+    /// Creates a default and zero initialized widget
+    fn default() -> Self;
+    /// transforms a widget pointer to a Widget, for internal use
+    /// # Safety
+    /// The pointer must be valid
+    unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
+    /// Get a widget from base widget
+    /// # Safety
+    /// The underlying object must be valid
+    unsafe fn from_widget<W: WidgetExt>(w: W) -> Self;
+    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
+    /// Handled or ignored events shoult return true, unhandled events should return false
+    fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F);
+    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
+    /// Handled or ignored events shoult return true, unhandled events should return false
+    /// takes the widget as a closure argument
+    fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
+    /// Set a custom draw method
+    fn draw<F: FnMut() + 'static>(&mut self, cb: F);
+    /// Set a custom draw method
+    /// takes the widget as a closure argument
+    fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
+    /// INTERNAL: Retrieve the draw data
+    /// # Safety
+    /// Can return multiple mutable references to the draw_data
+    unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
+    /// INTERNAL: Retrieve the handle data
+    /// # Safety
+    /// Can return multiple mutable references to the handle_data
+    unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
+}
+
+/// Defines the methods implemented by all widgets
+pub unsafe trait WidgetExt {
     /// Set to position x, y
     fn set_pos(&mut self, x: i32, y: i32);
     /// Set to dimensions width and height
@@ -100,19 +142,19 @@ pub unsafe trait WidgetBase {
     /// Sets the initial alignment of the widget
     fn with_align(self, align: Align) -> Self where Self: Sized;
     /// Positions the widget below w
-    fn below_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    fn below_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self where Self: Sized;
     /// Positions the widget above w
-    fn above_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    fn above_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self where Self: Sized;
     /// Positions the widget to the right of w
-    fn right_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    fn right_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self where Self: Sized;
     /// Positions the widget to the left of w
-    fn left_of<W: WidgetBase>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    fn left_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self where Self: Sized;
     /// Positions the widget to the center of w
-    fn center_of<W: WidgetBase>(self, w: &W) -> Self where Self: Sized;
+    fn center_of<W: WidgetExt>(self, w: &W) -> Self where Self: Sized;
     /// Takes the size of w
-    fn size_of<W: WidgetBase>(self, w: &W) -> Self where Self: Sized;
+    fn size_of<W: WidgetExt>(self, w: &W) -> Self where Self: Sized;
     /// Checks whether the self widget is inside another widget
-    fn inside<W: WidgetBase>(&self, wid: &W) -> bool where Self: Sized;
+    fn inside<W: WidgetExt>(&self, wid: &W) -> bool where Self: Sized;
     /// Returns the widget type when applicable
     fn get_type<T: WidgetType>(&self) -> T where Self: Sized;
     /// Sets the widget type
@@ -179,7 +221,7 @@ pub unsafe trait WidgetBase {
     /// Sets the alignment of the widget
     fn set_align(&mut self, align: Align);
     /// Returns the parent of the widget
-    fn parent(&self) -> Option<Box<dyn WidgetBase>>;
+    fn parent(&self) -> Option<Box<dyn WidgetExt>>;
     /// Gets the selection color of the widget
     fn selection_color(&mut self) -> Color;
     /// Sets the selection color of the widget
@@ -204,6 +246,8 @@ pub unsafe trait WidgetBase {
     fn has_visible_focus(&mut self) -> bool;
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
+    /// Deletes widgets and their children.
+    fn delete(wid: Self) where Self: Sized;
     /// Return whether the widget was damaged
     fn damage(&self) -> bool;
     /// Signal the widget as damaged and it should be redrawn in the next event loop cycle
@@ -220,54 +264,12 @@ pub unsafe trait WidgetBase {
     /// # Safety
     /// Can return multiple mutable references to the user_data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
-    /// Upcast a WidgetBase to a Widget
-    /// # Safety
-    /// May fail in non-compatible underlying pointer types
-    unsafe fn upcast(&self) -> crate::widget::Widget;
-}
-
-/// Defines the extended methods implemented by all widgets
-pub unsafe trait WidgetExt: WidgetBase {
-    /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
-    /// # Arguments
-    /// * `x` - The x coordinate in the screen
-    /// * `y` - The y coordinate in the screen
-    /// * `width` - The width of the widget
-    /// * `heigth` - The height of the widget
-    /// * `title` - The title or label of the widget
-    fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
-    /// Creates a default and zero initialized widget
-    fn default() -> Self;
-    /// transforms a widget pointer to a Widget, for internal use
-    /// # Safety
-    /// The pointer must be valid
-    unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self;
-    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
-    /// Handled or ignored events shoult return true, unhandled events should return false
-    fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F);
-    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
-    /// Handled or ignored events shoult return true, unhandled events should return false
-    /// takes the widget as a closure argument
-    fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
-    /// Set a custom draw method
-    fn draw<F: FnMut() + 'static>(&mut self, cb: F);
-    /// Set a custom draw method
-    /// takes the widget as a closure argument
-    fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
-    /// Deletes widgets and their children.
-    fn delete(wid: Self);
-    /// INTERNAL: Retrieve the draw data
-    /// # Safety
-    /// Can return multiple mutable references to the draw_data
-    unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
-    /// INTERNAL: Retrieve the handle data
-    /// # Safety
-    /// Can return multiple mutable references to the handle_data
-    unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
+    /// Upcast a WidgetExt to a Widget
+    fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized;
 }
 
 /// Defines the methods implemented by all button widgets
-pub unsafe trait ButtonExt: WidgetBase {
+pub unsafe trait ButtonExt: WidgetExt {
     /// Gets the shortcut associated with a button
     fn shortcut(&self) -> Shortcut;
     /// Sets the shortcut associated with a button
@@ -284,7 +286,7 @@ pub unsafe trait ButtonExt: WidgetBase {
 }
 
 /// Defines the methods implemented by all group widgets
-pub unsafe trait GroupExt: WidgetBase {
+pub unsafe trait GroupExt: WidgetExt {
     /// Begins a group, used for widgets implementing the group trait
     fn begin(&self);
     /// Ends a group, used for widgets implementing the group trait
@@ -294,17 +296,17 @@ pub unsafe trait GroupExt: WidgetBase {
     /// Return the number of children in a group
     fn children(&self) -> u32;
     /// Return child widget by index
-    fn child(&self, idx: u32) -> Option<Box<dyn WidgetBase>>;
+    fn child(&self, idx: u32) -> Option<Box<dyn WidgetExt>>;
     /// Find a widget within a group and return its index
-    fn find<W: WidgetBase>(&self, widget: &W) -> u32 where Self: Sized;
+    fn find<W: WidgetExt>(&self, widget: &W) -> u32 where Self: Sized;
     /// Add a widget to a group
-    fn add<W: WidgetBase>(&mut self, widget: &W) where Self: Sized;
+    fn add<W: WidgetExt>(&mut self, widget: &W) where Self: Sized;
     /// Insert a widget to a group at a certain index
-    fn insert<W: WidgetBase>(&mut self, widget: &W, index: u32) where Self: Sized;
+    fn insert<W: WidgetExt>(&mut self, widget: &W, index: u32) where Self: Sized;
     /// Remove a widget from a group, but does not delete it
-    fn remove<W: WidgetBase>(&mut self, widget: &W) where Self: Sized;
+    fn remove<W: WidgetExt>(&mut self, widget: &W) where Self: Sized;
     /// Make the passed widget resizable
-    fn resizable<W: WidgetBase>(&self, widget: &mut W) where Self: Sized;
+    fn resizable<W: WidgetExt>(&self, widget: &mut W) where Self: Sized;
 }
 
 /// Defines the methods implemented by all window widgets
@@ -352,7 +354,7 @@ pub unsafe trait WindowExt: GroupExt {
 }
 
 /// Defines the methods implemented by all input and output widgets
-pub unsafe trait InputExt: WidgetBase {
+pub unsafe trait InputExt: WidgetExt {
     /// Returns the value inside the input/output widget
     fn value(&self) -> String;
     /// Sets the value inside an input/output widget
@@ -404,7 +406,7 @@ pub unsafe trait InputExt: WidgetBase {
 }
 
 /// Defines the methods implemented by all menu widgets
-pub unsafe trait MenuExt: WidgetBase {
+pub unsafe trait MenuExt: WidgetExt {
     /// Get a menu item by name
     fn find_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
     /// Set selected item
@@ -525,7 +527,7 @@ pub unsafe trait MenuExt: WidgetBase {
 }
 
 /// Defines the methods implemented by all valuator widgets
-pub unsafe trait ValuatorExt: WidgetBase {
+pub unsafe trait ValuatorExt: WidgetExt {
     /// Set bounds of a valuator
     fn set_bounds(&mut self, a: f64, b: f64);
     /// Get the minimum bound of a valuator
@@ -559,7 +561,7 @@ pub unsafe trait ValuatorExt: WidgetBase {
 }
 
 /// Defines the methods implemented by TextDisplay and TextEditor
-pub unsafe trait DisplayExt: WidgetBase {
+pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
     fn buffer(&self) -> Option<TextBuffer>;
     /// Sets the associated TextBuffer
@@ -680,7 +682,7 @@ pub unsafe trait DisplayExt: WidgetBase {
 }
 
 /// Defines the methods implemented by all browser types
-pub unsafe trait BrowserExt: WidgetBase {
+pub unsafe trait BrowserExt: WidgetExt {
     /// Removes the specified line
     /// Lines start at 1
     fn remove(&mut self, line: u32);

@@ -320,7 +320,7 @@ impl MenuItem {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
-                let mut wid = crate::widget::Widget::from_raw(wid as *mut _);
+                let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
                 let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
                     data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
                 let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
