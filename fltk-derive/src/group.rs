@@ -20,7 +20,6 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "resizable").as_str(),
         name.span(),
     );
-    
 
     let gen = quote! {
         unsafe impl GroupExt for #name {
@@ -68,7 +67,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     #find(self._inner, widget.as_widget_ptr() as *mut raw::c_void) as u32
                 }
             }
-            
+
             fn add<W: WidgetExt>(&mut self, widget: &W) {
                 unsafe {
                     assert!(!self.was_deleted());

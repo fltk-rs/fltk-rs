@@ -5,12 +5,14 @@ use std::{
     ffi::{CStr, CString},
     mem,
     os::raw,
+    sync::{Arc, Mutex},
 };
 
 /// Wraps a text buffer, Cloning a text buffer invalidates the underlying pointer, thus the no derive(Clone)
 #[derive(Debug)]
 pub struct TextBuffer {
     _inner: *mut Fl_Text_Buffer,
+    _refcount: Arc<Mutex<usize>>,
 }
 
 impl TextBuffer {
@@ -21,6 +23,7 @@ impl TextBuffer {
             assert!(!text_buffer.is_null());
             TextBuffer {
                 _inner: text_buffer,
+                _refcount: Arc::from(Mutex::from(1)),
             }
         }
     }
@@ -46,7 +49,10 @@ impl TextBuffer {
     /// The pointer must be valid
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         assert!(!ptr.is_null());
-        TextBuffer { _inner: ptr }
+        TextBuffer {
+            _inner: ptr,
+            _refcount: Arc::from(Mutex::from(2)),
+        }
     }
 
     /// Returns the inner pointer from a text buffer
@@ -543,8 +549,25 @@ unsafe impl Send for TextBuffer {}
 impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {
         assert!(!self._inner.is_null());
+        let mut x = self._refcount.lock().unwrap();
+        *x += 1;
         TextBuffer {
             _inner: self._inner,
+            _refcount: Arc::from(Mutex::from(*x)),
+        }
+    }
+}
+
+impl Drop for TextBuffer {
+    fn drop(&mut self) {
+        assert!(!self._inner.is_null());
+        let mut x = self._refcount.lock().unwrap();
+        *x -= 1;
+        if *x == 0 {
+            unsafe {
+                Fl_Text_Buffer_delete(self._inner);
+            }
+            self._inner = std::ptr::null_mut();
         }
     }
 }

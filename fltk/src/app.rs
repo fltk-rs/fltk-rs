@@ -473,7 +473,7 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 
 /// Starts waiting for events
 pub fn wait() -> bool {
-    unsafe { 
+    unsafe {
         if !IS_INIT {
             init_all();
         }

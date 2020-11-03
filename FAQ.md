@@ -101,14 +101,10 @@ The callback mechanism consists of a closure as a void pointer with a shim which
 As stated before, panics accross FFI boundaries are undefined behavior, as such, the C++ wrapper never throws. Furthermore, all panics which might arise in callbacks are caught on the Rust side using catch_unwind.
 
 FLTK manages it's own memory. Any widget is automatically owned by a parent which does the book-keeping as well and deletion, this is the enclosing widget implementing GroupExt such as windws etc. This is done in the C++ FLTK library itself. Any constructed widget calls the current() method which detects the enclosing group widget, and calls its add() method rending ownership to the group widget. Upon destruction of the group widget, all owned widgets are freed. Also all widgets are wrapped in a mutex for all mutating methods, and their lifetimes are tracked using an Fl_Widget_Tracker, That means widgets have interior mutability as if wrapped in an Arc<Mutex<widget>> and have a tracking pointer to detect deletion. Cloning a widget performs a memcpy of the underlying pointer and allows for interior mutability; it does not create a new widget.
-SharedImages are reference-counted by FLTK. All mutating methods are wrapped in locks.
+Images are reference-counted. All mutating methods are wrapped in locks.
 This locking might lead to some performance degradation as compared to the original FLTK library, it does allow for multithreaded applications, and is necessary in an FLTK (C++) application if it also required threading.
 
-So while FLTK widgets don't leak, this might create lifetime issues with certain widgets, namely the TextEditor and TextDisplay widgets. These 2 widgets require a TextBuffer, which might point to a file, and which might get destroyed/freed before the destruction of these widgets. As such the buffers require manual resource management if they happen to outlive the TextDisplay or TextEditor widgets, similarly, images might require explicit management if they happen to outlive the widget they were used in and are no longer needed in the program.
-
 Overriding drawing methods will box data to be sent to the C++ library, so the data should optimally be limited to widgets or plain old data types to avoid unnecessary leaks if a custom drawn widget might be deleted during the lifetime of the program.
-
-The 2 internal traits fltk-sys and fltk-derive are supposed to remain internal, and not be exposed into the public api, and are thus marked unsafe.
 
 That said, fltk-rs is still in active development, and has not yet been fuzzed nor thouroughly tested for memory safety issues.
 

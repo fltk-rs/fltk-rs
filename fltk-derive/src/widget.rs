@@ -3,7 +3,6 @@ use proc_macro::TokenStream;
 use quote::*;
 use syn::*;
 
-
 pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
     let name = &ast.ident;
 
@@ -905,44 +904,44 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
-                if let Some(image) = image {
+                if let Some(mut image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { #set_image(self._inner, image.as_image_ptr() as *mut _) }
+                    unsafe { image.increment_arc(); #set_image(self._inner, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_image(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 
-            fn image(&self) -> Option<Image> {
+            fn image(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let image_ptr = #image(self._inner);
                     if image_ptr.is_null() {
                         None
                     } else {
-                        Some(Image::from_raw(image_ptr as *mut fltk_sys::image::Fl_Image))
+                        Some(Box::new(Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image)))
                     }
                 }
             }
 
             fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
-                if let Some(image) = image {
+                if let Some(mut image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { #set_deimage(self._inner, image.as_image_ptr() as *mut _) }
+                    unsafe { image.increment_arc(); #set_deimage(self._inner, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_deimage(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 
-            fn deimage(&self) -> Option<Image> {
+            fn deimage(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let image_ptr = #deimage(self._inner);
                     if image_ptr.is_null() {
                         None
                     } else {
-                        Some(Image::from_raw(image_ptr as *mut fltk_sys::image::Fl_Image))
+                        Some(Box::new(Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image)))
                     }
                 }
             }

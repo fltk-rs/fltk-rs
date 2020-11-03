@@ -1,6 +1,4 @@
 pub use crate::enums::*;
-use crate::image::Image;
-use crate::text::{StyleTableEntry, TextBuffer};
 pub(crate) use crate::utils::*;
 use std::convert::From;
 use std::{fmt, io};
@@ -92,46 +90,86 @@ pub unsafe trait WidgetExt {
     /// Can return multiple mutable pointers to the same widget
     unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
     /// Initialize to position x, y
-    fn with_pos(self, x: i32, y: i32) -> Self where Self: Sized;
+    fn with_pos(self, x: i32, y: i32) -> Self
+    where
+        Self: Sized;
     /// Initialilze to dimensions width and height
-    fn with_size(self, width: i32, height: i32) -> Self where Self: Sized;
+    fn with_size(self, width: i32, height: i32) -> Self
+    where
+        Self: Sized;
     /// Initialize with label/title
-    fn with_label(self, title: &str) -> Self where Self: Sized;
+    fn with_label(self, title: &str) -> Self
+    where
+        Self: Sized;
     /// Sets the initial alignment of the widget
-    fn with_align(self, align: Align) -> Self where Self: Sized;
+    fn with_align(self, align: Align) -> Self
+    where
+        Self: Sized;
     /// Positions the widget below w
-    fn below_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    fn below_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
+    where
+        Self: Sized;
     /// Positions the widget above w
-    fn above_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    fn above_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
+    where
+        Self: Sized;
     /// Positions the widget to the right of w
-    fn right_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    fn right_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
+    where
+        Self: Sized;
     /// Positions the widget to the left of w
-    fn left_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self where Self: Sized;
+    fn left_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
+    where
+        Self: Sized;
     /// Positions the widget to the center of w
-    fn center_of<W: WidgetExt>(self, w: &W) -> Self where Self: Sized;
+    fn center_of<W: WidgetExt>(self, w: &W) -> Self
+    where
+        Self: Sized;
     /// Takes the size of w
-    fn size_of<W: WidgetExt>(self, w: &W) -> Self where Self: Sized;
+    fn size_of<W: WidgetExt>(self, w: &W) -> Self
+    where
+        Self: Sized;
     /// Checks whether the self widget is inside another widget
-    fn inside<W: WidgetExt>(&self, wid: &W) -> bool where Self: Sized;
+    fn inside<W: WidgetExt>(&self, wid: &W) -> bool
+    where
+        Self: Sized;
     /// Returns the widget type when applicable
-    fn get_type<T: WidgetType>(&self) -> T where Self: Sized;
+    fn get_type<T: WidgetType>(&self) -> T
+    where
+        Self: Sized;
     /// Sets the widget type
-    fn set_type<T: WidgetType>(&mut self, typ: T) where Self: Sized;
+    fn set_type<T: WidgetType>(&mut self, typ: T)
+    where
+        Self: Sized;
     /// Sets the image of the widget
-    fn set_image<I: ImageExt>(&mut self, image: Option<I>) where Self: Sized;
+    fn set_image<I: ImageExt>(&mut self, image: Option<I>)
+    where
+        Self: Sized;
     /// Gets the image associated with the widget
-    fn image(&self) -> Option<Image> where Self: Sized;
+    fn image(&self) -> Option<Box<dyn ImageExt>>
+    where
+        Self: Sized;
     /// Sets the image of the widget
-    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) where Self: Sized;
+    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>)
+    where
+        Self: Sized;
     /// Gets the image associated with the widget
-    fn deimage(&self) -> Option<Image> where Self: Sized;
+    fn deimage(&self) -> Option<Box<dyn ImageExt>>
+    where
+        Self: Sized;
     /// Sets the callback when the widget is triggered (clicks for example)
-    fn set_callback<F: FnMut() + 'static>(&mut self, cb: F) where Self: Sized;
+    fn set_callback<F: FnMut() + 'static>(&mut self, cb: F)
+    where
+        Self: Sized;
     /// Sets the callback when the widget is triggered (clicks for example)
     /// takes the widget as a closure argument
-    fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) where Self: Sized;
+    fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F)
+    where
+        Self: Sized;
     /// Emits a message on callback using a sender
-    fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) where Self: Sized;
+    fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T)
+    where
+        Self: Sized;
     /// Activates the widget
     fn activate(&mut self);
     /// Deactivates the widget
@@ -205,7 +243,9 @@ pub unsafe trait WidgetExt {
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
     /// Deletes widgets and their children.
-    fn delete(wid: Self) where Self: Sized;
+    fn delete(wid: Self)
+    where
+        Self: Sized;
     /// Return whether the widget was damaged
     fn damage(&self) -> bool;
     /// Signal the widget as damaged and it should be redrawn in the next event loop cycle
@@ -223,7 +263,9 @@ pub unsafe trait WidgetExt {
     /// Can return multiple mutable references to the user_data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     /// Upcast a WidgetExt to a Widget
-    fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized;
+    fn into_widget<W: WidgetBase>(&self) -> W
+    where
+        Self: Sized;
 }
 
 /// Defines the extended methods implemented by all widgets
@@ -298,21 +340,33 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Return child widget by index
     fn child(&self, idx: u32) -> Option<Box<dyn WidgetExt>>;
     /// Find a widget within a group and return its index
-    fn find<W: WidgetExt>(&self, widget: &W) -> u32 where Self: Sized;
+    fn find<W: WidgetExt>(&self, widget: &W) -> u32
+    where
+        Self: Sized;
     /// Add a widget to a group
-    fn add<W: WidgetExt>(&mut self, widget: &W) where Self: Sized;
+    fn add<W: WidgetExt>(&mut self, widget: &W)
+    where
+        Self: Sized;
     /// Insert a widget to a group at a certain index
-    fn insert<W: WidgetExt>(&mut self, widget: &W, index: u32) where Self: Sized;
+    fn insert<W: WidgetExt>(&mut self, widget: &W, index: u32)
+    where
+        Self: Sized;
     /// Remove a widget from a group, but does not delete it
-    fn remove<W: WidgetExt>(&mut self, widget: &W) where Self: Sized;
+    fn remove<W: WidgetExt>(&mut self, widget: &W)
+    where
+        Self: Sized;
     /// Make the passed widget resizable
-    fn resizable<W: WidgetExt>(&self, widget: &mut W) where Self: Sized;
+    fn resizable<W: WidgetExt>(&self, widget: &mut W)
+    where
+        Self: Sized;
 }
 
 /// Defines the methods implemented by all window widgets
 pub unsafe trait WindowExt: GroupExt {
     /// Positions the window to the center of the screen
-    fn center_screen(self) -> Self where Self: Sized;
+    fn center_screen(self) -> Self
+    where
+        Self: Sized;
     /// Makes a window modal
     fn make_modal(&mut self, val: bool);
     /// Makes a window fullscreen
@@ -320,9 +374,11 @@ pub unsafe trait WindowExt: GroupExt {
     /// Makes the window current
     fn make_current(&mut self);
     /// Returns the icon of the window
-    fn icon(&self) -> Option<Image>;
+    fn icon(&self) -> Option<Box<dyn ImageExt>>;
     /// Sets the windows icon
-    fn set_icon<T: ImageExt>(&mut self, image: Option<T>) where Self: Sized;
+    fn set_icon<T: ImageExt>(&mut self, image: Option<T>)
+    where
+        Self: Sized;
     /// Make the window resizable
     fn make_resizable(&mut self, val: bool);
     /// Sets the cursor style within the window
@@ -563,11 +619,11 @@ pub unsafe trait ValuatorExt: WidgetExt {
 /// Defines the methods implemented by TextDisplay and TextEditor
 pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
-    fn buffer(&self) -> Option<TextBuffer>;
+    fn buffer(&self) -> Option<crate::text::TextBuffer>;
     /// Sets the associated TextBuffer
-    fn set_buffer(&mut self, buffer: Option<TextBuffer>);
+    fn set_buffer(&mut self, buffer: Option<crate::text::TextBuffer>);
     /// Get the associated style TextBuffer
-    fn style_buffer(&self) -> Option<TextBuffer>;
+    fn style_buffer(&self) -> Option<crate::text::TextBuffer>;
     /// Return the text font
     fn text_font(&self) -> Font;
     /// Sets the text font
@@ -603,7 +659,11 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_highlight_data(&mut self, style_buffer: TextBuffer, entries: Vec<StyleTableEntry>);
+    fn set_highlight_data(
+        &mut self,
+        style_buffer: crate::text::TextBuffer,
+        entries: Vec<crate::text::StyleTableEntry>,
+    );
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: TextCursor);
     /// Sets the cursor color
@@ -727,7 +787,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn set_icon<Img: ImageExt>(&mut self, line: u32, image: Option<Img>);
     /// Returns the icon of a browser element
     /// Lines start at 1
-    fn icon(&self, line: u32) -> Option<Image>;
+    fn icon(&self, line: u32) -> Option<Box<dyn ImageExt>>;
     /// Removes the icon of a browser element
     /// Lines start at 1
     fn remove_icon(&mut self, line: u32);
@@ -926,7 +986,9 @@ pub unsafe trait TableExt: GroupExt {
 /// Defines the methods implemented by all image types
 pub unsafe trait ImageExt {
     /// Performs a deep copy of the image
-    fn copy(&self) -> Self;
+    fn copy(&self) -> Self
+    where
+        Self: Sized;
     /// Draws the image at the presupplied coordinates and size
     fn draw(&mut self, x: i32, y: i32, width: i32, height: i32);
     /// Return the width of the image
@@ -940,7 +1002,9 @@ pub unsafe trait ImageExt {
     /// Transforms a raw image pointer to an image
     /// # Safety
     /// The pointer must be valid
-    unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self;
+    unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self
+    where
+        Self: Sized;
     /// Returns the underlying raw rgb image data
     fn to_rgb_data(&self) -> Vec<u8>;
     /// Returns the underlying raw image data
@@ -962,17 +1026,35 @@ pub unsafe trait ImageExt {
     /// Greys the image
     fn inactive(&mut self);
     /// Transforms an image to a PngImage
-    fn into_png(self) -> Result<crate::image::PngImage, FltkError>;
+    fn into_png(self) -> Result<crate::image::PngImage, FltkError>
+    where
+        Self: Sized;
     /// Transforms an image to a JpegImage
-    fn into_jpeg(self) -> Result<crate::image::JpegImage, FltkError>;
+    fn into_jpeg(self) -> Result<crate::image::JpegImage, FltkError>
+    where
+        Self: Sized;
     /// Transforms an image to a BmpImage
-    fn into_bmp(self) -> Result<crate::image::BmpImage, FltkError>;
+    fn into_bmp(self) -> Result<crate::image::BmpImage, FltkError>
+    where
+        Self: Sized;
     /// Deletes the image
     /// # Safety
     /// An image shouldn't be deleted while it's being used by a widget
-    unsafe fn delete(img: Self);
+    unsafe fn delete(img: Self)
+    where
+        Self: Sized;
     /// Checks if the image was deleted
     fn was_deleted(&self) -> bool;
+    /// INTERNAL: Manually increment the atomic refcount
+    /// # Safety
+    /// The underlying image pointer must be valid
+    unsafe fn increment_arc(&mut self);
+    /// Transforms an Image base into another Image
+    /// # Safety
+    /// Can be unsafe if used to downcast to an image of different format
+    unsafe fn into_image<I: ImageExt>(self) -> I
+    where
+        Self: Sized;
 }
 
 /// Defines the methods implemented by all surface types, currently ImageSurface
