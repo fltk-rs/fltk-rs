@@ -105,7 +105,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "do_callback").as_str(),
         name.span(),
     );
-    let inside = Ident::new(format!("{}_{}", name_str, "inside").as_str(), name.span());
     let window = Ident::new(format!("{}_{}", name_str, "window").as_str(), name.span());
     let top_window = Ident::new(
         format!("{}_{}", name_str, "top_window").as_str(),
@@ -418,37 +417,26 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn inside(&self, wid: crate::widget::Widget) -> bool {
-                assert!(!self.was_deleted());
-                assert!(!wid.was_deleted());
-                unsafe {
-                    match #inside(self._inner, wid.as_ptr() as *mut raw::c_void) {
-                        0 => false,
-                        _ => true,
-                    }
-                }
-            }
-
-            fn window(&self) -> Option<crate::window::Window> {
+            fn window(&self) -> Option<Box<dyn WindowBase>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let wind_ptr = #window(self._inner);
                     if wind_ptr.is_null() {
                         None
                     } else {
-                        Some(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget))
+                        Some(Box::new(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget)))
                     }
                 }
             }
 
-            fn top_window(&self) -> Option<crate::window::Window> {
+            fn top_window(&self) -> Option<Box<dyn WindowBase>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let wind_ptr = #top_window(self._inner);
                     if wind_ptr.is_null() {
                         None
                     } else {
-                        Some(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget))
+                        Some(Box::new(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget)))
                     }
                 }
             }
@@ -564,25 +552,25 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn as_window(&mut self) -> Option<crate::window::Window> {
+            fn as_window(&mut self) -> Option<Box<dyn WindowBase>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #as_window(self._inner);
                     if ptr.is_null() {
                         return None;
                     }
-                    Some(crate::window::Window::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                    Some(Box::new(crate::window::Window::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)))
                 }
             }
 
-            unsafe fn as_group(&mut self) -> Option<crate::group::Group> {
+            fn as_group(&mut self) -> Option<Box<dyn GroupBase>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #as_group(self._inner);
                     if ptr.is_null() {
                         return None;
                     }
-                    Some(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                    Some(Box::new(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)))
                 }
             }
 
@@ -600,6 +588,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let name_str = get_fl_name(name.to_string());
     let ptr_name = Ident::new(name_str.as_str(), name.span());
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
+    let inside = Ident::new(format!("{}_{}", name_str, "inside").as_str(), name.span());
     let get_type = Ident::new(format!("{}_{}", name_str, "get_type").as_str(), name.span());
     let set_type = Ident::new(format!("{}_{}", name_str, "set_type").as_str(), name.span());
     let set_image = Ident::new(
@@ -974,7 +963,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 self
             }
 
-
+            fn inside<W: WidgetBase>(&self, wid: &W) -> bool {
+                assert!(!self.was_deleted());
+                assert!(!wid.was_deleted());
+                unsafe {
+                    match #inside(self._inner, wid.as_widget_ptr() as *mut raw::c_void) {
+                        0 => false,
+                        _ => true,
+                    }
+                }
+            }
 
             unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
                 unsafe {

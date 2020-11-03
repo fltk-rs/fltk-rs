@@ -542,7 +542,12 @@ impl RgbImage {
         }
         unsafe {
             // data is deleted on the C++ side
-            let img = Fl_RGB_Image_new(mem::ManuallyDrop::new(data.to_owned()).as_ptr(), w as i32, h as i32, depth as i32);
+            let img = Fl_RGB_Image_new(
+                mem::ManuallyDrop::new(data.to_owned()).as_ptr(),
+                w as i32,
+                h as i32,
+                depth as i32,
+            );
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
             } else {
@@ -554,7 +559,12 @@ impl RgbImage {
     /// Initializes a new raw RgbImage from shared data, doesn't handle the data's lifetime
     /// # Safety
     /// The data must be valid for the lifetime of the image
-    pub unsafe fn from_data(data: &[u8], w: u32, h: u32, depth: u32) -> Result<RgbImage, FltkError> {
+    pub unsafe fn from_data(
+        data: &[u8],
+        w: u32,
+        h: u32,
+        depth: u32,
+    ) -> Result<RgbImage, FltkError> {
         if depth > 4 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }

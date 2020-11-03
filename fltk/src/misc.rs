@@ -410,7 +410,9 @@ impl Tooltip {
         unsafe {
             let widget_ptr = Fl_Tooltip_current_widget();
             assert!(!widget_ptr.is_null());
-            Box::new(Widget::from_raw(widget_ptr as *mut fltk_sys::widget::Fl_Widget))
+            Box::new(Widget::from_raw(
+                widget_ptr as *mut fltk_sys::widget::Fl_Widget,
+            ))
         }
     }
 
@@ -507,7 +509,7 @@ impl Tooltip {
     }
 
     /// Returns the current window
-    pub fn current_window<W: WindowExt>() -> Window {
+    pub fn current_window<W: WindowExt>() -> impl WindowExt {
         unsafe {
             let wind = Fl_Tooltip_current_window();
             assert!(!wind.is_null());

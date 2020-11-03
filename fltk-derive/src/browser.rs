@@ -469,21 +469,21 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn scrollbar(&self) -> crate::valuator::Scrollbar {
+            fn scrollbar(&self) -> Box<dyn ValuatorExt> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #scrollbar(self._inner);
                     assert!(!ptr.is_null());
-                    crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
+                    Box::new(crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
                 }
             }
 
-            fn hscrollbar(&self) -> crate::valuator::Scrollbar {
+            fn hscrollbar(&self) -> Box<dyn ValuatorExt> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #hscrollbar(self._inner);
                     assert!(!ptr.is_null());
-                    crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
+                    Box::new(crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
                 }
             }
         }

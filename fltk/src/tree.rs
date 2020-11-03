@@ -1351,7 +1351,9 @@ impl TreeItem {
     pub fn widget(&self) -> Box<dyn WidgetBase> {
         assert!(!self.was_deleted());
         unsafe {
-            Box::new(Widget::from_raw(Fl_Tree_Item_widget(self._inner) as *mut fltk_sys::widget::Fl_Widget))
+            Box::new(Widget::from_raw(
+                Fl_Tree_Item_widget(self._inner) as *mut fltk_sys::widget::Fl_Widget
+            ))
         }
     }
 

@@ -1,4 +1,4 @@
-// This is an example of using c_style callbacks. 
+// This is an example of using c_style callbacks.
 
 use fltk::*;
 use std::os::raw::*;
@@ -6,7 +6,7 @@ use std::os::raw::*;
 // data can be anything, even a different widget
 fn cb(w: app::WidgetPtr, data: *mut c_void) {
     // To access the button
-    let btn = unsafe { widget::Widget::from_raw(w) };  // Gets a Widget
+    let btn = unsafe { widget::Widget::from_raw(w) }; // Gets a Widget
     let mut btn: button::Button = unsafe { btn.into() }; // Turns the widget to a button, not really needed if only using WidgetExt methods
     btn.set_label("Works!");
 
@@ -30,8 +30,6 @@ fn main() {
         // // Using a closure also works
         // app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")});
     }
-    
-    
 
     app.run().unwrap();
 }

@@ -319,12 +319,10 @@ impl MenuItem {
     pub fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
-            unsafe extern "C" fn shim(
-                wid: *mut fltk_sys::menu::Fl_Widget,
-                data: *mut raw::c_void,
-            ) {
+            unsafe extern "C" fn shim(wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
                 let mut wid = crate::widget::Widget::from_raw(wid as *mut _);
-                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> = data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
+                    data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
                 let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }

@@ -220,21 +220,6 @@ impl App {
         }
     }
 
-    /// Returns the apps windows.
-    pub fn windows(&self) -> Option<Vec<Window>> {
-        let mut v: Vec<Window> = vec![];
-        let first = first_window();
-        first.as_ref()?;
-        let first = first?;
-        v.push(first.clone());
-        let mut win = first;
-        while let Some(wind) = next_window(&win) {
-            v.push(wind.clone());
-            win = wind;
-        }
-        Some(v)
-    }
-
     /// Redraws the app
     pub fn redraw(&self) {
         redraw()
@@ -268,7 +253,7 @@ pub fn scrollbar_size() -> u32 {
 }
 
 /// Get the grabbed window
-pub fn grab() -> Option<Window> {
+pub fn grab() -> Option<impl WindowExt> {
     unsafe {
         let ptr = Fl_grab();
         if ptr.is_null() {
@@ -278,7 +263,6 @@ pub fn grab() -> Option<Window> {
         }
     }
 }
-
 
 /// Set the current grab
 pub fn set_grab(win: Option<Window>) {
@@ -508,9 +492,7 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 
 /// Starts waiting for events
 pub fn wait() -> bool {
-    unsafe {
-        Fl_wait() != 0
-    }
+    unsafe { Fl_wait() != 0 }
 }
 
 /// Waits a maximum of `dur` seconds or until "something happens".
@@ -618,7 +600,7 @@ pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
 }
 
 /// Returns the first window of the application
-pub fn first_window() -> Option<Window> {
+pub fn first_window() -> Option<impl WindowExt> {
     unsafe {
         let x = Fl_first_window();
         if x.is_null() {
@@ -631,7 +613,7 @@ pub fn first_window() -> Option<Window> {
 }
 
 /// Returns the next window in order
-pub fn next_window<W: WindowExt>(w: &W) -> Option<Window> {
+pub fn next_window<W: WindowExt>(w: &W) -> Option<impl WindowExt> {
     unsafe {
         let x = Fl_next_window(w.as_widget_ptr() as *const raw::c_void);
         if x.is_null() {
@@ -651,21 +633,11 @@ pub fn quit() {
             unload_font(loaded_font).unwrap_or(());
         }
     }
-    let mut v: Vec<Window> = vec![];
-    let first = first_window();
-    if first.is_none() {
-        return;
-    }
-    let first = first.unwrap();
-    v.push(first.clone());
-    let mut win = first;
-    while let Some(wind) = next_window(&win) {
-        v.push(wind.clone());
-        win = wind;
-    }
-    for mut i in v {
-        if i.shown() {
-            i.hide();
+    if let Some(wins) = windows() {
+        for mut i in wins {
+            if i.shown() {
+                i.hide();
+            }
         }
     }
 }
@@ -844,15 +816,13 @@ pub fn pushed() -> Option<impl WidgetBase> {
         if ptr.is_null() {
             None
         } else {
-            Some(crate::widget::Widget::from_widget_ptr(
-                ptr as *mut _,
-            ))
+            Some(crate::widget::Widget::from_widget_ptr(ptr as *mut _))
         }
     }
 }
 
 /// Gets the widget which has focus
-pub fn focus() -> Option<impl WidgetBase>  {
+pub fn focus() -> Option<impl WidgetBase> {
     unsafe {
         let ptr = Fl_focus();
         if ptr.is_null() {
@@ -970,5 +940,21 @@ fn unload_font(path: &str) -> Result<(), FltkError> {
         let path = CString::new(path)?;
         Fl_unload_font(path.as_ptr());
         Ok(())
+    }
+}
+
+/// Returns the apps windows.
+pub fn windows() -> Option<Vec<impl WindowExt>> {
+    unsafe {
+        let mut v: Vec<Window> = vec![];
+        let first: Window = first_window().unwrap().upcast().into();
+        v.push(first.clone());
+        let mut win = first;
+        while let Some(wind) = next_window(&win) {
+            let w = wind.upcast().into::<Window>();
+            v.push(w.clone());
+            win = w;
+        }
+        Some(v)
     }
 }

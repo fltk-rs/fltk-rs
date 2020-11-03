@@ -444,22 +444,20 @@ impl FileChooser {
     }
 
     /// Gets the new button of the FileChooser
-    pub fn new_button(&mut self) -> Option<crate::button::Button> {
+    pub fn new_button(&mut self) -> Option<impl ButtonExt> {
         assert!(!self._inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_newButton(self._inner);
             if ptr.is_null() {
                 None
             } else {
-                Some(crate::button::Button::from_widget_ptr(
-                    ptr as *mut _,
-                ))
+                Some(crate::button::Button::from_widget_ptr(ptr as *mut _))
             }
         }
     }
 
     /// Gets the preview button of the FileChooser
-    pub fn preview_button(&mut self) -> Option<crate::button::CheckButton> {
+    pub fn preview_button(&mut self) -> Option<impl ButtonExt> {
         assert!(!self._inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_previewButton(self._inner);
@@ -474,7 +472,7 @@ impl FileChooser {
     }
 
     /// Gets the show hidden button of the FileChooser
-    pub fn show_hidden_button(&mut self) -> Option<crate::button::CheckButton> {
+    pub fn show_hidden_button(&mut self) -> Option<impl ButtonExt> {
         assert!(!self._inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_showHiddenButton(self._inner);
@@ -801,7 +799,7 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_visible(self._inner) != 0 }
     }
 
-    pub fn window(&mut self) -> crate::window::Window {
+    pub fn window(&mut self) -> impl WindowExt {
         // Shouldn't fail
         unsafe {
             let win_ptr = self

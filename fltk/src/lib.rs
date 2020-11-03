@@ -162,20 +162,20 @@
 //! - enable-glwindow: Support for drawing using OpenGL functions.
 //!
 //! ## Dependencies
-//! 
+//!
 //! Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag (which requires curl and tar to download and unpack the bundled libraries).
-//! 
+//!
 //! - Windows: No dependencies.
 //! - MacOS: No dependencies.
 //! - Linux: X11 and OpenGL development headers need to be installed for development. The libraries themselves are available on linux distros with a graphical user interface.
-//! 
+//!
 //! For Debian-based GUI distributions, that means running:
 //! ```
 //! $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev
 //! ```
 //! For RHEL-based GUI distributions, that means running:
 //! ```
-//! $ sudo yum groupinstall "X Software Development" 
+//! $ sudo yum groupinstall "X Software Development"
 //! ```
 //! For Arch-based GUI distributions, that means running:
 //! ```
@@ -205,15 +205,15 @@ pub mod menu;
 pub mod misc;
 pub mod output;
 pub mod prelude;
+pub mod printer;
+pub mod surface;
 pub mod table;
 pub mod text;
 pub mod tree;
+pub(crate) mod utils;
 pub mod valuator;
 pub mod widget;
 pub mod window;
-pub mod surface;
-pub mod printer;
-pub(crate) mod utils;
 
 pub use enums::*;
 pub use prelude::*;

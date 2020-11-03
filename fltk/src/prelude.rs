@@ -2,8 +2,6 @@ pub use crate::enums::*;
 use crate::image::Image;
 use crate::text::{StyleTableEntry, TextBuffer};
 pub(crate) use crate::utils::*;
-use crate::widget::Widget;
-use crate::window::Window;
 use std::convert::From;
 use std::{fmt, io};
 
@@ -147,12 +145,10 @@ pub unsafe trait WidgetBase {
     fn set_selection_color(&mut self, color: Color);
     /// Runs the already registered callback
     fn do_callback(&mut self);
-    /// Checks whether the self widget is inside another widget
-    fn inside(&self, wid: Widget) -> bool;
     /// Returns the direct window holding the widget
-    fn window(&self) -> Option<Window>;
+    fn window(&self) -> Option<Box<dyn WindowBase>>;
     /// Returns the topmost window holding the widget
-    fn top_window(&self) -> Option<Window>;
+    fn top_window(&self) -> Option<Box<dyn WindowBase>>;
     /// Checks whether a widget is capable of taking events
     fn takes_events(&self) -> bool;
     /// Make the widget take focus
@@ -177,18 +173,14 @@ pub unsafe trait WidgetBase {
     fn set_trigger(&mut self, trigger: CallbackTrigger);
     /// Sets a boxed callback when the widget is triggered (clicks for example)
     fn set_boxed_callback(&mut self, cb: Box<dyn FnMut()>);
+    /// Return the widget as a window if it's a window
+    fn as_window(&mut self) -> Option<Box<dyn WindowBase>>;
+    /// Return the widget as a group widget if it's a group widget
+    fn as_group(&mut self) -> Option<Box<dyn GroupBase>>;
     /// INTERNAL: Retakes ownership of the user callback data
     /// # Safety
     /// Can return multiple mutable references to the user_data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
-    /// Return the widget as a window if it's a window
-    /// # Safety
-    /// Casts the widget as a window type
-    unsafe fn as_window(&mut self) -> Option<crate::window::Window>;
-    /// Return the widget as a group widget if it's a group widget
-    /// # Safety
-    /// Casts the widget as a group type
-    unsafe fn as_group(&mut self) -> Option<crate::group::Group>;
     /// Upcast a WidgetBase to a Widget
     /// # Safety
     /// May fail in non-compatible underlying pointer types
@@ -231,6 +223,8 @@ pub unsafe trait WidgetExt: WidgetBase {
     fn center_of<W: WidgetBase>(self, w: &W) -> Self;
     /// Takes the size of w
     fn size_of<W: WidgetBase>(self, w: &W) -> Self;
+    /// Checks whether the self widget is inside another widget
+    fn inside<W: WidgetBase>(&self, wid: &W) -> bool;
     /// Returns the widget type when applicable
     fn get_type<T: WidgetType>(&self) -> T;
     /// Sets the widget type
@@ -292,19 +286,11 @@ pub unsafe trait ButtonExt: WidgetBase {
 }
 
 /// Defines the methods implemented by all group widgets
-pub unsafe trait GroupExt: WidgetBase + WidgetExt {
+pub unsafe trait GroupBase: WidgetBase {
     /// Begins a group, used for widgets implementing the group trait
     fn begin(&self);
     /// Ends a group, used for widgets implementing the group trait
     fn end(&self);
-    /// Find a widget within a group and return its index
-    fn find<Widget: WidgetBase>(&self, widget: &Widget) -> u32;
-    /// Add a widget to a group
-    fn add<Widget: WidgetBase>(&mut self, widget: &Widget);
-    /// Insert a widget to a group at a certain index
-    fn insert<Widget: WidgetBase>(&mut self, widget: &Widget, index: u32);
-    /// Remove a widget from a group, but does not delete it
-    fn remove<Widget: WidgetBase>(&mut self, widget: &Widget);
     /// Clear a group from all widgets
     fn clear(&mut self);
     /// Return the number of children in a group
@@ -313,22 +299,30 @@ pub unsafe trait GroupExt: WidgetBase + WidgetExt {
     /// # Safety
     /// Can return multiple objects referring to an already existing widget
     fn child(&self, idx: u32) -> Option<Box<dyn WidgetBase>>;
+}
+
+/// Defines the methods implemented by all group widgets
+pub unsafe trait GroupExt: GroupBase {
+    /// Find a widget within a group and return its index
+    fn find<W: WidgetBase>(&self, widget: &W) -> u32;
+    /// Add a widget to a group
+    fn add<W: WidgetBase>(&mut self, widget: &W);
+    /// Insert a widget to a group at a certain index
+    fn insert<W: WidgetBase>(&mut self, widget: &W, index: u32);
+    /// Remove a widget from a group, but does not delete it
+    fn remove<W: WidgetBase>(&mut self, widget: &W);
     /// Make the passed widget resizable
-    fn resizable<Widget: WidgetBase>(&self, widget: &mut Widget);
+    fn resizable<W: WidgetBase>(&self, widget: &mut W);
 }
 
 /// Defines the methods implemented by all window widgets
-pub unsafe trait WindowExt: GroupExt {
-    /// Positions the window to the center of the screen
-    fn center_screen(self) -> Self;
+pub unsafe trait WindowBase: GroupBase {
     /// Makes a window modal
     fn make_modal(&mut self, val: bool);
     /// Makes a window fullscreen
     fn fullscreen(&mut self, val: bool);
     /// Makes the window current
     fn make_current(&mut self);
-    /// Sets the windows icon
-    fn set_icon<T: ImageExt>(&mut self, image: Option<T>);
     /// Returns the icon of the window
     fn icon(&self) -> Option<Image>;
     /// Make the window resizable
@@ -361,8 +355,16 @@ pub unsafe trait WindowExt: GroupExt {
     fn fullscreen_active(&self) -> bool;
 }
 
+/// Defines the methods implemented by all window widgets
+pub unsafe trait WindowExt: WindowBase {
+    /// Positions the window to the center of the screen
+    fn center_screen(self) -> Self;
+    /// Sets the windows icon
+    fn set_icon<T: ImageExt>(&mut self, image: Option<T>);
+}
+
 /// Defines the methods implemented by all input and output widgets
-pub unsafe trait InputExt: WidgetBase + WidgetExt {
+pub unsafe trait InputExt: WidgetBase {
     /// Returns the value inside the input/output widget
     fn value(&self) -> String;
     /// Sets the value inside an input/output widget
@@ -414,7 +416,7 @@ pub unsafe trait InputExt: WidgetBase + WidgetExt {
 }
 
 /// Defines the methods implemented by all menu widgets
-pub unsafe trait MenuExt: WidgetBase + WidgetExt {
+pub unsafe trait MenuExt: WidgetBase {
     /// Get a menu item by name
     fn find_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
     /// Set selected item
@@ -535,7 +537,7 @@ pub unsafe trait MenuExt: WidgetBase + WidgetExt {
 }
 
 /// Defines the methods implemented by all valuator widgets
-pub unsafe trait ValuatorExt: WidgetBase + WidgetExt {
+pub unsafe trait ValuatorExt: WidgetBase {
     /// Set bounds of a valuator
     fn set_bounds(&mut self, a: f64, b: f64);
     /// Get the minimum bound of a valuator
@@ -569,7 +571,7 @@ pub unsafe trait ValuatorExt: WidgetBase + WidgetExt {
 }
 
 /// Defines the methods implemented by TextDisplay and TextEditor
-pub unsafe trait DisplayExt: WidgetBase + WidgetExt {
+pub unsafe trait DisplayExt: WidgetBase {
     /// Get the associated TextBuffer
     fn buffer(&self) -> Option<TextBuffer>;
     /// Sets the associated TextBuffer
@@ -690,7 +692,7 @@ pub unsafe trait DisplayExt: WidgetBase + WidgetExt {
 }
 
 /// Defines the methods implemented by all browser types
-pub unsafe trait BrowserExt: WidgetBase + WidgetExt {
+pub unsafe trait BrowserExt: WidgetBase {
     /// Removes the specified line
     /// Lines start at 1
     fn remove(&mut self, line: u32);
@@ -790,13 +792,13 @@ pub unsafe trait BrowserExt: WidgetBase + WidgetExt {
     /// Sorts the items of the browser
     fn sort(&mut self);
     /// Returns the vertical scrollbar
-    fn scrollbar(&self) -> crate::valuator::Scrollbar;
+    fn scrollbar(&self) -> Box<dyn ValuatorExt>;
     /// Returns the horizontal scrollbar
-    fn hscrollbar(&self) -> crate::valuator::Scrollbar;
+    fn hscrollbar(&self) -> Box<dyn ValuatorExt>;
 }
 
 /// Defines the methods implemented by table types
-pub unsafe trait TableExt: GroupExt {
+pub unsafe trait TableExt: GroupBase {
     /// Clears the table
     fn clear(&mut self);
     /// Sets the table frame, table_box

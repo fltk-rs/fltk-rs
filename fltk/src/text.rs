@@ -488,7 +488,8 @@ impl TextBuffer {
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
+                Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_add_modify_callback(self._inner, callback, data);
@@ -527,7 +528,8 @@ impl TextBuffer {
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
+                Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
             Fl_Text_Buffer_remove_modify_callback(self._inner, callback, data);

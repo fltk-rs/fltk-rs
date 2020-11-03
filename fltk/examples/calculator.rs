@@ -39,10 +39,14 @@ impl MyButton {
             "CE" => {
                 b.set_color(Color::Red);
                 b.set_shortcut(Shortcut::None | Key::Delete);
-            },
+            }
             "x" | "/" | "+" | "-" | "=" | "C" | "@<-" => {
                 b.set_color(Color::Yellow);
-                let shortcut = if title == "x" { '*' } else { title.chars().next().unwrap() };
+                let shortcut = if title == "x" {
+                    '*'
+                } else {
+                    title.chars().next().unwrap()
+                };
                 b.set_shortcut(Shortcut::None | shortcut);
                 if shortcut == '@' {
                     b.set_shortcut(Shortcut::None | Key::BackSpace);
@@ -50,11 +54,11 @@ impl MyButton {
                 if shortcut == '=' {
                     b.set_shortcut(Shortcut::None | Key::Enter);
                 }
-            },
+            }
             _ => {
                 b.set_color(Color::Light2);
                 b.set_shortcut(Shortcut::None | title.chars().next().unwrap());
-            },
+            }
         }
         b
     }
@@ -180,7 +184,7 @@ fn main() {
     but_dot.emit(s, Message::Dot);
 
     while app.wait() {
-        if let Some(val) = r.recv(){
+        if let Some(val) = r.recv() {
             match val {
                 Message::Number(num) => {
                     if out.value() == "0" {
