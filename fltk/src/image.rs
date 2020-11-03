@@ -10,13 +10,6 @@ pub struct Image {
 
 /// A conversion function for internal use
 impl Image {
-    /// Returns the internal pointer of Image
-    /// # Safety
-    /// Can lead to multiple mutable pointers of the same image
-    pub unsafe fn as_ptr(&self) -> *mut Fl_Image {
-        self._inner
-    }
-
     /// Initialize an Image base from a raw pointer
     /// # Safety
     /// Can be unsafe if given an invalid pointer
@@ -29,13 +22,6 @@ impl Image {
     /// Can be unsafe if used to downcast to an image of different format
     pub unsafe fn into<I: ImageExt>(self) -> I {
         I::from_image_ptr(self._inner)
-    }
-
-    /// Deletes an image
-    /// # Safety
-    /// An image shouldn't be deleted while it's being used by a widget
-    pub unsafe fn delete<I: ImageExt>(img: I) {
-        ImageExt::delete(img);
     }
 }
 
