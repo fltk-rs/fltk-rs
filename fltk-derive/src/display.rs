@@ -237,7 +237,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     if let Some(buffer) = buffer {
-                        *buffer._refcount.lock().unwrap() += 1;
+                        buffer._refcount.fetch_add(1, Ordering::Relaxed);
                         #set_buffer(self._inner, buffer.as_ptr())
                     } else {
                         #set_buffer(self._inner, std::ptr::null_mut() as *mut Fl_Text_Buffer)
@@ -415,7 +415,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
                 assert!(entries.len() < 29);
-                *style_buffer._refcount.lock().unwrap() += 1;
+                style_buffer._refcount.fetch_add(1, Ordering::Relaxed);
                 let mut colors: Vec<u32> = vec![];
                 let mut fonts: Vec<i32> = vec![];
                 let mut sizes: Vec<i32> = vec![];

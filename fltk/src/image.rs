@@ -3,21 +3,21 @@ use fltk_sys::image::*;
 use std::{
     ffi::CString,
     mem,
-    sync::{Arc, Mutex},
+    sync::atomic::{AtomicUsize, Ordering},
 };
 
 /// Wrapper around Fl_Image, used to wrap other image types
 #[derive(ImageExt, Debug)]
 pub struct Image {
     _inner: *mut Fl_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 /// Creates a struct holding a shared image
 #[derive(ImageExt, Debug)]
 pub struct SharedImage {
     _inner: *mut Fl_Shared_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl SharedImage {
@@ -44,7 +44,7 @@ impl SharedImage {
                 }
                 Ok(SharedImage {
                     _inner: x,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -62,7 +62,7 @@ impl SharedImage {
                 }
                 Ok(SharedImage {
                     _inner: x,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -73,7 +73,7 @@ impl SharedImage {
 #[derive(ImageExt, Debug)]
 pub struct JpegImage {
     _inner: *mut Fl_JPEG_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl JpegImage {
@@ -100,7 +100,7 @@ impl JpegImage {
                 }
                 Ok(JpegImage {
                     _inner: image_ptr,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -121,7 +121,7 @@ impl JpegImage {
                     }
                     Ok(JpegImage {
                         _inner: x,
-                        _refcount: Arc::from(Mutex::from(1)),
+                        _refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -142,7 +142,7 @@ impl JpegImage {
 #[derive(ImageExt, Debug)]
 pub struct PngImage {
     _inner: *mut Fl_PNG_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl PngImage {
@@ -169,7 +169,7 @@ impl PngImage {
                 }
                 Ok(PngImage {
                     _inner: image_ptr,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -190,7 +190,7 @@ impl PngImage {
                     }
                     Ok(PngImage {
                         _inner: x,
-                        _refcount: Arc::from(Mutex::from(1)),
+                        _refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -211,7 +211,7 @@ impl PngImage {
 #[derive(ImageExt, Debug)]
 pub struct SvgImage {
     _inner: *mut Fl_SVG_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl SvgImage {
@@ -238,7 +238,7 @@ impl SvgImage {
                 }
                 Ok(SvgImage {
                     _inner: image_ptr,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -260,7 +260,7 @@ impl SvgImage {
                     }
                     Ok(SvgImage {
                         _inner: x,
-                        _refcount: Arc::from(Mutex::from(1)),
+                        _refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -272,7 +272,7 @@ impl SvgImage {
 #[derive(ImageExt, Debug)]
 pub struct BmpImage {
     _inner: *mut Fl_BMP_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl BmpImage {
@@ -299,7 +299,7 @@ impl BmpImage {
                 }
                 Ok(BmpImage {
                     _inner: image_ptr,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -320,7 +320,7 @@ impl BmpImage {
                     }
                     Ok(BmpImage {
                         _inner: x,
-                        _refcount: Arc::from(Mutex::from(1)),
+                        _refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -341,7 +341,7 @@ impl BmpImage {
 #[derive(ImageExt, Debug)]
 pub struct GifImage {
     _inner: *mut Fl_GIF_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl GifImage {
@@ -368,7 +368,7 @@ impl GifImage {
                 }
                 Ok(GifImage {
                     _inner: image_ptr,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -389,7 +389,7 @@ impl GifImage {
                     }
                     Ok(GifImage {
                         _inner: x,
-                        _refcount: Arc::from(Mutex::from(1)),
+                        _refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -401,7 +401,7 @@ impl GifImage {
 #[derive(ImageExt, Debug)]
 pub struct XpmImage {
     _inner: *mut Fl_XPM_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl XpmImage {
@@ -428,7 +428,7 @@ impl XpmImage {
                 }
                 Ok(XpmImage {
                     _inner: image_ptr,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -439,7 +439,7 @@ impl XpmImage {
 #[derive(ImageExt, Debug)]
 pub struct XbmImage {
     _inner: *mut Fl_XBM_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl XbmImage {
@@ -466,7 +466,7 @@ impl XbmImage {
                 }
                 Ok(XbmImage {
                     _inner: image_ptr,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -477,7 +477,7 @@ impl XbmImage {
 #[derive(ImageExt, Debug)]
 pub struct PnmImage {
     _inner: *mut Fl_PNM_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl PnmImage {
@@ -504,7 +504,7 @@ impl PnmImage {
                 }
                 Ok(PnmImage {
                     _inner: image_ptr,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -515,7 +515,7 @@ impl PnmImage {
 #[derive(ImageExt, Debug)]
 pub struct TiledImage {
     _inner: *mut Fl_Tiled_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl TiledImage {
@@ -526,7 +526,7 @@ impl TiledImage {
             assert!(!ptr.is_null());
             TiledImage {
                 _inner: ptr,
-                _refcount: Arc::from(Mutex::from(1)),
+                _refcount: AtomicUsize::new(1),
             }
         }
     }
@@ -536,7 +536,7 @@ impl TiledImage {
 #[derive(ImageExt, Debug)]
 pub struct Pixmap {
     _inner: *mut Fl_Pixmap,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl Pixmap {
@@ -549,7 +549,7 @@ impl Pixmap {
             assert!(!ptr.is_null());
             Pixmap {
                 _inner: ptr,
-                _refcount: Arc::from(Mutex::from(1)),
+                _refcount: AtomicUsize::new(1),
             }
         }
     }
@@ -559,7 +559,7 @@ impl Pixmap {
 #[derive(ImageExt, Debug)]
 pub struct RgbImage {
     _inner: *mut Fl_RGB_Image,
-    _refcount: Arc<Mutex<usize>>,
+    _refcount: AtomicUsize,
 }
 
 impl RgbImage {
@@ -590,7 +590,7 @@ impl RgbImage {
             } else {
                 Ok(RgbImage {
                     _inner: img,
-                    _refcount: Arc::from(Mutex::from(1)),
+                    _refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -621,7 +621,7 @@ impl RgbImage {
         } else {
             Ok(RgbImage {
                 _inner: img,
-                _refcount: Arc::from(Mutex::from(1)),
+                _refcount: AtomicUsize::new(1),
             })
         }
     }
