@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.10.3] - Unreleased
+### Changes
+- Change return type of Printer::begin_job().
+
 ## [0.10.3] - 2020-11-04
 ### Changes
 - BREAKING (Security update): Methods and functions returning widget and image instances now return a safer boxed trait object since these might not be constructed by user code (like in dialogs).
