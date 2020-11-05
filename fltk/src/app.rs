@@ -5,9 +5,11 @@ use fltk_sys::fl::*;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::{
+    any,
     ffi::{CStr, CString},
-    mem,
+    marker, mem,
     os::raw,
+    panic, path, process, ptr, time,
 };
 
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
@@ -99,7 +101,7 @@ pub fn awake<F: FnMut() + 'static>(cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -165,11 +167,11 @@ impl App {
     /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
     /// frame.set_label_font(Font::by_name(&font));
     /// ```
-    pub fn load_font<P: AsRef<std::path::Path>>(&self, path: P) -> Result<String, FltkError> {
+    pub fn load_font<P: AsRef<path::Path>>(&self, path: P) -> Result<String, FltkError> {
         self.load_font_(path.as_ref())
     }
 
-    fn load_font_(&self, path: &std::path::Path) -> Result<String, FltkError> {
+    fn load_font_(&self, path: &path::Path) -> Result<String, FltkError> {
         if !path.exists() {
             return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -192,7 +194,7 @@ impl App {
             unsafe extern "C" fn shim(data: *mut raw::c_void) {
                 let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
                 let f: &mut (dyn FnMut()) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
             }
             let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -217,7 +219,7 @@ impl App {
     }
 
     /// Quit the application
-    pub fn quit(&self) {
+    pub fn quit(&self) -> ! {
         quit()
     }
 }
@@ -251,7 +253,7 @@ pub fn set_grab<W: WindowExt>(win: Option<W>) {
         if let Some(w) = win {
             Fl_set_grab(w.as_widget_ptr() as *mut _)
         } else {
-            Fl_set_grab(std::ptr::null_mut())
+            Fl_set_grab(ptr::null_mut())
         }
     }
 }
@@ -394,7 +396,7 @@ where
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
         }
         let _old_data = widget.user_data();
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
@@ -465,7 +467,7 @@ pub fn add_handler(cb: fn(Event) -> bool) {
     unsafe {
         let callback: Option<unsafe extern "C" fn(ev: raw::c_int) -> raw::c_int> =
             Some(mem::transmute(move |ev| {
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| cb(ev) as i32));
+                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| cb(ev) as i32));
             }));
         Fl_add_handler(callback);
     }
@@ -525,7 +527,7 @@ struct Message<T: Copy + Send + Sync> {
 /// Creates a sender struct
 #[derive(Debug, Clone, Copy)]
 pub struct Sender<T: Copy + Send + Sync> {
-    data: std::marker::PhantomData<T>,
+    data: marker::PhantomData<T>,
     hash: u64,
     sz: usize,
 }
@@ -545,7 +547,7 @@ impl<T: Copy + Send + Sync> Sender<T> {
 /// Creates a receiver struct
 #[derive(Debug, Clone, Copy)]
 pub struct Receiver<T: Copy + Send + Sync> {
-    data: std::marker::PhantomData<T>,
+    data: marker::PhantomData<T>,
     hash: u64,
     sz: usize,
 }
@@ -569,19 +571,19 @@ impl<T: Copy + Send + Sync> Receiver<T> {
 /// Creates a channel returning a Sender and Receiver structs
 // The implementation could really use generic statics
 pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
-    let msg_sz = std::mem::size_of::<T>();
-    let type_name = std::any::type_name::<T>();
+    let msg_sz = mem::size_of::<T>();
+    let type_name = any::type_name::<T>();
     let mut hasher = DefaultHasher::new();
     type_name.hash(&mut hasher);
     let type_hash = hasher.finish();
 
     let s = Sender {
-        data: std::marker::PhantomData,
+        data: marker::PhantomData,
         hash: type_hash,
         sz: msg_sz,
     };
     let r = Receiver {
-        data: std::marker::PhantomData,
+        data: marker::PhantomData,
         hash: type_hash,
         sz: msg_sz,
     };
@@ -615,7 +617,7 @@ pub fn next_window<W: WindowExt>(w: &W) -> Option<impl WindowExt> {
 }
 
 /// Quit the app
-pub fn quit() {
+pub fn quit() -> ! {
     unsafe {
         if let Some(loaded_font) = LOADED_FONT {
             // Shouldn't fail
@@ -629,6 +631,7 @@ pub fn quit() {
             }
         }
     }
+    process::exit(0);
 }
 
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
@@ -637,7 +640,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -654,7 +657,7 @@ pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -669,7 +672,7 @@ pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -861,9 +864,9 @@ pub fn set_focus<W: WidgetExt>(wid: &W) {
 /// Delays the current thread by millis. Because std::thread::sleep isn't accurate on windows!
 /// Caution: It's a busy wait!
 pub fn delay(millis: u128) {
-    let now = std::time::Instant::now();
+    let now = time::Instant::now();
     loop {
-        let after = std::time::Instant::now();
+        let after = time::Instant::now();
         if after.duration_since(now).as_millis() > millis {
             break;
         }
@@ -951,7 +954,7 @@ fn load_font(path: &str) -> Result<String, FltkError> {
 /// Unload a loaded font
 fn unload_font(path: &str) -> Result<(), FltkError> {
     unsafe {
-        let check = std::path::Path::new(path);
+        let check = path::Path::new(path);
         if !check.exists() {
             return Err::<(), FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -964,13 +967,17 @@ fn unload_font(path: &str) -> Result<(), FltkError> {
 /// Returns the apps windows.
 pub fn windows() -> Option<Vec<impl WindowExt>> {
     let mut v: Vec<Window> = vec![];
-    let first: Window = first_window().unwrap().into_widget();
-    v.push(first.clone());
-    let mut win = first;
-    while let Some(wind) = next_window(&win) {
-        let w = wind.into_widget::<Window>();
-        v.push(w.clone());
-        win = w;
+    if let Some(first) = first_window() {
+        let first: Window = first.into_widget();
+        v.push(first.clone());
+        let mut win = first;
+        while let Some(wind) = next_window(&win) {
+            let w = wind.into_widget::<Window>();
+            v.push(w.clone());
+            win = w;
+        }
+        Some(v)
+    } else {
+        None
     }
-    Some(v)
 }
