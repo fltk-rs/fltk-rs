@@ -4,6 +4,7 @@
 ### Changes
 - Change return type of Printer::begin_job().
 - Use AtomicUsize for refcounting instead of Arc<Mutex>.
+- Decrease refcount when unsetting an image or setting another image.
 
 ## [0.10.3] - 2020-11-04
 ### Changes

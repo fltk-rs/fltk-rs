@@ -212,6 +212,11 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 self._refcount.fetch_add(1, Ordering::Relaxed);
             }
 
+            unsafe fn decrement_arc(&mut self) {
+                assert!(!self.was_deleted());
+                self._refcount.fetch_sub(1, Ordering::Relaxed);
+            }
+
             fn was_deleted(&self) -> bool {
                 self._inner.is_null()
             }

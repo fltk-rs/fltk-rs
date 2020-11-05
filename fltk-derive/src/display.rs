@@ -236,6 +236,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn set_buffer(&mut self, buffer: Option<TextBuffer>) {
                 unsafe {
                     assert!(!self.was_deleted());
+                    let _old_buf = self.buffer();
                     if let Some(buffer) = buffer {
                         buffer._refcount.fetch_add(1, Ordering::Relaxed);
                         #set_buffer(self._inner, buffer.as_ptr())
@@ -415,6 +416,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
                 assert!(entries.len() < 29);
+                let _old_buf = self.buffer();
                 style_buffer._refcount.fetch_add(1, Ordering::Relaxed);
                 let mut colors: Vec<u32> = vec![];
                 let mut fonts: Vec<i32> = vec![];

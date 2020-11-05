@@ -1049,6 +1049,10 @@ pub unsafe trait ImageExt {
     /// # Safety
     /// The underlying image pointer must be valid
     unsafe fn increment_arc(&mut self);
+    /// INTERNAL: Manually decrement the atomic refcount
+    /// # Safety
+    /// The underlying image pointer must be valid
+    unsafe fn decrement_arc(&mut self);
     /// Transforms an Image base into another Image
     /// # Safety
     /// Can be unsafe if used to downcast to an image of different format
