@@ -205,7 +205,6 @@ pub mod menu;
 pub mod misc;
 pub mod output;
 pub mod prelude;
-pub mod printer;
 pub mod surface;
 pub mod table;
 pub mod text;
@@ -214,6 +213,8 @@ pub(crate) mod utils;
 pub mod valuator;
 pub mod widget;
 pub mod window;
+#[cfg(not(target_os = "android"))]
+pub mod printer;
 
 pub use enums::*;
 pub use prelude::*;

@@ -3,6 +3,7 @@
 ## [0.10.5] - Unreleased
 ### Changes
 - Patch fltk to fix behavior of Fl_Win32_At_Exit() with mingw toolchain.
+- Fix android build which doesn't support Fl_Printer.
 
 ## [0.10.4] - 2020-11-06
 ### Changes
