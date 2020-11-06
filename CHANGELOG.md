@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.4] - 2020-11-06
+### Changes
+- Change return type of Printer::begin_job().
+- Use AtomicUsize for refcounting instead of Arc<Mutex>.
+- Decrease refcount when unsetting an image or setting another image.
+- Remove unwrapping when querying for windows, which could fail.
+
 ## [0.10.3] - 2020-11-04
 ### Changes
 - BREAKING (Security update): Methods and functions returning widget and image instances now return a safer boxed trait object since these might not be constructed by user code (like in dialogs).

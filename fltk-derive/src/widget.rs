@@ -904,6 +904,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
+                let _old_image = self.image();
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
                     unsafe { image.increment_arc(); #set_image(self._inner, image.as_image_ptr() as *mut _) }
@@ -926,6 +927,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
+                let _old_image = self.image();
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
                     unsafe { image.increment_arc(); #set_deimage(self._inner, image.as_image_ptr() as *mut _) }
