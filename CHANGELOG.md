@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.10.4] - Unreleased
+## [0.10.4] - 2020-11-06
 ### Changes
 - Change return type of Printer::begin_job().
 - Use AtomicUsize for refcounting instead of Arc<Mutex>.

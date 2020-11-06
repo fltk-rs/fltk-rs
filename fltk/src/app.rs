@@ -9,7 +9,7 @@ use std::{
     ffi::{CStr, CString},
     marker, mem,
     os::raw,
-    panic, path, process, ptr, time,
+    panic, path, ptr, time,
 };
 
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
@@ -219,7 +219,7 @@ impl App {
     }
 
     /// Quit the application
-    pub fn quit(&self) -> ! {
+    pub fn quit(&self) {
         quit()
     }
 }
@@ -617,7 +617,7 @@ pub fn next_window<W: WindowExt>(w: &W) -> Option<impl WindowExt> {
 }
 
 /// Quit the app
-pub fn quit() -> ! {
+pub fn quit() {
     unsafe {
         if let Some(loaded_font) = LOADED_FONT {
             // Shouldn't fail
@@ -631,7 +631,6 @@ pub fn quit() -> ! {
             }
         }
     }
-    process::exit(0);
 }
 
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
