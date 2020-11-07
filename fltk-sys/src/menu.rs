@@ -76,6 +76,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_widget_resize(
+        arg1: *mut Fl_Widget,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
@@ -92,6 +101,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Widget_measure_label(
+        arg1: *const Fl_Widget,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
@@ -330,6 +346,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_widget_resize(
+        arg1: *mut Fl_Menu_Bar,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Bar_tooltip(arg1: *mut Fl_Menu_Bar) -> *const libc::c_char;
 }
 extern "C" {
@@ -346,6 +371,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_color(arg1: *mut Fl_Menu_Bar, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_measure_label(
+        arg1: *const Fl_Menu_Bar,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Menu_Bar_label_color(arg1: *mut Fl_Menu_Bar) -> libc::c_uint;
@@ -676,6 +708,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Button_widget_resize(
+        arg1: *mut Fl_Menu_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Button_tooltip(arg1: *mut Fl_Menu_Button) -> *const libc::c_char;
 }
 extern "C" {
@@ -692,6 +733,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_color(arg1: *mut Fl_Menu_Button, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Menu_Button_measure_label(
+        arg1: *const Fl_Menu_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Menu_Button_label_color(arg1: *mut Fl_Menu_Button) -> libc::c_uint;
@@ -1034,6 +1082,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Choice_widget_resize(
+        arg1: *mut Fl_Choice,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Choice_tooltip(arg1: *mut Fl_Choice) -> *const libc::c_char;
 }
 extern "C" {
@@ -1050,6 +1107,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_set_color(arg1: *mut Fl_Choice, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Choice_measure_label(
+        arg1: *const Fl_Choice,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Choice_label_color(arg1: *mut Fl_Choice) -> libc::c_uint;
@@ -1372,6 +1436,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Sys_Menu_Bar_widget_resize(
+        arg1: *mut Fl_Sys_Menu_Bar,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Sys_Menu_Bar_tooltip(arg1: *mut Fl_Sys_Menu_Bar) -> *const libc::c_char;
 }
 extern "C" {
@@ -1388,6 +1461,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_color(arg1: *mut Fl_Sys_Menu_Bar, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_measure_label(
+        arg1: *const Fl_Sys_Menu_Bar,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_label_color(arg1: *mut Fl_Sys_Menu_Bar) -> libc::c_uint;

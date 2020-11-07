@@ -76,6 +76,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_widget_resize(
+        arg1: *mut Fl_Widget,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
@@ -92,6 +101,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Widget_measure_label(
+        arg1: *const Fl_Widget,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
@@ -505,6 +521,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Text_Display_widget_resize(
+        arg1: *mut Fl_Text_Display,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Text_Display_tooltip(arg1: *mut Fl_Text_Display) -> *const libc::c_char;
 }
 extern "C" {
@@ -521,6 +546,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Display_set_color(arg1: *mut Fl_Text_Display, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Text_Display_measure_label(
+        arg1: *const Fl_Text_Display,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Display_label_color(arg1: *mut Fl_Text_Display) -> libc::c_uint;
@@ -991,6 +1023,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Text_Editor_widget_resize(
+        arg1: *mut Fl_Text_Editor,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Text_Editor_tooltip(arg1: *mut Fl_Text_Editor) -> *const libc::c_char;
 }
 extern "C" {
@@ -1007,6 +1048,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_color(arg1: *mut Fl_Text_Editor, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_measure_label(
+        arg1: *const Fl_Text_Editor,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Editor_label_color(arg1: *mut Fl_Text_Editor) -> libc::c_uint;
@@ -1559,6 +1607,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Simple_Terminal_widget_resize(
+        arg1: *mut Fl_Simple_Terminal,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Simple_Terminal_tooltip(arg1: *mut Fl_Simple_Terminal) -> *const libc::c_char;
 }
 extern "C" {
@@ -1575,6 +1632,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_color(arg1: *mut Fl_Simple_Terminal, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_measure_label(
+        arg1: *const Fl_Simple_Terminal,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_label_color(arg1: *mut Fl_Simple_Terminal) -> libc::c_uint;

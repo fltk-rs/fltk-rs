@@ -18,7 +18,7 @@ index 6e8bc5dd6..c3d01df9a 100644
  
  add_subdirectory(src)
 diff --git a/CMake/options.cmake b/CMake/options.cmake
-index ac7fa5bb6..aeb953e99 100644
+index 2bb439ae6..a7259b0f0 100644
 --- a/CMake/options.cmake
 +++ b/CMake/options.cmake
 @@ -115,7 +115,7 @@ option (OPTION_BUILD_SHARED_LIBS
@@ -38,7 +38,7 @@ index 88c5fb891..000000000
 @@ -1 +0,0 @@
 -1.4.0
 diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
-index d5eee5dc8..96108dad5 100644
+index ff15cf04a..791c8add8 100644
 --- a/src/CMakeLists.txt
 +++ b/src/CMakeLists.txt
 @@ -300,6 +300,7 @@ elseif (ANDROID)
@@ -114,6 +114,23 @@ index a98be46ec..07999a0a0 100644
  
  
  
+diff --git a/src/Fl_win32.cxx b/src/Fl_win32.cxx
+index e0d5c9f4b..4f0001c17 100644
+--- a/src/Fl_win32.cxx
++++ b/src/Fl_win32.cxx
+@@ -586,9 +586,11 @@ public:
+   Fl_Win32_At_Exit() {}
+   ~Fl_Win32_At_Exit() {
+     fl_free_fonts(); // do some Windows cleanup
++  #ifndef __MINGW32__
+     fl_cleanup_pens();
+-    OleUninitialize();
+     if (fl_graphics_driver) fl_brush_action(1);
++  #endif
++    OleUninitialize();
+     fl_cleanup_dc_list();
+     // This is actually too late in the cleanup process to remove the
+     // clipboard notifications, but we have no earlier hook so we try
 diff --git a/src/config_lib.h b/src/config_lib.h
 index bbcfb75f5..aa16cd48b 100644
 --- a/src/config_lib.h

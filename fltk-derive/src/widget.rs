@@ -65,22 +65,17 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
             fn default() -> Self {
                 let temp = CString::new("").unwrap();;
                 unsafe {
-                    let widget_ptr = #new(
-                        0,
-                        0,
-                        0,
-                        0,
-                        temp.into_raw());
-                        assert!(!widget_ptr.is_null());
-                        let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
-                        assert!(!tracker.is_null());
-                        unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                            if !data.is_null() {
-                                let x = data as *mut Box<dyn FnMut()>;
-                                let x = Box::from_raw(x);
-                            }
+                    let widget_ptr = #new(0, 0, 0, 0, temp.into_raw());
+                    assert!(!widget_ptr.is_null());
+                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
+                    assert!(!tracker.is_null());
+                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                        if !data.is_null() {
+                            let x = data as *mut Box<dyn FnMut()>;
+                            let x = Box::from_raw(x);
                         }
-                        #set_deleter(widget_ptr, Some(shim));
+                    }
+                    #set_deleter(widget_ptr, Some(shim));
                     #name {
                         _inner: widget_ptr,
                         _tracker: tracker,
@@ -228,6 +223,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
     let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
     let label = Ident::new(format!("{}_{}", name_str, "label").as_str(), name.span());
+    let measure_label = Ident::new(format!("{}_{}", name_str, "measure_label").as_str(), name.span());
     let set_label = Ident::new(
         format!("{}_{}", name_str, "set_label").as_str(),
         name.span(),
@@ -245,6 +241,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let resize = Ident::new(format!("{}_{}", name_str, "resize").as_str(), name.span());
+    let widget_resize = Ident::new(
+        format!("{}_{}", name_str, "widget_resize").as_str(),
+        name.span(),
+    );
     let tooltip = Ident::new(format!("{}_{}", name_str, "tooltip").as_str(), name.span());
     let set_tooltip = Ident::new(
         format!("{}_{}", name_str, "set_tooltip").as_str(),
@@ -469,6 +469,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     CStr::from_ptr(#label(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
+            }
+
+            fn measure_label(&self) -> (i32, i32) {
+                assert!(!self.was_deleted());
+                let mut x = 0;
+                let mut y = 0;
+                unsafe {
+                    #measure_label(self._inner, &mut x, &mut y);
+                }
+                (x, y)
             }
 
             unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
@@ -876,7 +886,15 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn with_size(mut self, width: i32, height: i32) -> Self {
-                self.resize(self.x(), self.y(), width, height);
+                let x = self.x();
+                let y = self.y();
+                let w = self.width();
+                let h = self.height();
+                if w == 0 || h == 0 {
+                    unsafe { #widget_resize(self._inner, x, y, width, height); }
+                } else {
+                    self.resize(x, y, width, height);
+                }
                 self
             }
 

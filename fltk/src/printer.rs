@@ -53,13 +53,9 @@ impl Printer {
     }
 
     /// End the print page
-    pub fn end_page(&mut self) -> Result<(), FltkError> {
+    pub fn end_page(&mut self) {
         unsafe {
-            if Fl_Printer_end_page(self._inner) != 0 {
-                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
-            } else {
-                Ok(())
-            }
+            Fl_Printer_end_page(self._inner);
         }
     }
 
@@ -69,26 +65,19 @@ impl Printer {
     }
 
     /// Begins a print page
-    pub fn begin_page(&mut self) -> Result<(), FltkError> {
+    pub fn begin_page(&mut self) {
         unsafe {
-            if Fl_Printer_begin_page(self._inner) != 0 {
-                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
-            } else {
-                Ok(())
-            }
+            Fl_Printer_begin_page(self._inner);
         }
     }
 
     /// Returns the width and height of the printable rect
-    pub fn printable_rect(&self) -> Result<(i32, i32), FltkError> {
+    pub fn printable_rect(&self) -> (i32, i32) {
         unsafe {
             let mut x = 0;
             let mut y = 0;
-            if Fl_Printer_printable_rect(self._inner, &mut x, &mut y) != 0 {
-                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
-            } else {
-                Ok((x, y))
-            }
+            Fl_Printer_printable_rect(self._inner, &mut x, &mut y);
+            (x, y)
         }
     }
 

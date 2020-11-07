@@ -85,47 +85,49 @@ pub unsafe trait WidgetExt {
     fn height(&self) -> i32;
     /// Returns the label of the widget
     fn label(&self) -> String;
+    /// Measures the label's width and height
+    fn measure_label(&self) -> (i32, i32);
     /// transforms a widget to a base Fl_Widget, for internal use
     /// # Safety
     /// Can return multiple mutable pointers to the same widget
     unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
-    /// Initialize to position x, y
+    /// Initialize to position x, y, (should only be called on initialization)
     fn with_pos(self, x: i32, y: i32) -> Self
     where
         Self: Sized;
-    /// Initialilze to dimensions width and height
+    /// Initialilze to dimensions width and height, (should only be called on initialization)
     fn with_size(self, width: i32, height: i32) -> Self
     where
         Self: Sized;
-    /// Initialize with label/title
+    /// Initialize with label/title, (should only be called on initialization)
     fn with_label(self, title: &str) -> Self
     where
         Self: Sized;
-    /// Sets the initial alignment of the widget
+    /// Sets the initial alignment of the widget, (should only be called on initialization)
     fn with_align(self, align: Align) -> Self
     where
         Self: Sized;
-    /// Positions the widget below w
+    /// Positions the widget below w, the size of w should be known
     fn below_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
     where
         Self: Sized;
-    /// Positions the widget above w
+    /// Positions the widget above w, the size of w should be known
     fn above_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
     where
         Self: Sized;
-    /// Positions the widget to the right of w
+    /// Positions the widget to the right of w, the size of w should be known
     fn right_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
     where
         Self: Sized;
-    /// Positions the widget to the left of w
+    /// Positions the widget to the left of w, the size of w should be known
     fn left_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
     where
         Self: Sized;
-    /// Positions the widget to the center of w
+    /// Positions the widget to the center of w, the size of w should be known
     fn center_of<W: WidgetExt>(self, w: &W) -> Self
     where
         Self: Sized;
-    /// Takes the size of w
+    /// Takes the size of w, the size of w should be known
     fn size_of<W: WidgetExt>(self, w: &W) -> Self
     where
         Self: Sized;
@@ -367,7 +369,7 @@ pub unsafe trait WindowExt: GroupExt {
     fn center_screen(self) -> Self
     where
         Self: Sized;
-    /// Makes a window modal
+    /// Makes a window modal, should be called before ```show```
     fn make_modal(&mut self, val: bool);
     /// Makes a window fullscreen
     fn fullscreen(&mut self, val: bool);
@@ -379,7 +381,7 @@ pub unsafe trait WindowExt: GroupExt {
     fn set_icon<T: ImageExt>(&mut self, image: Option<T>)
     where
         Self: Sized;
-    /// Make the window resizable
+    /// Make the window resizable, should be called before ```show```
     fn make_resizable(&mut self, val: bool);
     /// Sets the cursor style within the window
     /// Needs to be called after the window is shown

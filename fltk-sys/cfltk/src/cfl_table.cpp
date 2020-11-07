@@ -30,6 +30,10 @@
         operator table *() {                                                                       \
             return (table *)this;                                                                  \
         }                                                                                          \
+        void widget_resize(int x, int y, int w, int h) {                                           \
+            Fl_Widget::resize(x, y, w, h);                                                         \
+            redraw();                                                                              \
+        }                                                                                          \
         void set_handler(handler h) {                                                              \
             inner_handler = h;                                                                     \
         }                                                                                          \

@@ -527,6 +527,17 @@ pub fn width2(txt: &str, n: i32) -> f64 {
     unsafe { Fl_width2(txt.as_ptr(), n) }
 }
 
+/// Measure the width and height of a text
+pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
+    let txt = CString::safe_new(txt);
+    let mut x = 0;
+    let mut y = 0;
+    unsafe {
+        Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
+    }
+    (x, y)
+}
+
 /// Returns the typographical width of a single character
 pub fn char_width(c: char) -> f64 {
     unsafe { Fl_width3(c as u32) }

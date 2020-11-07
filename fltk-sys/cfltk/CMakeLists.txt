@@ -53,8 +53,11 @@ set(CFLTK_SRCS
     src/cfl_table.cpp
     src/cfl_tree.cpp
     src/cfl_surface.cpp
-    src/cfl_printer.cpp
     )
+
+if(NOT ANDROID)
+    set(CFLTK_SRCS ${CFLTK_SRCS} src/cfl_printer.cpp)
+endif()
 
 if(CFLTK_BUILD_SHARED)
     add_library(cfltk SHARED ${CFLTK_SRCS})
@@ -88,7 +91,6 @@ if(USE_SYSTEM_FLTK)
         DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
         )
 endif()
-
 
 if(CFLTK_BUILD_TESTS)
     enable_testing()

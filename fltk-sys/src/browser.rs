@@ -76,6 +76,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_widget_resize(
+        arg1: *mut Fl_Widget,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
@@ -92,6 +101,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Widget_measure_label(
+        arg1: *const Fl_Widget,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
@@ -325,6 +341,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Browser_widget_resize(
+        arg1: *mut Fl_Browser,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Browser_tooltip(arg1: *mut Fl_Browser) -> *const libc::c_char;
 }
 extern "C" {
@@ -341,6 +366,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_set_color(arg1: *mut Fl_Browser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Browser_measure_label(
+        arg1: *const Fl_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Browser_label_color(arg1: *mut Fl_Browser) -> libc::c_uint;
@@ -712,6 +744,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Hold_Browser_widget_resize(
+        arg1: *mut Fl_Hold_Browser,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Hold_Browser_tooltip(arg1: *mut Fl_Hold_Browser) -> *const libc::c_char;
 }
 extern "C" {
@@ -728,6 +769,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_color(arg1: *mut Fl_Hold_Browser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_measure_label(
+        arg1: *const Fl_Hold_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_label_color(arg1: *mut Fl_Hold_Browser) -> libc::c_uint;
@@ -1116,6 +1164,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Select_Browser_widget_resize(
+        arg1: *mut Fl_Select_Browser,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Select_Browser_tooltip(arg1: *mut Fl_Select_Browser) -> *const libc::c_char;
 }
 extern "C" {
@@ -1132,6 +1189,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_color(arg1: *mut Fl_Select_Browser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Select_Browser_measure_label(
+        arg1: *const Fl_Select_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Select_Browser_label_color(arg1: *mut Fl_Select_Browser) -> libc::c_uint;
@@ -1532,6 +1596,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_widget_resize(
+        arg1: *mut Fl_Multi_Browser,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Multi_Browser_tooltip(arg1: *mut Fl_Multi_Browser) -> *const libc::c_char;
 }
 extern "C" {
@@ -1548,6 +1621,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_color(arg1: *mut Fl_Multi_Browser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_measure_label(
+        arg1: *const Fl_Multi_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Multi_Browser_label_color(arg1: *mut Fl_Multi_Browser) -> libc::c_uint;
@@ -1941,6 +2021,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_File_Browser_widget_resize(
+        arg1: *mut Fl_File_Browser,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_File_Browser_tooltip(arg1: *mut Fl_File_Browser) -> *const libc::c_char;
 }
 extern "C" {
@@ -1957,6 +2046,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_set_color(arg1: *mut Fl_File_Browser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_File_Browser_measure_label(
+        arg1: *const Fl_File_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_File_Browser_label_color(arg1: *mut Fl_File_Browser) -> libc::c_uint;
