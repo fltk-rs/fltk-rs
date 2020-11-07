@@ -51,7 +51,7 @@ impl Editor {
         self.editor.set_trigger(CallbackTrigger::Changed);
     }
 
-    pub fn save_file(&mut self, saved: &mut bool) {
+    pub fn save_file(&mut self, saved: &mut bool) -> Result<(), Box<dyn error::Error>> {
         let mut filename = self.filename.clone();
         if *saved {
             if filename.is_empty() {
@@ -59,20 +59,19 @@ impl Editor {
                 dlg.set_option(dialog::FileDialogOptions::SaveAsConfirm);
                 dlg.show();
                 filename = dlg.filename().to_string_lossy().to_string();
-                if filename.is_empty() {
-                    return;
-                }
-                match path::Path::new(&filename).exists() {
-                    true => {
-                        self.editor.buffer().unwrap().save_file(&filename).unwrap();
-                        *saved = true;
+                if !filename.is_empty() {
+                    match path::Path::new(&filename).exists() {
+                        true => {
+                            self.editor.buffer().unwrap().save_file(&filename)?;
+                            *saved = true;
+                        }
+                        false => dialog::alert(dlg_x(), dlg_y(), "Please specify a file!"),
                     }
-                    false => dialog::alert(dlg_x(), dlg_y(), "Please specify a file!"),
                 }
             } else {
                 match path::Path::new(&filename).exists() {
                     true => {
-                        self.editor.buffer().unwrap().save_file(&filename).unwrap();
+                        self.editor.buffer().unwrap().save_file(&filename)?;
                         *saved = true;
                     }
                     false => dialog::alert(dlg_x(), dlg_y(), "Please specify a file!"),
@@ -83,17 +82,17 @@ impl Editor {
             dlg.set_option(dialog::FileDialogOptions::SaveAsConfirm);
             dlg.show();
             filename = dlg.filename().to_string_lossy().to_string();
-            if filename.is_empty() {
-                return;
-            }
-            match path::Path::new(&filename).exists() {
-                true => {
-                    self.editor.buffer().unwrap().save_file(&filename).unwrap();
-                    *saved = true;
+            if !filename.is_empty() {
+                match path::Path::new(&filename).exists() {
+                    true => {
+                        self.editor.buffer().unwrap().save_file(&filename)?;
+                        *saved = true;
+                    }
+                    false => dialog::alert(dlg_x(), dlg_y(), "Please specify a file!"),
                 }
-                false => dialog::alert(dlg_x(), dlg_y(), "Please specify a file!"),
             }
         }
+        Ok(())
     }
 }
 
@@ -125,20 +124,12 @@ pub enum Message {
     About,
 }
 
-fn main() -> Result<(), Box<dyn error::Error>> {
+fn main() {
     panic::set_hook(Box::new(|info| {
         if let Some(s) = info.payload().downcast_ref::<&str>() {
-            dialog::message(
-                dlg_x(),
-                dlg_y(),
-                s,
-            );
+            dialog::message(dlg_x(), dlg_y(), s);
         } else {
-            dialog::message(
-                dlg_x(),
-                dlg_y(),
-                &info.to_string(),
-            );
+            dialog::message(dlg_x(), dlg_y(), &info.to_string());
         }
     }));
     let args: Vec<String> = std::env::args().collect();
@@ -245,8 +236,9 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         Message::About,
     );
 
-    let mut x = menu.find_item("&File/Quit\t").unwrap();
-    x.set_label_color(Color::Red);
+    if let Some(mut item) = menu.find_item("&File/Quit\t") {
+        item.set_label_color(Color::Red);
+    }
 
     wind.make_resizable(true);
     wind.end();
@@ -258,7 +250,6 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         }
     });
 
-    
     // Handle drag and drop
     let mut dnd = false;
     let mut released = false;
@@ -322,13 +313,13 @@ fn main() -> Result<(), Box<dyn error::Error>> {
                         }
                     }
                 },
-                Save => editor.save_file(&mut saved),
-                SaveAs => editor.save_file(&mut false),
+                Save => editor.save_file(&mut saved).unwrap(),
+                SaveAs => editor.save_file(&mut false).unwrap(),
                 Quit => {
                     if !saved {
                         let x = dialog::choice(dlg_x(), dlg_y(), "Would you like to save your work?", "Yes", "No", "");
                         if x == 0 {
-                            editor.save_file(&mut saved);
+                            editor.save_file(&mut saved).unwrap();
                             app.quit();
                         } else {
                             app.quit();
@@ -340,9 +331,8 @@ fn main() -> Result<(), Box<dyn error::Error>> {
                 Cut => editor.cut(),
                 Copy => editor.copy(),
                 Paste => editor.paste(),
-                About => dialog::message(dlg_x(), dlg_y(), "This is an example application written in Rust and using the FLTK Gui library.",),
+                About => dialog::message(dlg_x(), dlg_y(), "This is an example application written in Rust and using the FLTK Gui library."),
             }
         }
     }
-    Ok(())
 }

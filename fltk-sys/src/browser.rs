@@ -103,6 +103,13 @@ extern "C" {
     pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Widget_measure_label(
+        arg1: *const Fl_Widget,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
@@ -359,6 +366,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_set_color(arg1: *mut Fl_Browser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Browser_measure_label(
+        arg1: *const Fl_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Browser_label_color(arg1: *mut Fl_Browser) -> libc::c_uint;
@@ -755,6 +769,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_color(arg1: *mut Fl_Hold_Browser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_measure_label(
+        arg1: *const Fl_Hold_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Hold_Browser_label_color(arg1: *mut Fl_Hold_Browser) -> libc::c_uint;
@@ -1168,6 +1189,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_set_color(arg1: *mut Fl_Select_Browser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Select_Browser_measure_label(
+        arg1: *const Fl_Select_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Select_Browser_label_color(arg1: *mut Fl_Select_Browser) -> libc::c_uint;
@@ -1595,6 +1623,13 @@ extern "C" {
     pub fn Fl_Multi_Browser_set_color(arg1: *mut Fl_Multi_Browser, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_measure_label(
+        arg1: *const Fl_Multi_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Multi_Browser_label_color(arg1: *mut Fl_Multi_Browser) -> libc::c_uint;
 }
 extern "C" {
@@ -2011,6 +2046,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_set_color(arg1: *mut Fl_File_Browser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_File_Browser_measure_label(
+        arg1: *const Fl_File_Browser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_File_Browser_label_color(arg1: *mut Fl_File_Browser) -> libc::c_uint;

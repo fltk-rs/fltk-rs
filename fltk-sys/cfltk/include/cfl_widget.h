@@ -42,6 +42,7 @@ typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
     void widget##_set_type(widget *, int typ);                                                     \
     unsigned int widget##_color(widget *);                                                         \
     void widget##_set_color(widget *, unsigned int color);                                         \
+    void widget##_measure_label(const widget *, int *, int *);                                     \
     unsigned int widget##_label_color(widget *);                                                   \
     void widget##_set_label_color(widget *, unsigned int color);                                   \
     int widget##_label_font(widget *);                                                             \
@@ -246,6 +247,9 @@ typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
     }                                                                                              \
     void widget##_set_color(widget *self, unsigned int color) {                                    \
         LOCK(self->color(color);)                                                                  \
+    }                                                                                              \
+    void widget##_measure_label(const widget *self, int *x, int *y) {                              \
+        self->measure_label(*x, *y);                                                               \
     }                                                                                              \
     unsigned int widget##_label_color(widget *self) {                                              \
         return self->labelcolor();                                                                 \

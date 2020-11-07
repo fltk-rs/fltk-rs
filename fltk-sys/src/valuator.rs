@@ -103,6 +103,13 @@ extern "C" {
     pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Widget_measure_label(
+        arg1: *const Fl_Widget,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
@@ -359,6 +366,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Slider_set_color(arg1: *mut Fl_Slider, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Slider_measure_label(
+        arg1: *const Fl_Slider,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Slider_label_color(arg1: *mut Fl_Slider) -> libc::c_uint;
@@ -662,6 +676,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Nice_Slider_set_color(arg1: *mut Fl_Nice_Slider, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Nice_Slider_measure_label(
+        arg1: *const Fl_Nice_Slider,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Nice_Slider_label_color(arg1: *mut Fl_Nice_Slider) -> libc::c_uint;
@@ -976,6 +997,13 @@ extern "C" {
     pub fn Fl_Counter_set_color(arg1: *mut Fl_Counter, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Counter_measure_label(
+        arg1: *const Fl_Counter,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Counter_label_color(arg1: *mut Fl_Counter) -> libc::c_uint;
 }
 extern "C" {
@@ -1283,6 +1311,13 @@ extern "C" {
     pub fn Fl_Dial_set_color(arg1: *mut Fl_Dial, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Dial_measure_label(
+        arg1: *const Fl_Dial,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Dial_label_color(arg1: *mut Fl_Dial) -> libc::c_uint;
 }
 extern "C" {
@@ -1580,6 +1615,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Line_Dial_set_color(arg1: *mut Fl_Line_Dial, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Line_Dial_measure_label(
+        arg1: *const Fl_Line_Dial,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Line_Dial_label_color(arg1: *mut Fl_Line_Dial) -> libc::c_uint;
@@ -1889,6 +1931,13 @@ extern "C" {
     pub fn Fl_Roller_set_color(arg1: *mut Fl_Roller, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Roller_measure_label(
+        arg1: *const Fl_Roller,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Roller_label_color(arg1: *mut Fl_Roller) -> libc::c_uint;
 }
 extern "C" {
@@ -2190,6 +2239,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_color(arg1: *mut Fl_Scrollbar, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Scrollbar_measure_label(
+        arg1: *const Fl_Scrollbar,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Scrollbar_label_color(arg1: *mut Fl_Scrollbar) -> libc::c_uint;
@@ -2497,6 +2553,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_color(arg1: *mut Fl_Value_Slider, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Value_Slider_measure_label(
+        arg1: *const Fl_Value_Slider,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Value_Slider_label_color(arg1: *mut Fl_Value_Slider) -> libc::c_uint;
@@ -2816,6 +2879,13 @@ extern "C" {
     pub fn Fl_Adjuster_set_color(arg1: *mut Fl_Adjuster, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Adjuster_measure_label(
+        arg1: *const Fl_Adjuster,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Adjuster_label_color(arg1: *mut Fl_Adjuster) -> libc::c_uint;
 }
 extern "C" {
@@ -3121,6 +3191,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Input_set_color(arg1: *mut Fl_Value_Input, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Value_Input_measure_label(
+        arg1: *const Fl_Value_Input,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Value_Input_label_color(arg1: *mut Fl_Value_Input) -> libc::c_uint;
@@ -3433,6 +3510,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Output_set_color(arg1: *mut Fl_Value_Output, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Value_Output_measure_label(
+        arg1: *const Fl_Value_Output,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Value_Output_label_color(arg1: *mut Fl_Value_Output) -> libc::c_uint;
@@ -3752,6 +3836,13 @@ extern "C" {
     pub fn Fl_Fill_Slider_set_color(arg1: *mut Fl_Fill_Slider, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Fill_Slider_measure_label(
+        arg1: *const Fl_Fill_Slider,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Fill_Slider_label_color(arg1: *mut Fl_Fill_Slider) -> libc::c_uint;
 }
 extern "C" {
@@ -4064,6 +4155,13 @@ extern "C" {
     pub fn Fl_Fill_Dial_set_color(arg1: *mut Fl_Fill_Dial, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Fill_Dial_measure_label(
+        arg1: *const Fl_Fill_Dial,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Fill_Dial_label_color(arg1: *mut Fl_Fill_Dial) -> libc::c_uint;
 }
 extern "C" {
@@ -4369,6 +4467,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_color(arg1: *mut Fl_Hor_Slider, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_measure_label(
+        arg1: *const Fl_Hor_Slider,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Hor_Slider_label_color(arg1: *mut Fl_Hor_Slider) -> libc::c_uint;
@@ -4679,6 +4784,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_color(arg1: *mut Fl_Hor_Fill_Slider, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_measure_label(
+        arg1: *const Fl_Hor_Fill_Slider,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_label_color(arg1: *mut Fl_Hor_Fill_Slider) -> libc::c_uint;
@@ -5005,6 +5117,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_color(arg1: *mut Fl_Hor_Nice_Slider, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_measure_label(
+        arg1: *const Fl_Hor_Nice_Slider,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_label_color(arg1: *mut Fl_Hor_Nice_Slider) -> libc::c_uint;
@@ -5337,6 +5456,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_color(arg1: *mut Fl_Hor_Value_Slider, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_measure_label(
+        arg1: *const Fl_Hor_Value_Slider,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_label_color(arg1: *mut Fl_Hor_Value_Slider) -> libc::c_uint;

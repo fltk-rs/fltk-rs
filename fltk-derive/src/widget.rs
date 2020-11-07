@@ -223,6 +223,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
     let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
     let label = Ident::new(format!("{}_{}", name_str, "label").as_str(), name.span());
+    let measure_label = Ident::new(format!("{}_{}", name_str, "measure_label").as_str(), name.span());
     let set_label = Ident::new(
         format!("{}_{}", name_str, "set_label").as_str(),
         name.span(),
@@ -468,6 +469,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     CStr::from_ptr(#label(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
+            }
+
+            fn measure_label(&self) -> (i32, i32) {
+                assert!(!self.was_deleted());
+                let mut x = 0;
+                let mut y = 0;
+                unsafe {
+                    #measure_label(self._inner, &mut x, &mut y);
+                }
+                (x, y)
             }
 
             unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
@@ -879,7 +890,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let y = self.y();
                 let w = self.width();
                 let h = self.height();
-                if w == 0 && h == 0 {
+                if w == 0 || h == 0 {
                     unsafe { #widget_resize(self._inner, x, y, width, height); }
                 } else {
                     self.resize(x, y, width, height);

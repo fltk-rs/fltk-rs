@@ -103,6 +103,13 @@ extern "C" {
     pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Widget_measure_label(
+        arg1: *const Fl_Widget,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
@@ -359,6 +366,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tree_set_color(arg1: *mut Fl_Tree, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Tree_measure_label(
+        arg1: *const Fl_Tree,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Tree_label_color(arg1: *mut Fl_Tree) -> libc::c_uint;

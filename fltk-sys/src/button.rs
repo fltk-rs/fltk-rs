@@ -103,6 +103,13 @@ extern "C" {
     pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Widget_measure_label(
+        arg1: *const Fl_Widget,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
@@ -359,6 +366,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Button_set_color(arg1: *mut Fl_Button, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Button_measure_label(
+        arg1: *const Fl_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Button_label_color(arg1: *mut Fl_Button) -> libc::c_uint;
@@ -632,6 +646,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_set_color(arg1: *mut Fl_Check_Button, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Check_Button_measure_label(
+        arg1: *const Fl_Check_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Check_Button_label_color(arg1: *mut Fl_Check_Button) -> libc::c_uint;
@@ -920,6 +941,13 @@ extern "C" {
     pub fn Fl_Radio_Button_set_color(arg1: *mut Fl_Radio_Button, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Radio_Button_measure_label(
+        arg1: *const Fl_Radio_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Radio_Button_label_color(arg1: *mut Fl_Radio_Button) -> libc::c_uint;
 }
 extern "C" {
@@ -1206,6 +1234,13 @@ extern "C" {
     pub fn Fl_Toggle_Button_set_color(arg1: *mut Fl_Toggle_Button, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Toggle_Button_measure_label(
+        arg1: *const Fl_Toggle_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Toggle_Button_label_color(arg1: *mut Fl_Toggle_Button) -> libc::c_uint;
 }
 extern "C" {
@@ -1490,6 +1525,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Round_Button_set_color(arg1: *mut Fl_Round_Button, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Round_Button_measure_label(
+        arg1: *const Fl_Round_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Round_Button_label_color(arg1: *mut Fl_Round_Button) -> libc::c_uint;
@@ -1782,6 +1824,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_set_color(arg1: *mut Fl_Radio_Round_Button, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_measure_label(
+        arg1: *const Fl_Radio_Round_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_label_color(arg1: *mut Fl_Radio_Round_Button) -> libc::c_uint;
@@ -2112,6 +2161,13 @@ extern "C" {
     pub fn Fl_Radio_Light_Button_set_color(arg1: *mut Fl_Radio_Light_Button, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Radio_Light_Button_measure_label(
+        arg1: *const Fl_Radio_Light_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Radio_Light_Button_label_color(arg1: *mut Fl_Radio_Light_Button) -> libc::c_uint;
 }
 extern "C" {
@@ -2434,6 +2490,13 @@ extern "C" {
     pub fn Fl_Light_Button_set_color(arg1: *mut Fl_Light_Button, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Light_Button_measure_label(
+        arg1: *const Fl_Light_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Light_Button_label_color(arg1: *mut Fl_Light_Button) -> libc::c_uint;
 }
 extern "C" {
@@ -2720,6 +2783,13 @@ extern "C" {
     pub fn Fl_Repeat_Button_set_color(arg1: *mut Fl_Repeat_Button, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Repeat_Button_measure_label(
+        arg1: *const Fl_Repeat_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Repeat_Button_label_color(arg1: *mut Fl_Repeat_Button) -> libc::c_uint;
 }
 extern "C" {
@@ -2998,6 +3068,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_set_color(arg1: *mut Fl_Return_Button, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Return_Button_measure_label(
+        arg1: *const Fl_Return_Button,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Return_Button_label_color(arg1: *mut Fl_Return_Button) -> libc::c_uint;

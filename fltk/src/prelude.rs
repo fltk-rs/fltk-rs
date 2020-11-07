@@ -85,6 +85,8 @@ pub unsafe trait WidgetExt {
     fn height(&self) -> i32;
     /// Returns the label of the widget
     fn label(&self) -> String;
+    /// Measures the label's x and y coordinates
+    fn measure_label(&self) -> (i32, i32);
     /// transforms a widget to a base Fl_Widget, for internal use
     /// # Safety
     /// Can return multiple mutable pointers to the same widget

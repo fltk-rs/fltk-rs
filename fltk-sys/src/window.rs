@@ -103,6 +103,13 @@ extern "C" {
     pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Widget_measure_label(
+        arg1: *const Fl_Widget,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
@@ -359,6 +366,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_set_color(arg1: *mut Fl_Group, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Group_measure_label(
+        arg1: *const Fl_Group,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Group_label_color(arg1: *mut Fl_Group) -> libc::c_uint;
@@ -649,6 +663,13 @@ extern "C" {
     pub fn Fl_Pack_set_color(arg1: *mut Fl_Pack, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Pack_measure_label(
+        arg1: *const Fl_Pack,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Pack_label_color(arg1: *mut Fl_Pack) -> libc::c_uint;
 }
 extern "C" {
@@ -931,6 +952,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_set_color(arg1: *mut Fl_Scroll, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Scroll_measure_label(
+        arg1: *const Fl_Scroll,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Scroll_label_color(arg1: *mut Fl_Scroll) -> libc::c_uint;
@@ -1240,6 +1268,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_set_color(arg1: *mut Fl_Tabs, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Tabs_measure_label(
+        arg1: *const Fl_Tabs,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Tabs_label_color(arg1: *mut Fl_Tabs) -> libc::c_uint;
@@ -1553,6 +1588,13 @@ extern "C" {
     pub fn Fl_Tile_set_color(arg1: *mut Fl_Tile, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Tile_measure_label(
+        arg1: *const Fl_Tile,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Tile_label_color(arg1: *mut Fl_Tile) -> libc::c_uint;
 }
 extern "C" {
@@ -1835,6 +1877,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_set_color(arg1: *mut Fl_Wizard, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Wizard_measure_label(
+        arg1: *const Fl_Wizard,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Wizard_label_color(arg1: *mut Fl_Wizard) -> libc::c_uint;
@@ -2135,6 +2184,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_set_color(arg1: *mut Fl_Color_Chooser, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_measure_label(
+        arg1: *const Fl_Color_Chooser,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Color_Chooser_label_color(arg1: *mut Fl_Color_Chooser) -> libc::c_uint;
@@ -2497,6 +2553,13 @@ extern "C" {
     pub fn Fl_Window_set_color(arg1: *mut Fl_Window, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Window_measure_label(
+        arg1: *const Fl_Window,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Window_label_color(arg1: *mut Fl_Window) -> libc::c_uint;
 }
 extern "C" {
@@ -2852,6 +2915,13 @@ extern "C" {
     pub fn Fl_Single_Window_set_color(arg1: *mut Fl_Single_Window, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Single_Window_measure_label(
+        arg1: *const Fl_Single_Window,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Single_Window_label_color(arg1: *mut Fl_Single_Window) -> libc::c_uint;
 }
 extern "C" {
@@ -3200,6 +3270,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_set_color(arg1: *mut Fl_Double_Window, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Double_Window_measure_label(
+        arg1: *const Fl_Double_Window,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Double_Window_label_color(arg1: *mut Fl_Double_Window) -> libc::c_uint;
@@ -3555,6 +3632,13 @@ extern "C" {
     pub fn Fl_Menu_Window_set_color(arg1: *mut Fl_Menu_Window, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Menu_Window_measure_label(
+        arg1: *const Fl_Menu_Window,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Menu_Window_label_color(arg1: *mut Fl_Menu_Window) -> libc::c_uint;
 }
 extern "C" {
@@ -3900,6 +3984,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_color(arg1: *mut Fl_Gl_Window, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_measure_label(
+        arg1: *const Fl_Gl_Window,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Gl_Window_label_color(arg1: *mut Fl_Gl_Window) -> libc::c_uint;

@@ -103,6 +103,13 @@ extern "C" {
     pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Widget_measure_label(
+        arg1: *const Fl_Widget,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
 }
 extern "C" {
@@ -359,6 +366,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_set_color(arg1: *mut Fl_Input, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Input_measure_label(
+        arg1: *const Fl_Input,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Input_label_color(arg1: *mut Fl_Input) -> libc::c_uint;
@@ -704,6 +718,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_set_color(arg1: *mut Fl_Int_Input, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Int_Input_measure_label(
+        arg1: *const Fl_Int_Input,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Int_Input_label_color(arg1: *mut Fl_Int_Input) -> libc::c_uint;
@@ -1056,6 +1077,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_set_color(arg1: *mut Fl_Float_Input, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Float_Input_measure_label(
+        arg1: *const Fl_Float_Input,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Float_Input_label_color(arg1: *mut Fl_Float_Input) -> libc::c_uint;
@@ -1411,6 +1439,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_color(arg1: *mut Fl_Multiline_Input, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_measure_label(
+        arg1: *const Fl_Multiline_Input,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Multiline_Input_label_color(arg1: *mut Fl_Multiline_Input) -> libc::c_uint;
@@ -1786,6 +1821,13 @@ extern "C" {
     pub fn Fl_Secret_Input_set_color(arg1: *mut Fl_Secret_Input, color: libc::c_uint);
 }
 extern "C" {
+    pub fn Fl_Secret_Input_measure_label(
+        arg1: *const Fl_Secret_Input,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Secret_Input_label_color(arg1: *mut Fl_Secret_Input) -> libc::c_uint;
 }
 extern "C" {
@@ -2139,6 +2181,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Input_set_color(arg1: *mut Fl_File_Input, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_File_Input_measure_label(
+        arg1: *const Fl_File_Input,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_File_Input_label_color(arg1: *mut Fl_File_Input) -> libc::c_uint;
