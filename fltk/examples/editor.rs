@@ -129,14 +129,14 @@ fn main() -> Result<(), Box<dyn error::Error>> {
     panic::set_hook(Box::new(|info| {
         if let Some(s) = info.payload().downcast_ref::<&str>() {
             dialog::message(
-                (app::screen_size().0 / 2.0) as i32 - 200,
-                (app::screen_size().1 / 2.0) as i32 - 100,
+                dlg_x(),
+                dlg_y(),
                 s,
             );
         } else {
             dialog::message(
-                (app::screen_size().0 / 2.0) as i32 - 200,
-                (app::screen_size().1 / 2.0) as i32 - 100,
+                dlg_x(),
+                dlg_y(),
                 &info.to_string(),
             );
         }
@@ -172,10 +172,6 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         buf.load_file(&args[1]).unwrap();
         editor.set_filename(&args[1]);
     }
-
-    // Handle drag and drop
-    let mut dnd = false;
-    let mut released = false;
 
     menu.add_emit(
         "&File/New...\t",
@@ -262,6 +258,11 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         }
     });
 
+    
+    // Handle drag and drop
+    let mut dnd = false;
+    let mut released = false;
+
     editor.handle(move |ev| match ev {
         Event::DndEnter => {
             dnd = true;
@@ -325,7 +326,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
                 SaveAs => editor.save_file(&mut false),
                 Quit => {
                     if !saved {
-                        let x = dialog::choice((app::screen_size().0 / 2.0) as i32 - 200, (app::screen_size().1 / 2.0) as i32 - 100, "Would you like to save your work?", "Yes", "No", "");
+                        let x = dialog::choice(dlg_x(), dlg_y(), "Would you like to save your work?", "Yes", "No", "");
                         if x == 0 {
                             editor.save_file(&mut saved);
                             app.quit();
