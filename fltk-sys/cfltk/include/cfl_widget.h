@@ -35,6 +35,7 @@ typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
     void widget##_deactivate(widget *);                                                            \
     void widget##_redraw_label(widget *);                                                          \
     void widget##_resize(widget *, int x, int y, int width, int height);                           \
+    void widget##_widget_resize(widget *, int x, int y, int width, int height);                    \
     const char *widget##_tooltip(widget *);                                                        \
     void widget##_set_tooltip(widget *, const char *txt);                                          \
     int widget##_get_type(widget *);                                                               \
@@ -113,6 +114,10 @@ typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
         }                                                                                          \
         operator widget *() {                                                                      \
             return (widget *)this;                                                                 \
+        }                                                                                          \
+        void widget_resize(int x, int y, int w, int h) {                                           \
+            Fl_Widget::resize(x, y, w, h);                                                         \
+            redraw();                                                                              \
         }                                                                                          \
         void set_handler(handler h) {                                                              \
             inner_handler = h;                                                                     \
@@ -220,6 +225,9 @@ typedef void (*custom_draw_callback2)(Fl_Widget *, void *);
     }                                                                                              \
     void widget##_resize(widget *self, int x, int y, int width, int height) {                      \
         LOCK(self->resize(x, y, width, height);)                                                   \
+    }                                                                                              \
+    void widget##_widget_resize(widget *self, int x, int y, int width, int height) {               \
+        LOCK(((widget##_Derived *)self)->widget_resize(x, y, width, height))                       \
     }                                                                                              \
     const char *widget##_tooltip(widget *self) {                                                   \
         return self->tooltip();                                                                    \

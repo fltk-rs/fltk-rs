@@ -4,6 +4,7 @@
 ### Changes
 - Patch fltk to fix behavior of Fl_Win32_At_Exit() with mingw toolchain.
 - Fix android build which doesn't support Fl_Printer.
+- Fix WidgetExt::with_size() resizability.
 
 ## [0.10.4] - 2020-11-06
 ### Changes

@@ -76,6 +76,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_widget_resize(
+        arg1: *mut Fl_Widget,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
@@ -497,6 +506,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Display_resize(
+        arg1: *mut Fl_Text_Display,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_widget_resize(
         arg1: *mut Fl_Text_Display,
         x: libc::c_int,
         y: libc::c_int,
@@ -983,6 +1001,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_resize(
+        arg1: *mut Fl_Text_Editor,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_widget_resize(
         arg1: *mut Fl_Text_Editor,
         x: libc::c_int,
         y: libc::c_int,
@@ -1551,6 +1578,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_resize(
+        arg1: *mut Fl_Simple_Terminal,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_widget_resize(
         arg1: *mut Fl_Simple_Terminal,
         x: libc::c_int,
         y: libc::c_int,

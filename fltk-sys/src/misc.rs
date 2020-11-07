@@ -76,6 +76,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_widget_resize(
+        arg1: *mut Fl_Widget,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
@@ -317,6 +326,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Spinner_resize(
+        arg1: *mut Fl_Spinner,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Spinner_widget_resize(
         arg1: *mut Fl_Spinner,
         x: libc::c_int,
         y: libc::c_int,
@@ -623,6 +641,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Clock_widget_resize(
+        arg1: *mut Fl_Clock,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Clock_tooltip(arg1: *mut Fl_Clock) -> *const libc::c_char;
 }
 extern "C" {
@@ -864,6 +891,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_resize(
+        arg1: *mut Fl_Chart,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Chart_widget_resize(
         arg1: *mut Fl_Chart,
         x: libc::c_int,
         y: libc::c_int,
@@ -1181,6 +1217,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_resize(
+        arg1: *mut Fl_Progress,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Progress_widget_resize(
         arg1: *mut Fl_Progress,
         x: libc::c_int,
         y: libc::c_int,

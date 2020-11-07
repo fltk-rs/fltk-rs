@@ -76,6 +76,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_widget_resize(
+        arg1: *mut Fl_Widget,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
@@ -317,6 +326,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_resize(
+        arg1: *mut Fl_Input,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Input_widget_resize(
         arg1: *mut Fl_Input,
         x: libc::c_int,
         y: libc::c_int,
@@ -653,6 +671,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_resize(
+        arg1: *mut Fl_Int_Input,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Int_Input_widget_resize(
         arg1: *mut Fl_Int_Input,
         x: libc::c_int,
         y: libc::c_int,
@@ -1004,6 +1031,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Float_Input_widget_resize(
+        arg1: *mut Fl_Float_Input,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Float_Input_tooltip(arg1: *mut Fl_Float_Input) -> *const libc::c_char;
 }
 extern "C" {
@@ -1342,6 +1378,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Input_resize(
+        arg1: *mut Fl_Multiline_Input,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_widget_resize(
         arg1: *mut Fl_Multiline_Input,
         x: libc::c_int,
         y: libc::c_int,
@@ -1714,6 +1759,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Secret_Input_widget_resize(
+        arg1: *mut Fl_Secret_Input,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Secret_Input_tooltip(arg1: *mut Fl_Secret_Input) -> *const libc::c_char;
 }
 extern "C" {
@@ -2052,6 +2106,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Input_resize(
+        arg1: *mut Fl_File_Input,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Input_widget_resize(
         arg1: *mut Fl_File_Input,
         x: libc::c_int,
         y: libc::c_int,
@@ -2406,6 +2469,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Output_widget_resize(
+        arg1: *mut Fl_Output,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Output_tooltip(arg1: *mut Fl_Output) -> *const libc::c_char;
 }
 extern "C" {
@@ -2737,6 +2809,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Output_resize(
+        arg1: *mut Fl_Multiline_Output,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_widget_resize(
         arg1: *mut Fl_Multiline_Output,
         x: libc::c_int,
         y: libc::c_int,

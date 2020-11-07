@@ -76,6 +76,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_widget_resize(
+        arg1: *mut Fl_Widget,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
@@ -317,6 +326,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Slider_resize(
+        arg1: *mut Fl_Slider,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Slider_widget_resize(
         arg1: *mut Fl_Slider,
         x: libc::c_int,
         y: libc::c_int,
@@ -611,6 +629,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Nice_Slider_resize(
+        arg1: *mut Fl_Nice_Slider,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Nice_Slider_widget_resize(
         arg1: *mut Fl_Nice_Slider,
         x: libc::c_int,
         y: libc::c_int,
@@ -922,6 +949,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Counter_widget_resize(
+        arg1: *mut Fl_Counter,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Counter_tooltip(arg1: *mut Fl_Counter) -> *const libc::c_char;
 }
 extern "C" {
@@ -1220,6 +1256,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Dial_widget_resize(
+        arg1: *mut Fl_Dial,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Dial_tooltip(arg1: *mut Fl_Dial) -> *const libc::c_char;
 }
 extern "C" {
@@ -1502,6 +1547,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Line_Dial_resize(
+        arg1: *mut Fl_Line_Dial,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Line_Dial_widget_resize(
         arg1: *mut Fl_Line_Dial,
         x: libc::c_int,
         y: libc::c_int,
@@ -1808,6 +1862,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Roller_widget_resize(
+        arg1: *mut Fl_Roller,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Roller_tooltip(arg1: *mut Fl_Roller) -> *const libc::c_char;
 }
 extern "C" {
@@ -2094,6 +2157,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_resize(
+        arg1: *mut Fl_Scrollbar,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Scrollbar_widget_resize(
         arg1: *mut Fl_Scrollbar,
         x: libc::c_int,
         y: libc::c_int,
@@ -2392,6 +2464,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Slider_resize(
+        arg1: *mut Fl_Value_Slider,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Slider_widget_resize(
         arg1: *mut Fl_Value_Slider,
         x: libc::c_int,
         y: libc::c_int,
@@ -2708,6 +2789,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Adjuster_widget_resize(
+        arg1: *mut Fl_Adjuster,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Adjuster_tooltip(arg1: *mut Fl_Adjuster) -> *const libc::c_char;
 }
 extern "C" {
@@ -2998,6 +3088,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Input_resize(
+        arg1: *mut Fl_Value_Input,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Input_widget_resize(
         arg1: *mut Fl_Value_Input,
         x: libc::c_int,
         y: libc::c_int,
@@ -3301,6 +3400,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Output_resize(
+        arg1: *mut Fl_Value_Output,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Value_Output_widget_resize(
         arg1: *mut Fl_Value_Output,
         x: libc::c_int,
         y: libc::c_int,
@@ -3617,6 +3725,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Fill_Slider_widget_resize(
+        arg1: *mut Fl_Fill_Slider,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Fill_Slider_tooltip(arg1: *mut Fl_Fill_Slider) -> *const libc::c_char;
 }
 extern "C" {
@@ -3912,6 +4029,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Fill_Dial_resize(
+        arg1: *mut Fl_Fill_Dial,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_widget_resize(
         arg1: *mut Fl_Fill_Dial,
         x: libc::c_int,
         y: libc::c_int,
@@ -4218,6 +4344,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Hor_Slider_widget_resize(
+        arg1: *mut Fl_Hor_Slider,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Hor_Slider_tooltip(arg1: *mut Fl_Hor_Slider) -> *const libc::c_char;
 }
 extern "C" {
@@ -4511,6 +4646,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_resize(
+        arg1: *mut Fl_Hor_Fill_Slider,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_widget_resize(
         arg1: *mut Fl_Hor_Fill_Slider,
         x: libc::c_int,
         y: libc::c_int,
@@ -4836,6 +4980,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Hor_Nice_Slider_widget_resize(
+        arg1: *mut Fl_Hor_Nice_Slider,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Hor_Nice_Slider_tooltip(arg1: *mut Fl_Hor_Nice_Slider) -> *const libc::c_char;
 }
 extern "C" {
@@ -5148,6 +5301,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_resize(
+        arg1: *mut Fl_Hor_Value_Slider,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_widget_resize(
         arg1: *mut Fl_Hor_Value_Slider,
         x: libc::c_int,
         y: libc::c_int,

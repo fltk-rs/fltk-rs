@@ -76,6 +76,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Widget_widget_resize(
+        arg1: *mut Fl_Widget,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
 }
 extern "C" {
@@ -317,6 +326,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Button_resize(
+        arg1: *mut Fl_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Button_widget_resize(
         arg1: *mut Fl_Button,
         x: libc::c_int,
         y: libc::c_int,
@@ -581,6 +599,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Button_resize(
+        arg1: *mut Fl_Check_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Check_Button_widget_resize(
         arg1: *mut Fl_Check_Button,
         x: libc::c_int,
         y: libc::c_int,
@@ -866,6 +893,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Radio_Button_widget_resize(
+        arg1: *mut Fl_Radio_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Radio_Button_tooltip(arg1: *mut Fl_Radio_Button) -> *const libc::c_char;
 }
 extern "C" {
@@ -1135,6 +1171,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Toggle_Button_resize(
+        arg1: *mut Fl_Toggle_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_widget_resize(
         arg1: *mut Fl_Toggle_Button,
         x: libc::c_int,
         y: libc::c_int,
@@ -1420,6 +1465,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Round_Button_widget_resize(
+        arg1: *mut Fl_Round_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Round_Button_tooltip(arg1: *mut Fl_Round_Button) -> *const libc::c_char;
 }
 extern "C" {
@@ -1692,6 +1746,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_resize(
+        arg1: *mut Fl_Radio_Round_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_widget_resize(
         arg1: *mut Fl_Radio_Round_Button,
         x: libc::c_int,
         y: libc::c_int,
@@ -2019,6 +2082,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Radio_Light_Button_widget_resize(
+        arg1: *mut Fl_Radio_Light_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Radio_Light_Button_tooltip(arg1: *mut Fl_Radio_Light_Button) -> *const libc::c_char;
 }
 extern "C" {
@@ -2335,6 +2407,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Light_Button_widget_resize(
+        arg1: *mut Fl_Light_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Light_Button_tooltip(arg1: *mut Fl_Light_Button) -> *const libc::c_char;
 }
 extern "C" {
@@ -2612,6 +2693,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Repeat_Button_widget_resize(
+        arg1: *mut Fl_Repeat_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Repeat_Button_tooltip(arg1: *mut Fl_Repeat_Button) -> *const libc::c_char;
 }
 extern "C" {
@@ -2875,6 +2965,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Return_Button_resize(
+        arg1: *mut Fl_Return_Button,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Return_Button_widget_resize(
         arg1: *mut Fl_Return_Button,
         x: libc::c_int,
         y: libc::c_int,
