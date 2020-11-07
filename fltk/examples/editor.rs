@@ -141,6 +141,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
             );
         }
     }));
+    
     let args: Vec<String> = std::env::args().collect();
 
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
