@@ -160,7 +160,7 @@ fn main() {
 
     if args.len() > 1 {
         let file = path::Path::new(&args[1]);
-        assert!(file.exists() && file.is_file());
+        assert!(file.exists() && file.is_file(), "An error occured while opening the file!");
         buf.load_file(&args[1]).unwrap();
         editor.set_filename(&args[1]);
     }
