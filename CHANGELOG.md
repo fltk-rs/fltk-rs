@@ -6,6 +6,7 @@
 - Fix android build which doesn't support Fl_Printer.
 - Fix WidgetExt::with_size() resizability.
 - Add WidgetExt::measure_label() and draw::measure().
+- Simplified some return types in the printer module.
 
 ## [0.10.4] - 2020-11-06
 ### Changes
