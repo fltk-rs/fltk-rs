@@ -15,7 +15,6 @@ pub fn dlg_y() -> i32 {
     (app::screen_size().1 / 2.0 - 200.0) as i32
 }
 
-#[derive(Debug, Clone)]
 pub struct Editor {
     pub editor: text::TextEditor,
     filename: String,
