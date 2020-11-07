@@ -338,13 +338,13 @@ fn main() {
                     let mut printer = printer::Printer::default();
                     if printer.begin_job(0).is_ok() {
                         let (w, h) = printer.printable_rect();
-                        printable.set_size(w, h);
+                        printable.set_size(w - 40, h - 40);
                         // Needs cleanup
                         let line_count = printable.count_lines(0, printable.buffer().unwrap().length(), true) / 45;
-                        for i in 0..line_count {
+                        for i in 0..=line_count {
                             printable.scroll(45 * i, 0);
                             printer.begin_page();
-                            printer.print_widget(&printable, 0, 0);
+                            printer.print_widget(&printable, 20, 20);
                             printer.end_page();
                         }
                         printer.end_job();
