@@ -6,13 +6,8 @@ use std::{
 };
 
 #[inline(always)]
-pub fn dlg_x() -> i32 {
-    (app::screen_size().0 / 2.0 - 200.0) as i32
-}
-
-#[inline(always)]
-pub fn dlg_y() -> i32 {
-    (app::screen_size().1 / 2.0 - 200.0) as i32
+pub fn center() -> (i32, i32) {
+    ((app::screen_size().0 / 2.0) as i32, (app::screen_size().1 / 2.0) as i32)
 }
 
 pub struct Editor {
@@ -31,6 +26,11 @@ impl Editor {
         e.editor.resize(5, 5, 790, 590);
 
         e.editor.set_buffer(Some(buf));
+        e.editor.set_text_font(Font::Courier);
+        e.editor.set_linenumber_width(32);
+        e.editor
+            .set_linenumber_fgcolor(Color::from_u32(0x8b8386));
+        e.editor.set_trigger(CallbackTrigger::Changed);
         e
     }
 
@@ -40,14 +40,6 @@ impl Editor {
 
     pub fn set_filename(&mut self, name: &str) {
         self.filename = String::from(name);
-    }
-
-    pub fn style(&mut self) {
-        self.editor.set_text_font(Font::Courier);
-        self.editor.set_linenumber_width(32);
-        self.editor
-            .set_linenumber_fgcolor(Color::from_u32(0x8b8386));
-        self.editor.set_trigger(CallbackTrigger::Changed);
     }
 
     pub fn save_file(&mut self, saved: &mut bool) -> Result<(), Box<dyn error::Error>> {
@@ -64,7 +56,7 @@ impl Editor {
                             self.editor.buffer().unwrap().save_file(&filename)?;
                             *saved = true;
                         }
-                        false => dialog::alert(dlg_x(), dlg_y(), "Please specify a file!"),
+                        false => dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!"),
                     }
                 }
             } else {
@@ -73,7 +65,7 @@ impl Editor {
                         self.editor.buffer().unwrap().save_file(&filename)?;
                         *saved = true;
                     }
-                    false => dialog::alert(dlg_x(), dlg_y(), "Please specify a file!"),
+                    false => dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!"),
                 }
             }
         } else {
@@ -87,7 +79,7 @@ impl Editor {
                         self.editor.buffer().unwrap().save_file(&filename)?;
                         *saved = true;
                     }
-                    false => dialog::alert(dlg_x(), dlg_y(), "Please specify a file!"),
+                    false => dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!"),
                 }
             }
         }
@@ -126,9 +118,9 @@ pub enum Message {
 fn main() {
     panic::set_hook(Box::new(|info| {
         if let Some(s) = info.payload().downcast_ref::<&str>() {
-            dialog::message(dlg_x(), dlg_y(), s);
+            dialog::message(center().0 - 200, center().1 - 100, s);
         } else {
-            dialog::message(dlg_x(), dlg_y(), &info.to_string());
+            dialog::message(center().0 - 200, center().1 - 100, &info.to_string());
         }
     }));
     
@@ -151,7 +143,6 @@ fn main() {
     buf.set_tab_distance(4);
 
     let mut editor = Editor::new(buf);
-    editor.style();
 
     editor.emit(s, Message::Changed);
 
@@ -292,7 +283,7 @@ fn main() {
                 Changed => saved = false,
                 New => {
                     if editor.buffer().unwrap().text() != "" {
-                        let x = dialog::choice(dlg_x(), dlg_y(), "File unsaved, Do you wish to continue?", "Yes", "No!", "");
+                        let x = dialog::choice(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "");
                         if x == 0 {
                             editor.buffer().unwrap().set_text("");
                         }
@@ -309,7 +300,7 @@ fn main() {
                     if !filename.is_empty() {
                         match path::Path::new(&filename).exists() {
                             true => editor.buffer().unwrap().load_file(&filename).unwrap(),
-                            false => dialog::alert(dlg_x(), dlg_y(), "File does not exist!"),
+                            false => dialog::alert(center().0 - 200, center().1 - 100, "File does not exist!"),
                         }
                     }
                 },
@@ -317,7 +308,7 @@ fn main() {
                 SaveAs => editor.save_file(&mut false).unwrap(),
                 Quit => {
                     if !saved {
-                        let x = dialog::choice(dlg_x(), dlg_y(), "Would you like to save your work?", "Yes", "No", "");
+                        let x = dialog::choice(center().0 - 200, center().1 - 100, "Would you like to save your work?", "Yes", "No", "");
                         if x == 0 {
                             editor.save_file(&mut saved).unwrap();
                             app.quit();
@@ -331,7 +322,7 @@ fn main() {
                 Cut => editor.cut(),
                 Copy => editor.copy(),
                 Paste => editor.paste(),
-                About => dialog::message(dlg_x(), dlg_y(), "This is an example application written in Rust and using the FLTK Gui library."),
+                About => dialog::message(center().0 - 300, center().1 - 100, "This is an example application written in Rust and using the FLTK Gui library."),
             }
         }
     }
