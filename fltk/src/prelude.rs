@@ -85,7 +85,7 @@ pub unsafe trait WidgetExt {
     fn height(&self) -> i32;
     /// Returns the label of the widget
     fn label(&self) -> String;
-    /// Measures the label's x and y coordinates
+    /// Measures the label's width and height
     fn measure_label(&self) -> (i32, i32);
     /// transforms a widget to a base Fl_Widget, for internal use
     /// # Safety

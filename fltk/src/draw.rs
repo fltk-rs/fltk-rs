@@ -527,7 +527,7 @@ pub fn width2(txt: &str, n: i32) -> f64 {
     unsafe { Fl_width2(txt.as_ptr(), n) }
 }
 
-/// Measure the length of text
+/// Measure the width and height of a text
 pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
     let txt = CString::safe_new(txt);
     let mut x = 0;
