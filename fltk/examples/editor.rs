@@ -132,6 +132,7 @@ fn main() {
             dialog::message(dlg_x(), dlg_y(), &info.to_string());
         }
     }));
+    
     let args: Vec<String> = std::env::args().collect();
 
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
