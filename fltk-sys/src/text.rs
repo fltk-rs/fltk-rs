@@ -811,7 +811,7 @@ extern "C" {
     pub fn Fl_Text_Display_show_cursor(arg1: *mut Fl_Text_Display, boolean: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_style_table_entry(
+    pub fn Fl_Text_Display_set_highlight_data(
         self_: *mut Fl_Text_Display,
         sbuf: *mut libc::c_void,
         color: *mut libc::c_uint,
@@ -1313,7 +1313,7 @@ extern "C" {
     pub fn Fl_Text_Editor_show_cursor(arg1: *mut Fl_Text_Editor, boolean: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_style_table_entry(
+    pub fn Fl_Text_Editor_set_highlight_data(
         self_: *mut Fl_Text_Editor,
         sbuf: *mut libc::c_void,
         color: *mut libc::c_uint,
@@ -1948,7 +1948,7 @@ extern "C" {
     pub fn Fl_Simple_Terminal_show_cursor(arg1: *mut Fl_Simple_Terminal, boolean: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_style_table_entry(
+    pub fn Fl_Simple_Terminal_set_highlight_data(
         self_: *mut Fl_Simple_Terminal,
         sbuf: *mut libc::c_void,
         color: *mut libc::c_uint,

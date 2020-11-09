@@ -1,9 +1,10 @@
 # Changelog
 
-## [0.10.6] - Unreleased
+## [0.10.6] - 2020-11-10
 ### Changes
 - No longer force the position of default init windows and keep it up to the window manager.
 - Add WindowExt::free_position().
+- Change C api set_style_table_entry to set_highlight_data.
 
 ## [0.10.5] - 2020-11-08
 ### Changes
