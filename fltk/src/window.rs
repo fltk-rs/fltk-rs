@@ -39,6 +39,13 @@ pub struct Window {
 }
 
 impl Window {
+    /// Creates a default initialized window
+    pub fn default() -> Window {
+        let mut win = <Window as WidgetBase>::default();
+        win.free_position();
+        win
+    }
+
     /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app
     /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
     /// # Safety
@@ -138,6 +145,13 @@ pub struct SingleWindow {
 }
 
 impl SingleWindow {
+    /// Creates a default initialized single window
+    pub fn default() -> SingleWindow {
+        let mut win = <SingleWindow as WidgetBase>::default();
+        win.free_position();
+        win
+    }
+
     /// Use FLTK specific arguments for the application:
     /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
     /// The options are:
@@ -214,6 +228,13 @@ pub struct DoubleWindow {
 }
 
 impl DoubleWindow {
+    /// Creates a default initialized double window
+    pub fn default() -> DoubleWindow {
+        let mut win = <DoubleWindow as WidgetBase>::default();
+        win.free_position();
+        win
+    }
+
     /// Use FLTK specific arguments for the application:
     /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
     /// The options are:
@@ -295,6 +316,15 @@ pub struct MenuWindow {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+impl MenuWindow {
+    /// Creates a default initialized menu window
+    pub fn default() -> MenuWindow {
+        let mut win = <MenuWindow as WidgetBase>::default();
+        win.free_position();
+        win
+    }
+}
+
 /// A wrapper around a raw OpenGL context
 pub type GlContext = *mut raw::c_void;
 
@@ -308,6 +338,13 @@ pub struct GlWindow {
 
 #[cfg(feature = "enable-glwindow")]
 impl GlWindow {
+    /// Creates a default initialized gl window
+    pub fn default() -> GlWindow {
+        let mut win = <GlWindow as WidgetBase>::default();
+        win.free_position();
+        win
+    }
+
     /// Forces the window to be drawn, this window is also made current and calls draw()
     pub fn flush(&mut self) {
         assert!(!self.was_deleted());

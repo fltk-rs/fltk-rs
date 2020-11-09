@@ -2807,6 +2807,9 @@ extern "C" {
     pub fn Fl_Window_fullscreen_active(self_: *const Fl_Window) -> libc::c_uint;
 }
 extern "C" {
+    pub fn Fl_Window_free_position(self_: *mut Fl_Window);
+}
+extern "C" {
     pub fn Fl_Window_find_by_handle(handle: *mut libc::c_void) -> *mut Fl_Window;
 }
 extern "C" {
@@ -3185,6 +3188,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Single_Window_fullscreen_active(self_: *const Fl_Single_Window) -> libc::c_uint;
 }
+extern "C" {
+    pub fn Fl_Single_Window_free_position(self_: *mut Fl_Single_Window);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {
@@ -3545,6 +3551,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Double_Window_fullscreen_active(self_: *const Fl_Double_Window) -> libc::c_uint;
 }
+extern "C" {
+    pub fn Fl_Double_Window_free_position(self_: *mut Fl_Double_Window);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -3899,6 +3908,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Window_fullscreen_active(self_: *const Fl_Menu_Window) -> libc::c_uint;
 }
+extern "C" {
+    pub fn Fl_Menu_Window_free_position(self_: *mut Fl_Menu_Window);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Gl_Window {
@@ -4242,6 +4254,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_fullscreen_active(self_: *const Fl_Gl_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_free_position(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);

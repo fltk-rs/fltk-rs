@@ -26,6 +26,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let border = Ident::new(format!("{}_{}", name_str, "border").as_str(), name.span());
+    let free_position = Ident::new(format!("{}_{}", name_str, "free_position").as_str(), name.span());
     let make_resizable = Ident::new(
         format!("{}_{}", name_str, "make_resizable").as_str(),
         name.span(),
@@ -138,6 +139,12 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #border(self._inner) != 0
+                }
+            }
+
+            fn free_position(&mut self) {
+                unsafe {
+                    #free_position(self._inner)
                 }
             }
 

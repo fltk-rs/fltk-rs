@@ -392,6 +392,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn set_border(&mut self, flag: bool);
     /// Returns whether a window has a border
     fn border(&self) -> bool;
+    /// Frees the position of the window
+    fn free_position(&mut self);
     /// Get the raw system handle of the window
     fn raw_handle(&self) -> crate::window::RawHandle;
     /// Set the window associated with a raw handle.
