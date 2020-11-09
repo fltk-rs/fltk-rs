@@ -82,8 +82,8 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "show_cursor").as_str(),
         name.span(),
     );
-    let set_style_table_entry = Ident::new(
-        format!("{}_{}", name_str, "set_style_table_entry").as_str(),
+    let set_highlight_data = Ident::new(
+        format!("{}_{}", name_str, "set_highlight_data").as_str(),
         name.span(),
     );
     let set_cursor_style = Ident::new(
@@ -427,7 +427,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     sizes.push(entry.size as i32);
                 }
                 unsafe {
-                    #set_style_table_entry(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32)
+                    #set_highlight_data(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32)
                 }
             }
 

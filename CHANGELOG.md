@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.10.6] - 2020-11-10
+### Changes
+- No longer force the position of default init windows and keep it up to the window manager.
+- Add WindowExt::free_position().
+- Change C api set_style_table_entry to set_highlight_data.
+
 ## [0.10.5] - 2020-11-08
 ### Changes
 - Patch fltk to fix behavior of Fl_Win32_At_Exit() with mingw toolchain.

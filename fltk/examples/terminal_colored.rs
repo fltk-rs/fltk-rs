@@ -53,7 +53,7 @@ impl Term {
         }
     }
 
-    fn append(&mut self, txt: &str) {
+    fn append_txt(&mut self, txt: &str) {
         self.term.append(txt);
         if txt == self.current_dir.as_str() {
             self.sbuf.append(&"C".repeat(txt.len()));
@@ -131,7 +131,7 @@ fn main() {
     let mut term = Term::new();
 
     let dir = term.current_dir.clone();
-    term.append(&dir);
+    term.append_txt(&dir);
 
     wind.make_resizable(true);
     wind.end();
@@ -145,15 +145,15 @@ fn main() {
         match ev {
             Event::KeyDown => match app::event_key() {
                 Key::Enter => {
-                    term.append("\n");
+                    term.append_txt("\n");
                     let out = term.run_command();
                     if out.contains("not found") {
                         term.append_error(&out);
                     } else {
-                        term.append(&out);
+                        term.append_txt(&out);
                     }
                     let current_dir = term.current_dir.clone();
-                    term.append(&current_dir);
+                    term.append_txt(&current_dir);
                     term.cmd.clear();
                     true
                 }
@@ -171,7 +171,7 @@ fn main() {
                 _ => {
                     let temp = app::event_text();
                     term.cmd.push_str(&temp);
-                    term.append(&temp);
+                    term.append_txt(&temp);
                     true
                 }
             },

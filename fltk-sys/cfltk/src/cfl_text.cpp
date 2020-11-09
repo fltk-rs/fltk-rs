@@ -68,8 +68,8 @@
     void widget##_show_cursor(widget *self, int boolean) {                                         \
         LOCK(if (boolean) self->show_cursor(); else self->hide_cursor();)                          \
     }                                                                                              \
-    void widget##_set_style_table_entry(widget *self, void *sbuff, unsigned int *color, int *font, \
-                                        int *fontsz, int sz) {                                     \
+    void widget##_set_highlight_data(widget *self, void *sbuff, unsigned int *color, int *font,    \
+                                     int *fontsz, int sz) {                                        \
         Fl_Text_Display::Style_Table_Entry *stable = new Fl_Text_Display::Style_Table_Entry[sz];   \
         if (!stable)                                                                               \
             return;                                                                                \

@@ -66,6 +66,9 @@
     }                                                                                              \
     unsigned int widget##_fullscreen_active(const widget *self) {                                  \
         return self->fullscreen_active();                                                          \
+    }                                                                                              \
+    void widget##_free_position(widget *self) {                                                    \
+        LOCK(self->free_position())                                                                \
     }
 
 WIDGET_CLASS(Fl_Window)
