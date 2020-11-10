@@ -158,11 +158,6 @@ fn main() {
             dst.define("CFLTK_USE_OPENGL", "OFF");
         }
 
-        if cfg!(feature = "cpp-testing") {
-            println!("cargo:rerun-if-changed=cfltk/tests/test1.cpp");
-            dst.define("CFLTK_BUILD_TESTS", "ON");
-        }
-
         if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN") {
             dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
         }
@@ -283,7 +278,7 @@ fn main() {
                 println!("cargo:rustc-link-lib=c++_shared");
             }
             "ios" => {
-                // Also experimental
+                // Experimental
                 println!("cargo:rustc-link-lib=framework=UIKit");
             }
             _ => {
