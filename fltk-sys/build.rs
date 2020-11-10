@@ -180,7 +180,6 @@ fn main() {
         let _dst = dst
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
-            .define("CMAKE_INSTALL_PREFIX", out_dir.parent().unwrap().join("lib"))
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
             .define("FLTK_BUILD_FLUID", "OFF")
