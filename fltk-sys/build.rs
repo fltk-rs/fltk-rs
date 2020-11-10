@@ -85,8 +85,14 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/src/cfl_printer.cpp");
 
         Command::new("git")
-            .args(&["submodule", "update", "--init"])
+            .args(&["submodule", "update", "--init", "--recursive"])
             .current_dir(manifest_dir.clone())
+            .status()
+            .expect("Git is needed to retrieve the fltk source files!");
+
+        Command::new("git")
+            .args(&["checkout", "main"])
+            .current_dir(manifest_dir.join("cfltk"))
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
 
