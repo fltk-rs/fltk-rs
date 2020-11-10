@@ -32,4 +32,3 @@ legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy Op
 fltk-bundled = ["fltk-sys/fltk-bundled"] # Support for bundled versions of cfltk and fltk (requires curl and tar)
 enable-glwindow = ["fltk-sys/enable-glwindow"] # Support for systems without OpenGL
 no-images = ["fltk-sys/no-images"] # (Experimental) You can use this feature if your app doesn't use images to reduce binary size
-cpp-testing = ["fltk-sys/cpp-testing"] # For internal C++ testing

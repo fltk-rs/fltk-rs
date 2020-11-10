@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.7] - Unreleased
+### Changes
+- Separate the C api "cfltk" into a separate repo and add via submodules.
+- Restructuring the repo accordingly.
+
 ## [0.10.6] - 2020-11-10
 ### Changes
 - No longer force the position of default init windows and keep it up to the window manager.

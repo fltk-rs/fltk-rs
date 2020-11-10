@@ -85,8 +85,14 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/src/cfl_printer.cpp");
 
         Command::new("git")
-            .args(&["submodule", "update", "--init"])
+            .args(&["submodule", "update", "--init", "--recursive"])
             .current_dir(manifest_dir.clone())
+            .status()
+            .expect("Git is needed to retrieve the fltk source files!");
+
+        Command::new("git")
+            .args(&["checkout", "main"])
+            .current_dir(manifest_dir.join("cfltk"))
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
 
@@ -152,11 +158,6 @@ fn main() {
             dst.define("CFLTK_USE_OPENGL", "OFF");
         }
 
-        if cfg!(feature = "cpp-testing") {
-            println!("cargo:rerun-if-changed=cfltk/tests/test1.cpp");
-            dst.define("CFLTK_BUILD_TESTS", "ON");
-        }
-
         if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN") {
             dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
         }
@@ -198,6 +199,11 @@ fn main() {
     println!(
         "cargo:rustc-link-search=native={}",
         out_dir.join("build").display()
+    );
+
+    println!(
+        "cargo:rustc-link-search=native={}",
+        out_dir.join("build").join("Release").display()
     );
 
     println!(
@@ -272,7 +278,7 @@ fn main() {
                 println!("cargo:rustc-link-lib=c++_shared");
             }
             "ios" => {
-                // Also experimental
+                // Experimental
                 println!("cargo:rustc-link-lib=framework=UIKit");
             }
             _ => {

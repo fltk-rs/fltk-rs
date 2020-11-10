@@ -1,4 +1,4 @@
-[submodule "fltk-sys/cflt/fltk"]
-	path = fltk-sys/cfltk/fltk
-	url = https://github.com/fltk/fltk
-	branch = master
+[submodule "fltk-sys/cfltk"]
+	path = fltk-sys/cfltk
+	url = https://github.com/MoAlyousef/cfltk
+	branch = main
