@@ -24,6 +24,9 @@ extern "C" {
     pub fn Fl_awake(handler: Fl_Awake_Handler, data: *mut libc::c_void) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_awake2();
+}
+extern "C" {
     pub fn Fl_set_scrollbar_size(arg1: libc::c_int);
 }
 extern "C" {

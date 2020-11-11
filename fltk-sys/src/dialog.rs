@@ -303,6 +303,48 @@ extern "C" {
     pub fn Fl_File_Chooser_visible(self_: *mut Fl_File_Chooser) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_File_Chooser_set_add_favorites_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_all_files_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_custom_filter_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_existing_file_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_favorites_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_filename_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_filesystems_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_manage_favorites_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_new_directory_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_new_directory_tooltip(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_preview_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_save_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_show_label(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_hidden_label(msg: *const libc::c_char);
+}
+extern "C" {
     pub fn Fl_dir_chooser(
         message: *const libc::c_char,
         fname: *const libc::c_char,

@@ -161,28 +161,24 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler(
+    pub fn Fl_Widget_handle(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler2(
+    pub fn Fl_Widget_handle2(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw(
-        self_: *mut Fl_Widget,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw2(
+    pub fn Fl_Widget_draw2(
         self_: *mut Fl_Widget,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -426,32 +422,24 @@ extern "C" {
     pub fn Fl_Input_set_image(arg1: *mut Fl_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Input_set_handler(
+    pub fn Fl_Input_handle(
         self_: *mut Fl_Input,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Input_set_handler2(
+    pub fn Fl_Input_handle2(
         self_: *mut Fl_Input,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Input_set_draw(
-        self_: *mut Fl_Input,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Input_draw(self_: *mut Fl_Input, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Input_set_draw2(
-        self_: *mut Fl_Input,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Input_draw2(self_: *mut Fl_Input, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Input_set_trigger(arg1: *mut Fl_Input, arg2: libc::c_int);
@@ -778,28 +766,28 @@ extern "C" {
     pub fn Fl_Int_Input_set_image(arg1: *mut Fl_Int_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_handler(
+    pub fn Fl_Int_Input_handle(
         self_: *mut Fl_Int_Input,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_handler2(
+    pub fn Fl_Int_Input_handle2(
         self_: *mut Fl_Int_Input,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_draw(
+    pub fn Fl_Int_Input_draw(
         self_: *mut Fl_Int_Input,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_draw2(
+    pub fn Fl_Int_Input_draw2(
         self_: *mut Fl_Int_Input,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -1137,28 +1125,28 @@ extern "C" {
     pub fn Fl_Float_Input_set_image(arg1: *mut Fl_Float_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_handler(
+    pub fn Fl_Float_Input_handle(
         self_: *mut Fl_Float_Input,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_handler2(
+    pub fn Fl_Float_Input_handle2(
         self_: *mut Fl_Float_Input,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_draw(
+    pub fn Fl_Float_Input_draw(
         self_: *mut Fl_Float_Input,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_draw2(
+    pub fn Fl_Float_Input_draw2(
         self_: *mut Fl_Float_Input,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -1499,28 +1487,28 @@ extern "C" {
     pub fn Fl_Multiline_Input_set_image(arg1: *mut Fl_Multiline_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_handler(
+    pub fn Fl_Multiline_Input_handle(
         self_: *mut Fl_Multiline_Input,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_handler2(
+    pub fn Fl_Multiline_Input_handle2(
         self_: *mut Fl_Multiline_Input,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_draw(
+    pub fn Fl_Multiline_Input_draw(
         self_: *mut Fl_Multiline_Input,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_draw2(
+    pub fn Fl_Multiline_Input_draw2(
         self_: *mut Fl_Multiline_Input,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -1879,28 +1867,28 @@ extern "C" {
     pub fn Fl_Secret_Input_set_image(arg1: *mut Fl_Secret_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_handler(
+    pub fn Fl_Secret_Input_handle(
         self_: *mut Fl_Secret_Input,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_handler2(
+    pub fn Fl_Secret_Input_handle2(
         self_: *mut Fl_Secret_Input,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_draw(
+    pub fn Fl_Secret_Input_draw(
         self_: *mut Fl_Secret_Input,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_draw2(
+    pub fn Fl_Secret_Input_draw2(
         self_: *mut Fl_Secret_Input,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -2241,28 +2229,28 @@ extern "C" {
     pub fn Fl_File_Input_set_image(arg1: *mut Fl_File_Input, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Input_set_handler(
+    pub fn Fl_File_Input_handle(
         self_: *mut Fl_File_Input,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_File_Input_set_handler2(
+    pub fn Fl_File_Input_handle2(
         self_: *mut Fl_File_Input,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_File_Input_set_draw(
+    pub fn Fl_File_Input_draw(
         self_: *mut Fl_File_Input,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_File_Input_set_draw2(
+    pub fn Fl_File_Input_draw2(
         self_: *mut Fl_File_Input,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,

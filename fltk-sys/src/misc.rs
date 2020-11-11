@@ -161,28 +161,24 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler(
+    pub fn Fl_Widget_handle(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler2(
+    pub fn Fl_Widget_handle2(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw(
-        self_: *mut Fl_Widget,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw2(
+    pub fn Fl_Widget_draw2(
         self_: *mut Fl_Widget,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -426,28 +422,28 @@ extern "C" {
     pub fn Fl_Spinner_set_image(arg1: *mut Fl_Spinner, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Spinner_set_handler(
+    pub fn Fl_Spinner_handle(
         self_: *mut Fl_Spinner,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Spinner_set_handler2(
+    pub fn Fl_Spinner_handle2(
         self_: *mut Fl_Spinner,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Spinner_set_draw(
+    pub fn Fl_Spinner_draw(
         self_: *mut Fl_Spinner,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Spinner_set_draw2(
+    pub fn Fl_Spinner_draw2(
         self_: *mut Fl_Spinner,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -740,32 +736,24 @@ extern "C" {
     pub fn Fl_Clock_set_image(arg1: *mut Fl_Clock, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Clock_set_handler(
+    pub fn Fl_Clock_handle(
         self_: *mut Fl_Clock,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Clock_set_handler2(
+    pub fn Fl_Clock_handle2(
         self_: *mut Fl_Clock,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Clock_set_draw(
-        self_: *mut Fl_Clock,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Clock_draw(self_: *mut Fl_Clock, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Clock_set_draw2(
-        self_: *mut Fl_Clock,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Clock_draw2(self_: *mut Fl_Clock, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Clock_set_trigger(arg1: *mut Fl_Clock, arg2: libc::c_int);
@@ -1005,32 +993,24 @@ extern "C" {
     pub fn Fl_Chart_set_image(arg1: *mut Fl_Chart, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Chart_set_handler(
+    pub fn Fl_Chart_handle(
         self_: *mut Fl_Chart,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Chart_set_handler2(
+    pub fn Fl_Chart_handle2(
         self_: *mut Fl_Chart,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Chart_set_draw(
-        self_: *mut Fl_Chart,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Chart_draw(self_: *mut Fl_Chart, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Chart_set_draw2(
-        self_: *mut Fl_Chart,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Chart_draw2(self_: *mut Fl_Chart, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Chart_set_trigger(arg1: *mut Fl_Chart, arg2: libc::c_int);
@@ -1338,28 +1318,28 @@ extern "C" {
     pub fn Fl_Progress_set_image(arg1: *mut Fl_Progress, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Progress_set_handler(
+    pub fn Fl_Progress_handle(
         self_: *mut Fl_Progress,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Progress_set_handler2(
+    pub fn Fl_Progress_handle2(
         self_: *mut Fl_Progress,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Progress_set_draw(
+    pub fn Fl_Progress_draw(
         self_: *mut Fl_Progress,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Progress_set_draw2(
+    pub fn Fl_Progress_draw2(
         self_: *mut Fl_Progress,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,

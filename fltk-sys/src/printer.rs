@@ -85,3 +85,60 @@ extern "C" {
         y_offset: libc::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Printer_set_dialog_title(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_printer(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_range(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_copies(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_all(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_pages(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_from(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_to(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_properties(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_copyNo(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_print_button(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_cancel_button(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_dialog_print_to_file(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_property_title(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_property_pagesize(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_property_mode(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_property_use(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_property_save(msg: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Printer_set_property_cancel(msg: *const libc::c_char);
+}

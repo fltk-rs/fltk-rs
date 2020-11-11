@@ -161,28 +161,24 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler(
+    pub fn Fl_Widget_handle(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler2(
+    pub fn Fl_Widget_handle2(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw(
-        self_: *mut Fl_Widget,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw2(
+    pub fn Fl_Widget_draw2(
         self_: *mut Fl_Widget,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -426,28 +422,24 @@ extern "C" {
     pub fn Fl_Tree_set_image(arg1: *mut Fl_Tree, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_set_handler(
+    pub fn Fl_Tree_handle(
         self_: *mut Fl_Tree,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Tree_set_handler2(
+    pub fn Fl_Tree_handle2(
         self_: *mut Fl_Tree,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Tree_set_draw(self_: *mut Fl_Tree, cb: custom_draw_callback, data: *mut libc::c_void);
+    pub fn Fl_Tree_draw(self_: *mut Fl_Tree, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_set_draw2(
-        self_: *mut Fl_Tree,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Tree_draw2(self_: *mut Fl_Tree, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Tree_set_trigger(arg1: *mut Fl_Tree, arg2: libc::c_int);
