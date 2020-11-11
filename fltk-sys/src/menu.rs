@@ -161,28 +161,24 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler(
+    pub fn Fl_Widget_handle(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler2(
+    pub fn Fl_Widget_handle2(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw(
-        self_: *mut Fl_Widget,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw2(
+    pub fn Fl_Widget_draw2(
         self_: *mut Fl_Widget,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -431,28 +427,28 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_image(arg1: *mut Fl_Menu_Bar, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_handler(
+    pub fn Fl_Menu_Bar_handle(
         self_: *mut Fl_Menu_Bar,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_handler2(
+    pub fn Fl_Menu_Bar_handle2(
         self_: *mut Fl_Menu_Bar,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_draw(
+    pub fn Fl_Menu_Bar_draw(
         self_: *mut Fl_Menu_Bar,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_draw2(
+    pub fn Fl_Menu_Bar_draw2(
         self_: *mut Fl_Menu_Bar,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -793,28 +789,28 @@ extern "C" {
     pub fn Fl_Menu_Button_set_image(arg1: *mut Fl_Menu_Button, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_handler(
+    pub fn Fl_Menu_Button_handle(
         self_: *mut Fl_Menu_Button,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_handler2(
+    pub fn Fl_Menu_Button_handle2(
         self_: *mut Fl_Menu_Button,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_draw(
+    pub fn Fl_Menu_Button_draw(
         self_: *mut Fl_Menu_Button,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_draw2(
+    pub fn Fl_Menu_Button_draw2(
         self_: *mut Fl_Menu_Button,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -1167,28 +1163,24 @@ extern "C" {
     pub fn Fl_Choice_set_image(arg1: *mut Fl_Choice, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Choice_set_handler(
+    pub fn Fl_Choice_handle(
         self_: *mut Fl_Choice,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Choice_set_handler2(
+    pub fn Fl_Choice_handle2(
         self_: *mut Fl_Choice,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Choice_set_draw(
-        self_: *mut Fl_Choice,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Choice_draw(self_: *mut Fl_Choice, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Choice_set_draw2(
+    pub fn Fl_Choice_draw2(
         self_: *mut Fl_Choice,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -1521,28 +1513,28 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_image(arg1: *mut Fl_Sys_Menu_Bar, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_handler(
+    pub fn Fl_Sys_Menu_Bar_handle(
         self_: *mut Fl_Sys_Menu_Bar,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_handler2(
+    pub fn Fl_Sys_Menu_Bar_handle2(
         self_: *mut Fl_Sys_Menu_Bar,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_draw(
+    pub fn Fl_Sys_Menu_Bar_draw(
         self_: *mut Fl_Sys_Menu_Bar,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_draw2(
+    pub fn Fl_Sys_Menu_Bar_draw2(
         self_: *mut Fl_Sys_Menu_Bar,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,

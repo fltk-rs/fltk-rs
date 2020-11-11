@@ -62,6 +62,7 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/include/cfl_table.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_surface.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_printer.h");
+        println!("cargo:rerun-if-changed=cfltk/src/cfl_global.hpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_new.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_widget.cpp");

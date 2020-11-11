@@ -161,28 +161,24 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler(
+    pub fn Fl_Widget_handle(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler2(
+    pub fn Fl_Widget_handle2(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw(
-        self_: *mut Fl_Widget,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw2(
+    pub fn Fl_Widget_draw2(
         self_: *mut Fl_Widget,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -606,28 +602,28 @@ extern "C" {
     pub fn Fl_Text_Display_set_image(arg1: *mut Fl_Text_Display, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_handler(
+    pub fn Fl_Text_Display_handle(
         self_: *mut Fl_Text_Display,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_handler2(
+    pub fn Fl_Text_Display_handle2(
         self_: *mut Fl_Text_Display,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_draw(
+    pub fn Fl_Text_Display_draw(
         self_: *mut Fl_Text_Display,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_draw2(
+    pub fn Fl_Text_Display_draw2(
         self_: *mut Fl_Text_Display,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -1108,28 +1104,28 @@ extern "C" {
     pub fn Fl_Text_Editor_set_image(arg1: *mut Fl_Text_Editor, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_handler(
+    pub fn Fl_Text_Editor_handle(
         self_: *mut Fl_Text_Editor,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_handler2(
+    pub fn Fl_Text_Editor_handle2(
         self_: *mut Fl_Text_Editor,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_draw(
+    pub fn Fl_Text_Editor_draw(
         self_: *mut Fl_Text_Editor,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_draw2(
+    pub fn Fl_Text_Editor_draw2(
         self_: *mut Fl_Text_Editor,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -1692,28 +1688,28 @@ extern "C" {
     pub fn Fl_Simple_Terminal_set_image(arg1: *mut Fl_Simple_Terminal, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_handler(
+    pub fn Fl_Simple_Terminal_handle(
         self_: *mut Fl_Simple_Terminal,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_handler2(
+    pub fn Fl_Simple_Terminal_handle2(
         self_: *mut Fl_Simple_Terminal,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_draw(
+    pub fn Fl_Simple_Terminal_draw(
         self_: *mut Fl_Simple_Terminal,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_draw2(
+    pub fn Fl_Simple_Terminal_draw2(
         self_: *mut Fl_Simple_Terminal,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,

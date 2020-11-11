@@ -161,28 +161,24 @@ extern "C" {
     pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler(
+    pub fn Fl_Widget_handle(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_handler2(
+    pub fn Fl_Widget_handle2(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw(
-        self_: *mut Fl_Widget,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw2(
+    pub fn Fl_Widget_draw2(
         self_: *mut Fl_Widget,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -426,32 +422,24 @@ extern "C" {
     pub fn Fl_Group_set_image(arg1: *mut Fl_Group, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Group_set_handler(
+    pub fn Fl_Group_handle(
         self_: *mut Fl_Group,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Group_set_handler2(
+    pub fn Fl_Group_handle2(
         self_: *mut Fl_Group,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Group_set_draw(
-        self_: *mut Fl_Group,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Group_draw(self_: *mut Fl_Group, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Group_set_draw2(
-        self_: *mut Fl_Group,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Group_draw2(self_: *mut Fl_Group, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Group_set_trigger(arg1: *mut Fl_Group, arg2: libc::c_int);
@@ -721,28 +709,24 @@ extern "C" {
     pub fn Fl_Pack_set_image(arg1: *mut Fl_Pack, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Pack_set_handler(
+    pub fn Fl_Pack_handle(
         self_: *mut Fl_Pack,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Pack_set_handler2(
+    pub fn Fl_Pack_handle2(
         self_: *mut Fl_Pack,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Pack_set_draw(self_: *mut Fl_Pack, cb: custom_draw_callback, data: *mut libc::c_void);
+    pub fn Fl_Pack_draw(self_: *mut Fl_Pack, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Pack_set_draw2(
-        self_: *mut Fl_Pack,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Pack_draw2(self_: *mut Fl_Pack, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Pack_set_trigger(arg1: *mut Fl_Pack, arg2: libc::c_int);
@@ -1012,28 +996,24 @@ extern "C" {
     pub fn Fl_Scroll_set_image(arg1: *mut Fl_Scroll, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Scroll_set_handler(
+    pub fn Fl_Scroll_handle(
         self_: *mut Fl_Scroll,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Scroll_set_handler2(
+    pub fn Fl_Scroll_handle2(
         self_: *mut Fl_Scroll,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Scroll_set_draw(
-        self_: *mut Fl_Scroll,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Scroll_draw(self_: *mut Fl_Scroll, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Scroll_set_draw2(
+    pub fn Fl_Scroll_draw2(
         self_: *mut Fl_Scroll,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -1328,28 +1308,24 @@ extern "C" {
     pub fn Fl_Tabs_set_image(arg1: *mut Fl_Tabs, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Tabs_set_handler(
+    pub fn Fl_Tabs_handle(
         self_: *mut Fl_Tabs,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Tabs_set_handler2(
+    pub fn Fl_Tabs_handle2(
         self_: *mut Fl_Tabs,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Tabs_set_draw(self_: *mut Fl_Tabs, cb: custom_draw_callback, data: *mut libc::c_void);
+    pub fn Fl_Tabs_draw(self_: *mut Fl_Tabs, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Tabs_set_draw2(
-        self_: *mut Fl_Tabs,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Tabs_draw2(self_: *mut Fl_Tabs, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Tabs_set_trigger(arg1: *mut Fl_Tabs, arg2: libc::c_int);
@@ -1646,28 +1622,24 @@ extern "C" {
     pub fn Fl_Tile_set_image(arg1: *mut Fl_Tile, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Tile_set_handler(
+    pub fn Fl_Tile_handle(
         self_: *mut Fl_Tile,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Tile_set_handler2(
+    pub fn Fl_Tile_handle2(
         self_: *mut Fl_Tile,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Tile_set_draw(self_: *mut Fl_Tile, cb: custom_draw_callback, data: *mut libc::c_void);
+    pub fn Fl_Tile_draw(self_: *mut Fl_Tile, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Tile_set_draw2(
-        self_: *mut Fl_Tile,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Tile_draw2(self_: *mut Fl_Tile, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Tile_set_trigger(arg1: *mut Fl_Tile, arg2: libc::c_int);
@@ -1937,28 +1909,24 @@ extern "C" {
     pub fn Fl_Wizard_set_image(arg1: *mut Fl_Wizard, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Wizard_set_handler(
+    pub fn Fl_Wizard_handle(
         self_: *mut Fl_Wizard,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Wizard_set_handler2(
+    pub fn Fl_Wizard_handle2(
         self_: *mut Fl_Wizard,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Wizard_set_draw(
-        self_: *mut Fl_Wizard,
-        cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
+    pub fn Fl_Wizard_draw(self_: *mut Fl_Wizard, cb: custom_draw_callback, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Wizard_set_draw2(
+    pub fn Fl_Wizard_draw2(
         self_: *mut Fl_Wizard,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,
@@ -2244,28 +2212,28 @@ extern "C" {
     pub fn Fl_Color_Chooser_set_image(arg1: *mut Fl_Color_Chooser, arg2: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Color_Chooser_set_handler(
+    pub fn Fl_Color_Chooser_handle(
         self_: *mut Fl_Color_Chooser,
         cb: custom_handler_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Color_Chooser_set_handler2(
+    pub fn Fl_Color_Chooser_handle2(
         self_: *mut Fl_Color_Chooser,
         cb: custom_handler_callback2,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Color_Chooser_set_draw(
+    pub fn Fl_Color_Chooser_draw(
         self_: *mut Fl_Color_Chooser,
         cb: custom_draw_callback,
         data: *mut libc::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Color_Chooser_set_draw2(
+    pub fn Fl_Color_Chooser_draw2(
         self_: *mut Fl_Color_Chooser,
         cb: custom_draw_callback2,
         data: *mut libc::c_void,

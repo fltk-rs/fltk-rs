@@ -9,17 +9,17 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
     let name_str = get_fl_name(name.to_string());
     let ptr_name = Ident::new(name_str.as_str(), name.span());
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
-    let set_handler = Ident::new(
-        format!("{}_{}", name_str, "set_handler").as_str(),
+    let handle = Ident::new(
+        format!("{}_{}", name_str, "handle").as_str(),
         name.span(),
     );
-    let set_handler2 = Ident::new(
-        format!("{}_{}", name_str, "set_handler2").as_str(),
+    let handle2 = Ident::new(
+        format!("{}_{}", name_str, "handle2").as_str(),
         name.span(),
     );
-    let set_draw = Ident::new(format!("{}_{}", name_str, "set_draw").as_str(), name.span());
-    let set_draw2 = Ident::new(
-        format!("{}_{}", name_str, "set_draw2").as_str(),
+    let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
+    let draw2 = Ident::new(
+        format!("{}_{}", name_str, "draw2").as_str(),
         name.span(),
     );
     let handle_data = Ident::new(
@@ -120,7 +120,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_handler_callback = Some(shim);
-                    #set_handler(self._inner, callback, data);
+                    #handle(self._inner, callback, data);
                 }
             }
 
@@ -146,7 +146,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self, Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_handler_callback2 = Some(shim);
-                    #set_handler2(self._inner, callback, data);
+                    #handle2(self._inner, callback, data);
                 }
             }
 
@@ -162,7 +162,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_callback = Some(shim);
-                    #set_draw(self._inner, callback, data);
+                    #draw(self._inner, callback, data);
                 }
             }
 
@@ -179,7 +179,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_callback2 = Some(shim);
-                    #set_draw2(self._inner, callback, data);
+                    #draw2(self._inner, callback, data);
                 }
             }
 
@@ -191,7 +191,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     }
                     let data = ptr as *mut Box<dyn FnMut()>;
                     let data = Box::from_raw(data);
-                    #set_draw(self._inner, None, std::ptr::null_mut());
+                    #draw(self._inner, None, std::ptr::null_mut());
                     Some(*data)
                 }
             }
@@ -204,7 +204,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     }
                     let data = ptr as *mut Box<dyn FnMut(Event) -> bool>;
                     let data = Box::from_raw(data);
-                    #set_handler(self._inner, None, std::ptr::null_mut());
+                    #handle(self._inner, None, std::ptr::null_mut());
                     Some(*data)
                 }
             }

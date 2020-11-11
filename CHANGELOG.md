@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.10.7] - Unreleased
+## [0.10.7] - 2020-11-11
 ### Changes
 - Separate the C api "cfltk" into a separate repo and add via submodules.
 - Restructuring the repo accordingly.

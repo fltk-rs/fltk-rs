@@ -195,12 +195,12 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "tab_cell_nav").as_str(),
         name.span(),
     );
-    let set_draw_cell = Ident::new(
-        format!("{}_{}", name_str, "set_draw_cell").as_str(),
+    let draw_cell = Ident::new(
+        format!("{}_{}", name_str, "draw_cell").as_str(),
         name.span(),
     );
-    let set_draw_cell2 = Ident::new(
-        format!("{}_{}", name_str, "set_draw_cell2").as_str(),
+    let draw_cell2 = Ident::new(
+        format!("{}_{}", name_str, "draw_cell2").as_str(),
         name.span(),
     );
     let draw_cell_data = Ident::new(
@@ -614,7 +614,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_cell_callback = Some(shim);
-                    #set_draw_cell(self._inner, callback, data);
+                    #draw_cell(self._inner, callback, data);
                 }
             }
 
@@ -634,7 +634,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_cell_callback2 = Some(shim);
-                    #set_draw_cell2(self._inner, callback, data);
+                    #draw_cell2(self._inner, callback, data);
                 }
             }
 
