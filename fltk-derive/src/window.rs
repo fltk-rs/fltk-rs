@@ -27,10 +27,6 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     );
     let border = Ident::new(format!("{}_{}", name_str, "border").as_str(), name.span());
     let free_position = Ident::new(format!("{}_{}", name_str, "free_position").as_str(), name.span());
-    let make_resizable = Ident::new(
-        format!("{}_{}", name_str, "make_resizable").as_str(),
-        name.span(),
-    );
     let set_cursor = Ident::new(
         format!("{}_{}", name_str, "set_cursor").as_str(),
         name.span(),
@@ -99,15 +95,6 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     unsafe { image.increment_arc(); #set_icon(self._inner, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_icon(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
-                }
-            }
-
-            fn make_resizable(&mut self, val: bool) {
-                assert!(!self.was_deleted());
-                if val {
-                    unsafe {
-                        #make_resizable(self._inner, self._inner as *mut raw::c_void)
-                    }
                 }
             }
 

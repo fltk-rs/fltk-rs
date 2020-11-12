@@ -219,7 +219,7 @@ pub unsafe trait WidgetExt {
     /// Sets the alignment of the widget
     fn set_align(&mut self, align: Align);
     /// Returns the parent of the widget
-    fn parent(&self) -> Option<Box<dyn WidgetExt>>;
+    fn parent(&self) -> Option<Box<dyn GroupExt>>;
     /// Gets the selection color of the widget
     fn selection_color(&mut self) -> Color;
     /// Sets the selection color of the widget
@@ -361,6 +361,8 @@ pub unsafe trait GroupExt: WidgetExt {
     fn resizable<W: WidgetExt>(&self, widget: &mut W)
     where
         Self: Sized;
+    /// Make the window resizable, should be called before ```show```
+    fn make_resizable(&mut self, val: bool);
 }
 
 /// Defines the methods implemented by all window widgets
@@ -381,8 +383,6 @@ pub unsafe trait WindowExt: GroupExt {
     fn set_icon<T: ImageExt>(&mut self, image: Option<T>)
     where
         Self: Sized;
-    /// Make the window resizable, should be called before ```show```
-    fn make_resizable(&mut self, val: bool);
     /// Sets the cursor style within the window
     /// Needs to be called after the window is shown
     fn set_cursor(&mut self, cursor: Cursor);

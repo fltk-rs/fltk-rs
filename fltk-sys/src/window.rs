@@ -2741,9 +2741,6 @@ extern "C" {
     pub fn Fl_Window_icon(arg1: *const Fl_Window) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Window_make_resizable(self_: *mut Fl_Window, arg1: *mut libc::c_void);
-}
-extern "C" {
     pub fn Fl_Window_set_cursor(self_: *mut Fl_Window, cursor: libc::c_int);
 }
 extern "C" {
@@ -3123,9 +3120,6 @@ extern "C" {
     pub fn Fl_Single_Window_icon(arg1: *const Fl_Single_Window) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Single_Window_make_resizable(self_: *mut Fl_Single_Window, arg1: *mut libc::c_void);
-}
-extern "C" {
     pub fn Fl_Single_Window_set_cursor(self_: *mut Fl_Single_Window, cursor: libc::c_int);
 }
 extern "C" {
@@ -3486,9 +3480,6 @@ extern "C" {
     pub fn Fl_Double_Window_icon(arg1: *const Fl_Double_Window) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Double_Window_make_resizable(self_: *mut Fl_Double_Window, arg1: *mut libc::c_void);
-}
-extern "C" {
     pub fn Fl_Double_Window_set_cursor(self_: *mut Fl_Double_Window, cursor: libc::c_int);
 }
 extern "C" {
@@ -3843,9 +3834,6 @@ extern "C" {
     pub fn Fl_Menu_Window_icon(arg1: *const Fl_Menu_Window) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_make_resizable(self_: *mut Fl_Menu_Window, arg1: *mut libc::c_void);
-}
-extern "C" {
     pub fn Fl_Menu_Window_set_cursor(self_: *mut Fl_Menu_Window, cursor: libc::c_int);
 }
 extern "C" {
@@ -4188,9 +4176,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_icon(arg1: *const Fl_Gl_Window) -> *mut libc::c_void;
-}
-extern "C" {
-    pub fn Fl_Gl_Window_make_resizable(self_: *mut Fl_Gl_Window, arg1: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_cursor(self_: *mut Fl_Gl_Window, cursor: libc::c_int);
