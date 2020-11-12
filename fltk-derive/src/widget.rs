@@ -630,14 +630,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn parent(&self) -> Option<Box<dyn WidgetExt>> {
+            fn parent(&self) -> Option<Box<dyn GroupExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let x = #parent(self._inner);
                     if x.is_null() {
                         None
                     } else {
-                        Some(Box::new(crate::widget::Widget::from_widget_ptr(x as *mut _)))
+                        Some(Box::new(crate::group::Group::from_widget_ptr(x as *mut _)))
                     }
                 }
             }

@@ -64,7 +64,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #find(self._inner, widget.as_widget_ptr() as *mut raw::c_void) as u32
+                    #find(self._inner, widget.as_widget_ptr() as *mut _) as u32
                 }
             }
 
@@ -72,7 +72,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #add(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
+                    #add(self._inner, widget.as_widget_ptr() as *mut _)
                 }
             }
 
@@ -81,7 +81,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     debug_assert!(index <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #insert(self._inner, widget.as_widget_ptr() as *mut raw::c_void, index as i32)
+                    #insert(self._inner, widget.as_widget_ptr() as *mut _, index as i32)
                 }
             }
 
@@ -89,7 +89,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #remove(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
+                    #remove(self._inner, widget.as_widget_ptr() as *mut _)
                 }
             }
 
@@ -97,7 +97,15 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #resizable(self._inner, widget.as_widget_ptr() as *mut raw::c_void)
+                    #resizable(self._inner, widget.as_widget_ptr() as *mut _)
+                }
+            }
+
+            fn make_resizable(&mut self, val: bool) {
+                assert!(!self.was_deleted());
+                let ptr = if val { self._inner } else { std::ptr::null_mut() };
+                unsafe {
+                    #resizable(self._inner, ptr as *mut _)
                 }
             }
         }
