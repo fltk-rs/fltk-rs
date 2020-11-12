@@ -92,7 +92,7 @@ fn main() {
             .expect("Git is needed to retrieve the fltk source files!");
 
         Command::new("git")
-            .args(&["checkout", "main"])
+            .args(&["checkout", "stable"])
             .current_dir(manifest_dir.join("cfltk"))
             .status()
             .expect("Git is needed to retrieve the fltk source files!");

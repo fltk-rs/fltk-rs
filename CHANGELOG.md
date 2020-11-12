@@ -4,6 +4,7 @@
 ### Changes
 - WindowExt::make_resizable moved to GroupExt::make_resizable.
 - WidgetExt::parent returns a boxed GroupExt instead of a WidgetExt.
+- Follow cfltk stable branch instead of main.
 
 ## [0.10.7] - 2020-11-11
 ### Changes
