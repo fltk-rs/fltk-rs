@@ -264,6 +264,7 @@ pub struct ColorChooser {
 }
 
 impl ColorChooser {
+    /// Return the rgb color
     pub fn rgb_color(&self) -> (u8, u8, u8) {
         unsafe {
             assert!(!self.was_deleted());
@@ -273,6 +274,8 @@ impl ColorChooser {
             (r, g, b)
         }
     }
+
+    /// Return the hex color
     pub fn hex_color(&self) -> u32 {
         assert!(!self.was_deleted());
         let c = self.rgb_color();
@@ -282,15 +285,41 @@ impl ColorChooser {
 }
 
 impl Pack {
+    /// Get the spacing of the pack
     pub fn spacing(&self) -> i32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Pack_spacing(self._inner) }
     }
 
+    /// Set the spacing of the pack
     pub fn set_spacing(&mut self, spacing: i32) {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Pack_set_spacing(self._inner, spacing);
+        }
+    }
+
+    /// Layout the children of the pack automatically
+    /// Must be called on existing children
+    pub fn auto_layout(&mut self) {
+        let children = self.children() as i32;
+        let t = self.get_type::<PackType>();
+        let w = self.width() / children;
+        let h = self.height() / children;
+        
+
+        for i in 0..children {
+            unsafe {
+                let mut c = self.child(i as u32).unwrap();
+                let c_w = c.width();
+                let c_h = c.height();
+                if t == PackType::Vertical {
+                    c.set_size(c_w, h);
+                } else {
+                    c.set_size(w, c_h);
+                }
+                Fl_Pack_resizable(self._inner, c.as_widget_ptr() as *mut _);
+            }
         }
     }
 }

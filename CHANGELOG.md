@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.9] - Unreleased
+### Changes
+- Add Pack::auto_layout.
+- GroupExt::resizable() takes a &WidgetExt instead of a &mut WidgetExt.
+
 ## [0.10.8] - 2020-11-13
 ### Changes
 - WindowExt::make_resizable moved to GroupExt::make_resizable.
