@@ -92,18 +92,6 @@ fn main() {
             .expect("Git is needed to retrieve the fltk source files!");
 
         Command::new("git")
-            .args(&["checkout", "stable"])
-            .current_dir(manifest_dir.join("cfltk"))
-            .status()
-            .expect("Git is needed to retrieve the fltk source files!");
-
-        Command::new("git")
-            .args(&["checkout", "master"])
-            .current_dir(manifest_dir.join("cfltk").join("fltk"))
-            .status()
-            .expect("Git is needed to retrieve the fltk source files!");
-
-        Command::new("git")
             .args(&["apply", "../fltk.patch"])
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
@@ -192,7 +180,7 @@ fn main() {
     }
 
     Command::new("git")
-        .args(&["reset", "--hard", "master"])
+        .args(&["reset", "--hard"])
         .current_dir(manifest_dir.join("cfltk").join("fltk"))
         .status()
         .expect("Git is needed to retrieve the fltk source files!");
