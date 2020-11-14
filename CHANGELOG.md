@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.10] - Unreleased
+### Changes
+- Clean up build script.
+- Account for spacing with auto_layout.
+
 ## [0.10.9] - 2020-11-15
 ### Changes
 - Add Pack::auto_layout.
