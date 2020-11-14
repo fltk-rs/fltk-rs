@@ -93,7 +93,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn resizable<W: WidgetExt>(&self, widget: &mut W) {
+            fn resizable<W: WidgetExt>(&self, widget: &W) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());

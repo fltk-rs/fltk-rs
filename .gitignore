@@ -9,3 +9,4 @@ temp.*
 compile_commands.json
 /.clangd
 *.ttf
+/.cache

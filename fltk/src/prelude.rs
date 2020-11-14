@@ -358,7 +358,7 @@ pub unsafe trait GroupExt: WidgetExt {
     where
         Self: Sized;
     /// Make the passed widget resizable
-    fn resizable<W: WidgetExt>(&self, widget: &mut W)
+    fn resizable<W: WidgetExt>(&self, widget: &W)
     where
         Self: Sized;
     /// Make the window resizable, should be called before ```show```

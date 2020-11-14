@@ -28,11 +28,11 @@ struct MyButton {
 impl MyButton {
     pub fn new(title: &str) -> MyButton {
         let mut b = MyButton {
-            btn: Button::new(0, 0, 90, 60, title),
+            btn: Button::new(0, 0, 90, 0, title),
         };
         match title {
             "0" => {
-                b.resize(0, 0, 90 * 2, 60);
+                b.resize(0, 0, 90 * 2, 0);
                 b.set_color(Color::Light2);
                 b.set_shortcut(Shortcut::None | '0');
             }
