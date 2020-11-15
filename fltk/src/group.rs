@@ -310,16 +310,13 @@ impl Pack {
         let h = (self.height() - spacing) / children;
 
         for i in 0..children {
-            unsafe {
-                let mut c = self.child(i as u32).unwrap();
-                let c_w = c.width();
-                let c_h = c.height();
-                if t == PackType::Vertical {
-                    c.set_size(c_w, h);
-                } else {
-                    c.set_size(w, c_h);
-                }
-                Fl_Pack_resizable(self._inner, c.as_widget_ptr() as *mut _);
+            let mut c = self.child(i as u32).unwrap();
+            let c_w = c.width();
+            let c_h = c.height();
+            if t == PackType::Vertical {
+                c.set_size(c_w, h);
+            } else {
+                c.set_size(w, c_h);
             }
         }
     }
