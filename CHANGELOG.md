@@ -4,6 +4,7 @@
 ### Changes
 - Clean up build script.
 - Account for spacing with auto_layout.
+- Add custom widgets: group::HGrid and group::VGrid.
 
 ## [0.10.9] - 2020-11-15
 ### Changes

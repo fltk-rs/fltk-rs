@@ -5,6 +5,7 @@ use fltk_sys::group::*;
 use std::{
     ffi::{CStr, CString},
     mem,
+    ops::{Deref, DerefMut},
     os::raw,
 };
 
@@ -307,7 +308,6 @@ impl Pack {
         let t = self.get_type::<PackType>();
         let w = (self.width() - spacing) / children;
         let h = (self.height() - spacing) / children;
-        
 
         for i in 0..children {
             unsafe {
@@ -322,5 +322,143 @@ impl Pack {
                 Fl_Pack_resizable(self._inner, c.as_widget_ptr() as *mut _);
             }
         }
+    }
+}
+
+/// Defines a Vertical Grid (custom widget)
+/// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing
+/// Requires explicit calls to add, which is overloaded especially for the layout
+#[derive(Debug, Clone)]
+pub struct VGrid {
+    vpack: Pack,
+    rows: i32,
+    cols: i32,
+    current: i32,
+}
+
+impl VGrid {
+    /// Creates a new vertical grid
+    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> VGrid {
+        let vpack = Pack::new(x, y, w, h, label);
+        vpack.end();
+        VGrid {
+            vpack,
+            rows: 1,
+            cols: 1,
+            current: 0,
+        }
+    }
+
+    /// Sets the params for the grid
+    pub fn set_params(&mut self, rows: i32, cols: i32, spacing: i32) {
+        self.vpack.set_spacing(spacing);
+        let rows = if rows < 1 { 1 } else { rows };
+        let cols = if cols < 1 { 1 } else { cols };
+        self.rows = rows;
+        self.cols = cols;
+        for _ in 0..rows {
+            let mut p = Pack::new(0, 0, self.vpack.width(), 0, "");
+            p.set_type(PackType::Horizontal);
+            p.set_spacing(spacing);
+            p.end();
+            self.vpack.add(&p);
+        }
+    }
+
+    /// Adds widgets to the grid
+    pub fn add<W: WidgetExt>(&mut self, w: &W) {
+        let rem = self.current / self.cols;
+        if rem < self.rows {
+            let hpack = self.vpack.child(rem as u32).unwrap();
+            let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
+            hpack.end();
+            hpack.add(w);
+            hpack.auto_layout();
+            self.vpack.auto_layout();
+            self.current += 1;
+        }
+    }
+}
+
+impl Deref for VGrid {
+    type Target = Pack;
+
+    fn deref(&self) -> &Self::Target {
+        &self.vpack
+    }
+}
+
+impl DerefMut for VGrid {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.vpack
+    }
+}
+
+/// Defines a Horizontal Grid (custom widget)
+/// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing
+/// Requires explicit calls to add, which is overloaded especially for the layout
+#[derive(Debug, Clone)]
+pub struct HGrid {
+    hpack: Pack,
+    rows: i32,
+    cols: i32,
+    current: i32,
+}
+
+impl HGrid {
+    /// Creates a new horizontal grid
+    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> HGrid {
+        let mut hpack = Pack::new(x, y, w, h, label);
+        hpack.set_type(PackType::Horizontal);
+        hpack.end();
+        HGrid {
+            hpack,
+            rows: 1,
+            cols: 1,
+            current: 0,
+        }
+    }
+
+    /// Sets the params for the grid
+    pub fn set_params(&mut self, rows: i32, cols: i32, spacing: i32) {
+        self.hpack.set_spacing(spacing);
+        let rows = if rows < 1 { 1 } else { rows };
+        let cols = if cols < 1 { 1 } else { cols };
+        self.rows = rows;
+        self.cols = cols;
+        for _ in 0..cols {
+            let mut p = Pack::new(0, 0, 0, self.hpack.height(), "");
+            p.set_spacing(spacing);
+            p.end();
+            self.hpack.add(&p);
+        }
+    }
+
+    /// Adds widgets to the grid
+    pub fn add<W: WidgetExt>(&mut self, w: &W) {
+        let rem = self.current / self.rows;
+        if rem < self.cols {
+            let vpack = self.hpack.child(rem as u32).unwrap();
+            let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
+            vpack.end();
+            vpack.add(w);
+            vpack.auto_layout();
+            self.hpack.auto_layout();
+            self.current += 1;
+        }
+    }
+}
+
+impl Deref for HGrid {
+    type Target = Pack;
+
+    fn deref(&self) -> &Self::Target {
+        &self.hpack
+    }
+}
+
+impl DerefMut for HGrid {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.hpack
     }
 }
