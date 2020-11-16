@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.10.10] - Unreleased
+## [0.10.10] - 2020-11-17
 ### Changes
 - Clean up build script.
 - Account for spacing with auto_layout.
