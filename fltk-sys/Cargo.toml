@@ -31,4 +31,5 @@ legacy-opengl = []
 fltk-bundled = []
 enable-glwindow = []
 no-images = []
+no-pango = []
 
