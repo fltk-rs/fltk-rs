@@ -5,6 +5,8 @@
 - Clean up build script.
 - Account for spacing with auto_layout.
 - Add custom widgets: group::HGrid and group::VGrid.
+- Add lib search paths for Mageia 7 by @nsalguero.
+- Fix docs on special characters. 
 
 ## [0.10.9] - 2020-11-15
 ### Changes
