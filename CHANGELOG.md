@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.10.10] - 2020-11-17
+### Changes
+- Clean up build script.
+- Account for spacing with auto_layout.
+- Add custom widgets: group::HGrid and group::VGrid.
+- Add lib search paths for Mageia 7 by @nsalguero.
+- Fix docs on special characters. 
+- Add feature: no-pango if rtl and cjk unicode support is not needed on linux/bsd.s
+
 ## [0.10.9] - 2020-11-15
 ### Changes
 - Add Pack::auto_layout.

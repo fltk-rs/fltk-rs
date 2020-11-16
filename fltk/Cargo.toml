@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "0.10.9"
+version = "0.10.10"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
@@ -17,8 +17,8 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "^0.10.9" }
-fltk-derive = { path = "../fltk-derive", version = "^0.10.9" }
+fltk-sys = { path = "../fltk-sys", version = "^0.10.10" }
+fltk-derive = { path = "../fltk-derive", version = "^0.10.10" }
 
 [features]
 default = []
@@ -32,3 +32,4 @@ legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy Op
 fltk-bundled = ["fltk-sys/fltk-bundled"] # Support for bundled versions of cfltk and fltk (requires curl and tar)
 enable-glwindow = ["fltk-sys/enable-glwindow"] # Support for systems without OpenGL
 no-images = ["fltk-sys/no-images"] # (Experimental) You can use this feature if your app doesn't use images to reduce binary size
+no-pango = ["fltk-sys/no-pango"] # (Experimental and Linux only) You can use this if you don't need rtl or cjk unicode support

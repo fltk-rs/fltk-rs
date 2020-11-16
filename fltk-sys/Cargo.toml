@@ -1,6 +1,6 @@
 [package]
 name = "fltk-sys"
-version = "0.10.9"
+version = "0.10.10"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 build = "build.rs"
 edition = "2018"
@@ -31,4 +31,5 @@ legacy-opengl = []
 fltk-bundled = []
 enable-glwindow = []
 no-images = []
+no-pango = []
 

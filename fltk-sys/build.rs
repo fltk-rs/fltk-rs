@@ -156,7 +156,12 @@ fn main() {
         }
 
         if target_triple.contains("linux") && !target_triple.contains("android") {
-            dst.define("OPTION_USE_PANGO", "ON");
+            if cfg!(feature = "no-pango") {
+                dst.define("OPTION_USE_PANGO", "OFF");
+            } else {
+                dst.define("OPTION_USE_PANGO", "ON");
+            }
+            
         }
 
         if target_triple.contains("unknown-linux-musl") {
@@ -202,7 +207,17 @@ fn main() {
 
     println!(
         "cargo:rustc-link-search=native={}",
+        out_dir.join("lib64").display()
+    );
+
+    println!(
+        "cargo:rustc-link-search=native={}",
         out_dir.join("lib").join("Release").display()
+    );
+
+    println!(
+        "cargo:rustc-link-search=native={}",
+        out_dir.join("lib64").join("Release").display()
     );
 
     if !cfg!(feature = "fltk-shared") {
@@ -280,11 +295,13 @@ fn main() {
                 println!("cargo:rustc-link-lib=dylib=Xfixes");
                 println!("cargo:rustc-link-lib=dylib=Xft");
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
-                println!("cargo:rustc-link-lib=dylib=pango-1.0");
-                println!("cargo:rustc-link-lib=dylib=pangoxft-1.0");
-                println!("cargo:rustc-link-lib=dylib=gobject-2.0");
-                println!("cargo:rustc-link-lib=dylib=cairo");
-                println!("cargo:rustc-link-lib=dylib=pangocairo-1.0");
+                if !cfg!(feature = "no-pango") {
+                    println!("cargo:rustc-link-lib=dylib=pango-1.0");
+                    println!("cargo:rustc-link-lib=dylib=pangoxft-1.0");
+                    println!("cargo:rustc-link-lib=dylib=gobject-2.0");
+                    println!("cargo:rustc-link-lib=dylib=cairo");
+                    println!("cargo:rustc-link-lib=dylib=pangocairo-1.0");
+                }
             }
         }
     }

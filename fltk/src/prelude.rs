@@ -486,8 +486,8 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Sets the text color
     fn set_text_color(&mut self, c: Color);
     /// Add a menu item along with its callback
-    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
-    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
+    /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     fn add<F: FnMut() + 'static>(
         &mut self,
         label: &str,
@@ -496,8 +496,8 @@ pub unsafe trait MenuExt: WidgetExt {
         cb: F,
     );
     /// Add a menu item along with its callback
-    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
-    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
+    /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     /// Takes the menu item as a closure argument
     fn add2<F: FnMut(&mut Self) + 'static>(
         &mut self,
@@ -507,8 +507,8 @@ pub unsafe trait MenuExt: WidgetExt {
         cb: F,
     );
     /// Inserts a menu item at an index along with its callback
-    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
-    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
+    /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     fn insert<F: FnMut() + 'static>(
         &mut self,
         idx: u32,
@@ -518,8 +518,8 @@ pub unsafe trait MenuExt: WidgetExt {
         cb: F,
     );
     /// Inserts a menu item at an index along with its callback
-    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
-    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
+    /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     /// Takes the menu item as a closure argument
     fn insert2<F: FnMut(&mut Self) + 'static>(
         &mut self,
@@ -530,8 +530,8 @@ pub unsafe trait MenuExt: WidgetExt {
         cb: F,
     );
     /// Add a menu item along with an emit (sender and message)
-    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
-    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
+    /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     fn add_emit<T: 'static + Copy + Send + Sync>(
         &mut self,
         label: &str,
@@ -541,8 +541,8 @@ pub unsafe trait MenuExt: WidgetExt {
         msg: T,
     );
     /// Inserts a menu item along with an emit (sender and message)
-    /// The characters "&", "/", "\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
-    /// The "\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
+    /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     fn insert_emit<T: 'static + Copy + Send + Sync>(
         &mut self,
         idx: u32,
@@ -555,6 +555,8 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Remove a menu item by index
     fn remove(&mut self, idx: u32);
     /// Adds a simple text option to the Choice and MenuButton widgets
+    /// The characters "&", "/", "\\", "|", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
+    /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
     fn add_choice(&mut self, text: &str);
     /// Gets the user choice from the Choice and MenuButton widgets
     fn choice(&self) -> Option<String>;
