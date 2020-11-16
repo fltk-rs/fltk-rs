@@ -202,7 +202,17 @@ fn main() {
 
     println!(
         "cargo:rustc-link-search=native={}",
+        out_dir.join("lib64").display()
+    );
+
+    println!(
+        "cargo:rustc-link-search=native={}",
         out_dir.join("lib").join("Release").display()
+    );
+
+    println!(
+        "cargo:rustc-link-search=native={}",
+        out_dir.join("lib64").join("Release").display()
     );
 
     if !cfg!(feature = "fltk-shared") {
