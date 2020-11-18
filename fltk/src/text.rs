@@ -605,8 +605,13 @@ pub struct TextEditor {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Creates an editable text display widget
+/// Creates an editable text display widget to handle terminal-like behavior, such as
+/// logging events or debug information
 /// SimpleTerminal already has an internal buffer
+/// It is NOT is a full terminal emulator; it does NOT
+/// handle stdio redirection, pipes, pseudo ttys, termio character cooking,
+/// keyboard input processing, screen addressing, random cursor positioning,
+/// curses compatibility, or VT100/xterm emulation.
 #[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
 pub struct SimpleTerminal {
     _inner: *mut Fl_Simple_Terminal,
