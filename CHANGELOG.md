@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.10.11] - Unreleased
+## [0.10.11] - 2020-11-19
 ### Changes
 - Added doc comment on the limitations of SimpleTerminal.
 - Added a Dockerfile, because why not!
