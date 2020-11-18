@@ -4,6 +4,7 @@
 ### Changes
 - Added doc comment on the limitations of SimpleTerminal.
 - Added a Dockerfile, because why not!
+- Update cfltk and fltk.
 
 ## [0.10.10] - 2020-11-17
 ### Changes
