@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.12] - 2020-11-20
+### Changes
+- Write to temp files in TEMP/TMPDIR.
+- Add surface::SvgFileSurface to draw widgets as svg images.
+- Add surface::ImageSurface::draw_decorated_window().
+- Add WindowExt::decorated_w() and decorated_h().
+
 ## [0.10.11] - 2020-11-19
 ### Changes
 - Added doc comment on the limitations of SimpleTerminal.

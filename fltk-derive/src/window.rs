@@ -46,6 +46,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "fullscreen_active").as_str(),
         name.span(),
     );
+    let decorated_w = Ident::new(format!("{}_{}", name_str, "decorated_w").as_str(), name.span());
+    let decorated_h = Ident::new(format!("{}_{}", name_str, "decorated_h").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl WindowExt for #name {
@@ -200,6 +202,18 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #fullscreen_active(self._inner) != 0
+                }
+            }
+
+            fn decorated_w(&self) -> i32 {
+                unsafe {
+                    #decorated_w(self._inner)
+                }
+            }
+            
+            fn decorated_h(&self) -> i32 {
+                unsafe {
+                    #decorated_h(self._inner)
                 }
             }
         }
