@@ -6,6 +6,11 @@ use std::{
     sync::atomic::{AtomicUsize, Ordering},
 };
 
+#[cfg(target_os = "windows")]
+const TMP: &'static str = "TEMP";
+#[cfg(not(target_os = "windows"))]
+const TMP: &'static str = "TMPDIR";
+
 /// Wrapper around Fl_Image, used to wrap other image types
 #[derive(ImageExt, Debug)]
 pub struct Image {

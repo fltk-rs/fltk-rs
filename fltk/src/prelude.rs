@@ -9,6 +9,7 @@ pub enum FltkError {
     IoError(io::Error),
     NullError(std::ffi::NulError),
     Internal(FltkErrorKind),
+    EnvVarError(std::env::VarError),
     Unknown(String),
 }
 
@@ -44,6 +45,7 @@ impl fmt::Display for FltkError {
             FltkError::IoError(ref err) => err.fmt(f),
             FltkError::NullError(ref err) => err.fmt(f),
             FltkError::Internal(ref err) => write!(f, "An internal error occured {:?}", err),
+            FltkError::EnvVarError(ref err) => write!(f, "An env var error occured {:?}", err),
             FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {:?}", err),
         }
     }
@@ -58,6 +60,12 @@ impl From<io::Error> for FltkError {
 impl From<std::ffi::NulError> for FltkError {
     fn from(err: std::ffi::NulError) -> FltkError {
         FltkError::NullError(err)
+    }
+}
+
+impl From<std::env::VarError> for FltkError {
+    fn from(err: std::env::VarError) -> FltkError {
+        FltkError::EnvVarError(err)
     }
 }
 
@@ -411,6 +419,10 @@ pub unsafe trait WindowExt: GroupExt {
     fn iconize(&mut self);
     /// Returns whether the window is fullscreen or not
     fn fullscreen_active(&self) -> bool;
+    /// Returns the decorated width
+    fn decorated_w(&self) -> i32;
+    /// Returns the decorated height
+    fn decorated_h(&self) -> i32;
 }
 
 /// Defines the methods implemented by all input and output widgets

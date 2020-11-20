@@ -72,3 +72,56 @@ extern "C" {
         delta_y: libc::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Image_Surface_draw_decorated_window(
+        self_: *mut Fl_Image_Surface,
+        widget: *mut libc::c_void,
+        delta_x: libc::c_int,
+        delta_y: libc::c_int,
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_SVG_File_Surface {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_SVG_File_Surface_new(
+        width: libc::c_int,
+        height: libc::c_int,
+        file: *const libc::c_char,
+    ) -> *mut Fl_SVG_File_Surface;
+}
+extern "C" {
+    pub fn Fl_SVG_File_Surface_delete(self_: *mut Fl_SVG_File_Surface);
+}
+extern "C" {
+    pub fn Fl_SVG_File_Surface_origin(
+        self_: *mut Fl_SVG_File_Surface,
+        x: libc::c_int,
+        y: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_SVG_File_Surface_printable_rect(
+        self_: *mut Fl_SVG_File_Surface,
+        w: *mut libc::c_int,
+        h: *mut libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_SVG_File_Surface_draw(
+        self_: *mut Fl_SVG_File_Surface,
+        widget: *mut libc::c_void,
+        delta_x: libc::c_int,
+        delta_y: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_SVG_File_Surface_draw_decorated_window(
+        self_: *mut Fl_SVG_File_Surface,
+        widget: *mut libc::c_void,
+        delta_x: libc::c_int,
+        delta_y: libc::c_int,
+    );
+}

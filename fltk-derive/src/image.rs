@@ -174,7 +174,8 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
             fn into_png(self) -> Result<PngImage, FltkError> {
                 assert!(!self.was_deleted());
-                let path = std::path::PathBuf::from("_internal_temp_fltk_file.png");
+                let tmp_dir = std::path::PathBuf::from(&std::env::var(TMP)?);
+                let path = tmp_dir.join("_internal_temp_fltk_file.png");
                 let _ = crate::draw::write_to_png_file(&self, &path)?;
                 let ret = PngImage::load(&path)?.clone();
                 std::fs::remove_file(&path)?;
@@ -183,7 +184,8 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
             fn into_jpeg(self) -> Result<JpegImage, FltkError> {
                 assert!(!self.was_deleted());
-                let path = std::path::PathBuf::from("_internal_temp_fltk_file.jpg");
+                let tmp_dir = std::path::PathBuf::from(&std::env::var(TMP)?);
+                let path = tmp_dir.join("_internal_temp_fltk_file.jpg");
                 let _ = crate::draw::write_to_jpg_file(&self, &path)?;
                 let ret = JpegImage::load(&path)?.clone();
                 std::fs::remove_file(&path)?;
@@ -192,7 +194,8 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
             fn into_bmp(self) -> Result<BmpImage, FltkError> {
                 assert!(!self.was_deleted());
-                let path = std::path::PathBuf::from("_internal_temp_fltk_file.bmp");
+                let tmp_dir = std::path::PathBuf::from(&std::env::var(TMP)?);
+                let path = tmp_dir.join("_internal_temp_fltk_file.bmp");
                 let _ = crate::draw::write_to_bmp_file(&self, &path)?;
                 let ret = BmpImage::load(&path)?.clone();
                 std::fs::remove_file(&path)?;
