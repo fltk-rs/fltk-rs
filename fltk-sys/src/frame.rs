@@ -185,7 +185,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: libc::c_int);
+    pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut libc::c_void;
@@ -438,7 +441,10 @@ extern "C" {
     pub fn Fl_Box_draw2(self_: *mut Fl_Box, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Box_set_trigger(arg1: *mut Fl_Box, arg2: libc::c_int);
+    pub fn Fl_Box_set_when(arg1: *mut Fl_Box, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Box_when(arg1: *const Fl_Box) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Box_image(arg1: *const Fl_Box) -> *mut libc::c_void;

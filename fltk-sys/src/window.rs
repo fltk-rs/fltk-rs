@@ -185,7 +185,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: libc::c_int);
+    pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut libc::c_void;
@@ -442,7 +445,10 @@ extern "C" {
     pub fn Fl_Group_draw2(self_: *mut Fl_Group, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Group_set_trigger(arg1: *mut Fl_Group, arg2: libc::c_int);
+    pub fn Fl_Group_set_when(arg1: *mut Fl_Group, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Group_when(arg1: *const Fl_Group) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Group_image(arg1: *const Fl_Group) -> *mut libc::c_void;
@@ -729,7 +735,10 @@ extern "C" {
     pub fn Fl_Pack_draw2(self_: *mut Fl_Pack, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Pack_set_trigger(arg1: *mut Fl_Pack, arg2: libc::c_int);
+    pub fn Fl_Pack_set_when(arg1: *mut Fl_Pack, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Pack_when(arg1: *const Fl_Pack) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Pack_image(arg1: *const Fl_Pack) -> *mut libc::c_void;
@@ -1020,7 +1029,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Scroll_set_trigger(arg1: *mut Fl_Scroll, arg2: libc::c_int);
+    pub fn Fl_Scroll_set_when(arg1: *mut Fl_Scroll, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Scroll_when(arg1: *const Fl_Scroll) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Scroll_image(arg1: *const Fl_Scroll) -> *mut libc::c_void;
@@ -1328,7 +1340,10 @@ extern "C" {
     pub fn Fl_Tabs_draw2(self_: *mut Fl_Tabs, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Tabs_set_trigger(arg1: *mut Fl_Tabs, arg2: libc::c_int);
+    pub fn Fl_Tabs_set_when(arg1: *mut Fl_Tabs, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Tabs_when(arg1: *const Fl_Tabs) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Tabs_image(arg1: *const Fl_Tabs) -> *mut libc::c_void;
@@ -1642,7 +1657,10 @@ extern "C" {
     pub fn Fl_Tile_draw2(self_: *mut Fl_Tile, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Tile_set_trigger(arg1: *mut Fl_Tile, arg2: libc::c_int);
+    pub fn Fl_Tile_set_when(arg1: *mut Fl_Tile, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Tile_when(arg1: *const Fl_Tile) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Tile_image(arg1: *const Fl_Tile) -> *mut libc::c_void;
@@ -1933,7 +1951,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Wizard_set_trigger(arg1: *mut Fl_Wizard, arg2: libc::c_int);
+    pub fn Fl_Wizard_set_when(arg1: *mut Fl_Wizard, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Wizard_when(arg1: *const Fl_Wizard) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Wizard_image(arg1: *const Fl_Wizard) -> *mut libc::c_void;
@@ -2240,7 +2261,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Color_Chooser_set_trigger(arg1: *mut Fl_Color_Chooser, arg2: libc::c_int);
+    pub fn Fl_Color_Chooser_set_when(arg1: *mut Fl_Color_Chooser, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_when(arg1: *const Fl_Color_Chooser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Color_Chooser_image(arg1: *const Fl_Color_Chooser) -> *mut libc::c_void;
@@ -2603,7 +2627,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Window_set_trigger(arg1: *mut Fl_Window, arg2: libc::c_int);
+    pub fn Fl_Window_set_when(arg1: *mut Fl_Window, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Window_when(arg1: *const Fl_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Window_image(arg1: *const Fl_Window) -> *mut libc::c_void;
@@ -2971,7 +2998,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_trigger(arg1: *mut Fl_Single_Window, arg2: libc::c_int);
+    pub fn Fl_Single_Window_set_when(arg1: *mut Fl_Single_Window, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_when(arg1: *const Fl_Single_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Single_Window_image(arg1: *const Fl_Single_Window) -> *mut libc::c_void;
@@ -3334,7 +3364,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_trigger(arg1: *mut Fl_Double_Window, arg2: libc::c_int);
+    pub fn Fl_Double_Window_set_when(arg1: *mut Fl_Double_Window, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Double_Window_when(arg1: *const Fl_Double_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_image(arg1: *const Fl_Double_Window) -> *mut libc::c_void;
@@ -3700,7 +3733,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_trigger(arg1: *mut Fl_Menu_Window, arg2: libc::c_int);
+    pub fn Fl_Menu_Window_set_when(arg1: *mut Fl_Menu_Window, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_when(arg1: *const Fl_Menu_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Window_image(arg1: *const Fl_Menu_Window) -> *mut libc::c_void;
@@ -4060,7 +4096,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_trigger(arg1: *mut Fl_Gl_Window, arg2: libc::c_int);
+    pub fn Fl_Gl_Window_set_when(arg1: *mut Fl_Gl_Window, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_when(arg1: *const Fl_Gl_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_image(arg1: *const Fl_Gl_Window) -> *mut libc::c_void;

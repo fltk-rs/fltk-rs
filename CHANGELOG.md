@@ -5,6 +5,8 @@
 
 - Fix WidgetExt::right_of() by @dheatovwil
 - Fix WidgetExt::center_of().
+- Add WidgetExt::trigger() getter.
+- Trigger rebuild on env change of CC or CXX.
 - Update cfltk.
 
 ## [0.10.12] - 2020-11-20

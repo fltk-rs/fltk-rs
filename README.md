@@ -256,22 +256,23 @@ Setting the scheme to Gtk:
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
 
-## Currently implemented widgets
+## Currently implemented types:
 
-The most commonly widgets are implemented: 
-- Image widgets
-    - SharedImage
-    - BmpImage
-    - JpegImage
-    - GifImage
-    - PngImage
-    - SvgImage
-    - Pixmap
-    - RgbImage
-    - XpmImage
-    - XbmImage
-    - PnmImage
-    - TiledImage
+### Image types:
+- SharedImage
+- BmpImage
+- JpegImage
+- GifImage
+- PngImage
+- SvgImage
+- Pixmap
+- RgbImage
+- XpmImage
+- XbmImage
+- PnmImage
+- TiledImage
+
+### Widget:
 - Buttons
     - Button
     - RadioButton
@@ -307,6 +308,8 @@ The most commonly widgets are implemented:
     - Tile
     - Wizard
     - ColorChooser
+    - VGrind
+    - HGrid
 - Text display widgets
     - TextDisplay
     - TextEditor
@@ -362,7 +365,13 @@ The most commonly widgets are implemented:
 - Trees
     - Tree
     - TreeItem
-- Drawing primitives
+
+### Drawing primitives
+(In the draw module)
+### Surface types:
+- Printer.
+- ImageSurface.
+- SvgFileSurface.
 
 ## Tutorials
 

@@ -42,6 +42,8 @@ fn main() {
             .status()
             .expect("Curl and Tar are needed to download and upack the bundled libraries!");
     } else {
+        println!("cargo:rerun-if-env-changed=CC");
+        println!("cargo:rerun-if-env-changed=CXX");
         println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
         println!("cargo:rerun-if-changed=cfltk/include/cfl.h");
         println!("cargo:rerun-if-changed=cfltk/include/cfl_widget.h");

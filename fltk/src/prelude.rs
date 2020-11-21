@@ -264,6 +264,8 @@ pub unsafe trait WidgetExt {
     fn clear_damage(&mut self);
     /// Sets the default callback trigger for a widget
     fn set_trigger(&mut self, trigger: CallbackTrigger);
+    /// Return the callback trigger
+    fn trigger(&self) -> u32;
     /// Return the widget as a window if it's a window
     fn as_window(&mut self) -> Option<Box<dyn WindowExt>>;
     /// Return the widget as a group widget if it's a group widget

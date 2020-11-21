@@ -21,7 +21,7 @@ If you're building using the MSVC toolchain, make sure you run you're build (at 
 If you're building for the GNU toolchain, make sure that Make is also installed, which usually comes installed in MSYS2 and Cygwin.
 
 ### Why do I get a Link error while using the mingw toolchain on windows?
-If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048, it should work by using the fltk-shared feature (an issue with older compilers). Which would also generate a dynamic library which would need to be deployed with your application.
+If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048 with older toolchains, it should work by using the fltk-shared feature (an issue with older compilers). Which would also generate a dynamic library which would need to be deployed with your application.
 ```toml
 [dependencies]
 fltk = { version = "^0.10", features = ["fltk-shared"] }
@@ -63,7 +63,7 @@ Yes. This crate has an MIT license which requires acknowledgment. FLTK (the C++ 
 ## Alignment
 
 ### Why can't I align input or output text to the right?
-FLTK has some known issues with text alignment and right-to-left language support.
+FLTK has some known issues with text alignment.
 
 ## Concurrency
 
@@ -89,10 +89,13 @@ This is the default behavior in FLTK. You can easily override it by setting a ca
     }));
 ```
 
-## Panics
+## Panics/Crashes
 
 ### My app panics when I try to handle events, how can I fix it?
 This is due to a debug_assert which checks that the involved widget and the window are capable of handling events. Although most events would be handled correctly, some events require that the aforementioned conditions be met. Thus it is advisable to place your event handling code after the main drawing is done, i.e after calling your main window's show() method. Another point is that event handling and drawing should be done in the main thread. Panics accross FFI boundaries are undefined behavior, as such, the wrapper never throws. Furthermore, all panics which might arise in callbacks are caught on the Rust side using catch_unwind.
+
+### My app crashes on certain linux distros when I use a NativeFileDialog, how can I fix it?
+FLTK vendors libpng by default, sometimes version mismatches can cause problems if the Gtk native dialog expects a different version. In that case, you can use the feature "system-libpng" which would link to the distro's libpng.
 
 ## Memory and unsafety
 

@@ -303,8 +303,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_align").as_str(),
         name.span(),
     );
+    let trigger = Ident::new(
+        format!("{}_{}", name_str, "when").as_str(),
+        name.span(),
+    );
     let set_trigger = Ident::new(
-        format!("{}_{}", name_str, "set_trigger").as_str(),
+        format!("{}_{}", name_str, "set_when").as_str(),
         name.span(),
     );
     let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
@@ -627,6 +631,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #set_trigger(self._inner, trigger as i32)
+                }
+            }
+
+            fn trigger(&self) -> u32 {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #trigger(self._inner) as u32
                 }
             }
 

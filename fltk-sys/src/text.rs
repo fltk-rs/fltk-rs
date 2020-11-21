@@ -185,7 +185,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: libc::c_int);
+    pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut libc::c_void;
@@ -630,7 +633,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_trigger(arg1: *mut Fl_Text_Display, arg2: libc::c_int);
+    pub fn Fl_Text_Display_set_when(arg1: *mut Fl_Text_Display, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Display_when(arg1: *const Fl_Text_Display) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_image(arg1: *const Fl_Text_Display) -> *mut libc::c_void;
@@ -1132,7 +1138,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_trigger(arg1: *mut Fl_Text_Editor, arg2: libc::c_int);
+    pub fn Fl_Text_Editor_set_when(arg1: *mut Fl_Text_Editor, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_when(arg1: *const Fl_Text_Editor) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_image(arg1: *const Fl_Text_Editor) -> *mut libc::c_void;
@@ -1716,7 +1725,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_trigger(arg1: *mut Fl_Simple_Terminal, arg2: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_when(arg1: *mut Fl_Simple_Terminal, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_when(arg1: *const Fl_Simple_Terminal) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_image(arg1: *const Fl_Simple_Terminal) -> *mut libc::c_void;

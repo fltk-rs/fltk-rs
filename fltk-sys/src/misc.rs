@@ -185,7 +185,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: libc::c_int);
+    pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut libc::c_void;
@@ -450,7 +453,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Spinner_set_trigger(arg1: *mut Fl_Spinner, arg2: libc::c_int);
+    pub fn Fl_Spinner_set_when(arg1: *mut Fl_Spinner, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Spinner_when(arg1: *const Fl_Spinner) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Spinner_image(arg1: *const Fl_Spinner) -> *mut libc::c_void;
@@ -756,7 +762,10 @@ extern "C" {
     pub fn Fl_Clock_draw2(self_: *mut Fl_Clock, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Clock_set_trigger(arg1: *mut Fl_Clock, arg2: libc::c_int);
+    pub fn Fl_Clock_set_when(arg1: *mut Fl_Clock, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Clock_when(arg1: *const Fl_Clock) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Clock_image(arg1: *const Fl_Clock) -> *mut libc::c_void;
@@ -1013,7 +1022,10 @@ extern "C" {
     pub fn Fl_Chart_draw2(self_: *mut Fl_Chart, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Chart_set_trigger(arg1: *mut Fl_Chart, arg2: libc::c_int);
+    pub fn Fl_Chart_set_when(arg1: *mut Fl_Chart, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Chart_when(arg1: *const Fl_Chart) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Chart_image(arg1: *const Fl_Chart) -> *mut libc::c_void;
@@ -1346,7 +1358,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Progress_set_trigger(arg1: *mut Fl_Progress, arg2: libc::c_int);
+    pub fn Fl_Progress_set_when(arg1: *mut Fl_Progress, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Progress_when(arg1: *const Fl_Progress) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Progress_image(arg1: *const Fl_Progress) -> *mut libc::c_void;

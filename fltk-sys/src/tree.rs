@@ -185,7 +185,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: libc::c_int);
+    pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut libc::c_void;
@@ -442,7 +445,10 @@ extern "C" {
     pub fn Fl_Tree_draw2(self_: *mut Fl_Tree, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_set_trigger(arg1: *mut Fl_Tree, arg2: libc::c_int);
+    pub fn Fl_Tree_set_when(arg1: *mut Fl_Tree, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Tree_when(arg1: *const Fl_Tree) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Tree_image(arg1: *const Fl_Tree) -> *mut libc::c_void;

@@ -185,7 +185,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: libc::c_int);
+    pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut libc::c_void;
@@ -442,7 +445,10 @@ extern "C" {
     pub fn Fl_Input_draw2(self_: *mut Fl_Input, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Input_set_trigger(arg1: *mut Fl_Input, arg2: libc::c_int);
+    pub fn Fl_Input_set_when(arg1: *mut Fl_Input, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Input_when(arg1: *const Fl_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Input_image(arg1: *const Fl_Input) -> *mut libc::c_void;
@@ -794,7 +800,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Int_Input_set_trigger(arg1: *mut Fl_Int_Input, arg2: libc::c_int);
+    pub fn Fl_Int_Input_set_when(arg1: *mut Fl_Int_Input, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Int_Input_when(arg1: *const Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Int_Input_image(arg1: *const Fl_Int_Input) -> *mut libc::c_void;
@@ -1153,7 +1162,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Float_Input_set_trigger(arg1: *mut Fl_Float_Input, arg2: libc::c_int);
+    pub fn Fl_Float_Input_set_when(arg1: *mut Fl_Float_Input, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Float_Input_when(arg1: *const Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Float_Input_image(arg1: *const Fl_Float_Input) -> *mut libc::c_void;
@@ -1515,7 +1527,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_set_trigger(arg1: *mut Fl_Multiline_Input, arg2: libc::c_int);
+    pub fn Fl_Multiline_Input_set_when(arg1: *mut Fl_Multiline_Input, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_when(arg1: *const Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_image(arg1: *const Fl_Multiline_Input) -> *mut libc::c_void;
@@ -1895,7 +1910,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Secret_Input_set_trigger(arg1: *mut Fl_Secret_Input, arg2: libc::c_int);
+    pub fn Fl_Secret_Input_set_when(arg1: *mut Fl_Secret_Input, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Secret_Input_when(arg1: *const Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Secret_Input_image(arg1: *const Fl_Secret_Input) -> *mut libc::c_void;
@@ -2257,7 +2275,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_File_Input_set_trigger(arg1: *mut Fl_File_Input, arg2: libc::c_int);
+    pub fn Fl_File_Input_set_when(arg1: *mut Fl_File_Input, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Input_when(arg1: *const Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_File_Input_image(arg1: *const Fl_File_Input) -> *mut libc::c_void;
