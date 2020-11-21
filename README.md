@@ -272,7 +272,7 @@ Different frame types which can be used with many different widgets such as Fram
 - PnmImage
 - TiledImage
 
-### Widget:
+### Widgets:
 - Buttons
     - Button
     - RadioButton
