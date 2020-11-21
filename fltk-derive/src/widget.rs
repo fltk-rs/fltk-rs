@@ -833,7 +833,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn right_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
-                debug_assert!(w.width() != 0 && w.height() != 0, "right_of requires the size of the widget to be known!");
+                debug_assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
                 self.resize(w.x() + w.width() + padding, w.y(), self.width(), self.height());
                 self
             }
@@ -856,7 +856,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let mut wh = w.height() as f64;
                 let mut x = (ww - sw) / 2.0;
                 let mut y = (wh - sh) / 2.0;
-                self.resize(x as i32, y as i32, self.width(), self.height());
+                self.resize(x as i32 + w.x(), y as i32 + w.y(), self.width(), self.height());
                 self.redraw();
                 self
             }
