@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.10.13] - Unreleased
+## [0.10.13] - 2020-11-21
 ### Changes
 
 - Fix WidgetExt::right_of() by @dheatovwil
