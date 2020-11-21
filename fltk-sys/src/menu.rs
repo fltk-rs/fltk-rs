@@ -185,7 +185,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_set_trigger(arg1: *mut Fl_Widget, arg2: libc::c_int);
+    pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut libc::c_void;
@@ -455,7 +458,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_set_trigger(arg1: *mut Fl_Menu_Bar, arg2: libc::c_int);
+    pub fn Fl_Menu_Bar_set_when(arg1: *mut Fl_Menu_Bar, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_when(arg1: *const Fl_Menu_Bar) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_image(arg1: *const Fl_Menu_Bar) -> *mut libc::c_void;
@@ -817,7 +823,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Menu_Button_set_trigger(arg1: *mut Fl_Menu_Button, arg2: libc::c_int);
+    pub fn Fl_Menu_Button_set_when(arg1: *mut Fl_Menu_Button, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Button_when(arg1: *const Fl_Menu_Button) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_image(arg1: *const Fl_Menu_Button) -> *mut libc::c_void;
@@ -1187,7 +1196,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Choice_set_trigger(arg1: *mut Fl_Choice, arg2: libc::c_int);
+    pub fn Fl_Choice_set_when(arg1: *mut Fl_Choice, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Choice_when(arg1: *const Fl_Choice) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_image(arg1: *const Fl_Choice) -> *mut libc::c_void;
@@ -1541,7 +1553,10 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_set_trigger(arg1: *mut Fl_Sys_Menu_Bar, arg2: libc::c_int);
+    pub fn Fl_Sys_Menu_Bar_set_when(arg1: *mut Fl_Sys_Menu_Bar, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_when(arg1: *const Fl_Sys_Menu_Bar) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_image(arg1: *const Fl_Sys_Menu_Bar) -> *mut libc::c_void;

@@ -303,8 +303,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_align").as_str(),
         name.span(),
     );
+    let trigger = Ident::new(
+        format!("{}_{}", name_str, "when").as_str(),
+        name.span(),
+    );
     let set_trigger = Ident::new(
-        format!("{}_{}", name_str, "set_trigger").as_str(),
+        format!("{}_{}", name_str, "set_when").as_str(),
         name.span(),
     );
     let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
@@ -630,6 +634,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn trigger(&self) -> u32 {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #trigger(self._inner) as u32
+                }
+            }
+
             fn parent(&self) -> Option<Box<dyn GroupExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -834,7 +845,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
-                self.resize(w.x() + self.width() + padding, w.y(), self.width(), self.height());
+                self.resize(w.x() + w.width() + padding, w.y(), self.width(), self.height());
                 self
             }
 
@@ -856,7 +867,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let mut wh = w.height() as f64;
                 let mut x = (ww - sw) / 2.0;
                 let mut y = (wh - sh) / 2.0;
-                self.resize(x as i32, y as i32, self.width(), self.height());
+                self.resize(x as i32 + w.x(), y as i32 + w.y(), self.width(), self.height());
                 self.redraw();
                 self
             }
