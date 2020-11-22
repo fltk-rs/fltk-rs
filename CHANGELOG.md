@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.14] - 2020-11-23
+### Changes
+- Pin fltk crate versions to each other.
+- update fltk and cfltk.
+
 ## [0.10.13] - 2020-11-21
 ### Changes
 
