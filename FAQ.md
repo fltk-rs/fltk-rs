@@ -27,6 +27,15 @@ If the linking fails because of this issue: https://github.com/rust-lang/rust/is
 fltk = { version = "^0.10", features = ["fltk-shared"] }
 ```
 
+### Build fails on Arch linux because of pango or cairo?
+Pango changed its include paths which caused build failures across many projects. There are 2 solutions:
+- Use the no-pango feature. Downsides: loss of rtl and cjk language support.
+- Set the CFLAGS and CXXFLAGS to correct the global include paths.
+```
+$ export CFLAGS="-isystem /usr/include/harfbuzz -isystem /usr/include/cairo"
+$ export CXXFLAGS="-isystem /usr/include/harfbuzz -isystem /usr/include/cairo"
+```
+
 ### How do I force CMake to use a certain C++ compiler?
 FLTK works with all 3 major compilers. If you would like to change the C++ compiler that's chosen by default by CMake, you can change the CXX environment variable before running the build:
 ```

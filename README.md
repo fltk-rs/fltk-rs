@@ -189,11 +189,11 @@ $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcur
 ```
 For RHEL-based GUI distributions, that means running:
 ```
-$ sudo yum groupinstall "X Software Development" 
+$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel
 ```
 For Arch-based GUI distributions, that means running:
 ```
-$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango libgl mesa --needed
+$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango cairo libgl mesa --needed
 ```
 For Alpine linux:
 ```
