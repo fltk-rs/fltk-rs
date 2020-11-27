@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.10.15] - 2020-11-27
+### Changes
+- Add more fields to enums::Align.
+- Add impl BitOr for Shortcut | Shortcut.
+- Update dependencies.
+
 ## [0.10.14] - 2020-11-23
 ### Changes
 - Pin fltk crate versions to each other.

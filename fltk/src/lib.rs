@@ -175,11 +175,11 @@
 //! ```
 //! For RHEL-based GUI distributions, that means running:
 //! ```
-//! $ sudo yum groupinstall "X Software Development"
+//! $ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel
 //! ```
 //! For Arch-based GUI distributions, that means running:
 //! ```
-//! $ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango libgl mesa --needed
+//! $ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango cairo libgl mesa --needed
 //! ```
 //! For Alpine linux:
 //! ```
@@ -213,6 +213,7 @@ pub(crate) mod utils;
 pub mod valuator;
 pub mod widget;
 pub mod window;
+
 #[cfg(not(target_os = "android"))]
 pub mod printer;
 

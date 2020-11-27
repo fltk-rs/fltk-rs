@@ -96,6 +96,23 @@ pub enum Align {
     Bottom = 2,
     Left = 4,
     Right = 8,
+    Inside = 16,
+    TextOverImage = 20,
+    Clip = 40,
+    Wrap = 80,
+    ImageNextToText = 100,
+    TextNextToImage = 120,
+    ImageBackdrop = 200,
+    TopLeft = 1 | 4,
+    TopRight = 1 | 8,
+    BottomLeft = 2 | 4,
+    BottomRight = 2 | 8,
+    LeftTop = 7,
+    RightTop = 11,
+    LeftBottom = 13,
+    RightBottom = 14,
+    PositionMask = 15,
+    ImageMask = 320,
 }
 
 /// Defines fonts used by FLTK
@@ -463,6 +480,13 @@ impl std::ops::BitOr<Key> for Shortcut {
     }
 }
 
+impl std::ops::BitOr<Shortcut> for Shortcut {
+    type Output = Shortcut;
+    fn bitor(self, other: Shortcut) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | other as i32) }
+    }
+}
+
 impl std::ops::BitOr<CallbackTrigger> for CallbackTrigger {
     type Output = CallbackTrigger;
     fn bitor(self, rhs: CallbackTrigger) -> Self::Output {
@@ -473,6 +497,13 @@ impl std::ops::BitOr<CallbackTrigger> for CallbackTrigger {
 impl std::ops::BitOr<Align> for Align {
     type Output = Align;
     fn bitor(self, rhs: Align) -> Self::Output {
+        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+    }
+}
+
+impl std::ops::BitOr<i32> for Align {
+    type Output = Align;
+    fn bitor(self, rhs: i32) -> Self::Output {
         unsafe { std::mem::transmute(self as i32 | rhs as i32) }
     }
 }
