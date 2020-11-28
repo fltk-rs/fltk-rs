@@ -267,9 +267,9 @@ pub unsafe trait WidgetExt {
     /// Return the callback trigger
     fn trigger(&self) -> u32;
     /// Return the widget as a window if it's a window
-    fn as_window(&mut self) -> Option<Box<dyn WindowExt>>;
+    fn as_window(&self) -> Option<Box<dyn WindowExt>>;
     /// Return the widget as a group widget if it's a group widget
-    fn as_group(&mut self) -> Option<Box<dyn GroupExt>>;
+    fn as_group(&self) -> Option<Box<dyn GroupExt>>;
     /// INTERNAL: Retakes ownership of the user callback data
     /// # Safety
     /// Can return multiple mutable references to the user_data

@@ -14,6 +14,10 @@ use std::{
 
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
+static mut CURRENT_FONT: i32 = 0;
+
+static mut CURRENT_FRAME: i32 = 2;
+
 /// The fonts associated with the application
 pub(crate) static mut FONTS: Vec<String> = Vec::new();
 
@@ -421,6 +425,57 @@ pub unsafe fn set_raw_callback<W>(
     fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), cb, data);
 }
 
+pub fn visible_focus() -> bool {
+    unsafe {
+        Fl_visible_focus() != 0
+    }
+}
+
+pub fn set_visible_focus(flag: bool) {
+    unsafe {
+        Fl_set_visible_focus(flag as i32)
+    }
+}
+
+/// Set the app's default frame type
+pub fn set_frame_type(new_frame: FrameType) {
+    unsafe {
+        let new_frame = new_frame as i32;
+        Fl_set_box_type(56, CURRENT_FRAME);
+        Fl_set_box_type(CURRENT_FRAME, new_frame);
+        Fl_set_box_type(new_frame, 56);
+        CURRENT_FRAME = new_frame;
+        // Fl_set_box_type(FrameType::UpBox as i32, new_frame as i32)
+    }
+}
+
+/// Sets the app's default background color
+pub fn set_color(r: u8, g: u8, b: u8) {
+    unsafe {
+        Fl_set_color(Color::FrameDefault as u32, r, g, b)
+    }
+}
+
+/// Set the app's font
+pub fn set_font(new_font: Font) {
+    unsafe {
+        let new_font = new_font as i32;
+        Fl_set_font(15, CURRENT_FONT);
+        Fl_set_font(0, new_font);
+        Fl_set_font(new_font, CURRENT_FONT);
+        CURRENT_FONT = new_font;
+    }
+}
+
+/// Get the font's name
+pub fn get_font(font: Font) -> String {
+    unsafe {
+        CStr::from_ptr(Fl_get_font(font as i32))
+            .to_string_lossy()
+            .to_string()
+    }
+}
+
 /// Initializes loaded fonts of a certain pattern ```name```
 pub fn set_fonts(name: &str) -> u8 {
     let name = CString::safe_new(name);
@@ -518,7 +573,7 @@ fn thread_msg<T>() -> Option<T> {
 }
 
 #[repr(C)]
-struct Message<T: Copy + Send + Sync> {
+struct Message<T: Send + Sync> {
     hash: u64,
     sz: usize,
     msg: T,
@@ -526,13 +581,13 @@ struct Message<T: Copy + Send + Sync> {
 
 /// Creates a sender struct
 #[derive(Debug, Clone, Copy)]
-pub struct Sender<T: Copy + Send + Sync> {
+pub struct Sender<T: Send + Sync> {
     data: marker::PhantomData<T>,
     hash: u64,
     sz: usize,
 }
 
-impl<T: Copy + Send + Sync> Sender<T> {
+impl<T: Send + Sync> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
         let msg = Message {
@@ -546,13 +601,13 @@ impl<T: Copy + Send + Sync> Sender<T> {
 
 /// Creates a receiver struct
 #[derive(Debug, Clone, Copy)]
-pub struct Receiver<T: Copy + Send + Sync> {
+pub struct Receiver<T: Send + Sync> {
     data: marker::PhantomData<T>,
     hash: u64,
     sz: usize,
 }
 
-impl<T: Copy + Send + Sync> Receiver<T> {
+impl<T: Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         let data: Option<Message<T>> = thread_msg();
@@ -570,7 +625,7 @@ impl<T: Copy + Send + Sync> Receiver<T> {
 
 /// Creates a channel returning a Sender and Receiver structs
 // The implementation could really use generic statics
-pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
+pub fn channel<T: Send + Sync>() -> (Sender<T>, Receiver<T>) {
     let msg_sz = mem::size_of::<T>();
     let type_name = any::type_name::<T>();
     let mut hasher = DefaultHasher::new();

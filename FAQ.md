@@ -11,7 +11,7 @@ The first tutorial uses the fltk-bundled feature flag, which is only supported f
 If you're not running one of the aforementioned platforms, you'll have to remove the fltk-bundled feature flag in your Cargo.toml file:
 ```toml
 [dependencies]
-fltk = "^0.10"
+fltk = "^0.11"
 ```
 Furthermore, the fltk-bundled flag assumes you have curl and tar installed (for Windows, they're available in the Native Tools Command Prompt).
 
@@ -24,7 +24,7 @@ If you're building for the GNU toolchain, make sure that Make is also installed,
 If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048 with older toolchains, it should work by using the fltk-shared feature (an issue with older compilers). Which would also generate a dynamic library which would need to be deployed with your application.
 ```toml
 [dependencies]
-fltk = { version = "^0.10", features = ["fltk-shared"] }
+fltk = { version = "^0.11", features = ["fltk-shared"] }
 ```
 
 ### Build fails on Arch linux because of pango or cairo?
@@ -43,6 +43,9 @@ $ export CXX=/usr/bin/clang++
 $ cargo run
 ```
 CMake caches the C++ compiler variable after it's first run, so if the above failed because of a previous run, you would have to run ```cargo clean``` or you can manually delete the CMakeCache.txt file in the build directory.
+
+### Can I accelerate the build speed?
+You can use the "use-ninja" feature flag if you have ninja installed. Or you can set the NUM_JOBS environment variable, which the cmake crate picks up and tries to parallelize the build.
 
 ## Deployment
 

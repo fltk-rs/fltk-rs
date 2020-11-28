@@ -1,5 +1,3 @@
-// For windows, you might want to change the window to a DoubleWindow and remove the sleep from the event loop.
-
 use fltk::{app::*, frame::*, image::*, window::*};
 
 macro_rules! clock {() => ("<?xml version=\"1.0\" encoding=\"utf-8\"?>
@@ -31,7 +29,7 @@ macro_rules! clock {() => ("<?xml version=\"1.0\" encoding=\"utf-8\"?>
 
 fn main() {
     let app = App::default().with_scheme(Scheme::Gtk);
-    let mut wind = DoubleWindow::default()
+    let mut wind = Window::default()
         .with_label("svg test")
         .with_size(720, 486)
         .center_screen();
@@ -71,7 +69,7 @@ fn main() {
 
 // fn main() {
 //     let app = App::default();
-//     let mut wind = DoubleWindow::default()
+//     let mut wind = Window::default()
 //         .with_label("svg test")
 //         .with_size(720, 486)
 //         .center_screen();

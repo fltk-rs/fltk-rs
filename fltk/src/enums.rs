@@ -198,26 +198,8 @@ impl Color {
 
     /// Returns a color from hex or decimal
     pub fn from_u32(val: u32) -> Color {
-        let hex = format!("{:06x}", val);
-        let r = u8::from_str_radix(&hex[0..2], 16).unwrap();
-        let g = u8::from_str_radix(&hex[2..4], 16).unwrap();
-        let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
+        let (r, g, b) = crate::utils::hex2rgb(val);
         Color::from_rgb(r, g, b)
-    }
-
-    /// Returns the hex/u32 value of a color
-    pub fn to_u32(&self) -> u32 {
-        *self as u32
-    }
-
-    /// Returns the rgb values of a color
-    pub fn to_rgb(&self) -> (u8, u8, u8) {
-        let x = *self as u32;
-        let hex = format!("{:06x}", x);
-        let r = u8::from_str_radix(&hex[0..2], 16).unwrap();
-        let g = u8::from_str_radix(&hex[2..4], 16).unwrap();
-        let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
-        (r, g, b)
     }
 }
 

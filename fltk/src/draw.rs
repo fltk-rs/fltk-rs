@@ -194,8 +194,19 @@ pub fn draw_focus_rect(x: i32, y: i32, w: i32, h: i32) {
 }
 
 /// Sets the drawing color
+pub fn set_draw_hex_color(color: u32) {
+    let (r, g, b) = crate::utils::hex2rgb(color);
+    unsafe { Fl_set_color_rgb(r, g, b) }
+}
+
+/// Sets the drawing color
+pub fn set_draw_rgb_color(r: u8, g: u8, b: u8) {
+    unsafe { Fl_set_color_rgb(r, g, b) }
+}
+
+/// Sets the drawing color
 pub fn set_draw_color(color: Color) {
-    unsafe { Fl_set_color_int(color.to_u32()) }
+    unsafe { Fl_set_color_int(color as u32) }
 }
 
 /// Draws a circle
@@ -484,7 +495,7 @@ pub fn end_complex_polygon() {
 
 /// Sets the current font, which is then used in various drawing routines
 pub fn set_font(face: Font, fsize: u32) {
-    unsafe { Fl_set_font(face as i32, fsize as i32) }
+    unsafe { Fl_set_draw_font(face as i32, fsize as i32) }
 }
 
 /// Gets the current font, which is used in various drawing routines

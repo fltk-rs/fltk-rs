@@ -5,7 +5,7 @@ use std::rc::Rc;
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
 
-    let mut wind = DoubleWindow::new(100, 100, 800, 600, "RustyPainter");
+    let mut wind = Window::new(100, 100, 800, 600, "RustyPainter");
     let mut frame = Frame::new(5, 5, 790, 590, "");
     frame.set_color(Color::White);
     frame.set_frame(FrameType::DownBox);
@@ -35,7 +35,7 @@ fn main() {
         // println!("{:?}", ev);
         // println!("coords {:?}", app::event_coords());
         // println!("get mouse {:?}", app::get_mouse());
-        set_draw_color(Color::Red);
+        set_draw_rgb_color(255, 0, 0); // red
         set_line_style(LineStyle::Solid, 3);
 
         match ev {

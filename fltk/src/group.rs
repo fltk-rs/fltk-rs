@@ -279,9 +279,8 @@ impl ColorChooser {
     /// Return the hex color
     pub fn hex_color(&self) -> u32 {
         assert!(!self.was_deleted());
-        let c = self.rgb_color();
-        let x = Color::from_rgb(c.0, c.1, c.2);
-        x.to_u32()
+        let (r, g, b) = self.rgb_color();
+        crate::utils::rgb2hex(r, g, b)
     }
 }
 

@@ -803,7 +803,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn as_window(&mut self) -> Option<Box<dyn WindowExt>> {
+            fn as_window(&self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #as_window(self._inner);
@@ -814,7 +814,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn as_group(&mut self) -> Option<Box<dyn GroupExt>> {
+            fn as_group(&self) -> Option<Box<dyn GroupExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #as_group(self._inner);
@@ -865,9 +865,11 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let mut sh = self.height() as f64;
                 let mut ww = w.width() as f64;
                 let mut wh = w.height() as f64;
-                let mut x = (ww - sw) / 2.0;
-                let mut y = (wh - sh) / 2.0;
-                self.resize(x as i32 + w.x(), y as i32 + w.y(), self.width(), self.height());
+                let mut sx = (ww - sw) / 2.0;
+                let mut sy = (wh - sh) / 2.0;
+                let wx = if w.as_window().is_some() { 0 } else { w.x() };
+                let wy = if w.as_window().is_some() { 0 } else { w.y() };
+                self.resize(sx as i32 + wx, sy as i32 + wy, self.width(), self.height());
                 self.redraw();
                 self
             }

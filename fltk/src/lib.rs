@@ -22,11 +22,12 @@
 //!
 //! ```toml
 //! [dependencies]
-//! fltk = "^0.10"
+//! fltk = "^0.11"
 //! ```
 //! The library is automatically built and statically linked to your binary.
 //!
-//! You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature.
+//! For faster builds with the cmake crate, you can try setting the NUM_JOBS environment variable, 
+//! or you can enable ninja builds for the C++ source using the "use-ninja" feature.
 //!
 //! An example hello world application:
 //!
@@ -185,7 +186,6 @@
 //! ```
 //! $ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev
 //! ```
-//! If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
 //!
 //! ## FAQ
 //!
@@ -209,7 +209,7 @@ pub mod surface;
 pub mod table;
 pub mod text;
 pub mod tree;
-pub(crate) mod utils;
+pub mod utils;
 pub mod valuator;
 pub mod widget;
 pub mod window;

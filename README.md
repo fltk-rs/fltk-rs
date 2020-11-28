@@ -31,12 +31,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.10"
+fltk = "^0.11"
 ```
 
-The library is automatically built and statically linked to your binary. 
+The library is automatically built and statically linked to your binary.
 
-You can also enable ninja builds for a faster build of the C++ source using the "use-ninja" feature.
+For faster builds with the cmake crate, you can try setting the NUM_JOBS environment variable, or you can enable ninja builds for the C++ source using the "use-ninja" feature.
 
 An example hello world application:
 
