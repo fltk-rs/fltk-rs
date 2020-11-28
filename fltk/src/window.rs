@@ -32,16 +32,27 @@ pub type RawHandle = *mut raw::c_void;
 pub type RawHandle = u64;
 
 /// Creates a window widget
+pub type Window = DoubleWindow;
+
+/// Defines the window type, can be set dynamically using the set_type() method
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum WindowType {
+    Normal = 240,
+    Double = 241,
+}
+
+/// Creates a single (buffered) window widget
 #[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
-pub struct Window {
-    _inner: *mut Fl_Window,
+pub struct SingleWindow {
+    _inner: *mut Fl_Single_Window,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-impl Window {
-    /// Creates a default initialized window
-    pub fn default() -> Window {
-        let mut win = <Window as WidgetBase>::default();
+impl SingleWindow {
+    /// Creates a default initialized single window
+    pub fn default() -> SingleWindow {
+        let mut win = <SingleWindow as WidgetBase>::default();
         win.free_position();
         win
     }
@@ -129,97 +140,6 @@ impl Window {
     }
 }
 
-/// Defines the window type, can be set dynamically using the set_type() method
-#[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
-pub enum WindowType {
-    Normal = 240,
-    Double = 241,
-}
-
-/// Creates a single (buffered) window widget
-#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
-pub struct SingleWindow {
-    _inner: *mut Fl_Single_Window,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
-}
-
-impl SingleWindow {
-    /// Creates a default initialized single window
-    pub fn default() -> SingleWindow {
-        let mut win = <SingleWindow as WidgetBase>::default();
-        win.free_position();
-        win
-    }
-
-    /// Use FLTK specific arguments for the application:
-    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
-    /// The options are:
-    /// -bg2 color
-    /// -bg color
-    /// -di[splay] host:n.n
-    /// -dn[d]
-    /// -fg color
-    /// -g[eometry] WxH+X+Y
-    /// -i[conic]
-    /// -k[bd]
-    /// -na[me] classname
-    /// -nod[nd]
-    /// -nok[bd]
-    /// -not[ooltips]
-    /// -s[cheme] scheme
-    /// -ti[tle] windowtitle
-    /// -to[oltips]
-    pub fn show_with_env_args(&mut self) {
-        assert!(!self.was_deleted());
-        unsafe {
-            let args: Vec<String> = std::env::args().collect();
-            let len = args.len() as i32;
-            let mut v: Vec<*mut raw::c_char> = vec![];
-            for arg in args {
-                let c = CString::safe_new(arg.as_str());
-                v.push(c.into_raw() as *mut raw::c_char);
-            }
-            let mut v = mem::ManuallyDrop::new(v);
-            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
-        }
-    }
-
-    /// Use FLTK specific arguments for the application:
-    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
-    /// The options are:
-    /// -bg2 color
-    /// -bg color
-    /// -di[splay] host:n.n
-    /// -dn[d]
-    /// -fg color
-    /// -g[eometry] WxH+X+Y
-    /// -i[conic]
-    /// -k[bd]
-    /// -na[me] classname
-    /// -nod[nd]
-    /// -nok[bd]
-    /// -not[ooltips]
-    /// -s[cheme] scheme
-    /// -ti[tle] windowtitle
-    /// -to[oltips]
-    pub fn show_with_args(&mut self, args: &[&str]) {
-        assert!(!self.was_deleted());
-        unsafe {
-            let mut temp = vec![""];
-            temp.extend(args);
-            let len = temp.len() as i32;
-            let mut v: Vec<*mut raw::c_char> = vec![];
-            for arg in temp {
-                let c = CString::safe_new(arg);
-                v.push(c.into_raw() as *mut raw::c_char);
-            }
-            let mut v = mem::ManuallyDrop::new(v);
-            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
-        }
-    }
-}
-
 /// Creates a double (buffered) window widget
 #[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct DoubleWindow {
@@ -233,6 +153,21 @@ impl DoubleWindow {
         let mut win = <DoubleWindow as WidgetBase>::default();
         win.free_position();
         win
+    }
+
+    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app
+    /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
+    /// # Safety
+    /// The data must be valid and is OS-dependent.
+    pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
+        let ptr = Fl_Window_find_by_handle(mem::transmute(&handle));
+        if ptr.is_null() {
+            None
+        } else {
+            Some(Window::from_widget_ptr(
+                ptr as *mut fltk_sys::widget::Fl_Widget,
+            ))
+        }
     }
 
     /// Use FLTK specific arguments for the application:

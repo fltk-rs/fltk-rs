@@ -17,7 +17,7 @@ struct Ball {
 
 fn main() {
     let app = app::App::default();
-    let mut wind = window::DoubleWindow::default()
+    let mut wind = window::Window::default()
         .with_size(800, 600)
         .center_screen()
         .with_label("Pong!");

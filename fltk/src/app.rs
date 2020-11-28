@@ -16,6 +16,8 @@ pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
 static mut CURRENT_FONT: i32 = 0;
 
+static mut CURRENT_FRAME: i32 = 2;
+
 /// The fonts associated with the application
 pub(crate) static mut FONTS: Vec<String> = Vec::new();
 
@@ -423,10 +425,35 @@ pub unsafe fn set_raw_callback<W>(
     fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), cb, data);
 }
 
-/// Initializes loaded fonts of a certain pattern ```name```
-pub fn set_fonts(name: &str) -> u8 {
-    let name = CString::safe_new(name);
-    unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
+pub fn visible_focus() -> bool {
+    unsafe {
+        Fl_visible_focus() != 0
+    }
+}
+
+pub fn set_visible_focus(flag: bool) {
+    unsafe {
+        Fl_set_visible_focus(flag as i32)
+    }
+}
+
+/// Set the app's default frame type
+pub fn set_frame_type(new_frame: FrameType) {
+    unsafe {
+        let new_frame = new_frame as i32;
+        Fl_set_box_type(56, CURRENT_FRAME);
+        Fl_set_box_type(CURRENT_FRAME, new_frame);
+        Fl_set_box_type(new_frame, 56);
+        CURRENT_FRAME = new_frame;
+        // Fl_set_box_type(FrameType::UpBox as i32, new_frame as i32)
+    }
+}
+
+/// Sets the app's default background color
+pub fn set_color(r: u8, g: u8, b: u8) {
+    unsafe {
+        Fl_set_color(Color::FrameDefault as u32, r, g, b)
+    }
 }
 
 /// Set the app's font
@@ -438,6 +465,21 @@ pub fn set_font(new_font: Font) {
         Fl_set_font(new_font, CURRENT_FONT);
         CURRENT_FONT = new_font;
     }
+}
+
+/// Get the font's name
+pub fn get_font(font: Font) -> String {
+    unsafe {
+        CStr::from_ptr(Fl_get_font(font as i32))
+            .to_string_lossy()
+            .to_string()
+    }
+}
+
+/// Initializes loaded fonts of a certain pattern ```name```
+pub fn set_fonts(name: &str) -> u8 {
+    let name = CString::safe_new(name);
+    unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
 
 /// Gets the name of a font through its index

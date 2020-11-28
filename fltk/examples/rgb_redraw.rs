@@ -4,7 +4,7 @@ use std::rc::Rc;
 
 fn main() {
     let app = app::App::default();
-    let mut wind = window::DoubleWindow::new(100, 100, 400, 400, "Hello from rust");
+    let mut wind = window::Window::new(100, 100, 400, 400, "Hello from rust");
     let mut frame = frame::Frame::new(0, 0, 400, 400, "");
     wind.end();
     wind.show();

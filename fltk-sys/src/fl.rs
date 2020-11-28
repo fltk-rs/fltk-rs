@@ -93,7 +93,22 @@ extern "C" {
     pub fn Fl_scheme() -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_scheme_string() -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_visible_focus() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_set_visible_focus(arg1: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_set_box_type(arg1: libc::c_int, arg2: libc::c_int);
+}
+extern "C" {
     pub fn Fl_get_rgb_color(r: libc::c_uchar, g: libc::c_uchar, b: libc::c_uchar) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_set_color(c: libc::c_uint, r: libc::c_uchar, g: libc::c_uchar, b: libc::c_uchar);
 }
 extern "C" {
     pub fn Fl_get_font(idx: libc::c_int) -> *const libc::c_char;

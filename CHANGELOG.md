@@ -1,9 +1,17 @@
 # Changelog
 
-## [0.10.16] - 2020-11-29
+## [0.11.0] - 2020-11-29
 ### Changes
+- [BREAKING] Remove enums::Color::to_rgb and to_u32.
+- Add utils::rgb2hex and utils::hex2rgb.
+- Add draw::set_draw_rgb_color() and set_draw_hex_color().
 - Relax app::Message requirements to only be Send + Sync.
 - Add app::set_font(Font) to set global app font.
+- Add app::set_color(Color) to set the global app's background color.
+- Add app::visible_focus and set_visible_focus.
+- Fix WidgetExt::center_of() to account for special positioning within windows.
+- WidgetExt::as_window and as_group only require immutable ref to self.
+- Default Window to a DoubleWindow instead of single window for better performance.
 
 ## [0.10.15] - 2020-11-27
 ### Changes
