@@ -23,4 +23,5 @@ jobs:
       shell: bash
     - uses: actions/checkout@v2
     - name: Build
+      shell: bash
       run: NUM_JOBS=4 cargo build --examples --verbose
