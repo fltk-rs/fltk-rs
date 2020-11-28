@@ -14,6 +14,8 @@ use std::{
 
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
+static mut CURRENT_FONT: i32 = 0;
+
 /// The fonts associated with the application
 pub(crate) static mut FONTS: Vec<String> = Vec::new();
 
@@ -427,6 +429,17 @@ pub fn set_fonts(name: &str) -> u8 {
     unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
 
+/// Set the app's font
+pub fn set_font(new_font: Font) {
+    unsafe {
+        let new_font = new_font as i32;
+        Fl_set_font(15, CURRENT_FONT);
+        Fl_set_font(0, new_font);
+        Fl_set_font(new_font, CURRENT_FONT);
+        CURRENT_FONT = new_font;
+    }
+}
+
 /// Gets the name of a font through its index
 pub fn font_name(idx: usize) -> Option<String> {
     unsafe { Some(FONTS[idx].clone()) }
@@ -518,7 +531,7 @@ fn thread_msg<T>() -> Option<T> {
 }
 
 #[repr(C)]
-struct Message<T: Copy + Send + Sync> {
+struct Message<T: Send + Sync> {
     hash: u64,
     sz: usize,
     msg: T,
@@ -526,13 +539,13 @@ struct Message<T: Copy + Send + Sync> {
 
 /// Creates a sender struct
 #[derive(Debug, Clone, Copy)]
-pub struct Sender<T: Copy + Send + Sync> {
+pub struct Sender<T: Send + Sync> {
     data: marker::PhantomData<T>,
     hash: u64,
     sz: usize,
 }
 
-impl<T: Copy + Send + Sync> Sender<T> {
+impl<T: Send + Sync> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
         let msg = Message {
@@ -546,13 +559,13 @@ impl<T: Copy + Send + Sync> Sender<T> {
 
 /// Creates a receiver struct
 #[derive(Debug, Clone, Copy)]
-pub struct Receiver<T: Copy + Send + Sync> {
+pub struct Receiver<T: Send + Sync> {
     data: marker::PhantomData<T>,
     hash: u64,
     sz: usize,
 }
 
-impl<T: Copy + Send + Sync> Receiver<T> {
+impl<T: Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         let data: Option<Message<T>> = thread_msg();
@@ -570,7 +583,7 @@ impl<T: Copy + Send + Sync> Receiver<T> {
 
 /// Creates a channel returning a Sender and Receiver structs
 // The implementation could really use generic statics
-pub fn channel<T: Copy + Send + Sync>() -> (Sender<T>, Receiver<T>) {
+pub fn channel<T: Send + Sync>() -> (Sender<T>, Receiver<T>) {
     let msg_sz = mem::size_of::<T>();
     let type_name = any::type_name::<T>();
     let mut hasher = DefaultHasher::new();

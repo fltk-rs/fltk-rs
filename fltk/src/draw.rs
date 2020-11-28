@@ -484,7 +484,7 @@ pub fn end_complex_polygon() {
 
 /// Sets the current font, which is then used in various drawing routines
 pub fn set_font(face: Font, fsize: u32) {
-    unsafe { Fl_set_font(face as i32, fsize as i32) }
+    unsafe { Fl_set_draw_font(face as i32, fsize as i32) }
 }
 
 /// Gets the current font, which is used in various drawing routines

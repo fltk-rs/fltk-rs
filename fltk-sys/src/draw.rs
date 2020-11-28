@@ -269,7 +269,7 @@ extern "C" {
     pub fn Fl_end_offscreen();
 }
 extern "C" {
-    pub fn Fl_set_font(face: libc::c_int, fsize: libc::c_int);
+    pub fn Fl_set_draw_font(face: libc::c_int, fsize: libc::c_int);
 }
 extern "C" {
     pub fn Fl_font() -> libc::c_int;

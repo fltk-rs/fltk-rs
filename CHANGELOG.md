@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.16] - 2020-11-29
+### Changes
+- Relax app::Message requirements to only be Send + Sync.
+- Add app::set_font(Font) to set global app font.
+
 ## [0.10.15] - 2020-11-27
 ### Changes
 - Add more fields to enums::Align.
