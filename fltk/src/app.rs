@@ -137,17 +137,17 @@ impl App {
     }
 
     /// Gets the scheme of the application
-    pub fn scheme(&self) -> Scheme {
+    pub fn scheme(self) -> Scheme {
         scheme()
     }
 
     /// Runs the event loop
-    pub fn run(&self) -> Result<(), FltkError> {
+    pub fn run(self) -> Result<(), FltkError> {
         run()
     }
 
     /// Wait for incoming messages
-    pub fn wait(&self) -> bool {
+    pub fn wait(self) -> bool {
         wait()
     }
 
@@ -171,11 +171,11 @@ impl App {
     /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
     /// frame.set_label_font(Font::by_name(&font));
     /// ```
-    pub fn load_font<P: AsRef<path::Path>>(&self, path: P) -> Result<String, FltkError> {
+    pub fn load_font<P: AsRef<path::Path>>(self, path: P) -> Result<String, FltkError> {
         self.load_font_(path.as_ref())
     }
 
-    fn load_font_(&self, path: &path::Path) -> Result<String, FltkError> {
+    fn load_font_(self, path: &path::Path) -> Result<String, FltkError> {
         if !path.exists() {
             return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -188,12 +188,12 @@ impl App {
     }
 
     /// Set the visual of the application
-    pub fn set_visual(&self, mode: Mode) -> Result<(), FltkError> {
+    pub fn set_visual(self, mode: Mode) -> Result<(), FltkError> {
         set_visual(mode)
     }
 
     /// Awakens the main UI thread with a callback
-    pub fn awake<F: FnMut() + 'static>(&self, cb: F) {
+    pub fn awake<F: FnMut() + 'static>(self, cb: F) {
         unsafe {
             unsafe extern "C" fn shim(data: *mut raw::c_void) {
                 let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -208,22 +208,22 @@ impl App {
     }
 
     /// Redraws the app
-    pub fn redraw(&self) {
+    pub fn redraw(self) {
         redraw()
     }
 
     /// Set the app as damaged to reschedule a redraw in the next event loop cycle
-    pub fn set_damage(&self, flag: bool) {
+    pub fn set_damage(self, flag: bool) {
         set_damage(flag)
     }
 
     /// Returns whether an app element is damaged
-    pub fn damage(&self) -> bool {
+    pub fn damage(self) -> bool {
         damage()
     }
 
     /// Quit the application
-    pub fn quit(&self) {
+    pub fn quit(self) {
         quit()
     }
 }

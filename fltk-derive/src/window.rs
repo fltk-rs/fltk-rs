@@ -173,7 +173,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 ))]
                 assert!(handle != 0);
 
-                Fl_Window_set_raw_handle(self._inner as *mut Fl_Window, mem::transmute(&handle));
+                Fl_Window_set_raw_handle(self._inner as *mut Fl_Window, &handle as *const u64 as *mut std::ffi::c_void);
             }
 
             fn region(&self) -> crate::draw::Region {

@@ -7,9 +7,9 @@ use std::{
 };
 
 #[cfg(target_os = "windows")]
-const TMP: &'static str = "TEMP";
+const TMP: &str = "TEMP";
 #[cfg(not(target_os = "windows"))]
-const TMP: &'static str = "TMPDIR";
+const TMP: &str = "TMPDIR";
 
 /// Wrapper around Fl_Image, used to wrap other image types
 #[derive(ImageExt, Debug)]
