@@ -159,6 +159,13 @@ impl Font {
 }
 
 /// Defines colors used by FLTK
+/// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum. 
+/// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
+/// The RGBI can be acquired by casting the color to u32 and formatting it to ```0x{08x}```.
+/// The last 2 digits are the hexadecimal representation of the color in this enum.
+/// For example, Color::White, has a hex of 0x000000ff, ff being the 255 value of this enum. 
+/// A custom color like Color::from_u32(0x646464), will have an representation as 0x64646400,
+/// of which the final 00 indicates that it is not stored in this enum.
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Color {
