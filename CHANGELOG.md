@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.11.2] - 2020-11-30
+## [0.11.3] - 2020-11-30
 ### Changes
 - [BREAKING] Remove enums::Color::to_rgb and to_u32.
 - [BREAKING] WidgetExt::trigger returns a CallbackTrigger instead of an int.
