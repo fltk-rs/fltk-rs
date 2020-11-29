@@ -634,10 +634,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn trigger(&self) -> u32 {
+            fn trigger(&self) -> CallbackTrigger {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #trigger(self._inner) as u32
+                    mem::transmute(#trigger(self._inner))
                 }
             }
 

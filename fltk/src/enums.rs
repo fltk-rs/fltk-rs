@@ -89,7 +89,7 @@ impl FrameType {
 
 /// Defines alignment rules used by FLTK for labels
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum Align {
     Center = 0,
     Top = 1,
@@ -115,9 +115,41 @@ pub enum Align {
     ImageMask = 320,
 }
 
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Align {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use Align::*;
+        match *self {
+            Center => write!(f, "Align::Center"),
+            Top => write!(f, "Align::Top"),
+            Bottom => write!(f, "Align::Bottom"),
+            Left => write!(f, "Align::Left"),
+            Right => write!(f, "Align::Right"),
+            Inside => write!(f, "Align::Inside"),
+            TextOverImage => write!(f, "Align::TextOverImage"),
+            Clip => write!(f, "Align::Clip"),
+            Wrap => write!(f, "Align::Wrap"),
+            ImageNextToText => write!(f, "Align::ImageNextToText"),
+            TextNextToImage => write!(f, "Align::TextNextToImage"),
+            ImageBackdrop => write!(f, "Align::ImageBackdrop"),
+            TopLeft => write!(f, "Align::TopLeft"),
+            TopRight => write!(f, "Align::TopRight"),
+            BottomLeft => write!(f, "Align::BottomLeft"),
+            BottomRight => write!(f, "Align::BottomRight"),
+            LeftTop => write!(f, "Align::LeftTop"),
+            RightTop => write!(f, "Align::RightTop"),
+            LeftBottom => write!(f, "Align::LeftBottom"),
+            RightBottom => write!(f, "Align::RightBottom"),
+            PositionMask => write!(f, "Align::PositionMask"),
+            ImageMask => write!(f, "Align::ImageMask"),
+            _ => write!(f, "0x{:02x}", *self as i32),
+        }
+    }
+}
+
 /// Defines fonts used by FLTK
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum Font {
     Helvetica = 0,
     HelveticaBold = 1,
@@ -158,6 +190,33 @@ impl Font {
     }
 }
 
+
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Font {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use Font::*;
+        match *self {
+            Helvetica => write!(f, "Font::Helvetica"),
+            HelveticaBold => write!(f, "Font::HelveticaBold"),
+            HelveticaItalic => write!(f, "Font::HelveticaItalic"),
+            HelveticaBoldItalic => write!(f, "Font::HelveticaBoldItalic"),
+            Courier => write!(f, "Font::Courier"),
+            CourierBold => write!(f, "Font::CourierBold"),
+            CourierItalic => write!(f, "Font::CourierItalic"),
+            CourierBoldItalic => write!(f, "Font::CourierBoldItalic"),
+            Times => write!(f, "Font::Times"),
+            TimesBold => write!(f, "Font::TimesBold"),
+            TimesItalic => write!(f, "Font::TimesItalic"),
+            TimesBoldItalic => write!(f, "Font::TimesBoldItalic"),
+            Symbol => write!(f, "Font::Symbol"),
+            Screen => write!(f, "Font::Screen"),
+            ScreenBold => write!(f, "Font::ScreenBold"),
+            Zapfdingbats => write!(f, "Font::Zapfdingbats"),
+            _ => write!(f, "0x{:02x}", *self as i32),
+        }
+    }
+}
+
 /// Defines colors used by FLTK
 /// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum. 
 /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
@@ -167,7 +226,7 @@ impl Font {
 /// A custom color like Color::from_u32(0x646464), will have an representation as 0x64646400,
 /// of which the final 00 indicates that it is not stored in this enum.
 #[repr(u32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum Color {
     ForeGround = 0,
     BackGround = 7,
@@ -207,6 +266,42 @@ impl Color {
     pub fn from_u32(val: u32) -> Color {
         let (r, g, b) = crate::utils::hex2rgb(val);
         Color::from_rgb(r, g, b)
+    }
+}
+
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Color {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use Color::*;
+        match *self {
+            ForeGround => write!(f, "Color::ForeGround"),
+            BackGround => write!(f, "Color::BackGround"),
+            Inactive => write!(f, "Color::Inactive"),
+            Selection => write!(f, "Color::Selection"),
+            Gray0 => write!(f, "Color::Gray0"),
+            Dark3 => write!(f, "Color::Dark3"),
+            Dark2 => write!(f, "Color::Dark2"),
+            Dark1 => write!(f, "Color::Dark1"),
+            FrameDefault => write!(f, "Color::FrameDefault"),
+            Light1 => write!(f, "Color::Light1"),
+            Light2 => write!(f, "Color::Light2"),
+            Light3 => write!(f, "Color::Light3"),
+            Black => write!(f, "Color::Black"),
+            Red => write!(f, "Color::Red"),
+            Green => write!(f, "Color::Green"),
+            Yellow => write!(f, "Color::Yellow"),
+            Blue => write!(f, "Color::Blue"),
+            Magenta => write!(f, "Color::Magenta"),
+            Cyan => write!(f, "Color::Cyan"),
+            DarkRed => write!(f, "Color::DarkRed"),
+            DarkGreen => write!(f, "Color::DarkGreen"),
+            DarkYellow => write!(f, "Color::DarkYellow"),
+            DarkBlue => write!(f, "Color::DarkBlue"),
+            DarkMagenta => write!(f, "Color::DarkMagenta"),
+            DarkCyan => write!(f, "Color::DarkCyan"),
+            White => write!(f, "Color::White"),
+            _ => write!(f, "{:06x}", *self as u32),
+        }
     }
 }
 
@@ -306,46 +401,46 @@ impl Key {
 impl std::fmt::Debug for Key {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match *self {
-            Key::None => write!(f, "None"),
-            Key::Button => write!(f, "Button"),
-            Key::BackSpace => write!(f, "BackSpace"),
-            Key::Tab => write!(f, "Tab"),
-            Key::IsoKey => write!(f, "IsoKey"),
-            Key::Enter => write!(f, "Enter"),
-            Key::Pause => write!(f, "Pause"),
-            Key::ScrollLock => write!(f, "ScrollLock"),
-            Key::Escape => write!(f, "Escape"),
-            Key::Kana => write!(f, "Kana"),
-            Key::Eisu => write!(f, "Eisu"),
-            Key::Yen => write!(f, "Yen"),
-            Key::JISUnderscore => write!(f, "JISUnderscore"),
-            Key::Home => write!(f, "Home"),
-            Key::Left => write!(f, "Left"),
-            Key::Up => write!(f, "Up"),
-            Key::Right => write!(f, "Right"),
-            Key::Down => write!(f, "Down"),
-            Key::PageUp => write!(f, "PageUp"),
-            Key::PageDown => write!(f, "PageDown"),
-            Key::End => write!(f, "End"),
-            Key::Print => write!(f, "Print"),
-            Key::Insert => write!(f, "Insert"),
-            Key::Menu => write!(f, "Menu"),
-            Key::Help => write!(f, "Help"),
-            Key::NumLock => write!(f, "NumLock"),
-            Key::KP => write!(f, "KP"),
-            Key::KPEnter => write!(f, "KPEnter"),
-            Key::KPLast => write!(f, "KPLast"),
-            Key::FLast => write!(f, "FLast"),
-            Key::ShiftL => write!(f, "ShiftL"),
-            Key::ShiftR => write!(f, "ShiftR"),
-            Key::ControlL => write!(f, "ControlL"),
-            Key::ControlR => write!(f, "ControlR"),
-            Key::CapsLock => write!(f, "CapsLock"),
-            Key::MetaL => write!(f, "MetaL"),
-            Key::MetaR => write!(f, "MetaR"),
-            Key::AltL => write!(f, "AltL"),
-            Key::AltR => write!(f, "AltR"),
-            Key::Delete => write!(f, "Delete"),
+            Key::None => write!(f, "Key::None"),
+            Key::Button => write!(f, "Key::Button"),
+            Key::BackSpace => write!(f, "Key::BackSpace"),
+            Key::Tab => write!(f, "Key::Tab"),
+            Key::IsoKey => write!(f, "Key::IsoKey"),
+            Key::Enter => write!(f, "Key::Enter"),
+            Key::Pause => write!(f, "Key::Pause"),
+            Key::ScrollLock => write!(f, "Key::ScrollLock"),
+            Key::Escape => write!(f, "Key::Escape"),
+            Key::Kana => write!(f, "Key::Kana"),
+            Key::Eisu => write!(f, "Key::Eisu"),
+            Key::Yen => write!(f, "Key::Yen"),
+            Key::JISUnderscore => write!(f, "Key::JISUnderscore"),
+            Key::Home => write!(f, "Key::Home"),
+            Key::Left => write!(f, "Key::Left"),
+            Key::Up => write!(f, "Key::Up"),
+            Key::Right => write!(f, "Key::Right"),
+            Key::Down => write!(f, "Key::Down"),
+            Key::PageUp => write!(f, "Key::PageUp"),
+            Key::PageDown => write!(f, "Key::PageDown"),
+            Key::End => write!(f, "Key::End"),
+            Key::Print => write!(f, "Key::Print"),
+            Key::Insert => write!(f, "Key::Insert"),
+            Key::Menu => write!(f, "Key::Menu"),
+            Key::Help => write!(f, "Key::Help"),
+            Key::NumLock => write!(f, "Key::NumLock"),
+            Key::KP => write!(f, "Key::KP"),
+            Key::KPEnter => write!(f, "Key::KPEnter"),
+            Key::KPLast => write!(f, "Key::KPLast"),
+            Key::FLast => write!(f, "Key::FLast"),
+            Key::ShiftL => write!(f, "Key::ShiftL"),
+            Key::ShiftR => write!(f, "Key::ShiftR"),
+            Key::ControlL => write!(f, "Key::ControlL"),
+            Key::ControlR => write!(f, "Key::ControlR"),
+            Key::CapsLock => write!(f, "Key::CapsLock"),
+            Key::MetaL => write!(f, "Key::MetaL"),
+            Key::MetaR => write!(f, "Key::MetaR"),
+            Key::AltL => write!(f, "Key::AltL"),
+            Key::AltR => write!(f, "Key::AltR"),
+            Key::Delete => write!(f, "Key::Delete"),
             _ => write!(f, "0x{:02x}", *self as i32),
         }
     }
@@ -353,13 +448,13 @@ impl std::fmt::Debug for Key {
 
 /// Defines the modifiers of virtual keycodes
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum Shortcut {
     None = 0,
-    Shift = 0x00010000,
-    CapsLock = 0x00020000,
-    Ctrl = 0x00040000,
-    Alt = 0x00080000,
+    Shift = 0x0001_0000,
+    CapsLock = 0x0002_0000,
+    Ctrl = 0x0004_0000,
+    Alt = 0x0008_0000,
 }
 
 impl Shortcut {
@@ -379,9 +474,24 @@ impl Shortcut {
     }
 }
 
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Shortcut {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use Shortcut::*;
+        match *self {
+            None => write!(f, "Shortcut::None"),
+            Shift => write!(f, "Shortcut::Shift"),
+            CapsLock => write!(f, "Shortcut::CapsLock"),
+            Ctrl => write!(f, "Shortcut::Ctrl"),
+            Alt => write!(f, "Shortcut::Alt"),
+            _ => write!(f, "0x{:08x}", *self as i32),
+        }
+    }
+}
+
 /// Defines the types of triggers for widget callback functions
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum CallbackTrigger {
     Never = 0,
     Changed = 1,
@@ -391,6 +501,25 @@ pub enum CallbackTrigger {
     EnterKey = 8,
     EnterKeyAlways = 10,
     EnterKeyChanged = 11,
+}
+
+
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for CallbackTrigger {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use CallbackTrigger::*;
+        match *self {
+            Never => write!(f, "CallbackTrigger::Never"),
+            Changed => write!(f, "CallbackTrigger::Changed"),
+            NotChanged => write!(f, "CallbackTrigger::NotChanged"),
+            Release => write!(f, "CallbackTrigger::Release"),
+            ReleaseAlways => write!(f, "CallbackTrigger::ReleaseAlways"),
+            EnterKey => write!(f, "CallbackTrigger::EnterKey"),
+            EnterKeyAlways => write!(f, "CallbackTrigger::EnterKeyAlways"),
+            EnterKeyChanged => write!(f, "CallbackTrigger::EnterKeyChanged"),
+            _ => write!(f, "0x{:02x}", *self as i32),
+        }
+    }
 }
 
 /// Defines the text cursor styles supported by fltk
@@ -434,7 +563,7 @@ pub enum Cursor {
 
 /// Defines Fl_Mode types
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum Mode {
     Rgb = 0,
     Index = 1,
@@ -448,6 +577,29 @@ pub enum Mode {
     Stereo = 256,
     FakeSingle = 512, // Fake single buffered windows using double-buffer
     Opengl3 = 1024,
+}
+
+
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Mode {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use Mode::*;
+        match *self {
+            Rgb => write!(f, "Mode::Rgb"),
+            Index => write!(f, "Mode::Index"),
+            Double => write!(f, "Mode::Double"),
+            Accum => write!(f, "Mode::Accum"),
+            Alpha => write!(f, "Mode::Alpha"),
+            Depth => write!(f, "Mode::Depth"),
+            Stencil => write!(f, "Mode::Stencil"),
+            Rgb8 => write!(f, "Mode::Rgb8"),
+            MultiSample => write!(f, "Mode::MultiSample"),
+            Stereo => write!(f, "Mode::Stereo"),
+            FakeSingle => write!(f, "Mode::FakeSingle"),
+            Opengl3 => write!(f, "Mode::Opengl3"),
+            _ => write!(f, "0x{:04x}", *self as i32),
+        }
+    }
 }
 
 pub trait WidgetType {
@@ -493,13 +645,6 @@ impl std::ops::BitOr<Align> for Align {
 impl std::ops::BitOr<i32> for Align {
     type Output = Align;
     fn bitor(self, rhs: i32) -> Self::Output {
-        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
-    }
-}
-
-impl std::ops::BitOr<Color> for Color {
-    type Output = Color;
-    fn bitor(self, rhs: Color) -> Self::Output {
         unsafe { std::mem::transmute(self as i32 | rhs as i32) }
     }
 }

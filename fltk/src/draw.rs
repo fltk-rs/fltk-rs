@@ -11,7 +11,7 @@ pub struct Coord<T: Copy>(pub T, pub T);
 
 /// Defines the line styles supported by fltk
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(WidgetType, Copy, Clone, PartialEq)]
 pub enum LineStyle {
     Solid = 0,
     Dash,

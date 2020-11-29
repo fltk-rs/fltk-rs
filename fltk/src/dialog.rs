@@ -31,7 +31,7 @@ pub type NativeFileChooserType = FileDialogType;
 
 /// Defines the File dialog options, which can be set using the set_option() method.
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(WidgetType, Copy, Clone, PartialEq)]
 pub enum FileDialogOptions {
     NoOptions = 0,
     SaveAsConfirm = 1,
@@ -407,12 +407,26 @@ pub struct FileChooser {
 
 /// The types of FileChooser
 #[repr(i32)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum FileChooserType {
     Single = 0,
     Multi = 1,
     Create = 2,
     Directory = 4,
+}
+
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for FileChooserType {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        use FileChooserType::*;
+        match *self {
+            Single => write!(f, "FileChooserType::Single"),
+            Multi => write!(f, "FileChooserType::Multi"),
+            Create => write!(f, "FileChooserType::Create"),
+            Directory => write!(f, "FileChooserType::Directory"),
+            _ => write!(f, "0x{:02x}", *self as i32),
+        }
+    }
 }
 
 impl std::ops::BitOr<FileChooserType> for FileChooserType {
