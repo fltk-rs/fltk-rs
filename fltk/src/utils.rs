@@ -23,7 +23,7 @@ impl FlString for CString {
 /// ```
 pub fn rgb2hex(r: u8, g: u8, b: u8) -> u32 {
     // Shouldn't fail
-    format!("0x{:02x}{:02x}{:02x}", r, g, b).parse().unwrap()
+    u32::from_str_radix(&format!("{:02x}{:02x}{:02x}", r, g, b), 16).unwrap()
 }
 
 /// Convenience function to convert hex to rgb

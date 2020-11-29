@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.11.0] - 2020-11-29
+## [0.11.1] - 2020-11-29
 ### Changes
 - [BREAKING] Remove enums::Color::to_rgb and to_u32.
 - Add utils::rgb2hex and utils::hex2rgb.
