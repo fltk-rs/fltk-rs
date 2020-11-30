@@ -1,15 +1,13 @@
 # Changelog
 
-## [0.11.4] - Unreleased
-### Changes
-- Use lazy_static for globals.
-- Use bitflags for several enum types.
 
-## [0.11.3] - 2020-11-30
+## [0.11.4] - 2020-11-30
 ### Changes
 - [BREAKING] Remove enums::Color::to_rgb and to_u32.
 - [BREAKING] WidgetExt::trigger returns a CallbackTrigger instead of an int.
-- Add custom Debug implementation for Color.
+- Add custom Display implementation for Color.
+- Use lazy_static for globals.
+- Use bitflags for several enum types.
 - Add utils::rgb2hex and utils::hex2rgb.
 - Add draw::set_draw_rgb_color() and set_draw_hex_color().
 - Relax app::Message requirements to only be Send + Sync.
