@@ -540,7 +540,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
-                unsafe { #set_color(self._inner, color as u32) }
+                unsafe { #set_color(self._inner, color.bits() as u32) }
             }
 
             fn label_color(&self) -> Color {
@@ -550,7 +550,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_label_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_color(self._inner, color as u32) }
+                unsafe { #set_label_color(self._inner, color.bits() as u32) }
             }
 
             fn label_font(&self) -> Font {
@@ -560,7 +560,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_label_font(&mut self, font: Font) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_font(self._inner, font as i32) }
+                unsafe { #set_label_font(self._inner, font.bits() as i32) }
             }
 
             fn label_size(&self) -> i32 {
@@ -624,13 +624,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_align(&mut self, align: Align) {
                 assert!(!self.was_deleted());
-                unsafe { #set_align(self._inner, align as i32) }
+                unsafe { #set_align(self._inner, align.bits() as i32) }
             }
 
             fn set_trigger(&mut self, trigger: CallbackTrigger) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_trigger(self._inner, trigger as i32)
+                    #set_trigger(self._inner, trigger.bits() as i32)
                 }
             }
 
@@ -663,7 +663,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn set_selection_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_selection_color(self._inner, color as u32);
+                    #set_selection_color(self._inner, color.bits() as u32);
                 }
             }
 

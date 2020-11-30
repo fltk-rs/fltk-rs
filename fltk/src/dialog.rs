@@ -405,34 +405,13 @@ pub struct FileChooser {
     _inner: *mut Fl_File_Chooser,
 }
 
-/// The types of FileChooser
-#[repr(i32)]
-#[derive(Copy, Clone, PartialEq)]
-pub enum FileChooserType {
-    Single = 0,
-    Multi = 1,
-    Create = 2,
-    Directory = 4,
-}
-
-#[allow(unreachable_patterns)]
-impl std::fmt::Debug for FileChooserType {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        use FileChooserType::*;
-        match *self {
-            Single => write!(f, "FileChooserType::Single"),
-            Multi => write!(f, "FileChooserType::Multi"),
-            Create => write!(f, "FileChooserType::Create"),
-            Directory => write!(f, "FileChooserType::Directory"),
-            _ => write!(f, "0x{:02x}", *self as i32),
-        }
-    }
-}
-
-impl std::ops::BitOr<FileChooserType> for FileChooserType {
-    type Output = FileChooserType;
-    fn bitor(self, other: FileChooserType) -> Self::Output {
-        unsafe { std::mem::transmute(self as i32 | other as i32) }
+bitflags! {
+    /// The types of FileChooser
+    pub struct FileChooserType: i32 {
+        const Single = 0;
+        const Multi = 1;
+        const Create = 2;
+        const Directory = 4;
     }
 }
 
@@ -444,7 +423,7 @@ impl FileChooser {
         let title = CString::safe_new(title);
         unsafe {
             let ptr =
-                Fl_File_Chooser_new(dir.as_ptr(), pattern.as_ptr(), typ as i32, title.as_ptr());
+                Fl_File_Chooser_new(dir.as_ptr(), pattern.as_ptr(), typ.bits as i32, title.as_ptr());
             assert!(!ptr.is_null());
             FileChooser { _inner: ptr }
         }
@@ -543,7 +522,7 @@ impl FileChooser {
     /// Sets the color of the FileChooser
     pub fn set_color(&mut self, c: Color) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_color(self._inner, c as u32) }
+        unsafe { Fl_File_Chooser_set_color(self._inner, c.bits() as u32) }
     }
 
     /// Gets the color of the FileChooser
@@ -719,7 +698,7 @@ impl FileChooser {
     /// Sets the text color of the file chooser
     pub fn set_textcolor(&mut self, c: Color) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_textcolor(self._inner, c as u32) }
+        unsafe { Fl_File_Chooser_set_textcolor(self._inner, c.bits() as u32) }
     }
 
     /// Gets the text color of the file chooser
@@ -731,7 +710,7 @@ impl FileChooser {
     /// Sets the text font of the file chooser
     pub fn set_textfont(&mut self, f: Font) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_textfont(self._inner, f as i32) }
+        unsafe { Fl_File_Chooser_set_textfont(self._inner, f.bits() as i32) }
     }
 
     /// Gets the text font of the file chooser
@@ -755,7 +734,7 @@ impl FileChooser {
     /// Sets the type of the FileChooser
     pub fn set_type(&mut self, t: FileChooserType) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_type(self._inner, t as i32) }
+        unsafe { Fl_File_Chooser_set_type(self._inner, t.bits as i32) }
     }
 
     /// Gets the type of the FileChooser

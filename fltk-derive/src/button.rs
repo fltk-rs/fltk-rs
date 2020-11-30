@@ -32,7 +32,7 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
             fn set_shortcut(&mut self, shortcut: Shortcut) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_shortcut(self._inner, shortcut as i32)
+                    #set_shortcut(self._inner, shortcut.bits() as i32)
                 }
             }
 

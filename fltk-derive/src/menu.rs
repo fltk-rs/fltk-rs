@@ -78,7 +78,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #add(self._inner, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
+                    #add(self._inner, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
                 }
             }
 
@@ -95,7 +95,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #add(self._inner, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
+                    #add(self._inner, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
                 }
             }
 
@@ -111,7 +111,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #insert(self._inner, idx as i32, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
+                    #insert(self._inner, idx as i32, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
                 }
             }
 
@@ -128,7 +128,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #insert(self._inner, idx as i32, temp.as_ptr(), shortcut as i32, callback, data, flag as i32);
+                    #insert(self._inner, idx as i32, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
                 }
             }
 
@@ -210,7 +210,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn set_text_font(&mut self, c: Font) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_text_font(self._inner, c as i32)
+                    #set_text_font(self._inner, c.bits() as i32)
                 }
             }
 
@@ -239,7 +239,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn set_text_color(&mut self, c: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_text_color(self._inner, c as u32)
+                    #set_text_color(self._inner, c.bits() as u32)
                 }
             }
 

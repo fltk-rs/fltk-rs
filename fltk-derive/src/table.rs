@@ -407,7 +407,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn set_row_header_color(&mut self, val: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_row_header_color(self._inner, val as u32)
+                    #set_row_header_color(self._inner, val.bits() as u32)
                 }
             }
 
@@ -421,7 +421,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn set_col_header_color(&mut self, val: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_col_header_color(self._inner, val as u32)
+                    #set_col_header_color(self._inner, val.bits() as u32)
                 }
             }
 

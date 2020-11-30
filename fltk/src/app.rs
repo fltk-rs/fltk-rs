@@ -9,28 +9,37 @@ use std::{
     ffi::{CStr, CString},
     marker, mem,
     os::raw,
-    panic, path, ptr, time,
+    panic, path, ptr,
+    sync::{
+        atomic::{AtomicBool, Ordering},
+        Mutex,
+    },
+    time,
 };
 
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
-static mut CURRENT_FONT: i32 = 0;
+lazy_static! {
+    /// The currently chosen font
+    static ref CURRENT_FONT: Mutex<i32> = Mutex::new(0);
 
-static mut CURRENT_FRAME: i32 = 2;
+    /// The currently chosen frame type
+    static ref CURRENT_FRAME: Mutex<i32> = Mutex::new(2);
 
-/// The fonts associated with the application
-pub(crate) static mut FONTS: Vec<String> = Vec::new();
+    /// Currently loaded fonts
+    static ref LOADED_FONT: Option<&'static str> = None;
 
-/// Basically a check for global locking
-pub(crate) static mut IS_INIT: bool = false;
+    /// Basically a check for global locking
+    static ref IS_INIT: AtomicBool = AtomicBool::new(false);
 
-/// Currently loaded fonts
-static mut LOADED_FONT: Option<&str> = None;
+    /// The fonts associated with the application
+    pub(crate) static ref FONTS: Mutex<Vec<String>> = Mutex::new(Vec::new());
+}
 
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
     unsafe {
-        if !IS_INIT {
+        if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
         match Fl_run() {
@@ -153,9 +162,7 @@ impl App {
 
     /// Loads system fonts
     pub fn load_system_fonts(self) -> Self {
-        unsafe {
-            FONTS = get_font_names();
-        }
+        *FONTS.lock().unwrap() = get_font_names();
         self
     }
 
@@ -426,51 +433,46 @@ pub unsafe fn set_raw_callback<W>(
 }
 
 pub fn visible_focus() -> bool {
-    unsafe {
-        Fl_visible_focus() != 0
-    }
+    unsafe { Fl_visible_focus() != 0 }
 }
 
 pub fn set_visible_focus(flag: bool) {
-    unsafe {
-        Fl_set_visible_focus(flag as i32)
-    }
+    unsafe { Fl_set_visible_focus(flag as i32) }
 }
 
 /// Set the app's default frame type
 pub fn set_frame_type(new_frame: FrameType) {
     unsafe {
         let new_frame = new_frame as i32;
-        Fl_set_box_type(56, CURRENT_FRAME);
-        Fl_set_box_type(CURRENT_FRAME, new_frame);
+        let mut curr = CURRENT_FRAME.lock().unwrap();
+        Fl_set_box_type(56, *curr);
+        Fl_set_box_type(*curr, new_frame);
         Fl_set_box_type(new_frame, 56);
-        CURRENT_FRAME = new_frame;
-        // Fl_set_box_type(FrameType::UpBox as i32, new_frame as i32)
+        *curr = new_frame;
     }
 }
 
 /// Sets the app's default background color
 pub fn set_color(r: u8, g: u8, b: u8) {
-    unsafe {
-        Fl_set_color(Color::FrameDefault as u32, r, g, b)
-    }
+    unsafe { Fl_set_color(Color::FrameDefault.bits() as u32, r, g, b) }
 }
 
 /// Set the app's font
 pub fn set_font(new_font: Font) {
     unsafe {
-        let new_font = new_font as i32;
-        Fl_set_font(15, CURRENT_FONT);
+        let new_font = new_font.bits() as i32;
+        let mut f = CURRENT_FONT.lock().unwrap();
+        Fl_set_font(15, *f);
         Fl_set_font(0, new_font);
-        Fl_set_font(new_font, CURRENT_FONT);
-        CURRENT_FONT = new_font;
+        Fl_set_font(new_font, *f);
+        *f = new_font;
     }
 }
 
 /// Get the font's name
 pub fn get_font(font: Font) -> String {
     unsafe {
-        CStr::from_ptr(Fl_get_font(font as i32))
+        CStr::from_ptr(Fl_get_font(font.bits() as i32))
             .to_string_lossy()
             .to_string()
     }
@@ -484,7 +486,8 @@ pub fn set_fonts(name: &str) -> u8 {
 
 /// Gets the name of a font through its index
 pub fn font_name(idx: usize) -> Option<String> {
-    unsafe { Some(FONTS[idx].clone()) }
+    let f = FONTS.lock().unwrap();
+    Some(f[idx].clone())
 }
 
 /// Returns a list of available fonts to the application
@@ -504,17 +507,18 @@ pub fn get_font_names() -> Vec<String> {
 
 /// Finds the index of a font through its name
 pub fn font_index(name: &str) -> Option<usize> {
-    unsafe { FONTS.iter().position(|i| i == name) }
+    let f = FONTS.lock().unwrap();
+    f.iter().position(|i| i == name)
 }
 
 /// Gets the number of loaded fonts
 pub fn font_count() -> usize {
-    unsafe { FONTS.len() }
+    (*FONTS.lock().unwrap()).len()
 }
 
 /// Gets a Vector<String> of loaded fonts
 pub fn fonts() -> Vec<String> {
-    unsafe { FONTS.clone() }
+    (*FONTS.lock().unwrap()).clone()
 }
 
 /// Adds a custom handler for unhandled events
@@ -531,7 +535,7 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 /// Starts waiting for events
 pub fn wait() -> bool {
     unsafe {
-        if !IS_INIT {
+        if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
         Fl_wait() != 0
@@ -541,7 +545,7 @@ pub fn wait() -> bool {
 /// Waits a maximum of `dur` seconds or until "something happens".
 pub fn wait_for(dur: f64) -> Result<(), FltkError> {
     unsafe {
-        if !IS_INIT {
+        if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
         if Fl_wait_for(dur) >= 0.0 {
@@ -673,11 +677,9 @@ pub fn next_window<W: WindowExt>(w: &W) -> Option<impl WindowExt> {
 
 /// Quit the app
 pub fn quit() {
-    unsafe {
-        if let Some(loaded_font) = LOADED_FONT {
-            // Shouldn't fail
-            unload_font(loaded_font).unwrap_or(());
-        }
+    if let Some(loaded_font) = *LOADED_FONT {
+        // Shouldn't fail
+        unload_font(loaded_font).unwrap_or(());
     }
     if let Some(wins) = windows() {
         for mut i in wins {
@@ -810,7 +812,7 @@ pub fn init_all() {
         lock().expect("fltk-rs requires threading support!");
         register_images();
         // This should never appear!
-        FONTS = vec![
+        *FONTS.lock().unwrap() = vec![
             "Helvetica".to_owned(),
             "HelveticaBold".to_owned(),
             "HelveticaItalic".to_owned(),
@@ -828,8 +830,8 @@ pub fn init_all() {
             "ScreenBold".to_owned(),
             "Zapfdingbats".to_owned(),
         ];
-        if !IS_INIT {
-            IS_INIT = true;
+        if !IS_INIT.load(Ordering::Relaxed) {
+            IS_INIT.store(true, Ordering::Relaxed);
         }
     }
 }
@@ -872,7 +874,7 @@ pub fn damage() -> bool {
 /// Sets the visual mode of the application
 pub fn set_visual(mode: Mode) -> Result<(), FltkError> {
     unsafe {
-        match Fl_visual(mode as i32) {
+        match Fl_visual(mode.bits() as i32) {
             0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             _ => Ok(()),
         }
@@ -985,7 +987,7 @@ pub fn dnd() {
 fn load_font(path: &str) -> Result<String, FltkError> {
     unsafe {
         let path = CString::new(path)?;
-        if let Some(load_font) = LOADED_FONT {
+        if let Some(load_font) = *LOADED_FONT {
             unload_font(load_font)?;
         }
         let ptr = Fl_load_font(path.as_ptr());
@@ -995,10 +997,11 @@ fn load_font(path: &str) -> Result<String, FltkError> {
             let name = CString::from_raw(ptr as *mut _)
                 .to_string_lossy()
                 .to_string();
-            if FONTS.len() < 17 {
-                FONTS.push(name.clone());
+            let mut f = FONTS.lock().unwrap();
+            if f.len() < 17 {
+                f.push(name.clone());
             } else {
-                FONTS[16] = name.clone();
+                f[16] = name.clone();
             }
             Ok(name)
         }

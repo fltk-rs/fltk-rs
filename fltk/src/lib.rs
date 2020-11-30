@@ -191,6 +191,8 @@
 //!
 //! please check the [FAQ](https://github.com/MoAlyousef/fltk-rs/blob/master/FAQ.md) page for frequently asked questions, encountered issues, guides on deployment, and contribution.
 
+#![allow(non_upper_case_globals)]
+
 pub mod app;
 pub mod browser;
 pub mod button;
@@ -222,3 +224,9 @@ pub use prelude::*;
 
 #[macro_use]
 extern crate fltk_derive;
+
+#[macro_use]
+extern crate lazy_static;
+
+#[macro_use]
+extern crate bitflags;
