@@ -198,7 +198,7 @@ impl Tabs {
     /// Sets the tab label alignment
     pub fn set_tab_align(&mut self, a: Align) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tabs_set_tab_align(self._inner, a as i32) }
+        unsafe { Fl_Tabs_set_tab_align(self._inner, a.bits() as i32) }
     }
 
     /// Gets the tab label alignment.

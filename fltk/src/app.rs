@@ -460,7 +460,7 @@ pub fn set_color(r: u8, g: u8, b: u8) {
 /// Set the app's font
 pub fn set_font(new_font: Font) {
     unsafe {
-        let new_font = new_font as i32;
+        let new_font = new_font.bits() as i32;
         let mut f = CURRENT_FONT.lock().unwrap();
         Fl_set_font(15, *f);
         Fl_set_font(0, new_font);
@@ -472,7 +472,7 @@ pub fn set_font(new_font: Font) {
 /// Get the font's name
 pub fn get_font(font: Font) -> String {
     unsafe {
-        CStr::from_ptr(Fl_get_font(font as i32))
+        CStr::from_ptr(Fl_get_font(font.bits() as i32))
             .to_string_lossy()
             .to_string()
     }
@@ -874,7 +874,7 @@ pub fn damage() -> bool {
 /// Sets the visual mode of the application
 pub fn set_visual(mode: Mode) -> Result<(), FltkError> {
     unsafe {
-        match Fl_visual(mode as i32) {
+        match Fl_visual(mode.bits() as i32) {
             0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             _ => Ok(()),
         }

@@ -219,7 +219,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn set_text_font(&mut self, font: Font) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_text_font(self._inner, font as i32)
+                    #set_text_font(self._inner, font.bits() as i32)
                 }
             }
 

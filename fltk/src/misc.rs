@@ -105,7 +105,7 @@ impl Spinner {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_font(self._inner, f as i32) }
+        unsafe { Fl_Spinner_set_text_font(self._inner, f.bits() as i32) }
     }
 
     /// Gets the text size
@@ -238,7 +238,7 @@ impl Chart {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_font(self._inner, f as i32) }
+        unsafe { Fl_Chart_set_text_font(self._inner, f.bits() as i32) }
     }
 
     /// Gets the text size
@@ -429,7 +429,7 @@ impl Tooltip {
 
     /// Sets the tooltip's font
     pub fn set_font(font: Font) {
-        unsafe { Fl_Tooltip_set_font(font as i32) }
+        unsafe { Fl_Tooltip_set_font(font.bits() as i32) }
     }
 
     /// Gets the tooltip's font size

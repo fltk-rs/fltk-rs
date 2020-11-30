@@ -696,7 +696,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            Fl_Text_Editor_kf_default(c as i32, self._inner);
+            Fl_Text_Editor_kf_default(c.bits() as i32, self._inner);
         }
     }
 
@@ -705,7 +705,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            Fl_Text_Editor_kf_ignore(c as i32, self._inner);
+            Fl_Text_Editor_kf_ignore(c.bits() as i32, self._inner);
         }
     }
 
@@ -732,7 +732,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            Fl_Text_Editor_kf_move(c as i32, self._inner);
+            Fl_Text_Editor_kf_move(c.bits() as i32, self._inner);
         }
     }
 
@@ -741,7 +741,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            Fl_Text_Editor_kf_shift_move(c as i32, self._inner);
+            Fl_Text_Editor_kf_shift_move(c.bits() as i32, self._inner);
         }
     }
 
@@ -750,7 +750,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            Fl_Text_Editor_kf_ctrl_move(c as i32, self._inner);
+            Fl_Text_Editor_kf_ctrl_move(c.bits() as i32, self._inner);
         }
     }
 
@@ -759,7 +759,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            Fl_Text_Editor_kf_c_s_move(c as i32, self._inner);
+            Fl_Text_Editor_kf_c_s_move(c.bits() as i32, self._inner);
         }
     }
 
@@ -768,7 +768,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            Fl_Text_Editor_kf_meta_move(c as i32, self._inner);
+            Fl_Text_Editor_kf_meta_move(c.bits() as i32, self._inner);
         }
     }
 
@@ -777,7 +777,7 @@ impl TextEditor {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
-            Fl_Text_Editor_kf_m_s_move(c as i32, self._inner);
+            Fl_Text_Editor_kf_m_s_move(c.bits() as i32, self._inner);
         }
     }
 

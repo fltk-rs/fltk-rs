@@ -9,7 +9,11 @@ fn main() {
     wind.end();
     wind.show();
 
+    let opts = FileChooserType::Multi;
+    println!("{:?}", opts);
+
     but.set_callback(|| {
+        
         let file = file_chooser("Choose File", "*.rs", ".", true).unwrap();
         println!("{}", file);
 

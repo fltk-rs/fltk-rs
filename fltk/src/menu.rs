@@ -161,7 +161,7 @@ impl MenuItem {
     /// Sets the label font of the menu item
     pub fn set_label_font(&mut self, font: Font) {
         assert!(!self.was_deleted() && !self._inner.is_null());
-        unsafe { Fl_Menu_Item_set_label_font(self._inner, font as i32) }
+        unsafe { Fl_Menu_Item_set_label_font(self._inner, font.bits() as i32) }
     }
 
     /// Returns the label size of the menu item
