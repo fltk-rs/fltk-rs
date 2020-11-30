@@ -522,7 +522,7 @@ impl FileChooser {
     /// Sets the color of the FileChooser
     pub fn set_color(&mut self, c: Color) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_color(self._inner, c as u32) }
+        unsafe { Fl_File_Chooser_set_color(self._inner, c.bits() as u32) }
     }
 
     /// Gets the color of the FileChooser
@@ -698,7 +698,7 @@ impl FileChooser {
     /// Sets the text color of the file chooser
     pub fn set_textcolor(&mut self, c: Color) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_textcolor(self._inner, c as u32) }
+        unsafe { Fl_File_Chooser_set_textcolor(self._inner, c.bits() as u32) }
     }
 
     /// Gets the text color of the file chooser

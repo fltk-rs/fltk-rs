@@ -11,6 +11,9 @@ fn main() {
     app::set_frame_type(FrameType::RFlatBox);
     app::set_visible_focus(false);
 
+    let c = Color::Gray0;
+    println!("{}", c);
+
     // regular widget code
     let mut win = window::Window::default().with_size(400, 300);
     let _frame = frame::Frame::new(0, 0, 400, 200, "Defaults");

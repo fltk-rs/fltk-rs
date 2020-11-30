@@ -660,7 +660,7 @@ impl Tree {
     /// Sets the items' foreground color
     pub fn set_item_label_fg_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_set_item_labelfgcolor(self._inner, val as u32) }
+        unsafe { Fl_Tree_set_item_labelfgcolor(self._inner, val.bits() as u32) }
     }
 
     /// Gets the items' background color
@@ -672,7 +672,7 @@ impl Tree {
     /// Sets the items' foreground color
     pub fn set_item_label_bg_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_set_item_labelbgcolor(self._inner, val as u32) }
+        unsafe { Fl_Tree_set_item_labelbgcolor(self._inner, val.bits() as u32) }
     }
 
     /// Gets the items' connector color
@@ -684,7 +684,7 @@ impl Tree {
     /// Sets the items' foreground color
     pub fn set_connector_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_set_connectorcolor(self._inner, val as u32) }
+        unsafe { Fl_Tree_set_connectorcolor(self._inner, val.bits() as u32) }
     }
 
     /// Gets the left margin
@@ -1325,7 +1325,7 @@ impl TreeItem {
     /// Sets the label's foreground color
     pub fn set_label_fg_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_set_labelfgcolor(self._inner, val as u32) }
+        unsafe { Fl_Tree_Item_set_labelfgcolor(self._inner, val.bits() as u32) }
     }
 
     /// Gets the label's foreground color
@@ -1337,7 +1337,7 @@ impl TreeItem {
     /// Sets the label's color
     pub fn set_label_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_set_labelcolor(self._inner, val as u32) }
+        unsafe { Fl_Tree_Item_set_labelcolor(self._inner, val.bits() as u32) }
     }
 
     /// Gets the label's color
@@ -1349,7 +1349,7 @@ impl TreeItem {
     /// Sets the label's background color
     pub fn set_label_bg_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_set_labelbgcolor(self._inner, val as u32) }
+        unsafe { Fl_Tree_Item_set_labelbgcolor(self._inner, val.bits() as u32) }
     }
 
     /// Gets the label's foreground color

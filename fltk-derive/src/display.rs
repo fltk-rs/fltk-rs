@@ -279,7 +279,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn set_text_color(&mut self, color: Color){
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
-                unsafe { #set_text_color(self._inner, color as u32) }
+                unsafe { #set_text_color(self._inner, color.bits() as u32) }
             }
 
             fn text_size(&self) -> u32{
@@ -422,7 +422,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 let mut fonts: Vec<i32> = vec![];
                 let mut sizes: Vec<i32> = vec![];
                 for entry in entries.iter() {
-                    colors.push(entry.color as u32);
+                    colors.push(entry.color.bits() as u32);
                     fonts.push(entry.font.bits() as i32);
                     sizes.push(entry.size as i32);
                 }
@@ -441,7 +441,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn set_cursor_color(&mut self, color: Color){
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_cursor_color(self._inner, color as u32)
+                    #set_cursor_color(self._inner, color.bits() as u32)
                 }
             }
 
@@ -636,7 +636,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn set_linenumber_fgcolor(&mut self, color: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_linenumber_fgcolor(self._inner, color as u32)
+                    #set_linenumber_fgcolor(self._inner, color.bits() as u32)
                 }
             }
 
@@ -650,7 +650,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn set_linenumber_bgcolor(&mut self, color: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_linenumber_bgcolor(self._inner, color as u32)
+                    #set_linenumber_bgcolor(self._inner, color.bits() as u32)
                 }
             }
 

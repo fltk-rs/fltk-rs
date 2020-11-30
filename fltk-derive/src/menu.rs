@@ -239,7 +239,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn set_text_color(&mut self, c: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_text_color(self._inner, c as u32)
+                    #set_text_color(self._inner, c.bits() as u32)
                 }
             }
 

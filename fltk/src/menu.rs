@@ -149,7 +149,7 @@ impl MenuItem {
     /// Sets the label color of the menu item
     pub fn set_label_color(&mut self, color: Color) {
         assert!(!self.was_deleted() && !self._inner.is_null());
-        unsafe { Fl_Menu_Item_set_label_color(self._inner, color as u32) }
+        unsafe { Fl_Menu_Item_set_label_color(self._inner, color.bits() as u32) }
     }
 
     /// Returns the label font of the menu item

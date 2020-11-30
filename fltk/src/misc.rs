@@ -133,7 +133,7 @@ impl Spinner {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_color(self._inner, color as u32) }
+        unsafe { Fl_Spinner_set_text_color(self._inner, color.bits() as u32) }
     }
 }
 
@@ -162,7 +162,7 @@ impl Chart {
     pub fn add(&mut self, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_add(self._inner, val, txt.as_ptr(), col as u32) }
+        unsafe { Fl_Chart_add(self._inner, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Inserts an entry at an index
@@ -173,7 +173,7 @@ impl Chart {
         );
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_insert(self._inner, idx as i32, val, txt.as_ptr(), col as u32) }
+        unsafe { Fl_Chart_insert(self._inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Replaces an entry at an index
@@ -184,7 +184,7 @@ impl Chart {
         );
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_replace(self._inner, idx as i32, val, txt.as_ptr(), col as u32) }
+        unsafe { Fl_Chart_replace(self._inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Sets the bounds of the chart
@@ -266,7 +266,7 @@ impl Chart {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_color(self._inner, color as u32) }
+        unsafe { Fl_Chart_set_text_color(self._inner, color.bits() as u32) }
     }
 
     /// Returns wheter the chart is autosizable
@@ -453,7 +453,7 @@ impl Tooltip {
 
     /// Sets the tooltip's color
     pub fn set_color(c: Color) {
-        unsafe { Fl_Tooltip_set_color(c as u32) }
+        unsafe { Fl_Tooltip_set_color(c.bits() as u32) }
     }
 
     /// Gets the tooltip's text color
@@ -463,7 +463,7 @@ impl Tooltip {
 
     /// Sets the tooltip's text color
     pub fn set_text_color(c: Color) {
-        unsafe { Fl_Tooltip_set_text_color(c as u32) }
+        unsafe { Fl_Tooltip_set_text_color(c.bits() as u32) }
     }
 
     /// Gets the margin width

@@ -158,43 +158,45 @@ impl Font {
     }
 }
 
-/// Defines colors used by FLTK
-/// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum. 
-/// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
-/// The RGBI can be acquired by casting the color to u32 and formatting it to ```0x{08x}```.
-/// The last 2 digits are the hexadecimal representation of the color in this enum.
-/// For example, Color::White, has a hex of 0x000000ff, ff being the 255 value of this enum. 
-/// A custom color like Color::from_u32(0x646464), will have an representation as 0x64646400,
-/// of which the final 00 indicates that it is not stored in this enum.
-#[repr(u32)]
-#[derive(Copy, Clone, PartialEq)]
-pub enum Color {
-    ForeGround = 0,
-    BackGround = 7,
-    Inactive = 8,
-    Selection = 15,
-    Gray0 = 32,
-    Dark3 = 39,
-    Dark2 = 45,
-    Dark1 = 47,
-    FrameDefault = 49,
-    Light1 = 50,
-    Light2 = 52,
-    Light3 = 54,
-    Black = 56,
-    Red = 88,
-    Green = 63,
-    Yellow = 95,
-    Blue = 216,
-    Magenta = 248,
-    Cyan = 223,
-    DarkRed = 72,
-    DarkGreen = 60,
-    DarkYellow = 76,
-    DarkBlue = 136,
-    DarkMagenta = 152,
-    DarkCyan = 140,
-    White = 255,
+bitflags! {
+    /// Defines colors used by FLTK
+    /// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum. 
+    /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
+    /// The RGBI can be acquired by casting the color to u32 and formatting it to ```0x{08x}```.
+    /// The last 2 digits are the hexadecimal representation of the color in this enum.
+    /// For example, Color::White, has a hex of 0x000000ff, ff being the 255 value of this enum. 
+    /// A custom color like Color::from_u32(0x646464), will have an representation as 0x64646400,
+    /// of which the final 00 indicates that it is not stored in this enum.
+    /// For convenience, the fmt::Display trait is implemented so that the name of the Color is shown
+    /// when there is one, otherwise the RGB value is given.
+    pub struct Color: u32 {
+        const ForeGround = 0;
+        const BackGround = 7;
+        const Inactive = 8;
+        const Selection = 15;
+        const Gray0 = 32;
+        const Dark3 = 39;
+        const Dark2 = 45;
+        const Dark1 = 47;
+        const FrameDefault = 49;
+        const Light1 = 50;
+        const Light2 = 52;
+        const Light3 = 54;
+        const Black = 56;
+        const Red = 88;
+        const Green = 63;
+        const Yellow = 95;
+        const Blue = 216;
+        const Magenta = 248;
+        const Cyan = 223;
+        const DarkRed = 72;
+        const DarkGreen = 60;
+        const DarkYellow = 76;
+        const DarkBlue = 136;
+        const DarkMagenta = 152;
+        const DarkCyan = 140;
+        const White = 255;
+    }
 }
 
 impl Color {
@@ -211,37 +213,39 @@ impl Color {
 }
 
 #[allow(unreachable_patterns)]
-impl std::fmt::Debug for Color {
+impl std::fmt::Display for Color {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        use Color::*;
         match *self {
-            ForeGround => write!(f, "Color::ForeGround"),
-            BackGround => write!(f, "Color::BackGround"),
-            Inactive => write!(f, "Color::Inactive"),
-            Selection => write!(f, "Color::Selection"),
-            Gray0 => write!(f, "Color::Gray0"),
-            Dark3 => write!(f, "Color::Dark3"),
-            Dark2 => write!(f, "Color::Dark2"),
-            Dark1 => write!(f, "Color::Dark1"),
-            FrameDefault => write!(f, "Color::FrameDefault"),
-            Light1 => write!(f, "Color::Light1"),
-            Light2 => write!(f, "Color::Light2"),
-            Light3 => write!(f, "Color::Light3"),
-            Black => write!(f, "Color::Black"),
-            Red => write!(f, "Color::Red"),
-            Green => write!(f, "Color::Green"),
-            Yellow => write!(f, "Color::Yellow"),
-            Blue => write!(f, "Color::Blue"),
-            Magenta => write!(f, "Color::Magenta"),
-            Cyan => write!(f, "Color::Cyan"),
-            DarkRed => write!(f, "Color::DarkRed"),
-            DarkGreen => write!(f, "Color::DarkGreen"),
-            DarkYellow => write!(f, "Color::DarkYellow"),
-            DarkBlue => write!(f, "Color::DarkBlue"),
-            DarkMagenta => write!(f, "Color::DarkMagenta"),
-            DarkCyan => write!(f, "Color::DarkCyan"),
-            White => write!(f, "Color::White"),
-            _ => write!(f, "{:06x}", *self as u32),
+            Color::ForeGround => write!(f, "ForeGround"),
+            Color::BackGround => write!(f, "BackGround"),
+            Color::Inactive => write!(f, "Inactive"),
+            Color::Selection => write!(f, "Selection"),
+            Color::Gray0 => write!(f, "Gray0"),
+            Color::Dark3 => write!(f, "Dark3"),
+            Color::Dark2 => write!(f, "Dark2"),
+            Color::Dark1 => write!(f, "Dark1"),
+            Color::FrameDefault => write!(f, "FrameDefault"),
+            Color::Light1 => write!(f, "Light1"),
+            Color::Light2 => write!(f, "Light2"),
+            Color::Light3 => write!(f, "Light3"),
+            Color::Black => write!(f, "Black"),
+            Color::Red => write!(f, "Red"),
+            Color::Green => write!(f, "Green"),
+            Color::Yellow => write!(f, "Yellow"),
+            Color::Blue => write!(f, "Blue"),
+            Color::Magenta => write!(f, "Magenta"),
+            Color::Cyan => write!(f, "Cyan"),
+            Color::DarkRed => write!(f, "DarkRed"),
+            Color::DarkGreen => write!(f, "DarkGreen"),
+            Color::DarkYellow => write!(f, "DarkYellow"),
+            Color::DarkBlue => write!(f, "DarkBlue"),
+            Color::DarkMagenta => write!(f, "DarkMagenta"),
+            Color::DarkCyan => write!(f, "DarkCyan"),
+            Color::White => write!(f, "White"),
+            _ => { 
+                let temp = format!("{:08x}", self.bits);
+                write!(f, "0x{}", &temp[0..6])
+            },
         }
     }
 }

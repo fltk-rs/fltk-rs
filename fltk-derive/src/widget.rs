@@ -540,7 +540,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
-                unsafe { #set_color(self._inner, color as u32) }
+                unsafe { #set_color(self._inner, color.bits() as u32) }
             }
 
             fn label_color(&self) -> Color {
@@ -550,7 +550,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_label_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_color(self._inner, color as u32) }
+                unsafe { #set_label_color(self._inner, color.bits() as u32) }
             }
 
             fn label_font(&self) -> Font {
@@ -663,7 +663,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn set_selection_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_selection_color(self._inner, color as u32);
+                    #set_selection_color(self._inner, color.bits() as u32);
                 }
             }
 

@@ -454,7 +454,7 @@ pub fn set_frame_type(new_frame: FrameType) {
 
 /// Sets the app's default background color
 pub fn set_color(r: u8, g: u8, b: u8) {
-    unsafe { Fl_set_color(Color::FrameDefault as u32, r, g, b) }
+    unsafe { Fl_set_color(Color::FrameDefault.bits() as u32, r, g, b) }
 }
 
 /// Set the app's font

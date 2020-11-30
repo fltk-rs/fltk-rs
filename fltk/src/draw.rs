@@ -117,7 +117,7 @@ impl Drop for Offscreen {
 
 /// Shows a color map
 pub fn show_colormap(old_color: Color) -> Color {
-    unsafe { mem::transmute(Fl_show_colormap(old_color as u32)) }
+    unsafe { mem::transmute(Fl_show_colormap(old_color.bits() as u32)) }
 }
 
 /// Sets the color using rgb values
@@ -159,7 +159,7 @@ pub fn draw_rect(x: i32, y: i32, w: i32, h: i32) {
 
 /// Draws a rectangle with border color
 pub fn draw_rect_with_color(x: i32, y: i32, w: i32, h: i32, color: Color) {
-    unsafe { Fl_rect_with_color(x, y, w, h, color as u32) }
+    unsafe { Fl_rect_with_color(x, y, w, h, color.bits() as u32) }
 }
 
 /// Draws a non-filled 3-sided polygon
@@ -185,7 +185,7 @@ pub fn draw_loop3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Co
 
 /// Draws a filled rectangle
 pub fn draw_rect_fill(x: i32, y: i32, w: i32, h: i32, color: Color) {
-    unsafe { Fl_rectf_with_color(x, y, w, h, color as u32) }
+    unsafe { Fl_rectf_with_color(x, y, w, h, color.bits() as u32) }
 }
 
 /// Draws a focus rectangle
@@ -206,7 +206,7 @@ pub fn set_draw_rgb_color(r: u8, g: u8, b: u8) {
 
 /// Sets the drawing color
 pub fn set_draw_color(color: Color) {
-    unsafe { Fl_set_color_int(color as u32) }
+    unsafe { Fl_set_color_int(color.bits() as u32) }
 }
 
 /// Draws a circle
@@ -618,7 +618,7 @@ pub fn draw_frame2(string: &str, x: i32, y: i32, width: i32, height: i32) {
 
 /// Draws a box given the box type, size, position and color
 pub fn draw_box(box_type: FrameType, x: i32, y: i32, w: i32, h: i32, color: Color) {
-    unsafe { Fl_draw_box(box_type as i32, x, y, w, h, color as u32) }
+    unsafe { Fl_draw_box(box_type as i32, x, y, w, h, color.bits() as u32) }
 }
 
 /// Checks whether platform supports true alpha blending for RGBA images
@@ -659,7 +659,7 @@ pub fn set_cursor(cursor: Cursor) {
 
 /// Sets the cursor style
 pub fn set_cursor_with_color(cursor: Cursor, fg: Color, bg: Color) {
-    unsafe { Fl_set_cursor2(cursor as i32, fg as i32, bg as i32) }
+    unsafe { Fl_set_cursor2(cursor as i32, fg.bits() as i32, bg.bits() as i32) }
 }
 
 /// Sets the status

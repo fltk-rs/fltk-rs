@@ -233,7 +233,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn set_text_color(&mut self, color: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_text_color(self._inner, color as u32)
+                    #set_text_color(self._inner, color.bits() as u32)
                 }
             }
 
