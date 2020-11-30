@@ -222,3 +222,6 @@ pub use prelude::*;
 
 #[macro_use]
 extern crate fltk_derive;
+
+#[macro_use]
+extern crate lazy_static;

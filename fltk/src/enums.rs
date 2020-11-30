@@ -173,7 +173,7 @@ impl Font {
     /// Returns a font by index, can be queried via the app::get_font_names()
     pub fn by_index(idx: usize) -> Font {
         unsafe {
-            if idx < FONTS.len() {
+            if idx < (*FONTS.lock().unwrap()).len() {
                 std::mem::transmute(idx as i32)
             } else {
                 Font::Helvetica

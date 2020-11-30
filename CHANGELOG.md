@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.11.4] - Unreleased
+### Changes
+- Use lazy_static for globals.
+
 ## [0.11.3] - 2020-11-30
 ### Changes
 - [BREAKING] Remove enums::Color::to_rgb and to_u32.
