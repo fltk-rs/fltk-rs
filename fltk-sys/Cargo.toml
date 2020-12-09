@@ -17,7 +17,7 @@ path = "src/lib.rs"
 libc = "0.2.81"
 
 [build-dependencies]
-cmake = { git = "https://github.com/moalyousef/cmake-rs" }
+cmake = { version = "^0.1.45", git = "https://github.com/moalyousef/cmake-rs" }
 
 [features]
 default = []
