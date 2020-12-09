@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.11.5] - 2020-12-09
+### Changes
+- Add wiki.
+- Update dependencies.
+- Update README and lib.rs.
+
 
 ## [0.11.4] - 2020-11-30
 ### Changes
