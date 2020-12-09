@@ -28,7 +28,7 @@ jobs:
       shell: bash
     - uses: actions/checkout@v2
     - name: Build
-      run: NUM_JOBS=4 cargo build --release
+      run: cargo build --release
       shell: bash
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
