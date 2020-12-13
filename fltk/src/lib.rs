@@ -30,8 +30,7 @@
 //! ```
 //! The library is automatically built and statically linked to your binary.
 //!
-//! For faster builds with the cmake crate, you can try setting the NUM_JOBS environment variable, 
-//! or you can enable ninja builds for the C++ source using the "use-ninja" feature.
+//! For faster builds you can enable ninja builds for the C++ source using the "use-ninja" feature.
 //!
 //! An example hello world application:
 //!
@@ -164,6 +163,7 @@
 //! - system-libjpeg: Uses the system libjpeg
 //! - system-zlib: Uses the system zlib
 //! - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
+//! - no-pango: Build without pango support on Linux/BSD.
 //! - enable-glwindow: Support for drawing using OpenGL functions.
 //!
 //! ## Dependencies

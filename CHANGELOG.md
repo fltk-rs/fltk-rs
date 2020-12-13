@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.11.6] - 2020-12-13
+### Changes
+- Update docs and README.
+- Dissociate versions of fltk from both fltk-derive and fltk-sys.
+
 ## [0.11.5] - 2020-12-09
 ### Changes
 - Add wiki.
