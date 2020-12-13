@@ -177,6 +177,7 @@ The following are the features offered by the crate:
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
+- no-pango: Build without pango support on Linux/BSD.
 - enable-glwindow: Support for drawing using OpenGL functions.
 
 ## Dependencies
