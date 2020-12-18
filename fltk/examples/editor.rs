@@ -30,6 +30,7 @@ impl Editor {
         #[cfg(target_os = "macos")]
         e.editor.resize(5, 5, 790, 590);
 
+        e.editor.set_scrollbar_size(15);
         e.editor.set_buffer(Some(buf));
         e.editor.set_text_font(Font::Courier);
         e.editor.set_linenumber_width(32);
