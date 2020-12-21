@@ -13,6 +13,7 @@ The FLTK crate is a crossplatform lightweight gui library which can be staticall
 Tutorials:
 - [Video](https://github.com/MoAlyousef/fltk-rs#tutorials)
 - [Written](https://github.com/MoAlyousef/fltk-rs/wiki)
+- Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference. 
 
 Why choose FLTK?
 - Lightweight. Small binary, around 1mb after stripping. [Small memory footprint](https://szibele.com/memory-footprint-of-gui-toolkits/).
