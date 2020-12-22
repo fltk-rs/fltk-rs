@@ -1,6 +1,6 @@
 use fltk::{app::*, frame::*, image::*, window::*};
 
-macro_rules! clock {() => ("<?xml version=\"1.0\" encoding=\"utf-8\"?>
+const CLOCK: &str = "<?xml version=\"1.0\" encoding=\"utf-8\"?>
 <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">
 <svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\"
 	 width=\"640px\" height=\"480px\" viewBox=\"0 0 640 480\" enable-background=\"new 0 0 640 480\" xml:space=\"preserve\">
@@ -25,16 +25,16 @@ macro_rules! clock {() => ("<?xml version=\"1.0\" encoding=\"utf-8\"?>
 	c1.895,3.087,4.307,5.309,7.23,6.662c2.926,1.355,6.338,2.031,10.238,2.031c5.631,0,10.613-1.244,14.947-3.737v-25.186h-14.785
 	l-2.6-18.849h43.547v55.57c-5.85,3.793-12.297,6.718-19.336,8.774C453.051,284.987,445.631,286.019,437.832,286.019z M523.5,151.5
 	c0-6.627-5.373-12-12-12h-343c-6.627,0-12,5.373-12,12v150c0,6.627,5.373,12,12,12h343c6.627,0,12-5.373,12-12V151.5z\"/>
-</svg>")}
+</svg>";
 
 fn main() {
-    let app = App::default().with_scheme(Scheme::Gtk);
+    let app = App::default();
     let mut wind = Window::default()
         .with_label("svg test")
         .with_size(720, 486)
         .center_screen();
     let mut frame = Frame::new(-30, 200, 30, 30, "");
-    let mut svg = SvgImage::from_data(&clock!()).unwrap();
+    let mut svg = SvgImage::from_data(CLOCK).unwrap();
     svg.scale(200, 200, true, true);
     frame.set_image(Some(svg));
     wind.set_color(Color::White);
@@ -74,7 +74,7 @@ fn main() {
 //         .with_size(720, 486)
 //         .center_screen();
 //     let mut frame = Frame::new(-30, 200, 30, 30, "");
-//     let mut svg = SvgImage::from_data(&clock!()).unwrap();
+//     let mut svg = SvgImage::from_data(CLOCK).unwrap();
 //     svg.scale(200, 200, true, true);
 //     frame.set_image(Some(svg));
 //     wind.set_color(Color::White);

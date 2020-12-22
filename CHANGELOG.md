@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.12.0] - 2020-12-23
+### Changes
+- [BREAKING] TableRow::select_row and select_all_rows also take a flag to specify selection/deselection/toggling existing state.
+- Update docs.
+- Update dependencies.
+
 ## [0.11.6] - 2020-12-13
 ### Changes
 - Update docs and README.

@@ -13,6 +13,7 @@ The FLTK crate is a crossplatform lightweight gui library which can be staticall
 Tutorials:
 - [Video](https://github.com/MoAlyousef/fltk-rs#tutorials)
 - [Written](https://github.com/MoAlyousef/fltk-rs/wiki)
+- Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference. 
 
 Why choose FLTK?
 - Lightweight. Small binary, around 1mb after stripping. [Small memory footprint](https://szibele.com/memory-footprint-of-gui-toolkits/).
@@ -35,7 +36,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.11"
+fltk = "^0.12"
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -190,19 +191,19 @@ Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to b
 
 For Debian-based GUI distributions, that means running:
 ```
-$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev
+$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
 ```
 For RHEL-based GUI distributions, that means running:
 ```
-$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel
+$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libpng-devel
 ```
 For Arch-based GUI distributions, that means running:
 ```
-$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango cairo libgl mesa --needed
+$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes libpng pango cairo libgl mesa --needed
 ```
 For Alpine linux:
 ```
-$ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev
+$ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev libpng-dev mesa-gl
 ```
 - Android: Android Studio, Android Sdk, Android Ndk.
 

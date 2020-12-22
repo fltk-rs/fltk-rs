@@ -540,6 +540,10 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn unset_selection(&mut self) {
+                self.set_selection(-1, -1, -1, -1)
+            }
+
             fn move_cursor_with_shift_select(&mut self, r: i32, c: i32, shiftselect: bool) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());

@@ -778,6 +778,10 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 }
 
 /// Gets the widget that is below the mouse cursor
+/// This returns an Option<impl WidgetExt> which can be specified in the function call
+/// ```rust
+/// let w = app::belowmouse::<widget::Widget>(); // or by specifying a more concrete type
+/// ```
 pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
     unsafe {
         let x = Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
