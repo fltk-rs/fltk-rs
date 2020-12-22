@@ -3470,8 +3470,12 @@ extern "C" {
     pub fn Fl_Table_Row_row_selected(self_: *mut Fl_Table_Row, row: libc::c_int) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_select_row(self_: *mut Fl_Table_Row, row: libc::c_int) -> libc::c_int;
+    pub fn Fl_Table_Row_select_row(
+        self_: *mut Fl_Table_Row,
+        row: libc::c_int,
+        flag: libc::c_int,
+    ) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_select_all_rows(self_: *mut Fl_Table_Row);
+    pub fn Fl_Table_Row_select_all_rows(self_: *mut Fl_Table_Row, flag: libc::c_int);
 }

@@ -963,6 +963,8 @@ pub unsafe trait TableExt: GroupExt {
     );
     /// Sets the selection
     fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
+    /// Unset selection
+    fn unset_selection(&mut self);
     /// Moves the cursor with shift select
     fn move_cursor_with_shift_select(
         &mut self,

@@ -45,6 +45,15 @@ pub enum TableRowSelectMode {
     SelectMulti,
 }
 
+/// Defines the table row select flag
+#[repr(i32)]
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum TableRowSelectFlag {
+    Deselect,
+    Select,
+    Toggle,
+}
+
 impl TableRow {
     /// Sets the type of the table row
     pub fn set_type(&mut self, val: TableRowSelectMode) {
@@ -70,10 +79,10 @@ impl TableRow {
     }
 
     /// Selects a row
-    pub fn select_row(&mut self, row: i32) -> Result<(), FltkError> {
+    pub fn select_row(&mut self, row: i32, selection_flag: TableRowSelectFlag) -> Result<(), FltkError> {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Table_Row_select_row(self._inner, row) {
+            match Fl_Table_Row_select_row(self._inner, row, selection_flag as i32) {
                 1 => Ok(()),
                 0 => Err(FltkError::Internal(FltkErrorKind::TableError)),
                 -1 => Err(FltkError::Internal(FltkErrorKind::TableError)),
@@ -83,8 +92,8 @@ impl TableRow {
     }
 
     /// Selects all rows
-    pub fn select_all_rows(&mut self) {
+    pub fn select_all_rows(&mut self, selection_flag: TableRowSelectFlag) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Table_Row_select_all_rows(self._inner) }
+        unsafe { Fl_Table_Row_select_all_rows(self._inner, selection_flag as i32) }
     }
 }
