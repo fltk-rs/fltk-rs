@@ -3,7 +3,6 @@
 ## [0.12.0] - 2020-12-23
 ### Changes
 - [BREAKING] TableRow::select_row and select_all_rows also take a flag to specify selection/deselection/toggling existing state.
-- [BREAKING] Require libpng on linux systems to avoid linking with local bundled with bundled libpng which might conflict with installed libpng.
 - Update docs.
 - Update dependencies.
 
