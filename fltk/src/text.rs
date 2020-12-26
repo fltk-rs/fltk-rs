@@ -283,10 +283,7 @@ impl TextBuffer {
     pub fn selected(&self) -> bool {
         assert!(!self._inner.is_null());
         unsafe {
-            match Fl_Text_Buffer_selected(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Text_Buffer_selected(self._inner) != 0
         }
     }
 
@@ -355,10 +352,7 @@ impl TextBuffer {
     pub fn is_highlighted(&mut self) -> bool {
         assert!(!self._inner.is_null());
         unsafe {
-            match Fl_Text_Buffer_is_highlighted(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Text_Buffer_is_highlighted(self._inner) != 0
         }
     }
 

@@ -275,7 +275,9 @@ pub unsafe trait WidgetExt {
     /// Can return multiple mutable references to the user_data
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     /// Upcast a WidgetExt to a Widget
-    fn into_widget<W: WidgetBase>(&self) -> W
+    /// # Safety
+    /// Allows for potentially unsafe casts between incompatible widget types
+    unsafe fn into_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
 }

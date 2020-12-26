@@ -349,10 +349,7 @@ impl HelpDialog {
     /// Returs whether the help dialog is visible
     pub fn visible(&mut self) -> bool {
         unsafe {
-            match Fl_Help_Dialog_visible(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Help_Dialog_visible(self._inner) != 0
         }
     }
 

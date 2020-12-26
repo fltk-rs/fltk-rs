@@ -180,10 +180,7 @@ impl MenuItem {
     pub fn value(&self) -> bool {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
-            match Fl_Menu_Item_value(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Menu_Item_value(self._inner) != 0
         }
     }
 
@@ -203,10 +200,7 @@ impl MenuItem {
     pub fn visible(&self) -> bool {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
-            match Fl_Menu_Item_visible(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Menu_Item_visible(self._inner) != 0
         }
     }
 
@@ -214,10 +208,7 @@ impl MenuItem {
     pub fn active(&mut self) -> bool {
         assert!(!self.was_deleted() && !self._inner.is_null());
         unsafe {
-            match Fl_Menu_Item_active(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Menu_Item_active(self._inner) != 0
         }
     }
 

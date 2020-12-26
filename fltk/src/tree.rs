@@ -441,10 +441,7 @@ impl Tree {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
         unsafe {
-            match Fl_Tree_is_open(self._inner, path.as_ptr() as *mut raw::c_char) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_is_open(self._inner, path.as_ptr() as *mut raw::c_char) != 0
         }
     }
 
@@ -453,10 +450,7 @@ impl Tree {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
         unsafe {
-            match Fl_Tree_is_close(self._inner, path.as_ptr() as *mut raw::c_char) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_is_close(self._inner, path.as_ptr() as *mut raw::c_char) != 0
         }
     }
 
@@ -616,10 +610,7 @@ impl Tree {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
         unsafe {
-            match Fl_Tree_is_selected(self._inner, path.as_ptr() as *mut raw::c_char) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_is_selected(self._inner, path.as_ptr() as *mut raw::c_char) != 0
         }
     }
 
@@ -925,10 +916,7 @@ impl Tree {
     pub fn show_collapse(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_showcollapse(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_showcollapse(self._inner) != 0
         }
     }
 
@@ -942,10 +930,7 @@ impl Tree {
     pub fn show_root(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_showroot(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_showroot(self._inner) != 0
         }
     }
 
@@ -1050,10 +1035,7 @@ impl Tree {
         assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
         unsafe {
-            match Fl_Tree_displayed(self._inner, item._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_displayed(self._inner, item._inner) != 0
         }
     }
 
@@ -1121,10 +1103,7 @@ impl Tree {
         assert!(!w.was_deleted());
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_is_scrollbar(self._inner, w.as_widget_ptr() as *mut Fl_Widget) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_is_scrollbar(self._inner, w.as_widget_ptr() as *mut Fl_Widget) != 0
         }
     }
 
@@ -1144,10 +1123,7 @@ impl Tree {
     pub fn is_vscroll_visible(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_is_vscroll_visible(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_is_vscroll_visible(self._inner) != 0
         }
     }
 
@@ -1155,10 +1131,7 @@ impl Tree {
     pub fn is_hscroll_visible(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_is_hscroll_visible(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_is_hscroll_visible(self._inner) != 0
         }
     }
 
@@ -1397,10 +1370,7 @@ impl TreeItem {
     pub fn has_children(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_Item_has_children(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_Item_has_children(self._inner)  != 0
         }
     }
 
@@ -1631,10 +1601,7 @@ impl TreeItem {
     pub fn is_open(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_Item_is_open(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_Item_is_open(self._inner)  != 0
         }
     }
 
@@ -1642,10 +1609,7 @@ impl TreeItem {
     pub fn is_close(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_Item_is_close(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_Item_is_close(self._inner) != 0
         }
     }
 
@@ -1693,10 +1657,7 @@ impl TreeItem {
     pub fn is_root(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_Item_is_root(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_Item_is_root(self._inner) != 0
         }
     }
 
@@ -1704,10 +1665,7 @@ impl TreeItem {
     pub fn is_visible(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_Item_is_visible(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_Item_is_visible(self._inner) != 0
         }
     }
 
@@ -1715,10 +1673,7 @@ impl TreeItem {
     pub fn is_active(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_Item_is_active(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_Item_is_active(self._inner) != 0
         }
     }
 
@@ -1726,10 +1681,7 @@ impl TreeItem {
     pub fn is_activated(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_Item_is_activated(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_Item_is_activated(self._inner) != 0
         }
     }
 
@@ -1749,10 +1701,7 @@ impl TreeItem {
     pub fn is_selected(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Tree_Item_is_selected(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tree_Item_is_selected(self._inner) != 0
         }
     }
 
