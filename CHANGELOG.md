@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.12.2] - 2020-12-26
+### Changes
+- Fix logic bug in the BrowserExt::select method. Thanks @ThiNei2l.
+
 ## [0.12.1] - 2020-12-26
 ### Changes
 - [BREAKING] TableRow::select_row and select_all_rows also take a flag to specify selection/deselection/toggling existing state.
