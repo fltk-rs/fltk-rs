@@ -193,7 +193,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn select(&mut self, line: u32) {
                 assert!(!self.was_deleted());
-                if line < self.size() {
+                if line <= self.size() {
                     unsafe {
                         #select(self._inner, line as i32);
                     }
