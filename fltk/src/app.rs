@@ -308,10 +308,7 @@ pub fn event_button() -> i32 {
 /// Returns the number of clicks
 pub fn event_clicks() -> bool {
     unsafe {
-        match Fl_event_clicks() {
-            0 => false,
-            _ => true,
-        }
+        Fl_event_clicks() != 0
     }
 }
 
@@ -363,10 +360,7 @@ pub fn event_coords() -> (i32, i32) {
 /// Determines whether an event was a click
 pub fn event_is_click() -> bool {
     unsafe {
-        match Fl_event_is_click() {
-            0 => false,
-            _ => true,
-        }
+        Fl_event_is_click() != 0
     }
 }
 
@@ -740,10 +734,7 @@ pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
 /// Returns whether a quit signal was sent
 pub fn should_program_quit() -> bool {
     unsafe {
-        match Fl_should_program_quit() {
-            0 => false,
-            _ => true,
-        }
+        Fl_should_program_quit() != 0
     }
 }
 
@@ -760,20 +751,14 @@ pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
     let w = wid.width();
     let h = wid.height();
     unsafe {
-        match Fl_event_inside(x, y, w, h) {
-            0 => false,
-            _ => true,
-        }
+        Fl_event_inside(x, y, w, h) != 0
     }
 }
 
 /// Returns whether an event occured within a region
 pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     unsafe {
-        match Fl_event_inside(x, y, w, h) {
-            0 => false,
-            _ => true,
-        }
+        Fl_event_inside(x, y, w, h) != 0
     }
 }
 
@@ -1029,11 +1014,11 @@ fn unload_font(path: &str) -> Result<(), FltkError> {
 pub fn windows() -> Option<Vec<impl WindowExt>> {
     let mut v: Vec<Window> = vec![];
     if let Some(first) = first_window() {
-        let first: Window = first.into_widget();
+        let first: Window = unsafe { first.into_widget() };
         v.push(first.clone());
         let mut win = first;
         while let Some(wind) = next_window(&win) {
-            let w = wind.into_widget::<Window>();
+            let w = unsafe { wind.into_widget::<Window>() };
             v.push(w.clone());
             win = w;
         }

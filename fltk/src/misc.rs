@@ -273,10 +273,7 @@ impl Chart {
     pub fn is_autosize(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Chart_is_autosize(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Chart_is_autosize(self._inner) != 0
         }
     }
 
@@ -372,10 +369,7 @@ impl Tooltip {
     /// Returns whether the tooltip is enabled
     pub fn enabled() -> bool {
         unsafe {
-            match Fl_Tooltip_enabled() {
-                0 => false,
-                _ => true,
-            }
+            Fl_Tooltip_enabled() != 0
         }
     }
 

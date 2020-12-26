@@ -71,10 +71,7 @@ impl TableRow {
     pub fn row_selected(&mut self, row: i32) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Table_Row_row_selected(self._inner, row) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Table_Row_row_selected(self._inner, row) != 0
         }
     }
 

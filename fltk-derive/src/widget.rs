@@ -1017,7 +1017,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 self.set_callback(move || sender.send(msg))
             }
 
-            fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {
+            unsafe fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {
                 unsafe { W::from_widget_ptr(self.as_widget_ptr() as *mut _) }
             }
         }

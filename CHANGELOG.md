@@ -1,10 +1,15 @@
 # Changelog
 
-## [0.12.0] - 2020-12-23
+## [0.12.1] - 2020-12-26
 ### Changes
 - [BREAKING] TableRow::select_row and select_all_rows also take a flag to specify selection/deselection/toggling existing state.
+- [BREAKING] Mark WidgetExt::into_widget as unsafe since it allows casting into incompatible widget types.
 - Update docs.
 - Update dependencies.
+- Refactoring.
+
+## [0.12.0] - 2020-12-23 - YANKED
+### Changes
 
 ## [0.11.6] - 2020-12-13
 ### Changes

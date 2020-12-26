@@ -283,10 +283,7 @@ pub fn push_no_clip() {
 /// Returns whether the rectangle intersect with the current clip region
 pub fn not_clipped(x: i32, y: i32, w: i32, h: i32) -> bool {
     unsafe {
-        match Fl_not_clipped(x, y, w, h) {
-            0 => false,
-            _ => true,
-        }
+        Fl_not_clipped(x, y, w, h) != 0
     }
 }
 
@@ -624,10 +621,7 @@ pub fn draw_box(box_type: FrameType, x: i32, y: i32, w: i32, h: i32, color: Colo
 /// Checks whether platform supports true alpha blending for RGBA images
 pub fn can_do_alpha_blending() -> bool {
     unsafe {
-        match Fl_can_do_alpha_blending() {
-            0 => false,
-            _ => true,
-        }
+        Fl_can_do_alpha_blending() != 0
     }
 }
 

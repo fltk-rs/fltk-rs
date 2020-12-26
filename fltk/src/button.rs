@@ -36,10 +36,7 @@ impl RadioButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Radio_Button_is_toggled(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Radio_Button_is_toggled(self._inner) != 0
         }
     }
 
@@ -62,10 +59,7 @@ impl RadioRoundButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Radio_Round_Button_is_toggled(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Radio_Round_Button_is_toggled(self._inner) != 0
         }
     }
 
@@ -88,10 +82,7 @@ impl RadioLightButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Radio_Light_Button_is_toggled(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Radio_Light_Button_is_toggled(self._inner) != 0
         }
     }
 
@@ -114,10 +105,7 @@ impl RoundButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Round_Button_is_toggled(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Round_Button_is_toggled(self._inner) != 0
         }
     }
 
@@ -140,10 +128,7 @@ impl CheckButton {
     pub fn is_checked(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Check_Button_is_checked(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Check_Button_is_checked(self._inner) != 0
         }
     }
 
@@ -168,10 +153,7 @@ impl ToggleButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Toggle_Button_is_toggled(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Toggle_Button_is_toggled(self._inner) != 0
         }
     }
 
@@ -194,10 +176,7 @@ impl LightButton {
     pub fn is_on(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Light_Button_is_on(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Light_Button_is_on(self._inner) != 0
         }
     }
 
