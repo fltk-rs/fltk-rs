@@ -65,6 +65,19 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let set_mode = Ident::new(format!("{}_{}", name_str, "set_mode").as_str(), name.span());
 
     let gen = quote! {
+        impl IntoIterator for #name {
+            type Item = MenuItem;
+            type IntoIter = std::vec::IntoIter<Self::Item>;
+            
+            fn into_iter(self) -> Self::IntoIter {
+                let mut v: Vec<MenuItem> = vec![];
+                for i in 0..self.size() {
+                    v.push(self.at(i).unwrap());
+                }
+                v.into_iter()
+            }
+        }
+
         unsafe impl MenuExt for #name {
             fn add<F: FnMut() + 'static>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
                 assert!(!self.was_deleted());
