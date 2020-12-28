@@ -1161,6 +1161,19 @@ impl Tree {
     }
 }
 
+impl IntoIterator for Tree {
+    type Item = TreeItem;
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+    
+    fn into_iter(self) -> Self::IntoIter {
+        if let Some(items) = self.get_items() {
+            items.into_iter()
+        } else {
+            Vec::with_capacity(0).into_iter()
+        }
+    }
+}
+
 impl TreeItem {
     /// Create a TreeItem from a raw pointer
     /// # Safety
@@ -1819,6 +1832,19 @@ impl TreeItemArray {
                 v.push(val.unwrap());
             }
             Some(v)
+        }
+    }
+}
+
+impl IntoIterator for TreeItemArray {
+    type Item = TreeItem;
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+    
+    fn into_iter(self) -> Self::IntoIter {
+        if let Some(items) = self.into_vec() {
+            items.into_iter()
+        } else {
+            Vec::with_capacity(0).into_iter()
         }
     }
 }

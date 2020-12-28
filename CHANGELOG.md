@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.12.3] - 2020-12-28
+### Changes
+- Add IntoIterator impls for GroupExt widgets, MenuExt widgets and the Tree widget.
+
 ## [0.12.2] - 2020-12-26
 ### Changes
 - Fix logic bug in the BrowserExt::select method. Thanks @ThiNei2l.
