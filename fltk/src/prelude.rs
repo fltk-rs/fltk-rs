@@ -252,10 +252,6 @@ pub unsafe trait WidgetExt {
     fn has_visible_focus(&mut self) -> bool;
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
-    /// Deletes widgets and their children.
-    fn delete(wid: Self)
-    where
-        Self: Sized;
     /// Return whether the widget was damaged
     fn damage(&self) -> bool;
     /// Signal the widget as damaged and it should be redrawn in the next event loop cycle
@@ -294,6 +290,10 @@ pub unsafe trait WidgetBase: WidgetExt {
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
     /// Creates a default and zero initialized widget
     fn default() -> Self;
+    /// Deletes widgets and their children.
+    fn delete(wid: Self)
+    where
+        Self: Sized;
     /// transforms a widget pointer to a Widget, for internal use
     /// # Safety
     /// The pointer must be valid

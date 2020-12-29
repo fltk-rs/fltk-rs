@@ -781,9 +781,9 @@ pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
 }
 
 /// Deletes widgets and their children.
-pub fn delete_widget<Wid: WidgetExt>(wid: Wid) {
+pub fn delete_widget<Wid: WidgetBase>(wid: Wid) {
     assert!(!wid.was_deleted());
-    WidgetExt::delete(wid)
+    WidgetBase::delete(wid)
 }
 
 /// Registers all images supported by SharedImage

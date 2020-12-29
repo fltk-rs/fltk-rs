@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.4] - Unreleased
+### Changes
+- Widget deletion is relegated to WidgetBase.
+- Fix potential mem leak of Fl_Widget_Tracker in case of dangling widget pointers.
+
 ## [0.12.3] - 2020-12-28
 ### Changes
 - Add IntoIterator impls for GroupExt widgets, MenuExt widgets and the Tree widget.

@@ -9,19 +9,10 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
     let name_str = get_fl_name(name.to_string());
     let ptr_name = Ident::new(name_str.as_str(), name.span());
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
-    let handle = Ident::new(
-        format!("{}_{}", name_str, "handle").as_str(),
-        name.span(),
-    );
-    let handle2 = Ident::new(
-        format!("{}_{}", name_str, "handle2").as_str(),
-        name.span(),
-    );
+    let handle = Ident::new(format!("{}_{}", name_str, "handle").as_str(), name.span());
+    let handle2 = Ident::new(format!("{}_{}", name_str, "handle2").as_str(), name.span());
     let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
-    let draw2 = Ident::new(
-        format!("{}_{}", name_str, "draw2").as_str(),
-        name.span(),
-    );
+    let draw2 = Ident::new(format!("{}_{}", name_str, "draw2").as_str(), name.span());
     let handle_data = Ident::new(
         format!("{}_{}", name_str, "handle_data").as_str(),
         name.span(),
@@ -40,6 +31,17 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
+        impl Drop for #name {
+            fn drop(&mut self) {
+                unsafe {
+                    if !self._tracker.is_null() {
+                        fltk_sys::fl::Fl_Widget_Tracker_delete(self._tracker);
+                        self._tracker = std::ptr::null_mut();
+                    }
+                }
+            }
+        }
+
         unsafe impl WidgetBase for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::safe_new(title);
@@ -80,6 +82,16 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                         _inner: widget_ptr,
                         _tracker: tracker,
                     }
+                }
+            }
+
+            fn delete(mut wid: Self) {
+                assert!(!wid.was_deleted());
+                unsafe {
+                    fltk_sys::fl::Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
+                    wid._inner = std::ptr::null_mut() as *mut _;
+                    fltk_sys::fl::Fl_Widget_Tracker_delete(wid._tracker);
+                    wid._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
                 }
             }
 
@@ -223,7 +235,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
     let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
     let label = Ident::new(format!("{}_{}", name_str, "label").as_str(), name.span());
-    let measure_label = Ident::new(format!("{}_{}", name_str, "measure_label").as_str(), name.span());
+    let measure_label = Ident::new(
+        format!("{}_{}", name_str, "measure_label").as_str(),
+        name.span(),
+    );
     let set_label = Ident::new(
         format!("{}_{}", name_str, "set_label").as_str(),
         name.span(),
@@ -303,14 +318,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_align").as_str(),
         name.span(),
     );
-    let trigger = Ident::new(
-        format!("{}_{}", name_str, "when").as_str(),
-        name.span(),
-    );
-    let set_trigger = Ident::new(
-        format!("{}_{}", name_str, "set_when").as_str(),
-        name.span(),
-    );
+    let trigger = Ident::new(format!("{}_{}", name_str, "when").as_str(), name.span());
+    let set_trigger = Ident::new(format!("{}_{}", name_str, "set_when").as_str(), name.span());
     let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
     let selection_color = Ident::new(
         format!("{}_{}", name_str, "selection_color").as_str(),
@@ -769,16 +778,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         return fltk_sys::fl::Fl_Widget_Tracker_deleted(self._tracker) != 0;
                     }
-                }
-            }
-
-            fn delete(mut wid: Self) {
-                assert!(!wid.was_deleted());
-                unsafe {
-                    fltk_sys::fl::Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-                    wid._inner = std::ptr::null_mut() as *mut _;
-                    fltk_sys::fl::Fl_Widget_Tracker_delete(wid._tracker);
-                    wid._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
                 }
             }
 
