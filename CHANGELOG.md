@@ -1,9 +1,9 @@
 # Changelog
 
-## [0.12.4] - Unreleased
+## [0.12.4] - 2020-12-30
 ### Changes
 - Widget deletion is relegated to WidgetBase.
-- Add app::background and foreground to set default app colors.
+- Add app::background, background2 and foreground to set default app colors.
 - Deprecate app::set_color.
 
 ## [0.12.3] - 2020-12-28
