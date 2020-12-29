@@ -6,9 +6,9 @@ fn main() {
     let app = app::App::default();
 
     // global theming
-    app::set_color(r, g, b);
+    app::background(r, g, b);
     app::set_font(Font::Courier);
-    app::set_frame_type(FrameType::RFlatBox);
+    // app::set_frame_type(FrameType::RFlatBox);
     app::set_visible_focus(false);
 
     // regular widget code
@@ -19,10 +19,10 @@ fn main() {
     pack.set_spacing(80);
     let mut but1 = button::Button::default()
         .with_label("Button1");
-    but1.set_color(Color::Yellow);
+    // but1.set_color(Color::Yellow);
     let mut but2 = button::Button::default()
         .with_label("Button2");
-    but2.set_color(Color::Yellow);
+    // but2.set_color(Color::Yellow);
     pack.end();
     pack.auto_layout();
 

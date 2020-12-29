@@ -3,7 +3,8 @@
 ## [0.12.4] - Unreleased
 ### Changes
 - Widget deletion is relegated to WidgetBase.
-- Fix potential mem leak of Fl_Widget_Tracker in case of dangling widget pointers.
+- Add app::background and foreground to set default app colors.
+- Deprecate app::set_color.
 
 ## [0.12.3] - 2020-12-28
 ### Changes

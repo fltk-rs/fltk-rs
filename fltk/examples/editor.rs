@@ -144,6 +144,7 @@ fn main() {
 
     let (s, r) = app::channel::<Message>();
 
+    // What shows when we attempt to print
     let mut printable = text::TextDisplay::default();
     printable.set_frame(FrameType::NoBox);
     printable.set_scrollbar_width(0);

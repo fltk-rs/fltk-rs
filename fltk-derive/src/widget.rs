@@ -31,17 +31,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        impl Drop for #name {
-            fn drop(&mut self) {
-                unsafe {
-                    if !self._tracker.is_null() {
-                        fltk_sys::fl::Fl_Widget_Tracker_delete(self._tracker);
-                        self._tracker = std::ptr::null_mut();
-                    }
-                }
-            }
-        }
-
         unsafe impl WidgetBase for #name {
             fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
                 let temp = CString::safe_new(title);

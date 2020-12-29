@@ -447,6 +447,10 @@ pub fn set_frame_type(new_frame: FrameType) {
 }
 
 /// Sets the app's default background color
+#[deprecated(
+    since = "0.12.4",
+    note = "Please use the background function instead"
+)]
 pub fn set_color(r: u8, g: u8, b: u8) {
     unsafe { Fl_set_color(Color::FrameDefault.bits() as u32, r, g, b) }
 }
@@ -1027,3 +1031,25 @@ pub fn windows() -> Option<Vec<impl WindowExt>> {
         None
     }
 }
+
+/// Set the foreground color
+pub fn foreground(r: u8, g: u8, b: u8) {
+    unsafe {
+        Fl_foreground(r, g, b)
+    }
+}
+
+/// Set the background color
+pub fn background(r: u8, g: u8, b: u8) {
+    unsafe {
+        Fl_background(r, g, b)
+    }
+}
+
+/// Set the background color for input and text widgets
+pub fn background2(r: u8, g: u8, b: u8) {
+    unsafe {
+        Fl_background2(r, g, b)
+    }
+}
+
