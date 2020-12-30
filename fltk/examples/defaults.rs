@@ -6,7 +6,7 @@ fn main() {
     let app = app::App::default();
 
     // global theming
-    app::set_color(r, g, b);
+    app::background(r, g, b);
     app::set_font(Font::Courier);
     app::set_frame_type(FrameType::RFlatBox);
     app::set_visible_focus(false);
