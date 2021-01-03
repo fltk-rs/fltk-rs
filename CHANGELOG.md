@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.12.6] - 2021-01-03
+### Changes
+- Add MenuExt::end, a stub needed for fluid.
+- Add TableExt::callback_col, callback_row, callback_context.
+- Build fluid with fltk.
 ## [0.12.5] - 2020-12-30
 ### Changes
 - Widget deletion is relegated to WidgetBase.

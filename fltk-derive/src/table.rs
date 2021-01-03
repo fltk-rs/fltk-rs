@@ -207,6 +207,18 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "draw_cell_data").as_str(),
         name.span(),
     );
+    let callback_col = Ident::new(
+        format!("{}_{}", name_str, "callback_col").as_str(),
+        name.span(),
+    );
+    let callback_row = Ident::new(
+        format!("{}_{}", name_str, "callback_row").as_str(),
+        name.span(),
+    );
+    let callback_context = Ident::new(
+        format!("{}_{}", name_str, "callback_context").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl TableExt for #name {
@@ -650,6 +662,24 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                     let data = ptr as *mut Box<dyn FnMut()>;
                     let data = Box::from_raw(data);
                     Some(*data)
+                }
+            }
+
+            fn callback_col(&self) -> i32 {
+                unsafe {
+                    #callback_col(self._inner)
+                }
+            }
+            
+            fn callback_row(&self) -> i32 {
+                unsafe {
+                    #callback_row(self._inner)
+                }
+            }
+            
+            fn callback_context(&self) -> TableContext {
+                unsafe {
+                    mem::transmute(#callback_context(self._inner))
                 }
             }
         }
