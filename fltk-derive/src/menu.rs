@@ -411,6 +411,10 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     #set_mode(self._inner, idx as i32, flag as i32)
                 }
             }
+
+            fn end(&mut self) {
+                //
+            }
         }
     };
     gen.into()

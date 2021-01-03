@@ -602,6 +602,8 @@ pub unsafe trait MenuExt: WidgetExt {
     fn mode(&self, idx: u32) -> crate::menu::MenuFlag;
     /// Get the mode of a menu item
     fn set_mode(&mut self, idx: u32, flag: crate::menu::MenuFlag);
+    /// End the menu
+    fn end(&mut self);
 }
 
 /// Defines the methods implemented by all valuator widgets
@@ -1005,6 +1007,12 @@ pub unsafe trait TableExt: GroupExt {
     /// # Safety
     /// Can return multiple mutable references to the draw_cell_data
     unsafe fn draw_cell_data(&self) -> Option<Box<dyn FnMut()>>;
+    /// Get the callback column, should be called from within a callback
+    fn callback_col(&self) -> i32;
+    /// Get the callback row, should be called from within a callback
+    fn callback_row(&self) -> i32;
+    /// Get the callback context, should be called from within a callback
+    fn callback_context(&self) -> crate::table::TableContext;
 }
 
 /// Defines the methods implemented by all image types
