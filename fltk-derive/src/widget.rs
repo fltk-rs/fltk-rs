@@ -1000,9 +1000,9 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
+            fn emit<T: 'static + Clone + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
                 assert!(!self.was_deleted());
-                self.set_callback(move || sender.send(msg))
+                self.set_callback(move || sender.send(msg.clone()))
             }
 
             unsafe fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {

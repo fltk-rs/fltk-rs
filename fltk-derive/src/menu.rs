@@ -145,7 +145,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn add_emit<T: 'static + Copy + Send + Sync>(
+            fn add_emit<T: 'static + Clone + Send + Sync>(
                 &mut self,
                 label: &str,
                 shortcut: Shortcut,
@@ -153,10 +153,10 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 sender: crate::app::Sender<T>,
                 msg: T,
             ) {
-                self.add(label, shortcut, flag, move|| sender.send(msg))
+                self.add(label, shortcut, flag, move|| sender.send(msg.clone()))
             }
 
-            fn insert_emit<T: 'static + Copy + Send + Sync>(
+            fn insert_emit<T: 'static + Clone + Send + Sync>(
                 &mut self,
                 idx: u32,
                 label: &str,
@@ -165,7 +165,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 sender: crate::app::Sender<T>,
                 msg: T,
             ) {
-                self.insert(idx, label, shortcut, flag, move|| sender.send(msg))
+                self.insert(idx, label, shortcut, flag, move|| sender.send(msg.clone()))
             }
 
             fn remove(&mut self, idx: u32) {

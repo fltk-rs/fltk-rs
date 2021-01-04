@@ -177,7 +177,7 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Emits a message on callback using a sender
-    fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T)
+    fn emit<T: 'static + Clone + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T)
     where
         Self: Sized;
     /// Activates the widget
@@ -548,7 +548,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Add a menu item along with an emit (sender and message)
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
-    fn add_emit<T: 'static + Copy + Send + Sync>(
+    fn add_emit<T: 'static + Clone + Send + Sync>(
         &mut self,
         label: &str,
         shortcut: Shortcut,
@@ -559,7 +559,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Inserts a menu item along with an emit (sender and message)
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
-    fn insert_emit<T: 'static + Copy + Send + Sync>(
+    fn insert_emit<T: 'static + Clone + Send + Sync>(
         &mut self,
         idx: u32,
         label: &str,
