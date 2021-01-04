@@ -326,8 +326,8 @@ impl MenuItem {
     }
 
     /// Use a sender to send a message during callback
-    pub fn emit<T: 'static + Copy + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
-        self.set_callback(move || sender.send(msg));
+    pub fn emit<T: 'static + Clone + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
+        self.set_callback(move || sender.send(msg.clone()));
     }
 
     /// Check if a menu item was deleted

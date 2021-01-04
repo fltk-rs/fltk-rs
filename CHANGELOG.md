@@ -1,5 +1,10 @@
 # Changelog
 
+
+## [0.12.7] - Unreleased
+### Changes
+- Relax Copy trait bound to Clone as message requirement in widget emit calls.
+
 ## [0.12.6] - 2021-01-03
 ### Changes
 - Add MenuExt::end, a stub needed for fluid.
