@@ -48,6 +48,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     );
     let decorated_w = Ident::new(format!("{}_{}", name_str, "decorated_w").as_str(), name.span());
     let decorated_h = Ident::new(format!("{}_{}", name_str, "decorated_h").as_str(), name.span());
+    let size_range = Ident::new(format!("{}_{}", name_str, "size_range").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl WindowExt for #name {
@@ -206,14 +207,23 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn decorated_w(&self) -> i32 {
+                assert!(!self.was_deleted());
                 unsafe {
                     #decorated_w(self._inner)
                 }
             }
             
             fn decorated_h(&self) -> i32 {
+                assert!(!self.was_deleted());
                 unsafe {
                     #decorated_h(self._inner)
+                }
+            }
+
+            fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #size_range(self._inner, min_w, min_h, max_w, max_h);
                 }
             }
         }

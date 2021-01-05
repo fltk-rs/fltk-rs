@@ -391,6 +391,7 @@ Different frame types which can be used with many different widgets such as Fram
 - [Working with images](https://www.youtube.com/watch?v=Rn2sjfAX4WI)
 - [Audio player with custom widgets](https://www.youtube.com/watch?v=okdFx6tv7ds)
 - [Using FLTK on Android](https://www.youtube.com/watch?v=3jW_vxGmxt0)
+- [Use FLUID (RAD tool) with Rust](https://www.youtube.com/watch?v=k_P0wG3-dNk)
 
 More videos in the playlist [here](https://www.youtube.com/playlist?list=PLHqrrowPLkDu9U-uk60sGM-YWLOJFfLoE).
 Some of the demo projects can be found [here](https://github.com/MoAlyousef/fltk-rs-demos).
