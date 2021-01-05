@@ -48,6 +48,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     );
     let decorated_w = Ident::new(format!("{}_{}", name_str, "decorated_w").as_str(), name.span());
     let decorated_h = Ident::new(format!("{}_{}", name_str, "decorated_h").as_str(), name.span());
+    let size_range = Ident::new(format!("{}_{}", name_str, "size_range").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl WindowExt for #name {
