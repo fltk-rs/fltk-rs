@@ -1842,6 +1842,73 @@ extern "C" {
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
+extern "C" {
+    pub fn Fl_Help_View_directory(self_: *const Fl_Help_View) -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_Help_View_filename(self_: *const Fl_Help_View) -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_Help_View_find(
+        self_: *mut Fl_Help_View,
+        s: *const libc::c_char,
+        p: libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_View_value(self_: *const Fl_Help_View) -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_Help_View_set_value(self_: *mut Fl_Help_View, val: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Help_View_clear_selection(self_: *mut Fl_Help_View);
+}
+extern "C" {
+    pub fn Fl_Help_View_select_all(self_: *mut Fl_Help_View);
+}
+extern "C" {
+    pub fn Fl_Help_View_set_topline(self_: *mut Fl_Help_View, n: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Help_View_set_topline2(self_: *mut Fl_Help_View, arg1: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Help_View_topline(self_: *const Fl_Help_View) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_View_set_leftline(self_: *mut Fl_Help_View, arg1: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Help_View_leftline(self_: *const Fl_Help_View) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_View_set_textcolor(self_: *mut Fl_Help_View, c: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Help_View_textcolor(self_: *mut Fl_Help_View) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Help_View_set_textfont(self_: *mut Fl_Help_View, f: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Help_View_textfont(self_: *mut Fl_Help_View) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_View_set_textsize(self_: *mut Fl_Help_View, s: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Help_View_textsize(self_: *mut Fl_Help_View) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_View_scrollbar_size(self_: *const Fl_Help_View) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_View_set_scrollbar_size(self_: *mut Fl_Help_View, newSize: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Help_View_load(self_: *mut Fl_Help_View, f: *const libc::c_char) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Input_Choice {
@@ -2123,6 +2190,42 @@ extern "C" {
 extern "C" {
     pub fn Fl_Input_Choice_down_box(self_: *const Fl_Input_Choice) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Input_Choice_add(self_: *mut Fl_Input_Choice, s: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Input_Choice_clear(self_: *mut Fl_Input_Choice);
+}
+extern "C" {
+    pub fn Fl_Input_Choice_value(self_: *const Fl_Input_Choice) -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_Input_Choice_set_value(self_: *mut Fl_Input_Choice, val: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Input_Choice_set_value2(self_: *mut Fl_Input_Choice, val: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Input_Choice_menubutton(self_: *mut Fl_Input_Choice) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Input_Choice_set_textcolor(self_: *mut Fl_Input_Choice, c: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Input_Choice_textcolor(self_: *mut Fl_Input_Choice) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Input_Choice_set_textfont(self_: *mut Fl_Input_Choice, f: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Input_Choice_textfont(self_: *mut Fl_Input_Choice) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Input_Choice_set_textsize(self_: *mut Fl_Input_Choice, s: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Input_Choice_textsize(self_: *mut Fl_Input_Choice) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Check_Browser {
@@ -2397,4 +2500,98 @@ extern "C" {
         arg1: *mut Fl_Check_Browser,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Check_Browser_add(
+        self_: *mut Fl_Check_Browser,
+        s: *const libc::c_char,
+        b: libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_remove(self_: *mut Fl_Check_Browser, item: libc::c_int) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_clear(self_: *mut Fl_Check_Browser);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_nitems(self_: *const Fl_Check_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_nchecked(self_: *const Fl_Check_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_checked(
+        self_: *const Fl_Check_Browser,
+        item: libc::c_int,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_set_checked(self_: *mut Fl_Check_Browser, item: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_check_all(self_: *mut Fl_Check_Browser);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_check_none(self_: *mut Fl_Check_Browser);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_value(self_: *const Fl_Check_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_text(
+        self_: *const Fl_Check_Browser,
+        item: libc::c_int,
+    ) -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_position(self_: *const Fl_Check_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_set_position(self_: *mut Fl_Check_Browser, pos: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_hposition(self_: *const Fl_Check_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_set_hposition(self_: *mut Fl_Check_Browser, arg1: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_has_scrollbar(self_: *mut Fl_Check_Browser) -> libc::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_scrollbar(self_: *const Fl_Check_Browser) -> *const libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_hscrollbar(self_: *const Fl_Check_Browser) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_set_has_scrollbar(self_: *mut Fl_Check_Browser, mode: libc::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_scrollbar_size(self_: *const Fl_Check_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_set_scrollbar_size(self_: *mut Fl_Check_Browser, newSize: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_sort(self_: *mut Fl_Check_Browser);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_set_textcolor(self_: *mut Fl_Check_Browser, c: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_textcolor(self_: *mut Fl_Check_Browser) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_set_textfont(self_: *mut Fl_Check_Browser, f: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_textfont(self_: *mut Fl_Check_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_set_textsize(self_: *mut Fl_Check_Browser, s: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Check_Browser_textsize(self_: *mut Fl_Check_Browser) -> libc::c_int;
 }

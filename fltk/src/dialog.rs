@@ -63,6 +63,7 @@ impl FileDialog {
 
     /// Returns the chosen file name
     pub fn filename(&self) -> std::path::PathBuf {
+        assert!(!self._inner.is_null());
         unsafe {
             let cnt = Fl_Native_File_Chooser_count(self._inner);
             if cnt == 0 {
@@ -79,6 +80,7 @@ impl FileDialog {
 
     /// Returns the chosen file names
     pub fn filenames(&self) -> Vec<std::path::PathBuf> {
+        assert!(!self._inner.is_null());
         unsafe {
             let cnt = Fl_Native_File_Chooser_count(self._inner);
             let mut names: Vec<std::path::PathBuf> = vec![];
@@ -100,6 +102,7 @@ impl FileDialog {
 
     /// Returns the preset directory
     pub fn directory(&self) -> std::path::PathBuf {
+        assert!(!self._inner.is_null());
         unsafe {
             let x = Fl_Native_File_Chooser_directory(self._inner);
             if !x.is_null() {
@@ -116,10 +119,12 @@ impl FileDialog {
 
     /// Sets the starting directory
     pub fn set_directory<P: AsRef<std::path::Path>>(&mut self, dir: P) -> Result<(), FltkError> {
+        assert!(!self._inner.is_null());
         self.set_directory_(dir.as_ref())
     }
 
     fn set_directory_(&mut self, dir: &std::path::Path) -> Result<(), FltkError> {
+        assert!(!self._inner.is_null());
         let dir = CString::new(dir.to_str().ok_or_else(|| {
             FltkError::Unknown(String::from("Failed to convert path to string"))
         })?)?;
@@ -129,6 +134,7 @@ impl FileDialog {
 
     /// Shows the file dialog
     pub fn show(&mut self) {
+        assert!(!self._inner.is_null());
         unsafe {
             Fl_Native_File_Chooser_show(self._inner);
         }
@@ -136,16 +142,19 @@ impl FileDialog {
 
     /// Sets the option for the dialog
     pub fn set_option(&mut self, opt: FileDialogOptions) {
+        assert!(!self._inner.is_null());
         unsafe { Fl_Native_File_Chooser_set_option(self._inner, opt as i32) }
     }
 
     /// Sets the type for the dialog
     pub fn set_type(&mut self, op: FileDialogType) {
+        assert!(!self._inner.is_null());
         unsafe { Fl_Native_File_Chooser_set_type(self._inner, op as i32) }
     }
 
     /// Sets the title for the dialog
     pub fn set_title(&mut self, title: &str) {
+        assert!(!self._inner.is_null());
         let title = CString::safe_new(title);
         unsafe { Fl_Native_File_Chooser_set_title(self._inner, title.as_ptr()) }
     }
@@ -157,18 +166,21 @@ impl FileDialog {
     /// A list of separate wildcards with a "\n" between each (eg. "*.{cxx,H}\n*.txt")
     /// A list of descriptive names and wildcards (eg. "C++ Files\t*.{cxx,H}\nTxt Files\t*.txt")
     pub fn set_filter(&mut self, f: &str) {
+        assert!(!self._inner.is_null());
         let f = CString::safe_new(f);
         unsafe { Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr()) }
     }
 
     /// Sets the preset filter for the dialog
     pub fn set_preset_file(&mut self, f: &str) {
+        assert!(!self._inner.is_null());
         let f = CString::safe_new(f);
         unsafe { Fl_Native_File_Chooser_set_preset_file(self._inner, f.as_ptr()) }
     }
 
     /// returns the error message from the file dialog
     pub fn error_message(&self) -> Option<String> {
+        assert!(!self._inner.is_null());
         unsafe {
             let err_msg = Fl_Native_File_Chooser_errmsg(self._inner);
             if err_msg.is_null() {
@@ -186,7 +198,10 @@ impl FileDialog {
 
 impl Drop for FileDialog {
     fn drop(&mut self) {
-        unsafe { Fl_Native_File_Chooser_delete(self._inner) }
+        if !self._inner.is_null() {
+            unsafe { Fl_Native_File_Chooser_delete(self._inner) }
+            self._inner = std::ptr::null_mut();
+        }
     }
 }
 

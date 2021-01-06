@@ -518,7 +518,7 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    );
+    ) where Self: Sized;
     /// Add a menu item along with its callback
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -529,7 +529,7 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    );
+    ) where Self: Sized;
     /// Inserts a menu item at an index along with its callback
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -540,7 +540,7 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    );
+    ) where Self: Sized;
     /// Inserts a menu item at an index along with its callback
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -552,7 +552,7 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    );
+    ) where Self: Sized;
     /// Add a menu item along with an emit (sender and message)
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -563,7 +563,7 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    );
+    ) where Self: Sized;
     /// Inserts a menu item along with an emit (sender and message)
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -575,7 +575,7 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    );
+    ) where Self: Sized;
     /// Remove a menu item by index
     fn remove(&mut self, idx: u32);
     /// Adds a simple text option to the Choice and MenuButton widgets
@@ -705,6 +705,10 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Sets the cursor color
     fn set_cursor_color(&mut self, color: Color);
     /// Sets the scrollbar width
+    #[deprecated(
+        since = "0.12.9",
+        note = "Please use the size function instead"
+    )]
     fn set_scrollbar_width(&mut self, width: i32);
     /// Sets the scrollbar size in pixels
     fn set_scrollbar_size(&mut self, size: u32);
@@ -715,6 +719,10 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Returns the cursor color
     fn cursor_color(&self) -> Color;
     /// Returns the scrollback width
+    #[deprecated(
+        since = "0.12.9",
+        note = "Please use the size function instead"
+    )]
     fn scrollbar_width(&self) -> u32;
     /// Returns the scrollbar size in pixels
     fn scrollbar_size(&self) -> u32;
@@ -872,8 +880,16 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Sets the scrollbar size
     fn set_scrollbar_size(&mut self, new_size: u32);
     /// Gets the scrollbar width
+    #[deprecated(
+        since = "0.12.9",
+        note = "Please use the size function instead"
+    )]
     fn scrollbar_width(&self) -> i32;
     /// Sets the scrollbar width
+    #[deprecated(
+        since = "0.12.9",
+        note = "Please use the size function instead"
+    )]
     fn set_scrollbar_width(&mut self, width: i32);
     /// Sorts the items of the browser
     fn sort(&mut self);

@@ -1,4 +1,5 @@
 # Roadmap
 
-## Version 0.12.10
-- Add InputChoice, HelpView and CheckBrowser widgets implementations.
+## Version 0.12.9
+- Add missing docs.
+
