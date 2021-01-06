@@ -365,6 +365,9 @@ Different frame types which can be used with many different widgets such as Fram
     - Chart (several chart types are available)
     - Progress (progress bar)
     - Tooltip
+    - CheckBrowser
+    - InputChoice
+    - HelpView
 - Table widgets
     - Table
     - TableRow

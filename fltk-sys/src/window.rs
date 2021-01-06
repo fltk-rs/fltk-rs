@@ -541,6 +541,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Group_current() -> *mut Fl_Group;
+}
+extern "C" {
+    pub fn Fl_Group_set_current(grp: *mut Fl_Group);
+}
+extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
 }
 extern "C" {
@@ -829,6 +835,12 @@ extern "C" {
         arg1: *mut Fl_Pack,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Pack_spacing(self_: *mut Fl_Pack) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_set_spacing(self_: *mut Fl_Pack, spacing: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Pack_begin(self_: *mut Fl_Pack);
@@ -2412,12 +2424,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Color_Chooser_resizable(self_: *mut Fl_Color_Chooser, arg1: *mut libc::c_void);
 }
-extern "C" {
-    pub fn Fl_Pack_spacing(self_: *mut Fl_Pack) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Pack_set_spacing(self_: *mut Fl_Pack, spacing: libc::c_int);
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union winid {
@@ -2811,6 +2817,9 @@ extern "C" {
         arg3: libc::c_int,
         arg4: libc::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Window_hotspot(self_: *mut Fl_Window, wid: *mut Fl_Widget);
 }
 extern "C" {
     pub fn Fl_Window_find_by_handle(handle: *mut libc::c_void) -> *mut Fl_Window;
@@ -3209,6 +3218,9 @@ extern "C" {
         arg4: libc::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Single_Window_hotspot(self_: *mut Fl_Single_Window, wid: *mut Fl_Widget);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {
@@ -3587,6 +3599,9 @@ extern "C" {
         arg4: libc::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Double_Window_hotspot(self_: *mut Fl_Double_Window, wid: *mut Fl_Widget);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -3959,6 +3974,9 @@ extern "C" {
         arg4: libc::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Menu_Window_hotspot(self_: *mut Fl_Menu_Window, wid: *mut Fl_Widget);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Gl_Window {
@@ -4320,6 +4338,9 @@ extern "C" {
         arg3: libc::c_int,
         arg4: libc::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_hotspot(self_: *mut Fl_Gl_Window, wid: *mut Fl_Widget);
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);

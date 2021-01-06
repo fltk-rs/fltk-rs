@@ -19,6 +19,8 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_value").as_str(),
         name.span(),
     );
+    let down_box = Ident::new(format!("{}_{}", name_str, "down_box").as_str(), name.span());
+    let set_down_box = Ident::new(format!("{}_{}", name_str, "set_down_box").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl ButtonExt for #name {
@@ -57,6 +59,20 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_value(self._inner, flag as i32)
+                }
+            }
+
+            fn set_down_frame(&mut self, f: FrameType) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #set_down_box(self._inner, f as i32)
+                }
+            }
+            
+            fn down_frame(&self) -> FrameType {
+                assert!(!self.was_deleted());
+                unsafe {
+                    mem::transmute(#down_box(self._inner))
                 }
             }
         }

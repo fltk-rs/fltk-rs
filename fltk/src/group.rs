@@ -16,6 +16,16 @@ pub struct Group {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+impl Group {
+    pub fn current() -> Box<dyn GroupExt> {
+        unsafe {
+            let ptr = Fl_Group_current();
+            assert!(ptr.is_null());
+            Box::new(Group::from_widget_ptr(ptr as _))
+        }
+    }
+}
+
 /// Creates a widget pack
 #[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Pack {

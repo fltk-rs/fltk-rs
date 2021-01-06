@@ -511,3 +511,37 @@ impl Tooltip {
         }
     }
 }
+
+#[derive(WidgetBase, WidgetExt, Debug)]
+pub struct InputChoice {
+    _inner: *mut Fl_Input_Choice,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl InputChoice {
+    pub fn set_down_frame(&mut self, f: FrameType) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Input_Choice_set_down_box(self._inner, f as i32)
+        }
+    }
+    
+    pub fn down_frame(&self) -> FrameType {
+        assert!(!self.was_deleted());
+        unsafe {
+            mem::transmute(Fl_Input_Choice_down_box(self._inner))
+        }
+    }
+}
+
+#[derive(WidgetBase, WidgetExt, Debug)]
+pub struct HelpView {
+    _inner: *mut Fl_Help_View,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+#[derive(WidgetBase, WidgetExt, Debug)]
+pub struct CheckBrowser {
+    _inner: *mut Fl_Check_Browser,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}

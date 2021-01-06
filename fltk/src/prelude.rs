@@ -339,6 +339,10 @@ pub unsafe trait ButtonExt: WidgetExt {
     /// Sets whether a button is set or not
     /// Useful for round, radio, light, toggle and check buttons
     fn set(&mut self, flag: bool);
+    /// Set the down_box of the widget
+    fn set_down_frame(&mut self, f: FrameType);
+    /// Get the down frame type of the widget
+    fn down_frame(&self) -> FrameType;
 }
 
 /// Defines the methods implemented by all group widgets
@@ -429,6 +433,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn decorated_h(&self) -> i32;
     /// Set the window's minimum width, minimum height, max width and max height
     fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32);
+    /// Set the hotspot widget of the window
+    fn hotspot<W: WidgetExt>(&mut self, w: &W) where Self: Sized;
 }
 
 /// Defines the methods implemented by all input and output widgets
@@ -606,6 +612,10 @@ pub unsafe trait MenuExt: WidgetExt {
     fn set_mode(&mut self, idx: u32, flag: crate::menu::MenuFlag);
     /// End the menu
     fn end(&mut self);
+    /// Set the down_box of the widget
+    fn set_down_frame(&mut self, f: FrameType);
+    /// Get the down frame type of the widget
+    fn down_frame(&self) -> FrameType;
 }
 
 /// Defines the methods implemented by all valuator widgets
