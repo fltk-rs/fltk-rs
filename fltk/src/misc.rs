@@ -511,3 +511,323 @@ impl Tooltip {
         }
     }
 }
+
+/// Creates an InputChoice widget
+#[derive(WidgetBase, WidgetExt, Debug)]
+pub struct InputChoice {
+    _inner: *mut Fl_Input_Choice,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl InputChoice {
+    /// Set the down_box of the widget
+    pub fn set_down_frame(&mut self, f: FrameType) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Input_Choice_set_down_box(self._inner, f as i32)
+        }
+    }
+    
+    /// Get the down frame type of the widget
+    pub fn down_frame(&self) -> FrameType {
+        assert!(!self.was_deleted());
+        unsafe {
+            mem::transmute(Fl_Input_Choice_down_box(self._inner))
+        }
+    }
+
+    /// Add an element to the input choice
+    pub fn add(&mut self, s: &str) {
+        assert!(!self.was_deleted());
+        let s = CString::safe_new(s);
+        unsafe {
+            Fl_Input_Choice_add(self._inner, s.as_ptr())
+        }
+    }
+
+    /// Clear the input choice widget
+    pub fn clear(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Input_Choice_clear(self._inner)
+        }
+    }
+
+    /// Get the value of the current choice
+    pub fn value(&self) -> Option<String> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Input_Choice_value(self._inner);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set the value to a string
+    pub fn set_value(&mut self, val: &str) {
+        assert!(!self.was_deleted());
+        let val = CString::safe_new(val);
+        unsafe {
+            Fl_Input_Choice_set_value(self._inner, val.as_ptr())
+        }
+    }
+
+    /// Set the value of the input choice to a current element
+    pub fn set_value2(&mut self, val: u32) {
+        debug_assert!(
+            val <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Input_Choice_set_value2(self._inner, val as i32)
+        }
+    }
+
+    /// Get the associated menu button
+    pub fn menu_button(&self) -> Box<dyn MenuExt> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Input_Choice_menubutton(self._inner);
+            assert!(!ptr.is_null());
+            Box::new(crate::menu::MenuButton::from_widget_ptr(ptr as _))
+        }
+    }
+    
+    /// Gets the text font
+    pub fn text_font(&self) -> Font {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Input_Choice_textfont(self._inner)) }
+    }
+
+    /// Sets the text font
+    pub fn set_text_font(&mut self, f: Font) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Input_Choice_set_textfont(self._inner, f.bits() as i32) }
+    }
+
+    /// Gets the text size
+    pub fn text_size(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Input_Choice_textsize(self._inner) as u32 }
+    }
+
+    /// Sets the text size
+    pub fn set_text_size(&mut self, s: u32) {
+        debug_assert!(
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        assert!(!self.was_deleted());
+        unsafe { Fl_Input_Choice_set_textsize(self._inner, s as i32) }
+    }
+
+    /// Gets the text's color
+    pub fn text_color(&self) -> Color {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Input_Choice_textcolor(self._inner)) }
+    }
+
+    /// Sets the text's color
+    pub fn set_text_color(&mut self, color: Color) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Input_Choice_set_textcolor(self._inner, color.bits() as u32) }
+    }
+}
+
+/// Creates a HelpView widget
+#[derive(WidgetBase, WidgetExt, Debug)]
+pub struct HelpView {
+    _inner: *mut Fl_Help_View,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl HelpView {
+    /// Return the directory
+    pub fn directory(&self) -> std::path::PathBuf {
+        assert!(!self.was_deleted());
+        unsafe {
+            let x = Fl_Help_View_directory(self._inner);
+            if !x.is_null() {
+                std::path::PathBuf::from(
+                    CStr::from_ptr(x as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
+            } else {
+                std::path::PathBuf::from("")
+            }
+        }
+    }
+
+    /// Return the filename
+    pub fn filename(&self) -> std::path::PathBuf {
+        assert!(!self.was_deleted());
+        unsafe {
+            let x = Fl_Help_View_directory(self._inner);
+            if !x.is_null() {
+                std::path::PathBuf::from(
+                    CStr::from_ptr(x as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
+            } else {
+                std::path::PathBuf::from("")
+            }
+        }
+    }
+
+    /// Find a string, returns the index
+    pub fn find(&self, s: &str, start_from: u32) -> Option<u32> {
+        assert!(!self.was_deleted());
+        debug_assert!(
+            start_from <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        unsafe {
+            let s = CString::safe_new(s);
+            let idx = Fl_Help_View_find(self._inner, s.as_ptr(), start_from as i32);
+            println!("{}", idx);
+            match idx {
+                -1 => None,
+                _ => Some(idx as u32),
+            }
+        }
+    }
+
+    /// Get the value of the widget
+    pub fn value(&self) -> Option<String> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let val = Fl_Help_View_value(self._inner);
+            if val.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(val).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set value of the widget
+    pub fn set_value(&mut self, val: &str) {
+        assert!(!self.was_deleted());
+        let val = CString::safe_new(val);
+        unsafe { Fl_Help_View_set_value(self._inner, val.as_ptr()) }
+    }
+
+    /// Clear selection
+    pub fn clear_selection(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_clear_selection(self._inner) }
+    }
+
+    /// Select all
+    pub fn select_all(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_select_all(self._inner) }
+    }
+
+    /// Set the topline string
+    pub fn set_topline(&mut self, n: &str) {
+        assert!(!self.was_deleted());
+        let n = CString::safe_new(n);
+        unsafe { Fl_Help_View_set_topline(self._inner, n.as_ptr()) }
+    }
+
+    /// Set the leftline position
+    pub fn set_topline2(&mut self, arg1: i32) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_set_topline2(self._inner, arg1) }
+    }
+
+    /// Get the topline position
+    pub fn topline(&self) -> i32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_topline(self._inner) }
+    }
+
+    /// Set the leftline position
+    pub fn set_leftline(&mut self, arg1: i32) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_set_leftline(self._inner, arg1) }
+    }
+
+    /// Gets the current leftline in pixels
+    pub fn leftline(&self) -> i32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_leftline(self._inner) }
+    }
+
+
+    /// Gets the text font
+    pub fn text_font(&self) -> Font {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Help_View_textfont(self._inner)) }
+    }
+
+    /// Sets the text font
+    pub fn set_text_font(&mut self, f: Font) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_set_textfont(self._inner, f.bits() as i32) }
+    }
+
+    /// Gets the text size
+    pub fn text_size(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_textsize(self._inner) as u32 }
+    }
+
+    /// Sets the text size
+    pub fn set_text_size(&mut self, s: u32) {
+        debug_assert!(
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_set_textsize(self._inner, s as i32) }
+    }
+
+    /// Gets the text's color
+    pub fn text_color(&self) -> Color {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Help_View_textcolor(self._inner)) }
+    }
+
+    /// Sets the text's color
+    pub fn set_text_color(&mut self, color: Color) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_set_textcolor(self._inner, color.bits() as u32) }
+    }
+
+
+    /// Gets the scrollbar size
+    pub fn scrollbar_size(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_scrollbar_size(self._inner) as u32 }
+    }
+
+    /// Sets the scrollbar size
+    pub fn set_scrollbar_size(&mut self, new_size: u32) {
+        debug_assert!(
+            new_size <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        assert!(!self.was_deleted());
+        unsafe { Fl_Help_View_set_scrollbar_size(self._inner, new_size as i32) }
+    }
+
+    /// Load a view from a file or URI
+    pub fn load(&mut self, f: &str) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
+        let f = CString::safe_new(f);
+        unsafe { 
+            match Fl_Help_View_load(self._inner, f.as_ptr()) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
+            }
+        }
+    }
+}

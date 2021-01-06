@@ -63,6 +63,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let at = Ident::new(format!("{}_{}", name_str, "at").as_str(), name.span());
     let mode = Ident::new(format!("{}_{}", name_str, "mode").as_str(), name.span());
     let set_mode = Ident::new(format!("{}_{}", name_str, "set_mode").as_str(), name.span());
+    let down_box = Ident::new(format!("{}_{}", name_str, "down_box").as_str(), name.span());
+    let set_down_box = Ident::new(format!("{}_{}", name_str, "set_down_box").as_str(), name.span());
 
     let gen = quote! {
         impl IntoIterator for #name {
@@ -414,6 +416,20 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn end(&mut self) {
                 //
+            }
+
+            fn set_down_frame(&mut self, f: FrameType) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #set_down_box(self._inner, f as i32)
+                }
+            }
+            
+            fn down_frame(&self) -> FrameType {
+                assert!(!self.was_deleted());
+                unsafe {
+                    mem::transmute(#down_box(self._inner))
+                }
             }
         }
     };

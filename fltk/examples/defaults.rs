@@ -20,15 +20,17 @@ fn main() {
     let mut but1 = button::Button::default()
         .with_label("Button1");
     but1.set_color(Color::Yellow);
+    but1.set_down_frame(FrameType::RFlatBox);
     let mut but2 = button::Button::default()
         .with_label("Button2");
     but2.set_color(Color::Yellow);
+    but2.set_down_frame(FrameType::RFlatBox);
     pack.end();
     pack.auto_layout();
 
     win.end();
     win.show();
-
+    
     but1.set_callback(|| app::redraw());
     but2.set_callback(|| app::redraw());
     

@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.12.9] - 2021-01-07
+### Changes
+- Add Color::by_index(u8).
+- Add WindowExt::hotspot().
+- Add Group::current().
+- Add ButtonExt and MenuExt down_box().
+- Add HelpView and InputChoice widgets in the misc module.
+- Add CheckBrowser in the browser module.
+- Add app::get_system_colors().
+- Deprecate calls to scrollbar_width, use scrollbar_size instead.
+
+
 ## [0.12.8] - 2021-01-06
 ### Changes
 - Add WindowExt::size_range which sets min/max width/height.

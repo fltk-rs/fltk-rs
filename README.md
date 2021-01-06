@@ -359,12 +359,15 @@ Different frame types which can be used with many different widgets such as Fram
     - HoldBrowser
     - MultiBrowser
     - FileBrowser
+    - CheckBrowser
 - Miscelaneous widgets
     - Spinner
     - Clock (Round and Square)
     - Chart (several chart types are available)
     - Progress (progress bar)
     - Tooltip
+    - InputChoice
+    - HelpView
 - Table widgets
     - Table
     - TableRow

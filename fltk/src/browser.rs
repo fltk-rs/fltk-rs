@@ -133,3 +133,242 @@ impl FileBrowser {
         unsafe { Fl_File_Browser_set_filetype(self._inner, t as i32) }
     }
 }
+
+
+/// Creates a CheckBrowser widget
+#[derive(WidgetBase, WidgetExt, Debug)]
+pub struct CheckBrowser {
+    _inner: *mut Fl_Check_Browser,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl CheckBrowser {
+    /// Add an item, returns the number of current items
+    pub fn add(&mut self, s: &str, checked: bool) -> i32 {
+        assert!(!self.was_deleted());
+        let s = CString::safe_new(s);
+        unsafe {
+            Fl_Check_Browser_add(self._inner, s.as_ptr(), checked as i32)
+        }
+    }
+
+    /// Remove item at index, returns the number of current items
+    pub fn remove(&mut self, item: usize) -> i32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_remove(self._inner, item as i32)
+        }
+    }
+
+    /// Clear the browser
+    pub fn clear(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_clear(self._inner)
+        }
+    }
+
+    /// Return the number of items
+    pub fn nitems(&self) -> usize {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_nitems(self._inner) as usize
+        }
+    }
+
+    /// Get the number of checked items
+    pub fn nchecked(&self) -> usize {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_nchecked(self._inner) as usize
+        }
+    }
+
+    /// Returns whether an item is checked
+    pub fn checked(&self, item: i32) -> bool {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_checked(self._inner, item) != 0
+        }
+    }
+
+    /// Check selected item
+    pub fn set_checked(&mut self, item: i32) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_set_checked(self._inner, item)
+        }
+    }
+
+    /// Ckeck all of the items
+    pub fn check_all(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_check_all(self._inner)
+        }
+    }
+
+    /// Check none of the items
+    pub fn check_none(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_check_none(self._inner)
+        }
+    }
+
+    /// Get the currently selected item
+    pub fn value(&self) -> usize {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_value(self._inner) as usize
+        }
+    }
+
+    /// Get the text of the item
+    pub fn text(&self, item: i32) -> Option<String> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Check_Browser_text(self._inner, item);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Gets the text font
+    pub fn text_font(&self) -> Font {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Check_Browser_textfont(self._inner)) }
+    }
+
+    /// Sets the text font
+    pub fn set_text_font(&mut self, f: Font) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Check_Browser_set_textfont(self._inner, f.bits() as i32) }
+    }
+
+    /// Gets the text size
+    pub fn text_size(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Check_Browser_textsize(self._inner) as u32 }
+    }
+
+    /// Sets the text size
+    pub fn set_text_size(&mut self, s: u32) {
+        debug_assert!(
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        assert!(!self.was_deleted());
+        unsafe { Fl_Check_Browser_set_textsize(self._inner, s as i32) }
+    }
+
+    /// Gets the text's color
+    pub fn text_color(&self) -> Color {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Check_Browser_textcolor(self._inner)) }
+    }
+
+    /// Sets the text's color
+    pub fn set_text_color(&mut self, color: Color) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Check_Browser_set_textcolor(self._inner, color.bits() as u32) }
+    }
+
+    /// Gets the vertical scroll position of the list as a pixel position
+    pub fn position(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_position(self._inner) as u32
+        }
+    }
+
+    /// Sets the vertical scroll position of the list as a pixel position
+    pub fn set_position(&mut self, pos: u32) {
+        assert!(!self.was_deleted());
+        debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+        unsafe {
+            Fl_Check_Browser_set_position(self._inner, pos as i32)
+        }
+    }
+
+    /// Gets the horizontal scroll position of the list as a pixel position
+    pub fn hposition(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_hposition(self._inner) as u32
+        }
+    }
+
+    /// Sets the horizontal scroll position of the list as a pixel position
+    pub fn set_hposition(&mut self, pos: u32) {
+        assert!(!self.was_deleted());
+        debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+        unsafe {
+            Fl_Check_Browser_set_hposition(self._inner, pos as i32)
+        }
+    }
+
+    /// Returns the type of scrollbar associated with the browser
+    pub fn has_scrollbar(&self) -> BrowserScrollbar {
+        assert!(!self.was_deleted());
+        unsafe {
+            mem::transmute(Fl_Check_Browser_has_scrollbar(self._inner))
+        }
+    }
+
+    /// Sets the type of scrollbar associated with the browser
+    pub fn set_has_scrollbar(&mut self, mode: BrowserScrollbar) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_set_has_scrollbar(self._inner, mode as raw::c_uchar)
+        }
+    }
+    
+    /// Gets the scrollbar size
+    pub fn scrollbar_size(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_scrollbar_size(self._inner) as u32
+        }
+    }
+
+    /// Sets the scrollbar size
+    pub fn set_scrollbar_size(&mut self, new_size: u32) {
+        assert!(!self.was_deleted());
+        debug_assert!(new_size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+        unsafe {
+            Fl_Check_Browser_set_scrollbar_size(self._inner, new_size as i32)
+        }
+    }
+
+    /// Sort browser elements
+    pub fn sort(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Check_Browser_sort(self._inner)
+        }
+    }
+
+    /// Returns the vertical scrollbar
+    pub fn scrollbar(&self) -> Box<dyn ValuatorExt> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Check_Browser_scrollbar(self._inner);
+            assert!(!ptr.is_null());
+            Box::new(crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+        }
+    }
+
+    /// Returns the horizontal scrollbar
+    pub fn hscrollbar(&self) -> Box<dyn ValuatorExt> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Check_Browser_hscrollbar(self._inner);
+            assert!(!ptr.is_null());
+            Box::new(crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+        }
+    }
+}
