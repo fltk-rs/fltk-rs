@@ -9,6 +9,7 @@
 - Add HelpView and InputChoice widgets in the misc module.
 - Add CheckBrowser in the browser module.
 - Add app::get_system_colors().
+- Deprecate calls to scrollbar_width, use scrollbar_size instead.
 
 
 ## [0.12.8] - 2021-01-06
