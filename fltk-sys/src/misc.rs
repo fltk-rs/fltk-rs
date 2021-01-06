@@ -2557,13 +2557,13 @@ extern "C" {
     pub fn Fl_Check_Browser_set_hposition(self_: *mut Fl_Check_Browser, arg1: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_has_scrollbar(self_: *mut Fl_Check_Browser) -> libc::c_uchar;
+    pub fn Fl_Check_Browser_has_scrollbar(self_: *const Fl_Check_Browser) -> libc::c_uchar;
 }
 extern "C" {
     pub fn Fl_Check_Browser_scrollbar(self_: *const Fl_Check_Browser) -> *const libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_hscrollbar(self_: *const Fl_Check_Browser) -> *mut libc::c_void;
+    pub fn Fl_Check_Browser_hscrollbar(self_: *const Fl_Check_Browser) -> *const libc::c_void;
 }
 extern "C" {
     pub fn Fl_Check_Browser_set_has_scrollbar(self_: *mut Fl_Check_Browser, mode: libc::c_uchar);
