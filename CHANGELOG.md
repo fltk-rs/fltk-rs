@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.12.9] - Unreleased
+### Changes
+- Add Color::by_index(u8).
+
 ## [0.12.8] - 2021-01-06
 ### Changes
 - Add WindowExt::size_range which sets min/max width/height.
