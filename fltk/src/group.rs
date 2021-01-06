@@ -20,7 +20,7 @@ impl Group {
     pub fn current() -> Box<dyn GroupExt> {
         unsafe {
             let ptr = Fl_Group_current();
-            assert!(ptr.is_null());
+            assert!(!ptr.is_null());
             Box::new(Group::from_widget_ptr(ptr as _))
         }
     }
