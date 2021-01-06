@@ -263,3 +263,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_background2(r: libc::c_uchar, g: libc::c_uchar, b: libc::c_uchar);
 }
+extern "C" {
+    pub fn Fl_get_system_colors();
+}

@@ -7,6 +7,7 @@
 - Add Group::current().
 - Add ButtonExt and MenuExt down_box().
 - Add HelpView, CheckBrowser, InputChoice widgets in the misc module.
+- Add app::get_system_colors().
 
 
 ## [0.12.8] - 2021-01-06

@@ -512,6 +512,7 @@ impl Tooltip {
     }
 }
 
+/// Creates an InputChoice widget
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct InputChoice {
     _inner: *mut Fl_Input_Choice,
@@ -519,6 +520,7 @@ pub struct InputChoice {
 }
 
 impl InputChoice {
+    /// Set the down_box of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
         unsafe {
@@ -526,6 +528,7 @@ impl InputChoice {
         }
     }
     
+    /// Get the down frame type of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
         unsafe {
@@ -534,12 +537,14 @@ impl InputChoice {
     }
 }
 
+/// Creates a HelpView widget
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct HelpView {
     _inner: *mut Fl_Help_View,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Creates a CheckBrowser widget
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct CheckBrowser {
     _inner: *mut Fl_Check_Browser,

@@ -57,6 +57,7 @@ pub struct FileInput {
 }
 
 impl FileInput {
+    /// Set the down_box of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
         unsafe {
@@ -64,6 +65,7 @@ impl FileInput {
         }
     }
     
+    /// Get the down_box of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
         unsafe {

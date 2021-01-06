@@ -1053,3 +1053,9 @@ pub fn background2(r: u8, g: u8, b: u8) {
     }
 }
 
+/// Gets the system colors
+pub fn get_system_colors() {
+    unsafe {
+        Fl_get_system_colors()
+    }
+}
