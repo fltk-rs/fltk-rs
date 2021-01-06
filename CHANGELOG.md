@@ -1,12 +1,13 @@
 # Changelog
 
-## [0.12.9] - Unreleased
+## [0.12.9] - 2021-01-07
 ### Changes
 - Add Color::by_index(u8).
 - Add WindowExt::hotspot().
 - Add Group::current().
 - Add ButtonExt and MenuExt down_box().
-- Add HelpView, CheckBrowser, InputChoice widgets in the misc module.
+- Add HelpView and InputChoice widgets in the misc module.
+- Add CheckBrowser in the browser module.
 - Add app::get_system_colors().
 
 

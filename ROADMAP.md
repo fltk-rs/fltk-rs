@@ -1,5 +1,5 @@
 # Roadmap
 
 ## Version 0.12.9
-- Add missing docs.
+- Remove deprecated functions pre 0.13.0.
 
