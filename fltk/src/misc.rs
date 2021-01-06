@@ -588,7 +588,7 @@ impl InputChoice {
     }
 
     /// Get the associated menu button
-    pub fn menu_button(&mut self) -> Box<dyn MenuExt> {
+    pub fn menu_button(&self) -> Box<dyn MenuExt> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Input_Choice_menubutton(self._inner);
@@ -681,7 +681,7 @@ impl HelpView {
     }
 
     /// Find a string, returns the index
-    pub fn find(&mut self, s: &str, start_from: u32) -> u32 {
+    pub fn find(&self, s: &str, start_from: u32) -> Option<u32> {
         assert!(!self.was_deleted());
         debug_assert!(
             start_from <= std::isize::MAX as u32,
@@ -689,7 +689,12 @@ impl HelpView {
         );
         unsafe {
             let s = CString::safe_new(s);
-            Fl_Help_View_find(self._inner, s.as_ptr(), p as i32) as u32
+            let idx = Fl_Help_View_find(self._inner, s.as_ptr(), start_from as i32);
+            println!("{}", idx);
+            match idx {
+                -1 => None,
+                _ => Some(idx as u32),
+            }
         }
     }
 
@@ -815,9 +820,14 @@ impl HelpView {
     }
 
     /// Load a view from a file or URI
-    pub fn load<P: AsRef<std::path::Path>>(&mut self, f: P) -> i32 {
+    pub fn load(&mut self, f: &str) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
-        let f = CString::safe_new(f.as_ref());
-        unsafe { Fl_Help_View_load(self._inner, f.as_ptr()) }
+        let f = CString::safe_new(f);
+        unsafe { 
+            match Fl_Help_View_load(self._inner, f.as_ptr()) {
+                0 => Ok(()),
+                _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
+            }
+        }
     }
 }
