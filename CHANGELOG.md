@@ -1,11 +1,8 @@
 # Changelog
 
-## [0.12.10] - Unreleased
+## [0.12.10] - 2021-01-07
 ### Changes
 - Add proper Default impl for use with fl2rust.
-
-## [0.12.9] - 2021-01-07
-### Changes
 - Add Color::by_index(u8).
 - Add WindowExt::hotspot().
 - Add Group::current().
