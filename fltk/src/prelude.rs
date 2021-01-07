@@ -702,12 +702,6 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn set_cursor_style(&mut self, style: TextCursor);
     /// Sets the cursor color
     fn set_cursor_color(&mut self, color: Color);
-    /// Sets the scrollbar width
-    #[deprecated(
-        since = "0.12.9",
-        note = "Please use the size function instead"
-    )]
-    fn set_scrollbar_width(&mut self, width: i32);
     /// Sets the scrollbar size in pixels
     fn set_scrollbar_size(&mut self, size: u32);
     /// Sets the scrollbar alignment
@@ -716,12 +710,6 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn cursor_style(&self) -> TextCursor;
     /// Returns the cursor color
     fn cursor_color(&self) -> Color;
-    /// Returns the scrollback width
-    #[deprecated(
-        since = "0.12.9",
-        note = "Please use the size function instead"
-    )]
-    fn scrollbar_width(&self) -> u32;
     /// Returns the scrollbar size in pixels
     fn scrollbar_size(&self) -> u32;
     /// Returns the scrollbar alignment
@@ -877,18 +865,6 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn scrollbar_size(&self) -> u32;
     /// Sets the scrollbar size
     fn set_scrollbar_size(&mut self, new_size: u32);
-    /// Gets the scrollbar width
-    #[deprecated(
-        since = "0.12.9",
-        note = "Please use the size function instead"
-    )]
-    fn scrollbar_width(&self) -> i32;
-    /// Sets the scrollbar width
-    #[deprecated(
-        since = "0.12.9",
-        note = "Please use the size function instead"
-    )]
-    fn set_scrollbar_width(&mut self, width: i32);
     /// Sorts the items of the browser
     fn sort(&mut self);
     /// Returns the vertical scrollbar

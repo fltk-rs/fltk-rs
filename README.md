@@ -36,7 +36,7 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.12"
+fltk = "^0.13"
 ```
 
 The library is automatically built and statically linked to your binary.

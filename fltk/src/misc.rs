@@ -681,20 +681,12 @@ impl HelpView {
     }
 
     /// Find a string, returns the index
-    pub fn find(&self, s: &str, start_from: u32) -> Option<u32> {
+    pub fn find(&self, s: &str, start_from: usize) -> Option<usize> {
         assert!(!self.was_deleted());
-        debug_assert!(
-            start_from <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
-        unsafe {
-            let s = CString::safe_new(s);
-            let idx = Fl_Help_View_find(self._inner, s.as_ptr(), start_from as i32);
-            println!("{}", idx);
-            match idx {
-                -1 => None,
-                _ => Some(idx as u32),
-            }
+        if let Some(v) = self.value() {
+            v[start_from..].find(s).map(|idx| start_from + idx)
+        } else {
+            None
         }
     }
 
