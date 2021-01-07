@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.13.2] - Unreleased
+### Changes
+- FAQ: Add info on keeping the console window only for debug builds on Windows.Thanks @dheijl
 
 ## [0.13.1] - 2021-01-07
 ### Changes
