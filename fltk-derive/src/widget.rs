@@ -31,11 +31,11 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
-        unsafe impl WidgetBase for #name {
-            fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                let temp = CString::safe_new(title);
+        impl Default for #name {
+            fn default() -> Self {
+                let temp = CString::new("").unwrap();;
                 unsafe {
-                    let widget_ptr = #new(x, y, width, height, temp.into_raw());
+                    let widget_ptr = #new(0, 0, 0, 0, temp.into_raw());
                     assert!(!widget_ptr.is_null());
                     let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
                     assert!(!tracker.is_null());
@@ -52,11 +52,13 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
+        }
 
-            fn default() -> Self {
-                let temp = CString::new("").unwrap();;
+        unsafe impl WidgetBase for #name {
+            fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
+                let temp = CString::safe_new(title);
                 unsafe {
-                    let widget_ptr = #new(0, 0, 0, 0, temp.into_raw());
+                    let widget_ptr = #new(x, y, width, height, temp.into_raw());
                     assert!(!widget_ptr.is_null());
                     let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
                     assert!(!tracker.is_null());

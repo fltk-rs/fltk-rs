@@ -52,7 +52,7 @@ pub struct SingleWindow {
 impl SingleWindow {
     /// Creates a default initialized single window
     pub fn default() -> SingleWindow {
-        let mut win = <SingleWindow as WidgetBase>::default();
+        let mut win = <SingleWindow as Default>::default();
         win.free_position();
         win
     }
@@ -150,7 +150,7 @@ pub struct DoubleWindow {
 impl DoubleWindow {
     /// Creates a default initialized double window
     pub fn default() -> DoubleWindow {
-        let mut win = <DoubleWindow as WidgetBase>::default();
+        let mut win = <DoubleWindow as Default>::default();
         win.free_position();
         win
     }
@@ -254,7 +254,7 @@ pub struct MenuWindow {
 impl MenuWindow {
     /// Creates a default initialized menu window
     pub fn default() -> MenuWindow {
-        let mut win = <MenuWindow as WidgetBase>::default();
+        let mut win = <MenuWindow as Default>::default();
         win.free_position();
         win
     }
@@ -275,7 +275,7 @@ pub struct GlWindow {
 impl GlWindow {
     /// Creates a default initialized gl window
     pub fn default() -> GlWindow {
-        let mut win = <GlWindow as WidgetBase>::default();
+        let mut win = <GlWindow as Default>::default();
         win.free_position();
         win
     }

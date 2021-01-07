@@ -288,8 +288,6 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// * `heigth` - The height of the widget
     /// * `title` - The title or label of the widget
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
-    /// Creates a default and zero initialized widget
-    fn default() -> Self;
     /// Deletes widgets and their children.
     fn delete(wid: Self)
     where
