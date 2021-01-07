@@ -1,7 +1,9 @@
 # Changelog
 
-## [0.12.10] - 2021-01-07
+
+## [0.13.0] - 2021-01-07
 ### Changes
+- [BREAKING] Remove deprecated calls app::set_color and calls to scrollbar_width (should be replaced by scrollbar_size)
 - Add proper Default impl for use with fl2rust.
 - Add Color::by_index(u8).
 - Add WindowExt::hotspot().
@@ -10,13 +12,10 @@
 - Add HelpView and InputChoice widgets in the misc module.
 - Add CheckBrowser in the browser module.
 - Add app::get_system_colors().
-- Deprecate calls to scrollbar_width, use scrollbar_size instead.
-
 
 ## [0.12.8] - 2021-01-06
 ### Changes
 - Add WindowExt::size_range which sets min/max width/height.
-
 
 ## [0.12.7] - 2021-01-05
 ### Changes
