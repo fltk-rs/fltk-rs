@@ -147,7 +147,7 @@ fn main() {
     // What shows when we attempt to print
     let mut printable = text::TextDisplay::default();
     printable.set_frame(FrameType::NoBox);
-    printable.set_scrollbar_width(0);
+    printable.set_scrollbar_size(0);
 
     let mut wind = window::Window::default()
         .with_size(800, 600)
