@@ -107,14 +107,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_scrollbar_size").as_str(),
         name.span(),
     );
-    let scrollbar_width = Ident::new(
-        format!("{}_{}", name_str, "scrollbar_width").as_str(),
-        name.span(),
-    );
-    let set_scrollbar_width = Ident::new(
-        format!("{}_{}", name_str, "set_scrollbar_width").as_str(),
-        name.span(),
-    );
     let sort = Ident::new(format!("{}_{}", name_str, "sort").as_str(), name.span());
     let scrollbar = Ident::new(
         format!("{}_{}", name_str, "scrollbar").as_str(),
@@ -446,20 +438,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(new_size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     #set_scrollbar_size(self._inner, new_size as i32)
-                }
-            }
-
-            fn scrollbar_width(&self) -> i32 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #scrollbar_width(self._inner)
-                }
-            }
-
-            fn set_scrollbar_width(&mut self, width: i32) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #set_scrollbar_width(self._inner, width)
                 }
             }
 

@@ -102,10 +102,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_scrollbar_align").as_str(),
         name.span(),
     );
-    let set_scrollbar_width = Ident::new(
-        format!("{}_{}", name_str, "set_scrollbar_width").as_str(),
-        name.span(),
-    );
     let cursor_style = Ident::new(
         format!("{}_{}", name_str, "cursor_style").as_str(),
         name.span(),
@@ -120,10 +116,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
     );
     let scrollbar_align = Ident::new(
         format!("{}_{}", name_str, "scrollbar_align").as_str(),
-        name.span(),
-    );
-    let scrollbar_width = Ident::new(
-        format!("{}_{}", name_str, "scrollbar_width").as_str(),
         name.span(),
     );
     let line_start = Ident::new(
@@ -445,13 +437,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_scrollbar_width(&mut self, width: i32){
-                unsafe {
-                    assert!(!self.was_deleted());
-                    #set_scrollbar_width(self._inner, width)
-                }
-            }
-
             fn set_scrollbar_size(&mut self, size: u32){
                 debug_assert!(size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
@@ -478,13 +463,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     mem::transmute(#cursor_color(self._inner))
-                }
-            }
-
-            fn scrollbar_width(&self) -> u32 {
-                unsafe {
-                    assert!(!self.was_deleted());
-                    #scrollbar_width(self._inner) as u32
                 }
             }
 

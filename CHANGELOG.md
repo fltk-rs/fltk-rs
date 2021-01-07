@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.13.0] - 2021-01-07
+## [0.13.1] - 2021-01-07
 ### Changes
 - [BREAKING] Remove deprecated calls app::set_color and calls to scrollbar_width (should be replaced by scrollbar_size)
 - Add proper Default impl for use with fl2rust.
