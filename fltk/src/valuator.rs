@@ -25,11 +25,17 @@ pub struct NiceSlider {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum SliderType {
+    /// Vertical slider
     Vertical = 0,
+    /// Horizontal slider
     Horizontal = 1,
+    /// Vertical fill slider
     VerticalFill = 2,
+    /// Horizontal fill slider
     HorizontalFill = 3,
+    /// Vertical nice slider
     VerticalNice = 4,
+    /// Horizontal nice slider
     HorizontalNice = 5,
 }
 
@@ -51,8 +57,11 @@ pub struct LineDial {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum DialType {
+    /// Normal dial
     Normal = 0,
+    /// Line dial
     Line = 1,
+    /// Filled dial
     Fill = 2,
 }
 
@@ -67,7 +76,9 @@ pub struct Counter {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum CounterType {
+    /// Normal counter
     Normal = 0,
+    /// Simple counter
     Simple = 1,
 }
 
@@ -82,11 +93,17 @@ pub struct Scrollbar {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ScrollbarType {
+    /// Vertical scrollbar
     Vertical = 0,
+    /// Horizontal scrollbar
     Horizontal = 1,
+    /// Vertical fill scrollbar
     VerticalFill = 2,
+    /// Horizontal fill scrollbar
     HorizontalFill = 3,
+    /// Vertical nice scrollbar
     VerticalNice = 4,
+    /// Horizontal nice scrollbar
     HorizontalNice = 5,
 }
 

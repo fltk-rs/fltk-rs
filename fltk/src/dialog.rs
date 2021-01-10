@@ -19,27 +19,40 @@ pub type NativeFileChooser = FileDialog;
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum FileDialogType {
+    /// Browse file
     BrowseFile = 0,
+    /// Browse dir
     BrowseDir,
+    /// Browse multiple files
     BrowseMultiFile,
+    /// Browse multiple dirs
     BrowseMultiDir,
+    /// Browse save file
     BrowseSaveFile,
+    /// Browse save directory
     BrowseSaveDir,
 }
 
+/// Alias for NativeFileChooserType
 pub type NativeFileChooserType = FileDialogType;
 
 /// Defines the File dialog options, which can be set using the set_option() method.
 #[repr(i32)]
 #[derive(WidgetType, Copy, Clone, PartialEq)]
 pub enum FileDialogOptions {
+    /// No options
     NoOptions = 0,
+    /// Confirm on save as
     SaveAsConfirm = 1,
+    /// New folder option
     NewFolder = 2,
+    /// Enable preview
     Preview = 4,
+    /// Use extension filter
     UseFilterExt = 8,
 }
 
+/// Alias to NativeFileChooserOptions
 pub type NativeFileChooserOptions = FileDialogOptions;
 
 impl std::ops::BitOr<FileDialogOptions> for FileDialogOptions {
@@ -399,11 +412,17 @@ impl Drop for HelpDialog {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum BeepType {
+    /// Default beep
     Default = 0,
+    /// Message beep
     Message,
+    /// Error beep
     Error,
+    /// Question beep
     Question,
+    /// Password sound
     Password,
+    /// Notification sound
     Notification,
 }
 
@@ -420,9 +439,13 @@ pub struct FileChooser {
 bitflags! {
     /// The types of FileChooser
     pub struct FileChooserType: i32 {
+        /// Single file
         const Single = 0;
+        /// Multiple files
         const Multi = 1;
+        /// Allow creation of file/dir
         const Create = 2;
+        /// Directory
         const Directory = 4;
     }
 }

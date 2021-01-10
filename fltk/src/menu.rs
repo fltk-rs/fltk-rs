@@ -47,15 +47,25 @@ pub struct MenuItem {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum MenuFlag {
+    /// Normal item
     Normal = 0,
+    /// Inactive item
     Inactive = 1,
+    /// Item is a checkbox toggle (shows checkbox for on/off state)
     Toggle = 2,
+    /// The on/off state for checkbox/radio buttons (if set, state is 'on')
     Value = 4,
+    /// Item is a radio button
     Radio = 8,
+    /// Invisible item
     Invisible = 0x10,
+    /// Indicates user_data() is a pointer to another menu array (unused with Rust)
     SubmenuPointer = 0x20,
+    /// Menu item is a submenu
     Submenu = 0x40,
+    /// Menu divider
     MenuDivider = 0x80,
+    /// Horizontal menu (actually reserved for future use)
     MenuHorizontal = 0x100,
 }
 

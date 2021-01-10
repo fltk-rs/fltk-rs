@@ -568,9 +568,13 @@ impl Drop for TextBuffer {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum WrapMode {
+    /// No wrapping
     None,
+    /// Wrap text at certain column
     AtColumn,
+    /// Wrap text at certain pixel
     AtPixel,
+    /// Wrap text at certain bounds
     AtBounds,
 }
 
@@ -578,11 +582,16 @@ pub enum WrapMode {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum DragType {
-    DragNone = -2,
-    DragStartDnd = -1,
-    DragChar = 0,
-    DragWord = 1,
-    DragLine = 2,
+    /// No dragging
+    None = -2,
+    /// Drag Start "drag n drop" event
+    StartDnd = -1,
+    /// Drag single character
+    Char = 0,
+    /// Drag single word
+    Word = 1,
+    /// Drag single line
+    Line = 2,
 }
 
 /// Creates a non-editable text display widget
@@ -615,8 +624,11 @@ pub struct SimpleTerminal {
 /// Defines the styles used in the set_highlight_data, which is used with style buffers
 #[derive(Debug, Clone, Copy)]
 pub struct StyleTableEntry {
+    /// Font color
     pub color: Color,
+    /// Font type
     pub font: Font,
+    /// Font size
     pub size: u32,
 }
 

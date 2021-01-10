@@ -38,7 +38,9 @@ pub type Window = DoubleWindow;
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum WindowType {
+    /// Single window
     Normal = 240,
+    /// Double window
     Double = 241,
 }
 

@@ -453,8 +453,11 @@ bitflags! {
     }
 }
 
+/// A trait defined for all enums passable to the WidgetExt::set_type() method
 pub trait WidgetType {
+    /// Get the integral representation of the widget type
     fn to_int(self) -> i32;
+    /// Get the widget type from its integral representation
     fn from_i32(val: i32) -> Self;
 }
 
