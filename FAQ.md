@@ -53,7 +53,10 @@ You can use the "use-ninja" feature flag if you have ninja installed. Or you can
 Rust, by default, statically links your application. FLTK is built also for static linking. That means that the resulting executable can be directly deployed without the need to deploy other files along with it. If you want to create a WIN32 application, Mac OS Bundle or Linux AppImage, please check the question just below!
 
 ### Why do I get a console window whenever I start my GUI app?
-This is the default behavior of the toolchain, and is helpful for debugging purposes. It can be turned off easily by adding ```#![windows_subsystem = "windows"]``` at the beginning of your main.rs file if you're on windows. For Mac OS and Linux, this is done by a post-build process to create a Mac OS Bundle or Linux AppImage respectively.
+This is the default behavior of the toolchain, and is helpful for debugging purposes. It can be turned off easily by adding ```#![windows_subsystem = "windows"]``` at the beginning of your main.rs file if you're on windows. 
+If you would like to keep the console window on debug builds, but not on release builds, you can use ```#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]``` instead.
+
+For Mac OS and Linux, this is done by a post-build process to create a Mac OS Bundle or Linux AppImage respectively.
 
 See [cargo-bundle](https://github.com/burtonageo/cargo-bundle) for an automated tool for creating Mac OS app bundles. 
 

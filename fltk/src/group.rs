@@ -17,6 +17,7 @@ pub struct Group {
 }
 
 impl Group {
+    /// Get the current group
     pub fn current() -> Box<dyn GroupExt> {
         unsafe {
             let ptr = Fl_Group_current();
@@ -37,7 +38,9 @@ pub struct Pack {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum PackType {
+    /// Vertical layout pack
     Vertical = 0,
+    /// Horizontal layout pack
     Horizontal = 1,
 }
 
@@ -52,13 +55,21 @@ pub struct Scroll {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ScrollType {
+    /// Never show bars
     None = 0,
+    /// Show vertical bar
     Horizontal = 1,
+    /// Show vertical bar
     Vertical = 2,
+    /// Show both horizontal and vertical bars
     Both = 3,
+    /// Always show bars
     AlwaysOn = 4,
+    /// Show horizontal bar always
     HorizontalAlways = 5,
+    /// Show vertical bar always
     VerticalAlways = 6,
+    /// Always show both horizontal and vertical bars
     BothAlways = 7,
 }
 

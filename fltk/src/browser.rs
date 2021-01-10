@@ -18,9 +18,13 @@ pub struct Browser {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum BrowserType {
+    /// Normal browser
     Normal = 0,
+    /// Enable select
     Select = 1,
+    /// Enable holding
     Hold = 2,
+    /// Multi selection
     Multi = 3,
 }
 
@@ -28,13 +32,21 @@ pub enum BrowserType {
 #[repr(u8)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum BrowserScrollbar {
+    /// Never show bars
     None = 0,
+    /// Show vertical bar
     Horizontal = 1,
+    /// Show vertical bar
     Vertical = 2,
+    /// Show both horizontal and vertical bars
     Both = 3,
+    /// Always show bars
     AlwaysOn = 4,
+    /// Show horizontal bar always
     HorizontalAlways = 5,
+    /// Show vertical bar always
     VerticalAlways = 6,
+    /// Always show both horizontal and vertical bars
     BothAlways = 7,
 }
 
@@ -66,10 +78,13 @@ pub struct FileBrowser {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// File types for the FileBrowser
 #[repr(i32)]
 #[derive(Copy, Clone, Debug)]
 pub enum FileType {
+    /// Show files
     Files = 0,
+    /// Show dirs
     Dirs,
 }
 

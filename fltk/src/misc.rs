@@ -13,12 +13,19 @@ use std::{
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ChartType {
+    /// Bar chart
     Bar = 0,
+    /// Horizontal bar chart
     HorizontalBar = 1,
+    /// Line chart
     Line = 2,
+    /// Fill chart
     Fill = 3,
+    /// Spike chart
     Spike = 4,
+    /// Pie chart
     Pie = 5,
+    /// Special pie chart
     SpecialPie = 6,
 }
 
@@ -26,7 +33,9 @@ pub enum ChartType {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ClockType {
+    /// Square clock
     Square = 0,
+    /// Round clock
     Round = 1,
 }
 
@@ -683,10 +692,17 @@ impl HelpView {
     /// Find a string, returns the index
     pub fn find(&self, s: &str, start_from: usize) -> Option<usize> {
         assert!(!self.was_deleted());
-        if let Some(v) = self.value() {
-            v[start_from..].find(s).map(|idx| start_from + idx)
-        } else {
-            None
+        debug_assert!(
+            start_from <= std::isize::MAX as usize,
+            "usize entries have to be < std::isize::MAX for compatibility!"
+        );
+        unsafe {
+            let s = CString::safe_new(s);
+            let ret =  Fl_Help_View_find(self._inner, s.as_ptr(), start_from as i32);
+            match ret {
+                -1 => None,
+                _ => Some(ret as usize),
+            }
         }
     }
 

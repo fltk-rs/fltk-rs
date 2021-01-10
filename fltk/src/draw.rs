@@ -13,16 +13,27 @@ pub struct Coord<T: Copy>(pub T, pub T);
 #[repr(i32)]
 #[derive(WidgetType, Copy, Clone, PartialEq)]
 pub enum LineStyle {
+    /// Solid line
     Solid = 0,
+    /// Dash
     Dash,
+    /// Dot
     Dot,
+    /// Dash dot
     DashDot,
+    /// Dash dot dot
     DashDotDot,
+    /// Cap flat
     CapFlat = 100,
+    /// Cap round
     CapRound = 200,
+    /// Cap square
     CapSquare = 300,
+    /// Join miter
     JoinMiter = 1000,
+    /// Join round
     JoinRound = 2000,
+    /// Join bevel
     JoinBevel = 3000,
 }
 

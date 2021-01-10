@@ -12,8 +12,11 @@ use std::{
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeSort {
+    /// Don't sort
     None = 0,
+    /// Sort ascending
     Ascending = 1,
+    /// Sort descending
     Descending = 2,
 }
 
@@ -21,8 +24,11 @@ pub enum TreeSort {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeConnectorStyle {
+    /// No line
     None = 0,
+    /// Dotted line
     Dotted = 1,
+    /// Solid line
     Solid = 2,
 }
 
@@ -30,9 +36,13 @@ pub enum TreeConnectorStyle {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeSelect {
+    /// Select none
     None = 0,
+    /// Select single
     Single = 1,
+    /// Select multi
     Multi = 2,
+    /// Select single and make draggable
     SingleDraggable = 3,
 }
 
@@ -40,8 +50,11 @@ pub enum TreeSelect {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeItemSelect {
+    /// Deselect when clicked
     Deselect = 0,
+    /// Selected when clicked
     Select = 1,
+    /// Toggle when clicked
     Toggle = 2,
 }
 
@@ -49,12 +62,19 @@ pub enum TreeItemSelect {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeReason {
+    /// No callback trigger
     None = 0,
+    /// Trigger callback when selected
     Selected,
+    /// Trigger callback when deselected
     Deselected,
+    /// Trigger callback when reselected
     Reselected,
+    /// Trigger callback when opened
     Opened,
+    /// Trigger callback when closed
     Closed,
+    /// Trigger callback when dragged
     Dragged,
 }
 
@@ -62,7 +82,9 @@ pub enum TreeReason {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeItemReselectMode {
+    /// Reselect once
     Once = 0,
+    /// Always reselect
     Always,
 }
 
@@ -70,8 +92,11 @@ pub enum TreeItemReselectMode {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeItemDrawMode {
+    /// Default draw mode
     Default = 0,
+    /// Draws label and widget
     LabelAndWidget = 1,
+    /// Draws the height from widget
     HeightFromWidget = 2,
 }
 
@@ -477,6 +502,7 @@ impl Tree {
         unsafe { Fl_Tree_select_toggle(self._inner, item._inner, do_callback as i32) }
     }
 
+    /// Deselect an item at `path` and determine whether to do the callback
     pub fn deselect(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);

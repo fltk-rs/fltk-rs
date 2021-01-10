@@ -17,6 +17,7 @@ use std::{
     time,
 };
 
+/// Alias Widget ptr
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
 lazy_static! {
@@ -426,10 +427,12 @@ pub unsafe fn set_raw_callback<W>(
     fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), cb, data);
 }
 
+/// Return whether visible focus is shown
 pub fn visible_focus() -> bool {
     unsafe { Fl_visible_focus() != 0 }
 }
 
+/// Show focus around widgets
 pub fn set_visible_focus(flag: bool) {
     unsafe { Fl_set_visible_focus(flag as i32) }
 }

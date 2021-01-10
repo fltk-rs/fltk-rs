@@ -6,10 +6,15 @@ use std::{fmt, io};
 /// Error types returned by fltk-rs + wrappers of std::io errors
 #[derive(Debug)]
 pub enum FltkError {
+    /// i/o error
     IoError(io::Error),
+    /// Null string conversion error
     NullError(std::ffi::NulError),
+    /// Internal fltk error
     Internal(FltkErrorKind),
+    /// Error using an errorneous env variable
     EnvVarError(std::env::VarError),
+    /// Unknown error
     Unknown(String),
 }
 
@@ -19,13 +24,21 @@ unsafe impl Sync for FltkError {}
 /// Error kinds enum for FltkError
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum FltkErrorKind {
+    /// Failed to run the application
     FailedToRun,
+    /// Failed to initialize the multithreading
     FailedToLock,
+    /// Failed to set the general scheme of the application
     FailedToSetScheme,
+    /// Failed operation, mostly unknown reason!
     FailedOperation,
+    /// System resource (file, image) not found
     ResourceNotFound,
+    /// Image format error when opening an image of an unsopported format
     ImageFormatError,
+    /// Error filling table
     TableError,
+    /// Error due to printing
     PrintError,
 }
 

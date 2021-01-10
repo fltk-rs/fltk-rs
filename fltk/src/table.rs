@@ -19,13 +19,21 @@ pub struct Table {
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TableContext {
+    /// No context
     None = 0,
+    /// start of page context
     StartPage = 0x01,
+    /// End of page context
     EndPage = 0x02,
+    /// Row header context
     RowHeader = 0x04,
+    /// Column header context
     ColHeader = 0x08,
+    /// Cell context
     Cell = 0x10,
+    /// Table context
     Table = 0x20,
+    /// Row-Column resize context
     RcResize = 0x40,
 }
 
@@ -40,17 +48,23 @@ pub struct TableRow {
 #[repr(i32)]
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum TableRowSelectMode {
-    SelectNone,
-    SelectSingle,
-    SelectMulti,
+    /// Disable select
+    None,
+    /// Select single elements
+    Single,
+    /// Select several elements
+    Multi,
 }
 
 /// Defines the table row select flag
 #[repr(i32)]
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum TableRowSelectFlag {
+    /// Deselect on click
     Deselect,
+    /// Select on click
     Select,
+    /// Toggle selection on click
     Toggle,
 }
 
