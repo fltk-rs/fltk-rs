@@ -1,12 +1,11 @@
 # Changelog
 
-## [0.13.2] - Unreleased
-### Changes
-- FAQ: Add info on keeping the console window only for debug builds on Windows.Thanks @dheijl
 
-## [0.13.1] - 2021-01-07
+## [0.13.3] - 2021-01-10
 ### Changes
-- [BREAKING] Remove deprecated calls app::set_color and calls to scrollbar_width (should be replaced by scrollbar_size)
+- [BREAKING] Remove deprecated calls app::set_color and calls to scrollbar_width (should be replaced by scrollbar_size).
+- [BREAKING] Change Color::BackGround to BackGround2 to better reflect the color of input/output widgets.
+- FAQ: Add info on keeping the console window only for debug builds on Windows.Thanks @dheijl
 - Add proper Default impl for use with fl2rust.
 - Add Color::by_index(u8).
 - Add WindowExt::hotspot().
@@ -15,6 +14,8 @@
 - Add HelpView and InputChoice widgets in the misc module.
 - Add CheckBrowser in the browser module.
 - Add app::get_system_colors().
+- Update dependencies.
+- Add missing docs.
 
 ## [0.12.8] - 2021-01-06
 ### Changes

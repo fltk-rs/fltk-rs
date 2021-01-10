@@ -171,7 +171,7 @@ bitflags! {
     /// when there is one, otherwise the RGB value is given.
     pub struct Color: u32 {
         const ForeGround = 0;
-        const BackGround = 7;
+        const BackGround2 = 7;
         const Inactive = 8;
         const Selection = 15;
         const Gray0 = 32;
@@ -179,6 +179,7 @@ bitflags! {
         const Dark2 = 45;
         const Dark1 = 47;
         const FrameDefault = 49;
+        const BackGround = 49;
         const Light1 = 50;
         const Light2 = 52;
         const Light3 = 54;
