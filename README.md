@@ -207,6 +207,11 @@ $ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev 
 ```
 - Android: Android Studio, Android Sdk, Android Ndk.
 
+For NixOS (Linux distribution) this `nix-shell` environment can be used:
+```
+$ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libpng libcerf pango cairo libGL mesa pkg-config
+```
+
 ## FAQ
 
 please check the [FAQ](FAQ.md) page for frequently asked questions, encountered issues, guides on deployment, and contribution.
