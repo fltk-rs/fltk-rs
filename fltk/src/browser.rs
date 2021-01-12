@@ -255,19 +255,19 @@ impl CheckBrowser {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Check_Browser_textfont(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Check_Browser_text_font(self._inner)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_textfont(self._inner, f.bits() as i32) }
+        unsafe { Fl_Check_Browser_set_text_font(self._inner, f.bits() as i32) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_textsize(self._inner) as u32 }
+        unsafe { Fl_Check_Browser_text_size(self._inner) as u32 }
     }
 
     /// Sets the text size
@@ -277,19 +277,19 @@ impl CheckBrowser {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_textsize(self._inner, s as i32) }
+        unsafe { Fl_Check_Browser_set_text_size(self._inner, s as i32) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Check_Browser_textcolor(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Check_Browser_text_color(self._inner)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_textcolor(self._inner, color.bits() as u32) }
+        unsafe { Fl_Check_Browser_set_text_color(self._inner, color.bits() as u32) }
     }
 
     /// Gets the vertical scroll position of the list as a pixel position

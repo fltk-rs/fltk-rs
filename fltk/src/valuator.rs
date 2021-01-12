@@ -121,6 +121,48 @@ pub struct ValueSlider {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+impl ValueSlider {
+    /// Gets the text font
+    pub fn text_font(&self) -> Font {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Value_Slider_text_font(self._inner)) }
+    }
+
+    /// Sets the text font
+    pub fn set_text_font(&mut self, f: Font) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Slider_set_text_font(self._inner, f.bits() as i32) }
+    }
+
+    /// Gets the text size
+    pub fn text_size(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Slider_text_size(self._inner) as u32 }
+    }
+
+    /// Sets the text size
+    pub fn set_text_size(&mut self, s: u32) {
+        debug_assert!(
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Slider_set_text_size(self._inner, s as i32) }
+    }
+
+    /// Gets the text's color
+    pub fn text_color(&self) -> Color {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Value_Slider_text_color(self._inner)) }
+    }
+
+    /// Sets the text's color
+    pub fn set_text_color(&mut self, color: Color) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Slider_set_text_color(self._inner, color.bits() as u32) }
+    }
+}
+
 /// Creates an adjuster widget
 #[derive(WidgetBase, WidgetExt, ValuatorExt, Debug)]
 pub struct Adjuster {
@@ -135,11 +177,95 @@ pub struct ValueInput {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+impl ValueInput {
+    /// Gets the text font
+    pub fn text_font(&self) -> Font {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Value_Input_text_font(self._inner)) }
+    }
+
+    /// Sets the text font
+    pub fn set_text_font(&mut self, f: Font) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Input_set_text_font(self._inner, f.bits() as i32) }
+    }
+
+    /// Gets the text size
+    pub fn text_size(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Input_text_size(self._inner) as u32 }
+    }
+
+    /// Sets the text size
+    pub fn set_text_size(&mut self, s: u32) {
+        debug_assert!(
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Input_set_text_size(self._inner, s as i32) }
+    }
+
+    /// Gets the text's color
+    pub fn text_color(&self) -> Color {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Value_Input_text_color(self._inner)) }
+    }
+
+    /// Sets the text's color
+    pub fn set_text_color(&mut self, color: Color) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Input_set_text_color(self._inner, color.bits() as u32) }
+    }
+}
+
 /// Creates an value output widget
 #[derive(WidgetBase, WidgetExt, ValuatorExt, Debug)]
 pub struct ValueOutput {
     _inner: *mut Fl_Value_Output,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl ValueOutput {
+    /// Gets the text font
+    pub fn text_font(&self) -> Font {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Value_Output_text_font(self._inner)) }
+    }
+
+    /// Sets the text font
+    pub fn set_text_font(&mut self, f: Font) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Output_set_text_font(self._inner, f.bits() as i32) }
+    }
+
+    /// Gets the text size
+    pub fn text_size(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Output_text_size(self._inner) as u32 }
+    }
+
+    /// Sets the text size
+    pub fn set_text_size(&mut self, s: u32) {
+        debug_assert!(
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Output_set_text_size(self._inner, s as i32) }
+    }
+
+    /// Gets the text's color
+    pub fn text_color(&self) -> Color {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Value_Output_text_color(self._inner)) }
+    }
+
+    /// Sets the text's color
+    pub fn set_text_color(&mut self, color: Color) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Output_set_text_color(self._inner, color.bits() as u32) }
+    }
 }
 
 /// Creates a fill slider
@@ -182,4 +308,46 @@ pub struct HorNiceSlider {
 pub struct HorValueSlider {
     _inner: *mut Fl_Hor_Value_Slider,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl HorValueSlider {
+    /// Gets the text font
+    pub fn text_font(&self) -> Font {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Hor_Value_Slider_text_font(self._inner)) }
+    }
+
+    /// Sets the text font
+    pub fn set_text_font(&mut self, f: Font) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Hor_Value_Slider_set_text_font(self._inner, f.bits() as i32) }
+    }
+
+    /// Gets the text size
+    pub fn text_size(&self) -> u32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Hor_Value_Slider_text_size(self._inner) as u32 }
+    }
+
+    /// Sets the text size
+    pub fn set_text_size(&mut self, s: u32) {
+        debug_assert!(
+            s <= std::isize::MAX as u32,
+            "u32 entries have to be < std::isize::MAX for compatibility!"
+        );
+        assert!(!self.was_deleted());
+        unsafe { Fl_Hor_Value_Slider_set_text_size(self._inner, s as i32) }
+    }
+
+    /// Gets the text's color
+    pub fn text_color(&self) -> Color {
+        assert!(!self.was_deleted());
+        unsafe { std::mem::transmute(Fl_Hor_Value_Slider_text_color(self._inner)) }
+    }
+
+    /// Sets the text's color
+    pub fn set_text_color(&mut self, color: Color) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Hor_Value_Slider_set_text_color(self._inner, color.bits() as u32) }
+    }
 }

@@ -672,12 +672,6 @@ extern "C" {
     pub fn Fl_Browser_set_scrollbar_size(self_: *mut Fl_Browser, newSize: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Browser_scrollbar_width(self_: *const Fl_Browser) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Browser_set_scrollbar_width(self_: *mut Fl_Browser, width: libc::c_int);
-}
-extern "C" {
     pub fn Fl_Browser_sort(self_: *mut Fl_Browser);
 }
 extern "C" {
@@ -1093,12 +1087,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_set_scrollbar_size(self_: *mut Fl_Hold_Browser, newSize: libc::c_int);
-}
-extern "C" {
-    pub fn Fl_Hold_Browser_scrollbar_width(self_: *const Fl_Hold_Browser) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Hold_Browser_set_scrollbar_width(self_: *mut Fl_Hold_Browser, width: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_sort(self_: *mut Fl_Hold_Browser);
@@ -1530,12 +1518,6 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_scrollbar_width(self_: *const Fl_Select_Browser) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Select_Browser_set_scrollbar_width(self_: *mut Fl_Select_Browser, width: libc::c_int);
-}
-extern "C" {
     pub fn Fl_Select_Browser_sort(self_: *mut Fl_Select_Browser);
 }
 extern "C" {
@@ -1956,12 +1938,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multi_Browser_set_scrollbar_size(self_: *mut Fl_Multi_Browser, newSize: libc::c_int);
-}
-extern "C" {
-    pub fn Fl_Multi_Browser_scrollbar_width(self_: *const Fl_Multi_Browser) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Multi_Browser_set_scrollbar_width(self_: *mut Fl_Multi_Browser, width: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Multi_Browser_sort(self_: *mut Fl_Multi_Browser);
@@ -2399,12 +2375,6 @@ extern "C" {
     pub fn Fl_File_Browser_set_scrollbar_size(self_: *mut Fl_File_Browser, newSize: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_File_Browser_scrollbar_width(self_: *const Fl_File_Browser) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_File_Browser_set_scrollbar_width(self_: *mut Fl_File_Browser, width: libc::c_int);
-}
-extern "C" {
     pub fn Fl_File_Browser_sort(self_: *mut Fl_File_Browser);
 }
 extern "C" {
@@ -2765,20 +2735,20 @@ extern "C" {
     pub fn Fl_Check_Browser_sort(self_: *mut Fl_Check_Browser);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_textcolor(self_: *mut Fl_Check_Browser, c: libc::c_uint);
+    pub fn Fl_Check_Browser_set_text_color(self_: *mut Fl_Check_Browser, c: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_textcolor(self_: *mut Fl_Check_Browser) -> libc::c_uint;
+    pub fn Fl_Check_Browser_text_color(self_: *mut Fl_Check_Browser) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_textfont(self_: *mut Fl_Check_Browser, f: libc::c_int);
+    pub fn Fl_Check_Browser_set_text_font(self_: *mut Fl_Check_Browser, f: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_textfont(self_: *mut Fl_Check_Browser) -> libc::c_int;
+    pub fn Fl_Check_Browser_text_font(self_: *mut Fl_Check_Browser) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Check_Browser_set_textsize(self_: *mut Fl_Check_Browser, s: libc::c_int);
+    pub fn Fl_Check_Browser_set_text_size(self_: *mut Fl_Check_Browser, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Check_Browser_textsize(self_: *mut Fl_Check_Browser) -> libc::c_int;
+    pub fn Fl_Check_Browser_text_size(self_: *mut Fl_Check_Browser) -> libc::c_int;
 }
