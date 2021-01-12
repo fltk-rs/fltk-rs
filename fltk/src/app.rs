@@ -981,7 +981,7 @@ fn load_font(path: &str) -> Result<String, FltkError> {
         if ptr.is_null() {
             Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
-            let name = CString::from_raw(ptr as *mut _)
+            let name = CStr::from_ptr(ptr as *mut _)
                 .to_string_lossy()
                 .to_string();
             let mut f = FONTS.lock().unwrap();

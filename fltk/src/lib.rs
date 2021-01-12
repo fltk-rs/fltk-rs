@@ -190,6 +190,11 @@
 //! ```
 //! $ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev libpng-dev mesa-gl
 //! ```
+//! For NixOS (Linux distribution) this `nix-shell` environment can be used:
+//! ```
+//! $ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libpng libcerf pango cairo libGL mesa pkg-config
+//! ```
+//! - Android: Android Studio, Android Sdk, Android Ndk.
 //!
 //! ## FAQ
 //!
