@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [0.13.4] - 2021-01-13
+### Changes
+- Fix premature drop in app::load_font.
+- Add build instructions for nixOS. Thanks @legendofa
+
 ## [0.13.3] - 2021-01-12
 ### Changes
 - [BREAKING] Remove deprecated calls app::set_color and calls to scrollbar_width (should be replaced by scrollbar_size).
