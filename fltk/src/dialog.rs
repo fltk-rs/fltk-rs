@@ -731,39 +731,39 @@ impl FileChooser {
     }
 
     /// Sets the text color of the file chooser
-    pub fn set_textcolor(&mut self, c: Color) {
+    pub fn set_text_color(&mut self, c: Color) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_textcolor(self._inner, c.bits() as u32) }
+        unsafe { Fl_File_Chooser_set_text_color(self._inner, c.bits() as u32) }
     }
 
     /// Gets the text color of the file chooser
-    pub fn textcolor(&mut self) -> Color {
+    pub fn text_color(&mut self) -> Color {
         assert!(!self._inner.is_null());
-        unsafe { mem::transmute(Fl_File_Chooser_textcolor(self._inner)) }
+        unsafe { mem::transmute(Fl_File_Chooser_text_color(self._inner)) }
     }
 
     /// Sets the text font of the file chooser
-    pub fn set_textfont(&mut self, f: Font) {
+    pub fn set_text_font(&mut self, f: Font) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_textfont(self._inner, f.bits() as i32) }
+        unsafe { Fl_File_Chooser_set_text_font(self._inner, f.bits() as i32) }
     }
 
     /// Gets the text font of the file chooser
-    pub fn textfont(&mut self) -> Font {
+    pub fn text_font(&mut self) -> Font {
         assert!(!self._inner.is_null());
-        unsafe { mem::transmute(Fl_File_Chooser_textfont(self._inner)) }
+        unsafe { mem::transmute(Fl_File_Chooser_text_font(self._inner)) }
     }
 
     /// Sets the text size of the file chooser
-    pub fn set_textsize(&mut self, s: u32) {
+    pub fn set_text_size(&mut self, s: u32) {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_textsize(self._inner, s as i32) }
+        unsafe { Fl_File_Chooser_set_text_size(self._inner, s as i32) }
     }
 
     /// Gets the text size of the file chooser
-    pub fn textsize(&mut self) -> u32 {
+    pub fn text_size(&mut self) -> u32 {
         assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_textsize(self._inner) as u32 }
+        unsafe { Fl_File_Chooser_text_size(self._inner) as u32 }
     }
 
     /// Sets the type of the FileChooser

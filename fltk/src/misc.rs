@@ -130,7 +130,7 @@ impl Spinner {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_textsize(self._inner, s as i32) }
+        unsafe { Fl_Spinner_set_text_size(self._inner, s as i32) }
     }
 
     /// Gets the text's color
@@ -263,7 +263,7 @@ impl Chart {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_textsize(self._inner, s as i32) }
+        unsafe { Fl_Chart_set_text_size(self._inner, s as i32) }
     }
 
     /// Gets the text's color
@@ -600,7 +600,7 @@ impl InputChoice {
     pub fn menu_button(&self) -> Box<dyn MenuExt> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Input_Choice_menubutton(self._inner);
+            let ptr = Fl_Input_Choice_menu_button(self._inner);
             assert!(!ptr.is_null());
             Box::new(crate::menu::MenuButton::from_widget_ptr(ptr as _))
         }
@@ -609,19 +609,19 @@ impl InputChoice {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Input_Choice_textfont(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Input_Choice_text_font(self._inner)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_textfont(self._inner, f.bits() as i32) }
+        unsafe { Fl_Input_Choice_set_text_font(self._inner, f.bits() as i32) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_textsize(self._inner) as u32 }
+        unsafe { Fl_Input_Choice_text_size(self._inner) as u32 }
     }
 
     /// Sets the text size
@@ -631,19 +631,19 @@ impl InputChoice {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_textsize(self._inner, s as i32) }
+        unsafe { Fl_Input_Choice_set_text_size(self._inner, s as i32) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Input_Choice_textcolor(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Input_Choice_text_color(self._inner)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_textcolor(self._inner, color.bits() as u32) }
+        unsafe { Fl_Input_Choice_set_text_color(self._inner, color.bits() as u32) }
     }
 }
 
@@ -769,23 +769,22 @@ impl HelpView {
         unsafe { Fl_Help_View_leftline(self._inner) }
     }
 
-
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Help_View_textfont(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Help_View_text_font(self._inner)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_textfont(self._inner, f.bits() as i32) }
+        unsafe { Fl_Help_View_set_text_font(self._inner, f.bits() as i32) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_textsize(self._inner) as u32 }
+        unsafe { Fl_Help_View_text_size(self._inner) as u32 }
     }
 
     /// Sets the text size
@@ -795,19 +794,19 @@ impl HelpView {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_textsize(self._inner, s as i32) }
+        unsafe { Fl_Help_View_set_text_size(self._inner, s as i32) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Help_View_textcolor(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Help_View_text_color(self._inner)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_textcolor(self._inner, color.bits() as u32) }
+        unsafe { Fl_Help_View_set_text_color(self._inner, color.bits() as u32) }
     }
 
 

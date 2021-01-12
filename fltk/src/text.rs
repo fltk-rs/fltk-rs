@@ -226,7 +226,7 @@ impl TextBuffer {
             .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let path = CString::new(path)?;
         unsafe {
-            match Fl_Text_Buffer_loadfile(self._inner, path.as_ptr()) {
+            match Fl_Text_Buffer_load_file(self._inner, path.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }
@@ -242,7 +242,7 @@ impl TextBuffer {
             .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let path = CString::new(path)?;
         unsafe {
-            match Fl_Text_Buffer_savefile(self._inner, path.as_ptr()) {
+            match Fl_Text_Buffer_save_file(self._inner, path.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }

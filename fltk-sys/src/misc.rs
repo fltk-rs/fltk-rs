@@ -589,7 +589,7 @@ extern "C" {
     pub fn Fl_Spinner_text_size(self_: *const Fl_Spinner) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Spinner_set_textsize(self_: *mut Fl_Spinner, s: libc::c_int);
+    pub fn Fl_Spinner_set_text_size(self_: *mut Fl_Spinner, s: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Spinner_text_color(self_: *const Fl_Spinner) -> libc::c_uint;
@@ -1171,7 +1171,7 @@ extern "C" {
     pub fn Fl_Chart_text_size(self_: *const Fl_Chart) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Chart_set_textsize(self_: *mut Fl_Chart, s: libc::c_int);
+    pub fn Fl_Chart_set_text_size(self_: *mut Fl_Chart, s: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Chart_text_color(self_: *const Fl_Chart) -> libc::c_uint;
@@ -1883,22 +1883,22 @@ extern "C" {
     pub fn Fl_Help_View_leftline(self_: *const Fl_Help_View) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Help_View_set_textcolor(self_: *mut Fl_Help_View, c: libc::c_uint);
+    pub fn Fl_Help_View_set_text_color(self_: *mut Fl_Help_View, c: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Help_View_textcolor(self_: *mut Fl_Help_View) -> libc::c_uint;
+    pub fn Fl_Help_View_text_color(self_: *mut Fl_Help_View) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Help_View_set_textfont(self_: *mut Fl_Help_View, f: libc::c_int);
+    pub fn Fl_Help_View_set_text_font(self_: *mut Fl_Help_View, f: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Help_View_textfont(self_: *mut Fl_Help_View) -> libc::c_int;
+    pub fn Fl_Help_View_text_font(self_: *mut Fl_Help_View) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Help_View_set_textsize(self_: *mut Fl_Help_View, s: libc::c_int);
+    pub fn Fl_Help_View_set_text_size(self_: *mut Fl_Help_View, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Help_View_textsize(self_: *mut Fl_Help_View) -> libc::c_int;
+    pub fn Fl_Help_View_text_size(self_: *mut Fl_Help_View) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Help_View_scrollbar_size(self_: *const Fl_Help_View) -> libc::c_int;
@@ -2206,23 +2206,23 @@ extern "C" {
     pub fn Fl_Input_Choice_set_value2(self_: *mut Fl_Input_Choice, val: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_Choice_menubutton(self_: *mut Fl_Input_Choice) -> *mut libc::c_void;
+    pub fn Fl_Input_Choice_menu_button(self_: *mut Fl_Input_Choice) -> *mut libc::c_void;
 }
 extern "C" {
-    pub fn Fl_Input_Choice_set_textcolor(self_: *mut Fl_Input_Choice, c: libc::c_uint);
+    pub fn Fl_Input_Choice_set_text_color(self_: *mut Fl_Input_Choice, c: libc::c_uint);
 }
 extern "C" {
-    pub fn Fl_Input_Choice_textcolor(self_: *mut Fl_Input_Choice) -> libc::c_uint;
+    pub fn Fl_Input_Choice_text_color(self_: *mut Fl_Input_Choice) -> libc::c_uint;
 }
 extern "C" {
-    pub fn Fl_Input_Choice_set_textfont(self_: *mut Fl_Input_Choice, f: libc::c_int);
+    pub fn Fl_Input_Choice_set_text_font(self_: *mut Fl_Input_Choice, f: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_Choice_textfont(self_: *mut Fl_Input_Choice) -> libc::c_int;
+    pub fn Fl_Input_Choice_text_font(self_: *mut Fl_Input_Choice) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_Choice_set_textsize(self_: *mut Fl_Input_Choice, s: libc::c_int);
+    pub fn Fl_Input_Choice_set_text_size(self_: *mut Fl_Input_Choice, s: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_Input_Choice_textsize(self_: *mut Fl_Input_Choice) -> libc::c_int;
+    pub fn Fl_Input_Choice_text_size(self_: *mut Fl_Input_Choice) -> libc::c_int;
 }
