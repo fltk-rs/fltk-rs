@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.13.5] - 2021-01-15
+### Changes
+- Change dialog::color_chooser's default to white instead of black.
+- Add dialog::color_chooser_with_default().
 
 ## [0.13.4] - 2021-01-13
 ### Changes
