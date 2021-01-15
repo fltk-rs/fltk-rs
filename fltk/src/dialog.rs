@@ -976,18 +976,36 @@ pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> 
     }
 }
 
-/// Spawns a color_chooser dialog. `cmode`: Optional mode for color chooser. Default is -1 if rgb mode.
+/// Spawns a color_chooser dialog. 
+/// `cmode`: Optional mode for color chooser. Default is 0 if rgb mode.
 pub fn color_chooser(name: &str, cmode: i32) -> Option<(u8, u8, u8)> {
     unsafe {
         let name = CString::safe_new(name);
-        let mut r = 0;
-        let mut g = 0;
-        let mut b = 0;
+        let mut r = 255;
+        let mut g = 255;
+        let mut b = 255;
         let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode);
         if ret == 0 {
             None
         } else {
             Some((r, g, b))
+        }
+    }
+}
+
+/// Spawns a color_chooser dialog. 
+/// `cmode`: Optional mode for color chooser. Default is 0 if rgb mode.
+pub fn color_chooser_with_default(name: &str, cmode: i32, col: (u8, u8, u8)) -> (u8, u8, u8) {
+    unsafe {
+        let name = CString::safe_new(name);
+        let mut r = col.0;
+        let mut g = col.1;
+        let mut b = col.2;
+        let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode);
+        if ret == 0 {
+            col
+        } else {
+            (r, g, b)
         }
     }
 }
