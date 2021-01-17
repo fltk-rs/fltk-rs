@@ -172,7 +172,7 @@ impl App {
     /// As such only one font can be loaded at a time.
     /// The font name can be used with Font::by_name, and index with Font::by_index.
     /// # Examples
-    /// ```
+    /// ```no_run
     /// use fltk::*;
     /// let app = app::App::default();
     /// let font = app.load_font("font.ttf").unwrap();
@@ -762,7 +762,9 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 
 /// Gets the widget that is below the mouse cursor
 /// This returns an Option<impl WidgetExt> which can be specified in the function call
-/// ```rust
+/// ```no_run
+/// use fltk::app;
+/// use fltk::widget;
 /// let w = app::belowmouse::<widget::Widget>(); // or by specifying a more concrete type
 /// ```
 pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {

@@ -34,7 +34,7 @@
 //!
 //! An example hello world application:
 //!
-//! ```rust
+//! ```no_run
 //!     use fltk::{app::*, window::*};
 //!
 //!     let app = App::default();
@@ -45,7 +45,7 @@
 //! ```
 //!
 //! Another example showing the basic callback functionality:
-//! ```rust
+//! ```no_run
 //!     use fltk::{app::*, button::*, frame::*, window::*};
 //!
 //!     let app = App::default();
@@ -60,7 +60,7 @@
 //! Please check the examples directory for more examples.
 //! You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 //!
-//! ```rust
+//! ```ignored
 //! let but1 = Button::new(10, 10, 80, 40, "Button 1");
 //!
 //! let but2 = Button::default()
@@ -70,7 +70,7 @@
 //! ```
 //!
 //! An example of a counter showing use of the builder pattern:
-//! ```rust
+//! ```ignored
 //!     let app = app::App::default();
 //!     let mut wind = Window::default()
 //!         .with_size(160, 200)
@@ -97,13 +97,13 @@
 //! ### Events
 //!
 //! Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
-//! ```rust
+//! ```ignored
 //!     /* previous hello world code */
 //!     but.set_callback(move || frame.set_label("Hello World!"));
 //!     app.run().unwrap();
 //! ```
 //! Another way is to use message passing:
-//! ```rust
+//! ```ignored
 //!     /* previous counter code */
 //!     let (s, r) = app::channel::<Message>();
 //!
@@ -123,7 +123,7 @@
 //! https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter2.rs
 //!
 //! For custom event handling, the handle() method can be used:
-//! ```rust
+//! ```ignored
 //!     some_widget.handle(move |ev: Event| {
 //!         match ev {
 //!             /* handle ev */
@@ -142,12 +142,12 @@
 //! - Plastic
 //!
 //! These can be set using the App::with_scheme() function.
-//! ```rust
+//! ```ignored
 //! let app = App::default().with_scheme(AppScheme::Gleam);
 //! ```
 //! Themes of individual widgets can be optionally modified using the provided methods in the WidgetBase trait,
 //! such as set_color(), set_label_font(), set_frame() etc:
-//! ```rust
+//! ```ignored
 //!     some_button.set_color(Color::Light1); //! You can use one of the provided colors in the fltk enums
 //!     some_button.set_color(Color::from_rgb(255, 0, 0)); //! Or you can specify a color by rgb or hex/u32 value
 //!     some_button.set_color(Color::from_u32(0xffebee));
@@ -175,23 +175,23 @@
 //! - Linux: X11 and OpenGL development headers need to be installed for development. The libraries themselves are available on linux distros with a graphical user interface.
 //!
 //! For Debian-based GUI distributions, that means running:
-//! ```
+//! ```ignored
 //! $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
-//! ```
+//! ```ignored
 //! For RHEL-based GUI distributions, that means running:
-//! ```
+//! ```ignored
 //! $ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libpng-devel
 //! ```
 //! For Arch-based GUI distributions, that means running:
-//! ```
+//! ```ignored
 //! $ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes libpng pango cairo libgl mesa --needed
 //! ```
 //! For Alpine linux:
-//! ```
+//! ```ignored
 //! $ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev libpng-dev mesa-gl
 //! ```
 //! For NixOS (Linux distribution) this `nix-shell` environment can be used:
-//! ```
+//! ```ignored
 //! $ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libpng libcerf pango cairo libGL mesa pkg-config
 //! ```
 //! - Android: Android Studio, Android Sdk, Android Ndk.
