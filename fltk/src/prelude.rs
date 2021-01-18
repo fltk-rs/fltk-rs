@@ -668,7 +668,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated TextBuffer
     fn buffer(&self) -> Option<crate::text::TextBuffer>;
     /// Sets the associated TextBuffer
-    fn set_buffer(&mut self, buffer: Option<crate::text::TextBuffer>);
+    fn set_buffer<B: Into<Option<crate::text::TextBuffer>>>(&mut self, buffer: B);
     /// Get the associated style TextBuffer
     fn style_buffer(&self) -> Option<crate::text::TextBuffer>;
     /// Return the text font
@@ -706,9 +706,9 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_highlight_data(
+    fn set_highlight_data<B: Into<Option<crate::text::TextBuffer>>>(
         &mut self,
-        style_buffer: crate::text::TextBuffer,
+        style_buffer: B,
         entries: Vec<crate::text::StyleTableEntry>,
     );
     /// Sets the cursor style
