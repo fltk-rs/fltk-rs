@@ -228,8 +228,8 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
             fn set_buffer<B: Into<Option<crate::text::TextBuffer>>>(&mut self, buffer: B) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let _old_buf = self.buffer();
                     if let Some(buffer) = buffer.into() {
+                        let _old_buf = self.buffer();
                         buffer._refcount.fetch_add(1, Ordering::Relaxed);
                         #set_buffer(self._inner, buffer.as_ptr())
                     } else {
@@ -409,8 +409,8 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(self.buffer().is_some());
                 debug_assert!(entries.len() < 29);
                 if entries.len() == 0 { return; }
-                let _old_buf = self.buffer();
                 if let Some(style_buffer) = style_buffer.into() {
+                    let _old_buf = self.style_buffer();
                     style_buffer._refcount.fetch_add(1, Ordering::Relaxed);
                     let mut colors: Vec<u32> = vec![];
                     let mut fonts: Vec<i32> = vec![];
@@ -424,9 +424,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                         #set_highlight_data(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32)
                     }
                 } else {
-                    unsafe {
-                        #set_highlight_data(self._inner, std::ptr::null_mut() as _, 0 as _, 0 as _, 0 as _, 0)
-                    }
+                    return;
                 }
             }
 
