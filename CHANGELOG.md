@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.13.6] - Unreleased
+## [0.13.6] - 2021-01-18
 ### Changes
 - Add debug_assert that char != 0 for BrowserExt::set_format_char and set_column_char.
 - Fix rustdoc failing tests.
