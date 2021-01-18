@@ -225,11 +225,11 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_buffer(&mut self, buffer: Option<TextBuffer>) {
+            fn set_buffer<B: Into<Option<crate::text::TextBuffer>>>(&mut self, buffer: B) {
                 unsafe {
                     assert!(!self.was_deleted());
                     let _old_buf = self.buffer();
-                    if let Some(buffer) = buffer {
+                    if let Some(buffer) = buffer.into() {
                         buffer._refcount.fetch_add(1, Ordering::Relaxed);
                         #set_buffer(self._inner, buffer.as_ptr())
                     } else {
@@ -404,22 +404,29 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_highlight_data(&mut self, mut style_buffer: TextBuffer, entries: Vec<StyleTableEntry>) {
+            fn set_highlight_data<B: Into<Option<TextBuffer>>>(&mut self, mut style_buffer: B, entries: Vec<StyleTableEntry>) {
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
-                assert!(entries.len() < 29);
+                debug_assert!(entries.len() < 29);
+                if entries.len() == 0 { return; }
                 let _old_buf = self.buffer();
-                style_buffer._refcount.fetch_add(1, Ordering::Relaxed);
-                let mut colors: Vec<u32> = vec![];
-                let mut fonts: Vec<i32> = vec![];
-                let mut sizes: Vec<i32> = vec![];
-                for entry in entries.iter() {
-                    colors.push(entry.color.bits() as u32);
-                    fonts.push(entry.font.bits() as i32);
-                    sizes.push(entry.size as i32);
-                }
-                unsafe {
-                    #set_highlight_data(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32)
+                if let Some(style_buffer) = style_buffer.into() {
+                    style_buffer._refcount.fetch_add(1, Ordering::Relaxed);
+                    let mut colors: Vec<u32> = vec![];
+                    let mut fonts: Vec<i32> = vec![];
+                    let mut sizes: Vec<i32> = vec![];
+                    for entry in entries.iter() {
+                        colors.push(entry.color.bits() as u32);
+                        fonts.push(entry.font.bits() as i32);
+                        sizes.push(entry.size as i32);
+                    }
+                    unsafe {
+                        #set_highlight_data(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32)
+                    }
+                } else {
+                    unsafe {
+                        #set_highlight_data(self._inner, std::ptr::null_mut() as _, 0 as _, 0 as _, 0 as _, 0)
+                    }
                 }
             }
 

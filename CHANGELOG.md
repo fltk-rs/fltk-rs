@@ -2,8 +2,9 @@
 
 ## [0.13.6] - Unreleased
 ### Changes
-- Add assert that char != 0 for BrowserExt::set_format_char and set_column_char.
+- Add debug_assert that char != 0 for BrowserExt::set_format_char and set_column_char.
 - Fix rustdoc failing tests.
+- Add syntactic sugar for DisplayExt::set_buffer to accept Into-Option, same for set_highlight_data.
 
 ## [0.13.5] - 2021-01-15
 ### Changes
