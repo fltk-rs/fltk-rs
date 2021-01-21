@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.13.8] - Unreleased
+## [0.13.8] - 2021-01-21
 ### Changes
 - Add missing assert.
 - Update cfltk.
