@@ -134,6 +134,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn free_position(&mut self) {
+                assert!(!self.was_deleted());
                 unsafe {
                     #free_position(self._inner)
                 }

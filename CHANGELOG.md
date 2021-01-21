@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.13.8] - Unreleased
+### Changes
+- Add missing assert.
+- Update cfltk.
+
 ## [0.13.7] - 2021-01-18
 ### Changes
 - Add debug_assert that char != 0 for BrowserExt::set_format_char and set_column_char.
