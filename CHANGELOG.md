@@ -5,9 +5,6 @@
 ### Changes
 - Fix GlWindow::set_mode to account for change of enums::Mode now using bitfalgs.
 - Fix linkage with feature enable-glwindow.
-
-## [0.13.8] - 2021-01-21
-### Changes
 - Add missing assert.
 - Update cfltk.
 
