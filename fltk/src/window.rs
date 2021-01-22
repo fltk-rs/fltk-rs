@@ -412,7 +412,7 @@ impl GlWindow {
     pub fn set_mode(&mut self, mode: Mode) {
         assert!(!self.was_deleted());
         unsafe {
-            Fl_Gl_Window_set_mode(self._inner, mode as i32);
+            Fl_Gl_Window_set_mode(self._inner, mode.bits());
         }
     }
 }
