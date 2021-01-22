@@ -4,7 +4,7 @@
 ## [0.13.9] - 2021-01-22
 ### Changes
 - Fix GlWindow::set_mode to account for change of enums::Mode now using bitfalgs.
-- Link OpenGL when using the enable-glwindow feature.
+- Fix linkage with feature enable-glwindow.
 
 ## [0.13.8] - 2021-01-21
 ### Changes
