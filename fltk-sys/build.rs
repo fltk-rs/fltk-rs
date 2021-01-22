@@ -163,7 +163,6 @@ fn main() {
             } else {
                 dst.define("OPTION_USE_PANGO", "ON");
             }
-            
         }
 
         if target_triple.contains("unknown-linux-musl") {
@@ -255,6 +254,17 @@ fn main() {
 
         if cfg!(feature = "enable-glwindow") {
             println!("cargo:rustc-link-lib=static=fltk_gl");
+            match target_os.as_str() {
+                "macos" => println!("cargo:rustc-link-lib=framework=OpenGL"),
+                "windows" => {
+                    println!("cargo:rustc-link-lib=dylib=opengl32");
+                    println!("cargo:rustc-link-lib=dylib=glu32");
+                }
+                _ => {
+                    println!("cargo:rustc-link-lib=dylib=GL");
+                    println!("cargo:rustc-link-lib=dylib=GLU");
+                }
+            }
         }
 
         match target_os.as_str() {
