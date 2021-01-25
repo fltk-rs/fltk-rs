@@ -600,10 +600,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn changed(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    match #changed(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #changed(self._inner)  != 0
                 }
             }
 
@@ -701,10 +698,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn takes_events(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    match #takes_events(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #takes_events(self._inner)  != 0
                 }
             }
 
@@ -876,10 +870,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 assert!(!wid.was_deleted());
                 unsafe {
-                    match #inside(self._inner, wid.as_widget_ptr() as *mut raw::c_void) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #inside(self._inner, wid.as_widget_ptr() as *mut raw::c_void)  != 0
                 }
             }
 

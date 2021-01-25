@@ -255,10 +255,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn readonly(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    match #readonly(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #readonly(self._inner)  != 0
                 }
             }
 
@@ -272,10 +269,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn wrap(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    match #wrap(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #wrap(self._inner)  != 0
                 }
             }
 

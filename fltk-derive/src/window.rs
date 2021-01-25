@@ -112,10 +112,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             fn shown(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    match #shown(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #shown(self._inner)  != 0
                 }
             }
 

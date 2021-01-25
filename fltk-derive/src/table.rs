@@ -283,20 +283,14 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn is_interactive_resize(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    match #is_interactive_resize(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #is_interactive_resize(self._inner)  != 0
                 }
             }
 
             fn row_resize(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    match #row_resize(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #row_resize(self._inner)  != 0
                 }
             }
 
@@ -310,10 +304,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn col_resize(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    match #col_resize(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #col_resize(self._inner)  != 0
                 }
             }
 
@@ -357,10 +348,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn row_header(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    match #row_header(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #row_header(self._inner)  != 0
                 }
             }
 
@@ -374,10 +362,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn col_header(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    match #col_header(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #col_header(self._inner)  != 0
                 }
             }
 
@@ -531,10 +516,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn is_selected(&self, r: i32, c: i32) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    match #is_selected(self._inner, r, c) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #is_selected(self._inner, r, c)  != 0
                 }
             }
 

@@ -16,8 +16,8 @@ fn main() {
 
     let mut img = image::SvgImage::from_data(IMG).unwrap();
 
-    table.draw_cell2(move |t, ctx, row, col, x, y, w, h| match ctx {
-        table::TableContext::Cell => {
+    table.draw_cell2(move |t, ctx, row, col, x, y, w, h| {
+        if let table::TableContext::Cell = ctx {
             img.scale(w, h - 20, true, false);
             let mut button = button::Button::new(x, y, w, h, &format!("Image {}", row + col));
             button.set_align(Align::Bottom | Align::Inside);
@@ -26,7 +26,6 @@ fn main() {
             button.set_callback2(|b| println!("Selected: {}", b.label()));
             t.add(&button);
         }
-        _ => (),
     });
 
     wind.make_resizable(true);

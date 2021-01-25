@@ -201,6 +201,7 @@
 //! please check the [FAQ](https://github.com/MoAlyousef/fltk-rs/blob/master/FAQ.md) page for frequently asked questions, encountered issues, guides on deployment, and contribution.
 
 #![allow(non_upper_case_globals)]
+#![warn(missing_docs)]
 
 /// Application related methods and functions
 pub mod app;
