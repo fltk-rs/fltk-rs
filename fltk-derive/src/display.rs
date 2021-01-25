@@ -355,9 +355,10 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(self.buffer().is_some());
                     let x = #move_right(self._inner);
                     if x == 0 {
-                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+                    } else {
+                        Ok(())
                     }
-                    Ok(())
                 }
             }
 
@@ -367,9 +368,10 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(self.buffer().is_some());
                     let x = #move_left(self._inner);
                     if x == 0 {
-                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-                    }
-                    Ok(())
+                        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+                    } else {
+                        Ok(())
+                    }              
                 }
             }
 
@@ -379,9 +381,10 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(self.buffer().is_some());
                     let x = #move_up(self._inner);
                     if x == 0 {
-                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-                    }
-                    Ok(())
+                        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+                    } else {
+                        Ok(())
+                    }              
                 }
             }
 
@@ -391,9 +394,10 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(self.buffer().is_some());
                     let x = #move_down(self._inner);
                     if x == 0 {
-                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-                    }
-                    Ok(())
+                        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+                    } else {
+                        Ok(())
+                    }              
                 }
             }
 
@@ -423,8 +427,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     unsafe {
                         #set_highlight_data(self._inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32)
                     }
-                } else {
-                    return;
                 }
             }
 
@@ -662,10 +664,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    match #in_selection(self._inner, x, y) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #in_selection(self._inner, x, y)  != 0
                 }
             }
 

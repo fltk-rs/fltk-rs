@@ -31,8 +31,8 @@ fn main() {
     win.end();
     win.show();
     
-    but1.set_callback(|| app::redraw());
-    but2.set_callback(|| app::redraw());
+    but1.set_callback(app::redraw);
+    but2.set_callback(app::redraw);
     
     app.run().unwrap();
 }

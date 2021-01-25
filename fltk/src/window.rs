@@ -292,10 +292,7 @@ impl GlWindow {
     pub fn valid(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Gl_Window_valid(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Gl_Window_valid(self._inner) != 0
         }
     }
 
@@ -309,10 +306,7 @@ impl GlWindow {
     pub fn context_valid(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Gl_Window_context_valid(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Gl_Window_context_valid(self._inner) != 0
         }
     }
 
@@ -359,10 +353,7 @@ impl GlWindow {
     pub fn can_do_overlay(&mut self) -> bool {
         assert!(!self.was_deleted());
         unsafe {
-            match Fl_Gl_Window_can_do_overlay(self._inner) {
-                0 => false,
-                _ => true,
-            }
+            Fl_Gl_Window_can_do_overlay(self._inner) != 0
         }
     }
 

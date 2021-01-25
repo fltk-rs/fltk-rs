@@ -48,10 +48,7 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
             fn is_set(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    match #value(self._inner) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #value(self._inner)  != 0
                 }
             }
 

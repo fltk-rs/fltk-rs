@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.13.10] - 2021-01-25
+### Changes
+- Add missing docs.
+- Fix clippy warnings.
+- Update syn crate.
 
 ## [0.13.9] - 2021-01-22
 ### Changes

@@ -201,7 +201,7 @@ fn main() {
                         txt.push_str("0.");
                     }
                     if !txt.contains('.') {
-                        txt.push_str(".");
+                        txt.push('.');
                         out.set_value(txt.as_str());
                     }
                 }

@@ -196,10 +196,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
-                    match #selected(self._inner, line as i32) {
-                        0 => false,
-                        _ => true,
-                    }
+                    #selected(self._inner, line as i32)  != 0
                 }
             }
 
