@@ -1,5 +1,10 @@
 # Changelog
 
+
+## [0.13.11] - Unreleased
+### Changes
+- Add GlWindow::get_proc_address(). 
+
 ## [0.13.10] - 2021-01-25
 ### Changes
 - Add missing docs.

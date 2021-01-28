@@ -282,6 +282,12 @@ impl GlWindow {
         win
     }
 
+    /// Gets an opengl function address
+    pub fn get_proc_address(&self, s: &'static str) -> *const raw::c_void {
+        let s = CString::safe_new(s);
+        unsafe { Fl_Gl_Window_get_proc_address(self._inner, s.as_ptr()) }
+    }
+
     /// Forces the window to be drawn, this window is also made current and calls draw()
     pub fn flush(&mut self) {
         assert!(!self.was_deleted());
