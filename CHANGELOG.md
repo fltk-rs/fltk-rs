@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.13.11] - Unreleased
+## [0.13.11] - 2021-01-29
 ### Changes
 - Add GlWindow::get_proc_address().
 - Use bitflags for draw::LineStyle.
