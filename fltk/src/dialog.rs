@@ -287,7 +287,7 @@ pub fn password(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
 pub fn message_default(txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
-        Fl_message(x, y, txt.as_ptr())
+        Fl_message2(txt.as_ptr())
     }
 }
 
@@ -295,7 +295,7 @@ pub fn message_default(txt: &str) {
 pub fn alert_default(txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
-        Fl_alert(x, y, txt.as_ptr())
+        Fl_alert2(txt.as_ptr())
     }
 }
 
@@ -307,7 +307,7 @@ pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
+        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
     }
 }
 
@@ -317,7 +317,7 @@ pub fn input_default(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::safe_new(deflt);
         let txt = CString::safe_new(txt);
-        let x = Fl_input(x, y, txt.as_ptr(), temp.as_ptr());
+        let x = Fl_input2(txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
             None
         } else {
@@ -335,7 +335,7 @@ pub fn password_default(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::safe_new(deflt);
         let txt = CString::safe_new(txt);
-        let x = Fl_password(x, y, txt.as_ptr(), temp.as_ptr());
+        let x = Fl_password2(txt.as_ptr(), temp.as_ptr());
         if x.is_null() {
             None
         } else {

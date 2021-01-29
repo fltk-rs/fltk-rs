@@ -1,4 +1,3 @@
-use app::background;
 use fltk::*;
 use std::{
     error,
@@ -369,7 +368,7 @@ fn main() {
                 Cut => editor.cut(),
                 Copy => editor.copy(),
                 Paste => editor.paste(),
-                About => dialog::message_default("This is an example application written in Rust and using the FLTK Gui library."),
+                About => dialog::message(center().0 - 300, center().1 - 100, "This is an example application written in Rust and using the FLTK Gui library."),
             }
         }
     }
