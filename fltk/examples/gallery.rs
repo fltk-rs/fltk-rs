@@ -1,61 +1,75 @@
 use fltk::{
-    app::{App, Scheme},
-    button::*,
-    frame::*,
-    group::*,
-    input::*,
-    menu::*,
-    output::*,
-    valuator::*,
-    window::*,
+    app, button::*, group::*, input::*, menu::*, misc::*, output::*, valuator::*, window::*,
 };
 
 fn draw_gallery() {
-    let tab = Tabs::new(10, 10, 500 - 20, 400 - 20, "");
+    let tab = Tabs::new(10, 10, 500 - 20, 500 - 20, "");
 
-    let grp1 = Group::new(10, 35, 500 - 20, 400 - 45, "Tab1");
+    let grp1 = Group::new(10, 35, 500 - 20, 500 - 45, "Tab1\t");
 
-    let _but1 = Button::new(50, 60, 90, 25, "Button");
+    let mut pack = Pack::new(15, 45, 150, 500 - 45, "");
 
-    let _but2 = RoundButton::new(50, 90, 90, 25, "Round");
+    pack.set_spacing(10);
 
-    let _but3 = CheckButton::new(50, 120, 90, 25, "Check");
+    let _but1 = Button::default().with_size(0, 30).with_label("Button");
 
-    let _but4 = LightButton::new(50, 150, 90, 25, "Light");
+    let _but2 = RoundButton::default().with_size(0, 30).with_label("Round");
 
-    let mut but5 = MenuButton::new(50, 180, 90, 25, "Menu");
+    let _but3 = CheckButton::default().with_size(0, 30).with_label("Check");
+
+    let _but4 = LightButton::default().with_size(0, 30).with_label("Light");
+
+    let mut but5 = MenuButton::default().with_size(0, 30).with_label("Menu");
 
     but5.add_choice("Hello");
 
-    let _but6 = ReturnButton::new(50, 210, 90, 25, "Return");
+    let _but6 = ReturnButton::default()
+        .with_size(0, 30)
+        .with_label("Return");
 
     let mut chce = Choice::new(50, 240, 90, 30, "");
 
     chce.add_choice("Hello");
 
-    let _slider = Slider::new(180, 60, 30, 210, "Slider");
+    let _inp = Input::default().with_size(0, 30).with_label("");
 
-    let _dial = Dial::new(360, 150, 90, 90, "Dial");
+    let _out = Output::default().with_size(0, 30).with_label("");
 
-    let _scrl = Scrollbar::new(240, 60, 30, 210, "Scrollbar");
+    let _cnt = Counter::default().with_size(0, 30);
 
-    let _rller = Roller::new(300, 60, 30, 210, "Roller");
+    let mut scrl = Scrollbar::default().with_size(0, 30);
 
-    let _cnt = Counter::new(50, 330, 210, 30, "Counter");
+    scrl.set_type(ScrollbarType::HorizontalNice);
 
-    let _inp = Input::new(50, 270, 90, 25, "");
+    pack.end();
 
-    let _out = Output::new(50, 300, 90, 25, "");
+    let mut pack = Pack::new(200, 45, 150, 400, "");
 
-    let mut scrl2 = Scrollbar::new(180, 300, 150, 25, "");
+    pack.set_type(PackType::Horizontal);
 
-    scrl2.set_type(ScrollbarType::HorizontalNice);
+    pack.set_spacing(30);
 
-    let _frame = Frame::new(270, 335, 90, 30, "Examples!");
+    let mut slider = Slider::default().with_size(25, 0).with_label("Slider");
+
+    slider.set_type(SliderType::VerticalNice);
+
+    let _scrl2 = Scrollbar::default()
+        .with_size(25, 0)
+        .with_label("Scrollbar");
+
+    let _rller = Roller::default().with_size(25, 0).with_label("Roller");
+
+    pack.end();
+
+    let _clock = Clock::new(380, 200, 90, 90, "Clock");
+
+    let mut dial = FillDial::new(380, 50, 90, 90, "Dial");
+
+    dial.set_selection_color(Color::Red);
 
     grp1.end();
 
-    let grp2 = Group::new(10, 35, 500 - 30, 400 - 25, "Tab2");
+    let grp2 = Group::new(10, 35, 500 - 30, 500 - 25, "Tab2\t");
 
     grp2.end();
 
@@ -63,16 +77,13 @@ fn draw_gallery() {
 }
 
 fn main() {
-    let app = App::default().with_scheme(Scheme::Gtk);
+    let app = app::App::default().with_scheme(app::Scheme::Gtk);
+    app::background(221, 221, 221);
 
-    let (screen_width, screen_height) = fltk::app::screen_size();
-    let mut wind = Window::new(
-        (screen_width / 2.0 - 250.0) as i32,
-        (screen_height / 2.0 - 200.0) as i32,
-        500,
-        400,
-        "Gallery",
-    );
+    let mut wind = Window::default()
+        .with_size(500, 500)
+        .with_label("Gallery")
+        .center_screen();
 
     draw_gallery();
 

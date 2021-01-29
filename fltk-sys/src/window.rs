@@ -4403,3 +4403,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Gl_Window_set_mode(self_: *mut Fl_Gl_Window, mode: libc::c_int);
 }
+extern "C" {
+    pub fn Fl_Gl_Window_get_proc_address(
+        self_: *mut Fl_Gl_Window,
+        s: *const libc::c_char,
+    ) -> *mut libc::c_void;
+}

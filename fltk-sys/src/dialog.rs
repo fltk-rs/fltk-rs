@@ -98,6 +98,29 @@ extern "C" {
         deflt: *const libc::c_char,
     ) -> *const libc::c_char;
 }
+extern "C" {
+    pub fn Fl_message2(txt: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_alert2(txt: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_choice2(
+        txt: *const libc::c_char,
+        b0: *const libc::c_char,
+        b1: *const libc::c_char,
+        b2: *const libc::c_char,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_input2(txt: *const libc::c_char, deflt: *const libc::c_char) -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_password2(
+        txt: *const libc::c_char,
+        deflt: *const libc::c_char,
+    ) -> *const libc::c_char;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Help_Dialog {

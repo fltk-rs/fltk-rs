@@ -141,6 +141,7 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
 
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
+    app::background(211, 211, 211);
 
     let (s, r) = app::channel::<Message>();
 
@@ -155,7 +156,6 @@ fn main() {
         .with_label("RustyEd");
 
     let mut menu = menu::SysMenuBar::new(0, 0, 800, 35, "");
-    menu.set_color(Color::Light2);
 
     let mut buf = text::TextBuffer::default();
     printable.set_buffer(Some(buf.clone()));

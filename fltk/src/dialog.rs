@@ -283,6 +283,71 @@ pub fn password(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     }
 }
 
+/// Displays a message box
+pub fn message_default(txt: &str) {
+    unsafe {
+        let txt = CString::safe_new(txt);
+        Fl_message2(txt.as_ptr())
+    }
+}
+
+/// Displays an alert box
+pub fn alert_default(txt: &str) {
+    unsafe {
+        let txt = CString::safe_new(txt);
+        Fl_alert2(txt.as_ptr())
+    }
+}
+
+/// Displays a choice box with upto three choices
+/// An empty choice will not be shown
+pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
+    unsafe {
+        let txt = CString::safe_new(txt);
+        let b0 = CString::safe_new(b0);
+        let b1 = CString::safe_new(b1);
+        let b2 = CString::safe_new(b2);
+        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
+    }
+}
+
+/// Displays an input box, which returns the inputted string.
+/// Can be used for gui io
+pub fn input_default(txt: &str, deflt: &str) -> Option<String> {
+    unsafe {
+        let temp = CString::safe_new(deflt);
+        let txt = CString::safe_new(txt);
+        let x = Fl_input2(txt.as_ptr(), temp.as_ptr());
+        if x.is_null() {
+            None
+        } else {
+            Some(
+                CStr::from_ptr(x as *const raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
+        }
+    }
+}
+
+/// Shows an input box, but with hidden string
+pub fn password_default(txt: &str, deflt: &str) -> Option<String> {
+    unsafe {
+        let temp = CString::safe_new(deflt);
+        let txt = CString::safe_new(txt);
+        let x = Fl_password2(txt.as_ptr(), temp.as_ptr());
+        if x.is_null() {
+            None
+        } else {
+            Some(
+                CStr::from_ptr(x as *const raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
+        }
+    }
+}
+
 /// Creates a help dialog
 #[derive(Debug)]
 pub struct HelpDialog {
