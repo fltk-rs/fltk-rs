@@ -1,3 +1,4 @@
+use app::background;
 use fltk::*;
 use std::{
     error,
@@ -141,6 +142,7 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
 
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
+    app::background(211, 211, 211);
 
     let (s, r) = app::channel::<Message>();
 
@@ -155,7 +157,6 @@ fn main() {
         .with_label("RustyEd");
 
     let mut menu = menu::SysMenuBar::new(0, 0, 800, 35, "");
-    menu.set_color(Color::Light2);
 
     let mut buf = text::TextBuffer::default();
     printable.set_buffer(Some(buf.clone()));
@@ -368,7 +369,7 @@ fn main() {
                 Cut => editor.cut(),
                 Copy => editor.copy(),
                 Paste => editor.paste(),
-                About => dialog::message(center().0 - 300, center().1 - 100, "This is an example application written in Rust and using the FLTK Gui library."),
+                About => dialog::message_default("This is an example application written in Rust and using the FLTK Gui library."),
             }
         }
     }
