@@ -3,7 +3,9 @@
 
 ## [0.13.11] - Unreleased
 ### Changes
-- Add GlWindow::get_proc_address(). 
+- Add GlWindow::get_proc_address().
+- Use bitflags for draw::LineStyle.
+- Open display before calls to draw.
 
 ## [0.13.10] - 2021-01-25
 ### Changes

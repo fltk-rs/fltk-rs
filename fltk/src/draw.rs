@@ -9,38 +9,31 @@ use std::os::raw;
 #[derive(Copy, Clone, Debug)]
 pub struct Coord<T: Copy>(pub T, pub T);
 
-/// Defines the line styles supported by fltk
-#[repr(i32)]
-#[derive(WidgetType, Copy, Clone, PartialEq)]
-pub enum LineStyle {
-    /// Solid line
-    Solid = 0,
-    /// Dash
-    Dash,
-    /// Dot
-    Dot,
-    /// Dash dot
-    DashDot,
-    /// Dash dot dot
-    DashDotDot,
-    /// Cap flat
-    CapFlat = 100,
-    /// Cap round
-    CapRound = 200,
-    /// Cap square
-    CapSquare = 300,
-    /// Join miter
-    JoinMiter = 1000,
-    /// Join round
-    JoinRound = 2000,
-    /// Join bevel
-    JoinBevel = 3000,
-}
-
-impl std::ops::BitOr<LineStyle> for LineStyle {
-    type Output = LineStyle;
-    fn bitor(self, rhs: LineStyle) -> Self::Output {
-        unsafe { std::mem::transmute(self as i32 | rhs as i32) }
+bitflags! {
+    /// Defines the line styles supported by fltk
+    pub struct LineStyle: i32 {
+        /// Solid line
+        const Solid = 0;
+        /// Dash
+        const Dash = 1;
+        /// Dot
+        const Dot =2;
+        /// Dash dot
+        const DashDot = 3;
+        /// Dash dot dot
+        const DashDotDot =4;
+        /// Cap flat
+        const CapFlat = 100;
+        /// Cap round
+        const CapRound = 200;
+        /// Cap square
+        const CapSquare = 300;
+        /// Join miter
+        const JoinMiter = 1000;
+        /// Join round
+        const JoinRound = 2000;
+        /// Join bevel
+        const JoinBevel = 3000;
     }
 }
 
@@ -250,7 +243,7 @@ pub fn draw_pie(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
 pub fn set_line_style(style: LineStyle, width: i32) {
     unsafe {
         Fl_line_style(
-            style as i32,
+            style.bits(),
             width,
             std::ptr::null_mut() as *mut std::os::raw::c_char,
         );
@@ -293,9 +286,7 @@ pub fn push_no_clip() {
 
 /// Returns whether the rectangle intersect with the current clip region
 pub fn not_clipped(x: i32, y: i32, w: i32, h: i32) -> bool {
-    unsafe {
-        Fl_not_clipped(x, y, w, h) != 0
-    }
+    unsafe { Fl_not_clipped(x, y, w, h) != 0 }
 }
 
 /// Restores the clip region
@@ -631,9 +622,7 @@ pub fn draw_box(box_type: FrameType, x: i32, y: i32, w: i32, h: i32, color: Colo
 
 /// Checks whether platform supports true alpha blending for RGBA images
 pub fn can_do_alpha_blending() -> bool {
-    unsafe {
-        Fl_can_do_alpha_blending() != 0
-    }
+    unsafe { Fl_can_do_alpha_blending() != 0 }
 }
 
 /// Get a human-readable string from a shortcut value
