@@ -59,7 +59,7 @@ fn main() {
             .with_size(160, 40)
             .with_label("Show wizard")
             .center_of(&win);
-        b.set_callback(|| show_wizard());
+        b.set_callback(show_wizard);
         b
     };
     win.end();
