@@ -154,12 +154,10 @@ impl SvgFileSurface {
     /// Returns a new SvgFileSurface
     pub fn new<P: AsRef<path::Path>>(width: i32, height: i32, path: P) -> SvgFileSurface {
         let path = CString::safe_new(path.as_ref().to_str().unwrap());
-        unsafe { 
+        unsafe {
             let ptr = Fl_SVG_File_Surface_new(width, height, path.as_ptr());
             assert!(!ptr.is_null());
-            SvgFileSurface {
-                _inner: ptr,
-            }
+            SvgFileSurface { _inner: ptr }
         }
     }
 

@@ -297,9 +297,7 @@ impl GlWindow {
     /// Returns whether the OpeGL context is still valid
     pub fn valid(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Gl_Window_valid(self._inner) != 0
-        }
+        unsafe { Fl_Gl_Window_valid(self._inner) != 0 }
     }
 
     /// Mark the OpeGL context as still valid
@@ -311,9 +309,7 @@ impl GlWindow {
     /// Returns whether the context is valid upon creation
     pub fn context_valid(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Gl_Window_context_valid(self._inner) != 0
-        }
+        unsafe { Fl_Gl_Window_context_valid(self._inner) != 0 }
     }
 
     /// Mark the context as valid upon creation
@@ -358,9 +354,7 @@ impl GlWindow {
     /// Returns whether the GlWindow can do overlay
     pub fn can_do_overlay(&mut self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Gl_Window_can_do_overlay(self._inner) != 0
-        }
+        unsafe { Fl_Gl_Window_can_do_overlay(self._inner) != 0 }
     }
 
     /// Redraws the overlay

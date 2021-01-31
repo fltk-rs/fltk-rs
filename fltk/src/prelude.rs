@@ -445,7 +445,9 @@ pub unsafe trait WindowExt: GroupExt {
     /// Set the window's minimum width, minimum height, max width and max height
     fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32);
     /// Set the hotspot widget of the window
-    fn hotspot<W: WidgetExt>(&mut self, w: &W) where Self: Sized;
+    fn hotspot<W: WidgetExt>(&mut self, w: &W)
+    where
+        Self: Sized;
 }
 
 /// Defines the methods implemented by all input and output widgets
@@ -529,7 +531,8 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) where Self: Sized;
+    ) where
+        Self: Sized;
     /// Add a menu item along with its callback
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -540,7 +543,8 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) where Self: Sized;
+    ) where
+        Self: Sized;
     /// Inserts a menu item at an index along with its callback
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -551,7 +555,8 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) where Self: Sized;
+    ) where
+        Self: Sized;
     /// Inserts a menu item at an index along with its callback
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -563,7 +568,8 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) where Self: Sized;
+    ) where
+        Self: Sized;
     /// Add a menu item along with an emit (sender and message)
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -574,7 +580,8 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    ) where Self: Sized;
+    ) where
+        Self: Sized;
     /// Inserts a menu item along with an emit (sender and message)
     /// The characters "&", "/", "\\", and "_" are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "_" character cause a divider to be placed after that menu item.
@@ -586,7 +593,8 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    ) where Self: Sized;
+    ) where
+        Self: Sized;
     /// Remove a menu item by index
     fn remove(&mut self, idx: u32);
     /// Adds a simple text option to the Choice and MenuButton widgets

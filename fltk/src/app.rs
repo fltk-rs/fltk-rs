@@ -308,9 +308,7 @@ pub fn event_button() -> i32 {
 
 /// Returns the number of clicks
 pub fn event_clicks() -> bool {
-    unsafe {
-        Fl_event_clicks() != 0
-    }
+    unsafe { Fl_event_clicks() != 0 }
 }
 
 /// Gets the x coordinate of the mouse in the window
@@ -360,9 +358,7 @@ pub fn event_coords() -> (i32, i32) {
 
 /// Determines whether an event was a click
 pub fn event_is_click() -> bool {
-    unsafe {
-        Fl_event_is_click() != 0
-    }
+    unsafe { Fl_event_is_click() != 0 }
 }
 
 /// Returns the duration of an event
@@ -731,9 +727,7 @@ pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
 
 /// Returns whether a quit signal was sent
 pub fn should_program_quit() -> bool {
-    unsafe {
-        Fl_should_program_quit() != 0
-    }
+    unsafe { Fl_should_program_quit() != 0 }
 }
 
 /// Determines whether a program should quit
@@ -748,16 +742,12 @@ pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
     let y = wid.y();
     let w = wid.width();
     let h = wid.height();
-    unsafe {
-        Fl_event_inside(x, y, w, h) != 0
-    }
+    unsafe { Fl_event_inside(x, y, w, h) != 0 }
 }
 
 /// Returns whether an event occured within a region
 pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
-    unsafe {
-        Fl_event_inside(x, y, w, h) != 0
-    }
+    unsafe { Fl_event_inside(x, y, w, h) != 0 }
 }
 
 /// Gets the widget that is below the mouse cursor
@@ -983,9 +973,7 @@ fn load_font(path: &str) -> Result<String, FltkError> {
         if ptr.is_null() {
             Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
-            let name = CStr::from_ptr(ptr as *mut _)
-                .to_string_lossy()
-                .to_string();
+            let name = CStr::from_ptr(ptr as *mut _).to_string_lossy().to_string();
             let mut f = FONTS.lock().unwrap();
             if f.len() < 17 {
                 f.push(name.clone());
@@ -1030,28 +1018,20 @@ pub fn windows() -> Option<Vec<impl WindowExt>> {
 
 /// Set the foreground color
 pub fn foreground(r: u8, g: u8, b: u8) {
-    unsafe {
-        Fl_foreground(r, g, b)
-    }
+    unsafe { Fl_foreground(r, g, b) }
 }
 
 /// Set the background color
 pub fn background(r: u8, g: u8, b: u8) {
-    unsafe {
-        Fl_background(r, g, b)
-    }
+    unsafe { Fl_background(r, g, b) }
 }
 
 /// Set the background color for input and text widgets
 pub fn background2(r: u8, g: u8, b: u8) {
-    unsafe {
-        Fl_background2(r, g, b)
-    }
+    unsafe { Fl_background2(r, g, b) }
 }
 
 /// Gets the system colors
 pub fn get_system_colors() {
-    unsafe {
-        Fl_get_system_colors()
-    }
+    unsafe { Fl_get_system_colors() }
 }

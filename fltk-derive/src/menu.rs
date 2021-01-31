@@ -64,13 +64,16 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
     let mode = Ident::new(format!("{}_{}", name_str, "mode").as_str(), name.span());
     let set_mode = Ident::new(format!("{}_{}", name_str, "set_mode").as_str(), name.span());
     let down_box = Ident::new(format!("{}_{}", name_str, "down_box").as_str(), name.span());
-    let set_down_box = Ident::new(format!("{}_{}", name_str, "set_down_box").as_str(), name.span());
+    let set_down_box = Ident::new(
+        format!("{}_{}", name_str, "set_down_box").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl IntoIterator for #name {
             type Item = MenuItem;
             type IntoIter = std::vec::IntoIter<Self::Item>;
-            
+
             fn into_iter(self) -> Self::IntoIter {
                 let mut v: Vec<MenuItem> = vec![];
                 for i in 0..self.size() {
@@ -424,7 +427,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     #set_down_box(self._inner, f as i32)
                 }
             }
-            
+
             fn down_frame(&self) -> FrameType {
                 assert!(!self.was_deleted());
                 unsafe {

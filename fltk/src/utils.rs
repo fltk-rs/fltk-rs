@@ -17,7 +17,7 @@ impl FlString for CString {
 }
 
 /// Convenience function to convert rgb to hex
-/// Example: 
+/// Example:
 /// ```no_run
 /// use fltk::utils::rgb2hex;
 /// let ret = rgb2hex(0, 255, 0); println!("0x{:06x}", ret);

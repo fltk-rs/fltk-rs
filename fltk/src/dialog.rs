@@ -441,9 +441,7 @@ impl HelpDialog {
 
     /// Returs whether the help dialog is visible
     pub fn visible(&mut self) -> bool {
-        unsafe {
-            Fl_Help_Dialog_visible(self._inner) != 0
-        }
+        unsafe { Fl_Help_Dialog_visible(self._inner) != 0 }
     }
 
     /// Returns the width of the help dialog
@@ -522,8 +520,12 @@ impl FileChooser {
         let pattern = CString::safe_new(pattern);
         let title = CString::safe_new(title);
         unsafe {
-            let ptr =
-                Fl_File_Chooser_new(dir.as_ptr(), pattern.as_ptr(), typ.bits as i32, title.as_ptr());
+            let ptr = Fl_File_Chooser_new(
+                dir.as_ptr(),
+                pattern.as_ptr(),
+                typ.bits as i32,
+                title.as_ptr(),
+            );
             assert!(!ptr.is_null());
             FileChooser { _inner: ptr }
         }
@@ -1041,7 +1043,7 @@ pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> 
     }
 }
 
-/// Spawns a color_chooser dialog. 
+/// Spawns a color_chooser dialog.
 /// `cmode`: Optional mode for color chooser. Default is 0 if rgb mode.
 pub fn color_chooser(name: &str, cmode: i32) -> Option<(u8, u8, u8)> {
     unsafe {
@@ -1058,7 +1060,7 @@ pub fn color_chooser(name: &str, cmode: i32) -> Option<(u8, u8, u8)> {
     }
 }
 
-/// Spawns a color_chooser dialog. 
+/// Spawns a color_chooser dialog.
 /// `cmode`: Optional mode for color chooser. Default is 0 if rgb mode.
 pub fn color_chooser_with_default(name: &str, cmode: i32, col: (u8, u8, u8)) -> (u8, u8, u8) {
     unsafe {

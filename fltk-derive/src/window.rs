@@ -26,7 +26,10 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let border = Ident::new(format!("{}_{}", name_str, "border").as_str(), name.span());
-    let free_position = Ident::new(format!("{}_{}", name_str, "free_position").as_str(), name.span());
+    let free_position = Ident::new(
+        format!("{}_{}", name_str, "free_position").as_str(),
+        name.span(),
+    );
     let set_cursor = Ident::new(
         format!("{}_{}", name_str, "set_cursor").as_str(),
         name.span(),
@@ -46,9 +49,18 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "fullscreen_active").as_str(),
         name.span(),
     );
-    let decorated_w = Ident::new(format!("{}_{}", name_str, "decorated_w").as_str(), name.span());
-    let decorated_h = Ident::new(format!("{}_{}", name_str, "decorated_h").as_str(), name.span());
-    let size_range = Ident::new(format!("{}_{}", name_str, "size_range").as_str(), name.span());
+    let decorated_w = Ident::new(
+        format!("{}_{}", name_str, "decorated_w").as_str(),
+        name.span(),
+    );
+    let decorated_h = Ident::new(
+        format!("{}_{}", name_str, "decorated_h").as_str(),
+        name.span(),
+    );
+    let size_range = Ident::new(
+        format!("{}_{}", name_str, "size_range").as_str(),
+        name.span(),
+    );
     let hotspot = Ident::new(format!("{}_{}", name_str, "hotspot").as_str(), name.span());
 
     let gen = quote! {
@@ -211,7 +223,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     #decorated_w(self._inner)
                 }
             }
-            
+
             fn decorated_h(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {

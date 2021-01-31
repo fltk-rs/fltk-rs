@@ -465,18 +465,14 @@ impl Tree {
     pub fn is_open(&self, path: &str) -> bool {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
-        unsafe {
-            Fl_Tree_is_open(self._inner, path.as_ptr() as *mut raw::c_char) != 0
-        }
+        unsafe { Fl_Tree_is_open(self._inner, path.as_ptr() as *mut raw::c_char) != 0 }
     }
 
     /// Returns whether an item is closed
     pub fn is_close(&self, path: &str) -> bool {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
-        unsafe {
-            Fl_Tree_is_close(self._inner, path.as_ptr() as *mut raw::c_char) != 0
-        }
+        unsafe { Fl_Tree_is_close(self._inner, path.as_ptr() as *mut raw::c_char) != 0 }
     }
 
     /// Select a tree item
@@ -635,9 +631,7 @@ impl Tree {
     pub fn is_selected(&self, path: &str) -> bool {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
-        unsafe {
-            Fl_Tree_is_selected(self._inner, path.as_ptr() as *mut raw::c_char) != 0
-        }
+        unsafe { Fl_Tree_is_selected(self._inner, path.as_ptr() as *mut raw::c_char) != 0 }
     }
 
     /// Gets the items' label font
@@ -941,9 +935,7 @@ impl Tree {
     /// Returns true if the collapse icon is enabled, false if not.
     pub fn show_collapse(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_showcollapse(self._inner) != 0
-        }
+        unsafe { Fl_Tree_showcollapse(self._inner) != 0 }
     }
 
     /// Sets whether the collapse icon is enabled
@@ -955,9 +947,7 @@ impl Tree {
     /// Returs whether the root is shown
     pub fn show_root(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_showroot(self._inner) != 0
-        }
+        unsafe { Fl_Tree_showroot(self._inner) != 0 }
     }
 
     /// Sets whether the root is shown
@@ -1060,9 +1050,7 @@ impl Tree {
     pub fn displayed(&mut self, item: TreeItem) -> bool {
         assert!(!self.was_deleted());
         assert!(!item._inner.is_null());
-        unsafe {
-            Fl_Tree_displayed(self._inner, item._inner) != 0
-        }
+        unsafe { Fl_Tree_displayed(self._inner, item._inner) != 0 }
     }
 
     /// Shows an item
@@ -1128,9 +1116,7 @@ impl Tree {
     pub fn is_scrollbar<W: WidgetExt>(&mut self, w: &W) -> bool {
         assert!(!w.was_deleted());
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_is_scrollbar(self._inner, w.as_widget_ptr() as *mut Fl_Widget) != 0
-        }
+        unsafe { Fl_Tree_is_scrollbar(self._inner, w.as_widget_ptr() as *mut Fl_Widget) != 0 }
     }
 
     /// Gets the scrollbar size
@@ -1148,17 +1134,13 @@ impl Tree {
     /// Returns whether vertical scrolling is visible
     pub fn is_vscroll_visible(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_is_vscroll_visible(self._inner) != 0
-        }
+        unsafe { Fl_Tree_is_vscroll_visible(self._inner) != 0 }
     }
 
     /// Returns whether horizontal scrolling is visible
     pub fn is_hscroll_visible(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_is_hscroll_visible(self._inner) != 0
-        }
+        unsafe { Fl_Tree_is_hscroll_visible(self._inner) != 0 }
     }
 
     /// Set the callback item
@@ -1190,7 +1172,7 @@ impl Tree {
 impl IntoIterator for Tree {
     type Item = TreeItem;
     type IntoIter = std::vec::IntoIter<Self::Item>;
-    
+
     fn into_iter(self) -> Self::IntoIter {
         if let Some(items) = self.get_items() {
             items.into_iter()
@@ -1408,9 +1390,7 @@ impl TreeItem {
     /// Returns whether the item has children
     pub fn has_children(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_Item_has_children(self._inner)  != 0
-        }
+        unsafe { Fl_Tree_Item_has_children(self._inner) != 0 }
     }
 
     /// Find a child using its name, returns index result
@@ -1639,17 +1619,13 @@ impl TreeItem {
     /// Returns whether an item is open
     pub fn is_open(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_Item_is_open(self._inner)  != 0
-        }
+        unsafe { Fl_Tree_Item_is_open(self._inner) != 0 }
     }
 
     /// Returns whether an item is closed
     pub fn is_close(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_Item_is_close(self._inner) != 0
-        }
+        unsafe { Fl_Tree_Item_is_close(self._inner) != 0 }
     }
 
     /// Toggle the open state of the item
@@ -1695,33 +1671,25 @@ impl TreeItem {
     /// Returns whether an item is root
     pub fn is_root(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_Item_is_root(self._inner) != 0
-        }
+        unsafe { Fl_Tree_Item_is_root(self._inner) != 0 }
     }
 
     /// Returns whether an item is visible
     pub fn is_visible(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_Item_is_visible(self._inner) != 0
-        }
+        unsafe { Fl_Tree_Item_is_visible(self._inner) != 0 }
     }
 
     /// Returns whether an item is active
     pub fn is_active(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_Item_is_active(self._inner) != 0
-        }
+        unsafe { Fl_Tree_Item_is_active(self._inner) != 0 }
     }
 
     /// Returns whether an item is activated
     pub fn is_activated(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_Item_is_activated(self._inner) != 0
-        }
+        unsafe { Fl_Tree_Item_is_activated(self._inner) != 0 }
     }
 
     /// Deactivate an item
@@ -1739,9 +1707,7 @@ impl TreeItem {
     /// Returns whether an item is selected
     pub fn is_selected(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Tree_Item_is_selected(self._inner) != 0
-        }
+        unsafe { Fl_Tree_Item_is_selected(self._inner) != 0 }
     }
 
     /// Check if the tree item was deleted
@@ -1865,7 +1831,7 @@ impl TreeItemArray {
 impl IntoIterator for TreeItemArray {
     type Item = TreeItem;
     type IntoIter = std::vec::IntoIter<Self::Item>;
-    
+
     fn into_iter(self) -> Self::IntoIter {
         if let Some(items) = self.into_vec() {
             items.into_iter()

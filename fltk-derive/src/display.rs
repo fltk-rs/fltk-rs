@@ -371,7 +371,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
                     } else {
                         Ok(())
-                    }              
+                    }
                 }
             }
 
@@ -384,7 +384,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
                     } else {
                         Ok(())
-                    }              
+                    }
                 }
             }
 
@@ -397,7 +397,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
                     } else {
                         Ok(())
-                    }              
+                    }
                 }
             }
 

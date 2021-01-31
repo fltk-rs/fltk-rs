@@ -90,7 +90,11 @@ impl TableRow {
     }
 
     /// Selects a row
-    pub fn select_row(&mut self, row: i32, selection_flag: TableRowSelectFlag) -> Result<(), FltkError> {
+    pub fn select_row(
+        &mut self,
+        row: i32,
+        selection_flag: TableRowSelectFlag,
+    ) -> Result<(), FltkError> {
         unsafe {
             assert!(!self.was_deleted());
             match Fl_Table_Row_select_row(self._inner, row, selection_flag as i32) {

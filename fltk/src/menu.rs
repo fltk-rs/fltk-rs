@@ -189,9 +189,7 @@ impl MenuItem {
     /// Returns the value of the menu item
     pub fn value(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Menu_Item_value(self._inner) != 0
-        }
+        unsafe { Fl_Menu_Item_value(self._inner) != 0 }
     }
 
     /// Sets the menu item
@@ -209,17 +207,13 @@ impl MenuItem {
     /// Returns whether the menu item is visible or not
     pub fn visible(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Menu_Item_visible(self._inner) != 0
-        }
+        unsafe { Fl_Menu_Item_visible(self._inner) != 0 }
     }
 
     /// Returns whether the menu item is active
     pub fn active(&mut self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Menu_Item_active(self._inner) != 0
-        }
+        unsafe { Fl_Menu_Item_active(self._inner) != 0 }
     }
 
     /// Activates the menu item
@@ -336,7 +330,11 @@ impl MenuItem {
     }
 
     /// Use a sender to send a message during callback
-    pub fn emit<T: 'static + Clone + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
+    pub fn emit<T: 'static + Clone + Send + Sync>(
+        &mut self,
+        sender: crate::app::Sender<T>,
+        msg: T,
+    ) {
         self.set_callback(move || sender.send(msg.clone()));
     }
 
