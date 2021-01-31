@@ -68,17 +68,13 @@ impl FileInput {
     /// Set the down_box of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_File_Input_set_down_box(self._inner, f as i32)
-        }
+        unsafe { Fl_File_Input_set_down_box(self._inner, f as i32) }
     }
-    
+
     /// Get the down_box of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
-        unsafe {
-            mem::transmute(Fl_File_Input_down_box(self._inner))
-        }
+        unsafe { mem::transmute(Fl_File_Input_down_box(self._inner)) }
     }
 }
 

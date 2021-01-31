@@ -182,7 +182,15 @@ impl Chart {
         );
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_insert(self._inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
+        unsafe {
+            Fl_Chart_insert(
+                self._inner,
+                idx as i32,
+                val,
+                txt.as_ptr(),
+                col.bits() as u32,
+            )
+        }
     }
 
     /// Replaces an entry at an index
@@ -193,7 +201,15 @@ impl Chart {
         );
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_replace(self._inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
+        unsafe {
+            Fl_Chart_replace(
+                self._inner,
+                idx as i32,
+                val,
+                txt.as_ptr(),
+                col.bits() as u32,
+            )
+        }
     }
 
     /// Sets the bounds of the chart
@@ -377,9 +393,7 @@ impl Tooltip {
 
     /// Returns whether the tooltip is enabled
     pub fn enabled() -> bool {
-        unsafe {
-            Fl_Tooltip_enabled() != 0
-        }
+        unsafe { Fl_Tooltip_enabled() != 0 }
     }
 
     /// Sets whether the tooltip is enabled
@@ -532,34 +546,26 @@ impl InputChoice {
     /// Set the down_box of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Input_Choice_set_down_box(self._inner, f as i32)
-        }
+        unsafe { Fl_Input_Choice_set_down_box(self._inner, f as i32) }
     }
-    
+
     /// Get the down frame type of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
-        unsafe {
-            mem::transmute(Fl_Input_Choice_down_box(self._inner))
-        }
+        unsafe { mem::transmute(Fl_Input_Choice_down_box(self._inner)) }
     }
 
     /// Add an element to the input choice
     pub fn add(&mut self, s: &str) {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
-        unsafe {
-            Fl_Input_Choice_add(self._inner, s.as_ptr())
-        }
+        unsafe { Fl_Input_Choice_add(self._inner, s.as_ptr()) }
     }
 
     /// Clear the input choice widget
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Input_Choice_clear(self._inner)
-        }
+        unsafe { Fl_Input_Choice_clear(self._inner) }
     }
 
     /// Get the value of the current choice
@@ -579,9 +585,7 @@ impl InputChoice {
     pub fn set_value(&mut self, val: &str) {
         assert!(!self.was_deleted());
         let val = CString::safe_new(val);
-        unsafe {
-            Fl_Input_Choice_set_value(self._inner, val.as_ptr())
-        }
+        unsafe { Fl_Input_Choice_set_value(self._inner, val.as_ptr()) }
     }
 
     /// Set the value of the input choice to a current element
@@ -591,9 +595,7 @@ impl InputChoice {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Input_Choice_set_value2(self._inner, val as i32)
-        }
+        unsafe { Fl_Input_Choice_set_value2(self._inner, val as i32) }
     }
 
     /// Get the associated menu button
@@ -605,7 +607,7 @@ impl InputChoice {
             Box::new(crate::menu::MenuButton::from_widget_ptr(ptr as _))
         }
     }
-    
+
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
@@ -698,7 +700,7 @@ impl HelpView {
         );
         unsafe {
             let s = CString::safe_new(s);
-            let ret =  Fl_Help_View_find(self._inner, s.as_ptr(), start_from as i32);
+            let ret = Fl_Help_View_find(self._inner, s.as_ptr(), start_from as i32);
             match ret {
                 -1 => None,
                 _ => Some(ret as usize),
@@ -809,7 +811,6 @@ impl HelpView {
         unsafe { Fl_Help_View_set_text_color(self._inner, color.bits() as u32) }
     }
 
-
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> u32 {
         assert!(!self.was_deleted());
@@ -830,7 +831,7 @@ impl HelpView {
     pub fn load(&mut self, f: &str) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let f = CString::safe_new(f);
-        unsafe { 
+        unsafe {
             match Fl_Help_View_load(self._inner, f.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),

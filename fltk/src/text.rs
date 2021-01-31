@@ -282,9 +282,7 @@ impl TextBuffer {
     /// Returns whether text is selected
     pub fn selected(&self) -> bool {
         assert!(!self._inner.is_null());
-        unsafe {
-            Fl_Text_Buffer_selected(self._inner) != 0
-        }
+        unsafe { Fl_Text_Buffer_selected(self._inner) != 0 }
     }
 
     /// Unselects text
@@ -351,9 +349,7 @@ impl TextBuffer {
     /// Returns whether text is highlighted
     pub fn is_highlighted(&mut self) -> bool {
         assert!(!self._inner.is_null());
-        unsafe {
-            Fl_Text_Buffer_is_highlighted(self._inner) != 0
-        }
+        unsafe { Fl_Text_Buffer_is_highlighted(self._inner) != 0 }
     }
 
     /// Unhighlights text

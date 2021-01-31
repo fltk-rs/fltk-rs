@@ -26,7 +26,10 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let border = Ident::new(format!("{}_{}", name_str, "border").as_str(), name.span());
-    let free_position = Ident::new(format!("{}_{}", name_str, "free_position").as_str(), name.span());
+    let free_position = Ident::new(
+        format!("{}_{}", name_str, "free_position").as_str(),
+        name.span(),
+    );
     let set_cursor = Ident::new(
         format!("{}_{}", name_str, "set_cursor").as_str(),
         name.span(),
@@ -46,12 +49,57 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "fullscreen_active").as_str(),
         name.span(),
     );
-    let decorated_w = Ident::new(format!("{}_{}", name_str, "decorated_w").as_str(), name.span());
-    let decorated_h = Ident::new(format!("{}_{}", name_str, "decorated_h").as_str(), name.span());
-    let size_range = Ident::new(format!("{}_{}", name_str, "size_range").as_str(), name.span());
+    let decorated_w = Ident::new(
+        format!("{}_{}", name_str, "decorated_w").as_str(),
+        name.span(),
+    );
+    let decorated_h = Ident::new(
+        format!("{}_{}", name_str, "decorated_h").as_str(),
+        name.span(),
+    );
+    let size_range = Ident::new(
+        format!("{}_{}", name_str, "size_range").as_str(),
+        name.span(),
+    );
     let hotspot = Ident::new(format!("{}_{}", name_str, "hotspot").as_str(), name.span());
 
     let gen = quote! {
+        unsafe impl HasRawWindowHandle for #name {
+            fn raw_window_handle(&self) -> RawWindowHandle {
+                #[cfg(target_os = "windows")]
+                return RawWindowHandle::Windows(windows::WindowsHandle {
+                    hwnd: self.raw_handle(),
+                    hinstance: crate::app::display(),
+                    ..windows::WindowsHandle::empty()
+                });
+        
+                #[cfg(target_os = "macos")]
+                return RawWindowHandle::MacOS(macos::MacOSHandle {
+                    ns_window: self.raw_handle(),
+                    ..macos::MacOSHandle::empty()
+                });
+        
+                #[cfg(target_os = "anndroid")]
+                return RawWindowHandle::Android(android::AndroidHandle {
+                    a_native_window: self.raw_handle(),
+                    ..android::AndroidHandle::empty()
+                });
+        
+                #[cfg(any(
+                    target_os = "linux",
+                    target_os = "dragonfly",
+                    target_os = "freebsd",
+                    target_os = "netbsd",
+                    target_os = "openbsd",
+                ))]
+                return RawWindowHandle::Xlib(unix::XlibHandle {
+                    window: self.raw_handle(),
+                    display: crate::app::display(),
+                    ..unix::XlibHandle::empty()
+                });
+            }
+        }
+
         unsafe impl WindowExt for #name {
             fn center_screen(mut self) -> Self {
                 assert!(!self.was_deleted());
@@ -211,7 +259,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     #decorated_w(self._inner)
                 }
             }
-            
+
             fn decorated_h(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {

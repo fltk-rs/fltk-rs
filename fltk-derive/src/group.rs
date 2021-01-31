@@ -25,7 +25,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
         impl IntoIterator for #name {
             type Item = Box<dyn WidgetExt>;
             type IntoIter = std::vec::IntoIter<Self::Item>;
-            
+
             fn into_iter(self) -> Self::IntoIter {
                 let mut v: Vec<Box<dyn WidgetExt>> = vec![];
                 for i in 0..self.children() {

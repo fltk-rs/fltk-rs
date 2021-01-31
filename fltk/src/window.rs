@@ -9,6 +9,7 @@ use std::{
     ops::{Deref, DerefMut},
     os::raw,
 };
+use raw_window_handle::*;
 
 /// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
 /// XID (u64) raw window handle for X11
@@ -284,8 +285,7 @@ impl GlWindow {
 
     /// Gets an opengl function address
     pub fn get_proc_address(&self, s: &'static str) -> *const raw::c_void {
-        let s = CString::safe_new(s);
-        unsafe { Fl_Gl_Window_get_proc_address(self._inner, s.as_ptr()) }
+        gl_loader::get_proc_address(s) as *const _
     }
 
     /// Forces the window to be drawn, this window is also made current and calls draw()
@@ -297,9 +297,7 @@ impl GlWindow {
     /// Returns whether the OpeGL context is still valid
     pub fn valid(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Gl_Window_valid(self._inner) != 0
-        }
+        unsafe { Fl_Gl_Window_valid(self._inner) != 0 }
     }
 
     /// Mark the OpeGL context as still valid
@@ -311,9 +309,7 @@ impl GlWindow {
     /// Returns whether the context is valid upon creation
     pub fn context_valid(&self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Gl_Window_context_valid(self._inner) != 0
-        }
+        unsafe { Fl_Gl_Window_context_valid(self._inner) != 0 }
     }
 
     /// Mark the context as valid upon creation
@@ -358,9 +354,7 @@ impl GlWindow {
     /// Returns whether the GlWindow can do overlay
     pub fn can_do_overlay(&mut self) -> bool {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Gl_Window_can_do_overlay(self._inner) != 0
-        }
+        unsafe { Fl_Gl_Window_can_do_overlay(self._inner) != 0 }
     }
 
     /// Redraws the overlay

@@ -652,13 +652,13 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                     #callback_col(self._inner)
                 }
             }
-            
+
             fn callback_row(&self) -> i32 {
                 unsafe {
                     #callback_row(self._inner)
                 }
             }
-            
+
             fn callback_context(&self) -> TableContext {
                 unsafe {
                     mem::transmute(#callback_context(self._inner))
