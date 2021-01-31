@@ -615,7 +615,7 @@ impl<T: Send + Sync> Receiver<T> {
     }
 }
 
-/// Creates a channel returning a Sender and Receiver structs
+/// Creates a channel returning a Sender and Receiver structs (mpsc)
 // The implementation could really use generic statics
 pub fn channel<T: Send + Sync>() -> (Sender<T>, Receiver<T>) {
     let msg_sz = mem::size_of::<T>();
@@ -809,6 +809,8 @@ pub fn init_all() {
             "ScreenBold".to_owned(),
             "Zapfdingbats".to_owned(),
         ];
+        #[cfg(feature = "enable-glwindow")]
+        gl_loader::init_gl();
         if !IS_INIT.load(Ordering::Relaxed) {
             IS_INIT.store(true, Ordering::Relaxed);
         }

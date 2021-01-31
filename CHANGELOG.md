@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [0.13.12] - Unreleased
+### Changes
+- Add gl_loader dependency for interop with other OpenGL crates.
+- Add raw-window-handle dependency for interop with other renderers and windowing systems.
+
 ## [0.13.11] - 2021-01-29
 ### Changes
 - Add GlWindow::get_proc_address().

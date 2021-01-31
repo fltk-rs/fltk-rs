@@ -64,6 +64,42 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     let hotspot = Ident::new(format!("{}_{}", name_str, "hotspot").as_str(), name.span());
 
     let gen = quote! {
+        unsafe impl HasRawWindowHandle for #name {
+            fn raw_window_handle(&self) -> RawWindowHandle {
+                #[cfg(target_os = "windows")]
+                return RawWindowHandle::Windows(windows::WindowsHandle {
+                    hwnd: self.raw_handle(),
+                    hinstance: crate::app::display(),
+                    ..windows::WindowsHandle::empty()
+                });
+        
+                #[cfg(target_os = "macos")]
+                return RawWindowHandle::MacOS(macos::MacOSHandle {
+                    ns_window: self.raw_handle(),
+                    ..macos::MacOSHandle::empty()
+                });
+        
+                #[cfg(target_os = "anndroid")]
+                return RawWindowHandle::Android(android::AndroidHandle {
+                    a_native_window: self.raw_handle(),
+                    ..android::AndroidHandle::empty()
+                });
+        
+                #[cfg(any(
+                    target_os = "linux",
+                    target_os = "dragonfly",
+                    target_os = "freebsd",
+                    target_os = "netbsd",
+                    target_os = "openbsd",
+                ))]
+                return RawWindowHandle::Xlib(unix::XlibHandle {
+                    window: self.raw_handle(),
+                    display: crate::app::display(),
+                    ..unix::XlibHandle::empty()
+                });
+            }
+        }
+
         unsafe impl WindowExt for #name {
             fn center_screen(mut self) -> Self {
                 assert!(!self.was_deleted());
