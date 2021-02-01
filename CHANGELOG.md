@@ -1,11 +1,12 @@
 # Changelog
 
 
-## [0.13.12] - 2021-01-31
+## [0.13.13] - 2021-02-02
 ### Changes
-- Add gl_loader dependency for interop with other OpenGL crates.
+- Add optional gl_loader dependency for interop with other OpenGL crates.
 - Add raw-window-handle dependency for interop with other renderers and windowing systems.
 (both are lightweight)
+- Pass contentView to RawWindowHandle for compat with wgpu.
 
 ## [0.13.11] - 2021-01-29
 ### Changes

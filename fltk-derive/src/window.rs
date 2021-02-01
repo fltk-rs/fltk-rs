@@ -67,24 +67,35 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl HasRawWindowHandle for #name {
             fn raw_window_handle(&self) -> RawWindowHandle {
                 #[cfg(target_os = "windows")]
-                return RawWindowHandle::Windows(windows::WindowsHandle {
-                    hwnd: self.raw_handle(),
-                    hinstance: crate::app::display(),
-                    ..windows::WindowsHandle::empty()
-                });
-        
+                {
+                    return RawWindowHandle::Windows(windows::WindowsHandle {
+                        hwnd: self.raw_handle(),
+                        hinstance: crate::app::display(),
+                        ..windows::WindowsHandle::empty()
+                    });
+                }
+
                 #[cfg(target_os = "macos")]
-                return RawWindowHandle::MacOS(macos::MacOSHandle {
-                    ns_window: self.raw_handle(),
-                    ..macos::MacOSHandle::empty()
-                });
-        
+                {
+                    let raw = self.raw_handle();
+                    let cv: *mut objc::runtime::Object = unsafe {
+                        msg_send![raw as *mut objc::runtime::Object, contentView]
+                    };
+                    return RawWindowHandle::MacOS(macos::MacOSHandle {
+                        ns_window: raw,
+                        ns_view: cv as _,
+                        ..macos::MacOSHandle::empty()
+                    });
+                }
+
                 #[cfg(target_os = "anndroid")]
-                return RawWindowHandle::Android(android::AndroidHandle {
-                    a_native_window: self.raw_handle(),
-                    ..android::AndroidHandle::empty()
-                });
-        
+                {
+                    return RawWindowHandle::Android(android::AndroidHandle {
+                        a_native_window: self.raw_handle(),
+                        ..android::AndroidHandle::empty()
+                    });
+                }
+
                 #[cfg(any(
                     target_os = "linux",
                     target_os = "dragonfly",
@@ -92,11 +103,13 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     target_os = "netbsd",
                     target_os = "openbsd",
                 ))]
-                return RawWindowHandle::Xlib(unix::XlibHandle {
-                    window: self.raw_handle(),
-                    display: crate::app::display(),
-                    ..unix::XlibHandle::empty()
-                });
+                {
+                    return RawWindowHandle::Xlib(unix::XlibHandle {
+                        window: self.raw_handle(),
+                        display: crate::app::display(),
+                        ..unix::XlibHandle::empty()
+                    });
+                }
             }
         }
 
