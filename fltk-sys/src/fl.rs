@@ -266,3 +266,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_get_system_colors();
 }
+extern "C" {
+    pub fn Fl_handle(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int;
+}

@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.13.14] - 2021-02-03
+### Changes
+- Lock messages.
+- Enable detection of window resizing (added enums::Event::Resize).
+- Added app::handle which enables sending messages to app windows.
+- Update FLTK and cfltk.
+
 ## [0.13.13] - 2021-02-02
 ### Changes
 - Add optional gl_loader dependency for interop with other OpenGL crates.

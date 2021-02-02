@@ -447,6 +447,8 @@ pub enum Event {
     ZoomGesture,
     /// Zoom Event
     ZoomEvent,
+    /// Window Resize Event
+    Resize,
 }
 
 bitflags! {
