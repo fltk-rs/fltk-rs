@@ -549,9 +549,7 @@ pub fn wait_for(dur: f64) -> Result<(), FltkError> {
 /// Sends a custom message
 fn awake_msg<T>(msg: T) {
     unsafe {
-        Fl_lock();
         Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void);
-        Fl_unlock();
     }
 }
 
@@ -1040,4 +1038,9 @@ pub fn background2(r: u8, g: u8, b: u8) {
 /// Gets the system colors
 pub fn get_system_colors() {
     unsafe { Fl_get_system_colors() }
+}
+
+/// Send a signal to a window
+pub fn handle<W: WindowExt>(msg: i32, w: &W) -> i32 {
+    unsafe { Fl_handle(msg, w.as_widget_ptr() as _) }
 }
