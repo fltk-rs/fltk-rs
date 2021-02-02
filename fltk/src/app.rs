@@ -547,22 +547,25 @@ pub fn wait_for(dur: f64) -> Result<(), FltkError> {
 }
 
 /// Sends a custom message
-fn awake_msg<T>(msg: T) {
-    unsafe {
-        Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void);
-    }
+/// # Safety
+/// The type must be Send and Sync safe
+pub unsafe fn awake_msg<T>(msg: T) {
+    Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void);
 }
 
 /// Receives a custom message
-fn thread_msg<T>() -> Option<T> {
-    unsafe {
-        let msg = Fl_thread_msg();
-        if msg.is_null() {
-            None
-        } else {
-            let msg = Box::from_raw(msg as *const _ as *mut T);
-            Some(*msg)
-        }
+/// ```ignored
+/// if let Some(msg) = unsafe { thread_msg::<32>() } { do_smth(); }
+/// ```
+/// # Safety
+/// The type must correspond to the received message
+pub unsafe fn thread_msg<T>() -> Option<T> {
+    let msg = Fl_thread_msg();
+    if msg.is_null() {
+        None
+    } else {
+        let msg = Box::from_raw(msg as *const _ as *mut T);
+        Some(*msg)
     }
 }
 
@@ -589,7 +592,7 @@ impl<T: Send + Sync> Sender<T> {
             sz: self.sz,
             msg: val,
         };
-        awake_msg(msg)
+        unsafe { awake_msg(msg) }
     }
 }
 
@@ -604,7 +607,7 @@ pub struct Receiver<T: Send + Sync> {
 impl<T: Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
-        let data: Option<Message<T>> = thread_msg();
+        let data: Option<Message<T>> = unsafe { thread_msg() };
         if let Some(data) = data {
             if data.sz == self.sz && data.hash == self.hash {
                 Some(data.msg)
@@ -1041,6 +1044,24 @@ pub fn get_system_colors() {
 }
 
 /// Send a signal to a window
-pub fn handle<W: WindowExt>(msg: i32, w: &W) -> i32 {
-    unsafe { Fl_handle(msg, w.as_widget_ptr() as _) }
+/// returns false if the event was not handled
+/// ```ignored
+/// but.set_callback(move || unsafe {
+///     let _ = handle(29, &wind);
+/// });
+/// wind.handle2(move |w, ev| {
+///     if ev as i32 == 29 {
+///         frame.set_size(100, 100);
+///         w.redraw();
+///         true
+///     } else {
+///         false
+///     }
+/// });
+/// ```
+/// # Safety
+/// Can send an arbitrary message to the window, 
+/// which can't be debug formatted
+pub unsafe fn handle<W: WindowExt>(msg: i32, w: &W) -> bool {
+    Fl_handle(msg, w.as_widget_ptr() as _) != 0
 }
