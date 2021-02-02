@@ -548,7 +548,11 @@ pub fn wait_for(dur: f64) -> Result<(), FltkError> {
 
 /// Sends a custom message
 fn awake_msg<T>(msg: T) {
-    unsafe { Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void) }
+    unsafe {
+        Fl_lock();
+        Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void);
+        Fl_unlock();
+    }
 }
 
 /// Receives a custom message
