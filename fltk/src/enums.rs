@@ -451,6 +451,22 @@ pub enum Event {
     Resize,
 }
 
+impl Event {
+    /// Creates an event from an i32 value
+    /// # Safety
+    /// The i32 value might not have a representation within the enum
+    /// This should be taken into account in fmt::Debug for example
+    pub unsafe fn from_i32(val: i32) -> Event {
+        std::mem::transmute(val)
+    }
+}
+
+impl Into<i32> for Event {
+    fn into(self) -> i32 {
+        self as i32
+    }
+}
+
 bitflags! {
     /// Defines the inputted virtual keycode
     pub struct Key: i32 {
