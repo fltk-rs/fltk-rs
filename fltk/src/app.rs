@@ -1046,13 +1046,13 @@ pub fn get_system_colors() {
 /// Send a signal to a window
 /// returns false if the event was not handled
 /// ```ignored
+/// const CHANGE_FRAME: i32 = 100;
 /// but.set_callback(move || unsafe {
-///     let _ = handle(29, &wind);
+///     let _ = handle(CHANGE_FRAME, &wind);
 /// });
-/// wind.handle2(move |w, ev| {
-///     if ev as i32 == 29 {
-///         frame.set_size(100, 100);
-///         w.redraw();
+/// frame.handle2(move |f, ev| {
+///     if ev as i32 == CHANGE_FRAME {
+///         f.set_label("Hello world");
 ///         true
 ///     } else {
 ///         false
@@ -1061,7 +1061,8 @@ pub fn get_system_colors() {
 /// ```
 /// # Safety
 /// Can send an arbitrary message to the window, 
-/// which can't be debug formatted
+/// which can't be debug formatted as an Event enum.
+/// Sent values should also not clash for Enum as i32 value
 pub unsafe fn handle<W: WindowExt>(msg: i32, w: &W) -> bool {
     Fl_handle(msg, w.as_widget_ptr() as _) != 0
 }
