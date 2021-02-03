@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.13.15] - 2021-02-04
+### Changes
+- Add app::handle_main() for sending events to the main window.
+- Add i32 conversion methods for enums::Event.
 
 ## [0.13.14] - 2021-02-03
 ### Changes
