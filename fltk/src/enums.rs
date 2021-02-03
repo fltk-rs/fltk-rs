@@ -25,7 +25,7 @@ pub enum LabelType {
     FreeType,
 }
 
-/// Defines the frame type, which can be set using the set_type() method
+/// Defines the frame types which can be set using the set_frame() and set_down_frame() methods
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum FrameType {
