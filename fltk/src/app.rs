@@ -1062,7 +1062,7 @@ pub fn get_system_colors() {
 /// # Safety
 /// Can send an arbitrary message to the window, 
 /// which can't be debug formatted as an Event enum.
-/// Sent values should also not clash for Enum as i32 value
+/// Sent values should also not conflict with an existing Event's i32 value
 pub unsafe fn handle<W: WindowExt>(msg: i32, w: &W) -> bool {
     Fl_handle(msg, w.as_widget_ptr() as _) != 0
 }
