@@ -289,6 +289,11 @@ pub unsafe trait WidgetExt {
     unsafe fn into_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
+    /// Draw a frame buffer (rgba) into the widget
+    /// # Safety
+    /// The data passed should be valid and outlive the widget
+    /// Doesn't work on window widgets
+    unsafe fn draw_framebuffer(&mut self, fb: &[u8]) -> Result<(), FltkError>;
 }
 
 /// Defines the extended methods implemented by all widgets

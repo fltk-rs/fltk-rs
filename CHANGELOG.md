@@ -1,5 +1,10 @@
 # Changelog
 
+
+## [0.13.16] - Unreleased
+### Changes
+- Add WidgetExt::draw_framebuffer().
+
 ## [0.13.15] - 2021-02-04
 ### Changes
 - Add app::handle_main() for sending events to the main window.
