@@ -1,5 +1,11 @@
 # Changelog
 
+
+## [0.13.16] - 2021-02-05
+### Changes
+- Add WidgetExt::draw_framebuffer().
+- Add utils::hex2rgba().
+
 ## [0.13.15] - 2021-02-04
 ### Changes
 - Add app::handle_main() for sending events to the main window.

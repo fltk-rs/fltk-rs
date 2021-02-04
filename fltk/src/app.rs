@@ -554,7 +554,7 @@ pub unsafe fn awake_msg<T>(msg: T) {
 }
 
 /// Receives a custom message
-/// ```ignored
+/// ```no_run
 /// if let Some(msg) = unsafe { thread_msg::<32>() } { do_smth(); }
 /// ```
 /// # Safety
@@ -1045,7 +1045,7 @@ pub fn get_system_colors() {
 
 /// Send a signal to a window
 /// returns false if the event was not handled
-/// ```ignored
+/// ```no_run
 /// const CHANGE_FRAME: i32 = 100;
 /// but.set_callback(move || unsafe {
 ///     let _ = handle(CHANGE_FRAME, &wind);
@@ -1069,7 +1069,7 @@ pub unsafe fn handle<I: Into<i32>, W: WindowExt>(msg: I, w: &W) -> bool {
 
 /// Send a signal to the main window
 /// returns false if the event was not handled
-/// ```ignored
+/// ```no_run
 /// const CHANGE_FRAME: i32 = 100;
 /// but.set_callback(move || unsafe {
 ///     let _ = handle_main(CHANGE_FRAME);

@@ -1001,6 +1001,25 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             unsafe fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {
                 unsafe { W::from_widget_ptr(self.as_widget_ptr() as *mut _) }
             }
+
+            unsafe fn draw_framebuffer(&mut self, fb: &[u8]) -> Result<(), FltkError> {
+                let ptr = fb.as_ptr();
+                let len = fb.len();
+                let width = self.width() as u32;
+                let height = self.height() as u32; 
+                self.draw2(move |s| {
+                    let x = s.x();
+                    let y = s.y();
+                    let w = s.width();
+                    let h = s.height();
+                    let mut img = unsafe { 
+                        crate::image::RgbImage::from_data(std::slice::from_raw_parts(ptr, len), width, height, 4).unwrap() 
+                    };
+                    img.scale(w, h, false, true);
+                    img.draw(x, y, w, h);
+                });
+                Ok(())
+            }
         }
     };
     gen.into()
