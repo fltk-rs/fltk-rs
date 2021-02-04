@@ -1,10 +1,15 @@
 # Changelog
 
 
-## [0.13.16] - 2021-02-05
+## [0.14.0] - 2021-02-05
 ### Changes
+- [BREAKING] Rename old app::awake<F: FnMut()>(cb: F) to app::awake_callback.
+- [BREAKING] Remove redundant/unnecessary methods from the App struct.
 - Add WidgetExt::draw_framebuffer().
 - Add utils::hex2rgba().
+- Add app::awake().
+- Add custom std::fmt::Debug impl for Event to account for custom events.
+- Update libc dependency.
 
 ## [0.13.15] - 2021-02-04
 ### Changes

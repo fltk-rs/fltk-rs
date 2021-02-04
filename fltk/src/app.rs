@@ -109,8 +109,8 @@ pub fn unlock() {
     }
 }
 
-/// Awakens the main UI thread with a callback
-pub fn awake<F: FnMut() + 'static>(cb: F) {
+/// Registers a function that will be called by the main thread during the next message handling cycle
+pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -121,6 +121,13 @@ pub fn awake<F: FnMut() + 'static>(cb: F) {
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Fl_Awake_Handler = Some(shim);
         Fl_awake(callback, data);
+    }
+}
+
+/// Trigger event loop handling in the main thread
+pub fn awake() {
+    unsafe {
+        Fl_awake2()
     }
 }
 
@@ -200,34 +207,9 @@ impl App {
         set_visual(mode)
     }
 
-    /// Awakens the main UI thread with a callback
-    pub fn awake<F: FnMut() + 'static>(self, cb: F) {
-        unsafe {
-            unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-                let f: &mut (dyn FnMut()) = &mut **a;
-                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
-            }
-            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-            let data: *mut raw::c_void = a as *mut raw::c_void;
-            let callback: Fl_Awake_Handler = Some(shim);
-            Fl_awake(callback, data);
-        }
-    }
-
     /// Redraws the app
     pub fn redraw(self) {
         redraw()
-    }
-
-    /// Set the app as damaged to reschedule a redraw in the next event loop cycle
-    pub fn set_damage(self, flag: bool) {
-        set_damage(flag)
-    }
-
-    /// Returns whether an app element is damaged
-    pub fn damage(self) -> bool {
-        damage()
     }
 
     /// Quit the application
