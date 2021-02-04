@@ -5,7 +5,6 @@
 ### Changes
 - Add WidgetExt::draw_framebuffer().
 - Add utils::hex2rgba().
-- Use Into-Option-ImageExt for methods receiving an image.
 
 ## [0.13.15] - 2021-02-04
 ### Changes
