@@ -389,7 +389,7 @@ impl std::fmt::Display for Color {
 
 /// Defines event types captured by FLTK
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq)]
 pub enum Event {
     /// No Event
     NoEvent = 0,
@@ -456,14 +456,54 @@ impl Event {
     /// # Safety
     /// The i32 value might not have a representation within the enum
     /// This should be taken into account in fmt::Debug for example
-    pub unsafe fn from_i32(val: i32) -> Event {
-        std::mem::transmute(val)
+    pub fn from_i32(val: i32) -> Event {
+        unsafe { std::mem::transmute(val) }
     }
 }
 
 impl Into<i32> for Event {
     fn into(self) -> i32 {
         self as i32
+    }
+}
+
+#[allow(unreachable_patterns)]
+impl std::fmt::Debug for Event {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match *self {
+            Event::NoEvent => write!(f, "NoEvent"),
+            Event::Push => write!(f, "Push"),
+            Event::Released => write!(f, "Released"),
+            Event::Enter => write!(f, "Enter"),
+            Event::Leave => write!(f, "Leave"),
+            Event::Drag => write!(f, "Drag"),
+            Event::Focus => write!(f, "Focus"),
+            Event::Unfocus => write!(f, "Unfocus"),
+            Event::KeyDown => write!(f, "KeyDown"),
+            Event::KeyUp => write!(f, "KeyUp"),
+            Event::Close => write!(f, "Close"),
+            Event::Move => write!(f, "Move"),
+            Event::Shortcut => write!(f, "Shortcut"),
+            Event::Deactivate => write!(f, "Deactivate"),
+            Event::Activate => write!(f, "Activate"),
+            Event::Hide => write!(f, "Hide"),
+            Event::Show => write!(f, "Show"),
+            Event::Paste => write!(f, "Paste"),
+            Event::SelectionClear => write!(f, "SelectionClear"),
+            Event::MouseWheel => write!(f, "MouseWheel"),
+            Event::DndEnter => write!(f, "DndEnter"),
+            Event::DndDrag => write!(f, "DndDrag"),
+            Event::DndLeave => write!(f, "DndLeave"),
+            Event::DndRelease => write!(f, "DndRelease"),
+            Event::ScreenConfigChanged => write!(f, "ScreenConfigChanged"),
+            Event::Fullscreen => write!(f, "Fullscreen"),
+            Event::ZoomGesture => write!(f, "ZoomGesture"),
+            Event::ZoomEvent => write!(f, "ZoomEvent"),
+            Event::Resize => write!(f, "Resize"),
+            _ => {
+                write!(f, "Event::from_i32({})", *self as i32)
+            }
+        }
     }
 }
 
