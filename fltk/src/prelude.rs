@@ -165,7 +165,7 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_image<I: ImageExt>(&mut self, image: Option<I>)
+    fn set_image<I: ImageExt, T: Into<Option<I>>>(&mut self, image: T)
     where
         Self: Sized;
     /// Gets the image associated with the widget
@@ -173,7 +173,7 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>)
+    fn set_deimage<I: ImageExt, T: Into<Option<I>>>(&mut self, image: T)
     where
         Self: Sized;
     /// Gets the image associated with the widget
@@ -413,7 +413,7 @@ pub unsafe trait WindowExt: GroupExt {
     /// Returns the icon of the window
     fn icon(&self) -> Option<Box<dyn ImageExt>>;
     /// Sets the windows icon
-    fn set_icon<T: ImageExt>(&mut self, image: Option<T>)
+    fn set_icon<I: ImageExt, T: Into<Option<I>>>(&mut self, image: T)
     where
         Self: Sized;
     /// Sets the cursor style within the window
@@ -841,7 +841,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn set_text_size(&mut self, sz: u32);
     /// Sets the icon for browser elements
     /// Lines start at 1
-    fn set_icon<Img: ImageExt>(&mut self, line: u32, image: Option<Img>);
+    fn set_icon<Img: ImageExt, T: Into<Option<Img>>>(&mut self, line: u32, image: T);
     /// Returns the icon of a browser element
     /// Lines start at 1
     fn icon(&self, line: u32) -> Option<Box<dyn ImageExt>>;
