@@ -291,8 +291,9 @@ pub unsafe trait WidgetExt {
         Self: Sized;
     /// Draw a frame buffer (rgba) into the widget
     /// # Safety
-    /// The data passed should be valid and outlive the widget
-    /// Doesn't work on window widgets
+    /// - The data passed should be valid and outlive the widget
+    /// - Doesn't work on window widgets
+    /// - Hex color values 0x00000000 don't fit on u8, so the fb slice len should account for that
     unsafe fn draw_framebuffer(&mut self, fb: &[u8]) -> Result<(), FltkError>;
 }
 

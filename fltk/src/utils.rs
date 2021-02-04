@@ -40,3 +40,18 @@ pub fn hex2rgb(val: u32) -> (u8, u8, u8) {
     let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
     (r, g, b)
 }
+
+/// Convenience function to convert hex to rgba
+/// Example:
+/// ```no_run
+/// use fltk::utils::hex2rgba;
+/// let (r, g, b, a) = hex2rgba(0xff0000ff);
+/// ```
+pub fn hex2rgba(val: u64) -> (u8, u8, u8, u8) {
+    let hex = format!("{:06x}", val);
+    let r = u8::from_str_radix(&hex[0..2], 16).unwrap();
+    let g = u8::from_str_radix(&hex[2..4], 16).unwrap();
+    let b = u8::from_str_radix(&hex[4..6], 16).unwrap();
+    let a = u8::from_str_radix(&hex[6..8], 16).unwrap();
+    (r, g, b, a)
+}
