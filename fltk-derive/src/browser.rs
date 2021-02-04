@@ -250,11 +250,11 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_icon<Img: ImageExt, T: Into<Option<Img>>>(&mut self, line: u32, image: T) {
+            fn set_icon<Img: ImageExt>(&mut self, line: u32, image: Option<Img>) {
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 let _old_image = self.image();
-                if let Some(mut image) = image.into() {
+                if let Some(mut image) = image {
                     assert!(!image.was_deleted());
                     unsafe { image.increment_arc(); #set_icon(self._inner, line as i32, image.as_image_ptr() as *mut _) }
                 } else {
