@@ -1,14 +1,12 @@
 # Changelog
 
-## [0.14.1] - 2021-02-06
-### Changes
-- Add app::event_key_down(Key) which takes a key and returns true if the given key was held down (or pressed) during the last event. Thanks @CaseyB.
 
-## [0.14.0] - 2021-02-05
+## [0.14.1] - 2021-02-06
 ### Changes
 - [BREAKING] Rename old app::awake<F: FnMut()>(cb: F) to app::awake_callback.
 - [BREAKING] Remove redundant/unnecessary methods from the App struct.
-- Add WidgetExt::draw_framebuffer().
+- Add app::event_key_down(Key) which takes a key and returns true if the given key was held down (or pressed) during the last event. Thanks @CaseyB.
+- Add framebuffer drawing functions: draw::draw_rgba(), draw_rgba_nocopy(), draw_rgb() and draw_rgb_nocopy().
 - Add utils::hex2rgba().
 - Add app::awake().
 - Add custom std::fmt::Debug impl for Event to account for custom events.
