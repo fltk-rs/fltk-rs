@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.14.1] - 2021-02-06
+### Changes
+- Add app::event_key_down(Key) which takes a key and returns true if the given key was held down (or pressed) during the last event. Thanks @CaseyB.
 
 ## [0.14.0] - 2021-02-05
 ### Changes

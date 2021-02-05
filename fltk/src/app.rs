@@ -269,7 +269,7 @@ pub fn event_key() -> Key {
     }
 }
 
-/// Returns whether the  key is pressed
+/// Returns whether the  key is pressed or held down during the last event
 pub fn event_key_down(key: Key) -> bool {
     unsafe {
         Fl_event_key_down(mem::transmute(key)) != 0
