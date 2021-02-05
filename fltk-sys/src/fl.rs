@@ -39,6 +39,9 @@ extern "C" {
     pub fn Fl_event_key() -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_event_key_down(key: libc::c_int) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_event_text() -> *const libc::c_char;
 }
 extern "C" {

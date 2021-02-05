@@ -1,4 +1,4 @@
-use fltk::{app, frame, prelude::*, window::Window};
+use fltk::{app, frame, draw, prelude::*, window::Window};
 use std::{thread, time::Duration};
 
 const WIDTH: u32 = 320;
@@ -24,7 +24,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut framebuf: Vec<u8> = vec![0; (WIDTH * HEIGHT * 4) as usize];
     let mut world = World::new();
-    unsafe { frame.draw_framebuffer(&framebuf).unwrap(); }
+    unsafe { draw::draw_rgba_nocopy(&mut frame, &framebuf); }
 
     Ok(while app.wait() {
         world.update();
