@@ -598,6 +598,16 @@ impl InputChoice {
         unsafe { Fl_Input_Choice_set_value2(self._inner, val as i32) }
     }
 
+    /// Get the associated input
+    pub fn input(&self) -> Box<dyn InputExt> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Input_Choice_input(self._inner);
+            assert!(!ptr.is_null());
+            Box::new(crate::input::Input::from_widget_ptr(ptr as _))
+        }
+    }
+
     /// Get the associated menu button
     pub fn menu_button(&self) -> Box<dyn MenuExt> {
         assert!(!self.was_deleted());
