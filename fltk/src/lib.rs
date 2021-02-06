@@ -26,7 +26,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! fltk = "^0.13"
+//! fltk = "^0.14"
 //! ```
 //! The library is automatically built and statically linked to your binary.
 //!
