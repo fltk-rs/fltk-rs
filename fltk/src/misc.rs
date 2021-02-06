@@ -598,7 +598,7 @@ impl InputChoice {
         unsafe { Fl_Input_Choice_set_value2(self._inner, val as i32) }
     }
 
-    /// Get the associated input
+    /// Get the associated input widget
     pub fn input(&self) -> Box<dyn InputExt> {
         assert!(!self.was_deleted());
         unsafe {
