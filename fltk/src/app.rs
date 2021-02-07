@@ -14,7 +14,7 @@ use std::{
         atomic::{AtomicBool, Ordering},
         Mutex,
     },
-    time,
+    thread, time,
 };
 
 /// Alias Widget ptr
@@ -120,15 +120,13 @@ pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Fl_Awake_Handler = Some(shim);
-        Fl_awake(callback, data);
+        Fl_awake_callback(callback, data);
     }
 }
 
 /// Trigger event loop handling in the main thread
 pub fn awake() {
-    unsafe {
-        Fl_awake2()
-    }
+    unsafe { Fl_awake() }
 }
 
 /// Basic Application struct, used to instatiate, set the scheme and run the event loop
@@ -164,6 +162,7 @@ impl App {
     }
 
     /// Wait for incoming messages
+    /// Calls to redraw within wait require an explicit sleep
     pub fn wait(self) -> bool {
         wait()
     }
@@ -271,9 +270,7 @@ pub fn event_key() -> Key {
 
 /// Returns whether the  key is pressed or held down during the last event
 pub fn event_key_down(key: Key) -> bool {
-    unsafe {
-        Fl_event_key_down(mem::transmute(key)) != 0
-    }
+    unsafe { Fl_event_key_down(mem::transmute(key)) != 0 }
 }
 
 /// Returns a textual representation of the latest event
@@ -510,12 +507,34 @@ pub fn add_handler(cb: fn(Event) -> bool) {
 }
 
 /// Starts waiting for events
+/// Calls to redraw within wait require an explicit sleep
 pub fn wait() -> bool {
     unsafe {
         if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
         Fl_wait() != 0
+    }
+}
+
+/// Put the thread to sleep for `dur` seconds
+pub fn sleep(dur: f64) {
+    let dur = dur / 1000.;
+    thread::sleep(time::Duration::from_millis(dur as u64));
+}
+
+/// Add an idle callback
+pub fn add_idle<F: FnMut() + 'static>(cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut libc::c_void)> = Some(shim);
+        Fl_add_idle(callback, data);
     }
 }
 

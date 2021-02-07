@@ -21,10 +21,10 @@ extern "C" {
     pub fn Fl_unlock();
 }
 extern "C" {
-    pub fn Fl_awake(handler: Fl_Awake_Handler, data: *mut libc::c_void) -> libc::c_int;
+    pub fn Fl_awake_callback(handler: Fl_Awake_Handler, data: *mut libc::c_void) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_awake2();
+    pub fn Fl_awake();
 }
 extern "C" {
     pub fn Fl_set_scrollbar_size(arg1: libc::c_int);
@@ -39,7 +39,7 @@ extern "C" {
     pub fn Fl_event_key() -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_event_key_down(key: libc::c_int) -> libc::c_int;
+    pub fn Fl_event_key_down(arg1: libc::c_int) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_event_text() -> *const libc::c_char;
@@ -271,4 +271,10 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_handle(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_add_idle(
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+        arg2: *mut libc::c_void,
+    );
 }

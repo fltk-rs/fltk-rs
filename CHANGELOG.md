@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.3] - 2021-02-08
+### Changes
+- Add app::add_idle().
+- Add app::sleep().
+- Add note on WidgetBase::draw() regarding drawing on MacOS.
+- Update cfltk.
+
 ## [0.14.2] - 2021-02-07
 ### Changes
 - Add InputChoice::input() which returns the underlying input widget. Thanks @tdryer
