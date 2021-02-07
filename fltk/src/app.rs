@@ -524,6 +524,7 @@ pub fn sleep(dur: f64) {
 }
 
 /// Add an idle callback to run within the event loop
+/// Calls to WidgetExt::redraw within the callback require an explicit sleep
 pub fn add_idle<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
