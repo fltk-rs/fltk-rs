@@ -14,7 +14,7 @@ fn main() {
         fb.push(0x20); // blue
         fb.push(0xfa); // alpha
     }
-    
+
     draw::draw_rgba(&mut frame, &fb).unwrap();
 
     app.run().unwrap();

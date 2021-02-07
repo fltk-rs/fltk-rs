@@ -165,7 +165,7 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_image<I: ImageExt>(&mut self, image: Option<I>)  
+    fn set_image<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Gets the image associated with the widget
@@ -173,7 +173,7 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) 
+    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Gets the image associated with the widget
@@ -321,9 +321,11 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// takes the widget as a closure argument
     fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
     /// Set a custom draw method
+    /// MacOS requires that WidgetBase::draw actually calls drawing functions
     fn draw<F: FnMut() + 'static>(&mut self, cb: F);
     /// Set a custom draw method
     /// takes the widget as a closure argument
+    /// MacOS requires that WidgetBase::draw actually calls drawing functions
     fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
     /// INTERNAL: Retrieve the draw data
     /// # Safety

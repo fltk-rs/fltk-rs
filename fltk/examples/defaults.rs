@@ -17,12 +17,10 @@ fn main() {
     let mut pack = group::Pack::new(0, 250, 400, 50, "");
     pack.set_type(group::PackType::Horizontal);
     pack.set_spacing(80);
-    let mut but1 = button::Button::default()
-        .with_label("Button1");
+    let mut but1 = button::Button::default().with_label("Button1");
     but1.set_color(Color::Yellow);
     but1.set_down_frame(FrameType::RFlatBox);
-    let mut but2 = button::Button::default()
-        .with_label("Button2");
+    let mut but2 = button::Button::default().with_label("Button2");
     but2.set_color(Color::Yellow);
     but2.set_down_frame(FrameType::RFlatBox);
     pack.end();
@@ -30,9 +28,9 @@ fn main() {
 
     win.end();
     win.show();
-    
+
     but1.set_callback(app::redraw);
     but2.set_callback(app::redraw);
-    
+
     app.run().unwrap();
 }

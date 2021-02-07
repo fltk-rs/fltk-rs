@@ -726,19 +726,23 @@ pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
     let ptr = fb.as_ptr();
     let len = fb.len();
     let width = wid.width() as u32;
-    let height = wid.height() as u32; 
+    let height = wid.height() as u32;
     wid.draw2(move |s| {
         let x = s.x();
         let y = s.y();
         let w = s.width();
         let h = s.height();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(std::slice::from_raw_parts(ptr, len), width, height, 4) {
+        if let Ok(mut img) = crate::image::RgbImage::from_data(
+            std::slice::from_raw_parts(ptr, len),
+            width,
+            height,
+            4,
+        ) {
             img.scale(w, h, false, true);
             img.draw(x, y, w, h);
         }
     });
 }
-
 
 /// Draw a framebuffer (rgba) into a widget
 pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
@@ -763,13 +767,18 @@ pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
     let ptr = fb.as_ptr();
     let len = fb.len();
     let width = wid.width() as u32;
-    let height = wid.height() as u32; 
+    let height = wid.height() as u32;
     wid.draw2(move |s| {
         let x = s.x();
         let y = s.y();
         let w = s.width();
         let h = s.height();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(std::slice::from_raw_parts(ptr, len), width, height, 3) {
+        if let Ok(mut img) = crate::image::RgbImage::from_data(
+            std::slice::from_raw_parts(ptr, len),
+            width,
+            height,
+            3,
+        ) {
             img.scale(w, h, false, true);
             img.draw(x, y, w, h);
         }

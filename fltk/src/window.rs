@@ -3,13 +3,13 @@ use crate::image::Image;
 pub use crate::prelude::*;
 use crate::widget::*;
 use fltk_sys::window::*;
+use raw_window_handle::*;
 use std::{
     ffi::{CStr, CString},
     mem,
     ops::{Deref, DerefMut},
     os::raw,
 };
-use raw_window_handle::*;
 
 /// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
 /// XID (u64) raw window handle for X11
