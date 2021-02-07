@@ -41,7 +41,7 @@ fn main() {
     wind.end();
     wind.show_with_env_args();
 
-    while app.wait() {
+    add_idle(move || {
         let x = frame.x();
         let y = frame.y();
         let w = frame.width();
@@ -51,8 +51,10 @@ fn main() {
         }
         frame.resize(x + 5, y, w, h);
         wind.redraw();
-        std::thread::sleep(std::time::Duration::from_millis(16));
-    }
+        sleep(0.016);
+    });
+
+    app.run().unwrap();
 }
 
 // // Another way is using app::add_timeout and app::repeat_timout

@@ -519,11 +519,11 @@ pub fn wait() -> bool {
 
 /// Put the thread to sleep for `dur` seconds
 pub fn sleep(dur: f64) {
-    let dur = dur / 1000.;
+    let dur = dur * 1000.;
     thread::sleep(time::Duration::from_millis(dur as u64));
 }
 
-/// Add an idle callback
+/// Add an idle callback to run within the event loop
 pub fn add_idle<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
@@ -533,7 +533,7 @@ pub fn add_idle<F: FnMut() + 'static>(cb: F) {
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(arg1: *mut libc::c_void)> = Some(shim);
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         Fl_add_idle(callback, data);
     }
 }

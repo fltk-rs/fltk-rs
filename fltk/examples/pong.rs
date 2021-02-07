@@ -52,7 +52,7 @@ fn main() {
         }
     });
 
-    while app.wait() {
+    app::add_idle(move || {
         ball.pos.0 += 10 * ball.dir.0 as i32; // The increment in x position
         ball.pos.1 += 10 * ball.dir.1 as i32; // The increment in y position
         if ball.pos.1 == 540 - 40
@@ -76,6 +76,8 @@ fn main() {
         }
         ball.wid.resize(ball.pos.0, ball.pos.1, 40, 40); // Moves the ball
         wind.redraw();
-        std::thread::sleep(std::time::Duration::from_millis(16));
-    }
+        app::sleep(0.016);
+    });
+
+    app.run().unwrap();
 }
