@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [0.14.2] - 2021-02-07
+### Changes
+- Add InputChoice::input() which returns the underlying input widget. Thanks @tdryer
+- Update docs.
+
 ## [0.14.1] - 2021-02-06
 ### Changes
 - [BREAKING] Rename old app::awake<F: FnMut()>(cb: F) to app::awake_callback.

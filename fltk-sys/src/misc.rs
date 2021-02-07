@@ -2206,6 +2206,9 @@ extern "C" {
     pub fn Fl_Input_Choice_set_value2(self_: *mut Fl_Input_Choice, val: libc::c_int);
 }
 extern "C" {
+    pub fn Fl_Input_Choice_input(self_: *mut Fl_Input_Choice) -> *mut libc::c_void;
+}
+extern "C" {
     pub fn Fl_Input_Choice_menu_button(self_: *mut Fl_Input_Choice) -> *mut libc::c_void;
 }
 extern "C" {
