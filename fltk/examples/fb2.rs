@@ -1,4 +1,4 @@
-use fltk::{app, frame, draw, prelude::*, window::Window};
+use fltk::{app, draw, frame, prelude::*, window::Window};
 
 const WIDTH: u32 = 320;
 const HEIGHT: u32 = 240;
@@ -23,7 +23,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut framebuf: Vec<u8> = vec![0; (WIDTH * HEIGHT * 4) as usize];
     let mut world = World::new();
-    unsafe { draw::draw_rgba_nocopy(&mut frame, &framebuf); }
+    unsafe {
+        draw::draw_rgba_nocopy(&mut frame, &framebuf);
+    }
 
     app::add_idle(move || {
         world.update();

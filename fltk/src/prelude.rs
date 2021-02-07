@@ -165,7 +165,7 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_image<I: ImageExt>(&mut self, image: Option<I>)  
+    fn set_image<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Gets the image associated with the widget
@@ -173,7 +173,7 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) 
+    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Gets the image associated with the widget
