@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.14.2] - Unreleased
+## [0.14.2] - 2021-02-07
 ### Changes
 - Add InputChoice::input() which returns the underlying input widget. Thanks @tdryer
 - Update docs.
