@@ -44,7 +44,7 @@ fn main() {
         }
         frame.set_label(&format!("[{}]", fonts[i]));
         frame.set_label_font(Font::by_index(i));
-        std::thread::sleep(std::time::Duration::from_millis(500));
+        app::sleep(0.5);
         i += 1;
     }
 }
