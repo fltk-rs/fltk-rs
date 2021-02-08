@@ -348,14 +348,6 @@ unsafe impl Send for MenuItem {}
 
 unsafe impl Sync for MenuItem {}
 
-impl Drop for MenuItem {
-    fn drop(&mut self) {
-        if self._alloc {
-            unsafe { Fl_Menu_Item_delete(self._inner) }
-            self._inner = std::ptr::null_mut::<Fl_Menu_Item>();
-        }
-    }
-}
 
 #[cfg(test)]
 mod menu {
