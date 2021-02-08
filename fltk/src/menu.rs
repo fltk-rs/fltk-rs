@@ -275,6 +275,23 @@ impl MenuItem {
         }
     }
 
+    /// Get the menu item at `idx`
+    pub fn at(&mut self, idx: u32) -> Option<MenuItem> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Menu_Item_next(self._inner, idx as i32);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(MenuItem {
+                    _inner: ptr,
+                    _parent: self._parent,
+                    _alloc: self._alloc,
+                })
+            }
+        }
+    }
+
     /// Get the user data
     /// # Safety
     /// Can return multiple mutable instances of the user data, which has a different lifetime than the object
@@ -347,6 +364,21 @@ impl MenuItem {
 unsafe impl Send for MenuItem {}
 
 unsafe impl Sync for MenuItem {}
+
+impl IntoIterator for MenuItem {
+    type Item = MenuItem;
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+
+    fn into_iter(mut self) -> Self::IntoIter {
+        let mut v: Vec<MenuItem> = vec![];
+        let mut i = 0;
+        while let Some(item) = self.next(i) {
+            v.push(item);
+            i += 1;
+        }
+        v.into_iter()
+    }
+}
 
 
 #[cfg(test)]

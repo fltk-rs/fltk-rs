@@ -390,6 +390,7 @@ impl std::fmt::Display for Color {
 /// Defines event types captured by FLTK
 #[repr(i32)]
 #[derive(Copy, Clone, PartialEq)]
+#[non_exhaustive]
 pub enum Event {
     /// No Event
     NoEvent = 0,
@@ -753,16 +754,17 @@ bitflags! {
     }
 }
 
-bitflags! {
-    /// Defines Fl_Mode types
-    pub struct Mouse: i32 {
-        /// Left mouse button
-        const Left = 1;
-        /// Middle mouse button
-        const Middle = 2;
-        /// Right mouse button
-        const Right = 3;
-    }
+/// Defines Mouse buttons
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+#[non_exhaustive]
+pub enum Mouse {
+    /// Left mouse button
+    Left = 1,
+    /// Middle mouse button
+    Middle = 2,
+    /// Right mouse button
+    Right = 3,
 }
 
 /// A trait defined for all enums passable to the WidgetExt::set_type() method
