@@ -453,9 +453,6 @@ pub enum Event {
 
 impl Event {
     /// Creates an event from an i32 value
-    /// # Safety
-    /// The i32 value might not have a representation within the enum
-    /// This should be taken into account in fmt::Debug for example
     pub fn from_i32(val: i32) -> Event {
         unsafe { std::mem::transmute(val) }
     }
@@ -753,6 +750,18 @@ bitflags! {
         const FakeSingle = 512; // Fake single buffered windows using double-buffer
         /// Opengl3
         const Opengl3 = 1024;
+    }
+}
+
+bitflags! {
+    /// Defines Fl_Mode types
+    pub struct Mouse: i32 {
+        /// Left mouse button
+        const Left = 1;
+        /// Middle mouse button
+        const Middle = 2;
+        /// Right mouse button
+        const Right = 3;
     }
 }
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.14.4] - 2021-02-08
+### Changes
+- Add app::event_mouse_button();
+- Add enums::Mouse.
+- Fix docs.
 
 ## [0.14.3] - 2021-02-08
 ### Changes
