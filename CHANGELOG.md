@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.14.5] - 2021-02-10
+### Changes
+- Remove unnecessary field in MenuItem.
+
 ## [0.14.4] - 2021-02-09
 ### Changes
 - Add app::event_mouse_button();

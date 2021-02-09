@@ -39,8 +39,6 @@ pub struct SysMenuBar {
 #[derive(Debug, Clone)]
 pub struct MenuItem {
     _inner: *mut Fl_Menu_Item,
-    _parent: *const MenuBar,
-    _alloc: bool,
 }
 
 /// Defines the menu flag for any added menu items using the add() method
@@ -81,11 +79,7 @@ impl MenuItem {
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
-            MenuItem {
-                _inner: item_ptr,
-                _parent: std::ptr::null::<MenuBar>(),
-                _alloc: true,
-            }
+            MenuItem { _inner: item_ptr }
         }
     }
 
@@ -99,8 +93,6 @@ impl MenuItem {
             } else {
                 let item = MenuItem {
                     _inner: item as *mut Fl_Menu_Item,
-                    _parent: std::ptr::null::<MenuBar>(),
-                    _alloc: false,
                 };
                 Some(item)
             }
@@ -266,11 +258,7 @@ impl MenuItem {
             if ptr.is_null() {
                 None
             } else {
-                Some(MenuItem {
-                    _inner: ptr,
-                    _parent: self._parent,
-                    _alloc: self._alloc,
-                })
+                Some(MenuItem { _inner: ptr })
             }
         }
     }
@@ -283,11 +271,7 @@ impl MenuItem {
             if ptr.is_null() {
                 None
             } else {
-                Some(MenuItem {
-                    _inner: ptr,
-                    _parent: self._parent,
-                    _alloc: self._alloc,
-                })
+                Some(MenuItem { _inner: ptr })
             }
         }
     }
@@ -361,6 +345,13 @@ impl MenuItem {
     }
 }
 
+/// Delete a menu item
+/// # Safety
+/// The wrapper can't assure use after free when manually deleting a menu item
+pub unsafe fn delete_menu_item(item: MenuItem) {
+    Fl_Menu_Item_delete(item._inner)
+}
+
 unsafe impl Send for MenuItem {}
 
 unsafe impl Sync for MenuItem {}
@@ -379,7 +370,6 @@ impl IntoIterator for MenuItem {
         v.into_iter()
     }
 }
-
 
 #[cfg(test)]
 mod menu {
