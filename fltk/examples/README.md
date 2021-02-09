@@ -16,3 +16,5 @@ $ cargo run --example paint
 $ cargo run --example pong
 $ cargo run --example <filename>
 ```
+
+More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/MoAlyousef/fltk-rs-demos).

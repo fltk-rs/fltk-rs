@@ -271,6 +271,8 @@ Setting the scheme to Gtk:
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
 
+More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/MoAlyousef/fltk-rs-demos).
+
 ## Currently implemented types:
 
 ### Image types:
