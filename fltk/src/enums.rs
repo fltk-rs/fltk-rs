@@ -390,6 +390,7 @@ impl std::fmt::Display for Color {
 /// Defines event types captured by FLTK
 #[repr(i32)]
 #[derive(Copy, Clone, PartialEq)]
+#[non_exhaustive]
 pub enum Event {
     /// No Event
     NoEvent = 0,
@@ -453,9 +454,6 @@ pub enum Event {
 
 impl Event {
     /// Creates an event from an i32 value
-    /// # Safety
-    /// The i32 value might not have a representation within the enum
-    /// This should be taken into account in fmt::Debug for example
     pub fn from_i32(val: i32) -> Event {
         unsafe { std::mem::transmute(val) }
     }
@@ -754,6 +752,19 @@ bitflags! {
         /// Opengl3
         const Opengl3 = 1024;
     }
+}
+
+/// Defines Mouse buttons
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+#[non_exhaustive]
+pub enum Mouse {
+    /// Left mouse button
+    Left = 1,
+    /// Middle mouse button
+    Middle = 2,
+    /// Right mouse button
+    Right = 3,
 }
 
 /// A trait defined for all enums passable to the WidgetExt::set_type() method

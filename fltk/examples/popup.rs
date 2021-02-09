@@ -1,20 +1,24 @@
-use fltk::{app::*, button::*, menu::*, window::*};
+use fltk::*;
 
 fn main() {
-    let app = App::default();
-    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
-    let mut but = Button::new(160, 210, 80, 40, "Click me!");
-
+    let app = app::App::default();
+    let mut wind = window::Window::default().with_size(400, 300);
+    let mut frame = frame::Frame::default().size_of(&wind);
     wind.end();
     wind.show();
-
-    but.set_callback(|| {
-        let v = vec!["1st val", "2nd val", "3rd val"];
-        let mut x = MenuItem::new(&v);
-        match x.popup(100, 100) {
-            None => println!("No value was chosen!"),
-            Some(val) => println!("{}", val.label().unwrap()),
+    let mut menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
+    frame.handle(move |ev| match ev {
+        Event::Push => {
+            if app::event_button() == 3 { // or app::event_mouse_button() == Mouse::Right
+                let coords = app::event_coords();
+                match menu.popup(coords.0, coords.1) {
+                    None => println!("No value was chosen!"),
+                    Some(val) => println!("{}", val.label().unwrap()),
+                }
+            }
+            true
         }
+        _ => false,
     });
 
     app.run().unwrap();

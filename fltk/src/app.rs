@@ -288,8 +288,14 @@ pub fn event_text() -> String {
 }
 
 /// Returns the captured button event
+/// 1 for left key, 2 for middle, 3 for right
 pub fn event_button() -> i32 {
     unsafe { Fl_event_button() }
+}
+
+/// Returns the captured button event
+pub fn event_mouse_button() -> Mouse {
+    unsafe { mem::transmute(Fl_event_button()) }
 }
 
 /// Returns the number of clicks

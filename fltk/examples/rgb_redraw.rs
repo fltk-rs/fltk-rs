@@ -32,7 +32,7 @@ fn main() {
         if i < data.borrow().len() {
             data.borrow_mut()[i] = 255;
         }
-        std::thread::sleep(std::time::Duration::from_millis(30));
+        app::sleep(0.030);
         frame.redraw();
         i += 1;
     }
