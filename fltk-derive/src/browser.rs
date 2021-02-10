@@ -116,10 +116,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "hscrollbar").as_str(),
         name.span(),
     );
-    let value = Ident::new(
-        format!("{}_{}", name_str, "value").as_str(),
-        name.span(),
-    );
+    let value = Ident::new(format!("{}_{}", name_str, "value").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl BrowserExt for #name {

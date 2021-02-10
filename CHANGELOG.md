@@ -1,8 +1,10 @@
 # Changelog
 
-## [0.14.6] - Unreleased
+## [0.14.6] - 2021-02-11
 ### Changes
 - Add BrowserExt::value(). Thanks @tdryer.
+- Refactoring derive code.
+- Update cfltk.
 
 ## [0.14.5] - 2021-02-10
 ### Changes
