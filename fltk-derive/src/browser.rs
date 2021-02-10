@@ -116,6 +116,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "hscrollbar").as_str(),
         name.span(),
     );
+    let value = Ident::new(format!("{}_{}", name_str, "value").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl BrowserExt for #name {
@@ -463,6 +464,11 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!ptr.is_null());
                     Box::new(crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
                 }
+            }
+
+            fn value(&self) -> u32 {
+                assert!(!self.was_deleted());
+                unsafe { #value(self._inner) as u32 }
             }
         }
     };

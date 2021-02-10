@@ -553,6 +553,9 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Browser_value(arg1: *mut Fl_Browser) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Browser_remove(arg1: *mut Fl_Browser, line: libc::c_int);
 }
 extern "C" {
@@ -954,6 +957,9 @@ extern "C" {
         arg1: *mut Fl_Hold_Browser,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_value(arg1: *mut Fl_Hold_Browser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_remove(arg1: *mut Fl_Hold_Browser, line: libc::c_int);
@@ -1374,6 +1380,9 @@ extern "C" {
         arg1: *mut Fl_Select_Browser,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Select_Browser_value(arg1: *mut Fl_Select_Browser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_remove(arg1: *mut Fl_Select_Browser, line: libc::c_int);
@@ -1800,6 +1809,9 @@ extern "C" {
         arg1: *mut Fl_Multi_Browser,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_value(arg1: *mut Fl_Multi_Browser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_remove(arg1: *mut Fl_Multi_Browser, line: libc::c_int);
@@ -2240,6 +2252,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_set_filetype(self_: *mut Fl_File_Browser, t: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Browser_value(arg1: *mut Fl_File_Browser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_File_Browser_remove(arg1: *mut Fl_File_Browser, line: libc::c_int);

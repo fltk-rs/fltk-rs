@@ -83,18 +83,14 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                 assert!(!self.was_deleted());
-                unsafe {
-                    self._inner as *mut fltk_sys::image::Fl_Image
-                }
+                self._inner as *mut fltk_sys::image::Fl_Image
             }
 
             unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
-                unsafe {
-                    assert!(!ptr.is_null());
-                    #name {
-                        _inner: ptr as *mut #ptr_name,
-                        _refcount: AtomicUsize::new(2),
-                    }
+                assert!(!ptr.is_null());
+                #name {
+                    _inner: ptr as *mut #ptr_name,
+                    _refcount: AtomicUsize::new(2),
                 }
             }
 
@@ -204,10 +200,8 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn delete(mut img: Self) {
                 assert!(!img._inner.is_null());
-                unsafe {
-                    #delete(img._inner);
-                    img._inner = std::ptr::null_mut() as *mut #ptr_name;
-                }
+                #delete(img._inner);
+                img._inner = std::ptr::null_mut() as *mut #ptr_name;
             }
 
             unsafe fn increment_arc(&mut self) {
