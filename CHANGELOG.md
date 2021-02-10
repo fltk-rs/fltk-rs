@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.14.6] - Unreleased
+### Changes
+- Add BrowserExt::value(). Thanks @tdryer.
+
 ## [0.14.5] - 2021-02-10
 ### Changes
 - Remove unnecessary field in MenuItem.

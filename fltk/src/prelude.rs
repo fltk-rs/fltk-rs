@@ -894,6 +894,8 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn scrollbar(&self) -> Box<dyn ValuatorExt>;
     /// Returns the horizontal scrollbar
     fn hscrollbar(&self) -> Box<dyn ValuatorExt>;
+    /// Returns the selected line, returns 0 if no line is selected
+    fn value(&self) -> u32;
 }
 
 /// Defines the methods implemented by table types
