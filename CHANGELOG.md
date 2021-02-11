@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.14.7] - 2021-02-12
+### Changes
+- Fix size of window::RawHandle on 32-bit Xlib systems (#502). Thanks @CaseyB.
+
 ## [0.14.6] - 2021-02-11
 ### Changes
 - Add BrowserExt::value(). Thanks @tdryer.
