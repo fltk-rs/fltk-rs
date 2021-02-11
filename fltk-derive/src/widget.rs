@@ -33,24 +33,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         impl Default for #name {
             fn default() -> Self {
-                let temp = CString::new("").unwrap();;
-                unsafe {
-                    let widget_ptr = #new(0, 0, 0, 0, temp.into_raw());
-                    assert!(!widget_ptr.is_null());
-                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
-                    assert!(!tracker.is_null());
-                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                        if !data.is_null() {
-                            let x = data as *mut Box<dyn FnMut()>;
-                            let x = Box::from_raw(x);
-                        }
-                    }
-                    #set_deleter(widget_ptr, Some(shim));
-                    #name {
-                        _inner: widget_ptr,
-                        _tracker: tracker,
-                    }
-                }
+                Self::new(0, 0, 0, 0, "")
             }
         }
 
@@ -65,7 +48,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     unsafe extern "C" fn shim(data: *mut raw::c_void) {
                         if !data.is_null() {
                             let x = data as *mut Box<dyn FnMut()>;
-                            let x = Box::from_raw(x);
+                            let _x = Box::from_raw(x);
                         }
                     }
                     #set_deleter(widget_ptr, Some(shim));
@@ -88,13 +71,11 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
                 assert!(!ptr.is_null());
-                unsafe {
-                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
-                    assert!(!tracker.is_null());
-                    #name {
-                        _inner: ptr as *mut #ptr_name,
-                        _tracker: tracker,
-                    }
+                let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
+                assert!(!tracker.is_null());
+                #name {
+                    _inner: ptr as *mut #ptr_name,
+                    _tracker: tracker,
                 }
             }
 
@@ -187,29 +168,25 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
-                unsafe {
-                    let ptr = #draw_data(self._inner);
-                    if ptr.is_null() {
-                        return None;
-                    }
-                    let data = ptr as *mut Box<dyn FnMut()>;
-                    let data = Box::from_raw(data);
-                    #draw(self._inner, None, std::ptr::null_mut());
-                    Some(*data)
+                let ptr = #draw_data(self._inner);
+                if ptr.is_null() {
+                    return None;
                 }
+                let data = ptr as *mut Box<dyn FnMut()>;
+                let data = Box::from_raw(data);
+                #draw(self._inner, None, std::ptr::null_mut());
+                Some(*data)
             }
 
             unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
-                unsafe {
-                    let ptr = #handle_data(self._inner);
-                    if ptr.is_null() {
-                        return None;
-                    }
-                    let data = ptr as *mut Box<dyn FnMut(Event) -> bool>;
-                    let data = Box::from_raw(data);
-                    #handle(self._inner, None, std::ptr::null_mut());
-                    Some(*data)
+                let ptr = #handle_data(self._inner);
+                if ptr.is_null() {
+                    return None;
                 }
+                let data = ptr as *mut Box<dyn FnMut(Event) -> bool>;
+                let data = Box::from_raw(data);
+                #handle(self._inner, None, std::ptr::null_mut());
+                Some(*data)
             }
         }
     };
@@ -486,7 +463,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
-                unsafe { self._inner as *mut fltk_sys::widget::Fl_Widget }
+                self._inner as *mut fltk_sys::widget::Fl_Widget
             }
 
             fn activate(&mut self) {
@@ -845,12 +822,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
-                let mut sw = self.width() as f64;
-                let mut sh = self.height() as f64;
-                let mut ww = w.width() as f64;
-                let mut wh = w.height() as f64;
-                let mut sx = (ww - sw) / 2.0;
-                let mut sy = (wh - sh) / 2.0;
+                let sw = self.width() as f64;
+                let sh = self.height() as f64;
+                let ww = w.width() as f64;
+                let wh = w.height() as f64;
+                let sx = (ww - sw) / 2.0;
+                let sy = (wh - sh) / 2.0;
                 let wx = if w.as_window().is_some() { 0 } else { w.x() };
                 let wy = if w.as_window().is_some() { 0 } else { w.y() };
                 self.resize(sx as i32 + wx, sy as i32 + wy, self.width(), self.height());
@@ -999,26 +976,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             unsafe fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {
-                unsafe { W::from_widget_ptr(self.as_widget_ptr() as *mut _) }
-            }
-
-            unsafe fn draw_framebuffer(&mut self, fb: &[u8]) -> Result<(), FltkError> {
-                let ptr = fb.as_ptr();
-                let len = fb.len();
-                let width = self.width() as u32;
-                let height = self.height() as u32; 
-                self.draw2(move |s| {
-                    let x = s.x();
-                    let y = s.y();
-                    let w = s.width();
-                    let h = s.height();
-                    let mut img = unsafe { 
-                        crate::image::RgbImage::from_data(std::slice::from_raw_parts(ptr, len), width, height, 4).unwrap() 
-                    };
-                    img.scale(w, h, false, true);
-                    img.draw(x, y, w, h);
-                });
-                Ok(())
+                W::from_widget_ptr(self.as_widget_ptr() as *mut _)
             }
         }
     };

@@ -26,8 +26,13 @@
 //!
 //! ```toml
 //! [dependencies]
-//! fltk = "^0.13"
+//! fltk = "^0.14"
 //! ```
+//! To use the latest changes in the repo:
+//! ```toml
+//! [dependencies]
+//! fltk = { version = "^0.14", git = "https://github.com/MoAlyousef/fltk-rs" }
+//!
 //! The library is automatically built and statically linked to your binary.
 //!
 //! For faster builds you can enable ninja builds for the C++ source using the "use-ninja" feature.

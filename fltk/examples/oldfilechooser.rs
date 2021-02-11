@@ -13,7 +13,6 @@ fn main() {
     println!("{:?}", opts);
 
     but.set_callback(|| {
-        
         let file = file_chooser("Choose File", "*.rs", ".", true).unwrap();
         println!("{}", file);
 

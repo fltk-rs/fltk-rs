@@ -194,8 +194,6 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(MenuItem {
                             _inner: menu_item,
-                            _parent: self as *const _ as *const MenuBar,
-                            _alloc: false,
                         })
                     }
                 }
@@ -394,8 +392,6 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(MenuItem {
                             _inner: ptr,
-                            _parent: self as *const _ as *const MenuBar,
-                            _alloc: false,
                         })
                     }
                 }

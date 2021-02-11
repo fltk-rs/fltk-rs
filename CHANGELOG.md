@@ -1,11 +1,40 @@
 # Changelog
 
+## [0.14.6] - 2021-02-11
+### Changes
+- Add BrowserExt::value(). Thanks @tdryer.
+- Refactoring derive code.
+- Update cfltk.
 
-## [0.14.0] - 2021-02-05
+## [0.14.5] - 2021-02-10
+### Changes
+- Remove unnecessary field in MenuItem.
+
+## [0.14.4] - 2021-02-09
+### Changes
+- Add app::event_mouse_button();
+- Add enums::Mouse.
+- Fix docs.
+- impl IntoIter for MenuItem.
+
+## [0.14.3] - 2021-02-08
+### Changes
+- Add app::add_idle().
+- Add app::sleep().
+- Add note on WidgetBase::draw() regarding drawing on MacOS.
+- Update cfltk.
+
+## [0.14.2] - 2021-02-07
+### Changes
+- Add InputChoice::input() which returns the underlying input widget. Thanks @tdryer
+- Update docs.
+
+## [0.14.1] - 2021-02-06
 ### Changes
 - [BREAKING] Rename old app::awake<F: FnMut()>(cb: F) to app::awake_callback.
 - [BREAKING] Remove redundant/unnecessary methods from the App struct.
-- Add WidgetExt::draw_framebuffer().
+- Add app::event_key_down(Key) which takes a key and returns true if the given key was held down (or pressed) during the last event. Thanks @CaseyB.
+- Add framebuffer drawing functions: draw::draw_rgba(), draw_rgba_nocopy(), draw_rgb() and draw_rgb_nocopy().
 - Add utils::hex2rgba().
 - Add app::awake().
 - Add custom std::fmt::Debug impl for Event to account for custom events.

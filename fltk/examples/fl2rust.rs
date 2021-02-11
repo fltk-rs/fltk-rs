@@ -22,13 +22,11 @@ use fltk::valuator::*;
 use fltk::widget::*;
 use fltk::window::*;
 
-
 #[derive(Debug, Clone, Default)]
 pub struct UserInterface {
     pub fds: Slider,
     pub fds2: Slider,
 }
-
 
 impl UserInterface {
     pub fn make_window2() -> Self {
@@ -40,7 +38,10 @@ impl UserInterface {
         let mut fds = Slider::new(25, 35, 175, 35, "fds");
         fds.set_type(SliderType::HorizontalNice);
         fl2rust_gen_widget_0.add(&fds);
-        Self { fds, ..Default::default() }
+        Self {
+            fds,
+            ..Default::default()
+        }
     }
     pub fn make_window() -> Self {
         let mut fl2rust_gen_widget_2 = Window::new(186, 209, 229, 214, "");
@@ -51,7 +52,10 @@ impl UserInterface {
         let mut fds2 = Slider::new(25, 35, 175, 35, "fds");
         fds2.set_type(SliderType::HorizontalNice);
         fl2rust_gen_widget_2.add(&fds2);
-        Self {fds2, ..Default::default() }
+        Self {
+            fds2,
+            ..Default::default()
+        }
     }
 }
 

@@ -36,7 +36,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.13"
+fltk = "^0.14"
+```
+To use the latest changes in the repo:
+```toml
+[dependencies]
+fltk = { version = "^0.14", git = "https://github.com/MoAlyousef/fltk-rs" }
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -265,6 +270,8 @@ Setting the scheme to Gtk:
 ![alt_test](screenshots/frames.jpg)
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
+
+More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/MoAlyousef/fltk-rs-demos).
 
 ## Currently implemented types:
 

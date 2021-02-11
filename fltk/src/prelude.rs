@@ -165,7 +165,7 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_image<I: ImageExt>(&mut self, image: Option<I>)  
+    fn set_image<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Gets the image associated with the widget
@@ -173,7 +173,7 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the image of the widget
-    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) 
+    fn set_deimage<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Gets the image associated with the widget
@@ -289,12 +289,6 @@ pub unsafe trait WidgetExt {
     unsafe fn into_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
-    /// Draw a frame buffer (rgba) into the widget
-    /// # Safety
-    /// - The data passed should be valid and outlive the widget
-    /// - Doesn't work on window widgets
-    /// - Hex color values 0x00000000 don't fit on u8, so the fb slice len should account for that
-    unsafe fn draw_framebuffer(&mut self, fb: &[u8]) -> Result<(), FltkError>;
 }
 
 /// Defines the extended methods implemented by all widgets
@@ -327,9 +321,11 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// takes the widget as a closure argument
     fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
     /// Set a custom draw method
+    /// MacOS requires that WidgetBase::draw actually calls drawing functions
     fn draw<F: FnMut() + 'static>(&mut self, cb: F);
     /// Set a custom draw method
     /// takes the widget as a closure argument
+    /// MacOS requires that WidgetBase::draw actually calls drawing functions
     fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
     /// INTERNAL: Retrieve the draw data
     /// # Safety
@@ -898,6 +894,8 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn scrollbar(&self) -> Box<dyn ValuatorExt>;
     /// Returns the horizontal scrollbar
     fn hscrollbar(&self) -> Box<dyn ValuatorExt>;
+    /// Returns the selected line, returns 0 if no line is selected
+    fn value(&self) -> u32;
 }
 
 /// Defines the methods implemented by table types

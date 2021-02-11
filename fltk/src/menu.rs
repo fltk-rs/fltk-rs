@@ -39,8 +39,6 @@ pub struct SysMenuBar {
 #[derive(Debug, Clone)]
 pub struct MenuItem {
     _inner: *mut Fl_Menu_Item,
-    _parent: *const MenuBar,
-    _alloc: bool,
 }
 
 /// Defines the menu flag for any added menu items using the add() method
@@ -81,11 +79,7 @@ impl MenuItem {
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
-            MenuItem {
-                _inner: item_ptr,
-                _parent: std::ptr::null::<MenuBar>(),
-                _alloc: true,
-            }
+            MenuItem { _inner: item_ptr }
         }
     }
 
@@ -99,8 +93,6 @@ impl MenuItem {
             } else {
                 let item = MenuItem {
                     _inner: item as *mut Fl_Menu_Item,
-                    _parent: std::ptr::null::<MenuBar>(),
-                    _alloc: false,
                 };
                 Some(item)
             }
@@ -266,11 +258,20 @@ impl MenuItem {
             if ptr.is_null() {
                 None
             } else {
-                Some(MenuItem {
-                    _inner: ptr,
-                    _parent: self._parent,
-                    _alloc: self._alloc,
-                })
+                Some(MenuItem { _inner: ptr })
+            }
+        }
+    }
+
+    /// Get the menu item at `idx`
+    pub fn at(&mut self, idx: u32) -> Option<MenuItem> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Menu_Item_next(self._inner, idx as i32);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(MenuItem { _inner: ptr })
             }
         }
     }
@@ -344,16 +345,29 @@ impl MenuItem {
     }
 }
 
+/// Delete a menu item
+/// # Safety
+/// The wrapper can't assure use after free when manually deleting a menu item
+pub unsafe fn delete_menu_item(item: MenuItem) {
+    Fl_Menu_Item_delete(item._inner)
+}
+
 unsafe impl Send for MenuItem {}
 
 unsafe impl Sync for MenuItem {}
 
-impl Drop for MenuItem {
-    fn drop(&mut self) {
-        if self._alloc {
-            unsafe { Fl_Menu_Item_delete(self._inner) }
-            self._inner = std::ptr::null_mut::<Fl_Menu_Item>();
+impl IntoIterator for MenuItem {
+    type Item = MenuItem;
+    type IntoIter = std::vec::IntoIter<Self::Item>;
+
+    fn into_iter(mut self) -> Self::IntoIter {
+        let mut v: Vec<MenuItem> = vec![];
+        let mut i = 0;
+        while let Some(item) = self.next(i) {
+            v.push(item);
+            i += 1;
         }
+        v.into_iter()
     }
 }
 

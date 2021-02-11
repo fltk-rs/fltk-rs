@@ -212,10 +212,10 @@ impl CheckBrowser {
         unsafe { Fl_Check_Browser_check_none(self._inner) }
     }
 
-    /// Get the currently selected item
-    pub fn value(&self) -> usize {
+    /// Returns the selected line, returns 0 if no line is selected
+    pub fn value(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_value(self._inner) as usize }
+        unsafe { Fl_Check_Browser_value(self._inner) as u32 }
     }
 
     /// Get the text of the item
