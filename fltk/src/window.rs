@@ -21,6 +21,14 @@ use raw_window_handle::*;
 ))]
 pub type RawHandle = *mut raw::c_void;
 
+// Opaque raw window handle on 32-bit linux running on a Raspberry Pi
+#[cfg(all(
+    target_os = "linux",
+    target_arch = "arm",
+    target_env = "gnu",
+))]
+pub type RawHandle = u32;
+
 /// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
 /// XID (u64) raw window handle for X11
 #[cfg(any(
