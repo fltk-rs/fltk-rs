@@ -23,14 +23,12 @@ pub type RawHandle = *mut raw::c_void;
 
 // Opaque raw window handle on 32-bit linux running on a Raspberry Pi
 #[cfg(all(
-    not(
-        any(
-            target_os = "windows",
-            target_os = "macos",
-            target_os = "ios",
-            target_os = "android"
-        )
-    ),
+    not(any(
+        target_os = "windows",
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "android"
+    )),
     any(
         target_arch = "arm",
         target_arch = "mips",
@@ -39,20 +37,18 @@ pub type RawHandle = *mut raw::c_void;
         target_arch = "wasm32",
         target_arch = "x86",
     )
-)]
+))]
 pub type RawHandle = u32;
 
 /// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
 /// XID (u64) raw window handle for X11
 #[cfg(all(
-    not(
-        any(
-            target_os = "windows",
-            target_os = "macos",
-            target_os = "ios",
-            target_os = "android"
-        )
-    ),
+    not(any(
+        target_os = "windows",
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "android"
+    )),
     any(
         target_arch = "aarch64",
         target_arch = "mips64",
@@ -61,7 +57,7 @@ pub type RawHandle = u32;
         target_arch = "sparc64",
         target_arch = "x86_64",
     )
-)]
+))]
 pub type RawHandle = u64;
 
 /// Creates a window widget
