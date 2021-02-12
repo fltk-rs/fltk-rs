@@ -4409,3 +4409,437 @@ extern "C" {
         s: *const libc::c_char,
     ) -> *mut libc::c_void;
 }
+
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Glut_Window {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Glut_Window_new(
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+        title: *const libc::c_char,
+    ) -> *mut Fl_Glut_Window;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_x(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_y(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_width(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_height(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_label(arg1: *mut Fl_Glut_Window) -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_label(arg1: *mut Fl_Glut_Window, title: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_redraw(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_show(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_hide(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_activate(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_deactivate(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_redraw_label(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_resize(
+        arg1: *mut Fl_Glut_Window,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_widget_resize(
+        arg1: *mut Fl_Glut_Window,
+        x: libc::c_int,
+        y: libc::c_int,
+        width: libc::c_int,
+        height: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_tooltip(arg1: *mut Fl_Glut_Window) -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_tooltip(arg1: *mut Fl_Glut_Window, txt: *const libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_get_type(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_type(arg1: *mut Fl_Glut_Window, typ: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_color(arg1: *mut Fl_Glut_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_color(arg1: *mut Fl_Glut_Window, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_measure_label(
+        arg1: *const Fl_Glut_Window,
+        arg2: *mut libc::c_int,
+        arg3: *mut libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_label_color(arg1: *mut Fl_Glut_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_label_color(arg1: *mut Fl_Glut_Window, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_label_font(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_label_font(arg1: *mut Fl_Glut_Window, font: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_label_size(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_label_size(arg1: *mut Fl_Glut_Window, sz: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_label_type(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_label_type(arg1: *mut Fl_Glut_Window, typ: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_box(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_box(arg1: *mut Fl_Glut_Window, typ: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_changed(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_changed(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_clear_changed(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_align(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_align(arg1: *mut Fl_Glut_Window, typ: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_delete(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_image(arg1: *mut Fl_Glut_Window, arg2: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_handle(
+        self_: *mut Fl_Glut_Window,
+        cb: custom_handler_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_handle2(
+        self_: *mut Fl_Glut_Window,
+        cb: custom_handler_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_draw(
+        self_: *mut Fl_Glut_Window,
+        cb: custom_draw_callback,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_draw2(
+        self_: *mut Fl_Glut_Window,
+        cb: custom_draw_callback2,
+        data: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_when(arg1: *mut Fl_Glut_Window, arg2: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_when(arg1: *const Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_image(arg1: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_parent(self_: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_selection_color(arg1: *mut Fl_Glut_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_selection_color(arg1: *mut Fl_Glut_Window, color: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_do_callback(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_inside(self_: *const Fl_Glut_Window, arg1: *mut libc::c_void) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_window(arg1: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_top_window(arg1: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_takes_events(arg1: *const Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_user_data(arg1: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_take_focus(self_: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_visible_focus(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_clear_visible_focus(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_visible_focus(self_: *mut Fl_Glut_Window, v: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_has_visible_focus(self_: *mut Fl_Glut_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_user_data(arg1: *mut Fl_Glut_Window, data: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_draw_data(self_: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_handle_data(self_: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_draw_data(self_: *mut Fl_Glut_Window, data: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_handle_data(self_: *mut Fl_Glut_Window, data: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_damage(self_: *const Fl_Glut_Window) -> libc::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_damage(self_: *mut Fl_Glut_Window, flag: libc::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_clear_damage(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_as_window(self_: *mut Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_as_group(self_: *mut Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_deimage(arg1: *mut Fl_Glut_Window, arg2: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_deimage(arg1: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_callback(
+        arg1: *mut Fl_Glut_Window,
+        arg2: Fl_Callback,
+        arg3: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_deleter(
+        arg1: *mut Fl_Glut_Window,
+        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_begin(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_end(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_find(self_: *mut Fl_Glut_Window, arg1: *const libc::c_void) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_add(self_: *mut Fl_Glut_Window, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_insert(self_: *mut Fl_Glut_Window, arg1: *mut libc::c_void, pos: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_remove(self_: *mut Fl_Glut_Window, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_clear(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_children(self_: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_child(arg1: *mut Fl_Glut_Window, index: libc::c_int) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_resizable(self_: *mut Fl_Glut_Window, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_make_modal(arg1: *mut Fl_Glut_Window, boolean: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_fullscreen(arg1: *mut Fl_Glut_Window, boolean: libc::c_uint);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_make_current(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_icon(arg1: *mut Fl_Glut_Window, arg2: *const libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_icon(arg1: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_cursor(self_: *mut Fl_Glut_Window, cursor: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_shown(self_: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_raw_handle(w: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_border(arg1: *mut Fl_Glut_Window, flag: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_border(arg1: *const Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_region(self_: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_region(self_: *mut Fl_Glut_Window, r: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_iconize(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_fullscreen_active(self_: *const Fl_Glut_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_free_position(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_decorated_w(self_: *const Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_decorated_h(self_: *const Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_size_range(
+        self_: *mut Fl_Glut_Window,
+        arg1: libc::c_int,
+        arg2: libc::c_int,
+        arg3: libc::c_int,
+        arg4: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_hotspot(self_: *mut Fl_Glut_Window, wid: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_flush(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_valid(self_: *const Fl_Glut_Window) -> libc::c_char;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_valid(self_: *mut Fl_Glut_Window, v: libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_context_valid(self_: *const Fl_Glut_Window) -> libc::c_char;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_context_valid(self_: *mut Fl_Glut_Window, v: libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_can_do(self_: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_context(self_: *const Fl_Glut_Window) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_context(
+        self_: *mut Fl_Glut_Window,
+        ctx: *mut libc::c_void,
+        destroy_flag: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_swap_buffers(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_ortho(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_can_do_overlay(self_: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_redraw_overlay(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_hide_overlay(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_make_overlay_current(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_pixels_per_unit(self_: *mut Fl_Glut_Window) -> f32;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_pixel_w(self_: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_pixel_h(self_: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_mode(self_: *const Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_mode(self_: *mut Fl_Glut_Window, mode: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_get_proc_address(
+        self_: *mut Fl_Glut_Window,
+        s: *const libc::c_char,
+    ) -> *mut libc::c_void;
+}
+

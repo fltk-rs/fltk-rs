@@ -1,7 +1,6 @@
 # Examples
 
 Each file is a standalone executable with its own main function. Examples vary from basic hello world simplicity to some more complex examples. They may contain logic bugs, however their purpose is for demonstration and for testing UI elements. If you would like to contribute fixes, improvements or more examples, you're very welcome to do so.
-The paint example might not work on MacOS because of offscreen drawing issue. You can check the fltk-rs-demos repo for a paint example using fltk and raqote. 
 
 To run the examples: 
 ```
