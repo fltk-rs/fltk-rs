@@ -1,9 +1,9 @@
 # Changelog
 
-## [0.14.8] - Unreleased
+## [0.14.8] - 2021-02-13
 ### Changes
 - Add TabelExt::get_selection2 and visible_cells2 variants which return tuples.
-- Add GlutWindow.
+- Add GlutWindow widget.
 
 ## [0.14.7] - 2021-02-12
 ### Changes
