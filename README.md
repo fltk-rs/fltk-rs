@@ -316,6 +316,7 @@ More interesting examples can be found in the fltk-rs-demos [repo](https://githu
     - SingleWindow
     - DoubleWindow
     - MenuWindow
+    - OverlayWindow
     - GlWindow (requires the "enable-glwindow" flag)
     - GlutWindow (requires the "enable-glwindow" flag)
 - Groups

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.14.9] - Unreleased
+### Changes
+- Add draw::draw_image().
+- Add OverlayWindow widget.
+
 ## [0.14.8] - 2021-02-13
 ### Changes
 - Add TabelExt::get_selection2 and visible_cells2 variants which return tuples.

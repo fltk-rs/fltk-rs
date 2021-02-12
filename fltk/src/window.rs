@@ -291,6 +291,151 @@ impl MenuWindow {
     }
 }
 
+/// Creates a overlay (buffered) window widget
+#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
+pub struct OverlayWindow {
+    _inner: *mut Fl_Overlay_Window,
+    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl OverlayWindow {
+    /// Creates a default initialized overlay window
+    pub fn default() -> OverlayWindow {
+        let mut win = <OverlayWindow as Default>::default();
+        win.free_position();
+        win
+    }
+
+    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app
+    /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
+    /// # Safety
+    /// The data must be valid and is OS-dependent.
+    pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
+        let ptr = Fl_Window_find_by_handle(mem::transmute(&handle));
+        if ptr.is_null() {
+            None
+        } else {
+            Some(Window::from_widget_ptr(
+                ptr as *mut fltk_sys::widget::Fl_Widget,
+            ))
+        }
+    }
+
+    /// Use FLTK specific arguments for the application:
+    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// The options are:
+    /// -bg2 color
+    /// -bg color
+    /// -di[splay] host:n.n
+    /// -dn[d]
+    /// -fg color
+    /// -g[eometry] WxH+X+Y
+    /// -i[conic]
+    /// -k[bd]
+    /// -na[me] classname
+    /// -nod[nd]
+    /// -nok[bd]
+    /// -not[ooltips]
+    /// -s[cheme] scheme
+    /// -ti[tle] windowtitle
+    /// -to[oltips]
+    pub fn show_with_env_args(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            let args: Vec<String> = std::env::args().collect();
+            let len = args.len() as i32;
+            let mut v: Vec<*mut raw::c_char> = vec![];
+            for arg in args {
+                let c = CString::safe_new(arg.as_str());
+                v.push(c.into_raw() as *mut raw::c_char);
+            }
+            let mut v = mem::ManuallyDrop::new(v);
+            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
+        }
+    }
+
+    /// Use FLTK specific arguments for the application:
+    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// The options are:
+    /// -bg2 color
+    /// -bg color
+    /// -di[splay] host:n.n
+    /// -dn[d]
+    /// -fg color
+    /// -g[eometry] WxH+X+Y
+    /// -i[conic]
+    /// -k[bd]
+    /// -na[me] classname
+    /// -nod[nd]
+    /// -nok[bd]
+    /// -not[ooltips]
+    /// -s[cheme] scheme
+    /// -ti[tle] windowtitle
+    /// -to[oltips]
+    pub fn show_with_args(&mut self, args: &[&str]) {
+        assert!(!self.was_deleted());
+        unsafe {
+            let mut temp = vec![""];
+            temp.extend(args);
+            let len = temp.len() as i32;
+            let mut v: Vec<*mut raw::c_char> = vec![];
+            for arg in temp {
+                let c = CString::safe_new(arg);
+                v.push(c.into_raw() as *mut raw::c_char);
+            }
+            let mut v = mem::ManuallyDrop::new(v);
+            Fl_Window_show_with_args(self._inner as *mut Fl_Window, len, v.as_mut_ptr())
+        }
+    }
+
+    /// Forces the window to be drawn, this window is also made current and calls draw()
+    pub fn flush(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Double_Window_flush(self._inner as _) }
+    }
+
+    /// Draw overlay
+    pub fn draw_overlay<F: FnMut() + 'static>(&mut self, cb: F) {
+        assert!(!self.was_deleted());
+        unsafe {
+            unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+                let f: &mut (dyn FnMut()) = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+            }
+            let _old_data = self.draw_data();
+            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut raw::c_void = a as *mut raw::c_void;
+            let callback: custom_draw_callback = Some(shim);
+            Fl_Overlay_Window_draw_overlay(self._inner, callback, data);
+        }
+    }
+
+    /// Draw overlay
+    pub fn draw_overlay2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+        assert!(!self.was_deleted());
+        unsafe {
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                let mut wid = OverlayWindow::from_widget_ptr(wid as *mut _);
+                let a: *mut Box<dyn FnMut(&mut OverlayWindow)> =
+                    data as *mut Box<dyn FnMut(&mut OverlayWindow)>;
+                let f: &mut (dyn FnMut(&mut OverlayWindow)) = &mut **a;
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+            }
+            let _old_data = self.draw_data();
+            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut raw::c_void = a as *mut raw::c_void;
+            let callback: custom_draw_callback2 = Some(shim);
+            Fl_Overlay_Window_draw_overlay2(self._inner, callback, data);
+        }
+    }
+
+    /// Redraw overlay
+    pub fn redraw_overlay(&self) {
+        unsafe { Fl_Overlay_Window_redraw_overlay(self._inner) }
+    }
+}
+
 /// A wrapper around a raw OpenGL context
 pub type GlContext = *mut raw::c_void;
 
