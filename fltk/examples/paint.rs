@@ -14,10 +14,6 @@ fn main() {
     wind.show();
 
     let offs = Offscreen::new(790, 590).unwrap();
-    offs.begin();
-    set_draw_color(Color::White);
-    draw_rectf(0, 0, 790, 590);
-    offs.end();
 
     let offs = Rc::from(RefCell::from(offs));
     let offs_rc = offs.clone();
@@ -25,6 +21,11 @@ fn main() {
     frame.draw(move || {
         if offs_rc.borrow().is_valid() {
             offs_rc.borrow().copy(5, 5, 790, 590, 0, 0);
+        } else {
+            offs_rc.borrow_mut().begin();
+            set_draw_color(Color::White);
+            draw_rectf(0, 0, 790, 590);
+            offs_rc.borrow_mut().end();
         }
     });
 
