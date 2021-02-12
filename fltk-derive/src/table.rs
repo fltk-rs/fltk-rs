@@ -273,10 +273,22 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn visible_cells( &mut self, r1: &mut i32, r2: &mut i32, c1: &mut i32, c2: &mut i32,) {
+            fn visible_cells(&self, row_top: &mut i32, col_left: &mut i32, row_bot: &mut i32, col_right: &mut i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #visible_cells(self._inner, r1, r2, c1, c2)
+                    #visible_cells(self._inner, row_top, col_left, row_bot, col_right)
+                }
+            }
+
+            fn visible_cells2(&self) -> (i32, i32, i32, i32) {
+                unsafe {
+                    assert!(!self.was_deleted());
+                    let mut row_top = 0;
+                    let mut col_left = 0;
+                    let mut row_bot = 0;
+                    let mut col_right = 0;
+                    self.visible_cells(&mut row_top, &mut col_left, &mut row_bot, &mut col_right);
+                    (row_top, col_left, row_bot, col_right)
                 }
             }
 
@@ -524,6 +536,18 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     #get_selection(self._inner, row_top, col_left, row_bot, col_right)
+                }
+            }
+
+            fn get_selection2(&self) -> (i32, i32, i32, i32) {
+                unsafe {
+                    assert!(!self.was_deleted());
+                    let mut row_top = 0;
+                    let mut col_left = 0;
+                    let mut row_bot = 0;
+                    let mut col_right = 0;
+                    self.get_selection(&mut row_top, &mut col_left, &mut row_bot, &mut col_right);
+                    (row_top, col_left, row_bot, col_right)
                 }
             }
 

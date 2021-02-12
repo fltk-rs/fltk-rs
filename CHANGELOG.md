@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.14.8] - Unreleased
+### Changes
+- Add TabelExt::get_selection2 and visible_cells2 variants which return tuples.
+
 ## [0.14.7] - 2021-02-12
 ### Changes
 - Fix size of window::RawHandle on 32-bit Xlib systems (#502). Thanks @CaseyB.

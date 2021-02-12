@@ -915,7 +915,15 @@ pub unsafe trait TableExt: GroupExt {
     /// Gets the number of columns
     fn cols(&self) -> u32;
     /// Returns the range of row and column numbers for all visible and partially visible cells in the table.
-    fn visible_cells(&mut self, r1: &mut i32, r2: &mut i32, c1: &mut i32, c2: &mut i32);
+    fn visible_cells(
+        &self,
+        row_top: &mut i32,
+        col_left: &mut i32,
+        row_bot: &mut i32,
+        col_right: &mut i32,
+    );
+    /// Returns the range of row and column numbers for all visible and partially visible cells in the table.
+    fn visible_cells2(&self) -> (i32, i32, i32, i32);
     /// Returns whether the resize is interactive
     fn is_interactive_resize(&self) -> bool;
     /// Returns whether a row is resizable
@@ -992,6 +1000,8 @@ pub unsafe trait TableExt: GroupExt {
         row_bot: &mut i32,
         col_right: &mut i32,
     );
+    /// Gets the selection
+    fn get_selection2(&self) -> (i32, i32, i32, i32);
     /// Sets the selection
     fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
     /// Unset selection
