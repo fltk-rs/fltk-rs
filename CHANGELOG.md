@@ -3,6 +3,7 @@
 ## [0.14.8] - Unreleased
 ### Changes
 - Add TabelExt::get_selection2 and visible_cells2 variants which return tuples.
+- Add GlutWindow.
 
 ## [0.14.7] - 2021-02-12
 ### Changes

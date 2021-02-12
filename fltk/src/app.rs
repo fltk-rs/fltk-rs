@@ -830,7 +830,9 @@ pub fn init_all() {
             "Zapfdingbats".to_owned(),
         ];
         #[cfg(feature = "enable-glwindow")]
-        gl_loader::init_gl();
+        {
+            gl_loader::init_gl();
+        }
         if !IS_INIT.load(Ordering::Relaxed) {
             IS_INIT.store(true, Ordering::Relaxed);
         }
