@@ -432,7 +432,14 @@ impl OverlayWindow {
 
     /// Redraw overlay
     pub fn redraw_overlay(&self) {
+        assert!(!self.was_deleted());
         unsafe { Fl_Overlay_Window_redraw_overlay(self._inner) }
+    }
+
+    /// Returns whether the overlay window can do hardware backed overlay
+    pub fn can_do_overlay(&self) -> bool {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Overlay_Window_can_do_overlay(self._inner) != 0 }
     }
 }
 
@@ -525,7 +532,7 @@ impl GlWindow {
     }
 
     /// Returns whether the GlWindow can do overlay
-    pub fn can_do_overlay(&mut self) -> bool {
+    pub fn can_do_overlay(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe { Fl_Gl_Window_can_do_overlay(self._inner) != 0 }
     }
@@ -673,7 +680,7 @@ impl GlutWindow {
     }
 
     /// Returns whether the GlutWindow can do overlay
-    pub fn can_do_overlay(&mut self) -> bool {
+    pub fn can_do_overlay(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_can_do_overlay(self._inner) != 0 }
     }

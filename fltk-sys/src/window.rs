@@ -4313,6 +4313,9 @@ extern "C" {
     pub fn Fl_Overlay_Window_redraw_overlay(self_: *mut Fl_Overlay_Window);
 }
 extern "C" {
+    pub fn Fl_Overlay_Window_can_do_overlay(self_: *mut Fl_Overlay_Window) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Overlay_Window_make_modal(arg1: *mut Fl_Overlay_Window, boolean: libc::c_uint);
 }
 extern "C" {

@@ -87,17 +87,17 @@ fn main() {
         println!("cargo:rerun-if-changed=cfltk/src/cfl_surface.cpp");
         println!("cargo:rerun-if-changed=cfltk/src/cfl_printer.cpp");
 
-        Command::new("git")
-            .args(&["submodule", "update", "--init", "--recursive"])
-            .current_dir(manifest_dir.clone())
-            .status()
-            .expect("Git is needed to retrieve the fltk source files!");
+        // Command::new("git")
+        //     .args(&["submodule", "update", "--init", "--recursive"])
+        //     .current_dir(manifest_dir.clone())
+        //     .status()
+        //     .expect("Git is needed to retrieve the fltk source files!");
 
-        Command::new("git")
-            .args(&["apply", "../fltk.patch"])
-            .current_dir(manifest_dir.join("cfltk").join("fltk"))
-            .status()
-            .expect("Git is needed to retrieve the fltk source files!");
+        // Command::new("git")
+        //     .args(&["apply", "../fltk.patch"])
+        //     .current_dir(manifest_dir.join("cfltk").join("fltk"))
+        //     .status()
+        //     .expect("Git is needed to retrieve the fltk source files!");
 
         if cfg!(feature = "fltk-shared") {
             dst.define("CFLTK_BUILD_SHARED", "ON");
@@ -185,11 +185,11 @@ fn main() {
             .build();
     }
 
-    Command::new("git")
-        .args(&["reset", "--hard"])
-        .current_dir(manifest_dir.join("cfltk").join("fltk"))
-        .status()
-        .expect("Git is needed to retrieve the fltk source files!");
+    // Command::new("git")
+    //     .args(&["reset", "--hard"])
+    //     .current_dir(manifest_dir.join("cfltk").join("fltk"))
+    //     .status()
+    //     .expect("Git is needed to retrieve the fltk source files!");
 
     println!(
         "cargo:rustc-link-search=native={}",
