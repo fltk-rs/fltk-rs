@@ -5,6 +5,7 @@
 - Add draw::draw_image().
 - Add OverlayWindow widget.
 - Relax requirement of static str for get_proc_address.
+- Update deps.
 
 ## [0.14.8] - 2021-02-13
 ### Changes
