@@ -1,9 +1,10 @@
 # Changelog
 
-## [0.14.9] - Unreleased
+## [0.14.9] - 2021-02-14
 ### Changes
 - Add draw::draw_image().
 - Add OverlayWindow widget.
+- Relax requirement of static str for get_proc_address.
 
 ## [0.14.8] - 2021-02-13
 ### Changes

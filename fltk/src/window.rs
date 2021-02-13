@@ -464,7 +464,7 @@ impl GlWindow {
     }
 
     /// Gets an opengl function address
-    pub fn get_proc_address(&self, s: &'static str) -> *const raw::c_void {
+    pub fn get_proc_address(&self, s: &str) -> *const raw::c_void {
         gl_loader::get_proc_address(s) as *const _
     }
 
@@ -606,7 +606,7 @@ impl GlutWindow {
     }
 
     /// Gets an opengl function address
-    pub fn get_proc_address(&self, s: &'static str) -> *const raw::c_void {
+    pub fn get_proc_address(&self, s: &str) -> *const raw::c_void {
         let ret = gl_loader::get_proc_address(s);
         if !ret.is_null() {
             ret as *const _
