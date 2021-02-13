@@ -14,6 +14,13 @@ fn main() {
     wind.show();
 
     let offs = Offscreen::new(790, 590).unwrap();
+    #[cfg(not(target_os = "macos"))]
+    {
+        offs.begin();
+        set_draw_color(Color::White);
+        draw_rectf(0, 0, 790, 590);
+        offs.end();
+    }
 
     let offs = Rc::from(RefCell::from(offs));
     let offs_rc = offs.clone();
@@ -32,36 +39,35 @@ fn main() {
     let mut x = 0;
     let mut y = 0;
 
-    frame.handle2(move |f, ev| {
+    frame.handle2(move |f, ev| match ev {
         // println!("{:?}", ev);
         // println!("coords {:?}", app::event_coords());
         // println!("get mouse {:?}", app::get_mouse());
-        set_draw_rgb_color(255, 0, 0); // red
-        set_line_style(LineStyle::Solid, 3);
-
-        match ev {
-            Event::Push => {
-                offs.borrow().begin();
-                let coords = app::event_coords();
-                x = coords.0;
-                y = coords.1;
-                draw_point(x, y);
-                offs.borrow().end();
-                f.redraw();
-                true
-            }
-            Event::Drag => {
-                offs.borrow().begin();
-                let coords = app::event_coords();
-                draw_line(x, y, coords.0, coords.1);
-                x = coords.0;
-                y = coords.1;
-                offs.borrow().end();
-                f.redraw();
-                true
-            }
-            _ => false,
+        Event::Push => {
+            offs.borrow().begin();
+            set_draw_color(Color::Red);
+            set_line_style(LineStyle::Solid, 3);
+            let coords = app::event_coords();
+            x = coords.0;
+            y = coords.1;
+            draw_point(x, y);
+            offs.borrow().end();
+            f.redraw();
+            true
         }
+        Event::Drag => {
+            offs.borrow().begin();
+            set_draw_color(Color::Red);
+            set_line_style(LineStyle::Solid, 3);
+            let coords = app::event_coords();
+            draw_line(x, y, coords.0, coords.1);
+            x = coords.0;
+            y = coords.1;
+            offs.borrow().end();
+            f.redraw();
+            true
+        }
+        _ => false,
     });
 
     app.run().unwrap();
