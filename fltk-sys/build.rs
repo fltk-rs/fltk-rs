@@ -10,7 +10,6 @@ fn main() {
     let target_triple = env::var("TARGET").unwrap();
     let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
     let pkg_version = env::var("CARGO_PKG_VERSION").unwrap();
-    let mut dst = cmake::Config::new("cfltk");
 
     println!("cargo:rerun-if-changed=build.rs");
 
@@ -99,90 +98,177 @@ fn main() {
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
 
-        if cfg!(feature = "fltk-shared") {
-            dst.define("CFLTK_BUILD_SHARED", "ON");
-        }
+        if !target_triple.contains("android") {
+            let mut dst = cmake::Config::new("cfltk");
 
-        if cfg!(feature = "use-ninja") {
-            dst.generator("Ninja");
-        }
-
-        if cfg!(feature = "system-fltk") {
-            dst.define("USE_SYSTEM_FLTK", "ON");
-        }
-
-        if cfg!(feature = "system-libpng") {
-            dst.define("OPTION_USE_SYSTEM_LIBPNG", "ON");
-        } else {
-            dst.define("OPTION_USE_SYSTEM_LIBPNG", "OFF");
-        }
-
-        if cfg!(feature = "system-libjpeg") {
-            dst.define("OPTION_USE_SYSTEM_LIBJPEG", "ON");
-        } else {
-            dst.define("OPTION_USE_SYSTEM_LIBJPEG", "OFF");
-        }
-
-        if cfg!(feature = "system-zlib") {
-            dst.define("OPTION_USE_SYSTEM_ZLIB", "ON");
-        } else {
-            dst.define("OPTION_USE_SYSTEM_ZLIB", "OFF");
-        }
-
-        if cfg!(feature = "no-images") {
-            dst.define("CFLTK_LINK_IMAGES", "OFF");
-        } else {
-            dst.define("CFLTK_LINK_IMAGES", "ON");
-        }
-
-        if cfg!(feature = "legacy-opengl") {
-            dst.define("OpenGL_GL_PREFERENCE", "LEGACY");
-        } else {
-            dst.define("OpenGL_GL_PREFERENCE", "GLVND");
-        }
-
-        if cfg!(feature = "enable-glwindow") {
-            dst.define("OPTION_USE_GL", "ON");
-            dst.define("CFLTK_USE_OPENGL", "ON");
-        } else {
-            dst.define("OPTION_USE_GL", "OFF");
-            dst.define("CFLTK_USE_OPENGL", "OFF");
-        }
-
-        if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN") {
-            dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
-        }
-
-        if target_triple.contains("android") {
-            handle_android(&target_triple, &mut dst);
-        }
-
-        if target_triple.contains("linux") && !target_triple.contains("android") {
-            if cfg!(feature = "no-pango") {
-                dst.define("OPTION_USE_PANGO", "OFF");
-            } else {
-                dst.define("OPTION_USE_PANGO", "ON");
+            if cfg!(feature = "fltk-shared") {
+                dst.define("CFLTK_BUILD_SHARED", "ON");
             }
-        }
 
-        if target_triple.contains("unknown-linux-musl") {
-            dst.define("CMAKE_C_COMPILER", "musl-gcc");
-            dst.define("CMAKE_CXX_COMPILER", "musl-gcc");
-            dst.define("HAVE_STRLCPY", "False");
-            dst.define("HAVE_STRLCAT", "False");
-        }
+            if cfg!(feature = "use-ninja") {
+                dst.generator("Ninja");
+            }
 
-        let _dst = dst
-            .profile("Release")
-            .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
-            .define("FLTK_BUILD_EXAMPLES", "OFF")
-            .define("FLTK_BUILD_TEST", "OFF")
-            .define("FLTK_BUILD_FLUID", "OFF")
-            .define("OPTION_USE_THREADS", "ON")
-            .define("OPTION_LARGE_FILE", "ON")
-            .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
-            .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
-            .build();
+            if cfg!(feature = "system-fltk") {
+                dst.define("USE_SYSTEM_FLTK", "ON");
+            }
+
+            if cfg!(feature = "system-libpng") {
+                dst.define("OPTION_USE_SYSTEM_LIBPNG", "ON");
+            } else {
+                dst.define("OPTION_USE_SYSTEM_LIBPNG", "OFF");
+            }
+
+            if cfg!(feature = "system-libjpeg") {
+                dst.define("OPTION_USE_SYSTEM_LIBJPEG", "ON");
+            } else {
+                dst.define("OPTION_USE_SYSTEM_LIBJPEG", "OFF");
+            }
+
+            if cfg!(feature = "system-zlib") {
+                dst.define("OPTION_USE_SYSTEM_ZLIB", "ON");
+            } else {
+                dst.define("OPTION_USE_SYSTEM_ZLIB", "OFF");
+            }
+
+            if cfg!(feature = "no-images") {
+                dst.define("CFLTK_LINK_IMAGES", "OFF");
+            } else {
+                dst.define("CFLTK_LINK_IMAGES", "ON");
+            }
+
+            if cfg!(feature = "legacy-opengl") {
+                dst.define("OpenGL_GL_PREFERENCE", "LEGACY");
+            } else {
+                dst.define("OpenGL_GL_PREFERENCE", "GLVND");
+            }
+
+            if cfg!(feature = "enable-glwindow") {
+                dst.define("OPTION_USE_GL", "ON");
+                dst.define("CFLTK_USE_OPENGL", "ON");
+            } else {
+                dst.define("OPTION_USE_GL", "OFF");
+                dst.define("CFLTK_USE_OPENGL", "OFF");
+            }
+
+            if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN") {
+                dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
+            }
+
+            if target_triple.contains("linux") && !target_triple.contains("android") {
+                if cfg!(feature = "no-pango") {
+                    dst.define("OPTION_USE_PANGO", "OFF");
+                } else {
+                    dst.define("OPTION_USE_PANGO", "ON");
+                }
+            }
+
+            if target_triple.contains("unknown-linux-musl") {
+                dst.define("CMAKE_C_COMPILER", "musl-gcc");
+                dst.define("CMAKE_CXX_COMPILER", "musl-gcc");
+                dst.define("HAVE_STRLCPY", "False");
+                dst.define("HAVE_STRLCAT", "False");
+            }
+
+            let _dst = dst
+                .profile("Release")
+                .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
+                .define("FLTK_BUILD_EXAMPLES", "OFF")
+                .define("FLTK_BUILD_TEST", "OFF")
+                .define("OPTION_USE_THREADS", "ON")
+                .define("OPTION_LARGE_FILE", "ON")
+                .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
+                .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
+                .build();
+        } else {
+            let sdk = PathBuf::from(
+                env::var("ANDROID_SDK_ROOT").expect("ANDROID_SDK_ROOT needs to be set!"),
+            );
+            let mut ndk: Option<PathBuf> = None;
+            if let Ok(root) = env::var("ANDROID_NDK_ROOT") {
+                ndk = Some(PathBuf::from(root));
+            }
+            // fallback to NDK_HOME
+            if ndk.is_none() {
+                ndk = Some(PathBuf::from(
+                    env::var("NDK_HOME").expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!"),
+                ));
+            }
+
+            let ndk = ndk.expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!");
+
+            let cmake_build_dir = out_dir.join("cmake_build").to_str().unwrap().to_string();
+            let mut cmd = vec![];
+            cmd.push(format!("-B{}", cmake_build_dir));
+            cmd.push("-DOPTION_USE_GL=OFF".to_string());
+            cmd.push("-DOPTION_USE_SYSTEM_ZLIB=OFF".to_string());
+            cmd.push("-DCFLTK_USE_OPENGL=OFF".to_string());
+            cmd.push("-DCMAKE_EXPORT_COMPILE_COMMANDS=ON".to_string());
+            cmd.push("-DFLTK_BUILD_EXAMPLES=OFF".to_string());
+            cmd.push("-DFLTK_BUILD_TEST=OFF".to_string());
+            cmd.push("-DOPTION_USE_THREADS=ON".to_string());
+            cmd.push("-DOPTION_LARGE_FILE=ON".to_string());
+            cmd.push("-DOPTION_BUILD_HTML_DOCUMENTATION=OFF".to_string());
+            cmd.push("-DOPTION_BUILD_PDF_DOCUMENTATION=OFF".to_string());
+            cmd.push("-DCMAKE_BUILD_TYPE=Release".to_string());
+            cmd.push(format!(
+                "-DCMAKE_INSTALL_PREFIX={}",
+                out_dir.to_str().unwrap()
+            ));
+            cmd.push("-GNinja".to_string());
+            cmd.push("-DCMAKE_SYSTEM_NAME=Android".to_string());
+            cmd.push("-DCMAKE_SYSTEM_VERSION=21".to_string());
+            cmd.push("-DANDROID_PLATFORM=android-21".to_string());
+            cmd.push(format!("-DCMAKE_ANDROID_NDK={}", &ndk.to_str().unwrap()));
+            cmd.push(format!("-DANDROID_NDK={}", &ndk.to_str().unwrap()));
+            cmd.push(format!(
+                "-DCMAKE_MAKE_PROGRAM={}",
+                find_ninja(&sdk)
+                    .expect("Couldn't find NDK ninja!")
+                    .to_str()
+                    .unwrap()
+            ));
+            cmd.push(format!(
+                "-DCMAKE_TOOLCHAIN_FILE={}",
+                ndk.join("build")
+                    .join("cmake")
+                    .join("android.toolchain.cmake")
+                    .to_str()
+                    .unwrap()
+            ));
+
+            match target_triple.as_str() {
+                "i686-linux-android" => {
+                    cmd.push("-DANDROID_ABI=x86".to_string());
+                    cmd.push("-DCMAKE_ANDROID_ARCH_ABI=x86".to_string());
+                }
+                "aarch64-linux-android" => {
+                    cmd.push("-DANDROID_ABI=arm64-v8a".to_string());
+                    cmd.push("-DCMAKE_ANDROID_ARCH_ABI=arm64-v8a".to_string());
+                }
+                "armv7-linux-androideabi" => {
+                    cmd.push("-DANDROID_ABI=armeabi-v7a".to_string());
+                    cmd.push("-DCMAKE_ANDROID_ARCH_ABI=armeabi-v7a".to_string());
+                }
+                "x86_64-linux-android" => {
+                    cmd.push("-DANDROID_ABI=x86_64".to_string());
+                    cmd.push("-DCMAKE_ANDROID_ARCH_ABI=x86_64".to_string());
+                }
+                _ => panic!("Unknown android triple"),
+            }
+
+            Command::new("cmake")
+                .args(&cmd)
+                .current_dir("cfltk")
+                .status()
+                .expect("CMake is needed for android builds!");
+
+            Command::new("cmake")
+                .args(&["--build", &cmake_build_dir, "--target", "install"])
+                .current_dir("cfltk")
+                .status()
+                .expect("CMake is needed for android builds!");
+        }
     }
 
     Command::new("git")
@@ -316,60 +402,6 @@ fn main() {
                 }
             }
         }
-    }
-}
-
-fn handle_android(triple: &str, dst: &mut cmake::Config) {
-    let sdk =
-        PathBuf::from(env::var("ANDROID_SDK_ROOT").expect("ANDROID_SDK_ROOT needs to be set!"));
-    let mut ndk: Option<PathBuf> = None;
-    if let Ok(root) = env::var("ANDROID_NDK_ROOT") {
-        ndk = Some(PathBuf::from(root));
-    }
-    // fallback to NDK_HOME
-    if ndk.is_none() {
-        ndk = Some(PathBuf::from(
-            env::var("NDK_HOME").expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!"),
-        ));
-    }
-
-    let ndk = ndk.expect("ANDROID_NDK_ROOT or NDK_HOME need to be set!");
-
-    dst.generator("Ninja");
-    dst.define("CMAKE_SYSTEM_NAME", "Android");
-    dst.define("CMAKE_SYSTEM_VERSION", "21");
-    dst.define("ANDROID_PLATFORM", "android-21");
-    dst.define("CMAKE_ANDROID_NDK", &ndk);
-    dst.define("ANDROID_NDK", &ndk);
-    dst.define(
-        "CMAKE_MAKE_PROGRAM",
-        find_ninja(&sdk).expect("Couldn't find NDK ninja!"),
-    );
-    dst.define(
-        "CMAKE_TOOLCHAIN_FILE",
-        ndk.join("build")
-            .join("cmake")
-            .join("android.toolchain.cmake"),
-    );
-
-    match triple {
-        "i686-linux-android" => {
-            dst.define("ANDROID_ABI", "x86");
-            dst.define("CMAKE_ANDROID_ARCH_ABI", "x86");
-        }
-        "aarch64-linux-android" => {
-            dst.define("ANDROID_ABI", "arm64-v8a");
-            dst.define("CMAKE_ANDROID_ARCH_ABI", "arm64-v8a");
-        }
-        "armv7-linux-androideabi" => {
-            dst.define("ANDROID_ABI", "armeabi-v7a");
-            dst.define("CMAKE_ANDROID_ARCH_ABI", "armeabi-v7a");
-        }
-        "x86_64-linux-android" => {
-            dst.define("ANDROID_ABI", "x86_64");
-            dst.define("CMAKE_ANDROID_ARCH_ABI", "x86_64");
-        }
-        _ => panic!("Unknown android triple"),
     }
 }
 

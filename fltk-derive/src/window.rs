@@ -88,7 +88,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     });
                 }
 
-                #[cfg(target_os = "anndroid")]
+                #[cfg(target_os = "android")]
                 {
                     return RawWindowHandle::Android(android::AndroidHandle {
                         a_native_window: self.raw_handle(),

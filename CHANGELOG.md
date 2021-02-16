@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [0.14.11] - 2021-02-17
+### Changes
+- Fix android typo causing failed android builds.
+- Fix draw::draw_image().
+
 ## [0.14.10] - 2021-02-16
 ### Changes
 - Mark draw::draw_image() as unsafe.
