@@ -89,6 +89,8 @@ pub unsafe trait WidgetExt {
     /// Set to dimensions width and height
     fn set_size(&mut self, width: i32, height: i32);
     /// Sets the widget's label
+    /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png)
+    /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
     fn set_label(&mut self, title: &str);
     /// Redraws a widget, necessary for resizing and changing positions
     fn redraw(&mut self);
@@ -300,6 +302,8 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// * `width` - The width of the widget
     /// * `heigth` - The height of the widget
     /// * `title` - The title or label of the widget
+    /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png)
+    /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
     /// Deletes widgets and their children.
     fn delete(wid: Self)
