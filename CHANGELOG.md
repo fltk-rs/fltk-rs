@@ -1,9 +1,11 @@
 # Changelog
 
-## [0.14.10] - 2021-02-14
+
+## [0.14.10] - 2021-02-16
 ### Changes
 - Mark draw::draw_image() as unsafe.
 - Add docs regarding label's special symbols.
+- Add enable-glwindow to docs.rs metadata.
 
 ## [0.14.9] - 2021-02-14
 ### Changes
