@@ -235,7 +235,6 @@ To run the examples:
 ```
 $ cargo run --example editor
 $ cargo run --example calculator
-$ cargo run --example gallery
 $ cargo run --example terminal_colored
 $ cargo run --example counter
 $ cargo run --example hello
@@ -253,7 +252,7 @@ Setting the scheme to Gtk:
 
 ![alt_test](screenshots/calc.jpg)
 
-![alt_test](screenshots/gallery.jpg)
+![alt_test](screenshots/tabs.jpg)
 
 <img alt="Counter" width=240 height=300 src="screenshots/counter.jpg">
 
