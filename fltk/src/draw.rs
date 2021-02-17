@@ -787,7 +787,14 @@ pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
 
 /// Draw an image into a widget
 /// Requires a call to app::set_visual(Mode::Rgb8).unwrap()
-pub fn draw_image(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: u32) -> Result<(), FltkError> {
+pub fn draw_image(
+    data: &[u8],
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    depth: u32,
+) -> Result<(), FltkError> {
     if depth > 4 {
         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
     }
@@ -798,9 +805,7 @@ pub fn draw_image(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: u32) -> Re
     if sz > data.len() {
         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
     }
-    unsafe {
-        Ok(Fl_draw_image(data.as_ptr(), x, y, w, h, depth as i32, 0))
-    }
+    unsafe { Ok(Fl_draw_image(data.as_ptr(), x, y, w, h, depth as i32, 0)) }
 }
 
 /// Transforms raw data to png file

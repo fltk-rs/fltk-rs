@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.12] - 2021-02-18
+### Changes
+- Update FLTK and cfltk.
+- cleanup fltk.patch.
+- Fix broken image::Pixmap.
+- Add asserts for supported window icon images.
+
 ## [0.14.11] - 2021-02-17
 ### Changes
 - Fix android typo causing failed android builds.

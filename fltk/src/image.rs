@@ -3,6 +3,7 @@ use fltk_sys::image::*;
 use std::{
     ffi::CString,
     mem,
+    os::raw,
     sync::atomic::{AtomicUsize, Ordering},
 };
 
@@ -545,12 +546,14 @@ pub struct Pixmap {
 }
 
 impl Pixmap {
-    /// Creates an new Pixmap image
-    pub fn new(data: &[u8]) -> Pixmap {
+    /// Creates a new Pixmap image
+    pub fn new(data: &'static [&'static str]) -> Pixmap {
         unsafe {
-            let data = data.to_owned();
-            let data = Box::new(data.as_ptr());
-            let ptr = Fl_Pixmap_new(Box::into_raw(data));
+            let mut v: Vec<*const raw::c_char> = vec![];
+            for &elem in data {
+                v.push(CString::safe_new(elem).into_raw());
+            }
+            let ptr = Fl_Pixmap_new(Box::leak(Box::new(v)).as_ptr());
             assert!(!ptr.is_null());
             Pixmap {
                 _inner: ptr,

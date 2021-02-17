@@ -2,6 +2,8 @@ use fltk::{app, button::*, frame::*, window::*};
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
+    app::background(0x62, 0x00, 0xee);
+    app::set_visible_focus(false);
 
     let mut wind = Window::default()
         .with_size(160, 200)
@@ -22,7 +24,7 @@ fn main() {
         .with_label("-");
     wind.make_resizable(true);
     wind.end();
-    wind.show_with_args(&["-nokbd"]); // -nokbd is akin to .clear_visible_focus() on all widgets
+    wind.show();
 
     let mut frame1 = frame.clone();
     but_inc.set_callback(move || {
@@ -37,15 +39,15 @@ fn main() {
     });
 
     // Theming
-    wind.set_color(Color::from_u32(0xffebee));
+    wind.set_color(Color::White);
     but_inc.set_color(Color::from_u32(0x304FFE));
     but_inc.set_selection_color(Color::Green);
     but_inc.set_label_size(20);
-    but_inc.set_frame(FrameType::RFlatBox);
+    but_inc.set_frame(FrameType::FlatBox);
     but_inc.set_label_color(Color::White);
     but_dec.set_color(Color::from_u32(0x2962FF));
     but_dec.set_selection_color(Color::Red);
-    but_dec.set_frame(FrameType::RFlatBox);
+    but_dec.set_frame(FrameType::FlatBox);
     but_dec.set_label_size(20);
     but_dec.set_label_color(Color::White);
     // End theming

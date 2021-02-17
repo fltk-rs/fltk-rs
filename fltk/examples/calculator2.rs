@@ -28,21 +28,23 @@ struct MyButton {
 impl MyButton {
     pub fn new(title: &str) -> MyButton {
         let mut b = MyButton {
-            btn: Button::new(0, 0, 90, 0, title),
+            btn: Button::new(0, 0, 100, 0, title),
         };
-        b.set_label_size(20);
+        b.set_label_size(24);
+        b.set_frame(FrameType::FlatBox);
         match title {
             "0" => {
-                b.resize(0, 0, 90 * 2, 0);
-                b.set_color(Color::Light3);
+                b.resize(0, 0, 100 * 2, 0);
+                b.set_label_color(Color::White);
                 b.set_shortcut(Shortcut::None | '0');
             }
             "CE" => {
-                b.set_color(Color::Red);
+                b.set_color(Color::from_u32(0xd50000));
                 b.set_shortcut(Shortcut::None | Key::Delete);
             }
             "x" | "/" | "+" | "-" | "=" | "C" | "@<-" => {
-                b.set_color(Color::Yellow);
+                b.set_color(Color::from_u32(0xffee58));
+                b.set_label_color(Color::Black);
                 let shortcut = if title == "x" {
                     '*'
                 } else {
@@ -57,7 +59,7 @@ impl MyButton {
                 }
             }
             _ => {
-                b.set_color(Color::Light3);
+                b.set_label_color(Color::White);
                 b.set_shortcut(Shortcut::None | title.chars().next().unwrap());
             }
         }
@@ -81,10 +83,13 @@ impl DerefMut for MyButton {
 
 fn main() {
     let app = app::App::default();
+    app::set_visible_focus(false);
+    app::background(0x42, 0x42, 0x42);
+    app::background2(0x1b, 0x1b, 0x1b);
+
     let win_w = 400;
     let win_h = 500;
-    let border = 20;
-    let but_row = 180;
+    let but_row = 160;
 
     let mut operation = Ops::None;
     let mut txt = String::from("0");
@@ -95,15 +100,16 @@ fn main() {
         .with_label("FLTK Calc")
         .with_size(win_w, win_h)
         .center_screen();
-    wind.set_color(Color::Light3);
 
-    let mut out = Output::new(border, border, win_w - 40, 140, "");
+    let mut out = Output::new(0, 0, win_w, 160, "");
+    out.set_frame(FrameType::FlatBox);
+    out.set_text_color(Color::White);
     out.set_text_size(36);
     out.set_value("0");
 
-    let vpack = Pack::new(border, but_row, win_w - 40, 300, "");
+    let vpack = Pack::new(0, but_row, win_w, win_h - 170, "");
 
-    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w, 68, "");
     let but_ce = MyButton::new("CE");
     let but_c = MyButton::new("C");
     let but_back = MyButton::new("@<-");
@@ -111,7 +117,7 @@ fn main() {
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w, 68, "");
     let mut but7 = MyButton::new("7");
     let mut but8 = MyButton::new("8");
     let mut but9 = MyButton::new("9");
@@ -119,7 +125,7 @@ fn main() {
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w, 68, "");
     let mut but4 = MyButton::new("4");
     let mut but5 = MyButton::new("5");
     let mut but6 = MyButton::new("6");
@@ -127,7 +133,7 @@ fn main() {
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w, 68, "");
     let mut but1 = MyButton::new("1");
     let mut but2 = MyButton::new("2");
     let mut but3 = MyButton::new("3");
@@ -135,7 +141,7 @@ fn main() {
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, win_w - 40, 60, "");
+    let mut hpack = Pack::new(0, 0, win_w, 68, "");
     let mut but_dot = MyButton::new(".");
     let mut but0 = MyButton::new("0");
     let but_eq = MyButton::new("=");
@@ -146,7 +152,7 @@ fn main() {
 
     wind.make_resizable(false);
     wind.end();
-    wind.show_with_args(&["-scheme", "gtk+", "-nokbd"]);
+    wind.show();
 
     app::set_focus(&*but1);
 
