@@ -30,10 +30,11 @@ impl MyButton {
         let mut b = MyButton {
             btn: Button::new(0, 0, 90, 0, title),
         };
+        b.set_label_size(20);
         match title {
             "0" => {
                 b.resize(0, 0, 90 * 2, 0);
-                b.set_color(Color::Light2);
+                b.set_color(Color::Light3);
                 b.set_shortcut(Shortcut::None | '0');
             }
             "CE" => {
@@ -56,7 +57,7 @@ impl MyButton {
                 }
             }
             _ => {
-                b.set_color(Color::Light2);
+                b.set_color(Color::Light3);
                 b.set_shortcut(Shortcut::None | title.chars().next().unwrap());
             }
         }
@@ -94,10 +95,10 @@ fn main() {
         .with_label("FLTK Calc")
         .with_size(win_w, win_h)
         .center_screen();
-    wind.set_color(Color::Light2);
+    wind.set_color(Color::Light3);
 
     let mut out = Output::new(border, border, win_w - 40, 140, "");
-    out.set_text_size(30);
+    out.set_text_size(36);
     out.set_value("0");
 
     let vpack = Pack::new(border, but_row, win_w - 40, 300, "");
