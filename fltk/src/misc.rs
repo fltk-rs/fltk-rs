@@ -659,7 +659,11 @@ impl InputChoice {
     }
 }
 
-/// Creates a HelpView widget
+/// Creates a HelpView widget which supports HTML 2 formatting
+/// ```no_run
+/// let mut h = misc::HelpView::new(10, 10, 380, 280, "");
+/// h.set_value("Hello <b><font color=red>again</font></b>");
+/// ```
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct HelpView {
     _inner: *mut Fl_Help_View,

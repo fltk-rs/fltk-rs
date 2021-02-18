@@ -84,6 +84,18 @@ impl TextBuffer {
     }
 
     /// Appends to the buffer
+    /// To append and scroll to the end of the buffer:
+    /// ```no_run
+    /// let buf = TextBuffer::default();
+    /// let mut disp = TextDisplay::default();
+    /// disp.set_buffer(Some(buf));
+    /// disp.buffer().unwrap().append(txt);
+    /// disp.set_insert_position(disp.buffer().unwrap().length());
+    /// disp.scroll(
+    ///     disp.count_lines(0, disp.buffer().unwrap().length(), true),
+    ///     0,
+    /// );
+    /// ```
     pub fn append(&mut self, text: &str) {
         assert!(!self._inner.is_null());
         let text = CString::safe_new(text);

@@ -1,4 +1,4 @@
-use fltk::{app::*, button::*, tree::*, window::*};
+use fltk::{app, button::*, tree::*, window::*};
 use std::env;
 
 fn main() {
@@ -14,7 +14,7 @@ fn main() {
         })
         .collect();
 
-    let app = App::default().with_scheme(Scheme::Gtk);
+    let app = app::App::default().with_scheme(app::Scheme::Gtk);
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut but = Button::new(160, 255, 80, 40, "Get Items");
     let mut tree = Tree::new(5, 10, 190, 240, "");

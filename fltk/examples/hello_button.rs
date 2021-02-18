@@ -1,7 +1,7 @@
-use fltk::{app::*, button::*, frame::*, window::*};
+use fltk::{app, button::*, frame::*, window::*};
 
 fn main() {
-    let app = App::default();
+    let app = app::App::default();
     let mut wind = Window::default().with_size(400, 300);
     let mut frame = Frame::default().size_of(&wind);
     let mut but = Button::new(160, 210, 80, 40, "Click me!");

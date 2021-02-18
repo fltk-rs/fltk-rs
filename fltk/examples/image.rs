@@ -1,10 +1,10 @@
 // // This is an example using the image crate
 
-// use fltk::{app::*, frame::*, image::RgbImage, window::*};
+// use fltk::{app, frame::*, image::RgbImage, window::*};
 // use image::GenericImageView;
 //
 // fn main() {
-//     let app = App::default();
+//     let app = app::App::default();
 //     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //     let mut frame = Frame::new(0, 0, 400, 200, "");
 //
@@ -21,7 +21,7 @@
 
 // // This is an example using the rust_embed crate
 
-// use fltk::{app::*, frame::*, image::*, window::*};
+// use fltk::{app, frame::*, image::*, window::*};
 // #[macro_use]
 // extern crate rust_embed;
 //
@@ -30,7 +30,7 @@
 // struct Asset;
 //
 // fn main() {
-//     let app = App::default();
+//     let app = app::App::default();
 //     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //     let mut frame = Frame::new(0, 0, 400, 200, "");
 //
@@ -46,11 +46,11 @@
 
 // // This is an example showing using the inbuilt image functions
 
-use fltk::{app::*, frame::*, image::*, window::*};
+use fltk::{app, frame::*, image::*, window::*};
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let app = App::default().with_scheme(Scheme::Gleam);
+    let app = app::App::default().with_scheme(app::Scheme::Gleam);
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 300, "");
 

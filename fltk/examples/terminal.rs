@@ -1,136 +1,117 @@
 use fltk::{app, text::*, window::*};
-use std::cell::RefCell;
 use std::ops::{Deref, DerefMut};
 use std::path::Path;
 use std::process::{Command, Stdio};
-use std::rc::Rc;
-
-fn append(disp: &mut TextDisplay, txt: &str) {
-    disp.buffer().unwrap().append(txt);
-    disp.set_insert_position(disp.buffer().unwrap().length());
-    disp.scroll(
-        disp.count_lines(0, disp.buffer().unwrap().length(), true),
-        0,
-    );
-}
 
 #[derive(Debug, Clone)]
 struct Term {
-    pub term: TextDisplay,
-    current_dir: Rc<RefCell<String>>,
-    cmd: Rc<RefCell<String>>,
+    pub term: SimpleTerminal,
+    current_dir: String,
+    cmd: String,
+    sbuf: TextBuffer,
 }
 
 impl Term {
-    pub fn default() -> Term {
+    pub fn new() -> Term {
         let mut current_dir = std::env::current_dir()
             .unwrap()
             .to_string_lossy()
             .to_string();
+
         current_dir.push_str("$ ");
 
-        let mut term = TextDisplay::new(5, 5, 630, 470, "");
-        let buf = TextBuffer::default();
-        term.set_buffer(Some(buf));
-        term.set_color(Color::Black);
-        term.set_text_color(Color::Green);
-        term.set_text_font(Font::Courier);
-        term.set_cursor_color(Color::Green);
-        term.set_cursor_style(TextCursor::Block);
-        term.show_cursor(true);
-        append(&mut term, &current_dir);
+        let mut term = SimpleTerminal::new(5, 5, 630, 470, "");
 
-        let current_dir = Rc::from(RefCell::from(current_dir));
-        let cmd = Rc::from(RefCell::from(String::from("")));
-        let cmd_c = cmd.clone();
-        let current_dir_c = current_dir.clone();
+        let sbuf = TextBuffer::default();
 
-        let run_command = move || -> String {
-            let args = cmd_c.borrow().clone();
-            let args: Vec<&str> = args.split_whitespace().collect();
+        // Enable different colored text in TestDisplay
+        let styles: Vec<StyleTableEntry> = vec![
+            StyleTableEntry {
+                color: Color::Green,
+                font: Font::Courier,
+                size: 16,
+            },
+            StyleTableEntry {
+                color: Color::Red,
+                font: Font::Courier,
+                size: 16,
+            },
+            StyleTableEntry {
+                color: Color::from_u32(0x8000ff),
+                font: Font::Courier,
+                size: 16,
+            },
+        ];
 
-            if !args.is_empty() {
-                let mut proc = Command::new(args[0]);
-                if args.len() > 1 {
-                    if args[0] == "cd" {
-                        let path = Path::new(args[1]);
-                        if path.exists() && path.is_dir() {
-                            std::env::set_current_dir(path).unwrap();
-                            let mut dir = std::env::current_dir()
-                                .unwrap()
-                                .to_string_lossy()
-                                .to_string();
-                            dir.push_str("$ ");
-                            *current_dir_c.borrow_mut() = dir;
-                            return String::from("");
-                        } else {
-                            return String::from("Path does not exist!\n");
-                        }
-                    } else {
-                        proc.args(&args[1..]);
-                    }
-                }
-                let out = proc.stdout(Stdio::piped()).stderr(Stdio::piped()).output();
-                if let Ok(out) = out {
-                    let stdout = out.stdout;
-                    String::from_utf8_lossy(&stdout).to_string()
-                } else {
-                    let msg = format!("{}: command not found!\n", &*cmd_c.borrow());
-                    msg
-                }
-            } else {
-                String::from("")
-            }
-        };
-
-        let cmd_c = cmd.clone();
-        let current_dir_c = current_dir.clone();
-
-        term.handle2(move |t, ev| {
-            // println!("{:?}", app::event());
-            // println!("{:?}", app::event_key());
-            // println!("{:?}", app::event_text());
-            match ev {
-                Event::KeyDown => match app::event_key() {
-                    Key::Enter => {
-                        append(t, "\n");
-                        let out = run_command();
-                        append(t, &out);
-                        append(t, &current_dir_c.borrow());
-                        cmd_c.borrow_mut().clear();
-                        true
-                    }
-                    Key::BackSpace => {
-                        if !cmd_c.borrow().is_empty() {
-                            let text_len = t.buffer().unwrap().text().len() as u32;
-                            t.buffer().unwrap().remove(text_len - 1, text_len as u32);
-                            cmd_c.borrow_mut().pop().unwrap();
-                            true
-                        } else {
-                            false
-                        }
-                    }
-                    _ => {
-                        let temp = app::event_text();
-                        cmd_c.borrow_mut().push_str(&temp);
-                        append(t, &temp);
-                        true
-                    }
-                },
-                _ => false,
-            }
-        });
+        term.set_highlight_data(sbuf.clone(), styles);
 
         Term {
             term,
             current_dir,
-            cmd,
+            cmd: String::from(""),
+            sbuf,
+        }
+    }
+
+    fn append_txt(&mut self, txt: &str) {
+        self.term.append(txt);
+        if txt == self.current_dir.as_str() {
+            self.sbuf.append(&"C".repeat(txt.len()));
+        } else {
+            self.sbuf.append(&"A".repeat(txt.len()));
+        }
+    }
+
+    fn append_error(&mut self, txt: &str) {
+        self.term.append(txt);
+        self.sbuf.append(&"B".repeat(txt.len()));
+    }
+
+    fn run_command(&mut self) -> String {
+        let args = self.cmd.clone();
+        let args: Vec<&str> = args.split_whitespace().collect();
+
+        if !args.is_empty() {
+            let mut cmd = Command::new(args[0]);
+            if args.len() > 1 {
+                if args[0] == "cd" {
+                    let path = args[1];
+                    return self.change_dir(&Path::new(path));
+                } else {
+                    cmd.args(&args[1..]);
+                }
+            }
+            let out = cmd.stdout(Stdio::piped()).stderr(Stdio::piped()).output();
+            if let Ok(out) = out {
+                let stdout = out.stdout;
+                String::from_utf8_lossy(&stdout).to_string()
+            } else {
+                let msg = format!("{}: command not found!\n", self.cmd);
+                msg
+            }
+        } else {
+            String::from("")
+        }
+    }
+
+    pub fn change_dir(&mut self, path: &Path) -> String {
+        if path.exists() && path.is_dir() {
+            std::env::set_current_dir(path).unwrap();
+            let mut current_dir = std::env::current_dir()
+                .unwrap()
+                .to_string_lossy()
+                .to_string();
+            current_dir.push_str("$ ");
+            self.current_dir = current_dir;
+            String::from("")
+        } else {
+            String::from("Path does not exist!\n")
         }
     }
 }
 
 impl Deref for Term {
-    type Target = TextDisplay;
+    type Target = SimpleTerminal;
 
     fn deref(&self) -> &Self::Target {
         &self.term
@@ -145,11 +126,58 @@ impl DerefMut for Term {
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Plastic);
-    let mut wind = Window::new(100, 100, 640, 480, "Rusty Terminal");
-    let _t = Term::default();
+    let mut wind = Window::new(100, 100, 640, 480, "Color Terminal");
+
+    let mut term = Term::new();
+
+    let dir = term.current_dir.clone();
+    term.append_txt(&dir);
+
     wind.make_resizable(true);
     wind.end();
     wind.show();
+
+    let mut term_c = term.clone();
+    term_c.handle(move |ev| {
+        // println!("{:?}", app::event());
+        // println!("{:?}", app::event_key());
+        // println!("{:?}", app::event_text());
+        match ev {
+            Event::KeyDown => match app::event_key() {
+                Key::Enter => {
+                    term.append_txt("\n");
+                    let out = term.run_command();
+                    if out.contains("not found") {
+                        term.append_error(&out);
+                    } else {
+                        term.append_txt(&out);
+                    }
+                    let current_dir = term.current_dir.clone();
+                    term.append_txt(&current_dir);
+                    term.cmd.clear();
+                    true
+                }
+                Key::BackSpace => {
+                    if !term.cmd.is_empty() {
+                        let text_len = term.text().len() as u32;
+                        term.buffer().unwrap().remove(text_len - 1, text_len);
+                        term.sbuf.remove(text_len - 1, text_len);
+                        term.cmd.pop().unwrap();
+                        true
+                    } else {
+                        false
+                    }
+                }
+                _ => {
+                    let temp = app::event_text();
+                    term.cmd.push_str(&temp);
+                    term.append_txt(&temp);
+                    true
+                }
+            },
+            _ => false,
+        }
+    });
 
     app.run().unwrap();
 }

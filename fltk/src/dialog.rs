@@ -495,6 +495,39 @@ pub fn beep(tp: BeepType) {
 }
 
 /// FLTK's own FileChooser. Which differs for the Native FileDialog
+/// Example:
+/// ```no_run
+/// let mut chooser = FileChooser::new(
+///     ".",                    // directory
+///     "*",                    // filter or pattern
+///     FileChooserType::Multi, // chooser type
+///     "Title Of Chooser",     // title
+/// );
+/// chooser.show();
+/// chooser.window().set_pos(300, 300);
+/// // Block until user picks something.
+/// //     (The other way to do this is to use a callback())
+/// //
+/// while chooser.shown() {
+///     app::wait();
+/// }
+/// // User hit cancel?
+/// if chooser.value(1).is_none() {
+///     println!("(User hit 'Cancel')");
+///     return;
+/// }
+/// // Print what the user picked
+/// println!("--------------------");
+/// println!("DIRECTORY: '{}'", chooser.directory().unwrap());
+/// println!("    VALUE: '{}'", chooser.value(1).unwrap()); // value starts at 1!
+/// println!("    COUNT: {} files selected", chooser.count());
+/// // Multiple files? Show all of them
+/// if chooser.count() > 1 {
+///     for t in 1..=chooser.count() {
+///         println!(" VALUE[{}]: '{}'", t, chooser.value(t).unwrap());
+///     }
+/// }
+/// ```
 pub struct FileChooser {
     _inner: *mut Fl_File_Chooser,
 }
@@ -1020,6 +1053,11 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
 }
 
 /// Shows a file chooser returning a String
+/// Example:
+/// ```no_run
+/// let file = file_chooser("Choose File", "*.rs", ".", true).unwrap();
+/// println!("{}", file);
+/// ```
 pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> Option<String> {
     let message = CString::safe_new(message);
     let pattern = CString::safe_new(pattern);

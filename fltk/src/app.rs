@@ -401,6 +401,23 @@ where
 }
 
 /// Set a widget callback using a C style API
+/// ```no_run
+/// // data can be anything, even a different widget
+/// fn cb(w: app::WidgetPtr, data: *mut c_void) {
+///     // To access the button
+///     let mut btn = unsafe { button::Button::from_widget_ptr(w) }; // Gets a Widget
+///     btn.set_label("Works!");
+///     // To access the frame
+///     let mut frm = unsafe { widget::Widget::from_widget_ptr(data as app::WidgetPtr) };
+///     frm.set_label("Works!");
+/// }
+/// unsafe {
+///     // If no data needs to be passed, you can pass 0 as *mut _
+///     app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(cb));
+///     // // Using a closure also works
+///     app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")});
+/// }
+/// ```
 /// # Safety
 /// The function involves dereferencing externally provided raw pointers
 pub unsafe fn set_raw_callback<W>(
@@ -699,6 +716,20 @@ pub fn quit() {
 }
 
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
+/// Example:
+/// ```no_run
+/// fn callback() {
+///     println!("TICK");
+///     app::repeat_timeout(1.0, callback);
+/// }
+/// fn main() {
+///     let app = app::App::default();
+///     let mut wind = window::Window::new(100, 100, 400, 300, "");
+///     wind.show();
+///     app::add_timeout(1.0, callback);
+///     app.run().unwrap();
+/// }
+/// ```
 pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
@@ -716,6 +747,20 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
 /// Repeats a timeout callback from the expiration of the previous timeout
 /// You may only call this method inside a timeout callback.
 /// The timeout duration `tm` is indicated in seconds
+/// Example:
+/// ```no_run
+/// fn callback() {
+///     println!("TICK");
+///     app::repeat_timeout(1.0, callback);
+/// }
+/// fn main() {
+///     let app = app::App::default();
+///     let mut wind = window::Window::new(100, 100, 400, 300, "");
+///     wind.show();
+///     app::add_timeout(1.0, callback);
+///     app.run().unwrap();
+/// }
+/// ```
 pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {

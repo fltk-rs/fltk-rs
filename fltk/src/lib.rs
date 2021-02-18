@@ -42,7 +42,7 @@
 //! ```no_run
 //!     use fltk::{app::*, window::*};
 //!
-//!     let app = App::default();
+//!     let app = app::App::default();
 //!     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //!     wind.end();
 //!     wind.show();
@@ -53,7 +53,7 @@
 //! ```no_run
 //!     use fltk::{app::*, button::*, frame::*, window::*};
 //!
-//!     let app = App::default();
+//!     let app = app::App::default();
 //!     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //!     let mut frame = Frame::new(0, 0, 400, 200, "");
 //!     let mut but = Button::new(160, 210, 80, 40, "Click me!");
@@ -148,7 +148,7 @@
 //!
 //! These can be set using the App::with_scheme() function.
 //! ```ignored
-//! let app = App::default().with_scheme(AppScheme::Gleam);
+//! let app = app::App::default().with_scheme(app::Scheme::Gleam);
 //! ```
 //! Themes of individual widgets can be optionally modified using the provided methods in the WidgetBase trait,
 //! such as set_color(), set_label_font(), set_frame() etc:
