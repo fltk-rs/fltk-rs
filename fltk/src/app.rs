@@ -572,8 +572,7 @@ pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
             0.0 => Ok(false),
             1.0 => Ok(true),
             _ => Err(FltkError::Unknown(String::from(
-                "An unknown error occured!",)))
-            }
+                "An unknown error occured!"))),
         }
     }
 }
