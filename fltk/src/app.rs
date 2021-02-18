@@ -563,6 +563,9 @@ pub fn add_idle<F: FnMut() + 'static>(cb: F) {
 }
 
 /// Waits a maximum of `dur` seconds or until "something happens".
+/// Returns true if an event happened (always true on windows)
+/// Returns false if nothing happened
+/// Can error out on X11 system if interrupted by a signal 
 pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
     unsafe {
         if !IS_INIT.load(Ordering::Relaxed) {
