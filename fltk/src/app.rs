@@ -563,17 +563,17 @@ pub fn add_idle<F: FnMut() + 'static>(cb: F) {
 }
 
 /// Waits a maximum of `dur` seconds or until "something happens".
-pub fn wait_for(dur: f64) -> Result<(), FltkError> {
+pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
     unsafe {
         if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
-        if Fl_wait_for(dur) >= 0.0 {
-            Ok(())
-        } else {
-            Err(FltkError::Unknown(String::from(
-                "An unknown error occured!",
-            )))
+        match Fl_wait_for(dur) {
+            0.0 => Ok(false),
+            1.0 => Ok(true),
+            _ => Err(FltkError::Unknown(String::from(
+                "An unknown error occured!",)))
+            }
         }
     }
 }
@@ -965,13 +965,13 @@ pub fn set_focus<W: WidgetExt>(wid: &W) {
     unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }
 
-/// Delays the current thread by millis. Because std::thread::sleep isn't accurate on windows!
+/// Delays the current thread by seconds
 /// Caution: It's a busy wait!
-pub fn delay(millis: u128) {
+pub fn delay(seconds: f64) {
     let now = time::Instant::now();
     loop {
         let after = time::Instant::now();
-        if after.duration_since(now).as_millis() > millis {
+        if after.duration_since(now).as_millis() > (seconds * 1000.0) as u128 {
             break;
         }
     }
