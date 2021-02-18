@@ -1,8 +1,9 @@
-use fltk::{app::*, frame::*, image::*, window::*};
+use fltk::{app, frame::*, image::*, window::*};
 
 fn main() {
-    let app = App::default().with_scheme(Scheme::Gleam);
+    let app = app::App::default().with_scheme(app::Scheme::Gleam);
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+
     let mut frame = Frame::new(20, 20, 360, 260, "");
     frame.set_frame(FrameType::EngraveBox);
     let mut image = SvgImage::load("screenshots/RustLogo.svg").unwrap();

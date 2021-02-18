@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.14.13] - 2021-02-19
+### Changes
+- Clean up examples.
+- Move example usage to docs.
+- Mark Pixmap constructor as unsafe.
+- Refactoring.
+
 ## [0.14.12] - 2021-02-18
 ### Changes
 - Update FLTK and cfltk.

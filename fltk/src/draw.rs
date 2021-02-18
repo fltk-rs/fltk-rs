@@ -683,6 +683,13 @@ pub fn reset_spot() {
 }
 
 /// Captures part of the window and returns raw data
+/// Example usage:
+/// ```no_run
+/// let image = draw::capture_window(&mut win).unwrap().into_jpeg().unwrap();
+/// image
+///    .write_to_file(&std::path::PathBuf::from("test.jpg"))
+///    .unwrap();
+/// ```
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     assert!(!win.was_deleted());
     let cp = win.width() as u32 * win.height() as u32 * 3;
@@ -805,7 +812,8 @@ pub fn draw_image(
     if sz > data.len() {
         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
     }
-    unsafe { Ok(Fl_draw_image(data.as_ptr(), x, y, w, h, depth as i32, 0)) }
+    unsafe { Fl_draw_image(data.as_ptr(), x, y, w, h, depth as i32, 0); }
+    Ok(())
 }
 
 /// Transforms raw data to png file

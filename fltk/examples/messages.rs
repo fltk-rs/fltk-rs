@@ -1,4 +1,4 @@
-use fltk::{app::*, frame::*, window::*};
+use fltk::{app, frame::*, window::*};
 
 #[derive(Debug, Copy, Clone)]
 pub enum Message {
@@ -12,7 +12,7 @@ fn inc_frame(frame: &mut Frame, val: &mut i32, step: i32) {
 }
 
 fn main() {
-    let app = App::default();
+    let app = app::App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 300, "");
 
@@ -20,10 +20,10 @@ fn main() {
 
     wind.show();
 
-    let (s, r) = channel::<Message>();
+    let (s, r) = app::channel::<Message>();
 
     std::thread::spawn(move || loop {
-        std::thread::sleep(std::time::Duration::from_millis(1000));
+        app::sleep(1.);
         s.send(Message::Increment(2));
     });
 

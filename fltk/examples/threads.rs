@@ -7,11 +7,10 @@
 // or surround widget-mutating functions/methods with an app::lock and app::unlock.
 // But that should rarely be required.
 
-use fltk::{app::*, button::*, frame::*, window::*};
-use std::{thread, time};
+use fltk::{app, button::*, frame::*, window::*};
 
 fn main() {
-    let app = App::default();
+    let app = app::App::default();
     let mut wind = Window::default()
         .with_size(400, 300)
         .center_screen()
@@ -23,9 +22,9 @@ fn main() {
 
     but.set_callback(move || {
         let mut frame = frame.clone();
-        thread::spawn(move || {
+        std::thread::spawn(move || {
             for i in 0..1000 {
-                thread::sleep(time::Duration::from_millis(10));
+                app::sleep(0.010);
                 frame.set_label(format!("Hello {}", i).as_str());
             }
         });
@@ -36,7 +35,7 @@ fn main() {
 
 // // Using messages
 // fn main() {
-//     let app = App::default();
+//     let app = app::App::default();
 //     let mut wind = Window::default()
 //         .with_size(400, 300)
 //         .center_screen()
@@ -52,8 +51,7 @@ fn main() {
 //         // let mut frame = frame.clone();
 //         thread::spawn(move|| {
 //             for i in 0..1000 {
-//                 thread::sleep(time::Duration::from_millis(10));
-//                 // frame.set_label(format!("Hello {}", i).as_str());
+//                 app::sleep(0.010);
 //                 s.send(i);
 //             }
 //         });
@@ -70,7 +68,7 @@ fn main() {
 
 // // Using an Arc<Mutex>>
 // fn main() {
-//     let app = App::default();
+//     let app = app::App::default();
 //     let mut wind = Window::default()
 //         .with_size(400, 300)
 //         .center_screen()
@@ -83,7 +81,7 @@ fn main() {
 //         let frame = frame.clone();
 //         thread::spawn(move|| {
 //             for i in 0..1000 {
-//                 thread::sleep(time::Duration::from_millis(10));
+//                 app::sleep(0.01);
 //                 let mut frame = frame.lock().unwrap();
 //                 frame.set_label(format!("Hello {}", i).as_str());
 //             }

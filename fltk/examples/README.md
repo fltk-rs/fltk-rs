@@ -6,6 +6,7 @@ To run the examples:
 ```
 $ cargo run --example editor
 $ cargo run --example calculator
+$ cargo run --example calculator2
 $ cargo run --example tabs
 $ cargo run --example terminal
 $ cargo run --example counter
@@ -13,6 +14,7 @@ $ cargo run --example hello
 $ cargo run --example hello_button
 $ cargo run --example paint
 $ cargo run --example pong
+$ cargo run --example fb
 $ cargo run --example <filename>
 ```
 

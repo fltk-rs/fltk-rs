@@ -51,10 +51,10 @@ For faster builds you can enable ninja builds for the C++ source using the "use-
 An example hello world application:
 
 ```rust
-use fltk::{app::*, window::*};
+use fltk::{app, window::*};
 
 fn main() {
-    let app = App::default();
+    let app = app::App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     wind.end();
     wind.show();
@@ -64,10 +64,10 @@ fn main() {
 
 Another example showing the basic callback functionality:
 ```rust
-use fltk::{app::*, button::*, frame::*, window::*};
+use fltk::{app, button::*, frame::*, window::*};
 
 fn main() {
-    let app = App::default();
+    let app = app::App::default();
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     let mut frame = Frame::new(0, 0, 400, 200, "");
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
@@ -92,7 +92,7 @@ let but2 = Button::default()
 An example of a counter showing use of the builder pattern:
 ```rust
 fn main() {
-    let app = App::default();
+    let app = app::App::default();
     let mut wind = Window::default()
         .with_size(160, 200)
         .center_screen()
@@ -164,7 +164,7 @@ FLTK offers 4 application themes (called schemes):
 
 These can be set using the App::with_scheme() method.
 ```rust
-let app = App::default().with_scheme(AppScheme::Gleam);
+let app = app::App::default().with_scheme(app::Scheme::Gleam);
 ```
 Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait, such as set_color(), set_label_font(), set_frame() etc:
 ```rust
@@ -235,10 +235,12 @@ To run the examples:
 ```
 $ cargo run --example editor
 $ cargo run --example calculator
-$ cargo run --example terminal_colored
+$ cargo run --example calculator2
+$ cargo run --example terminal
 $ cargo run --example counter
 $ cargo run --example hello
 $ cargo run --example hello_button
+$ cargo run --example fb
 ...
 ```
 
