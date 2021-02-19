@@ -4,10 +4,9 @@
 ## [0.15.0] - 2021-02-20
 ### Changes
 - [BREAKING] Remove app::delay().
-- [BREAKING] Remove image related label types.
-- app::wait_for returns a Result<bool, FltkError>. 
-
-
+- [BREAKING] Remove image related LabelType values.
+- [BREAKING] app::wait_for returns a Result<bool, FltkError>. 
+- Update FLTK and cfltk.
 
 ## [0.14.13] - 2021-02-19
 ### Changes
