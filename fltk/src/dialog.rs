@@ -740,13 +740,13 @@ impl FileChooser {
     }
 
     /// Sets the icon size of the FileChooser
-    pub fn set_iconsize(&mut self, s: u8) {
+    pub fn set_icon_size(&mut self, s: u8) {
         assert!(!self._inner.is_null());
         unsafe { Fl_File_Chooser_set_iconsize(self._inner, s) }
     }
 
     /// Gets the icon size of the FileChooser
-    pub fn iconsize(&mut self) -> u8 {
+    pub fn icon_size(&mut self) -> u8 {
         assert!(!self._inner.is_null());
         unsafe { Fl_File_Chooser_iconsize(self._inner) }
     }

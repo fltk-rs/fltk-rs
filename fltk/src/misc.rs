@@ -755,33 +755,33 @@ impl HelpView {
         unsafe { Fl_Help_View_select_all(self._inner) }
     }
 
-    /// Set the topline string
-    pub fn set_topline(&mut self, n: &str) {
+    /// Set the top line string
+    pub fn set_top_line(&mut self, n: &str) {
         assert!(!self.was_deleted());
         let n = CString::safe_new(n);
         unsafe { Fl_Help_View_set_topline(self._inner, n.as_ptr()) }
     }
 
-    /// Set the leftline position
-    pub fn set_topline2(&mut self, arg1: i32) {
+    /// Set the top line position
+    pub fn set_top_line2(&mut self, arg1: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_topline2(self._inner, arg1) }
     }
 
-    /// Get the topline position
-    pub fn topline(&self) -> i32 {
+    /// Get the top line position
+    pub fn top_line(&self) -> i32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_topline(self._inner) }
     }
 
-    /// Set the leftline position
-    pub fn set_leftline(&mut self, arg1: i32) {
+    /// Set the left line position
+    pub fn set_left_line(&mut self, arg1: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_leftline(self._inner, arg1) }
     }
 
-    /// Gets the current leftline in pixels
-    pub fn leftline(&self) -> i32 {
+    /// Gets the current left line in pixels
+    pub fn left_line(&self) -> i32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_leftline(self._inner) }
     }

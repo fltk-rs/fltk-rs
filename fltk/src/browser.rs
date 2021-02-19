@@ -106,13 +106,13 @@ pub enum FileType {
 
 impl FileBrowser {
     /// Gets the icon size
-    pub fn iconsize(&self) -> u32 {
+    pub fn icon_size(&self) -> u32 {
         assert!(!self.was_deleted());
         unsafe { Fl_File_Browser_iconsize(self._inner) }
     }
 
     /// Sets the icon size
-    pub fn set_iconsize(&mut self, s: u32) {
+    pub fn set_icon_size(&mut self, s: u32) {
         assert!(!self.was_deleted());
         unsafe { Fl_File_Browser_set_iconsize(self._inner, s) }
     }

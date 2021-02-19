@@ -5,6 +5,8 @@
 ### Changes
 - [BREAKING] Remove app::delay().
 - [BREAKING] Remove image related LabelType values.
+- [BREAKING] Change iconsize and set_iconsize to icon_size and set_icon_size.
+- [BREAKING] BrowserExt::topline, middleline and bottomline converted to snake case.
 - [BREAKING] app::wait_for returns a Result<bool, FltkError>.
 - Fix temp file creation when lacking TMPDIR env variable.
 - Fix doc tests.

@@ -284,7 +284,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn topline(&mut self, line: u32) {
+            fn top_line(&mut self, line: u32) {
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
@@ -292,7 +292,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn bottomline(&mut self, line: u32) {
+            fn bottom_line(&mut self, line: u32) {
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
@@ -300,7 +300,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn middleline(&mut self, line: u32) {
+            fn middle_line(&mut self, line: u32) {
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
