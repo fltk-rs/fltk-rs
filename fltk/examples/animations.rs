@@ -2,7 +2,7 @@ use fltk::{app, frame::*, image::*, window::*};
 
 const PXM: &[&str] = &[
     "50 34 4 1",
-    "  c black",
+    "  c #000000",
     "o c #ff9900",
     "@ c #ffffff",
     "# c None",
