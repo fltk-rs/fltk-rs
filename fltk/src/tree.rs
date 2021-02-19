@@ -1553,25 +1553,25 @@ impl TreeItem {
     }
 
     /// Gets the previous item
-    pub fn prev(&mut self) -> Option<TreeItem> {
+    pub fn prev(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_Item_prev(self._inner)) }
     }
 
-    // /// Gets the next item
-    // pub fn next(&mut self) -> Option<TreeItem> {
-    //     assert!(!self.was_deleted());
-    //     unsafe { TreeItem::from_raw(Fl_Tree_Item_next(self._inner)) }
-    // }
+    /// Gets the next item
+    pub fn next(&self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
+        unsafe { TreeItem::from_raw(Fl_Tree_Item_next(self._inner)) }
+    }
 
     /// Gets the next sibling
-    pub fn next_sibling(&mut self) -> Option<TreeItem> {
+    pub fn next_sibling(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_Item_next_sibling(self._inner)) }
     }
 
     /// Gets the previous sibling
-    pub fn prev_sibling(&mut self) -> Option<TreeItem> {
+    pub fn prev_sibling(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_Item_prev_sibling(self._inner)) }
     }
