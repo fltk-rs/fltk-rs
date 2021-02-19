@@ -15,14 +15,6 @@ pub enum LabelType {
     Engraved,
     /// Embossed
     Embossed,
-    /// Multi
-    Multi,
-    /// Icon
-    Icon,
-    /// Image
-    Image,
-    /// FreeType
-    FreeType,
 }
 
 /// Defines the frame types which can be set using the set_frame() and set_down_frame() methods

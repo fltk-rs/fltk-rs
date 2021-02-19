@@ -3,9 +3,11 @@
 
 ## [0.15.0] - 2021-02-20
 ### Changes
-- [BREAKING] app::delay() takes a f64 seconds parameter. 
+- [BREAKING] Remove app::delay().
+- [BREAKING] Remove image related label types.
 - app::wait_for returns a Result<bool, FltkError>. 
-- Disable LabelType::Multi until a MultiLabel struct is implemented. 
+
+
 
 ## [0.14.13] - 2021-02-19
 ### Changes
