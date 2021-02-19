@@ -685,6 +685,8 @@ pub fn reset_spot() {
 /// Captures part of the window and returns raw data
 /// Example usage:
 /// ```no_run
+/// use fltk::*;
+/// let mut win = window::Window::default();
 /// let image = draw::capture_window(&mut win).unwrap().into_jpeg().unwrap();
 /// image
 ///    .write_to_file(&std::path::PathBuf::from("test.jpg"))
@@ -812,7 +814,9 @@ pub fn draw_image(
     if sz > data.len() {
         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
     }
-    unsafe { Fl_draw_image(data.as_ptr(), x, y, w, h, depth as i32, 0); }
+    unsafe {
+        Fl_draw_image(data.as_ptr(), x, y, w, h, depth as i32, 0);
+    }
     Ok(())
 }
 

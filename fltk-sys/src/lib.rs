@@ -23,11 +23,3 @@ pub mod widget;
 pub mod window;
 pub mod surface;
 pub mod printer;
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}

@@ -40,32 +40,31 @@
 //! An example hello world application:
 //!
 //! ```no_run
-//!     use fltk::{app::*, window::*};
-//!
-//!     let app = app::App::default();
-//!     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
-//!     wind.end();
-//!     wind.show();
-//!     app.run().unwrap();
+//! use fltk::{app::*, window::*};
+//! let app = app::App::default();
+//! let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+//! wind.end();
+//! wind.show();
+//! app.run().unwrap();
 //! ```
 //!
 //! Another example showing the basic callback functionality:
 //! ```no_run
-//!     use fltk::{app::*, button::*, frame::*, window::*};
-//!
-//!     let app = app::App::default();
-//!     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
-//!     let mut frame = Frame::new(0, 0, 400, 200, "");
-//!     let mut but = Button::new(160, 210, 80, 40, "Click me!");
-//!     wind.end();
-//!     wind.show();
-//!     but.set_callback(move || frame.set_label("Hello World!"));
-//!     app.run().unwrap();
+//! use fltk::{app, button::*, frame::*, window::*};
+//! let app = app::App::default();
+//! let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+//! let mut frame = Frame::new(0, 0, 400, 200, "");
+//! let mut but = Button::new(160, 210, 80, 40, "Click me!");
+//! wind.end();
+//! wind.show();
+//! but.set_callback(move || frame.set_label("Hello World!"));
+//! app.run().unwrap();
 //! ```
 //! Please check the examples directory for more examples.
 //! You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 //!
-//! ```ignored
+//! ```no_run
+//! use fltk::button::*;
 //! let but1 = Button::new(10, 10, 80, 40, "Button 1");
 //!
 //! let but2 = Button::default()
@@ -75,28 +74,29 @@
 //! ```
 //!
 //! An example of a counter showing use of the builder pattern:
-//! ```ignored
-//!     let app = app::App::default();
-//!     let mut wind = Window::default()
-//!         .with_size(160, 200)
-//!         .center_screen()
-//!         .with_label("Counter");
-//!     let mut frame = Frame::default()
-//!         .with_size(100, 40)
-//!         .center_of(&wind)
-//!         .with_label("0");
-//!     let mut but_inc = Button::default()
-//!         .size_of(&frame)
-//!         .above_of(&frame, 0)
-//!         .with_label("+");
-//!     let mut but_dec = Button::default()
-//!         .size_of(&frame)
-//!         .below_of(&frame, 0)
-//!         .with_label("-");
-//!     wind.make_resizable(true);
-//!     wind.end();
-//!     wind.show();
-//!     /* Event handling */
+//! ```no_run
+//! use fltk::{app, button::*, frame::*, window::*};
+//! let app = app::App::default();
+//! let mut wind = Window::default()
+//!     .with_size(160, 200)
+//!     .center_screen()
+//!     .with_label("Counter");
+//! let mut frame = Frame::default()
+//!     .with_size(100, 40)
+//!     .center_of(&wind)
+//!     .with_label("0");
+//! let mut but_inc = Button::default()
+//!     .size_of(&frame)
+//!     .above_of(&frame, 0)
+//!     .with_label("+");
+//! let mut but_dec = Button::default()
+//!     .size_of(&frame)
+//!     .below_of(&frame, 0)
+//!     .with_label("-");
+//! wind.make_resizable(true);
+//! wind.end();
+//! wind.show();
+//! /* Event handling */
 //! ```
 //!
 //! ### Events

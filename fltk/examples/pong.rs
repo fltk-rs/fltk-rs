@@ -76,6 +76,7 @@ fn main() {
         }
         ball.wid.resize(ball.pos.0, ball.pos.1, 40, 40); // Moves the ball
         wind.redraw();
+        // sleeps are necessary when calling redraw in the event loop
         app::sleep(0.016);
     }
 }

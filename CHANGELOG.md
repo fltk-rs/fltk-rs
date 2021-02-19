@@ -7,6 +7,8 @@
 - [BREAKING] Remove image related LabelType values.
 - [BREAKING] app::wait_for returns a Result<bool, FltkError>.
 - Fix temp file creation when lacking TMPDIR env variable.
+- Fix doc tests.
+- Add tests directory.
 - Update FLTK and cfltk.
 
 ## [0.14.13] - 2021-02-19

@@ -66,18 +66,17 @@ fn main() {
         }
         frame.resize(x + 5, y, w, h);
         wind.redraw();
-        app::sleep(0.016);
+        app::sleep(0.016); // sleeps are necessary when calling redraw in the event loop
     });
 
     app.run().unwrap();
 }
 
-// // Another way is using app::add_timeout and app::repeat_timout
-
+// // Using timeouts
 // fn move_image(mut frm: Frame) {
 //     let (x, y) = (frm.x(), frm.y());
 //     frm.set_pos(x + 5, y);
-//     redraw();
+//     app::redraw();
 //     app::repeat_timeout(0.016, move || {
 //         let frm = frm.clone();
 //         move_image(frm);

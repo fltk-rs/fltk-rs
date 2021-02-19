@@ -204,14 +204,3 @@ pub struct ReturnButton {
     _inner: *mut Fl_Return_Button,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
-
-#[cfg(test)]
-mod button {
-    use super::*;
-    #[test]
-    fn tooltip() {
-        let mut but = Button::new(0, 0, 0, 0, "hello");
-        but.set_tooltip("tooltip");
-        assert!(but.tooltip().unwrap() == "tooltip");
-    }
-}

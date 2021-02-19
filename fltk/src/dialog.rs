@@ -497,10 +497,11 @@ pub fn beep(tp: BeepType) {
 /// FLTK's own FileChooser. Which differs for the Native FileDialog
 /// Example:
 /// ```no_run
-/// let mut chooser = FileChooser::new(
+/// use fltk::*;
+/// let mut chooser = dialog::FileChooser::new(
 ///     ".",                    // directory
 ///     "*",                    // filter or pattern
-///     FileChooserType::Multi, // chooser type
+///     dialog::FileChooserType::Multi, // chooser type
 ///     "Title Of Chooser",     // title
 /// );
 /// chooser.show();
@@ -1055,7 +1056,8 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
 /// Shows a file chooser returning a String
 /// Example:
 /// ```no_run
-/// let file = file_chooser("Choose File", "*.rs", ".", true).unwrap();
+/// use fltk::*;
+/// let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
 /// println!("{}", file);
 /// ```
 pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> Option<String> {

@@ -27,7 +27,7 @@ use fltk::*;
 
 fn main() {
     let app = app::App::default().load_system_fonts();
-    // app::load_font("/opt/X11/share/fonts/TTF/luximr.ttf", "LuxiMono").unwrap();
+    // To load a font by path, check the app::load_font() function
     let fonts = app::fonts();
     // println!("{:?}", fonts);
     let mut wind = window::Window::new(300, 200, 400, 300, "Fonts");
