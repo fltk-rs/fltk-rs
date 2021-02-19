@@ -10,7 +10,8 @@ use std::{
 /// Creates a normal browser
 /// Example usage:
 /// ```no_run
-/// let mut b = Browser::new(10, 10, 900 - 20, 300 - 20, "");
+/// use fltk::*;
+/// let mut b = browser::Browser::new(10, 10, 900 - 20, 300 - 20, "");
 /// let widths = &[50, 50, 50, 70, 70, 40, 40, 70, 70, 50];
 /// b.set_column_widths(widths);
 /// b.set_column_char('\t');
@@ -105,13 +106,13 @@ pub enum FileType {
 
 impl FileBrowser {
     /// Gets the icon size
-    pub fn iconsize(&self) -> u32 {
+    pub fn icon_size(&self) -> u32 {
         assert!(!self.was_deleted());
         unsafe { Fl_File_Browser_iconsize(self._inner) }
     }
 
     /// Sets the icon size
-    pub fn set_iconsize(&mut self, s: u32) {
+    pub fn set_icon_size(&mut self, s: u32) {
         assert!(!self.was_deleted());
         unsafe { Fl_File_Browser_set_iconsize(self._inner, s) }
     }

@@ -86,8 +86,10 @@ impl TextBuffer {
     /// Appends to the buffer
     /// To append and scroll to the end of the buffer:
     /// ```no_run
-    /// let buf = TextBuffer::default();
-    /// let mut disp = TextDisplay::default();
+    /// use fltk::*;
+    /// let txt = "Some long text!";
+    /// let buf = text::TextBuffer::default();
+    /// let mut disp = text::TextDisplay::default();
     /// disp.set_buffer(Some(buf));
     /// disp.buffer().unwrap().append(txt);
     /// disp.set_insert_position(disp.buffer().unwrap().length());
@@ -992,10 +994,4 @@ impl SimpleTerminal {
         );
         unsafe { Fl_Simple_Terminal_remove_lines(self._inner, start as i32, count as i32) }
     }
-}
-
-#[cfg(test)]
-mod editor {
-    #[test]
-    fn buffer() {}
 }

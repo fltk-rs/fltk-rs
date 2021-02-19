@@ -663,25 +663,25 @@ impl Tree {
     }
 
     /// Gets the items' foreground color
-    pub fn item_label_fg_color(&self) -> Color {
+    pub fn item_label_fgcolor(&self) -> Color {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_item_labelfgcolor(self._inner)) }
     }
 
     /// Sets the items' foreground color
-    pub fn set_item_label_fg_color(&mut self, val: Color) {
+    pub fn set_item_label_fgcolor(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_labelfgcolor(self._inner, val.bits() as u32) }
     }
 
     /// Gets the items' background color
-    pub fn item_label_bg_color(&self) -> Color {
+    pub fn item_label_bgcolor(&self) -> Color {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_item_labelbgcolor(self._inner)) }
     }
 
     /// Sets the items' foreground color
-    pub fn set_item_label_bg_color(&mut self, val: Color) {
+    pub fn set_item_label_bgcolor(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_labelbgcolor(self._inner, val.bits() as u32) }
     }
@@ -1341,13 +1341,13 @@ impl TreeItem {
     }
 
     /// Sets the label's background color
-    pub fn set_label_bg_color(&mut self, val: Color) {
+    pub fn set_label_bgcolor(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_labelbgcolor(self._inner, val.bits() as u32) }
     }
 
     /// Gets the label's foreground color
-    pub fn label_bg_color(&self) -> Color {
+    pub fn label_bgcolor(&self) -> Color {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_Item_labelbgcolor(self._inner)) }
     }
@@ -1553,25 +1553,25 @@ impl TreeItem {
     }
 
     /// Gets the previous item
-    pub fn prev(&mut self) -> Option<TreeItem> {
+    pub fn prev(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_Item_prev(self._inner)) }
     }
 
-    // /// Gets the next item
-    // pub fn next(&mut self) -> Option<TreeItem> {
-    //     assert!(!self.was_deleted());
-    //     unsafe { TreeItem::from_raw(Fl_Tree_Item_next(self._inner)) }
-    // }
+    /// Gets the next item
+    pub fn next(&self) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
+        unsafe { TreeItem::from_raw(Fl_Tree_Item_next(self._inner)) }
+    }
 
     /// Gets the next sibling
-    pub fn next_sibling(&mut self) -> Option<TreeItem> {
+    pub fn next_sibling(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_Item_next_sibling(self._inner)) }
     }
 
     /// Gets the previous sibling
-    pub fn prev_sibling(&mut self) -> Option<TreeItem> {
+    pub fn prev_sibling(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_Item_prev_sibling(self._inner)) }
     }

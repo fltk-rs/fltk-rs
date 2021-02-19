@@ -42,7 +42,18 @@ const PXM: &[&str] = &[
     "##################################################",
 ];
 
-fn main() {
+fn move_image(mut frm: Frame) {
+    let (x, y) = (frm.x(), frm.y());
+    frm.set_pos(x + 5, y);
+    app::redraw();
+    app::repeat_timeout(0.016, move || {
+        let frm = frm.clone();
+        move_image(frm);
+    });
+}
+
+#[test]
+fn run_animation() {
     let app = app::App::default();
     let mut wind = Window::default()
         .with_label("pxm test")
@@ -56,18 +67,9 @@ fn main() {
     wind.end();
     wind.show_with_env_args();
 
-    app::add_idle(move || {
-        let x = frame.x();
-        let y = frame.y();
-        let w = frame.width();
-        let h = frame.height();
-        if x > wind.width() + w + 30 {
-            app.quit();
-        }
-        frame.resize(x + 5, y, w, h);
-        wind.redraw();
-        app::sleep(0.016); // sleeps are necessary when calling redraw in the event loop
+    app::add_timeout(0.016, move || {
+        let frame = frame.clone();
+        move_image(frame);
     });
-
     app.run().unwrap();
 }

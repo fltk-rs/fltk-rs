@@ -497,10 +497,11 @@ pub fn beep(tp: BeepType) {
 /// FLTK's own FileChooser. Which differs for the Native FileDialog
 /// Example:
 /// ```no_run
-/// let mut chooser = FileChooser::new(
+/// use fltk::*;
+/// let mut chooser = dialog::FileChooser::new(
 ///     ".",                    // directory
 ///     "*",                    // filter or pattern
-///     FileChooserType::Multi, // chooser type
+///     dialog::FileChooserType::Multi, // chooser type
 ///     "Title Of Chooser",     // title
 /// );
 /// chooser.show();
@@ -739,13 +740,13 @@ impl FileChooser {
     }
 
     /// Sets the icon size of the FileChooser
-    pub fn set_iconsize(&mut self, s: u8) {
+    pub fn set_icon_size(&mut self, s: u8) {
         assert!(!self._inner.is_null());
         unsafe { Fl_File_Chooser_set_iconsize(self._inner, s) }
     }
 
     /// Gets the icon size of the FileChooser
-    pub fn iconsize(&mut self) -> u8 {
+    pub fn icon_size(&mut self) -> u8 {
         assert!(!self._inner.is_null());
         unsafe { Fl_File_Chooser_iconsize(self._inner) }
     }
@@ -1055,7 +1056,8 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
 /// Shows a file chooser returning a String
 /// Example:
 /// ```no_run
-/// let file = file_chooser("Choose File", "*.rs", ".", true).unwrap();
+/// use fltk::*;
+/// let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
 /// println!("{}", file);
 /// ```
 pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> Option<String> {

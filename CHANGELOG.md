@@ -1,6 +1,18 @@
 # Changelog
 
 
+## [0.15.0] - 2021-02-20
+### Changes
+- [BREAKING] Remove app::delay().
+- [BREAKING] Remove image related LabelType values.
+- [BREAKING] Change iconsize and set_iconsize to icon_size and set_icon_size.
+- [BREAKING] BrowserExt::topline, middleline and bottomline converted to snake case.
+- [BREAKING] app::wait_for returns a Result<bool, FltkError>.
+- Fix temp file creation when lacking TMPDIR env variable.
+- Fix doc tests.
+- Add tests directory.
+- Update FLTK and cfltk.
+
 ## [0.14.13] - 2021-02-19
 ### Changes
 - Clean up examples.

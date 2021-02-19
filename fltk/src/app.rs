@@ -402,6 +402,8 @@ where
 
 /// Set a widget callback using a C style API
 /// ```no_run
+/// use fltk::*;
+/// use std::os::raw::*;
 /// // data can be anything, even a different widget
 /// fn cb(w: app::WidgetPtr, data: *mut c_void) {
 ///     // To access the button
@@ -411,11 +413,13 @@ where
 ///     let mut frm = unsafe { widget::Widget::from_widget_ptr(data as app::WidgetPtr) };
 ///     frm.set_label("Works!");
 /// }
+/// let mut but = button::Button::default();
+/// let mut frame = frame::Frame::default();
 /// unsafe {
 ///     // If no data needs to be passed, you can pass 0 as *mut _
 ///     app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(cb));
-///     // // Using a closure also works
-///     app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")});
+///     // Using a closure also works
+///     app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")}));
 /// }
 /// ```
 /// # Safety
@@ -563,17 +567,20 @@ pub fn add_idle<F: FnMut() + 'static>(cb: F) {
 }
 
 /// Waits a maximum of `dur` seconds or until "something happens".
-pub fn wait_for(dur: f64) -> Result<(), FltkError> {
+/// Returns true if an event happened (always true on windows)
+/// Returns false if nothing happened
+/// Can error out on X11 system if interrupted by a signal
+pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
     unsafe {
         if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
-        if Fl_wait_for(dur) >= 0.0 {
-            Ok(())
-        } else {
-            Err(FltkError::Unknown(String::from(
+        match Fl_wait_for(dur) as i32 {
+            0 => Ok(false),
+            1 => Ok(true),
+            _ => Err(FltkError::Unknown(String::from(
                 "An unknown error occured!",
-            )))
+            ))),
         }
     }
 }
@@ -587,7 +594,8 @@ pub unsafe fn awake_msg<T>(msg: T) {
 
 /// Receives a custom message
 /// ```no_run
-/// if let Some(msg) = unsafe { thread_msg::<32>() } { do_smth(); }
+/// use fltk::*;
+/// if let Some(msg) = unsafe { app::thread_msg::<i32>() } { /* do something */ }
 /// ```
 /// # Safety
 /// The type must correspond to the received message
@@ -718,6 +726,7 @@ pub fn quit() {
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
 /// Example:
 /// ```no_run
+/// use fltk::*;
 /// fn callback() {
 ///     println!("TICK");
 ///     app::repeat_timeout(1.0, callback);
@@ -749,6 +758,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
 /// The timeout duration `tm` is indicated in seconds
 /// Example:
 /// ```no_run
+/// use fltk::*;
 /// fn callback() {
 ///     println!("TICK");
 ///     app::repeat_timeout(1.0, callback);
@@ -965,18 +975,6 @@ pub fn set_focus<W: WidgetExt>(wid: &W) {
     unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }
 
-/// Delays the current thread by millis. Because std::thread::sleep isn't accurate on windows!
-/// Caution: It's a busy wait!
-pub fn delay(millis: u128) {
-    let now = time::Instant::now();
-    loop {
-        let after = time::Instant::now();
-        if after.duration_since(now).as_millis() > millis {
-            break;
-        }
-    }
-}
-
 /// Gets FLTK version
 pub fn version() -> f64 {
     unsafe { Fl_version() }
@@ -1108,9 +1106,13 @@ pub fn get_system_colors() {
 /// Send a signal to a window
 /// returns false if the event was not handled
 /// ```no_run
+/// use fltk::*;
 /// const CHANGE_FRAME: i32 = 100;
+/// let mut wind = window::Window::default();
+/// let mut but = button::Button::default();
+/// let mut frame = frame::Frame::default();
 /// but.set_callback(move || unsafe {
-///     let _ = handle(CHANGE_FRAME, &wind);
+///     let _ = app::handle(CHANGE_FRAME, &wind);
 /// });
 /// frame.handle2(move |f, ev| {
 ///     if ev as i32 == CHANGE_FRAME {
@@ -1132,9 +1134,12 @@ pub unsafe fn handle<I: Into<i32>, W: WindowExt>(msg: I, w: &W) -> bool {
 /// Send a signal to the main window
 /// returns false if the event was not handled
 /// ```no_run
+/// use fltk::*;
 /// const CHANGE_FRAME: i32 = 100;
+/// let mut but = button::Button::default();
+/// let mut frame = frame::Frame::default();
 /// but.set_callback(move || unsafe {
-///     let _ = handle_main(CHANGE_FRAME);
+///     let _ = app::handle_main(CHANGE_FRAME);
 /// });
 /// frame.handle2(move |f, ev| match ev as i32 {
 ///     CHANGE_FRAME => {

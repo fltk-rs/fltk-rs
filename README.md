@@ -36,12 +36,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.14"
+fltk = "^0.15"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^0.14", git = "https://github.com/MoAlyousef/fltk-rs" }
+fltk = { version = "^0.15", git = "https://github.com/MoAlyousef/fltk-rs" }
 ```
 
 The library is automatically built and statically linked to your binary.

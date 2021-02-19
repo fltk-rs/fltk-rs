@@ -370,19 +370,3 @@ impl IntoIterator for MenuItem {
         v.into_iter()
     }
 }
-
-#[cfg(test)]
-mod menu {
-    use super::*;
-    #[test]
-    fn label() {
-        let mut menu = MenuBar::new(0, 0, 0, 0, "hello");
-        menu.set_label("cloned");
-    }
-    #[test]
-    fn tooltip() {
-        let mut menu = MenuBar::new(0, 0, 0, 0, "hello");
-        menu.set_tooltip("tooltip");
-        assert!(menu.tooltip().unwrap() == "tooltip");
-    }
-}

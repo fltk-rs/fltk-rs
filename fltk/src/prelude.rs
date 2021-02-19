@@ -850,13 +850,13 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn remove_icon(&mut self, line: u32);
     /// Scrolls the browser so the top item in the browser is showing the specified line
     /// Lines start at 1
-    fn topline(&mut self, line: u32);
+    fn top_line(&mut self, line: u32);
     /// Scrolls the browser so the bottom item in the browser is showing the specified line
     /// Lines start at 1
-    fn bottomline(&mut self, line: u32);
+    fn bottom_line(&mut self, line: u32);
     /// Scrolls the browser so the middle item in the browser is showing the specified line
     /// Lines start at 1
-    fn middleline(&mut self, line: u32);
+    fn middle_line(&mut self, line: u32);
     /// Gets the current format code prefix character, which by default is '\@'
     /// More info here: https://www.fltk.org/doc-1.3/classFl__Browser.html#a129dca59d64baf166503ba59341add69
     fn format_char(&self) -> char;
