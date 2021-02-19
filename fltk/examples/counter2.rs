@@ -8,7 +8,7 @@ pub enum Message {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let app = app::App::default();
-    let mut wind = Window::new(200, 200, 160, 200, "Counter");
+    let mut wind = Window::default().with_size(160, 200).with_label("Counter");
     let mut frame = Frame::new(30, 80, 100, 40, "0");
     let mut but_inc = Button::new(30, 40, 100, 40, "+");
     let mut but_dec = Button::new(30, 120, 100, 40, "-");
@@ -23,10 +23,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     while app.wait() {
         let label: i32 = frame.label().parse()?;
 
-        match r.recv() {
-            Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
-            Some(Message::Decrement) => frame.set_label(&(label - 1).to_string()),
-            None => (),
+        if let Some(msg) = r.recv() {
+            match msg {
+                Message::Increment => frame.set_label(&(label + 1).to_string()),
+                Message::Decrement => frame.set_label(&(label - 1).to_string()),
+            }
         }
     }
     Ok(())
