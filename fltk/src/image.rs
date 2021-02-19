@@ -3,14 +3,8 @@ use fltk_sys::image::*;
 use std::{
     ffi::CString,
     mem,
-    os::raw,
     sync::atomic::{AtomicUsize, Ordering},
 };
-
-#[cfg(target_os = "windows")]
-const TMP: &str = "TEMP";
-#[cfg(not(target_os = "windows"))]
-const TMP: &str = "TMPDIR";
 
 /// Wrapper around Fl_Image, used to wrap other image types
 #[derive(ImageExt, Debug)]
@@ -547,22 +541,34 @@ pub struct Pixmap {
 
 impl Pixmap {
     /// Creates a new Pixmap image
-    /// # Safety
-    /// The pixmap format should be valid
-    pub unsafe fn new(data: &'static [&'static str]) -> Result<Pixmap, FltkError> {
-        let mut v: Vec<*const raw::c_char> = vec![];
-        for &elem in data {
-            v.push(CString::safe_new(elem).into_raw());
+    pub fn new(data: &[&str]) -> Result<Pixmap, FltkError> {
+        let mut temp_file = std::env::temp_dir();
+        temp_file.push("_internal_temp_fltk_file.xpm");
+        let mut temp = String::from("/* XPM */\nstatic char *_613589117910[] = {\n");
+        for elem in data {
+            temp.push('\"');
+            temp.push_str(elem);
+            temp.push_str("\",\n");
         }
-        let ptr = Fl_Pixmap_new(Box::leak(Box::new(v)).as_ptr());
-        assert!(!ptr.is_null());
-        if Fl_Pixmap_fail(ptr) < 0 {
-            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-        } else {
-            Ok(Pixmap {
-                _inner: ptr,
-                _refcount: AtomicUsize::new(1),
-            })
+        temp.push_str("};\n");
+        std::fs::write(&temp_file, temp)?;
+        unsafe {
+            let temp = CString::new(temp_file.to_string_lossy().as_bytes())?;
+            let image_ptr = Fl_XPM_Image_new(temp.as_ptr());
+            if image_ptr.is_null() {
+                std::fs::remove_file(temp_file)?;
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                if Fl_XPM_Image_fail(image_ptr) < 0 {
+                    std::fs::remove_file(temp_file)?;
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                std::fs::remove_file(temp_file)?;
+                Ok(Pixmap {
+                    _inner: image_ptr as _,
+                    _refcount: AtomicUsize::new(1),
+                })
+            }
         }
     }
 }

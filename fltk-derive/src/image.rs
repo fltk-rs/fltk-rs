@@ -170,31 +170,31 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
             fn into_png(self) -> Result<PngImage, FltkError> {
                 assert!(!self.was_deleted());
-                let tmp_dir = std::path::PathBuf::from(&std::env::var(TMP)?);
-                let path = tmp_dir.join("_internal_temp_fltk_file.png");
-                let _ = crate::draw::write_to_png_file(&self, &path)?;
-                let ret = PngImage::load(&path)?.clone();
-                std::fs::remove_file(&path)?;
+                let mut temp_dir = std::env::temp_dir();
+                temp_dir.push("_internal_temp_fltk_file.png");
+                let _ = crate::draw::write_to_png_file(&self, &temp_dir)?;
+                let ret = PngImage::load(&temp_dir)?.clone();
+                std::fs::remove_file(&temp_dir)?;
                 Ok(ret)
             }
 
             fn into_jpeg(self) -> Result<JpegImage, FltkError> {
                 assert!(!self.was_deleted());
-                let tmp_dir = std::path::PathBuf::from(&std::env::var(TMP)?);
-                let path = tmp_dir.join("_internal_temp_fltk_file.jpg");
-                let _ = crate::draw::write_to_jpg_file(&self, &path)?;
-                let ret = JpegImage::load(&path)?.clone();
-                std::fs::remove_file(&path)?;
+                let mut temp_dir = std::env::temp_dir();
+                temp_dir.push("_internal_temp_fltk_file.jpg");
+                let _ = crate::draw::write_to_jpg_file(&self, &temp_dir)?;
+                let ret = JpegImage::load(&temp_dir)?.clone();
+                std::fs::remove_file(&temp_dir)?;
                 Ok(ret)
             }
 
             fn into_bmp(self) -> Result<BmpImage, FltkError> {
                 assert!(!self.was_deleted());
-                let tmp_dir = std::path::PathBuf::from(&std::env::var(TMP)?);
-                let path = tmp_dir.join("_internal_temp_fltk_file.bmp");
-                let _ = crate::draw::write_to_bmp_file(&self, &path)?;
-                let ret = BmpImage::load(&path)?.clone();
-                std::fs::remove_file(&path)?;
+                let mut temp_dir = std::env::temp_dir();
+                temp_dir.push("_internal_temp_fltk_file.bmp");
+                let _ = crate::draw::write_to_bmp_file(&self, &temp_dir)?;
+                let ret = BmpImage::load(&temp_dir)?.clone();
+                std::fs::remove_file(&temp_dir)?;
                 Ok(ret)
             }
 

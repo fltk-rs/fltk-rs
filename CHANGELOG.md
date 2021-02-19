@@ -5,7 +5,8 @@
 ### Changes
 - [BREAKING] Remove app::delay().
 - [BREAKING] Remove image related LabelType values.
-- [BREAKING] app::wait_for returns a Result<bool, FltkError>. 
+- [BREAKING] app::wait_for returns a Result<bool, FltkError>.
+- Fix temp file creation when lacking TMPDIR env variable.
 - Update FLTK and cfltk.
 
 ## [0.14.13] - 2021-02-19

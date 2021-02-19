@@ -2,7 +2,7 @@ use fltk::{app, frame::*, image::*, window::*};
 
 const PXM: &[&str] = &[
     "50 34 4 1",
-    "  c #000000",
+    "  c black",
     "o c #ff9900",
     "@ c #ffffff",
     "# c None",
@@ -49,7 +49,7 @@ fn main() {
         .with_size(720, 486)
         .center_screen();
     let mut frame = Frame::new(-30, 200, 30, 30, "");
-    let mut pxm = unsafe { Pixmap::new(PXM).unwrap() };
+    let mut pxm = Pixmap::new(PXM).unwrap();
     pxm.scale(200, 200, true, true);
     frame.set_image(Some(pxm));
     wind.set_color(Color::White);
@@ -91,7 +91,7 @@ fn main() {
 //         .with_size(720, 486)
 //         .center_screen();
 //     let mut frame = Frame::new(-30, 200, 30, 30, "");
-//     let mut pxm = unsafe { Pixmap::new(PXM).unwrap() };
+//     let mut pxm = Pixmap::new(PXM).unwrap();
 //     pxm.scale(200, 200, true, true);
 //     frame.set_image(Some(pxm));
 //     wind.set_color(Color::White);

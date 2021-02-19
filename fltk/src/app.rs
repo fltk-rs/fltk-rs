@@ -571,14 +571,11 @@ pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
         if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
-        let temp = Fl_wait_for(dur); 
-        if temp == 0.0 {
-            Ok(false)
-        } else if temp == 1.0 {
-            Ok(true) 
-        } else {
-            Err(FltkError::Unknown(String::from(
-                "An unknown error occured!")))
+        match Fl_wait_for(dur) as i32 {
+            0 => Ok(false),
+            1 => Ok(true),
+            _ => Err(FltkError::Unknown(String::from(
+                "An unknown error occured!"))),
         }
     }
 }
