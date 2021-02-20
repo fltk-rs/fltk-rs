@@ -1,14 +1,15 @@
 # Changelog
 
 
-## [0.15.0] - 2021-02-20
+## [0.15.1] - 2021-02-20
 ### Changes
+- [BREAKING] RgbImage::new() and draw::draw_image() take a ColorDepth enum instead of an int.
 - [BREAKING] Remove app::delay().
 - [BREAKING] Remove image related LabelType values.
 - [BREAKING] Change iconsize and set_iconsize to icon_size and set_icon_size.
 - [BREAKING] BrowserExt::topline, middleline and bottomline converted to snake case.
 - [BREAKING] app::wait_for returns a Result<bool, FltkError>.
-- Fix temp file creation when lacking TMPDIR env variable.
+- Fix temp file creation when lacking TMPDIR env variable on some systems.
 - Fix doc tests.
 - Add tests directory.
 - Update FLTK and cfltk.

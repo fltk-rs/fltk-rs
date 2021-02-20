@@ -1093,7 +1093,7 @@ pub unsafe trait ImageExt {
     /// Gets the image's data height
     fn data_h(&self) -> u32;
     /// Gets the image's depth
-    fn depth(&self) -> u32;
+    fn depth(&self) -> ColorDepth;
     /// Gets the image's line data size
     fn ld(&self) -> u32;
     /// Greys the image

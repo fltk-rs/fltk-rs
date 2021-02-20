@@ -6,23 +6,16 @@ fn main() {
     let mut frame = frame::Frame::new(0, 0, 400, 400, "");
     frame.draw2(|f| {
         let mut image = {
-            let t: Vec<u32> = (0..128 * 128 * 3)
-                .map(|i| {
-                    let x = i % 128;
-                    let y = i / 128;
-                    x ^ y
-                })
-                .collect();
-            let mut v: Vec<u8> = vec![];
-            for elem in t {
-                let (r, g, b) = utils::hex2rgb(elem);
-                v.push(r);
-                v.push(g);
-                v.push(b);
+            let mut v: Vec<u8> = vec![0u8; 128 * 128 * 3];
+            for (i, pixel) in v.chunks_exact_mut(3).enumerate() {
+                let x = i % 128;
+                let y = i / 128;
+                let (r, g, b) = utils::hex2rgb((x ^ y) as u32);
+                pixel.copy_from_slice(&[r, g, b]);
             }
-            image::RgbImage::new(&v, 128, 128, 3).unwrap()
+            image::RgbImage::new(&v, 128, 128, ColorDepth::Rgb8).unwrap()
         };
-        image.scale(400, 400, false, true);
+        image.scale(f.width(), f.height(), false, true);
         image.draw(f.x(), f.y(), f.width(), f.height());
     });
     wind.make_resizable(true);

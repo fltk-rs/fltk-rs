@@ -17,6 +17,20 @@ pub enum LabelType {
     Embossed,
 }
 
+/// Defines the color depth for drawing and rgb images
+#[repr(u8)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum ColorDepth {
+    /// Luminance/grayscale
+    L8 = 1,
+    /// Luminance with Alpha channel
+    La8 = 2,
+    /// RGB888
+    Rgb8 = 3,
+    /// RGBA8888 with Alpha channel
+    Rgba8 = 4,
+}
+
 /// Defines the frame types which can be set using the set_frame() and set_down_frame() methods
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
