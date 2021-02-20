@@ -6,15 +6,21 @@ fn main() {
     let mut frame = frame::Frame::new(0, 0, 400, 400, "");
     frame.draw2(|f| {
         let mut image = {
-            let v: Vec<u32> = (0..128 * 128)
+            let t: Vec<u32> = (0..128 * 128 * 3)
                 .map(|i| {
                     let x = i % 128;
                     let y = i / 128;
                     x ^ y
                 })
                 .collect();
-            let v: Vec<u8> = v.into_iter().map(|i| i as u8).collect();
-            image::RgbImage::new(&v, 128, 128, 1).unwrap()
+            let mut v: Vec<u8> = vec![];
+            for elem in t {
+                let (r, g, b) = utils::hex2rgb(elem);
+                v.push(r);
+                v.push(g);
+                v.push(b);
+            }
+            image::RgbImage::new(&v, 128, 128, 3).unwrap()
         };
         image.scale(400, 400, false, true);
         image.draw(f.x(), f.y(), f.width(), f.height());
