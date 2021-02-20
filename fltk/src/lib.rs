@@ -32,6 +32,7 @@
 //! ```toml
 //! [dependencies]
 //! fltk = { version = "^0.15", git = "https://github.com/MoAlyousef/fltk-rs" }
+//! ```
 //!
 //! The library is automatically built and statically linked to your binary.
 //!
@@ -40,7 +41,7 @@
 //! An example hello world application:
 //!
 //! ```no_run
-//! use fltk::{app::*, window::*};
+//! use fltk::{app, window::*};
 //! let app = app::App::default();
 //! let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //! wind.end();
@@ -117,10 +118,11 @@
 //!
 //!     while app.wait() {
 //!         let label: i32 = frame.label().parse().unwrap();
-//!         match r.recv() {
-//!             Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
-//!             Some(Message::Decrement) => frame.set_label(&(label - 1).to_string()),
-//!             None => (),
+//!         if let Some(msg) = r.recv() {
+//!             match msg {
+//!                 Message::Increment => frame.set_label(&(label + 1).to_string()),
+//!                 Message::Decrement => frame.set_label(&(label - 1).to_string()),
+//!             }
 //!         }
 //!     }
 //! ```
@@ -182,8 +184,10 @@
 //! For Debian-based GUI distributions, that means running:
 //! ```ignored
 //! $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
+//! ```
 //! ```ignored
 //! For RHEL-based GUI distributions, that means running:
+//! ```
 //! ```ignored
 //! $ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libpng-devel
 //! ```

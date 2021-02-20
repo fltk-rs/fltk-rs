@@ -100,7 +100,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     let ptr = #data(self._inner);
                     assert!(!ptr.is_null());
                     assert!(!(*ptr).is_null());
-                    let cnt = self.data_w() * self.data_h() * self.depth();
+                    let cnt = self.data_w() * self.data_h() * self.depth() as u32;
                     let ret: &[u8] = std::slice::from_raw_parts(*ptr as *const u8, cnt as usize);
                     ret.to_vec()
                 }
@@ -147,10 +147,10 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn depth(&self) -> u32 {
+            fn depth(&self) -> ColorDepth {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #d(self._inner) as u32
+                    mem::transmute(#d(self._inner) as u8)
                 }
             }
 

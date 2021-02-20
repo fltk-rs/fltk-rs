@@ -706,7 +706,7 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
                 x,
                 win.width() as u32,
                 win.height() as u32,
-                3,
+                ColorDepth::Rgb8,
             )?)
         }
     }
@@ -716,7 +716,7 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
 pub fn draw_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
     let width = wid.width() as u32;
     let height = wid.height() as u32;
-    let mut img = crate::image::RgbImage::new(fb, width, height, 4)?;
+    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
     wid.draw2(move |s| {
         let x = s.x();
         let y = s.y();
@@ -745,7 +745,7 @@ pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
             std::slice::from_raw_parts(ptr, len),
             width,
             height,
-            4,
+            ColorDepth::Rgba8,
         ) {
             img.scale(w, h, false, true);
             img.draw(x, y, w, h);
@@ -757,7 +757,7 @@ pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
 pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
     let width = wid.width() as u32;
     let height = wid.height() as u32;
-    let mut img = crate::image::RgbImage::new(fb, width, height, 3)?;
+    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
     wid.draw2(move |s| {
         let x = s.x();
         let y = s.y();
@@ -786,7 +786,7 @@ pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
             std::slice::from_raw_parts(ptr, len),
             width,
             height,
-            3,
+            ColorDepth::Rgb8,
         ) {
             img.scale(w, h, false, true);
             img.draw(x, y, w, h);
