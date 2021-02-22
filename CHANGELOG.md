@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.15.1] - 2021-02-20
+## [0.15.2] - 2021-02-22
 ### Changes
 - [BREAKING] RgbImage::new() and draw::draw_image() take a ColorDepth enum instead of an int.
 - [BREAKING] Remove app::delay().

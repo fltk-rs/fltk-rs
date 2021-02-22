@@ -802,15 +802,9 @@ pub fn draw_image(
     y: i32,
     w: i32,
     h: i32,
-    depth: u32,
+    depth: ColorDepth,
 ) -> Result<(), FltkError> {
-    if depth > 4 {
-        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
-    }
-    let mut sz = (w * h) as usize;
-    if depth > 0 {
-        sz *= depth as usize;
-    }
+    let sz = (w * h * depth as i32) as usize;
     if sz > data.len() {
         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
     }
