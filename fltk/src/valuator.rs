@@ -46,11 +46,49 @@ pub struct Dial {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+impl Dial {
+    /// Get the angles of the dial
+    pub fn angles(&self) -> (u16, u16) {
+        let angle1 = unsafe { Fl_Dial_angle1(self._inner) };
+        let angle2 = unsafe { Fl_Dial_angle1(self._inner) };
+        (angle1 as u16, angle2 as u16)
+    }
+
+    /// Set the angles of the dial
+    pub fn set_angles(&mut self, angle1: u16, angle2: u16) {
+        if angle1 <= 360 {
+            unsafe { Fl_Dial_set_angle1(self._inner, angle1 as _); }
+        }
+        if angle2 <= 360 {
+            unsafe { Fl_Dial_set_angle2(self._inner, angle2 as _); }
+        }
+    }
+}
+
 /// Creates a line dial widget
 #[derive(WidgetBase, WidgetExt, ValuatorExt, Debug)]
 pub struct LineDial {
     _inner: *mut Fl_Line_Dial,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl LineDial {
+    /// Get the angles of the dial
+    pub fn angles(&self) -> (u16, u16) {
+        let angle1 = unsafe { Fl_Dial_angle1(self._inner as _) };
+        let angle2 = unsafe { Fl_Dial_angle1(self._inner as _) };
+        (angle1 as u16, angle2 as u16)
+    }
+
+    /// Set the angles of the dial
+    pub fn set_angles(&mut self, angle1: u16, angle2: u16) {
+        if angle1 <= 360 {
+            unsafe { Fl_Dial_set_angle1(self._inner as _, angle1 as _); }
+        }
+        if angle2 <= 360 {
+            unsafe { Fl_Dial_set_angle2(self._inner as _, angle2 as _); }
+        }
+    }
 }
 
 /// Defines dial types
@@ -280,6 +318,25 @@ pub struct FillSlider {
 pub struct FillDial {
     _inner: *mut Fl_Fill_Dial,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+impl FillDial {
+    /// Get the angles of the dial
+    pub fn angles(&self) -> (u16, u16) {
+        let angle1 = unsafe { Fl_Dial_angle1(self._inner as _) };
+        let angle2 = unsafe { Fl_Dial_angle1(self._inner as _) };
+        (angle1 as u16, angle2 as u16)
+    }
+
+    /// Set the angles of the dial
+    pub fn set_angles(&mut self, angle1: u16, angle2: u16) {
+        if angle1 <= 360 {
+            unsafe { Fl_Dial_set_angle1(self._inner as _, angle1 as _); }
+        }
+        if angle2 <= 360 {
+            unsafe { Fl_Dial_set_angle2(self._inner as _, angle2 as _); }
+        }
+    }
 }
 
 /// Creates a horizontal slider

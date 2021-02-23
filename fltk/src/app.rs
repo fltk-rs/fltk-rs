@@ -566,6 +566,36 @@ pub fn add_idle<F: FnMut() + 'static>(cb: F) {
     }
 }
 
+/// Remove an idle function
+pub fn remove_idle<F: FnMut() + 'static>(cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        Fl_remove_idle(callback, data);
+    }
+}
+
+/// Checks whether an idle function is installed
+pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        Fl_has_idle(callback, data) != 0
+    }
+}
+
 /// Waits a maximum of `dur` seconds or until "something happens".
 /// Returns true if an event happened (always true on windows)
 /// Returns false if nothing happened
@@ -797,6 +827,21 @@ pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         fltk_sys::fl::Fl_remove_timeout(callback, data);
+    }
+}
+
+/// Check whether a timeout is installed
+pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fltk_sys::fl::Fl_has_timeout(callback, data) != 0
     }
 }
 
@@ -1104,15 +1149,18 @@ pub fn get_system_colors() {
 }
 
 /// Send a signal to a window
-/// returns false if the event was not handled
+/// Integral values from 0 to 30 are reserved
+/// Returns Ok(true) if the event was handled
+/// Returns Ok(false) if the event was not handled
+/// Returns Err on error or in use of one of the reserved values
 /// ```no_run
 /// use fltk::*;
 /// const CHANGE_FRAME: i32 = 100;
 /// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();
 /// let mut frame = frame::Frame::default();
-/// but.set_callback(move || unsafe {
-///     let _ = app::handle(CHANGE_FRAME, &wind);
+/// but.set_callback(move || {
+///     let _ = app::handle(CHANGE_FRAME, &wind).unwrap();
 /// });
 /// frame.handle2(move |f, ev| {
 ///     if ev as i32 == CHANGE_FRAME {
@@ -1123,40 +1171,59 @@ pub fn get_system_colors() {
 ///     }
 /// });
 /// ```
-/// # Safety
-/// Can send an arbitrary message to the window,
-/// which can't be debug formatted as an Event enum.
-/// Sent values should also not conflict with an existing Event's i32 value
-pub unsafe fn handle<I: Into<i32>, W: WindowExt>(msg: I, w: &W) -> bool {
-    Fl_handle(msg.into(), w.as_widget_ptr() as _) != 0
+pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
+    msg: I,
+    w: &W,
+) -> Result<bool, FltkError> {
+    let val = msg.into();
+    if val >= 0 && val <= 30 {
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+    } else {
+        let ret = unsafe { Fl_handle(val, w.as_widget_ptr() as _) != 0 };
+        Ok(ret)
+    }
 }
 
-/// Send a signal to the main window
-/// returns false if the event was not handled
+/// Send a signal to a window
+/// Integral values from 0 to 30 are reserved
+/// Returns Ok(true) if the event was handled
+/// Returns Ok(false) if the event was not handled
+/// Returns Err on error or in use of one of the reserved values
 /// ```no_run
 /// use fltk::*;
 /// const CHANGE_FRAME: i32 = 100;
+/// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();
 /// let mut frame = frame::Frame::default();
-/// but.set_callback(move || unsafe {
-///     let _ = app::handle_main(CHANGE_FRAME);
+/// but.set_callback(move || {
+///     let _ = app::handle_main(CHANGE_FRAME).unwrap();
 /// });
-/// frame.handle2(move |f, ev| match ev as i32 {
-///     CHANGE_FRAME => {
+/// frame.handle2(move |f, ev| {
+///     if ev as i32 == CHANGE_FRAME {
 ///         f.set_label("Hello world");
 ///         true
-///     },
-///     _ => false,
+///     } else {
+///         false
+///     }
 /// });
 /// ```
-/// # Safety
-/// Can send an arbitrary message to the window,
-/// which can't be debug formatted as an Event enum.
-/// Sent values should also not conflict with an existing Event's i32 value
-pub unsafe fn handle_main<I: Into<i32>>(msg: I) -> bool {
-    if let Some(win) = first_window() {
-        Fl_handle(msg.into(), win.as_widget_ptr() as _) != 0
+pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
+    msg: I,
+) -> Result<bool, FltkError> {
+    let val = msg.into();
+    if val >= 0 && val <= 30 {
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+    } else if let Some(win) = first_window() {
+        let ret = unsafe { Fl_handle(val, win.as_widget_ptr() as _) != 0 };
+        Ok(ret)
     } else {
-        false
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+    }
+}
+
+/// Flush the main window
+pub fn flush() {
+    unsafe {
+        Fl_flush()
     }
 }

@@ -1489,6 +1489,18 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Dial_angle1(self_: *const Fl_Dial) -> libc::c_short;
+}
+extern "C" {
+    pub fn Fl_Dial_angle2(self_: *const Fl_Dial) -> libc::c_short;
+}
+extern "C" {
+    pub fn Fl_Dial_set_angle1(self_: *mut Fl_Dial, val: libc::c_short);
+}
+extern "C" {
+    pub fn Fl_Dial_set_angle2(self_: *mut Fl_Dial, val: libc::c_short);
+}
+extern "C" {
     pub fn Fl_Dial_set_bounds(arg1: *mut Fl_Dial, a: f64, b: f64);
 }
 extern "C" {

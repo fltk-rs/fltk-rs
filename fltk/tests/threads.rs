@@ -15,7 +15,7 @@ fn raw_threads() {
     let mut wind = Window::default()
         .with_size(400, 300)
         .center_screen()
-        .with_label("Hello");
+        .with_label("threads");
     let frame = Frame::new(0, 0, 400, 200, "");
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
 

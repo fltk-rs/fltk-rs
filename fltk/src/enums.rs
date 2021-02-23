@@ -395,7 +395,7 @@ impl std::fmt::Display for Color {
 
 /// Defines event types captured by FLTK
 #[repr(i32)]
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Copy, Clone, PartialEq, PartialOrd)]
 #[non_exhaustive]
 pub enum Event {
     /// No Event
@@ -455,6 +455,7 @@ pub enum Event {
     /// Zoom Event
     ZoomEvent,
     /// Window Resize Event
+    /// Avoid resizing a widget during a resize event!
     Resize,
 }
 
