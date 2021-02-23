@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [0.15.3] - 2021-02-23
+### Changes
+- Mark app::handle and handle_main as safe.
+
 ## [0.15.2] - 2021-02-22
 ### Changes
 - [BREAKING] RgbImage::new() and draw::draw_image() take a ColorDepth enum instead of an int.

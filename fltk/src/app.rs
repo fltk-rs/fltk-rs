@@ -1104,15 +1104,17 @@ pub fn get_system_colors() {
 }
 
 /// Send a signal to a window
-/// returns false if the event was not handled
+/// Returns Ok(true) if the event was handled
+/// Returns Ok(false) if the event was not handled
+/// Returns Err on error or in use of one of the reserved values
 /// ```no_run
 /// use fltk::*;
 /// const CHANGE_FRAME: i32 = 100;
 /// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();
 /// let mut frame = frame::Frame::default();
-/// but.set_callback(move || unsafe {
-///     let _ = app::handle(CHANGE_FRAME, &wind);
+/// but.set_callback(move || {
+///     let _ = app::handle(CHANGE_FRAME, &wind).unwrap();
 /// });
 /// frame.handle2(move |f, ev| {
 ///     if ev as i32 == CHANGE_FRAME {
@@ -1123,40 +1125,60 @@ pub fn get_system_colors() {
 ///     }
 /// });
 /// ```
-/// # Safety
-/// Can send an arbitrary message to the window,
-/// which can't be debug formatted as an Event enum.
-/// Sent values should also not conflict with an existing Event's i32 value
-pub unsafe fn handle<I: Into<i32>, W: WindowExt>(msg: I, w: &W) -> bool {
-    Fl_handle(msg.into(), w.as_widget_ptr() as _) != 0
+pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
+    msg: I,
+    w: &W,
+) -> Result<bool, FltkError> {
+    let val = msg.into();
+    if val >= 0 && val <= 30 {
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+    } else {
+        lock()?;
+        let ret = unsafe { Fl_handle(val, w.as_widget_ptr() as _) != 0 };
+        unlock();
+        awake();
+        Ok(ret)
+    }
 }
 
-/// Send a signal to the main window
-/// returns false if the event was not handled
+
+/// Send a signal to a window
+/// Returns Ok(true) if the event was handled
+/// Returns Ok(false) if the event was not handled
+/// Returns Err on error or in use of one of the reserved values
 /// ```no_run
 /// use fltk::*;
 /// const CHANGE_FRAME: i32 = 100;
+/// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();
 /// let mut frame = frame::Frame::default();
-/// but.set_callback(move || unsafe {
-///     let _ = app::handle_main(CHANGE_FRAME);
+/// but.set_callback(move || {
+///     let _ = app::handle_main(CHANGE_FRAME).unwrap();
 /// });
-/// frame.handle2(move |f, ev| match ev as i32 {
-///     CHANGE_FRAME => {
+/// frame.handle2(move |f, ev| {
+///     if ev as i32 == CHANGE_FRAME {
 ///         f.set_label("Hello world");
 ///         true
-///     },
-///     _ => false,
+///     } else {
+///         false
+///     }
 /// });
 /// ```
-/// # Safety
-/// Can send an arbitrary message to the window,
-/// which can't be debug formatted as an Event enum.
-/// Sent values should also not conflict with an existing Event's i32 value
-pub unsafe fn handle_main<I: Into<i32>>(msg: I) -> bool {
-    if let Some(win) = first_window() {
-        Fl_handle(msg.into(), win.as_widget_ptr() as _) != 0
+pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
+    msg: I,
+) -> Result<bool, FltkError> {
+    let val = msg.into();
+    if val >= 0 && val <= 30 {
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
     } else {
-        false
+        if let Some(win) = first_window() {
+            lock()?;
+            let ret = unsafe { Fl_handle(val, win.as_widget_ptr() as _) != 0 };
+            unlock();
+            awake();
+            Ok(ret)
+        } else {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+        }
     }
 }

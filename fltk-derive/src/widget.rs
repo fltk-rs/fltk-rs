@@ -71,12 +71,15 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
                 assert!(!ptr.is_null());
+                fltk_sys::fl::Fl_lock();
                 let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
                 assert!(!tracker.is_null());
-                #name {
+                let temp = #name {
                     _inner: ptr as *mut #ptr_name,
                     _tracker: tracker,
-                }
+                };
+                fltk_sys::fl::Fl_unlock();
+                temp
             }
 
             unsafe fn from_widget<W: WidgetExt>(w: W) -> Self {
