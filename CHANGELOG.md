@@ -5,6 +5,7 @@
 ### Changes
 - Mark app::handle and handle_main as safe.
 - Add methods to get and set Dial angles.
+- Add app::remove_idle, has_idle, remove_timeout.
 
 ## [0.15.2] - 2021-02-22
 ### Changes

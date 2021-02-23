@@ -241,6 +241,7 @@ $ cargo run --example counter
 $ cargo run --example hello
 $ cargo run --example hello_button
 $ cargo run --example fb
+$ cargo run --example pong
 ...
 ```
 

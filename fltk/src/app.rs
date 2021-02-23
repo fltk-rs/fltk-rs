@@ -566,6 +566,36 @@ pub fn add_idle<F: FnMut() + 'static>(cb: F) {
     }
 }
 
+/// Remove an idle function
+pub fn remove_idle<F: FnMut() + 'static>(cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        Fl_remove_idle(callback, data);
+    }
+}
+
+/// Checks whether an idle function is installed
+pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        Fl_has_idle(callback, data) != 0
+    }
+}
+
 /// Waits a maximum of `dur` seconds or until "something happens".
 /// Returns true if an event happened (always true on windows)
 /// Returns false if nothing happened
@@ -797,6 +827,21 @@ pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
         fltk_sys::fl::Fl_remove_timeout(callback, data);
+    }
+}
+
+/// Check whether a timeout is installed
+pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fltk_sys::fl::Fl_has_timeout(callback, data) != 0
     }
 }
 
@@ -1173,5 +1218,12 @@ pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
         Ok(ret)
     } else {
         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+    }
+}
+
+/// Flush the main window
+pub fn flush() {
+    unsafe {
+        Fl_flush()
     }
 }

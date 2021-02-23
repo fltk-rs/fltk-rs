@@ -160,6 +160,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_has_timeout(
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+        arg2: *mut libc::c_void,
+    ) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_dnd() -> libc::c_int;
 }
 extern "C" {
@@ -277,4 +283,19 @@ extern "C" {
         arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
         arg2: *mut libc::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_has_idle(
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+        arg2: *mut libc::c_void,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_remove_idle(
+        arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+        arg2: *mut libc::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_flush();
 }
