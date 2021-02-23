@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.15.3] - 2021-02-23
+## [0.15.3] - 2021-02-24
 ### Changes
 - Mark app::handle and handle_main as safe.
 - Add methods to get and set Dial angles.
