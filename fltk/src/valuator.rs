@@ -51,7 +51,7 @@ impl Dial {
     pub fn angles(&self) -> (u16, u16) {
         let angle1 = unsafe { Fl_Dial_angle1(self._inner) };
         let angle2 = unsafe { Fl_Dial_angle1(self._inner) };
-        (angle1, angle2)
+        (angle1 as u16, angle2 as u16)
     }
 
     /// Set the angles of the dial
@@ -60,7 +60,7 @@ impl Dial {
             unsafe { Fl_Dial_set_angle1(self._inner, angle1 as _); }
         }
         if angle2 <= 360 {
-            Fl_Dial_set_angle2(self._inner, angle2 as _);
+            unsafe { Fl_Dial_set_angle2(self._inner, angle2 as _); }
         }
     }
 }
@@ -77,7 +77,7 @@ impl LineDial {
     pub fn angles(&self) -> (u16, u16) {
         let angle1 = unsafe { Fl_Dial_angle1(self._inner as _) };
         let angle2 = unsafe { Fl_Dial_angle1(self._inner as _) };
-        (angle1, angle2)
+        (angle1 as u16, angle2 as u16)
     }
 
     /// Set the angles of the dial
@@ -86,7 +86,7 @@ impl LineDial {
             unsafe { Fl_Dial_set_angle1(self._inner as _, angle1 as _); }
         }
         if angle2 <= 360 {
-            Fl_Dial_set_angle2(self._inner as _, angle2 as _);
+            unsafe { Fl_Dial_set_angle2(self._inner as _, angle2 as _); }
         }
     }
 }
@@ -320,12 +320,12 @@ pub struct FillDial {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-impl LineDial {
+impl FillDial {
     /// Get the angles of the dial
     pub fn angles(&self) -> (u16, u16) {
         let angle1 = unsafe { Fl_Dial_angle1(self._inner as _) };
         let angle2 = unsafe { Fl_Dial_angle1(self._inner as _) };
-        (angle1, angle2)
+        (angle1 as u16, angle2 as u16)
     }
 
     /// Set the angles of the dial
@@ -334,7 +334,7 @@ impl LineDial {
             unsafe { Fl_Dial_set_angle1(self._inner as _, angle1 as _); }
         }
         if angle2 <= 360 {
-            Fl_Dial_set_angle2(self._inner as _, angle2 as _);
+            unsafe { Fl_Dial_set_angle2(self._inner as _, angle2 as _); }
         }
     }
 }
