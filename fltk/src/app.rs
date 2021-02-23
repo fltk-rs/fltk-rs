@@ -1104,6 +1104,7 @@ pub fn get_system_colors() {
 }
 
 /// Send a signal to a window
+/// Integral values from 0 to 30 are reserved
 /// Returns Ok(true) if the event was handled
 /// Returns Ok(false) if the event was not handled
 /// Returns Err on error or in use of one of the reserved values
@@ -1138,8 +1139,8 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     }
 }
 
-
 /// Send a signal to a window
+/// Integral values from 0 to 30 are reserved
 /// Returns Ok(true) if the event was handled
 /// Returns Ok(false) if the event was not handled
 /// Returns Err on error or in use of one of the reserved values
@@ -1167,12 +1168,10 @@ pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
     let val = msg.into();
     if val >= 0 && val <= 30 {
         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+    } else if let Some(win) = first_window() {
+        let ret = unsafe { Fl_handle(val, win.as_widget_ptr() as _) != 0 };
+        Ok(ret)
     } else {
-        if let Some(win) = first_window() {
-            let ret = unsafe { Fl_handle(val, win.as_widget_ptr() as _) != 0 };
-            Ok(ret)
-        } else {
-            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-        }
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
     }
 }
