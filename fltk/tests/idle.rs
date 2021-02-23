@@ -1,12 +1,12 @@
 use fltk::{app, button::*, frame::*, window::*};
 
 #[test]
-fn messages() {
+fn idle() {
     let app = app::App::default();
     let mut wind = Window::default()
         .with_size(400, 300)
         .center_screen()
-        .with_label("messages");
+        .with_label("Idle");
     let mut frame = Frame::new(0, 0, 400, 200, "");
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
 
@@ -23,11 +23,11 @@ fn messages() {
         });
     });
 
-    while app.wait() {
-        let msg = r.recv();
-        match msg {
-            Some(val) => frame.set_label(format!("Hello {}", val).as_str()),
-            None => (),
+    app::add_idle(move || {
+        if let Some(msg) = r.recv() {
+            frame.set_label(format!("Hello {}", msg).as_str());
         }
-    }
+    });
+
+    app.run().unwrap();
 }

@@ -56,7 +56,7 @@ fn move_image(mut frm: Frame) {
 fn run_animation() {
     let app = app::App::default();
     let mut wind = Window::default()
-        .with_label("pxm test")
+        .with_label("timeout")
         .with_size(720, 486)
         .center_screen();
     let mut frame = Frame::new(-30, 200, 30, 30, "");
