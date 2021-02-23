@@ -1133,10 +1133,7 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     if val >= 0 && val <= 30 {
         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
     } else {
-        lock()?;
         let ret = unsafe { Fl_handle(val, w.as_widget_ptr() as _) != 0 };
-        unlock();
-        awake();
         Ok(ret)
     }
 }
@@ -1172,10 +1169,7 @@ pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
     } else {
         if let Some(win) = first_window() {
-            lock()?;
             let ret = unsafe { Fl_handle(val, win.as_widget_ptr() as _) != 0 };
-            unlock();
-            awake();
             Ok(ret)
         } else {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
