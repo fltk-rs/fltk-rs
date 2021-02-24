@@ -19,16 +19,19 @@ fn app_handle() {
                 let ret = app::handle_main(i);
                 if let Ok(ret) = ret {
                     println!("Handled? {}", ret);
-
                 }
             }
         });
     });
 
-    frame.handle2(|f, ev| if ev as i32 > 30 {
-        f.set_label(&format!("{:?}", ev));
-        true
-    } else { false });
+    frame.handle2(|f, ev| {
+        if ev as i32 > 30 {
+            f.set_label(&format!("{:?}", ev));
+            true
+        } else {
+            false
+        }
+    });
 
     app.run().unwrap();
 }
