@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [0.15.4] - Unreleased
+### Changes
+- Add utils::rgba2hex().
+
 ## [0.15.3] - 2021-02-24
 ### Changes
 - Mark app::handle and handle_main as safe.

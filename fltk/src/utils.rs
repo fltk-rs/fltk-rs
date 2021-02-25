@@ -27,6 +27,17 @@ pub fn rgb2hex(r: u8, g: u8, b: u8) -> u32 {
     u32::from_str_radix(&format!("{:02x}{:02x}{:02x}", r, g, b), 16).unwrap()
 }
 
+/// Convenience function to convert rgba to hex
+/// Example:
+/// ```no_run
+/// use fltk::utils::rgb2hex;
+/// let ret = rgba2hex(0, 255, 0, 255); println!("0x{:08x}", ret);
+/// ```
+pub fn rgba2hex(r: u8, g: u8, b: u8, a: u8) -> u32 {
+    // Shouldn't fail
+    u32::from_str_radix(&format!("{:02x}{:02x}{:02x}{:02x}", r, g, b, a), 16).unwrap()
+}
+
 /// Convenience function to convert hex to rgb
 /// Example:
 /// ```no_run
