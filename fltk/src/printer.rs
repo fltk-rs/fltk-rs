@@ -2,7 +2,7 @@ pub use crate::prelude::*;
 use fltk_sys::printer::*;
 use std::ffi::CString;
 
-/// Defines a printer object
+/// Defines a printer object.
 /// Example usage:
 /// ```no_run
 /// use fltk::*;

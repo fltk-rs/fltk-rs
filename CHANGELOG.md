@@ -4,6 +4,9 @@
 ## [0.15.4] - Unreleased
 ### Changes
 - Add utils::rgba2hex().
+- Pass u32 to utils::hex2rgba().
+- Fix docs and intra doc links.
+- Update FLTK and cfltk.
 
 ## [0.15.3] - 2021-02-24
 ### Changes

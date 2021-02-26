@@ -619,8 +619,8 @@ pub struct TextEditor {
 }
 
 /// Creates an editable text display widget to handle terminal-like behavior, such as
-/// logging events or debug information
-/// SimpleTerminal already has an internal buffer
+/// logging events or debug information.
+/// SimpleTerminal already has an internal buffer.
 /// It is NOT is a full terminal emulator; it does NOT
 /// handle stdio redirection, pipes, pseudo ttys, termio character cooking,
 /// keyboard input processing, screen addressing, random cursor positioning,

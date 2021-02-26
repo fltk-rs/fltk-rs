@@ -3,7 +3,7 @@ use fltk_sys::surface::*;
 use std::ffi::CString;
 use std::path;
 
-/// An image surface object
+/// An image surface object.
 /// Example usage:
 /// ```no_run
 /// use fltk::*;

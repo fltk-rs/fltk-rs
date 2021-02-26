@@ -16,7 +16,7 @@ impl FlString for CString {
     }
 }
 
-/// Convenience function to convert rgb to hex
+/// Convenience function to convert rgb to hex.
 /// Example:
 /// ```no_run
 /// use fltk::utils::rgb2hex;
@@ -27,10 +27,10 @@ pub fn rgb2hex(r: u8, g: u8, b: u8) -> u32 {
     u32::from_str_radix(&format!("{:02x}{:02x}{:02x}", r, g, b), 16).unwrap()
 }
 
-/// Convenience function to convert rgba to hex
+/// Convenience function to convert rgba to hex.
 /// Example:
 /// ```no_run
-/// use fltk::utils::rgb2hex;
+/// use fltk::utils::rgba2hex;
 /// let ret = rgba2hex(0, 255, 0, 255); println!("0x{:08x}", ret);
 /// ```
 pub fn rgba2hex(r: u8, g: u8, b: u8, a: u8) -> u32 {
@@ -38,7 +38,7 @@ pub fn rgba2hex(r: u8, g: u8, b: u8, a: u8) -> u32 {
     u32::from_str_radix(&format!("{:02x}{:02x}{:02x}{:02x}", r, g, b, a), 16).unwrap()
 }
 
-/// Convenience function to convert hex to rgb
+/// Convenience function to convert hex to rgb.
 /// Example:
 /// ```no_run
 /// use fltk::utils::hex2rgb;
@@ -52,13 +52,13 @@ pub fn hex2rgb(val: u32) -> (u8, u8, u8) {
     (r, g, b)
 }
 
-/// Convenience function to convert hex to rgba
+/// Convenience function to convert hex to rgba.
 /// Example:
 /// ```no_run
 /// use fltk::utils::hex2rgba;
 /// let (r, g, b, a) = hex2rgba(0xff0000ff);
 /// ```
-pub fn hex2rgba(val: u64) -> (u8, u8, u8, u8) {
+pub fn hex2rgba(val: u32) -> (u8, u8, u8, u8) {
     let r = ((val >> 24) & 0xff) as u8;
     let g = ((val >> 16) & 0xff) as u8;
     let b = ((val >> 8) & 0xff) as u8;

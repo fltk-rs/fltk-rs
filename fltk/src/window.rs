@@ -11,7 +11,7 @@ use std::{
     os::raw,
 };
 
-/// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
+/// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS),
 /// XID (u64) raw window handle for X11
 #[cfg(any(
     target_os = "windows",
@@ -40,7 +40,7 @@ pub type RawHandle = *mut raw::c_void;
 ))]
 pub type RawHandle = u32;
 
-/// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS)
+/// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS),
 /// XID (u64) raw window handle for X11
 #[cfg(all(
     not(any(
@@ -88,7 +88,7 @@ impl SingleWindow {
         win
     }
 
-    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app
+    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app.
     /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
     /// # Safety
     /// The data must be valid and is OS-dependent.
@@ -104,23 +104,23 @@ impl SingleWindow {
     }
 
     /// Use FLTK specific arguments for the application:
-    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
     /// The options are:
-    /// -bg2 color
-    /// -bg color
-    /// -di[splay] host:n.n
-    /// -dn[d]
-    /// -fg color
-    /// -g[eometry] WxH+X+Y
-    /// -i[conic]
-    /// -k[bd]
-    /// -na[me] classname
-    /// -nod[nd]
-    /// -nok[bd]
-    /// -not[ooltips]
-    /// -s[cheme] scheme
-    /// -ti[tle] windowtitle
-    /// -to[oltips]
+    /// - `-bg2 color`
+    /// - `-bg color`
+    /// - `-di[splay] host:n.n`
+    /// - `-dn[d]`
+    /// - `-fg color`
+    /// - `-g[eometry] WxH+X+Y`
+    /// - `-i[conic]`
+    /// - `-k[bd]`
+    /// - `-na[me] classname`
+    /// - `-nod[nd]`
+    /// - `-nok[bd]`
+    /// - `-not[ooltips]`
+    /// - `-s[cheme] scheme`
+    /// - `-ti[tle] windowtitle`
+    /// - `-to[oltips]`
     pub fn show_with_env_args(&mut self) {
         assert!(!self.was_deleted());
         unsafe {
@@ -137,23 +137,23 @@ impl SingleWindow {
     }
 
     /// Use FLTK specific arguments for the application:
-    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
     /// The options are:
-    /// -bg2 color
-    /// -bg color
-    /// -di[splay] host:n.n
-    /// -dn[d]
-    /// -fg color
-    /// -g[eometry] WxH+X+Y
-    /// -i[conic]
-    /// -k[bd]
-    /// -na[me] classname
-    /// -nod[nd]
-    /// -nok[bd]
-    /// -not[ooltips]
-    /// -s[cheme] scheme
-    /// -ti[tle] windowtitle
-    /// -to[oltips]
+    /// - `-bg2 color`
+    /// - `-bg color`
+    /// - `-di[splay] host:n.n`
+    /// - `-dn[d]`
+    /// - `-fg color`
+    /// - `-g[eometry] WxH+X+Y`
+    /// - `-i[conic]`
+    /// - `-k[bd]`
+    /// - `-na[me] classname`
+    /// - `-nod[nd]`
+    /// - `-nok[bd]`
+    /// - `-not[ooltips]`
+    /// - `-s[cheme] scheme`
+    /// - `-ti[tle] windowtitle`
+    /// - `-to[oltips]`
     pub fn show_with_args(&mut self, args: &[&str]) {
         assert!(!self.was_deleted());
         unsafe {
@@ -186,7 +186,7 @@ impl DoubleWindow {
         win
     }
 
-    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app
+    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app.
     /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
     /// # Safety
     /// The data must be valid and is OS-dependent.
@@ -202,23 +202,23 @@ impl DoubleWindow {
     }
 
     /// Use FLTK specific arguments for the application:
-    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
     /// The options are:
-    /// -bg2 color
-    /// -bg color
-    /// -di[splay] host:n.n
-    /// -dn[d]
-    /// -fg color
-    /// -g[eometry] WxH+X+Y
-    /// -i[conic]
-    /// -k[bd]
-    /// -na[me] classname
-    /// -nod[nd]
-    /// -nok[bd]
-    /// -not[ooltips]
-    /// -s[cheme] scheme
-    /// -ti[tle] windowtitle
-    /// -to[oltips]
+    /// - `-bg2 color`
+    /// - `-bg color`
+    /// - `-di[splay] host:n.n`
+    /// - `-dn[d]`
+    /// - `-fg color`
+    /// - `-g[eometry] WxH+X+Y`
+    /// - `-i[conic]`
+    /// - `-k[bd]`
+    /// - `-na[me] classname`
+    /// - `-nod[nd]`
+    /// - `-nok[bd]`
+    /// - `-not[ooltips]`
+    /// - `-s[cheme] scheme`
+    /// - `-ti[tle] windowtitle`
+    /// - `-to[oltips]`
     pub fn show_with_env_args(&mut self) {
         assert!(!self.was_deleted());
         unsafe {
@@ -235,23 +235,23 @@ impl DoubleWindow {
     }
 
     /// Use FLTK specific arguments for the application:
-    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
     /// The options are:
-    /// -bg2 color
-    /// -bg color
-    /// -di[splay] host:n.n
-    /// -dn[d]
-    /// -fg color
-    /// -g[eometry] WxH+X+Y
-    /// -i[conic]
-    /// -k[bd]
-    /// -na[me] classname
-    /// -nod[nd]
-    /// -nok[bd]
-    /// -not[ooltips]
-    /// -s[cheme] scheme
-    /// -ti[tle] windowtitle
-    /// -to[oltips]
+    /// - `-bg2 color`
+    /// - `-bg color`
+    /// - `-di[splay] host:n.n`
+    /// - `-dn[d]`
+    /// - `-fg color`
+    /// - `-g[eometry] WxH+X+Y`
+    /// - `-i[conic]`
+    /// - `-k[bd]`
+    /// - `-na[me] classname`
+    /// - `-nod[nd]`
+    /// - `-nok[bd]`
+    /// - `-not[ooltips]`
+    /// - `-s[cheme] scheme`
+    /// - `-ti[tle] windowtitle`
+    /// - `-to[oltips]`
     pub fn show_with_args(&mut self, args: &[&str]) {
         assert!(!self.was_deleted());
         unsafe {
@@ -306,7 +306,7 @@ impl OverlayWindow {
         win
     }
 
-    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app
+    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app.
     /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
     /// # Safety
     /// The data must be valid and is OS-dependent.
@@ -322,23 +322,23 @@ impl OverlayWindow {
     }
 
     /// Use FLTK specific arguments for the application:
-    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
     /// The options are:
-    /// -bg2 color
-    /// -bg color
-    /// -di[splay] host:n.n
-    /// -dn[d]
-    /// -fg color
-    /// -g[eometry] WxH+X+Y
-    /// -i[conic]
-    /// -k[bd]
-    /// -na[me] classname
-    /// -nod[nd]
-    /// -nok[bd]
-    /// -not[ooltips]
-    /// -s[cheme] scheme
-    /// -ti[tle] windowtitle
-    /// -to[oltips]
+    /// - `-bg2 color`
+    /// - `-bg color`
+    /// - `-di[splay] host:n.n`
+    /// - `-dn[d]`
+    /// - `-fg color`
+    /// - `-g[eometry] WxH+X+Y`
+    /// - `-i[conic]`
+    /// - `-k[bd]`
+    /// - `-na[me] classname`
+    /// - `-nod[nd]`
+    /// - `-nok[bd]`
+    /// - `-not[ooltips]`
+    /// - `-s[cheme] scheme`
+    /// - `-ti[tle] windowtitle`
+    /// - `-to[oltips]`
     pub fn show_with_env_args(&mut self) {
         assert!(!self.was_deleted());
         unsafe {
@@ -355,23 +355,23 @@ impl OverlayWindow {
     }
 
     /// Use FLTK specific arguments for the application:
-    /// More info: https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48
+    /// More info [here](https://www.fltk.org/doc-1.3/classFl.html#a1576b8c9ca3e900daaa5c36ca0e7ae48).
     /// The options are:
-    /// -bg2 color
-    /// -bg color
-    /// -di[splay] host:n.n
-    /// -dn[d]
-    /// -fg color
-    /// -g[eometry] WxH+X+Y
-    /// -i[conic]
-    /// -k[bd]
-    /// -na[me] classname
-    /// -nod[nd]
-    /// -nok[bd]
-    /// -not[ooltips]
-    /// -s[cheme] scheme
-    /// -ti[tle] windowtitle
-    /// -to[oltips]
+    /// - `-bg2 color`
+    /// - `-bg color`
+    /// - `-di[splay] host:n.n`
+    /// - `-dn[d]`
+    /// - `-fg color`
+    /// - `-g[eometry] WxH+X+Y`
+    /// - `-i[conic]`
+    /// - `-k[bd]`
+    /// - `-na[me] classname`
+    /// - `-nod[nd]`
+    /// - `-nok[bd]`
+    /// - `-not[ooltips]`
+    /// - `-s[cheme] scheme`
+    /// - `-ti[tle] windowtitle`
+    /// - `-to[oltips]`
     pub fn show_with_args(&mut self, args: &[&str]) {
         assert!(!self.was_deleted());
         unsafe {

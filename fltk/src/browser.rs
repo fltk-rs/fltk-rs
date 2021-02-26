@@ -7,7 +7,7 @@ use std::{
     os::raw,
 };
 
-/// Creates a normal browser
+/// Creates a normal browser.
 /// Example usage:
 /// ```no_run
 /// use fltk::*;
@@ -117,15 +117,16 @@ impl FileBrowser {
         unsafe { Fl_File_Browser_set_iconsize(self._inner, s) }
     }
 
-    /// Sets the filter for the FileBrowser
+    /// Sets the filter for the FileBrowser.
     /// The following syntax is used for the pattern:
-    /// * matches any sequence of 0 or more characters.
-    /// ? matches any single character.
-    /// [set] matches any character in the set. Set can contain any single characters, or a-z to represent a range. To match ] or - they must be the first characters. To match ^ or ! they must not be the first characters.
-    /// [^set] or [!set] matches any character not in the set.
-    /// {X|Y|Z} or {X,Y,Z} matches any one of the subexpressions literally.
-    /// \x quotes the character x so it has no special meaning.
-    /// x all other characters must be matched exactly.
+    /// `*` matches any sequence of 0 or more characters.
+    /// `?` matches any single character.
+    /// `[set]` matches any character in the set. The set can contain any single characters, or a-z to represent a range. To match `]` or 
+    /// they must be the first characters. To match `^` or `!` they must not be the first characters.
+    /// `[^set]` or `[!set]` matches any character not in the set.
+    /// `{X|Y|Z}` or `{X,Y,Z}` matches any one of the subexpressions literally.
+    /// `\x` quotes the character `x` so it has no special meaning.
+    /// `x` all other characters must be matched exactly.
     pub fn set_filter(&mut self, pattern: &str) {
         assert!(!self.was_deleted());
         let pattern = CString::safe_new(pattern);
