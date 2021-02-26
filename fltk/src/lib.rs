@@ -126,8 +126,7 @@
 //!         }
 //!     }
 //! ```
-//! For the remainder of the code, check the full example here:
-//! https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter2.rs
+//! For the remainder of the code, check the full example [here](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter2.rs).
 //!
 //! For custom event handling, the handle() method can be used:
 //! ```ignored
@@ -211,6 +210,7 @@
 
 #![allow(non_upper_case_globals)]
 #![warn(missing_docs)]
+#![warn(broken_intra_doc_links)]
 
 /// Application related methods and functions
 pub mod app;

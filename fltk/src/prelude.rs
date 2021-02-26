@@ -790,7 +790,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Sets the wrap mode of the Display widget
     /// If the wrap mode is AtColumn, wrap_margin is the column.
     /// If the wrap mode is AtPixel, wrap_margin is the pixel
-    /// For more info: https://www.fltk.org/doc-1.4/classFl__Text__Display.html#ab9378d48b949f8fc7da04c6be4142c54
+    /// For more [info](https://www.fltk.org/doc-1.4/classFl__Text__Display.html#ab9378d48b949f8fc7da04c6be4142c54)
     fn wrap_mode(&mut self, wrap: crate::text::WrapMode, wrap_margin: i32);
     /// Correct a column number based on an unconstrained position
     fn wrapped_column(&self, row: i32, column: i32) -> i32;
@@ -858,7 +858,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Lines start at 1
     fn middle_line(&mut self, line: u32);
     /// Gets the current format code prefix character, which by default is '\@'
-    /// More info here: https://www.fltk.org/doc-1.3/classFl__Browser.html#a129dca59d64baf166503ba59341add69
+    /// More info [here](https://www.fltk.org/doc-1.3/classFl__Browser.html#a129dca59d64baf166503ba59341add69)
     fn format_char(&self) -> char;
     /// Sets the current format code prefix character to \p c. The default prefix is '\@
     /// c should be ascii

@@ -264,7 +264,7 @@ impl MenuItem {
     }
 
     /// Get the menu item at `idx`
-    pub fn at(&mut self, idx: u32) -> Option<MenuItem> {
+    pub fn at(&self, idx: u32) -> Option<MenuItem> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Menu_Item_next(self._inner, idx as i32);

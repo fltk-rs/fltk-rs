@@ -682,7 +682,7 @@ pub fn reset_spot() {
     unsafe { Fl_reset_spot() }
 }
 
-/// Captures part of the window and returns raw data
+/// Captures part of the window and returns raw data.
 /// Example usage:
 /// ```no_run
 /// use fltk::*;
@@ -730,7 +730,7 @@ pub fn draw_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), 
 
 /// Draw a framebuffer (rgba) into a widget
 /// # Safety
-/// - The data passed should be valid and outlive the widget
+/// The data passed should be valid and outlive the widget
 pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
     let ptr = fb.as_ptr();
     let len = fb.len();
@@ -771,7 +771,7 @@ pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), F
 
 /// Draw a framebuffer (rgba) into a widget
 /// # Safety
-/// - The data passed should be valid and outlive the widget
+/// The data passed should be valid and outlive the widget
 pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
     let ptr = fb.as_ptr();
     let len = fb.len();
@@ -794,7 +794,7 @@ pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
     });
 }
 
-/// Draw an image into a widget
+/// Draw an image into a widget.
 /// Requires a call to app::set_visual(Mode::Rgb8).unwrap()
 pub fn draw_image(
     data: &[u8],

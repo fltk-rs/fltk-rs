@@ -287,7 +287,7 @@ pub fn event_text() -> String {
     }
 }
 
-/// Returns the captured button event
+/// Returns the captured button event.
 /// 1 for left key, 2 for middle, 3 for right
 pub fn event_button() -> i32 {
     unsafe { Fl_event_button() }
@@ -533,7 +533,7 @@ pub fn add_handler(cb: fn(Event) -> bool) {
     }
 }
 
-/// Starts waiting for events
+/// Starts waiting for events.
 /// Calls to redraw within wait require an explicit sleep
 pub fn wait() -> bool {
     unsafe {
@@ -550,7 +550,7 @@ pub fn sleep(dur: f64) {
     thread::sleep(time::Duration::from_millis(dur as u64));
 }
 
-/// Add an idle callback to run within the event loop
+/// Add an idle callback to run within the event loop.
 /// Calls to WidgetExt::redraw within the callback require an explicit sleep
 pub fn add_idle<F: FnMut() + 'static>(cb: F) {
     unsafe {
@@ -597,8 +597,8 @@ pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
 }
 
 /// Waits a maximum of `dur` seconds or until "something happens".
-/// Returns true if an event happened (always true on windows)
-/// Returns false if nothing happened
+/// Returns true if an event happened (always true on windows).
+/// Returns false if nothing happened.
 /// Can error out on X11 system if interrupted by a signal
 pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
     unsafe {
@@ -783,7 +783,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     }
 }
 
-/// Repeats a timeout callback from the expiration of the previous timeout
+/// Repeats a timeout callback from the expiration of the previous timeout.
 /// You may only call this method inside a timeout callback.
 /// The timeout duration `tm` is indicated in seconds
 /// Example:
@@ -870,7 +870,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     unsafe { Fl_event_inside(x, y, w, h) != 0 }
 }
 
-/// Gets the widget that is below the mouse cursor
+/// Gets the widget that is below the mouse cursor.
 /// This returns an Option<impl WidgetExt> which can be specified in the function call
 /// ```no_run
 /// use fltk::app;
@@ -901,7 +901,7 @@ pub fn register_images() {
     unsafe { fltk_sys::image::Fl_register_images() }
 }
 
-/// Inits all styles, fonts and images available to FLTK
+/// Inits all styles, fonts and images available to FLTK.
 /// Also initializes global locking
 /// # Panics
 /// If the current environment lacks threading support. Practically this should never happen!
@@ -1040,7 +1040,7 @@ pub fn crate_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
 
-/// The current graphics context of the app, fl_gc
+/// The current graphics context of the app, fl_gc.
 /// *mut c_void to HDC on Windows, CGContextRef on MacOS, _XGC on X11
 pub type GraphicsContext = *mut raw::c_void;
 
@@ -1053,11 +1053,11 @@ pub fn graphics_context() -> GraphicsContext {
     }
 }
 
-/// The display global variable, fl_display
+/// The display global variable, fl_display.
 /// _XDisplay on X11, HINSTANCE on Windows.
 pub type Display = *mut raw::c_void;
 
-/// Gets the display global variable, fl_display
+/// Gets the display global variable, fl_display.
 /// _XDisplay on X11, HINSTANCE on Windows.
 pub fn display() -> Display {
     unsafe {
@@ -1148,11 +1148,11 @@ pub fn get_system_colors() {
     unsafe { Fl_get_system_colors() }
 }
 
-/// Send a signal to a window
-/// Integral values from 0 to 30 are reserved
-/// Returns Ok(true) if the event was handled
-/// Returns Ok(false) if the event was not handled
-/// Returns Err on error or in use of one of the reserved values
+/// Send a signal to a window.
+/// Integral values from 0 to 30 are reserved.
+/// Returns Ok(true) if the event was handled.
+/// Returns Ok(false) if the event was not handled.
+/// Returns Err on error or in use of one of the reserved values.
 /// ```no_run
 /// use fltk::*;
 /// const CHANGE_FRAME: i32 = 100;
@@ -1184,11 +1184,11 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     }
 }
 
-/// Send a signal to a window
-/// Integral values from 0 to 30 are reserved
-/// Returns Ok(true) if the event was handled
-/// Returns Ok(false) if the event was not handled
-/// Returns Err on error or in use of one of the reserved values
+/// Send a signal to a window.
+/// Integral values from 0 to 30 are reserved.
+/// Returns Ok(true) if the event was handled.
+/// Returns Ok(false) if the event was not handled.
+/// Returns Err on error or in use of one of the reserved values.
 /// ```no_run
 /// use fltk::*;
 /// const CHANGE_FRAME: i32 = 100;
