@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.15.4] - Unreleased
+## [0.15.4] - 2021-02-26
 ### Changes
 - Add utils::rgba2hex().
 - Pass u32 to utils::hex2rgba().
