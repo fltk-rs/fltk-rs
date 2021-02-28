@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.15.5] - Unreleased
+## [0.15.5] - 2021-03-01
 ### Changes
 - Check for 0 children with Pack::auto_layout(). Thanks @dheijl.
 
