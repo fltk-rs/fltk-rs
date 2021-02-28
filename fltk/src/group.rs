@@ -324,6 +324,9 @@ impl Pack {
     /// Must be called on existing children
     pub fn auto_layout(&mut self) {
         let children = self.children() as i32;
+        if children == 0 {
+            return;
+        }
         let spacing = self.spacing() * (children - 1);
         let t = self.get_type::<PackType>();
         let w = (self.width() - spacing) / children;
