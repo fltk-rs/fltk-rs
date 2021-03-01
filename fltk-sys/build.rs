@@ -92,11 +92,11 @@ fn main() {
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
 
-        // Command::new("git")
-        //     .args(&["apply", "../fltk.patch"])
-        //     .current_dir(manifest_dir.join("cfltk").join("fltk"))
-        //     .status()
-        //     .expect("Git is needed to retrieve the fltk source files!");
+        Command::new("git")
+            .args(&["apply", "../fltk.patch"])
+            .current_dir(manifest_dir.join("cfltk").join("fltk"))
+            .status()
+            .expect("Git is needed to retrieve the fltk source files!");
 
         if !target_triple.contains("android") {
             let mut dst = cmake::Config::new("cfltk");
@@ -271,11 +271,11 @@ fn main() {
         }
     }
 
-    // Command::new("git")
-    //     .args(&["reset", "--hard"])
-    //     .current_dir(manifest_dir.join("cfltk").join("fltk"))
-    //     .status()
-    //     .expect("Git is needed to retrieve the fltk source files!");
+    Command::new("git")
+        .args(&["reset", "--hard"])
+        .current_dir(manifest_dir.join("cfltk").join("fltk"))
+        .status()
+        .expect("Git is needed to retrieve the fltk source files!");
 
     println!(
         "cargo:rustc-link-search=native={}",

@@ -22,7 +22,7 @@ impl RtlInput {
         i.hide();
         let mut i_c = i.clone();
         let mut f_c = f.clone();
-        g.handle(|ev| match ev {
+        g.handle(move |ev| match ev {
             Event::Focus => {
                 if !i_c.visible() {
                     f_c.hide();
