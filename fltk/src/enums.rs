@@ -732,31 +732,35 @@ pub enum Cursor {
 }
 
 bitflags! {
-    /// Defines Fl_Mode types
+    /// Defines visual mode types (capabilites of the window)
+    /// Rgb and Single have a value of zero, so they
+    /// are "on" unless you give Index or Double.
     pub struct Mode: i32 {
-        /// Rgb
+        /// Rgb color (not indexed)
         const Rgb = 0;
-        /// Index
+        /// Single buffered
+        const Single = 0;
+        /// Indexed mode
         const Index = 1;
-        /// Double
+        /// Double buffered
         const Double = 2;
-        /// Accum
+        /// Accumulation buffer
         const Accum = 4;
-        /// Alpha
+        /// Alpha channel in color
         const Alpha = 8;
-        /// Depth
+        /// Depth buffer
         const Depth = 16;
-        /// Stencil
+        /// Stencil buffer
         const Stencil = 32;
-        /// Rgb8
+        /// Rgb8 color with at least 8 bits of each color
         const Rgb8 = 64;
-        /// MultiSample
+        /// MultiSample antialiasing
         const MultiSample = 128;
-        /// Stereo
+        /// Stereoscopic rendering
         const Stereo = 256;
-        /// FakeSingle
-        const FakeSingle = 512; // Fake single buffered windows using double-buffer
-        /// Opengl3
+        /// Fake single buffered windows using double-buffer
+        const FakeSingle = 512; // 
+        /// Use OpenGL version 3.0 or more
         const Opengl3 = 1024;
     }
 }
