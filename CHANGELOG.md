@@ -4,7 +4,7 @@
 ## [0.15.6] - Unreleased
 ### Changes
 - Add screen scale getters and setters in the app module.
-- add WidgetExt::visible and visible_r method.
+- add WidgetExt::visible and visible_r methods.
 - Update deps.
 
 ## [0.15.5] - 2021-03-01
