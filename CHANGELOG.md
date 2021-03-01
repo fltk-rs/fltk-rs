@@ -1,5 +1,10 @@
 # Changelog
 
+
+## [0.15.6] - Unreleased
+### Changes
+- Add screen scale getters and setters in the app module.
+
 ## [0.15.5] - 2021-03-01
 ### Changes
 - Check for 0 children with Pack::auto_layout(). Thanks @dheijl.

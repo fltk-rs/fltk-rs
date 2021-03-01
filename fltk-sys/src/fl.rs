@@ -299,3 +299,15 @@ extern "C" {
 extern "C" {
     pub fn Fl_flush();
 }
+extern "C" {
+    pub fn Fl_set_screen_scale(n: libc::c_int, val: f32);
+}
+extern "C" {
+    pub fn Fl_screen_scale(n: libc::c_int) -> f32;
+}
+extern "C" {
+    pub fn Fl_screen_scaling_supported() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_screen_count() -> libc::c_int;
+}
