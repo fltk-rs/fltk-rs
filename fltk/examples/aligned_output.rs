@@ -24,7 +24,7 @@ impl RtlInput {
         let mut f_c = f.clone();
         g.handle(|ev| match ev {
             Event::Focus => {
-                if !i_c.shown() {
+                if !i_c.visible() {
                     f_c.hide();
                 }
                 true
