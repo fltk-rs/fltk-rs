@@ -1228,12 +1228,12 @@ pub fn flush() {
 
 /// Set the screen scale
 pub fn set_screen_scale(n: u32, factor: f32) {
-    unsafe { Fl_set_screen_scale(n, factor) }
+    unsafe { Fl_set_screen_scale(n as i32, factor) }
 }
 
 /// Get the screen scale
 pub fn screen_scale(n: u32) -> f32 {
-    unsafe { Fl_screen_scale(n) }
+    unsafe { Fl_screen_scale(n as i32) }
 }
 
 /// Return whether scaling the screen is supported
