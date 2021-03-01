@@ -280,6 +280,12 @@ extern "C" {
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
+extern "C" {
+    pub fn Fl_Widget_visible(self_: *const Fl_Widget) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Spinner {
@@ -551,6 +557,12 @@ extern "C" {
         arg1: *mut Fl_Spinner,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Spinner_visible(self_: *const Fl_Spinner) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Spinner_visible_r(self_: *const Fl_Spinner) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
@@ -857,6 +869,12 @@ extern "C" {
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
+extern "C" {
+    pub fn Fl_Clock_visible(self_: *const Fl_Clock) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Clock_visible_r(self_: *const Fl_Clock) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -1116,6 +1134,12 @@ extern "C" {
         arg1: *mut Fl_Chart,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Chart_visible(self_: *const Fl_Chart) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Chart_visible_r(self_: *const Fl_Chart) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -1456,6 +1480,12 @@ extern "C" {
         arg1: *mut Fl_Progress,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Progress_visible(self_: *const Fl_Progress) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_visible_r(self_: *const Fl_Progress) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;
@@ -1843,6 +1873,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Help_View_visible(self_: *const Fl_Help_View) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Help_View_visible_r(self_: *const Fl_Help_View) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Help_View_directory(self_: *const Fl_Help_View) -> *const libc::c_char;
 }
 extern "C" {
@@ -2183,6 +2219,12 @@ extern "C" {
         arg1: *mut Fl_Input_Choice,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Input_Choice_visible(self_: *const Fl_Input_Choice) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Input_Choice_visible_r(self_: *const Fl_Input_Choice) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Input_Choice_set_down_box(self_: *mut Fl_Input_Choice, box_: libc::c_int);

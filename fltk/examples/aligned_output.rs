@@ -1,59 +1,66 @@
 use fltk::*;
-use std::cell::RefCell;
 use std::ops::{Deref, DerefMut};
-use std::rc::Rc;
 
 #[derive(Clone)]
-struct MyOutput {
+struct RtlInput {
+    g: group::Group,
     f: frame::Frame,
-    val: Rc<RefCell<String>>,
+    i: input::Input,
 }
 
-impl MyOutput {
-    pub fn new(x: i32, y: i32, width: i32, height: i32, align: Align) -> Self {
-        let mut o = MyOutput {
-            f: frame::Frame::new(x, y, width, height, ""),
-            val: Rc::from(RefCell::from(String::from(""))),
-        };
-        let v = o.val.clone();
-        o.f.draw(move || {
-            draw::push_clip(x, y, width, height);
-            draw::draw_box(FrameType::DownBox, x, y, width, height, Color::White);
-            draw::set_draw_color(Color::Black);
-            draw::draw_text2(&v.borrow(), x, y, width, height, align);
-            draw::pop_clip();
+impl RtlInput {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, title: &str) -> Self {
+        let mut g = group::Group::new(x, y, w, h, title);
+        let mut f = frame::Frame::new(x, y, w, h, "");
+        let mut i = input::Input::new(x, y, w, h, "");
+        g.end();
+        g.set_frame(FrameType::NoBox);
+        g.set_align(Align::Right);
+        f.set_align(Align::Right | Align::Inside);
+        f.set_color(Color::White);
+        f.set_frame(FrameType::DownBox);
+        i.hide();
+        let mut i_c = i.clone();
+        let mut f_c = f.clone();
+        g.handle(|ev| match ev {
+            Event::Focus => {
+                if !i_c.shown() {
+                    f_c.hide();
+                }
+                true
+            },
+            Event::Unfocus => {
+                true
+            },
+            _ => false,
         });
-        o
-    }
-    pub fn set_value(&mut self, val: &str) {
-        *self.val.borrow_mut() = String::from(val);
-        self.f.redraw();
+        RtlInput {
+            g,
+            f,
+            i,
+        }
     }
 }
 
-impl Deref for MyOutput {
-    type Target = frame::Frame;
+impl Deref for RtlInput {
+    type Target = input::Input;
 
     fn deref(&self) -> &Self::Target {
-        &self.f
+        &self.i
     }
 }
 
-impl DerefMut for MyOutput {
+impl DerefMut for RtlInput {
     fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.f
+        &mut self.i
     }
 }
 
 fn main() {
     let app = app::App::default();
     let mut win = window::Window::new(100, 100, 400, 300, "");
-    let mut out = MyOutput::new(20, 100, 360, 40, Align::Center);
-    let mut but = button::Button::new(160, 200, 80, 40, "Click Me!");
+    let mut inp = RtlInput::new(80, 100, 200, 40, " أدخل الاسم");
     win.end();
     win.show();
-    but.set_callback(move || {
-        out.set_value("Clicked!");
-    });
     app.run().unwrap();
 }

@@ -291,6 +291,10 @@ pub unsafe trait WidgetExt {
     unsafe fn into_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
+    /// Returns whether a widget is visible
+    fn visible(&self) -> bool;
+    /// Returns whether a widget or any of its parents are visible
+    fn visible_r(&self) -> bool;
 }
 
 /// Defines the extended methods implemented by all widgets

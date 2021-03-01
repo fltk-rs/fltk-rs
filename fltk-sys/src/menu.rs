@@ -280,6 +280,12 @@ extern "C" {
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
+extern "C" {
+    pub fn Fl_Widget_visible(self_: *const Fl_Widget) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Item {
@@ -556,6 +562,12 @@ extern "C" {
         arg1: *mut Fl_Menu_Bar,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_visible(self_: *const Fl_Menu_Bar) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_visible_r(self_: *const Fl_Menu_Bar) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add(
@@ -932,6 +944,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Menu_Button_visible(self_: *const Fl_Menu_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_visible_r(self_: *const Fl_Menu_Button) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
         name: *const libc::c_char,
@@ -1304,6 +1322,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Choice_visible(self_: *const Fl_Choice) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_visible_r(self_: *const Fl_Choice) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Choice_add(
         arg1: *mut Fl_Choice,
         name: *const libc::c_char,
@@ -1672,6 +1696,12 @@ extern "C" {
         arg1: *mut Fl_Sys_Menu_Bar,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_visible(self_: *const Fl_Sys_Menu_Bar) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_visible_r(self_: *const Fl_Sys_Menu_Bar) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(

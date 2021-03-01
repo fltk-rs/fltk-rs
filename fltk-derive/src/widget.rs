@@ -380,6 +380,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_callback").as_str(),
         name.span(),
     );
+    let visible = Ident::new(format!("{}_{}", name_str, "visible").as_str(), name.span());
+    let visible_r = Ident::new(format!("{}_{}", name_str, "visible_r").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -980,6 +982,20 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {
                 W::from_widget_ptr(self.as_widget_ptr() as *mut _)
+            }
+
+            fn visible(&self) -> bool {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #visible(self._inner) != 0
+                }
+            }
+
+            fn visible_r(&self) -> bool {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #visible_r(self._inner) != 0
+                }
             }
         }
     };

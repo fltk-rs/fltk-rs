@@ -280,6 +280,12 @@ extern "C" {
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
+extern "C" {
+    pub fn Fl_Widget_visible(self_: *const Fl_Widget) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Button {
@@ -543,6 +549,12 @@ extern "C" {
         arg1: *mut Fl_Button,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Button_visible(self_: *const Fl_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Button_visible_r(self_: *const Fl_Button) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Button_shortcut(self_: *const Fl_Button) -> libc::c_int;
@@ -839,6 +851,12 @@ extern "C" {
         arg1: *mut Fl_Check_Button,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Check_Button_visible(self_: *const Fl_Check_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Button_visible_r(self_: *const Fl_Check_Button) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Button_is_checked(arg1: *mut Fl_Check_Button) -> libc::c_int;
@@ -1143,6 +1161,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Radio_Button_visible(self_: *const Fl_Radio_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Button_visible_r(self_: *const Fl_Radio_Button) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Radio_Button_is_toggled(arg1: *mut Fl_Radio_Button) -> libc::c_int;
 }
 extern "C" {
@@ -1445,6 +1469,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Toggle_Button_visible(self_: *const Fl_Toggle_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Toggle_Button_visible_r(self_: *const Fl_Toggle_Button) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Toggle_Button_is_toggled(arg1: *mut Fl_Toggle_Button) -> libc::c_int;
 }
 extern "C" {
@@ -1745,6 +1775,12 @@ extern "C" {
         arg1: *mut Fl_Round_Button,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Round_Button_visible(self_: *const Fl_Round_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Round_Button_visible_r(self_: *const Fl_Round_Button) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Round_Button_is_toggled(arg1: *mut Fl_Round_Button) -> libc::c_int;
@@ -2086,6 +2122,12 @@ extern "C" {
         arg1: *mut Fl_Radio_Round_Button,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_visible(self_: *const Fl_Radio_Round_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Round_Button_visible_r(self_: *const Fl_Radio_Round_Button) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Radio_Round_Button_is_toggled(arg1: *mut Fl_Radio_Round_Button) -> libc::c_int;
@@ -2432,6 +2474,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Radio_Light_Button_visible(self_: *const Fl_Radio_Light_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Radio_Light_Button_visible_r(self_: *const Fl_Radio_Light_Button) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Radio_Light_Button_is_toggled(arg1: *mut Fl_Radio_Light_Button) -> libc::c_int;
 }
 extern "C" {
@@ -2737,6 +2785,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Light_Button_visible(self_: *const Fl_Light_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Light_Button_visible_r(self_: *const Fl_Light_Button) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Light_Button_is_on(arg1: *mut Fl_Light_Button) -> libc::c_int;
 }
 extern "C" {
@@ -3039,6 +3093,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Repeat_Button_visible(self_: *const Fl_Repeat_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Repeat_Button_visible_r(self_: *const Fl_Repeat_Button) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Repeat_Button_shortcut(self_: *const Fl_Repeat_Button) -> libc::c_int;
 }
 extern "C" {
@@ -3333,6 +3393,12 @@ extern "C" {
         arg1: *mut Fl_Return_Button,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Return_Button_visible(self_: *const Fl_Return_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Return_Button_visible_r(self_: *const Fl_Return_Button) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Return_Button_shortcut(self_: *const Fl_Return_Button) -> libc::c_int;
