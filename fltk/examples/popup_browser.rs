@@ -7,7 +7,9 @@ fn main() {
     app::background(211, 211, 211);
 
     let mut win = window::Window::default().with_size(900, 300);
-    let mut b = browser::HoldBrowser::new(5, 5, 900 - 10, 300 - 10, "");
+    let mut b = browser::HoldBrowser::default()
+        .with_size(900 - 10, 300 - 10)
+        .center_of(&win);
     let widths = &[50, 50, 50, 70, 70, 40, 40, 70, 70, 50];
 
     b.set_column_widths(widths);
@@ -22,13 +24,15 @@ fn main() {
     );
 
     let menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
-    
-    b.set_callback(move || if app::event_mouse_button() == Mouse::Right {
-        // or app::event_button() == 3
-        let coords = app::event_coords();
-        match menu.popup(coords.0, coords.1) {
-            None => println!("No value was chosen!"),
-            Some(val) => println!("{}", val.label().unwrap()),
+
+    b.set_callback(move || {
+        if app::event_mouse_button() == Mouse::Right {
+            // or app::event_button() == 3
+            let coords = app::event_coords();
+            match menu.popup(coords.0, coords.1) {
+                None => println!("No value was chosen!"),
+                Some(val) => println!("{}", val.label().unwrap()),
+            }
         }
     });
 

@@ -115,6 +115,17 @@ fn main() {
     /* Event handling */
 }
 ```
+Alternatively, you can use packs to layout your widgets:
+```rust
+    let mut wind = Window::default().with_size(160, 200).with_label("Counter");
+    // Vertical is default. You can choose horizontal using pack.set_type(PackType::Horizontal);
+    let mut pack = Pack::default().with_size(120, 140).center_of(&wind);
+    pack.set_spacing(10);
+    let mut but_inc = Button::default().with_size(0, 40).with_label("+");
+    let mut frame = Frame::default().with_size(0, 40).with_label("0");
+    let mut but_dec = Button::default().with_size(0, 40).with_label("-");
+    pack.end();
+```
 
 ### Events
 **Event handling must be done after the drawing is done and the main window shown. And must be done in the main thread**

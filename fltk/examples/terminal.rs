@@ -3,6 +3,9 @@ use std::ops::{Deref, DerefMut};
 use std::path::Path;
 use std::process::{Command, Stdio};
 
+const WIDTH: i32 = 640;
+const HEIGHT: i32 = 480;
+
 #[derive(Debug, Clone)]
 struct Term {
     pub term: SimpleTerminal,
@@ -20,7 +23,7 @@ impl Term {
 
         current_dir.push_str("$ ");
 
-        let mut term = SimpleTerminal::new(5, 5, 630, 470, "");
+        let mut term = SimpleTerminal::new(5, 5, WIDTH - 10, HEIGHT - 10, "");
 
         let sbuf = TextBuffer::default();
 
@@ -126,7 +129,9 @@ impl DerefMut for Term {
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Plastic);
-    let mut wind = Window::new(100, 100, 640, 480, "Color Terminal");
+    let mut wind = Window::default()
+        .with_size(WIDTH, HEIGHT)
+        .with_label("ColorTerminal");
 
     let mut term = Term::new();
 
