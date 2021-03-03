@@ -1,10 +1,10 @@
 # Changelog
 
 
-## [0.15.6] - Unreleased
+## [0.15.6] - 2021-03-03
 ### Changes
 - Add screen scale getters and setters in the app module.
-- add WidgetExt::visible and visible_r methods.
+- add WidgetExt::visible() and visible_r() (recursive) methods.
 - Add GroupExt::remove_by_index().
 - MenuItem::popup() no longer requires mut self.
 - Update deps.

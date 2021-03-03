@@ -293,7 +293,7 @@ pub unsafe trait WidgetExt {
         Self: Sized;
     /// Returns whether a widget is visible
     fn visible(&self) -> bool;
-    /// Returns whether a widget or any of its parents are visible
+    /// Returns whether a widget or any of its parents are visible (recursively)
     fn visible_r(&self) -> bool;
 }
 
