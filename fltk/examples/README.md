@@ -19,3 +19,4 @@ $ cargo run --example <filename>
 ```
 
 More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/MoAlyousef/fltk-rs-demos).
+Also a crude implementation of the 7guis tasks can be found [here](https://github.com/MoAlyousef/fltk7guis).

@@ -577,6 +577,9 @@ extern "C" {
     pub fn Fl_Group_remove(self_: *mut Fl_Group, wid: *mut libc::c_void);
 }
 extern "C" {
+    pub fn Fl_Group_remove_by_index(self_: *mut Fl_Group, idx: libc::c_int);
+}
+extern "C" {
     pub fn Fl_Group_clear(self_: *mut Fl_Group);
 }
 extern "C" {
@@ -877,6 +880,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_remove(self_: *mut Fl_Pack, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Pack_remove_by_index(self_: *mut Fl_Pack, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Pack_clear(self_: *mut Fl_Pack);
@@ -1198,6 +1204,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_remove(self_: *mut Fl_Scroll, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Scroll_remove_by_index(self_: *mut Fl_Scroll, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Scroll_clear(self_: *mut Fl_Scroll);
@@ -1523,6 +1532,9 @@ extern "C" {
     pub fn Fl_Tabs_remove(self_: *mut Fl_Tabs, wid: *mut libc::c_void);
 }
 extern "C" {
+    pub fn Fl_Tabs_remove_by_index(self_: *mut Fl_Tabs, idx: libc::c_int);
+}
+extern "C" {
     pub fn Fl_Tabs_clear(self_: *mut Fl_Tabs);
 }
 extern "C" {
@@ -1817,6 +1829,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_remove(self_: *mut Fl_Tile, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Tile_remove_by_index(self_: *mut Fl_Tile, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Tile_clear(self_: *mut Fl_Tile);
@@ -2129,6 +2144,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_remove(self_: *mut Fl_Wizard, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Wizard_remove_by_index(self_: *mut Fl_Wizard, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Wizard_clear(self_: *mut Fl_Wizard);
@@ -2456,6 +2474,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_remove(self_: *mut Fl_Color_Chooser, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_remove_by_index(self_: *mut Fl_Color_Chooser, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Color_Chooser_clear(self_: *mut Fl_Color_Chooser);
@@ -2799,6 +2820,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_remove(self_: *mut Fl_Window, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Window_remove_by_index(self_: *mut Fl_Window, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Window_clear(self_: *mut Fl_Window);
@@ -3204,6 +3228,9 @@ extern "C" {
     pub fn Fl_Single_Window_remove(self_: *mut Fl_Single_Window, wid: *mut libc::c_void);
 }
 extern "C" {
+    pub fn Fl_Single_Window_remove_by_index(self_: *mut Fl_Single_Window, idx: libc::c_int);
+}
+extern "C" {
     pub fn Fl_Single_Window_clear(self_: *mut Fl_Single_Window);
 }
 extern "C" {
@@ -3591,6 +3618,9 @@ extern "C" {
     pub fn Fl_Double_Window_remove(self_: *mut Fl_Double_Window, wid: *mut libc::c_void);
 }
 extern "C" {
+    pub fn Fl_Double_Window_remove_by_index(self_: *mut Fl_Double_Window, idx: libc::c_int);
+}
+extern "C" {
     pub fn Fl_Double_Window_clear(self_: *mut Fl_Double_Window);
 }
 extern "C" {
@@ -3975,6 +4005,9 @@ extern "C" {
     pub fn Fl_Menu_Window_remove(self_: *mut Fl_Menu_Window, wid: *mut libc::c_void);
 }
 extern "C" {
+    pub fn Fl_Menu_Window_remove_by_index(self_: *mut Fl_Menu_Window, idx: libc::c_int);
+}
+extern "C" {
     pub fn Fl_Menu_Window_clear(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
@@ -4357,6 +4390,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Overlay_Window_remove(self_: *mut Fl_Overlay_Window, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_remove_by_index(self_: *mut Fl_Overlay_Window, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Overlay_Window_clear(self_: *mut Fl_Overlay_Window);
@@ -4751,6 +4787,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_remove(self_: *mut Fl_Gl_Window, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_remove_by_index(self_: *mut Fl_Gl_Window, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Gl_Window_clear(self_: *mut Fl_Gl_Window);
@@ -5199,6 +5238,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_remove(self_: *mut Fl_Glut_Window, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_remove_by_index(self_: *mut Fl_Glut_Window, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Glut_Window_clear(self_: *mut Fl_Glut_Window);

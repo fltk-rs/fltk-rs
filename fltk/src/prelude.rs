@@ -394,6 +394,8 @@ pub unsafe trait GroupExt: WidgetExt {
     fn remove<W: WidgetExt>(&mut self, widget: &W)
     where
         Self: Sized;
+    /// Remove a child widget by its index
+    fn remove_by_index(&mut self, idx: u32);
     /// Make the passed widget resizable
     fn resizable<W: WidgetExt>(&self, widget: &W)
     where
