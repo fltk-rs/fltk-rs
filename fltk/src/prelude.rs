@@ -291,6 +291,10 @@ pub unsafe trait WidgetExt {
     unsafe fn into_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
+    /// Returns whether a widget is visible
+    fn visible(&self) -> bool;
+    /// Returns whether a widget or any of its parents are visible (recursively)
+    fn visible_r(&self) -> bool;
 }
 
 /// Defines the extended methods implemented by all widgets
@@ -390,6 +394,8 @@ pub unsafe trait GroupExt: WidgetExt {
     fn remove<W: WidgetExt>(&mut self, widget: &W)
     where
         Self: Sized;
+    /// Remove a child widget by its index
+    fn remove_by_index(&mut self, idx: u32);
     /// Make the passed widget resizable
     fn resizable<W: WidgetExt>(&self, widget: &W)
     where

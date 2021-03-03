@@ -16,6 +16,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
     let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
     let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
     let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
+    let remove_by_index = Ident::new(format!("{}_{}", name_str, "remove_by_index").as_str(), name.span());
     let resizable = Ident::new(
         format!("{}_{}", name_str, "resizable").as_str(),
         name.span(),
@@ -103,6 +104,15 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
                     #remove(self._inner, widget.as_widget_ptr() as *mut _)
+                }
+            }
+
+            fn remove_by_index(&mut self, idx: u32) {
+                debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+                unsafe {
+                    assert!(!self.was_deleted());
+                    assert!(idx < self.children());
+                    #remove_by_index(self._inner, idx as i32);
                 }
             }
 

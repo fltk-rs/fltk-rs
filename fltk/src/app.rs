@@ -1223,7 +1223,25 @@ pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
 
 /// Flush the main window
 pub fn flush() {
-    unsafe {
-        Fl_flush()
-    }
+    unsafe { Fl_flush() }
+}
+
+/// Set the screen scale
+pub fn set_screen_scale(n: u32, factor: f32) {
+    unsafe { Fl_set_screen_scale(n as i32, factor) }
+}
+
+/// Get the screen scale
+pub fn screen_scale(n: u32) -> f32 {
+    unsafe { Fl_screen_scale(n as i32) }
+}
+
+/// Return whether scaling the screen is supported
+pub fn screen_scaling_supported() -> bool {
+    unsafe { Fl_screen_scaling_supported() != 0 }
+}
+
+/// Get the screen count
+pub fn screen_count() -> u32 {
+    unsafe { Fl_screen_count() as u32 }
 }

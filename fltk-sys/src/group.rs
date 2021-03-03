@@ -280,6 +280,12 @@ extern "C" {
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
+extern "C" {
+    pub fn Fl_Widget_visible(self_: *const Fl_Widget) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
@@ -541,6 +547,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Group_visible(self_: *const Fl_Group) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Group_visible_r(self_: *const Fl_Group) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Group_current() -> *mut Fl_Group;
 }
 extern "C" {
@@ -563,6 +575,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_remove(self_: *mut Fl_Group, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Group_remove_by_index(self_: *mut Fl_Group, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Group_clear(self_: *mut Fl_Group);
@@ -837,6 +852,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Pack_visible(self_: *const Fl_Pack) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_visible_r(self_: *const Fl_Pack) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Pack_spacing(self_: *mut Fl_Pack) -> libc::c_int;
 }
 extern "C" {
@@ -859,6 +880,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_remove(self_: *mut Fl_Pack, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Pack_remove_by_index(self_: *mut Fl_Pack, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Pack_clear(self_: *mut Fl_Pack);
@@ -1137,6 +1161,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Scroll_visible(self_: *const Fl_Scroll) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_visible_r(self_: *const Fl_Scroll) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Scroll_scrollbar(self_: *mut Fl_Scroll) -> *mut libc::c_void;
 }
 extern "C" {
@@ -1174,6 +1204,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_remove(self_: *mut Fl_Scroll, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Scroll_remove_by_index(self_: *mut Fl_Scroll, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Scroll_clear(self_: *mut Fl_Scroll);
@@ -1448,6 +1481,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Tabs_visible(self_: *const Fl_Tabs) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_visible_r(self_: *const Fl_Tabs) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Tabs_value(self_: *mut Fl_Tabs) -> *mut Fl_Widget;
 }
 extern "C" {
@@ -1491,6 +1530,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_remove(self_: *mut Fl_Tabs, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Tabs_remove_by_index(self_: *mut Fl_Tabs, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Tabs_clear(self_: *mut Fl_Tabs);
@@ -1765,6 +1807,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Tile_visible(self_: *const Fl_Tile) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_visible_r(self_: *const Fl_Tile) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -1781,6 +1829,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_remove(self_: *mut Fl_Tile, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Tile_remove_by_index(self_: *mut Fl_Tile, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Tile_clear(self_: *mut Fl_Tile);
@@ -2059,6 +2110,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Wizard_visible(self_: *const Fl_Wizard) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Wizard_visible_r(self_: *const Fl_Wizard) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
 }
 extern "C" {
@@ -2087,6 +2144,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_remove(self_: *mut Fl_Wizard, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Wizard_remove_by_index(self_: *mut Fl_Wizard, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Wizard_clear(self_: *mut Fl_Wizard);
@@ -2376,6 +2436,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Color_Chooser_visible(self_: *const Fl_Color_Chooser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_visible_r(self_: *const Fl_Color_Chooser) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
 }
 extern "C" {
@@ -2408,6 +2474,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_remove(self_: *mut Fl_Color_Chooser, wid: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_remove_by_index(self_: *mut Fl_Color_Chooser, idx: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Color_Chooser_clear(self_: *mut Fl_Color_Chooser);

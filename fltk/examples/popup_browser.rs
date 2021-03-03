@@ -21,7 +21,7 @@ fn main() {
         "root\t13464\t0.0\t0.0\t1352\t0\ttty1\tSW\tAug30\t0:00\t@b@f/sbin/mingetty tty1 --noclear",
     );
 
-    let mut menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
+    let menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
     
     b.set_callback(move || if app::event_mouse_button() == Mouse::Right {
         // or app::event_button() == 3

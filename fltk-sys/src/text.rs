@@ -280,6 +280,12 @@ extern "C" {
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
 }
+extern "C" {
+    pub fn Fl_Widget_visible(self_: *const Fl_Widget) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 pub type Fl_Text_Modify_Cb = ::core::option::Option<
     unsafe extern "C" fn(
         pos: libc::c_int,
@@ -734,6 +740,12 @@ extern "C" {
         arg1: *mut Fl_Text_Display,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Text_Display_visible(self_: *const Fl_Text_Display) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_visible_r(self_: *const Fl_Text_Display) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
@@ -1233,6 +1245,12 @@ extern "C" {
         arg1: *mut Fl_Text_Editor,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_visible(self_: *const Fl_Text_Editor) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_visible_r(self_: *const Fl_Text_Editor) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
@@ -1823,6 +1841,12 @@ extern "C" {
         arg1: *mut Fl_Simple_Terminal,
         arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
     );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_visible(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_visible_r(self_: *const Fl_Simple_Terminal) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);

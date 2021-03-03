@@ -84,7 +84,7 @@ impl MenuItem {
     }
 
     /// Creates a popup menu at the specified coordinates and returns its choice
-    pub fn popup(&mut self, x: i32, y: i32) -> Option<MenuItem> {
+    pub fn popup(&self, x: i32, y: i32) -> Option<MenuItem> {
         assert!(!self.was_deleted());
         unsafe {
             let item = Fl_Menu_Item_popup(self._inner, x, y);
