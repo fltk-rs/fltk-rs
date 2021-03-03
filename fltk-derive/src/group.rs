@@ -112,7 +112,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(idx < self.children());
-                    #remove(self._inner, idx as i32);
+                    #remove_by_index(self._inner, idx as i32);
                 }
             }
 
