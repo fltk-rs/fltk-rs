@@ -345,7 +345,7 @@ Also a crude implementation of the 7guis tasks can be found [here](https://githu
     - Tile
     - Wizard
     - ColorChooser
-    - VGrind
+    - VGrid
     - HGrid
 - Text display widgets
     - TextDisplay
