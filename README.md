@@ -25,7 +25,7 @@ Why choose FLTK?
 - Provides around 80 customizable widgets. 
 - Has inbuilt image support.
 
-Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
+Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/MoAlyousef/fltk-rs/issues/418).
 
 - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
 - [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
@@ -225,7 +225,7 @@ For NixOS (Linux distribution) this `nix-shell` environment can be used:
 ```
 $ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libpng libcerf pango cairo libGL mesa pkg-config
 ```
-- Android: Android Studio, Android Sdk, Android Ndk.
+- Android (experimental): Android Studio, Android Sdk, Android Ndk.
 
 ## FAQ
 
@@ -263,6 +263,8 @@ With custom theming:
 
 ![alt_test](screenshots/calc2.jpg)
 
+![alt_test](screenshots/custom.jpg)
+
 Setting the scheme to Gtk:
 
 ![alt_test](screenshots/calc.jpg)
@@ -286,8 +288,6 @@ Setting the scheme to Gtk:
 ![alt_test](screenshots/pong.gif)
 
 ![alt_test](screenshots/frames.jpg)
-
-![alt_test](screenshots/custom.jpg)
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
 
@@ -334,15 +334,15 @@ Also a crude implementation of the 7guis tasks can be found [here](https://githu
 - Frame (Fl_Box)
 - Windows
     - Window
-    - SingleWindow
-    - DoubleWindow
+    - SingleWindow (single buffered)
+    - DoubleWindow (double buffered)
     - MenuWindow
     - OverlayWindow
     - GlWindow (requires the "enable-glwindow" flag)
     - GlutWindow (requires the "enable-glwindow" flag)
 - Groups
     - Group
-    - Pack
+    - Pack (Horizontal and Vertical)
     - Tabs
     - Scroll
     - Tile
@@ -429,6 +429,7 @@ Also a crude implementation of the 7guis tasks can be found [here](https://githu
 - [Audio player with custom widgets](https://www.youtube.com/watch?v=okdFx6tv7ds)
 - [Using FLTK on Android](https://www.youtube.com/watch?v=3jW_vxGmxt0)
 - [Use FLUID (RAD tool) with Rust](https://www.youtube.com/watch?v=k_P0wG3-dNk)
+- [multiple windows and embedding windows](https://www.youtube.com/watch?v=qEPYx1Lw7fY)
 
 More videos in the playlist [here](https://www.youtube.com/playlist?list=PLHqrrowPLkDu9U-uk60sGM-YWLOJFfLoE).
 Some of the demo projects can be found [here](https://github.com/MoAlyousef/fltk-rs-demos).

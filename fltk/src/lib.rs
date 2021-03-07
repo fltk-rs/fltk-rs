@@ -15,7 +15,7 @@
 //! - [Video](https://github.com/MoAlyousef/fltk-rs#tutorials)
 //! - [Written](https://github.com/MoAlyousef/fltk-rs/wiki)
 //!
-//! Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK.
+//! Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/MoAlyousef/fltk-rs/issues/418).
 //!
 //! - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
 //! - [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
@@ -214,7 +214,7 @@
 //! ```ignored
 //! $ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libpng libcerf pango cairo libGL mesa pkg-config
 //! ```
-//! - Android: Android Studio, Android Sdk, Android Ndk.
+//! - Android(experimental): Android Studio, Android Sdk, Android Ndk.
 //!
 //! ## FAQ
 //!

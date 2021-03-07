@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [0.15.7] - Unreleased
+### Changes
+- Fix typo in README. Thanks @kainjow.
+
 ## [0.15.6] - 2021-03-03
 ### Changes
 - Add screen scale getters and setters in the app module.
