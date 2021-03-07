@@ -253,6 +253,7 @@ $ cargo run --example hello
 $ cargo run --example hello_button
 $ cargo run --example fb
 $ cargo run --example pong
+$ cargo run --example custom_widgets
 ...
 ```
 
@@ -285,6 +286,8 @@ Setting the scheme to Gtk:
 ![alt_test](screenshots/pong.gif)
 
 ![alt_test](screenshots/frames.jpg)
+
+![alt_test](screenshots/custom.jpg)
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
 
