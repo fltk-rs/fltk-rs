@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.15.7] - Unreleased
+## [0.15.7] - 2021-03-08
 ### Changes
 - Fix typo in README. Thanks @kainjow.
 - Update deps.
