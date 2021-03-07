@@ -13,8 +13,8 @@ fn inc_frame(frame: &mut Frame, val: &mut i32, step: i32) {
 
 fn main() {
     let app = app::App::default();
-    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
-    let mut frame = Frame::new(0, 0, 400, 300, "");
+    let mut wind = Window::default().with_size(400, 300);
+    let mut frame = Frame::default().size_of(&wind);
 
     let mut val = 0;
 

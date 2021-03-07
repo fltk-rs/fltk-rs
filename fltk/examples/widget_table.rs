@@ -4,7 +4,7 @@ const IMG: &str = include_str!("../../screenshots/RustLogo.svg");
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
-    let mut wind = window::Window::new(100, 100, 402, 275, "Table");
+    let mut wind = window::Window::default().with_size(402, 275);
     let mut table = table::Table::default().size_of(&wind);
 
     table.set_rows(3);

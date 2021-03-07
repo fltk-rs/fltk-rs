@@ -15,6 +15,7 @@ $ cargo run --example hello_button
 $ cargo run --example paint
 $ cargo run --example pong
 $ cargo run --example fb
+$ cargo run --example custom_widgets
 $ cargo run --example <filename>
 ```
 

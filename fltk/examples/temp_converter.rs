@@ -2,12 +2,19 @@ use fltk::*;
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);
-    let mut win = window::Window::new(200, 200, 150, 200, "");
-    let pack = group::Pack::new(0, 0, 150, 250, "");
-    let _frame1 = frame::Frame::new(0, 0, 0, 50, "Celcius");
-    let mut inp1 = input::FloatInput::new(0, 0, 50, 50, "");
-    let _frame2 = frame::Frame::new(0, 0, 0, 50, "Farenheit");
-    let mut inp2 = input::FloatInput::new(0, 0, 50, 50, "");
+    let mut win = window::Window::default().with_size(150, 200);
+    let mut pack = group::Pack::default().with_size(130, 180).center_of(&win);
+    pack.set_spacing(5);
+    frame::Frame::default()
+        .with_size(0, 40)
+        .with_label("Celcius")
+        .with_align(Align::Inside | Align::Bottom);
+    let mut inp1 = input::FloatInput::default().with_size(0, 40);
+    frame::Frame::default()
+        .with_size(0, 40)
+        .with_label("Farenheit")
+        .with_align(Align::Inside | Align::Bottom);
+    let mut inp2 = input::FloatInput::default().with_size(0, 40);
     pack.end();
     win.end();
     win.show();

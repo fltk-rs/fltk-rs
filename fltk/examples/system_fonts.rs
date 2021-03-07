@@ -30,8 +30,8 @@ fn main() {
     // To load a font by path, check the app::load_font() function
     let fonts = app::fonts();
     // println!("{:?}", fonts);
-    let mut wind = window::Window::new(300, 200, 400, 300, "Fonts");
-    let mut frame = frame::Frame::new(0, 0, 400, 300, "");
+    let mut wind = window::Window::default().with_size(400, 300);
+    let mut frame = frame::Frame::default().size_of(&wind);
     frame.set_label_size(30);
     wind.set_color(Color::White);
     wind.end();

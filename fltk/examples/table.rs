@@ -4,8 +4,10 @@ use fltk::*;
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
-    let mut wind = window::Window::new(100, 100, 800, 600, "Table");
-    let mut table = table::Table::new(5, 5, 790, 590, "");
+    let mut wind = window::Window::default().with_size(800, 600);
+    let mut table = table::Table::default()
+        .with_size(800 - 10, 600 - 10)
+        .center_of(&wind);
 
     table.set_rows(30);
     table.set_row_header(true);

@@ -2,8 +2,8 @@ use fltk::*;
 
 fn main() {
     let app = app::App::default();
-    let mut wind = window::Window::new(100, 100, 400, 400, "Hello from rust");
-    let mut frame = frame::Frame::new(0, 0, 400, 400, "");
+    let mut wind = window::Window::default().with_size(400, 400);
+    let mut frame = frame::Frame::default().size_of(&wind);
     frame.draw2(|f| {
         let mut image = {
             let mut fb: Vec<u8> = vec![0u8; 128 * 128 * 3];
