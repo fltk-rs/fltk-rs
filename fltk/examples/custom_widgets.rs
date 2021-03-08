@@ -195,6 +195,18 @@ impl FancyHorSlider {
             }
             _ => false,
         });
+        frame1.handle({
+            let mut frame2 = frame2.clone();
+            move |ev| match ev {
+                Event::Push => {
+                    let x = app::event_coords().0;
+                    frame2.set_pos(x - frame2.width() / 2, frame2.y());
+                    app::redraw();
+                    true
+                }
+                _ => false,
+            }
+        });
         Self { frame1, frame2 }
     }
     pub fn value(&self) -> f64 {
@@ -210,7 +222,7 @@ fn main() {
         .with_label("Custom Widgets");
     let mut but = FlatButton::new(350, 350, 160, 80, "Increment");
     let mut power = PowerButton::new(600, 100, 100, 100);
-    let mut dial = FillDial::new(100, 100, 200, 200, "");
+    let mut dial = FillDial::new(100, 100, 200, 200, "0");
     let mut frame = Frame::default()
         .with_size(160, 80)
         .with_label("0")
@@ -228,11 +240,16 @@ fn main() {
     dial.set_color(Color::from_u32(0x6D4C41));
     dial.set_color(Color::White);
     dial.set_selection_color(Color::Red);
-    dial.set_frame(FrameType::NoBox);
+
+    #[cfg(not(target_os = "macos"))]
+    {
+        dial.set_frame(FrameType::NoBox);
+    }
+
     dial.draw2(|d| {
         draw::set_draw_color(Color::Black);
         draw::draw_pie(d.x() + 20, d.y() + 20, 160, 160, 0., 360.);
-        draw::draw_pie(d.x(), d.y(), 200, 200, -45., -135.);
+        draw::draw_pie(d.x() - 5, d.y() - 5, 210, 210, -135., -45.);
     });
 
     dial.set_callback2(|d| {
