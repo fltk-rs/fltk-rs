@@ -241,11 +241,6 @@ fn main() {
     dial.set_color(Color::White);
     dial.set_selection_color(Color::Red);
 
-    #[cfg(not(target_os = "macos"))]
-    {
-        dial.set_frame(FrameType::NoBox);
-    }
-
     dial.draw2(|d| {
         draw::set_draw_color(Color::Black);
         draw::draw_pie(d.x() + 20, d.y() + 20, 160, 160, 0., 360.);
