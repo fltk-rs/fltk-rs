@@ -5,6 +5,7 @@
 ### Changes
 - Add enums::Damage.
 - Add WidgetExt::damage_type() and set_damage_type().
+- Add WidgetExt::size_of_parent().
 
 ## [0.15.7] - 2021-03-08
 ### Changes

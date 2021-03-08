@@ -3,7 +3,7 @@ use fltk::*;
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     let mut win = window::Window::new(100, 100, 800, 600, "Charts");
-    let mut chart = misc::Chart::default().size_of(&win);
+    let mut chart = misc::Chart::default().size_of_parent();
     chart.set_type(misc::ChartType::Pie);
     chart.set_bounds(0.0, 100.0);
     chart.set_text_size(18);
