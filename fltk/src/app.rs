@@ -323,12 +323,14 @@ pub fn event_y_root() -> i32 {
     unsafe { Fl_event_y_root() }
 }
 
-/// Gets the difference in x axis of the mouse coordinates from the screen to the window
+/// Returns the current horizontal mouse scrolling associated with the
+/// Event::MouseWheel. Right is positive.
 pub fn event_dx() -> i32 {
     unsafe { Fl_event_dx() }
 }
 
-/// Gets the difference in y axis of the mouse coordinates from the screen to the window
+/// Returns the current vertical mouse scrolling associated with the
+/// Event::MouseWheel. Down is positive.
 pub fn event_dy() -> i32 {
     unsafe { Fl_event_dy() }
 }
