@@ -762,6 +762,20 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn damage_type(&self) -> Damage {
+                assert!(!self.was_deleted());
+                unsafe {
+                    mem::transmute(#damage(self._inner))
+                }
+            }
+            
+            fn set_damage_type(&mut self, mask: Damage) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #set_damage(self._inner, mask.bits())
+                }
+            }
+
             fn clear_damage(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -1012,7 +1026,7 @@ pub fn impl_widget_type(ast: &DeriveInput) -> TokenStream {
             }
 
             fn from_i32(val: i32) -> #name {
-                unsafe { std::mem::transmute(val) }
+                unsafe { mem::transmute(val) }
             }
         }
     };

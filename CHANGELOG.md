@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [0.15.8] - Unreleased
+### Changes
+- Add enums::Damage.
+- Add WidgetExt::damage_type() and set_damage_type().
+
 ## [0.15.7] - 2021-03-08
 ### Changes
 - Fix typo in README. Thanks @kainjow.
