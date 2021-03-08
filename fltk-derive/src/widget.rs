@@ -757,8 +757,9 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_damage(&mut self, flag: bool) {
                 assert!(!self.was_deleted());
+                let flag = if flag { 10 } else { 0 };
                 unsafe {
-                    #set_damage(self._inner, flag as raw::c_uchar)
+                    #set_damage(self._inner, flag)
                 }
             }
 
