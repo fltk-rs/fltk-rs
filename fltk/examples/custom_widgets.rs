@@ -1,4 +1,4 @@
-use fltk::{app, draw, frame::*, image::*, valuator::*, widget::*, window::*};
+use fltk::{app, button, draw, frame::*, image::*, valuator::*, widget::*, window::*};
 use std::ops::{Deref, DerefMut};
 use std::{cell::RefCell, rc::Rc};
 
@@ -228,6 +228,8 @@ fn main() {
         .with_label("0")
         .above_of(&*but, 20);
     let fancy_slider = FancyHorSlider::new(100, 550, 500, 10, "FancySlider");
+    let mut toggle = button::ToggleButton::new(650, 400, 80, 35, "@+9circle")
+        .with_align(Align::Left | Align::Inside);
     wind.end();
     wind.show();
 
@@ -240,6 +242,21 @@ fn main() {
     dial.set_color(Color::from_u32(0x6D4C41));
     dial.set_color(Color::White);
     dial.set_selection_color(Color::Red);
+    toggle.set_frame(FrameType::RFlatBox);
+    toggle.set_label_color(Color::White);
+    toggle.set_selection_color(Color::from_u32(0x00008B));
+    toggle.set_color(Color::from_u32(0xD7D7D7));
+    toggle.clear_visible_focus();
+    
+    toggle.set_callback2(|t| {
+        if t.is_set() {
+            t.set_align(Align::Right | Align::Inside);
+            
+        } else {
+            t.set_align(Align::Left | Align::Inside);
+        }
+        app::redraw();
+    });
 
     dial.draw2(|d| {
         draw::set_draw_color(Color::Black);
