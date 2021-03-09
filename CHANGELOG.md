@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.15.8] - Unreleased
+## [0.15.8] - 2021-03-10
 ### Changes
 - Fix memory leak in RgbImage::new() and other functions calling it.
 - Add enums::Damage.
