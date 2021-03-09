@@ -196,7 +196,6 @@
 //! ```ignored
 //! $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
 //! ```
-//! 
 //! For RHEL-based GUI distributions, that means running:
 //! ```ignored
 //! $ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libpng-devel
