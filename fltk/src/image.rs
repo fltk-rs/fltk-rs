@@ -589,9 +589,8 @@ impl RgbImage {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
         unsafe {
-            // data is deleted on the C++ side
             let img = Fl_RGB_Image_new(
-                mem::ManuallyDrop::new(data.to_owned()).as_ptr(),
+                data.to_owned().as_ptr(),
                 w as i32,
                 h as i32,
                 depth as i32,

@@ -3,6 +3,7 @@
 
 ## [0.15.8] - Unreleased
 ### Changes
+- Fix memory leak in RgbImage::new() and other functions calling it.
 - Add enums::Damage.
 - Add WidgetExt::damage_type() and set_damage_type().
 - Add WidgetExt::size_of_parent().
