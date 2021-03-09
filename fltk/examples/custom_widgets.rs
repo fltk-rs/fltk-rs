@@ -1,4 +1,4 @@
-use fltk::{app, draw, frame::*, image::*, valuator::*, widget::*, window::*};
+use fltk::{app, button, draw, frame::*, image::*, valuator::*, widget::*, window::*};
 use std::ops::{Deref, DerefMut};
 use std::{cell::RefCell, rc::Rc};
 
@@ -195,6 +195,18 @@ impl FancyHorSlider {
             }
             _ => false,
         });
+        frame1.handle({
+            let mut frame2 = frame2.clone();
+            move |ev| match ev {
+                Event::Push => {
+                    let x = app::event_coords().0;
+                    frame2.set_pos(x - frame2.width() / 2, frame2.y());
+                    app::redraw();
+                    true
+                }
+                _ => false,
+            }
+        });
         Self { frame1, frame2 }
     }
     pub fn value(&self) -> f64 {
@@ -210,12 +222,14 @@ fn main() {
         .with_label("Custom Widgets");
     let mut but = FlatButton::new(350, 350, 160, 80, "Increment");
     let mut power = PowerButton::new(600, 100, 100, 100);
-    let mut dial = FillDial::new(100, 100, 200, 200, "");
+    let mut dial = FillDial::new(100, 100, 200, 200, "0");
     let mut frame = Frame::default()
         .with_size(160, 80)
         .with_label("0")
         .above_of(&*but, 20);
     let fancy_slider = FancyHorSlider::new(100, 550, 500, 10, "FancySlider");
+    let mut toggle = button::ToggleButton::new(650, 400, 80, 35, "@+9circle")
+        .with_align(Align::Left | Align::Inside);
     wind.end();
     wind.show();
 
@@ -228,11 +242,26 @@ fn main() {
     dial.set_color(Color::from_u32(0x6D4C41));
     dial.set_color(Color::White);
     dial.set_selection_color(Color::Red);
-    dial.set_frame(FrameType::NoBox);
+    toggle.set_frame(FrameType::RFlatBox);
+    toggle.set_label_color(Color::White);
+    toggle.set_selection_color(Color::from_u32(0x00008B));
+    toggle.set_color(Color::from_u32(0x585858));
+    toggle.clear_visible_focus();
+
+    toggle.set_callback2(|t| {
+        if t.is_set() {
+            t.set_align(Align::Right | Align::Inside);
+            
+        } else {
+            t.set_align(Align::Left | Align::Inside);
+        }
+        app::redraw();
+    });
+
     dial.draw2(|d| {
         draw::set_draw_color(Color::Black);
         draw::draw_pie(d.x() + 20, d.y() + 20, 160, 160, 0., 360.);
-        draw::draw_pie(d.x(), d.y(), 200, 200, -45., -135.);
+        draw::draw_pie(d.x() - 5, d.y() - 5, 210, 210, -135., -45.);
     });
 
     dial.set_callback2(|d| {

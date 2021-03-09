@@ -759,9 +759,31 @@ bitflags! {
         /// Stereoscopic rendering
         const Stereo = 256;
         /// Fake single buffered windows using double-buffer
-        const FakeSingle = 512; // 
+        const FakeSingle = 512; //
         /// Use OpenGL version 3.0 or more
         const Opengl3 = 1024;
+    }
+}
+
+bitflags! {
+    /// Damage masks
+    pub struct Damage: u8 {
+        /// No damage
+        const  None = 0x00;
+        /// A child needs to be redrawn.
+        const  Child    = 0x01;
+        /// The window was exposed.
+        const Expose   = 0x02;
+        /// The Fl_Scroll widget was scrolled.
+        const Scroll   = 0x04;
+        /// The overlay planes need to be redrawn.
+        const Overlay  = 0x08;
+        /// First user-defined damage bit.
+        const User1    = 0x10;
+        /// Second user-defined damage bit.
+        const User2    = 0x20;
+        /// Everything needs to be redrawn.
+        const All     = 0x80;
     }
 }
 

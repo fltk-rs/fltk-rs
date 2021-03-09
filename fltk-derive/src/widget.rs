@@ -381,7 +381,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let visible = Ident::new(format!("{}_{}", name_str, "visible").as_str(), name.span());
-    let visible_r = Ident::new(format!("{}_{}", name_str, "visible_r").as_str(), name.span());
+    let visible_r = Ident::new(
+        format!("{}_{}", name_str, "visible_r").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -757,8 +760,23 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_damage(&mut self, flag: bool) {
                 assert!(!self.was_deleted());
+                let flag = if flag { 10 } else { 0 };
                 unsafe {
-                    #set_damage(self._inner, flag as raw::c_uchar)
+                    #set_damage(self._inner, flag)
+                }
+            }
+
+            fn damage_type(&self) -> Damage {
+                assert!(!self.was_deleted());
+                unsafe {
+                    mem::transmute(#damage(self._inner))
+                }
+            }
+
+            fn set_damage_type(&mut self, mask: Damage) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #set_damage(self._inner, mask.bits())
                 }
             }
 
@@ -845,6 +863,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 debug_assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
                 self.resize(self.x(), self. y(), w.width(), w.height());
+                self
+            }
+
+            fn size_of_parent(mut self) -> Self {
+                assert!(!self.was_deleted());
+                if let Some(parent) = self.parent() {
+                    let w = parent.width();
+                    let h = parent.height();
+                    self.resize(self.x(), self.y(), w, h);
+                }
                 self
             }
 
@@ -1012,7 +1040,7 @@ pub fn impl_widget_type(ast: &DeriveInput) -> TokenStream {
             }
 
             fn from_i32(val: i32) -> #name {
-                unsafe { std::mem::transmute(val) }
+                unsafe { mem::transmute(val) }
             }
         }
     };

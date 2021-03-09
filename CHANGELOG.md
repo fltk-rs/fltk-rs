@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.15.8] - 2021-03-10
+### Changes
+- Fix memory leak in RgbImage::new() and other functions calling it.
+- Add enums::Damage.
+- Add WidgetExt::damage_type() and set_damage_type().
+- Add WidgetExt::size_of_parent().
+
 ## [0.15.7] - 2021-03-08
 ### Changes
 - Fix typo in README. Thanks @kainjow.
