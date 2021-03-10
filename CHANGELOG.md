@@ -1,8 +1,10 @@
 # Changelog
 
 
-## [0.15.8] - 2021-03-10
+## [0.15.9] - 2021-03-10
 ### Changes
+- Clone data in RgbImage::new().
+- Fix typo in EngravedBox name.
 - Fix memory leak in RgbImage::new() and other functions calling it.
 - Add enums::Damage.
 - Add WidgetExt::damage_type() and set_damage_type().

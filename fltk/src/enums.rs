@@ -55,8 +55,8 @@ pub enum FrameType {
     ThinUpFrame,
     /// Thin Down Frame
     ThinDownFrame,
-    /// Engrave Box
-    EngraveBox,
+    /// Engraved Box
+    EngravedBox,
     /// Embossed Box
     EmbossedBox,
     /// Engraved Frame

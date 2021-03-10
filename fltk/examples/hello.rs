@@ -5,7 +5,7 @@ fn main() {
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 
     let mut frame = Frame::default().with_size(360, 260).center_of(&wind);
-    frame.set_frame(FrameType::EngraveBox);
+    frame.set_frame(FrameType::EngravedBox);
     let mut image = SvgImage::load("screenshots/RustLogo.svg").unwrap();
     image.scale(200, 200, true, true);
     frame.set_image(Some(image));
