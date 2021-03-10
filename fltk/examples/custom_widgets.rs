@@ -216,7 +216,8 @@ impl FancyHorSlider {
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
-
+    app::set_visible_focus(false);
+    
     let mut wind = Window::default()
         .with_size(800, 600)
         .with_label("Custom Widgets");
@@ -246,7 +247,6 @@ fn main() {
     toggle.set_label_color(Color::White);
     toggle.set_selection_color(Color::from_u32(0x00008B));
     toggle.set_color(Color::from_u32(0x585858));
-    toggle.clear_visible_focus();
 
     toggle.set_callback2(|t| {
         if t.is_set() {
