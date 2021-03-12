@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [0.15.10] - Unreleased
+### Changes
+- Remove unnecessary clone in RgbImage::new().
+
 ## [0.15.9] - 2021-03-10
 ### Changes
 - Clone data in RgbImage::new().
