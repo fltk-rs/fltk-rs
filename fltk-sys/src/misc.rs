@@ -609,6 +609,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Spinner_set_text_color(self_: *mut Fl_Spinner, n: libc::c_uint);
 }
+extern "C" {
+    pub fn Fl_Spinner_value(arg1: *const Fl_Spinner) -> f64;
+}
+extern "C" {
+    pub fn Fl_Spinner_set_value(arg1: *mut Fl_Spinner, arg2: f64);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Clock {

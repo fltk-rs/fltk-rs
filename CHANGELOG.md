@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [0.15.11] - Unreleased
+### Changes
+- Add Spinner value setter and getter.
+
 ## [0.15.10] - 2021-03-13
 ### Changes
 - Remove unnecessary clone in RgbImage::new().

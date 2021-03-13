@@ -144,6 +144,20 @@ impl Spinner {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_text_color(self._inner, color.bits() as u32) }
     }
+
+    /// Returns the value of the spinner
+    pub fn value(&self) -> f64 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Spinner_value(self._inner) }
+    }
+
+    /// Sets the value of the spinner
+    pub fn set_value(&mut self, arg2: f64) {
+        unsafe {
+            assert!(!self.was_deleted());
+            Fl_Spinner_set_value(self._inner, arg2);
+        }
+    }
 }
 
 /// Creates a clock widget
