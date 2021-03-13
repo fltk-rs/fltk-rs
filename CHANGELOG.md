@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.15.11] - Unreleased
+## [0.15.11] - 2021-03-14
 ### Changes
 - Add Spinner value setter and getter.
 
