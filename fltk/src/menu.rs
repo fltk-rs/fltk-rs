@@ -28,7 +28,7 @@ pub struct Choice {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Creates a MacOS system menu bar
+/// Creates a MacOS system menu bar on MacOS and a normal menu bar on other systems
 #[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct SysMenuBar {
     _inner: *mut Fl_Sys_Menu_Bar,
