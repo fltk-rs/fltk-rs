@@ -454,8 +454,9 @@ pub enum Event {
     ZoomGesture,
     /// Zoom Event
     ZoomEvent,
-    /// Window Resize Event
-    /// Avoid resizing a widget during a resize event!
+    /// Window Resize Event.
+    /// Avoid resizing the widget during a resize event
+    /// to avoid infinite recursion
     Resize,
 }
 

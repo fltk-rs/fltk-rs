@@ -590,7 +590,7 @@ impl RgbImage {
         }
         unsafe {
             let img = Fl_RGB_Image_new(
-                data.clone().as_ptr(),
+                data.as_ptr(),
                 w as i32,
                 h as i32,
                 depth as i32,

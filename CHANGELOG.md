@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [0.15.10] - 2021-03-13
+### Changes
+- Remove unnecessary clone in RgbImage::new().
+- Add doc comments regarding SysMenuBar and enums::Event::Resize.
+
 ## [0.15.9] - 2021-03-10
 ### Changes
 - Clone data in RgbImage::new().
