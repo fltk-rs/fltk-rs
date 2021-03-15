@@ -150,6 +150,10 @@ pub unsafe trait WidgetExt {
     fn center_of<W: WidgetExt>(self, w: &W) -> Self
     where
         Self: Sized;
+    /// Positions the widget to the center of its parent
+    fn center_of_parent(self) -> Self
+    where
+        Self: Sized;
     /// Takes the size of w, the size of w should be known
     fn size_of<W: WidgetExt>(self, w: &W) -> Self
     where
