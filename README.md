@@ -265,6 +265,8 @@ With custom theming:
 
 ![alt_test](screenshots/custom.jpg)
 
+![alt_test](screenshots/flutter_like.jpg)
+
 Setting the scheme to Gtk:
 
 ![alt_test](screenshots/calc.jpg)
