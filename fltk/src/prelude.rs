@@ -1095,6 +1095,10 @@ pub unsafe trait ImageExt {
     fn width(&self) -> i32;
     /// Return the height of the image
     fn height(&self) -> i32;
+    /// Return the width of the image
+    fn w(&self) -> i32;
+    /// Return the height of the image
+    fn h(&self) -> i32;
     /// Retunrs a pointer of the image
     /// # Safety
     /// Can return multiple mutable pointers to the image

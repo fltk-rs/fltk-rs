@@ -4,6 +4,7 @@
 ## [0.15.13] - Unreleased
 ### Changes
 - Update deps.
+- Add ImageExt::w() and h().
 
 ## [0.15.12] - 2021-03-17
 ### Changes

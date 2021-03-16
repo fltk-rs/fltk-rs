@@ -81,6 +81,20 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn w(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #width(self._inner)
+                }
+            }
+
+            fn h(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #height(self._inner)
+                }
+            }
+
             unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                 assert!(!self.was_deleted());
                 self._inner as *mut fltk_sys::image::Fl_Image
