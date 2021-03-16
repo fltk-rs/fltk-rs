@@ -453,6 +453,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #height(self._inner) }
             }
 
+            fn w(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe { #width(self._inner) }
+            }
+
+            fn h(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe { #height(self._inner) }
+            }
+
             fn label(&self) -> String {
                 assert!(!self.was_deleted());
                 unsafe {

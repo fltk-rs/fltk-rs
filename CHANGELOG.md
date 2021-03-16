@@ -1,11 +1,13 @@
 # Changelog
 
 
-## [0.15.12] - Unreleased
+## [0.15.12] - 2021-03-17
 ### Changes
 - Add WidgetExt::center_of_parent().
 - Add ButtonExt::value() and set_value().
 - Add comment on supported image formats in WindowExt::set_icon().
+- Remove redundant set_size() definitions in Chart and BrowserExt.
+- Add WidgetExt::w() and WidgetExt::h().
 
 ## [0.15.11] - 2021-03-14
 ### Changes

@@ -177,13 +177,6 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_size(&mut self, w: i32, h: i32) {
-                unsafe {
-                    assert!(!self.was_deleted());
-                    #set_size(self._inner, w, h)
-                }
-            }
-
             fn select(&mut self, line: u32) {
                 assert!(!self.was_deleted());
                 if line <= self.size() {
