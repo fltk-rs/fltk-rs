@@ -453,6 +453,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #height(self._inner) }
             }
 
+            fn w(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe { #width(self._inner) }
+            }
+
+            fn h(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe { #height(self._inner) }
+            }
+
             fn label(&self) -> String {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -855,6 +865,24 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let wy = if w.as_window().is_some() { 0 } else { w.y() };
                 self.resize(sx as i32 + wx, sy as i32 + wy, self.width(), self.height());
                 self.redraw();
+                self
+            }
+
+            fn center_of_parent(mut self) -> Self {
+                assert!(!self.was_deleted());
+                if let Some(w) = self.parent() {
+                    debug_assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
+                    let sw = self.width() as f64;
+                    let sh = self.height() as f64;
+                    let ww = w.width() as f64;
+                    let wh = w.height() as f64;
+                    let sx = (ww - sw) / 2.0;
+                    let sy = (wh - sh) / 2.0;
+                    let wx = if w.as_window().is_some() { 0 } else { w.x() };
+                    let wy = if w.as_window().is_some() { 0 } else { w.y() };
+                    self.resize(sx as i32 + wx, sy as i32 + wy, self.width(), self.height());
+                    self.redraw();
+                }
                 self
             }
 

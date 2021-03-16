@@ -238,20 +238,6 @@ impl Chart {
         unsafe { Fl_Chart_size(self._inner) as u32 }
     }
 
-    /// Sets the size of the chart
-    pub fn set_size(&mut self, w: u32, h: u32) {
-        debug_assert!(
-            w <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
-        debug_assert!(
-            h <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
-        assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_size(self._inner, w as i32, h as i32) }
-    }
-
     /// Gets the maximum supported size of the chart
     pub fn maximum_size(&self) -> u32 {
         assert!(!self.was_deleted());

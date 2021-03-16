@@ -88,8 +88,8 @@ pub unsafe trait WidgetExt {
     fn set_pos(&mut self, x: i32, y: i32);
     /// Set to dimensions width and height
     fn set_size(&mut self, width: i32, height: i32);
-    /// Sets the widget's label
-    /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png)
+    /// Sets the widget's label.
+    /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
     /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
     fn set_label(&mut self, title: &str);
     /// Redraws a widget, necessary for resizing and changing positions
@@ -106,6 +106,10 @@ pub unsafe trait WidgetExt {
     fn width(&self) -> i32;
     /// Returns the height of the widget
     fn height(&self) -> i32;
+    /// Returns the width of the widget
+    fn w(&self) -> i32;
+    /// Returns the height of the widget
+    fn h(&self) -> i32;
     /// Returns the label of the widget
     fn label(&self) -> String;
     /// Measures the label's width and height
@@ -148,6 +152,10 @@ pub unsafe trait WidgetExt {
         Self: Sized;
     /// Positions the widget to the center of w, the size of w should be known
     fn center_of<W: WidgetExt>(self, w: &W) -> Self
+    where
+        Self: Sized;
+    /// Positions the widget to the center of its parent
+    fn center_of_parent(self) -> Self
     where
         Self: Sized;
     /// Takes the size of w, the size of w should be known
@@ -314,7 +322,7 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// * `width` - The width of the widget
     /// * `heigth` - The height of the widget
     /// * `title` - The title or label of the widget
-    /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png)
+    /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
     /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
     fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
     /// Deletes widgets and their children.
@@ -368,6 +376,12 @@ pub unsafe trait ButtonExt: WidgetExt {
     /// Sets whether a button is set or not
     /// Useful for round, radio, light, toggle and check buttons
     fn set(&mut self, flag: bool);
+    /// Returns whether a button is set or not
+    /// Useful for round, radio, light, toggle and check buttons
+    fn value(&self) -> bool;
+    /// Sets whether a button is set or not
+    /// Useful for round, radio, light, toggle and check buttons
+    fn set_value(&mut self, flag: bool);
     /// Set the down_box of the widget
     fn set_down_frame(&mut self, f: FrameType);
     /// Get the down frame type of the widget
@@ -426,7 +440,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn make_current(&mut self);
     /// Returns the icon of the window
     fn icon(&self) -> Option<Box<dyn ImageExt>>;
-    /// Sets the windows icon
+    /// Sets the windows icon.
+    /// Supported formats are bmp, jpeg, png and rgb
     fn set_icon<T: ImageExt>(&mut self, image: Option<T>)
     where
         Self: Sized;
@@ -832,8 +847,6 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn clear(&mut self);
     /// Returns the number of items
     fn size(&self) -> u32;
-    /// Set the number of items
-    fn set_size(&mut self, w: i32, h: i32);
     /// Select an item at the specified line
     /// Lines start at 1
     fn select(&mut self, line: u32);
