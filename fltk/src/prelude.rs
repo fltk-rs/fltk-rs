@@ -436,7 +436,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn make_current(&mut self);
     /// Returns the icon of the window
     fn icon(&self) -> Option<Box<dyn ImageExt>>;
-    /// Sets the windows icon
+    /// Sets the windows icon.
+    /// Supported formats are bmp, jpeg, png and rgb
     fn set_icon<T: ImageExt>(&mut self, image: Option<T>)
     where
         Self: Sized;

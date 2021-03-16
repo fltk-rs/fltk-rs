@@ -5,6 +5,7 @@
 ### Changes
 - Add WidgetExt::center_of_parent().
 - Add ButtonExt::value() and set_value().
+- Add comment on supported image formats in WindowExt::set_icon().
 
 ## [0.15.11] - 2021-03-14
 ### Changes
