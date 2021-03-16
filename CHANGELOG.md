@@ -4,6 +4,7 @@
 ## [0.15.12] - Unreleased
 ### Changes
 - Add WidgetExt::center_of_parent().
+- Add ButtonExt::value() and set_value().
 
 ## [0.15.11] - 2021-03-14
 ### Changes

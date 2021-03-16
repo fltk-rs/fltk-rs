@@ -62,6 +62,20 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn value(&self) -> bool {
+                unsafe {
+                    assert!(!self.was_deleted());
+                    #value(self._inner)  != 0
+                }
+            }
+
+            fn set_value(&mut self, flag: bool) {
+                unsafe {
+                    assert!(!self.was_deleted());
+                    #set_value(self._inner, flag as i32)
+                }
+            }
+
             fn set_down_frame(&mut self, f: FrameType) {
                 assert!(!self.was_deleted());
                 unsafe {

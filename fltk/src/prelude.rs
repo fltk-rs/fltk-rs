@@ -372,6 +372,12 @@ pub unsafe trait ButtonExt: WidgetExt {
     /// Sets whether a button is set or not
     /// Useful for round, radio, light, toggle and check buttons
     fn set(&mut self, flag: bool);
+    /// Returns whether a button is set or not
+    /// Useful for round, radio, light, toggle and check buttons
+    fn value(&self) -> bool;
+    /// Sets whether a button is set or not
+    /// Useful for round, radio, light, toggle and check buttons
+    fn set_value(&mut self, flag: bool);
     /// Set the down_box of the widget
     fn set_down_frame(&mut self, f: FrameType);
     /// Get the down frame type of the widget
