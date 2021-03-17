@@ -307,7 +307,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
+            fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
                 assert!(self.w() != 0);
                 assert!(self.h() != 0);
@@ -321,13 +321,17 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::Image>(), "Images can't be generic!");
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::TiledImage>(), "TiledImage is not supported!");
                 let _old_image = self.shape();
-                let image = if let Some(mut image) = image {  
-                    image.increment_arc(); 
-                    image.as_image_ptr() 
-                } else { 
-                    std::ptr::null() 
-                };
-                #set_shape(self._inner, image as _)
+                unsafe {
+                    let image = if let Some(mut image) = image {  
+                        image.increment_arc();
+                        assert!(image.w() == image.data_w() as i32);
+                        assert!(image.h() == image.data_h() as i32);
+                        image.as_image_ptr() 
+                    } else { 
+                        std::ptr::null() 
+                    };
+                    #set_shape(self._inner, image as _)
+                }
             }
 
             fn shape(&self) -> Option<Box<dyn ImageExt>> {

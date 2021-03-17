@@ -36,7 +36,7 @@ fn main() {
     let mut frm = Frame::default().size_of_parent();
     wind.end();
     wind.show();
-    unsafe { wind.set_shape(Some(shape)); }
+    wind.set_shape(Some(shape));
     frm.set_image(Some(pattern));
 
     app.run().unwrap();
