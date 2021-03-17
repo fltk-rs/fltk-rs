@@ -469,7 +469,8 @@ pub unsafe trait WindowExt: GroupExt {
     /// # Safety
     /// The data must be valid.
     unsafe fn set_region(&mut self, region: crate::draw::Region);
-    /// Iconifies the window
+    /// Iconifies the window.
+    /// You can tell that the window is iconized by checking that it's shown and not visible
     fn iconize(&mut self);
     /// Returns whether the window is fullscreen or not
     fn fullscreen_active(&self) -> bool;
