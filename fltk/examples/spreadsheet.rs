@@ -29,12 +29,12 @@ impl CellData {
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     let mut wind = window::Window::default().with_size(800, 600);
-    let mut table = table::Table::default()
-        .with_size(800 - 10, 600 - 10)
-        .center_of(&wind);
     // We need an input widget
     let mut inp = input::Input::default();
     inp.hide();
+    let mut table = table::Table::default()
+        .with_size(800 - 10, 600 - 10)
+        .center_of(&wind);
     let data = Rc::from(RefCell::from(vec![vec![String::from(""); 26]; 28]));
     let cell = Rc::from(RefCell::from(CellData::default()));
 
@@ -83,15 +83,13 @@ fn main() {
 
     table.handle(move |ev| match ev {
         Event::Push => {
-            if app::event_clicks() {
-                // double clicks
-                let c = cell_c.borrow();
-                inp_c.resize(c._x, c._y, c._w, c._h);
-                inp_c.set_value(&data_c.borrow_mut()[c._row as usize][c._col as usize]);
-                inp_c.show();
-                return true;
-            }
-            false
+            let c = cell_c.borrow();
+            inp_c.resize(c._x, c._y, c._w, c._h);
+            inp_c.set_value(&data_c.borrow_mut()[c._row as usize][c._col as usize]);
+            inp_c.show();
+            inp_c.take_focus().ok();  
+            inp_c.redraw();
+            true
         }
         _ => false,
     });
