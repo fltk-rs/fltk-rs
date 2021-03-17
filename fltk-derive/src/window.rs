@@ -309,8 +309,13 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
-                let image = if let Some(image) = image {  image.increment_arc(); image.as_image_ptr() } else { std::ptr::null() };
                 unsafe {
+                    let image = if let Some(mut image) = image {  
+                        image.increment_arc(); 
+                        image.as_image_ptr() 
+                    } else { 
+                        std::ptr::null() 
+                    };
                     #set_shape(self._inner, image as _)
                 }
             }
@@ -322,7 +327,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     if image.is_null() {
                         None
                     } else {
-                        Some(Box::new(Image::from_image_ptr(image as *mut fltk_sys::image::Fl_Image)))
+                        Some(Box::new(Image::from_image_ptr(image as _)))
                     }
                 }
             }
