@@ -483,14 +483,16 @@ pub unsafe trait WindowExt: GroupExt {
     fn hotspot<W: WidgetExt>(&mut self, w: &W)
     where
         Self: Sized;
-    /// Set the shape of the window
-    fn set_shape<I: ImageExt>(&mut self, image: Option<I>)
+    /// Set the shape of the window.
+    /// Supported images are BMP, RGB and Pixmap. 
+    /// The window covers non-transparent shape of the image
+    /// # Safety
+    /// The image must not be scaled(resized) before hand. The size will be adapted to the window's size
+    unsafe fn set_shape<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
     /// Get the shape of the window
-    fn shape<I: ImageExt>(&self) -> Option<Box<dyn ImageExt>>
-    where
-        Self: Sized;
+    fn shape(&self) -> Option<Box<dyn ImageExt>>;
 }
 
 /// Defines the methods implemented by all input and output widgets

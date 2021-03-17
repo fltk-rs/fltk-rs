@@ -307,20 +307,30 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
+            unsafe fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
-                unsafe {
-                    let image = if let Some(mut image) = image {  
-                        image.increment_arc(); 
-                        image.as_image_ptr() 
-                    } else { 
-                        std::ptr::null() 
-                    };
-                    #set_shape(self._inner, image as _)
-                }
+                assert!(self.w() != 0);
+                assert!(self.h() != 0);
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::XbmImage>(), "Xbm is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::PnmImage>(), "Pnm is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::GifImage>(), "Gif is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::GifImage>(), "Jpeg is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "Svg is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "Png is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::Image>(), "Images can't be generic!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::TiledImage>(), "TiledImage is not supported!");
+                let _old_image = self.shape();
+                let image = if let Some(mut image) = image {  
+                    image.increment_arc(); 
+                    image.as_image_ptr() 
+                } else { 
+                    std::ptr::null() 
+                };
+                #set_shape(self._inner, image as _)
             }
 
-            fn shape<I: ImageExt>(&self) -> Option<Box<dyn ImageExt>> {
+            fn shape(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let image = #shape(self._inner);
