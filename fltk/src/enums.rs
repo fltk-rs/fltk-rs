@@ -157,6 +157,26 @@ impl FrameType {
         let idx = if idx > 56 { 56 } else { idx };
         unsafe { std::mem::transmute(idx as i32) }
     }
+
+    /// Get the frame's x offset
+    pub fn dx(&self) -> i32 {
+        unsafe { fltk_sys::fl::Fl_box_dx(*self as i32) }
+    }
+
+    /// Get the frame's y offset
+    pub fn dy(&self) -> i32 {
+        unsafe { fltk_sys::fl::Fl_box_dy(*self as i32) }
+    }
+
+    /// Get the frame's width offset
+    pub fn dw(&self) -> i32 {
+        unsafe { fltk_sys::fl::Fl_box_dw(*self as i32) }
+    }
+
+    /// Get the frame's height offset
+    pub fn dh(&self) -> i32 {
+        unsafe { fltk_sys::fl::Fl_box_dh(*self as i32) }
+    }
 }
 
 bitflags! {

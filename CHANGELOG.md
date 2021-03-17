@@ -10,6 +10,7 @@
 - Add WindowExt::shap() and set_shape().
 - Fix take_focus() error value.
 - Add WindowExt::x_root() and y_root().
+- Add FrameType::dx(), dy(), dw() and dh().
 
 ## [0.15.12] - 2021-03-17
 ### Changes
