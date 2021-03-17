@@ -57,10 +57,14 @@ impl Dial {
     /// Set the angles of the dial
     pub fn set_angles(&mut self, angle1: u16, angle2: u16) {
         if angle1 <= 360 {
-            unsafe { Fl_Dial_set_angle1(self._inner, angle1 as _); }
+            unsafe {
+                Fl_Dial_set_angle1(self._inner, angle1 as _);
+            }
         }
         if angle2 <= 360 {
-            unsafe { Fl_Dial_set_angle2(self._inner, angle2 as _); }
+            unsafe {
+                Fl_Dial_set_angle2(self._inner, angle2 as _);
+            }
         }
     }
 }
@@ -83,10 +87,14 @@ impl LineDial {
     /// Set the angles of the dial
     pub fn set_angles(&mut self, angle1: u16, angle2: u16) {
         if angle1 <= 360 {
-            unsafe { Fl_Dial_set_angle1(self._inner as _, angle1 as _); }
+            unsafe {
+                Fl_Dial_set_angle1(self._inner as _, angle1 as _);
+            }
         }
         if angle2 <= 360 {
-            unsafe { Fl_Dial_set_angle2(self._inner as _, angle2 as _); }
+            unsafe {
+                Fl_Dial_set_angle2(self._inner as _, angle2 as _);
+            }
         }
     }
 }
@@ -331,10 +339,14 @@ impl FillDial {
     /// Set the angles of the dial
     pub fn set_angles(&mut self, angle1: u16, angle2: u16) {
         if angle1 <= 360 {
-            unsafe { Fl_Dial_set_angle1(self._inner as _, angle1 as _); }
+            unsafe {
+                Fl_Dial_set_angle1(self._inner as _, angle1 as _);
+            }
         }
         if angle2 <= 360 {
-            unsafe { Fl_Dial_set_angle2(self._inner as _, angle2 as _); }
+            unsafe {
+                Fl_Dial_set_angle2(self._inner as _, angle2 as _);
+            }
         }
     }
 }

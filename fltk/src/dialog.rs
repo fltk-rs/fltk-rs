@@ -454,6 +454,16 @@ impl HelpDialog {
         unsafe { Fl_Help_Dialog_h(self._inner) }
     }
 
+    /// Returns the width of the help dialog
+    pub fn w(&mut self) -> i32 {
+        unsafe { Fl_Help_Dialog_w(self._inner) }
+    }
+
+    /// Returns the height of the help dialog
+    pub fn h(&mut self) -> i32 {
+        unsafe { Fl_Help_Dialog_h(self._inner) }
+    }
+
     /// Returns the x position of the help dialog
     pub fn x(&mut self) -> i32 {
         unsafe { Fl_Help_Dialog_x(self._inner) }

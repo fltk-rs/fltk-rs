@@ -593,9 +593,6 @@ extern "C" {
     pub fn Fl_Browser_size(arg1: *const Fl_Browser) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Browser_set_size(arg1: *mut Fl_Browser, W: libc::c_int, H: libc::c_int);
-}
-extern "C" {
     pub fn Fl_Browser_select(arg1: *mut Fl_Browser, line: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -1003,9 +1000,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_size(arg1: *const Fl_Hold_Browser) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Hold_Browser_set_size(arg1: *mut Fl_Hold_Browser, W: libc::c_int, H: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_select(arg1: *mut Fl_Hold_Browser, line: libc::c_int) -> libc::c_int;
@@ -1432,9 +1426,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_size(arg1: *const Fl_Select_Browser) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Select_Browser_set_size(arg1: *mut Fl_Select_Browser, W: libc::c_int, H: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Select_Browser_select(arg1: *mut Fl_Select_Browser, line: libc::c_int)
@@ -1867,9 +1858,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multi_Browser_size(arg1: *const Fl_Multi_Browser) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Multi_Browser_set_size(arg1: *mut Fl_Multi_Browser, W: libc::c_int, H: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Multi_Browser_select(arg1: *mut Fl_Multi_Browser, line: libc::c_int) -> libc::c_int;
@@ -2316,9 +2304,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_size(arg1: *const Fl_File_Browser) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_File_Browser_set_size(arg1: *mut Fl_File_Browser, W: libc::c_int, H: libc::c_int);
 }
 extern "C" {
     pub fn Fl_File_Browser_select(arg1: *mut Fl_File_Browser, line: libc::c_int) -> libc::c_int;

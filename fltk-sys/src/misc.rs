@@ -1183,9 +1183,6 @@ extern "C" {
     pub fn Fl_Chart_size(self_: *const Fl_Chart) -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_Chart_set_size(self_: *mut Fl_Chart, W: libc::c_int, H: libc::c_int);
-}
-extern "C" {
     pub fn Fl_Chart_maxsize(self_: *const Fl_Chart) -> libc::c_int;
 }
 extern "C" {

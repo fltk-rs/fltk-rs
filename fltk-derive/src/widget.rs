@@ -713,8 +713,8 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     match #take_focus(self._inner) {
-                        0 => Ok(()),
-                        _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+                        0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+                        _ => Ok(()),
                     }
                 }
             }

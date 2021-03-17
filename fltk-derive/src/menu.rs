@@ -68,6 +68,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_down_box").as_str(),
         name.span(),
     );
+    let global = Ident::new(format!("{}_{}", name_str, "global").as_str(), name.span());
 
     let gen = quote! {
         impl IntoIterator for #name {
@@ -428,6 +429,13 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     mem::transmute(#down_box(self._inner))
+                }
+            }
+
+            fn global(&mut self) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #global(self._inner)
                 }
             }
         }

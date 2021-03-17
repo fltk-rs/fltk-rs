@@ -469,7 +469,8 @@ pub unsafe trait WindowExt: GroupExt {
     /// # Safety
     /// The data must be valid.
     unsafe fn set_region(&mut self, region: crate::draw::Region);
-    /// Iconifies the window
+    /// Iconifies the window.
+    /// You can tell that the window is iconized by checking that it's shown and not visible
     fn iconize(&mut self);
     /// Returns whether the window is fullscreen or not
     fn fullscreen_active(&self) -> bool;
@@ -483,6 +484,20 @@ pub unsafe trait WindowExt: GroupExt {
     fn hotspot<W: WidgetExt>(&mut self, w: &W)
     where
         Self: Sized;
+    /// Set the shape of the window.
+    /// Supported image formats are BMP, RGB and Pixmap. 
+    /// The window covers non-transparent/non-black shape of the image.
+    /// The image must not be scaled(resized) beforehand. 
+    /// The size will be adapted to the window's size
+    fn set_shape<I: ImageExt>(&mut self, image: Option<I>)
+    where
+        Self: Sized;
+    /// Get the shape of the window
+    fn shape(&self) -> Option<Box<dyn ImageExt>>;
+    /// Get the window's x coord from the screen
+    fn x_root(&self) -> i32;
+    /// Get the window's y coord from the screen
+    fn y_root(&self) -> i32;
 }
 
 /// Defines the methods implemented by all input and output widgets
@@ -670,6 +685,8 @@ pub unsafe trait MenuExt: WidgetExt {
     fn set_down_frame(&mut self, f: FrameType);
     /// Get the down frame type of the widget
     fn down_frame(&self) -> FrameType;
+    /// Make a menu globally accessible from any window
+    fn global(&mut self);
 }
 
 /// Defines the methods implemented by all valuator widgets
@@ -1095,6 +1112,10 @@ pub unsafe trait ImageExt {
     fn width(&self) -> i32;
     /// Return the height of the image
     fn height(&self) -> i32;
+    /// Return the width of the image
+    fn w(&self) -> i32;
+    /// Return the height of the image
+    fn h(&self) -> i32;
     /// Retunrs a pointer of the image
     /// # Safety
     /// Can return multiple mutable pointers to the image

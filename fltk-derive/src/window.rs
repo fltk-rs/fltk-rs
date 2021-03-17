@@ -62,6 +62,13 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let hotspot = Ident::new(format!("{}_{}", name_str, "hotspot").as_str(), name.span());
+    let shape = Ident::new(format!("{}_{}", name_str, "shape").as_str(), name.span());
+    let set_shape = Ident::new(
+        format!("{}_{}", name_str, "set_shape").as_str(),
+        name.span(),
+    );
+    let x_root = Ident::new(format!("{}_{}", name_str, "x_root").as_str(), name.span());
+    let y_root = Ident::new(format!("{}_{}", name_str, "y_root").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl HasRawWindowHandle for #name {
@@ -299,6 +306,59 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!w.was_deleted());
                 unsafe {
                     #hotspot(self._inner, w.as_widget_ptr() as _)
+                }
+            }
+
+            fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
+                assert!(!self.was_deleted());
+                assert!(self.w() != 0);
+                assert!(self.h() != 0);
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SharedImage>(), "SharedImage is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::XbmImage>(), "Xbm is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::PnmImage>(), "Pnm is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::GifImage>(), "Gif is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::GifImage>(), "Jpeg is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "Svg is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "Png is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::Image>(), "Images can't be generic!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::TiledImage>(), "TiledImage is not supported!");
+                let _old_image = self.shape();
+                unsafe {
+                    let image = if let Some(mut image) = image {  
+                        image.increment_arc();
+                        assert!(image.w() == image.data_w() as i32);
+                        assert!(image.h() == image.data_h() as i32);
+                        image.as_image_ptr() 
+                    } else { 
+                        std::ptr::null() 
+                    };
+                    #set_shape(self._inner, image as _)
+                }
+            }
+
+            fn shape(&self) -> Option<Box<dyn ImageExt>> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let image = #shape(self._inner);
+                    if image.is_null() {
+                        None
+                    } else {
+                        Some(Box::new(Image::from_image_ptr(image as _)))
+                    }
+                }
+            }
+
+            fn x_root(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #x_root(self._inner)
+                }
+            }
+            
+            fn y_root(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #y_root(self._inner)
                 }
             }
         }

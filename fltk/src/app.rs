@@ -1247,3 +1247,17 @@ pub fn screen_scaling_supported() -> bool {
 pub fn screen_count() -> u32 {
     unsafe { Fl_screen_count() as u32 }
 }
+
+/// Open the current display
+/// # Safety
+/// A correct visual must be set prior to opening the display
+pub unsafe fn open_display() {
+    Fl_open_display()
+}
+
+/// Close the current display
+/// # Safety
+/// The display shouldn't be closed while a window is shown
+pub unsafe fn close_display() {
+    Fl_close_display()
+}

@@ -16,7 +16,10 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
     let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
     let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
     let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
-    let remove_by_index = Ident::new(format!("{}_{}", name_str, "remove_by_index").as_str(), name.span());
+    let remove_by_index = Ident::new(
+        format!("{}_{}", name_str, "remove_by_index").as_str(),
+        name.span(),
+    );
     let resizable = Ident::new(
         format!("{}_{}", name_str, "resizable").as_str(),
         name.span(),

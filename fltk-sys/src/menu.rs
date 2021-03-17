@@ -668,6 +668,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Bar_down_box(self_: *const Fl_Menu_Bar) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Bar_global(self_: *mut Fl_Menu_Bar);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Button {
@@ -1057,6 +1060,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_down_box(self_: *const Fl_Menu_Button) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Menu_Button_global(self_: *mut Fl_Menu_Button);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Choice {
@@ -1421,6 +1427,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_down_box(self_: *const Fl_Choice) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Choice_global(self_: *mut Fl_Choice);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1815,6 +1824,9 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_down_box(self_: *const Fl_Sys_Menu_Bar) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Sys_Menu_Bar_global(self_: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
     pub fn Fl_Menu_Item_new(args: *mut *mut libc::c_char, sz: libc::c_int) -> *mut Fl_Menu_Item;
 }
 extern "C" {
@@ -1908,4 +1920,25 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Item_set_user_data(arg1: *mut Fl_Menu_Item, data: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_draw(
+        self_: *const Fl_Menu_Item,
+        x: libc::c_int,
+        y: libc::c_int,
+        w: libc::c_int,
+        h: libc::c_int,
+        m: *const libc::c_void,
+        selected: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Item_measure(
+        self_: *const Fl_Menu_Item,
+        hp: *mut libc::c_int,
+        m: *const libc::c_void,
+    ) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_image(self_: *mut Fl_Menu_Item, image: *mut libc::c_void);
 }

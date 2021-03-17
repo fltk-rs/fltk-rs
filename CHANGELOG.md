@@ -1,6 +1,17 @@
 # Changelog
 
 
+## [0.15.13] - 2021-03-18
+### Changes
+- Update deps.
+- Add ImageExt::w() and h().
+- Add MenuExt::global(). 
+- Add MenuItem::measure(), draw() and set_image().
+- Add WindowExt::shap() and set_shape().
+- Fix take_focus() error value.
+- Add WindowExt::x_root() and y_root().
+- Add FrameType::dx(), dy(), dw() and dh().
+
 ## [0.15.12] - 2021-03-17
 ### Changes
 - Add WidgetExt::center_of_parent().

@@ -311,3 +311,21 @@ extern "C" {
 extern "C" {
     pub fn Fl_screen_count() -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_open_display();
+}
+extern "C" {
+    pub fn Fl_close_display();
+}
+extern "C" {
+    pub fn Fl_box_dx(boxtype: libc::c_int) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_box_dy(boxtype: libc::c_int) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_box_dw(boxtype: libc::c_int) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_box_dh(boxtype: libc::c_int) -> libc::c_int;
+}
