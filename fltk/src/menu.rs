@@ -372,15 +372,10 @@ impl MenuItem {
     /// Set the image of the menu item
     /// # Safety
     /// Trying to add a label after adding an image might lead to undefined behavior
-    pub unsafe fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
+    pub unsafe fn set_image<I: ImageExt>(&mut self, mut image: I) {
         assert!(!self.was_deleted());
-        let image = if let Some(mut image) = image {
-            image.increment_arc();
-            image.as_image_ptr()
-        } else {
-            std::ptr::null()
-        };
-        Fl_Menu_Item_image(self._inner, image as _)
+        image.increment_arc();
+        Fl_Menu_Item_image(self._inner, image.as_image_ptr() as _)
     }
 }
 
