@@ -67,6 +67,8 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_shape").as_str(),
         name.span(),
     );
+    let x_root = Ident::new(format!("{}_{}", name_str, "x_root").as_str(), name.span());
+    let y_root = Ident::new(format!("{}_{}", name_str, "y_root").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl HasRawWindowHandle for #name {
@@ -343,6 +345,20 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(Box::new(Image::from_image_ptr(image as _)))
                     }
+                }
+            }
+
+            fn x_root(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #x_root(self._inner)
+                }
+            }
+            
+            fn y_root(&self) -> i32 {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #y_root(self._inner)
                 }
             }
         }

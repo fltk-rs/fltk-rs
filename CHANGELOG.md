@@ -9,6 +9,7 @@
 - Add MenuItem::measure(), draw() and set_image().
 - Add WindowExt::shap() and set_shape().
 - Fix take_focus() error value.
+- Add WindowExt::x_root() and y_root().
 
 ## [0.15.12] - 2021-03-17
 ### Changes

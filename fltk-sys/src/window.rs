@@ -2906,6 +2906,12 @@ extern "C" {
     pub fn Fl_Window_shape(self_: *mut Fl_Window) -> *const libc::c_void;
 }
 extern "C" {
+    pub fn Fl_Window_x_root(self_: *const Fl_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_y_root(self_: *const Fl_Window) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Window_find_by_handle(handle: *mut libc::c_void) -> *mut Fl_Window;
 }
 extern "C" {
@@ -3320,6 +3326,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Single_Window_shape(self_: *mut Fl_Single_Window) -> *const libc::c_void;
 }
+extern "C" {
+    pub fn Fl_Single_Window_x_root(self_: *const Fl_Single_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_y_root(self_: *const Fl_Single_Window) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {
@@ -3716,6 +3728,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Double_Window_shape(self_: *mut Fl_Double_Window) -> *const libc::c_void;
 }
+extern "C" {
+    pub fn Fl_Double_Window_x_root(self_: *const Fl_Double_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_y_root(self_: *const Fl_Double_Window) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -4105,6 +4123,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_shape(self_: *mut Fl_Menu_Window) -> *const libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_x_root(self_: *const Fl_Menu_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_y_root(self_: *const Fl_Menu_Window) -> libc::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -4522,6 +4546,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Overlay_Window_shape(self_: *mut Fl_Overlay_Window) -> *const libc::c_void;
 }
+extern "C" {
+    pub fn Fl_Overlay_Window_x_root(self_: *const Fl_Overlay_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_y_root(self_: *const Fl_Overlay_Window) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Gl_Window {
@@ -4901,6 +4931,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_shape(self_: *mut Fl_Gl_Window) -> *const libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_x_root(self_: *const Fl_Gl_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_y_root(self_: *const Fl_Gl_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);
@@ -5358,6 +5394,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_shape(self_: *mut Fl_Glut_Window) -> *const libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_x_root(self_: *const Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_y_root(self_: *const Fl_Glut_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_flush(self_: *mut Fl_Glut_Window);

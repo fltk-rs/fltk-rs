@@ -492,6 +492,10 @@ pub unsafe trait WindowExt: GroupExt {
         Self: Sized;
     /// Get the shape of the window
     fn shape(&self) -> Option<Box<dyn ImageExt>>;
+    /// Get the window's x coord from the screen
+    fn x_root(&self) -> i32;
+    /// Get the window's y coord from the screen
+    fn y_root(&self) -> i32;
 }
 
 /// Defines the methods implemented by all input and output widgets
