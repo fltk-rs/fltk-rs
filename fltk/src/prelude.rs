@@ -484,9 +484,10 @@ pub unsafe trait WindowExt: GroupExt {
     where
         Self: Sized;
     /// Set the shape of the window.
-    /// Supported images are BMP, RGB and Pixmap. 
-    /// The window covers non-transparent shape of the image
-    /// The image must not be scaled(resized) before hand. The size will be adapted to the window's size
+    /// Supported image formats are BMP, RGB and Pixmap. 
+    /// The window covers non-transparent/non-black shape of the image.
+    /// The image must not be scaled(resized) beforehand. 
+    /// The size will be adapted to the window's size
     fn set_shape<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
