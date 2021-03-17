@@ -1,8 +1,8 @@
-use fltk::{app, frame::*, image::*, window::*};
+use fltk::{app, frame::*, image::*, utils, window::*};
 
 fn main() {
-    let mut fb: Vec<u8> = vec![0u8; 400 * 400 * 4];
-    for (iter, pixel) in fb.chunks_exact_mut(4).enumerate() {
+    let mut shape: Vec<u8> = vec![0u8; 400 * 400 * 4];
+    for (iter, pixel) in shape.chunks_exact_mut(4).enumerate() {
         let x = (iter % 400 as usize) as i16;
         let y = (iter / 400 as usize) as i16;
         let d = {
@@ -20,13 +20,24 @@ fn main() {
 
         pixel.copy_from_slice(&rgba);
     }
-    let mut image = RgbImage::new(&fb, 400, 400, ColorDepth::Rgba8).unwrap();
+    let shape = RgbImage::new(&shape, 400, 400, ColorDepth::Rgba8).unwrap();
+
+    let mut pattern: Vec<u8> = vec![0u8; 500 * 500 * 3];
+    for (iter, pixel) in pattern.chunks_exact_mut(3).enumerate() {
+        let x = iter % 500;
+        let y = iter / 500;
+        let (red, green, blue) = utils::hex2rgb((x ^ y) as u32);
+        pixel.copy_from_slice(&[red, green, blue]);
+    }
+    let pattern = RgbImage::new(&pattern, 500, 500, ColorDepth::Rgb8).unwrap();
+
     let app = app::App::default();
     let mut wind = Window::default().with_size(400, 400);
-    
+    let mut frm = Frame::default().size_of_parent();
     wind.end();
     wind.show();
-    unsafe { wind.set_shape(Some(image)); }
+    unsafe { wind.set_shape(Some(shape)); }
+    frm.set_image(Some(pattern));
 
     app.run().unwrap();
 }
