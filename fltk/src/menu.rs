@@ -344,7 +344,8 @@ impl MenuItem {
         self._inner.is_null()
     }
 
-    /// Draw a box around the menu item
+    /// Draw a box around the menu item.
+    /// Requires the call to be made inside a MenuExt-implementing widget's own draw method
     pub fn draw<M: MenuExt>(&self, x: i32, y: i32, w: i32, h: i32, m: &M, selected: bool) {
         assert!(!self.was_deleted());
         unsafe {
@@ -361,24 +362,25 @@ impl MenuItem {
     }
 
     /// Measure the width and height of a menu item
-    pub fn measure<M: MenuExt>(&self, m: &M) -> (i32, i32) {
+    pub fn measure(&self) -> (i32, i32) {
         assert!(!self.was_deleted());
         let h: &mut i32 = &mut 0;
-        let ret = unsafe { Fl_Menu_Item_measure(self._inner, h as _, m.as_widget_ptr() as _) };
+        let ret = unsafe { Fl_Menu_Item_measure(self._inner, h as _, std::ptr::null()) };
         (ret, *h)
     }
 
     /// Set the image of the menu item
-    pub fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
+    /// # Safety
+    /// Trying to add a label after adding an image might lead to undefined behavior
+    pub unsafe fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
         assert!(!self.was_deleted());
-        unsafe {
-            let image = if let Some(image) = image {
-                image.as_image_ptr()
-            } else {
-                std::ptr::null()
-            };
-            Fl_Menu_Item_image(self._inner, image as _)
-        }
+        let image = if let Some(mut image) = image {
+            image.increment_arc();
+            image.as_image_ptr()
+        } else {
+            std::ptr::null()
+        };
+        Fl_Menu_Item_image(self._inner, image as _)
     }
 }
 
