@@ -1247,3 +1247,13 @@ pub fn screen_scaling_supported() -> bool {
 pub fn screen_count() -> u32 {
     unsafe { Fl_screen_count() as u32 }
 }
+
+/// Open the current display
+pub(crate) fn open_display() {
+    unsafe { Fl_open_display() }
+}
+
+/// Close the current display
+pub(crate) fn close_display() {
+    unsafe { Fl_close_display() }
+}

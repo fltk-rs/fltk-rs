@@ -311,3 +311,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_screen_count() -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_open_display();
+}
+extern "C" {
+    pub fn Fl_close_display();
+}

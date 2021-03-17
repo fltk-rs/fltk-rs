@@ -5,6 +5,9 @@
 ### Changes
 - Update deps.
 - Add ImageExt::w() and h().
+- Add MenuExt::global(). 
+- Add MenuItem::measure(), draw() and set_image().
+- Add WindowExt::shap() and set_shape().
 
 ## [0.15.12] - 2021-03-17
 ### Changes
