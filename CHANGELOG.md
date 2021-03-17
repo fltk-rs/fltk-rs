@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [0.15.13] - Unreleased
+## [0.15.13] - 2021-03-18
 ### Changes
 - Update deps.
 - Add ImageExt::w() and h().
