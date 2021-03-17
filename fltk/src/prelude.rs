@@ -483,6 +483,14 @@ pub unsafe trait WindowExt: GroupExt {
     fn hotspot<W: WidgetExt>(&mut self, w: &W)
     where
         Self: Sized;
+    /// Set the shape of the window
+    fn set_shape<I: ImageExt>(&mut self, image: Option<I>)
+    where
+        Self: Sized;
+    /// Get the shape of the window
+    fn shape<I: ImageExt>(&self) -> Option<Box<dyn ImageExt>>
+    where
+        Self: Sized;
 }
 
 /// Defines the methods implemented by all input and output widgets
@@ -670,6 +678,8 @@ pub unsafe trait MenuExt: WidgetExt {
     fn set_down_frame(&mut self, f: FrameType);
     /// Get the down frame type of the widget
     fn down_frame(&self) -> FrameType;
+    /// Make a menu globally accessible from any window
+    fn global(&mut self);
 }
 
 /// Defines the methods implemented by all valuator widgets

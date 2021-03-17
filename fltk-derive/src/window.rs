@@ -62,6 +62,11 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let hotspot = Ident::new(format!("{}_{}", name_str, "hotspot").as_str(), name.span());
+    let shape = Ident::new(format!("{}_{}", name_str, "shape").as_str(), name.span());
+    let set_shape = Ident::new(
+        format!("{}_{}", name_str, "set_shape").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl HasRawWindowHandle for #name {
@@ -299,6 +304,26 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!w.was_deleted());
                 unsafe {
                     #hotspot(self._inner, w.as_widget_ptr() as _)
+                }
+            }
+
+            fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
+                assert!(!self.was_deleted());
+                let image = if let Some(image) = image {  image.increment_arc(); image.as_image_ptr() } else { std::ptr::null() };
+                unsafe {
+                    #set_shape(self._inner, image as _)
+                }
+            }
+
+            fn shape<I: ImageExt>(&self) -> Option<Box<dyn ImageExt>> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let image = #shape(self._inner);
+                    if image.is_null() {
+                        None
+                    } else {
+                        Some(Box::new(Image::from_image_ptr(image as *mut fltk_sys::image::Fl_Image)))
+                    }
                 }
             }
         }

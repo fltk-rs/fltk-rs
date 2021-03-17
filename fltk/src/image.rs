@@ -589,12 +589,7 @@ impl RgbImage {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
         unsafe {
-            let img = Fl_RGB_Image_new(
-                data.as_ptr(),
-                w as i32,
-                h as i32,
-                depth as i32,
-            );
+            let img = Fl_RGB_Image_new(data.as_ptr(), w as i32, h as i32, depth as i32);
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
             } else {

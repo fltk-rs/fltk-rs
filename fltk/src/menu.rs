@@ -343,6 +343,31 @@ impl MenuItem {
     pub fn was_deleted(&self) -> bool {
         self._inner.is_null()
     }
+
+    /// Draw a box around the menu item
+    pub fn draw<M: MenuExt>(&self, x: i32, y: i32, w: i32, h: i32, m: &M, selected: bool) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Menu_Item_draw(x, y, w, h, m.as_widget_ptr() as _, selected as i32) }
+    }
+
+    /// Measure the width and height of a menu item
+    pub fn measure<M: MenuExt>(&self, m: &M) -> (i32, i32) {
+        assert!(!self.was_deleted());
+        let mut h = 0;
+        let ret = unsafe { Fl_Menu_Item_measure(self._inner, h as _, m.as_widget_ptr() as _) };
+        (ret, h)
+    }
+
+    /// Set the image of the menu item
+    pub fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
+        assert!(!self.was_deleted());
+        let image = if let Some(image) = image {
+            image.as_image_ptr()
+        } else {
+            std::ptr::null()
+        };
+        unsafe { Fl_Menu_Item_image(self._inner, image as _) }
+    }
 }
 
 /// Delete a menu item
