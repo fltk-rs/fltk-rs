@@ -346,7 +346,7 @@ impl MenuItem {
 
     /// Draw a box around the menu item.
     /// Requires the call to be made inside a MenuExt-implementing widget's own draw method
-    pub fn draw<M: MenuExt>(&self, x: i32, y: i32, w: i32, h: i32, m: &M, selected: bool) {
+    pub fn draw<M: MenuExt>(&self, x: i32, y: i32, w: i32, h: i32, menu: &M, selected: bool) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Menu_Item_draw(
@@ -355,7 +355,7 @@ impl MenuItem {
                 y,
                 w,
                 h,
-                m.as_widget_ptr() as _,
+                menu.as_widget_ptr() as _,
                 selected as i32,
             )
         }
