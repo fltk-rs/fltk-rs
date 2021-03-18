@@ -74,9 +74,13 @@ impl Printer {
     }
 
     /// End the print page
-    pub fn end_page(&mut self) {
+    pub fn end_page(&mut self) -> Result<(), FltkError> {
         unsafe {
-            Fl_Printer_end_page(self._inner);
+            if Fl_Printer_end_page(self._inner) != 0 {
+                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
+            } else {
+                Ok(())
+            }
         }
     }
 
@@ -86,9 +90,13 @@ impl Printer {
     }
 
     /// Begins a print page
-    pub fn begin_page(&mut self) {
+    pub fn begin_page(&mut self) -> Result<(), FltkError> {
         unsafe {
-            Fl_Printer_begin_page(self._inner);
+            if Fl_Printer_begin_page(self._inner) != 0 {
+                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
+            } else {
+                Ok(())
+            }
         }
     }
 
