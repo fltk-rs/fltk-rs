@@ -45,28 +45,28 @@ impl Printer {
             pagecount <= std::isize::MAX as u32,
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
-        let frompage_: *mut i32 = std::ptr::null_mut();
-        let topage_: *mut i32 = std::ptr::null_mut();
+        let mut frompage_ = 0;
+        let mut topage_ = 0;
         unsafe {
             if Fl_Printer_begin_job(
                 self._inner,
                 pagecount as i32,
-                frompage_,
-                topage_,
+                &mut frompage_,
+                &mut topage_,
                 std::ptr::null_mut(),
             ) != 0
             {
                 Err(FltkError::Internal(FltkErrorKind::FailedToRun))
             } else {
-                let from = if frompage_.is_null() {
+                let from = if frompage_ == 0 {
                     None
                 } else {
-                    Some(*frompage_ as u32)
+                    Some(frompage_ as u32)
                 };
-                let to = if topage_.is_null() {
+                let to = if topage_ == 0 {
                     None
                 } else {
-                    Some(*topage_ as u32)
+                    Some(topage_ as u32)
                 };
                 Ok((from, to))
             }
