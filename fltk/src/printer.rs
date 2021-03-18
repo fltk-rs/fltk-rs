@@ -10,7 +10,7 @@ use std::ffi::CString;
 /// but.set_callback2(|widget| {
 ///     let mut printer = printer::Printer::default();
 ///     if printer.begin_job(1).is_ok() {
-///         printer.begin_page();
+///         printer.begin_page().ok();
 ///         let (width, height) = printer.printable_rect();
 ///         draw::set_draw_color(Color::Black);
 ///         draw::set_line_style(draw::LineStyle::Solid, 2);
@@ -18,7 +18,7 @@ use std::ffi::CString;
 ///         draw::set_font(Font::Courier, 12);
 ///         printer.set_origin(width / 2, height / 2);
 ///         printer.print_widget(widget, -widget.width() / 2, -widget.height() / 2);
-///         printer.end_page();
+///         printer.end_page().ok();
 ///         printer.end_job();
 ///     }
 /// });

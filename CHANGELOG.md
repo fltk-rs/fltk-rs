@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [0.15.14] - 2021-03-19
+### Changes
+- Fix print support on linux/bsd and add proper error handling.
+- Pull Gif fix from FLTK.
+
 ## [0.15.13] - 2021-03-18
 ### Changes
 - Update deps.

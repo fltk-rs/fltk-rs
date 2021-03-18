@@ -345,9 +345,9 @@ fn main() {
                         let line_count = printable.count_lines(0, printable.buffer().unwrap().length(), true) / 45;
                         for i in 0..=line_count {
                             printable.scroll(45 * i, 0);
-                            printer.begin_page();
+                            printer.begin_page().ok();
                             printer.print_widget(&printable, 20, 20);
-                            printer.end_page();
+                            printer.end_page().ok();
                         }
                         printer.end_job();
                     }
