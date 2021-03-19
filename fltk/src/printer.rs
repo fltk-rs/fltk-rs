@@ -10,7 +10,7 @@ use std::ffi::CString;
 /// but.set_callback2(|widget| {
 ///     let mut printer = printer::Printer::default();
 ///     if printer.begin_job(1).is_ok() {
-///         printer.begin_page();
+///         printer.begin_page().ok();
 ///         let (width, height) = printer.printable_rect();
 ///         draw::set_draw_color(Color::Black);
 ///         draw::set_line_style(draw::LineStyle::Solid, 2);
@@ -18,7 +18,7 @@ use std::ffi::CString;
 ///         draw::set_font(Font::Courier, 12);
 ///         printer.set_origin(width / 2, height / 2);
 ///         printer.print_widget(widget, -widget.width() / 2, -widget.height() / 2);
-///         printer.end_page();
+///         printer.end_page().ok();
 ///         printer.end_job();
 ///     }
 /// });
@@ -45,28 +45,28 @@ impl Printer {
             pagecount <= std::isize::MAX as u32,
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
-        let frompage_: *mut i32 = std::ptr::null_mut();
-        let topage_: *mut i32 = std::ptr::null_mut();
+        let mut frompage_ = 0;
+        let mut topage_ = 0;
         unsafe {
             if Fl_Printer_begin_job(
                 self._inner,
                 pagecount as i32,
-                frompage_,
-                topage_,
+                &mut frompage_,
+                &mut topage_,
                 std::ptr::null_mut(),
             ) != 0
             {
                 Err(FltkError::Internal(FltkErrorKind::FailedToRun))
             } else {
-                let from = if frompage_.is_null() {
+                let from = if frompage_ == 0 {
                     None
                 } else {
-                    Some(*frompage_ as u32)
+                    Some(frompage_ as u32)
                 };
-                let to = if topage_.is_null() {
+                let to = if topage_ == 0 {
                     None
                 } else {
-                    Some(*topage_ as u32)
+                    Some(topage_ as u32)
                 };
                 Ok((from, to))
             }
@@ -74,9 +74,13 @@ impl Printer {
     }
 
     /// End the print page
-    pub fn end_page(&mut self) {
+    pub fn end_page(&mut self) -> Result<(), FltkError> {
         unsafe {
-            Fl_Printer_end_page(self._inner);
+            if Fl_Printer_end_page(self._inner) != 0 {
+                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
+            } else {
+                Ok(())
+            }
         }
     }
 
@@ -86,9 +90,13 @@ impl Printer {
     }
 
     /// Begins a print page
-    pub fn begin_page(&mut self) {
+    pub fn begin_page(&mut self) -> Result<(), FltkError> {
         unsafe {
-            Fl_Printer_begin_page(self._inner);
+            if Fl_Printer_begin_page(self._inner) != 0 {
+                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
+            } else {
+                Ok(())
+            }
         }
     }
 

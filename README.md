@@ -242,7 +242,7 @@ $ cargo build
 
 ## Examples
 
-To run the examples: 
+To run the [examples](https://github.com/MoAlyousef/fltk-rs/tree/master/fltk/examples): 
 ```
 $ cargo run --example editor
 $ cargo run --example calculator
