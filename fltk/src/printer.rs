@@ -193,115 +193,115 @@ impl Printer {
     }
 
     /// Set the dialog "Title"
-    pub fn set_dialog_title(msg: &str) {
+    pub fn set_dialog_title(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_title(msg.into_raw()) }
     }
 
     /// Set the dialog "Printer"
-    pub fn set_dialog_printer(msg: &str) {
+    pub fn set_dialog_printer(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_printer(msg.into_raw()) }
     }
 
     /// Set dialog "Range"
-    pub fn set_dialog_range(msg: &str) {
+    pub fn set_dialog_range(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_range(msg.into_raw()) }
     }
 
     /// Set dialog "Copies"
-    pub fn set_dialog_copies(msg: &str) {
+    pub fn set_dialog_copies(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_copies(msg.into_raw()) }
     }
 
     /// Set dialog "All"
-    pub fn set_dialog_all(msg: &str) {
+    pub fn set_dialog_all(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_all(msg.into_raw()) }
     }
 
     /// Set dialog "Pages"
-    pub fn set_dialog_pages(msg: &str) {
+    pub fn set_dialog_pages(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_pages(msg.into_raw()) }
     }
 
     /// Set dialog "From"
-    pub fn set_dialog_from(msg: &str) {
+    pub fn set_dialog_from(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_from(msg.into_raw()) }
     }
 
     /// Set dialog "To"
-    pub fn set_dialog_to(msg: &str) {
+    pub fn set_dialog_to(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_to(msg.into_raw()) }
     }
 
     /// Set dialog "Properties"
-    pub fn set_dialog_properties(msg: &str) {
+    pub fn set_dialog_properties(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_properties(msg.into_raw()) }
     }
 
     /// Set dialog "Number of copies"
-    pub fn set_dialog_copy_number(msg: &str) {
+    pub fn set_dialog_copy_number(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_copyNo(msg.into_raw()) }
     }
 
     /// Set dialog "Print" button
-    pub fn set_dialog_print_button(msg: &str) {
+    pub fn set_dialog_print_button(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_print_button(msg.into_raw()) }
     }
 
     /// Set dialog "Cancel" button
-    pub fn set_dialog_cancel_button(msg: &str) {
+    pub fn set_dialog_cancel_button(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_cancel_button(msg.into_raw()) }
     }
 
     /// Set dialog "Print to file" button
-    pub fn set_dialog_print_to_file(msg: &str) {
+    pub fn set_dialog_print_to_file(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_dialog_print_to_file(msg.into_raw()) }
     }
 
     /// Set property "Title"
-    pub fn set_property_title(msg: &str) {
+    pub fn set_property_title(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_property_title(msg.into_raw()) }
     }
 
     /// Set property "Page Size"
-    pub fn set_property_pagesize(msg: &str) {
+    pub fn set_property_pagesize(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_property_pagesize(msg.into_raw()) }
     }
 
     /// Set property "Mode"
-    pub fn set_property_mode(msg: &str) {
+    pub fn set_property_mode(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_property_mode(msg.into_raw()) }
     }
 
     /// Set property "Use"
-    pub fn set_property_use(msg: &str) {
+    pub fn set_property_use(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_property_use(msg.into_raw()) }
     }
 
     /// Set property "Save"
-    pub fn set_property_save(msg: &str) {
+    pub fn set_property_save(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_property_save(msg.into_raw()) }
     }
 
     /// Set property "Cancel"
-    pub fn set_property_cancel(msg: &str) {
+    pub fn set_property_cancel(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_Printer_set_property_cancel(msg.into_raw()) }
     }

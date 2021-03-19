@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [0.15.15] - Unreleased
+### Changes
+- Specify 'static lifetime for Printer labels.
+
 ## [0.15.14] - 2021-03-19
 ### Changes
 - Fix print support on linux/bsd and add proper error handling.
