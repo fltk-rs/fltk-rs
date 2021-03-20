@@ -465,7 +465,13 @@ impl GlWindow {
 
     /// Gets an opengl function address
     pub fn get_proc_address(&self, s: &str) -> *const raw::c_void {
-        gl_loader::get_proc_address(s) as *const _
+        let ret = gl_loader::get_proc_address(s);
+        if !ret.is_null() {
+            ret as *const _
+        } else {
+            let s = CString::safe_new(s);
+            unsafe { Fl_Gl_Window_get_proc_address(self._inner, s.as_ptr()) as *const _ }
+        }
     }
 
     /// Forces the window to be drawn, this window is also made current and calls draw()

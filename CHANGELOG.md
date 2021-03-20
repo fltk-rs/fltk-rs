@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [0.15.15] - 2021-03-21
+### Changes
+- Specify 'static lifetime for Printer labels.
+- Add assert on image's color depth prior to writing to a file.
+- Add second check in GlWindow get_proc_address.
+
 ## [0.15.14] - 2021-03-19
 ### Changes
 - Fix print support on linux/bsd and add proper error handling.
