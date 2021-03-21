@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [0.15.16] - Unreleased
+### Changes
+- Add app::set_font_size() to set the global font size of the app.
+
 ## [0.15.15] - 2021-03-21
 ### Changes
 - Specify 'static lifetime for Printer labels.

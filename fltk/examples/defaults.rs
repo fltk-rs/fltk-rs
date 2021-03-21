@@ -8,6 +8,7 @@ fn main() {
     // global theming
     app::background(r, g, b);
     app::set_font(Font::Courier);
+    app::set_font_size(16);
     app::set_frame_type(FrameType::RFlatBox);
     app::set_visible_focus(false);
 
