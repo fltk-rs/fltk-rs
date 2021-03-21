@@ -523,30 +523,6 @@ extern "C" {
     pub fn Fl_reset_spot();
 }
 extern "C" {
-    pub fn Fl_raw_image_to_png(
-        data: *mut libc::c_uchar,
-        fname: *const libc::c_char,
-        w: libc::c_int,
-        h: libc::c_int,
-    ) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_raw_image_to_jpg(
-        data: *mut libc::c_uchar,
-        fname: *const libc::c_char,
-        w: libc::c_int,
-        h: libc::c_int,
-    ) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_raw_image_to_bmp(
-        data: *mut libc::c_uchar,
-        fname: *const libc::c_char,
-        w: libc::c_int,
-        h: libc::c_int,
-    ) -> libc::c_int;
-}
-extern "C" {
     pub fn Fl_show_colormap(old_col: libc::c_uint) -> libc::c_uint;
 }
 extern "C" {

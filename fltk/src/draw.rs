@@ -814,116 +814,116 @@ pub fn draw_image(
     Ok(())
 }
 
-/// Transforms raw data to png file
-pub fn write_to_png_file<I: ImageExt, P: AsRef<std::path::Path>>(
-    image: &I,
-    path: P,
-) -> Result<(), FltkError> {
-    write_to_png_file_(image, path.as_ref())
-}
+// /// Transforms raw data to png file
+// pub fn write_to_png_file<I: ImageExt, P: AsRef<std::path::Path>>(
+//     image: &I,
+//     path: P,
+// ) -> Result<(), FltkError> {
+//     write_to_png_file_(image, path.as_ref())
+// }
 
-fn write_to_png_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
-    assert!(
-        std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
-        "SVG images are not supported!"
-    );
-    assert!(image.depth() == ColorDepth::Rgb8);
-    let path = path.to_str();
-    if path.is_none() {
-        return Err(FltkError::IoError(std::io::Error::new(
-            std::io::ErrorKind::Other,
-            "Could not convert path to string!",
-        )));
-    }
-    let path = std::ffi::CString::new(path.unwrap())?;
-    unsafe {
-        match Fl_raw_image_to_png(
-            *image.to_raw_data() as *mut u8,
-            path.as_ptr(),
-            image.data_w() as i32,
-            image.data_h() as i32,
-        ) {
-            -1 => Err(FltkError::IoError(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "Could not write image!",
-            ))),
-            _ => Ok(()),
-        }
-    }
-}
+// fn write_to_png_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
+//     assert!(
+//         std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
+//         "SVG images are not supported!"
+//     );
+//     assert!(image.depth() == ColorDepth::Rgb8);
+//     let path = path.to_str();
+//     if path.is_none() {
+//         return Err(FltkError::IoError(std::io::Error::new(
+//             std::io::ErrorKind::Other,
+//             "Could not convert path to string!",
+//         )));
+//     }
+//     let path = std::ffi::CString::new(path.unwrap())?;
+//     unsafe {
+//         match Fl_raw_image_to_png(
+//             *image.to_raw_data() as *mut u8,
+//             path.as_ptr(),
+//             image.data_w() as i32,
+//             image.data_h() as i32,
+//         ) {
+//             -1 => Err(FltkError::IoError(std::io::Error::new(
+//                 std::io::ErrorKind::Other,
+//                 "Could not write image!",
+//             ))),
+//             _ => Ok(()),
+//         }
+//     }
+// }
 
-/// Transforms raw data to jpg file
-pub fn write_to_jpg_file<I: ImageExt, P: AsRef<std::path::Path>>(
-    image: &I,
-    path: P,
-) -> Result<(), FltkError> {
-    write_to_jpg_file_(image, path.as_ref())
-}
+// /// Transforms raw data to jpg file
+// pub fn write_to_jpg_file<I: ImageExt, P: AsRef<std::path::Path>>(
+//     image: &I,
+//     path: P,
+// ) -> Result<(), FltkError> {
+//     write_to_jpg_file_(image, path.as_ref())
+// }
 
-fn write_to_jpg_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
-    assert!(
-        std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
-        "SVG images are not supported!"
-    );
-    assert!(image.depth() == ColorDepth::Rgb8);
-    let path = path.to_str();
-    if path.is_none() {
-        return Err(FltkError::IoError(std::io::Error::new(
-            std::io::ErrorKind::Other,
-            "Could not convert path to string!",
-        )));
-    }
-    let path = std::ffi::CString::new(path.unwrap())?;
-    unsafe {
-        match Fl_raw_image_to_jpg(
-            *image.to_raw_data() as *mut u8,
-            path.as_ptr(),
-            image.data_w() as i32,
-            image.data_h() as i32,
-        ) {
-            -1 => Err(FltkError::IoError(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "Could not write image!",
-            ))),
-            _ => Ok(()),
-        }
-    }
-}
+// fn write_to_jpg_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
+//     assert!(
+//         std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
+//         "SVG images are not supported!"
+//     );
+//     assert!(image.depth() == ColorDepth::Rgb8);
+//     let path = path.to_str();
+//     if path.is_none() {
+//         return Err(FltkError::IoError(std::io::Error::new(
+//             std::io::ErrorKind::Other,
+//             "Could not convert path to string!",
+//         )));
+//     }
+//     let path = std::ffi::CString::new(path.unwrap())?;
+//     unsafe {
+//         match Fl_raw_image_to_jpg(
+//             *image.to_raw_data() as *mut u8,
+//             path.as_ptr(),
+//             image.data_w() as i32,
+//             image.data_h() as i32,
+//         ) {
+//             -1 => Err(FltkError::IoError(std::io::Error::new(
+//                 std::io::ErrorKind::Other,
+//                 "Could not write image!",
+//             ))),
+//             _ => Ok(()),
+//         }
+//     }
+// }
 
-/// Transforms raw data to bmp file
-pub fn write_to_bmp_file<I: ImageExt, P: AsRef<std::path::Path>>(
-    image: &I,
-    path: P,
-) -> Result<(), FltkError> {
-    write_to_bmp_file_(image, path.as_ref())
-}
+// /// Transforms raw data to bmp file
+// pub fn write_to_bmp_file<I: ImageExt, P: AsRef<std::path::Path>>(
+//     image: &I,
+//     path: P,
+// ) -> Result<(), FltkError> {
+//     write_to_bmp_file_(image, path.as_ref())
+// }
 
-fn write_to_bmp_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
-    assert!(
-        std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
-        "SVG images are not supported!"
-    );
-    assert!(image.depth() == ColorDepth::Rgb8);
-    let path = path.to_str();
-    if path.is_none() {
-        return Err(FltkError::IoError(std::io::Error::new(
-            std::io::ErrorKind::Other,
-            "Could not convert path to string!",
-        )));
-    }
-    let path = std::ffi::CString::new(path.unwrap())?;
-    unsafe {
-        match Fl_raw_image_to_bmp(
-            *image.to_raw_data() as *mut u8,
-            path.as_ptr(),
-            image.data_w() as i32,
-            image.data_h() as i32,
-        ) {
-            -1 => Err(FltkError::IoError(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "Could not write image!",
-            ))),
-            _ => Ok(()),
-        }
-    }
-}
+// fn write_to_bmp_file_<I: ImageExt>(image: &I, path: &std::path::Path) -> Result<(), FltkError> {
+//     assert!(
+//         std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
+//         "SVG images are not supported!"
+//     );
+//     assert!(image.depth() == ColorDepth::Rgb8);
+//     let path = path.to_str();
+//     if path.is_none() {
+//         return Err(FltkError::IoError(std::io::Error::new(
+//             std::io::ErrorKind::Other,
+//             "Could not convert path to string!",
+//         )));
+//     }
+//     let path = std::ffi::CString::new(path.unwrap())?;
+//     unsafe {
+//         match Fl_raw_image_to_bmp(
+//             *image.to_raw_data() as *mut u8,
+//             path.as_ptr(),
+//             image.data_w() as i32,
+//             image.data_h() as i32,
+//         ) {
+//             -1 => Err(FltkError::IoError(std::io::Error::new(
+//                 std::io::ErrorKind::Other,
+//                 "Could not write image!",
+//             ))),
+//             _ => Ok(()),
+//         }
+//     }
+// }

@@ -1146,18 +1146,18 @@ pub unsafe trait ImageExt {
     fn ld(&self) -> u32;
     /// Greys the image
     fn inactive(&mut self);
-    /// Transforms an image to a PngImage
-    fn into_png(self) -> Result<crate::image::PngImage, FltkError>
-    where
-        Self: Sized;
-    /// Transforms an image to a JpegImage
-    fn into_jpeg(self) -> Result<crate::image::JpegImage, FltkError>
-    where
-        Self: Sized;
-    /// Transforms an image to a BmpImage
-    fn into_bmp(self) -> Result<crate::image::BmpImage, FltkError>
-    where
-        Self: Sized;
+    // /// Transforms an image to a PngImage
+    // fn into_png(self) -> Result<crate::image::PngImage, FltkError>
+    // where
+    //     Self: Sized;
+    // /// Transforms an image to a JpegImage
+    // fn into_jpeg(self) -> Result<crate::image::JpegImage, FltkError>
+    // where
+    //     Self: Sized;
+    // /// Transforms an image to a BmpImage
+    // fn into_bmp(self) -> Result<crate::image::BmpImage, FltkError>
+    // where
+    //     Self: Sized;
     /// Deletes the image
     /// # Safety
     /// An image shouldn't be deleted while it's being used by a widget
