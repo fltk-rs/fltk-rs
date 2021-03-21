@@ -37,11 +37,6 @@ lazy_static! {
     pub(crate) static ref FONTS: Mutex<Vec<String>> = Mutex::new(Vec::new());
 }
 
-extern "C" {
-    /// Default font size for fltk apps
-    static mut FL_NORMAL_SIZE: i32;
-}
-
 /// Runs the event loop
 pub fn run() -> Result<(), FltkError> {
     unsafe {
@@ -480,9 +475,7 @@ pub fn set_font(new_font: Font) {
 /// Set the app's font size
 pub fn set_font_size(sz: u8) {
     unsafe {
-        Fl_lock();
-        FL_NORMAL_SIZE = sz as i32;
-        Fl_unlock();
+        Fl_set_font_size(sz as i32)
     }
 }
 

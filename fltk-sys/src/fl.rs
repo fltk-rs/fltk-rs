@@ -123,6 +123,9 @@ extern "C" {
     pub fn Fl_set_font(arg1: libc::c_int, arg2: libc::c_int);
 }
 extern "C" {
+    pub fn Fl_set_font_size(arg1: libc::c_int);
+}
+extern "C" {
     pub fn Fl_add_handler(
         ev_handler: ::core::option::Option<unsafe extern "C" fn(ev: libc::c_int) -> libc::c_int>,
     );
