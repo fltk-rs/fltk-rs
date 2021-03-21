@@ -687,10 +687,7 @@ pub fn reset_spot() {
 /// ```no_run
 /// use fltk::*;
 /// let mut win = window::Window::default();
-/// let image = draw::capture_window(&mut win).unwrap().into_jpeg().unwrap();
-/// image
-///    .write_to_file(&std::path::PathBuf::from("test.jpg"))
-///    .unwrap();
+/// let image = draw::capture_window(&mut win).unwrap();
 /// ```
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     assert!(!win.was_deleted());

@@ -3,8 +3,8 @@
 
 ## [0.16.0] - Unreleased
 ### Changes
+- [BREAKING] Remove image conversion code, reducing deps & delegable to the image crate.
 - Add app::set_font_size() to set the global font size of the app.
-- Remove image conversion code, which complicates dependencies and can be delegated to the image crate.
 
 ## [0.15.15] - 2021-03-21
 ### Changes

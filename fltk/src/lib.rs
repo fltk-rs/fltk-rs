@@ -26,12 +26,12 @@
 //!
 //! ```toml
 //! [dependencies]
-//! fltk = "^0.15"
+//! fltk = "^0.16"
 //! ```
 //! To use the latest changes in the repo:
 //! ```toml
 //! [dependencies]
-//! fltk = { version = "^0.15", git = "https://github.com/MoAlyousef/fltk-rs" }
+//! fltk = { version = "^0.16", git = "https://github.com/MoAlyousef/fltk-rs" }
 //! ```
 //!
 //! The library is automatically built and statically linked to your binary.
