@@ -557,6 +557,18 @@ extern "C" {
     pub fn Fl_Slider_visible_r(self_: *const Fl_Slider) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Slider_slider_size(self_: *const Fl_Slider) -> f32;
+}
+extern "C" {
+    pub fn Fl_Slider_set_slider_size(self_: *mut Fl_Slider, v: f32);
+}
+extern "C" {
+    pub fn Fl_Slider_slider_box(self_: *const Fl_Slider) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Slider_set_slider_box(self_: *mut Fl_Slider, c: libc::c_int);
+}
+extern "C" {
     pub fn Fl_Slider_set_bounds(arg1: *mut Fl_Slider, a: f64, b: f64);
 }
 extern "C" {

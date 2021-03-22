@@ -14,6 +14,37 @@ pub struct Slider {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Slider implementation
+impl Slider {
+    /// Get the slider size as a fraction of the long axis
+    pub fn slider_size(&self) -> f32 {
+        unsafe {
+            Fl_Slider_slider_size(self._inner)
+        }
+    }
+
+    /// Set the slider size as a fraction of the long axis
+    pub fn set_slider_size(&mut self, v: f32) {
+        unsafe {
+            Fl_Slider_set_slider_size(self._inner, v)
+        }
+    }
+
+    /// Get the frame type of the slider box
+    pub fn slider_frame(&self) -> FrameType {
+        unsafe {
+            mem::transmute(Fl_Slider_slider_box(self._inner))
+        }
+    }
+
+    /// Set the frame type of the slider box
+    pub fn set_slider_frame(&mut self, c: FrameType) {
+        unsafe {
+            Fl_Slider_set_slider_box(self._inner, c as i32)
+        }
+    }
+}
+
 /// Creates a nice slider widget
 #[derive(WidgetBase, WidgetExt, ValuatorExt, Debug)]
 pub struct NiceSlider {
