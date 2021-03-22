@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [0.16.1] - 2021-03-22
+### Changes
+- Fix Fl_RGB_Image allocation.
+
 ## [0.16.0] - 2021-03-22
 ### Changes
 - [BREAKING] Remove image conversion code.
