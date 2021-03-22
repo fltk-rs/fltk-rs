@@ -1,13 +1,15 @@
 # Changelog
 
 
-## [0.16.0] - Unreleased
+## [0.16.0] - 2021-03-22
 ### Changes
 - [BREAKING] Remove image conversion code.
 - Refactor build script.
 - Enable the fltk-bundled feature on a system path using the CFLTK_BUNDLE_DIR env variable.
 - Enable the fltk-bundled feature on a user-defined url using CFLTK_BUNDLE_URL env var.
 - Add app::set_font_size() to set the global font size of the app.
+- Add Slider (and Scrollbar) slider_size setter and getter.
+- Add Slider (and Scrollbar) slider_frame setter and getter.
 
 ## [0.15.15] - 2021-03-21
 ### Changes
