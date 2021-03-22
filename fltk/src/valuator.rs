@@ -14,11 +14,57 @@ pub struct Slider {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Slider implementation
+impl Slider {
+    /// Get the slider size as a fraction of the long axis
+    pub fn slider_size(&self) -> f32 {
+        unsafe { Fl_Slider_slider_size(self._inner) }
+    }
+
+    /// Set the slider size as a fraction of the long axis
+    pub fn set_slider_size(&mut self, v: f32) {
+        unsafe { Fl_Slider_set_slider_size(self._inner, v) }
+    }
+
+    /// Get the frame type of the slider box
+    pub fn slider_frame(&self) -> FrameType {
+        unsafe { mem::transmute(Fl_Slider_slider_box(self._inner)) }
+    }
+
+    /// Set the frame type of the slider box
+    pub fn set_slider_frame(&mut self, c: FrameType) {
+        unsafe { Fl_Slider_set_slider_box(self._inner, c as i32) }
+    }
+}
+
 /// Creates a nice slider widget
 #[derive(WidgetBase, WidgetExt, ValuatorExt, Debug)]
 pub struct NiceSlider {
     _inner: *mut Fl_Nice_Slider,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+/// Slider implementation
+impl NiceSlider {
+    /// Get the slider size as a fraction of the long axis
+    pub fn slider_size(&self) -> f32 {
+        unsafe { Fl_Slider_slider_size(self._inner as _) }
+    }
+
+    /// Set the slider size as a fraction of the long axis
+    pub fn set_slider_size(&mut self, v: f32) {
+        unsafe { Fl_Slider_set_slider_size(self._inner as _, v) }
+    }
+
+    /// Get the frame type of the slider box
+    pub fn slider_frame(&self) -> FrameType {
+        unsafe { mem::transmute(Fl_Slider_slider_box(self._inner as _)) }
+    }
+
+    /// Set the frame type of the slider box
+    pub fn set_slider_frame(&mut self, c: FrameType) {
+        unsafe { Fl_Slider_set_slider_box(self._inner as _, c as i32) }
+    }
 }
 
 /// Defines slider types
@@ -135,6 +181,28 @@ pub struct Scrollbar {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+impl Scrollbar {
+    /// Get the slider size as a fraction of the long axis
+    pub fn slider_size(&self) -> f32 {
+        unsafe { Fl_Slider_slider_size(self._inner as _) }
+    }
+
+    /// Set the slider size as a fraction of the long axis
+    pub fn set_slider_size(&mut self, v: f32) {
+        unsafe { Fl_Slider_set_slider_size(self._inner as _, v) }
+    }
+
+    /// Get the frame type of the slider box
+    pub fn slider_frame(&self) -> FrameType {
+        unsafe { mem::transmute(Fl_Slider_slider_box(self._inner as _)) }
+    }
+
+    /// Set the frame type of the slider box
+    pub fn set_slider_frame(&mut self, c: FrameType) {
+        unsafe { Fl_Slider_set_slider_box(self._inner as _, c as i32) }
+    }
+}
+
 /// Defines scrollbar types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
@@ -206,6 +274,26 @@ impl ValueSlider {
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_set_text_color(self._inner, color.bits() as u32) }
+    }
+
+    /// Get the slider size as a fraction of the long axis
+    pub fn slider_size(&self) -> f32 {
+        unsafe { Fl_Slider_slider_size(self._inner as _) }
+    }
+
+    /// Set the slider size as a fraction of the long axis
+    pub fn set_slider_size(&mut self, v: f32) {
+        unsafe { Fl_Slider_set_slider_size(self._inner as _, v) }
+    }
+
+    /// Get the frame type of the slider box
+    pub fn slider_frame(&self) -> FrameType {
+        unsafe { mem::transmute(Fl_Slider_slider_box(self._inner as _)) }
+    }
+
+    /// Set the frame type of the slider box
+    pub fn set_slider_frame(&mut self, c: FrameType) {
+        unsafe { Fl_Slider_set_slider_box(self._inner as _, c as i32) }
     }
 }
 
@@ -358,6 +446,29 @@ pub struct HorSlider {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Slider implementation
+impl HorSlider {
+    /// Get the slider size as a fraction of the long axis
+    pub fn slider_size(&self) -> f32 {
+        unsafe { Fl_Slider_slider_size(self._inner as _) }
+    }
+
+    /// Set the slider size as a fraction of the long axis
+    pub fn set_slider_size(&mut self, v: f32) {
+        unsafe { Fl_Slider_set_slider_size(self._inner as _, v) }
+    }
+
+    /// Get the frame type of the slider box
+    pub fn slider_frame(&self) -> FrameType {
+        unsafe { mem::transmute(Fl_Slider_slider_box(self._inner as _)) }
+    }
+
+    /// Set the frame type of the slider box
+    pub fn set_slider_frame(&mut self, c: FrameType) {
+        unsafe { Fl_Slider_set_slider_box(self._inner as _, c as i32) }
+    }
+}
+
 /// Creates a horizontal fill slider
 #[derive(WidgetBase, WidgetExt, ValuatorExt, Debug)]
 pub struct HorFillSlider {
@@ -365,11 +476,57 @@ pub struct HorFillSlider {
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Slider implementation
+impl HorFillSlider {
+    /// Get the slider size as a fraction of the long axis
+    pub fn slider_size(&self) -> f32 {
+        unsafe { Fl_Slider_slider_size(self._inner as _) }
+    }
+
+    /// Set the slider size as a fraction of the long axis
+    pub fn set_slider_size(&mut self, v: f32) {
+        unsafe { Fl_Slider_set_slider_size(self._inner as _, v) }
+    }
+
+    /// Get the frame type of the slider box
+    pub fn slider_frame(&self) -> FrameType {
+        unsafe { mem::transmute(Fl_Slider_slider_box(self._inner as _)) }
+    }
+
+    /// Set the frame type of the slider box
+    pub fn set_slider_frame(&mut self, c: FrameType) {
+        unsafe { Fl_Slider_set_slider_box(self._inner as _, c as i32) }
+    }
+}
+
 /// Creates a horizontal nice slider
 #[derive(WidgetBase, WidgetExt, ValuatorExt, Debug)]
 pub struct HorNiceSlider {
     _inner: *mut Fl_Hor_Nice_Slider,
     _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+}
+
+/// Slider implementation
+impl HorNiceSlider {
+    /// Get the slider size as a fraction of the long axis
+    pub fn slider_size(&self) -> f32 {
+        unsafe { Fl_Slider_slider_size(self._inner as _) }
+    }
+
+    /// Set the slider size as a fraction of the long axis
+    pub fn set_slider_size(&mut self, v: f32) {
+        unsafe { Fl_Slider_set_slider_size(self._inner as _, v) }
+    }
+
+    /// Get the frame type of the slider box
+    pub fn slider_frame(&self) -> FrameType {
+        unsafe { mem::transmute(Fl_Slider_slider_box(self._inner as _)) }
+    }
+
+    /// Set the frame type of the slider box
+    pub fn set_slider_frame(&mut self, c: FrameType) {
+        unsafe { Fl_Slider_set_slider_box(self._inner as _, c as i32) }
+    }
 }
 
 /// Creates a horizontal value slider
@@ -418,5 +575,25 @@ impl HorValueSlider {
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_set_text_color(self._inner, color.bits() as u32) }
+    }
+
+    /// Get the slider size as a fraction of the long axis
+    pub fn slider_size(&self) -> f32 {
+        unsafe { Fl_Slider_slider_size(self._inner as _) }
+    }
+
+    /// Set the slider size as a fraction of the long axis
+    pub fn set_slider_size(&mut self, v: f32) {
+        unsafe { Fl_Slider_set_slider_size(self._inner as _, v) }
+    }
+
+    /// Get the frame type of the slider box
+    pub fn slider_frame(&self) -> FrameType {
+        unsafe { mem::transmute(Fl_Slider_slider_box(self._inner as _)) }
+    }
+
+    /// Set the frame type of the slider box
+    pub fn set_slider_frame(&mut self, c: FrameType) {
+        unsafe { Fl_Slider_set_slider_box(self._inner as _, c as i32) }
     }
 }

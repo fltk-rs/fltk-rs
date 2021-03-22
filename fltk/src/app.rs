@@ -472,6 +472,13 @@ pub fn set_font(new_font: Font) {
     }
 }
 
+/// Set the app's font size
+pub fn set_font_size(sz: u8) {
+    unsafe {
+        Fl_set_font_size(sz as i32)
+    }
+}
+
 /// Get the font's name
 pub fn get_font(font: Font) -> String {
     unsafe {
