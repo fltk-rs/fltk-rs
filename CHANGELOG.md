@@ -1,9 +1,10 @@
 # Changelog
 
 
-## [0.16.0] - 2021-03-22
+## [0.16.1] - 2021-03-22
 ### Changes
 - [BREAKING] Remove image conversion code.
+- Fix Fl_RGB_Image allocation.
 - Refactor build script.
 - Enable the fltk-bundled feature on a system path using the CFLTK_BUNDLE_DIR env variable.
 - Enable the fltk-bundled feature on a user-defined url using CFLTK_BUNDLE_URL env var.
