@@ -182,36 +182,6 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            // fn into_png(self) -> Result<PngImage, FltkError> {
-            //     assert!(!self.was_deleted());
-            //     let mut temp_dir = std::env::temp_dir();
-            //     temp_dir.push("_internal_temp_fltk_file.png");
-            //     let _ = crate::draw::write_to_png_file(&self, &temp_dir)?;
-            //     let ret = PngImage::load(&temp_dir)?.clone();
-            //     std::fs::remove_file(&temp_dir)?;
-            //     Ok(ret)
-            // }
-
-            // fn into_jpeg(self) -> Result<JpegImage, FltkError> {
-            //     assert!(!self.was_deleted());
-            //     let mut temp_dir = std::env::temp_dir();
-            //     temp_dir.push("_internal_temp_fltk_file.jpg");
-            //     let _ = crate::draw::write_to_jpg_file(&self, &temp_dir)?;
-            //     let ret = JpegImage::load(&temp_dir)?.clone();
-            //     std::fs::remove_file(&temp_dir)?;
-            //     Ok(ret)
-            // }
-
-            // fn into_bmp(self) -> Result<BmpImage, FltkError> {
-            //     assert!(!self.was_deleted());
-            //     let mut temp_dir = std::env::temp_dir();
-            //     temp_dir.push("_internal_temp_fltk_file.bmp");
-            //     let _ = crate::draw::write_to_bmp_file(&self, &temp_dir)?;
-            //     let ret = BmpImage::load(&temp_dir)?.clone();
-            //     std::fs::remove_file(&temp_dir)?;
-            //     Ok(ret)
-            // }
-
             unsafe fn delete(mut img: Self) {
                 assert!(!img._inner.is_null());
                 #delete(img._inner);

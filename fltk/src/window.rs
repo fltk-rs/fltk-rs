@@ -291,7 +291,7 @@ impl MenuWindow {
     }
 }
 
-/// Creates a overlay (buffered) window widget
+/// Creates an overlay (buffered) window widget
 #[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
 pub struct OverlayWindow {
     _inner: *mut Fl_Overlay_Window,

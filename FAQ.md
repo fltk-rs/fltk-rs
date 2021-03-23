@@ -30,6 +30,9 @@ If the linking fails because of this issue: https://github.com/rust-lang/rust/is
 fltk = { version = "^0.16", features = ["fltk-shared"] }
 ```
 
+### Why do I get link errors when I use the system-fltk feature?
+This crate targets FLTK 1.4, while currently most distros distribute an older version of FLTK (1.3.5). You can try to install FLTK (C++) by building from source.
+
 ### Build fails on Arch linux because of pango or cairo?
 Pango changed its include paths which caused build failures across many projects. There are 2 solutions:
 - Use the no-pango feature. Downsides: loss of rtl and cjk language support.
@@ -49,6 +52,9 @@ CMake caches the C++ compiler variable after it's first run, so if the above fai
 
 ### Can I accelerate the build speed?
 You can use the "use-ninja" feature flag if you have ninja installed. Or you can set the NUM_JOBS environment variable, which the cmake crate picks up and tries to parallelize the build.
+
+### Can I cache a previous build of the FLTK library?
+You can use the fltk-bundled feature and use either the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL to point to the location of your cached cfltk and fltk libraries.
 
 ## Deployment
 
