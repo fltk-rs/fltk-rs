@@ -703,7 +703,8 @@ pub unsafe trait ValuatorExt: WidgetExt {
     fn set_maximum(&mut self, a: f64);
     /// Set the range of a valuator
     fn set_range(&mut self, a: f64, b: f64);
-    /// Set change step of a valuator
+    /// Set change step of a valuator.
+    /// Rounds to multiples of a/b, or no rounding if a is zero
     fn set_step(&mut self, a: f64, b: i32);
     /// Get change step of a valuator
     fn step(&self) -> f64;
@@ -870,9 +871,12 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Returns whether the item is selected
     /// Lines start at 1
     fn selected(&self, line: u32) -> bool;
-    /// Returns the text of the selected item
+    /// Returns the text of the item at `line`
     /// Lines start at 1
     fn text(&self, line: u32) -> Option<String>;
+    /// Returns the text of the selected item
+    /// Lines start at 1
+    fn selected_text(&self) -> Option<String>;
     /// Sets the text of the selected item
     /// Lines start at 1
     fn set_text(&mut self, line: u32, txt: &str);
@@ -1146,18 +1150,6 @@ pub unsafe trait ImageExt {
     fn ld(&self) -> u32;
     /// Greys the image
     fn inactive(&mut self);
-    // /// Transforms an image to a PngImage
-    // fn into_png(self) -> Result<crate::image::PngImage, FltkError>
-    // where
-    //     Self: Sized;
-    // /// Transforms an image to a JpegImage
-    // fn into_jpeg(self) -> Result<crate::image::JpegImage, FltkError>
-    // where
-    //     Self: Sized;
-    // /// Transforms an image to a BmpImage
-    // fn into_bmp(self) -> Result<crate::image::BmpImage, FltkError>
-    // where
-    //     Self: Sized;
     /// Deletes the image
     /// # Safety
     /// An image shouldn't be deleted while it's being used by a widget

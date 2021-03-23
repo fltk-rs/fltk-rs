@@ -207,6 +207,10 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn selected_text(&self) -> Option<String> {
+                self.text(self.value())
+            }
+
             fn set_text(&mut self, line: u32, txt: &str) {
                 assert!(!self.was_deleted());
                 debug_assert!(line <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
