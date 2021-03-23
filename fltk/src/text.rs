@@ -564,8 +564,8 @@ impl Clone for TextBuffer {
 impl Drop for TextBuffer {
     fn drop(&mut self) {
         assert!(!self._inner.is_null());
-        let x = self._refcount.fetch_sub(1, Ordering::Relaxed);
-        if x == 0 {
+        self._refcount.fetch_sub(1, Ordering::Relaxed);
+        if *self._refcount.get_mut() == 0 {
             unsafe {
                 Fl_Text_Buffer_delete(self._inner);
             }

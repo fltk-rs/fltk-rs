@@ -38,8 +38,8 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
         impl Drop for #name {
             fn drop(&mut self) {
                 if !self.was_deleted() {
-                    let x = self._refcount.fetch_sub(1, Ordering::Relaxed);
-                    if x == 0 {
+                    self._refcount.fetch_sub(1, Ordering::Relaxed);
+                    if *self._refcount.get_mut() == 0 {
                         unsafe {
                             #delete(self._inner);
                             self._inner = std::ptr::null_mut();
