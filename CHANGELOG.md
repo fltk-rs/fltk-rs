@@ -4,6 +4,7 @@
 ## [0.16.2] - 2021-03-24
 ### Changes
 - Update FLTK cfltk and libc.
+- Add BrowserExt::selected_text().
 - Remove commented code.
 - Fix refcount checks.
 - Fix typo in docs.

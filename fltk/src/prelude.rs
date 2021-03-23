@@ -870,9 +870,12 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Returns whether the item is selected
     /// Lines start at 1
     fn selected(&self, line: u32) -> bool;
-    /// Returns the text of the selected item
+    /// Returns the text of the item at `line`
     /// Lines start at 1
     fn text(&self, line: u32) -> Option<String>;
+    /// Returns the text of the selected item
+    /// Lines start at 1
+    fn selected_text(&self) -> Option<String>;
     /// Sets the text of the selected item
     /// Lines start at 1
     fn set_text(&mut self, line: u32, txt: &str);
