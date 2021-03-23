@@ -703,7 +703,8 @@ pub unsafe trait ValuatorExt: WidgetExt {
     fn set_maximum(&mut self, a: f64);
     /// Set the range of a valuator
     fn set_range(&mut self, a: f64, b: f64);
-    /// Set change step of a valuator
+    /// Set change step of a valuator.
+    /// Rounds to multiples of a/b, or no rounding if a is zero
     fn set_step(&mut self, a: f64, b: i32);
     /// Get change step of a valuator
     fn step(&self) -> f64;

@@ -91,6 +91,7 @@ pub fn impl_valuator_trait(ast: &DeriveInput) -> TokenStream {
             fn set_step(&mut self, a: f64, b: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
+                    assert!(b != 0);
                     #set_step(self._inner, a, b)
                 }
             }

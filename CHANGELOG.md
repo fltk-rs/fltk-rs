@@ -9,6 +9,7 @@
 - Fix refcount checks.
 - Fix typo in docs.
 - Update FAQ.
+- Add ValuatorExt::set_step() zero checks.
 
 ## [0.16.1] - 2021-03-22
 ### Changes
