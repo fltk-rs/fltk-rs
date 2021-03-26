@@ -156,10 +156,10 @@ pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
 }
 
 fn has_ninja() -> bool {
-    let ninja = std::process::Command::new("ninja")
+    match std::process::Command::new("ninja")
         .arg("--version")
-        .output();
-    let ninja = match ninja {
+        .output()
+    {
         Ok(out) => {
             if out.stdout.len() > 0 {
                 true
@@ -168,18 +168,5 @@ fn has_ninja() -> bool {
             }
         }
         _ => false,
-    };
-    let shell = std::process::Command::new("uname").output();
-    let shell = match shell {
-        Ok(out) => {
-            let uname = std::str::from_utf8(&out.stdout).unwrap();
-            if uname.contains("MINGW") {
-                false
-            } else {
-                true
-            }
-        }
-        _ => true,
-    };
-    ninja && shell
+    }
 }
