@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [0.16.3] - Unreleased
+### Changes
+- Add app::set_selection_color() and set_inactive_color().
+- Update readme on events.
+
 ## [0.16.2] - 2021-03-24
 ### Changes
 - Update FLTK cfltk and libc.
