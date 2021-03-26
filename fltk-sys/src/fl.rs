@@ -276,6 +276,12 @@ extern "C" {
     pub fn Fl_background2(r: libc::c_uchar, g: libc::c_uchar, b: libc::c_uchar);
 }
 extern "C" {
+    pub fn Fl_selection_color(r: libc::c_uchar, g: libc::c_uchar, b: libc::c_uchar);
+}
+extern "C" {
+    pub fn Fl_inactive_color(r: libc::c_uchar, g: libc::c_uchar, b: libc::c_uchar);
+}
+extern "C" {
     pub fn Fl_get_system_colors();
 }
 extern "C" {

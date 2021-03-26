@@ -1152,6 +1152,19 @@ pub fn background2(r: u8, g: u8, b: u8) {
     unsafe { Fl_background2(r, g, b) }
 }
 
+/// Sets the app's default selection color
+pub fn set_selection_color(r: u8, g: u8, b: u8) {
+    unsafe {
+        Fl_selection_color(r, g, b)
+    }
+}
+/// Sets the app's default selection color
+pub fn set_inactive_color(r: u8, g: u8, b: u8) {
+    unsafe {
+        Fl_inactive_color(r, g, b)
+    }
+}
+
 /// Gets the system colors
 pub fn get_system_colors() {
     unsafe { Fl_get_system_colors() }

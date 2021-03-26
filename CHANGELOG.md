@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [0.16.3] - 2021-03-27
+### Changes
+- Add app::set_selection_color() and set_inactive_color().
+- Update readme on events.
+- Update deps.
+- Try to use ninja when available.
+
 ## [0.16.2] - 2021-03-24
 ### Changes
 - Update FLTK cfltk and libc.

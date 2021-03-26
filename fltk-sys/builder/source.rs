@@ -67,7 +67,7 @@ pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
             dst.define("CFLTK_BUILD_SHARED", "ON");
         }
 
-        if cfg!(feature = "use-ninja") {
+        if cfg!(feature = "use-ninja") || has_ninja() {
             dst.generator("Ninja");
         }
 
@@ -152,5 +152,21 @@ pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
+    }
+}
+
+fn has_ninja() -> bool {
+    match std::process::Command::new("ninja")
+        .arg("--version")
+        .output()
+    {
+        Ok(out) => {
+            if out.stdout.len() > 0 {
+                true
+            } else {
+                false
+            }
+        }
+        _ => false,
     }
 }

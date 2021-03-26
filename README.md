@@ -128,8 +128,6 @@ Alternatively, you can use packs to layout your widgets:
 ```
 
 ### Events
-**Event handling must be done after the drawing is done and the main window shown. And must be done in the main thread**
-
 Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
 ```rust
     /* previous hello world code */
