@@ -159,7 +159,7 @@ fn has_ninja() -> bool {
     let ninja = std::process::Command::new("ninja")
         .arg("--version")
         .output();
-    match ninja {
+    let ninja = match ninja {
         Ok(out) => {
             if out.stdout.len() > 0 {
                 true
@@ -168,5 +168,18 @@ fn has_ninja() -> bool {
             }
         }
         _ => false,
-    }
+    };
+    let shell = std::process::Command::new("uname").output();
+    let shell = match shell {
+        Ok(out) => {
+            let uname = std::str::from_utf8(&out.stdout).unwrap();
+            if uname.contains("MINGW") {
+                false
+            } else {
+                true
+            }
+        }
+        _ => true,
+    };
+    ninja && shell
 }
