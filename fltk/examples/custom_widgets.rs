@@ -217,7 +217,7 @@ impl FancyHorSlider {
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     app::set_visible_focus(false);
-    
+
     let mut wind = Window::default()
         .with_size(800, 600)
         .with_label("Custom Widgets");
@@ -251,7 +251,6 @@ fn main() {
     toggle.set_callback2(|t| {
         if t.is_set() {
             t.set_align(Align::Right | Align::Inside);
-            
         } else {
             t.set_align(Align::Left | Align::Inside);
         }

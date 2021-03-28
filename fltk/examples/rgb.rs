@@ -21,6 +21,6 @@ fn main() {
         image.scale(f.width(), f.height(), false, true);
         image.draw(f.x(), f.y(), f.width(), f.height());
     });
-    
+
     app.run().unwrap();
 }

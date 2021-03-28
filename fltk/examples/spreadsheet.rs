@@ -87,7 +87,7 @@ fn main() {
             inp_c.resize(c._x, c._y, c._w, c._h);
             inp_c.set_value(&data_c.borrow_mut()[c._row as usize][c._col as usize]);
             inp_c.show();
-            inp_c.take_focus().ok();  
+            inp_c.take_focus().ok();
             inp_c.redraw();
             true
         }

@@ -32,6 +32,7 @@ If you're having build difficulties, please check:
 - The FAQ
 - That you have a working CMake and C++11 compiler
 - That your Rust's target arch is similar to your C/C++ target arch. 
+
 Otherwise you can open a github discussion [here](https://github.com/MoAlyousef/fltk-rs/discussions) describing your difficulties.
 
 Please only open a bug report if the repo/crate used to build and currently fails. The github-actions CI already checks for the 3 major desktop platforms. Also include the outputs of:

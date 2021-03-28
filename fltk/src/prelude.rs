@@ -429,11 +429,17 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Get whether clip_children is set
     fn clip_children(&mut self) -> bool;
     /// Draw a child widget
-    fn draw_child<W: WidgetExt>(&self, w: &mut W) where Self: Sized;
+    fn draw_child<W: WidgetExt>(&self, w: &mut W)
+    where
+        Self: Sized;
     /// Update a child widget
-    fn update_child<W: WidgetExt>(&self, w: &mut W) where Self: Sized;
+    fn update_child<W: WidgetExt>(&self, w: &mut W)
+    where
+        Self: Sized;
     /// Draw the outside label
-    fn draw_outside_label<W: WidgetExt>(&self, w: &mut W) where Self: Sized;
+    fn draw_outside_label<W: WidgetExt>(&self, w: &mut W)
+    where
+        Self: Sized;
     /// Draw children
     fn draw_children(&mut self);
 }
@@ -497,9 +503,9 @@ pub unsafe trait WindowExt: GroupExt {
     where
         Self: Sized;
     /// Set the shape of the window.
-    /// Supported image formats are BMP, RGB and Pixmap. 
+    /// Supported image formats are BMP, RGB and Pixmap.
     /// The window covers non-transparent/non-black shape of the image.
-    /// The image must not be scaled(resized) beforehand. 
+    /// The image must not be scaled(resized) beforehand.
     /// The size will be adapted to the window's size
     fn set_shape<I: ImageExt>(&mut self, image: Option<I>)
     where
