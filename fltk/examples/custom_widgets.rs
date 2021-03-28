@@ -170,53 +170,40 @@ impl DerefMut for PowerButton {
 }
 
 pub struct FancyHorSlider {
-    frame1: Frame,
-    frame2: Frame,
+    s: Slider,
 }
 
 impl FancyHorSlider {
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> Self {
-        let mut frame1 = Frame::new(x, y, w, h, label).with_align(Align::Bottom);
-        frame1.set_frame(FrameType::RFlatBox);
-        frame1.set_color(Color::from_u32(0x868db1));
-        let mut frame2 = Frame::new(x - 5, y - 5, 20, 20, "@+5circle");
-        frame2.set_label_color(Color::from_u32(0x132068));
-        frame2.handle2(move |f, ev| match ev {
-            Event::Push => true,
-            Event::Drag => {
-                let event_x = app::event_coords().0;
-                if event_x >= x && event_x <= x + w {
-                    f.resize(app::event_coords().0, f.y(), 20, 20);
-                    app::redraw();
-                    true
-                } else {
-                    false
-                }
-            }
-            _ => false,
+    pub fn new(x: i32, y: i32, w: i32, h: i32) -> Self {
+        let mut s = Slider::new(x, y, w, h, "");
+        s.set_type(SliderType::Horizontal);
+        s.set_frame(FrameType::RFlatBox);
+        s.set_color(Color::from_u32(0x868db1));
+        s.draw2(|s| {
+            draw::set_draw_color(Color::Blue);
+            draw::draw_pie(s.x() - 10 + (s.w() as f64 * s.value()) as i32, s.y() - 10, 30, 30, 0., 360.);
         });
-        frame1.handle({
-            let mut frame2 = frame2.clone();
-            move |ev| match ev {
-                Event::Push => {
-                    let x = app::event_coords().0;
-                    frame2.set_pos(x - frame2.width() / 2, frame2.y());
-                    app::redraw();
-                    true
-                }
-                _ => false,
-            }
-        });
-        Self { frame1, frame2 }
+        Self { s }
     }
-    pub fn value(&self) -> f64 {
-        ((self.frame2.x() - self.frame1.x()) as f64 + 10.) / (self.frame1.width() as f64)
+}
+
+impl Deref for FancyHorSlider {
+    type Target = Slider;
+
+    fn deref(&self) -> &Self::Target {
+        &self.s
+    }
+}
+
+impl DerefMut for FancyHorSlider {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.s
     }
 }
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
-    app::set_visible_focus(false);
+    // app::set_visible_focus(false);
 
     let mut wind = Window::default()
         .with_size(800, 600)
@@ -228,7 +215,7 @@ fn main() {
         .with_size(160, 80)
         .with_label("0")
         .above_of(&*but, 20);
-    let fancy_slider = FancyHorSlider::new(100, 550, 500, 10, "FancySlider");
+    let mut fancy_slider = FancyHorSlider::new(100, 550, 500, 10);
     let mut toggle = button::ToggleButton::new(650, 400, 80, 35, "@+9circle")
         .with_align(Align::Left | Align::Inside);
     wind.end();
@@ -247,6 +234,7 @@ fn main() {
     toggle.set_label_color(Color::White);
     toggle.set_selection_color(Color::from_u32(0x00008B));
     toggle.set_color(Color::from_u32(0x585858));
+    toggle.clear_visible_focus();
 
     toggle.set_callback2(|t| {
         if t.is_set() {
@@ -254,7 +242,7 @@ fn main() {
         } else {
             t.set_align(Align::Left | Align::Inside);
         }
-        app::redraw();
+        t.parent().unwrap().redraw();
     });
 
     dial.draw2(|d| {
@@ -273,8 +261,9 @@ fn main() {
 
     power.set_callback(move || {
         println!("power button clicked");
-        println!("slider value is: {}", fancy_slider.value());
     });
+
+    fancy_slider.set_callback2(|s| s.parent().unwrap().redraw());
 
     app.run().unwrap();
 }
