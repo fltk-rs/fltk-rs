@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [0.16.4] - Unreleased
+### Changes
+- Add GroupExt::clip_children() and set_clip_children().
+- Add GroupExt::draw_child(), update_child and draw_children.
+
 ## [0.16.3] - 2021-03-27
 ### Changes
 - Add app::set_selection_color() and set_inactive_color().

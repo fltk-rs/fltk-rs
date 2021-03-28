@@ -424,6 +424,18 @@ pub unsafe trait GroupExt: WidgetExt {
         Self: Sized;
     /// Make the window resizable, should be called before ```show```
     fn make_resizable(&mut self, val: bool);
+    /// Set clip children
+    fn set_clip_children(&mut self, flag: bool);
+    /// Get whether clip_children is set
+    fn clip_children(&mut self) -> bool;
+    /// Draw a child widget
+    fn draw_child<W: WidgetExt>(&self, w: &mut W) where Self: Sized;
+    /// Update a child widget
+    fn update_child<W: WidgetExt>(&self, w: &mut W) where Self: Sized;
+    /// Draw the outside label
+    fn draw_outside_label<W: WidgetExt>(&self, w: &mut W) where Self: Sized;
+    /// Draw children
+    fn draw_children(&mut self);
 }
 
 /// Defines the methods implemented by all window widgets
