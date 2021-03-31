@@ -324,13 +324,13 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::TiledImage>(), "TiledImage is not supported!");
                 let _old_image = self.shape();
                 unsafe {
-                    let image = if let Some(mut image) = image {  
+                    let image = if let Some(mut image) = image {
                         image.increment_arc();
                         assert!(image.w() == image.data_w() as i32);
                         assert!(image.h() == image.data_h() as i32);
-                        image.as_image_ptr() 
-                    } else { 
-                        std::ptr::null() 
+                        image.as_image_ptr()
+                    } else {
+                        std::ptr::null()
                     };
                     #set_shape(self._inner, image as _)
                 }
@@ -354,7 +354,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     #x_root(self._inner)
                 }
             }
-            
+
             fn y_root(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {

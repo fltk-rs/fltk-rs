@@ -474,9 +474,7 @@ pub fn set_font(new_font: Font) {
 
 /// Set the app's font size
 pub fn set_font_size(sz: u8) {
-    unsafe {
-        Fl_set_font_size(sz as i32)
-    }
+    unsafe { Fl_set_font_size(sz as i32) }
 }
 
 /// Get the font's name
@@ -1154,15 +1152,11 @@ pub fn background2(r: u8, g: u8, b: u8) {
 
 /// Sets the app's default selection color
 pub fn set_selection_color(r: u8, g: u8, b: u8) {
-    unsafe {
-        Fl_selection_color(r, g, b)
-    }
+    unsafe { Fl_selection_color(r, g, b) }
 }
 /// Sets the app's default selection color
 pub fn set_inactive_color(r: u8, g: u8, b: u8) {
-    unsafe {
-        Fl_inactive_color(r, g, b)
-    }
+    unsafe { Fl_inactive_color(r, g, b) }
 }
 
 /// Gets the system colors

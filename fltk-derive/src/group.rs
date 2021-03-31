@@ -24,6 +24,14 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "resizable").as_str(),
         name.span(),
     );
+    let clip_children = Ident::new(
+        format!("{}_{}", name_str, "clip_children").as_str(),
+        name.span(),
+    );
+    let set_clip_children = Ident::new(
+        format!("{}_{}", name_str, "set_clip_children").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl IntoIterator for #name {
@@ -134,6 +142,55 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     #resizable(self._inner, ptr as *mut _)
                 }
             }
+
+           fn set_clip_children(&mut self, flag: bool) {
+               assert!(!self.was_deleted());
+               unsafe {
+                   #set_clip_children(self._inner, flag as i32)
+               }
+           }
+
+           fn clip_children(&mut self) -> bool {
+               assert!(!self.was_deleted());
+               unsafe {
+                   #clip_children(self._inner) != 0
+               }
+           }
+
+           fn draw_child<W: WidgetExt>(&self, w: &mut W) {
+               assert!(!self.was_deleted());
+               assert!(!w.was_deleted());
+               unsafe {
+                   crate::app::open_display();
+                   Fl_Group_draw_child(self._inner as _, w.as_widget_ptr() as _)
+               }
+           }
+
+           fn update_child<W: WidgetExt>(&self, w: &mut W) {
+               assert!(!self.was_deleted());
+               assert!(!w.was_deleted());
+               unsafe {
+                    crate::app::open_display();
+                   Fl_Group_update_child(self._inner as _, w.as_widget_ptr() as _)
+               }
+           }
+
+           fn draw_outside_label<W: WidgetExt>(&self, w: &mut W) {
+               assert!(!self.was_deleted());
+               assert!(!w.was_deleted());
+               unsafe {
+                   crate::app::open_display();
+                   Fl_Group_draw_outside_label(self._inner as _, w.as_widget_ptr() as _)
+               }
+           }
+
+           fn draw_children(&mut self) {
+               assert!(!self.was_deleted());
+               unsafe {
+                   crate::app::open_display();
+                   Fl_Group_draw_children(self._inner as _)
+               }
+           }
         }
     };
     gen.into()

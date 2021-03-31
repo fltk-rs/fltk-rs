@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [0.16.4] - 2021-04-01
+### Changes
+- Add GroupExt::clip_children() and set_clip_children().
+- Add GroupExt::draw_child(), update_child, draw_children and draw_outside_label.
+- Fix FileBrowser::set_filter doc comment.
+- Update libc and syn.
+- Update FLTK and cfltk.
+
 ## [0.16.3] - 2021-03-27
 ### Changes
 - Add app::set_selection_color() and set_inactive_color().

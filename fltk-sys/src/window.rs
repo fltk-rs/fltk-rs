@@ -559,6 +559,18 @@ extern "C" {
     pub fn Fl_Group_set_current(grp: *mut Fl_Group);
 }
 extern "C" {
+    pub fn Fl_Group_draw_child(self_: *const Fl_Group, w: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Group_update_child(self_: *const Fl_Group, w: *mut Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Group_draw_outside_label(self_: *const Fl_Group, widget: *const Fl_Widget);
+}
+extern "C" {
+    pub fn Fl_Group_draw_children(self_: *mut Fl_Group);
+}
+extern "C" {
     pub fn Fl_Group_begin(self_: *mut Fl_Group);
 }
 extern "C" {
@@ -590,6 +602,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_resizable(self_: *mut Fl_Group, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Group_set_clip_children(self_: *mut Fl_Group, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Group_clip_children(self_: *mut Fl_Group) -> libc::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -895,6 +913,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_resizable(self_: *mut Fl_Pack, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Pack_set_clip_children(self_: *mut Fl_Pack, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Pack_clip_children(self_: *mut Fl_Pack) -> libc::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1219,6 +1243,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_resizable(self_: *mut Fl_Scroll, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Scroll_set_clip_children(self_: *mut Fl_Scroll, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Scroll_clip_children(self_: *mut Fl_Scroll) -> libc::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1546,6 +1576,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tabs_resizable(self_: *mut Fl_Tabs, arg1: *mut libc::c_void);
 }
+extern "C" {
+    pub fn Fl_Tabs_set_clip_children(self_: *mut Fl_Tabs, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Tabs_clip_children(self_: *mut Fl_Tabs) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tile {
@@ -1844,6 +1880,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_resizable(self_: *mut Fl_Tile, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Tile_set_clip_children(self_: *mut Fl_Tile, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Tile_clip_children(self_: *mut Fl_Tile) -> libc::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2159,6 +2201,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_resizable(self_: *mut Fl_Wizard, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Wizard_set_clip_children(self_: *mut Fl_Wizard, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Wizard_clip_children(self_: *mut Fl_Wizard) -> libc::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2492,6 +2540,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_resizable(self_: *mut Fl_Color_Chooser, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_clip_children(self_: *mut Fl_Color_Chooser, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_clip_children(self_: *mut Fl_Color_Chooser) -> libc::c_int;
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -2835,6 +2889,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_resizable(self_: *mut Fl_Window, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Window_set_clip_children(self_: *mut Fl_Window, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Window_clip_children(self_: *mut Fl_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: libc::c_uint);
@@ -3258,6 +3318,12 @@ extern "C" {
     pub fn Fl_Single_Window_resizable(self_: *mut Fl_Single_Window, arg1: *mut libc::c_void);
 }
 extern "C" {
+    pub fn Fl_Single_Window_set_clip_children(self_: *mut Fl_Single_Window, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Single_Window_clip_children(self_: *mut Fl_Single_Window) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Single_Window_make_modal(arg1: *mut Fl_Single_Window, boolean: libc::c_uint);
 }
 extern "C" {
@@ -3660,6 +3726,12 @@ extern "C" {
     pub fn Fl_Double_Window_resizable(self_: *mut Fl_Double_Window, arg1: *mut libc::c_void);
 }
 extern "C" {
+    pub fn Fl_Double_Window_set_clip_children(self_: *mut Fl_Double_Window, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Double_Window_clip_children(self_: *mut Fl_Double_Window) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Double_Window_make_modal(arg1: *mut Fl_Double_Window, boolean: libc::c_uint);
 }
 extern "C" {
@@ -4054,6 +4126,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_resizable(self_: *mut Fl_Menu_Window, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_clip_children(self_: *mut Fl_Menu_Window, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_clip_children(self_: *mut Fl_Menu_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Window_make_modal(arg1: *mut Fl_Menu_Window, boolean: libc::c_uint);
@@ -4456,6 +4534,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Overlay_Window_resizable(self_: *mut Fl_Overlay_Window, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_set_clip_children(self_: *mut Fl_Overlay_Window, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_clip_children(self_: *mut Fl_Overlay_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_draw_overlay(
@@ -4862,6 +4946,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_resizable(self_: *mut Fl_Gl_Window, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_clip_children(self_: *mut Fl_Gl_Window, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_clip_children(self_: *mut Fl_Gl_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_make_modal(arg1: *mut Fl_Gl_Window, boolean: libc::c_uint);
@@ -5325,6 +5415,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_resizable(self_: *mut Fl_Glut_Window, arg1: *mut libc::c_void);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_clip_children(self_: *mut Fl_Glut_Window, c: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_clip_children(self_: *mut Fl_Glut_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_make_modal(arg1: *mut Fl_Glut_Window, boolean: libc::c_uint);
