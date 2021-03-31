@@ -187,12 +187,12 @@ Themes of individual widgets can be optionally modified using the provided metho
 ## Features
 
 The following are the features offered by the crate:
+- no-pango: Build without pango support on Linux/BSD, if rtl/cjk font support is not needed.
 - use-ninja:  If you have ninja build installed, it builds faster than make or VS
 - system-libpng: Uses the system libpng
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
 - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
-- no-pango: Build without pango support on Linux/BSD.
 - enable-glwindow: Support for drawing using OpenGL functions.
 
 ## Dependencies

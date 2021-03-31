@@ -161,6 +161,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                assert!(!self.was_deleted());
                assert!(!w.was_deleted());
                unsafe {
+                   crate::app::open_display();
                    Fl_Group_draw_child(self._inner as _, w.as_widget_ptr() as _)
                }
            }
@@ -169,6 +170,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                assert!(!self.was_deleted());
                assert!(!w.was_deleted());
                unsafe {
+                    crate::app::open_display();
                    Fl_Group_update_child(self._inner as _, w.as_widget_ptr() as _)
                }
            }
