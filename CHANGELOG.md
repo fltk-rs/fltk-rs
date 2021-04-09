@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [0.16.5] - Unreleased
+### Changes
+- Update FLTK.
+- Update syn.
+- Add assert of widget validity when cloning.
+
 ## [0.16.4] - 2021-04-01
 ### Changes
 - Add GroupExt::clip_children() and set_clip_children().

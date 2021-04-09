@@ -10,9 +10,10 @@ Rust bindings for the FLTK Graphical User Interface library.
 
 The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
 
-Tutorials:
-- [Video](https://github.com/MoAlyousef/fltk-rs#tutorials)
+Resources:
 - [Written](https://github.com/MoAlyousef/fltk-rs/wiki)
+- [Video](https://github.com/MoAlyousef/fltk-rs#tutorials)
+- [Discussions](https://github.com/MoAlyousef/fltk-rs/discussions)
 - Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference. 
 
 Why choose FLTK?
