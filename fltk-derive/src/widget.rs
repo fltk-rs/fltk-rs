@@ -64,7 +64,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     fltk_sys::fl::Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
                     wid._inner = std::ptr::null_mut() as *mut _;
-                    fltk_sys::fl::Fl_Widget_Tracker_delete(wid._tracker);
                     wid._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
                 }
             }
@@ -392,6 +391,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
         impl Clone for #name {
             fn clone(&self) -> #name {
+                assert!(!self.was_deleted());
                 #name { _inner: self._inner, _tracker: self._tracker }
             }
         }

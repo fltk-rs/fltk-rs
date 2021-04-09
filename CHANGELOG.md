@@ -5,6 +5,7 @@
 ### Changes
 - Update FLTK.
 - Update syn.
+- Add assert of widget validity when cloning.
 
 ## [0.16.4] - 2021-04-01
 ### Changes
