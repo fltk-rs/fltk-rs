@@ -36,6 +36,7 @@ impl MyButton {
             "0" => {
                 b.resize(0, 0, 100 * 2, 0);
                 b.set_label_color(Color::White);
+                b.set_selection_color(Color::from_u32(0x1b1b1b));
                 b.set_shortcut(Shortcut::None | '0');
             }
             "CE" => {
@@ -60,6 +61,7 @@ impl MyButton {
             }
             _ => {
                 b.set_label_color(Color::White);
+                b.set_selection_color(Color::from_u32(0x1b1b1b));
                 b.set_shortcut(Shortcut::None | title.chars().next().unwrap());
             }
         }
