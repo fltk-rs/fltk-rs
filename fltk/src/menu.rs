@@ -69,7 +69,7 @@ pub enum MenuFlag {
 
 impl MenuItem {
     /// Initializes a new window, useful for popup menus
-    pub fn new(choices: &[&str]) -> MenuItem {
+    pub fn new(choices: &[&'static str]) -> MenuItem {
         unsafe {
             let sz = choices.len();
             let mut temp: Vec<*mut raw::c_char> = vec![];

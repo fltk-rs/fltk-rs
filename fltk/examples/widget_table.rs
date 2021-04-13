@@ -19,7 +19,8 @@ fn main() {
     table.draw_cell2(move |t, ctx, row, col, x, y, w, h| {
         if let table::TableContext::Cell = ctx {
             img.scale(w, h - 20, true, false);
-            let mut button = button::Button::new(x, y, w, h, &format!("Image {}", row + col));
+            let mut button = button::Button::new(x, y, w, h, None);
+            button.set_label(&format!("Image {}", row + col));
             button.set_align(Align::Bottom | Align::Inside);
             button.set_frame(FrameType::FlatBox);
             button.set_image(Some(img.clone()));

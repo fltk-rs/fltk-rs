@@ -9,8 +9,8 @@ struct MyButton {
 }
 
 impl MyButton {
-    pub fn new(w: i32, h: i32, label: &str) -> MyButton {
-        let mut grp = group::Group::new(0, 0, w, h, label);
+    pub fn new(w: i32, h: i32) -> MyButton {
+        let mut grp = group::Group::new(0, 0, w, h, None);
         grp.set_frame(FrameType::RFlatBox);
         grp.set_color(Color::from_u32(0x01579b));
         grp.set_align(Align::Center);
@@ -53,7 +53,8 @@ fn main() {
 
     for i in 0..3 {
         let label = format!("Button {}", i + 1);
-        let mut but = MyButton::new(500, 100, &label);
+        let mut but = MyButton::new(500, 100);
+        but.set_label(&label);
         but.set_callback(move || println!("{}", label));
     }
 

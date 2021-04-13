@@ -59,7 +59,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let mut c = counter.clone();
         move || c.decrement()
     });
-    
+
     frame.handle2(move |f, ev| {
         if ev as i32 == MyEvent::CHANGED {
             f.set_label(&counter.clone().value().to_string());

@@ -26,7 +26,7 @@ struct MyButton {
 }
 
 impl MyButton {
-    pub fn new(title: &str) -> MyButton {
+    pub fn new(title: &'static str) -> MyButton {
         let mut b = MyButton {
             btn: Button::new(0, 0, 90, 0, title),
         };

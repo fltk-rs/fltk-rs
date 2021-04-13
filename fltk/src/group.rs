@@ -371,7 +371,7 @@ pub struct VGrid {
 
 impl VGrid {
     /// Creates a new vertical grid
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> VGrid {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &'static str) -> VGrid {
         let vpack = Pack::new(x, y, w, h, label);
         vpack.end();
         VGrid {
@@ -453,7 +453,7 @@ pub struct HGrid {
 
 impl HGrid {
     /// Creates a new horizontal grid
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> HGrid {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &'static str) -> HGrid {
         let mut hpack = Pack::new(x, y, w, h, label);
         hpack.set_type(PackType::Horizontal);
         hpack.end();

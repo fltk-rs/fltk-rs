@@ -324,7 +324,13 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// * `title` - The title or label of the widget
     /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
     /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
-    fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> Self;
+    fn new<T: Into<Option<&'static str>>>(
+        x: i32,
+        y: i32,
+        width: i32,
+        height: i32,
+        title: T,
+    ) -> Self;
     /// Deletes widgets and their children.
     fn delete(wid: Self)
     where

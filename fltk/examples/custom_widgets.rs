@@ -52,7 +52,7 @@ pub struct FlatButton {
 }
 
 impl FlatButton {
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> FlatButton {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &'static str) -> FlatButton {
         let mut x = FlatButton {
             wid: Widget::new(x, y, w, h, label),
         };
@@ -181,7 +181,14 @@ impl FancyHorSlider {
         s.set_color(Color::from_u32(0x868db1));
         s.draw2(|s| {
             draw::set_draw_color(Color::Blue);
-            draw::draw_pie(s.x() - 10 + (s.w() as f64 * s.value()) as i32, s.y() - 10, 30, 30, 0., 360.);
+            draw::draw_pie(
+                s.x() - 10 + (s.w() as f64 * s.value()) as i32,
+                s.y() - 10,
+                30,
+                30,
+                0.,
+                360.,
+            );
         });
         Self { s }
     }

@@ -33,17 +33,22 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         impl Default for #name {
             fn default() -> Self {
-                Self::new(0, 0, 0, 0, "")
+                Self::new(0, 0, 0, 0, None)
             }
         }
 
         unsafe impl WidgetBase for #name {
-            fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                let temp = CString::safe_new(title);
+            fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, width: i32, height: i32, title: T) -> #name {
+                let temp = if let Some(title) = title.into() {
+                    CString::safe_new(title).into_raw()
+                } else {
+                    std::ptr::null_mut()
+                };
                 unsafe {
-                    let widget_ptr = #new(x, y, width, height, temp.into_raw());
+                    let widget_ptr = #new(x, y, width, height, temp);
                     assert!(!widget_ptr.is_null());
-                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
+                    let tracker =
+                        fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
                     assert!(!tracker.is_null());
                     unsafe extern "C" fn shim(data: *mut raw::c_void) {
                         if !data.is_null() {
