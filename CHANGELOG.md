@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.0.0] - 2021-05-01
+- [BREAKING] New widgets take a `&'static str` for a label when initialized, to use dynamic labels, use set_label or with_label. This reflects the FLTK api.
+
+
 ## [0.16.5] - 2021-04-10
 ### Changes
 - Update FLTK, syn and libc.
