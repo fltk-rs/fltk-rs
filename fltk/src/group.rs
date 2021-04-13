@@ -371,7 +371,7 @@ pub struct VGrid {
 
 impl VGrid {
     /// Creates a new vertical grid
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &'static str) -> VGrid {
+    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> VGrid {
         let vpack = Pack::new(x, y, w, h, label);
         vpack.end();
         VGrid {
@@ -453,7 +453,7 @@ pub struct HGrid {
 
 impl HGrid {
     /// Creates a new horizontal grid
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &'static str) -> HGrid {
+    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> HGrid {
         let mut hpack = Pack::new(x, y, w, h, label);
         hpack.set_type(PackType::Horizontal);
         hpack.end();
@@ -506,5 +506,77 @@ impl Deref for HGrid {
 impl DerefMut for HGrid {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.hpack
+    }
+}
+
+/// A wrapper around a vertical pack, with auto_layouting using the add method
+pub struct Column {
+    p: Pack,
+}
+
+impl Column {
+    /// Default init a column filling the parent
+    pub fn default() -> Self {
+        let mut p = Pack::default().size_of_parent().center_of_parent();
+        p.set_type(PackType::Vertical);
+        p.end();
+        Column {
+            p
+        }
+    }
+    /// Add a widget to the column with automatic layouting
+    pub fn add<W: WidgetExt>(&mut self, w: &W) {
+        self.p.add(w);
+        self.p.auto_layout();
+    }
+}
+
+impl Deref for Column {
+    type Target = Pack;
+
+    fn deref(&self) -> &Self::Target {
+        &self.p
+    }
+}
+
+impl DerefMut for Column {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.p
+    }
+}
+
+/// A wrapper around a Horizontal pack, with auto_layouting using the add method
+pub struct Row {
+    p: Pack,
+}
+
+impl Row {
+    /// Default init a row filling the parent
+    pub fn default() -> Self {
+        let mut p = Pack::default().size_of_parent().center_of_parent();
+        p.set_type(PackType::Horizontal);
+        p.end();
+        Row {
+            p
+        }
+    }
+    /// Add a widget to the row with automatic layouting
+    pub fn add<W: WidgetExt>(&mut self, w: &W) {
+        self.p.add(w);
+        self.p.auto_layout();
+    }
+}
+
+impl Deref for Row {
+    type Target = Pack;
+
+    fn deref(&self) -> &Self::Target {
+        &self.p
+    }
+}
+
+impl DerefMut for Row {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.p
     }
 }

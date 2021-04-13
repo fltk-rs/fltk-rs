@@ -44,7 +44,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut but_inc = Button::default().with_size(0, 40).with_label("+");
     let mut frame = Frame::default()
         .with_size(0, 40)
-        .with_label(&counter.clone().value().to_string());
+        .with_label(&counter.value().to_string());
     let mut but_dec = Button::default().with_size(0, 40).with_label("-");
     pack.end();
     wind.end();

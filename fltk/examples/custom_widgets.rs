@@ -174,8 +174,8 @@ pub struct FancyHorSlider {
 }
 
 impl FancyHorSlider {
-    pub fn new(x: i32, y: i32, w: i32, h: i32) -> Self {
-        let mut s = Slider::new(x, y, w, h, "");
+    pub fn new(x: i32, y: i32, width: i32, height: i32) -> Self {
+        let mut s = Slider::new(x, y, width, height, "");
         s.set_type(SliderType::Horizontal);
         s.set_frame(FrameType::RFlatBox);
         s.set_color(Color::from_u32(0x868db1));
