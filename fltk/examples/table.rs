@@ -62,7 +62,7 @@ fn draw_header(txt: &str, x: i32, y: i32, w: i32, h: i32) {
 fn draw_data(txt: &str, x: i32, y: i32, w: i32, h: i32, selected: bool) {
     draw::push_clip(x, y, w, h);
     if selected {
-        draw::set_draw_color(enums::Color::from_u32(0xD3D3D3));
+        draw::set_draw_color(enums::Color::from_u32(0x00D3_D3D3));
     } else {
         draw::set_draw_color(enums::Color::White);
     }

@@ -1,4 +1,4 @@
-use fltk::{app, button::*, enums::*, group::*, output::*, prelude::*, window::*};
+use fltk::{app, button::*, enums::*, group::*, output::*, prelude::*, window::Window};
 use std::ops::{Deref, DerefMut};
 
 #[derive(Debug, Copy, Clone, PartialEq)]

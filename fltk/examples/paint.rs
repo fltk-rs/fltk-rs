@@ -1,6 +1,8 @@
 use fltk::{
     app,
-    draw::*,
+    draw::{
+        draw_line, draw_point, draw_rectf, set_draw_color, set_line_style, LineStyle, Offscreen,
+    },
     enums::{Color, Event, FrameType},
     frame::Frame,
     prelude::*,

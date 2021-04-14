@@ -1,28 +1,31 @@
 // Basically a table where the cell contents can be modified
 
-use fltk::*;
+use fltk::{
+    app, draw, enums, input, table, window, BrowserExt, ButtonExt, GroupExt, ImageExt, InputExt,
+    MenuExt, TableExt, ValuatorExt, WidgetBase, WidgetExt,
+};
 use std::cell::RefCell;
 use std::rc::Rc;
 
 // Needed to store cell information during the draw_cell call
 #[derive(Default)]
 struct CellData {
-    _row: i32, // row
-    _col: i32, // column
-    _x: i32,
-    _y: i32,
-    _w: i32,
-    _h: i32,
+    row: i32, // row
+    col: i32, // column
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
 }
 
 impl CellData {
     pub fn select(&mut self, row: i32, col: i32, x: i32, y: i32, w: i32, h: i32) {
-        self._row = row;
-        self._col = col;
-        self._x = x;
-        self._y = y;
-        self._w = w;
-        self._h = h;
+        self.row = row;
+        self.col = col;
+        self.x = x;
+        self.y = y;
+        self.w = w;
+        self.h = h;
     }
 }
 
@@ -84,8 +87,8 @@ fn main() {
     table.handle(move |_, ev| match ev {
         enums::Event::Push => {
             let c = cell_c.borrow();
-            inp_c.resize(c._x, c._y, c._w, c._h);
-            inp_c.set_value(&data_c.borrow_mut()[c._row as usize][c._col as usize]);
+            inp_c.resize(c.x, c.y, c.w, c.h);
+            inp_c.set_value(&data_c.borrow_mut()[c.row as usize][c.col as usize]);
             inp_c.show();
             inp_c.take_focus().ok();
             inp_c.redraw();
@@ -99,7 +102,7 @@ fn main() {
             if app::event_key() == enums::Key::Enter {
                 // Press enter to store the data into the cell
                 let c = cell.borrow();
-                data.borrow_mut()[c._row as usize][c._col as usize] = inp.value();
+                data.borrow_mut()[c.row as usize][c.col as usize] = inp.value();
                 inp.set_value("");
                 inp.hide();
                 table.redraw();
@@ -139,7 +142,7 @@ fn draw_header(txt: &str, x: i32, y: i32, w: i32, h: i32) {
 fn draw_data(txt: &str, x: i32, y: i32, w: i32, h: i32, selected: bool) {
     draw::push_clip(x, y, w, h);
     if selected {
-        draw::set_draw_color(enums::Color::from_u32(0xD3D3D3));
+        draw::set_draw_color(enums::Color::from_u32(0x00D3_D3D3));
     } else {
         draw::set_draw_color(enums::Color::White);
     }
