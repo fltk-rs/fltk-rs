@@ -14,6 +14,7 @@ pub struct Counter {
 }
 
 impl Counter {
+    #[must_use]
     pub fn new(val: i32) -> Self {
         Counter {
             count: Rc::from(RefCell::from(val)),
@@ -30,6 +31,7 @@ impl Counter {
         app::handle_main(MyEvent::CHANGED).unwrap();
     }
 
+    #[must_use]
     pub fn value(&self) -> i32 {
         *self.count.borrow()
     }

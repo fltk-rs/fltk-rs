@@ -1,4 +1,4 @@
-use fltk::{enums::*, *};
+use fltk::*;
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);
@@ -8,12 +8,12 @@ fn main() {
     frame::Frame::default()
         .with_size(0, 40)
         .with_label("Celcius")
-        .with_align(Align::Inside | Align::Bottom);
+        .with_align(enums::Align::Inside | enums::Align::Bottom);
     let mut inp1 = input::FloatInput::default().with_size(0, 40);
     frame::Frame::default()
         .with_size(0, 40)
         .with_label("Farenheit")
-        .with_align(Align::Inside | Align::Bottom);
+        .with_align(enums::Align::Inside | enums::Align::Bottom);
     let mut inp2 = input::FloatInput::default().with_size(0, 40);
     pack.end();
     win.end();
@@ -22,8 +22,8 @@ fn main() {
     inp1.set_value(&format!("{}", 0.0));
     inp2.set_value(&format!("{}", 32.0));
 
-    inp1.set_trigger(CallbackTrigger::Changed);
-    inp2.set_trigger(CallbackTrigger::Changed);
+    inp1.set_trigger(enums::CallbackTrigger::Changed);
+    inp2.set_trigger(enums::CallbackTrigger::Changed);
 
     let (s, r) = app::channel::<bool>();
 

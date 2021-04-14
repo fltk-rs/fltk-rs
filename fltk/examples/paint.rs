@@ -1,4 +1,11 @@
-use fltk::{app, draw::*, enums::*, frame::*, prelude::*, window::*};
+use fltk::{
+    app,
+    draw::*,
+    enums::{Color, Event, FrameType},
+    frame::Frame,
+    prelude::*,
+    window::Window,
+};
 use std::cell::RefCell;
 use std::rc::Rc;
 

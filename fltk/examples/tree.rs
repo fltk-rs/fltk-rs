@@ -1,4 +1,10 @@
-use fltk::{app, button::*, prelude::*, tree::*, window::*};
+use fltk::{
+    app,
+    button::Button,
+    prelude::*,
+    tree::{Tree, TreeSelect},
+    window::Window,
+};
 use std::env;
 
 fn main() {

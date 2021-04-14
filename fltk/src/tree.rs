@@ -138,7 +138,7 @@ impl Tree {
             }
             let x = Tree {
                 inner: ptr,
-                tracker: tracker,
+                tracker,
             };
             Some(x)
         }
