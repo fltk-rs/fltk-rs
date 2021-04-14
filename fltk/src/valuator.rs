@@ -353,6 +353,19 @@ impl ValueInput {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_text_color(self.inner, color.bits() as u32) }
     }
+
+    /// Returns whether the user is allowed to drag the value outside the range.
+    /// Default is true
+    pub fn soft(&self) -> bool {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Input_soft(self.inner) != 0 }
+    }
+
+    /// Set whether the user is allowed to drag the value outside the range
+    pub fn set_soft(&mut self, val: bool) -> bool {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Value_Input_set_soft(self.inner, val) }
+    }
 }
 
 /// Creates an value output widget
