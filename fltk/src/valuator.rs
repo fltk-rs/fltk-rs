@@ -306,7 +306,8 @@ pub struct Adjuster {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Creates an value input widget
+/// Creates an value input widget, which takes a numeric value. 
+/// If a step is set, the value can be also dragged
 #[derive(WidgetBase, WidgetExt, ValuatorExt, Debug)]
 pub struct ValueInput {
     inner: *mut Fl_Value_Input,
