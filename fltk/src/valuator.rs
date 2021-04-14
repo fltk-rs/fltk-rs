@@ -362,9 +362,9 @@ impl ValueInput {
     }
 
     /// Set whether the user is allowed to drag the value outside the range
-    pub fn set_soft(&mut self, val: bool) -> bool {
+    pub fn set_soft(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_set_soft(self.inner, val) }
+        unsafe { Fl_Value_Input_set_soft(self.inner, val as raw::c_char) }
     }
 }
 
