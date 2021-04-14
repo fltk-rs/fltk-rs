@@ -72,7 +72,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn value(&self) -> String {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let value_ptr = #value(self._inner);
+                    let value_ptr = #value(self.inner);
                     assert!(!value_ptr.is_null());
                     CStr::from_ptr(value_ptr as *mut raw::c_char).to_string_lossy().to_string()
                 }
@@ -82,14 +82,14 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(val);
                 unsafe {
-                    #set_value(self._inner, temp.as_ptr());
+                    #set_value(self.inner, temp.as_ptr());
                 }
             }
 
             fn maximum_size(&self) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #maximum_size(self._inner) as u32
+                    #maximum_size(self.inner) as u32
                 }
             }
 
@@ -97,14 +97,14 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
-                    #set_maximum_size(self._inner, val as i32)
+                    #set_maximum_size(self.inner, val as i32)
                 }
             }
 
             fn position(&self) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #position(self._inner) as u32
+                    #position(self.inner) as u32
                 }
             }
 
@@ -112,7 +112,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
-                    let x = #set_position(self._inner, val as i32);
+                    let x = #set_position(self.inner, val as i32);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -123,7 +123,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn mark(&self) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #mark(self._inner) as u32
+                    #mark(self.inner) as u32
                 }
             }
 
@@ -131,7 +131,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
-                    let x = #set_mark(self._inner, val as i32);
+                    let x = #set_mark(self.inner, val as i32);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -144,7 +144,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let val = CString::safe_new(val);
                 unsafe {
-                    let x = #replace(self._inner, beg as i32, end as i32, val.as_ptr(), 0);
+                    let x = #replace(self.inner, beg as i32, end as i32, val.as_ptr(), 0);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -156,7 +156,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let txt = CString::safe_new(txt);
                 unsafe {
-                    let x = #insert(self._inner, txt.as_ptr(), 0);
+                    let x = #insert(self.inner, txt.as_ptr(), 0);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -168,7 +168,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let txt = CString::safe_new(txt);
                 unsafe {
-                    let x = #append(self._inner,  txt.as_ptr(), 0, 0);
+                    let x = #append(self.inner,  txt.as_ptr(), 0, 0);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -179,7 +179,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn copy(&mut self) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let x = #copy(self._inner, 1);
+                    let x = #copy(self.inner, 1);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -190,7 +190,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn undo(&mut self) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let x = #undo(self._inner);
+                    let x = #undo(self.inner);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -201,7 +201,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn cut(&mut self) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let x = #copy_cuts(self._inner);
+                    let x = #copy_cuts(self.inner);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -212,35 +212,35 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
             fn text_font(&self) -> Font {
                 unsafe {
                     assert!(!self.was_deleted());
-                    mem::transmute(#text_font(self._inner))
+                    mem::transmute(#text_font(self.inner))
                 }
             }
 
             fn set_text_font(&mut self, font: Font) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_text_font(self._inner, font.bits() as i32)
+                    #set_text_font(self.inner, font.bits() as i32)
                 }
             }
 
             fn text_color(&self) -> Color {
                 unsafe {
                     assert!(!self.was_deleted());
-                    mem::transmute(#text_color(self._inner))
+                    mem::transmute(#text_color(self.inner))
                 }
             }
 
             fn set_text_color(&mut self, color: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_text_color(self._inner, color.bits() as u32)
+                    #set_text_color(self.inner, color.bits() as u32)
                 }
             }
 
             fn text_size(&self) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #text_size(self._inner) as u32
+                    #text_size(self.inner) as u32
                 }
             }
 
@@ -248,35 +248,35 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     debug_assert!(sz <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
-                    #set_text_size(self._inner, sz as i32)
+                    #set_text_size(self.inner, sz as i32)
                 }
             }
 
             fn readonly(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #readonly(self._inner)  != 0
+                    #readonly(self.inner)  != 0
                 }
             }
 
             fn set_readonly(&mut self, val: bool) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_readonly(self._inner, val as i32)
+                    #set_readonly(self.inner, val as i32)
                 }
             }
 
             fn wrap(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #wrap(self._inner)  != 0
+                    #wrap(self.inner)  != 0
                 }
             }
 
             fn set_wrap(&mut self, val: bool) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_wrap(self._inner, val as i32)
+                    #set_wrap(self.inner, val as i32)
                 }
             }
         }

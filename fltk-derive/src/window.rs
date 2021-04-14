@@ -133,23 +133,23 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
 
             fn make_modal(&mut self, val: bool) {
                 assert!(!self.was_deleted());
-                unsafe { #make_modal(self._inner, val as u32) }
+                unsafe { #make_modal(self.inner, val as u32) }
             }
 
             fn fullscreen(&mut self, val: bool) {
                 assert!(!self.was_deleted());
-                unsafe { #fullscreen(self._inner, val as u32) }
+                unsafe { #fullscreen(self.inner, val as u32) }
             }
 
             fn make_current(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #make_current(self._inner) }
+                unsafe { #make_current(self.inner) }
             }
 
             fn icon(&self) -> Option<Box<dyn ImageExt>> {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let icon_ptr = #icon(self._inner);
+                    let icon_ptr = #icon(self.inner);
                     if icon_ptr.is_null() {
                         None
                     } else {
@@ -171,51 +171,51 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 let _old_image = self.image();
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { image.increment_arc(); #set_icon(self._inner, image.as_image_ptr() as *mut _) }
+                    unsafe { image.increment_arc(); #set_icon(self.inner, image.as_image_ptr() as *mut _) }
                 } else {
-                    unsafe { #set_icon(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
+                    unsafe { #set_icon(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 
             fn set_cursor(&mut self, cursor: Cursor) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_cursor(self._inner, cursor as i32)
+                    #set_cursor(self.inner, cursor as i32)
                 }
             }
 
             fn shown(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #shown(self._inner)  != 0
+                    #shown(self.inner)  != 0
                 }
             }
 
             fn set_border(&mut self, flag: bool) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_border(self._inner, flag as i32)
+                    #set_border(self.inner, flag as i32)
                 }
             }
 
             fn border(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #border(self._inner) != 0
+                    #border(self.inner) != 0
                 }
             }
 
             fn free_position(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #free_position(self._inner)
+                    #free_position(self.inner)
                 }
             }
 
             fn raw_handle(&self) -> RawHandle {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let ptr = #raw_handle(self._inner);
+                    let ptr = #raw_handle(self.inner);
                     assert!(!ptr.is_null());
                     let winid = resolve_raw_handle(ptr);
 
@@ -248,13 +248,13 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 ))]
                 assert!(handle != 0);
 
-                Fl_Window_set_raw_handle(self._inner as *mut Fl_Window, mem::transmute(&handle));
+                Fl_Window_set_raw_handle(self.inner as *mut Fl_Window, mem::transmute(&handle));
             }
 
             fn region(&self) -> crate::draw::Region {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let ptr = #region(self._inner);
+                    let ptr = #region(self.inner);
                     assert!(!ptr.is_null());
                     ptr
                 }
@@ -263,41 +263,41 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             unsafe fn set_region(&mut self, region: crate::draw::Region) {
                 assert!(!self.was_deleted());
                 assert!(!region.is_null());
-                #set_region(self._inner, region)
+                #set_region(self.inner, region)
             }
 
             fn iconize(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #iconize(self._inner)
+                    #iconize(self.inner)
                 }
             }
 
             fn fullscreen_active(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #fullscreen_active(self._inner) != 0
+                    #fullscreen_active(self.inner) != 0
                 }
             }
 
             fn decorated_w(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #decorated_w(self._inner)
+                    #decorated_w(self.inner)
                 }
             }
 
             fn decorated_h(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #decorated_h(self._inner)
+                    #decorated_h(self.inner)
                 }
             }
 
             fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #size_range(self._inner, min_w, min_h, max_w, max_h);
+                    #size_range(self.inner, min_w, min_h, max_w, max_h);
                 }
             }
 
@@ -305,7 +305,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 assert!(!w.was_deleted());
                 unsafe {
-                    #hotspot(self._inner, w.as_widget_ptr() as _)
+                    #hotspot(self.inner, w.as_widget_ptr() as _)
                 }
             }
 
@@ -332,14 +332,14 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         std::ptr::null()
                     };
-                    #set_shape(self._inner, image as _)
+                    #set_shape(self.inner, image as _)
                 }
             }
 
             fn shape(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let image = #shape(self._inner);
+                    let image = #shape(self.inner);
                     if image.is_null() {
                         None
                     } else {
@@ -351,14 +351,14 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             fn x_root(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #x_root(self._inner)
+                    #x_root(self.inner)
                 }
             }
 
             fn y_root(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #y_root(self._inner)
+                    #y_root(self.inner)
                 }
             }
         }

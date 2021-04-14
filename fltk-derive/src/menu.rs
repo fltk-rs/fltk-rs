@@ -85,23 +85,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
         }
 
         unsafe impl MenuExt for #name {
-            fn add<F: FnMut() + 'static>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
-                assert!(!self.was_deleted());
-                let temp = CString::safe_new(name);
-                unsafe {
-                    unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-                        let f: &mut (dyn FnMut()) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
-                    }
-                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: Fl_Callback = Some(shim);
-                    #add(self._inner, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
-                }
-            }
-
-            fn add2<F: FnMut(&mut Self) + 'static>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
+            fn add<F: FnMut(&mut Self) + 'static>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(name);
                 unsafe {
@@ -114,27 +98,11 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #add(self._inner, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
+                    #add(self.inner, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
                 }
             }
 
-            fn insert<F: FnMut() + 'static>(&mut self, idx: u32, label: &str, shortcut: Shortcut, flag: MenuFlag, cb: F) {
-                assert!(!self.was_deleted());
-                let temp = CString::safe_new(label);
-                unsafe {
-                    unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-                        let f: &mut (dyn FnMut()) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
-                    }
-                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: Fl_Callback = Some(shim);
-                    #insert(self._inner, idx as i32, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
-                }
-            }
-
-            fn insert2<F: FnMut(&mut Self) + 'static>(&mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
+            fn insert<F: FnMut(&mut Self) + 'static>(&mut self, idx: u32, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(name);
                 unsafe {
@@ -147,7 +115,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #insert(self._inner, idx as i32, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
+                    #insert(self.inner, idx as i32, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
                 }
             }
 
@@ -159,7 +127,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 sender: crate::app::Sender<T>,
                 msg: T,
             ) {
-                self.add(label, shortcut, flag, move|| sender.send(msg.clone()))
+                self.add(label, shortcut, flag, move|_| sender.send(msg.clone()))
             }
 
             fn insert_emit<T: 'static + Clone + Send + Sync>(
@@ -171,7 +139,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 sender: crate::app::Sender<T>,
                 msg: T,
             ) {
-                self.insert(idx, label, shortcut, flag, move|| sender.send(msg.clone()))
+                self.insert(idx, label, shortcut, flag, move|_| sender.send(msg.clone()))
             }
 
             fn remove(&mut self, idx: u32) {
@@ -179,7 +147,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 let idx = if idx < self.size() { idx } else { self.size() - 1 };
                 debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
-                    #remove(self._inner, idx as i32)
+                    #remove(self.inner, idx as i32)
                 }
             }
 
@@ -188,13 +156,13 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 let name = CString::safe_new(name);
                 unsafe {
                     let menu_item = #get_item(
-                        self._inner,
+                        self.inner,
                         name.as_ptr());
                     if menu_item.is_null() {
                         None
                     } else {
                         Some(MenuItem {
-                            _inner: menu_item,
+                            inner: menu_item,
                         })
                     }
                 }
@@ -204,8 +172,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_item(
-                        self._inner,
-                        item._inner) != 0
+                        self.inner,
+                        item.inner) != 0
                 }
             }
 
@@ -213,28 +181,28 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let label = CString::safe_new(label);
                 unsafe {
-                    #find_index(self._inner, label.as_ptr()) as u32
+                    #find_index(self.inner, label.as_ptr()) as u32
                 }
             }
 
             fn text_font(&self) -> Font {
                 unsafe {
                     assert!(!self.was_deleted());
-                    mem::transmute(#text_font(self._inner))
+                    mem::transmute(#text_font(self.inner))
                 }
             }
 
             fn set_text_font(&mut self, c: Font) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_text_font(self._inner, c.bits() as i32)
+                    #set_text_font(self.inner, c.bits() as i32)
                 }
             }
 
             fn text_size(&self) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #text_size(self._inner) as u32
+                    #text_size(self.inner) as u32
                 }
             }
 
@@ -242,21 +210,21 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     debug_assert!(c <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
-                    #set_text_size(self._inner, c as i32)
+                    #set_text_size(self.inner, c as i32)
                 }
             }
 
             fn text_color(&self) -> Color {
                 unsafe {
                     assert!(!self.was_deleted());
-                    mem::transmute(#text_color(self._inner))
+                    mem::transmute(#text_color(self.inner))
                 }
             }
 
             fn set_text_color(&mut self, c: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_text_color(self._inner, c.bits() as u32)
+                    #set_text_color(self.inner, c.bits() as u32)
                 }
             }
 
@@ -264,14 +232,14 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     let arg2 = CString::safe_new(text);
-                    #add_choice(self._inner, arg2.as_ptr() as *mut raw::c_char)
+                    #add_choice(self.inner, arg2.as_ptr() as *mut raw::c_char)
                 }
             }
 
             fn choice(&self) -> Option<String> {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let choice_ptr = #get_choice(self._inner);
+                    let choice_ptr = #get_choice(self.inner);
                     if choice_ptr.is_null() {
                         None
                     } else {
@@ -283,21 +251,21 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn value(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #value(self._inner)
+                    #value(self.inner)
                 }
             }
 
             fn set_value(&mut self,v:i32) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_value(self._inner,v) != 0
+                    #set_value(self.inner,v) != 0
                 }
             }
 
             fn clear(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #clear(self._inner);
+                    #clear(self.inner);
                 }
             }
 
@@ -311,7 +279,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                         let _ = c.user_data();
                     }
                 }
-                #clear(self._inner);
+                #clear(self.inner);
             }
 
             fn clear_submenu(&mut self, idx: u32) -> Result<(), FltkError> {
@@ -321,7 +289,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                         idx <= std::isize::MAX as u32,
                         "u32 entries have to be < std::isize::MAX for compatibility!"
                     );
-                    match #clear_submenu(self._inner, idx as i32) {
+                    match #clear_submenu(self.inner, idx as i32) {
                         0 => Ok(()),
                         _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                     }
@@ -353,7 +321,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let _ = item.user_data();
                     i += 1;
                 }
-                match #clear_submenu(self._inner, idx as i32) {
+                match #clear_submenu(self.inner, idx as i32) {
                     0 => Ok(()),
                     _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                 }
@@ -363,7 +331,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn size(&self) -> u32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #size(self._inner) as u32
+                    #size(self.inner) as u32
                 }
             }
 
@@ -371,7 +339,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
-                    let text = #text(self._inner, idx as i32);
+                    let text = #text(self.inner, idx as i32);
                     if text.is_null() {
                         None
                     } else {
@@ -387,12 +355,12 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     return None;
                 }
                 unsafe {
-                    let ptr = #at(self._inner, idx as i32) as *mut Fl_Menu_Item;
+                    let ptr = #at(self.inner, idx as i32) as *mut Fl_Menu_Item;
                     if ptr.is_null() {
                         None
                     } else {
                         Some(MenuItem {
-                            _inner: ptr,
+                            inner: ptr,
                         })
                     }
                 }
@@ -402,7 +370,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
-                    mem::transmute(#mode(self._inner, idx as i32))
+                    mem::transmute(#mode(self.inner, idx as i32))
                 }
             }
 
@@ -410,7 +378,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
-                    #set_mode(self._inner, idx as i32, flag as i32)
+                    #set_mode(self.inner, idx as i32, flag as i32)
                 }
             }
 
@@ -421,21 +389,21 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             fn set_down_frame(&mut self, f: FrameType) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_down_box(self._inner, f as i32)
+                    #set_down_box(self.inner, f as i32)
                 }
             }
 
             fn down_frame(&self) -> FrameType {
                 assert!(!self.was_deleted());
                 unsafe {
-                    mem::transmute(#down_box(self._inner))
+                    mem::transmute(#down_box(self.inner))
                 }
             }
 
             fn global(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #global(self._inner)
+                    #global(self.inner)
                 }
             }
         }

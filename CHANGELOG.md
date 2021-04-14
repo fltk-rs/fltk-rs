@@ -3,6 +3,8 @@
 
 ## [1.0.0] - 2021-05-01
 - [BREAKING] New widgets take a `&'static str` for a label when initialized, to use dynamic labels, use set_label or with_label. This reflects the FLTK api.
+- [BREAKING] Replace TableExt::visible_cells and get_selection with their easier overloads.
+- [BREAKING] Rename InputChoice::set_value2 to set_value_index.
 - Add a Column and Row widgets which support auto_layout by default, but require that widgets be added using add().
 
 

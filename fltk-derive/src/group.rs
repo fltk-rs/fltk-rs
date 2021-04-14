@@ -50,25 +50,25 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl GroupExt for #name {
             fn begin(&self) {
                 assert!(!self.was_deleted());
-                unsafe { #begin(self._inner) }
+                unsafe { #begin(self.inner) }
             }
 
             fn end(&self) {
                 assert!(!self.was_deleted());
-                unsafe { #end(self._inner) }
+                unsafe { #end(self.inner) }
             }
 
             fn clear(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #clear(self._inner);
+                    #clear(self.inner);
                 }
             }
 
             fn children(&self) -> u32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #children(self._inner) as u32
+                    #children(self.inner) as u32
                 }
             }
 
@@ -76,7 +76,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
-                    let child_widget = #child(self._inner, idx as i32);
+                    let child_widget = #child(self.inner, idx as i32);
                     if child_widget.is_null() {
                         None
                     } else {
@@ -89,7 +89,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #find(self._inner, widget.as_widget_ptr() as *mut _) as u32
+                    #find(self.inner, widget.as_widget_ptr() as *mut _) as u32
                 }
             }
 
@@ -97,7 +97,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #add(self._inner, widget.as_widget_ptr() as *mut _)
+                    #add(self.inner, widget.as_widget_ptr() as *mut _)
                 }
             }
 
@@ -106,7 +106,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     debug_assert!(index <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #insert(self._inner, widget.as_widget_ptr() as *mut _, index as i32)
+                    #insert(self.inner, widget.as_widget_ptr() as *mut _, index as i32)
                 }
             }
 
@@ -114,7 +114,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #remove(self._inner, widget.as_widget_ptr() as *mut _)
+                    #remove(self.inner, widget.as_widget_ptr() as *mut _)
                 }
             }
 
@@ -123,7 +123,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(idx < self.children());
-                    #remove_by_index(self._inner, idx as i32);
+                    #remove_by_index(self.inner, idx as i32);
                 }
             }
 
@@ -131,29 +131,29 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #resizable(self._inner, widget.as_widget_ptr() as *mut _)
+                    #resizable(self.inner, widget.as_widget_ptr() as *mut _)
                 }
             }
 
             fn make_resizable(&mut self, val: bool) {
                 assert!(!self.was_deleted());
-                let ptr = if val { self._inner } else { std::ptr::null_mut() };
+                let ptr = if val { self.inner } else { std::ptr::null_mut() };
                 unsafe {
-                    #resizable(self._inner, ptr as *mut _)
+                    #resizable(self.inner, ptr as *mut _)
                 }
             }
 
            fn set_clip_children(&mut self, flag: bool) {
                assert!(!self.was_deleted());
                unsafe {
-                   #set_clip_children(self._inner, flag as i32)
+                   #set_clip_children(self.inner, flag as i32)
                }
            }
 
            fn clip_children(&mut self) -> bool {
                assert!(!self.was_deleted());
                unsafe {
-                   #clip_children(self._inner) != 0
+                   #clip_children(self.inner) != 0
                }
            }
 
@@ -162,7 +162,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                assert!(!w.was_deleted());
                unsafe {
                    crate::app::open_display();
-                   Fl_Group_draw_child(self._inner as _, w.as_widget_ptr() as _)
+                   Fl_Group_draw_child(self.inner as _, w.as_widget_ptr() as _)
                }
            }
 
@@ -171,7 +171,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                assert!(!w.was_deleted());
                unsafe {
                     crate::app::open_display();
-                   Fl_Group_update_child(self._inner as _, w.as_widget_ptr() as _)
+                   Fl_Group_update_child(self.inner as _, w.as_widget_ptr() as _)
                }
            }
 
@@ -180,7 +180,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                assert!(!w.was_deleted());
                unsafe {
                    crate::app::open_display();
-                   Fl_Group_draw_outside_label(self._inner as _, w.as_widget_ptr() as _)
+                   Fl_Group_draw_outside_label(self.inner as _, w.as_widget_ptr() as _)
                }
            }
 
@@ -188,7 +188,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                assert!(!self.was_deleted());
                unsafe {
                    crate::app::open_display();
-                   Fl_Group_draw_children(self._inner as _)
+                   Fl_Group_draw_children(self.inner as _)
                }
            }
         }

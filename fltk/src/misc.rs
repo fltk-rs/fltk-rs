@@ -42,57 +42,57 @@ pub enum ClockType {
 /// Creates a spinner widget
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Spinner {
-    _inner: *mut Fl_Spinner,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Spinner,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl Spinner {
     /// Returns the minimum value of the spinner widget
     pub fn minimum(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_minimum(self._inner) }
+        unsafe { Fl_Spinner_minimum(self.inner) }
     }
 
     /// Sets the minimu value of the spinner widget
     pub fn set_minimum(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_minimum(self._inner, a) }
+        unsafe { Fl_Spinner_set_minimum(self.inner, a) }
     }
 
     /// Returns the maximum value of the spinner widget
     pub fn maximum(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_maximum(self._inner) }
+        unsafe { Fl_Spinner_maximum(self.inner) }
     }
 
     /// Sets the minimum value of the spinner widget
     pub fn set_maximum(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_maximum(self._inner, a) }
+        unsafe { Fl_Spinner_set_maximum(self.inner, a) }
     }
 
     /// Sets the range of the spinner widget
     pub fn set_range(&mut self, a: f64, b: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_range(self._inner, a, b) }
+        unsafe { Fl_Spinner_set_range(self.inner, a, b) }
     }
 
     /// Sets the step of the spinner widget
     pub fn set_step(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_step(self._inner, a) }
+        unsafe { Fl_Spinner_set_step(self.inner, a) }
     }
 
     /// Gets the range of the spinner widget
     pub fn step(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_step(self._inner) }
+        unsafe { Fl_Spinner_step(self.inner) }
     }
 
     /// Returns the maximum size supported by the spinner widget
     pub fn maximum_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_maxsize(self._inner) as u32 }
+        unsafe { Fl_Spinner_maxsize(self.inner) as u32 }
     }
 
     /// Sets the maximum size supported by the spinner widget
@@ -102,25 +102,25 @@ impl Spinner {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_maxsize(self._inner, s as i32) }
+        unsafe { Fl_Spinner_set_maxsize(self.inner, s as i32) }
     }
 
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Spinner_text_font(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Spinner_text_font(self.inner)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_font(self._inner, f.bits() as i32) }
+        unsafe { Fl_Spinner_set_text_font(self.inner, f.bits() as i32) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_text_size(self._inner) as u32 }
+        unsafe { Fl_Spinner_text_size(self.inner) as u32 }
     }
 
     /// Sets the text size
@@ -130,32 +130,32 @@ impl Spinner {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_size(self._inner, s as i32) }
+        unsafe { Fl_Spinner_set_text_size(self.inner, s as i32) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Spinner_text_color(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Spinner_text_color(self.inner)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_color(self._inner, color.bits() as u32) }
+        unsafe { Fl_Spinner_set_text_color(self.inner, color.bits() as u32) }
     }
 
     /// Returns the value of the spinner
     pub fn value(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_value(self._inner) }
+        unsafe { Fl_Spinner_value(self.inner) }
     }
 
     /// Sets the value of the spinner
     pub fn set_value(&mut self, arg2: f64) {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Spinner_set_value(self._inner, arg2);
+            Fl_Spinner_set_value(self.inner, arg2);
         }
     }
 }
@@ -163,29 +163,29 @@ impl Spinner {
 /// Creates a clock widget
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Clock {
-    _inner: *mut Fl_Clock,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Clock,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a chart widget
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Chart {
-    _inner: *mut Fl_Chart,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Chart,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl Chart {
     /// Clears the chart
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_clear(self._inner) }
+        unsafe { Fl_Chart_clear(self.inner) }
     }
 
     /// Adds an entry
     pub fn add(&mut self, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_add(self._inner, val, txt.as_ptr(), col.bits() as u32) }
+        unsafe { Fl_Chart_add(self.inner, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Inserts an entry at an index
@@ -198,7 +198,7 @@ impl Chart {
         let txt = CString::safe_new(txt);
         unsafe {
             Fl_Chart_insert(
-                self._inner,
+                self.inner,
                 idx as i32,
                 val,
                 txt.as_ptr(),
@@ -217,7 +217,7 @@ impl Chart {
         let txt = CString::safe_new(txt);
         unsafe {
             Fl_Chart_replace(
-                self._inner,
+                self.inner,
                 idx as i32,
                 val,
                 txt.as_ptr(),
@@ -229,19 +229,19 @@ impl Chart {
     /// Sets the bounds of the chart
     pub fn set_bounds(&mut self, a: f64, b: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_bounds(self._inner, a, b) }
+        unsafe { Fl_Chart_set_bounds(self.inner, a, b) }
     }
 
     /// Returns the size of the chart
     pub fn size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_size(self._inner) as u32 }
+        unsafe { Fl_Chart_size(self.inner) as u32 }
     }
 
     /// Gets the maximum supported size of the chart
     pub fn maximum_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_maxsize(self._inner) as u32 }
+        unsafe { Fl_Chart_maxsize(self.inner) as u32 }
     }
 
     /// Sets the maximum supported size of the chart
@@ -251,25 +251,25 @@ impl Chart {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_maxsize(self._inner, s as i32) }
+        unsafe { Fl_Chart_set_maxsize(self.inner, s as i32) }
     }
 
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Chart_text_font(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Chart_text_font(self.inner)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_font(self._inner, f.bits() as i32) }
+        unsafe { Fl_Chart_set_text_font(self.inner, f.bits() as i32) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_text_size(self._inner) as u32 }
+        unsafe { Fl_Chart_text_size(self.inner) as u32 }
     }
 
     /// Sets the text size
@@ -279,79 +279,79 @@ impl Chart {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_size(self._inner, s as i32) }
+        unsafe { Fl_Chart_set_text_size(self.inner, s as i32) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Chart_text_color(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Chart_text_color(self.inner)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_color(self._inner, color.bits() as u32) }
+        unsafe { Fl_Chart_set_text_color(self.inner, color.bits() as u32) }
     }
 
     /// Returns wheter the chart is autosizable
     pub fn is_autosize(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Chart_is_autosize(self._inner) != 0
+            Fl_Chart_is_autosize(self.inner) != 0
         }
     }
 
     /// Sets the ability of the chart to be autosizable
     pub fn make_autosize(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_make_autosize(self._inner, val as i32) }
+        unsafe { Fl_Chart_make_autosize(self.inner, val as i32) }
     }
 }
 
 /// Creates a progress bar
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct Progress {
-    _inner: *mut Fl_Progress,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Progress,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl Progress {
     /// Returns the minimum value of the progress bar
     pub fn minimum(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_minimum(self._inner) }
+        unsafe { Fl_Progress_minimum(self.inner) }
     }
 
     /// Sets the minimu value of the progress bar
     pub fn set_minimum(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_set_minimum(self._inner, a) }
+        unsafe { Fl_Progress_set_minimum(self.inner, a) }
     }
 
     /// Returns the maximum value of the progress bar
     pub fn maximum(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_maximum(self._inner) }
+        unsafe { Fl_Progress_maximum(self.inner) }
     }
 
     /// Sets the minimum value of the progress bar
     pub fn set_maximum(&mut self, a: f64) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_set_maximum(self._inner, a) }
+        unsafe { Fl_Progress_set_maximum(self.inner, a) }
     }
 
     /// Returns the value of the progress bar
     pub fn value(&self) -> f64 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Progress_value(self._inner) }
+        unsafe { Fl_Progress_value(self.inner) }
     }
 
     /// Sets the value of the progress bar
     pub fn set_value(&mut self, arg2: f64) {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Progress_set_value(self._inner, arg2);
+            Fl_Progress_set_value(self.inner, arg2);
         }
     }
 }
@@ -538,41 +538,41 @@ impl Tooltip {
 /// Creates an InputChoice widget
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct InputChoice {
-    _inner: *mut Fl_Input_Choice,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Input_Choice,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl InputChoice {
     /// Set the down_box of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_down_box(self._inner, f as i32) }
+        unsafe { Fl_Input_Choice_set_down_box(self.inner, f as i32) }
     }
 
     /// Get the down frame type of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_Input_Choice_down_box(self._inner)) }
+        unsafe { mem::transmute(Fl_Input_Choice_down_box(self.inner)) }
     }
 
     /// Add an element to the input choice
     pub fn add(&mut self, s: &str) {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
-        unsafe { Fl_Input_Choice_add(self._inner, s.as_ptr()) }
+        unsafe { Fl_Input_Choice_add(self.inner, s.as_ptr()) }
     }
 
     /// Clear the input choice widget
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_clear(self._inner) }
+        unsafe { Fl_Input_Choice_clear(self.inner) }
     }
 
     /// Get the value of the current choice
     pub fn value(&self) -> Option<String> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Input_Choice_value(self._inner);
+            let ptr = Fl_Input_Choice_value(self.inner);
             if ptr.is_null() {
                 None
             } else {
@@ -585,24 +585,24 @@ impl InputChoice {
     pub fn set_value(&mut self, val: &str) {
         assert!(!self.was_deleted());
         let val = CString::safe_new(val);
-        unsafe { Fl_Input_Choice_set_value(self._inner, val.as_ptr()) }
+        unsafe { Fl_Input_Choice_set_value(self.inner, val.as_ptr()) }
     }
 
-    /// Set the value of the input choice to a current element
-    pub fn set_value2(&mut self, val: u32) {
+    /// Set the value of the input choice to the element at `idx`
+    pub fn set_value_index(&mut self, idx: u32) {
         debug_assert!(
-            val <= std::isize::MAX as u32,
+            idx <= std::isize::MAX as u32,
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_value2(self._inner, val as i32) }
+        unsafe { Fl_Input_Choice_set_value2(self.inner, idx as i32) }
     }
 
     /// Get the associated input widget
     pub fn input(&self) -> Box<dyn InputExt> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Input_Choice_input(self._inner);
+            let ptr = Fl_Input_Choice_input(self.inner);
             assert!(!ptr.is_null());
             Box::new(crate::input::Input::from_widget_ptr(ptr as _))
         }
@@ -612,7 +612,7 @@ impl InputChoice {
     pub fn menu_button(&self) -> Box<dyn MenuExt> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Input_Choice_menu_button(self._inner);
+            let ptr = Fl_Input_Choice_menu_button(self.inner);
             assert!(!ptr.is_null());
             Box::new(crate::menu::MenuButton::from_widget_ptr(ptr as _))
         }
@@ -621,19 +621,19 @@ impl InputChoice {
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Input_Choice_text_font(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Input_Choice_text_font(self.inner)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_text_font(self._inner, f.bits() as i32) }
+        unsafe { Fl_Input_Choice_set_text_font(self.inner, f.bits() as i32) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_text_size(self._inner) as u32 }
+        unsafe { Fl_Input_Choice_text_size(self.inner) as u32 }
     }
 
     /// Sets the text size
@@ -643,19 +643,19 @@ impl InputChoice {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_text_size(self._inner, s as i32) }
+        unsafe { Fl_Input_Choice_set_text_size(self.inner, s as i32) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Input_Choice_text_color(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Input_Choice_text_color(self.inner)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_text_color(self._inner, color.bits() as u32) }
+        unsafe { Fl_Input_Choice_set_text_color(self.inner, color.bits() as u32) }
     }
 }
 
@@ -667,8 +667,8 @@ impl InputChoice {
 /// ```
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct HelpView {
-    _inner: *mut Fl_Help_View,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Help_View,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl HelpView {
@@ -676,7 +676,7 @@ impl HelpView {
     pub fn directory(&self) -> std::path::PathBuf {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Help_View_directory(self._inner);
+            let x = Fl_Help_View_directory(self.inner);
             if !x.is_null() {
                 std::path::PathBuf::from(
                     CStr::from_ptr(x as *mut raw::c_char)
@@ -693,7 +693,7 @@ impl HelpView {
     pub fn filename(&self) -> std::path::PathBuf {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Help_View_directory(self._inner);
+            let x = Fl_Help_View_directory(self.inner);
             if !x.is_null() {
                 std::path::PathBuf::from(
                     CStr::from_ptr(x as *mut raw::c_char)
@@ -715,7 +715,7 @@ impl HelpView {
         );
         unsafe {
             let s = CString::safe_new(s);
-            let ret = Fl_Help_View_find(self._inner, s.as_ptr(), start_from as i32);
+            let ret = Fl_Help_View_find(self.inner, s.as_ptr(), start_from as i32);
             match ret {
                 -1 => None,
                 _ => Some(ret as usize),
@@ -727,7 +727,7 @@ impl HelpView {
     pub fn value(&self) -> Option<String> {
         assert!(!self.was_deleted());
         unsafe {
-            let val = Fl_Help_View_value(self._inner);
+            let val = Fl_Help_View_value(self.inner);
             if val.is_null() {
                 None
             } else {
@@ -740,68 +740,68 @@ impl HelpView {
     pub fn set_value(&mut self, val: &str) {
         assert!(!self.was_deleted());
         let val = CString::safe_new(val);
-        unsafe { Fl_Help_View_set_value(self._inner, val.as_ptr()) }
+        unsafe { Fl_Help_View_set_value(self.inner, val.as_ptr()) }
     }
 
     /// Clear selection
     pub fn clear_selection(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_clear_selection(self._inner) }
+        unsafe { Fl_Help_View_clear_selection(self.inner) }
     }
 
     /// Select all
     pub fn select_all(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_select_all(self._inner) }
+        unsafe { Fl_Help_View_select_all(self.inner) }
     }
 
     /// Set the top line string
-    pub fn set_top_line(&mut self, n: &str) {
+    pub fn set_top_line_string(&mut self, n: &str) {
         assert!(!self.was_deleted());
         let n = CString::safe_new(n);
-        unsafe { Fl_Help_View_set_topline(self._inner, n.as_ptr()) }
+        unsafe { Fl_Help_View_set_topline(self.inner, n.as_ptr()) }
     }
 
     /// Set the top line position
-    pub fn set_top_line2(&mut self, arg1: i32) {
+    pub fn set_top_line(&mut self, line: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_topline2(self._inner, arg1) }
+        unsafe { Fl_Help_View_set_topline2(self.inner, line) }
     }
 
     /// Get the top line position
     pub fn top_line(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_topline(self._inner) }
+        unsafe { Fl_Help_View_topline(self.inner) }
     }
 
     /// Set the left line position
     pub fn set_left_line(&mut self, arg1: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_leftline(self._inner, arg1) }
+        unsafe { Fl_Help_View_set_leftline(self.inner, arg1) }
     }
 
     /// Gets the current left line in pixels
     pub fn left_line(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_leftline(self._inner) }
+        unsafe { Fl_Help_View_leftline(self.inner) }
     }
 
     /// Gets the text font
     pub fn text_font(&self) -> Font {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Help_View_text_font(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Help_View_text_font(self.inner)) }
     }
 
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_text_font(self._inner, f.bits() as i32) }
+        unsafe { Fl_Help_View_set_text_font(self.inner, f.bits() as i32) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_text_size(self._inner) as u32 }
+        unsafe { Fl_Help_View_text_size(self.inner) as u32 }
     }
 
     /// Sets the text size
@@ -811,25 +811,25 @@ impl HelpView {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_text_size(self._inner, s as i32) }
+        unsafe { Fl_Help_View_set_text_size(self.inner, s as i32) }
     }
 
     /// Gets the text's color
     pub fn text_color(&self) -> Color {
         assert!(!self.was_deleted());
-        unsafe { std::mem::transmute(Fl_Help_View_text_color(self._inner)) }
+        unsafe { std::mem::transmute(Fl_Help_View_text_color(self.inner)) }
     }
 
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_text_color(self._inner, color.bits() as u32) }
+        unsafe { Fl_Help_View_set_text_color(self.inner, color.bits() as u32) }
     }
 
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> u32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_scrollbar_size(self._inner) as u32 }
+        unsafe { Fl_Help_View_scrollbar_size(self.inner) as u32 }
     }
 
     /// Sets the scrollbar size
@@ -839,7 +839,7 @@ impl HelpView {
             "u32 entries have to be < std::isize::MAX for compatibility!"
         );
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_scrollbar_size(self._inner, new_size as i32) }
+        unsafe { Fl_Help_View_set_scrollbar_size(self.inner, new_size as i32) }
     }
 
     /// Load a view from a file or URI
@@ -847,7 +847,7 @@ impl HelpView {
         assert!(!self.was_deleted());
         let f = CString::safe_new(f);
         unsafe {
-            match Fl_Help_View_load(self._inner, f.as_ptr()) {
+            match Fl_Help_View_load(self.inner, f.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }

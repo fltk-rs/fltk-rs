@@ -30,63 +30,63 @@ pub fn impl_button_trait(ast: &DeriveInput) -> TokenStream {
             fn shortcut(&self) -> Shortcut {
                 unsafe {
                     assert!(!self.was_deleted());
-                    mem::transmute(#shortcut(self._inner))
+                    mem::transmute(#shortcut(self.inner))
                 }
             }
 
             fn set_shortcut(&mut self, shortcut: Shortcut) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_shortcut(self._inner, shortcut.bits() as i32)
+                    #set_shortcut(self.inner, shortcut.bits() as i32)
                 }
             }
 
             fn clear(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #clear(self._inner);
+                    #clear(self.inner);
                 }
             }
 
             fn is_set(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #value(self._inner)  != 0
+                    #value(self.inner)  != 0
                 }
             }
 
             fn set(&mut self, flag: bool) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_value(self._inner, flag as i32)
+                    #set_value(self.inner, flag as i32)
                 }
             }
 
             fn value(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #value(self._inner)  != 0
+                    #value(self.inner)  != 0
                 }
             }
 
             fn set_value(&mut self, flag: bool) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_value(self._inner, flag as i32)
+                    #set_value(self.inner, flag as i32)
                 }
             }
 
             fn set_down_frame(&mut self, f: FrameType) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_down_box(self._inner, f as i32)
+                    #set_down_box(self.inner, f as i32)
                 }
             }
 
             fn down_frame(&self) -> FrameType {
                 assert!(!self.was_deleted());
                 unsafe {
-                    mem::transmute(#down_box(self._inner))
+                    mem::transmute(#down_box(self.inner))
                 }
             }
         }

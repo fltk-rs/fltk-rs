@@ -195,12 +195,8 @@ pub unsafe trait WidgetExt {
     where
         Self: Sized;
     /// Sets the callback when the widget is triggered (clicks for example)
-    fn set_callback<F: FnMut() + 'static>(&mut self, cb: F)
-    where
-        Self: Sized;
-    /// Sets the callback when the widget is triggered (clicks for example)
     /// takes the widget as a closure argument
-    fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F)
+    fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F)
     where
         Self: Sized;
     /// Emits a message on callback using a sender
@@ -345,18 +341,12 @@ pub unsafe trait WidgetBase: WidgetExt {
     unsafe fn from_widget<W: WidgetExt>(w: W) -> Self;
     /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
     /// Handled or ignored events shoult return true, unhandled events should return false
-    fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F);
-    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int)
-    /// Handled or ignored events shoult return true, unhandled events should return false
     /// takes the widget as a closure argument
-    fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
-    /// Set a custom draw method
-    /// MacOS requires that WidgetBase::draw actually calls drawing functions
-    fn draw<F: FnMut() + 'static>(&mut self, cb: F);
+    fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
     /// Set a custom draw method
     /// takes the widget as a closure argument
     /// MacOS requires that WidgetBase::draw actually calls drawing functions
-    fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
+    fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
     /// INTERNAL: Retrieve the draw data
     /// # Safety
     /// Can return multiple mutable references to the draw_data
@@ -599,19 +589,8 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Add a menu item along with its callback
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
-    fn add<F: FnMut() + 'static>(
-        &mut self,
-        label: &str,
-        shortcut: Shortcut,
-        flag: crate::menu::MenuFlag,
-        cb: F,
-    ) where
-        Self: Sized;
-    /// Add a menu item along with its callback
-    /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
-    /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     /// Takes the menu item as a closure argument
-    fn add2<F: FnMut(&mut Self) + 'static>(
+    fn add<F: FnMut(&mut Self) + 'static>(
         &mut self,
         name: &str,
         shortcut: Shortcut,
@@ -622,20 +601,8 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Inserts a menu item at an index along with its callback
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
-    fn insert<F: FnMut() + 'static>(
-        &mut self,
-        idx: u32,
-        label: &str,
-        shortcut: Shortcut,
-        flag: crate::menu::MenuFlag,
-        cb: F,
-    ) where
-        Self: Sized;
-    /// Inserts a menu item at an index along with its callback
-    /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
-    /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     /// Takes the menu item as a closure argument
-    fn insert2<F: FnMut(&mut Self) + 'static>(
+    fn insert<F: FnMut(&mut Self) + 'static>(
         &mut self,
         idx: u32,
         name: &str,
@@ -990,16 +957,9 @@ pub unsafe trait TableExt: GroupExt {
     fn set_cols(&mut self, val: u32);
     /// Gets the number of columns
     fn cols(&self) -> u32;
-    /// Returns the range of row and column numbers for all visible and partially visible cells in the table.
-    fn visible_cells(
-        &self,
-        row_top: &mut i32,
-        col_left: &mut i32,
-        row_bot: &mut i32,
-        col_right: &mut i32,
-    );
-    /// Returns the range of row and column numbers for all visible and partially visible cells in the table.
-    fn visible_cells2(&self) -> (i32, i32, i32, i32);
+    /// The range of row and column numbers for all visible and partially visible cells in the table.
+    /// Returns (row_top, col_left, row_bot, col_right)
+    fn visible_cells(&self) -> (i32, i32, i32, i32);
     /// Returns whether the resize is interactive
     fn is_interactive_resize(&self) -> bool;
     /// Returns whether a row is resizable
@@ -1068,16 +1028,9 @@ pub unsafe trait TableExt: GroupExt {
     fn top_row(&self) -> i32;
     /// Returns whether a cell is selected
     fn is_selected(&self, r: i32, c: i32) -> bool;
-    /// Gets the selection
-    fn get_selection(
-        &self,
-        row_top: &mut i32,
-        col_left: &mut i32,
-        row_bot: &mut i32,
-        col_right: &mut i32,
-    );
-    /// Gets the selection
-    fn get_selection2(&self) -> (i32, i32, i32, i32);
+    /// Gets the selection.
+    /// Returns (row_top, col_left, row_bot, col_right)
+    fn get_selection(&self) -> (i32, i32, i32, i32);
     /// Sets the selection
     fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
     /// Unset selection
@@ -1102,15 +1055,9 @@ pub unsafe trait TableExt: GroupExt {
     /// Returns the tab key cell navigation
     fn tab_cell_nav(&self) -> u32;
     /// Override draw_cell
-    /// callback args: TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
-    fn draw_cell<F: FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(
-        &mut self,
-        cb: F,
-    );
-    /// Override draw_cell
     /// callback args: &mut self, TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32
     /// takes the widget as a closure argument
-    fn draw_cell2<
+    fn draw_cell<
         F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static,
     >(
         &mut self,

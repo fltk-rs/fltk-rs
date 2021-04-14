@@ -1,5 +1,5 @@
 use crate::image::RgbImage;
-pub use crate::prelude::*;
+use crate::prelude::*;
 use fltk_sys::draw::*;
 use std::ffi::{CStr, CString};
 use std::mem;
@@ -43,7 +43,7 @@ pub type Region = *mut raw::c_void;
 /// Opaque type around Fl_Offscreen
 #[derive(Debug)]
 pub struct Offscreen {
-    _inner: *mut raw::c_void,
+    inner: *mut raw::c_void,
 }
 
 unsafe impl Sync for Offscreen {}
@@ -58,7 +58,7 @@ impl Offscreen {
             if x.is_null() {
                 None
             } else {
-                Some(Offscreen { _inner: x })
+                Some(Offscreen { inner: x })
             }
         }
     }
@@ -68,54 +68,54 @@ impl Offscreen {
     /// Leaves the offscreen in an uninitialized state
     pub unsafe fn uninit() -> Offscreen {
         Offscreen {
-            _inner: std::ptr::null_mut(),
+            inner: std::ptr::null_mut(),
         }
     }
 
     /// Begins drawing in the offscreen
     pub fn begin(&self) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_begin_offscreen(self._inner) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_begin_offscreen(self.inner) }
     }
 
     /// Ends drawing in the offscreen
     pub fn end(&self) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe { Fl_end_offscreen() }
     }
 
     /// Copies the offscreen
     pub fn copy(&self, x: i32, y: i32, w: i32, h: i32, srcx: i32, srcy: i32) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_copy_offscreen(x, y, w, h, self._inner, srcx, srcy) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_copy_offscreen(x, y, w, h, self.inner, srcx, srcy) }
     }
 
     /// Rescales the offscreen
     pub fn rescale(&mut self) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_rescale_offscreen(self._inner) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_rescale_offscreen(self.inner) }
     }
 
     /// Checks the validity of the offscreen
     pub fn is_valid(&self) -> bool {
-        assert!(!self._inner.is_null());
-        !self._inner.is_null()
+        assert!(!self.inner.is_null());
+        !self.inner.is_null()
     }
 
     /// Performs a shallow copy of the offscreen
     /// # Safety
     /// This can lead to multiple mutable references to the same offscreen
     pub unsafe fn shallow_copy(&self) -> Offscreen {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         Offscreen {
-            _inner: self._inner,
+            inner: self.inner,
         }
     }
 }
 
 impl Drop for Offscreen {
     fn drop(&mut self) {
-        unsafe { Fl_delete_offscreen(self._inner) }
+        unsafe { Fl_delete_offscreen(self.inner) }
     }
 }
 
@@ -714,7 +714,7 @@ pub fn draw_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), 
     let width = wid.width() as u32;
     let height = wid.height() as u32;
     let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
-    wid.draw2(move |s| {
+    wid.draw(move |s| {
         let x = s.x();
         let y = s.y();
         let w = s.width();
@@ -733,7 +733,7 @@ pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
     let len = fb.len();
     let width = wid.width() as u32;
     let height = wid.height() as u32;
-    wid.draw2(move |s| {
+    wid.draw(move |s| {
         let x = s.x();
         let y = s.y();
         let w = s.width();
@@ -755,7 +755,7 @@ pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), F
     let width = wid.width() as u32;
     let height = wid.height() as u32;
     let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
-    wid.draw2(move |s| {
+    wid.draw(move |s| {
         let x = s.x();
         let y = s.y();
         let w = s.width();
@@ -774,7 +774,7 @@ pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
     let len = fb.len();
     let width = wid.width() as u32;
     let height = wid.height() as u32;
-    wid.draw2(move |s| {
+    wid.draw(move |s| {
         let x = s.x();
         let y = s.y();
         let w = s.width();
