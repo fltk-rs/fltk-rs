@@ -7,7 +7,7 @@
 // or surround widget-mutating functions/methods with an app::lock and app::unlock.
 // But that should rarely be required.
 
-use fltk::{app, button::*, frame::*, window::*};
+use fltk::{app, button::*, frame::*, prelude::*, window::*};
 
 #[test]
 fn raw_threads() {

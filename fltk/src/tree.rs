@@ -1,5 +1,7 @@
+use crate::enums::*;
 use crate::image::Image;
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use crate::widget::Widget;
 use fltk_sys::tree::*;
 use std::{
@@ -1194,10 +1196,7 @@ impl TreeItem {
             let tracker =
                 fltk_sys::fl::Fl_Widget_Tracker_new(inner as *mut fltk_sys::fl::Fl_Widget);
             assert!(!tracker.is_null());
-            let tree = Tree {
-                inner,
-                tracker,
-            };
+            let tree = Tree { inner, tracker };
             let parent = Fl_Tree_Item_parent(ptr);
             let is_root = Fl_Tree_Item_is_root(ptr) != 0;
             let x = TreeItem {

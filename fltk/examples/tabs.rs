@@ -1,4 +1,4 @@
-use fltk::{app, button::*, group::*, input::*, menu::*, output::*, window::*};
+use fltk::{app, button::*, group::*, input::*, menu::*, output::*, prelude::*, window::*};
 
 fn draw_gallery() {
     let tab = Tabs::new(10, 10, 500 - 20, 450 - 20, "");

@@ -1,4 +1,4 @@
-use fltk::{app, button::*, tree::*, window::*};
+use fltk::{app, button::*, prelude::*, tree::*, window::*};
 use std::env;
 
 fn main() {

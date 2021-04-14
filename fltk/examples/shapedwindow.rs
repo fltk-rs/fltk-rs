@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{enums::*, *};
 
 pub struct ShapedWindow {
     frm: frame::Frame,

@@ -1,5 +1,7 @@
+use crate::enums::*;
 use crate::image::Image;
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use crate::widget::Widget;
 use crate::window::Window;
 use fltk_sys::misc::*;
@@ -196,15 +198,7 @@ impl Chart {
         );
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe {
-            Fl_Chart_insert(
-                self.inner,
-                idx as i32,
-                val,
-                txt.as_ptr(),
-                col.bits() as u32,
-            )
-        }
+        unsafe { Fl_Chart_insert(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Replaces an entry at an index
@@ -215,15 +209,7 @@ impl Chart {
         );
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe {
-            Fl_Chart_replace(
-                self.inner,
-                idx as i32,
-                val,
-                txt.as_ptr(),
-                col.bits() as u32,
-            )
-        }
+        unsafe { Fl_Chart_replace(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Sets the bounds of the chart

@@ -1,6 +1,6 @@
 // Example showing a browser widget with right click popup menu
 
-use fltk::*;
+use fltk::{enums::*, *};
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);

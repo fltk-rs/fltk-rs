@@ -1,5 +1,4 @@
-pub use crate::enums::*;
-pub(crate) use crate::utils::*;
+use crate::enums::*;
 use std::convert::From;
 use std::{fmt, io};
 
@@ -80,6 +79,14 @@ impl From<std::env::VarError> for FltkError {
     fn from(err: std::env::VarError) -> FltkError {
         FltkError::EnvVarError(err)
     }
+}
+
+/// A trait defined for all enums passable to the WidgetExt::set_type() method
+pub trait WidgetType {
+    /// Get the integral representation of the widget type
+    fn to_int(self) -> i32;
+    /// Get the widget type from its integral representation
+    fn from_i32(val: i32) -> Self;
 }
 
 /// Defines the methods implemented by all widgets

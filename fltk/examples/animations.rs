@@ -1,4 +1,4 @@
-use fltk::{app, frame::*, image::*, window::*};
+use fltk::{app, enums::*, frame::*, image::*, prelude::*, window::*};
 
 const PXM: &[&str] = &[
     "50 34 4 1",

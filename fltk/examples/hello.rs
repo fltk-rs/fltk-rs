@@ -1,4 +1,4 @@
-use fltk::{app, frame::*, image::*, window::*};
+use fltk::{app, enums::*, frame::*, image::*, prelude::*, window::*};
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);

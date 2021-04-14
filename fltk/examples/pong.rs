@@ -26,8 +26,8 @@ fn main() {
         pos: (0, 0),
         dir: (Direction::Positive, Direction::Positive),
     };
-    ball.wid.set_color(Color::White);
-    wind.set_color(Color::Black);
+    ball.wid.set_color(enums::Color::White);
+    wind.set_color(enums::Color::Black);
     wind.end();
     wind.show();
 
@@ -36,7 +36,7 @@ fn main() {
 
     // This is called whenever the window is drawn and redrawn (in the event loop)
     wind.draw(move |_| {
-        draw::set_draw_color(Color::White);
+        draw::set_draw_color(enums::Color::White);
         draw::draw_rectf(*paddle_c.borrow(), 540, 160, 20);
     });
 

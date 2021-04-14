@@ -1,4 +1,4 @@
-use fltk::{app, button::*, draw::*, frame::*, window::*};
+use fltk::{app, draw::*, enums::*, frame::*, prelude::*, window::*};
 use std::cell::RefCell;
 use std::rc::Rc;
 

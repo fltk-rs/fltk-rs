@@ -1,5 +1,7 @@
+use crate::enums::*;
 use crate::image::Image;
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use crate::widget::*;
 use fltk_sys::group::*;
 use std::{
@@ -520,9 +522,7 @@ impl Column {
         let mut p = Pack::default().size_of_parent().center_of_parent();
         p.set_type(PackType::Vertical);
         p.end();
-        Column {
-            p
-        }
+        Column { p }
     }
     /// Add a widget to the column with automatic layouting
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
@@ -556,9 +556,7 @@ impl Row {
         let mut p = Pack::default().size_of_parent().center_of_parent();
         p.set_type(PackType::Horizontal);
         p.end();
-        Row {
-            p
-        }
+        Row { p }
     }
     /// Add a widget to the row with automatic layouting
     pub fn add<W: WidgetExt>(&mut self, w: &W) {

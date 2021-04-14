@@ -1,5 +1,6 @@
-pub use crate::enums::*;
+use crate::enums::*;
 use crate::prelude::*;
+use crate::utils::*;
 use crate::window::*;
 use fltk_sys::fl::*;
 use std::collections::hash_map::DefaultHasher;
@@ -183,7 +184,7 @@ impl App {
     /// let app = app::App::default();
     /// let font = app.load_font("font.ttf").unwrap();
     /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
-    /// frame.set_label_font(Font::by_name(&font));
+    /// frame.set_label_font(enums::Font::by_name(&font));
     /// ```
     pub fn load_font<P: AsRef<path::Path>>(self, path: P) -> Result<String, FltkError> {
         self.load_font_(path.as_ref())

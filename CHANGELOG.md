@@ -2,9 +2,12 @@
 
 
 ## [1.0.0] - 2021-05-01
+- [BREAKING] Importing fltk::* no longer auto imports the enums module.
+- [BREAKING] Importing widgets no longer auto imports the prelude nor enums modules.
 - [BREAKING] New widgets take a `&'static str` for a label when initialized, to use dynamic labels, use set_label or with_label. This reflects the FLTK api.
 - [BREAKING] Replace TableExt::visible_cells and get_selection with their easier overloads.
 - [BREAKING] Rename InputChoice::set_value2 to set_value_index.
+- [BREAKING] Replace set_callback, handle, draw, draw_cell with their overloads.
 - Add a Column and Row widgets which support auto_layout by default, but require that widgets be added using add().
 
 

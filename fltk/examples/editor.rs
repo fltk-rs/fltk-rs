@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{app, dialog, enums::*, menu, prelude::*, printer, text, window};
 use std::{
     error,
     ops::{Deref, DerefMut},

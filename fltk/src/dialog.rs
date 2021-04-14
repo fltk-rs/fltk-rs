@@ -1,4 +1,6 @@
-pub use crate::prelude::*;
+use crate::enums::*;
+use crate::prelude::*;
+use crate::utils::*;
 use fltk_sys::dialog::*;
 use std::{
     ffi::{CStr, CString},
@@ -68,9 +70,7 @@ impl FileDialog {
         unsafe {
             let file_dialog = Fl_Native_File_Chooser_new(mem::transmute(op));
             assert!(!file_dialog.is_null());
-            FileDialog {
-                inner: file_dialog,
-            }
+            FileDialog { inner: file_dialog }
         }
     }
 
@@ -360,9 +360,7 @@ impl HelpDialog {
         unsafe {
             let help_dialog = Fl_Help_Dialog_new();
             assert!(!help_dialog.is_null());
-            HelpDialog {
-                inner: help_dialog,
-            }
+            HelpDialog { inner: help_dialog }
         }
     }
 

@@ -1,6 +1,8 @@
 use crate::app::*;
+use crate::enums::*;
 use crate::image::Image;
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use crate::widget::*;
 use fltk_sys::window::*;
 use raw_window_handle::*;

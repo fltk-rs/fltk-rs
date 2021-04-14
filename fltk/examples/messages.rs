@@ -1,4 +1,4 @@
-use fltk::{app, frame::*, window::*};
+use fltk::{app, frame::*, prelude::*, window::*};
 
 #[derive(Debug, Copy, Clone)]
 pub enum Message {

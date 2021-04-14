@@ -1,5 +1,7 @@
+use crate::enums::*;
 use crate::image::RgbImage;
 use crate::prelude::*;
+use crate::utils::*;
 use fltk_sys::draw::*;
 use std::ffi::{CStr, CString};
 use std::mem;
@@ -107,9 +109,7 @@ impl Offscreen {
     /// This can lead to multiple mutable references to the same offscreen
     pub unsafe fn shallow_copy(&self) -> Offscreen {
         assert!(!self.inner.is_null());
-        Offscreen {
-            inner: self.inner,
-        }
+        Offscreen { inner: self.inner }
     }
 }
 

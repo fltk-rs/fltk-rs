@@ -21,8 +21,8 @@ fn main() {
             img.scale(w, h - 20, true, false);
             let mut button = button::Button::new(x, y, w, h, None);
             button.set_label(&format!("Image {}", row + col));
-            button.set_align(Align::Bottom | Align::Inside);
-            button.set_frame(FrameType::FlatBox);
+            button.set_align(enums::Align::Bottom | enums::Align::Inside);
+            button.set_frame(enums::FrameType::FlatBox);
             button.set_image(Some(img.clone()));
             button.set_callback(|b| println!("Selected: {}", b.label()));
             t.add(&button);

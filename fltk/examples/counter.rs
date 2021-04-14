@@ -1,4 +1,4 @@
-use fltk::{app, button::*, frame::*, window::*};
+use fltk::{app, button::*, enums::*, frame::*, prelude::*, window::*};
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);

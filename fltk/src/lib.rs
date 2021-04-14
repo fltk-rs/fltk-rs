@@ -41,7 +41,7 @@
 //! An example hello world application:
 //!
 //! ```no_run
-//! use fltk::{app, window::*};
+//! use fltk::{app, prelude::*, window::Window};
 //! let app = app::App::default();
 //! let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //! wind.end();
@@ -51,7 +51,7 @@
 //!
 //! Another example showing the basic callback functionality:
 //! ```no_run
-//! use fltk::{app, button::*, frame::*, window::*};
+//! use fltk::{app, button::*, frame::*, prelude::*, window::*};
 //! let app = app::App::default();
 //! let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //! let mut frame = Frame::new(0, 0, 400, 200, "");
@@ -65,7 +65,7 @@
 //! You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 //!
 //! ```no_run
-//! use fltk::button::*;
+//! use fltk::{button::*, prelude::*};
 //! let but1 = Button::new(10, 10, 80, 40, "Button 1");
 //!
 //! let but2 = Button::default()
@@ -76,7 +76,7 @@
 //!
 //! An example of a counter showing use of the builder pattern:
 //! ```no_run
-//! use fltk::{app, button::*, frame::*, window::*};
+//! use fltk::{app, button::*, frame::*, prelude::*, window::*};
 //! let app = app::App::default();
 //! let mut wind = Window::default()
 //!     .with_size(160, 200)
@@ -101,7 +101,7 @@
 //! ```
 //! Alternatively, you can use packs to layout your widgets:
 //! ```no_run
-//! use fltk::{button::*, frame::*, group::*, window::*};
+//! use fltk::{button::*, frame::*, group::*, prelude::*, window::*};
 //! let mut wind = Window::default().with_size(160, 200).with_label("Counter");
 //! // Vertical is default. You can choose horizontal using pack.set_type(PackType::Horizontal);
 //! let mut pack = Pack::default().with_size(120, 140).center_of(&wind);
@@ -271,7 +271,6 @@ pub mod window;
 #[cfg(not(target_os = "android"))]
 pub mod printer;
 
-pub use enums::*;
 pub use prelude::*;
 
 #[macro_use]

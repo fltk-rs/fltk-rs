@@ -1,4 +1,5 @@
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use fltk_sys::surface::*;
 use std::ffi::CString;
 use std::path;
@@ -10,7 +11,7 @@ use std::path;
 /// let but = button::Button::new(0, 0, 80, 40, "Click");
 /// let sur = surface::ImageSurface::new(but.width(), but.height(), false);
 /// surface::ImageSurface::push_current(&sur);
-/// draw::set_draw_color(Color::White);
+/// draw::set_draw_color(enums::Color::White);
 /// draw::draw_rectf(0, 0, but.width(), but.height());
 /// sur.draw(&but, 0, 0);
 /// let img = sur.image().unwrap();
@@ -140,7 +141,7 @@ impl Drop for ImageSurface {
 /// {
 ///     let sur = surface::SvgFileSurface::new(but.width(), but.height(), "temp.svg");
 ///     surface::SvgFileSurface::push_current(&sur);
-///     draw::set_draw_color(Color::White);
+///     draw::set_draw_color(enums::Color::White);
 ///     draw::draw_rectf(0, 0, but.width(), but.height());
 ///     sur.draw(&but, 0, 0);
 ///     surface::SvgFileSurface::pop_current();

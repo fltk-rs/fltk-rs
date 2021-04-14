@@ -1,6 +1,6 @@
 // Basically a table where the cell contents can be modified
 
-use fltk::*;
+use fltk::{enums::*, *};
 use std::cell::RefCell;
 use std::rc::Rc;
 

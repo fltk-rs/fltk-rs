@@ -1,4 +1,6 @@
-pub use crate::prelude::*;
+use crate::enums::*;
+use crate::prelude::*;
+use crate::utils::*;
 use fltk_sys::image::*;
 use std::{
     ffi::CString,
