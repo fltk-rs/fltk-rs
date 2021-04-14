@@ -32,7 +32,7 @@ fn main() {
     let offs = Rc::from(RefCell::from(offs));
     let offs_rc = offs.clone();
 
-    frame.draw(move || {
+    frame.draw(move |_| {
         if offs_rc.borrow().is_valid() {
             offs_rc.borrow().copy(5, 5, WIDTH - 10, HEIGHT - 10, 0, 0);
         } else {
@@ -46,7 +46,7 @@ fn main() {
     let mut x = 0;
     let mut y = 0;
 
-    frame.handle2(move |f, ev| match ev {
+    frame.handle(move |f, ev| match ev {
         // println!("{:?}", ev);
         // println!("coords {:?}", app::event_coords());
         // println!("get mouse {:?}", app::get_mouse());

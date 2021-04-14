@@ -17,9 +17,9 @@ impl MyButton {
         let mut btn = button::Button::new(grp.x() + 420, grp.y() + 35, 15, 15, "X");
         btn.set_frame(FrameType::OFlatFrame);
         btn.set_color(Color::from_u32(0xf49da9));
-        btn.set_callback2(move |b| b.parent().unwrap().hide());
+        btn.set_callback(move |b| b.parent().unwrap().hide());
         grp.end();
-        grp.handle2(|g, ev| match ev {
+        grp.handle(|g, ev| match ev {
             Event::Push => {
                 g.do_callback();
                 true
@@ -55,7 +55,7 @@ fn main() {
         let label = format!("Button {}", i + 1);
         let mut but = MyButton::new(500, 100);
         but.set_label(&label);
-        but.set_callback(move || println!("{}", label));
+        but.set_callback(move |_| println!("{}", label));
     }
 
     pack.end();

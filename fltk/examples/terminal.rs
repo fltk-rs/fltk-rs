@@ -143,7 +143,7 @@ fn main() {
     wind.show();
 
     let mut term_c = term.clone();
-    term_c.handle(move |ev| {
+    term_c.handle(move |_, ev| {
         // println!("{:?}", app::event());
         // println!("{:?}", app::event_key());
         // println!("{:?}", app::event_text());

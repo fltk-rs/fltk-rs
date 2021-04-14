@@ -52,15 +52,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     but_inc.set_callback({
         let mut c = counter.clone();
-        move || c.increment()
+        move |_| c.increment()
     });
 
     but_dec.set_callback({
         let mut c = counter.clone();
-        move || c.decrement()
+        move |_| c.decrement()
     });
 
-    frame.handle2(move |f, ev| {
+    frame.handle(move |f, ev| {
         if ev as i32 == MyEvent::CHANGED {
             f.set_label(&counter.clone().value().to_string());
             true

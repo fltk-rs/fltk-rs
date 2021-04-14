@@ -1,6 +1,6 @@
 use fltk::*;
 
-pub fn show_wizard() {
+pub fn show_wizard(_but: &mut button::Button) {
     let mut win = window::Window::default()
         .with_size(400, 300)
         .with_label("Wizard");
@@ -35,17 +35,17 @@ pub fn show_wizard() {
     win.show();
     but1.set_callback({
         let mut wiz_c = wiz.clone();
-        move || wiz_c.next()
+        move |_| wiz_c.next()
     });
     but2.set_callback({
         let mut wiz_c = wiz.clone();
-        move || wiz_c.prev()
+        move |_| wiz_c.prev()
     });
     but3.set_callback({
         let mut wiz_c = wiz.clone();
-        move || wiz_c.next()
+        move |_| wiz_c.next()
     });
-    but4.set_callback(move || wiz.prev());
+    but4.set_callback(move |_| wiz.prev());
 }
 
 fn main() {

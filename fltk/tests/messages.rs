@@ -14,7 +14,7 @@ fn messages() {
 
     let (s, r) = app::channel::<i32>();
 
-    but.set_callback(move || {
+    but.set_callback(move |_| {
         std::thread::spawn(move || {
             for i in 0..1000 {
                 app::sleep(0.010);

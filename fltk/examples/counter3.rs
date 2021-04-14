@@ -34,7 +34,7 @@ fn main() {
     bar.set_label_size(22);
     bar.set_label_color(Color::White);
     bar.set_color(Color::from_u32(BLUE));
-    bar.draw2(|b| {
+    bar.draw(|b| {
         draw::set_draw_rgb_color(211, 211, 211);
         draw::draw_rectf(0, b.height(), b.width(), 3);
     });
@@ -51,7 +51,7 @@ fn main() {
     but.set_frame(FrameType::OFlatFrame);
     // End theming
 
-    but.set_callback(move || {
+    but.set_callback(move |_| {
         let label = (count.label().parse::<i32>().unwrap() + 1).to_string();
         count.set_label(&label);
     });

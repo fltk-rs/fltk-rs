@@ -35,13 +35,13 @@ fn main() {
     let paddle_c = paddle_pos.clone();
 
     // This is called whenever the window is drawn and redrawn (in the event loop)
-    wind.draw(move || {
+    wind.draw(move |_| {
         draw::set_draw_color(Color::White);
         draw::draw_rectf(*paddle_c.borrow(), 540, 160, 20);
     });
 
     let paddle_c = paddle_pos.clone();
-    wind.handle(move |ev| {
+    wind.handle(move |_, ev| {
         match ev {
             enums::Event::Move => {
                 // Mouse's x position relative to the paddle's center

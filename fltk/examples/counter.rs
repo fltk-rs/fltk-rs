@@ -27,13 +27,13 @@ fn main() {
     wind.show();
 
     let mut frame1 = frame.clone();
-    but_inc.set_callback(move || {
+    but_inc.set_callback(move |_| {
         let label = (frame1.label().parse::<i32>().unwrap() + 1).to_string();
         frame1.set_label(&label);
     });
 
     let mut frame1 = frame;
-    but_dec.set_callback(move || {
+    but_dec.set_callback(move |_| {
         let label = (frame1.label().parse::<i32>().unwrap() - 1).to_string();
         frame1.set_label(&label);
     });

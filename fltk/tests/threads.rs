@@ -21,7 +21,7 @@ fn raw_threads() {
 
     wind.show();
 
-    but.set_callback(move || {
+    but.set_callback(move |_| {
         let mut frame = frame.clone();
         std::thread::spawn(move || {
             for i in 0..1000 {

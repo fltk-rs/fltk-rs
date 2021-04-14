@@ -15,7 +15,7 @@ impl ShapedWindow {
         wind.set_shape(Some(shape));
         let mut x = 0;
         let mut y = 0;
-        wind.handle2(move |w, ev| match ev {
+        wind.handle(move |w, ev| match ev {
             Event::Push => {
                 let coords = app::event_coords();
                 x = coords.0;

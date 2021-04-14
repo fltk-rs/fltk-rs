@@ -25,7 +25,7 @@ fn main() {
 
     let menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
 
-    b.set_callback(move || {
+    b.set_callback(move |_| {
         if app::event_mouse_button() == Mouse::Right {
             // or app::event_button() == 3
             let coords = app::event_coords();

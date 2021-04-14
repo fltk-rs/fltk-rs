@@ -23,7 +23,7 @@ fn main() {
     wind.show();
 
     // Called when the table is drawn then when it's redrawn due to events
-    table.draw_cell2(move |t, ctx, row, col, x, y, w, h| match ctx {
+    table.draw_cell(move |t, ctx, row, col, x, y, w, h| match ctx {
         table::TableContext::StartPage => draw::set_font(Font::Helvetica, 14),
         table::TableContext::ColHeader => {
             draw_header(&format!("{}", (col + 65) as u8 as char), x, y, w, h)

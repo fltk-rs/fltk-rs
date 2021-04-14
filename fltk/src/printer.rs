@@ -7,7 +7,7 @@ use std::ffi::CString;
 /// ```no_run
 /// use fltk::*;
 /// let mut but = button::Button::default();
-/// but.set_callback2(|widget| {
+/// but.set_callback(|widget| {
 ///     let mut printer = printer::Printer::default();
 ///     if printer.begin_job(1).is_ok() {
 ///         printer.begin_page().ok();

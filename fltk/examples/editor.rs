@@ -265,7 +265,7 @@ fn main() {
     wind.end();
     wind.show();
 
-    wind.set_callback(move || {
+    wind.set_callback(move |_| {
         if app::event() == Event::Close {
             s.send(Message::Quit);
         }
@@ -275,7 +275,7 @@ fn main() {
     let mut dnd = false;
     let mut released = false;
 
-    editor.handle(move |ev| match ev {
+    editor.handle(move |_, ev| match ev {
         Event::DndEnter => {
             dnd = true;
             true

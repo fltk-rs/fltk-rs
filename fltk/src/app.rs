@@ -1175,10 +1175,10 @@ pub fn get_system_colors() {
 /// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();
 /// let mut frame = frame::Frame::default();
-/// but.set_callback(move || {
+/// but.set_callback(move |_| {
 ///     let _ = app::handle(CHANGE_FRAME, &wind).unwrap();
 /// });
-/// frame.handle2(move |f, ev| {
+/// frame.handle(move |f, ev| {
 ///     if ev as i32 == CHANGE_FRAME {
 ///         f.set_label("Hello world");
 ///         true
@@ -1211,10 +1211,10 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
 /// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();
 /// let mut frame = frame::Frame::default();
-/// but.set_callback(move || {
+/// but.set_callback(move |_| {
 ///     let _ = app::handle_main(CHANGE_FRAME).unwrap();
 /// });
-/// frame.handle2(move |f, ev| {
+/// frame.handle(move |f, ev| {
 ///     if ev as i32 == CHANGE_FRAME {
 ///         f.set_label("Hello world");
 ///         true

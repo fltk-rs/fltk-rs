@@ -18,7 +18,7 @@ fn main() {
     win.end();
     win.show();
 
-    choice.set_callback2(move |c| {
+    choice.set_callback(move |c| {
         chart.set_type(misc::ChartType::from_i32(c.value()));
         chart.redraw();
     });
