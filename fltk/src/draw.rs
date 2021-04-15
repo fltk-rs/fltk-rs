@@ -493,7 +493,7 @@ pub fn end_complex_polygon() {
 }
 
 /// Sets the current font, which is then used in various drawing routines
-pub fn set_font(face: Font, fsize: u32) {
+pub fn set_font(face: Font, fsize: u16) {
     unsafe { Fl_set_draw_font(face.bits() as i32, fsize as i32) }
 }
 
@@ -503,17 +503,17 @@ pub fn font() -> Font {
 }
 
 /// Gets the current font size, which is used in various drawing routines
-pub fn size() -> u32 {
-    unsafe { Fl_size() as u32 }
+pub fn size() -> u16 {
+    unsafe { Fl_size() as u16 }
 }
 
 /// Returns the recommended minimum line spacing for the current font
-pub fn height() -> i32 {
-    unsafe { Fl_height() }
+pub fn height() -> u16 {
+    unsafe { Fl_height() as u16 }
 }
 
 /// Sets the line spacing for the current font
-pub fn set_height(font: Font, size: u32) {
+pub fn set_height(font: Font, size: u16) {
     unsafe {
         Fl_set_height(font.bits() as i32, size as i32);
     }
@@ -662,7 +662,7 @@ pub fn set_status(x: i32, y: i32, w: i32, h: i32) {
 }
 
 /// Sets spot within the window
-pub fn set_spot<Win: WindowExt>(font: Font, size: u32, x: i32, y: i32, w: i32, h: i32, win: &Win) {
+pub fn set_spot<Win: WindowExt>(font: Font, size: u16, x: i32, y: i32, w: i32, h: i32, win: &Win) {
     unsafe {
         assert!(!win.was_deleted());
         Fl_set_spot(
@@ -691,7 +691,7 @@ pub fn reset_spot() {
 /// ```
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     assert!(!win.was_deleted());
-    let cp = win.width() as u32 * win.height() as u32 * 3;
+    let cp = win.width() * win.height() * 3;
     win.show();
     unsafe {
         let x = Fl_read_image(std::ptr::null_mut(), 0, 0, win.width(), win.height(), 0);
@@ -701,8 +701,8 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
             let x = std::slice::from_raw_parts(x, cp as usize);
             Ok(RgbImage::new(
                 x,
-                win.width() as u32,
-                win.height() as u32,
+                win.width(),
+                win.height(),
                 ColorDepth::Rgb8,
             )?)
         }
@@ -711,8 +711,8 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
 
 /// Draw a framebuffer (rgba) into a widget
 pub fn draw_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
-    let width = wid.width() as u32;
-    let height = wid.height() as u32;
+    let width = wid.width();
+    let height = wid.height();
     let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
     wid.draw(move |s| {
         let x = s.x();
@@ -731,8 +731,8 @@ pub fn draw_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), 
 pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
     let ptr = fb.as_ptr();
     let len = fb.len();
-    let width = wid.width() as u32;
-    let height = wid.height() as u32;
+    let width = wid.width();
+    let height = wid.height();
     wid.draw(move |s| {
         let x = s.x();
         let y = s.y();
@@ -752,8 +752,8 @@ pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
 
 /// Draw a framebuffer (rgba) into a widget
 pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
-    let width = wid.width() as u32;
-    let height = wid.height() as u32;
+    let width = wid.width();
+    let height = wid.height();
     let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
     wid.draw(move |s| {
         let x = s.x();
@@ -772,8 +772,8 @@ pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), F
 pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
     let ptr = fb.as_ptr();
     let len = fb.len();
-    let width = wid.width() as u32;
-    let height = wid.height() as u32;
+    let width = wid.width();
+    let height = wid.height();
     wid.draw(move |s| {
         let x = s.x();
         let y = s.y();

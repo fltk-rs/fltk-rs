@@ -65,16 +65,15 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn children(&self) -> u32 {
+            fn children(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #children(self.inner) as u32
+                    #children(self.inner) as u16
                 }
             }
 
-            fn child(&self, idx: u32) -> Option<Box<dyn WidgetExt>> {
+            fn child(&self, idx: u16) -> Option<Box<dyn WidgetExt>> {
                 unsafe {
-                    debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     let child_widget = #child(self.inner, idx as i32);
                     if child_widget.is_null() {
@@ -85,11 +84,11 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn find<W: WidgetExt>(&self, widget: &W) -> u32 {
+            fn find<W: WidgetExt>(&self, widget: &W) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #find(self.inner, widget.as_widget_ptr() as *mut _) as u32
+                    #find(self.inner, widget.as_widget_ptr() as *mut _) as u16
                 }
             }
 
@@ -101,9 +100,8 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn insert<W: WidgetExt>(&mut self, widget: &W, index: u32) {
+            fn insert<W: WidgetExt>(&mut self, widget: &W, index: u16) {
                 unsafe {
-                    debug_assert!(index <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
                     #insert(self.inner, widget.as_widget_ptr() as *mut _, index as i32)
@@ -118,8 +116,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn remove_by_index(&mut self, idx: u32) {
-                debug_assert!(idx <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn remove_by_index(&mut self, idx: u16) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(idx < self.children());

@@ -97,43 +97,31 @@ impl Scroll {
     }
 
     /// Returns the x position
-    pub fn xposition(&self) -> u32 {
+    pub fn xposition(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_xposition(self.inner) as u32 }
+        unsafe { Fl_Scroll_xposition(self.inner) as u16 }
     }
 
     /// Returns the y position
-    pub fn yposition(&self) -> u32 {
+    pub fn yposition(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_yposition(self.inner) as u32 }
+        unsafe { Fl_Scroll_yposition(self.inner) as u16 }
     }
 
     /// Scrolls from ```from``` to ```to```
-    pub fn scroll_to(&mut self, from: u32, to: u32) {
-        debug_assert!(
-            from <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
-        debug_assert!(
-            to <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn scroll_to(&mut self, from: u16, to: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Scroll_scroll_to(self.inner, from as i32, to as i32) }
     }
 
     /// Gets the scrollbar size
-    pub fn scrollbar_size(&self) -> u32 {
+    pub fn scrollbar_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scrollbar_size(self.inner) as u32 }
+        unsafe { Fl_Scroll_scrollbar_size(self.inner) as u16 }
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&mut self, new_size: u32) {
-        debug_assert!(
-            new_size <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_scrollbar_size(&mut self, new_size: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Scroll_set_scrollbar_size(self.inner, new_size as i32) }
     }
@@ -335,7 +323,7 @@ impl Pack {
         let h = (self.height() - spacing) / children;
 
         for i in 0..children {
-            let mut c = self.child(i as u32).unwrap();
+            let mut c = self.child(i as u16).unwrap();
             let c_w = c.width();
             let c_h = c.height();
             if t == PackType::Vertical {
@@ -404,7 +392,7 @@ impl VGrid {
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
         let rem = self.current / self.cols;
         if rem < self.rows {
-            let hpack = self.vpack.child(rem as u32).unwrap();
+            let hpack = self.vpack.child(rem as u16).unwrap();
             let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
             hpack.end();
             hpack.add(w);
@@ -486,7 +474,7 @@ impl HGrid {
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
         let rem = self.current / self.rows;
         if rem < self.cols {
-            let vpack = self.hpack.child(rem as u32).unwrap();
+            let vpack = self.hpack.child(rem as u16).unwrap();
             let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
             vpack.end();
             vpack.add(w);

@@ -232,9 +232,9 @@ impl CheckBrowser {
     }
 
     /// Returns the selected line, returns 0 if no line is selected
-    pub fn value(&self) -> u32 {
+    pub fn value(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_value(self.inner) as u32 }
+        unsafe { Fl_Check_Browser_value(self.inner) as u16 }
     }
 
     /// Get the text of the item
@@ -263,17 +263,13 @@ impl CheckBrowser {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u32 {
+    pub fn text_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_text_size(self.inner) as u32 }
+        unsafe { Fl_Check_Browser_text_size(self.inner) as u16 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_text_size(self.inner, s as i32) }
     }
@@ -291,34 +287,26 @@ impl CheckBrowser {
     }
 
     /// Gets the vertical scroll position of the list as a pixel position
-    pub fn position(&self) -> u32 {
+    pub fn position(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_position(self.inner) as u32 }
+        unsafe { Fl_Check_Browser_position(self.inner) as u16 }
     }
 
     /// Sets the vertical scroll position of the list as a pixel position
-    pub fn set_position(&mut self, pos: u32) {
+    pub fn set_position(&mut self, pos: u16) {
         assert!(!self.was_deleted());
-        debug_assert!(
-            pos <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
         unsafe { Fl_Check_Browser_set_position(self.inner, pos as i32) }
     }
 
     /// Gets the horizontal scroll position of the list as a pixel position
-    pub fn hposition(&self) -> u32 {
+    pub fn hposition(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_hposition(self.inner) as u32 }
+        unsafe { Fl_Check_Browser_hposition(self.inner) as u16 }
     }
 
     /// Sets the horizontal scroll position of the list as a pixel position
-    pub fn set_hposition(&mut self, pos: u32) {
+    pub fn set_hposition(&mut self, pos: u16) {
         assert!(!self.was_deleted());
-        debug_assert!(
-            pos <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
         unsafe { Fl_Check_Browser_set_hposition(self.inner, pos as i32) }
     }
 
@@ -335,18 +323,14 @@ impl CheckBrowser {
     }
 
     /// Gets the scrollbar size
-    pub fn scrollbar_size(&self) -> u32 {
+    pub fn scrollbar_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_scrollbar_size(self.inner) as u32 }
+        unsafe { Fl_Check_Browser_scrollbar_size(self.inner) as u16 }
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&mut self, new_size: u32) {
+    pub fn set_scrollbar_size(&mut self, new_size: u16) {
         assert!(!self.was_deleted());
-        debug_assert!(
-            new_size <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
         unsafe { Fl_Check_Browser_set_scrollbar_size(self.inner, new_size as i32) }
     }
 

@@ -41,11 +41,7 @@ impl Printer {
     /// Begins a print job
     /// `pagecount` The total number of pages to be created. Use 0 if this number is unknown
     /// Returns a tuple (frompage, topage) indicating the chosen pages by the user
-    pub fn begin_job(&mut self, pagecount: u32) -> Result<(Option<u32>, Option<u32>), FltkError> {
-        debug_assert!(
-            pagecount <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn begin_job(&mut self, pagecount: u16) -> Result<(Option<u16>, Option<u16>), FltkError> {
         let mut frompage_ = 0;
         let mut topage_ = 0;
         unsafe {
@@ -62,12 +58,12 @@ impl Printer {
                 let from = if frompage_ == 0 {
                     None
                 } else {
-                    Some(frompage_ as u32)
+                    Some(frompage_ as u16)
                 };
                 let to = if topage_ == 0 {
                     None
                 } else {
-                    Some(topage_ as u32)
+                    Some(topage_ as u16)
                 };
                 Ok((from, to))
             }

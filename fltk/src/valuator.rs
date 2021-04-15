@@ -251,17 +251,13 @@ impl ValueSlider {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u32 {
+    pub fn text_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_text_size(self.inner) as u32 }
+        unsafe { Fl_Value_Slider_text_size(self.inner) as u16 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_set_text_size(self.inner, s as i32) }
     }
@@ -306,7 +302,7 @@ pub struct Adjuster {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Creates an value input widget, which takes a numeric value. 
+/// Creates an value input widget, which takes a numeric value.
 /// If a step is set, the value can be also dragged
 #[derive(WidgetBase, WidgetExt, ValuatorExt, Debug)]
 pub struct ValueInput {
@@ -328,17 +324,13 @@ impl ValueInput {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u32 {
+    pub fn text_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_text_size(self.inner) as u32 }
+        unsafe { Fl_Value_Input_text_size(self.inner) as u16 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_text_size(self.inner, s as i32) }
     }
@@ -390,17 +382,13 @@ impl ValueOutput {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u32 {
+    pub fn text_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_text_size(self.inner) as u32 }
+        unsafe { Fl_Value_Output_text_size(self.inner) as u16 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Output_set_text_size(self.inner, s as i32) }
     }
@@ -566,17 +554,13 @@ impl HorValueSlider {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u32 {
+    pub fn text_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_text_size(self.inner) as u32 }
+        unsafe { Fl_Hor_Value_Slider_text_size(self.inner) as u16 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_set_text_size(self.inner, s as i32) }
     }

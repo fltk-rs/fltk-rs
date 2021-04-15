@@ -92,17 +92,13 @@ impl Spinner {
     }
 
     /// Returns the maximum size supported by the spinner widget
-    pub fn maximum_size(&self) -> u32 {
+    pub fn maximum_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_maxsize(self.inner) as u32 }
+        unsafe { Fl_Spinner_maxsize(self.inner) as u16 }
     }
 
     /// Sets the maximum size supported by the spinner widget
-    pub fn set_maximum_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_maximum_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_maxsize(self.inner, s as i32) }
     }
@@ -120,17 +116,13 @@ impl Spinner {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u32 {
+    pub fn text_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_text_size(self.inner) as u32 }
+        unsafe { Fl_Spinner_text_size(self.inner) as u16 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_text_size(self.inner, s as i32) }
     }
@@ -191,22 +183,14 @@ impl Chart {
     }
 
     /// Inserts an entry at an index
-    pub fn insert(&mut self, idx: u32, val: f64, txt: &str, col: Color) {
-        debug_assert!(
-            idx <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn insert(&mut self, idx: u16, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_insert(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Replaces an entry at an index
-    pub fn replace(&mut self, idx: u32, val: f64, txt: &str, col: Color) {
-        debug_assert!(
-            idx <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn replace(&mut self, idx: u16, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_replace(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
@@ -219,23 +203,19 @@ impl Chart {
     }
 
     /// Returns the size of the chart
-    pub fn size(&self) -> u32 {
+    pub fn size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_size(self.inner) as u32 }
+        unsafe { Fl_Chart_size(self.inner) as u16 }
     }
 
     /// Gets the maximum supported size of the chart
-    pub fn maximum_size(&self) -> u32 {
+    pub fn maximum_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_maxsize(self.inner) as u32 }
+        unsafe { Fl_Chart_maxsize(self.inner) as u16 }
     }
 
     /// Sets the maximum supported size of the chart
-    pub fn set_maximum_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_maximum_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_maxsize(self.inner, s as i32) }
     }
@@ -253,17 +233,13 @@ impl Chart {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u32 {
+    pub fn text_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_text_size(self.inner) as u32 }
+        unsafe { Fl_Chart_text_size(self.inner) as u16 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_text_size(self.inner, s as i32) }
     }
@@ -436,16 +412,12 @@ impl Tooltip {
     }
 
     /// Gets the tooltip's font size
-    pub fn font_size() -> u32 {
-        unsafe { Fl_Tooltip_font_size() as u32 }
+    pub fn font_size() -> u16 {
+        unsafe { Fl_Tooltip_font_size() as u16 }
     }
 
     /// Sets the tooltip's font size
-    pub fn set_font_size(s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_font_size(s: u16) {
         unsafe { Fl_Tooltip_set_font_size(s as i32) }
     }
 
@@ -470,44 +442,32 @@ impl Tooltip {
     }
 
     /// Gets the margin width
-    pub fn margin_width() -> u32 {
-        unsafe { Fl_Tooltip_margin_width() as u32 }
+    pub fn margin_width() -> u16 {
+        unsafe { Fl_Tooltip_margin_width() as u16 }
     }
 
     /// Sets the margin width
-    pub fn set_margin_width(v: u32) {
-        debug_assert!(
-            v <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_margin_width(v: u16) {
         unsafe { Fl_Tooltip_set_margin_width(v as i32) }
     }
 
     /// Gets the margin height
-    pub fn margin_height() -> u32 {
-        unsafe { Fl_Tooltip_margin_height() as u32 }
+    pub fn margin_height() -> u16 {
+        unsafe { Fl_Tooltip_margin_height() as u16 }
     }
 
     /// Sets the margin height
-    pub fn set_margin_height(v: u32) {
-        debug_assert!(
-            v <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_margin_height(v: u16) {
         unsafe { Fl_Tooltip_set_margin_height(v as i32) }
     }
 
     /// Gets the wrap width
-    pub fn wrap_width() -> u32 {
-        unsafe { Fl_Tooltip_wrap_width() as u32 }
+    pub fn wrap_width() -> u16 {
+        unsafe { Fl_Tooltip_wrap_width() as u16 }
     }
 
     /// Sets the wrap width
-    pub fn set_wrap_width(v: u32) {
-        debug_assert!(
-            v <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_wrap_width(v: u16) {
         unsafe { Fl_Tooltip_set_wrap_width(v as i32) }
     }
 
@@ -575,11 +535,7 @@ impl InputChoice {
     }
 
     /// Set the value of the input choice to the element at `idx`
-    pub fn set_value_index(&mut self, idx: u32) {
-        debug_assert!(
-            idx <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_value_index(&mut self, idx: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_set_value2(self.inner, idx as i32) }
     }
@@ -617,17 +573,13 @@ impl InputChoice {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u32 {
+    pub fn text_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_text_size(self.inner) as u32 }
+        unsafe { Fl_Input_Choice_text_size(self.inner) as u16 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_set_text_size(self.inner, s as i32) }
     }
@@ -693,12 +645,8 @@ impl HelpView {
     }
 
     /// Find a string, returns the index
-    pub fn find(&self, s: &str, start_from: usize) -> Option<usize> {
+    pub fn find(&self, s: &str, start_from: u16) -> Option<usize> {
         assert!(!self.was_deleted());
-        debug_assert!(
-            start_from <= std::isize::MAX as usize,
-            "usize entries have to be < std::isize::MAX for compatibility!"
-        );
         unsafe {
             let s = CString::safe_new(s);
             let ret = Fl_Help_View_find(self.inner, s.as_ptr(), start_from as i32);
@@ -785,17 +733,13 @@ impl HelpView {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u32 {
+    pub fn text_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_text_size(self.inner) as u32 }
+        unsafe { Fl_Help_View_text_size(self.inner) as u16 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        debug_assert!(
-            s <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_text_size(self.inner, s as i32) }
     }
@@ -813,17 +757,13 @@ impl HelpView {
     }
 
     /// Gets the scrollbar size
-    pub fn scrollbar_size(&self) -> u32 {
+    pub fn scrollbar_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_scrollbar_size(self.inner) as u32 }
+        unsafe { Fl_Help_View_scrollbar_size(self.inner) as u16 }
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&mut self, new_size: u32) {
-        debug_assert!(
-            new_size <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_scrollbar_size(&mut self, new_size: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_scrollbar_size(self.inner, new_size as i32) }
     }

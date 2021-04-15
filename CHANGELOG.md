@@ -8,6 +8,7 @@
 - [BREAKING] Replace TableExt::visible_cells and get_selection with their easier overloads.
 - [BREAKING] Rename InputChoice::set_value2 to set_value_index.
 - [BREAKING] Replace set_callback, handle, draw, draw_cell with their overloads.
+- [BREAKING] Take u16 instead of u32 for most positive int args and refactor out most debug_asserts.
 - Add a Column and Row widgets which support auto_layout by default, but require that widgets be added using add().
 - Add ValueInput::soft and set_soft methods.
 

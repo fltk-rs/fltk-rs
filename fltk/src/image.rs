@@ -558,13 +558,13 @@ pub struct RgbImage {
 impl RgbImage {
     /// Initializes a new raw RgbImage, copies the data and handles its lifetime
     /// If you need to work with RGB data,
-    pub fn new(data: &[u8], w: u32, h: u32, depth: ColorDepth) -> Result<RgbImage, FltkError> {
-        let sz = w * h * depth as u32;
-        if sz > data.len() as u32 {
+    pub fn new(data: &[u8], w: i32, h: i32, depth: ColorDepth) -> Result<RgbImage, FltkError> {
+        let sz = w * h * depth as i32;
+        if sz > data.len() as i32 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
         unsafe {
-            let img = Fl_RGB_Image_new(data.as_ptr(), w as i32, h as i32, depth as i32);
+            let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32);
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
             } else {
@@ -581,15 +581,15 @@ impl RgbImage {
     /// The data must be valid for the lifetime of the image
     pub unsafe fn from_data(
         data: &[u8],
-        w: u32,
-        h: u32,
+        w: i32,
+        h: i32,
         depth: ColorDepth,
     ) -> Result<RgbImage, FltkError> {
-        let sz = w * h * depth as u32;
-        if sz > data.len() as u32 {
+        let sz = w * h * depth as i32;
+        if sz > data.len() as i32 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
-        let img = Fl_RGB_Image_from_data(data.as_ptr(), w as i32, h as i32, depth as i32);
+        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32);
         if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
             Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
         } else {
@@ -603,7 +603,7 @@ impl RgbImage {
     /// Deconstructs a raw RgbImage into parts
     /// # Safety
     /// Destructures the image into its raw elements
-    pub unsafe fn into_parts(self) -> (Vec<u8>, u32, u32) {
+    pub unsafe fn into_parts(self) -> (Vec<u8>, i32, i32) {
         let w = self.data_w();
         let h = self.data_h();
         (self.to_rgb_data(), w, h)

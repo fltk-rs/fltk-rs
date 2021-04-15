@@ -274,23 +274,20 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #set_text_color(self.inner, color.bits() as u32) }
             }
 
-            fn text_size(&self) -> u32{
+            fn text_size(&self) -> u16{
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
-                unsafe { #text_size(self.inner) as u32 }
+                unsafe { #text_size(self.inner) as u16 }
             }
 
-            fn set_text_size(&mut self, sz: u32) {
-                debug_assert!(sz <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_text_size(&mut self, sz: u16) {
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
                 unsafe { #set_text_size(self.inner, sz as i32) }
             }
 
-            fn scroll(&mut self, topLineNum: u32, horizOffset: u32) {
+            fn scroll(&mut self, topLineNum: u16, horizOffset: u16) {
                 unsafe {
-                    debug_assert!(topLineNum <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
-                    debug_assert!(horizOffset <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
                     #scroll(self.inner, topLineNum as i32, horizOffset as i32)
@@ -306,46 +303,42 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_insert_position(&mut self, newPos: u32) {
+            fn set_insert_position(&mut self, newPos: u16) {
                 unsafe {
-                    debug_assert!(newPos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
                     #set_insert_position(self.inner, newPos as i32)
                 }
             }
 
-            fn insert_position(&self) -> u32 {
+            fn insert_position(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #insert_position(self.inner) as u32
+                    #insert_position(self.inner) as u16
                 }
             }
 
-            fn position_to_xy(&self, pos: u32) -> (u32, u32) {
-                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn position_to_xy(&self, pos: u16) -> (u16, u16) {
                 unsafe {
                     let mut x: i32 = 0;
                     let mut y: i32 = 0;
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
                     #position_to_xy(self.inner, pos as i32, &mut x, &mut y);
-                    (x as u32, y as u32)
+                    (x as u16, y as u16)
                 }
             }
 
-            fn count_lines(&self, start: u32, end: u32, is_line_start: bool) -> u32 {
+            fn count_lines(&self, start: u16, end: u16, is_line_start: bool) -> u16 {
                 let x = match is_line_start {
                     true => 1,
                     false => 0,
                 };
-                debug_assert!(start <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
-                debug_assert!(end <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #count_lines(self.inner, start as i32, end as i32, x) as u32
+                    #count_lines(self.inner, start as i32, end as i32, x) as u16
                 }
             }
 
@@ -444,8 +437,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_scrollbar_size(&mut self, size: u32){
-                debug_assert!(size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_scrollbar_size(&mut self, size: u16){
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_scrollbar_size(self.inner, size as i32)
@@ -473,10 +465,10 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn scrollbar_size(&self) -> u32 {
+            fn scrollbar_size(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #scrollbar_size(self.inner) as u32
+                    #scrollbar_size(self.inner) as u16
                 }
             }
 
@@ -487,41 +479,35 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn line_start(&self, pos: u32) -> u32 {
-                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn line_start(&self, pos: u16) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #line_start(self.inner, pos as i32) as u32
+                    #line_start(self.inner, pos as i32) as u16
                 }
             }
 
-            fn line_end(&self, start_pos: u32, is_line_start: bool) -> u32 {
-                debug_assert!(start_pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn line_end(&self, start_pos: u16, is_line_start: bool) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #line_end(self.inner, start_pos as i32, is_line_start as i32) as u32
+                    #line_end(self.inner, start_pos as i32, is_line_start as i32) as u16
                 }
             }
 
-            fn skip_lines(&mut self, start_pos: u32, lines: u32, is_line_start: bool) -> u32 {
-                debug_assert!(start_pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
-                debug_assert!(lines <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn skip_lines(&mut self, start_pos: u16, lines: u16, is_line_start: bool) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #skip_lines(self.inner, start_pos as i32, lines as i32, is_line_start as i32) as u32
+                    #skip_lines(self.inner, start_pos as i32, lines as i32, is_line_start as i32) as u16
                 }
             }
 
-            fn rewind_lines(&mut self, start_pos: u32, lines: u32) -> u32 {
-                debug_assert!(start_pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
-                debug_assert!(lines <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn rewind_lines(&mut self, start_pos: u16, lines: u16) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #rewind_lines(self.inner, start_pos as i32, lines as i32) as u32
+                    #rewind_lines(self.inner, start_pos as i32, lines as i32) as u16
                 }
             }
 
@@ -541,21 +527,19 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn word_start(&self, pos: u32) -> u32 {
-                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn word_start(&self, pos: u16) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #word_start(self.inner, pos as i32) as u32
+                    #word_start(self.inner, pos as i32) as u16
                 }
             }
 
-            fn word_end(&self, pos: u32) -> u32 {
-                debug_assert!(pos <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn word_end(&self, pos: u16) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #word_end(self.inner, pos as i32) as u32
+                    #word_end(self.inner, pos as i32) as u16
                 }
             }
 
@@ -603,18 +587,17 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_linenumber_size(&mut self, size: u32) {
-                debug_assert!(size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_linenumber_size(&mut self, size: u16) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_linenumber_size(self.inner, size as i32)
                 }
             }
 
-            fn linenumber_size(&self) -> u32 {
+            fn linenumber_size(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #linenumber_size(self.inner) as u32
+                    #linenumber_size(self.inner) as u16
                 }
             }
 

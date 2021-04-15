@@ -243,33 +243,31 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_rows(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_rows(&mut self, val: u16) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_rows(self.inner, val as i32)
                 }
             }
 
-            fn rows(&self) -> u32 {
+            fn rows(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #rows(self.inner) as u32
+                    #rows(self.inner) as u16
                 }
             }
 
-            fn set_cols(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_cols(&mut self, val: u16) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_cols(self.inner, val as i32)
                 }
             }
 
-            fn cols(&self) -> u32 {
+            fn cols(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #cols(self.inner) as u32
+                    #cols(self.inner) as u16
                 }
             }
 
@@ -320,30 +318,28 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn col_resize_min(&self) -> u32 {
+            fn col_resize_min(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #col_resize_min(self.inner)  as u32
+                    #col_resize_min(self.inner)  as u16
                 }
             }
 
-            fn set_col_resize_min(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_col_resize_min(&mut self, val: u16) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_col_resize_min(self.inner, val as i32)
                 }
             }
 
-            fn row_resize_min(&self) -> u32 {
+            fn row_resize_min(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #row_resize_min(self.inner) as u32
+                    #row_resize_min(self.inner) as u16
                 }
             }
 
-            fn set_row_resize_min(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_row_resize_min(&mut self, val: u16) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_row_resize_min(self.inner, val as i32)
@@ -577,33 +573,31 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn scrollbar_size(&self) -> u32 {
+            fn scrollbar_size(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #scrollbar_size(self.inner) as u32
+                    #scrollbar_size(self.inner) as u16
                 }
             }
 
-            fn set_scrollbar_size(&mut self, new_size: u32) {
-                debug_assert!(new_size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_scrollbar_size(&mut self, new_size: u16) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_scrollbar_size(self.inner, new_size as i32)
                 }
             }
 
-            fn set_tab_cell_nav(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_tab_cell_nav(&mut self, val: u16) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_tab_cell_nav(self.inner, val as i32)
                 }
             }
 
-            fn tab_cell_nav(&self) -> u32 {
+            fn tab_cell_nav(&self) -> u16 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #tab_cell_nav(self.inner) as u32
+                    #tab_cell_nav(self.inner) as u16
                 }
             }
 

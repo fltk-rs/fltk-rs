@@ -236,13 +236,13 @@ pub fn alert(x: i32, y: i32, txt: &str) {
 
 /// Displays a choice box with upto three choices.
 /// An empty choice will not be shown
-pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
+pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> u16 {
     unsafe {
         let txt = CString::safe_new(txt);
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
+        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u16
     }
 }
 
@@ -301,13 +301,13 @@ pub fn alert_default(txt: &str) {
 
 /// Displays a choice box with upto three choices.
 /// An empty choice will not be shown
-pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
+pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> u16 {
     unsafe {
         let txt = CString::safe_new(txt);
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
+        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u16
     }
 }
 
@@ -410,13 +410,13 @@ impl HelpDialog {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
+    pub fn set_text_size(&mut self, s: u16) {
         unsafe { Fl_Help_Dialog_set_text_size(self.inner, s as i32) }
     }
 
     /// Returns the text size
-    pub fn text_size(&mut self) -> u32 {
-        unsafe { Fl_Help_Dialog_text_size(self.inner) as u32 }
+    pub fn text_size(&mut self) -> u16 {
+        unsafe { Fl_Help_Dialog_text_size(self.inner) as u16 }
     }
 
     /// Sets the value of the help dialog
@@ -657,9 +657,9 @@ impl FileChooser {
     }
 
     /// Gets the count of chosen items
-    pub fn count(&mut self) -> u32 {
+    pub fn count(&mut self) -> u16 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_count(self.inner) as u32 }
+        unsafe { Fl_File_Chooser_count(self.inner) as u16 }
     }
 
     /// Sets the directory of the FileChooser
@@ -716,9 +716,9 @@ impl FileChooser {
     }
 
     /// Gets the current filename filter selection
-    pub fn filter_value(&mut self) -> u32 {
+    pub fn filter_value(&mut self) -> u16 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_filter_value(self.inner) as u32 }
+        unsafe { Fl_File_Chooser_filter_value(self.inner) as u16 }
     }
 
     /// Sets the filter for the dialog, can be:
@@ -727,7 +727,7 @@ impl FileChooser {
     /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`)
     /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`)
     /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
-    pub fn set_filter_value(&mut self, f: u32) {
+    pub fn set_filter_value(&mut self, f: u16) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_filter_value(self.inner, f as i32) }
     }
@@ -855,15 +855,15 @@ impl FileChooser {
     }
 
     /// Sets the text size of the file chooser
-    pub fn set_text_size(&mut self, s: u32) {
+    pub fn set_text_size(&mut self, s: u16) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_text_size(self.inner, s as i32) }
     }
 
     /// Gets the text size of the file chooser
-    pub fn text_size(&mut self) -> u32 {
+    pub fn text_size(&mut self) -> u16 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_text_size(self.inner) as u32 }
+        unsafe { Fl_File_Chooser_text_size(self.inner) as u16 }
     }
 
     /// Sets the type of the FileChooser
@@ -894,7 +894,7 @@ impl FileChooser {
     }
 
     /// Gets the file or dir name chosen by the FileChooser
-    pub fn value(&mut self, f: u32) -> Option<String> {
+    pub fn value(&mut self, f: u16) -> Option<String> {
         assert!(!self.inner.is_null());
         let mut f = f;
         if f == 0 {

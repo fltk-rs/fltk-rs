@@ -169,13 +169,13 @@ impl MenuItem {
     }
 
     /// Returns the label size of the menu item
-    pub fn label_size(&self) -> u32 {
+    pub fn label_size(&self) -> u16 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Menu_Item_label_size(self.inner) as u32 }
+        unsafe { Fl_Menu_Item_label_size(self.inner) as u16 }
     }
 
     /// Sets the label size of the menu item
-    pub fn set_label_size(&mut self, sz: u32) {
+    pub fn set_label_size(&mut self, sz: u16) {
         assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_set_label_size(self.inner, sz as i32) }
     }
@@ -253,7 +253,7 @@ impl MenuItem {
     }
 
     /// Get the next menu item
-    pub fn next(&mut self, idx: u32) -> Option<MenuItem> {
+    pub fn next(&mut self, idx: u16) -> Option<MenuItem> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Menu_Item_next(self.inner, idx as i32);
@@ -266,7 +266,7 @@ impl MenuItem {
     }
 
     /// Get the menu item at `idx`
-    pub fn at(&self, idx: u32) -> Option<MenuItem> {
+    pub fn at(&self, idx: u16) -> Option<MenuItem> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Menu_Item_next(self.inner, idx as i32);

@@ -114,7 +114,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     let ptr = #data(self.inner);
                     assert!(!ptr.is_null());
                     assert!(!(*ptr).is_null());
-                    let cnt = self.data_w() * self.data_h() * self.depth() as u32;
+                    let cnt = self.data_w() * self.data_h() * self.depth() as i32;
                     let ret: &[u8] = std::slice::from_raw_parts(*ptr as *const u8, cnt as usize);
                     ret.to_vec()
                 }
@@ -140,24 +140,24 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn count(&self) -> u32 {
+            fn count(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #count(self.inner) as u32
+                    #count(self.inner)
                 }
             }
 
-            fn data_w(&self) -> u32 {
+            fn data_w(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #data_w(self.inner) as u32
+                    #data_w(self.inner)
                 }
             }
 
-            fn data_h(&self) -> u32 {
+            fn data_h(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #data_h(self.inner) as u32
+                    #data_h(self.inner)
                 }
             }
 
@@ -168,10 +168,10 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn ld(&self) -> u32 {
+            fn ld(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #ld(self.inner) as u32
+                    #ld(self.inner)
                 }
             }
 

@@ -1,4 +1,8 @@
-use fltk::{app, button, group, prelude::{GroupExt, WidgetExt}, window};
+use fltk::{
+    app, button, group,
+    prelude::{GroupExt, WidgetExt},
+    window,
+};
 
 pub fn show_wizard(_but: &mut button::Button) {
     let mut win = window::Window::default()
