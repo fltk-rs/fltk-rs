@@ -1,4 +1,10 @@
-use fltk::{app, enums::*, prelude::*, text::*, window::*};
+use fltk::{
+    app,
+    enums::*,
+    prelude::*,
+    text::{SimpleTerminal, StyleTableEntry, TextBuffer},
+    window::Window,
+};
 use std::ops::{Deref, DerefMut};
 use std::path::Path;
 use std::process::{Command, Stdio};

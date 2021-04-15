@@ -1,4 +1,4 @@
-use fltk::{app, frame::*, image::*, prelude::*, window::*};
+use fltk::{app, frame::Frame, image::SharedImage, prelude::*, window::Window};
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {

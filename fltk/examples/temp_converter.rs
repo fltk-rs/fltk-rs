@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);

@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use fltk::*;
+use fltk::{prelude::*, *};
 use std::ops::{Deref, DerefMut};
 
 struct MyButton {

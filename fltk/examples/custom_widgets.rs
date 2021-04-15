@@ -1,5 +1,6 @@
 use fltk::{
-    app, button, draw, enums::*, frame::*, image::*, prelude::*, valuator::*, widget::*, window::*,
+    app, button, draw, enums::*, frame::Frame, image::SvgImage, prelude::*, valuator::*,
+    widget::Widget, window::Window,
 };
 use std::ops::{Deref, DerefMut};
 use std::{cell::RefCell, rc::Rc};

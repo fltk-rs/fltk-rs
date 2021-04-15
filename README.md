@@ -52,7 +52,7 @@ For faster builds you can enable ninja builds for the C++ source using the "use-
 An example hello world application:
 
 ```rust
-use fltk::{app, window::*};
+use fltk::{app, prelude::*, window::Window};
 
 fn main() {
     let app = app::App::default();
@@ -65,7 +65,7 @@ fn main() {
 
 Another example showing the basic callback functionality:
 ```rust
-use fltk::{app, button::*, frame::*, window::*};
+use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 fn main() {
     let app = app::App::default();

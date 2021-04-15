@@ -1,8 +1,9 @@
 // Basically a table where the cell contents can be modified
 
 use fltk::{
-    app, draw, enums, input, table, window, BrowserExt, ButtonExt, GroupExt, ImageExt, InputExt,
-    MenuExt, TableExt, ValuatorExt, WidgetBase, WidgetExt,
+    app, draw, enums, input,
+    prelude::{GroupExt, InputExt, TableExt, WidgetBase, WidgetExt},
+    table, window,
 };
 use std::cell::RefCell;
 use std::rc::Rc;

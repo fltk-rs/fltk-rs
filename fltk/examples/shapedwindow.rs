@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 pub struct ShapedWindow {
     frm: frame::Frame,

@@ -88,7 +88,7 @@ impl TextBuffer {
     /// Appends to the buffer
     /// To append and scroll to the end of the buffer:
     /// ```no_run
-    /// use fltk::*;
+    /// use fltk::{prelude::*, *};
     /// let txt = "Some long text!";
     /// let buf = text::TextBuffer::default();
     /// let mut disp = text::TextDisplay::default();

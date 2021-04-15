@@ -23,7 +23,7 @@
 // or be queried using the app::font_count(), app::font_name() and app::font_index() functions.
 // And the can be used using the Font::by_index() or Font::by_name() methods.
 
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let app = app::App::default().load_system_fonts();

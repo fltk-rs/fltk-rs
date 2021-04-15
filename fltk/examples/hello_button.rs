@@ -1,4 +1,4 @@
-use fltk::{app, button::*, frame::*, prelude::*, window::*};
+use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 fn main() {
     let app = app::App::default();

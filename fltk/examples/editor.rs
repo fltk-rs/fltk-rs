@@ -1,4 +1,10 @@
-use fltk::{app, dialog, enums::*, menu, prelude::*, printer, text, window};
+use fltk::{
+    app, dialog,
+    enums::{CallbackTrigger, Color, Event, Font, FrameType, Shortcut},
+    menu,
+    prelude::*,
+    printer, text, window,
+};
 use std::{
     error,
     ops::{Deref, DerefMut},

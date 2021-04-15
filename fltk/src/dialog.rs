@@ -505,7 +505,7 @@ pub fn beep(tp: BeepType) {
 /// FLTK's own FileChooser. Which differs for the Native FileDialog
 /// Example:
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// let mut chooser = dialog::FileChooser::new(
 ///     ".",                    // directory
 ///     "*",                    // filter or pattern
@@ -1055,7 +1055,7 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
 /// Shows a file chooser returning a String.
 /// Example:
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
 /// println!("{}", file);
 /// ```

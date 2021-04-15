@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 const IMG: &str = include_str!("../../screenshots/RustLogo.svg");
 

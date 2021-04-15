@@ -6,7 +6,7 @@ use std::ffi::CString;
 /// Defines a printer object.
 /// Example usage:
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// let mut but = button::Button::default();
 /// but.set_callback(|widget| {
 ///     let mut printer = printer::Printer::default();

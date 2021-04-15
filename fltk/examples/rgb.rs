@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let mut fb: Vec<u8> = vec![0u8; 128 * 128 * 3];

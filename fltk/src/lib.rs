@@ -51,7 +51,7 @@
 //!
 //! Another example showing the basic callback functionality:
 //! ```no_run
-//! use fltk::{app, button::*, frame::*, prelude::*, window::*};
+//! use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 //! let app = app::App::default();
 //! let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 //! let mut frame = Frame::new(0, 0, 400, 200, "");
@@ -270,8 +270,6 @@ pub mod window;
 /// Printing related functions
 #[cfg(not(target_os = "android"))]
 pub mod printer;
-
-pub use prelude::*;
 
 #[macro_use]
 extern crate fltk_derive;

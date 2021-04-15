@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 struct MyFrame {
     f: frame::Frame,

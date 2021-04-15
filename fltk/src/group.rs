@@ -351,7 +351,7 @@ impl Pack {
 /// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing.
 /// Requires explicit calls to add, which is overloaded especially for the layout.
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// let mut grid = group::VGrid::new(0, 0, 400, 300, "");
 /// grid.set_params(3, 3, 5);
 /// grid.add(&button::Button::default());
@@ -433,7 +433,7 @@ impl DerefMut for VGrid {
 /// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing.
 /// Requires explicit calls to add, which is overloaded especially for the layout.
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// let mut grid = group::HGrid::new(0, 0, 400, 300, "");
 /// grid.set_params(3, 3, 5);
 /// grid.add(&button::Button::default());

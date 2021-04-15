@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 const BLUE: u32 = 0x42A5F5;
 const SEL_BLUE: u32 = 0x2196F3;

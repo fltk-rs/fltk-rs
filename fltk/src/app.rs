@@ -180,7 +180,7 @@ impl App {
     /// The font name can be used with Font::by_name, and index with Font::by_index.
     /// # Examples
     /// ```no_run
-    /// use fltk::*;
+    /// use fltk::{prelude::*, *};
     /// let app = app::App::default();
     /// let font = app.load_font("font.ttf").unwrap();
     /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
@@ -405,7 +405,7 @@ where
 
 /// Set a widget callback using a C style API
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// use std::os::raw::*;
 /// // data can be anything, even a different widget
 /// fn cb(w: app::WidgetPtr, data: *mut c_void) {
@@ -632,7 +632,7 @@ pub unsafe fn awake_msg<T>(msg: T) {
 
 /// Receives a custom message
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// if let Some(msg) = unsafe { app::thread_msg::<i32>() } { /* do something */ }
 /// ```
 /// # Safety
@@ -764,7 +764,7 @@ pub fn quit() {
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
 /// Example:
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// fn callback() {
 ///     println!("TICK");
 ///     app::repeat_timeout(1.0, callback);
@@ -796,7 +796,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
 /// The timeout duration `tm` is indicated in seconds
 /// Example:
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// fn callback() {
 ///     println!("TICK");
 ///     app::repeat_timeout(1.0, callback);
@@ -1171,7 +1171,7 @@ pub fn get_system_colors() {
 /// Returns Ok(false) if the event was not handled.
 /// Returns Err on error or in use of one of the reserved values.
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// const CHANGE_FRAME: i32 = 100;
 /// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();
@@ -1207,7 +1207,7 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
 /// Returns Ok(false) if the event was not handled.
 /// Returns Err on error or in use of one of the reserved values.
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// const CHANGE_FRAME: i32 = 100;
 /// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();

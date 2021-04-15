@@ -685,7 +685,7 @@ pub fn reset_spot() {
 /// Captures part of the window and returns raw data.
 /// Example usage:
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// let mut win = window::Window::default();
 /// let image = draw::capture_window(&mut win).unwrap();
 /// ```

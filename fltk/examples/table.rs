@@ -1,6 +1,6 @@
 // Slightly modified translation of https://github.com/fltk/fltk/blob/master/examples/table-simple.cxx
 
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);

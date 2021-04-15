@@ -12,7 +12,7 @@ use std::{
 /// Creates a normal browser.
 /// Example usage:
 /// ```no_run
-/// use fltk::*;
+/// use fltk::{prelude::*, *};
 /// let mut b = browser::Browser::new(10, 10, 900 - 20, 300 - 20, "");
 /// let widths = &[50, 50, 50, 70, 70, 40, 40, 70, 70, 50];
 /// b.set_column_widths(widths);

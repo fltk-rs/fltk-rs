@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let (r, g, b) = utils::hex2rgb(0xfafdf3);
