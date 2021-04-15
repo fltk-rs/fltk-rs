@@ -115,13 +115,13 @@
 //! ### Events
 //!
 //! Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
-//! ```ignored
+//! ```rust,ignored
 //!     /* previous hello world code */
-//!     but.set_callback(move || frame.set_label("Hello World!"));
+//!     but.set_callback(move |_| frame.set_label("Hello World!"));
 //!     app.run().unwrap();
 //! ```
 //! Another way is to use message passing:
-//! ```ignored
+//! ```rust,ignored
 //!     /* previous counter code */
 //!     let (s, r) = app::channel::<Message>();
 //!
@@ -141,8 +141,8 @@
 //! For the remainder of the code, check the full example [here](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter2.rs).
 //!
 //! For custom event handling, the handle() method can be used:
-//! ```ignored
-//!     some_widget.handle(move |ev: Event| {
+//! ```rust,ignored
+//!     some_widget.handle(move |widget, ev: Event| {
 //!         match ev {
 //!             /* handle ev */
 //!         }
@@ -160,12 +160,12 @@
 //! - Plastic
 //!
 //! These can be set using the App::with_scheme() function.
-//! ```ignored
+//! ```rust,ignored
 //! let app = app::App::default().with_scheme(app::Scheme::Gleam);
 //! ```
 //! Themes of individual widgets can be optionally modified using the provided methods in the WidgetBase trait,
 //! such as set_color(), set_label_font(), set_frame() etc:
-//! ```ignored
+//! ```rust,ignored
 //!     some_button.set_color(Color::Light1); //! You can use one of the provided colors in the fltk enums
 //!     some_button.set_color(Color::from_rgb(255, 0, 0)); //! Or you can specify a color by rgb or hex/u32 value
 //!     some_button.set_color(Color::from_u32(0xffebee));
