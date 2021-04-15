@@ -74,7 +74,7 @@ fn main() {
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
     wind.end();
     wind.show();
-    but.set_callback(move || frame.set_label("Hello World!"));
+    but.set_callback(move |_| frame.set_label("Hello World!"));
     app.run().unwrap();
 }
 ```
@@ -132,7 +132,7 @@ Alternatively, you can use packs to layout your widgets:
 Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
 ```rust
     /* previous hello world code */
-    but.set_callback(move || frame.set_label("Hello World!"));
+    but.set_callback(move |_| frame.set_label("Hello World!"));
     app.run().unwrap();
 ```
 Another way is to use message passing:
@@ -156,7 +156,7 @@ For the remainder of the code, check the full example [here](fltk/examples/count
 
 For custom event handling, the handle() method can be used:
 ```rust
-    some_widget.handle(move |ev: Event| {
+    some_widget.handle(move |widget, ev: Event| {
         match ev {
             /* handle ev */
         }
