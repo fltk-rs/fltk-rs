@@ -235,9 +235,9 @@ pub unsafe trait WidgetExt {
     /// Sets the widget label's font
     fn set_label_font(&mut self, font: Font);
     /// Returns the widget label's size
-    fn label_size(&self) -> u16;
+    fn label_size(&self) -> i32;
     /// Sets the widget label's size
-    fn set_label_size(&mut self, sz: u16);
+    fn set_label_size(&mut self, sz: i32);
     /// Returns the widget label's type
     fn label_type(&self) -> LabelType;
     /// Sets the widget label's type

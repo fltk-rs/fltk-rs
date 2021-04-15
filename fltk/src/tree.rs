@@ -1256,15 +1256,16 @@ impl TreeItem {
     }
 
     /// Sets the label's size
-    pub fn set_label_size(&mut self, val: i32) {
+    pub fn set_label_size(&mut self, sz: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_set_labelsize(self.inner, val as i32) }
+        let sz = if sz < 1 { 1 } else { sz }; 
+        unsafe { Fl_Tree_Item_set_labelsize(self.inner, sz) }
     }
 
     /// Gets the label's size
     pub fn label_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_labelsize(self.inner) as i32 }
+        unsafe { Fl_Tree_Item_labelsize(self.inner) }
     }
 
     /// Sets the label's foreground color

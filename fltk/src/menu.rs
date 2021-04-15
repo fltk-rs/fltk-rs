@@ -177,7 +177,8 @@ impl MenuItem {
     /// Sets the label size of the menu item
     pub fn set_label_size(&mut self, sz: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Menu_Item_set_label_size(self.inner, sz as i32) }
+        let sz = if sz < 1 { 1 } else { sz }; 
+        unsafe { Fl_Menu_Item_set_label_size(self.inner, sz) }
     }
 
     /// Returns the value of the menu item

@@ -522,14 +522,15 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #set_label_font(self.inner, font.bits() as i32) }
             }
 
-            fn label_size(&self) -> u16 {
+            fn label_size(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #label_size(self.inner) as u16 }
+                unsafe { #label_size(self.inner) }
             }
 
-            fn set_label_size(&mut self, sz: u16) {
+            fn set_label_size(&mut self, sz: i32) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_size(self.inner, sz as i32) }
+                let sz = if sz < 1 { 1 } else { sz }; 
+                unsafe { #set_label_size(self.inner, sz) }
             }
 
             fn label_type(&self) -> LabelType {
