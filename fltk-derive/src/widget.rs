@@ -522,14 +522,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #set_label_font(self.inner, font.bits() as i32) }
             }
 
-            fn label_size(&self) -> i32 {
+            fn label_size(&self) -> u16 {
                 assert!(!self.was_deleted());
-                unsafe { #label_size(self.inner) }
+                unsafe { #label_size(self.inner) as u16 }
             }
 
-            fn set_label_size(&mut self, sz: i32) {
+            fn set_label_size(&mut self, sz: u16) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_size(self.inner, sz) }
+                unsafe { #set_label_size(self.inner, sz as i32) }
             }
 
             fn label_type(&self) -> LabelType {
@@ -912,7 +912,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn set_type<T: WidgetType>(&mut self, typ: T) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_type(self.inner, typ.to_int());
+                    #set_type(self.inner, typ.to_i32());
                 }
             }
 
@@ -1011,7 +1011,7 @@ pub fn impl_widget_type(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl WidgetType for #name {
-            fn to_int(self) -> i32 {
+            fn to_i32(self) -> i32 {
                 self as i32
             }
 

@@ -84,7 +84,7 @@ impl From<std::env::VarError> for FltkError {
 /// A trait defined for all enums passable to the WidgetExt::set_type() method
 pub trait WidgetType {
     /// Get the integral representation of the widget type
-    fn to_int(self) -> i32;
+    fn to_i32(self) -> i32;
     /// Get the widget type from its integral representation
     fn from_i32(val: i32) -> Self;
 }
@@ -235,9 +235,9 @@ pub unsafe trait WidgetExt {
     /// Sets the widget label's font
     fn set_label_font(&mut self, font: Font);
     /// Returns the widget label's size
-    fn label_size(&self) -> i32;
+    fn label_size(&self) -> u16;
     /// Sets the widget label's size
-    fn set_label_size(&mut self, sz: i32);
+    fn set_label_size(&mut self, sz: u16);
     /// Returns the widget label's type
     fn label_type(&self) -> LabelType;
     /// Sets the widget label's type

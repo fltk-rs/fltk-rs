@@ -369,6 +369,12 @@ impl Color {
         Color::from_rgb(r, g, b)
     }
 
+    /// Returns a color from hex or decimal
+    pub fn from_hex(val: u32) -> Color {
+        let (r, g, b) = crate::utils::hex2rgb(val);
+        Color::from_rgb(r, g, b)
+    }
+
     /// Returns a color by index of RGBI
     pub fn by_index(idx: u8) -> Color {
         unsafe { std::mem::transmute(idx as u32) }
