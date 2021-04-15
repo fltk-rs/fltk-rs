@@ -1,6 +1,12 @@
 use std::{env, path::PathBuf, process::Command};
 
 pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
+    if !crate::utils::has_prog("git") {
+        panic!("Git is needed to retrieve the fltk source files!\nDid you intend to use the fltk-bundled feature?");
+    }
+    if !crate::utils::has_prog("cmake") {
+        panic!("CMake is needed to build the fltk source files!\nDid you intend to use the fltk-bundled feature?");
+    }
     println!("cargo:rerun-if-env-changed=CC");
     println!("cargo:rerun-if-env-changed=CXX");
     println!("cargo:rerun-if-changed=cfltk/CMakeLists.txt");
@@ -67,7 +73,7 @@ pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
             dst.define("CFLTK_BUILD_SHARED", "ON");
         }
 
-        if cfg!(feature = "use-ninja") || has_ninja() {
+        if cfg!(feature = "use-ninja") || crate::utils::has_prog("ninja") {
             dst.generator("Ninja");
         }
 
@@ -152,21 +158,5 @@ pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
-    }
-}
-
-fn has_ninja() -> bool {
-    match std::process::Command::new("ninja")
-        .arg("--version")
-        .output()
-    {
-        Ok(out) => {
-            if out.stdout.len() > 0 {
-                true
-            } else {
-                false
-            }
-        }
-        _ => false,
     }
 }
