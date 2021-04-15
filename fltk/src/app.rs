@@ -219,13 +219,13 @@ impl App {
 }
 
 /// Set the application's scrollbar size
-pub fn set_scrollbar_size(sz: u16) {
+pub fn set_scrollbar_size(sz: i32) {
     unsafe { Fl_set_scrollbar_size(sz as i32) }
 }
 
 /// Get the app's scrollbar size
-pub fn scrollbar_size() -> u16 {
-    unsafe { Fl_scrollbar_size() as u16 }
+pub fn scrollbar_size() -> i32 {
+    unsafe { Fl_scrollbar_size() as i32 }
 }
 
 /// Get the grabbed window
@@ -356,8 +356,8 @@ pub fn event_is_click() -> bool {
 }
 
 /// Returns the duration of an event
-pub fn event_length() -> u16 {
-    unsafe { Fl_event_length() as u16 }
+pub fn event_length() -> i32 {
+    unsafe { Fl_event_length() as i32 }
 }
 
 /// Returns the state of the event
@@ -1243,12 +1243,12 @@ pub fn flush() {
 }
 
 /// Set the screen scale
-pub fn set_screen_scale(n: u16, factor: f32) {
+pub fn set_screen_scale(n: i32, factor: f32) {
     unsafe { Fl_set_screen_scale(n as i32, factor) }
 }
 
 /// Get the screen scale
-pub fn screen_scale(n: u16) -> f32 {
+pub fn screen_scale(n: i32) -> f32 {
     unsafe { Fl_screen_scale(n as i32) }
 }
 
@@ -1258,8 +1258,8 @@ pub fn screen_scaling_supported() -> bool {
 }
 
 /// Get the screen count
-pub fn screen_count() -> u16 {
-    unsafe { Fl_screen_count() as u16 }
+pub fn screen_count() -> i32 {
+    unsafe { Fl_screen_count() as i32 }
 }
 
 /// Open the current display

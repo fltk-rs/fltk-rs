@@ -86,28 +86,28 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn maximum_size(&self) -> u16 {
+            fn maximum_size(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #maximum_size(self.inner) as u16
+                    #maximum_size(self.inner) as i32
                 }
             }
 
-            fn set_maximum_size(&mut self, val: u16) {
+            fn set_maximum_size(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_maximum_size(self.inner, val as i32)
                 }
             }
 
-            fn position(&self) -> u16 {
+            fn position(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #position(self.inner) as u16
+                    #position(self.inner) as i32
                 }
             }
 
-            fn set_position(&mut self, val: u16) -> Result<(), FltkError> {
+            fn set_position(&mut self, val: i32) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
                     let x = #set_position(self.inner, val as i32);
@@ -118,14 +118,14 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn mark(&self) -> u16 {
+            fn mark(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #mark(self.inner) as u16
+                    #mark(self.inner) as i32
                 }
             }
 
-            fn set_mark(&mut self, val: u16) -> Result<(), FltkError> {
+            fn set_mark(&mut self, val: i32) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
                     let x = #set_mark(self.inner, val as i32);
@@ -136,7 +136,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn replace(&mut self, beg: u16, end: u16, val: &str) -> Result<(), FltkError> {
+            fn replace(&mut self, beg: i32, end: i32, val: &str) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
                 let val = CString::safe_new(val);
                 unsafe {
@@ -233,14 +233,14 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn text_size(&self) -> u16 {
+            fn text_size(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #text_size(self.inner) as u16
+                    #text_size(self.inner) as i32
                 }
             }
 
-            fn set_text_size(&mut self, sz: u16) {
+            fn set_text_size(&mut self, sz: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_text_size(self.inner, sz as i32)

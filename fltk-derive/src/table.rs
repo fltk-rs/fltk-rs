@@ -243,31 +243,31 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_rows(&mut self, val: u16) {
+            fn set_rows(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_rows(self.inner, val as i32)
                 }
             }
 
-            fn rows(&self) -> u16 {
+            fn rows(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #rows(self.inner) as u16
+                    #rows(self.inner) as i32
                 }
             }
 
-            fn set_cols(&mut self, val: u16) {
+            fn set_cols(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_cols(self.inner, val as i32)
                 }
             }
 
-            fn cols(&self) -> u16 {
+            fn cols(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #cols(self.inner) as u16
+                    #cols(self.inner) as i32
                 }
             }
 
@@ -318,28 +318,28 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn col_resize_min(&self) -> u16 {
+            fn col_resize_min(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #col_resize_min(self.inner)  as u16
+                    #col_resize_min(self.inner)  as i32
                 }
             }
 
-            fn set_col_resize_min(&mut self, val: u16) {
+            fn set_col_resize_min(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_col_resize_min(self.inner, val as i32)
                 }
             }
 
-            fn row_resize_min(&self) -> u16 {
+            fn row_resize_min(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #row_resize_min(self.inner) as u16
+                    #row_resize_min(self.inner) as i32
                 }
             }
 
-            fn set_row_resize_min(&mut self, val: u16) {
+            fn set_row_resize_min(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_row_resize_min(self.inner, val as i32)
@@ -573,31 +573,31 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn scrollbar_size(&self) -> u16 {
+            fn scrollbar_size(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #scrollbar_size(self.inner) as u16
+                    #scrollbar_size(self.inner) as i32
                 }
             }
 
-            fn set_scrollbar_size(&mut self, new_size: u16) {
+            fn set_scrollbar_size(&mut self, new_size: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_scrollbar_size(self.inner, new_size as i32)
                 }
             }
 
-            fn set_tab_cell_nav(&mut self, val: u16) {
+            fn set_tab_cell_nav(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_tab_cell_nav(self.inner, val as i32)
                 }
             }
 
-            fn tab_cell_nav(&self) -> u16 {
+            fn tab_cell_nav(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #tab_cell_nav(self.inner) as u16
+                    #tab_cell_nav(self.inner) as i32
                 }
             }
 

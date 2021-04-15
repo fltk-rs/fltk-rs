@@ -1,6 +1,6 @@
 use fltk::{
     app,
-    enums::*,
+    enums::{Color, Event, Font, Key},
     prelude::*,
     text::{SimpleTerminal, StyleTableEntry, TextBuffer},
     window::Window,
@@ -170,7 +170,7 @@ fn main() {
                 }
                 Key::BackSpace => {
                     if !term.cmd.is_empty() {
-                        let text_len = term.text().len() as u16;
+                        let text_len = term.text().len() as i32;
                         term.buffer().unwrap().remove(text_len - 1, text_len);
                         term.sbuf.remove(text_len - 1, text_len);
                         term.cmd.pop().unwrap();

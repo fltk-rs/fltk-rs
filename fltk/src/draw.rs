@@ -493,7 +493,7 @@ pub fn end_complex_polygon() {
 }
 
 /// Sets the current font, which is then used in various drawing routines
-pub fn set_font(face: Font, fsize: u16) {
+pub fn set_font(face: Font, fsize: i32) {
     unsafe { Fl_set_draw_font(face.bits() as i32, fsize as i32) }
 }
 
@@ -503,17 +503,17 @@ pub fn font() -> Font {
 }
 
 /// Gets the current font size, which is used in various drawing routines
-pub fn size() -> u16 {
-    unsafe { Fl_size() as u16 }
+pub fn size() -> i32 {
+    unsafe { Fl_size() as i32 }
 }
 
 /// Returns the recommended minimum line spacing for the current font
-pub fn height() -> u16 {
-    unsafe { Fl_height() as u16 }
+pub fn height() -> i32 {
+    unsafe { Fl_height() as i32 }
 }
 
 /// Sets the line spacing for the current font
-pub fn set_height(font: Font, size: u16) {
+pub fn set_height(font: Font, size: i32) {
     unsafe {
         Fl_set_height(font.bits() as i32, size as i32);
     }
@@ -662,7 +662,7 @@ pub fn set_status(x: i32, y: i32, w: i32, h: i32) {
 }
 
 /// Sets spot within the window
-pub fn set_spot<Win: WindowExt>(font: Font, size: u16, x: i32, y: i32, w: i32, h: i32, win: &Win) {
+pub fn set_spot<Win: WindowExt>(font: Font, size: i32, x: i32, y: i32, w: i32, h: i32, win: &Win) {
     unsafe {
         assert!(!win.was_deleted());
         Fl_set_spot(

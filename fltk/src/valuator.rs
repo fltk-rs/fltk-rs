@@ -96,14 +96,14 @@ pub struct Dial {
 
 impl Dial {
     /// Get the angles of the dial
-    pub fn angles(&self) -> (u16, u16) {
+    pub fn angles(&self) -> (i32, i32) {
         let angle1 = unsafe { Fl_Dial_angle1(self.inner) };
         let angle2 = unsafe { Fl_Dial_angle1(self.inner) };
-        (angle1 as u16, angle2 as u16)
+        (angle1 as i32, angle2 as i32)
     }
 
     /// Set the angles of the dial
-    pub fn set_angles(&mut self, angle1: u16, angle2: u16) {
+    pub fn set_angles(&mut self, angle1: i32, angle2: i32) {
         if angle1 <= 360 {
             unsafe {
                 Fl_Dial_set_angle1(self.inner, angle1 as _);
@@ -126,14 +126,14 @@ pub struct LineDial {
 
 impl LineDial {
     /// Get the angles of the dial
-    pub fn angles(&self) -> (u16, u16) {
+    pub fn angles(&self) -> (i32, i32) {
         let angle1 = unsafe { Fl_Dial_angle1(self.inner as _) };
         let angle2 = unsafe { Fl_Dial_angle1(self.inner as _) };
-        (angle1 as u16, angle2 as u16)
+        (angle1 as i32, angle2 as i32)
     }
 
     /// Set the angles of the dial
-    pub fn set_angles(&mut self, angle1: u16, angle2: u16) {
+    pub fn set_angles(&mut self, angle1: i32, angle2: i32) {
         if angle1 <= 360 {
             unsafe {
                 Fl_Dial_set_angle1(self.inner as _, angle1 as _);
@@ -251,13 +251,13 @@ impl ValueSlider {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u16 {
+    pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_text_size(self.inner) as u16 }
+        unsafe { Fl_Value_Slider_text_size(self.inner) as i32 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u16) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_set_text_size(self.inner, s as i32) }
     }
@@ -324,13 +324,13 @@ impl ValueInput {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u16 {
+    pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_text_size(self.inner) as u16 }
+        unsafe { Fl_Value_Input_text_size(self.inner) as i32 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u16) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_text_size(self.inner, s as i32) }
     }
@@ -382,13 +382,13 @@ impl ValueOutput {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u16 {
+    pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_text_size(self.inner) as u16 }
+        unsafe { Fl_Value_Output_text_size(self.inner) as i32 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u16) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Output_set_text_size(self.inner, s as i32) }
     }
@@ -422,14 +422,14 @@ pub struct FillDial {
 
 impl FillDial {
     /// Get the angles of the dial
-    pub fn angles(&self) -> (u16, u16) {
+    pub fn angles(&self) -> (i32, i32) {
         let angle1 = unsafe { Fl_Dial_angle1(self.inner as _) };
         let angle2 = unsafe { Fl_Dial_angle1(self.inner as _) };
-        (angle1 as u16, angle2 as u16)
+        (angle1 as i32, angle2 as i32)
     }
 
     /// Set the angles of the dial
-    pub fn set_angles(&mut self, angle1: u16, angle2: u16) {
+    pub fn set_angles(&mut self, angle1: i32, angle2: i32) {
         if angle1 <= 360 {
             unsafe {
                 Fl_Dial_set_angle1(self.inner as _, angle1 as _);
@@ -554,13 +554,13 @@ impl HorValueSlider {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u16 {
+    pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_text_size(self.inner) as u16 }
+        unsafe { Fl_Hor_Value_Slider_text_size(self.inner) as i32 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u16) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_set_text_size(self.inner, s as i32) }
     }

@@ -232,9 +232,9 @@ impl CheckBrowser {
     }
 
     /// Returns the selected line, returns 0 if no line is selected
-    pub fn value(&self) -> u16 {
+    pub fn value(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_value(self.inner) as u16 }
+        unsafe { Fl_Check_Browser_value(self.inner) as i32 }
     }
 
     /// Get the text of the item
@@ -263,13 +263,13 @@ impl CheckBrowser {
     }
 
     /// Gets the text size
-    pub fn text_size(&self) -> u16 {
+    pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_text_size(self.inner) as u16 }
+        unsafe { Fl_Check_Browser_text_size(self.inner) as i32 }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u16) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_text_size(self.inner, s as i32) }
     }
@@ -287,25 +287,25 @@ impl CheckBrowser {
     }
 
     /// Gets the vertical scroll position of the list as a pixel position
-    pub fn position(&self) -> u16 {
+    pub fn position(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_position(self.inner) as u16 }
+        unsafe { Fl_Check_Browser_position(self.inner) as i32 }
     }
 
     /// Sets the vertical scroll position of the list as a pixel position
-    pub fn set_position(&mut self, pos: u16) {
+    pub fn set_position(&mut self, pos: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_position(self.inner, pos as i32) }
     }
 
     /// Gets the horizontal scroll position of the list as a pixel position
-    pub fn hposition(&self) -> u16 {
+    pub fn hposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_hposition(self.inner) as u16 }
+        unsafe { Fl_Check_Browser_hposition(self.inner) as i32 }
     }
 
     /// Sets the horizontal scroll position of the list as a pixel position
-    pub fn set_hposition(&mut self, pos: u16) {
+    pub fn set_hposition(&mut self, pos: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_hposition(self.inner, pos as i32) }
     }
@@ -323,13 +323,13 @@ impl CheckBrowser {
     }
 
     /// Gets the scrollbar size
-    pub fn scrollbar_size(&self) -> u16 {
+    pub fn scrollbar_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_scrollbar_size(self.inner) as u16 }
+        unsafe { Fl_Check_Browser_scrollbar_size(self.inner) as i32 }
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&mut self, new_size: u16) {
+    pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_scrollbar_size(self.inner, new_size as i32) }
     }

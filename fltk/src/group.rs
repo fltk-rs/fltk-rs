@@ -97,31 +97,31 @@ impl Scroll {
     }
 
     /// Returns the x position
-    pub fn xposition(&self) -> u16 {
+    pub fn xposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_xposition(self.inner) as u16 }
+        unsafe { Fl_Scroll_xposition(self.inner) as i32 }
     }
 
     /// Returns the y position
-    pub fn yposition(&self) -> u16 {
+    pub fn yposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_yposition(self.inner) as u16 }
+        unsafe { Fl_Scroll_yposition(self.inner) as i32 }
     }
 
     /// Scrolls from ```from``` to ```to```
-    pub fn scroll_to(&mut self, from: u16, to: u16) {
+    pub fn scroll_to(&mut self, from: i32, to: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Scroll_scroll_to(self.inner, from as i32, to as i32) }
     }
 
     /// Gets the scrollbar size
-    pub fn scrollbar_size(&self) -> u16 {
+    pub fn scrollbar_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scrollbar_size(self.inner) as u16 }
+        unsafe { Fl_Scroll_scrollbar_size(self.inner) as i32 }
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&mut self, new_size: u16) {
+    pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Scroll_set_scrollbar_size(self.inner, new_size as i32) }
     }
@@ -323,7 +323,7 @@ impl Pack {
         let h = (self.height() - spacing) / children;
 
         for i in 0..children {
-            let mut c = self.child(i as u16).unwrap();
+            let mut c = self.child(i as i32).unwrap();
             let c_w = c.width();
             let c_h = c.height();
             if t == PackType::Vertical {
@@ -392,7 +392,7 @@ impl VGrid {
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
         let rem = self.current / self.cols;
         if rem < self.rows {
-            let hpack = self.vpack.child(rem as u16).unwrap();
+            let hpack = self.vpack.child(rem as i32).unwrap();
             let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
             hpack.end();
             hpack.add(w);
@@ -474,7 +474,7 @@ impl HGrid {
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
         let rem = self.current / self.rows;
         if rem < self.cols {
-            let vpack = self.hpack.child(rem as u16).unwrap();
+            let vpack = self.hpack.child(rem as i32).unwrap();
             let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
             vpack.end();
             vpack.add(w);

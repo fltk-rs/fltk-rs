@@ -210,7 +210,7 @@ impl Tree {
     }
 
     /// Inserts a TreeItem at a position ```pos```
-    pub fn insert(&mut self, item: &TreeItem, name: &str, pos: u16) -> Option<TreeItem> {
+    pub fn insert(&mut self, item: &TreeItem, name: &str, pos: i32) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if item.inner.is_null() {
             return None;
@@ -645,13 +645,13 @@ impl Tree {
     }
 
     /// Gets the items' label size
-    pub fn item_label_size(&self) -> u16 {
+    pub fn item_label_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_item_labelsize(self.inner) as u16 }
+        unsafe { Fl_Tree_item_labelsize(self.inner) as i32 }
     }
 
     /// Sets the items' label size
-    pub fn set_item_label_size(&mut self, val: u16) {
+    pub fn set_item_label_size(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_labelsize(self.inner, val as i32) }
     }
@@ -693,109 +693,109 @@ impl Tree {
     }
 
     /// Gets the left margin
-    pub fn margin_left(&self) -> u16 {
+    pub fn margin_left(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_marginleft(self.inner) as u16 }
+        unsafe { Fl_Tree_marginleft(self.inner) as i32 }
     }
 
     /// Sets the left margin
-    pub fn set_margin_left(&mut self, val: u16) {
+    pub fn set_margin_left(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_marginleft(self.inner, val as i32) }
     }
 
     /// Gets the top margin
-    pub fn margin_top(&self) -> u16 {
+    pub fn margin_top(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_margintop(self.inner) as u16 }
+        unsafe { Fl_Tree_margintop(self.inner) as i32 }
     }
 
     /// Sets the top margin
-    pub fn set_margin_top(&mut self, val: u16) {
+    pub fn set_margin_top(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_margintop(self.inner, val as i32) }
     }
 
     /// Gets the bottom margin
-    pub fn margin_bottom(&self) -> u16 {
+    pub fn margin_bottom(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_marginbottom(self.inner) as u16 }
+        unsafe { Fl_Tree_marginbottom(self.inner) as i32 }
     }
 
     /// Sets the bottom margin
-    pub fn set_margin_bottom(&mut self, val: u16) {
+    pub fn set_margin_bottom(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_marginbottom(self.inner, val as i32) }
     }
 
     /// Gets the line spacing
-    pub fn line_spacing(&self) -> u16 {
+    pub fn line_spacing(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_linespacing(self.inner) as u16 }
+        unsafe { Fl_Tree_linespacing(self.inner) as i32 }
     }
 
     /// Sets the line spacing
-    pub fn set_line_spacing(&mut self, val: u16) {
+    pub fn set_line_spacing(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_linespacing(self.inner, val as i32) }
     }
 
     /// Gets the open child bottom margin
-    pub fn open_child_margin_bottom(&self) -> u16 {
+    pub fn open_child_margin_bottom(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_openchild_marginbottom(self.inner) as u16 }
+        unsafe { Fl_Tree_openchild_marginbottom(self.inner) as i32 }
     }
 
     /// Sets the open child bottom margin
-    pub fn set_open_child_margin_bottom(&mut self, val: u16) {
+    pub fn set_open_child_margin_bottom(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_openchild_marginbottom(self.inner, val as i32) }
     }
 
     /// Gets the user icon left margin
-    pub fn user_icon_margin_left(&self) -> u16 {
+    pub fn user_icon_margin_left(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_usericonmarginleft(self.inner) as u16 }
+        unsafe { Fl_Tree_usericonmarginleft(self.inner) as i32 }
     }
 
     /// Sets the user icon left margin
-    pub fn set_user_icon_margin_left(&mut self, val: u16) {
+    pub fn set_user_icon_margin_left(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_usericonmarginleft(self.inner, val as i32) }
     }
 
     /// Gets the label's left margin
-    pub fn label_margin_left(&self) -> u16 {
+    pub fn label_margin_left(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_labelmarginleft(self.inner) as u16 }
+        unsafe { Fl_Tree_labelmarginleft(self.inner) as i32 }
     }
 
     /// Sets the label's left margin
-    pub fn set_label_margin_left(&mut self, val: u16) {
+    pub fn set_label_margin_left(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_labelmarginleft(self.inner, val as i32) }
     }
 
     /// Gets the widget's left margin
-    pub fn widget_margin_left(&self) -> u16 {
+    pub fn widget_margin_left(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_widgetmarginleft(self.inner) as u16 }
+        unsafe { Fl_Tree_widgetmarginleft(self.inner) as i32 }
     }
 
     /// Sets the widget's left margin
-    pub fn set_widget_margin_left(&mut self, val: u16) {
+    pub fn set_widget_margin_left(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_widgetmarginleft(self.inner, val as i32) }
     }
 
     /// Gets the connector's width
-    pub fn connector_width(&self) -> u16 {
+    pub fn connector_width(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_connectorwidth(self.inner) as u16 }
+        unsafe { Fl_Tree_connectorwidth(self.inner) as i32 }
     }
 
     /// Sets the connector's width
-    pub fn set_connector_width(&mut self, val: u16) {
+    pub fn set_connector_width(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_connectorwidth(self.inner, val as i32) }
     }
@@ -1084,7 +1084,7 @@ impl Tree {
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&mut self, sz: u16) {
+    pub fn set_scrollbar_size(&mut self, sz: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_scrollbar_size(self.inner, sz as i32) }
     }
@@ -1256,15 +1256,15 @@ impl TreeItem {
     }
 
     /// Sets the label's size
-    pub fn set_label_size(&mut self, val: u16) {
+    pub fn set_label_size(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_labelsize(self.inner, val as i32) }
     }
 
     /// Gets the label's size
-    pub fn label_size(&self) -> u16 {
+    pub fn label_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_labelsize(self.inner) as u16 }
+        unsafe { Fl_Tree_Item_labelsize(self.inner) as i32 }
     }
 
     /// Sets the label's foreground color
@@ -1321,13 +1321,13 @@ impl TreeItem {
     }
 
     /// Gets the children count
-    pub fn children(&self) -> u16 {
+    pub fn children(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_children(self.inner) as u16 }
+        unsafe { Fl_Tree_Item_children(self.inner) as i32 }
     }
 
     /// Gets the child item at idx position
-    pub fn child(&self, idx: u16) -> Option<TreeItem> {
+    pub fn child(&self, idx: i32) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe {
             TreeItem::from_raw(Fl_Tree_Item_child(self.inner, idx as i32) as *mut Fl_Tree_Item)
@@ -1341,7 +1341,7 @@ impl TreeItem {
     }
 
     /// Find a child using its name, returns index result
-    pub fn find_child(&mut self, name: &str) -> Result<u16, FltkError> {
+    pub fn find_child(&mut self, name: &str) -> Result<i32, FltkError> {
         assert!(!self.was_deleted());
         let name = CString::safe_new(name);
         unsafe {
@@ -1349,7 +1349,7 @@ impl TreeItem {
             if x == -1 {
                 Err(FltkError::Internal(FltkErrorKind::FailedOperation))
             } else {
-                Ok(x as u16)
+                Ok(x as i32)
             }
         }
     }
@@ -1413,13 +1413,13 @@ impl TreeItem {
     }
 
     /// Deparent a child by index
-    pub fn deparent(&mut self, index: u16) -> Option<TreeItem> {
+    pub fn deparent(&mut self, index: i32) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_Item_deparent(self.inner, index as i32)) }
     }
 
     /// Reparent a child by index
-    pub fn reparent(&mut self, new_child: &TreeItem, index: u16) -> Result<(), FltkError> {
+    pub fn reparent(&mut self, new_child: &TreeItem, index: i32) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !new_child.was_deleted());
         unsafe {
             match Fl_Tree_Item_reparent(self.inner, new_child.inner, index as i32) {
@@ -1430,7 +1430,7 @@ impl TreeItem {
     }
 
     /// Move item
-    pub fn move_item(&mut self, to: u16, from: u16) -> Result<(), FltkError> {
+    pub fn move_item(&mut self, to: i32, from: i32) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
             match Fl_Tree_Item_move(self.inner, to as i32, from as i32) {
@@ -1463,7 +1463,7 @@ impl TreeItem {
     }
 
     /// Move item into another item
-    pub fn move_into(&mut self, item: &TreeItem, pos: u16) -> Result<(), FltkError> {
+    pub fn move_into(&mut self, item: &TreeItem, pos: i32) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !item.was_deleted());
         unsafe {
             match Fl_Tree_Item_move_into(self.inner, item.inner, pos as i32) {
@@ -1474,9 +1474,9 @@ impl TreeItem {
     }
 
     /// Gets the depth of the item
-    pub fn depth(&self) -> u16 {
+    pub fn depth(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_depth(self.inner) as u16 }
+        unsafe { Fl_Tree_Item_depth(self.inner) as i32 }
     }
 
     /// Gets the previous item
@@ -1504,7 +1504,7 @@ impl TreeItem {
     }
 
     /// Update surrounding siblings
-    pub fn update_prev_next(&mut self, index: u16) {
+    pub fn update_prev_next(&mut self, index: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_update_prev_next(self.inner, index as i32) }
     }
@@ -1558,7 +1558,7 @@ impl TreeItem {
     }
 
     /// Select an item at index
-    pub fn select(&mut self, index: u16) {
+    pub fn select(&mut self, index: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_select(self.inner, index as i32) }
     }
@@ -1570,9 +1570,9 @@ impl TreeItem {
     }
 
     /// Select all subitems, returns number of selected items
-    pub fn select_all(&mut self) -> u16 {
+    pub fn select_all(&mut self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_select_all(self.inner) as u16 }
+        unsafe { Fl_Tree_Item_select_all(self.inner) as i32 }
     }
 
     /// Deselect an item
@@ -1582,9 +1582,9 @@ impl TreeItem {
     }
 
     /// Deselect all subitems
-    pub fn deselect_all(&mut self) -> u16 {
+    pub fn deselect_all(&mut self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_deselect_all(self.inner) as u16 }
+        unsafe { Fl_Tree_Item_deselect_all(self.inner) as i32 }
     }
 
     /// Returns whether an item is root
@@ -1657,8 +1657,8 @@ impl Iterator for TreeItem {
 
 impl TreeItemArray {
     /// Returns the len() of the array
-    fn total(&self) -> u16 {
-        unsafe { Fl_Tree_Item_Array_total(self.inner) as u16 }
+    fn total(&self) -> i32 {
+        unsafe { Fl_Tree_Item_Array_total(self.inner) as i32 }
     }
 
     /// Swaps children
@@ -1699,7 +1699,7 @@ impl TreeItemArray {
 
     /// Insert an item to the array at pos
     #[allow(dead_code)]
-    fn insert(&mut self, pos: u16, new_item: TreeItem) {
+    fn insert(&mut self, pos: i32, new_item: TreeItem) {
         unsafe { Fl_Tree_Item_Array_insert(self.inner, pos as i32, new_item.inner) }
     }
 
@@ -1722,7 +1722,7 @@ impl TreeItemArray {
     }
 
     /// Gets the item at idx
-    fn at(&self, idx: u16) -> Option<TreeItem> {
+    fn at(&self, idx: i32) -> Option<TreeItem> {
         unsafe { TreeItem::from_raw(Fl_Tree_Item_Array_at(self.inner, idx as i32)) }
     }
 

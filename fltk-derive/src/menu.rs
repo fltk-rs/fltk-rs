@@ -102,7 +102,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn insert<F: FnMut(&mut Self) + 'static>(&mut self, idx: u16, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
+            fn insert<F: FnMut(&mut Self) + 'static>(&mut self, idx: i32, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(name);
                 unsafe {
@@ -132,7 +132,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn insert_emit<T: 'static + Clone + Send + Sync>(
                 &mut self,
-                idx: u16,
+                idx: i32,
                 label: &str,
                 shortcut: Shortcut,
                 flag: crate::menu::MenuFlag,
@@ -142,7 +142,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 self.insert(idx, label, shortcut, flag, move|_| sender.send(msg.clone()))
             }
 
-            fn remove(&mut self, idx: u16) {
+            fn remove(&mut self, idx: i32) {
                 assert!(!self.was_deleted());
                 let idx = if idx < self.size() { idx } else { self.size() - 1 };
                 unsafe {
@@ -176,11 +176,11 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn find_index(&self, label: &str) -> u16 {
+            fn find_index(&self, label: &str) -> i32 {
                 assert!(!self.was_deleted());
                 let label = CString::safe_new(label);
                 unsafe {
-                    #find_index(self.inner, label.as_ptr()) as u16
+                    #find_index(self.inner, label.as_ptr()) as i32
                 }
             }
 
@@ -198,14 +198,14 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn text_size(&self) -> u16 {
+            fn text_size(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #text_size(self.inner) as u16
+                    #text_size(self.inner) as i32
                 }
             }
 
-            fn set_text_size(&mut self, c: u16) {
+            fn set_text_size(&mut self, c: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_text_size(self.inner, c as i32)
@@ -280,7 +280,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 #clear(self.inner);
             }
 
-            fn clear_submenu(&mut self, idx: u16) -> Result<(), FltkError> {
+            fn clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
                     match #clear_submenu(self.inner, idx as i32) {
@@ -290,7 +290,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn unsafe_clear_submenu(&mut self, idx: u16) -> Result<(), FltkError> {
+            unsafe fn unsafe_clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
                 let x = self.at(idx);
                 if x.is_none() {
@@ -318,14 +318,14 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
             }
 
 
-            fn size(&self) -> u16 {
+            fn size(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #size(self.inner) as u16
+                    #size(self.inner) as i32
                 }
             }
 
-            fn text(&self, idx: u16) -> Option<String> {
+            fn text(&self, idx: i32) -> Option<String> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let text = #text(self.inner, idx as i32);
@@ -337,7 +337,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn at(&self, idx: u16) -> Option<crate::menu::MenuItem> {
+            fn at(&self, idx: i32) -> Option<crate::menu::MenuItem> {
                 assert!(!self.was_deleted());
                 if idx >= self.size() {
                     return None;
@@ -354,14 +354,14 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn mode(&self, idx: u16) -> crate::menu::MenuFlag {
+            fn mode(&self, idx: i32) -> crate::menu::MenuFlag {
                 assert!(!self.was_deleted());
                 unsafe {
                     mem::transmute(#mode(self.inner, idx as i32))
                 }
             }
 
-            fn set_mode(&mut self, idx: u16, flag: crate::menu::MenuFlag) {
+            fn set_mode(&mut self, idx: i32, flag: crate::menu::MenuFlag) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #set_mode(self.inner, idx as i32, flag as i32)

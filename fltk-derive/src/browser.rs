@@ -120,7 +120,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         unsafe impl BrowserExt for #name {
-            fn remove(&mut self, line: u16) {
+            fn remove(&mut self, line: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #remove(self.inner, line as i32)
@@ -135,7 +135,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn insert(&mut self, line: u16, item: &str) {
+            fn insert(&mut self, line: i32, item: &str) {
                 assert!(!self.was_deleted());
                 let item = CString::safe_new(item);
                 unsafe {
@@ -143,14 +143,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn move_item(&mut self, to: u16, from: u16) {
+            fn move_item(&mut self, to: i32, from: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #move_item(self.inner, to as i32, from as i32)
                 }
             }
 
-            fn swap(&mut self, a: u16, b: u16) {
+            fn swap(&mut self, a: i32, b: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #swap(self.inner, a as i32, b as i32)
@@ -164,14 +164,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn size(&self) -> u16 {
+            fn size(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #size(self.inner) as u16
+                    #size(self.inner) as i32
                 }
             }
 
-            fn select(&mut self, line: u16) {
+            fn select(&mut self, line: i32) {
                 assert!(!self.was_deleted());
                 if line <= self.size() {
                     unsafe {
@@ -180,14 +180,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn selected(&self, line: u16) -> bool {
+            fn selected(&self, line: i32) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
                     #selected(self.inner, line as i32)  != 0
                 }
             }
 
-            fn text(&self, line: u16) -> Option<String> {
+            fn text(&self, line: i32) -> Option<String> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let text = #text(self.inner, line as i32);
@@ -203,7 +203,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 self.text(self.value())
             }
 
-            fn set_text(&mut self, line: u16, txt: &str) {
+            fn set_text(&mut self, line: i32, txt: &str) {
                 assert!(!self.was_deleted());
                 let txt = CString::safe_new(txt);
                 unsafe {
@@ -224,21 +224,21 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn text_size(&self) -> u16 {
+            fn text_size(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #text_size(self.inner) as u16
+                    #text_size(self.inner) as i32
                 }
             }
 
-            fn set_text_size(&mut self, c: u16) {
+            fn set_text_size(&mut self, c: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_text_size(self.inner, c as i32)
                 }
             }
 
-            fn set_icon<Img: ImageExt>(&mut self, line: u16, image: Option<Img>) {
+            fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<Img>) {
                 assert!(!self.was_deleted());
                 let _old_image = self.image();
                 if let Some(mut image) = image {
@@ -249,7 +249,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn icon(&self, line: u16) -> Option<Box<dyn ImageExt>> {
+            fn icon(&self, line: i32) -> Option<Box<dyn ImageExt>> {
                 unsafe {
                     assert!(!self.was_deleted());
                     let icon_ptr = #icon(self.inner, line as i32);
@@ -261,28 +261,28 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn remove_icon(&mut self, line: u16) {
+            fn remove_icon(&mut self, line: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #remove_icon(self.inner, line as i32)
                 }
             }
 
-            fn top_line(&mut self, line: u16) {
+            fn top_line(&mut self, line: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #topline(self.inner, line as i32)
                 }
             }
 
-            fn bottom_line(&mut self, line: u16) {
+            fn bottom_line(&mut self, line: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #bottomline(self.inner, line as i32)
                 }
             }
 
-            fn middle_line(&mut self, line: u16) {
+            fn middle_line(&mut self, line: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #middleline(self.inner, line as i32)
@@ -347,42 +347,42 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn displayed(&self, line: u16,) -> bool {
+            fn displayed(&self, line: i32,) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
                     #displayed(self.inner, line as i32,) != 0
                 }
             }
 
-            fn make_visible(&mut self, line: u16) {
+            fn make_visible(&mut self, line: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #make_visible(self.inner, line as i32)
                 }
             }
 
-            fn position(&self) -> u16 {
+            fn position(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #position(self.inner) as u16
+                    #position(self.inner) as i32
                 }
             }
 
-            fn set_position(&mut self, pos: u16) {
+            fn set_position(&mut self, pos: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #set_position(self.inner, pos as i32)
                 }
             }
 
-            fn hposition(&self) -> u16 {
+            fn hposition(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #hposition(self.inner) as u16
+                    #hposition(self.inner) as i32
                 }
             }
 
-            fn set_hposition(&mut self, pos: u16) {
+            fn set_hposition(&mut self, pos: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #set_hposition(self.inner, pos as i32)
@@ -403,14 +403,14 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn scrollbar_size(&self) -> u16 {
+            fn scrollbar_size(&self) -> i32 {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #scrollbar_size(self.inner) as u16
+                    #scrollbar_size(self.inner) as i32
                 }
             }
 
-            fn set_scrollbar_size(&mut self, new_size: u16) {
+            fn set_scrollbar_size(&mut self, new_size: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
                     #set_scrollbar_size(self.inner, new_size as i32)
@@ -442,9 +442,9 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn value(&self) -> u16 {
+            fn value(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #value(self.inner) as u16 }
+                unsafe { #value(self.inner) as i32 }
             }
         }
     };

@@ -107,13 +107,13 @@ impl TextBuffer {
     }
 
     /// Get the length of the buffer
-    pub fn length(&self) -> u16 {
+    pub fn length(&self) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_length(self.inner) as u16 }
+        unsafe { Fl_Text_Buffer_length(self.inner) as i32 }
     }
 
     /// Removes from the buffer
-    pub fn remove(&mut self, start: u16, end: u16) {
+    pub fn remove(&mut self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
         unsafe {
             Fl_Text_Buffer_remove(self.inner, start as i32, end as i32);
@@ -121,7 +121,7 @@ impl TextBuffer {
     }
 
     /// Returns the text within the range
-    pub fn text_range(&self, start: u16, end: u16) -> Option<String> {
+    pub fn text_range(&self, start: i32, end: i32) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
             let x = Fl_Text_Buffer_text_range(self.inner, start as i32, end as i32);
@@ -138,21 +138,21 @@ impl TextBuffer {
     }
 
     /// Inserts text into a position
-    pub fn insert(&mut self, pos: u16, text: &str) {
+    pub fn insert(&mut self, pos: i32, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_insert(self.inner, pos as i32, text.as_ptr()) }
     }
 
     /// Replaces text from position ```start``` to ```end```
-    pub fn replace(&mut self, start: u16, end: u16, text: &str) {
+    pub fn replace(&mut self, start: i32, end: i32, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_replace(self.inner, start as i32, end as i32, text.as_ptr()) }
     }
 
     /// Copies text from a source buffer into the current buffer
-    pub fn copy_from(&mut self, source_buf: &TextBuffer, start: u16, end: u16, to: u16) {
+    pub fn copy_from(&mut self, source_buf: &TextBuffer, start: i32, end: i32, to: i32) {
         assert!(!self.inner.is_null());
         unsafe {
             Fl_Text_Buffer_copy(
@@ -226,19 +226,19 @@ impl TextBuffer {
     }
 
     /// Returns the tab distance for the buffer
-    pub fn tab_distance(&self) -> u16 {
+    pub fn tab_distance(&self) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_tab_distance(self.inner) as u16 }
+        unsafe { Fl_Text_Buffer_tab_distance(self.inner) as i32 }
     }
 
     /// Sets the tab distance
-    pub fn set_tab_distance(&mut self, tab_dist: u16) {
+    pub fn set_tab_distance(&mut self, tab_dist: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_set_tab_distance(self.inner, tab_dist as i32) }
     }
 
     /// Selects the text from start to end
-    pub fn select(&mut self, start: u16, end: u16) {
+    pub fn select(&mut self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_select(self.inner, start as i32, end as i32) }
     }
@@ -256,14 +256,14 @@ impl TextBuffer {
     }
 
     /// Returns the selection position
-    pub fn selection_position(&mut self) -> Option<(u16, u16)> {
+    pub fn selection_position(&mut self) -> Option<(i32, i32)> {
         assert!(!self.inner.is_null());
         unsafe {
             let start: *mut raw::c_int = std::ptr::null_mut();
             let end: *mut raw::c_int = std::ptr::null_mut();
             let ret = Fl_Text_Buffer_selection_position(self.inner, start, end);
             if ret != 0 {
-                let x = (*start as u16, *end as u16);
+                let x = (*start as i32, *end as i32);
                 Some(x)
             } else {
                 None
@@ -297,7 +297,7 @@ impl TextBuffer {
     }
 
     /// Highlights selection
-    pub fn highlight(&mut self, start: u16, end: u16) {
+    pub fn highlight(&mut self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_highlight(self.inner, start as i32, end as i32) }
     }
@@ -315,14 +315,14 @@ impl TextBuffer {
     }
 
     /// Returns the highlight position
-    pub fn highlight_position(&mut self) -> Option<(u16, u16)> {
+    pub fn highlight_position(&mut self) -> Option<(i32, i32)> {
         assert!(!self.inner.is_null());
         unsafe {
             let start: *mut raw::c_int = std::ptr::null_mut();
             let end: *mut raw::c_int = std::ptr::null_mut();
             let ret = Fl_Text_Buffer_highlight_position(self.inner, start, end);
             if ret != 0 {
-                let x = (*start as u16, *end as u16);
+                let x = (*start as i32, *end as i32);
                 Some(x)
             } else {
                 None
@@ -343,7 +343,7 @@ impl TextBuffer {
     }
 
     /// Returns the line at pos
-    pub fn line_text(&self, pos: u16) -> String {
+    pub fn line_text(&self, pos: i32) -> String {
         assert!(!self.inner.is_null());
         unsafe {
             let x = Fl_Text_Buffer_line_text(self.inner, pos as i32);
@@ -355,27 +355,27 @@ impl TextBuffer {
     }
 
     /// Returns the index of the line's start position at pos
-    pub fn line_start(&self, pos: u16) -> u16 {
+    pub fn line_start(&self, pos: i32) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_line_start(self.inner, pos as i32) as u16 }
+        unsafe { Fl_Text_Buffer_line_start(self.inner, pos as i32) as i32 }
     }
 
     /// Returns the index of the first character of a word at pos
-    pub fn word_start(&self, pos: u16) -> u16 {
+    pub fn word_start(&self, pos: i32) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_word_start(self.inner, pos as i32) as u16 }
+        unsafe { Fl_Text_Buffer_word_start(self.inner, pos as i32) as i32 }
     }
 
     /// Returns the index of the last character of a word at pos
-    pub fn word_end(&self, pos: u16) -> u16 {
+    pub fn word_end(&self, pos: i32) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_word_end(self.inner, pos as i32) as u16 }
+        unsafe { Fl_Text_Buffer_word_end(self.inner, pos as i32) as i32 }
     }
 
     /// Counts the lines from start to end
-    pub fn count_lines(&self, start: u16, end: u16) -> u16 {
+    pub fn count_lines(&self, start: i32, end: i32) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_count_lines(self.inner, start as i32, end as i32) as u16 }
+        unsafe { Fl_Text_Buffer_count_lines(self.inner, start as i32, end as i32) as i32 }
     }
 
     /// Calls the modify callbacks
@@ -386,8 +386,8 @@ impl TextBuffer {
 
     /// Adds a modify callback
     /// callback args:
-    /// pos: u32, inserted items: u32, deleted items: u32, restyled items: u32, deleted_text
-    pub fn add_modify_callback<F: FnMut(u32, u32, u32, u32, &str) + 'static>(&mut self, cb: F) {
+    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
+    pub fn add_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self.inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
@@ -403,20 +403,20 @@ impl TextBuffer {
                 } else {
                     String::from("")
                 };
-                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
-                    data as *mut Box<dyn for<'r> FnMut(u32, u32, u32, u32, &'r str)>;
-                let f: &mut (dyn FnMut(u32, u32, u32, u32, &str)) = &mut **a;
+                let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
+                    data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
+                let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                     f(
-                        pos as u32,
-                        inserted as u32,
-                        deleted as u32,
-                        restyled as u32,
+                        pos as i32,
+                        inserted as i32,
+                        deleted as i32,
+                        restyled as i32,
                         &temp,
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
+            let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
@@ -426,8 +426,8 @@ impl TextBuffer {
 
     /// Removes a modify callback
     /// callback args:
-    /// pos: u32, inserted items: u32, deleted items: u32, restyled items: u32, deleted_text
-    pub fn remove_modify_callback<F: FnMut(u32, u32, u32, u32, &str) + 'static>(&mut self, cb: F) {
+    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
+    pub fn remove_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self.inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(
@@ -443,20 +443,20 @@ impl TextBuffer {
                 } else {
                     String::from("")
                 };
-                let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
-                    data as *mut Box<dyn for<'r> FnMut(u32, u32, u32, u32, &'r str)>;
-                let f: &mut (dyn FnMut(u32, u32, u32, u32, &str)) = &mut **a;
+                let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
+                    data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
+                let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                     f(
-                        pos as u32,
-                        inserted as u32,
-                        deleted as u32,
-                        restyled as u32,
+                        pos as i32,
+                        inserted as i32,
+                        deleted as i32,
+                        restyled as i32,
                         &temp,
                     )
                 }));
             }
-            let a: *mut Box<dyn FnMut(u32, u32, u32, u32, &str)> =
+            let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
@@ -557,7 +557,7 @@ pub struct StyleTableEntry {
     /// Font type
     pub font: Font,
     /// Font size
-    pub size: u16,
+    pub size: i32,
 }
 
 impl TextEditor {
@@ -831,17 +831,17 @@ impl SimpleTerminal {
     }
 
     /// Sets the max lines allowed in history
-    pub fn set_history_lines(&mut self, arg1: u16) {
+    pub fn set_history_lines(&mut self, arg1: i32) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_set_history_lines(self.inner, arg1 as i32) }
     }
 
     /// Gets the max lines allowed in history
-    pub fn history_lines(&self) -> u16 {
+    pub fn history_lines(&self) -> i32 {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
-        unsafe { Fl_Simple_Terminal_history_lines(self.inner) as u16 }
+        unsafe { Fl_Simple_Terminal_history_lines(self.inner) as i32 }
     }
 
     /// Enables ANSI sequences within the text to control text colors
@@ -895,7 +895,7 @@ impl SimpleTerminal {
     }
 
     /// Removes `count` lines from `start`
-    pub fn remove_lines(&mut self, start: u16, count: u16) {
+    pub fn remove_lines(&mut self, start: i32, count: i32) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_remove_lines(self.inner, start as i32, count as i32) }

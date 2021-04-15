@@ -41,7 +41,7 @@ impl Printer {
     /// Begins a print job
     /// `pagecount` The total number of pages to be created. Use 0 if this number is unknown
     /// Returns a tuple (frompage, topage) indicating the chosen pages by the user
-    pub fn begin_job(&mut self, pagecount: u16) -> Result<(Option<u16>, Option<u16>), FltkError> {
+    pub fn begin_job(&mut self, pagecount: i32) -> Result<(Option<i32>, Option<i32>), FltkError> {
         let mut frompage_ = 0;
         let mut topage_ = 0;
         unsafe {
@@ -58,12 +58,12 @@ impl Printer {
                 let from = if frompage_ == 0 {
                     None
                 } else {
-                    Some(frompage_ as u16)
+                    Some(frompage_ as i32)
                 };
                 let to = if topage_ == 0 {
                     None
                 } else {
-                    Some(topage_ as u16)
+                    Some(topage_ as i32)
                 };
                 Ok((from, to))
             }

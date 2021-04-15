@@ -274,19 +274,19 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #set_text_color(self.inner, color.bits() as u32) }
             }
 
-            fn text_size(&self) -> u16{
+            fn text_size(&self) -> i32{
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
-                unsafe { #text_size(self.inner) as u16 }
+                unsafe { #text_size(self.inner) as i32 }
             }
 
-            fn set_text_size(&mut self, sz: u16) {
+            fn set_text_size(&mut self, sz: i32) {
                 assert!(!self.was_deleted());
                 assert!(self.buffer().is_some());
                 unsafe { #set_text_size(self.inner, sz as i32) }
             }
 
-            fn scroll(&mut self, topLineNum: u16, horizOffset: u16) {
+            fn scroll(&mut self, topLineNum: i32, horizOffset: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
@@ -303,7 +303,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_insert_position(&mut self, newPos: u16) {
+            fn set_insert_position(&mut self, newPos: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
@@ -311,26 +311,26 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn insert_position(&self) -> u16 {
+            fn insert_position(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #insert_position(self.inner) as u16
+                    #insert_position(self.inner) as i32
                 }
             }
 
-            fn position_to_xy(&self, pos: u16) -> (u16, u16) {
+            fn position_to_xy(&self, pos: i32) -> (i32, i32) {
                 unsafe {
                     let mut x: i32 = 0;
                     let mut y: i32 = 0;
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
                     #position_to_xy(self.inner, pos as i32, &mut x, &mut y);
-                    (x as u16, y as u16)
+                    (x as i32, y as i32)
                 }
             }
 
-            fn count_lines(&self, start: u16, end: u16, is_line_start: bool) -> u16 {
+            fn count_lines(&self, start: i32, end: i32, is_line_start: bool) -> i32 {
                 let x = match is_line_start {
                     true => 1,
                     false => 0,
@@ -338,7 +338,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #count_lines(self.inner, start as i32, end as i32, x) as u16
+                    #count_lines(self.inner, start as i32, end as i32, x) as i32
                 }
             }
 
@@ -437,7 +437,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_scrollbar_size(&mut self, size: u16){
+            fn set_scrollbar_size(&mut self, size: i32){
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_scrollbar_size(self.inner, size as i32)
@@ -465,10 +465,10 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn scrollbar_size(&self) -> u16 {
+            fn scrollbar_size(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #scrollbar_size(self.inner) as u16
+                    #scrollbar_size(self.inner) as i32
                 }
             }
 
@@ -479,35 +479,35 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn line_start(&self, pos: u16) -> u16 {
+            fn line_start(&self, pos: i32) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #line_start(self.inner, pos as i32) as u16
+                    #line_start(self.inner, pos as i32) as i32
                 }
             }
 
-            fn line_end(&self, start_pos: u16, is_line_start: bool) -> u16 {
+            fn line_end(&self, start_pos: i32, is_line_start: bool) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #line_end(self.inner, start_pos as i32, is_line_start as i32) as u16
+                    #line_end(self.inner, start_pos as i32, is_line_start as i32) as i32
                 }
             }
 
-            fn skip_lines(&mut self, start_pos: u16, lines: u16, is_line_start: bool) -> u16 {
+            fn skip_lines(&mut self, start_pos: i32, lines: i32, is_line_start: bool) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #skip_lines(self.inner, start_pos as i32, lines as i32, is_line_start as i32) as u16
+                    #skip_lines(self.inner, start_pos as i32, lines as i32, is_line_start as i32) as i32
                 }
             }
 
-            fn rewind_lines(&mut self, start_pos: u16, lines: u16) -> u16 {
+            fn rewind_lines(&mut self, start_pos: i32, lines: i32) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #rewind_lines(self.inner, start_pos as i32, lines as i32) as u16
+                    #rewind_lines(self.inner, start_pos as i32, lines as i32) as i32
                 }
             }
 
@@ -527,19 +527,19 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn word_start(&self, pos: u16) -> u16 {
+            fn word_start(&self, pos: i32) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #word_start(self.inner, pos as i32) as u16
+                    #word_start(self.inner, pos as i32) as i32
                 }
             }
 
-            fn word_end(&self, pos: u16) -> u16 {
+            fn word_end(&self, pos: i32) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    #word_end(self.inner, pos as i32) as u16
+                    #word_end(self.inner, pos as i32) as i32
                 }
             }
 
@@ -587,17 +587,17 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_linenumber_size(&mut self, size: u16) {
+            fn set_linenumber_size(&mut self, size: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_linenumber_size(self.inner, size as i32)
                 }
             }
 
-            fn linenumber_size(&self) -> u16 {
+            fn linenumber_size(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #linenumber_size(self.inner) as u16
+                    #linenumber_size(self.inner) as i32
                 }
             }
 
