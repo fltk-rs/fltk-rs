@@ -338,7 +338,8 @@ pub fn event_y_root() -> i32 {
 }
 
 /// Event direction with Mousewheel event
-pub enum EventDirection {
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum MouseWheel {
     /// No movement
     None,
     /// Right movement
@@ -352,22 +353,23 @@ pub enum EventDirection {
 }
 
 /// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
-/// Returns EventDirection::None, Right or Left
-pub fn event_dx() -> EventDirection {
+/// Returns MouseWheel::None, Right or Left
+pub fn event_dx() -> MouseWheel {
     match 0.cmp(unsafe { &Fl_event_dx() }) {
-        cmp::Ordering::Greater => EventDirection::Right,
-        cmp::Ordering::Equal => EventDirection::None,
-        cmp::Ordering::Less => EventDirection::Left,
+        cmp::Ordering::Greater => MouseWheel::Right,
+        cmp::Ordering::Equal => MouseWheel::None,
+        cmp::Ordering::Less => MouseWheel::Left,
     }
 }
 
 /// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
-/// Returns EventDirection::None, Up or Down
-pub fn event_dy() -> EventDirection {
+/// Returns MouseWheel::None, Up or Down. 
+/// Doesn't indicate scrolling direction which depends on system preferences
+pub fn event_dy() -> MouseWheel {
     match 0.cmp(unsafe { &Fl_event_dy() }) {
-        cmp::Ordering::Greater => EventDirection::Down,
-        cmp::Ordering::Equal => EventDirection::None,
-        cmp::Ordering::Less => EventDirection::Up,
+        cmp::Ordering::Greater => MouseWheel::Down,
+        cmp::Ordering::Equal => MouseWheel::None,
+        cmp::Ordering::Less => MouseWheel::Up,
     }
 }
 
