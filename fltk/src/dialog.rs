@@ -10,7 +10,7 @@ use std::{
 
 /// Color modes to be used with the color chooser
 #[repr(u8)]
-#[derive(Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum ColorMode {
     /// Rgb color mode
     Rgb = 0,
@@ -54,7 +54,7 @@ pub type NativeFileChooserType = FileDialogType;
 
 /// Defines the File dialog options, which can be set using the set_option() method.
 #[repr(i32)]
-#[derive(WidgetType, Copy, Clone, PartialEq)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum FileDialogOptions {
     /// No options
     NoOptions = 0,
