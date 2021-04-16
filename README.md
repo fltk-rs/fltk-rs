@@ -253,23 +253,27 @@ $ cargo run --example hello_button
 $ cargo run --example fb
 $ cargo run --example pong
 $ cargo run --example custom_widgets
+$ cargo run --example custom_dial
 ...
 ```
 
+fltk/examples/hello.rs
 ![alt_test](screenshots/hello.jpg)
 
 With custom theming:
-
+fltk/examples/calculator2.rs
 ![alt_test](screenshots/calc2.jpg)
-
+fltk/examples/custom_widgets.rs
 ![alt_test](screenshots/custom.jpg)
-
+fltk/examples/counter3.rs
 ![alt_test](screenshots/flutter_like.jpg)
+fltk/examples/custom_dial.rs
+![alt_test](screenshots/dial.jpg)
 
 Setting the scheme to Gtk:
-
+fltk/examples/calculator.rs
 ![alt_test](screenshots/calc.jpg)
-
+fltk/examples/tabs.rs
 ![alt_test](screenshots/tabs.jpg)
 
 <img alt="Counter" width=240 height=300 src="screenshots/counter.jpg">
@@ -277,17 +281,17 @@ Setting the scheme to Gtk:
 Check the full [code](fltk/examples/counter.rs) for the custom theming.
 
 Setting the scheme to Gtk:
-
+fltk/examples/editor.rs
 ![alt_test](screenshots/editor.jpg)
-
+fltk/examples/terminal.rs
 ![alt_test](screenshots/terminal.jpg)
-
+fltk/examples/table.rs
 ![alt_test](screenshots/table.jpg)
-
+fltk/examples/charts.rs
 ![alt_test](screenshots/charts.jpg)
-
+fltk/examples/pong.rs
 ![alt_test](screenshots/pong.gif)
-
+fltk/examples/frames.rs
 ![alt_test](screenshots/frames.jpg)
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
