@@ -257,41 +257,62 @@ $ cargo run --example custom_dial
 ...
 ```
 
-fltk/examples/hello.rs
+Using custom theming and also FLTK provided default themes like Gtk:
+
+- [hello](fltk/examples/hello.rs)
+
 ![alt_test](screenshots/hello.jpg)
 
-With custom theming:
-fltk/examples/calculator2.rs
+- [calculator2](fltk/examples/calculator2.rs)
+
 ![alt_test](screenshots/calc2.jpg)
-fltk/examples/custom_widgets.rs
+
+- [custom_widgets](fltk/examples/custom_widgets.rs)
+
 ![alt_test](screenshots/custom.jpg)
-fltk/examples/counter3.rs
+
+- [counter3](fltk/examples/counter3.rs)
+
 ![alt_test](screenshots/flutter_like.jpg)
-fltk/examples/custom_dial.rs
+
+- [custom_dial](fltk/examples/custom_dial.rs)
+
 ![alt_test](screenshots/dial.jpg)
 
-Setting the scheme to Gtk:
-fltk/examples/calculator.rs
+- [calculator](fltk/examples/calculator.rs)
+
 ![alt_test](screenshots/calc.jpg)
-fltk/examples/tabs.rs
+
+- [tabs](fltk/examples/tabs.rs)
+
 ![alt_test](screenshots/tabs.jpg)
 
-<img alt="Counter" width=240 height=300 src="screenshots/counter.jpg">
+- [counter](fltk/examples/counter.rs)
 
-Check the full [code](fltk/examples/counter.rs) for the custom theming.
+![alt_test](screenshots/counter.jpg)
 
-Setting the scheme to Gtk:
-fltk/examples/editor.rs
+- [editor](fltk/examples/editor.rs)
+
 ![alt_test](screenshots/editor.jpg)
-fltk/examples/terminal.rs
+
+- [terminal](fltk/examples/terminal.rs)
+
 ![alt_test](screenshots/terminal.jpg)
-fltk/examples/table.rs
+
+- [table](fltk/examples/table.rs)
+
 ![alt_test](screenshots/table.jpg)
-fltk/examples/charts.rs
+
+- [charts](fltk/examples/charts.rs)
+
 ![alt_test](screenshots/charts.jpg)
-fltk/examples/pong.rs
+
+- [pong](fltk/examples/pong.rs)
+
 ![alt_test](screenshots/pong.gif)
-fltk/examples/frames.rs
+
+- [frames](fltk/examples/frames.rs)
+
 ![alt_test](screenshots/frames.jpg)
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
