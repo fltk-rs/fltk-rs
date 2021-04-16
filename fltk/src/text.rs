@@ -85,9 +85,9 @@ impl TextBuffer {
         }
     }
 
-    /// Appends to the buffer
+    /// Appends to the buffer.
     /// To append and scroll to the end of the buffer:
-    /// ```no_run
+    /// ```rust,no_run
     /// use fltk::{prelude::*, *};
     /// let txt = "Some long text!";
     /// let buf = text::TextBuffer::default();
@@ -384,7 +384,7 @@ impl TextBuffer {
         unsafe { Fl_Text_Buffer_call_modify_callbacks(self.inner) }
     }
 
-    /// Adds a modify callback
+    /// Adds a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
     pub fn add_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {
@@ -424,7 +424,7 @@ impl TextBuffer {
         }
     }
 
-    /// Removes a modify callback
+    /// Removes a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
     pub fn remove_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {

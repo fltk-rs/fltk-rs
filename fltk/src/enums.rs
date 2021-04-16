@@ -289,7 +289,7 @@ impl Font {
 }
 
 bitflags! {
-    /// Defines colors used by FLTK
+    /// Defines colors used by FLTK.
     /// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum.
     /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
     /// The RGBI can be acquired by casting the color to u32 and formatting it to ```0x{08x}```.
@@ -759,7 +759,7 @@ pub enum Cursor {
 }
 
 bitflags! {
-    /// Defines visual mode types (capabilites of the window)
+    /// Defines visual mode types (capabilites of the window).
     /// Rgb and Single have a value of zero, so they
     /// are "on" unless you give Index or Double.
     pub struct Mode: i32 {

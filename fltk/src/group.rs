@@ -310,7 +310,7 @@ impl Pack {
         }
     }
 
-    /// Layout the children of the pack automatically
+    /// Layout the children of the pack automatically.
     /// Must be called on existing children
     pub fn auto_layout(&mut self) {
         let children = self.children() as i32;
@@ -338,7 +338,7 @@ impl Pack {
 /// Defines a Vertical Grid (custom widget).
 /// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing.
 /// Requires explicit calls to add, which is overloaded especially for the layout.
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// let mut grid = group::VGrid::new(0, 0, 400, 300, "");
 /// grid.set_params(3, 3, 5);
@@ -420,7 +420,7 @@ impl DerefMut for VGrid {
 /// Defines a Horizontal Grid (custom widget).
 /// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing.
 /// Requires explicit calls to add, which is overloaded especially for the layout.
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// let mut grid = group::HGrid::new(0, 0, 400, 300, "");
 /// grid.set_params(3, 3, 5);

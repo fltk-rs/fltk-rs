@@ -115,13 +115,13 @@
 //! ### Events
 //!
 //! Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
-//! ```rust,ignored
+//! ```rust,ignore
 //!     /* previous hello world code */
 //!     but.set_callback(move |_| frame.set_label("Hello World!"));
 //!     app.run().unwrap();
 //! ```
 //! Another way is to use message passing:
-//! ```rust,ignored
+//! ```rust,ignore
 //!     /* previous counter code */
 //!     let (s, r) = app::channel::<Message>();
 //!
@@ -141,7 +141,7 @@
 //! For the remainder of the code, check the full example [here](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter2.rs).
 //!
 //! For custom event handling, the handle() method can be used:
-//! ```rust,ignored
+//! ```rust,ignore
 //!     some_widget.handle(move |widget, ev: Event| {
 //!         match ev {
 //!             /* handle ev */
@@ -160,12 +160,12 @@
 //! - Plastic
 //!
 //! These can be set using the App::with_scheme() function.
-//! ```rust,ignored
+//! ```rust,ignore
 //! let app = app::App::default().with_scheme(app::Scheme::Gleam);
 //! ```
 //! Themes of individual widgets can be optionally modified using the provided methods in the WidgetBase trait,
 //! such as set_color(), set_label_font(), set_frame() etc:
-//! ```rust,ignored
+//! ```rust,ignore
 //!     some_button.set_color(Color::Light1); //! You can use one of the provided colors in the fltk enums
 //!     some_button.set_color(Color::from_rgb(255, 0, 0)); //! Or you can specify a color by rgb or hex/u32 value
 //!     some_button.set_color(Color::from_u32(0xffebee));
@@ -193,23 +193,23 @@
 //! - Linux: X11 and OpenGL development headers need to be installed for development. The libraries themselves are available on linux distros with a graphical user interface.
 //!
 //! For Debian-based GUI distributions, that means running:
-//! ```ignored
+//! ```ignore
 //! $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
 //! ```
 //! For RHEL-based GUI distributions, that means running:
-//! ```ignored
+//! ```ignore
 //! $ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libpng-devel
 //! ```
 //! For Arch-based GUI distributions, that means running:
-//! ```ignored
+//! ```ignore
 //! $ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes libpng pango cairo libgl mesa --needed
 //! ```
 //! For Alpine linux:
-//! ```ignored
+//! ```ignore
 //! $ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev libpng-dev mesa-gl
 //! ```
 //! For NixOS (Linux distribution) this `nix-shell` environment can be used:
-//! ```ignored
+//! ```ignore
 //! $ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libpng libcerf pango cairo libGL mesa pkg-config
 //! ```
 //! - Android(experimental): Android Studio, Android Sdk, Android Ndk.

@@ -6,7 +6,7 @@ use std::path;
 
 /// An image surface object.
 /// Example usage:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// let but = button::Button::new(0, 0, 80, 40, "Click");
 /// let sur = surface::ImageSurface::new(but.width(), but.height(), false);
@@ -134,7 +134,7 @@ impl Drop for ImageSurface {
 
 /// An SVG image surface object
 /// Example usage:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// let but = button::Button::new(0, 0, 80, 40, "Click");
 /// // We need the destructor of SvgFileSurface to actually create the image
@@ -203,8 +203,8 @@ impl SvgFileSurface {
         }
     }
 
-    /// Draw a widget in an svg file surface
-    /// the .svg file is not complete until the destructor was run
+    /// Draw a widget in an svg file surface.
+    /// The .svg file is not complete until the destructor was run
     pub fn draw<W: WidgetExt>(&self, widget: &W, delta_x: i32, delta_y: i32) {
         unsafe {
             Fl_SVG_File_Surface_draw(

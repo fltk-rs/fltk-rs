@@ -5,7 +5,7 @@ use std::ffi::CString;
 
 /// Defines a printer object.
 /// Example usage:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// let mut but = button::Button::default();
 /// but.set_callback(|widget| {
@@ -38,7 +38,7 @@ impl Printer {
         }
     }
 
-    /// Begins a print job
+    /// Begins a print job.
     /// `pagecount` The total number of pages to be created. Use 0 if this number is unknown
     /// Returns a tuple (frompage, topage) indicating the chosen pages by the user
     pub fn begin_job(&mut self, pagecount: i32) -> Result<(Option<i32>, Option<i32>), FltkError> {
@@ -107,7 +107,7 @@ impl Printer {
         }
     }
 
-    /// Returns the coordinates of the printable margins
+    /// Returns the coordinates of the printable margins.
     /// (left, top, right, bottom)
     pub fn margins(&self) -> (i32, i32, i32, i32) {
         unsafe {

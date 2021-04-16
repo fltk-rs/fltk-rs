@@ -173,10 +173,10 @@ impl FileDialog {
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (eg. `"*.txt"`)
-    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`)
-    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`)
-    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`)
+    /// A single wildcard (eg. `"*.txt"`).
+    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`).
+    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`).
+    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`).
     /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
     pub fn set_filter(&mut self, f: &str) {
         assert!(!self.inner.is_null());
@@ -504,7 +504,7 @@ pub fn beep(tp: BeepType) {
 
 /// FLTK's own FileChooser. Which differs for the Native FileDialog
 /// Example:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// let mut chooser = dialog::FileChooser::new(
 ///     ".",                    // directory
@@ -687,10 +687,10 @@ impl FileChooser {
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (eg. `"*.txt"`)
-    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`)
-    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`)
-    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`)
+    /// A single wildcard (eg. `"*.txt"`).
+    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`).
+    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`).
+    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`).
     /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
     pub fn set_filter(&mut self, pattern: &str) {
         assert!(!self.inner.is_null());
@@ -722,10 +722,10 @@ impl FileChooser {
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (eg. `"*.txt"`)
-    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`)
-    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`)
-    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`)
+    /// A single wildcard (eg. `"*.txt"`).
+    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`).
+    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`).
+    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`).
     /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
     pub fn set_filter_value(&mut self, f: i32) {
         assert!(!self.inner.is_null());
@@ -1054,7 +1054,7 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
 
 /// Shows a file chooser returning a String.
 /// Example:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
 /// println!("{}", file);

@@ -556,7 +556,7 @@ pub struct RgbImage {
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage, copies the data and handles its lifetime
+    /// Initializes a new raw RgbImage, copies the data and handles its lifetime.
     /// If you need to work with RGB data,
     pub fn new(data: &[u8], w: i32, h: i32, depth: ColorDepth) -> Result<RgbImage, FltkError> {
         let sz = w * h * depth as i32;

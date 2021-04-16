@@ -162,7 +162,7 @@ impl App {
         run()
     }
 
-    /// Wait for incoming messages
+    /// Wait for incoming messages.
     /// Calls to redraw within wait require an explicit sleep
     pub fn wait(self) -> bool {
         wait()
@@ -179,7 +179,7 @@ impl App {
     /// As such only one font can be loaded at a time.
     /// The font name can be used with Font::by_name, and index with Font::by_index.
     /// # Examples
-    /// ```no_run
+    /// ```rust,no_run
     /// use fltk::{prelude::*, *};
     /// let app = app::App::default();
     /// let font = app.load_font("font.ttf").unwrap();
@@ -403,7 +403,7 @@ where
 }
 
 /// Set a widget callback using a C style API
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// use std::os::raw::*;
 /// // data can be anything, even a different widget
@@ -630,7 +630,7 @@ pub unsafe fn awake_msg<T>(msg: T) {
 }
 
 /// Receives a custom message
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// if let Some(msg) = unsafe { app::thread_msg::<i32>() } { /* do something */ }
 /// ```
@@ -762,7 +762,7 @@ pub fn quit() {
 
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
 /// Example:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// fn callback() {
 ///     println!("TICK");
@@ -794,7 +794,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
 /// You may only call this method inside a timeout callback.
 /// The timeout duration `tm` is indicated in seconds
 /// Example:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// fn callback() {
 ///     println!("TICK");
@@ -879,7 +879,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 
 /// Gets the widget that is below the mouse cursor.
 /// This returns an Option<impl WidgetExt> which can be specified in the function call
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::app;
 /// use fltk::widget;
 /// let w = app::belowmouse::<widget::Widget>(); // or by specifying a more concrete type
@@ -1169,7 +1169,7 @@ pub fn get_system_colors() {
 /// Returns Ok(true) if the event was handled.
 /// Returns Ok(false) if the event was not handled.
 /// Returns Err on error or in use of one of the reserved values.
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// const CHANGE_FRAME: i32 = 100;
 /// let mut wind = window::Window::default();
@@ -1205,7 +1205,7 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
 /// Returns Ok(true) if the event was handled.
 /// Returns Ok(false) if the event was not handled.
 /// Returns Err on error or in use of one of the reserved values.
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// const CHANGE_FRAME: i32 = 100;
 /// let mut wind = window::Window::default();
