@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use fltk::*;
+use fltk::{prelude::*, *};
 use std::ops::{Deref, DerefMut};
 
 struct MyButton {
@@ -9,18 +9,18 @@ struct MyButton {
 }
 
 impl MyButton {
-    pub fn new(w: i32, h: i32, label: &str) -> MyButton {
-        let mut grp = group::Group::new(0, 0, w, h, label);
-        grp.set_frame(FrameType::RFlatBox);
-        grp.set_color(Color::from_u32(0x01579b));
-        grp.set_align(Align::Center);
+    pub fn new(w: i32, h: i32) -> MyButton {
+        let mut grp = group::Group::new(0, 0, w, h, None);
+        grp.set_frame(enums::FrameType::RFlatBox);
+        grp.set_color(enums::Color::from_u32(0x01579b));
+        grp.set_align(enums::Align::Center);
         let mut btn = button::Button::new(grp.x() + 420, grp.y() + 35, 15, 15, "X");
-        btn.set_frame(FrameType::OFlatFrame);
-        btn.set_color(Color::from_u32(0xf49da9));
-        btn.set_callback2(move |b| b.parent().unwrap().hide());
+        btn.set_frame(enums::FrameType::OFlatFrame);
+        btn.set_color(enums::Color::from_u32(0xf49da9));
+        btn.set_callback(move |b| b.parent().unwrap().hide());
         grp.end();
-        grp.handle2(|g, ev| match ev {
-            Event::Push => {
+        grp.handle(|g, ev| match ev {
+            enums::Event::Push => {
                 g.do_callback();
                 true
             }
@@ -47,14 +47,15 @@ fn main() {
     app::set_visible_focus(false);
     let mut win = window::Window::default().with_size(500, 400);
     win.make_resizable(true);
-    win.set_color(Color::Black);
+    win.set_color(enums::Color::Black);
     let mut pack = group::Pack::default().size_of(&win);
     pack.set_spacing(10);
 
     for i in 0..3 {
         let label = format!("Button {}", i + 1);
-        let mut but = MyButton::new(500, 100, &label);
-        but.set_callback(move || println!("{}", label));
+        let mut but = MyButton::new(500, 100);
+        but.set_label(&label);
+        but.set_callback(move |_| println!("{}", label));
     }
 
     pack.end();

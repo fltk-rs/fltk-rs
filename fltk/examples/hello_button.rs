@@ -1,4 +1,4 @@
-use fltk::{app, button::*, frame::*, window::*};
+use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 fn main() {
     let app = app::App::default();
@@ -9,7 +9,7 @@ fn main() {
     wind.end();
     wind.show();
 
-    but.set_callback(move || frame.set_label("Hello world"));
+    but.set_callback(move |_| frame.set_label("Hello world"));
 
     app.run().unwrap();
 }

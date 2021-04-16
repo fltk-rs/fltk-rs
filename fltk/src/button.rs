@@ -1,5 +1,7 @@
+use crate::enums::*;
 use crate::image::Image;
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use fltk_sys::button::*;
 use std::{
     ffi::{CStr, CString},
@@ -10,8 +12,8 @@ use std::{
 /// Creates a normal button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct Button {
-    _inner: *mut Fl_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines the button type, which can be changed dynamically using the set_type function().
@@ -31,8 +33,8 @@ pub enum ButtonType {
 /// Creates a radio button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RadioButton {
-    _inner: *mut Fl_Radio_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Radio_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl RadioButton {
@@ -40,22 +42,22 @@ impl RadioButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Radio_Button_is_toggled(self._inner) != 0
+            Fl_Radio_Button_is_toggled(self.inner) != 0
         }
     }
 
     /// Sets whether the RadioButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Radio_Button_toggle(self._inner, val as i32) }
+        unsafe { Fl_Radio_Button_toggle(self.inner, val as i32) }
     }
 }
 
 /// Creates a radio round button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RadioRoundButton {
-    _inner: *mut Fl_Radio_Round_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Radio_Round_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl RadioRoundButton {
@@ -63,22 +65,22 @@ impl RadioRoundButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Radio_Round_Button_is_toggled(self._inner) != 0
+            Fl_Radio_Round_Button_is_toggled(self.inner) != 0
         }
     }
 
     /// Sets whether the RadioRoundButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Radio_Round_Button_toggle(self._inner, val as i32) }
+        unsafe { Fl_Radio_Round_Button_toggle(self.inner, val as i32) }
     }
 }
 
 /// Creates a radio light button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RadioLightButton {
-    _inner: *mut Fl_Radio_Light_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Radio_Light_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl RadioLightButton {
@@ -86,22 +88,22 @@ impl RadioLightButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Radio_Light_Button_is_toggled(self._inner) != 0
+            Fl_Radio_Light_Button_is_toggled(self.inner) != 0
         }
     }
 
     /// Sets whether the RadioLightButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Radio_Light_Button_toggle(self._inner, val as i32) }
+        unsafe { Fl_Radio_Light_Button_toggle(self.inner, val as i32) }
     }
 }
 
 /// Creates a round button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RoundButton {
-    _inner: *mut Fl_Round_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Round_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl RoundButton {
@@ -109,22 +111,22 @@ impl RoundButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Round_Button_is_toggled(self._inner) != 0
+            Fl_Round_Button_is_toggled(self.inner) != 0
         }
     }
 
     /// Sets whether the RoundButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Round_Button_toggle(self._inner, val as i32) }
+        unsafe { Fl_Round_Button_toggle(self.inner, val as i32) }
     }
 }
 
 /// Creates a check button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct CheckButton {
-    _inner: *mut Fl_Check_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Check_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl CheckButton {
@@ -132,7 +134,7 @@ impl CheckButton {
     pub fn is_checked(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Check_Button_is_checked(self._inner) != 0
+            Fl_Check_Button_is_checked(self.inner) != 0
         }
     }
 
@@ -140,7 +142,7 @@ impl CheckButton {
     pub fn set_checked(&self, checked: bool) {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Check_Button_set_checked(self._inner, checked as i32);
+            Fl_Check_Button_set_checked(self.inner, checked as i32);
         }
     }
 }
@@ -148,8 +150,8 @@ impl CheckButton {
 /// Creates a toggle button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct ToggleButton {
-    _inner: *mut Fl_Toggle_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Toggle_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl ToggleButton {
@@ -157,22 +159,22 @@ impl ToggleButton {
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Toggle_Button_is_toggled(self._inner) != 0
+            Fl_Toggle_Button_is_toggled(self.inner) != 0
         }
     }
 
     /// Sets whether the ToggleButton is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Toggle_Button_toggle(self._inner, val as i32) }
+        unsafe { Fl_Toggle_Button_toggle(self.inner, val as i32) }
     }
 }
 
 /// Creates a light button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct LightButton {
-    _inner: *mut Fl_Light_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Light_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl LightButton {
@@ -180,27 +182,27 @@ impl LightButton {
     pub fn is_on(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Light_Button_is_on(self._inner) != 0
+            Fl_Light_Button_is_on(self.inner) != 0
         }
     }
 
     /// Sets whether the LightButton is on or not
     pub fn turn_on(&mut self, on: bool) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Light_Button_turn_on(self._inner, on as i32) }
+        unsafe { Fl_Light_Button_turn_on(self.inner, on as i32) }
     }
 }
 
 /// Creates a repeat button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct RepeatButton {
-    _inner: *mut Fl_Repeat_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Repeat_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a return button
 #[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
 pub struct ReturnButton {
-    _inner: *mut Fl_Return_Button,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Return_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }

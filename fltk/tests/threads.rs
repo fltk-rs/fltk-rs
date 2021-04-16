@@ -7,7 +7,7 @@
 // or surround widget-mutating functions/methods with an app::lock and app::unlock.
 // But that should rarely be required.
 
-use fltk::{app, button::*, frame::*, window::*};
+use fltk::{app, button::*, frame::*, prelude::*, window::*};
 
 #[test]
 fn raw_threads() {
@@ -21,7 +21,7 @@ fn raw_threads() {
 
     wind.show();
 
-    but.set_callback(move || {
+    but.set_callback(move |_| {
         let mut frame = frame.clone();
         std::thread::spawn(move || {
             for i in 0..1000 {

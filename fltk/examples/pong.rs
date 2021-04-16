@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -26,8 +26,8 @@ fn main() {
         pos: (0, 0),
         dir: (Direction::Positive, Direction::Positive),
     };
-    ball.wid.set_color(Color::White);
-    wind.set_color(Color::Black);
+    ball.wid.set_color(enums::Color::White);
+    wind.set_color(enums::Color::Black);
     wind.end();
     wind.show();
 
@@ -35,13 +35,13 @@ fn main() {
     let paddle_c = paddle_pos.clone();
 
     // This is called whenever the window is drawn and redrawn (in the event loop)
-    wind.draw(move || {
-        draw::set_draw_color(Color::White);
+    wind.draw(move |_| {
+        draw::set_draw_color(enums::Color::White);
         draw::draw_rectf(*paddle_c.borrow(), 540, 160, 20);
     });
 
     let paddle_c = paddle_pos.clone();
-    wind.handle(move |ev| {
+    wind.handle(move |_, ev| {
         match ev {
             enums::Event::Move => {
                 // Mouse's x position relative to the paddle's center

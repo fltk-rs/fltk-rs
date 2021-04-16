@@ -1,4 +1,4 @@
-use fltk::{app, button::*, frame::*, window::*};
+use fltk::{app, button::*, frame::*, prelude::*, window::*};
 
 #[test]
 fn idle() {
@@ -14,7 +14,7 @@ fn idle() {
 
     let (s, r) = app::channel::<i32>();
 
-    but.set_callback(move || {
+    but.set_callback(move |_| {
         std::thread::spawn(move || {
             for i in 0..1000 {
                 app::sleep(0.010);

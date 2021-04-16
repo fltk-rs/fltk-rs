@@ -18,7 +18,7 @@ impl FlString for CString {
 
 /// Convenience function to convert rgb to hex.
 /// Example:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::utils::rgb2hex;
 /// let ret = rgb2hex(0, 255, 0); println!("0x{:06x}", ret);
 /// ```
@@ -29,7 +29,7 @@ pub fn rgb2hex(r: u8, g: u8, b: u8) -> u32 {
 
 /// Convenience function to convert rgba to hex.
 /// Example:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::utils::rgba2hex;
 /// let ret = rgba2hex(0, 255, 0, 255); println!("0x{:08x}", ret);
 /// ```
@@ -40,7 +40,7 @@ pub fn rgba2hex(r: u8, g: u8, b: u8, a: u8) -> u32 {
 
 /// Convenience function to convert hex to rgb.
 /// Example:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::utils::hex2rgb;
 /// let (r, g, b) = hex2rgb(0x000000);
 /// ```
@@ -54,7 +54,7 @@ pub fn hex2rgb(val: u32) -> (u8, u8, u8) {
 
 /// Convenience function to convert hex to rgba.
 /// Example:
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::utils::hex2rgba;
 /// let (r, g, b, a) = hex2rgba(0xff0000ff);
 /// ```

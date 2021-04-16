@@ -1,4 +1,4 @@
-use fltk::{app, button::*, frame::*, window::*};
+use fltk::{app, button::*, frame::*, prelude::*, window::*};
 
 #[test]
 fn app_handle() {
@@ -12,7 +12,7 @@ fn app_handle() {
 
     wind.show();
 
-    but.set_callback(move || {
+    but.set_callback(move |_| {
         std::thread::spawn(move || {
             for i in 31..1000 {
                 app::sleep(0.010);
@@ -24,7 +24,7 @@ fn app_handle() {
         });
     });
 
-    frame.handle2(|f, ev| {
+    frame.handle(|f, ev| {
         if ev as i32 > 30 {
             f.set_label(&format!("{:?}", ev));
             true

@@ -1,5 +1,7 @@
+use crate::enums::*;
 use crate::image::Image;
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use crate::widget::Widget;
 use fltk_sys::table::*;
 use std::{
@@ -11,8 +13,8 @@ use std::{
 /// Creates a table
 #[derive(WidgetBase, WidgetExt, GroupExt, TableExt, Debug)]
 pub struct Table {
-    _inner: *mut Fl_Table,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Table,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines the TableContext
@@ -40,8 +42,8 @@ pub enum TableContext {
 /// Creates a table row
 #[derive(WidgetBase, WidgetExt, GroupExt, TableExt, Debug)]
 pub struct TableRow {
-    _inner: *mut Fl_Table_Row,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Table_Row,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines the table row select mode
@@ -72,20 +74,20 @@ impl TableRow {
     /// Sets the type of the table row
     pub fn set_type(&mut self, val: TableRowSelectMode) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Table_Row_set_type(self._inner, val as i32) }
+        unsafe { Fl_Table_Row_set_type(self.inner, val as i32) }
     }
 
     /// Gets the type of the table row
     pub fn get_type(&self) -> TableRowSelectMode {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_Table_Row_get_type(self._inner)) }
+        unsafe { mem::transmute(Fl_Table_Row_get_type(self.inner)) }
     }
 
     /// Returns whether a row was selected
     pub fn row_selected(&mut self, row: i32) -> bool {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Table_Row_row_selected(self._inner, row) != 0
+            Fl_Table_Row_row_selected(self.inner, row) != 0
         }
     }
 
@@ -97,7 +99,7 @@ impl TableRow {
     ) -> Result<(), FltkError> {
         unsafe {
             assert!(!self.was_deleted());
-            match Fl_Table_Row_select_row(self._inner, row, selection_flag as i32) {
+            match Fl_Table_Row_select_row(self.inner, row, selection_flag as i32) {
                 1 => Ok(()),
                 0 => Err(FltkError::Internal(FltkErrorKind::TableError)),
                 -1 => Err(FltkError::Internal(FltkErrorKind::TableError)),
@@ -109,6 +111,6 @@ impl TableRow {
     /// Selects all rows
     pub fn select_all_rows(&mut self, selection_flag: TableRowSelectFlag) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Table_Row_select_all_rows(self._inner, selection_flag as i32) }
+        unsafe { Fl_Table_Row_select_all_rows(self.inner, selection_flag as i32) }
     }
 }

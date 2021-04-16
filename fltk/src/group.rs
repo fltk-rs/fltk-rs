@@ -1,5 +1,7 @@
+use crate::enums::*;
 use crate::image::Image;
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use crate::widget::*;
 use fltk_sys::group::*;
 use std::{
@@ -12,8 +14,8 @@ use std::{
 /// Creates a widget group
 #[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Group {
-    _inner: *mut Fl_Group,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Group,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl Group {
@@ -30,8 +32,8 @@ impl Group {
 /// Creates a widget pack
 #[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Pack {
-    _inner: *mut Fl_Pack,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Pack,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines pack types
@@ -47,8 +49,8 @@ pub enum PackType {
 /// Creates a scroll group
 #[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Scroll {
-    _inner: *mut Fl_Scroll,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Scroll,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Defines Scroll types
@@ -78,7 +80,7 @@ impl Scroll {
     pub fn scrollbar(&self) -> impl ValuatorExt {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Scroll_scrollbar(self._inner);
+            let ptr = Fl_Scroll_scrollbar(self.inner);
             assert!(!ptr.is_null());
             crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
         }
@@ -88,60 +90,48 @@ impl Scroll {
     pub fn hscrollbar(&self) -> impl ValuatorExt {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Scroll_hscrollbar(self._inner);
+            let ptr = Fl_Scroll_hscrollbar(self.inner);
             assert!(!ptr.is_null());
             crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
         }
     }
 
     /// Returns the x position
-    pub fn xposition(&self) -> u32 {
+    pub fn xposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_xposition(self._inner) as u32 }
+        unsafe { Fl_Scroll_xposition(self.inner) as i32 }
     }
 
     /// Returns the y position
-    pub fn yposition(&self) -> u32 {
+    pub fn yposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_yposition(self._inner) as u32 }
+        unsafe { Fl_Scroll_yposition(self.inner) as i32 }
     }
 
     /// Scrolls from ```from``` to ```to```
-    pub fn scroll_to(&mut self, from: u32, to: u32) {
-        debug_assert!(
-            from <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
-        debug_assert!(
-            to <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn scroll_to(&mut self, from: i32, to: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scroll_to(self._inner, from as i32, to as i32) }
+        unsafe { Fl_Scroll_scroll_to(self.inner, from as i32, to as i32) }
     }
 
     /// Gets the scrollbar size
-    pub fn scrollbar_size(&self) -> u32 {
+    pub fn scrollbar_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scrollbar_size(self._inner) as u32 }
+        unsafe { Fl_Scroll_scrollbar_size(self.inner) as i32 }
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&mut self, new_size: u32) {
-        debug_assert!(
-            new_size <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_set_scrollbar_size(self._inner, new_size as i32) }
+        unsafe { Fl_Scroll_set_scrollbar_size(self.inner, new_size as i32) }
     }
 }
 
 /// Creates a tab which can contain widgets
 #[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Tabs {
-    _inner: *mut Fl_Tabs,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Tabs,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl Tabs {
@@ -149,7 +139,7 @@ impl Tabs {
     pub fn value(&mut self) -> Option<impl GroupExt> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Tabs_value(self._inner);
+            let ptr = Fl_Tabs_value(self.inner);
             if ptr.is_null() {
                 None
             } else {
@@ -165,7 +155,7 @@ impl Tabs {
         assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_value(
-                self._inner,
+                self.inner,
                 w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
             ) {
                 0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -178,7 +168,7 @@ impl Tabs {
     pub fn push(&self) -> Option<impl GroupExt> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Tabs_push(self._inner);
+            let ptr = Fl_Tabs_push(self.inner);
             if ptr.is_null() {
                 None
             } else {
@@ -194,7 +184,7 @@ impl Tabs {
         assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_push(
-                self._inner,
+                self.inner,
                 w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
             ) {
                 0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -211,7 +201,7 @@ impl Tabs {
             let mut i2 = 0;
             let mut i3 = 0;
             let mut i4 = 0;
-            Fl_Tabs_client_area(self._inner, &mut i1, &mut i2, &mut i3, &mut i4);
+            Fl_Tabs_client_area(self.inner, &mut i1, &mut i2, &mut i3, &mut i4);
             (i1, i2, i3, i4)
         }
     }
@@ -219,41 +209,41 @@ impl Tabs {
     /// Sets the tab label alignment
     pub fn set_tab_align(&mut self, a: Align) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tabs_set_tab_align(self._inner, a.bits() as i32) }
+        unsafe { Fl_Tabs_set_tab_align(self.inner, a.bits() as i32) }
     }
 
     /// Gets the tab label alignment.
     pub fn tab_align(&self) -> Align {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_Tabs_tab_align(self._inner)) }
+        unsafe { mem::transmute(Fl_Tabs_tab_align(self.inner)) }
     }
 }
 
 /// Creates a tile which can contain widgets
 #[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Tile {
-    _inner: *mut Fl_Tile,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Tile,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a wizard widget
 #[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct Wizard {
-    _inner: *mut Fl_Wizard,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Wizard,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl Wizard {
     /// Gets the next view of the wizard
     pub fn next(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Wizard_next(self._inner) }
+        unsafe { Fl_Wizard_next(self.inner) }
     }
 
     /// Gets the previous view of the wizard
     pub fn prev(&mut self) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Wizard_prev(self._inner) }
+        unsafe { Fl_Wizard_prev(self.inner) }
     }
 
     /// Gets the underlying widget of the current view
@@ -261,7 +251,7 @@ impl Wizard {
         unsafe {
             assert!(!self.was_deleted());
             Box::new(Widget::from_widget_ptr(
-                Fl_Wizard_value(self._inner) as *mut fltk_sys::widget::Fl_Widget
+                Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget
             ))
         }
     }
@@ -271,7 +261,7 @@ impl Wizard {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Wizard_set_value(
-                self._inner,
+                self.inner,
                 w.as_widget_ptr() as *mut fltk_sys::group::Fl_Widget,
             )
         }
@@ -281,8 +271,8 @@ impl Wizard {
 /// Creates a color chooser widget
 #[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
 pub struct ColorChooser {
-    _inner: *mut Fl_Color_Chooser,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Color_Chooser,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl ColorChooser {
@@ -290,9 +280,9 @@ impl ColorChooser {
     pub fn rgb_color(&self) -> (u8, u8, u8) {
         unsafe {
             assert!(!self.was_deleted());
-            let r = (Fl_Color_Chooser_r(self._inner) * 255.0) as u8;
-            let g = (Fl_Color_Chooser_g(self._inner) * 255.0) as u8;
-            let b = (Fl_Color_Chooser_b(self._inner) * 255.0) as u8;
+            let r = (Fl_Color_Chooser_r(self.inner) * 255.0) as u8;
+            let g = (Fl_Color_Chooser_g(self.inner) * 255.0) as u8;
+            let b = (Fl_Color_Chooser_b(self.inner) * 255.0) as u8;
             (r, g, b)
         }
     }
@@ -309,18 +299,18 @@ impl Pack {
     /// Get the spacing of the pack
     pub fn spacing(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Pack_spacing(self._inner) }
+        unsafe { Fl_Pack_spacing(self.inner) }
     }
 
     /// Set the spacing of the pack
     pub fn set_spacing(&mut self, spacing: i32) {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Pack_set_spacing(self._inner, spacing);
+            Fl_Pack_set_spacing(self.inner, spacing);
         }
     }
 
-    /// Layout the children of the pack automatically
+    /// Layout the children of the pack automatically.
     /// Must be called on existing children
     pub fn auto_layout(&mut self) {
         let children = self.children() as i32;
@@ -333,7 +323,7 @@ impl Pack {
         let h = (self.height() - spacing) / children;
 
         for i in 0..children {
-            let mut c = self.child(i as u32).unwrap();
+            let mut c = self.child(i as i32).unwrap();
             let c_w = c.width();
             let c_h = c.height();
             if t == PackType::Vertical {
@@ -348,8 +338,8 @@ impl Pack {
 /// Defines a Vertical Grid (custom widget).
 /// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing.
 /// Requires explicit calls to add, which is overloaded especially for the layout.
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// let mut grid = group::VGrid::new(0, 0, 400, 300, "");
 /// grid.set_params(3, 3, 5);
 /// grid.add(&button::Button::default());
@@ -371,7 +361,7 @@ pub struct VGrid {
 
 impl VGrid {
     /// Creates a new vertical grid
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> VGrid {
+    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> VGrid {
         let vpack = Pack::new(x, y, w, h, label);
         vpack.end();
         VGrid {
@@ -402,7 +392,7 @@ impl VGrid {
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
         let rem = self.current / self.cols;
         if rem < self.rows {
-            let hpack = self.vpack.child(rem as u32).unwrap();
+            let hpack = self.vpack.child(rem as i32).unwrap();
             let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
             hpack.end();
             hpack.add(w);
@@ -430,8 +420,8 @@ impl DerefMut for VGrid {
 /// Defines a Horizontal Grid (custom widget).
 /// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing.
 /// Requires explicit calls to add, which is overloaded especially for the layout.
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// let mut grid = group::HGrid::new(0, 0, 400, 300, "");
 /// grid.set_params(3, 3, 5);
 /// grid.add(&button::Button::default());
@@ -453,7 +443,7 @@ pub struct HGrid {
 
 impl HGrid {
     /// Creates a new horizontal grid
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> HGrid {
+    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> HGrid {
         let mut hpack = Pack::new(x, y, w, h, label);
         hpack.set_type(PackType::Horizontal);
         hpack.end();
@@ -484,7 +474,7 @@ impl HGrid {
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
         let rem = self.current / self.rows;
         if rem < self.cols {
-            let vpack = self.hpack.child(rem as u32).unwrap();
+            let vpack = self.hpack.child(rem as i32).unwrap();
             let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
             vpack.end();
             vpack.add(w);
@@ -506,5 +496,73 @@ impl Deref for HGrid {
 impl DerefMut for HGrid {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.hpack
+    }
+}
+
+/// A wrapper around a vertical pack, with auto_layouting using the add method
+pub struct Column {
+    p: Pack,
+}
+
+impl Column {
+    /// Default init a column filling the parent
+    pub fn default() -> Self {
+        let mut p = Pack::default().size_of_parent().center_of_parent();
+        p.set_type(PackType::Vertical);
+        p.end();
+        Column { p }
+    }
+    /// Add a widget to the column with automatic layouting
+    pub fn add<W: WidgetExt>(&mut self, w: &W) {
+        self.p.add(w);
+        self.p.auto_layout();
+    }
+}
+
+impl Deref for Column {
+    type Target = Pack;
+
+    fn deref(&self) -> &Self::Target {
+        &self.p
+    }
+}
+
+impl DerefMut for Column {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.p
+    }
+}
+
+/// A wrapper around a Horizontal pack, with auto_layouting using the add method
+pub struct Row {
+    p: Pack,
+}
+
+impl Row {
+    /// Default init a row filling the parent
+    pub fn default() -> Self {
+        let mut p = Pack::default().size_of_parent().center_of_parent();
+        p.set_type(PackType::Horizontal);
+        p.end();
+        Row { p }
+    }
+    /// Add a widget to the row with automatic layouting
+    pub fn add<W: WidgetExt>(&mut self, w: &W) {
+        self.p.add(w);
+        self.p.auto_layout();
+    }
+}
+
+impl Deref for Row {
+    type Target = Pack;
+
+    fn deref(&self) -> &Self::Target {
+        &self.p
+    }
+}
+
+impl DerefMut for Row {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.p
     }
 }

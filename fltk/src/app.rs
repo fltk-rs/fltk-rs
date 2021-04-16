@@ -1,5 +1,6 @@
-pub use crate::enums::*;
+use crate::enums::*;
 use crate::prelude::*;
+use crate::utils::*;
 use crate::window::*;
 use fltk_sys::fl::*;
 use std::collections::hash_map::DefaultHasher;
@@ -161,7 +162,7 @@ impl App {
         run()
     }
 
-    /// Wait for incoming messages
+    /// Wait for incoming messages.
     /// Calls to redraw within wait require an explicit sleep
     pub fn wait(self) -> bool {
         wait()
@@ -178,12 +179,12 @@ impl App {
     /// As such only one font can be loaded at a time.
     /// The font name can be used with Font::by_name, and index with Font::by_index.
     /// # Examples
-    /// ```no_run
-    /// use fltk::*;
+    /// ```rust,no_run
+    /// use fltk::{prelude::*, *};
     /// let app = app::App::default();
     /// let font = app.load_font("font.ttf").unwrap();
     /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
-    /// frame.set_label_font(Font::by_name(&font));
+    /// frame.set_label_font(enums::Font::by_name(&font));
     /// ```
     pub fn load_font<P: AsRef<path::Path>>(self, path: P) -> Result<String, FltkError> {
         self.load_font_(path.as_ref())
@@ -218,14 +219,13 @@ impl App {
 }
 
 /// Set the application's scrollbar size
-pub fn set_scrollbar_size(sz: u32) {
-    debug_assert!(sz < std::u32::MAX);
+pub fn set_scrollbar_size(sz: i32) {
     unsafe { Fl_set_scrollbar_size(sz as i32) }
 }
 
 /// Get the app's scrollbar size
-pub fn scrollbar_size() -> u32 {
-    unsafe { Fl_scrollbar_size() as u32 }
+pub fn scrollbar_size() -> i32 {
+    unsafe { Fl_scrollbar_size() as i32 }
 }
 
 /// Get the grabbed window
@@ -356,8 +356,8 @@ pub fn event_is_click() -> bool {
 }
 
 /// Returns the duration of an event
-pub fn event_length() -> u32 {
-    unsafe { Fl_event_length() as u32 }
+pub fn event_length() -> i32 {
+    unsafe { Fl_event_length() as i32 }
 }
 
 /// Returns the state of the event
@@ -403,8 +403,8 @@ where
 }
 
 /// Set a widget callback using a C style API
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// use std::os::raw::*;
 /// // data can be anything, even a different widget
 /// fn cb(w: app::WidgetPtr, data: *mut c_void) {
@@ -630,8 +630,8 @@ pub unsafe fn awake_msg<T>(msg: T) {
 }
 
 /// Receives a custom message
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// if let Some(msg) = unsafe { app::thread_msg::<i32>() } { /* do something */ }
 /// ```
 /// # Safety
@@ -762,8 +762,8 @@ pub fn quit() {
 
 /// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
 /// Example:
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// fn callback() {
 ///     println!("TICK");
 ///     app::repeat_timeout(1.0, callback);
@@ -794,8 +794,8 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
 /// You may only call this method inside a timeout callback.
 /// The timeout duration `tm` is indicated in seconds
 /// Example:
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// fn callback() {
 ///     println!("TICK");
 ///     app::repeat_timeout(1.0, callback);
@@ -879,7 +879,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 
 /// Gets the widget that is below the mouse cursor.
 /// This returns an Option<impl WidgetExt> which can be specified in the function call
-/// ```no_run
+/// ```rust,no_run
 /// use fltk::app;
 /// use fltk::widget;
 /// let w = app::belowmouse::<widget::Widget>(); // or by specifying a more concrete type
@@ -1169,16 +1169,16 @@ pub fn get_system_colors() {
 /// Returns Ok(true) if the event was handled.
 /// Returns Ok(false) if the event was not handled.
 /// Returns Err on error or in use of one of the reserved values.
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// const CHANGE_FRAME: i32 = 100;
 /// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();
 /// let mut frame = frame::Frame::default();
-/// but.set_callback(move || {
+/// but.set_callback(move |_| {
 ///     let _ = app::handle(CHANGE_FRAME, &wind).unwrap();
 /// });
-/// frame.handle2(move |f, ev| {
+/// frame.handle(move |f, ev| {
 ///     if ev as i32 == CHANGE_FRAME {
 ///         f.set_label("Hello world");
 ///         true
@@ -1205,16 +1205,16 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
 /// Returns Ok(true) if the event was handled.
 /// Returns Ok(false) if the event was not handled.
 /// Returns Err on error or in use of one of the reserved values.
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// const CHANGE_FRAME: i32 = 100;
 /// let mut wind = window::Window::default();
 /// let mut but = button::Button::default();
 /// let mut frame = frame::Frame::default();
-/// but.set_callback(move || {
+/// but.set_callback(move |_| {
 ///     let _ = app::handle_main(CHANGE_FRAME).unwrap();
 /// });
-/// frame.handle2(move |f, ev| {
+/// frame.handle(move |f, ev| {
 ///     if ev as i32 == CHANGE_FRAME {
 ///         f.set_label("Hello world");
 ///         true
@@ -1243,12 +1243,12 @@ pub fn flush() {
 }
 
 /// Set the screen scale
-pub fn set_screen_scale(n: u32, factor: f32) {
+pub fn set_screen_scale(n: i32, factor: f32) {
     unsafe { Fl_set_screen_scale(n as i32, factor) }
 }
 
 /// Get the screen scale
-pub fn screen_scale(n: u32) -> f32 {
+pub fn screen_scale(n: i32) -> f32 {
     unsafe { Fl_screen_scale(n as i32) }
 }
 
@@ -1258,8 +1258,8 @@ pub fn screen_scaling_supported() -> bool {
 }
 
 /// Get the screen count
-pub fn screen_count() -> u32 {
-    unsafe { Fl_screen_count() as u32 }
+pub fn screen_count() -> i32 {
+    unsafe { Fl_screen_count() as i32 }
 }
 
 /// Open the current display

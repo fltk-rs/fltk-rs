@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let (r, g, b) = utils::hex2rgb(0xfafdf3);
@@ -7,9 +7,9 @@ fn main() {
 
     // global theming
     app::background(r, g, b);
-    app::set_font(Font::Courier);
+    app::set_font(enums::Font::Courier);
     app::set_font_size(16);
-    app::set_frame_type(FrameType::RFlatBox);
+    app::set_frame_type(enums::FrameType::RFlatBox);
     app::set_visible_focus(false);
 
     // regular widget code
@@ -21,11 +21,11 @@ fn main() {
     pack.set_type(group::PackType::Horizontal);
     pack.set_spacing(80);
     let mut but1 = button::Button::default().with_label("Button1");
-    but1.set_color(Color::Yellow);
-    but1.set_down_frame(FrameType::RFlatBox);
+    but1.set_color(enums::Color::Yellow);
+    but1.set_down_frame(enums::FrameType::RFlatBox);
     let mut but2 = button::Button::default().with_label("Button2");
-    but2.set_color(Color::Yellow);
-    but2.set_down_frame(FrameType::RFlatBox);
+    but2.set_color(enums::Color::Yellow);
+    but2.set_down_frame(enums::FrameType::RFlatBox);
     pack.end();
     pack.auto_layout();
 

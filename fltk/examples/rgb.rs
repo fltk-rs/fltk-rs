@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let mut fb: Vec<u8> = vec![0u8; 128 * 128 * 3];
@@ -16,8 +16,8 @@ fn main() {
     wind.end();
     wind.show();
 
-    frame.draw2(move |f| {
-        let mut image = image::RgbImage::new(&fb, 128, 128, ColorDepth::Rgb8).unwrap();
+    frame.draw(move |f| {
+        let mut image = image::RgbImage::new(&fb, 128, 128, enums::ColorDepth::Rgb8).unwrap();
         image.scale(f.width(), f.height(), false, true);
         image.draw(f.x(), f.y(), f.width(), f.height());
     });

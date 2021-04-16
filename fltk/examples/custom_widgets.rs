@@ -1,4 +1,7 @@
-use fltk::{app, button, draw, frame::*, image::*, valuator::*, widget::*, window::*};
+use fltk::{
+    app, button, draw, enums::*, frame::Frame, image::SvgImage, prelude::*, valuator::*,
+    widget::Widget, window::Window,
+};
 use std::ops::{Deref, DerefMut};
 use std::{cell::RefCell, rc::Rc};
 
@@ -52,7 +55,7 @@ pub struct FlatButton {
 }
 
 impl FlatButton {
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> FlatButton {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &'static str) -> FlatButton {
         let mut x = FlatButton {
             wid: Widget::new(x, y, w, h, label),
         };
@@ -63,7 +66,7 @@ impl FlatButton {
 
     // Overrides the draw function
     fn draw(&mut self) {
-        self.wid.draw2(move |b| {
+        self.wid.draw(move |b| {
             draw::draw_box(
                 FrameType::FlatBox,
                 b.x(),
@@ -89,7 +92,7 @@ impl FlatButton {
     // Notice the do_callback which allows the set_callback method to work
     fn handle(&mut self) {
         let mut wid = self.wid.clone();
-        self.wid.handle(move |ev| match ev {
+        self.wid.handle(move |_, ev| match ev {
             Event::Push => {
                 wid.do_callback();
                 true
@@ -122,7 +125,7 @@ impl PowerButton {
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> Self {
         let mut frm = Frame::new(x, y, w, h, "");
         let on = Rc::from(RefCell::from(false));
-        frm.draw2({
+        frm.draw({
             let on = on.clone();
             move |f| {
                 let image_data = if *on.borrow() {
@@ -135,7 +138,7 @@ impl PowerButton {
                 svg.draw(f.x(), f.y(), f.width(), f.height());
             }
         });
-        frm.handle2({
+        frm.handle({
             let on = on.clone();
             move |f, ev| match ev {
                 Event::Push => {
@@ -174,14 +177,21 @@ pub struct FancyHorSlider {
 }
 
 impl FancyHorSlider {
-    pub fn new(x: i32, y: i32, w: i32, h: i32) -> Self {
-        let mut s = Slider::new(x, y, w, h, "");
+    pub fn new(x: i32, y: i32, width: i32, height: i32) -> Self {
+        let mut s = Slider::new(x, y, width, height, "");
         s.set_type(SliderType::Horizontal);
         s.set_frame(FrameType::RFlatBox);
         s.set_color(Color::from_u32(0x868db1));
-        s.draw2(|s| {
+        s.draw(|s| {
             draw::set_draw_color(Color::Blue);
-            draw::draw_pie(s.x() - 10 + (s.w() as f64 * s.value()) as i32, s.y() - 10, 30, 30, 0., 360.);
+            draw::draw_pie(
+                s.x() - 10 + (s.w() as f64 * s.value()) as i32,
+                s.y() - 10,
+                30,
+                30,
+                0.,
+                360.,
+            );
         });
         Self { s }
     }
@@ -236,7 +246,7 @@ fn main() {
     toggle.set_color(Color::from_u32(0x585858));
     toggle.clear_visible_focus();
 
-    toggle.set_callback2(|t| {
+    toggle.set_callback(|t| {
         if t.is_set() {
             t.set_align(Align::Right | Align::Inside);
         } else {
@@ -245,25 +255,25 @@ fn main() {
         t.parent().unwrap().redraw();
     });
 
-    dial.draw2(|d| {
+    dial.draw(|d| {
         draw::set_draw_color(Color::Black);
         draw::draw_pie(d.x() + 20, d.y() + 20, 160, 160, 0., 360.);
         draw::draw_pie(d.x() - 5, d.y() - 5, 210, 210, -135., -45.);
     });
 
-    dial.set_callback2(|d| {
+    dial.set_callback(|d| {
         d.set_label(&format!("{}", (d.value() * 100.) as i32));
         app::redraw();
     });
-    but.set_callback(move || {
+    but.set_callback(move |_| {
         frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
     });
 
-    power.set_callback(move || {
+    power.set_callback(move |_| {
         println!("power button clicked");
     });
 
-    fancy_slider.set_callback2(|s| s.parent().unwrap().redraw());
+    fancy_slider.set_callback(|s| s.parent().unwrap().redraw());
 
     app.run().unwrap();
 }

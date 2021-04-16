@@ -225,69 +225,60 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn clear(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #clear(self._inner)
+                    #clear(self.inner)
                 }
             }
 
             fn set_table_frame(&mut self, frame: FrameType) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_table_box(self._inner, frame as i32)
+                    #set_table_box(self.inner, frame as i32)
                 }
             }
 
             fn table_frame(&self) -> FrameType {
                 unsafe {
                     assert!(!self.was_deleted());
-                    mem::transmute(#table_box(self._inner))
+                    mem::transmute(#table_box(self.inner))
                 }
             }
 
-            fn set_rows(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_rows(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_rows(self._inner, val as i32)
+                    #set_rows(self.inner, val as i32)
                 }
             }
 
-            fn rows(&self) -> u32 {
+            fn rows(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #rows(self._inner) as u32
+                    #rows(self.inner) as i32
                 }
             }
 
-            fn set_cols(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_cols(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_cols(self._inner, val as i32)
+                    #set_cols(self.inner, val as i32)
                 }
             }
 
-            fn cols(&self) -> u32 {
+            fn cols(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #cols(self._inner) as u32
+                    #cols(self.inner) as i32
                 }
             }
 
-            fn visible_cells(&self, row_top: &mut i32, col_left: &mut i32, row_bot: &mut i32, col_right: &mut i32) {
-                unsafe {
-                    assert!(!self.was_deleted());
-                    #visible_cells(self._inner, row_top, col_left, row_bot, col_right)
-                }
-            }
-
-            fn visible_cells2(&self) -> (i32, i32, i32, i32) {
+            fn visible_cells(&self) -> (i32, i32, i32, i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     let mut row_top = 0;
                     let mut col_left = 0;
                     let mut row_bot = 0;
                     let mut col_right = 0;
-                    self.visible_cells(&mut row_top, &mut col_left, &mut row_bot, &mut col_right);
+                    #visible_cells(self.inner, &mut row_top, &mut col_left, &mut row_bot, &mut col_right);
                     (row_top, col_left, row_bot, col_right)
                 }
             }
@@ -295,258 +286,249 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn is_interactive_resize(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #is_interactive_resize(self._inner)  != 0
+                    #is_interactive_resize(self.inner)  != 0
                 }
             }
 
             fn row_resize(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #row_resize(self._inner)  != 0
+                    #row_resize(self.inner)  != 0
                 }
             }
 
             fn set_row_resize(&mut self, flag: bool) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_row_resize(self._inner, flag as i32)
+                    #set_row_resize(self.inner, flag as i32)
                 }
             }
 
             fn col_resize(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #col_resize(self._inner)  != 0
+                    #col_resize(self.inner)  != 0
                 }
             }
 
             fn set_col_resize(&mut self, flag: bool) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_col_resize(self._inner, flag as i32)
+                    #set_col_resize(self.inner, flag as i32)
                 }
             }
 
-            fn col_resize_min(&self) -> u32 {
+            fn col_resize_min(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #col_resize_min(self._inner)  as u32
+                    #col_resize_min(self.inner)  as i32
                 }
             }
 
-            fn set_col_resize_min(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_col_resize_min(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_col_resize_min(self._inner, val as i32)
+                    #set_col_resize_min(self.inner, val as i32)
                 }
             }
 
-            fn row_resize_min(&self) -> u32 {
+            fn row_resize_min(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #row_resize_min(self._inner) as u32
+                    #row_resize_min(self.inner) as i32
                 }
             }
 
-            fn set_row_resize_min(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_row_resize_min(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_row_resize_min(self._inner, val as i32)
+                    #set_row_resize_min(self.inner, val as i32)
                 }
             }
 
             fn row_header(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #row_header(self._inner)  != 0
+                    #row_header(self.inner)  != 0
                 }
             }
 
             fn set_row_header(&mut self, flag: bool) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_row_header(self._inner, flag as i32)
+                    #set_row_header(self.inner, flag as i32)
                 }
             }
 
             fn col_header(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #col_header(self._inner)  != 0
+                    #col_header(self.inner)  != 0
                 }
             }
 
             fn set_col_header(&mut self, flag: bool) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_col_header(self._inner, flag as i32)
+                    #set_col_header(self.inner, flag as i32)
                 }
             }
 
             fn set_col_header_height(&mut self, height: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_col_header_height(self._inner, height)
+                    #set_col_header_height(self.inner, height)
                 }
             }
 
             fn col_header_height(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #col_header_height(self._inner)
+                    #col_header_height(self.inner)
                 }
             }
 
             fn set_row_header_width(&mut self, width: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_row_header_width(self._inner, width)
+                    #set_row_header_width(self.inner, width)
                 }
             }
 
             fn row_header_width(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #row_header_width(self._inner)
+                    #row_header_width(self.inner)
                 }
             }
 
             fn set_row_header_color(&mut self, val: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_row_header_color(self._inner, val.bits() as u32)
+                    #set_row_header_color(self.inner, val.bits() as u32)
                 }
             }
 
             fn row_header_color(&self) -> Color {
                 unsafe {
                     assert!(!self.was_deleted());
-                    mem::transmute(#row_header_color(self._inner))
+                    mem::transmute(#row_header_color(self.inner))
                 }
             }
 
             fn set_col_header_color(&mut self, val: Color) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_col_header_color(self._inner, val.bits() as u32)
+                    #set_col_header_color(self.inner, val.bits() as u32)
                 }
             }
 
             fn col_header_color(&self) -> Color {
                 unsafe {
                     assert!(!self.was_deleted());
-                    mem::transmute(#col_header_color(self._inner))
+                    mem::transmute(#col_header_color(self.inner))
                 }
             }
 
             fn set_row_height(&mut self, row: i32, height: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_row_height(self._inner, row, height)
+                    #set_row_height(self.inner, row, height)
                 }
             }
 
             fn row_height(&self, row: i32) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #row_height(self._inner, row)
+                    #row_height(self.inner, row)
                 }
             }
 
             fn set_col_width(&mut self, col: i32, width: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_col_width(self._inner, col, width)
+                    #set_col_width(self.inner, col, width)
                 }
             }
 
             fn col_width(&self, col: i32) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #col_width(self._inner, col)
+                    #col_width(self.inner, col)
                 }
             }
 
             fn set_row_height_all(&mut self, height: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_row_height_all(self._inner, height)
+                    #set_row_height_all(self.inner, height)
                 }
             }
 
             fn set_col_width_all(&mut self, width: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_col_width_all(self._inner, width)
+                    #set_col_width_all(self.inner, width)
                 }
             }
 
             fn set_row_position(&mut self, row: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_row_position(self._inner, row as i32)
+                    #set_row_position(self.inner, row as i32)
                 }
             }
 
             fn set_col_position(&mut self, col: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_col_position(self._inner, col as i32)
+                    #set_col_position(self.inner, col as i32)
                 }
             }
 
             fn row_position(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #row_position(self._inner) as i32
+                    #row_position(self.inner) as i32
                 }
             }
 
             fn col_position(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #col_position(self._inner) as i32
+                    #col_position(self.inner) as i32
                 }
             }
 
             fn set_top_row(&mut self, row: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_top_row(self._inner, row as i32)
+                    #set_top_row(self.inner, row as i32)
                 }
             }
 
             fn top_row(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #top_row(self._inner) as i32
+                    #top_row(self.inner) as i32
                 }
             }
 
             fn is_selected(&self, r: i32, c: i32) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #is_selected(self._inner, r, c)  != 0
+                    #is_selected(self.inner, r, c)  != 0
                 }
             }
 
-            fn get_selection(&self, row_top: &mut i32, col_left: &mut i32, row_bot: &mut i32, col_right: &mut i32,) {
-                unsafe {
-                    assert!(!self.was_deleted());
-                    #get_selection(self._inner, row_top, col_left, row_bot, col_right)
-                }
-            }
-
-            fn get_selection2(&self) -> (i32, i32, i32, i32) {
+            fn get_selection(&self) -> (i32, i32, i32, i32) {
                 unsafe {
                     assert!(!self.was_deleted());
                     let mut row_top = 0;
                     let mut col_left = 0;
                     let mut row_bot = 0;
                     let mut col_right = 0;
-                    self.get_selection(&mut row_top, &mut col_left, &mut row_bot, &mut col_right);
+                    #get_selection(self.inner, &mut row_top, &mut col_left, &mut row_bot, &mut col_right);
                     (row_top, col_left, row_bot, col_right)
                 }
             }
@@ -554,7 +536,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_selection(self._inner, row_top, col_left, row_bot, col_right)
+                    #set_selection(self.inner, row_top, col_left, row_bot, col_right)
                 }
             }
 
@@ -565,7 +547,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn move_cursor_with_shift_select(&mut self, r: i32, c: i32, shiftselect: bool) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let x = #move_cursor_with_shiftselect(self._inner, r, c, shiftselect as i32);
+                    let x = #move_cursor_with_shiftselect(self.inner, r, c, shiftselect as i32);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -576,7 +558,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn move_cursor(&mut self, r: i32, c: i32) -> Result<(), FltkError> {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let x = #move_cursor(self._inner, r, c);
+                    let x = #move_cursor(self.inner, r, c);
                     if x == 0 {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
@@ -587,60 +569,39 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn init_sizes(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #init_sizes(self._inner)
+                    #init_sizes(self.inner)
                 }
             }
 
-            fn scrollbar_size(&self) -> u32 {
+            fn scrollbar_size(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #scrollbar_size(self._inner) as u32
+                    #scrollbar_size(self.inner) as i32
                 }
             }
 
-            fn set_scrollbar_size(&mut self, new_size: u32) {
-                debug_assert!(new_size <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_scrollbar_size(&mut self, new_size: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_scrollbar_size(self._inner, new_size as i32)
+                    #set_scrollbar_size(self.inner, new_size as i32)
                 }
             }
 
-            fn set_tab_cell_nav(&mut self, val: u32) {
-                debug_assert!(val <= std::isize::MAX as u32, "u32 entries have to be < std::isize::MAX for compatibility!");
+            fn set_tab_cell_nav(&mut self, val: i32) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #set_tab_cell_nav(self._inner, val as i32)
+                    #set_tab_cell_nav(self.inner, val as i32)
                 }
             }
 
-            fn tab_cell_nav(&self) -> u32 {
+            fn tab_cell_nav(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #tab_cell_nav(self._inner) as u32
+                    #tab_cell_nav(self.inner) as i32
                 }
             }
 
-            fn draw_cell<F: FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                pub type custom_draw_cell_callback =
-                    Option<unsafe extern "C" fn(ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void)>;
-                unsafe {
-                    unsafe extern "C" fn shim(ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void) {
-                        let ctx: TableContext = mem::transmute(ctx);
-                        let a: *mut Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = data as *mut Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)>;
-                        let f: &mut (dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(ctx, arg2, arg3, arg4, arg5, arg6, arg7)));
-                    }
-                    let _old_data = self.draw_cell_data();
-                    let a: *mut Box<dyn FnMut(crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_draw_cell_callback = Some(shim);
-                    #draw_cell(self._inner, callback, data);
-                }
-            }
-
-            fn draw_cell2<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F) {
+            fn draw_cell<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 pub type custom_draw_cell_callback2 =
                     Option<unsafe extern "C" fn(wid: *mut Fl_Widget, ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void)>;
@@ -656,12 +617,12 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_cell_callback2 = Some(shim);
-                    #draw_cell2(self._inner, callback, data);
+                    #draw_cell2(self.inner, callback, data);
                 }
             }
 
             unsafe fn draw_cell_data(&self) -> Option<Box<dyn FnMut()>> {
-                let ptr = #draw_cell_data(self._inner);
+                let ptr = #draw_cell_data(self.inner);
                 if ptr.is_null() {
                     None
                 } else {
@@ -673,19 +634,19 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
 
             fn callback_col(&self) -> i32 {
                 unsafe {
-                    #callback_col(self._inner)
+                    #callback_col(self.inner)
                 }
             }
 
             fn callback_row(&self) -> i32 {
                 unsafe {
-                    #callback_row(self._inner)
+                    #callback_row(self.inner)
                 }
             }
 
             fn callback_context(&self) -> TableContext {
                 unsafe {
-                    mem::transmute(#callback_context(self._inner))
+                    mem::transmute(#callback_context(self.inner))
                 }
             }
         }
