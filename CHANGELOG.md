@@ -4,10 +4,10 @@
 ## [1.0.0] - 2021-04-20
 - [BREAKING] Importing fltk::* no longer auto-imports the prelude nor enums modules.
 - [BREAKING] Importing widgets no longer auto-imports the prelude nor enums modules.
+- [BREAKING] Replace set_callback, handle, draw, draw_cell with their overloads.
 - [BREAKING] Widgets take a `&'static str` for a label when initialized. To use dynamic labels, use set_label or with_label.
 - [BREAKING] Replace TableExt::visible_cells and get_selection with their easier overloads.
 - [BREAKING] Rename InputChoice::set_value2 to set_value_index.
-- [BREAKING] Replace set_callback, handle, draw, draw_cell with their overloads.
 - [BREAKING] Take i32 where FLTK expects i32.
 - [BREAKING] Rename WidgetType::to_int() to to_i32().
 - [BREAKING] app::event_dx() and event_dy() return an app::MouseWheel instead of i32.
