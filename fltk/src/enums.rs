@@ -814,19 +814,6 @@ bitflags! {
     }
 }
 
-/// Defines Mouse buttons
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
-#[non_exhaustive]
-pub enum Mouse {
-    /// Left mouse button
-    Left = 1,
-    /// Middle mouse button
-    Middle = 2,
-    /// Right mouse button
-    Right = 3,
-}
-
 impl std::ops::BitOr<char> for Shortcut {
     type Output = Shortcut;
     fn bitor(self, other: char) -> Self::Output {

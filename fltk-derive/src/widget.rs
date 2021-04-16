@@ -529,7 +529,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_label_size(&mut self, sz: i32) {
                 assert!(!self.was_deleted());
-                let sz = if sz < 1 { 1 } else { sz }; 
+                let sz = if sz < 1 { 1 } else { sz };
                 unsafe { #set_label_size(self.inner, sz) }
             }
 

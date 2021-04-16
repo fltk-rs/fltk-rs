@@ -7,6 +7,7 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::{
     any,
+    cmp,
     ffi::{CStr, CString},
     marker, mem,
     os::raw,
@@ -293,8 +294,21 @@ pub fn event_button() -> i32 {
     unsafe { Fl_event_button() }
 }
 
+/// Defines Mouse buttons
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+#[non_exhaustive]
+pub enum MouseButton {
+    /// Left mouse button
+    Left = 1,
+    /// Middle mouse button
+    Middle = 2,
+    /// Right mouse button
+    Right = 3,
+}
+
 /// Returns the captured button event
-pub fn event_mouse_button() -> Mouse {
+pub fn event_mouse_button() -> MouseButton {
     unsafe { mem::transmute(Fl_event_button()) }
 }
 
@@ -323,16 +337,38 @@ pub fn event_y_root() -> i32 {
     unsafe { Fl_event_y_root() }
 }
 
-/// Returns the current horizontal mouse scrolling associated with the
-/// Event::MouseWheel. Right is positive.
-pub fn event_dx() -> i32 {
-    unsafe { Fl_event_dx() }
+/// Event direction with Mousewheel event
+pub enum EventDirection {
+    /// No movement
+    None,
+    /// Right movement
+    Right,
+    /// Left movement
+    Left,
+    /// Up movement
+    Up,
+    /// Down movement
+    Down,
 }
 
-/// Returns the current vertical mouse scrolling associated with the
-/// Event::MouseWheel. Down is positive.
-pub fn event_dy() -> i32 {
-    unsafe { Fl_event_dy() }
+/// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
+/// Returns EventDirection::None, Right or Left
+pub fn event_dx() -> EventDirection {
+    match 0.cmp(unsafe { &Fl_event_dx() }) {
+        cmp::Ordering::Greater => EventDirection::Right,
+        cmp::Ordering::Equal => EventDirection::None,
+        cmp::Ordering::Less => EventDirection::Left,
+    }
+}
+
+/// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
+/// Returns EventDirection::None, Up or Down
+pub fn event_dy() -> EventDirection {
+    match 0.cmp(unsafe { &Fl_event_dy() }) {
+        cmp::Ordering::Greater => EventDirection::Down,
+        cmp::Ordering::Equal => EventDirection::None,
+        cmp::Ordering::Less => EventDirection::Up,
+    }
 }
 
 /// Gets the mouse coordinates relative to the screen

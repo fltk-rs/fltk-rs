@@ -587,17 +587,17 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_tab_cell_nav(&mut self, val: i32) {
+            fn set_tab_cell_nav(&mut self, val: bool) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_tab_cell_nav(self.inner, val as i32)
                 }
             }
 
-            fn tab_cell_nav(&self) -> i32 {
+            fn tab_cell_nav(&self) -> bool {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #tab_cell_nav(self.inner) as i32
+                    #tab_cell_nav(self.inner) != 0
                 }
             }
 

@@ -339,7 +339,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
 
             fn at(&self, idx: i32) -> Option<crate::menu::MenuItem> {
                 assert!(!self.was_deleted());
-                if idx >= self.size() {
+                if idx >= self.size() || idx < 0 {
                     return None;
                 }
                 unsafe {

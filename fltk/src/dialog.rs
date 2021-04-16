@@ -8,6 +8,20 @@ use std::{
     os::raw,
 };
 
+/// Color modes to be used with the color chooser
+#[repr(u8)]
+#[derive(Copy, Clone, PartialEq)]
+pub enum ColorMode {
+    /// Rgb color mode
+    Rgb = 0,
+    /// Byte color mode
+    Byte = 1,
+    /// Hex color mode
+    Hex = 2,
+    /// Hsv color mode
+    Hsv = 3,
+}
+
 /// Creates a file button
 #[derive(Debug)]
 pub struct FileDialog {
@@ -896,10 +910,7 @@ impl FileChooser {
     /// Gets the file or dir name chosen by the FileChooser
     pub fn value(&mut self, f: i32) -> Option<String> {
         assert!(!self.inner.is_null());
-        let mut f = f;
-        if f == 0 {
-            f = 1;
-        }
+        let f = if f == 0 { 1 } else { f };
         unsafe {
             let ptr = Fl_File_Chooser_value(self.inner, f as i32);
             if ptr.is_null() {
@@ -1083,14 +1094,13 @@ pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> 
 }
 
 /// Spawns a color_chooser dialog.
-/// `cmode`: Optional mode for color chooser. Default is 0 if rgb mode.
-pub fn color_chooser(name: &str, cmode: i32) -> Option<(u8, u8, u8)> {
+pub fn color_chooser(name: &str, cmode: ColorMode) -> Option<(u8, u8, u8)> {
     unsafe {
         let name = CString::safe_new(name);
         let mut r = 255;
         let mut g = 255;
         let mut b = 255;
-        let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode);
+        let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode as i32);
         if ret == 0 {
             None
         } else {
@@ -1100,14 +1110,13 @@ pub fn color_chooser(name: &str, cmode: i32) -> Option<(u8, u8, u8)> {
 }
 
 /// Spawns a color_chooser dialog.
-/// `cmode`: Optional mode for color chooser. Default is 0 if rgb mode.
-pub fn color_chooser_with_default(name: &str, cmode: i32, col: (u8, u8, u8)) -> (u8, u8, u8) {
+pub fn color_chooser_with_default(name: &str, cmode: ColorMode, col: (u8, u8, u8)) -> (u8, u8, u8) {
     unsafe {
         let name = CString::safe_new(name);
         let mut r = col.0;
         let mut g = col.1;
         let mut b = col.2;
-        let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode);
+        let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode as i32);
         if ret == 0 {
             col
         } else {

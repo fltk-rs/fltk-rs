@@ -26,7 +26,7 @@ fn main() {
     let menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
 
     b.set_callback(move |_| {
-        if app::event_mouse_button() == enums::Mouse::Right {
+        if app::event_mouse_button() == app::MouseButton::Right {
             // or app::event_button() == 3
             let coords = app::event_coords();
             match menu.popup(coords.0, coords.1) {

@@ -10,6 +10,8 @@
 - [BREAKING] Replace set_callback, handle, draw, draw_cell with their overloads.
 - [BREAKING] Take i32 where FLTK expects i32.
 - [BREAKING] Rename WidgetType::to_int() to to_i32().
+- [BREAKING] app::event_dx() and event_dy() return an app::EventDirection instead of i32.
+- [BREAKING] enums::Mouse moved to app::MouseButton.
 - Add a Column and Row widgets which support auto_layout by default, but require that widgets be added using add().
 - Add ValueInput::soft and set_soft methods.
 

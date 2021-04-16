@@ -653,6 +653,7 @@ impl Tree {
     /// Sets the items' label size
     pub fn set_item_label_size(&mut self, val: i32) {
         assert!(!self.was_deleted());
+        let val = if val < 1 { 1 } else { val };
         unsafe { Fl_Tree_set_item_labelsize(self.inner, val as i32) }
     }
 
@@ -1258,7 +1259,7 @@ impl TreeItem {
     /// Sets the label's size
     pub fn set_label_size(&mut self, sz: i32) {
         assert!(!self.was_deleted());
-        let sz = if sz < 1 { 1 } else { sz }; 
+        let sz = if sz < 1 { 1 } else { sz };
         unsafe { Fl_Tree_Item_set_labelsize(self.inner, sz) }
     }
 
@@ -1329,6 +1330,9 @@ impl TreeItem {
 
     /// Gets the child item at idx position
     pub fn child(&self, idx: i32) -> Option<TreeItem> {
+        if idx < 0 || idx >= self.children() {
+            return None;
+        }
         assert!(!self.was_deleted());
         unsafe {
             TreeItem::from_raw(Fl_Tree_Item_child(self.inner, idx as i32) as *mut Fl_Tree_Item)
@@ -1416,12 +1420,18 @@ impl TreeItem {
     /// Deparent a child by index
     pub fn deparent(&mut self, index: i32) -> Option<TreeItem> {
         assert!(!self.was_deleted());
+        if index < 0 || index >= self.children() {
+            return None;
+        }
         unsafe { TreeItem::from_raw(Fl_Tree_Item_deparent(self.inner, index as i32)) }
     }
 
     /// Reparent a child by index
     pub fn reparent(&mut self, new_child: &TreeItem, index: i32) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !new_child.was_deleted());
+        if index < 0 || index >= self.children() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+        }
         unsafe {
             match Fl_Tree_Item_reparent(self.inner, new_child.inner, index as i32) {
                 0 => Ok(()),

@@ -346,12 +346,12 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// # Safety
     /// The underlying object must be valid
     unsafe fn from_widget<W: WidgetExt>(w: W) -> Self;
-    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int). 
-    /// Handled or ignored events should return true, unhandled events should return false. 
+    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int).
+    /// Handled or ignored events should return true, unhandled events should return false.
     /// takes the widget as a closure argument
     fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
-    /// Set a custom draw method. 
-    /// takes the widget as a closure argument. 
+    /// Set a custom draw method.
+    /// takes the widget as a closure argument.
     /// MacOS requires that WidgetBase::draw actually calls drawing functions
     fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
     /// INTERNAL: Retrieve the draw data
@@ -373,16 +373,16 @@ pub unsafe trait ButtonExt: WidgetExt {
     /// Clears the value of the button.
     /// Useful for round, radio, light, toggle and check buttons
     fn clear(&mut self);
-    /// Returns whether a button is set or not. 
+    /// Returns whether a button is set or not.
     /// Useful for round, radio, light, toggle and check buttons
     fn is_set(&self) -> bool;
-    /// Sets whether a button is set or not. 
+    /// Sets whether a button is set or not.
     /// Useful for round, radio, light, toggle and check buttons
     fn set(&mut self, flag: bool);
-    /// Returns whether a button is set or not. 
+    /// Returns whether a button is set or not.
     /// Useful for round, radio, light, toggle and check buttons
     fn value(&self) -> bool;
-    /// Sets whether a button is set or not. 
+    /// Sets whether a button is set or not.
     /// Useful for round, radio, light, toggle and check buttons
     fn set_value(&mut self, flag: bool);
     /// Set the down_box of the widget
@@ -466,7 +466,7 @@ pub unsafe trait WindowExt: GroupExt {
     fn set_icon<T: ImageExt>(&mut self, image: Option<T>)
     where
         Self: Sized;
-    /// Sets the cursor style within the window. 
+    /// Sets the cursor style within the window.
     /// Needs to be called after the window is shown
     fn set_cursor(&mut self, cursor: Cursor);
     /// Returns whether a window is shown
@@ -593,7 +593,7 @@ pub unsafe trait MenuExt: WidgetExt {
     fn text_color(&self) -> Color;
     /// Sets the text color
     fn set_text_color(&mut self, c: Color);
-    /// Add a menu item along with its callback. 
+    /// Add a menu item along with its callback.
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     /// Takes the menu item as a closure argument
@@ -605,7 +605,7 @@ pub unsafe trait MenuExt: WidgetExt {
         cb: F,
     ) where
         Self: Sized;
-    /// Inserts a menu item at an index along with its callback. 
+    /// Inserts a menu item at an index along with its callback.
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     /// Takes the menu item as a closure argument
@@ -618,7 +618,7 @@ pub unsafe trait MenuExt: WidgetExt {
         cb: F,
     ) where
         Self: Sized;
-    /// Add a menu item along with an emit (sender and message). 
+    /// Add a menu item along with an emit (sender and message).
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     fn add_emit<T: 'static + Clone + Send + Sync>(
@@ -630,7 +630,7 @@ pub unsafe trait MenuExt: WidgetExt {
         msg: T,
     ) where
         Self: Sized;
-    /// Inserts a menu item along with an emit (sender and message). 
+    /// Inserts a menu item along with an emit (sender and message).
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     fn insert_emit<T: 'static + Clone + Send + Sync>(
@@ -645,7 +645,7 @@ pub unsafe trait MenuExt: WidgetExt {
         Self: Sized;
     /// Remove a menu item by index
     fn remove(&mut self, idx: i32);
-    /// Adds a simple text option to the Choice and MenuButton widgets. 
+    /// Adds a simple text option to the Choice and MenuButton widgets.
     /// The characters "&", "/", "\\", "|", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     fn add_choice(&mut self, text: &str);
@@ -786,9 +786,11 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn scrollbar_size(&self) -> i32;
     /// Returns the scrollbar alignment
     fn scrollbar_align(&self) -> Align;
-    /// Returns the beginning of the line from the current position
+    /// Returns the beginning of the line from the current position.
+    /// Returns new position as index
     fn line_start(&self, pos: i32) -> i32;
-    /// Returns the ending of the line from the current position
+    /// Returns the ending of the line from the current position.
+    /// Returns new position as index
     fn line_end(&self, start_pos: i32, is_line_start: bool) -> i32;
     /// Skips lines from start_pos
     fn skip_lines(&mut self, start_pos: i32, lines: i32, is_line_start: bool) -> i32;
@@ -832,9 +834,9 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn linenumber_align(&self) -> Align;
     /// Checks whether a pixel is within a text selection
     fn in_selection(&self, x: i32, y: i32) -> bool;
-    /// Sets the wrap mode of the Display widget. 
+    /// Sets the wrap mode of the Display widget.
     /// If the wrap mode is AtColumn, wrap_margin is the column.
-    /// If the wrap mode is AtPixel, wrap_margin is the pixel. 
+    /// If the wrap mode is AtPixel, wrap_margin is the pixel.
     /// For more [info](https://www.fltk.org/doc-1.4/classFl__Text__Display.html#ab9378d48b949f8fc7da04c6be4142c54)
     fn wrap_mode(&mut self, wrap: crate::text::WrapMode, wrap_margin: i32);
     /// Correct a column number based on an unconstrained position
@@ -845,25 +847,25 @@ pub unsafe trait DisplayExt: WidgetExt {
 
 /// Defines the methods implemented by all browser types
 pub unsafe trait BrowserExt: WidgetExt {
-    /// Removes the specified line. 
+    /// Removes the specified line.
     /// Lines start at 1
     fn remove(&mut self, line: i32);
     /// Adds an item
     fn add(&mut self, item: &str);
-    /// Inserts an item at an index. 
+    /// Inserts an item at an index.
     /// Lines start at 1
     fn insert(&mut self, line: i32, item: &str);
-    /// Moves an item. 
+    /// Moves an item.
     /// Lines start at 1
     fn move_item(&mut self, to: i32, from: i32);
-    /// Swaps 2 items. 
+    /// Swaps 2 items.
     /// Lines start at 1
     fn swap(&mut self, a: i32, b: i32);
     /// Clears the browser widget
     fn clear(&mut self);
     /// Returns the number of items
     fn size(&self) -> i32;
-    /// Select an item at the specified line. 
+    /// Select an item at the specified line.
     /// Lines start at 1
     fn select(&mut self, line: i32);
     /// Returns whether the item is selected
@@ -872,46 +874,46 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Returns the text of the item at `line`.
     /// Lines start at 1
     fn text(&self, line: i32) -> Option<String>;
-    /// Returns the text of the selected item. 
+    /// Returns the text of the selected item.
     /// Lines start at 1
     fn selected_text(&self) -> Option<String>;
-    /// Sets the text of the selected item. 
+    /// Sets the text of the selected item.
     /// Lines start at 1
     fn set_text(&mut self, line: i32, txt: &str);
     /// Load a file
     fn load<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError>;
     /// Return the text size
     fn text_size(&self) -> i32;
-    /// Sets the text size. 
+    /// Sets the text size.
     /// Lines start at 1
     fn set_text_size(&mut self, sz: i32);
-    /// Sets the icon for browser elements. 
+    /// Sets the icon for browser elements.
     /// Lines start at 1
     fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<Img>);
-    /// Returns the icon of a browser element. 
+    /// Returns the icon of a browser element.
     /// Lines start at 1
     fn icon(&self, line: i32) -> Option<Box<dyn ImageExt>>;
-    /// Removes the icon of a browser element. 
+    /// Removes the icon of a browser element.
     /// Lines start at 1
     fn remove_icon(&mut self, line: i32);
-    /// Scrolls the browser so the top item in the browser is showing the specified line. 
+    /// Scrolls the browser so the top item in the browser is showing the specified line.
     /// Lines start at 1
     fn top_line(&mut self, line: i32);
-    /// Scrolls the browser so the bottom item in the browser is showing the specified line. 
+    /// Scrolls the browser so the bottom item in the browser is showing the specified line.
     /// Lines start at 1
     fn bottom_line(&mut self, line: i32);
-    /// Scrolls the browser so the middle item in the browser is showing the specified line. 
+    /// Scrolls the browser so the middle item in the browser is showing the specified line.
     /// Lines start at 1
     fn middle_line(&mut self, line: i32);
-    /// Gets the current format code prefix character, which by default is '\@'. 
+    /// Gets the current format code prefix character, which by default is '\@'.
     /// More info [here](https://www.fltk.org/doc-1.3/classFl__Browser.html#a129dca59d64baf166503ba59341add69)
     fn format_char(&self) -> char;
-    /// Sets the current format code prefix character to \p c. The default prefix is '\@'. 
+    /// Sets the current format code prefix character to \p c. The default prefix is '\@'.
     /// c should be ascii
     fn set_format_char(&mut self, c: char);
     /// Gets the current column separator character. The default is '\t'
     fn column_char(&self) -> char;
-    /// Sets the column separator to c. This will only have an effect if you also use set_column_widths(). 
+    /// Sets the column separator to c. This will only have an effect if you also use set_column_widths().
     /// c should be ascii
     fn set_column_char(&mut self, c: char);
     /// Gets the current column width array
@@ -1057,12 +1059,12 @@ pub unsafe trait TableExt: GroupExt {
     fn scrollbar_size(&self) -> i32;
     /// Sets the scrollbar size
     fn set_scrollbar_size(&mut self, new_size: i32);
-    /// Sets the tab key cell navigation
-    fn set_tab_cell_nav(&mut self, val: i32);
-    /// Returns the tab key cell navigation
-    fn tab_cell_nav(&self) -> i32;
-    /// Override draw_cell. 
-    /// callback args: &mut self, TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32. 
+    /// Sets whether tab key cell navigation is enabled
+    fn set_tab_cell_nav(&mut self, val: bool);
+    /// Returns whether tab key cell navigation is enabled
+    fn tab_cell_nav(&self) -> bool;
+    /// Override draw_cell.
+    /// callback args: &mut self, TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32.
     /// takes the widget as a closure argument
     fn draw_cell<
         F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static,
