@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.0.0] - 2021-04-20
+## [1.0.0] - 2021-04-18
 - [BREAKING] Importing fltk::* no longer auto-imports the prelude nor enums modules.
 - [BREAKING] Importing widgets no longer auto-imports the prelude nor enums modules.
 - [BREAKING] Replace set_callback, handle, draw, draw_cell with their overloads.
