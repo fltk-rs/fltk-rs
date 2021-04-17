@@ -12,9 +12,10 @@
 - [BREAKING] Rename WidgetType::to_int() to to_i32().
 - [BREAKING] app::event_dx() and event_dy() return an app::MouseWheel instead of i32.
 - [BREAKING] enums::Mouse moved to app::MouseButton.
+- [BREAKING] Move enums::TextCursor to text::Cursor.
 - Add a Column and Row widgets which support auto_layout by default, but require that widgets be added using add().
 - Add ValueInput::soft and set_soft methods.
-- Add WindowExt::set_cursor_image
+- Add WindowExt::set_cursor_image() and default_cursor().
 
 ## [0.16.5] - 2021-04-10
 ### Changes

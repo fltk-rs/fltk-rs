@@ -692,24 +692,6 @@ bitflags! {
     }
 }
 
-/// Defines the text cursor styles supported by fltk
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
-pub enum TextCursor {
-    /// Normal
-    Normal,
-    /// Caret
-    Caret,
-    /// Dim
-    Dim,
-    /// Block
-    Block,
-    /// Heavy
-    Heavy,
-    /// Simple
-    Simple,
-}
-
 /// Defines the cursor styles supported by fltk
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]

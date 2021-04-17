@@ -423,7 +423,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_cursor_style(&mut self, style: TextCursor) {
+            fn set_cursor_style(&mut self, style: crate::text::Cursor) {
                 unsafe {
                     assert!(!self.was_deleted());
                     #set_cursor_style(self.inner, style as i32)
@@ -451,7 +451,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn cursor_style(&self) -> TextCursor {
+            fn cursor_style(&self) -> crate::text::Cursor {
                 unsafe {
                     assert!(!self.was_deleted());
                     mem::transmute(#cursor_style(self.inner))

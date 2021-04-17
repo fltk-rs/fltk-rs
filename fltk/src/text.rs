@@ -10,6 +10,24 @@ use std::{
     sync::atomic::{AtomicUsize, Ordering},
 };
 
+/// Defines the text cursor styles supported by fltk
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum Cursor {
+    /// Normal
+    Normal,
+    /// Caret
+    Caret,
+    /// Dim
+    Dim,
+    /// Block
+    Block,
+    /// Heavy
+    Heavy,
+    /// Simple
+    Simple,
+}
+
 /// Wraps a text buffer, Cloning a text buffer invalidates the underlying pointer, thus the no derive(Clone)
 #[derive(Debug)]
 pub struct TextBuffer {

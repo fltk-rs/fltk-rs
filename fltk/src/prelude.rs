@@ -521,6 +521,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn y_root(&self) -> i32;
     /// Set the cursor image
     fn set_cursor_image(&mut self, image: crate::image::RgbImage, hot_x: i32, hot_y: i32);
+    /// Set the window's default cursor
+    fn default_cursor(&mut self, cursor: Cursor);
 }
 
 /// Defines the methods implemented by all input and output widgets
@@ -773,7 +775,7 @@ pub unsafe trait DisplayExt: WidgetExt {
         entries: Vec<crate::text::StyleTableEntry>,
     );
     /// Sets the cursor style
-    fn set_cursor_style(&mut self, style: TextCursor);
+    fn set_cursor_style(&mut self, style: crate::text::Cursor);
     /// Sets the cursor color
     fn set_cursor_color(&mut self, color: Color);
     /// Sets the scrollbar size in pixels
@@ -781,7 +783,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Sets the scrollbar alignment
     fn set_scrollbar_align(&mut self, align: Align);
     /// Returns the cursor style
-    fn cursor_style(&self) -> TextCursor;
+    fn cursor_style(&self) -> crate::text::Cursor;
     /// Returns the cursor color
     fn cursor_color(&self) -> Color;
     /// Returns the scrollbar size in pixels
