@@ -14,7 +14,7 @@
 - [BREAKING] enums::Mouse moved to app::MouseButton.
 - Add a Column and Row widgets which support auto_layout by default, but require that widgets be added using add().
 - Add ValueInput::soft and set_soft methods.
-
+- Add WindowExt::set_cursor_image
 
 ## [0.16.5] - 2021-04-10
 ### Changes

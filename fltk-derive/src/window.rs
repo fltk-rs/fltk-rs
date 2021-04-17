@@ -363,9 +363,11 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_cursor_image(&mut self, image: crate::image::RgbImage, hot_x: i32, hot_y: i32) {
+            fn set_cursor_image(&mut self, mut image: crate::image::RgbImage, hot_x: i32, hot_y: i32) {
                 assert!(!self.was_deleted());
                 unsafe {
+                    assert!(image.w() == image.data_w() as i32);
+                    assert!(image.h() == image.data_h() as i32);
                     #set_cursor_image(self.inner, image.as_image_ptr() as _, hot_x, hot_y)
                 }
             }
