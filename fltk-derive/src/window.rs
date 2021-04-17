@@ -69,6 +69,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     );
     let x_root = Ident::new(format!("{}_{}", name_str, "x_root").as_str(), name.span());
     let y_root = Ident::new(format!("{}_{}", name_str, "y_root").as_str(), name.span());
+    let set_cursor_image = Ident::new(format!("{}_{}", name_str, "set_cursor_image").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl HasRawWindowHandle for #name {
@@ -359,6 +360,13 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #y_root(self.inner)
+                }
+            }
+
+            fn set_cursor_image(&mut self, image: crate::image::RgbImage, hot_x: i32, hot_y: i32) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #set_cursor_image(self.inner, image.as_image_ptr() as _, hot_x, hot_y)
                 }
             }
         }

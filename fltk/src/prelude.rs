@@ -519,6 +519,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn x_root(&self) -> i32;
     /// Get the window's y coord from the screen
     fn y_root(&self) -> i32;
+    /// Set the cursor image
+    fn set_cursor_image(&mut self, image: crate::image::RgbImage, hot_x: i32, hot_y: i32);
 }
 
 /// Defines the methods implemented by all input and output widgets
