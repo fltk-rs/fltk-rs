@@ -1,5 +1,7 @@
+use crate::enums::*;
 use crate::image::Image;
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use fltk_sys::input::*;
 use std::{
     ffi::{CStr, CString},
@@ -10,8 +12,8 @@ use std::{
 /// Creates an input widget
 #[derive(WidgetBase, WidgetExt, InputExt, Debug)]
 pub struct Input {
-    _inner: *mut Fl_Input,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Input,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Sets the input widget's type, which can be changed dynamically using the set_type() method
@@ -39,48 +41,48 @@ pub enum InputType {
 /// Creates an input widget which takes only integers
 #[derive(WidgetBase, WidgetExt, InputExt, Debug)]
 pub struct IntInput {
-    _inner: *mut Fl_Int_Input,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Int_Input,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates an input widget which takes only floats
 #[derive(WidgetBase, WidgetExt, InputExt, Debug)]
 pub struct FloatInput {
-    _inner: *mut Fl_Float_Input,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Float_Input,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a multiline-input widget
 #[derive(WidgetBase, WidgetExt, InputExt, Debug)]
 pub struct MultilineInput {
-    _inner: *mut Fl_Multiline_Input,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Multiline_Input,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 /// Creates a File-input widget
 #[derive(WidgetBase, WidgetExt, InputExt, Debug)]
 pub struct FileInput {
-    _inner: *mut Fl_File_Input,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_File_Input,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
 impl FileInput {
     /// Set the down_box of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
-        unsafe { Fl_File_Input_set_down_box(self._inner, f as i32) }
+        unsafe { Fl_File_Input_set_down_box(self.inner, f as i32) }
     }
 
     /// Get the down_box of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_File_Input_down_box(self._inner)) }
+        unsafe { mem::transmute(Fl_File_Input_down_box(self.inner)) }
     }
 }
 
 /// Creates a secret input widget
 #[derive(WidgetBase, WidgetExt, InputExt, Debug)]
 pub struct SecretInput {
-    _inner: *mut Fl_Secret_Input,
-    _tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    inner: *mut Fl_Secret_Input,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }

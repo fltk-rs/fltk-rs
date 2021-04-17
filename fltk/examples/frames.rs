@@ -1,4 +1,4 @@
-use fltk::*;
+use fltk::{prelude::*, *};
 
 struct MyFrame {
     f: frame::Frame,
@@ -11,8 +11,8 @@ impl MyFrame {
         };
         // Normally you would use the FrameType enum, for example:
         // some_widget.set_frame(FrameType::DownBox);
-        f.f.set_frame(FrameType::by_index(idx));
-        f.f.set_color(Color::from_u32(0x7FFFD4));
+        f.f.set_frame(enums::FrameType::by_index(idx));
+        f.f.set_color(enums::Color::from_u32(0x7FFFD4));
         let f_name = format!("{:?}", f.f.frame());
         f.f.set_label(&f_name);
         f.f.set_label_size(12);
@@ -77,7 +77,7 @@ fn main() {
 
     win.end();
     win.show();
-    win.set_color(Color::White);
+    win.set_color(enums::Color::White);
 
     app.run().unwrap();
 }

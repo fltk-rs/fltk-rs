@@ -23,7 +23,7 @@
 // or be queried using the app::font_count(), app::font_name() and app::font_index() functions.
 // And the can be used using the Font::by_index() or Font::by_name() methods.
 
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let app = app::App::default().load_system_fonts();
@@ -33,7 +33,7 @@ fn main() {
     let mut wind = window::Window::default().with_size(400, 300);
     let mut frame = frame::Frame::default().size_of(&wind);
     frame.set_label_size(30);
-    wind.set_color(Color::White);
+    wind.set_color(enums::Color::White);
     wind.end();
     wind.show();
     println!("The system has {} fonts!\nStarting slideshow!", fonts.len());
@@ -43,7 +43,7 @@ fn main() {
             i = 0;
         }
         frame.set_label(&format!("[{}]", fonts[i]));
-        frame.set_label_font(Font::by_index(i));
+        frame.set_label_font(enums::Font::by_index(i));
         app::sleep(0.5);
         i += 1;
     }

@@ -1,4 +1,6 @@
-pub use crate::prelude::*;
+use crate::enums::*;
+use crate::prelude::*;
+use crate::utils::*;
 use fltk_sys::image::*;
 use std::{
     ffi::CString,
@@ -9,15 +11,15 @@ use std::{
 /// Wrapper around Fl_Image, used to wrap other image types
 #[derive(ImageExt, Debug)]
 pub struct Image {
-    _inner: *mut Fl_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_Image,
+    refcount: AtomicUsize,
 }
 
 /// Creates a struct holding a shared image
 #[derive(ImageExt, Debug)]
 pub struct SharedImage {
-    _inner: *mut Fl_Shared_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_Shared_Image,
+    refcount: AtomicUsize,
 }
 
 impl SharedImage {
@@ -43,8 +45,8 @@ impl SharedImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(SharedImage {
-                    _inner: x,
-                    _refcount: AtomicUsize::new(1),
+                    inner: x,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -61,8 +63,8 @@ impl SharedImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(SharedImage {
-                    _inner: x,
-                    _refcount: AtomicUsize::new(1),
+                    inner: x,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -72,8 +74,8 @@ impl SharedImage {
 /// Creates a struct holding a Jpeg image
 #[derive(ImageExt, Debug)]
 pub struct JpegImage {
-    _inner: *mut Fl_JPEG_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_JPEG_Image,
+    refcount: AtomicUsize,
 }
 
 impl JpegImage {
@@ -99,8 +101,8 @@ impl JpegImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(JpegImage {
-                    _inner: image_ptr,
-                    _refcount: AtomicUsize::new(1),
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -120,8 +122,8 @@ impl JpegImage {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
                     Ok(JpegImage {
-                        _inner: x,
-                        _refcount: AtomicUsize::new(1),
+                        inner: x,
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -132,8 +134,8 @@ impl JpegImage {
 /// Creates a struct holding a PNG image
 #[derive(ImageExt, Debug)]
 pub struct PngImage {
-    _inner: *mut Fl_PNG_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_PNG_Image,
+    refcount: AtomicUsize,
 }
 
 impl PngImage {
@@ -159,8 +161,8 @@ impl PngImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(PngImage {
-                    _inner: image_ptr,
-                    _refcount: AtomicUsize::new(1),
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -180,8 +182,8 @@ impl PngImage {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
                     Ok(PngImage {
-                        _inner: x,
-                        _refcount: AtomicUsize::new(1),
+                        inner: x,
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -192,8 +194,8 @@ impl PngImage {
 /// Creates a struct holding an SVG image
 #[derive(ImageExt, Debug)]
 pub struct SvgImage {
-    _inner: *mut Fl_SVG_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_SVG_Image,
+    refcount: AtomicUsize,
 }
 
 impl SvgImage {
@@ -219,8 +221,8 @@ impl SvgImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(SvgImage {
-                    _inner: image_ptr,
-                    _refcount: AtomicUsize::new(1),
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -241,8 +243,8 @@ impl SvgImage {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
                     Ok(SvgImage {
-                        _inner: x,
-                        _refcount: AtomicUsize::new(1),
+                        inner: x,
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -253,8 +255,8 @@ impl SvgImage {
 /// Creates a struct holding a BMP image
 #[derive(ImageExt, Debug)]
 pub struct BmpImage {
-    _inner: *mut Fl_BMP_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_BMP_Image,
+    refcount: AtomicUsize,
 }
 
 impl BmpImage {
@@ -280,8 +282,8 @@ impl BmpImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(BmpImage {
-                    _inner: image_ptr,
-                    _refcount: AtomicUsize::new(1),
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -301,8 +303,8 @@ impl BmpImage {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
                     Ok(BmpImage {
-                        _inner: x,
-                        _refcount: AtomicUsize::new(1),
+                        inner: x,
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -313,8 +315,8 @@ impl BmpImage {
 /// Creates a struct holding a GIF image
 #[derive(ImageExt, Debug)]
 pub struct GifImage {
-    _inner: *mut Fl_GIF_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_GIF_Image,
+    refcount: AtomicUsize,
 }
 
 impl GifImage {
@@ -340,8 +342,8 @@ impl GifImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(GifImage {
-                    _inner: image_ptr,
-                    _refcount: AtomicUsize::new(1),
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -361,8 +363,8 @@ impl GifImage {
                         return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                     }
                     Ok(GifImage {
-                        _inner: x,
-                        _refcount: AtomicUsize::new(1),
+                        inner: x,
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -373,8 +375,8 @@ impl GifImage {
 /// Creates a struct holding a XPM image
 #[derive(ImageExt, Debug)]
 pub struct XpmImage {
-    _inner: *mut Fl_XPM_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_XPM_Image,
+    refcount: AtomicUsize,
 }
 
 impl XpmImage {
@@ -400,8 +402,8 @@ impl XpmImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(XpmImage {
-                    _inner: image_ptr,
-                    _refcount: AtomicUsize::new(1),
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -411,8 +413,8 @@ impl XpmImage {
 /// Creates a struct holding a XBM image
 #[derive(ImageExt, Debug)]
 pub struct XbmImage {
-    _inner: *mut Fl_XBM_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_XBM_Image,
+    refcount: AtomicUsize,
 }
 
 impl XbmImage {
@@ -438,8 +440,8 @@ impl XbmImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(XbmImage {
-                    _inner: image_ptr,
-                    _refcount: AtomicUsize::new(1),
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -449,8 +451,8 @@ impl XbmImage {
 /// Creates a struct holding a PNM image
 #[derive(ImageExt, Debug)]
 pub struct PnmImage {
-    _inner: *mut Fl_PNM_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_PNM_Image,
+    refcount: AtomicUsize,
 }
 
 impl PnmImage {
@@ -476,8 +478,8 @@ impl PnmImage {
                     return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
                 }
                 Ok(PnmImage {
-                    _inner: image_ptr,
-                    _refcount: AtomicUsize::new(1),
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -487,8 +489,8 @@ impl PnmImage {
 /// Creates a struct holding a tiled image
 #[derive(ImageExt, Debug)]
 pub struct TiledImage {
-    _inner: *mut Fl_Tiled_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_Tiled_Image,
+    refcount: AtomicUsize,
 }
 
 impl TiledImage {
@@ -498,8 +500,8 @@ impl TiledImage {
             let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
             assert!(!ptr.is_null());
             TiledImage {
-                _inner: ptr,
-                _refcount: AtomicUsize::new(1),
+                inner: ptr,
+                refcount: AtomicUsize::new(1),
             }
         }
     }
@@ -508,8 +510,8 @@ impl TiledImage {
 /// Creates a struct holding a pixmap image
 #[derive(ImageExt, Debug)]
 pub struct Pixmap {
-    _inner: *mut Fl_Pixmap,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_Pixmap,
+    refcount: AtomicUsize,
 }
 
 impl Pixmap {
@@ -538,8 +540,8 @@ impl Pixmap {
                 }
                 std::fs::remove_file(temp_file)?;
                 Ok(Pixmap {
-                    _inner: image_ptr as _,
-                    _refcount: AtomicUsize::new(1),
+                    inner: image_ptr as _,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -549,26 +551,26 @@ impl Pixmap {
 /// Creates a struct holding a raw RGB image
 #[derive(ImageExt, Debug)]
 pub struct RgbImage {
-    _inner: *mut Fl_RGB_Image,
-    _refcount: AtomicUsize,
+    inner: *mut Fl_RGB_Image,
+    refcount: AtomicUsize,
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage, copies the data and handles its lifetime
+    /// Initializes a new raw RgbImage, copies the data and handles its lifetime.
     /// If you need to work with RGB data,
-    pub fn new(data: &[u8], w: u32, h: u32, depth: ColorDepth) -> Result<RgbImage, FltkError> {
-        let sz = w * h * depth as u32;
-        if sz > data.len() as u32 {
+    pub fn new(data: &[u8], w: i32, h: i32, depth: ColorDepth) -> Result<RgbImage, FltkError> {
+        let sz = w * h * depth as i32;
+        if sz > data.len() as i32 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
         unsafe {
-            let img = Fl_RGB_Image_new(data.as_ptr(), w as i32, h as i32, depth as i32);
+            let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32);
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
             } else {
                 Ok(RgbImage {
-                    _inner: img,
-                    _refcount: AtomicUsize::new(1),
+                    inner: img,
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -579,21 +581,21 @@ impl RgbImage {
     /// The data must be valid for the lifetime of the image
     pub unsafe fn from_data(
         data: &[u8],
-        w: u32,
-        h: u32,
+        w: i32,
+        h: i32,
         depth: ColorDepth,
     ) -> Result<RgbImage, FltkError> {
-        let sz = w * h * depth as u32;
-        if sz > data.len() as u32 {
+        let sz = w * h * depth as i32;
+        if sz > data.len() as i32 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
-        let img = Fl_RGB_Image_from_data(data.as_ptr(), w as i32, h as i32, depth as i32);
+        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32);
         if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
             Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
         } else {
             Ok(RgbImage {
-                _inner: img,
-                _refcount: AtomicUsize::new(1),
+                inner: img,
+                refcount: AtomicUsize::new(1),
             })
         }
     }
@@ -601,7 +603,7 @@ impl RgbImage {
     /// Deconstructs a raw RgbImage into parts
     /// # Safety
     /// Destructures the image into its raw elements
-    pub unsafe fn into_parts(self) -> (Vec<u8>, u32, u32) {
+    pub unsafe fn into_parts(self) -> (Vec<u8>, i32, i32) {
         let w = self.data_w();
         let h = self.data_h();
         (self.to_rgb_data(), w, h)

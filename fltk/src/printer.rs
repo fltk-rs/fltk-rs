@@ -1,21 +1,22 @@
-pub use crate::prelude::*;
+use crate::prelude::*;
+use crate::utils::*;
 use fltk_sys::printer::*;
 use std::ffi::CString;
 
 /// Defines a printer object.
 /// Example usage:
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// let mut but = button::Button::default();
-/// but.set_callback2(|widget| {
+/// but.set_callback(|widget| {
 ///     let mut printer = printer::Printer::default();
 ///     if printer.begin_job(1).is_ok() {
 ///         printer.begin_page().ok();
 ///         let (width, height) = printer.printable_rect();
-///         draw::set_draw_color(Color::Black);
+///         draw::set_draw_color(enums::Color::Black);
 ///         draw::set_line_style(draw::LineStyle::Solid, 2);
 ///         draw::draw_rect(0, 0, width, height);
-///         draw::set_font(Font::Courier, 12);
+///         draw::set_font(enums::Font::Courier, 12);
 ///         printer.set_origin(width / 2, height / 2);
 ///         printer.print_widget(widget, -widget.width() / 2, -widget.height() / 2);
 ///         printer.end_page().ok();
@@ -24,7 +25,7 @@ use std::ffi::CString;
 /// });
 /// ```
 pub struct Printer {
-    _inner: *mut Fl_Printer,
+    inner: *mut Fl_Printer,
 }
 
 impl Printer {
@@ -33,23 +34,19 @@ impl Printer {
         unsafe {
             let ptr = Fl_Printer_new();
             assert!(!ptr.is_null());
-            Printer { _inner: ptr }
+            Printer { inner: ptr }
         }
     }
 
-    /// Begins a print job
+    /// Begins a print job.
     /// `pagecount` The total number of pages to be created. Use 0 if this number is unknown
     /// Returns a tuple (frompage, topage) indicating the chosen pages by the user
-    pub fn begin_job(&mut self, pagecount: u32) -> Result<(Option<u32>, Option<u32>), FltkError> {
-        debug_assert!(
-            pagecount <= std::isize::MAX as u32,
-            "u32 entries have to be < std::isize::MAX for compatibility!"
-        );
+    pub fn begin_job(&mut self, pagecount: i32) -> Result<(Option<i32>, Option<i32>), FltkError> {
         let mut frompage_ = 0;
         let mut topage_ = 0;
         unsafe {
             if Fl_Printer_begin_job(
-                self._inner,
+                self.inner,
                 pagecount as i32,
                 &mut frompage_,
                 &mut topage_,
@@ -61,12 +58,12 @@ impl Printer {
                 let from = if frompage_ == 0 {
                     None
                 } else {
-                    Some(frompage_ as u32)
+                    Some(frompage_ as i32)
                 };
                 let to = if topage_ == 0 {
                     None
                 } else {
-                    Some(topage_ as u32)
+                    Some(topage_ as i32)
                 };
                 Ok((from, to))
             }
@@ -76,7 +73,7 @@ impl Printer {
     /// End the print page
     pub fn end_page(&mut self) -> Result<(), FltkError> {
         unsafe {
-            if Fl_Printer_end_page(self._inner) != 0 {
+            if Fl_Printer_end_page(self.inner) != 0 {
                 Err(FltkError::Internal(FltkErrorKind::FailedToRun))
             } else {
                 Ok(())
@@ -86,13 +83,13 @@ impl Printer {
 
     /// Ends the print job
     pub fn end_job(&mut self) {
-        unsafe { Fl_Printer_end_job(self._inner) }
+        unsafe { Fl_Printer_end_job(self.inner) }
     }
 
     /// Begins a print page
     pub fn begin_page(&mut self) -> Result<(), FltkError> {
         unsafe {
-            if Fl_Printer_begin_page(self._inner) != 0 {
+            if Fl_Printer_begin_page(self.inner) != 0 {
                 Err(FltkError::Internal(FltkErrorKind::FailedToRun))
             } else {
                 Ok(())
@@ -105,12 +102,12 @@ impl Printer {
         unsafe {
             let mut x = 0;
             let mut y = 0;
-            Fl_Printer_printable_rect(self._inner, &mut x, &mut y);
+            Fl_Printer_printable_rect(self.inner, &mut x, &mut y);
             (x, y)
         }
     }
 
-    /// Returns the coordinates of the printable margins
+    /// Returns the coordinates of the printable margins.
     /// (left, top, right, bottom)
     pub fn margins(&self) -> (i32, i32, i32, i32) {
         unsafe {
@@ -118,7 +115,7 @@ impl Printer {
             let mut top = 0;
             let mut right = 0;
             let mut bottom = 0;
-            Fl_Printer_margins(self._inner, &mut left, &mut top, &mut right, &mut bottom);
+            Fl_Printer_margins(self.inner, &mut left, &mut top, &mut right, &mut bottom);
             (left, top, right, bottom)
         }
     }
@@ -128,51 +125,51 @@ impl Printer {
         unsafe {
             let mut x = 0;
             let mut y = 0;
-            Fl_Printer_origin(self._inner, &mut x, &mut y);
+            Fl_Printer_origin(self.inner, &mut x, &mut y);
             (x, y)
         }
     }
 
     /// Set the origin coordinates of the printable rect
     pub fn set_origin(&mut self, x: i32, y: i32) {
-        unsafe { Fl_Printer_set_origin(self._inner, x, y) }
+        unsafe { Fl_Printer_set_origin(self.inner, x, y) }
     }
 
     /// Scale the printable rect
     pub fn scale(&mut self, scale_x: f32, scale_y: f32) {
-        unsafe { Fl_Printer_scale(self._inner, scale_x, scale_y) }
+        unsafe { Fl_Printer_scale(self.inner, scale_x, scale_y) }
     }
 
     /// Rotate the printable rect
     pub fn rotate(&mut self, angle: f32) {
-        unsafe { Fl_Printer_rotate(self._inner, angle) }
+        unsafe { Fl_Printer_rotate(self.inner, angle) }
     }
 
     /// Translate the printable rect
     pub fn translate(&mut self, x: i32, y: i32) {
-        unsafe { Fl_Printer_translate(self._inner, x, y) }
+        unsafe { Fl_Printer_translate(self.inner, x, y) }
     }
 
     /// Untranslate the printable rect
     pub fn untranslate(&mut self) {
-        unsafe { Fl_Printer_untranslate(self._inner) }
+        unsafe { Fl_Printer_untranslate(self.inner) }
     }
 
     /// Check whether the printer is the current printer
     pub fn is_current(&self) -> bool {
-        unsafe { Fl_Printer_is_current(self._inner as *mut _) != 0 }
+        unsafe { Fl_Printer_is_current(self.inner as *mut _) != 0 }
     }
 
     /// Set the printer to be the current printer
     pub fn set_current(&mut self) {
-        unsafe { Fl_Printer_set_current(self._inner) }
+        unsafe { Fl_Printer_set_current(self.inner) }
     }
 
     /// Print a widget
     pub fn print_widget<W: WidgetExt>(&self, widget: &W, delta_x: i32, delta_y: i32) {
         unsafe {
             Fl_Printer_print_widget(
-                self._inner,
+                self.inner,
                 widget.as_widget_ptr() as *mut _,
                 delta_x,
                 delta_y,
@@ -184,7 +181,7 @@ impl Printer {
     pub fn print_window<W: WindowExt>(&self, win: &W, x_offset: i32, y_offset: i32) {
         unsafe {
             Fl_Printer_print_window(
-                self._inner,
+                self.inner,
                 win.as_widget_ptr() as *mut _,
                 x_offset,
                 y_offset,
@@ -309,6 +306,6 @@ impl Printer {
 
 impl Drop for Printer {
     fn drop(&mut self) {
-        unsafe { Fl_Printer_delete(self._inner) }
+        unsafe { Fl_Printer_delete(self.inner) }
     }
 }

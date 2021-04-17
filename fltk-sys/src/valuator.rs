@@ -3522,6 +3522,12 @@ extern "C" {
     pub fn Fl_Value_Input_text_size(self_: *mut Fl_Value_Input) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Value_Input_set_soft(self_: *mut Fl_Value_Input, val: libc::c_char);
+}
+extern "C" {
+    pub fn Fl_Value_Input_soft(self_: *const Fl_Value_Input) -> libc::c_char;
+}
+extern "C" {
     pub fn Fl_Value_Input_set_bounds(arg1: *mut Fl_Value_Input, a: f64, b: f64);
 }
 extern "C" {

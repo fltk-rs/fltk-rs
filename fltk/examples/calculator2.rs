@@ -1,4 +1,12 @@
-use fltk::{app, button::*, group::*, output::*, window::*};
+use fltk::{
+    app,
+    button::Button,
+    enums::{Color, FrameType, Key, Shortcut},
+    group::{Pack, PackType},
+    output::Output,
+    prelude::*,
+    window::Window,
+};
 use std::ops::{Deref, DerefMut};
 
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -26,7 +34,7 @@ struct MyButton {
 }
 
 impl MyButton {
-    pub fn new(title: &str) -> MyButton {
+    pub fn new(title: &'static str) -> MyButton {
         let mut b = MyButton {
             btn: Button::new(0, 0, 100, 0, title),
         };
@@ -36,6 +44,7 @@ impl MyButton {
             "0" => {
                 b.resize(0, 0, 100 * 2, 0);
                 b.set_label_color(Color::White);
+                b.set_selection_color(Color::from_u32(0x1b1b1b));
                 b.set_shortcut(Shortcut::None | '0');
             }
             "CE" => {
@@ -60,6 +69,7 @@ impl MyButton {
             }
             _ => {
                 b.set_label_color(Color::White);
+                b.set_selection_color(Color::from_u32(0x1b1b1b));
                 b.set_shortcut(Shortcut::None | title.chars().next().unwrap());
             }
         }

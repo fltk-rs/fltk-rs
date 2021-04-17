@@ -1,4 +1,6 @@
-pub use crate::prelude::*;
+use crate::enums::*;
+use crate::prelude::*;
+use crate::utils::*;
 use fltk_sys::dialog::*;
 use std::{
     ffi::{CStr, CString},
@@ -6,10 +8,24 @@ use std::{
     os::raw,
 };
 
+/// Color modes to be used with the color chooser
+#[repr(u8)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum ColorMode {
+    /// Rgb color mode
+    Rgb = 0,
+    /// Byte color mode
+    Byte = 1,
+    /// Hex color mode
+    Hex = 2,
+    /// Hsv color mode
+    Hsv = 3,
+}
+
 /// Creates a file button
 #[derive(Debug)]
 pub struct FileDialog {
-    _inner: *mut Fl_Native_File_Chooser,
+    inner: *mut Fl_Native_File_Chooser,
 }
 
 /// Re-alias FileDialog to NativeFileChooser (Fl_Native_File_Chooser)
@@ -38,7 +54,7 @@ pub type NativeFileChooserType = FileDialogType;
 
 /// Defines the File dialog options, which can be set using the set_option() method.
 #[repr(i32)]
-#[derive(WidgetType, Copy, Clone, PartialEq)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum FileDialogOptions {
     /// No options
     NoOptions = 0,
@@ -68,21 +84,19 @@ impl FileDialog {
         unsafe {
             let file_dialog = Fl_Native_File_Chooser_new(mem::transmute(op));
             assert!(!file_dialog.is_null());
-            FileDialog {
-                _inner: file_dialog,
-            }
+            FileDialog { inner: file_dialog }
         }
     }
 
     /// Returns the chosen file name
     pub fn filename(&self) -> std::path::PathBuf {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let cnt = Fl_Native_File_Chooser_count(self._inner);
+            let cnt = Fl_Native_File_Chooser_count(self.inner);
             if cnt == 0 {
                 return std::path::PathBuf::from("");
             }
-            let x = Fl_Native_File_Chooser_filenames(self._inner, 0);
+            let x = Fl_Native_File_Chooser_filenames(self.inner, 0);
             std::path::PathBuf::from(
                 CStr::from_ptr(x as *mut raw::c_char)
                     .to_string_lossy()
@@ -93,15 +107,15 @@ impl FileDialog {
 
     /// Returns the chosen file names
     pub fn filenames(&self) -> Vec<std::path::PathBuf> {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let cnt = Fl_Native_File_Chooser_count(self._inner);
+            let cnt = Fl_Native_File_Chooser_count(self.inner);
             let mut names: Vec<std::path::PathBuf> = vec![];
             if cnt == 0 {
                 names
             } else {
                 for i in 0..cnt {
-                    let x = Fl_Native_File_Chooser_filenames(self._inner, i);
+                    let x = Fl_Native_File_Chooser_filenames(self.inner, i);
                     names.push(std::path::PathBuf::from(
                         CStr::from_ptr(x as *mut raw::c_char)
                             .to_string_lossy()
@@ -115,9 +129,9 @@ impl FileDialog {
 
     /// Returns the preset directory
     pub fn directory(&self) -> std::path::PathBuf {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let x = Fl_Native_File_Chooser_directory(self._inner);
+            let x = Fl_Native_File_Chooser_directory(self.inner);
             if !x.is_null() {
                 std::path::PathBuf::from(
                     CStr::from_ptr(x as *mut raw::c_char)
@@ -132,70 +146,70 @@ impl FileDialog {
 
     /// Sets the starting directory
     pub fn set_directory<P: AsRef<std::path::Path>>(&mut self, dir: P) -> Result<(), FltkError> {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         self.set_directory_(dir.as_ref())
     }
 
     fn set_directory_(&mut self, dir: &std::path::Path) -> Result<(), FltkError> {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         let dir = CString::new(dir.to_str().ok_or_else(|| {
             FltkError::Unknown(String::from("Failed to convert path to string"))
         })?)?;
-        unsafe { Fl_Native_File_Chooser_set_directory(self._inner, dir.as_ptr()) }
+        unsafe { Fl_Native_File_Chooser_set_directory(self.inner, dir.as_ptr()) }
         Ok(())
     }
 
     /// Shows the file dialog
     pub fn show(&mut self) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            Fl_Native_File_Chooser_show(self._inner);
+            Fl_Native_File_Chooser_show(self.inner);
         }
     }
 
     /// Sets the option for the dialog
     pub fn set_option(&mut self, opt: FileDialogOptions) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_Native_File_Chooser_set_option(self._inner, opt as i32) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Native_File_Chooser_set_option(self.inner, opt as i32) }
     }
 
     /// Sets the type for the dialog
     pub fn set_type(&mut self, op: FileDialogType) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_Native_File_Chooser_set_type(self._inner, op as i32) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Native_File_Chooser_set_type(self.inner, op as i32) }
     }
 
     /// Sets the title for the dialog
     pub fn set_title(&mut self, title: &str) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         let title = CString::safe_new(title);
-        unsafe { Fl_Native_File_Chooser_set_title(self._inner, title.as_ptr()) }
+        unsafe { Fl_Native_File_Chooser_set_title(self.inner, title.as_ptr()) }
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (eg. `"*.txt"`)
-    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`)
-    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`)
-    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`)
+    /// A single wildcard (eg. `"*.txt"`).
+    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`).
+    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`).
+    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`).
     /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
     pub fn set_filter(&mut self, f: &str) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         let f = CString::safe_new(f);
-        unsafe { Fl_Native_File_Chooser_set_filter(self._inner, f.as_ptr()) }
+        unsafe { Fl_Native_File_Chooser_set_filter(self.inner, f.as_ptr()) }
     }
 
     /// Sets the preset filter for the dialog
     pub fn set_preset_file(&mut self, f: &str) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         let f = CString::safe_new(f);
-        unsafe { Fl_Native_File_Chooser_set_preset_file(self._inner, f.as_ptr()) }
+        unsafe { Fl_Native_File_Chooser_set_preset_file(self.inner, f.as_ptr()) }
     }
 
     /// returns the error message from the file dialog
     pub fn error_message(&self) -> Option<String> {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let err_msg = Fl_Native_File_Chooser_errmsg(self._inner);
+            let err_msg = Fl_Native_File_Chooser_errmsg(self.inner);
             if err_msg.is_null() {
                 None
             } else {
@@ -211,9 +225,9 @@ impl FileDialog {
 
 impl Drop for FileDialog {
     fn drop(&mut self) {
-        if !self._inner.is_null() {
-            unsafe { Fl_Native_File_Chooser_delete(self._inner) }
-            self._inner = std::ptr::null_mut();
+        if !self.inner.is_null() {
+            unsafe { Fl_Native_File_Chooser_delete(self.inner) }
+            self.inner = std::ptr::null_mut();
         }
     }
 }
@@ -236,13 +250,13 @@ pub fn alert(x: i32, y: i32, txt: &str) {
 
 /// Displays a choice box with upto three choices.
 /// An empty choice will not be shown
-pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
+pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     unsafe {
         let txt = CString::safe_new(txt);
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
+        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32
     }
 }
 
@@ -301,13 +315,13 @@ pub fn alert_default(txt: &str) {
 
 /// Displays a choice box with upto three choices.
 /// An empty choice will not be shown
-pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> u32 {
+pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     unsafe {
         let txt = CString::safe_new(txt);
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as u32
+        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32
     }
 }
 
@@ -351,7 +365,7 @@ pub fn password_default(txt: &str, deflt: &str) -> Option<String> {
 /// Creates a help dialog
 #[derive(Debug)]
 pub struct HelpDialog {
-    _inner: *mut Fl_Help_Dialog,
+    inner: *mut Fl_Help_Dialog,
 }
 
 impl HelpDialog {
@@ -360,9 +374,7 @@ impl HelpDialog {
         unsafe {
             let help_dialog = Fl_Help_Dialog_new();
             assert!(!help_dialog.is_null());
-            HelpDialog {
-                _inner: help_dialog,
-            }
+            HelpDialog { inner: help_dialog }
         }
     }
 
@@ -375,7 +387,7 @@ impl HelpDialog {
 
     /// Hides the help dialog
     pub fn hide(&mut self) {
-        unsafe { Fl_Help_Dialog_hide(self._inner) }
+        unsafe { Fl_Help_Dialog_hide(self.inner) }
     }
 
     /// Loads a file for the help dialog
@@ -389,7 +401,7 @@ impl HelpDialog {
             .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let f = CString::new(f)?;
         unsafe {
-            match Fl_Help_Dialog_load(self._inner, f.as_ptr()) {
+            match Fl_Help_Dialog_load(self.inner, f.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }
@@ -398,39 +410,39 @@ impl HelpDialog {
 
     /// Sets the position of the help dialog
     pub fn position(&mut self, x: i32, y: i32) {
-        unsafe { Fl_Help_Dialog_position(self._inner, x, y) }
+        unsafe { Fl_Help_Dialog_position(self.inner, x, y) }
     }
 
     /// Resizes the help dialog
     pub fn resize(&mut self, x: i32, y: i32, w: i32, h: i32) {
-        unsafe { Fl_Help_Dialog_resize(self._inner, x, y, w, h) }
+        unsafe { Fl_Help_Dialog_resize(self.inner, x, y, w, h) }
     }
 
     /// Shows the help dialog
     pub fn show(&mut self) {
-        unsafe { Fl_Help_Dialog_show(self._inner) }
+        unsafe { Fl_Help_Dialog_show(self.inner) }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: u32) {
-        unsafe { Fl_Help_Dialog_set_text_size(self._inner, s as i32) }
+    pub fn set_text_size(&mut self, s: i32) {
+        unsafe { Fl_Help_Dialog_set_text_size(self.inner, s as i32) }
     }
 
     /// Returns the text size
-    pub fn text_size(&mut self) -> u32 {
-        unsafe { Fl_Help_Dialog_text_size(self._inner) as u32 }
+    pub fn text_size(&mut self) -> i32 {
+        unsafe { Fl_Help_Dialog_text_size(self.inner) as i32 }
     }
 
     /// Sets the value of the help dialog
     pub fn set_value(&mut self, f: &str) {
         let f = CString::safe_new(f);
-        unsafe { Fl_Help_Dialog_set_value(self._inner, f.as_ptr()) }
+        unsafe { Fl_Help_Dialog_set_value(self.inner, f.as_ptr()) }
     }
 
     /// Returns the value of the help dialog
     pub fn value(&self) -> Option<String> {
         unsafe {
-            let val = Fl_Help_Dialog_value(self._inner);
+            let val = Fl_Help_Dialog_value(self.inner);
             if val.is_null() {
                 None
             } else {
@@ -441,43 +453,43 @@ impl HelpDialog {
 
     /// Returs whether the help dialog is visible
     pub fn visible(&mut self) -> bool {
-        unsafe { Fl_Help_Dialog_visible(self._inner) != 0 }
+        unsafe { Fl_Help_Dialog_visible(self.inner) != 0 }
     }
 
     /// Returns the width of the help dialog
     pub fn width(&mut self) -> i32 {
-        unsafe { Fl_Help_Dialog_w(self._inner) }
+        unsafe { Fl_Help_Dialog_w(self.inner) }
     }
 
     /// Returns the height of the help dialog
     pub fn height(&mut self) -> i32 {
-        unsafe { Fl_Help_Dialog_h(self._inner) }
+        unsafe { Fl_Help_Dialog_h(self.inner) }
     }
 
     /// Returns the width of the help dialog
     pub fn w(&mut self) -> i32 {
-        unsafe { Fl_Help_Dialog_w(self._inner) }
+        unsafe { Fl_Help_Dialog_w(self.inner) }
     }
 
     /// Returns the height of the help dialog
     pub fn h(&mut self) -> i32 {
-        unsafe { Fl_Help_Dialog_h(self._inner) }
+        unsafe { Fl_Help_Dialog_h(self.inner) }
     }
 
     /// Returns the x position of the help dialog
     pub fn x(&mut self) -> i32 {
-        unsafe { Fl_Help_Dialog_x(self._inner) }
+        unsafe { Fl_Help_Dialog_x(self.inner) }
     }
 
     /// Returns the y position of the help dialog
     pub fn y(&mut self) -> i32 {
-        unsafe { Fl_Help_Dialog_y(self._inner) }
+        unsafe { Fl_Help_Dialog_y(self.inner) }
     }
 }
 
 impl Drop for HelpDialog {
     fn drop(&mut self) {
-        unsafe { Fl_Help_Dialog_delete(self._inner) }
+        unsafe { Fl_Help_Dialog_delete(self.inner) }
     }
 }
 
@@ -506,8 +518,8 @@ pub fn beep(tp: BeepType) {
 
 /// FLTK's own FileChooser. Which differs for the Native FileDialog
 /// Example:
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// let mut chooser = dialog::FileChooser::new(
 ///     ".",                    // directory
 ///     "*",                    // filter or pattern
@@ -540,7 +552,7 @@ pub fn beep(tp: BeepType) {
 /// }
 /// ```
 pub struct FileChooser {
-    _inner: *mut Fl_File_Chooser,
+    inner: *mut Fl_File_Chooser,
 }
 
 bitflags! {
@@ -571,7 +583,7 @@ impl FileChooser {
                 title.as_ptr(),
             );
             assert!(!ptr.is_null());
-            FileChooser { _inner: ptr }
+            FileChooser { inner: ptr }
         }
     }
 
@@ -579,14 +591,14 @@ impl FileChooser {
     /// # Safety
     /// Can invalidate the underlying pointer
     pub unsafe fn delete(dlg: Self) {
-        Fl_File_Chooser_delete(dlg._inner)
+        Fl_File_Chooser_delete(dlg.inner)
     }
 
     /// Gets the new button of the FileChooser
     pub fn new_button(&mut self) -> Option<impl ButtonExt> {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let ptr = Fl_File_Chooser_newButton(self._inner);
+            let ptr = Fl_File_Chooser_newButton(self.inner);
             if ptr.is_null() {
                 None
             } else {
@@ -597,9 +609,9 @@ impl FileChooser {
 
     /// Gets the preview button of the FileChooser
     pub fn preview_button(&mut self) -> Option<impl ButtonExt> {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let ptr = Fl_File_Chooser_previewButton(self._inner);
+            let ptr = Fl_File_Chooser_previewButton(self.inner);
             if ptr.is_null() {
                 None
             } else {
@@ -612,9 +624,9 @@ impl FileChooser {
 
     /// Gets the show hidden button of the FileChooser
     pub fn show_hidden_button(&mut self) -> Option<impl ButtonExt> {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let ptr = Fl_File_Chooser_showHiddenButton(self._inner);
+            let ptr = Fl_File_Chooser_showHiddenButton(self.inner);
             if ptr.is_null() {
                 None
             } else {
@@ -626,30 +638,11 @@ impl FileChooser {
     }
 
     /// Sets the callback of the FileChooser
-    pub fn set_callback<F: FnMut() + 'static>(&mut self, cb: F) {
-        assert!(!self._inner.is_null());
-        unsafe {
-            unsafe extern "C" fn shim(_arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
-                let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-                let f: &mut (dyn FnMut()) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
-            }
-            let _old_data = self.user_data();
-            let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-            let data: *mut raw::c_void = a as *mut raw::c_void;
-            let callback: Option<
-                unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
-            > = Some(shim);
-            Fl_File_Chooser_set_callback(self._inner, callback, data)
-        }
-    }
-
-    /// Sets the callback of the FileChooser
-    pub fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
-        assert!(!self._inner.is_null());
+    pub fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+        assert!(!self.inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
-                let mut wid = FileChooser { _inner: arg1 };
+                let mut wid = FileChooser { inner: arg1 };
                 let a: *mut Box<dyn FnMut(&mut FileChooser)> =
                     data as *mut Box<dyn FnMut(&mut FileChooser)>;
                 let f: &mut (dyn FnMut(&mut FileChooser)) = &mut **a;
@@ -661,40 +654,40 @@ impl FileChooser {
             let callback: Option<
                 unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
             > = Some(shim);
-            Fl_File_Chooser_set_callback(self._inner, callback, data)
+            Fl_File_Chooser_set_callback(self.inner, callback, data)
         }
     }
 
     /// Sets the color of the FileChooser
     pub fn set_color(&mut self, c: Color) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_color(self._inner, c.bits() as u32) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_color(self.inner, c.bits() as u32) }
     }
 
     /// Gets the color of the FileChooser
     pub fn color(&mut self) -> Color {
-        assert!(!self._inner.is_null());
-        unsafe { mem::transmute(Fl_File_Chooser_color(self._inner)) }
+        assert!(!self.inner.is_null());
+        unsafe { mem::transmute(Fl_File_Chooser_color(self.inner)) }
     }
 
     /// Gets the count of chosen items
-    pub fn count(&mut self) -> u32 {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_count(self._inner) as u32 }
+    pub fn count(&mut self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_count(self.inner) as i32 }
     }
 
     /// Sets the directory of the FileChooser
     pub fn set_directory(&mut self, dir: &str) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         let dir = CString::safe_new(dir);
-        unsafe { Fl_File_Chooser_set_directory(self._inner, dir.as_ptr()) }
+        unsafe { Fl_File_Chooser_set_directory(self.inner, dir.as_ptr()) }
     }
 
     /// Gets the directory of the FileChooser
     pub fn directory(&mut self) -> Option<String> {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let ptr = Fl_File_Chooser_directory(self._inner);
+            let ptr = Fl_File_Chooser_directory(self.inner);
             if ptr.is_null() {
                 None
             } else {
@@ -708,22 +701,22 @@ impl FileChooser {
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (eg. `"*.txt"`)
-    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`)
-    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`)
-    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`)
+    /// A single wildcard (eg. `"*.txt"`).
+    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`).
+    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`).
+    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`).
     /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
     pub fn set_filter(&mut self, pattern: &str) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         let pattern = CString::safe_new(pattern);
-        unsafe { Fl_File_Chooser_set_filter(self._inner, pattern.as_ptr()) }
+        unsafe { Fl_File_Chooser_set_filter(self.inner, pattern.as_ptr()) }
     }
 
     /// Gets the filter of the FileChooser
     pub fn filter(&mut self) -> Option<String> {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let ptr = Fl_File_Chooser_filter(self._inner);
+            let ptr = Fl_File_Chooser_filter(self.inner);
             if ptr.is_null() {
                 None
             } else {
@@ -737,52 +730,52 @@ impl FileChooser {
     }
 
     /// Gets the current filename filter selection
-    pub fn filter_value(&mut self) -> u32 {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_filter_value(self._inner) as u32 }
+    pub fn filter_value(&mut self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_filter_value(self.inner) as i32 }
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (eg. `"*.txt"`)
-    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`)
-    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`)
-    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`)
+    /// A single wildcard (eg. `"*.txt"`).
+    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`).
+    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`).
+    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`).
     /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
-    pub fn set_filter_value(&mut self, f: u32) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_filter_value(self._inner, f as i32) }
+    pub fn set_filter_value(&mut self, f: i32) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_filter_value(self.inner, f as i32) }
     }
 
     /// Hides the File chooser
     pub fn hide(&mut self) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_hide(self._inner) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_hide(self.inner) }
     }
 
     /// Sets the icon size of the FileChooser
     pub fn set_icon_size(&mut self, s: u8) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_iconsize(self._inner, s) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_iconsize(self.inner, s) }
     }
 
     /// Gets the icon size of the FileChooser
     pub fn icon_size(&mut self) -> u8 {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_iconsize(self._inner) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_iconsize(self.inner) }
     }
 
     /// Sets the label of the FileChooser
     pub fn set_label(&mut self, l: &str) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
-        unsafe { Fl_File_Chooser_set_label(self._inner, l.as_ptr()) }
+        unsafe { Fl_File_Chooser_set_label(self.inner, l.as_ptr()) }
     }
 
     /// Gets the label of the FileChooser
     pub fn label(&mut self) -> String {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let ptr = Fl_File_Chooser_label(self._inner);
+            let ptr = Fl_File_Chooser_label(self.inner);
             if ptr.is_null() {
                 String::from("")
             } else {
@@ -795,16 +788,16 @@ impl FileChooser {
 
     /// Sets the label of the Ok button
     pub fn set_ok_label(&mut self, l: &str) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
-        unsafe { Fl_File_Chooser_set_ok_label(self._inner, l.as_ptr()) }
+        unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.as_ptr()) }
     }
 
     /// Gets the label of the Ok button
     pub fn ok_label(&mut self) -> String {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         unsafe {
-            let ptr = Fl_File_Chooser_ok_label(self._inner);
+            let ptr = Fl_File_Chooser_ok_label(self.inner);
             if ptr.is_null() {
                 String::from("")
             } else {
@@ -817,112 +810,109 @@ impl FileChooser {
 
     /// Add preview to the FileChooser
     pub fn set_preview(&mut self, e: bool) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_preview(self._inner, e as i32) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_preview(self.inner, e as i32) }
     }
 
     /// Returns whether preview is enabled for the FileChooser
     pub fn preview(&self) -> bool {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_preview(self._inner) != 0 }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_preview(self.inner) != 0 }
     }
 
     /// Rescan the directory
     pub fn rescan(&mut self) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_rescan(self._inner) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_rescan(self.inner) }
     }
 
     /// Rescan the directory while keeping the file name
     pub fn rescan_keep_filename(&mut self) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_rescan_keep_filename(self._inner) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_rescan_keep_filename(self.inner) }
     }
 
     /// Shows the File Chooser
     pub fn show(&mut self) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_show(self._inner) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_show(self.inner) }
     }
 
     /// Returns whether the file chooser is shown
     pub fn shown(&mut self) -> bool {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_shown(self._inner) != 0 }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_shown(self.inner) != 0 }
     }
 
     /// Sets the text color of the file chooser
     pub fn set_text_color(&mut self, c: Color) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_text_color(self._inner, c.bits() as u32) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_text_color(self.inner, c.bits() as u32) }
     }
 
     /// Gets the text color of the file chooser
     pub fn text_color(&mut self) -> Color {
-        assert!(!self._inner.is_null());
-        unsafe { mem::transmute(Fl_File_Chooser_text_color(self._inner)) }
+        assert!(!self.inner.is_null());
+        unsafe { mem::transmute(Fl_File_Chooser_text_color(self.inner)) }
     }
 
     /// Sets the text font of the file chooser
     pub fn set_text_font(&mut self, f: Font) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_text_font(self._inner, f.bits() as i32) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_text_font(self.inner, f.bits() as i32) }
     }
 
     /// Gets the text font of the file chooser
     pub fn text_font(&mut self) -> Font {
-        assert!(!self._inner.is_null());
-        unsafe { mem::transmute(Fl_File_Chooser_text_font(self._inner)) }
+        assert!(!self.inner.is_null());
+        unsafe { mem::transmute(Fl_File_Chooser_text_font(self.inner)) }
     }
 
     /// Sets the text size of the file chooser
-    pub fn set_text_size(&mut self, s: u32) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_text_size(self._inner, s as i32) }
+    pub fn set_text_size(&mut self, s: i32) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_text_size(self.inner, s as i32) }
     }
 
     /// Gets the text size of the file chooser
-    pub fn text_size(&mut self) -> u32 {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_text_size(self._inner) as u32 }
+    pub fn text_size(&mut self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_text_size(self.inner) as i32 }
     }
 
     /// Sets the type of the FileChooser
     pub fn set_type(&mut self, t: FileChooserType) {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_set_type(self._inner, t.bits as i32) }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_type(self.inner, t.bits as i32) }
     }
 
     /// Gets the type of the FileChooser
     pub fn get_type(&mut self) -> FileChooserType {
-        assert!(!self._inner.is_null());
-        unsafe { mem::transmute(Fl_File_Chooser_type(self._inner)) }
+        assert!(!self.inner.is_null());
+        unsafe { mem::transmute(Fl_File_Chooser_type(self.inner)) }
     }
 
     /// Gets the user data of the FileChooser
     /// # Safety
     /// Can invalidate the user data while the FileChooser is in use
     pub unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
-        let ptr = Fl_File_Chooser_user_data(self._inner);
+        let ptr = Fl_File_Chooser_user_data(self.inner);
         if ptr.is_null() {
             None
         } else {
             let x = ptr as *mut Box<dyn FnMut()>;
             let x = Box::from_raw(x);
-            Fl_File_Chooser_set_callback(self._inner, None, std::ptr::null_mut());
+            Fl_File_Chooser_set_callback(self.inner, None, std::ptr::null_mut());
             Some(*x)
         }
     }
 
     /// Gets the file or dir name chosen by the FileChooser
-    pub fn value(&mut self, f: u32) -> Option<String> {
-        assert!(!self._inner.is_null());
-        let mut f = f;
-        if f == 0 {
-            f = 1;
-        }
+    pub fn value(&mut self, f: i32) -> Option<String> {
+        assert!(!self.inner.is_null());
+        let f = if f == 0 { 1 } else { f };
         unsafe {
-            let ptr = Fl_File_Chooser_value(self._inner, f as i32);
+            let ptr = Fl_File_Chooser_value(self.inner, f as i32);
             if ptr.is_null() {
                 None
             } else {
@@ -937,15 +927,15 @@ impl FileChooser {
 
     /// Sets the file or dir name chosen by the FileChooser
     pub fn set_value(&mut self, filename: &str) {
-        assert!(!self._inner.is_null());
+        assert!(!self.inner.is_null());
         let filename = CString::safe_new(filename);
-        unsafe { Fl_File_Chooser_set_value(self._inner, filename.as_ptr()) }
+        unsafe { Fl_File_Chooser_set_value(self.inner, filename.as_ptr()) }
     }
 
     /// Returns whether the FileChooser is visible or not
     pub fn visible(&mut self) -> bool {
-        assert!(!self._inner.is_null());
-        unsafe { Fl_File_Chooser_visible(self._inner) != 0 }
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_visible(self.inner) != 0 }
     }
 
     /// Return dialog window
@@ -1051,7 +1041,7 @@ impl FileChooser {
 
 impl Drop for FileChooser {
     fn drop(&mut self) {
-        unsafe { Fl_File_Chooser_delete(self._inner) }
+        unsafe { Fl_File_Chooser_delete(self.inner) }
     }
 }
 
@@ -1075,8 +1065,8 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
 
 /// Shows a file chooser returning a String.
 /// Example:
-/// ```no_run
-/// use fltk::*;
+/// ```rust,no_run
+/// use fltk::{prelude::*, *};
 /// let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
 /// println!("{}", file);
 /// ```
@@ -1104,14 +1094,13 @@ pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> 
 }
 
 /// Spawns a color_chooser dialog.
-/// `cmode`: Optional mode for color chooser. Default is 0 if rgb mode.
-pub fn color_chooser(name: &str, cmode: i32) -> Option<(u8, u8, u8)> {
+pub fn color_chooser(name: &str, cmode: ColorMode) -> Option<(u8, u8, u8)> {
     unsafe {
         let name = CString::safe_new(name);
         let mut r = 255;
         let mut g = 255;
         let mut b = 255;
-        let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode);
+        let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode as i32);
         if ret == 0 {
             None
         } else {
@@ -1121,14 +1110,13 @@ pub fn color_chooser(name: &str, cmode: i32) -> Option<(u8, u8, u8)> {
 }
 
 /// Spawns a color_chooser dialog.
-/// `cmode`: Optional mode for color chooser. Default is 0 if rgb mode.
-pub fn color_chooser_with_default(name: &str, cmode: i32, col: (u8, u8, u8)) -> (u8, u8, u8) {
+pub fn color_chooser_with_default(name: &str, cmode: ColorMode, col: (u8, u8, u8)) -> (u8, u8, u8) {
     unsafe {
         let name = CString::safe_new(name);
         let mut r = col.0;
         let mut g = col.1;
         let mut b = col.2;
-        let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode);
+        let ret = Fl_color_chooser(name.as_ptr(), &mut r, &mut g, &mut b, cmode as i32);
         if ret == 0 {
             col
         } else {

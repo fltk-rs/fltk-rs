@@ -1,6 +1,6 @@
 // Example showing a browser widget with right click popup menu
 
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
@@ -25,8 +25,8 @@ fn main() {
 
     let menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
 
-    b.set_callback(move || {
-        if app::event_mouse_button() == Mouse::Right {
+    b.set_callback(move |_| {
+        if app::event_mouse_button() == app::MouseButton::Right {
             // or app::event_button() == 3
             let coords = app::event_coords();
             match menu.popup(coords.0, coords.1) {

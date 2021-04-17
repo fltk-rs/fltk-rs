@@ -37,12 +37,12 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^0.16"
+fltk = "^1"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^0.16", git = "https://github.com/MoAlyousef/fltk-rs" }
+fltk = { version = "^1", git = "https://github.com/MoAlyousef/fltk-rs" }
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -52,7 +52,7 @@ For faster builds you can enable ninja builds for the C++ source using the "use-
 An example hello world application:
 
 ```rust
-use fltk::{app, window::*};
+use fltk::{app, prelude::*, window::Window};
 
 fn main() {
     let app = app::App::default();
@@ -65,7 +65,7 @@ fn main() {
 
 Another example showing the basic callback functionality:
 ```rust
-use fltk::{app, button::*, frame::*, window::*};
+use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 fn main() {
     let app = app::App::default();
@@ -74,7 +74,7 @@ fn main() {
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
     wind.end();
     wind.show();
-    but.set_callback(move || frame.set_label("Hello World!"));
+    but.set_callback(move |_| frame.set_label("Hello World!"));
     app.run().unwrap();
 }
 ```
@@ -132,7 +132,7 @@ Alternatively, you can use packs to layout your widgets:
 Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
 ```rust
     /* previous hello world code */
-    but.set_callback(move || frame.set_label("Hello World!"));
+    but.set_callback(move |_| frame.set_label("Hello World!"));
     app.run().unwrap();
 ```
 Another way is to use message passing:
@@ -156,7 +156,7 @@ For the remainder of the code, check the full example [here](fltk/examples/count
 
 For custom event handling, the handle() method can be used:
 ```rust
-    some_widget.handle(move |ev: Event| {
+    some_widget.handle(move |widget, ev: Event| {
         match ev {
             /* handle ev */
         }
@@ -198,7 +198,7 @@ The following are the features offered by the crate:
 
 ## Dependencies
 
-Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag (which requires curl and tar to download and unpack the bundled libraries). If you have ninja-build installed, you can enable it using the "use-ninja" feature. This should accelerate build times significantly.
+Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms (win 10 x64, macos 10.15 x64, linux x64), this can be enabled using the `fltk-bundled` feature-flag (which requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: No dependencies.
 - MacOS: No dependencies.
@@ -253,40 +253,65 @@ $ cargo run --example hello_button
 $ cargo run --example fb
 $ cargo run --example pong
 $ cargo run --example custom_widgets
+$ cargo run --example custom_dial
 ...
 ```
 
+Using custom theming and also FLTK provided default themes like Gtk:
+
+- [hello](fltk/examples/hello.rs)
+
 ![alt_test](screenshots/hello.jpg)
 
-With custom theming:
+- [calculator2](fltk/examples/calculator2.rs)
 
 ![alt_test](screenshots/calc2.jpg)
 
+- [custom_widgets](fltk/examples/custom_widgets.rs)
+
 ![alt_test](screenshots/custom.jpg)
+
+- [counter3](fltk/examples/counter3.rs)
 
 ![alt_test](screenshots/flutter_like.jpg)
 
-Setting the scheme to Gtk:
+- [custom_dial](fltk/examples/custom_dial.rs)
+
+![alt_test](screenshots/dial.jpg)
+
+- [calculator](fltk/examples/calculator.rs)
 
 ![alt_test](screenshots/calc.jpg)
 
+- [tabs](fltk/examples/tabs.rs)
+
 ![alt_test](screenshots/tabs.jpg)
 
-<img alt="Counter" width=240 height=300 src="screenshots/counter.jpg">
+- [counter](fltk/examples/counter.rs)
 
-Check the full [code](fltk/examples/counter.rs) for the custom theming.
+![alt_test](screenshots/counter.jpg)
 
-Setting the scheme to Gtk:
+- [editor](fltk/examples/editor.rs)
 
 ![alt_test](screenshots/editor.jpg)
 
+- [terminal](fltk/examples/terminal.rs)
+
 ![alt_test](screenshots/terminal.jpg)
+
+- [table](fltk/examples/table.rs)
 
 ![alt_test](screenshots/table.jpg)
 
+- [charts](fltk/examples/charts.rs)
+
 ![alt_test](screenshots/charts.jpg)
 
+- [pong](fltk/examples/pong.rs)
+
 ![alt_test](screenshots/pong.gif)
+
+- [frames](fltk/examples/frames.rs)
 
 ![alt_test](screenshots/frames.jpg)
 
@@ -351,6 +376,8 @@ Also a nice implementation of the 7guis tasks can be found [here](https://github
     - ColorChooser
     - VGrid
     - HGrid
+    - Column (vertical pack supporting auto layout)
+    - Row (horizontal pack supporting auto layout)
 - Text display widgets
     - TextDisplay
     - TextEditor

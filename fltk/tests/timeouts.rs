@@ -1,4 +1,4 @@
-use fltk::{app, frame::*, image::*, window::*};
+use fltk::{app, enums, frame::*, image::*, prelude::*, window::*};
 
 const PXM: &[&str] = &[
     "50 34 4 1",
@@ -63,7 +63,7 @@ fn run_animation() {
     let mut pxm = Pixmap::new(PXM).unwrap();
     pxm.scale(200, 200, true, true);
     frame.set_image(Some(pxm));
-    wind.set_color(Color::White);
+    wind.set_color(enums::Color::White);
     wind.end();
     wind.show_with_env_args();
 

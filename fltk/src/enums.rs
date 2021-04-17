@@ -289,7 +289,7 @@ impl Font {
 }
 
 bitflags! {
-    /// Defines colors used by FLTK
+    /// Defines colors used by FLTK.
     /// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum.
     /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
     /// The RGBI can be acquired by casting the color to u32 and formatting it to ```0x{08x}```.
@@ -365,6 +365,12 @@ impl Color {
 
     /// Returns a color from hex or decimal
     pub fn from_u32(val: u32) -> Color {
+        let (r, g, b) = crate::utils::hex2rgb(val);
+        Color::from_rgb(r, g, b)
+    }
+
+    /// Returns a color from hex or decimal
+    pub fn from_hex(val: u32) -> Color {
         let (r, g, b) = crate::utils::hex2rgb(val);
         Color::from_rgb(r, g, b)
     }
@@ -686,24 +692,6 @@ bitflags! {
     }
 }
 
-/// Defines the text cursor styles supported by fltk
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
-pub enum TextCursor {
-    /// Normal
-    Normal,
-    /// Caret
-    Caret,
-    /// Dim
-    Dim,
-    /// Block
-    Block,
-    /// Heavy
-    Heavy,
-    /// Simple
-    Simple,
-}
-
 /// Defines the cursor styles supported by fltk
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -753,7 +741,7 @@ pub enum Cursor {
 }
 
 bitflags! {
-    /// Defines visual mode types (capabilites of the window)
+    /// Defines visual mode types (capabilites of the window).
     /// Rgb and Single have a value of zero, so they
     /// are "on" unless you give Index or Double.
     pub struct Mode: i32 {
@@ -806,27 +794,6 @@ bitflags! {
         /// Everything needs to be redrawn.
         const All     = 0x80;
     }
-}
-
-/// Defines Mouse buttons
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
-#[non_exhaustive]
-pub enum Mouse {
-    /// Left mouse button
-    Left = 1,
-    /// Middle mouse button
-    Middle = 2,
-    /// Right mouse button
-    Right = 3,
-}
-
-/// A trait defined for all enums passable to the WidgetExt::set_type() method
-pub trait WidgetType {
-    /// Get the integral representation of the widget type
-    fn to_int(self) -> i32;
-    /// Get the widget type from its integral representation
-    fn from_i32(val: i32) -> Self;
 }
 
 impl std::ops::BitOr<char> for Shortcut {

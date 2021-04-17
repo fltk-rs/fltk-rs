@@ -1,10 +1,25 @@
 # Changelog
 
 
-## [0.16.5] - Unreleased
+## [1.0.0] - 2021-04-18
+- [BREAKING] Importing fltk::* no longer auto-imports the prelude nor enums modules.
+- [BREAKING] Importing widgets no longer auto-imports the prelude nor enums modules.
+- [BREAKING] Replace set_callback, handle, draw, draw_cell with their overloads.
+- [BREAKING] Widgets take a `&'static str` for a label when initialized. To use dynamic labels, use set_label or with_label.
+- [BREAKING] Replace TableExt::visible_cells and get_selection with their easier overloads.
+- [BREAKING] Rename InputChoice::set_value2 to set_value_index.
+- [BREAKING] Take i32 where FLTK expects i32.
+- [BREAKING] Rename WidgetType::to_int() to to_i32().
+- [BREAKING] app::event_dx() and event_dy() return an app::MouseWheel instead of i32.
+- [BREAKING] enums::Mouse moved to app::MouseButton.
+- [BREAKING] Move enums::TextCursor to text::Cursor.
+- Add a Column and Row widgets which support auto_layout by default, but require that widgets be added using add().
+- Add ValueInput::soft and set_soft methods.
+- Add WindowExt::set_cursor_image() and default_cursor().
+
+## [0.16.5] - 2021-04-10
 ### Changes
-- Update FLTK.
-- Update syn.
+- Update FLTK, syn and libc.
 - Add assert of widget validity when cloning.
 
 ## [0.16.4] - 2021-04-01

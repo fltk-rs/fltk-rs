@@ -1,4 +1,10 @@
-use fltk::{app, text::*, window::*};
+use fltk::{
+    app,
+    enums::{Color, Event, Font, Key},
+    prelude::*,
+    text::{SimpleTerminal, StyleTableEntry, TextBuffer},
+    window::Window,
+};
 use std::ops::{Deref, DerefMut};
 use std::path::Path;
 use std::process::{Command, Stdio};
@@ -143,7 +149,7 @@ fn main() {
     wind.show();
 
     let mut term_c = term.clone();
-    term_c.handle(move |ev| {
+    term_c.handle(move |_, ev| {
         // println!("{:?}", app::event());
         // println!("{:?}", app::event_key());
         // println!("{:?}", app::event_text());
@@ -164,7 +170,7 @@ fn main() {
                 }
                 Key::BackSpace => {
                     if !term.cmd.is_empty() {
-                        let text_len = term.text().len() as u32;
+                        let text_len = term.text().len() as i32;
                         term.buffer().unwrap().remove(text_len - 1, text_len);
                         term.sbuf.remove(text_len - 1, text_len);
                         term.cmd.pop().unwrap();

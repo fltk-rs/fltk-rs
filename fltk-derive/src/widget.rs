@@ -33,17 +33,22 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         impl Default for #name {
             fn default() -> Self {
-                Self::new(0, 0, 0, 0, "")
+                Self::new(0, 0, 0, 0, None)
             }
         }
 
         unsafe impl WidgetBase for #name {
-            fn new(x: i32, y: i32, width: i32, height: i32, title: &str) -> #name {
-                let temp = CString::safe_new(title);
+            fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, width: i32, height: i32, title: T) -> #name {
+                let temp = if let Some(title) = title.into() {
+                    CString::safe_new(title).into_raw()
+                } else {
+                    std::ptr::null_mut()
+                };
                 unsafe {
-                    let widget_ptr = #new(x, y, width, height, temp.into_raw());
+                    let widget_ptr = #new(x, y, width, height, temp);
                     assert!(!widget_ptr.is_null());
-                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
+                    let tracker =
+                        fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
                     assert!(!tracker.is_null());
                     unsafe extern "C" fn shim(data: *mut raw::c_void) {
                         if !data.is_null() {
@@ -53,8 +58,8 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     }
                     #set_deleter(widget_ptr, Some(shim));
                     #name {
-                        _inner: widget_ptr,
-                        _tracker: tracker,
+                        inner: widget_ptr,
+                        tracker: tracker,
                     }
                 }
             }
@@ -63,8 +68,8 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!wid.was_deleted());
                 unsafe {
                     fltk_sys::fl::Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-                    wid._inner = std::ptr::null_mut() as *mut _;
-                    wid._tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
+                    wid.inner = std::ptr::null_mut() as *mut _;
+                    wid.tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
                 }
             }
 
@@ -74,8 +79,8 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
                 assert!(!tracker.is_null());
                 let temp = #name {
-                    _inner: ptr as *mut #ptr_name,
-                    _tracker: tracker,
+                    inner: ptr as *mut #ptr_name,
+                    tracker: tracker,
                 };
                 fltk_sys::fl::Fl_unlock();
                 temp
@@ -85,32 +90,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 Self::from_widget_ptr(w.as_widget_ptr() as *mut _)
             }
 
-            fn handle<F: FnMut(Event) -> bool + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    unsafe extern "C" fn shim(ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
-                        let ev: Event = mem::transmute(ev);
-                        let a: *mut Box<dyn FnMut(Event) -> bool> = data as *mut Box<dyn FnMut(Event) -> bool>;
-                        let f: &mut (dyn FnMut(Event) -> bool) = &mut **a;
-                        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(ev) {
-                            true => return 1,
-                            false => return 0,
-                        }));
-                        if let Ok(ret) = result {
-                            ret
-                        } else {
-                            0
-                        }
-                    }
-                    let _old_data = self.handle_data();
-                    let a: *mut Box<dyn FnMut(Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_handler_callback = Some(shim);
-                    #handle(self._inner, callback, data);
-                }
-            }
-
-            fn handle2<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
+            fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
@@ -132,27 +112,11 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self, Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_handler_callback2 = Some(shim);
-                    #handle2(self._inner, callback, data);
+                    #handle2(self.inner, callback, data);
                 }
             }
 
-            fn draw<F: FnMut() + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-                        let f: &mut (dyn FnMut()) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
-                    }
-                    let _old_data = self.draw_data();
-                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_draw_callback = Some(shim);
-                    #draw(self._inner, callback, data);
-                }
-            }
-
-            fn draw2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+            fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -165,29 +129,29 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: custom_draw_callback2 = Some(shim);
-                    #draw2(self._inner, callback, data);
+                    #draw2(self.inner, callback, data);
                 }
             }
 
             unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
-                let ptr = #draw_data(self._inner);
+                let ptr = #draw_data(self.inner);
                 if ptr.is_null() {
                     return None;
                 }
                 let data = ptr as *mut Box<dyn FnMut()>;
                 let data = Box::from_raw(data);
-                #draw(self._inner, None, std::ptr::null_mut());
+                #draw(self.inner, None, std::ptr::null_mut());
                 Some(*data)
             }
 
             unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
-                let ptr = #handle_data(self._inner);
+                let ptr = #handle_data(self.inner);
                 if ptr.is_null() {
                     return None;
                 }
                 let data = ptr as *mut Box<dyn FnMut(Event) -> bool>;
                 let data = Box::from_raw(data);
-                #handle(self._inner, None, std::ptr::null_mut());
+                #handle(self.inner, None, std::ptr::null_mut());
                 Some(*data)
             }
         }
@@ -392,7 +356,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         impl Clone for #name {
             fn clone(&self) -> #name {
                 assert!(!self.was_deleted());
-                #name { _inner: self._inner, _tracker: self._tracker }
+                #name { inner: self.inner, tracker: self.tracker }
             }
         }
 
@@ -410,7 +374,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let temp = CString::safe_new(title);
                 unsafe {
                     #set_label(
-                        self._inner,
+                        self.inner,
                         temp.as_ptr(),
                     )
                 }
@@ -419,54 +383,54 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn redraw(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #redraw(self._inner);
+                    #redraw(self.inner);
                 }
             }
 
             fn show(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #show(self._inner) }
+                unsafe { #show(self.inner) }
             }
 
             fn hide(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #hide(self._inner) }
+                unsafe { #hide(self.inner) }
             }
 
             fn x(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #x(self._inner)}
+                unsafe { #x(self.inner)}
             }
 
             fn y(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #y(self._inner) }
+                unsafe { #y(self.inner) }
             }
 
             fn width(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #width(self._inner) }
+                unsafe { #width(self.inner) }
             }
 
             fn height(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #height(self._inner) }
+                unsafe { #height(self.inner) }
             }
 
             fn w(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #width(self._inner) }
+                unsafe { #width(self.inner) }
             }
 
             fn h(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #height(self._inner) }
+                unsafe { #height(self.inner) }
             }
 
             fn label(&self) -> String {
                 assert!(!self.was_deleted());
                 unsafe {
-                    CStr::from_ptr(#label(self._inner) as *mut raw::c_char).to_string_lossy().to_string()
+                    CStr::from_ptr(#label(self.inner) as *mut raw::c_char).to_string_lossy().to_string()
                 }
             }
 
@@ -475,39 +439,39 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let mut x = 0;
                 let mut y = 0;
                 unsafe {
-                    #measure_label(self._inner, &mut x, &mut y);
+                    #measure_label(self.inner, &mut x, &mut y);
                 }
                 (x, y)
             }
 
             unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
-                self._inner as *mut fltk_sys::widget::Fl_Widget
+                self.inner as *mut fltk_sys::widget::Fl_Widget
             }
 
             fn activate(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #activate(self._inner) }
+                unsafe { #activate(self.inner) }
             }
 
             fn deactivate(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #deactivate(self._inner) }
+                unsafe { #deactivate(self.inner) }
             }
 
             fn redraw_label(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #redraw_label(self._inner) }
+                unsafe { #redraw_label(self.inner) }
             }
 
             fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
                 assert!(!self.was_deleted());
-                unsafe { #resize(self._inner, x, y, width, height) }
+                unsafe { #resize(self.inner, x, y, width, height) }
             }
 
             fn tooltip(&self) -> Option<String> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let tooltip_ptr = #tooltip(self._inner);
+                    let tooltip_ptr = #tooltip(self.inner);
                     if tooltip_ptr.is_null() {
                         None
                     } else {
@@ -522,7 +486,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let txt = CString::safe_new(txt);
                 unsafe {
                     #set_tooltip(
-                        self._inner,
+                        self.inner,
                         txt.as_ptr() as *mut raw::c_char,
                     )
                 }
@@ -530,113 +494,114 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn color(&self) -> Color {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#color(self._inner)) }
+                unsafe { mem::transmute(#color(self.inner)) }
             }
 
             fn set_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
-                unsafe { #set_color(self._inner, color.bits() as u32) }
+                unsafe { #set_color(self.inner, color.bits() as u32) }
             }
 
             fn label_color(&self) -> Color {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#label_color(self._inner)) }
+                unsafe { mem::transmute(#label_color(self.inner)) }
             }
 
             fn set_label_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_color(self._inner, color.bits() as u32) }
+                unsafe { #set_label_color(self.inner, color.bits() as u32) }
             }
 
             fn label_font(&self) -> Font {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#label_font(self._inner)) }
+                unsafe { mem::transmute(#label_font(self.inner)) }
             }
 
             fn set_label_font(&mut self, font: Font) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_font(self._inner, font.bits() as i32) }
+                unsafe { #set_label_font(self.inner, font.bits() as i32) }
             }
 
             fn label_size(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #label_size(self._inner) }
+                unsafe { #label_size(self.inner) }
             }
 
             fn set_label_size(&mut self, sz: i32) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_size(self._inner, sz) }
+                let sz = if sz < 1 { 1 } else { sz };
+                unsafe { #set_label_size(self.inner, sz) }
             }
 
             fn label_type(&self) -> LabelType {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#label_type(self._inner)) }
+                unsafe { mem::transmute(#label_type(self.inner)) }
             }
 
             fn set_label_type(&mut self, typ: LabelType) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_label_type(self._inner, typ as i32);
+                    #set_label_type(self.inner, typ as i32);
                 }
             }
 
             fn frame(&self) -> FrameType {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#frame(self._inner)) }
+                unsafe { mem::transmute(#frame(self.inner)) }
             }
 
             fn set_frame(&mut self, typ: FrameType) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_frame(self._inner, typ as i32);
+                    #set_frame(self.inner, typ as i32);
                 }
             }
 
             fn changed(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #changed(self._inner)  != 0
+                    #changed(self.inner)  != 0
                 }
             }
 
             fn set_changed(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #set_changed(self._inner) }
+                unsafe { #set_changed(self.inner) }
             }
 
             fn clear_changed(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe {#clear_changed(self._inner) }
+                unsafe {#clear_changed(self.inner) }
             }
 
             fn align(&self) -> Align {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#align(self._inner)) }
+                unsafe { mem::transmute(#align(self.inner)) }
             }
 
             fn set_align(&mut self, align: Align) {
                 assert!(!self.was_deleted());
-                unsafe { #set_align(self._inner, align.bits() as i32) }
+                unsafe { #set_align(self.inner, align.bits() as i32) }
             }
 
             fn set_trigger(&mut self, trigger: CallbackTrigger) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_trigger(self._inner, trigger.bits() as i32)
+                    #set_trigger(self.inner, trigger.bits() as i32)
                 }
             }
 
             fn trigger(&self) -> CallbackTrigger {
                 assert!(!self.was_deleted());
                 unsafe {
-                    mem::transmute(#trigger(self._inner))
+                    mem::transmute(#trigger(self.inner))
                 }
             }
 
             fn parent(&self) -> Option<Box<dyn GroupExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let x = #parent(self._inner);
+                    let x = #parent(self.inner);
                     if x.is_null() {
                         None
                     } else {
@@ -648,28 +613,28 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn selection_color(&mut self) -> Color {
                 assert!(!self.was_deleted());
                 unsafe {
-                    mem::transmute(#selection_color(self._inner))
+                    mem::transmute(#selection_color(self.inner))
                 }
             }
 
             fn set_selection_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_selection_color(self._inner, color.bits() as u32);
+                    #set_selection_color(self.inner, color.bits() as u32);
                 }
             }
 
             fn do_callback(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #do_callback(self._inner);
+                    #do_callback(self.inner);
                 }
             }
 
             fn window(&self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let wind_ptr = #window(self._inner);
+                    let wind_ptr = #window(self.inner);
                     if wind_ptr.is_null() {
                         None
                     } else {
@@ -681,7 +646,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn top_window(&self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let wind_ptr = #top_window(self._inner);
+                    let wind_ptr = #top_window(self.inner);
                     if wind_ptr.is_null() {
                         None
                     } else {
@@ -693,18 +658,18 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn takes_events(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #takes_events(self._inner)  != 0
+                    #takes_events(self.inner)  != 0
                 }
             }
 
             unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
-                let ptr = #user_data(self._inner);
+                let ptr = #user_data(self.inner);
                 if ptr.is_null() {
                     None
                 } else {
                     let x = ptr as *mut Box<dyn FnMut()>;
                     let x = Box::from_raw(x);
-                    #set_callback(self._inner, None, std::ptr::null_mut());
+                    #set_callback(self.inner, None, std::ptr::null_mut());
                     Some(*x)
                 }
             }
@@ -712,7 +677,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn take_focus(&mut self) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    match #take_focus(self._inner) {
+                    match #take_focus(self.inner) {
                         0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                         _ => Ok(()),
                     }
@@ -723,7 +688,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn set_visible_focus(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_visible_focus(self._inner)
+                    #set_visible_focus(self.inner)
                 }
             }
 
@@ -731,7 +696,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn clear_visible_focus(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #clear_visible_focus(self._inner)
+                    #clear_visible_focus(self.inner)
                 }
             }
 
@@ -739,7 +704,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn visible_focus(&mut self, v: bool) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #visible_focus(self._inner, v as i32)
+                    #visible_focus(self.inner, v as i32)
                 }
             }
 
@@ -747,16 +712,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn has_visible_focus(&mut self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #has_visible_focus(self._inner) != 0
+                    #has_visible_focus(self.inner) != 0
                 }
             }
 
             fn was_deleted(&self) -> bool {
                 unsafe {
-                    if self._inner.is_null() || self._tracker.is_null() {
+                    if self.inner.is_null() || self.tracker.is_null() {
                         return true;
                     } else {
-                        return fltk_sys::fl::Fl_Widget_Tracker_deleted(self._tracker) != 0;
+                        return fltk_sys::fl::Fl_Widget_Tracker_deleted(self.tracker) != 0;
                     }
                 }
             }
@@ -764,7 +729,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn damage(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #damage(self._inner) != 0
+                    #damage(self.inner) != 0
                 }
             }
 
@@ -772,35 +737,35 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let flag = if flag { 10 } else { 0 };
                 unsafe {
-                    #set_damage(self._inner, flag)
+                    #set_damage(self.inner, flag)
                 }
             }
 
             fn damage_type(&self) -> Damage {
                 assert!(!self.was_deleted());
                 unsafe {
-                    mem::transmute(#damage(self._inner))
+                    mem::transmute(#damage(self.inner))
                 }
             }
 
             fn set_damage_type(&mut self, mask: Damage) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_damage(self._inner, mask.bits())
+                    #set_damage(self.inner, mask.bits())
                 }
             }
 
             fn clear_damage(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #clear_damage(self._inner)
+                    #clear_damage(self.inner)
                 }
             }
 
             fn as_window(&self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let ptr = #as_window(self._inner);
+                    let ptr = #as_window(self.inner);
                     if ptr.is_null() {
                         return None;
                     }
@@ -811,7 +776,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn as_group(&self) -> Option<Box<dyn GroupExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let ptr = #as_group(self._inner);
+                    let ptr = #as_group(self.inner);
                     if ptr.is_null() {
                         return None;
                     }
@@ -908,7 +873,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 assert!(!wid.was_deleted());
                 unsafe {
-                    #inside(self._inner, wid.as_widget_ptr() as *mut raw::c_void)  != 0
+                    #inside(self.inner, wid.as_widget_ptr() as *mut raw::c_void)  != 0
                 }
             }
 
@@ -923,7 +888,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let w = self.width();
                 let h = self.height();
                 if w == 0 || h == 0 {
-                    unsafe { #widget_resize(self._inner, x, y, width, height); }
+                    unsafe { #widget_resize(self.inner, x, y, width, height); }
                 } else {
                     self.resize(x, y, width, height);
                 }
@@ -942,13 +907,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn get_type<T: WidgetType>(&self) -> T {
                 assert!(!self.was_deleted());
-                unsafe { T::from_i32(#get_type(self._inner)) }
+                unsafe { T::from_i32(#get_type(self.inner)) }
             }
 
             fn set_type<T: WidgetType>(&mut self, typ: T) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_type(self._inner, typ.to_int());
+                    #set_type(self.inner, typ.to_i32());
                 }
             }
 
@@ -957,16 +922,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let _old_image = self.image();
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { image.increment_arc(); #set_image(self._inner, image.as_image_ptr() as *mut _) }
+                    unsafe { image.increment_arc(); #set_image(self.inner, image.as_image_ptr() as *mut _) }
                 } else {
-                    unsafe { #set_image(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
+                    unsafe { #set_image(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 
             fn image(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let image_ptr = #image(self._inner);
+                    let image_ptr = #image(self.inner);
                     if image_ptr.is_null() {
                         None
                     } else {
@@ -980,16 +945,16 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let _old_image = self.image();
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { image.increment_arc(); #set_deimage(self._inner, image.as_image_ptr() as *mut _) }
+                    unsafe { image.increment_arc(); #set_deimage(self.inner, image.as_image_ptr() as *mut _) }
                 } else {
-                    unsafe { #set_deimage(self._inner, std::ptr::null_mut() as *mut raw::c_void) }
+                    unsafe { #set_deimage(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
             }
 
             fn deimage(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let image_ptr = #deimage(self._inner);
+                    let image_ptr = #deimage(self.inner);
                     if image_ptr.is_null() {
                         None
                     } else {
@@ -998,23 +963,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_callback<F: FnMut() + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    unsafe extern "C" fn shim(_wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-                        let f: &mut (dyn FnMut()) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
-                    }
-                    let _old_data = self.user_data();
-                    let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: Fl_Callback = Some(shim);
-                    #set_callback(self._inner, callback, data);
-                }
-            }
-
-            fn set_callback2<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+            fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
@@ -1027,13 +976,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #set_callback(self._inner, callback, data);
+                    #set_callback(self.inner, callback, data);
                 }
             }
 
             fn emit<T: 'static + Clone + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
                 assert!(!self.was_deleted());
-                self.set_callback(move || sender.send(msg.clone()))
+                self.set_callback(move |_| sender.send(msg.clone()))
             }
 
             unsafe fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {
@@ -1043,14 +992,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn visible(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #visible(self._inner) != 0
+                    #visible(self.inner) != 0
                 }
             }
 
             fn visible_r(&self) -> bool {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #visible_r(self._inner) != 0
+                    #visible_r(self.inner) != 0
                 }
             }
         }
@@ -1063,7 +1012,7 @@ pub fn impl_widget_type(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl WidgetType for #name {
-            fn to_int(self) -> i32 {
+            fn to_i32(self) -> i32 {
                 self as i32
             }
 

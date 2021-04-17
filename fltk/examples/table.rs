@@ -1,6 +1,6 @@
 // Slightly modified translation of https://github.com/fltk/fltk/blob/master/examples/table-simple.cxx
 
-use fltk::*;
+use fltk::{prelude::*, *};
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
@@ -23,8 +23,8 @@ fn main() {
     wind.show();
 
     // Called when the table is drawn then when it's redrawn due to events
-    table.draw_cell2(move |t, ctx, row, col, x, y, w, h| match ctx {
-        table::TableContext::StartPage => draw::set_font(Font::Helvetica, 14),
+    table.draw_cell(move |t, ctx, row, col, x, y, w, h| match ctx {
+        table::TableContext::StartPage => draw::set_font(enums::Font::Helvetica, 14),
         table::TableContext::ColHeader => {
             draw_header(&format!("{}", (col + 65) as u8 as char), x, y, w, h)
         } // Column titles
@@ -45,9 +45,16 @@ fn main() {
 
 fn draw_header(txt: &str, x: i32, y: i32, w: i32, h: i32) {
     draw::push_clip(x, y, w, h);
-    draw::draw_box(FrameType::ThinUpBox, x, y, w, h, Color::FrameDefault);
-    draw::set_draw_color(Color::Black);
-    draw::draw_text2(txt, x, y, w, h, Align::Center);
+    draw::draw_box(
+        enums::FrameType::ThinUpBox,
+        x,
+        y,
+        w,
+        h,
+        enums::Color::FrameDefault,
+    );
+    draw::set_draw_color(enums::Color::Black);
+    draw::draw_text2(txt, x, y, w, h, enums::Align::Center);
     draw::pop_clip();
 }
 
@@ -55,13 +62,13 @@ fn draw_header(txt: &str, x: i32, y: i32, w: i32, h: i32) {
 fn draw_data(txt: &str, x: i32, y: i32, w: i32, h: i32, selected: bool) {
     draw::push_clip(x, y, w, h);
     if selected {
-        draw::set_draw_color(Color::from_u32(0xD3D3D3));
+        draw::set_draw_color(enums::Color::from_u32(0x00D3_D3D3));
     } else {
-        draw::set_draw_color(Color::White);
+        draw::set_draw_color(enums::Color::White);
     }
     draw::draw_rectf(x, y, w, h);
-    draw::set_draw_color(Color::Gray0);
-    draw::draw_text2(txt, x, y, w, h, Align::Center);
+    draw::set_draw_color(enums::Color::Gray0);
+    draw::draw_text2(txt, x, y, w, h, enums::Align::Center);
     draw::draw_rect(x, y, w, h);
     draw::pop_clip();
 }
