@@ -6,8 +6,7 @@ use fltk_sys::fl::*;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::{
-    any,
-    cmp,
+    any, cmp,
     ffi::{CStr, CString},
     marker, mem,
     os::raw,
@@ -363,7 +362,7 @@ pub fn event_dx() -> MouseWheel {
 }
 
 /// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
-/// Returns MouseWheel::None, Up or Down. 
+/// Returns MouseWheel::None, Up or Down.
 /// Doesn't indicate scrolling direction which depends on system preferences
 pub fn event_dy() -> MouseWheel {
     match 0.cmp(unsafe { &Fl_event_dy() }) {
