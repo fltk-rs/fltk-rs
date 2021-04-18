@@ -14,12 +14,12 @@ impl PopupButton {
         but.handle(|b, ev| match ev {
             Event::Enter => {
                 b.set_color(Color::Blue);
-                b.top_window().unwrap().redraw();
+                b.redraw();
                 true
             }
             Event::Leave => {
                 b.set_color(Color::BackGround);
-                b.top_window().unwrap().redraw();
+                b.redraw();
                 true
             }
             _ => false,
@@ -53,12 +53,13 @@ impl MyPopup {
         let mut win = window::Window::default().with_size(100, 100);
         let mut pack = group::Pack::default().size_of_parent();
         pack.set_frame(FrameType::ThinUpFrame);
-        pack.set_spacing(5);
+        pack.set_color(Color::Black);
         win.set_border(false);
         win.make_modal(true);
         win.end();
         for choice in choices {
             let mut but = PopupButton::new(choice);
+            but.clear_visible_focus();
             but.set_callback({
                 let mut win = win.clone();
                 let val = val.clone();
