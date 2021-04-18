@@ -74,9 +74,9 @@ impl MyPopup {
         Self { win, val }
     }
     pub fn popup(&mut self, x: i32, y: i32) -> String {
-        self.win.redraw();
         self.win.show();
         self.win.set_pos(x, y);
+        self.win.redraw();
         while self.win.shown() {
             app::wait();
         }
@@ -91,6 +91,6 @@ fn main() {
     win.end();
     win.show();
     let mut menu = MyPopup::new(&["1st item", "2nd item", "3rd Item"]);
-    but.set_callback(move |_| println!("{}", menu.popup(app::event_x(), app::event_y())));
+    but.set_callback(move |_| println!("{}", menu.popup(app::event_x_root(), app::event_y_root())));
     app.run().unwrap();
 }
