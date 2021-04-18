@@ -430,7 +430,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn label(&self) -> String {
                 assert!(!self.was_deleted());
                 unsafe {
-                    CStr::from_ptr(#label(self.inner) as *mut raw::c_char).to_string_lossy().to_string()
+                    let ptr = #label(self.inner) as *mut raw::c_char;
+                    if ptr.is_null() {
+                        String::from("")
+                    } else {
+                        CStr::from_ptr(ptr).to_string_lossy().to_string()
+                    }
                 }
             }
 

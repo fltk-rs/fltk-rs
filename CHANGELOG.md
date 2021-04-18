@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.0.1] - 2021-04-19
+- Add MenuItem::children().
+- Relax mutability requirement for MenuItem::next() and at().
+- Add check on WidgetExt::label().
+
 ## [1.0.0] - 2021-04-18
 - [BREAKING] Importing fltk::* no longer auto-imports the prelude nor enums modules.
 - [BREAKING] Importing widgets no longer auto-imports the prelude nor enums modules.
