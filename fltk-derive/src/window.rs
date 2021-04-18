@@ -374,8 +374,6 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     image.increment_arc();
-                    assert!(image.w() == image.data_w() as i32);
-                    assert!(image.h() == image.data_h() as i32);
                     #set_cursor_image(self.inner, image.as_image_ptr() as _, hot_x, hot_y)
                 }
             }

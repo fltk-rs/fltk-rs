@@ -14,7 +14,8 @@ impl MyDial {
     pub fn new(x: i32, y: i32, w: i32, h: i32, label: &'static str) -> Self {
         let value = Rc::from(RefCell::from(0));
         let mut main_wid = frame::Frame::new(x, y, w, h, label).with_align(Align::Top);
-        let mut value_frame = frame::Frame::new(main_wid.x(), main_wid.y() + 80, main_wid.w(), 40, "0");
+        let mut value_frame =
+            frame::Frame::new(main_wid.x(), main_wid.y() + 80, main_wid.w(), 40, "0");
         value_frame.set_label_size(26);
         let value_c = value.clone();
         main_wid.draw(move |w| {
@@ -39,7 +40,11 @@ impl MyDial {
                 360.,
             );
         });
-        Self { main_wid, value, value_frame }
+        Self {
+            main_wid,
+            value,
+            value_frame,
+        }
     }
     pub fn value(&self) -> i32 {
         *self.value.borrow()

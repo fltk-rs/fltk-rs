@@ -254,29 +254,33 @@ impl MenuItem {
     }
 
     /// Get the next menu item
-    pub fn next(&mut self, idx: i32) -> Option<MenuItem> {
+    pub fn next(&self, idx: i32) -> Option<MenuItem> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Menu_Item_next(self.inner, idx as i32);
             if ptr.is_null() {
-                None
-            } else {
-                Some(MenuItem { inner: ptr })
+                return None;
             }
+            let label_ptr = Fl_Menu_Item_label(ptr);
+            if label_ptr.is_null() {
+                return None;
+            }
+            Some(MenuItem { inner: ptr })
         }
+    }
+
+    /// Get children of MenuItem
+    pub fn children(&self) -> i32 {
+        let mut i = 0;
+        while let Some(_item) = self.next(i) {
+            i += 1;
+        }
+        i
     }
 
     /// Get the menu item at `idx`
     pub fn at(&self, idx: i32) -> Option<MenuItem> {
-        assert!(!self.was_deleted());
-        unsafe {
-            let ptr = Fl_Menu_Item_next(self.inner, idx as i32);
-            if ptr.is_null() {
-                None
-            } else {
-                Some(MenuItem { inner: ptr })
-            }
-        }
+        self.next(idx)
     }
 
     /// Get the user data
@@ -377,7 +381,7 @@ impl IntoIterator for MenuItem {
     type Item = MenuItem;
     type IntoIter = std::vec::IntoIter<Self::Item>;
 
-    fn into_iter(mut self) -> Self::IntoIter {
+    fn into_iter(self) -> Self::IntoIter {
         let mut v: Vec<MenuItem> = vec![];
         let mut i = 0;
         while let Some(item) = self.next(i) {

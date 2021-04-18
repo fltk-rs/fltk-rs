@@ -36,9 +36,6 @@ impl ShapedWindow {
     pub fn show(&mut self) {
         self.wind.show();
     }
-    pub fn set_cursor_image(&mut self, image: image::RgbImage) {
-        self.wind.set_cursor_image(image, 0, 0);
-    }
 }
 
 fn main() {
@@ -52,8 +49,7 @@ fn main() {
     let pattern = image::RgbImage::new(&pattern, 500, 500, enums::ColorDepth::Rgb8).unwrap();
     let app = app::App::default();
     let mut win = ShapedWindow::default();
-    win.set_image(Some(pattern.clone()));
-    win.set_cursor_image(pattern);
+    win.set_image(Some(pattern));
     win.show();
     app.run().unwrap();
 }

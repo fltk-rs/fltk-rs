@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.0.0] - 2021-04-18
+## [1.0.1] - 2021-04-18
 - [BREAKING] Importing fltk::* no longer auto-imports the prelude nor enums modules.
 - [BREAKING] Importing widgets no longer auto-imports the prelude nor enums modules.
 - [BREAKING] Replace set_callback, handle, draw, draw_cell with their overloads.
@@ -16,6 +16,9 @@
 - Add a Column and Row widgets which support auto_layout by default, but require that widgets be added using add().
 - Add ValueInput::soft and set_soft methods.
 - Add WindowExt::set_cursor_image() and default_cursor().
+- Add MenuItem::children().
+- Relax mutability requirement for MenuItem::next() and at().
+- Add check on WidgetExt::label().
 
 ## [0.16.5] - 2021-04-10
 ### Changes
