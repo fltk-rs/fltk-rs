@@ -50,7 +50,7 @@ pub struct MyPopup {
 impl MyPopup {
     pub fn new(choices: &[&str]) -> Self {
         let val = Rc::from(RefCell::from(String::from("")));
-        let mut win = window::Window::default().with_size(100, 100);
+        let mut win = window::Window::default().with_size(120, choices.len() as i32 * 25);
         let mut pack = group::Pack::default().size_of_parent();
         pack.set_frame(FrameType::ThinUpFrame);
         pack.set_color(Color::Black);
@@ -87,10 +87,25 @@ impl MyPopup {
 fn main() {
     let app = app::App::default();
     let mut win = window::Window::default().with_size(400, 300);
-    let mut but = button::Button::new(160, 200, 80, 40, "Click me");
+    let mut frame = frame::Frame::default()
+        .with_size(200, 100)
+        .with_label("Right click me!")
+        .center_of_parent();
+    frame.set_frame(FrameType::BorderFrame);
+    frame.set_color(Color::Red);
     win.end();
     win.show();
-    let mut menu = MyPopup::new(&["1st item", "2nd item", "3rd Item"]);
-    but.set_callback(move |_| println!("{}", menu.popup(app::event_x_root(), app::event_y_root())));
+    let mut menu = MyPopup::new(&["1st item", "2nd item", &format!("{:?}", frame.frame())]);
+    frame.handle(move |_, ev| match ev {
+        Event::Push => {
+            if app::event_mouse_button() == app::MouseButton::Right {
+                println!("{}", menu.popup(app::event_x_root(), app::event_y_root()));
+                true
+            } else {
+                false
+            }
+        }
+        _ => false,
+    });
     app.run().unwrap();
 }
