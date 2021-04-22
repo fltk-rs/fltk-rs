@@ -12,7 +12,7 @@ fn main() {
     let target_triple = env::var("TARGET").unwrap();
     let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
 
-    println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-changed=build/main.rs");
 
     if cfg!(feature = "fltk-bundled") {
         bundled::get(target_os.clone(), out_dir.clone());
