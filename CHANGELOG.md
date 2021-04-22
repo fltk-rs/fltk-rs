@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.2] - Unreleased
+- Reorganize build script.
+
 ## [1.0.1] - 2021-04-18
 - Add MenuItem::children().
 - Relax mutability requirement for MenuItem::next() and at().

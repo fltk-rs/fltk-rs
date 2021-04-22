@@ -1,7 +1,10 @@
 use std::{env, path::PathBuf};
 
-mod builder;
-use builder::*;
+mod android;
+mod bundled;
+mod link;
+mod source;
+mod utils;
 
 fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
