@@ -3,6 +3,8 @@
 
 ## [1.0.2] - Unreleased
 - Reorganize build script.
+- Remove redundant functions in the bindings.
+- Update FLTK, cfltk, syn.
 
 ## [1.0.1] - 2021-04-18
 - Add MenuItem::children().
