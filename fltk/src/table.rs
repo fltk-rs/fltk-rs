@@ -1,7 +1,7 @@
-use crate::enums::*;
+use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use crate::widget::Widget;
 use fltk_sys::table::*;
 use std::{
@@ -17,7 +17,7 @@ pub struct Table {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Defines the TableContext
+/// Defines the `TableContext`
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TableContext {
@@ -92,6 +92,8 @@ impl TableRow {
     }
 
     /// Selects a row
+    /// # Errors
+    /// Errors on failure to select row
     pub fn select_row(
         &mut self,
         row: i32,
@@ -101,8 +103,7 @@ impl TableRow {
             assert!(!self.was_deleted());
             match Fl_Table_Row_select_row(self.inner, row, selection_flag as i32) {
                 1 => Ok(()),
-                0 => Err(FltkError::Internal(FltkErrorKind::TableError)),
-                -1 => Err(FltkError::Internal(FltkErrorKind::TableError)),
+                0 | -1 => Err(FltkError::Internal(FltkErrorKind::TableError)),
                 _ => unreachable!(),
             }
         }

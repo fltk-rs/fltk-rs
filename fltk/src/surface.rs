@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::surface::*;
 use std::ffi::CString;
 use std::path;
@@ -178,7 +178,7 @@ impl SurfaceDevice for SvgFileSurface {
 }
 
 impl SvgFileSurface {
-    /// Returns a new SvgFileSurface
+    /// Returns a new `SvgFileSurface`
     pub fn new<P: AsRef<path::Path>>(width: i32, height: i32, path: P) -> SvgFileSurface {
         let path = CString::safe_new(path.as_ref().to_str().unwrap());
         unsafe {
@@ -188,7 +188,7 @@ impl SvgFileSurface {
         }
     }
 
-    /// Sets the origin of the SvgFileSurface
+    /// Sets the origin of the `SvgFileSurface`
     pub fn set_origin(&mut self, x: i32, y: i32) {
         unsafe { Fl_SVG_File_Surface_origin(self.inner, x, y) }
     }

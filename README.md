@@ -8,7 +8,7 @@
 
 Rust bindings for the FLTK Graphical User Interface library. 
 
-The FLTK crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
+The fltk crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
 
 Resources:
 - [Written](https://github.com/MoAlyousef/fltk-rs/wiki)
@@ -129,7 +129,7 @@ Alternatively, you can use packs to layout your widgets:
 ```
 
 ### Events
-Events can be handled using the set_callback method (as above) or the available fltk::app::set_callback() free function, which will handle the default trigger of each widget(like clicks for buttons):
+Events can be handled using the `set_callback` method (as above) or the available `fltk::app::set_callback()` free function, which will handle the default trigger of each widget(like clicks for buttons):
 ```rust
     /* previous hello world code */
     but.set_callback(move |_| frame.set_label("Hello World!"));
@@ -172,11 +172,11 @@ FLTK offers 4 application themes (called schemes):
 - Gleam
 - Plastic
 
-These can be set using the App::with_scheme() method.
+These can be set using the `App::with_scheme()` method.
 ```rust
 let app = app::App::default().with_scheme(app::Scheme::Gleam);
 ```
-Themes of individual widgets can be optionally modified using the provided methods in the WidgetExt trait, such as set_color(), set_label_font(), set_frame() etc:
+Themes of individual widgets can be optionally modified using the provided methods in the `WidgetExt` trait, such as `set_color()`, `set_label_font()`, `set_frame()` etc:
 ```rust
     some_button.set_color(Color::Light1); // You can use one of the provided colors in the fltk enums
     some_button.set_color(Color::from_rgb(255, 0, 0)); // Or you can specify a color by rgb or hex/u32 value
@@ -202,7 +202,7 @@ Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to b
 
 - Windows: No dependencies.
 - MacOS: No dependencies.
-- Linux: X11 and OpenGL development headers need to be installed for development. The libraries themselves are available on linux distros with a graphical user interface.
+- Linux/BSD: X11 and OpenGL development headers need to be installed for development. The libraries themselves are available on linux distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:
 ```

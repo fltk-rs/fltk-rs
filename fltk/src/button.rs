@@ -1,7 +1,9 @@
-use crate::enums::*;
+use crate::enums::{
+    Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType, Shortcut,
+};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::button::*;
 use std::{
     ffi::{CStr, CString},
@@ -16,7 +18,7 @@ pub struct Button {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Defines the button type, which can be changed dynamically using the set_type function().
+/// Defines the button type, which can be changed dynamically using the `set_type()`.
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ButtonType {
@@ -38,7 +40,7 @@ pub struct RadioButton {
 }
 
 impl RadioButton {
-    /// Check whether a RadioButton is toggled
+    /// Check whether a `RadioButton` is toggled
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
@@ -46,7 +48,7 @@ impl RadioButton {
         }
     }
 
-    /// Sets whether the RadioButton is toggled or not
+    /// Sets whether the `RadioButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Radio_Button_toggle(self.inner, val as i32) }
@@ -61,7 +63,7 @@ pub struct RadioRoundButton {
 }
 
 impl RadioRoundButton {
-    /// Check whether a RadioRoundButton is toggled
+    /// Check whether a `RadioRoundButton` is toggled
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
@@ -69,7 +71,7 @@ impl RadioRoundButton {
         }
     }
 
-    /// Sets whether the RadioRoundButton is toggled or not
+    /// Sets whether the `RadioRoundButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Radio_Round_Button_toggle(self.inner, val as i32) }
@@ -84,7 +86,7 @@ pub struct RadioLightButton {
 }
 
 impl RadioLightButton {
-    /// Check whether a RadioLightButton is toggled
+    /// Check whether a `RadioLightButton` is toggled
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
@@ -92,7 +94,7 @@ impl RadioLightButton {
         }
     }
 
-    /// Sets whether the RadioLightButton is toggled or not
+    /// Sets whether the `RadioLightButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Radio_Light_Button_toggle(self.inner, val as i32) }
@@ -107,7 +109,7 @@ pub struct RoundButton {
 }
 
 impl RoundButton {
-    /// Check whether a RoundButton is toggled
+    /// Check whether a `RoundButton` is toggled
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
@@ -115,7 +117,7 @@ impl RoundButton {
         }
     }
 
-    /// Sets whether the RoundButton is toggled or not
+    /// Sets whether the `RoundButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Round_Button_toggle(self.inner, val as i32) }
@@ -130,7 +132,7 @@ pub struct CheckButton {
 }
 
 impl CheckButton {
-    /// Check whether a CheckButton is checked
+    /// Check whether a `CheckButton` is checked
     pub fn is_checked(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
@@ -138,7 +140,7 @@ impl CheckButton {
         }
     }
 
-    /// Set whether CheckButton is checked or not
+    /// Set whether `CheckButton` is checked or not
     pub fn set_checked(&self, checked: bool) {
         unsafe {
             assert!(!self.was_deleted());
@@ -155,7 +157,7 @@ pub struct ToggleButton {
 }
 
 impl ToggleButton {
-    /// Check whether a ToggleButton is toggled
+    /// Check whether a `ToggleButton` is toggled
     pub fn is_toggled(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
@@ -163,7 +165,7 @@ impl ToggleButton {
         }
     }
 
-    /// Sets whether the ToggleButton is toggled or not
+    /// Sets whether the `ToggleButton` is toggled or not
     pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Toggle_Button_toggle(self.inner, val as i32) }
@@ -178,7 +180,7 @@ pub struct LightButton {
 }
 
 impl LightButton {
-    /// Check whether a LightButton is on
+    /// Check whether a `LightButton` is on
     pub fn is_on(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
@@ -186,7 +188,7 @@ impl LightButton {
         }
     }
 
-    /// Sets whether the LightButton is on or not
+    /// Sets whether the `LightButton` is on or not
     pub fn turn_on(&mut self, on: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Light_Button_turn_on(self.inner, on as i32) }

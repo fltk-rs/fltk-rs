@@ -11,7 +11,6 @@ use std::{
     panic, path,
 };
 
-#[inline(always)]
 pub fn center() -> (i32, i32) {
     (
         (app::screen_size().0 / 2.0) as i32,
@@ -40,7 +39,8 @@ impl Editor {
         e.editor.set_buffer(Some(buf));
         e.editor.set_text_font(Font::Courier);
         e.editor.set_linenumber_width(32);
-        e.editor.set_linenumber_fgcolor(Color::from_u32(0x8b8386));
+        e.editor
+            .set_linenumber_fgcolor(Color::from_u32(0x008b_8386));
         e.editor.set_trigger(CallbackTrigger::Changed);
         e
     }
@@ -62,27 +62,19 @@ impl Editor {
                 dlg.show();
                 filename = dlg.filename().to_string_lossy().to_string();
                 if !filename.is_empty() {
-                    match path::Path::new(&filename).exists() {
-                        true => {
-                            self.editor.buffer().unwrap().save_file(&filename)?;
-                            self.saved = true;
-                        }
-                        false => dialog::alert(
-                            center().0 - 200,
-                            center().1 - 100,
-                            "Please specify a file!",
-                        ),
+                    if path::Path::new(&filename).exists() {
+                        self.editor.buffer().unwrap().save_file(&filename)?;
+                        self.saved = true;
+                    } else {
+                        dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
                     }
                 }
             } else {
-                match path::Path::new(&filename).exists() {
-                    true => {
-                        self.editor.buffer().unwrap().save_file(&filename)?;
-                        self.saved = true;
-                    }
-                    false => {
-                        dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
-                    }
+                if path::Path::new(&filename).exists() {
+                    self.editor.buffer().unwrap().save_file(&filename)?;
+                    self.saved = true;
+                } else {
+                    dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
                 }
             }
         } else {
@@ -91,14 +83,11 @@ impl Editor {
             dlg.show();
             filename = dlg.filename().to_string_lossy().to_string();
             if !filename.is_empty() {
-                match path::Path::new(&filename).exists() {
-                    true => {
-                        self.editor.buffer().unwrap().save_file(&filename)?;
-                        self.saved = true;
-                    }
-                    false => {
-                        dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
-                    }
+                if path::Path::new(&filename).exists() {
+                    self.editor.buffer().unwrap().save_file(&filename)?;
+                    self.saved = true;
+                } else {
+                    dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
                 }
             }
         }
@@ -334,14 +323,10 @@ fn main() {
                         .set_filename(&dlg.filename().to_string_lossy().to_string());
                     let filename = editor.filename();
                     if !filename.is_empty() {
-                        match path::Path::new(&filename).exists() {
-                            true => editor.buffer().unwrap().load_file(&filename).unwrap(),
-                            false => dialog::alert(center().0 - 200, center().1 - 100, "File does not exist!"),
-                        }
+                        if path::Path::new(&filename).exists() { editor.buffer().unwrap().load_file(&filename).unwrap() } else { dialog::alert(center().0 - 200, center().1 - 100, "File does not exist!") }
                     }
                 },
-                Save => editor.save_file().unwrap(),
-                SaveAs => editor.save_file().unwrap(),
+                Save | SaveAs => editor.save_file().unwrap(),
                 Print => {
                     let mut printer = printer::Printer::default();
                     if printer.begin_job(0).is_ok() {
@@ -359,7 +344,9 @@ fn main() {
                     }
                 },
                 Quit => {
-                    if !editor.saved {
+                    if editor.saved {
+                        app.quit();
+                    } else {
                         let x = dialog::choice(center().0 - 200, center().1 - 100, "Would you like to save your work?", "Yes", "No", "");
                         if x == 0 {
                             editor.save_file().unwrap();
@@ -367,8 +354,6 @@ fn main() {
                         } else {
                             app.quit();
                         }
-                    } else {
-                        app.quit();
                     }
                 },
                 Cut => editor.cut(),

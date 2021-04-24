@@ -1,8 +1,8 @@
-use crate::enums::*;
+use crate::enums::{Event, Font, FrameType, Key, Mode, Shortcut};
 use crate::prelude::*;
-use crate::utils::*;
-use crate::window::*;
-use fltk_sys::fl::*;
+use crate::utils::FlString;
+use crate::window::Window;
+use fltk_sys::fl;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::{
@@ -39,12 +39,14 @@ lazy_static! {
 }
 
 /// Runs the event loop
+/// # Errors
+/// Returns `FailedToRun`, this is fatal to the app
 pub fn run() -> Result<(), FltkError> {
     unsafe {
         if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
-        match Fl_run() {
+        match fl::Fl_run() {
             0 => Ok(()),
             _ => Err(FltkError::Internal(FltkErrorKind::FailedToRun)),
         }
@@ -52,9 +54,11 @@ pub fn run() -> Result<(), FltkError> {
 }
 
 /// Locks the main UI thread
+/// # Errors
+/// Returns `FailedToLock` if locking is unsopported. This is fatal to the app
 pub fn lock() -> Result<(), FltkError> {
     unsafe {
-        match Fl_lock() {
+        match fl::Fl_lock() {
             0 => Ok(()),
             _ => Err(FltkError::Internal(FltkErrorKind::FailedToLock)),
         }
@@ -83,14 +87,14 @@ pub fn set_scheme(scheme: Scheme) {
         Scheme::Plastic => "plastic",
     };
     let name_str = CString::safe_new(name_str);
-    unsafe { Fl_set_scheme(name_str.as_ptr()) }
+    unsafe { fl::Fl_set_scheme(name_str.as_ptr()) }
 }
 
 /// Gets the scheme of the application
 pub fn scheme() -> Scheme {
     unsafe {
-        use Scheme::*;
-        match Fl_scheme() {
+        use Scheme::{Base, Gleam, Gtk, Plastic};
+        match fl::Fl_scheme() {
             0 => Base,
             1 => Gtk,
             2 => Gleam,
@@ -100,13 +104,13 @@ pub fn scheme() -> Scheme {
     }
 }
 
-/// Alias Scheme to AppScheme
+/// Alias Scheme to `AppScheme`
 pub type AppScheme = Scheme;
 
 /// Unlocks the main UI thread
 pub fn unlock() {
     unsafe {
-        Fl_unlock();
+        fl::Fl_unlock();
     }
 }
 
@@ -120,14 +124,14 @@ pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Fl_Awake_Handler = Some(shim);
-        Fl_awake_callback(callback, data);
+        let callback: fl::Fl_Awake_Handler = Some(shim);
+        fl::Fl_awake_callback(callback, data);
     }
 }
 
 /// Trigger event loop handling in the main thread
 pub fn awake() {
-    unsafe { Fl_awake() }
+    unsafe { fl::Fl_awake() }
 }
 
 /// Basic Application struct, used to instatiate, set the scheme and run the event loop
@@ -153,11 +157,14 @@ impl App {
     }
 
     /// Gets the scheme of the application
+
     pub fn scheme(self) -> Scheme {
         scheme()
     }
 
     /// Runs the event loop
+    /// # Errors
+    /// Can error on failure to run the application
     pub fn run(self) -> Result<(), FltkError> {
         run()
     }
@@ -169,6 +176,7 @@ impl App {
     }
 
     /// Loads system fonts
+
     pub fn load_system_fonts(self) -> Self {
         *FONTS.lock().unwrap() = get_font_names();
         self
@@ -177,7 +185,7 @@ impl App {
     /// Loads a font from a path.
     /// On success, returns a String with the ttf Font Family name. The font's index is always 16.
     /// As such only one font can be loaded at a time.
-    /// The font name can be used with Font::by_name, and index with Font::by_index.
+    /// The font name can be used with `Font::by_name`, and index with `Font::by_index`.
     /// # Examples
     /// ```rust,no_run
     /// use fltk::{prelude::*, *};
@@ -186,11 +194,13 @@ impl App {
     /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
     /// frame.set_label_font(enums::Font::by_name(&font));
     /// ```
+    /// # Errors
+    /// Returns `ResourceNotFound` if the Font file was not found
     pub fn load_font<P: AsRef<path::Path>>(self, path: P) -> Result<String, FltkError> {
-        self.load_font_(path.as_ref())
+        Self::load_font_(path.as_ref())
     }
 
-    fn load_font_(self, path: &path::Path) -> Result<String, FltkError> {
+    fn load_font_(path: &path::Path) -> Result<String, FltkError> {
         if !path.exists() {
             return Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
@@ -203,6 +213,8 @@ impl App {
     }
 
     /// Set the visual of the application
+    /// # Errors
+    /// Returns `FailedOperation` if FLTK failed to set the visual mode
     pub fn set_visual(self, mode: Mode) -> Result<(), FltkError> {
         set_visual(mode)
     }
@@ -220,18 +232,18 @@ impl App {
 
 /// Set the application's scrollbar size
 pub fn set_scrollbar_size(sz: i32) {
-    unsafe { Fl_set_scrollbar_size(sz as i32) }
+    unsafe { fl::Fl_set_scrollbar_size(sz as i32) }
 }
 
 /// Get the app's scrollbar size
 pub fn scrollbar_size() -> i32 {
-    unsafe { Fl_scrollbar_size() as i32 }
+    unsafe { fl::Fl_scrollbar_size() as i32 }
 }
 
 /// Get the grabbed window
 pub fn grab() -> Option<impl WindowExt> {
     unsafe {
-        let ptr = Fl_grab();
+        let ptr = fl::Fl_grab();
         if ptr.is_null() {
             None
         } else {
@@ -243,18 +255,17 @@ pub fn grab() -> Option<impl WindowExt> {
 /// Set the current grab
 pub fn set_grab<W: WindowExt>(win: Option<W>) {
     unsafe {
-        if let Some(w) = win {
-            Fl_set_grab(w.as_widget_ptr() as *mut _)
-        } else {
-            Fl_set_grab(ptr::null_mut())
-        }
+        win.map_or_else(
+            || fl::Fl_set_grab(ptr::null_mut()),
+            |w| fl::Fl_set_grab(w.as_widget_ptr() as *mut _),
+        )
     }
 }
 
 /// Returns the latest captured event
 pub fn event() -> Event {
     unsafe {
-        let x = Fl_event();
+        let x = fl::Fl_event();
         let x: Event = mem::transmute(x);
         x
     }
@@ -263,20 +274,20 @@ pub fn event() -> Event {
 /// Returns the presed key
 pub fn event_key() -> Key {
     unsafe {
-        let x = Fl_event_key();
+        let x = fl::Fl_event_key();
         mem::transmute(x)
     }
 }
 
 /// Returns whether the  key is pressed or held down during the last event
 pub fn event_key_down(key: Key) -> bool {
-    unsafe { Fl_event_key_down(mem::transmute(key)) != 0 }
+    unsafe { fl::Fl_event_key_down(mem::transmute(key)) != 0 }
 }
 
 /// Returns a textual representation of the latest event
 pub fn event_text() -> String {
     unsafe {
-        let text = Fl_event_text();
+        let text = fl::Fl_event_text();
         if text.is_null() {
             String::from("")
         } else {
@@ -290,7 +301,7 @@ pub fn event_text() -> String {
 /// Returns the captured button event.
 /// 1 for left key, 2 for middle, 3 for right
 pub fn event_button() -> i32 {
-    unsafe { Fl_event_button() }
+    unsafe { fl::Fl_event_button() }
 }
 
 /// Defines Mouse buttons
@@ -308,32 +319,32 @@ pub enum MouseButton {
 
 /// Returns the captured button event
 pub fn event_mouse_button() -> MouseButton {
-    unsafe { mem::transmute(Fl_event_button()) }
+    unsafe { mem::transmute(fl::Fl_event_button()) }
 }
 
 /// Returns the number of clicks
 pub fn event_clicks() -> bool {
-    unsafe { Fl_event_clicks() != 0 }
+    unsafe { fl::Fl_event_clicks() != 0 }
 }
 
 /// Gets the x coordinate of the mouse in the window
 pub fn event_x() -> i32 {
-    unsafe { Fl_event_x() }
+    unsafe { fl::Fl_event_x() }
 }
 
 /// Gets the y coordinate of the mouse in the window
 pub fn event_y() -> i32 {
-    unsafe { Fl_event_y() }
+    unsafe { fl::Fl_event_y() }
 }
 
 /// Gets the x coordinate of the mouse in the screen
 pub fn event_x_root() -> i32 {
-    unsafe { Fl_event_x_root() }
+    unsafe { fl::Fl_event_x_root() }
 }
 
 /// Gets the y coordinate of the mouse in the screen
 pub fn event_y_root() -> i32 {
-    unsafe { Fl_event_y_root() }
+    unsafe { fl::Fl_event_y_root() }
 }
 
 /// Event direction with Mousewheel event
@@ -352,9 +363,9 @@ pub enum MouseWheel {
 }
 
 /// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
-/// Returns MouseWheel::None, Right or Left
+/// Returns `MouseWheel::None`, `Right` or `Left`
 pub fn event_dx() -> MouseWheel {
-    match 0.cmp(unsafe { &Fl_event_dx() }) {
+    match 0.cmp(unsafe { &fl::Fl_event_dx() }) {
         cmp::Ordering::Greater => MouseWheel::Right,
         cmp::Ordering::Equal => MouseWheel::None,
         cmp::Ordering::Less => MouseWheel::Left,
@@ -362,10 +373,10 @@ pub fn event_dx() -> MouseWheel {
 }
 
 /// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
-/// Returns MouseWheel::None, Up or Down.
+/// Returns `MouseWheel::None`, `Up` or `Down`.
 /// Doesn't indicate scrolling direction which depends on system preferences
 pub fn event_dy() -> MouseWheel {
-    match 0.cmp(unsafe { &Fl_event_dy() }) {
+    match 0.cmp(unsafe { &fl::Fl_event_dy() }) {
         cmp::Ordering::Greater => MouseWheel::Down,
         cmp::Ordering::Equal => MouseWheel::None,
         cmp::Ordering::Less => MouseWheel::Up,
@@ -377,44 +388,49 @@ pub fn get_mouse() -> (i32, i32) {
     unsafe {
         let mut x: i32 = 0;
         let mut y: i32 = 0;
-        Fl_get_mouse(&mut x, &mut y);
+        fl::Fl_get_mouse(&mut x, &mut y);
         (x, y)
     }
 }
 
 /// Returns the x and y coordinates of the captured event
 pub fn event_coords() -> (i32, i32) {
-    unsafe { (Fl_event_x(), Fl_event_y()) }
+    unsafe { (fl::Fl_event_x(), fl::Fl_event_y()) }
 }
 
 /// Determines whether an event was a click
 pub fn event_is_click() -> bool {
-    unsafe { Fl_event_is_click() != 0 }
+    unsafe { fl::Fl_event_is_click() != 0 }
 }
 
 /// Returns the duration of an event
 pub fn event_length() -> i32 {
-    unsafe { Fl_event_length() as i32 }
+    unsafe { fl::Fl_event_length() as i32 }
 }
 
 /// Returns the state of the event
 pub fn event_state() -> Shortcut {
-    unsafe { mem::transmute(Fl_event_state()) }
+    unsafe { mem::transmute(fl::Fl_event_state()) }
 }
 
 /// Returns a pair of the width and height of the screen
 pub fn screen_size() -> (f64, f64) {
-    unsafe { ((Fl_screen_w() as f64 / 0.96), (Fl_screen_h() as f64 / 0.96)) }
+    unsafe {
+        (
+            (fl::Fl_screen_w() as f64 / 0.96),
+            (fl::Fl_screen_h() as f64 / 0.96),
+        )
+    }
 }
 
-/// Used for widgets implementing the InputExt, pastes content from the clipboard
+/// Used for widgets implementing the `InputExt`, pastes content from the clipboard
 pub fn paste<T>(widget: &T)
 where
     T: WidgetBase + InputExt,
 {
     assert!(!widget.was_deleted());
     unsafe {
-        Fl_paste(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
+        fl::Fl_paste(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
     }
 }
 
@@ -477,12 +493,12 @@ pub unsafe fn set_raw_callback<W>(
 
 /// Return whether visible focus is shown
 pub fn visible_focus() -> bool {
-    unsafe { Fl_visible_focus() != 0 }
+    unsafe { fl::Fl_visible_focus() != 0 }
 }
 
 /// Show focus around widgets
 pub fn set_visible_focus(flag: bool) {
-    unsafe { Fl_set_visible_focus(flag as i32) }
+    unsafe { fl::Fl_set_visible_focus(flag as i32) }
 }
 
 /// Set the app's default frame type
@@ -490,9 +506,9 @@ pub fn set_frame_type(new_frame: FrameType) {
     unsafe {
         let new_frame = new_frame as i32;
         let mut curr = CURRENT_FRAME.lock().unwrap();
-        Fl_set_box_type(56, *curr);
-        Fl_set_box_type(*curr, new_frame);
-        Fl_set_box_type(new_frame, 56);
+        fl::Fl_set_box_type(56, *curr);
+        fl::Fl_set_box_type(*curr, new_frame);
+        fl::Fl_set_box_type(new_frame, 56);
         *curr = new_frame;
     }
 }
@@ -502,31 +518,31 @@ pub fn set_font(new_font: Font) {
     unsafe {
         let new_font = new_font.bits() as i32;
         let mut f = CURRENT_FONT.lock().unwrap();
-        Fl_set_font(15, *f);
-        Fl_set_font(0, new_font);
-        Fl_set_font(new_font, *f);
+        fl::Fl_set_font(15, *f);
+        fl::Fl_set_font(0, new_font);
+        fl::Fl_set_font(new_font, *f);
         *f = new_font;
     }
 }
 
 /// Set the app's font size
 pub fn set_font_size(sz: u8) {
-    unsafe { Fl_set_font_size(sz as i32) }
+    unsafe { fl::Fl_set_font_size(sz as i32) }
 }
 
 /// Get the font's name
 pub fn get_font(font: Font) -> String {
     unsafe {
-        CStr::from_ptr(Fl_get_font(font.bits() as i32))
+        CStr::from_ptr(fl::Fl_get_font(font.bits() as i32))
             .to_string_lossy()
             .to_string()
     }
 }
 
-/// Initializes loaded fonts of a certain pattern ```name```
+/// Initializes loaded fonts of a certain pattern `name`
 pub fn set_fonts(name: &str) -> u8 {
     let name = CString::safe_new(name);
-    unsafe { Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
+    unsafe { fl::Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
 }
 
 /// Gets the name of a font through its index
@@ -541,7 +557,7 @@ pub fn get_font_names() -> Vec<String> {
     let cnt = set_fonts("*") as usize;
     for i in 0..cnt {
         let temp = unsafe {
-            CStr::from_ptr(Fl_get_font(i as i32))
+            CStr::from_ptr(fl::Fl_get_font(i as i32))
                 .to_string_lossy()
                 .to_string()
         };
@@ -573,7 +589,7 @@ pub fn add_handler(cb: fn(Event) -> bool) {
             Some(mem::transmute(move |ev| {
                 let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| cb(ev) as i32));
             }));
-        Fl_add_handler(callback);
+        fl::Fl_add_handler(callback);
     }
 }
 
@@ -584,7 +600,7 @@ pub fn wait() -> bool {
         if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
-        Fl_wait() != 0
+        fl::Fl_wait() != 0
     }
 }
 
@@ -595,7 +611,7 @@ pub fn sleep(dur: f64) {
 }
 
 /// Add an idle callback to run within the event loop.
-/// Calls to WidgetExt::redraw within the callback require an explicit sleep
+/// Calls to `WidgetExt::redraw` within the callback require an explicit sleep
 pub fn add_idle<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
@@ -606,7 +622,7 @@ pub fn add_idle<F: FnMut() + 'static>(cb: F) {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        Fl_add_idle(callback, data);
+        fl::Fl_add_idle(callback, data);
     }
 }
 
@@ -621,7 +637,7 @@ pub fn remove_idle<F: FnMut() + 'static>(cb: F) {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        Fl_remove_idle(callback, data);
+        fl::Fl_remove_idle(callback, data);
     }
 }
 
@@ -636,20 +652,21 @@ pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        Fl_has_idle(callback, data) != 0
+        fl::Fl_has_idle(callback, data) != 0
     }
 }
 
 /// Waits a maximum of `dur` seconds or until "something happens".
 /// Returns true if an event happened (always true on windows).
 /// Returns false if nothing happened.
+/// # Errors
 /// Can error out on X11 system if interrupted by a signal
 pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
     unsafe {
         if !IS_INIT.load(Ordering::Relaxed) {
             init_all();
         }
-        match Fl_wait_for(dur) as i32 {
+        match fl::Fl_wait_for(dur) as i32 {
             0 => Ok(false),
             1 => Ok(true),
             _ => Err(FltkError::Unknown(String::from(
@@ -663,7 +680,7 @@ pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
 /// # Safety
 /// The type must be Send and Sync safe
 pub unsafe fn awake_msg<T>(msg: T) {
-    Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void);
+    fl::Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void);
 }
 
 /// Receives a custom message
@@ -674,7 +691,7 @@ pub unsafe fn awake_msg<T>(msg: T) {
 /// # Safety
 /// The type must correspond to the received message
 pub unsafe fn thread_msg<T>() -> Option<T> {
-    let msg = Fl_thread_msg();
+    let msg = fl::Fl_thread_msg();
     if msg.is_null() {
         None
     } else {
@@ -722,15 +739,13 @@ impl<T: Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         let data: Option<Message<T>> = unsafe { thread_msg() };
-        if let Some(data) = data {
+        data.and_then(|data| {
             if data.sz == self.sz && data.hash == self.hash {
                 Some(data.msg)
             } else {
                 None
             }
-        } else {
-            None
-        }
+        })
     }
 }
 
@@ -759,7 +774,7 @@ pub fn channel<T: Send + Sync>() -> (Sender<T>, Receiver<T>) {
 /// Returns the first window of the application
 pub fn first_window() -> Option<impl WindowExt> {
     unsafe {
-        let x = Fl_first_window();
+        let x = fl::Fl_first_window();
         if x.is_null() {
             None
         } else {
@@ -772,7 +787,7 @@ pub fn first_window() -> Option<impl WindowExt> {
 /// Returns the next window in order
 pub fn next_window<W: WindowExt>(w: &W) -> Option<impl WindowExt> {
     unsafe {
-        let x = Fl_next_window(w.as_widget_ptr() as *const raw::c_void);
+        let x = fl::Fl_next_window(w.as_widget_ptr() as *const raw::c_void);
         if x.is_null() {
             None
         } else {
@@ -891,12 +906,12 @@ pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
 
 /// Returns whether a quit signal was sent
 pub fn should_program_quit() -> bool {
-    unsafe { Fl_should_program_quit() != 0 }
+    unsafe { fl::Fl_should_program_quit() != 0 }
 }
 
 /// Determines whether a program should quit
 pub fn program_should_quit(flag: bool) {
-    unsafe { Fl_program_should_quit(flag as i32) }
+    unsafe { fl::Fl_program_should_quit(flag as i32) }
 }
 
 /// Returns whether an event occured within a widget
@@ -906,12 +921,12 @@ pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
     let y = wid.y();
     let w = wid.width();
     let h = wid.height();
-    unsafe { Fl_event_inside(x, y, w, h) != 0 }
+    unsafe { fl::Fl_event_inside(x, y, w, h) != 0 }
 }
 
 /// Returns whether an event occured within a region
 pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
-    unsafe { Fl_event_inside(x, y, w, h) != 0 }
+    unsafe { fl::Fl_event_inside(x, y, w, h) != 0 }
 }
 
 /// Gets the widget that is below the mouse cursor.
@@ -923,7 +938,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
 /// ```
 pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
     unsafe {
-        let x = Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
+        let x = fl::Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
         if x.is_null() {
             None
         } else {
@@ -940,7 +955,7 @@ pub fn delete_widget<Wid: WidgetBase>(wid: Wid) {
     WidgetBase::delete(wid)
 }
 
-/// Registers all images supported by SharedImage
+/// Registers all images supported by `SharedImage`
 pub fn register_images() {
     unsafe { fltk_sys::image::Fl_register_images() }
 }
@@ -985,43 +1000,45 @@ pub fn init_all() {
 
 /// Redraws everything
 pub fn redraw() {
-    unsafe { Fl_redraw() }
+    unsafe { fl::Fl_redraw() }
 }
 
 /// Returns whether the event is a shift press
 pub fn is_event_shift() -> bool {
-    unsafe { Fl_event_shift() != 0 }
+    unsafe { fl::Fl_event_shift() != 0 }
 }
 
 /// Returns whether the event is a control key press
 pub fn is_event_ctrl() -> bool {
-    unsafe { Fl_event_ctrl() != 0 }
+    unsafe { fl::Fl_event_ctrl() != 0 }
 }
 
 /// Returns whether the event is a command key press
 pub fn is_event_command() -> bool {
-    unsafe { Fl_event_command() != 0 }
+    unsafe { fl::Fl_event_command() != 0 }
 }
 
 /// Returns whether the event is a alt key press
 pub fn is_event_alt() -> bool {
-    unsafe { Fl_event_alt() != 0 }
+    unsafe { fl::Fl_event_alt() != 0 }
 }
 
 /// Sets the damage to true or false, illiciting a redraw by the application
 pub fn set_damage(flag: bool) {
-    unsafe { Fl_set_damage(flag as i32) }
+    unsafe { fl::Fl_set_damage(flag as i32) }
 }
 
 /// Returns whether any of the widgets were damaged
 pub fn damage() -> bool {
-    unsafe { Fl_damage() != 0 }
+    unsafe { fl::Fl_damage() != 0 }
 }
 
 /// Sets the visual mode of the application
+/// # Errors
+/// Returns Err(FailedOperation) if FLTK failed to set the visual mode
 pub fn set_visual(mode: Mode) -> Result<(), FltkError> {
     unsafe {
-        match Fl_visual(mode.bits() as i32) {
+        match fl::Fl_visual(mode.bits() as i32) {
             0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             _ => Ok(()),
         }
@@ -1030,13 +1047,13 @@ pub fn set_visual(mode: Mode) -> Result<(), FltkError> {
 
 /// Makes FLTK use its own colormap. This may make FLTK display better
 pub fn own_colormap() {
-    unsafe { Fl_own_colormap() }
+    unsafe { fl::Fl_own_colormap() }
 }
 
 /// Gets the widget which was pushed
 pub fn pushed() -> Option<impl WidgetExt> {
     unsafe {
-        let ptr = Fl_pushed();
+        let ptr = fl::Fl_pushed();
         if ptr.is_null() {
             None
         } else {
@@ -1048,7 +1065,7 @@ pub fn pushed() -> Option<impl WidgetExt> {
 /// Gets the widget which has focus
 pub fn focus() -> Option<impl WidgetExt> {
     unsafe {
-        let ptr = Fl_focus();
+        let ptr = fl::Fl_focus();
         if ptr.is_null() {
             None
         } else {
@@ -1061,22 +1078,22 @@ pub fn focus() -> Option<impl WidgetExt> {
 
 /// Sets the widget which has focus
 pub fn set_focus<W: WidgetExt>(wid: &W) {
-    unsafe { Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
+    unsafe { fl::Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }
 
 /// Gets FLTK version
 pub fn version() -> f64 {
-    unsafe { Fl_version() }
+    unsafe { fl::Fl_version() }
 }
 
 /// Gets FLTK API version
 pub fn api_version() -> i32 {
-    unsafe { Fl_api_version() }
+    unsafe { fl::Fl_api_version() }
 }
 
 /// Gets FLTK ABI version
 pub fn abi_version() -> i32 {
-    unsafe { Fl_abi_version() }
+    unsafe { fl::Fl_abi_version() }
 }
 
 /// Gets FLTK crate version
@@ -1084,11 +1101,11 @@ pub fn crate_version() -> &'static str {
     env!("CARGO_PKG_VERSION")
 }
 
-/// The current graphics context of the app, fl_gc.
-/// *mut c_void to HDC on Windows, CGContextRef on MacOS, _XGC on X11
+/// The current graphics context of the app, `fl_gc`.
+/// `*mut c_void` to `HDC` on Windows, `CGContextRef` on macOS, `_XGC` on X11
 pub type GraphicsContext = *mut raw::c_void;
 
-/// Get the graphics context, fl_gc
+/// Get the graphics context, `fl_gc`
 pub fn graphics_context() -> GraphicsContext {
     unsafe {
         let ctx = fltk_sys::window::Fl_gc();
@@ -1097,12 +1114,12 @@ pub fn graphics_context() -> GraphicsContext {
     }
 }
 
-/// The display global variable, fl_display.
-/// _XDisplay on X11, HINSTANCE on Windows.
+/// The display global variable, `fl_display`.
+/// `_XDisplay` on X11, `HINSTANCE` on Windows.
 pub type Display = *mut raw::c_void;
 
-/// Gets the display global variable, fl_display.
-/// _XDisplay on X11, HINSTANCE on Windows.
+/// Gets the display global variable, `fl_display`.
+/// `_XDisplay` on X11, `HINSTANCE` on Windows.
 pub fn display() -> Display {
     unsafe {
         let disp = fltk_sys::window::Fl_display();
@@ -1114,7 +1131,7 @@ pub fn display() -> Display {
 /// Initiate dnd action
 pub fn dnd() {
     unsafe {
-        Fl_dnd();
+        fl::Fl_dnd();
     }
 }
 
@@ -1125,7 +1142,7 @@ fn load_font(path: &str) -> Result<String, FltkError> {
         if let Some(load_font) = *LOADED_FONT {
             unload_font(load_font)?;
         }
-        let ptr = Fl_load_font(path.as_ptr());
+        let ptr = fl::Fl_load_font(path.as_ptr());
         if ptr.is_null() {
             Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
@@ -1149,7 +1166,7 @@ fn unload_font(path: &str) -> Result<(), FltkError> {
             return Err::<(), FltkError>(FltkError::Internal(FltkErrorKind::ResourceNotFound));
         }
         let path = CString::new(path)?;
-        Fl_unload_font(path.as_ptr());
+        fl::Fl_unload_font(path.as_ptr());
         Ok(())
     }
 }
@@ -1174,31 +1191,31 @@ pub fn windows() -> Option<Vec<impl WindowExt>> {
 
 /// Set the foreground color
 pub fn foreground(r: u8, g: u8, b: u8) {
-    unsafe { Fl_foreground(r, g, b) }
+    unsafe { fl::Fl_foreground(r, g, b) }
 }
 
 /// Set the background color
 pub fn background(r: u8, g: u8, b: u8) {
-    unsafe { Fl_background(r, g, b) }
+    unsafe { fl::Fl_background(r, g, b) }
 }
 
 /// Set the background color for input and text widgets
 pub fn background2(r: u8, g: u8, b: u8) {
-    unsafe { Fl_background2(r, g, b) }
+    unsafe { fl::Fl_background2(r, g, b) }
 }
 
 /// Sets the app's default selection color
 pub fn set_selection_color(r: u8, g: u8, b: u8) {
-    unsafe { Fl_selection_color(r, g, b) }
+    unsafe { fl::Fl_selection_color(r, g, b) }
 }
 /// Sets the app's default selection color
 pub fn set_inactive_color(r: u8, g: u8, b: u8) {
-    unsafe { Fl_inactive_color(r, g, b) }
+    unsafe { fl::Fl_inactive_color(r, g, b) }
 }
 
 /// Gets the system colors
 pub fn get_system_colors() {
-    unsafe { Fl_get_system_colors() }
+    unsafe { fl::Fl_get_system_colors() }
 }
 
 /// Send a signal to a window.
@@ -1224,6 +1241,8 @@ pub fn get_system_colors() {
 ///     }
 /// });
 /// ```
+/// # Errors
+/// Returns Err on error or in use of one of the reserved values.
 pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     msg: I,
     w: &W,
@@ -1232,7 +1251,7 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     if val >= 0 && val <= 30 {
         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
     } else {
-        let ret = unsafe { Fl_handle(val, w.as_widget_ptr() as _) != 0 };
+        let ret = unsafe { fl::Fl_handle(val, w.as_widget_ptr() as _) != 0 };
         Ok(ret)
     }
 }
@@ -1241,7 +1260,6 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
 /// Integral values from 0 to 30 are reserved.
 /// Returns Ok(true) if the event was handled.
 /// Returns Ok(false) if the event was not handled.
-/// Returns Err on error or in use of one of the reserved values.
 /// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// const CHANGE_FRAME: i32 = 100;
@@ -1260,55 +1278,60 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
 ///     }
 /// });
 /// ```
+/// # Errors
+/// Returns Err on error or in use of one of the reserved values.
 pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
     msg: I,
 ) -> Result<bool, FltkError> {
     let val = msg.into();
     if val >= 0 && val <= 30 {
         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-    } else if let Some(win) = first_window() {
-        let ret = unsafe { Fl_handle(val, win.as_widget_ptr() as _) != 0 };
-        Ok(ret)
     } else {
-        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+        first_window().map_or(
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            |win| {
+                let ret = unsafe { fl::Fl_handle(val, win.as_widget_ptr() as _) != 0 };
+                Ok(ret)
+            },
+        )
     }
 }
 
 /// Flush the main window
 pub fn flush() {
-    unsafe { Fl_flush() }
+    unsafe { fl::Fl_flush() }
 }
 
 /// Set the screen scale
 pub fn set_screen_scale(n: i32, factor: f32) {
-    unsafe { Fl_set_screen_scale(n as i32, factor) }
+    unsafe { fl::Fl_set_screen_scale(n as i32, factor) }
 }
 
 /// Get the screen scale
 pub fn screen_scale(n: i32) -> f32 {
-    unsafe { Fl_screen_scale(n as i32) }
+    unsafe { fl::Fl_screen_scale(n as i32) }
 }
 
 /// Return whether scaling the screen is supported
 pub fn screen_scaling_supported() -> bool {
-    unsafe { Fl_screen_scaling_supported() != 0 }
+    unsafe { fl::Fl_screen_scaling_supported() != 0 }
 }
 
 /// Get the screen count
 pub fn screen_count() -> i32 {
-    unsafe { Fl_screen_count() as i32 }
+    unsafe { fl::Fl_screen_count() as i32 }
 }
 
 /// Open the current display
 /// # Safety
 /// A correct visual must be set prior to opening the display
 pub unsafe fn open_display() {
-    Fl_open_display()
+    fl::Fl_open_display()
 }
 
 /// Close the current display
 /// # Safety
 /// The display shouldn't be closed while a window is shown
 pub unsafe fn close_display() {
-    Fl_close_display()
+    fl::Fl_close_display()
 }

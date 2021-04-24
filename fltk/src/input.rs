@@ -1,7 +1,7 @@
-use crate::enums::*;
+use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::input::*;
 use std::{
     ffi::{CStr, CString},
@@ -16,7 +16,7 @@ pub struct Input {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Sets the input widget's type, which can be changed dynamically using the set_type() method
+/// Sets the input widget's type
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum InputType {
@@ -67,13 +67,13 @@ pub struct FileInput {
 }
 
 impl FileInput {
-    /// Set the down_box of the widget
+    /// Set the `down_box` of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
         unsafe { Fl_File_Input_set_down_box(self.inner, f as i32) }
     }
 
-    /// Get the down_box of the widget
+    /// Get the `down_box` of the widget
     pub fn down_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_File_Input_down_box(self.inner)) }

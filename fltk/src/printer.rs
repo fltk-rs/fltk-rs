@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::printer::*;
 use std::ffi::CString;
 
@@ -41,6 +41,8 @@ impl Printer {
     /// Begins a print job.
     /// `pagecount` The total number of pages to be created. Use 0 if this number is unknown
     /// Returns a tuple (frompage, topage) indicating the chosen pages by the user
+    /// # Errors
+    /// Errors on failure to print
     pub fn begin_job(&mut self, pagecount: i32) -> Result<(Option<i32>, Option<i32>), FltkError> {
         let mut frompage_ = 0;
         let mut topage_ = 0;
@@ -51,10 +53,8 @@ impl Printer {
                 &mut frompage_,
                 &mut topage_,
                 std::ptr::null_mut(),
-            ) != 0
+            ) == 0
             {
-                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
-            } else {
                 let from = if frompage_ == 0 {
                     None
                 } else {
@@ -66,17 +66,21 @@ impl Printer {
                     Some(topage_ as i32)
                 };
                 Ok((from, to))
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
             }
         }
     }
 
     /// End the print page
+    /// # Errors
+    /// Errors on failure to end the page
     pub fn end_page(&mut self) -> Result<(), FltkError> {
         unsafe {
-            if Fl_Printer_end_page(self.inner) != 0 {
-                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
-            } else {
+            if Fl_Printer_end_page(self.inner) == 0 {
                 Ok(())
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
             }
         }
     }
@@ -87,12 +91,14 @@ impl Printer {
     }
 
     /// Begins a print page
+    /// # Errors
+    /// Errors on failure to begin the page
     pub fn begin_page(&mut self) -> Result<(), FltkError> {
         unsafe {
-            if Fl_Printer_begin_page(self.inner) != 0 {
-                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
-            } else {
+            if Fl_Printer_begin_page(self.inner) == 0 {
                 Ok(())
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedToRun))
             }
         }
     }

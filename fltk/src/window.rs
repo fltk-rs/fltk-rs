@@ -1,9 +1,11 @@
-use crate::app::*;
-use crate::enums::*;
+use crate::app::screen_size;
+use crate::enums::{
+    Align, CallbackTrigger, Color, Cursor, Damage, Event, Font, FrameType, LabelType,
+};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
-use crate::widget::*;
+use crate::utils::FlString;
+use crate::widget::Widget;
 use fltk_sys::window::*;
 use raw_window_handle::*;
 use std::{
@@ -13,8 +15,8 @@ use std::{
     os::raw,
 };
 
-/// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS),
-/// XID (u64) raw window handle for X11
+/// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
+/// `XID` (`u64`) raw window handle for X11
 #[cfg(any(
     target_os = "windows",
     target_os = "macos",
@@ -42,8 +44,8 @@ pub type RawHandle = *mut raw::c_void;
 ))]
 pub type RawHandle = u32;
 
-/// Opaque raw window handle (*mut c_void to HWND on Windows and NSWindow on MacOS),
-/// XID (u64) raw window handle for X11
+/// Opaque raw window handle (`*mut c_void` to `HWND` on Windows and `NSWindow` on macOS),
+/// `XID` (`u64`) raw window handle for X11
 #[cfg(all(
     not(any(
         target_os = "windows",
@@ -65,7 +67,7 @@ pub type RawHandle = u64;
 /// Creates a window widget
 pub type Window = DoubleWindow;
 
-/// Defines the window type, can be set dynamically using the set_type() method
+/// Defines the window type
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum WindowType {
@@ -90,8 +92,8 @@ impl SingleWindow {
         win
     }
 
-    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app.
-    /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
+    /// Find an `Fl_Window` through a raw handle. The window must have been instatiated by the app.
+    /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent.
     pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
@@ -188,8 +190,8 @@ impl DoubleWindow {
         win
     }
 
-    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app.
-    /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
+    /// Find an `Fl_Window` through a raw handle. The window must have been instatiated by the app.
+    /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent.
     pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {
@@ -308,8 +310,8 @@ impl OverlayWindow {
         win
     }
 
-    /// Find an Fl_Window through a raw handle. The window must have been instatiated by the app.
-    /// void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
+    /// Find an `Fl_Window` through a raw handle. The window must have been instatiated by the app.
+    /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent.
     pub unsafe fn find_by_handle(handle: RawHandle) -> Option<impl WindowExt> {

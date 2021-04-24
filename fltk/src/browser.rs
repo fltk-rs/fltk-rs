@@ -1,7 +1,7 @@
-use crate::enums::*;
+use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::browser::*;
 use std::{
     ffi::{CStr, CString},
@@ -32,7 +32,7 @@ pub struct Browser {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Defines the browser type, which can be changed dynamically using the set_type function().
+/// Defines the browser type
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum BrowserType {
@@ -96,7 +96,7 @@ pub struct FileBrowser {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// File types for the FileBrowser
+/// File types for the `FileBrowser`
 #[repr(i32)]
 #[derive(Copy, Clone, Debug)]
 pub enum FileType {
@@ -119,7 +119,7 @@ impl FileBrowser {
         unsafe { Fl_File_Browser_set_iconsize(self.inner, s) }
     }
 
-    /// Sets the filter for the FileBrowser.
+    /// Sets the filter for the `FileBrowser`.
     /// The following syntax is used for the pattern:
     /// `*` matches any sequence of 0 or more characters.
     /// `?` matches any single character.
@@ -138,7 +138,7 @@ impl FileBrowser {
         }
     }
 
-    /// Gets the filter for the FileBrowser
+    /// Gets the filter for the `FileBrowser`
     pub fn filter(&self) -> Option<String> {
         assert!(!self.was_deleted());
         unsafe {
@@ -155,20 +155,20 @@ impl FileBrowser {
         }
     }
 
-    /// Gets the FileType of the FileBrowser
+    /// Gets the `FileType` of the `FileBrowser`
     pub fn filetype(&self) -> FileType {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_File_Browser_filetype(self.inner)) }
     }
 
-    /// Sets the FileType of the FileBrowser
+    /// Sets the `FileType` of the `FileBrowser`
     pub fn set_filetype(&mut self, t: FileType) {
         assert!(!self.was_deleted());
         unsafe { Fl_File_Browser_set_filetype(self.inner, t as i32) }
     }
 }
 
-/// Creates a CheckBrowser widget
+/// Creates a `CheckBrowser` widget
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct CheckBrowser {
     inner: *mut Fl_Check_Browser,

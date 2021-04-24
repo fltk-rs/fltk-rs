@@ -1,7 +1,9 @@
-use crate::enums::*;
+use crate::enums::{
+    Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType, Shortcut,
+};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::menu::*;
 use std::{
     ffi::{CStr, CString},
@@ -30,7 +32,7 @@ pub struct Choice {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Creates a MacOS system menu bar on MacOS and a normal menu bar on other systems
+/// Creates a macOS system menu bar on macOS and a normal menu bar on other systems
 #[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct SysMenuBar {
     inner: *mut Fl_Sys_Menu_Bar,
@@ -269,7 +271,7 @@ impl MenuItem {
         }
     }
 
-    /// Get children of MenuItem
+    /// Get children of `MenuItem`
     pub fn children(&self) -> i32 {
         let mut i = 0;
         while let Some(_item) = self.next(i) {

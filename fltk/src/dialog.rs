@@ -1,6 +1,6 @@
-use crate::enums::*;
+use crate::enums::{Color, Font};
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::dialog::*;
 use std::{
     ffi::{CStr, CString},
@@ -28,10 +28,10 @@ pub struct FileDialog {
     inner: *mut Fl_Native_File_Chooser,
 }
 
-/// Re-alias FileDialog to NativeFileChooser (Fl_Native_File_Chooser)
+/// Re-alias `FileDialog` to `NativeFileChooser` (`Fl_Native_File_Chooser`)
 pub type NativeFileChooser = FileDialog;
 
-/// Defines the type of dialog, which can be changed dynamically using the set_type() method
+/// Defines the type of dialog, which can be changed dynamically using the `set_type()` method
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum FileDialogType {
@@ -49,10 +49,10 @@ pub enum FileDialogType {
     BrowseSaveDir,
 }
 
-/// Alias for NativeFileChooserType
+/// Alias for `NativeFileChooserType`
 pub type NativeFileChooserType = FileDialogType;
 
-/// Defines the File dialog options, which can be set using the set_option() method.
+/// Defines the File dialog options, which can be set using the `set_option()` method.
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum FileDialogOptions {
@@ -68,7 +68,7 @@ pub enum FileDialogOptions {
     UseFilterExt = 8,
 }
 
-/// Alias to NativeFileChooserOptions
+/// Alias to `NativeFileChooserOptions`
 pub type NativeFileChooserOptions = FileDialogOptions;
 
 impl std::ops::BitOr<FileDialogOptions> for FileDialogOptions {
@@ -132,19 +132,21 @@ impl FileDialog {
         assert!(!self.inner.is_null());
         unsafe {
             let x = Fl_Native_File_Chooser_directory(self.inner);
-            if !x.is_null() {
+            if x.is_null() {
+                std::path::PathBuf::from("")
+            } else {
                 std::path::PathBuf::from(
                     CStr::from_ptr(x as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
                 )
-            } else {
-                std::path::PathBuf::from("")
             }
         }
     }
 
     /// Sets the starting directory
+    /// # Errors
+    /// Errors on non-existent path
     pub fn set_directory<P: AsRef<std::path::Path>>(&mut self, dir: P) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         self.set_directory_(dir.as_ref())
@@ -391,6 +393,8 @@ impl HelpDialog {
     }
 
     /// Loads a file for the help dialog
+    /// # Errors
+    /// Errors on non-existent path
     pub fn load<P: AsRef<std::path::Path>>(&mut self, file: P) -> Result<(), FltkError> {
         self.load_(file.as_ref())
     }
@@ -516,7 +520,7 @@ pub fn beep(tp: BeepType) {
     unsafe { Fl_beep(tp as i32) }
 }
 
-/// FLTK's own FileChooser. Which differs for the Native FileDialog
+/// FLTK's own `FileChooser`. Which differs for the Native `FileDialog`
 /// Example:
 /// ```rust,no_run
 /// use fltk::{prelude::*, *};
@@ -570,7 +574,7 @@ bitflags! {
 }
 
 impl FileChooser {
-    /// Instantiates a new FileChooser
+    /// Instantiates a new `FileChooser`
     pub fn new(dir: &str, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
         let dir = CString::safe_new(dir);
         let pattern = CString::safe_new(pattern);
@@ -587,14 +591,14 @@ impl FileChooser {
         }
     }
 
-    /// Deletes a FileChooser
+    /// Deletes a `FileChooser`
     /// # Safety
     /// Can invalidate the underlying pointer
     pub unsafe fn delete(dlg: Self) {
         Fl_File_Chooser_delete(dlg.inner)
     }
 
-    /// Gets the new button of the FileChooser
+    /// Gets the new button of the `FileChooser`
     pub fn new_button(&mut self) -> Option<impl ButtonExt> {
         assert!(!self.inner.is_null());
         unsafe {
@@ -607,7 +611,7 @@ impl FileChooser {
         }
     }
 
-    /// Gets the preview button of the FileChooser
+    /// Gets the preview button of the `FileChooser`
     pub fn preview_button(&mut self) -> Option<impl ButtonExt> {
         assert!(!self.inner.is_null());
         unsafe {
@@ -622,7 +626,7 @@ impl FileChooser {
         }
     }
 
-    /// Gets the show hidden button of the FileChooser
+    /// Gets the show hidden button of the `FileChooser`
     pub fn show_hidden_button(&mut self) -> Option<impl ButtonExt> {
         assert!(!self.inner.is_null());
         unsafe {
@@ -637,7 +641,7 @@ impl FileChooser {
         }
     }
 
-    /// Sets the callback of the FileChooser
+    /// Sets the callback of the `FileChooser`
     pub fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
         assert!(!self.inner.is_null());
         unsafe {
@@ -658,13 +662,13 @@ impl FileChooser {
         }
     }
 
-    /// Sets the color of the FileChooser
+    /// Sets the color of the `FileChooser`
     pub fn set_color(&mut self, c: Color) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_color(self.inner, c.bits() as u32) }
     }
 
-    /// Gets the color of the FileChooser
+    /// Gets the color of the `FileChooser`
     pub fn color(&mut self) -> Color {
         assert!(!self.inner.is_null());
         unsafe { mem::transmute(Fl_File_Chooser_color(self.inner)) }
@@ -676,14 +680,14 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_count(self.inner) as i32 }
     }
 
-    /// Sets the directory of the FileChooser
+    /// Sets the directory of the `FileChooser`
     pub fn set_directory(&mut self, dir: &str) {
         assert!(!self.inner.is_null());
         let dir = CString::safe_new(dir);
         unsafe { Fl_File_Chooser_set_directory(self.inner, dir.as_ptr()) }
     }
 
-    /// Gets the directory of the FileChooser
+    /// Gets the directory of the `FileChooser`
     pub fn directory(&mut self) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
@@ -712,7 +716,7 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_set_filter(self.inner, pattern.as_ptr()) }
     }
 
-    /// Gets the filter of the FileChooser
+    /// Gets the filter of the `FileChooser`
     pub fn filter(&mut self) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
@@ -746,32 +750,32 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_set_filter_value(self.inner, f as i32) }
     }
 
-    /// Hides the File chooser
+    /// Hides the file chooser
     pub fn hide(&mut self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_hide(self.inner) }
     }
 
-    /// Sets the icon size of the FileChooser
+    /// Sets the icon size of the `FileChooser`
     pub fn set_icon_size(&mut self, s: u8) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_iconsize(self.inner, s) }
     }
 
-    /// Gets the icon size of the FileChooser
+    /// Gets the icon size of the `FileChooser`
     pub fn icon_size(&mut self) -> u8 {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_iconsize(self.inner) }
     }
 
-    /// Sets the label of the FileChooser
+    /// Sets the label of the `FileChooser`
     pub fn set_label(&mut self, l: &str) {
         assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
         unsafe { Fl_File_Chooser_set_label(self.inner, l.as_ptr()) }
     }
 
-    /// Gets the label of the FileChooser
+    /// Gets the label of the `FileChooser`
     pub fn label(&mut self) -> String {
         assert!(!self.inner.is_null());
         unsafe {
@@ -808,13 +812,13 @@ impl FileChooser {
         }
     }
 
-    /// Add preview to the FileChooser
+    /// Add preview to the `FileChooser`
     pub fn set_preview(&mut self, e: bool) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_preview(self.inner, e as i32) }
     }
 
-    /// Returns whether preview is enabled for the FileChooser
+    /// Returns whether preview is enabled for the `FileChooser`
     pub fn preview(&self) -> bool {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_preview(self.inner) != 0 }
@@ -880,21 +884,21 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_text_size(self.inner) as i32 }
     }
 
-    /// Sets the type of the FileChooser
+    /// Sets the type of the `FileChooser`
     pub fn set_type(&mut self, t: FileChooserType) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_type(self.inner, t.bits as i32) }
     }
 
-    /// Gets the type of the FileChooser
+    /// Gets the type of the `FileChooser`
     pub fn get_type(&mut self) -> FileChooserType {
         assert!(!self.inner.is_null());
         unsafe { mem::transmute(Fl_File_Chooser_type(self.inner)) }
     }
 
-    /// Gets the user data of the FileChooser
+    /// Gets the user data of the `FileChooser`
     /// # Safety
-    /// Can invalidate the user data while the FileChooser is in use
+    /// Can invalidate the user data while the `FileChooser` is in use
     pub unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
         let ptr = Fl_File_Chooser_user_data(self.inner);
         if ptr.is_null() {
@@ -907,7 +911,7 @@ impl FileChooser {
         }
     }
 
-    /// Gets the file or dir name chosen by the FileChooser
+    /// Gets the file or dir name chosen by the `FileChooser`
     pub fn value(&mut self, f: i32) -> Option<String> {
         assert!(!self.inner.is_null());
         let f = if f == 0 { 1 } else { f };
@@ -925,14 +929,14 @@ impl FileChooser {
         }
     }
 
-    /// Sets the file or dir name chosen by the FileChooser
+    /// Sets the file or dir name chosen by the `FileChooser`
     pub fn set_value(&mut self, filename: &str) {
         assert!(!self.inner.is_null());
         let filename = CString::safe_new(filename);
         unsafe { Fl_File_Chooser_set_value(self.inner, filename.as_ptr()) }
     }
 
-    /// Returns whether the FileChooser is visible or not
+    /// Returns whether the `FileChooser` is visible or not
     pub fn visible(&mut self) -> bool {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_visible(self.inner) != 0 }
@@ -1093,7 +1097,7 @@ pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> 
     }
 }
 
-/// Spawns a color_chooser dialog.
+/// Spawns a color chooser dialog.
 pub fn color_chooser(name: &str, cmode: ColorMode) -> Option<(u8, u8, u8)> {
     unsafe {
         let name = CString::safe_new(name);
@@ -1109,7 +1113,7 @@ pub fn color_chooser(name: &str, cmode: ColorMode) -> Option<(u8, u8, u8)> {
     }
 }
 
-/// Spawns a color_chooser dialog.
+/// Spawns a color chooser dialog.
 pub fn color_chooser_with_default(name: &str, cmode: ColorMode, col: (u8, u8, u8)) -> (u8, u8, u8) {
     unsafe {
         let name = CString::safe_new(name);

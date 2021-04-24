@@ -1,7 +1,7 @@
-use crate::enums::*;
+use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use crate::widget::Widget;
 use crate::window::Window;
 use fltk_sys::misc::*;
@@ -481,7 +481,7 @@ impl Tooltip {
     }
 }
 
-/// Creates an InputChoice widget
+/// Creates an `InputChoice` widget
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct InputChoice {
     inner: *mut Fl_Input_Choice,
@@ -489,7 +489,7 @@ pub struct InputChoice {
 }
 
 impl InputChoice {
-    /// Set the down_box of the widget
+    /// Set the `down_box` of the widget
     pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_set_down_box(self.inner, f as i32) }
@@ -597,7 +597,7 @@ impl InputChoice {
     }
 }
 
-/// Creates a HelpView widget which supports HTML 2 formatting
+/// Creates a `HelpView` widget which supports HTML 2 formatting
 /// ```rust,no_run
 /// use fltk::{prelude::*, *};
 /// let mut h = misc::HelpView::new(10, 10, 380, 280, "");
@@ -615,14 +615,14 @@ impl HelpView {
         assert!(!self.was_deleted());
         unsafe {
             let x = Fl_Help_View_directory(self.inner);
-            if !x.is_null() {
+            if x.is_null() {
+                std::path::PathBuf::from("")
+            } else {
                 std::path::PathBuf::from(
                     CStr::from_ptr(x as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
                 )
-            } else {
-                std::path::PathBuf::from("")
             }
         }
     }
@@ -632,14 +632,14 @@ impl HelpView {
         assert!(!self.was_deleted());
         unsafe {
             let x = Fl_Help_View_directory(self.inner);
-            if !x.is_null() {
+            if x.is_null() {
+                std::path::PathBuf::from("")
+            } else {
                 std::path::PathBuf::from(
                     CStr::from_ptr(x as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
                 )
-            } else {
-                std::path::PathBuf::from("")
             }
         }
     }
@@ -769,6 +769,8 @@ impl HelpView {
     }
 
     /// Load a view from a file or URI
+    /// # Errors
+    /// Errors on non-existent path
     pub fn load(&mut self, f: &str) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let f = CString::safe_new(f);

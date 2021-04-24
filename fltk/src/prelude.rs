@@ -1,8 +1,11 @@
-use crate::enums::*;
+use crate::enums::{
+    Align, CallbackTrigger, Color, ColorDepth, Cursor, Damage, Event, Font, FrameType, LabelType,
+    Shortcut,
+};
 use std::convert::From;
 use std::{fmt, io};
 
-/// Error types returned by fltk-rs + wrappers of std::io errors
+/// Error types returned by fltk-rs + wrappers of std errors
 #[derive(Debug)]
 pub enum FltkError {
     /// i/o error
@@ -20,7 +23,7 @@ pub enum FltkError {
 unsafe impl Send for FltkError {}
 unsafe impl Sync for FltkError {}
 
-/// Error kinds enum for FltkError
+/// Error kinds enum for `FltkError`
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
 pub enum FltkErrorKind {
     /// Failed to run the application
@@ -81,7 +84,7 @@ impl From<std::env::VarError> for FltkError {
     }
 }
 
-/// A trait defined for all enums passable to the WidgetExt::set_type() method
+/// A trait defined for all enums passable to the `WidgetExt::set_type()` method
 pub trait WidgetType {
     /// Get the integral representation of the widget type
     fn to_i32(self) -> i32;
@@ -121,7 +124,7 @@ pub unsafe trait WidgetExt {
     fn label(&self) -> String;
     /// Measures the label's width and height
     fn measure_label(&self) -> (i32, i32);
-    /// transforms a widget to a base Fl_Widget, for internal use
+    /// transforms a widget to a base `Fl_Widget`, for internal use
     /// # Safety
     /// Can return multiple mutable pointers to the same widget
     unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
@@ -271,6 +274,8 @@ pub unsafe trait WidgetExt {
     /// Checks whether a widget is capable of taking events
     fn takes_events(&self) -> bool;
     /// Make the widget take focus
+    /// # Errors
+    /// Errors on failure to take focus
     fn take_focus(&mut self) -> Result<(), FltkError>;
     /// Set the widget to have visible focus
     fn set_visible_focus(&mut self);
@@ -302,9 +307,9 @@ pub unsafe trait WidgetExt {
     fn as_group(&self) -> Option<Box<dyn GroupExt>>;
     /// INTERNAL: Retakes ownership of the user callback data
     /// # Safety
-    /// Can return multiple mutable references to the user_data
+    /// Can return multiple mutable references to the `user_data`
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
-    /// Upcast a WidgetExt to a Widget
+    /// Upcast a `WidgetExt` to a Widget
     /// # Safety
     /// Allows for potentially unsafe casts between incompatible widget types
     unsafe fn into_widget<W: WidgetBase>(&self) -> W
@@ -346,21 +351,21 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// # Safety
     /// The underlying object must be valid
     unsafe fn from_widget<W: WidgetExt>(w: W) -> Self;
-    /// Set a custom handler, where events are managed manually, akin to Fl_Widget::handle(int).
+    /// Set a custom handler, where events are managed manually, akin to `Fl_Widget::handle(int)`.
     /// Handled or ignored events should return true, unhandled events should return false.
     /// takes the widget as a closure argument
     fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F);
     /// Set a custom draw method.
     /// takes the widget as a closure argument.
-    /// MacOS requires that WidgetBase::draw actually calls drawing functions
+    /// macOS requires that `WidgetBase::draw` actually calls drawing functions
     fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
     /// INTERNAL: Retrieve the draw data
     /// # Safety
-    /// Can return multiple mutable references to the draw_data
+    /// Can return multiple mutable references to the `draw_data`
     unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
     /// INTERNAL: Retrieve the handle data
     /// # Safety
-    /// Can return multiple mutable references to the handle_data
+    /// Can return multiple mutable references to the `handle_data`
     unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
 }
 
@@ -385,7 +390,7 @@ pub unsafe trait ButtonExt: WidgetExt {
     /// Sets whether a button is set or not.
     /// Useful for round, radio, light, toggle and check buttons
     fn set_value(&mut self, flag: bool);
-    /// Set the down_box of the widget
+    /// Set the `down_box` of the widget
     fn set_down_frame(&mut self, f: FrameType);
     /// Get the down frame type of the widget
     fn down_frame(&self) -> FrameType;
@@ -425,25 +430,25 @@ pub unsafe trait GroupExt: WidgetExt {
     fn resizable<W: WidgetExt>(&self, widget: &W)
     where
         Self: Sized;
-    /// Make the window resizable, should be called before ```show```
+    /// Make the window resizable, should be called before `show`
     fn make_resizable(&mut self, val: bool);
     /// Clips children outside the group boundaries
     fn set_clip_children(&mut self, flag: bool);
-    /// Get whether clip_children is set
+    /// Get whether `clip_children` is set
     fn clip_children(&mut self) -> bool;
-    /// Draw a child widget, the call should be in a WidgetBase::draw method
+    /// Draw a child widget, the call should be in a `WidgetBase::draw` method
     fn draw_child<W: WidgetExt>(&self, w: &mut W)
     where
         Self: Sized;
-    /// Update a child widget, the call should be in a WidgetBase::draw method
+    /// Update a child widget, the call should be in a `WidgetBase::draw` method
     fn update_child<W: WidgetExt>(&self, w: &mut W)
     where
         Self: Sized;
-    /// Draw the outside label, the call should be in a WidgetBase::draw method
+    /// Draw the outside label, the call should be in a `WidgetBase::draw` method
     fn draw_outside_label<W: WidgetExt>(&self, w: &mut W)
     where
         Self: Sized;
-    /// Draw children, the call should be in a WidgetBase::draw method
+    /// Draw children, the call should be in a `WidgetBase::draw` method
     fn draw_children(&mut self);
 }
 
@@ -480,7 +485,7 @@ pub unsafe trait WindowExt: GroupExt {
     /// Get the raw system handle of the window
     fn raw_handle(&self) -> crate::window::RawHandle;
     /// Set the window associated with a raw handle.
-    /// RawHandle is a void pointer to: (Windows: HWND, X11: Xid (u64), MacOS: NSWindow)
+    /// `RawHandle` is a void pointer to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent. The window must be shown.
     unsafe fn set_raw_handle(&mut self, handle: crate::window::RawHandle);
@@ -538,22 +543,38 @@ pub unsafe trait InputExt: WidgetExt {
     /// Returns the index position inside an input/output widget
     fn position(&self) -> i32;
     /// Sets the index postion inside an input/output widget
+    /// # Errors
+    /// Errors on failure to set the cursor position in the text
     fn set_position(&mut self, val: i32) -> Result<(), FltkError>;
     /// Returns the index mark inside an input/output widget
     fn mark(&self) -> i32;
     /// Sets the index mark inside an input/output widget
+    /// # Errors
+    /// Errors on failure to set the mark
     fn set_mark(&mut self, val: i32) -> Result<(), FltkError>;
     /// Replace content with a &str
+    /// # Errors
+    /// Errors on failure to replace text
     fn replace(&mut self, beg: i32, end: i32, val: &str) -> Result<(), FltkError>;
     /// Insert a &str
+    /// # Errors
+    /// Errors on failure to insert text
     fn insert(&mut self, txt: &str) -> Result<(), FltkError>;
     /// Append a &str
+    /// # Errors
+    /// Errors on failure to append text
     fn append(&mut self, txt: &str) -> Result<(), FltkError>;
     /// Copy the value within the widget
+    /// # Errors
+    /// Errors on failure to copy selection
     fn copy(&mut self) -> Result<(), FltkError>;
     /// Undo changes
+    /// # Errors
+    /// Errors on failure to undo
     fn undo(&mut self) -> Result<(), FltkError>;
     /// Cut the value within the widget
+    /// # Errors
+    /// Errors on failure to cut selection
     fn cut(&mut self) -> Result<(), FltkError>;
     /// Return the text font
     fn text_font(&self) -> Font;
@@ -649,11 +670,11 @@ pub unsafe trait MenuExt: WidgetExt {
         Self: Sized;
     /// Remove a menu item by index
     fn remove(&mut self, idx: i32);
-    /// Adds a simple text option to the Choice and MenuButton widgets.
+    /// Adds a simple text option to the Choice and `MenuButton` widgets.
     /// The characters "&", "/", "\\", "|", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     fn add_choice(&mut self, text: &str);
-    /// Gets the user choice from the Choice and MenuButton widgets
+    /// Gets the user choice from the Choice and `MenuButton` widgets
     fn choice(&self) -> Option<String>;
     /// Get index into menu of the last item chosen, returns -1 if no item was chosen
     fn value(&self) -> i32;
@@ -661,15 +682,19 @@ pub unsafe trait MenuExt: WidgetExt {
     fn set_value(&mut self, v: i32) -> bool;
     /// Clears the items in a menu, effectively deleting them.
     fn clear(&mut self);
-    /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation
+    /// Clears a submenu by index, failure return `FltkErrorKind::FailedOperation`
+    /// # Errors
+    /// Errors on failure to clear the submenu
     fn clear_submenu(&mut self, idx: i32) -> Result<(), FltkError>;
     /// Clears the items in a menu, effectively deleting them, and recursively force-cleans capturing callbacks
     /// # Safety
-    /// Deletes user_data and any captured objects in the callback
+    /// Deletes `user_data` and any captured objects in the callback
     unsafe fn unsafe_clear(&mut self);
-    /// Clears a submenu by index, failure return FltkErrorKind::FailedOperation. Also recursively force-cleans capturing callbacks
+    /// Clears a submenu by index, failure return `FltkErrorKind::FailedOperation`. Also recursively force-cleans capturing callbacks
     /// # Safety
-    /// Deletes user_data and any captured objects in the callback
+    /// Deletes `user_data` and any captured objects in the callback
+    /// # Errors
+    /// Errors on failure to clear the submenu
     unsafe fn unsafe_clear_submenu(&mut self, idx: i32) -> Result<(), FltkError>;
     /// Get the size of the menu widget
     fn size(&self) -> i32;
@@ -683,7 +708,7 @@ pub unsafe trait MenuExt: WidgetExt {
     fn set_mode(&mut self, idx: i32, flag: crate::menu::MenuFlag);
     /// End the menu
     fn end(&mut self);
-    /// Set the down_box of the widget
+    /// Set the `down_box` of the widget
     fn set_down_frame(&mut self, f: FrameType);
     /// Get the down frame type of the widget
     fn down_frame(&self) -> FrameType;
@@ -717,6 +742,8 @@ pub unsafe trait ValuatorExt: WidgetExt {
     /// Set the value of a valuator
     fn set_value(&mut self, arg2: f64);
     /// Set the format of a valuator
+    /// # Errors
+    /// Errors on failure to set the format of the widget
     fn format(&mut self, arg2: &str) -> Result<(), FltkError>;
     /// Round the valuator
     fn round(&self, arg2: f64) -> f64;
@@ -726,13 +753,13 @@ pub unsafe trait ValuatorExt: WidgetExt {
     fn increment(&mut self, arg2: f64, arg3: i32) -> f64;
 }
 
-/// Defines the methods implemented by TextDisplay and TextEditor
+/// Defines the methods implemented by `TextDisplay` and `TextEditor`
 pub unsafe trait DisplayExt: WidgetExt {
-    /// Get the associated TextBuffer
+    /// Get the associated `TextBuffer`
     fn buffer(&self) -> Option<crate::text::TextBuffer>;
-    /// Sets the associated TextBuffer
+    /// Sets the associated `TextBuffer`
     fn set_buffer<B: Into<Option<crate::text::TextBuffer>>>(&mut self, buffer: B);
-    /// Get the associated style TextBuffer
+    /// Get the associated style `TextBuffer`
     fn style_buffer(&self) -> Option<crate::text::TextBuffer>;
     /// Return the text font
     fn text_font(&self) -> Font;
@@ -759,12 +786,20 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Counts the lines from start to end                         
     fn count_lines(&self, start: i32, end: i32, is_line_start: bool) -> i32;
     /// Moves the cursor right
+    /// # Errors
+    /// Errors on failure to move the cursor
     fn move_right(&mut self) -> Result<(), FltkError>;
     /// Moves the cursor left
+    /// # Errors
+    /// Errors on failure to move the cursor
     fn move_left(&mut self) -> Result<(), FltkError>;
     /// Moves the cursor up
+    /// # Errors
+    /// Errors on failure to move the cursor
     fn move_up(&mut self) -> Result<(), FltkError>;
     /// Moves the cursor down
+    /// # Errors
+    /// Errors on failure to move the cursor
     fn move_down(&mut self) -> Result<(), FltkError>;
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
@@ -796,7 +831,7 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Returns the ending of the line from the current position.
     /// Returns new position as index
     fn line_end(&self, start_pos: i32, is_line_start: bool) -> i32;
-    /// Skips lines from start_pos
+    /// Skips lines from `start_pos`
     fn skip_lines(&mut self, start_pos: i32, lines: i32, is_line_start: bool) -> i32;
     /// Rewinds the lines
     fn rewind_lines(&mut self, start_pos: i32, lines: i32) -> i32;
@@ -839,8 +874,8 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Checks whether a pixel is within a text selection
     fn in_selection(&self, x: i32, y: i32) -> bool;
     /// Sets the wrap mode of the Display widget.
-    /// If the wrap mode is AtColumn, wrap_margin is the column.
-    /// If the wrap mode is AtPixel, wrap_margin is the pixel.
+    /// If the wrap mode is `AtColumn`, wrap margin is the column.
+    /// If the wrap mode is `AtPixel`, wrap margin is the pixel.
     /// For more [info](https://www.fltk.org/doc-1.4/classFl__Text__Display.html#ab9378d48b949f8fc7da04c6be4142c54)
     fn wrap_mode(&mut self, wrap: crate::text::WrapMode, wrap_margin: i32);
     /// Correct a column number based on an unconstrained position
@@ -885,6 +920,8 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Lines start at 1
     fn set_text(&mut self, line: i32, txt: &str);
     /// Load a file
+    /// # Errors
+    /// Errors on non-existent paths
     fn load<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError>;
     /// Return the text size
     fn text_size(&self) -> i32;
@@ -917,7 +954,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn set_format_char(&mut self, c: char);
     /// Gets the current column separator character. The default is '\t'
     fn column_char(&self) -> char;
-    /// Sets the column separator to c. This will only have an effect if you also use set_column_widths().
+    /// Sets the column separator to c. This will only have an effect if you also use `set_column_widths()`.
     /// c should be ascii
     fn set_column_char(&mut self, c: char);
     /// Gets the current column width array
@@ -958,9 +995,9 @@ pub unsafe trait BrowserExt: WidgetExt {
 pub unsafe trait TableExt: GroupExt {
     /// Clears the table
     fn clear(&mut self);
-    /// Sets the table frame, table_box
+    /// Sets the table frame
     fn set_table_frame(&mut self, frame: FrameType);
-    /// Gets the table frame, table box
+    /// Gets the table frame
     fn table_frame(&self) -> FrameType;
     /// Sets the number of rows
     fn set_rows(&mut self, val: i32);
@@ -971,7 +1008,7 @@ pub unsafe trait TableExt: GroupExt {
     /// Gets the number of columns
     fn cols(&self) -> i32;
     /// The range of row and column numbers for all visible and partially visible cells in the table.
-    /// Returns (row_top, col_left, row_bot, col_right)
+    /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`)
     fn visible_cells(&self) -> (i32, i32, i32, i32);
     /// Returns whether the resize is interactive
     fn is_interactive_resize(&self) -> bool;
@@ -1042,13 +1079,15 @@ pub unsafe trait TableExt: GroupExt {
     /// Returns whether a cell is selected
     fn is_selected(&self, r: i32, c: i32) -> bool;
     /// Gets the selection.
-    /// Returns (row_top, col_left, row_bot, col_right)
+    /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`)
     fn get_selection(&self) -> (i32, i32, i32, i32);
     /// Sets the selection
     fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
     /// Unset selection
     fn unset_selection(&mut self);
     /// Moves the cursor with shift select
+    /// # Errors
+    /// Errors on failure to move the cursor
     fn move_cursor_with_shift_select(
         &mut self,
         r: i32,
@@ -1056,6 +1095,8 @@ pub unsafe trait TableExt: GroupExt {
         shiftselect: bool,
     ) -> Result<(), FltkError>;
     /// Moves the cursor
+    /// # Errors
+    /// Errors on failure to move the cursor
     fn move_cursor(&mut self, r: i32, c: i32) -> Result<(), FltkError>;
     /// Resets the internal array of widget sizes and positions.
     fn init_sizes(&mut self);
@@ -1067,8 +1108,8 @@ pub unsafe trait TableExt: GroupExt {
     fn set_tab_cell_nav(&mut self, val: bool);
     /// Returns whether tab key cell navigation is enabled
     fn tab_cell_nav(&self) -> bool;
-    /// Override draw_cell.
-    /// callback args: &mut self, TableContext, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32.
+    /// Override `draw_cell`.
+    /// callback args: &mut self, `TableContext`, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32.
     /// takes the widget as a closure argument
     fn draw_cell<
         F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static,
@@ -1078,7 +1119,7 @@ pub unsafe trait TableExt: GroupExt {
     );
     /// INTERNAL: Retrieve the draw cell data
     /// # Safety
-    /// Can return multiple mutable references to the draw_cell_data
+    /// Can return multiple mutable references to the `draw_cell_data`
     unsafe fn draw_cell_data(&self) -> Option<Box<dyn FnMut()>>;
     /// Get the callback column, should be called from within a callback
     fn callback_col(&self) -> i32;
@@ -1118,7 +1159,9 @@ pub unsafe trait ImageExt {
     fn to_rgb_data(&self) -> Vec<u8>;
     /// Returns the underlying raw image data
     fn to_raw_data(&self) -> *const *const u8;
-    /// Transforms the image into an RgbImage
+    /// Transforms the image into an `RgbImage`
+    /// # Errors
+    /// Errors on failure to transform to `RgbImage`
     fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError>;
     /// Scales the image
     fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool);
@@ -1158,7 +1201,7 @@ pub unsafe trait ImageExt {
         Self: Sized;
 }
 
-/// Defines the methods implemented by all surface types, currently ImageSurface
+/// Defines the methods implemented by all surface types, currently `ImageSurface`
 pub trait SurfaceDevice {
     /// Checks whether this surface is the current surface
     fn is_current(&self) -> bool;
