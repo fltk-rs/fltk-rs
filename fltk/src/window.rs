@@ -410,8 +410,8 @@ impl OverlayWindow {
             let _old_data = self.draw_data();
             let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
-            let callback: custom_draw_callback2 = Some(shim);
-            Fl_Overlay_Window_draw_overlay2(self.inner, callback, data);
+            let callback: custom_draw_callback = Some(shim);
+            Fl_Overlay_Window_draw_overlay(self.inner, callback, data);
         }
     }
 

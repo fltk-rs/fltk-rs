@@ -8,9 +8,6 @@ pub struct Fl_Widget {
 pub type Fl_Callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
 pub type custom_handler_callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int,
->;
-pub type custom_handler_callback2 = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
         arg2: libc::c_int,
@@ -18,8 +15,6 @@ pub type custom_handler_callback2 = ::core::option::Option<
     ) -> libc::c_int,
 >;
 pub type custom_draw_callback =
-    ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
-pub type custom_draw_callback2 =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
 extern "C" {
     pub fn Fl_Widget_new(
@@ -168,21 +163,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_handle2(
-        self_: *mut Fl_Widget,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
-}
-extern "C" {
-    pub fn Fl_Widget_draw2(
-        self_: *mut Fl_Widget,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
 }
 extern "C" {
     pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
@@ -438,23 +419,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Spinner_handle2(
-        self_: *mut Fl_Spinner,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Spinner_draw(
         self_: *mut Fl_Spinner,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Spinner_draw2(
-        self_: *mut Fl_Spinner,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -767,17 +734,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Clock_handle2(
-        self_: *mut Fl_Clock,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Clock_draw(self_: *mut Fl_Clock, cb: custom_draw_callback, data: *mut libc::c_void);
-}
-extern "C" {
-    pub fn Fl_Clock_draw2(self_: *mut Fl_Clock, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Clock_set_when(arg1: *mut Fl_Clock, arg2: libc::c_int);
@@ -1033,17 +990,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Chart_handle2(
-        self_: *mut Fl_Chart,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Chart_draw(self_: *mut Fl_Chart, cb: custom_draw_callback, data: *mut libc::c_void);
-}
-extern "C" {
-    pub fn Fl_Chart_draw2(self_: *mut Fl_Chart, cb: custom_draw_callback2, data: *mut libc::c_void);
 }
 extern "C" {
     pub fn Fl_Chart_set_when(arg1: *mut Fl_Chart, arg2: libc::c_int);
@@ -1364,23 +1311,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Progress_handle2(
-        self_: *mut Fl_Progress,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Progress_draw(
         self_: *mut Fl_Progress,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Progress_draw2(
-        self_: *mut Fl_Progress,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -1755,23 +1688,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Help_View_handle2(
-        self_: *mut Fl_Help_View,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Help_View_draw(
         self_: *mut Fl_Help_View,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Help_View_draw2(
-        self_: *mut Fl_Help_View,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2100,23 +2019,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Input_Choice_handle2(
-        self_: *mut Fl_Input_Choice,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Input_Choice_draw(
         self_: *mut Fl_Input_Choice,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Input_Choice_draw2(
-        self_: *mut Fl_Input_Choice,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }

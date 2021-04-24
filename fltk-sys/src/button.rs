@@ -8,9 +8,6 @@ pub struct Fl_Widget {
 pub type Fl_Callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
 pub type custom_handler_callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int,
->;
-pub type custom_handler_callback2 = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
         arg2: libc::c_int,
@@ -18,8 +15,6 @@ pub type custom_handler_callback2 = ::core::option::Option<
     ) -> libc::c_int,
 >;
 pub type custom_draw_callback =
-    ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
-pub type custom_draw_callback2 =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
 extern "C" {
     pub fn Fl_Widget_new(
@@ -168,21 +163,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_handle2(
-        self_: *mut Fl_Widget,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
-}
-extern "C" {
-    pub fn Fl_Widget_draw2(
-        self_: *mut Fl_Widget,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
 }
 extern "C" {
     pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
@@ -438,21 +419,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Button_handle2(
-        self_: *mut Fl_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Button_draw(self_: *mut Fl_Button, cb: custom_draw_callback, data: *mut libc::c_void);
-}
-extern "C" {
-    pub fn Fl_Button_draw2(
-        self_: *mut Fl_Button,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
 }
 extern "C" {
     pub fn Fl_Button_set_when(arg1: *mut Fl_Button, arg2: libc::c_int);
@@ -729,23 +696,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Check_Button_handle2(
-        self_: *mut Fl_Check_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Check_Button_draw(
         self_: *mut Fl_Check_Button,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Check_Button_draw2(
-        self_: *mut Fl_Check_Button,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -1037,23 +990,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Button_handle2(
-        self_: *mut Fl_Radio_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Radio_Button_draw(
         self_: *mut Fl_Radio_Button,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Radio_Button_draw2(
-        self_: *mut Fl_Radio_Button,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -1345,23 +1284,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Toggle_Button_handle2(
-        self_: *mut Fl_Toggle_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Toggle_Button_draw(
         self_: *mut Fl_Toggle_Button,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Toggle_Button_draw2(
-        self_: *mut Fl_Toggle_Button,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -1653,23 +1578,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Round_Button_handle2(
-        self_: *mut Fl_Round_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Round_Button_draw(
         self_: *mut Fl_Round_Button,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Round_Button_draw2(
-        self_: *mut Fl_Round_Button,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -1976,23 +1887,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Round_Button_handle2(
-        self_: *mut Fl_Radio_Round_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Radio_Round_Button_draw(
         self_: *mut Fl_Radio_Round_Button,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Radio_Round_Button_draw2(
-        self_: *mut Fl_Radio_Round_Button,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2326,23 +2223,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Radio_Light_Button_handle2(
-        self_: *mut Fl_Radio_Light_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Radio_Light_Button_draw(
         self_: *mut Fl_Radio_Light_Button,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Radio_Light_Button_draw2(
-        self_: *mut Fl_Radio_Light_Button,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2661,23 +2544,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Light_Button_handle2(
-        self_: *mut Fl_Light_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Light_Button_draw(
         self_: *mut Fl_Light_Button,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Light_Button_draw2(
-        self_: *mut Fl_Light_Button,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2969,23 +2838,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Repeat_Button_handle2(
-        self_: *mut Fl_Repeat_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Repeat_Button_draw(
         self_: *mut Fl_Repeat_Button,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Repeat_Button_draw2(
-        self_: *mut Fl_Repeat_Button,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -3271,23 +3126,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Return_Button_handle2(
-        self_: *mut Fl_Return_Button,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Return_Button_draw(
         self_: *mut Fl_Return_Button,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Return_Button_draw2(
-        self_: *mut Fl_Return_Button,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }

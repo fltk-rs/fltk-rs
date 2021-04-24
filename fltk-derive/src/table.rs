@@ -199,10 +199,6 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "draw_cell").as_str(),
         name.span(),
     );
-    let draw_cell2 = Ident::new(
-        format!("{}_{}", name_str, "draw_cell2").as_str(),
-        name.span(),
-    );
     let draw_cell_data = Ident::new(
         format!("{}_{}", name_str, "draw_cell_data").as_str(),
         name.span(),
@@ -603,7 +599,7 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
 
             fn draw_cell<F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
-                pub type custom_draw_cell_callback2 =
+                pub type custom_draw_cell_callback =
                     Option<unsafe extern "C" fn(wid: *mut Fl_Widget, ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void)>;
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, ctx: raw::c_int, arg2: raw::c_int, arg3: raw::c_int, arg4: raw::c_int, arg5: raw::c_int, arg6: raw::c_int, arg7: raw::c_int, data: *mut raw::c_void) {
@@ -616,8 +612,8 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                     let _old_data = self.draw_cell_data();
                     let a: *mut Box<dyn FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_draw_cell_callback2 = Some(shim);
-                    #draw_cell2(self.inner, callback, data);
+                    let callback: custom_draw_cell_callback = Some(shim);
+                    #draw_cell(self.inner, callback, data);
                 }
             }
 
