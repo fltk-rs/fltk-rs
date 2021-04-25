@@ -32,7 +32,7 @@ pub fn get(target_os: String, out_dir: PathBuf) {
 
         Command::new("tar")
             .args(&["-xzvf", url.file_name().unwrap().to_str().unwrap()])
-            .current_dir(out_dir.clone())
+            .current_dir(out_dir)
             .status()
             .expect("Curl and Tar are needed to download and upack the bundled libraries!");
     }

@@ -12,12 +12,17 @@ fn main() {
     let target_triple = env::var("TARGET").unwrap();
     let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
 
+    println!("cargo:rerun-if-changed=build/android.rs");
+    println!("cargo:rerun-if-changed=build/bundled.rs");
+    println!("cargo:rerun-if-changed=build/link.rs");
     println!("cargo:rerun-if-changed=build/main.rs");
+    println!("cargo:rerun-if-changed=build/source.rs");
+    println!("cargo:rerun-if-changed=build/utils.rs");
 
     if cfg!(feature = "fltk-bundled") {
         bundled::get(target_os.clone(), out_dir.clone());
     } else {
-        source::build(manifest_dir.clone(), target_triple.clone(), out_dir.clone());
+        source::build(manifest_dir, target_triple, out_dir.clone());
     }
 
     link::link(target_os, out_dir);
