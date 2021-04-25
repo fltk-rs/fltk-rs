@@ -3,7 +3,7 @@
 Contributions are very welcome! Even if just for submitting bug fixes, improving the documentation, adding tests and/or examples.
 
 ### Contributing to the wrapper
-The wrapper itself now lives in the cfltk [repo](https://github.com/MoAlyousef/cfltk) and the stable branch is used as a git submodule in the fltk-sys directory, it uses C89 for the headers (in the cfltk/include directory) and C++11 for the source files (in the cfltk/src directory). 
+The wrapper itself now lives in the cfltk [repo](https://github.com/MoAlyousef/cfltk) as a git submodule in the fltk-sys directory, it uses C89 for the headers (in the cfltk/include directory) and C++11 for the source files (in the cfltk/src directory). 
 Bindgen is used on the header files using the bind.sh script. It's not added as dependency to this project since it depends on libclang and 
 llvm and which add to the build complexity. As such, code added into the header files should be crossplatform and not depend on system pecularities or system headers (ifdefs are acceptable).  
 C89 was chosen for the headers since bindgen works best with them. 

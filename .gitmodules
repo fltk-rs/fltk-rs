@@ -1,4 +1,4 @@
 [submodule "fltk-sys/cfltk"]
 	path = fltk-sys/cfltk
 	url = https://github.com/MoAlyousef/cfltk
-	branch = stable
+	branch = main
