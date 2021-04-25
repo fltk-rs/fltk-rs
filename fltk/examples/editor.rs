@@ -278,13 +278,11 @@ impl MyApp {
                     });
                     self.saved = true;
                 }
+            } else if path::Path::new(&filename).exists() {
+                self.buf.save_file(&filename)?;
+                self.saved = true;
             } else {
-                if path::Path::new(&filename).exists() {
-                    self.buf.save_file(&filename)?;
-                    self.saved = true;
-                } else {
-                    dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
-                }
+                dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
             }
         } else {
             let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseSaveFile);
