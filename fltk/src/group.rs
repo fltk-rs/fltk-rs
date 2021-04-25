@@ -1,8 +1,8 @@
-use crate::enums::*;
+use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
-use crate::widget::*;
+use crate::utils::FlString;
+use crate::widget::Widget;
 use fltk_sys::group::*;
 use std::{
     ffi::{CStr, CString},
@@ -151,6 +151,8 @@ impl Tabs {
     }
 
     /// Sets the currently visible group
+    /// # Errors
+    /// Errors when the value can't be set for the group widget
     pub fn set_value<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
@@ -180,6 +182,8 @@ impl Tabs {
     }
 
     /// This is called by the tab widget's handle() method to set the tab group widget the user last pushed
+    /// # Errors
+    /// Errors if `set_push` can't be set for the group widget
     pub fn set_push<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
@@ -336,7 +340,7 @@ impl Pack {
 }
 
 /// Defines a Vertical Grid (custom widget).
-/// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing.
+/// Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
 /// Requires explicit calls to add, which is overloaded especially for the layout.
 /// ```rust,no_run
 /// use fltk::{prelude::*, *};
@@ -418,7 +422,7 @@ impl DerefMut for VGrid {
 }
 
 /// Defines a Horizontal Grid (custom widget).
-/// Requires setting the params manually using the set_params method, which takes the rows, columns and spacing.
+/// Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
 /// Requires explicit calls to add, which is overloaded especially for the layout.
 /// ```rust,no_run
 /// use fltk::{prelude::*, *};
@@ -499,7 +503,7 @@ impl DerefMut for HGrid {
     }
 }
 
-/// A wrapper around a vertical pack, with auto_layouting using the add method
+/// A wrapper around a vertical pack, with `auto_layout`ing using the add method
 pub struct Column {
     p: Pack,
 }
@@ -533,7 +537,7 @@ impl DerefMut for Column {
     }
 }
 
-/// A wrapper around a Horizontal pack, with auto_layouting using the add method
+/// A wrapper around a Horizontal pack, with `auto_layout`ing using the add method
 pub struct Row {
     p: Pack,
 }

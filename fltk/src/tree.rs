@@ -1,7 +1,7 @@
-use crate::enums::*;
+use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, Key, LabelType};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use crate::widget::Widget;
 use fltk_sys::tree::*;
 use std::{
@@ -48,7 +48,7 @@ pub enum TreeSelect {
     SingleDraggable = 3,
 }
 
-/// Defines the TreeItem's select mode
+/// Defines the `TreeItem`'s select mode
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeItemSelect {
@@ -80,7 +80,7 @@ pub enum TreeReason {
     Dragged,
 }
 
-/// Defines the TreeItem's reselect mode
+/// Defines the `TreeItem`'s reselect mode
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeItemReselectMode {
@@ -90,7 +90,7 @@ pub enum TreeItemReselectMode {
     Always,
 }
 
-/// Defines the TreeItem's draw mode
+/// Defines the `TreeItem`'s draw mode
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum TreeItemDrawMode {
@@ -125,7 +125,7 @@ struct TreeItemArray {
 }
 
 impl Tree {
-    /// Creates a Tree from a raw Fl_Tree pointer
+    /// Creates a Tree from a raw `Fl_Tree pointer`
     /// # Safety
     /// The pointer must be valid
     pub unsafe fn from_raw(ptr: *mut Fl_Tree) -> Option<Tree> {
@@ -185,7 +185,7 @@ impl Tree {
         unsafe { Fl_Tree_set_root(self.inner, ptr) }
     }
 
-    /// Adds a TreeItem
+    /// Adds a `TreeItem`
     pub fn add(&mut self, path: &str) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
@@ -195,7 +195,7 @@ impl Tree {
         }
     }
 
-    /// Inserts a TreeItem above another tree item
+    /// Inserts a `TreeItem` above another tree item
     pub fn insert_above(&mut self, above: &TreeItem, name: &str) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if above.inner.is_null() {
@@ -209,7 +209,7 @@ impl Tree {
         }
     }
 
-    /// Inserts a TreeItem at a position ```pos```
+    /// Inserts a `TreeItem` at a position `pos`
     pub fn insert(&mut self, item: &TreeItem, name: &str, pos: i32) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if item.inner.is_null() {
@@ -227,7 +227,9 @@ impl Tree {
         }
     }
 
-    /// Removes a TreeItem
+    /// Removes a `TreeItem`
+    /// # Errors
+    /// Errors on failure to remove item
     pub fn remove(&mut self, item: &TreeItem) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         if item.inner.is_null() {
@@ -351,7 +353,7 @@ impl Tree {
         unsafe { TreeItem::from_raw(Fl_Tree_last_selected_item(self.inner)) }
     }
 
-    /// Gets the next tree item, direction_key is by default Key::Down
+    /// Gets the next tree item, `direction_key` is by default `Key::Down`
     pub fn next_item(
         &mut self,
         item: &TreeItem,
@@ -372,7 +374,7 @@ impl Tree {
         }
     }
 
-    /// Gets the next selected tree item, direction_key is by default Key::Down
+    /// Gets the next selected tree item, `direction_key` is by default `Key::Down`
     pub fn next_selected_item(&mut self, item: &TreeItem, direction_key: Key) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if item.inner.is_null() {
@@ -420,6 +422,8 @@ impl Tree {
     }
 
     /// Opens a tree item, causing the children to be shown
+    /// # Errors
+    /// Errors on failure to open an item
     pub fn open(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
@@ -429,8 +433,7 @@ impl Tree {
                 path.as_ptr() as *mut raw::c_char,
                 do_callback as i32,
             ) {
-                0 => Ok(()),
-                1 => Ok(()),
+                0 | 1 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             }
         }
@@ -444,6 +447,8 @@ impl Tree {
     }
 
     /// Close a tree item, causing the children to be hidden
+    /// # Errors
+    /// Errors on failure to close an item
     pub fn close(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
@@ -474,6 +479,8 @@ impl Tree {
     }
 
     /// Select a tree item
+    /// # Errors
+    /// Errors on failure to select an item
     pub fn select(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
@@ -497,6 +504,8 @@ impl Tree {
     }
 
     /// Deselect an item at `path` and determine whether to do the callback
+    /// # Errors
+    /// Errors on failure to deselect item
     pub fn deselect(&mut self, path: &str, do_callback: bool) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let path = CString::safe_new(path);
@@ -513,6 +522,8 @@ impl Tree {
     }
 
     /// Deselect all items
+    /// # Errors
+    /// Errors on failure to deselect all items
     pub fn deselect_all(&mut self, item: &TreeItem, do_callback: bool) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         if item.inner.is_null() {
@@ -527,6 +538,8 @@ impl Tree {
     }
 
     /// Select only the specified item, deselecting all others that might be selected.
+    /// # Errors
+    /// Errors on failure to select an item
     pub fn select_only(
         &mut self,
         selected_item: &TreeItem,
@@ -545,6 +558,8 @@ impl Tree {
     }
 
     /// Select all items
+    /// # Errors
+    /// Errors on failure to select an item
     pub fn select_all(&mut self, item: &TreeItem, do_callback: bool) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         if item.inner.is_null() {
@@ -558,7 +573,9 @@ impl Tree {
         }
     }
 
-    /// Extend the selection between and including ```from``` and ```to``` in a certain direction
+    /// Extend the selection between and including `from` and `to` in a certain direction
+    /// # Errors
+    /// Errors on failure to extend selection in direction
     pub fn extend_selection_dir(
         &mut self,
         from: &TreeItem,
@@ -586,7 +603,9 @@ impl Tree {
         }
     }
 
-    /// Extend the selection between and including ```from``` and ```to```
+    /// Extend the selection between and including `from` and `to`
+    /// # Errors
+    /// Errors on failure to extend selection
     pub fn extend_selection(
         &mut self,
         from: &TreeItem,
@@ -939,13 +958,13 @@ impl Tree {
         unsafe { Fl_Tree_set_sortorder(self.inner, val as i32) }
     }
 
-    /// Gets the select frame(Fl_Box)
+    /// Gets the select frame
     pub fn select_frame(&self) -> FrameType {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_selectbox(self.inner)) }
     }
 
-    /// Sets the select frame(Fl_Box)
+    /// Sets the select frame
     pub fn set_select_frame(&mut self, val: FrameType) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_selectbox(self.inner, val as i32) }
@@ -1133,16 +1152,15 @@ impl IntoIterator for Tree {
     type IntoIter = std::vec::IntoIter<Self::Item>;
 
     fn into_iter(self) -> Self::IntoIter {
-        if let Some(items) = self.get_items() {
-            items.into_iter()
-        } else {
-            Vec::with_capacity(0).into_iter()
-        }
+        self.get_items().map_or_else(
+            || Vec::with_capacity(0).into_iter(),
+            std::iter::IntoIterator::into_iter,
+        )
     }
 }
 
 impl TreeItem {
-    /// Create a TreeItem from a raw pointer
+    /// Create a `TreeItem` from a raw pointer
     /// # Safety
     /// The pointer must be valid
     pub unsafe fn from_raw(ptr: *mut Fl_Tree_Item) -> Option<TreeItem> {
@@ -1346,6 +1364,8 @@ impl TreeItem {
     }
 
     /// Find a child using its name, returns index result
+    /// # Errors
+    /// Errors on failure to find child
     pub fn find_child(&mut self, name: &str) -> Result<i32, FltkError> {
         assert!(!self.was_deleted());
         let name = CString::safe_new(name);
@@ -1360,6 +1380,8 @@ impl TreeItem {
     }
 
     /// Remove child using its name
+    /// # Errors
+    /// Errors on failure to remove child
     pub fn remove_child(&mut self, new_label: &str) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let new_label = CString::safe_new(new_label);
@@ -1378,6 +1400,8 @@ impl TreeItem {
     }
 
     /// Swap children a and b
+    /// # Errors
+    /// Errors on failure to swap children
     pub fn swap_children(&mut self, a: &TreeItem, b: &TreeItem) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !a.was_deleted() && !b.was_deleted());
         unsafe {
@@ -1427,6 +1451,8 @@ impl TreeItem {
     }
 
     /// Reparent a child by index
+    /// # Errors
+    /// Errors on failure to move item   
     pub fn reparent(&mut self, new_child: &TreeItem, index: i32) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !new_child.was_deleted());
         if index < 0 || index >= self.children() {
@@ -1441,6 +1467,8 @@ impl TreeItem {
     }
 
     /// Move item
+    /// # Errors
+    /// Errors on failure to move item   
     pub fn move_item(&mut self, to: i32, from: i32) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
@@ -1452,6 +1480,8 @@ impl TreeItem {
     }
 
     /// Move item above another item
+    /// # Errors
+    /// Errors on failure to move item   
     pub fn move_above(&mut self, item: &TreeItem) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !item.was_deleted());
         unsafe {
@@ -1463,6 +1493,8 @@ impl TreeItem {
     }
 
     /// Move item below another item
+    /// # Errors
+    /// Errors on failure to move item   
     pub fn move_below(&mut self, item: &TreeItem) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !item.was_deleted());
         unsafe {
@@ -1474,6 +1506,8 @@ impl TreeItem {
     }
 
     /// Move item into another item
+    /// # Errors
+    /// Errors on failure to move item    
     pub fn move_into(&mut self, item: &TreeItem, pos: i32) -> Result<(), FltkError> {
         assert!(!self.was_deleted() && !item.was_deleted());
         unsafe {
@@ -1737,7 +1771,7 @@ impl TreeItemArray {
         unsafe { TreeItem::from_raw(Fl_Tree_Item_Array_at(self.inner, idx as i32)) }
     }
 
-    /// Transforms the TreeItemArray into a vector
+    /// Transforms the `TreeItemArray` into a vector
     fn into_vec(self) -> Option<Vec<TreeItem>> {
         let c = self.total();
         let mut v: Vec<TreeItem> = vec![];
@@ -1759,11 +1793,10 @@ impl IntoIterator for TreeItemArray {
     type IntoIter = std::vec::IntoIter<Self::Item>;
 
     fn into_iter(self) -> Self::IntoIter {
-        if let Some(items) = self.into_vec() {
-            items.into_iter()
-        } else {
-            Vec::with_capacity(0).into_iter()
-        }
+        self.into_vec().map_or_else(
+            || Vec::with_capacity(0).into_iter(),
+            std::iter::IntoIterator::into_iter,
+        )
     }
 }
 

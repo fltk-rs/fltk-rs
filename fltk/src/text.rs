@@ -1,7 +1,7 @@
-use crate::enums::*;
+use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, Key, LabelType};
 use crate::image::Image;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::text::*;
 use std::{
     ffi::{CStr, CString},
@@ -48,7 +48,7 @@ impl TextBuffer {
         }
     }
 
-    /// Deletes the TextBuffer
+    /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
     pub unsafe fn delete(mut buf: Self) {
@@ -56,7 +56,7 @@ impl TextBuffer {
         buf.inner = std::ptr::null_mut::<Fl_Text_Buffer>();
     }
 
-    /// Deletes the TextBuffer
+    /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
     pub unsafe fn delete_buffer(mut buf: TextBuffer) {
@@ -192,6 +192,8 @@ impl TextBuffer {
     }
 
     /// Performs an undo operation on the buffer
+    /// # Errors
+    /// Errors on failure to undo
     pub fn undo(&mut self) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         unsafe {
@@ -209,6 +211,8 @@ impl TextBuffer {
     }
 
     /// Loads a file into the buffer
+    /// # Errors
+    /// Errors on failure to load file
     pub fn load_file<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         if !path.as_ref().exists() {
@@ -228,6 +232,8 @@ impl TextBuffer {
     }
 
     /// Saves a buffer into a file
+    /// # Errors
+    /// Errors on failure to save file
     pub fn save_file<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         let path = path
@@ -280,11 +286,11 @@ impl TextBuffer {
             let start: *mut raw::c_int = std::ptr::null_mut();
             let end: *mut raw::c_int = std::ptr::null_mut();
             let ret = Fl_Text_Buffer_selection_position(self.inner, start, end);
-            if ret != 0 {
+            if ret == 0 {
+                None
+            } else {
                 let x = (*start as i32, *end as i32);
                 Some(x)
-            } else {
-                None
             }
         }
     }
@@ -339,11 +345,11 @@ impl TextBuffer {
             let start: *mut raw::c_int = std::ptr::null_mut();
             let end: *mut raw::c_int = std::ptr::null_mut();
             let ret = Fl_Text_Buffer_highlight_position(self.inner, start, end);
-            if ret != 0 {
+            if ret == 0 {
+                None
+            } else {
                 let x = (*start as i32, *end as i32);
                 Some(x)
-            } else {
-                None
             }
         }
     }
@@ -404,7 +410,7 @@ impl TextBuffer {
 
     /// Adds a modify callback.
     /// callback args:
-    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
+    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
     pub fn add_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self.inner.is_null());
         unsafe {
@@ -416,10 +422,10 @@ impl TextBuffer {
                 deleted_text: *const raw::c_char,
                 data: *mut raw::c_void,
             ) {
-                let temp = if !deleted_text.is_null() {
-                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
-                } else {
+                let temp = if deleted_text.is_null() {
                     String::from("")
+                } else {
+                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
                 };
                 let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
                     data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
@@ -444,7 +450,7 @@ impl TextBuffer {
 
     /// Removes a modify callback.
     /// callback args:
-    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, deleted_text
+    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
     pub fn remove_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {
         assert!(!self.inner.is_null());
         unsafe {
@@ -456,10 +462,10 @@ impl TextBuffer {
                 deleted_text: *const raw::c_char,
                 data: *mut raw::c_void,
             ) {
-                let temp = if !deleted_text.is_null() {
-                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
-                } else {
+                let temp = if deleted_text.is_null() {
                     String::from("")
+                } else {
+                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
                 };
                 let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
                     data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
@@ -556,7 +562,7 @@ pub struct TextEditor {
 
 /// Creates an editable text display widget to handle terminal-like behavior, such as
 /// logging events or debug information.
-/// SimpleTerminal already has an internal buffer.
+/// `SimpleTerminal` already has an internal buffer.
 /// It is NOT is a full terminal emulator; it does NOT
 /// handle stdio redirection, pipes, pseudo ttys, termio character cooking,
 /// keyboard input processing, screen addressing, random cursor positioning,
@@ -567,7 +573,7 @@ pub struct SimpleTerminal {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
-/// Defines the styles used in the set_highlight_data, which is used with style buffers
+/// Defines the styles used in the `set_highlight_data`, which is used with style buffers
 #[derive(Debug, Clone, Copy)]
 pub struct StyleTableEntry {
     /// Font color
@@ -607,7 +613,7 @@ impl TextEditor {
         unsafe { Fl_Text_Editor_tab_nav(self.inner) != 0 }
     }
 
-    /// Copies the text within the TextEditor widget
+    /// Copies the text within the `TextEditor` widget
     pub fn copy(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -616,7 +622,7 @@ impl TextEditor {
         }
     }
 
-    /// Cuts the text within the TextEditor widget
+    /// Cuts the text within the `TextEditor` widget
     pub fn cut(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -625,7 +631,7 @@ impl TextEditor {
         }
     }
 
-    /// Pastes text from the clipboard into the TextEditor widget
+    /// Pastes text from the clipboard into the `TextEditor` widget
     pub fn paste(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
@@ -634,7 +640,7 @@ impl TextEditor {
         }
     }
 
-    /// Undo changes in the TextEditor widget
+    /// Undo changes in the `TextEditor` widget
     pub fn undo(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());

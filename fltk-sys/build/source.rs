@@ -149,7 +149,7 @@ pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
             .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
             .build();
     } else {
-        crate::android::build(out_dir.clone(), target_triple.clone());
+        crate::android::build(out_dir, target_triple.clone());
     }
 
     if target_triple.contains("android") || target_triple.contains("windows") {

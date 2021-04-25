@@ -8,9 +8,6 @@ pub struct Fl_Widget {
 pub type Fl_Callback =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
 pub type custom_handler_callback = ::core::option::Option<
-    unsafe extern "C" fn(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int,
->;
-pub type custom_handler_callback2 = ::core::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
         arg2: libc::c_int,
@@ -18,8 +15,6 @@ pub type custom_handler_callback2 = ::core::option::Option<
     ) -> libc::c_int,
 >;
 pub type custom_draw_callback =
-    ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>;
-pub type custom_draw_callback2 =
     ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
 extern "C" {
     pub fn Fl_Widget_new(
@@ -168,21 +163,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Widget_handle2(
-        self_: *mut Fl_Widget,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
-}
-extern "C" {
-    pub fn Fl_Widget_draw2(
-        self_: *mut Fl_Widget,
-        cb: custom_draw_callback2,
-        data: *mut libc::c_void,
-    );
 }
 extern "C" {
     pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
@@ -438,23 +419,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Browser_handle2(
-        self_: *mut Fl_Browser,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Browser_draw(
         self_: *mut Fl_Browser,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Browser_draw2(
-        self_: *mut Fl_Browser,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -844,23 +811,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Hold_Browser_handle2(
-        self_: *mut Fl_Hold_Browser,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Hold_Browser_draw(
         self_: *mut Fl_Hold_Browser,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Hold_Browser_draw2(
-        self_: *mut Fl_Hold_Browser,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -1267,23 +1220,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Select_Browser_handle2(
-        self_: *mut Fl_Select_Browser,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Select_Browser_draw(
         self_: *mut Fl_Select_Browser,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Select_Browser_draw2(
-        self_: *mut Fl_Select_Browser,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -1702,23 +1641,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Multi_Browser_handle2(
-        self_: *mut Fl_Multi_Browser,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Multi_Browser_draw(
         self_: *mut Fl_Multi_Browser,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Multi_Browser_draw2(
-        self_: *mut Fl_Multi_Browser,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2130,23 +2055,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_File_Browser_handle2(
-        self_: *mut Fl_File_Browser,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_File_Browser_draw(
         self_: *mut Fl_File_Browser,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_File_Browser_draw2(
-        self_: *mut Fl_File_Browser,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }
@@ -2571,23 +2482,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Check_Browser_handle2(
-        self_: *mut Fl_Check_Browser,
-        cb: custom_handler_callback2,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
     pub fn Fl_Check_Browser_draw(
         self_: *mut Fl_Check_Browser,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
-    );
-}
-extern "C" {
-    pub fn Fl_Check_Browser_draw2(
-        self_: *mut Fl_Check_Browser,
-        cb: custom_draw_callback2,
         data: *mut libc::c_void,
     );
 }

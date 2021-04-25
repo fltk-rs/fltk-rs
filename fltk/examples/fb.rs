@@ -1,7 +1,7 @@
 use fltk::{app, draw, frame, prelude::*, window::Window};
 
-const WIDTH: u32 = 600;
-const HEIGHT: u32 = 400;
+const WIDTH: i32 = 600;
+const HEIGHT: i32 = 400;
 const CIRCLE_RADIUS: i16 = 64;
 
 struct World {
@@ -14,7 +14,7 @@ struct World {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let app = app::App::default();
     let mut win = Window::default()
-        .with_size(WIDTH as i32, HEIGHT as i32)
+        .with_size(WIDTH, HEIGHT)
         .with_label("Framebuffer");
     let mut frame = frame::Frame::default().size_of(&win);
     win.end();
@@ -23,6 +23,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let mut framebuf: Vec<u8> = vec![0; (WIDTH * HEIGHT * 4) as usize];
     let mut world = World::new();
+
     unsafe {
         draw::draw_rgba_nocopy(&mut frame, &framebuf);
     }

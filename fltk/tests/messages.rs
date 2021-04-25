@@ -1,4 +1,4 @@
-use fltk::{app, button::*, frame::*, prelude::*, window::*};
+use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 #[test]
 fn messages() {
@@ -24,10 +24,8 @@ fn messages() {
     });
 
     while app.wait() {
-        let msg = r.recv();
-        match msg {
-            Some(val) => frame.set_label(format!("Hello {}", val).as_str()),
-            None => (),
+        if let Some(msg) = r.recv() {
+            frame.set_label(format!("Hello {}", msg).as_str());
         }
     }
 }

@@ -1,11 +1,8 @@
-#![allow(dead_code)]
-
 use fltk::{prelude::*, *};
 use std::ops::{Deref, DerefMut};
 
 struct MyButton {
     grp: group::Group,
-    btn: button::Button,
 }
 
 impl MyButton {
@@ -26,7 +23,7 @@ impl MyButton {
             }
             _ => false,
         });
-        MyButton { grp, btn }
+        MyButton { grp }
     }
 }
 

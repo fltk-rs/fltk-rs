@@ -1,4 +1,4 @@
-use fltk::{app, button::*, frame::*, prelude::*, window::*};
+use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 #[test]
 fn idle() {

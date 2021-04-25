@@ -1,7 +1,7 @@
-use crate::enums::*;
+use crate::enums::{Align, Color, ColorDepth, Cursor, Font, FrameType, Shortcut};
 use crate::image::RgbImage;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::draw::*;
 use std::ffi::{CStr, CString};
 use std::mem;
@@ -39,10 +39,10 @@ bitflags! {
     }
 }
 
-/// Opaque type around Fl_Region
+/// Opaque type around `Fl_Region`
 pub type Region = *mut raw::c_void;
 
-/// Opaque type around Fl_Offscreen
+/// Opaque type around `Fl_Offscreen`
 #[derive(Debug)]
 pub struct Offscreen {
     inner: *mut raw::c_void,
@@ -87,9 +87,9 @@ impl Offscreen {
     }
 
     /// Copies the offscreen
-    pub fn copy(&self, x: i32, y: i32, w: i32, h: i32, srcx: i32, srcy: i32) {
+    pub fn copy(&self, x: i32, y: i32, w: i32, h: i32, src_x: i32, src_y: i32) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_copy_offscreen(x, y, w, h, self.inner, srcx, srcy) }
+        unsafe { Fl_copy_offscreen(x, y, w, h, self.inner, src_x, src_y) }
     }
 
     /// Rescales the offscreen
@@ -432,7 +432,7 @@ pub fn mult_matrix(val_a: f64, val_b: f64, val_c: f64, val_d: f64, x: f64, y: f6
     unsafe { Fl_mult_matrix(val_a, val_b, val_c, val_d, x, y) }
 }
 
-/// Starts drawing a list of points. Points are added to the list with fl_vertex()
+/// Starts drawing a list of points. Points are added to the list with `fl_vertex()`
 pub fn begin_points() {
     unsafe { Fl_begin_points() }
 }
@@ -689,6 +689,8 @@ pub fn reset_spot() {
 /// let mut win = window::Window::default();
 /// let image = draw::capture_window(&mut win).unwrap();
 /// ```
+/// # Errors
+/// The api can fail to capture the window as an image
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     assert!(!win.was_deleted());
     let cp = win.width() * win.height() * 3;
@@ -710,6 +712,8 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
 }
 
 /// Draw a framebuffer (rgba) into a widget
+/// # Errors
+/// Errors on invalid or unsupported image formats
 pub fn draw_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
     let width = wid.width();
     let height = wid.height();
@@ -751,6 +755,8 @@ pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
 }
 
 /// Draw a framebuffer (rgba) into a widget
+/// # Errors
+/// Errors on invalid or unsupported image formats
 pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
     let width = wid.width();
     let height = wid.height();
@@ -792,7 +798,9 @@ pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
 }
 
 /// Draw an image into a widget.
-/// Requires a call to app::set_visual(Mode::Rgb8).unwrap()
+/// Requires a call to `app::set_visual(Mode::Rgb8).unwrap()`
+/// # Errors
+/// Errors on invalid or unsupported image formats
 pub fn draw_image(
     data: &[u8],
     x: i32,

@@ -1,4 +1,4 @@
-use crate::app::*;
+use crate::app::{font_index, FONTS};
 use fltk_sys::fl::Fl_get_rgb_color;
 
 /// Defines label types
@@ -31,7 +31,7 @@ pub enum ColorDepth {
     Rgba8 = 4,
 }
 
-/// Defines the frame types which can be set using the set_frame() and set_down_frame() methods
+/// Defines the frame types which can be set using the `set_frame()` and `set_down_frame()` methods
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum FrameType {
@@ -159,23 +159,23 @@ impl FrameType {
     }
 
     /// Get the frame's x offset
-    pub fn dx(&self) -> i32 {
-        unsafe { fltk_sys::fl::Fl_box_dx(*self as i32) }
+    pub fn dx(self) -> i32 {
+        unsafe { fltk_sys::fl::Fl_box_dx(self as i32) }
     }
 
     /// Get the frame's y offset
-    pub fn dy(&self) -> i32 {
-        unsafe { fltk_sys::fl::Fl_box_dy(*self as i32) }
+    pub fn dy(self) -> i32 {
+        unsafe { fltk_sys::fl::Fl_box_dy(self as i32) }
     }
 
     /// Get the frame's width offset
-    pub fn dw(&self) -> i32 {
-        unsafe { fltk_sys::fl::Fl_box_dw(*self as i32) }
+    pub fn dw(self) -> i32 {
+        unsafe { fltk_sys::fl::Fl_box_dw(self as i32) }
     }
 
     /// Get the frame's height offset
-    pub fn dh(&self) -> i32 {
-        unsafe { fltk_sys::fl::Fl_box_dh(*self as i32) }
+    pub fn dh(self) -> i32 {
+        unsafe { fltk_sys::fl::Fl_box_dh(self as i32) }
     }
 }
 
@@ -268,7 +268,7 @@ bitflags! {
 }
 
 impl Font {
-    /// Returns a font by index, can be queried via the app::get_font_names()
+    /// Returns a font by index, can be queried via the `app::get_font_names()`
     pub fn by_index(idx: usize) -> Font {
         unsafe {
             if idx < (*FONTS.lock().unwrap()).len() {
@@ -279,7 +279,7 @@ impl Font {
         }
     }
 
-    /// Gets the font by its name, can be queried via the app::get_font_names()
+    /// Gets the font by its name, can be queried via the `app::get_font_names()`
     pub fn by_name(name: &str) -> Font {
         match font_index(name) {
             Some(val) => Font::by_index(val),

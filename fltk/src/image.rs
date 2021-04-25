@@ -1,6 +1,6 @@
-use crate::enums::*;
+use crate::enums::ColorDepth;
 use crate::prelude::*;
-use crate::utils::*;
+use crate::utils::FlString;
 use fltk_sys::image::*;
 use std::{
     ffi::CString,
@@ -8,7 +8,7 @@ use std::{
     sync::atomic::{AtomicUsize, Ordering},
 };
 
-/// Wrapper around Fl_Image, used to wrap other image types
+/// Wrapper around `Fl_Image`, used to wrap other image types
 #[derive(ImageExt, Debug)]
 pub struct Image {
     inner: *mut Fl_Image,
@@ -23,7 +23,9 @@ pub struct SharedImage {
 }
 
 impl SharedImage {
-    /// Loads a SharedImage from a path
+    /// Loads a `SharedImage` from a path
+    /// # Errors
+    /// Errors on non-existent path or invalid format
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<SharedImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -52,9 +54,12 @@ impl SharedImage {
         }
     }
 
-    /// Loads a SharedImage from an image
-    pub fn from_image<I: ImageExt>(image: I) -> Result<SharedImage, FltkError> {
+    /// Loads a `SharedImage` from an image
+    /// # Errors
+    /// Errors on unsupported `SharedImage` types
+    pub fn from_image<I: ImageExt>(mut image: I) -> Result<SharedImage, FltkError> {
         unsafe {
+            image.increment_arc();
             let x = Fl_Shared_Image_from_rgb(image.as_image_ptr() as *mut Fl_RGB_Image, 0);
             if x.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -80,6 +85,8 @@ pub struct JpegImage {
 
 impl JpegImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<JpegImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -109,6 +116,8 @@ impl JpegImage {
     }
 
     /// Loads the image from data/memory
+    /// # Errors
+    /// Errors on invalid format
     pub fn from_data(data: &[u8]) -> Result<JpegImage, FltkError> {
         unsafe {
             if data.is_empty() {
@@ -140,6 +149,8 @@ pub struct PngImage {
 
 impl PngImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<PngImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -169,6 +180,8 @@ impl PngImage {
     }
 
     /// Loads the image from data/memory
+    /// # Errors
+    /// Errors on invalid format
     pub fn from_data(data: &[u8]) -> Result<PngImage, FltkError> {
         unsafe {
             if data.is_empty() {
@@ -200,6 +213,8 @@ pub struct SvgImage {
 
 impl SvgImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<SvgImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -229,6 +244,8 @@ impl SvgImage {
     }
 
     /// Loads the image from data/memory
+    /// # Errors
+    /// Errors on invalid format
     pub fn from_data(data: &str) -> Result<SvgImage, FltkError> {
         if data.is_empty() {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -261,6 +278,8 @@ pub struct BmpImage {
 
 impl BmpImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<BmpImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -290,6 +309,8 @@ impl BmpImage {
     }
 
     /// Loads the image from data/memory
+    /// # Errors
+    /// Errors on invalid format
     pub fn from_data(data: &[u8]) -> Result<BmpImage, FltkError> {
         unsafe {
             if data.is_empty() {
@@ -321,6 +342,8 @@ pub struct GifImage {
 
 impl GifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<GifImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -350,6 +373,8 @@ impl GifImage {
     }
 
     /// Loads the image from data/memory
+    /// # Errors
+    /// Errors on invalid format
     pub fn from_data(data: &[u8]) -> Result<GifImage, FltkError> {
         unsafe {
             if data.is_empty() {
@@ -381,6 +406,8 @@ pub struct XpmImage {
 
 impl XpmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<XpmImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -419,6 +446,8 @@ pub struct XbmImage {
 
 impl XbmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<XbmImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -457,6 +486,8 @@ pub struct PnmImage {
 
 impl PnmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<PnmImage, FltkError> {
         Self::load_(path.as_ref())
     }
@@ -495,8 +526,9 @@ pub struct TiledImage {
 
 impl TiledImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn new<Img: ImageExt>(img: Img, w: i32, h: i32) -> TiledImage {
+    pub fn new<Img: ImageExt>(mut img: Img, w: i32, h: i32) -> TiledImage {
         unsafe {
+            img.increment_arc();
             let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
             assert!(!ptr.is_null());
             TiledImage {
@@ -516,6 +548,8 @@ pub struct Pixmap {
 
 impl Pixmap {
     /// Creates a new Pixmap image
+    /// # Errors
+    /// Errors on invalid or unsupported image format
     pub fn new(data: &[&str]) -> Result<Pixmap, FltkError> {
         let mut temp_file = std::env::temp_dir();
         temp_file.push("_internal_temp_fltk_file.xpm");
@@ -556,8 +590,10 @@ pub struct RgbImage {
 }
 
 impl RgbImage {
-    /// Initializes a new raw RgbImage, copies the data and handles its lifetime.
+    /// Initializes a new raw `RgbImage`, copies the data and handles its lifetime.
     /// If you need to work with RGB data,
+    /// # Errors
+    /// Errors on invalid or unsupported image format
     pub fn new(data: &[u8], w: i32, h: i32, depth: ColorDepth) -> Result<RgbImage, FltkError> {
         let sz = w * h * depth as i32;
         if sz > data.len() as i32 {
@@ -576,9 +612,11 @@ impl RgbImage {
         }
     }
 
-    /// Initializes a new raw RgbImage from shared data, doesn't handle the data's lifetime
+    /// Initializes a new raw `RgbImage` from shared data, doesn't handle the data's lifetime
     /// # Safety
     /// The data must be valid for the lifetime of the image
+    /// # Errors
+    /// Errors on invalid or unsupported image format
     pub unsafe fn from_data(
         data: &[u8],
         w: i32,
@@ -600,7 +638,7 @@ impl RgbImage {
         }
     }
 
-    /// Deconstructs a raw RgbImage into parts
+    /// Deconstructs a raw `RgbImage` into parts
     /// # Safety
     /// Destructures the image into its raw elements
     pub unsafe fn into_parts(self) -> (Vec<u8>, i32, i32) {
