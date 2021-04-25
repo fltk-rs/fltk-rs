@@ -19,13 +19,13 @@ The bindings live in the fltk and fltk-derive directories. The fltk-derive provi
 The fltk directory contains a prelude which has all the traits exposed by the crate, as well as the error types. Widgets are grouped by their inheritance relations, the outliers being the utils (for utility functions) and misc modules. The misc module contain widgets which are either composite (containing multiple) widgets or widgets directly inheriting from Fl_Widget. 
 
 ### Contributing examples 
-Each example should be in a single file, with no dependencies to other than this crate. This allows each example to be standalone. If you would like to contribute more complex examples, I invite you to contribute them to the fltk-rs-demos [repo](https://github.com/MoAlyousef/fltk-rs-demos). Adding your project or examples/demos using fltk as a dependency or dev-dependency to the Project Showcase issue tracker is also very appreciated. 
+Each example should be in a single file, with no dependencies to other than this crate, or to direct dependencies of fltk (like lazy_static and bitflags). This avoids littering dev-dependencies which would increase CI time. If you would like to contribute more complex examples, I invite you to contribute them to the fltk-rs-demos [repo](https://github.com/MoAlyousef/fltk-rs-demos). Adding your project or examples/demos using fltk as a dependency or dev-dependency to the Project Showcase issue tracker is also very appreciated. 
 
 ### Major API changes
 Please open an issue or a discussion for such changes before going ahead and doing them. It allows for discussion regarding the proposed changes. 
 This crate tries to stay as close as possible to the FLTK api, which offers familiarity to people having used FLTK, 
 and allows easier referral to the official documentation.
 
-### Example workflow
+### Typical workflow
 Given the above info, a normal workflow to add a method to a certain button widget for example would entail adding the method wrapper to the corresponding header file cfl_button.h and an implementation in the cpp file cfl_button.cpp (both in fltk-rs/fltk-sys/cfltk). Running `$ ./fltk-sys/bind.sh` or just the corresponding line to the header file `$ bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_button.h -o fltk-sys/src/button.rs`. If the method is part of the Fl_Button (which corresponds to the the interface implemented by all button widgets), the method is added to the ButtonExt trait, with the implementation added to the fltk-derive/src/button.rs impl_button_trait derive macro. Otherwise it's added directly in the fltk/src/button.rs in the impl of the corresponding button widget. If the method requires special handling or could benefit from an example, add an example to the fltk/examples directory or to the doc comment, showing a minimal example of using that method.
 Running `cargo test` should test the added example whether it was added to the examples directory or the doc comment. 
