@@ -1,10 +1,11 @@
 # Changelog
 
 
-## [1.0.2] - Unreleased
+## [1.0.2] - 2021-04-26
 - Reorganize build script.
 - Remove redundant functions in the bindings.
 - Update FLTK, cfltk, syn.
+- Base on cfltk main branch.
 
 ## [1.0.1] - 2021-04-18
 - Add MenuItem::children().
