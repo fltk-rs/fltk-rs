@@ -62,12 +62,8 @@ impl Editor {
                 dlg.show();
                 filename = dlg.filename().to_string_lossy().to_string();
                 if !filename.is_empty() {
-                    if path::Path::new(&filename).exists() {
-                        self.editor.buffer().unwrap().save_file(&filename)?;
-                        self.saved = true;
-                    } else {
-                        dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
-                    }
+                    self.editor.buffer().unwrap().save_file(&filename).unwrap_or_else(|_| dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!"));
+                    self.saved = true;
                 }
             } else {
                 if path::Path::new(&filename).exists() {
@@ -83,12 +79,8 @@ impl Editor {
             dlg.show();
             filename = dlg.filename().to_string_lossy().to_string();
             if !filename.is_empty() {
-                if path::Path::new(&filename).exists() {
-                    self.editor.buffer().unwrap().save_file(&filename)?;
-                    self.saved = true;
-                } else {
-                    dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
-                }
+                self.editor.buffer().unwrap().save_file(&filename).unwrap_or_else(|_| dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!"));
+                self.saved = true;
             }
         }
         Ok(())
