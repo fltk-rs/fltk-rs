@@ -13,7 +13,7 @@ use std::process::{Command, Stdio};
 use std::sync::Mutex;
 
 lazy_static::lazy_static! {
-    pub static ref CURRENT_DIR: Mutex<String> = { 
+    pub static ref CURRENT_DIR: Mutex<String> = {
         let mut curr = std::env::current_dir().unwrap().to_string_lossy().to_string();
         curr.push_str("$ ");
         Mutex::new(curr)
@@ -76,7 +76,10 @@ impl TerminalFuncs for SimpleTerminal {
     fn change_dir(&mut self, path: &Path) -> String {
         if path.exists() && path.is_dir() {
             std::env::set_current_dir(path).unwrap();
-            let mut path = std::env::current_dir().unwrap().to_string_lossy().to_string();
+            let mut path = std::env::current_dir()
+                .unwrap()
+                .to_string_lossy()
+                .to_string();
             path.push_str("$ ");
             let mut curr = CURRENT_DIR.lock().unwrap();
             *curr = path;
@@ -118,7 +121,7 @@ impl Term {
         let mut sbuf = TextBuffer::default();
         let mut term = SimpleTerminal::new(5, 5, WIDTH - 10, HEIGHT - 10, "");
 
-        term.set_highlight_data(sbuf.clone(), styles);   
+        term.set_highlight_data(sbuf.clone(), styles);
 
         term.handle(move |t, ev| {
             // println!("{:?}", app::event());
@@ -164,9 +167,7 @@ impl Term {
         let curr = CURRENT_DIR.lock().unwrap();
         term.append_dir(&curr);
 
-        Self {
-            term,
-        }
+        Self { term }
     }
 }
 

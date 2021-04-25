@@ -64,7 +64,9 @@ impl MyTable {
             table::TableContext::ColHeader => {
                 Self::draw_header(&format!("{}", (col + 65) as u8 as char), x, y, w, h)
             } // Column titles
-            table::TableContext::RowHeader => Self::draw_header(&format!("{}", row + 1), x, y, w, h), // Row titles
+            table::TableContext::RowHeader => {
+                Self::draw_header(&format!("{}", row + 1), x, y, w, h)
+            } // Row titles
             table::TableContext::Cell => {
                 if t.is_selected(row, col) {
                     cell_c.borrow_mut().select(row, col, x, y, w, h); // Captures the cell information
@@ -118,7 +120,7 @@ impl MyTable {
         draw::draw_text2(txt, x, y, w, h, enums::Align::Center);
         draw::pop_clip();
     }
-    
+
     // The selected flag sets the color of the cell to a grayish color, otherwise white
     fn draw_data(txt: &str, x: i32, y: i32, w: i32, h: i32, selected: bool) {
         draw::push_clip(x, y, w, h);
@@ -132,7 +134,7 @@ impl MyTable {
         draw::draw_text2(txt, x, y, w, h, enums::Align::Center);
         draw::draw_rect(x, y, w, h);
         draw::pop_clip();
-    }    
+    }
 }
 
 fn main() {
