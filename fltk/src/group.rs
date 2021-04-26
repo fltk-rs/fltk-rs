@@ -108,7 +108,7 @@ impl Scroll {
         unsafe { Fl_Scroll_yposition(self.inner) as i32 }
     }
 
-    /// Scrolls from ```from``` to ```to```
+    /// Scrolls from `from` to `to`
     pub fn scroll_to(&mut self, from: i32, to: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Scroll_scroll_to(self.inner, from as i32, to as i32) }

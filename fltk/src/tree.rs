@@ -1038,14 +1038,14 @@ impl Tree {
         unsafe { Fl_Tree_show_item(self.inner, item.inner, y_offset) }
     }
 
-    /// Adjust the vertical scrollbar so that ```item``` is visible
+    /// Adjust the vertical scrollbar so that `item` is visible
     pub fn show_item_top(&mut self, item: &TreeItem) {
         assert!(!self.was_deleted());
         assert!(!item.inner.is_null());
         unsafe { Fl_Tree_show_item_top(self.inner, item.inner) }
     }
 
-    /// Adjust the vertical scrollbar so that ```item``` is in the middle of the display
+    /// Adjust the vertical scrollbar so that `item` is in the middle of the display
     pub fn show_item_middle(&mut self, item: &TreeItem) {
         assert!(!self.was_deleted());
         assert!(!item.inner.is_null());

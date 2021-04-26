@@ -162,7 +162,7 @@ impl TextBuffer {
         unsafe { Fl_Text_Buffer_insert(self.inner, pos as i32, text.as_ptr()) }
     }
 
-    /// Replaces text from position ```start``` to ```end```
+    /// Replaces text from position `start` to `end`
     pub fn replace(&mut self, start: i32, end: i32, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
