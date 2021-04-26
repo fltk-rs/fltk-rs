@@ -2,7 +2,7 @@
 
 
 ## [1.0.3] - Unreleased
-- Fix WidgetExt::set_image leak.
+- Grab correct image for correct drops.
 
 ## [1.0.2] - 2021-04-26
 - Reorganize build script.

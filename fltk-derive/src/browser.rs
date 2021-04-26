@@ -240,10 +240,7 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<Img>) {
                 assert!(!self.was_deleted());
-                let old_image = self.icon(line);
-                if let Some(mut old) = old_image {
-                    unsafe { old.decrement_arc(); }
-                }
+                let _old_image = self.icon(line);
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
                     unsafe { image.increment_arc(); #set_icon(self.inner, line as i32, image.as_image_ptr() as *mut _) }
