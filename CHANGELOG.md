@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.3] - Unreleased
+- Fix WidgetExt::set_image leak.
+
 ## [1.0.2] - 2021-04-26
 - Reorganize build script.
 - Remove redundant functions in the bindings.
