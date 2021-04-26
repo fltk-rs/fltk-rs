@@ -176,7 +176,10 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::GifImage>(), "Gif icons are not supported!");
                 assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::Image>(), "Icon images can't be generic!");
                 assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::TiledImage>(), "TiledImage icons are not supported!");
-                let _old_image = self.image();
+                let old_image = self.icon();
+                if let Some(mut old) = old_image {
+                    unsafe { old.decrement_arc(); }
+                }
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
                     unsafe { image.increment_arc(); #set_icon(self.inner, image.as_image_ptr() as *mut _) }
@@ -330,7 +333,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "Png is not supported!");
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::Image>(), "Images can't be generic!");
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::TiledImage>(), "TiledImage is not supported!");
-                let _old_image = self.shape();
+                let old_image = self.shape();
                 unsafe {
                     let image = if let Some(mut image) = image {
                         image.increment_arc();
