@@ -71,7 +71,7 @@ impl TextBuffer {
         assert!(!ptr.is_null());
         TextBuffer {
             inner: ptr,
-            refcount: AtomicUsize::new(2),
+            refcount: AtomicUsize::new(1),
         }
     }
 

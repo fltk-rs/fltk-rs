@@ -824,13 +824,13 @@ impl Tree {
     pub fn user_icon(&self) -> Option<Box<dyn ImageExt>> {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Tree_usericon(self.inner);
-            if x.is_null() {
+            let image_ptr = Fl_Tree_usericon(self.inner);
+            if image_ptr.is_null() {
                 None
             } else {
-                Some(Box::new(Image::from_image_ptr(
-                    x as *mut fltk_sys::image::Fl_Image,
-                )))
+                let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                img.increment_arc();
+                Some(Box::new(img))
             }
         }
     }
@@ -838,7 +838,12 @@ impl Tree {
     /// Sets the user icon
     pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        let _old_image = self.user_icon();
+        let old_image = self.user_icon();
+        if let Some(mut old_image) = old_image {
+            unsafe {
+                old_image.decrement_arc();
+            }
+        }
         if let Some(mut image) = image {
             assert!(!image.was_deleted());
             unsafe {
@@ -854,13 +859,13 @@ impl Tree {
     pub fn open_icon(&self) -> Option<Box<dyn ImageExt>> {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Tree_openicon(self.inner);
-            if x.is_null() {
+            let image_ptr = Fl_Tree_openicon(self.inner);
+            if image_ptr.is_null() {
                 None
             } else {
-                Some(Box::new(Image::from_image_ptr(
-                    x as *mut fltk_sys::image::Fl_Image,
-                )))
+                let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                img.increment_arc();
+                Some(Box::new(img))
             }
         }
     }
@@ -868,7 +873,12 @@ impl Tree {
     /// Sets the opne icon
     pub fn set_open_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        let _old_image = self.open_icon();
+        let old_image = self.open_icon();
+        if let Some(mut old_image) = old_image {
+            unsafe {
+                old_image.decrement_arc();
+            }
+        }
         if let Some(mut image) = image {
             assert!(!image.was_deleted());
             unsafe {
@@ -884,13 +894,13 @@ impl Tree {
     pub fn close_icon(&self) -> Option<Box<dyn ImageExt>> {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Tree_closeicon(self.inner);
-            if x.is_null() {
+            let image_ptr = Fl_Tree_closeicon(self.inner);
+            if image_ptr.is_null() {
                 None
             } else {
-                Some(Box::new(Image::from_image_ptr(
-                    x as *mut fltk_sys::image::Fl_Image,
-                )))
+                let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                img.increment_arc();
+                Some(Box::new(img))
             }
         }
     }
@@ -898,7 +908,12 @@ impl Tree {
     /// Sets the opne icon
     pub fn set_close_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        let _old_image = self.close_icon();
+        let old_image = self.close_icon();
+        if let Some(mut old_image) = old_image {
+            unsafe {
+                old_image.decrement_arc();
+            }
+        }
         if let Some(mut image) = image {
             assert!(!image.was_deleted());
             unsafe {

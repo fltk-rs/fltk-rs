@@ -220,7 +220,9 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     if buffer.is_null() {
                         None
                     } else {
-                        Some(TextBuffer::from_ptr(buffer))
+                        let mut buf = TextBuffer::from_ptr(buffer);
+                        buf.refcount.fetch_add(1, Ordering::Relaxed);
+                        Some(buf)
                     }
                 }
             }
@@ -229,7 +231,10 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     if let Some(buffer) = buffer.into() {
-                        let _old_buf = self.buffer();
+                        let old_buf = self.buffer();
+                        if let Some(mut old_buf) = old_buf {
+                            old_buf.refcount.fetch_sub(1, Ordering::Relaxed);
+                        }
                         buffer.refcount.fetch_add(1, Ordering::Relaxed);
                         #set_buffer(self.inner, buffer.as_ptr())
                     } else {
@@ -245,7 +250,9 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     if buffer.is_null() {
                         None
                     } else {
-                        Some(TextBuffer::from_ptr(buffer))
+                        let mut buf = TextBuffer::from_ptr(buffer);
+                        buf.refcount.fetch_add(1, Ordering::Relaxed);
+                        Some(buf)
                     }
                 }
             }
@@ -407,7 +414,10 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(entries.len() < 29);
                 if entries.len() == 0 { return; }
                 if let Some(style_buffer) = style_buffer.into() {
-                    let _old_buf = self.style_buffer();
+                    let old_buf = self.style_buffer();
+                    if let Some(mut old_buf) = old_buf {
+                        old_buf.refcount.fetch_sub(1, Ordering::Relaxed);
+                    }
                     style_buffer.refcount.fetch_add(1, Ordering::Relaxed);
                     let mut colors: Vec<u32> = vec![];
                     let mut fonts: Vec<i32> = vec![];
