@@ -3,6 +3,7 @@
 
 ## [1.0.3] - Unreleased
 - Grab correct image for correct drops.
+- Fix `enable-glwindow` builds.
 
 ## [1.0.2] - 2021-04-26
 - Reorganize build script.
