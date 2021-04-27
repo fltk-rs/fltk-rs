@@ -1,6 +1,8 @@
+#![allow(unused_imports)]
+
 use crate::app::screen_size;
 use crate::enums::{
-    Align, CallbackTrigger, Color, Cursor, Damage, Event, Font, FrameType, LabelType
+    Align, CallbackTrigger, Color, Cursor, Damage, Event, Font, FrameType, LabelType, Mode
 };
 use crate::image::Image;
 use crate::prelude::*;
@@ -567,13 +569,13 @@ impl GlWindow {
     }
 
     /// Get the Mode of the GlWindow
-    pub fn mode(&self) -> crate::enums::Mode {
+    pub fn mode(&self) -> Mode {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Gl_Window_mode(self.inner)) }
     }
 
     /// Set the Mode of the GlWindow
-    pub fn set_mode(&mut self, mode: crate::enums::Mode) {
+    pub fn set_mode(&mut self, mode: Mode) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Gl_Window_set_mode(self.inner, mode.bits());
@@ -715,13 +717,13 @@ impl GlutWindow {
     }
 
     /// Get the Mode of the GlutWindow
-    pub fn mode(&self) -> crate::enums::Mode {
+    pub fn mode(&self) -> Mode {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Glut_Window_mode(self.inner)) }
     }
 
     /// Set the Mode of the GlutWindow
-    pub fn set_mode(&mut self, mode: crate::enums::Mode) {
+    pub fn set_mode(&mut self, mode: Mode) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Glut_Window_set_mode(self.inner, mode.bits());
