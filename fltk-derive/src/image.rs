@@ -39,10 +39,9 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
             fn drop(&mut self) {
                 if !self.was_deleted() {
                     self.refcount.fetch_sub(1, Ordering::Relaxed);
-                    if *self.refcount.get_mut() == 0 {
+                    if *self.refcount.get_mut() < 1 {
                         unsafe {
                             #delete(self.inner);
-                            self.inner = std::ptr::null_mut();
                         }
                     }
                 }
@@ -57,7 +56,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!img.is_null());
                     #name {
                         inner: img,
-                        refcount: AtomicUsize::new(1)
+                        refcount: AtomicUsize::new(2)
                     }
                 }
             }

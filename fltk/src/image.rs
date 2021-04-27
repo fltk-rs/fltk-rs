@@ -48,7 +48,7 @@ impl SharedImage {
                 }
                 Ok(SharedImage {
                     inner: x,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -57,9 +57,8 @@ impl SharedImage {
     /// Loads a `SharedImage` from an image
     /// # Errors
     /// Errors on unsupported `SharedImage` types
-    pub fn from_image<I: ImageExt>(mut image: I) -> Result<SharedImage, FltkError> {
+    pub fn from_image<I: ImageExt>(image: I) -> Result<SharedImage, FltkError> {
         unsafe {
-            image.increment_arc();
             let x = Fl_Shared_Image_from_rgb(image.as_image_ptr() as *mut Fl_RGB_Image, 0);
             if x.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -69,7 +68,7 @@ impl SharedImage {
                 }
                 Ok(SharedImage {
                     inner: x,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -109,7 +108,7 @@ impl JpegImage {
                 }
                 Ok(JpegImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -132,7 +131,7 @@ impl JpegImage {
                     }
                     Ok(JpegImage {
                         inner: x,
-                        refcount: AtomicUsize::new(1),
+                        refcount: AtomicUsize::new(2),
                     })
                 }
             }
@@ -173,7 +172,7 @@ impl PngImage {
                 }
                 Ok(PngImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -196,7 +195,7 @@ impl PngImage {
                     }
                     Ok(PngImage {
                         inner: x,
-                        refcount: AtomicUsize::new(1),
+                        refcount: AtomicUsize::new(2),
                     })
                 }
             }
@@ -237,7 +236,7 @@ impl SvgImage {
                 }
                 Ok(SvgImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -261,7 +260,7 @@ impl SvgImage {
                     }
                     Ok(SvgImage {
                         inner: x,
-                        refcount: AtomicUsize::new(1),
+                        refcount: AtomicUsize::new(2),
                     })
                 }
             }
@@ -302,7 +301,7 @@ impl BmpImage {
                 }
                 Ok(BmpImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -325,7 +324,7 @@ impl BmpImage {
                     }
                     Ok(BmpImage {
                         inner: x,
-                        refcount: AtomicUsize::new(1),
+                        refcount: AtomicUsize::new(2),
                     })
                 }
             }
@@ -366,7 +365,7 @@ impl GifImage {
                 }
                 Ok(GifImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -389,7 +388,7 @@ impl GifImage {
                     }
                     Ok(GifImage {
                         inner: x,
-                        refcount: AtomicUsize::new(1),
+                        refcount: AtomicUsize::new(2),
                     })
                 }
             }
@@ -430,7 +429,7 @@ impl XpmImage {
                 }
                 Ok(XpmImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -470,7 +469,7 @@ impl XbmImage {
                 }
                 Ok(XbmImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -510,7 +509,7 @@ impl PnmImage {
                 }
                 Ok(PnmImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -526,14 +525,13 @@ pub struct TiledImage {
 
 impl TiledImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn new<Img: ImageExt>(mut img: Img, w: i32, h: i32) -> TiledImage {
+    pub fn new<Img: ImageExt>(img: Img, w: i32, h: i32) -> TiledImage {
         unsafe {
-            img.increment_arc();
             let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
             assert!(!ptr.is_null());
             TiledImage {
                 inner: ptr,
-                refcount: AtomicUsize::new(1),
+                refcount: AtomicUsize::new(2),
             }
         }
     }
@@ -575,7 +573,7 @@ impl Pixmap {
                 std::fs::remove_file(temp_file)?;
                 Ok(Pixmap {
                     inner: image_ptr as _,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -606,7 +604,7 @@ impl RgbImage {
             } else {
                 Ok(RgbImage {
                     inner: img,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 })
             }
         }
@@ -633,7 +631,7 @@ impl RgbImage {
         } else {
             Ok(RgbImage {
                 inner: img,
-                refcount: AtomicUsize::new(1),
+                refcount: AtomicUsize::new(2),
             })
         }
     }

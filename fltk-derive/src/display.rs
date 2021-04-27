@@ -220,7 +220,8 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     if buffer.is_null() {
                         None
                     } else {
-                        Some(TextBuffer::from_ptr(buffer))
+                        let mut buf = TextBuffer::from_ptr(buffer);
+                        Some(buf)
                     }
                 }
             }
@@ -230,7 +231,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!self.was_deleted());
                     if let Some(buffer) = buffer.into() {
                         let _old_buf = self.buffer();
-                        buffer.refcount.fetch_add(1, Ordering::Relaxed);
                         #set_buffer(self.inner, buffer.as_ptr())
                     } else {
                         #set_buffer(self.inner, std::ptr::null_mut() as *mut Fl_Text_Buffer)
@@ -245,7 +245,8 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     if buffer.is_null() {
                         None
                     } else {
-                        Some(TextBuffer::from_ptr(buffer))
+                        let mut buf = TextBuffer::from_ptr(buffer);
+                        Some(buf)
                     }
                 }
             }
@@ -408,7 +409,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 if entries.len() == 0 { return; }
                 if let Some(style_buffer) = style_buffer.into() {
                     let _old_buf = self.style_buffer();
-                    style_buffer.refcount.fetch_add(1, Ordering::Relaxed);
                     let mut colors: Vec<u32> = vec![];
                     let mut fonts: Vec<i32> = vec![];
                     let mut sizes: Vec<i32> = vec![];

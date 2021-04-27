@@ -824,13 +824,11 @@ impl Tree {
     pub fn user_icon(&self) -> Option<Box<dyn ImageExt>> {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Tree_usericon(self.inner);
-            if x.is_null() {
+            let image_ptr = Fl_Tree_usericon(self.inner);
+            if image_ptr.is_null() {
                 None
             } else {
-                Some(Box::new(Image::from_image_ptr(
-                    x as *mut fltk_sys::image::Fl_Image,
-                )))
+                Some(Box::new(Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image)))
             }
         }
     }
@@ -838,11 +836,10 @@ impl Tree {
     /// Sets the user icon
     pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        let _old_image = self.image();
-        if let Some(mut image) = image {
+        let _old_image = self.user_icon();
+        if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                image.increment_arc();
                 Fl_Tree_set_usericon(self.inner, image.as_image_ptr() as *mut _)
             }
         } else {
@@ -854,13 +851,11 @@ impl Tree {
     pub fn open_icon(&self) -> Option<Box<dyn ImageExt>> {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Tree_openicon(self.inner);
-            if x.is_null() {
+            let image_ptr = Fl_Tree_openicon(self.inner);
+            if image_ptr.is_null() {
                 None
             } else {
-                Some(Box::new(Image::from_image_ptr(
-                    x as *mut fltk_sys::image::Fl_Image,
-                )))
+                Some(Box::new(Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image)))
             }
         }
     }
@@ -868,11 +863,10 @@ impl Tree {
     /// Sets the opne icon
     pub fn set_open_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        let _old_image = self.image();
-        if let Some(mut image) = image {
+        let _old_image = self.open_icon();
+        if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                image.increment_arc();
                 Fl_Tree_set_openicon(self.inner, image.as_image_ptr() as *mut _)
             }
         } else {
@@ -884,13 +878,11 @@ impl Tree {
     pub fn close_icon(&self) -> Option<Box<dyn ImageExt>> {
         assert!(!self.was_deleted());
         unsafe {
-            let x = Fl_Tree_closeicon(self.inner);
-            if x.is_null() {
+            let image_ptr = Fl_Tree_closeicon(self.inner);
+            if image_ptr.is_null() {
                 None
             } else {
-                Some(Box::new(Image::from_image_ptr(
-                    x as *mut fltk_sys::image::Fl_Image,
-                )))
+                Some(Box::new(Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image)))
             }
         }
     }
@@ -898,11 +890,10 @@ impl Tree {
     /// Sets the opne icon
     pub fn set_close_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        let _old_image = self.image();
-        if let Some(mut image) = image {
+        let _old_image = self.close_icon();
+        if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                image.increment_arc();
                 Fl_Tree_set_closeicon(self.inner, image.as_image_ptr() as *mut _)
             }
         } else {
@@ -1038,14 +1029,14 @@ impl Tree {
         unsafe { Fl_Tree_show_item(self.inner, item.inner, y_offset) }
     }
 
-    /// Adjust the vertical scrollbar so that ```item``` is visible
+    /// Adjust the vertical scrollbar so that `item` is visible
     pub fn show_item_top(&mut self, item: &TreeItem) {
         assert!(!self.was_deleted());
         assert!(!item.inner.is_null());
         unsafe { Fl_Tree_show_item_top(self.inner, item.inner) }
     }
 
-    /// Adjust the vertical scrollbar so that ```item``` is in the middle of the display
+    /// Adjust the vertical scrollbar so that `item` is in the middle of the display
     pub fn show_item_middle(&mut self, item: &TreeItem) {
         assert!(!self.was_deleted());
         assert!(!item.inner.is_null());

@@ -1,6 +1,8 @@
+#![allow(unused_imports)]
+
 use crate::app::screen_size;
 use crate::enums::{
-    Align, CallbackTrigger, Color, Cursor, Damage, Event, Font, FrameType, LabelType,
+    Align, CallbackTrigger, Color, Cursor, Damage, Event, Font, FrameType, LabelType, Mode
 };
 use crate::image::Image;
 use crate::prelude::*;

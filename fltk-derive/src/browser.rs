@@ -240,10 +240,10 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<Img>) {
                 assert!(!self.was_deleted());
-                let _old_image = self.image();
-                if let Some(mut image) = image {
+                let _old_image = self.icon(line);
+                if let Some(image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { image.increment_arc(); #set_icon(self.inner, line as i32, image.as_image_ptr() as *mut _) }
+                    unsafe { #set_icon(self.inner, line as i32, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_icon(self.inner, line as i32, std::ptr::null_mut() as *mut raw::c_void) }
                 }
@@ -252,11 +252,12 @@ pub fn impl_browser_trait(ast: &DeriveInput) -> TokenStream {
             fn icon(&self, line: i32) -> Option<Box<dyn ImageExt>> {
                 unsafe {
                     assert!(!self.was_deleted());
-                    let icon_ptr = #icon(self.inner, line as i32);
-                    if icon_ptr.is_null() {
+                    let image_ptr = #icon(self.inner, line as i32);
+                    if image_ptr.is_null() {
                         None
                     } else {
-                        Some(Box::new(Image::from_image_ptr(icon_ptr as *mut fltk_sys::image::Fl_Image)))
+                        let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                        Some(Box::new(img))
                     }
                 }
             }

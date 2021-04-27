@@ -458,7 +458,7 @@ pub unsafe trait WindowExt: GroupExt {
     fn center_screen(self) -> Self
     where
         Self: Sized;
-    /// Makes a window modal, should be called before ```show```
+    /// Makes a window modal, should be called before `show`
     fn make_modal(&mut self, val: bool);
     /// Makes a window fullscreen
     fn fullscreen(&mut self, val: bool);
