@@ -828,9 +828,7 @@ impl Tree {
             if image_ptr.is_null() {
                 None
             } else {
-                let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                img.increment_arc();
-                Some(Box::new(img))
+                Some(Box::new(Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image)))
             }
         }
     }
@@ -838,16 +836,10 @@ impl Tree {
     /// Sets the user icon
     pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        let old_image = self.user_icon();
-        if let Some(mut old_image) = old_image {
-            unsafe {
-                old_image.decrement_arc();
-            }
-        }
-        if let Some(mut image) = image {
+        let _old_image = self.user_icon();
+        if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                image.increment_arc();
                 Fl_Tree_set_usericon(self.inner, image.as_image_ptr() as *mut _)
             }
         } else {
@@ -863,9 +855,7 @@ impl Tree {
             if image_ptr.is_null() {
                 None
             } else {
-                let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                img.increment_arc();
-                Some(Box::new(img))
+                Some(Box::new(Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image)))
             }
         }
     }
@@ -873,16 +863,10 @@ impl Tree {
     /// Sets the opne icon
     pub fn set_open_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        let old_image = self.open_icon();
-        if let Some(mut old_image) = old_image {
-            unsafe {
-                old_image.decrement_arc();
-            }
-        }
-        if let Some(mut image) = image {
+        let _old_image = self.open_icon();
+        if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                image.increment_arc();
                 Fl_Tree_set_openicon(self.inner, image.as_image_ptr() as *mut _)
             }
         } else {
@@ -898,9 +882,7 @@ impl Tree {
             if image_ptr.is_null() {
                 None
             } else {
-                let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                img.increment_arc();
-                Some(Box::new(img))
+                Some(Box::new(Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image)))
             }
         }
     }
@@ -908,16 +890,10 @@ impl Tree {
     /// Sets the opne icon
     pub fn set_close_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        let old_image = self.close_icon();
-        if let Some(mut old_image) = old_image {
-            unsafe {
-                old_image.decrement_arc();
-            }
-        }
-        if let Some(mut image) = image {
+        let _old_image = self.close_icon();
+        if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                image.increment_arc();
                 Fl_Tree_set_closeicon(self.inner, image.as_image_ptr() as *mut _)
             }
         } else {

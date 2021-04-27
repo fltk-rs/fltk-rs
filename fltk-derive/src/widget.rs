@@ -922,15 +922,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
-                let old_image = self.image();
-                if let Some(mut old_image) = old_image {
-                    unsafe {
-                        old_image.decrement_arc();
-                    }
-                }
-                if let Some(mut image) = image {
+                let _old_image = self.image();
+                if let Some(image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { image.increment_arc(); #set_image(self.inner, image.as_image_ptr() as *mut _) }
+                    unsafe { #set_image(self.inner, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_image(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
@@ -944,7 +939,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         None
                     } else {
                         let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                        img.increment_arc();
                         Some(Box::new(img))
                     }
                 }
@@ -952,15 +946,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                 assert!(!self.was_deleted());
-                let old_image = self.deimage();
-                if let Some(mut old_image) = old_image {
-                    unsafe {
-                        old_image.decrement_arc();
-                    }
-                }
-                if let Some(mut image) = image {
+                let _old_image = self.deimage();
+                if let Some(image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { image.increment_arc(); #set_deimage(self.inner, image.as_image_ptr() as *mut _) }
+                    unsafe { #set_deimage(self.inner, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_deimage(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
@@ -974,7 +963,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         None
                     } else {
                         let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                        img.increment_arc();
                         Some(Box::new(img))
                     }
                 }

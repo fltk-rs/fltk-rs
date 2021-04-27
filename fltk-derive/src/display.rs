@@ -221,7 +221,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                         None
                     } else {
                         let mut buf = TextBuffer::from_ptr(buffer);
-                        buf.refcount.fetch_add(1, Ordering::Relaxed);
                         Some(buf)
                     }
                 }
@@ -231,11 +230,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     if let Some(buffer) = buffer.into() {
-                        let old_buf = self.buffer();
-                        if let Some(mut old_buf) = old_buf {
-                            old_buf.refcount.fetch_sub(1, Ordering::Relaxed);
-                        }
-                        buffer.refcount.fetch_add(1, Ordering::Relaxed);
+                        let _old_buf = self.buffer();
                         #set_buffer(self.inner, buffer.as_ptr())
                     } else {
                         #set_buffer(self.inner, std::ptr::null_mut() as *mut Fl_Text_Buffer)
@@ -251,7 +246,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                         None
                     } else {
                         let mut buf = TextBuffer::from_ptr(buffer);
-                        buf.refcount.fetch_add(1, Ordering::Relaxed);
                         Some(buf)
                     }
                 }
@@ -414,11 +408,7 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                 debug_assert!(entries.len() < 29);
                 if entries.len() == 0 { return; }
                 if let Some(style_buffer) = style_buffer.into() {
-                    let old_buf = self.style_buffer();
-                    if let Some(mut old_buf) = old_buf {
-                        old_buf.refcount.fetch_sub(1, Ordering::Relaxed);
-                    }
-                    style_buffer.refcount.fetch_add(1, Ordering::Relaxed);
+                    let _old_buf = self.style_buffer();
                     let mut colors: Vec<u32> = vec![];
                     let mut fonts: Vec<i32> = vec![];
                     let mut sizes: Vec<i32> = vec![];

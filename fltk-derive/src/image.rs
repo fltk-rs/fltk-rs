@@ -56,7 +56,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!img.is_null());
                     #name {
                         inner: img,
-                        refcount: AtomicUsize::new(1)
+                        refcount: AtomicUsize::new(2)
                     }
                 }
             }
@@ -103,7 +103,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!ptr.is_null());
                 #name {
                     inner: ptr as *mut #ptr_name,
-                    refcount: AtomicUsize::new(1),
+                    refcount: AtomicUsize::new(2),
                 }
             }
 
