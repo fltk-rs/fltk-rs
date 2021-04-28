@@ -1,12 +1,16 @@
 # Changelog
 
 
-## [1.0.4] - 2021-04-28
+## [1.0.5] - 2021-04-28
+- Revert WindowExt::set_icon to previous behavior.
+- Add null checks to new image code.
+
+## [1.0.4] - 2021-04-28 (Yanked)
 - Add Meta, Command & Control Shortcuts (helpful for working with MacOS). #640. Thanks @hannesbraun
 - Fix WidgetExt::set_image() memory leak when called with an already set image.
 - Update deps: Syn, libc and FLTK.
 
-## [1.0.3] - 2021-04-27
+## [1.0.3] - 2021-04-27 (Yanked)
 - Grab correct image for correct drops.
 - Fix `enable-glwindow` builds.
 
