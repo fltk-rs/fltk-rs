@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.5] - 2021-04-29
+- Revert WindowExt::set_icon to previous behavior.
+
 ## [1.0.4] - 2021-04-28
 - Add Meta, Command & Control Shortcuts (helpful for working with MacOS). #640. Thanks @hannesbraun
 - Fix WidgetExt::set_image() memory leak when called with an already set image.

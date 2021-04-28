@@ -177,9 +177,9 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::GifImage>(), "Gif icons are not supported!");
                 assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::Image>(), "Icon images can't be generic!");
                 assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::TiledImage>(), "TiledImage icons are not supported!");
-                if let Some(image) = image {
+                if let Some(mut image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { #set_icon(self.inner, image.as_image_ptr() as *mut _) }
+                    unsafe { image.increment_arc(); #set_icon(self.inner, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_icon(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
