@@ -48,7 +48,7 @@ impl SharedImage {
                 }
                 Ok(SharedImage {
                     inner: x,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -68,7 +68,7 @@ impl SharedImage {
                 }
                 Ok(SharedImage {
                     inner: x,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -108,7 +108,7 @@ impl JpegImage {
                 }
                 Ok(JpegImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -131,7 +131,7 @@ impl JpegImage {
                     }
                     Ok(JpegImage {
                         inner: x,
-                        refcount: AtomicUsize::new(2),
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -172,7 +172,7 @@ impl PngImage {
                 }
                 Ok(PngImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -195,7 +195,7 @@ impl PngImage {
                     }
                     Ok(PngImage {
                         inner: x,
-                        refcount: AtomicUsize::new(2),
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -236,7 +236,7 @@ impl SvgImage {
                 }
                 Ok(SvgImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -260,7 +260,7 @@ impl SvgImage {
                     }
                     Ok(SvgImage {
                         inner: x,
-                        refcount: AtomicUsize::new(2),
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -301,7 +301,7 @@ impl BmpImage {
                 }
                 Ok(BmpImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -324,7 +324,7 @@ impl BmpImage {
                     }
                     Ok(BmpImage {
                         inner: x,
-                        refcount: AtomicUsize::new(2),
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -365,7 +365,7 @@ impl GifImage {
                 }
                 Ok(GifImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -388,7 +388,7 @@ impl GifImage {
                     }
                     Ok(GifImage {
                         inner: x,
-                        refcount: AtomicUsize::new(2),
+                        refcount: AtomicUsize::new(1),
                     })
                 }
             }
@@ -429,7 +429,7 @@ impl XpmImage {
                 }
                 Ok(XpmImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -469,7 +469,7 @@ impl XbmImage {
                 }
                 Ok(XbmImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -509,7 +509,7 @@ impl PnmImage {
                 }
                 Ok(PnmImage {
                     inner: image_ptr,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -531,7 +531,7 @@ impl TiledImage {
             assert!(!ptr.is_null());
             TiledImage {
                 inner: ptr,
-                refcount: AtomicUsize::new(2),
+                refcount: AtomicUsize::new(1),
             }
         }
     }
@@ -573,7 +573,7 @@ impl Pixmap {
                 std::fs::remove_file(temp_file)?;
                 Ok(Pixmap {
                     inner: image_ptr as _,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -604,7 +604,7 @@ impl RgbImage {
             } else {
                 Ok(RgbImage {
                     inner: img,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 })
             }
         }
@@ -631,7 +631,7 @@ impl RgbImage {
         } else {
             Ok(RgbImage {
                 inner: img,
-                refcount: AtomicUsize::new(2),
+                refcount: AtomicUsize::new(1),
             })
         }
     }

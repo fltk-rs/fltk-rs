@@ -836,10 +836,9 @@ impl Tree {
     /// Sets the user icon
     pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        if let Some(mut image) = image {
+        if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                image.decrement_arc();
                 Fl_Tree_set_usericon(self.inner, image.as_image_ptr() as *mut _)
             }
         } else {
@@ -863,10 +862,9 @@ impl Tree {
     /// Sets the opne icon
     pub fn set_open_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        if let Some(mut image) = image {
+        if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                image.decrement_arc(); 
                 Fl_Tree_set_openicon(self.inner, image.as_image_ptr() as *mut _)
             }
         } else {
@@ -890,10 +888,9 @@ impl Tree {
     /// Sets the opne icon
     pub fn set_close_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
-        if let Some(mut image) = image {
+        if let Some(image) = image {
             assert!(!image.was_deleted());
             unsafe {
-                image.decrement_arc(); 
                 Fl_Tree_set_closeicon(self.inner, image.as_image_ptr() as *mut _)
             }
         } else {
