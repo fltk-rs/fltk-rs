@@ -31,7 +31,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
             fn clone(&self) -> Self {
                 assert!(!self.was_deleted());
                 let x = self.refcount.fetch_add(1, Ordering::Relaxed);
-                #name { inner: self.inner, refcount: AtomicUsize::new(x) }
+                #name { inner: self.inner, refcount: AtomicUsize::new(x + 1) }
             }
         }
 
@@ -56,7 +56,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                     assert!(!img.is_null());
                     #name {
                         inner: img,
-                        refcount: AtomicUsize::new(2)
+                        refcount: AtomicUsize::new(1)
                     }
                 }
             }
@@ -103,7 +103,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!ptr.is_null());
                 #name {
                     inner: ptr as *mut #ptr_name,
-                    refcount: AtomicUsize::new(2),
+                    refcount: AtomicUsize::new(1),
                 }
             }
 
@@ -195,6 +195,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
             unsafe fn decrement_arc(&mut self) {
                 assert!(!self.was_deleted());
                 self.refcount.fetch_sub(1, Ordering::Relaxed);
+                assert!(*self.refcount.get_mut() > 1, "The image should outlive the widget!");
             }
 
             fn was_deleted(&self) -> bool {

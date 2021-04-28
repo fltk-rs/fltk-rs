@@ -650,6 +650,20 @@ bitflags! {
         const Ctrl = 0x0004_0000;
         /// Alt
         const Alt = 0x0008_0000;
+        /// Meta
+        const Meta = 0x0040_0000;
+        /// Command (Meta for macOS, Ctrl for other systems)
+        const Command = if cfg!(target_os = "macos") {
+            Shortcut::Meta.bits
+        } else {
+            Shortcut::Ctrl.bits
+        };
+        /// Control (Ctrl for macOS, Meta for other systems)
+        const Control = if cfg!(target_os = "macos") {
+            Shortcut::Ctrl.bits
+        } else {
+            Shortcut::Meta.bits
+        };
     }
 }
 
