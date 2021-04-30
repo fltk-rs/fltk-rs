@@ -1,16 +1,22 @@
 use fltk::{prelude::*, *};
 
 pub struct ShapedWindow {
-    frm: frame::Frame,
     wind: window::Window,
 }
 
 impl ShapedWindow {
     pub fn default() -> Self {
-        let shape = prep_surface();
+        let shape = prep_shape();
 
         let mut wind = window::Window::default().with_size(400, 400);
-        let frm = frame::Frame::default().size_of_parent();
+        wind.set_color(enums::Color::White);
+        let mut but = button::Button::default()
+            .with_label("Button")
+            .with_size(80, 80)
+            .center_of_parent();
+        but.set_frame(enums::FrameType::OFlatFrame);
+        but.set_color(enums::Color::Cyan);
+        but.clear_visible_focus();
         wind.end();
         wind.set_shape(Some(shape));
         let mut x = 0;
@@ -28,10 +34,10 @@ impl ShapedWindow {
             }
             _ => false,
         });
-        Self { wind, frm }
+        Self { wind }
     }
-    pub fn set_image(&mut self, image: Option<image::RgbImage>) {
-        self.frm.set_image(image);
+    pub fn set_cursor(&mut self, img: image::RgbImage) {
+        self.wind.set_cursor_image(img, 0, 0);
     }
     pub fn show(&mut self) {
         self.wind.show();
@@ -39,22 +45,15 @@ impl ShapedWindow {
 }
 
 fn main() {
-    let mut pattern: Vec<u8> = vec![0_u8; 500 * 500 * 3];
-    for (iter, pixel) in pattern.chunks_exact_mut(3).enumerate() {
-        let x = iter % 500;
-        let y = iter / 500;
-        let (red, green, blue) = utils::hex2rgb((x ^ y) as u32);
-        pixel.copy_from_slice(&[red, green, blue]);
-    }
-    let pattern = image::RgbImage::new(&pattern, 500, 500, enums::ColorDepth::Rgb8).unwrap();
     let app = app::App::default();
     let mut win = ShapedWindow::default();
-    win.set_image(Some(pattern));
     win.show();
+    // Called after showing the window
+    win.set_cursor(prep_cursor());
     app.run().unwrap();
 }
 
-fn prep_surface() -> image::RgbImage {
+fn prep_shape() -> image::RgbImage {
     let surf = surface::ImageSurface::new(400, 400, false);
     surface::ImageSurface::push_current(&surf);
     draw::set_draw_color(enums::Color::Black);
@@ -64,4 +63,19 @@ fn prep_surface() -> image::RgbImage {
     let img = surf.image().unwrap();
     surface::ImageSurface::pop_current();
     img
+}
+
+fn prep_cursor() -> image::RgbImage {
+    let mut fb: Vec<u8> = vec![0u8; 20 * 20 * 4];
+    for (iter, pixel) in fb.chunks_exact_mut(4).enumerate() {
+        let x = iter % 20;
+        let y = iter / 20;
+        if x > 5 && x < 15 && y > 5 && y < 15 {
+            pixel.copy_from_slice(&[255, 0, 0, 255]);
+        } else {
+            pixel.copy_from_slice(&[0, 0, 0, 0]);
+        }
+    }
+    let image = image::RgbImage::new(&fb, 20, 20, enums::ColorDepth::Rgba8).unwrap();
+    image
 }
