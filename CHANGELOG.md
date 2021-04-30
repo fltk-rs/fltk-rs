@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.0.5] - 2021-05-01
+## [1.0.6] - 2021-05-01
 - Fix WindowExt::set_icon potential leak.
 - Update FLTK.
 
