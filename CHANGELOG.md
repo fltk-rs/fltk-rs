@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.5] - 2021-05-01
+- Fix WindowExt::set_icon potential leak.
+
 ## [1.0.5] - 2021-04-28
 - Revert WindowExt::set_icon to previous behavior.
 - Add null checks to new image code.

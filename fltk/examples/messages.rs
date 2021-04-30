@@ -14,7 +14,7 @@ fn inc_frame(frame: &mut Frame, val: &mut i32, step: i32) {
 fn main() {
     let app = app::App::default();
     let mut wind = Window::default().with_size(400, 300);
-    let mut frame = Frame::default().size_of(&wind);
+    let mut frame = Frame::default().size_of(&wind).with_label("0");
 
     let mut val = 0;
 
