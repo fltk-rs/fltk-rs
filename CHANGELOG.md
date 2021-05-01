@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.0.7] - Unreleased
+- Add missing Shortcut/EventState values.
+- Add missing screen functions.
+
 ## [1.0.6] - 2021-05-01
 - Fix WindowExt::set_icon potential leak.
 - Update FLTK.
