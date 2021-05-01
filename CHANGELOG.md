@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.0.7] - Unreleased
+## [1.0.7] - 2021-05-02
 - Add missing Shortcut/EventState values.
 - Add missing screen functions.
 - Add SvgImage::normalize().
