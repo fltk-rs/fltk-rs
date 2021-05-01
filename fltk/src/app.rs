@@ -417,8 +417,8 @@ pub fn event_state() -> Shortcut {
 pub fn screen_size() -> (f64, f64) {
     unsafe {
         (
-            (fl::Fl_screen_w() as f64 / 0.96),
-            (fl::Fl_screen_h() as f64 / 0.96),
+            (fl::Fl_screen_w() as f64),
+            (fl::Fl_screen_h() as f64),
         )
     }
 }
