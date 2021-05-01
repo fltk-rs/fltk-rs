@@ -81,6 +81,12 @@ extern "C" {
     pub fn Fl_event_state() -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_screen_x() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_screen_y() -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_screen_h() -> libc::c_int;
 }
 extern "C" {
@@ -319,6 +325,30 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_screen_count() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_screen_num(x: libc::c_int, y: libc::c_int) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_screen_xywh(
+        X: *mut libc::c_int,
+        Y: *mut libc::c_int,
+        W: *mut libc::c_int,
+        H: *mut libc::c_int,
+        n: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_screen_dpi(h: *mut f32, v: *mut f32, n: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_screen_work_area(
+        X: *mut libc::c_int,
+        Y: *mut libc::c_int,
+        W: *mut libc::c_int,
+        H: *mut libc::c_int,
+        n: libc::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_open_display();

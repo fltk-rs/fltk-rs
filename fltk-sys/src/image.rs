@@ -254,6 +254,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_SVG_Image_from(data: *const libc::c_char) -> *mut Fl_SVG_Image;
 }
+extern "C" {
+    pub fn Fl_SVG_Image_normalize(self_: *mut Fl_SVG_Image);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_BMP_Image {

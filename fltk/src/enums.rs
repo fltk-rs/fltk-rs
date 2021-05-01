@@ -664,8 +664,19 @@ bitflags! {
         } else {
             Shortcut::Meta.bits
         };
+        /// Mouse button 1 is pushed
+        const Button1 = 0x0100_0000;
+        /// Mouse button 2 is pushed
+        const Button2 = 0x0200_0000;
+        /// Mouse button 3 is pushed
+        const Button3 = 0x0400_0000;
+        /// Any mouse button is pushed
+        const Buttons = 0x7f00_0000;
     }
 }
+
+/// Alias reflecting FLTK's name
+pub type EventState = Shortcut;
 
 impl Shortcut {
     /// Create a shortcut from a char
@@ -681,6 +692,18 @@ impl Shortcut {
     /// Create a shortcut from an i32
     pub fn from_i32(v: i32) -> Shortcut {
         Shortcut::None | Key::from_i32(v)
+    }
+
+    /// get key mask
+    pub fn key(&self) -> Key {
+        let mut temp = self.bits;
+        temp &= 0x0000_ffff;
+        Key::from_i32(temp)
+    }
+
+    /// Get the button number
+    pub fn button(button_num: i32) -> Shortcut {
+        unsafe { std::mem::transmute(0x0080_0000 << button_num) }
     }
 }
 
