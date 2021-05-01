@@ -180,7 +180,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
                     // Shouldn't fail after the previous asserts!
-                    unsafe { #set_icon(self.inner, image.to_rgb().unwrap().as_image_ptr() as *mut _) }
+                    unsafe { image.increment_arc(); #set_icon(self.inner, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_icon(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }

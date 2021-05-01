@@ -4,6 +4,8 @@
 ## [1.0.7] - Unreleased
 - Add missing Shortcut/EventState values.
 - Add missing screen functions.
+- Add SvgImage::normalize().
+- Re-revert WindowExt::set_icon().
 
 ## [1.0.6] - 2021-05-01
 - Fix WindowExt::set_icon potential leak.
