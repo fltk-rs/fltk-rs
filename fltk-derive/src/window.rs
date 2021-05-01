@@ -336,8 +336,6 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                         assert!(image.w() == image.data_w() as i32);
                         assert!(image.h() == image.data_h() as i32);
                         #set_shape(self.inner, image.as_image_ptr() as _)
-                    } else {
-                        return;
                     };
                 }
             }
