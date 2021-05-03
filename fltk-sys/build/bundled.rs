@@ -19,7 +19,7 @@ pub fn get(target_os: String, out_dir: PathBuf) {
             }
 
             PathBuf::from(format!(
-                "https://github.com/MoAlyousef/fltk-rs/releases/download/{}/lib_x64-{}.tar.gz",
+                "https://github.com/fltk-rs/fltk-rs/releases/download/{}/lib_x64-{}.tar.gz",
                 pkg_version, platform
             ))
         };

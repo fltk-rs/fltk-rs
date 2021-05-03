@@ -2,8 +2,8 @@
 
 [![Documentation](https://docs.rs/fltk/badge.svg)](https://docs.rs/fltk)
 [![Crates.io](https://img.shields.io/crates/v/fltk.svg)](https://crates.io/crates/fltk)
-[![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/MoAlyousef/fltk-rs/blob/master/LICENSE)
-[![Build](https://github.com/MoAlyousef/fltk-rs/workflows/Build/badge.svg?branch=master)](https://github.com/MoAlyousef/fltk-rs/actions)
+[![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/fltk-rs/fltk-rs/blob/master/LICENSE)
+[![Build](https://github.com/fltk-rs/fltk-rs/workflows/Build/badge.svg?branch=master)](https://github.com/fltk-rs/fltk-rs/actions)
 
 
 Rust bindings for the FLTK Graphical User Interface library. 
@@ -11,9 +11,9 @@ Rust bindings for the FLTK Graphical User Interface library.
 The fltk crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
 
 Resources:
-- [Written](https://github.com/MoAlyousef/fltk-rs/wiki)
-- [Video](https://github.com/MoAlyousef/fltk-rs#tutorials)
-- [Discussions](https://github.com/MoAlyousef/fltk-rs/discussions)
+- [Written](https://github.com/fltk-rs/fltk-rs/wiki)
+- [Video](https://github.com/fltk-rs/fltk-rs#tutorials)
+- [Discussions](https://github.com/fltk-rs/fltk-rs/discussions)
 - Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference. 
 
 Why choose FLTK?
@@ -26,7 +26,7 @@ Why choose FLTK?
 - Provides around 80 customizable widgets. 
 - Has inbuilt image support.
 
-Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/MoAlyousef/fltk-rs/issues/418).
+Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/fltk-rs/fltk-rs/issues/418).
 
 - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
 - [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
@@ -42,7 +42,7 @@ fltk = "^1"
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1", git = "https://github.com/MoAlyousef/fltk-rs" }
+fltk = { version = "^1", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -234,14 +234,14 @@ please check the [FAQ](FAQ.md) page for frequently asked questions, encountered 
 
 To build, just run:
 ```
-$ git clone https://github.com/MoAlyousef/fltk-rs
+$ git clone https://github.com/fltk-rs/fltk-rs
 $ cd fltk-rs
 $ cargo build
 ```
 
 ## Examples
 
-To run the [examples](https://github.com/MoAlyousef/fltk-rs/tree/master/fltk/examples): 
+To run the [examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples): 
 ```
 $ cargo run --example editor
 $ cargo run --example calculator
@@ -317,7 +317,7 @@ Using custom theming and also FLTK provided default themes like Gtk:
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
 
-More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/MoAlyousef/fltk-rs-demos).
+More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/fltk-rs/demos).
 Also a nice implementation of the 7guis tasks can be found [here](https://github.com/tdryer/7guis-fltk-rs).
 
 ## Currently implemented types:
@@ -460,4 +460,4 @@ Also a nice implementation of the 7guis tasks can be found [here](https://github
 - [multiple windows and embedding windows](https://www.youtube.com/watch?v=qEPYx1Lw7fY)
 
 More videos in the playlist [here](https://www.youtube.com/playlist?list=PLHqrrowPLkDu9U-uk60sGM-YWLOJFfLoE).
-Some of the demo projects can be found [here](https://github.com/MoAlyousef/fltk-rs-demos).
+Some of the demo projects can be found [here](https://github.com/fltk-rs/demos).

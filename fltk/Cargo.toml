@@ -1,10 +1,10 @@
 [package]
 name = "fltk"
-version = "1.0.7"
+version = "1.0.8"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
-repository = "https://github.com/MoAlyousef/fltk-rs"
+repository = "https://github.com/fltk-rs/fltk-rs"
 documentation = "https://docs.rs/fltk"
 keywords = ["gui", "ui", "widgets", "bindings", "graphics"]
 categories = ["gui"]
@@ -17,8 +17,8 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "=1.0.7" }
-fltk-derive = { path = "../fltk-derive", version = "=1.0.7" }
+fltk-sys = { path = "../fltk-sys", version = "=1.0.8" }
+fltk-derive = { path = "../fltk-derive", version = "=1.0.8" }
 lazy_static = "^1.4.0"
 bitflags = "^1.2.1"
 gl_loader = { version = "^0.1.2", optional = true }

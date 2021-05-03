@@ -19,5 +19,5 @@ $ cargo run --example custom_widgets
 $ cargo run --example <filename>
 ```
 
-More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/MoAlyousef/fltk-rs-demos).
+More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/fltk-rs/demos).
 Also a nice implementation of the 7guis tasks can be found [here](https://github.com/tdryer/7guis-fltk-rs).

@@ -3,8 +3,8 @@
 
 [![Documentation](https://docs.rs/fltk/badge.svg)](https://docs.rs/fltk)
 [![Crates.io](https://img.shields.io/crates/v/fltk.svg)](https://crates.io/crates/fltk)
-[![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/MoAlyousef/fltk-rs/blob/master/LICENSE)
-[![Build](https://github.com/MoAlyousef/fltk-rs/workflows/Build/badge.svg?branch=master)](https://github.com/MoAlyousef/fltk-rs/actions)
+[![License](https://img.shields.io/crates/l/fltk.svg)](https://github.com/fltk-rs/fltk-rs/blob/master/LICENSE)
+[![Build](https://github.com/fltk-rs/fltk-rs/workflows/Build/badge.svg?branch=master)](https://github.com/fltk-rs/fltk-rs/actions)
 
 
 
@@ -13,10 +13,10 @@ Rust bindings for the FLTK Graphical User Interface library.
 The fltk crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
 
 Tutorials:
-- [Video](https://github.com/MoAlyousef/fltk-rs#tutorials)
-- [Written](https://github.com/MoAlyousef/fltk-rs/wiki)
+- [Video](https://github.com/fltk-rs/fltk-rs#tutorials)
+- [Written](https://github.com/fltk-rs/fltk-rs/wiki)
 
-Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/MoAlyousef/fltk-rs/issues/418).
+Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/fltk-rs/fltk-rs/issues/418).
 
 - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
 - [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
@@ -32,7 +32,7 @@ fltk = "^1"
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1", git = "https://github.com/MoAlyousef/fltk-rs" }
+fltk = { version = "^1", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -139,7 +139,7 @@ Another way is to use message passing:
         }
     }
 ```
-For the remainder of the code, check the full example [here](https://github.com/MoAlyousef/fltk-rs/blob/master/examples/counter2.rs).
+For the remainder of the code, check the full example [here](https://github.com/fltk-rs/fltk-rs/blob/master/examples/counter2.rs).
 
 For custom event handling, the handle() method can be used:
 ```rust,ignore
@@ -217,7 +217,7 @@ $ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXine
 
 ## FAQ
 
-please check the [FAQ](https://github.com/MoAlyousef/fltk-rs/blob/master/FAQ.md) page for frequently asked questions, encountered issues, guides on deployment, and contribution.
+please check the [FAQ](https://github.com/fltk-rs/fltk-rs/blob/master/FAQ.md) page for frequently asked questions, encountered issues, guides on deployment, and contribution.
 */
 
 #![allow(non_upper_case_globals)]

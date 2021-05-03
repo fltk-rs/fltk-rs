@@ -179,8 +179,12 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(std::any::type_name::<T>() != std::any::type_name::<crate::image::TiledImage>(), "TiledImage icons are not supported!");
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
-                    // Shouldn't fail after the previous asserts!
-                    unsafe { image.increment_arc(); #set_icon(self.inner, image.as_image_ptr() as *mut _) }
+                    if std::any::type_name::<T>() == std::any::type_name::<crate::image::SvgImage>() {
+                        unsafe { image.increment_arc(); #set_icon(self.inner, image.as_image_ptr() as *mut _) }
+                    } else {
+                        // Shouldn't fail after the previous asserts!
+                        unsafe { #set_icon(self.inner, image.to_rgb().unwrap().as_image_ptr() as *mut _) }
+                    }
                 } else {
                     unsafe { #set_icon(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
                 }
