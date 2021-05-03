@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.0.8] - 2021-05-03
+- Transfer repo and update LICENSE files.
+- Fix links to releases and demos.
+
 ## [1.0.7] - 2021-05-02
 - Add missing Shortcut/EventState values.
 - Add missing screen functions.
