@@ -82,7 +82,7 @@ FLTK currently doesn't support WASM nor mobile platforms. It is focused on deskt
 ### Can I use this crate in a commercial application?
 Yes. This crate has an MIT license which requires acknowledgment. FLTK (the C++ library) is licensed under the LGPL license with an exception allowing static linking for commercial/closed-source use. You can find the full terms of both licenses here:
 - https://github.com/fltk/fltk/blob/master/COPYING
-- https://github.com/MoAlyousef/fltk-rs/blob/master/LICENSE
+- https://github.com/fltk-rs/fltk-rs/blob/master/LICENSE
 
 ## Alignment
 
@@ -143,4 +143,4 @@ FLTK (C++) doesn't throw exceptions, neither do the C wrapper (cfltk) nor the fl
 Also any function sending a string across FFI is checked for interal null bytes. For such functions, the developer can perform a sanity check on passed strings to make sure they're valid UTF-8 strings, or check that a widget was not deleted prior to accessing a widget. That said, all functions passed as callbacks to be handled by the C++ side are exception-safe.
 
 ## Contributing
-Please refer to the [CONTRIBUTING](https://github.com/MoAlyousef/fltk-rs/blob/master/CONTRIBUTING.md) page for further information.
+Please refer to the [CONTRIBUTING](https://github.com/fltk-rs/fltk-rs/blob/master/CONTRIBUTING.md) page for further information.
