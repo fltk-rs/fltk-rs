@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.0.9] - Unreleased
+- Add RgbImage constructors which take line data as param.
+- Add draw::draw_image2 which takes line data as param.
+- Update FLTK & syn.
+
 ## [1.0.8] - 2021-05-03
 - Transfer repo and update LICENSE files.
 - Fix links to releases and demos.
