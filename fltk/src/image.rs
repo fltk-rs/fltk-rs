@@ -606,7 +606,7 @@ impl RgbImage {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
         unsafe {
-            let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32);
+            let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32, 0);
             if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
                 Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
             } else {
@@ -633,7 +633,58 @@ impl RgbImage {
         if sz > data.len() as i32 {
             return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
         }
-        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32);
+        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32, 0);
+        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+        } else {
+            Ok(RgbImage {
+                inner: img,
+                refcount: AtomicUsize::new(1),
+            })
+        }
+    }
+
+    /// Initializes a new raw `RgbImage`, copies the data and handles its lifetime.
+    /// If you need to work with RGB data,
+    /// # Errors
+    /// Errors on invalid or unsupported image format
+    /// # Safety
+    /// Passing wrong line data can read to over or underflow
+    pub unsafe fn new2(data: &[u8], w: i32, h: i32, depth: ColorDepth, line_data: i32) -> Result<RgbImage, FltkError> {
+        let sz = w * h * depth as i32;
+        if sz > data.len() as i32 {
+            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+        }
+        let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32, line_data);
+        if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
+            Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+        } else {
+            Ok(RgbImage {
+                inner: img,
+                refcount: AtomicUsize::new(1),
+            })
+        }
+    }
+
+    /// Initializes a new raw `RgbImage` from shared data, doesn't handle the data's lifetime
+    /// # Safety
+    /// The data must be valid for the lifetime of the image
+    /// # Errors
+    /// Errors on invalid or unsupported image format
+    /// # Safety
+    /// Passing wrong line data can read to over or underflow
+    pub unsafe fn from_data2(
+        data: &[u8],
+        w: i32,
+        h: i32,
+        depth: ColorDepth,
+        line_data: i32
+    ) -> Result<RgbImage, FltkError> {
+        let sz = w * h * depth as i32;
+        if sz > data.len() as i32 {
+            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+        }
+        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32, line_data);
         if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
             Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
         } else {
