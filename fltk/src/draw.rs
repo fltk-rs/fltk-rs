@@ -820,7 +820,9 @@ pub fn draw_image(
 }
 
 /// Draw an image into a widget.
-/// Requires a call to `app::set_visual(Mode::Rgb8).unwrap()`
+/// Requires a call to `app::set_visual(Mode::Rgb8).unwrap()`.
+/// A negative depth flips the image horizontally,
+/// while a negative line data flips it vertically.
 /// Allows passing a line-data parameter
 /// # Errors
 /// Errors on invalid or unsupported image formats
@@ -832,13 +834,8 @@ pub unsafe fn draw_image2(
     y: i32,
     w: i32,
     h: i32,
-    depth: ColorDepth,
+    depth: i32,
     line_data: i32,
-) -> Result<(), FltkError> {
-    let sz = (w * h * depth as i32) as usize;
-    if sz > data.len() {
-        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
-    }
-    Fl_draw_image(data.as_ptr(), x, y, w, h, depth as i32, line_data);
-    Ok(())
+) {
+    Fl_draw_image(data.as_ptr(), x, y, w, h, depth, line_data);
 }

@@ -650,12 +650,8 @@ impl RgbImage {
     /// Errors on invalid or unsupported image format
     /// # Safety
     /// Passing wrong line data can read to over or underflow
-    pub unsafe fn new2(data: &[u8], w: i32, h: i32, depth: ColorDepth, line_data: i32) -> Result<RgbImage, FltkError> {
-        let sz = w * h * depth as i32;
-        if sz > data.len() as i32 {
-            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
-        }
-        let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth as i32, line_data);
+    pub unsafe fn new2(data: &[u8], w: i32, h: i32, depth: i32, line_data: i32) -> Result<RgbImage, FltkError> {
+        let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth, line_data);
         if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
             Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
         } else {
@@ -677,14 +673,10 @@ impl RgbImage {
         data: &[u8],
         w: i32,
         h: i32,
-        depth: ColorDepth,
+        depth: i32,
         line_data: i32
     ) -> Result<RgbImage, FltkError> {
-        let sz = w * h * depth as i32;
-        if sz > data.len() as i32 {
-            return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
-        }
-        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth as i32, line_data);
+        let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth, line_data);
         if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
             Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
         } else {

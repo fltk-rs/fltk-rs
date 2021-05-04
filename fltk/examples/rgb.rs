@@ -1,4 +1,6 @@
 use fltk::{prelude::*, *};
+use std::rc::Rc;
+use std::cell::RefCell;
 
 fn main() {
     let mut fb: Vec<u8> = vec![0u8; 128 * 128 * 3];
@@ -16,11 +18,19 @@ fn main() {
     wind.end();
     wind.show();
 
+    let i = Rc::from(RefCell::from(3));
+    let i_c = i.clone();
+    
     frame.draw(move |f| {
-        let mut image = image::RgbImage::new(&fb, 128, 128, enums::ColorDepth::Rgb8).unwrap();
-        image.scale(f.width(), f.height(), false, true);
+        let mut image = unsafe { image::RgbImage::new2(&fb, 128, 128, -3, 128 * 3).unwrap() };
+        // image.scale(f.width(), f.height(), false, true);
         image.draw(f.x(), f.y(), f.width(), f.height());
+        // unsafe { draw::draw_image2(&fb, 0, 0, 128, 128, -3, -128 * 3); }
     });
 
-    app.run().unwrap();
+    while app.wait() {
+        // *i.borrow_mut() += 3;
+        // wind.redraw();
+        // app::sleep(1.);
+    }
 }
