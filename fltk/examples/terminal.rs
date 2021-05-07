@@ -1,24 +1,13 @@
-// Requires the lazy_static crate.
-
 use fltk::{
     app,
     enums::{Color, Event, Font, Key},
-    prelude::*,
+    prelude::{DisplayExt, GroupExt, WidgetBase, WidgetExt},
     text::{SimpleTerminal, StyleTableEntry, TextBuffer},
     window::Window,
 };
 use std::ops::{Deref, DerefMut};
 use std::path::Path;
 use std::process::{Command, Stdio};
-use std::sync::Mutex;
-
-lazy_static::lazy_static! {
-    pub static ref CURRENT_DIR: Mutex<String> = {
-        let mut curr = std::env::current_dir().unwrap().to_string_lossy().to_string();
-        curr.push_str("$ ");
-        Mutex::new(curr)
-    };
-}
 
 const WIDTH: i32 = 640;
 const HEIGHT: i32 = 480;
@@ -27,8 +16,8 @@ pub trait TerminalFuncs {
     fn append_txt(&mut self, txt: &str);
     fn append_dir(&mut self, dir: &str);
     fn append_error(&mut self, txt: &str);
-    fn run_command(&mut self, cmd: &str) -> String;
-    fn change_dir(&mut self, path: &Path) -> String;
+    fn run_command(&mut self, cmd: &str, cwd: &mut String) -> String;
+    fn change_dir(&mut self, path: &Path, current: &mut String) -> String;
 }
 
 impl TerminalFuncs for SimpleTerminal {
@@ -47,7 +36,7 @@ impl TerminalFuncs for SimpleTerminal {
         self.style_buffer().unwrap().append(&"B".repeat(txt.len()));
     }
 
-    fn run_command(&mut self, cmd: &str) -> String {
+    fn run_command(&mut self, cmd: &str, cwd: &mut String) -> String {
         let args: Vec<&str> = cmd.split_whitespace().collect();
 
         if !args.is_empty() {
@@ -55,7 +44,7 @@ impl TerminalFuncs for SimpleTerminal {
             if args.len() > 1 {
                 if args[0] == "cd" {
                     let path = args[1];
-                    return self.change_dir(&Path::new(path));
+                    return self.change_dir(&Path::new(path), cwd);
                 } else {
                     cmd.args(&args[1..]);
                 }
@@ -73,7 +62,7 @@ impl TerminalFuncs for SimpleTerminal {
         }
     }
 
-    fn change_dir(&mut self, path: &Path) -> String {
+    fn change_dir(&mut self, path: &Path, current: &mut String) -> String {
         if path.exists() && path.is_dir() {
             std::env::set_current_dir(path).unwrap();
             let mut path = std::env::current_dir()
@@ -81,8 +70,7 @@ impl TerminalFuncs for SimpleTerminal {
                 .to_string_lossy()
                 .to_string();
             path.push_str("$ ");
-            let mut curr = CURRENT_DIR.lock().unwrap();
-            *curr = path;
+            *current = path;
             String::new()
         } else {
             String::from("Path does not exist!\n")
@@ -123,6 +111,14 @@ impl Term {
 
         term.set_highlight_data(sbuf.clone(), styles);
 
+        let mut curr = std::env::current_dir()
+            .unwrap()
+            .to_string_lossy()
+            .to_string();
+        curr.push_str("$ ");
+
+        term.append_dir(&curr);
+
         term.handle(move |t, ev| {
             // println!("{:?}", app::event());
             // println!("{:?}", app::event_key());
@@ -131,13 +127,12 @@ impl Term {
                 Event::KeyDown => match app::event_key() {
                     Key::Enter => {
                         t.append_txt("\n");
-                        let out = t.run_command(&cmd);
+                        let out = t.run_command(&cmd, &mut curr);
                         if out.contains("not found") {
                             t.append_error(&out);
                         } else {
                             t.append_txt(&out);
                         }
-                        let curr = CURRENT_DIR.lock().unwrap();
                         t.append_dir(&curr);
                         cmd.clear();
                         true
@@ -163,9 +158,6 @@ impl Term {
                 _ => false,
             }
         });
-
-        let curr = CURRENT_DIR.lock().unwrap();
-        term.append_dir(&curr);
 
         Self { term }
     }
