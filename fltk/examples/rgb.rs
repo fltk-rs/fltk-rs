@@ -15,9 +15,8 @@ fn main() {
     wind.make_resizable(true);
     wind.end();
     wind.show();
-
+    let mut image = image::RgbImage::new(&fb, 128, 128, enums::ColorDepth::Rgb8).unwrap();
     frame.draw(move |f| {
-        let mut image = image::RgbImage::new(&fb, 128, 128, enums::ColorDepth::Rgb8).unwrap();
         image.scale(f.width(), f.height(), false, true);
         image.draw(f.x(), f.y(), f.width(), f.height());
     });

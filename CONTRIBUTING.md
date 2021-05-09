@@ -19,7 +19,7 @@ The bindings live in the fltk and fltk-derive directories. The fltk-derive provi
 The fltk directory contains a prelude which has all the traits exposed by the crate, as well as the error types. Widgets are grouped by their inheritance relations, the outliers being the utils (for utility functions) and misc modules. The misc module contain widgets which are either composite (containing multiple) widgets or widgets directly inheriting from Fl_Widget. 
 
 ### Contributing examples 
-Each example should be in a single file, with no dependencies to other than this crate, or to direct dependencies of fltk (like lazy_static and bitflags). This avoids littering dev-dependencies which would increase CI time. If you would like to contribute more complex examples, I invite you to contribute them to the fltk-rs-demos [repo](https://github.com/fltk-rs/demos). Adding your project or examples/demos using fltk as a dependency or dev-dependency to the Project Showcase issue tracker is also very appreciated. 
+Each example should be in a single file, with no dependencies to other than this crate. This allows people to just copy them verbatim and have the examples run, it also avoids adding unnecessary dev-dependencies to the project which might increase build times. If you would like to contribute more complex examples, I invite you to contribute them to the fltk-rs/demos [repo](https://github.com/fltk-rs/demos). Also adding your project or examples/demos using fltk as a dependency or dev-dependency to the Project Showcase issue tracker is also very appreciated. 
 
 ### Major API changes
 Please open an issue or a discussion for such changes before going ahead and doing them. It allows for discussion regarding the proposed changes. 

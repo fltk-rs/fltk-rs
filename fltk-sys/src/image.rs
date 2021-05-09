@@ -766,6 +766,7 @@ extern "C" {
         W: libc::c_int,
         H: libc::c_int,
         depth: libc::c_int,
+        ld: libc::c_int,
     ) -> *mut Fl_RGB_Image;
 }
 extern "C" {
@@ -774,6 +775,7 @@ extern "C" {
         W: libc::c_int,
         H: libc::c_int,
         depth: libc::c_int,
+        ld: libc::c_int,
     ) -> *mut Fl_RGB_Image;
 }
 #[repr(C)]

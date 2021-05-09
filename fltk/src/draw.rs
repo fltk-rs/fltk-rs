@@ -818,3 +818,24 @@ pub fn draw_image(
     }
     Ok(())
 }
+
+/// Draw an image into a widget.
+/// Requires a call to `app::set_visual(Mode::Rgb8).unwrap()`.
+/// A negative depth flips the image horizontally,
+/// while a negative line data flips it vertically.
+/// Allows passing a line-data parameter
+/// # Errors
+/// Errors on invalid or unsupported image formats
+/// # Safety
+/// Passing wrong line data can read to over or underflow
+pub unsafe fn draw_image2(
+    data: &[u8],
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    depth: i32,
+    line_data: i32,
+) {
+    Fl_draw_image(data.as_ptr(), x, y, w, h, depth, line_data);
+}
