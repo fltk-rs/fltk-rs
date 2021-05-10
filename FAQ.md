@@ -106,11 +106,11 @@ But that should rarely be required.
 ### Why does FLTK exit when I hit the escape key?
 This is the default behavior in FLTK. You can easily override it by setting a callback for your main window:
 ```rust
-    wind.set_callback(Box::new(|| {
-        if fltk::app::event() == fltk::Event::Close {
+    wind.set_callback(|_| {
+        if fltk::app::event() == fltk::enums::Event::Close {
             app::quit(); // Which would close using the close button. You can also assign other keys to close the application
         }
-    }));
+    });
 ```
 
 ## Panics/Crashes
