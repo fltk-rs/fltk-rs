@@ -404,6 +404,10 @@ pub unsafe trait GroupExt: WidgetExt {
     fn end(&self);
     /// Clear a group from all widgets
     fn clear(&mut self);
+    /// Clear a group from all widgets using FLTK's clear call.
+    /// # Safety
+    /// Ignores widget tracking
+    unsafe fn unsafe_clear(&mut self);
     /// Return the number of children in a group
     fn children(&self) -> i32;
     /// Return child widget by index
