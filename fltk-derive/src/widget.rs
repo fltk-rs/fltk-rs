@@ -353,7 +353,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
         impl Clone for #name {
             fn clone(&self) -> #name {
-                assert!(!self.was_deleted());
+                assert!(!self.was_deleted());                
                 #name { inner: self.inner, tracker: self.tracker }
             }
         }
@@ -721,11 +721,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn was_deleted(&self) -> bool {
                 unsafe {
-                    if self.inner.is_null() || self.tracker.is_null() {
-                        return true;
-                    } else {
-                        return fltk_sys::fl::Fl_Widget_Tracker_deleted(self.tracker) != 0;
-                    }
+                    self.inner.is_null() || self.tracker.is_null() || fltk_sys::fl::Fl_Widget_Tracker_deleted(self.tracker) != 0
                 }
             }
 
