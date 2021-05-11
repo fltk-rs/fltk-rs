@@ -1,6 +1,5 @@
 #![allow(unused_imports)]
 
-use crate::app::screen_size;
 use crate::enums::{
     Align, CallbackTrigger, Color, Cursor, Damage, Event, Font, FrameType, LabelType, Mode,
 };
@@ -739,7 +738,7 @@ pub struct AndroidWindow {
 impl AndroidWindow {
     /// Creates a default initialized Android Window
     pub fn default() -> Self {
-        let (w, h) = screen_size();
+        let (w, h) = crate::app::screen_size();
         let mut w = AndroidWindow {
             win: Window::new(0, 30, w as i32, h as i32 - 30, ""),
         };
