@@ -3,6 +3,7 @@
 
 ## [1.0.10] - 2021-05-11
 - Add open_display call before surface::ImageSurface::new.
+- Update FAQ to use 1.0 code . Thanks @sportfloh
 - Update FLTK & cfltk.
 
 ## [1.0.9] - 2021-05-09
