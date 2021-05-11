@@ -1,7 +1,11 @@
 # Changelog
 
 
-## [1.0.9] - Unreleased
+## [1.0.10] - 2021-05-11
+- Add open_display call before surface::ImageSurface::new.
+- Update FLTK & cfltk.
+
+## [1.0.9] - 2021-05-09
 - Add RgbImage constructors which take line data as param.
 - Add draw::draw_image2 which takes line data as param.
 - Update FLTK & syn.
