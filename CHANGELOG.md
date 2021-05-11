@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.12] - Unreleased
+- Pass FileChooser title as long-lived string.
+
 ## [1.0.11] - 2021-05-11
 - Add open_display call before surface::ImageSurface::new.
 - Update FAQ to use 1.0 code . Thanks @sportfloh
