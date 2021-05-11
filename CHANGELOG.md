@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.0.12] - 2021-05-11
+- Pass FileChooser title as long-lived string.
+- Fix GroupExt::clear to account for empty groups.
+
 ## [1.0.11] - 2021-05-11
 - Add open_display call before surface::ImageSurface::new.
 - Update FAQ to use 1.0 code . Thanks @sportfloh

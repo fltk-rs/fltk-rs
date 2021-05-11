@@ -61,8 +61,10 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
             fn clear(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    for c in self.children()..0 {
-                        crate::widget::Widget::delete(crate::widget::Widget::from_widget_ptr(self.child(c).unwrap().as_widget_ptr()));
+                    for c in 0..self.children() {
+                        crate::widget::Widget::delete(
+                            crate::widget::Widget::from_widget_ptr(self.child(c).unwrap().as_widget_ptr())
+                        );
                     }
                 }
             }

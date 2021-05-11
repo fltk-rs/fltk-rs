@@ -584,7 +584,7 @@ impl FileChooser {
                 dir.as_ptr(),
                 pattern.as_ptr(),
                 typ.bits as i32,
-                title.as_ptr(),
+                title.into_raw(),
             );
             assert!(!ptr.is_null());
             FileChooser { inner: ptr }
