@@ -132,7 +132,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
             fn center_screen(mut self) -> Self {
                 assert!(!self.was_deleted());
                 debug_assert!(self.width() != 0 && self.height() != 0, "center_screen requires the size of the widget to be known!");
-                let (mut x, mut y) = screen_size();
+                let (mut x, mut y) = crate::app::screen_size();
                 x -= self.width() as f64;
                 y -= self.height() as f64;
                 self.resize((x / 2.0) as i32, (y / 2.0) as i32, self.width(), self.height());

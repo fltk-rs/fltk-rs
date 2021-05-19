@@ -1,7 +1,7 @@
 use fltk::{
     app,
     button::Button,
-    enums::{Color, FrameType, Key, Shortcut},
+    enums::{Color, Event, FrameType, Key, Shortcut},
     group::{Pack, PackType},
     output::Output,
     prelude::*,
@@ -41,18 +41,12 @@ impl MyButton {
         b.set_label_size(24);
         b.set_frame(FrameType::FlatBox);
         match title {
-            "0" => {
-                b.resize(0, 0, 100 * 2, 0);
-                b.set_label_color(Color::White);
-                b.set_selection_color(Color::from_u32(0x1b1b1b));
-                b.set_shortcut(Shortcut::None | '0');
-            }
             "CE" => {
-                b.set_color(Color::from_u32(0xd50000));
+                b.set_color(Color::from_hex(0xd50000));
                 b.set_shortcut(Shortcut::None | Key::Delete);
             }
             "x" | "/" | "+" | "-" | "=" | "C" | "@<-" => {
-                b.set_color(Color::from_u32(0xffee58));
+                b.set_color(Color::from_hex(0xffee58));
                 b.set_label_color(Color::Black);
                 let shortcut = if title == "x" {
                     '*'
@@ -68,9 +62,25 @@ impl MyButton {
                 }
             }
             _ => {
+                if title == "0" {
+                    b.resize(0, 0, 100 * 2, 0);
+                }
                 b.set_label_color(Color::White);
-                b.set_selection_color(Color::from_u32(0x1b1b1b));
+                b.set_selection_color(Color::from_hex(0x1b1b1b));
                 b.set_shortcut(Shortcut::None | title.chars().next().unwrap());
+                b.handle(move |b, ev| match ev {
+                    Event::Enter => {
+                        b.set_color(Color::from_hex(0x2b2b2b));
+                        b.redraw();
+                        true
+                    }
+                    Event::Leave => {
+                        b.set_color(Color::from_hex(0x424242));
+                        b.redraw();
+                        true
+                    }
+                    _ => false,
+                });
             }
         }
         b

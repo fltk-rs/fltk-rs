@@ -209,11 +209,11 @@ impl MyApp {
         } else {
             String::new()
         };
-        // Handle drag and drop
-        let mut dnd = false;
-        let mut released = false;
 
+        // Handle drag and drop
         editor.handle({
+            let mut dnd = false;
+            let mut released = false;
             let mut buf = buf.clone();
             move |_, ev| match ev {
                 Event::DndEnter => {

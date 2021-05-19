@@ -843,7 +843,7 @@ impl FileChooser {
     }
 
     /// Returns whether the file chooser is shown
-    pub fn shown(&mut self) -> bool {
+    pub fn shown(&self) -> bool {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_shown(self.inner) != 0 }
     }
