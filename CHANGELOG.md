@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.0.13] - Unreleased
+## [1.0.13] - 2021-05-20
 - Fix link in main docs.
 - Relax FileChooser::shown() to accept immutable borrow.
 
