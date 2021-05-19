@@ -3,6 +3,7 @@
 
 ## [1.0.13] - Unreleased
 - Fix link in main docs.
+- Relax FileChooser::shown() to accept immutable borrow.
 
 ## [1.0.12] - 2021-05-11
 - Pass FileChooser title as long-lived string.
