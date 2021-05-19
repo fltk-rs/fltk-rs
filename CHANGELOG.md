@@ -4,6 +4,7 @@
 ## [1.0.13] - 2021-05-20
 - Fix link in main docs.
 - Relax FileChooser::shown() to accept immutable borrow.
+- Update fltk-derive.
 
 ## [1.0.12] - 2021-05-11
 - Pass FileChooser title as long-lived string.
