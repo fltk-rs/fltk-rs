@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.1.0] - Unreleased
+- Update FLTK and cfltk.
+- Link to system libpng on linux to avoid conflicting with FLTK's bundled libpng.
+
 ## [1.0.13] - 2021-05-20
 - Fix link in main docs.
 - Relax FileChooser::shown() to accept immutable borrow.
