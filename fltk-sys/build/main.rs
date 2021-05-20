@@ -20,10 +20,10 @@ fn main() {
     println!("cargo:rerun-if-changed=build/utils.rs");
 
     if cfg!(feature = "fltk-bundled") {
-        bundled::get(target_os.clone(), out_dir.clone());
+        bundled::get(&target_os, &out_dir);
     } else {
-        source::build(manifest_dir, target_triple, out_dir.clone());
+        source::build(&manifest_dir, &target_triple, &out_dir);
     }
 
-    link::link(target_os, out_dir);
+    link::link(&target_os, &target_triple, &out_dir);
 }

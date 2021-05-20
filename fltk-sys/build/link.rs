@@ -1,6 +1,6 @@
-use std::path::PathBuf;
+use std::path::Path;
 
-pub fn link(target_os: String, out_dir: PathBuf) {
+pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
     println!(
         "cargo:rustc-link-search=native={}",
         out_dir.join("build").display()
@@ -43,7 +43,11 @@ pub fn link(target_os: String, out_dir: PathBuf) {
         if !cfg!(features = "no-images") {
             println!("cargo:rustc-link-lib=static=fltk_images");
 
-            if cfg!(feature = "system-libpng") {
+            if cfg!(feature = "system-libpng")
+                || (!target_triple.contains("apple")
+                    && !target_triple.contains("windows")
+                    && !target_triple.contains("android"))
+            {
                 println!("cargo:rustc-link-lib=dylib=png");
             } else {
                 println!("cargo:rustc-link-lib=static=fltk_png");
@@ -64,7 +68,7 @@ pub fn link(target_os: String, out_dir: PathBuf) {
 
         if cfg!(feature = "enable-glwindow") {
             println!("cargo:rustc-link-lib=static=fltk_gl");
-            match target_os.as_str() {
+            match target_os {
                 "macos" => println!("cargo:rustc-link-lib=framework=OpenGL"),
                 "windows" => {
                     println!("cargo:rustc-link-lib=dylib=opengl32");
@@ -77,7 +81,7 @@ pub fn link(target_os: String, out_dir: PathBuf) {
             }
         }
 
-        match target_os.as_str() {
+        match target_os {
             "macos" => {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");

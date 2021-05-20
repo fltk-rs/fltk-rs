@@ -1,6 +1,6 @@
-use std::{env, path::PathBuf, process::Command};
+use std::{env, path::Path, process::Command};
 
-pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
+pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     if !crate::utils::has_prog("git") {
         panic!("Git is needed to retrieve the fltk source files!\nDid you intend to use the fltk-bundled feature?");
     }
@@ -54,7 +54,7 @@ pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
 
     Command::new("git")
         .args(&["submodule", "update", "--init", "--recursive"])
-        .current_dir(manifest_dir.clone())
+        .current_dir(manifest_dir)
         .status()
         .expect("Git is needed to retrieve the fltk source files!");
 
@@ -81,7 +81,11 @@ pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
             dst.define("USE_SYSTEM_FLTK", "ON");
         }
 
-        if cfg!(feature = "system-libpng") {
+        if cfg!(feature = "system-libpng")
+            || (!target_triple.contains("apple")
+                && !target_triple.contains("windows")
+                && !target_triple.contains("android"))
+        {
             dst.define("OPTION_USE_SYSTEM_LIBPNG", "ON");
         } else {
             dst.define("OPTION_USE_SYSTEM_LIBPNG", "OFF");
@@ -149,7 +153,7 @@ pub fn build(manifest_dir: PathBuf, target_triple: String, out_dir: PathBuf) {
             .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
             .build();
     } else {
-        crate::android::build(out_dir, target_triple.clone());
+        crate::android::build(out_dir, &target_triple);
     }
 
     if target_triple.contains("android") || target_triple.contains("windows") {

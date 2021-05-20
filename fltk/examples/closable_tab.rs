@@ -13,8 +13,8 @@ mod closable_tab {
     }
 
     impl TabButton {
-        pub fn new(label: &'static str) -> Self {
-            let mut grp = group::Group::new(0, 0, 150, 40, label);
+        pub fn default() -> Self {
+            let mut grp = group::Group::new(0, 0, 150, 40, None);
             let mut but = button::Button::new(grp.x() + 120, grp.y() + 10, 20, 20, "@1+");
             grp.end();
             grp.set_frame(FrameType::UpFrame);
@@ -52,7 +52,7 @@ mod closable_tab {
             self.grp.add(grp);
             let label = grp.label();
             grp.set_label("");
-            let mut but = TabButton::new("");
+            let mut but = TabButton::default();
             but.grp.set_align(Align::Left | Align::Inside);
             but.grp.set_label(&label);
             but.but.clear_visible_focus();
