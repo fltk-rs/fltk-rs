@@ -1,9 +1,11 @@
 # Changelog
 
 
-## [1.1.0] - Unreleased
+## [1.0.14] - Unreleased
 - Update FLTK and cfltk.
 - Link to system libpng on linux to avoid conflicting with FLTK's bundled libpng.
+- Add pixels_per_unit() and pixel_h pixel_w for SingleWindow and DoubleWindow.
+- Add WindowExt::screen_num() and set_screen_num().
 
 ## [1.0.13] - 2021-05-20
 - Fix link in main docs.

@@ -532,6 +532,10 @@ pub unsafe trait WindowExt: GroupExt {
     fn set_cursor_image(&mut self, image: crate::image::RgbImage, hot_x: i32, hot_y: i32);
     /// Set the window's default cursor
     fn default_cursor(&mut self, cursor: Cursor);
+    /// Get the screen number
+    fn screen_num(&self) -> i32;
+    /// Set the screen number
+    fn set_screen_num(&mut self, n: i32);
 }
 
 /// Defines the methods implemented by all input and output widgets

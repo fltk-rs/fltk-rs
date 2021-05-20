@@ -175,6 +175,30 @@ impl SingleWindow {
             Fl_Window_show_with_args(self.inner as *mut Fl_Window, len, v.as_mut_ptr())
         }
     }
+
+    /// Gets the window's width in pixels
+    pub fn pixel_w(&self) -> i32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_pixel_w(self.inner as _)
+        }
+    }
+
+    /// Gets the window's height in pixels
+    pub fn pixel_h(&self) -> i32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_pixel_h(self.inner as _)
+        }
+    }
+
+    /// Returns the pixels per unit
+    pub fn pixels_per_unit(&self) -> f32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_pixels_per_unit(self.inner as _)
+        }
+    }
 }
 
 /// Creates a double (buffered) window widget
@@ -278,6 +302,30 @@ impl DoubleWindow {
     pub fn flush(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Double_Window_flush(self.inner) }
+    }
+
+    /// Gets the window's width in pixels
+    pub fn pixel_w(&self) -> i32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_pixel_w(self.inner as _)
+        }
+    }
+
+    /// Gets the window's height in pixels
+    pub fn pixel_h(&self) -> i32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_pixel_h(self.inner as _)
+        }
+    }
+
+    /// Returns the pixels per unit
+    pub fn pixels_per_unit(&self) -> f32 {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_pixels_per_unit(self.inner as _)
+        }
     }
 }
 
