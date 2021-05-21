@@ -176,28 +176,32 @@ impl SingleWindow {
         }
     }
 
+    /// Returns the pixels per unit
+    pub fn pixels_per_unit(&self) -> f32 {
+        assert!(!self.was_deleted());
+        #[allow(unused_mut)]
+        let mut retina = 1.0;
+        #[cfg(target_os = "macos")]
+        {
+            retina = unsafe {
+                msg_send![
+                    self.raw_handle() as *mut objc::runtime::Object,
+                    backingScaleFactor
+                ]
+            };
+        }
+        let s = crate::app::screen_scale(self.screen_num());
+        s * retina
+    }
+
     /// Gets the window's width in pixels
     pub fn pixel_w(&self) -> i32 {
-        assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_pixel_w(self.inner as _)
-        }
+        (self.pixels_per_unit() * self.w() as f32) as i32
     }
 
     /// Gets the window's height in pixels
     pub fn pixel_h(&self) -> i32 {
-        assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_pixel_h(self.inner as _)
-        }
-    }
-
-    /// Returns the pixels per unit
-    pub fn pixels_per_unit(&self) -> f32 {
-        assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_pixels_per_unit(self.inner as _)
-        }
+        (self.pixels_per_unit() * self.h() as f32) as i32
     }
 }
 
@@ -304,28 +308,32 @@ impl DoubleWindow {
         unsafe { Fl_Double_Window_flush(self.inner) }
     }
 
+    /// Returns the pixels per unit
+    pub fn pixels_per_unit(&self) -> f32 {
+        assert!(!self.was_deleted());
+        #[allow(unused_mut)]
+        let mut retina = 1.0;
+        #[cfg(target_os = "macos")]
+        {
+            retina = unsafe {
+                msg_send![
+                    self.raw_handle() as *mut objc::runtime::Object,
+                    backingScaleFactor
+                ]
+            };
+        }
+        let s = crate::app::screen_scale(self.screen_num());
+        s * retina
+    }
+
     /// Gets the window's width in pixels
     pub fn pixel_w(&self) -> i32 {
-        assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_pixel_w(self.inner as _)
-        }
+        (self.pixels_per_unit() * self.w() as f32) as i32
     }
 
     /// Gets the window's height in pixels
     pub fn pixel_h(&self) -> i32 {
-        assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_pixel_h(self.inner as _)
-        }
-    }
-
-    /// Returns the pixels per unit
-    pub fn pixels_per_unit(&self) -> f32 {
-        assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_pixels_per_unit(self.inner as _)
-        }
+        (self.pixels_per_unit() * self.h() as f32) as i32
     }
 }
 

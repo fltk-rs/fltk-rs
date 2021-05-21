@@ -2880,9 +2880,6 @@ extern "C" {
     pub fn resolve_raw_handle(handle: *mut libc::c_void) -> winid;
 }
 extern "C" {
-    pub fn Fl_Window_pixels_per_unit(self_: *mut Fl_Window) -> f32;
-}
-extern "C" {
     pub fn Fl_display() -> *mut libc::c_void;
 }
 extern "C" {
@@ -2897,12 +2894,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut libc::c_void);
-}
-extern "C" {
-    pub fn Fl_Window_pixel_w(self_: *mut Fl_Window) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Window_pixel_h(self_: *mut Fl_Window) -> libc::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
