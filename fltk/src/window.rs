@@ -180,12 +180,12 @@ impl SingleWindow {
     pub fn pixels_per_unit(&self) -> f32 {
         assert!(!self.was_deleted());
         #[allow(unused_mut)]
-        let mut retina = 1.0;
+        let mut factor = 1.0;
         #[cfg(target_os = "macos")]
         {
             let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
             if mac_version >= 100700 {
-                retina = unsafe {
+                factor = unsafe {
                     msg_send![
                         self.raw_handle() as *mut objc::runtime::Object,
                         backingScaleFactor
@@ -194,7 +194,7 @@ impl SingleWindow {
             }
         }
         let s = crate::app::screen_scale(self.screen_num());
-        s * retina
+        s * factor
     }
 
     /// Gets the window's width in pixels
@@ -315,18 +315,21 @@ impl DoubleWindow {
     pub fn pixels_per_unit(&self) -> f32 {
         assert!(!self.was_deleted());
         #[allow(unused_mut)]
-        let mut retina = 1.0;
+        let mut factor = 1.0;
         #[cfg(target_os = "macos")]
         {
-            retina = unsafe {
-                msg_send![
-                    self.raw_handle() as *mut objc::runtime::Object,
-                    backingScaleFactor
-                ]
-            };
+            let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
+            if mac_version >= 100700 {
+                factor = unsafe {
+                    msg_send![
+                        self.raw_handle() as *mut objc::runtime::Object,
+                        backingScaleFactor
+                    ]
+                };
+            }
         }
         let s = crate::app::screen_scale(self.screen_num());
-        s * retina
+        s * factor
     }
 
     /// Gets the window's width in pixels
