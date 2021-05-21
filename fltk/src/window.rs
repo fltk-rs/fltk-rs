@@ -183,12 +183,15 @@ impl SingleWindow {
         let mut retina = 1.0;
         #[cfg(target_os = "macos")]
         {
-            retina = unsafe {
-                msg_send![
-                    self.raw_handle() as *mut objc::runtime::Object,
-                    backingScaleFactor
-                ]
-            };
+            let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
+            if mac_version >= 100700 {
+                retina = unsafe {
+                    msg_send![
+                        self.raw_handle() as *mut objc::runtime::Object,
+                        backingScaleFactor
+                    ]
+                };
+            }
         }
         let s = crate::app::screen_scale(self.screen_num());
         s * retina
