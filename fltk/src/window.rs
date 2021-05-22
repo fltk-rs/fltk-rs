@@ -177,6 +177,9 @@ impl SingleWindow {
     }
 
     /// Returns the pixels per unit
+    /// Assumes a factor of 2.0 (Retina) on MacOS since `[NSWindow backingScaleFactor]`
+    /// requires an info.plist with `NSHighResolutionCapable` set to true.
+    /// If this is not desired, you need to bundle your app and set to false.
     pub fn pixels_per_unit(&self) -> f32 {
         assert!(!self.was_deleted());
         #[allow(unused_mut)]
@@ -191,6 +194,7 @@ impl SingleWindow {
                         backingScaleFactor
                     ]
                 };
+                factor = if factor as i32 == 0 { 2.0 } else { 1.0 };
             }
         }
         let s = crate::app::screen_scale(self.screen_num());
@@ -311,7 +315,10 @@ impl DoubleWindow {
         unsafe { Fl_Double_Window_flush(self.inner) }
     }
 
-    /// Returns the pixels per unit
+    /// Returns the pixels per unit.
+    /// Assumes a factor of 2.0 (Retina) (Retina) on MacOS since `[NSWindow backingScaleFactor]`
+    /// requires an info.plist with `NSHighResolutionCapable` set to true.
+    /// If this is not desired, you need to bundle your app and set to false.
     pub fn pixels_per_unit(&self) -> f32 {
         assert!(!self.was_deleted());
         #[allow(unused_mut)]
@@ -326,6 +333,8 @@ impl DoubleWindow {
                         backingScaleFactor
                     ]
                 };
+                // A factor of 0 means no info.plist was found.
+                factor = if factor as i32 == 0 { 2.0 } else { 1.0 };
             }
         }
         let s = crate::app::screen_scale(self.screen_num());
