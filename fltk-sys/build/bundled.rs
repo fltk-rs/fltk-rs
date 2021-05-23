@@ -1,6 +1,10 @@
-use std::{env, path::PathBuf, process::Command};
+use std::{
+    env,
+    path::{Path, PathBuf},
+    process::Command,
+};
 
-pub fn get(target_os: String, out_dir: PathBuf) {
+pub fn get(target_os: &str, out_dir: &Path) {
     let pkg_version = env::var("CARGO_PKG_VERSION").unwrap();
     if let Ok(cfltk_path) = env::var("CFLTK_BUNDLE_DIR") {
         println!("cargo:rustc-link-search=native={}", cfltk_path);
@@ -10,7 +14,7 @@ pub fn get(target_os: String, out_dir: PathBuf) {
         } else {
             let mut platform = target_os.to_string();
 
-            if target_os.as_str() == "windows" {
+            if target_os == "windows" {
                 if cfg!(target_env = "gnu") {
                     platform.push_str("-gnu");
                 } else {
@@ -26,7 +30,7 @@ pub fn get(target_os: String, out_dir: PathBuf) {
 
         Command::new("curl")
             .args(&["-LOk", url.to_str().unwrap()])
-            .current_dir(out_dir.clone())
+            .current_dir(out_dir)
             .status()
             .expect("Curl and Tar are needed to download and upack the bundled libraries!");
 

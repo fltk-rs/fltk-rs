@@ -2868,6 +2868,12 @@ extern "C" {
     pub fn Fl_Window_default_cursor(self_: *mut Fl_Window, cursor: libc::c_int);
 }
 extern "C" {
+    pub fn Fl_Window_screen_num(arg1: *mut Fl_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_set_screen_num(arg1: *mut Fl_Window, screen_num: libc::c_int);
+}
+extern "C" {
     pub fn Fl_Window_find_by_handle(handle: *mut libc::c_void) -> *mut Fl_Window;
 }
 extern "C" {
@@ -3291,6 +3297,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Single_Window_default_cursor(self_: *mut Fl_Single_Window, cursor: libc::c_int);
 }
+extern "C" {
+    pub fn Fl_Single_Window_screen_num(arg1: *mut Fl_Single_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_screen_num(arg1: *mut Fl_Single_Window, screen_num: libc::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {
@@ -3696,6 +3708,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Double_Window_default_cursor(self_: *mut Fl_Double_Window, cursor: libc::c_int);
 }
+extern "C" {
+    pub fn Fl_Double_Window_screen_num(arg1: *mut Fl_Double_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_screen_num(arg1: *mut Fl_Double_Window, screen_num: libc::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -4094,6 +4112,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_default_cursor(self_: *mut Fl_Menu_Window, cursor: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_screen_num(arg1: *mut Fl_Menu_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_screen_num(arg1: *mut Fl_Menu_Window, screen_num: libc::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -4513,6 +4537,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Overlay_Window_default_cursor(self_: *mut Fl_Overlay_Window, cursor: libc::c_int);
 }
+extern "C" {
+    pub fn Fl_Overlay_Window_screen_num(arg1: *mut Fl_Overlay_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_set_screen_num(arg1: *mut Fl_Overlay_Window, screen_num: libc::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Gl_Window {
@@ -4901,6 +4931,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_default_cursor(self_: *mut Fl_Gl_Window, cursor: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_screen_num(arg1: *mut Fl_Gl_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_screen_num(arg1: *mut Fl_Gl_Window, screen_num: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);
@@ -5367,6 +5403,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_default_cursor(self_: *mut Fl_Glut_Window, cursor: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_screen_num(arg1: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_screen_num(arg1: *mut Fl_Glut_Window, screen_num: libc::c_int);
 }
 extern "C" {
     pub fn Fl_Glut_Window_flush(self_: *mut Fl_Glut_Window);

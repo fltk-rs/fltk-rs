@@ -4,7 +4,7 @@ use std::{
     process::Command,
 };
 
-pub fn build(out_dir: PathBuf, target_triple: String) {
+pub fn build(out_dir: &Path, target_triple: &str) {
     let sdk =
         PathBuf::from(env::var("ANDROID_SDK_ROOT").expect("ANDROID_SDK_ROOT needs to be set!"));
     let mut ndk: Option<PathBuf> = None;
@@ -60,7 +60,7 @@ pub fn build(out_dir: PathBuf, target_triple: String) {
             .unwrap()
     ));
 
-    match target_triple.as_str() {
+    match target_triple {
         "i686-linux-android" => {
             cmd.push("-DANDROID_ABI=x86".to_string());
             cmd.push("-DCMAKE_ANDROID_ARCH_ABI=x86".to_string());

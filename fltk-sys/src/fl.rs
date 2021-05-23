@@ -368,3 +368,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_box_dh(boxtype: libc::c_int) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_mac_os_version() -> libc::c_int;
+}

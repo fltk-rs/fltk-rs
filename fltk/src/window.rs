@@ -175,6 +175,41 @@ impl SingleWindow {
             Fl_Window_show_with_args(self.inner as *mut Fl_Window, len, v.as_mut_ptr())
         }
     }
+
+    /// Returns the pixels per unit
+    /// Assumes a factor of 2.0 (Retina) on MacOS since `[NSWindow backingScaleFactor]`
+    /// requires an info.plist with `NSHighResolutionCapable` set to true.
+    /// If this is not desired, you need to bundle your app and set to false.
+    pub fn pixels_per_unit(&self) -> f32 {
+        assert!(!self.was_deleted());
+        #[allow(unused_mut)]
+        let mut factor = 1.0;
+        #[cfg(target_os = "macos")]
+        {
+            let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
+            if mac_version >= 100700 {
+                factor = unsafe {
+                    msg_send![
+                        self.raw_handle() as *mut objc::runtime::Object,
+                        backingScaleFactor
+                    ]
+                };
+                factor = if factor as i32 == 0 { 2.0 } else { 1.0 };
+            }
+        }
+        let s = crate::app::screen_scale(self.screen_num());
+        s * factor
+    }
+
+    /// Gets the window's width in pixels
+    pub fn pixel_w(&self) -> i32 {
+        (self.pixels_per_unit() * self.w() as f32) as i32
+    }
+
+    /// Gets the window's height in pixels
+    pub fn pixel_h(&self) -> i32 {
+        (self.pixels_per_unit() * self.h() as f32) as i32
+    }
 }
 
 /// Creates a double (buffered) window widget
@@ -278,6 +313,42 @@ impl DoubleWindow {
     pub fn flush(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Double_Window_flush(self.inner) }
+    }
+
+    /// Returns the pixels per unit.
+    /// Assumes a factor of 2.0 (Retina) (Retina) on MacOS since `[NSWindow backingScaleFactor]`
+    /// requires an info.plist with `NSHighResolutionCapable` set to true.
+    /// If this is not desired, you need to bundle your app and set to false.
+    pub fn pixels_per_unit(&self) -> f32 {
+        assert!(!self.was_deleted());
+        #[allow(unused_mut)]
+        let mut factor = 1.0;
+        #[cfg(target_os = "macos")]
+        {
+            let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
+            if mac_version >= 100700 {
+                factor = unsafe {
+                    msg_send![
+                        self.raw_handle() as *mut objc::runtime::Object,
+                        backingScaleFactor
+                    ]
+                };
+                // A factor of 0 means no info.plist was found.
+                factor = if factor as i32 == 0 { 2.0 } else { 1.0 };
+            }
+        }
+        let s = crate::app::screen_scale(self.screen_num());
+        s * factor
+    }
+
+    /// Gets the window's width in pixels
+    pub fn pixel_w(&self) -> i32 {
+        (self.pixels_per_unit() * self.w() as f32) as i32
+    }
+
+    /// Gets the window's height in pixels
+    pub fn pixel_h(&self) -> i32 {
+        (self.pixels_per_unit() * self.h() as f32) as i32
     }
 }
 

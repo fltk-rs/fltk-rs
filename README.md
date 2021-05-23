@@ -45,6 +45,12 @@ To use the latest changes in the repo:
 fltk = { version = "^1", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 
+To use the bundled libs (available for x64 windows (msvc & gnu (msys2-mingw)), x64 linux & macos):
+```toml
+[dependencies]
+fltk = { version = "^1", features = ["fltk-bundled"] }
+```
+
 The library is automatically built and statically linked to your binary.
 
 For faster builds you can enable ninja builds for the C++ source using the "use-ninja" feature.
