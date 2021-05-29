@@ -19,20 +19,22 @@ impl ShapedWindow {
         but.clear_visible_focus();
         wind.end();
         wind.set_shape(Some(shape));
-        let mut x = 0;
-        let mut y = 0;
-        wind.handle(move |w, ev| match ev {
-            enums::Event::Push => {
-                let coords = app::event_coords();
-                x = coords.0;
-                y = coords.1;
-                true
+        wind.handle({
+            let mut x = 0;
+            let mut y = 0;
+            move |w, ev| match ev {
+                enums::Event::Push => {
+                    let coords = app::event_coords();
+                    x = coords.0;
+                    y = coords.1;
+                    true
+                }
+                enums::Event::Drag => {
+                    w.set_pos(app::event_x_root() - x, app::event_y_root() - y);
+                    true
+                }
+                _ => false,
             }
-            enums::Event::Drag => {
-                w.set_pos(app::event_x_root() - x, app::event_y_root() - y);
-                true
-            }
-            _ => false,
         });
         Self { wind }
     }
