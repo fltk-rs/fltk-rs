@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.14] - Unreleased
+- Update to latest FLTK with gdi+ support on Windows (for anti-aliased oblique lines and curves).
+
 ## [1.0.14] - 2021-05-23
 - Update FLTK and cfltk.
 - Link to system libpng on linux to avoid conflicting with FLTK's bundled libpng.
