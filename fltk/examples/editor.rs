@@ -76,6 +76,7 @@ pub struct MyMenu {
 impl MyMenu {
     pub fn new(s: &app::Sender<Message>) -> Self {
         let mut menu = menu::SysMenuBar::default().with_size(800, 35);
+        menu.set_frame(FrameType::FlatBox);
         menu.add_emit(
             "&File/New...\t",
             Shortcut::Ctrl | 'n',

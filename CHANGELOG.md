@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.0.15] - 2021-06-01
+- Update to latest FLTK with gdi+ support on Windows (for anti-aliased oblique lines and curves).
+- Fix GroupExt::clear().
+
 ## [1.0.14] - 2021-05-23
 - Update FLTK and cfltk.
 - Link to system libpng on linux to avoid conflicting with FLTK's bundled libpng.
