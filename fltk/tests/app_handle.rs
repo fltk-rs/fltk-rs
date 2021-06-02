@@ -25,7 +25,7 @@ fn app_handle() {
     });
 
     frame.handle(|f, ev| {
-        if ev as i32 > 30 {
+        if ev > 30.into() {
             f.set_label(&format!("{:?}", ev));
             true
         } else {
