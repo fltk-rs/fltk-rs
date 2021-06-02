@@ -499,6 +499,12 @@ impl Into<i32> for Event {
     }
 }
 
+impl From<i32> for Event {
+    fn from(val: i32) -> Event {
+        unsafe { std::mem::transmute(val) }
+    }
+}
+
 #[allow(unreachable_patterns)]
 impl std::fmt::Debug for Event {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
