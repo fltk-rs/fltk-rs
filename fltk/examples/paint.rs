@@ -55,10 +55,11 @@ fn main() {
     let mut x = 0;
     let mut y = 0;
 
-    frame.handle(move |f, ev| match ev {
-        // println!("{:?}", ev);
+    frame.handle(move |f, ev| {
+        // println!("{}", ev);
         // println!("coords {:?}", app::event_coords());
         // println!("get mouse {:?}", app::get_mouse());
+        match ev {
         Event::Push => {
             offs.borrow().begin();
             set_draw_color(Color::Red);
@@ -84,6 +85,7 @@ fn main() {
             true
         }
         _ => false,
+    }
     });
 
     app.run().unwrap();

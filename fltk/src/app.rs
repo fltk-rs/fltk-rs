@@ -1240,7 +1240,7 @@ pub fn get_system_colors() {
 ///     let _ = app::handle(CHANGE_FRAME, &wind).unwrap();
 /// });
 /// frame.handle(move |f, ev| {
-///     if ev as i32 == CHANGE_FRAME {
+///     if ev == CHANGE_FRAME.into() {
 ///         f.set_label("Hello world");
 ///         true
 ///     } else {
@@ -1277,7 +1277,7 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
 ///     let _ = app::handle_main(CHANGE_FRAME).unwrap();
 /// });
 /// frame.handle(move |f, ev| {
-///     if ev as i32 == CHANGE_FRAME {
+///     if ev == CHANGE_FRAME.into() {
 ///         f.set_label("Hello world");
 ///         true
 ///     } else {
