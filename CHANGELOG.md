@@ -1,12 +1,12 @@
 # Changelog
 
 
-## [1.0.16] - Unreleased
-- Add `impl From<i32> for Event`.
-
-## [1.0.15] - 2021-06-01
+## [1.0.16] - 2021-06-02
 - Update to latest FLTK with gdi+ support on Windows (for anti-aliased oblique lines and curves).
 - Fix GroupExt::clear().
+- Add `impl From<i32> for Event`.
+- Use bitflags for Event.
+- Impl fmt::Display for Event.
 
 ## [1.0.14] - 2021-05-23
 - Update FLTK and cfltk.

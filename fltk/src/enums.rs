@@ -385,117 +385,110 @@ impl Color {
 impl std::fmt::Display for Color {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match *self {
-            Color::ForeGround => write!(f, "ForeGround"),
-            Color::BackGround => write!(f, "BackGround"),
-            Color::Inactive => write!(f, "Inactive"),
-            Color::Selection => write!(f, "Selection"),
-            Color::Gray0 => write!(f, "Gray0"),
-            Color::Dark3 => write!(f, "Dark3"),
-            Color::Dark2 => write!(f, "Dark2"),
-            Color::Dark1 => write!(f, "Dark1"),
-            Color::FrameDefault => write!(f, "FrameDefault"),
-            Color::Light1 => write!(f, "Light1"),
-            Color::Light2 => write!(f, "Light2"),
-            Color::Light3 => write!(f, "Light3"),
-            Color::Black => write!(f, "Black"),
-            Color::Red => write!(f, "Red"),
-            Color::Green => write!(f, "Green"),
-            Color::Yellow => write!(f, "Yellow"),
-            Color::Blue => write!(f, "Blue"),
-            Color::Magenta => write!(f, "Magenta"),
-            Color::Cyan => write!(f, "Cyan"),
-            Color::DarkRed => write!(f, "DarkRed"),
-            Color::DarkGreen => write!(f, "DarkGreen"),
-            Color::DarkYellow => write!(f, "DarkYellow"),
-            Color::DarkBlue => write!(f, "DarkBlue"),
-            Color::DarkMagenta => write!(f, "DarkMagenta"),
-            Color::DarkCyan => write!(f, "DarkCyan"),
-            Color::White => write!(f, "White"),
+            Color::ForeGround => write!(f, "Color::ForeGround"),
+            Color::BackGround => write!(f, "Color::BackGround"),
+            Color::Inactive => write!(f, "Color::Inactive"),
+            Color::Selection => write!(f, "Color::Selection"),
+            Color::Gray0 => write!(f, "Color::Gray0"),
+            Color::Dark3 => write!(f, "Color::Dark3"),
+            Color::Dark2 => write!(f, "Color::Dark2"),
+            Color::Dark1 => write!(f, "Color::Dark1"),
+            Color::FrameDefault => write!(f, "Color::FrameDefault"),
+            Color::Light1 => write!(f, "Color::Light1"),
+            Color::Light2 => write!(f, "Color::Light2"),
+            Color::Light3 => write!(f, "Color::Light3"),
+            Color::Black => write!(f, "Color::Black"),
+            Color::Red => write!(f, "Color::Red"),
+            Color::Green => write!(f, "Color::Green"),
+            Color::Yellow => write!(f, "Color::Yellow"),
+            Color::Blue => write!(f, "Color::Blue"),
+            Color::Magenta => write!(f, "Color::Magenta"),
+            Color::Cyan => write!(f, "Color::Cyan"),
+            Color::DarkRed => write!(f, "Color::DarkRed"),
+            Color::DarkGreen => write!(f, "Color::DarkGreen"),
+            Color::DarkYellow => write!(f, "Color::DarkYellow"),
+            Color::DarkBlue => write!(f, "Color::DarkBlue"),
+            Color::DarkMagenta => write!(f, "Color::DarkMagenta"),
+            Color::DarkCyan => write!(f, "Color::DarkCyan"),
+            Color::White => write!(f, "Color::White"),
             _ => {
                 let temp = format!("{:08x}", self.bits);
-                write!(f, "0x{}", &temp[0..6])
+                write!(f, "Color::from_hex(0x{})", &temp[0..6])
             }
         }
     }
 }
 
-/// Defines event types captured by FLTK
-#[repr(i32)]
-#[derive(Copy, Clone, PartialEq, PartialOrd)]
-#[non_exhaustive]
-pub enum Event {
-    /// No Event
-    NoEvent = 0,
-    /// Push
-    Push,
-    /// Released
-    Released,
-    /// Enter
-    Enter,
-    /// Leave
-    Leave,
-    /// Drag
-    Drag,
-    /// Focus
-    Focus,
-    /// Unfocus
-    Unfocus,
-    /// KeyDown
-    KeyDown,
-    /// KeyUp
-    KeyUp,
-    /// Close
-    Close,
-    /// Move
-    Move,
-    /// Shortcut
-    Shortcut,
-    /// Deactivate
-    Deactivate,
-    /// Activate
-    Activate,
-    /// Hide
-    Hide,
-    /// Show
-    Show,
-    /// Paste
-    Paste,
-    /// Selection Clear
-    SelectionClear,
-    /// MouseWheel
-    MouseWheel,
-    /// DndEnter
-    DndEnter,
-    /// Drag n Drop: Drag
-    DndDrag,
-    /// Drag n Drop: Leave
-    DndLeave,
-    /// Drag n Drop: Release
-    DndRelease,
-    /// Screen Config Changed
-    ScreenConfigChanged,
-    /// Fullscreen
-    Fullscreen,
-    /// Zoom Gesture
-    ZoomGesture,
-    /// Zoom Event
-    ZoomEvent,
-    /// Window Resize Event.
-    /// Avoid resizing the widget during a resize event
-    /// to avoid infinite recursion
-    Resize,
+bitflags! {
+    /// Defines event types captured by FLTK
+    pub struct Event: i32 {
+        /// No Event
+        const NoEvent = 0;
+        /// Push
+        const Push = 1;
+        /// Released
+        const Released = 2;
+        /// Enter
+        const Enter = 3;
+        /// Leave
+        const Leave = 4;
+        /// Drag
+        const Drag = 5;
+        /// Focus
+        const Focus = 6;
+        /// Unfocus
+        const Unfocus = 7;
+        /// KeyDown
+        const KeyDown = 8;
+        /// KeyUp
+        const KeyUp = 9;
+        /// Close
+        const Close = 10;
+        /// Move
+        const Move = 11;
+        /// Shortcut
+        const Shortcut = 12;
+        /// Deactivate
+        const Deactivate = 13;
+        /// Activate
+        const Activate = 14;
+        /// Hide
+        const Hide = 15;
+        /// Show
+        const Show = 16;
+        /// Paste
+        const Paste = 17;
+        /// Selection Clear
+        const SelectionClear = 18;
+        /// MouseWheel
+        const MouseWheel = 19;
+        /// DndEnter
+        const DndEnter = 20;
+        /// Drag n Drop: Drag
+        const DndDrag = 21;
+        /// Drag n Drop: Leave
+        const DndLeave = 22;
+        /// Drag n Drop: Release
+        const DndRelease = 23;
+        /// Screen Config Changed
+        const ScreenConfigChanged = 24;
+        /// Fullscreen
+        const Fullscreen = 25;
+        /// Zoom Gesture
+        const ZoomGesture = 26;
+        /// Zoom Event
+        const ZoomEvent = 27;
+        /// Window Resize Event.
+        /// Avoid resizing the widget during a resize event
+        /// to avoid infinite recursion
+        const Resize = 28;
+    }
 }
 
 impl Event {
     /// Creates an event from an i32 value
     pub fn from_i32(val: i32) -> Event {
         unsafe { std::mem::transmute(val) }
-    }
-}
-
-impl Into<i32> for Event {
-    fn into(self) -> i32 {
-        self as i32
     }
 }
 
@@ -506,40 +499,40 @@ impl From<i32> for Event {
 }
 
 #[allow(unreachable_patterns)]
-impl std::fmt::Debug for Event {
+impl std::fmt::Display for Event {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match *self {
-            Event::NoEvent => write!(f, "NoEvent"),
-            Event::Push => write!(f, "Push"),
-            Event::Released => write!(f, "Released"),
-            Event::Enter => write!(f, "Enter"),
-            Event::Leave => write!(f, "Leave"),
-            Event::Drag => write!(f, "Drag"),
-            Event::Focus => write!(f, "Focus"),
-            Event::Unfocus => write!(f, "Unfocus"),
-            Event::KeyDown => write!(f, "KeyDown"),
-            Event::KeyUp => write!(f, "KeyUp"),
-            Event::Close => write!(f, "Close"),
-            Event::Move => write!(f, "Move"),
-            Event::Shortcut => write!(f, "Shortcut"),
-            Event::Deactivate => write!(f, "Deactivate"),
-            Event::Activate => write!(f, "Activate"),
-            Event::Hide => write!(f, "Hide"),
-            Event::Show => write!(f, "Show"),
-            Event::Paste => write!(f, "Paste"),
-            Event::SelectionClear => write!(f, "SelectionClear"),
-            Event::MouseWheel => write!(f, "MouseWheel"),
-            Event::DndEnter => write!(f, "DndEnter"),
-            Event::DndDrag => write!(f, "DndDrag"),
-            Event::DndLeave => write!(f, "DndLeave"),
-            Event::DndRelease => write!(f, "DndRelease"),
-            Event::ScreenConfigChanged => write!(f, "ScreenConfigChanged"),
-            Event::Fullscreen => write!(f, "Fullscreen"),
-            Event::ZoomGesture => write!(f, "ZoomGesture"),
-            Event::ZoomEvent => write!(f, "ZoomEvent"),
-            Event::Resize => write!(f, "Resize"),
+            Event::NoEvent => write!(f, "Event::NoEvent"),
+            Event::Push => write!(f, "Event::Push"),
+            Event::Released => write!(f, "Event::Released"),
+            Event::Enter => write!(f, "Event::Enter"),
+            Event::Leave => write!(f, "Event::Leave"),
+            Event::Drag => write!(f, "Event::Drag"),
+            Event::Focus => write!(f, "Event::Focus"),
+            Event::Unfocus => write!(f, "Event::Unfocus"),
+            Event::KeyDown => write!(f, "Event::KeyDown"),
+            Event::KeyUp => write!(f, "Event::KeyUp"),
+            Event::Close => write!(f, "Event::Close"),
+            Event::Move => write!(f, "Event::Move"),
+            Event::Shortcut => write!(f, "Event::Shortcut"),
+            Event::Deactivate => write!(f, "Event::Deactivate"),
+            Event::Activate => write!(f, "Event::Activate"),
+            Event::Hide => write!(f, "Event::Hide"),
+            Event::Show => write!(f, "Event::Show"),
+            Event::Paste => write!(f, "Event::Paste"),
+            Event::SelectionClear => write!(f, "Event::SelectionClear"),
+            Event::MouseWheel => write!(f, "Event::MouseWheel"),
+            Event::DndEnter => write!(f, "Event::DndEnter"),
+            Event::DndDrag => write!(f, "Event::DndDrag"),
+            Event::DndLeave => write!(f, "Event::DndLeave"),
+            Event::DndRelease => write!(f, "Event::DndRelease"),
+            Event::ScreenConfigChanged => write!(f, "Event::ScreenConfigChanged"),
+            Event::Fullscreen => write!(f, "Event::Fullscreen"),
+            Event::ZoomGesture => write!(f, "Event::ZoomGesture"),
+            Event::ZoomEvent => write!(f, "Event::ZoomEvent"),
+            Event::Resize => write!(f, "Event::Resize"),
             _ => {
-                write!(f, "Event::from_i32({})", *self as i32)
+                write!(f, "Event::from_i32({})", self.bits)
             }
         }
     }
