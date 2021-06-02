@@ -63,7 +63,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     });
 
     frame.handle(move |f, ev| {
-        if ev as i32 == MyEvent::CHANGED {
+        if ev == MyEvent::CHANGED.into() {
             f.set_label(&counter.clone().value().to_string());
             true
         } else {
