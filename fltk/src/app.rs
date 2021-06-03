@@ -444,18 +444,19 @@ where
 /// Sets the callback of a widget
 pub fn set_callback<F, W>(widget: &mut W, cb: F)
 where
-    F: FnMut(),
+    F: FnMut(&mut dyn WidgetExt),
     W: WidgetExt,
 {
     assert!(!widget.was_deleted());
     unsafe {
-        unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        unsafe extern "C" fn shim(wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> = data as *mut Box<dyn FnMut(&mut dyn WidgetExt)>;
+            let f: &mut (dyn FnMut(&mut dyn WidgetExt)) = &mut **a;
+            let mut wid = crate::widget::Widget::from_widget_ptr(wid);
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(&mut wid)));
         }
         let _old_data = widget.user_data();
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
         fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), callback, data);

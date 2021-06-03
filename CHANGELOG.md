@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.17] - Unreleased
+- Update app::set_callback to reflect WidgetExt::set_callback.
+
 ## [1.0.16] - 2021-06-02
 - Update to latest FLTK with gdi+ support on Windows (for anti-aliased oblique lines and curves).
 - Fix GroupExt::clear().
