@@ -177,6 +177,15 @@ impl FrameType {
     pub fn dh(self) -> i32 {
         unsafe { fltk_sys::fl::Fl_box_dh(self as i32) }
     }
+
+    /// Swap frames
+    pub fn swap_frames(old_frame: FrameType, new_frame: FrameType) {
+        unsafe {
+            let new_frame = new_frame as i32;
+            let old_frame = old_frame as i32;
+            fltk_sys::fl::Fl_set_box_type(old_frame, new_frame);
+        }
+    }
 }
 
 bitflags! {

@@ -514,6 +514,22 @@ pub fn set_frame_type(new_frame: FrameType) {
     unsafe {
         let new_frame = new_frame as i32;
         let mut curr = CURRENT_FRAME.lock().unwrap();
+        fl::Fl_set_box_type(*curr, new_frame);
+        *curr = new_frame;
+    }
+}
+
+/// Get the app's frame type
+pub fn frame_type() -> FrameType {
+    let curr = CURRENT_FRAME.lock().unwrap();
+    FrameType::by_index(*curr as _)
+}
+
+/// Swap the default frame type with a new frame type
+pub fn swap_frame_type(new_frame: FrameType) {
+    unsafe {
+        let new_frame = new_frame as i32;
+        let mut curr = CURRENT_FRAME.lock().unwrap();
         fl::Fl_set_box_type(56, *curr);
         fl::Fl_set_box_type(*curr, new_frame);
         fl::Fl_set_box_type(new_frame, 56);
