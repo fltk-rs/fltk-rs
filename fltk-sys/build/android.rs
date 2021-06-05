@@ -5,6 +5,9 @@ use std::{
 };
 
 pub fn build(out_dir: &Path, target_triple: &str) {
+    println!("cargo:rerun-if-env-changed=ANDROID_SDK_ROOT");
+    println!("cargo:rerun-if-env-changed=ANDROID_NDK_ROOT");
+    
     let sdk =
         PathBuf::from(env::var("ANDROID_SDK_ROOT").expect("ANDROID_SDK_ROOT needs to be set!"));
     let mut ndk: Option<PathBuf> = None;
