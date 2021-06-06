@@ -9,7 +9,7 @@ use std::{
     os::raw,
 };
 
-/**!
+/**
     Creates a normal browser.
     Example usage:
     ```rust,no_run

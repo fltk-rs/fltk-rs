@@ -103,7 +103,7 @@ impl TextBuffer {
         }
     }
 
-    /**!
+    /**
         Appends to the buffer.
         To append and scroll to the end of the buffer:
         ```rust,no_run

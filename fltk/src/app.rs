@@ -182,7 +182,7 @@ impl App {
         self
     }
 
-    /**!
+    /**
         Loads a font from a path.
         On success, returns a String with the ttf Font Family name. The font's index is always 16.
         As such only one font can be loaded at a time.
@@ -459,7 +459,8 @@ where
     }
 }
 
-/**!
+#[allow(clippy::missing_safety_doc)]
+/**
     Set a widget callback using a C style API
     ```rust,no_run
     use fltk::{prelude::*, *};
@@ -482,9 +483,9 @@ where
         app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")}));
     }
     ```
+    # Safety
+    The function involves dereferencing externally provided raw pointers
 */
-/// # Safety
-/// The function involves dereferencing externally provided raw pointers
 pub unsafe fn set_raw_callback<W>(
     widget: &mut W,
     data: *mut raw::c_void,
@@ -705,15 +706,16 @@ pub unsafe fn awake_msg<T>(msg: T) {
     fl::Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void);
 }
 
-/**!
+#[allow(clippy::missing_safety_doc)]
+/**
     Receives a custom message
     ```rust,no_run
     use fltk::{prelude::*, *};
     if let Some(msg) = unsafe { app::thread_msg::<i32>() } { /* do something */ }
     ```
+    # Safety
+    The type must correspond to the received message
 */
-/// # Safety
-/// The type must correspond to the received message
 pub unsafe fn thread_msg<T>() -> Option<T> {
     let msg = fl::Fl_thread_msg();
     if msg.is_null() {
@@ -836,7 +838,7 @@ pub fn quit() {
     }
 }
 
-/**!
+/**
     Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
     Example:
     ```rust,no_run
@@ -868,7 +870,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     }
 }
 
-/**!
+/**
     Repeats a timeout callback from the expiration of the previous timeout.
     You may only call this method inside a timeout callback.
     The timeout duration `tm` is indicated in seconds
@@ -957,7 +959,7 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     unsafe { fl::Fl_event_inside(x, y, w, h) != 0 }
 }
 
-/**!
+/**
     Gets the widget that is below the mouse cursor.
     This returns an Option<impl WidgetExt> which can be specified in the function call
     ```rust,no_run
@@ -1248,7 +1250,7 @@ pub fn get_system_colors() {
     unsafe { fl::Fl_get_system_colors() }
 }
 
-/**!
+/**
     Send a signal to a window.
     Integral values from 0 to 30 are reserved.
     Returns Ok(true) if the event was handled.
@@ -1288,7 +1290,7 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     }
 }
 
-/**!
+/**
     Send a signal to a window.
     Integral values from 0 to 30 are reserved.
     Returns Ok(true) if the event was handled.

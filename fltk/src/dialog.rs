@@ -520,7 +520,7 @@ pub fn beep(tp: BeepType) {
     unsafe { Fl_beep(tp as i32) }
 }
 
-/**!
+/**
     FLTK's own `FileChooser`. Which differs for the Native `FileDialog`
     Example:
     ```rust,no_run
@@ -1069,7 +1069,7 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
     }
 }
 
-/**!
+/**
     Shows a file chooser returning a String.
     Example:
     ```rust,no_run

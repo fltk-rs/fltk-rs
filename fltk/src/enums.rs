@@ -300,7 +300,7 @@ impl Font {
         }
     }
 
-    /**!
+    /**
         Replace a current font with a loaded font
         ```rust,no_run
         use fltk::enums::Font;
@@ -315,7 +315,7 @@ impl Font {
         }
     }
 
-    /**!
+    /**
         Load font from file
         ```rust,no_run
         use fltk::enums::Font;

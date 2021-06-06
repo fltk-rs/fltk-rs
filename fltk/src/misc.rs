@@ -597,7 +597,7 @@ impl InputChoice {
     }
 }
 
-/**!
+/**
     Creates a `HelpView` widget which supports HTML 2 formatting
     ```rust,no_run
     use fltk::{prelude::*, *};

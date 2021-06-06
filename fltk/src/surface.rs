@@ -4,7 +4,7 @@ use fltk_sys::surface::*;
 use std::ffi::CString;
 use std::path;
 
-/**!
+/**
     An image surface object.
     Example usage:
     ```rust,no_run
@@ -134,7 +134,7 @@ impl Drop for ImageSurface {
     }
 }
 
-/**!
+/**
     An SVG image surface object
     Example usage:
     ```rust,no_run

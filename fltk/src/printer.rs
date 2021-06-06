@@ -3,7 +3,7 @@ use crate::utils::FlString;
 use fltk_sys::printer::*;
 use std::ffi::CString;
 
-/**!
+/**
     Defines a printer object.
     Example usage:
     ```rust,no_run

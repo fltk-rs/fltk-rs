@@ -682,7 +682,7 @@ pub fn reset_spot() {
     unsafe { Fl_reset_spot() }
 }
 
-/**!
+/**
     Captures part of the window and returns raw data.
     Example usage:
     ```rust,no_run

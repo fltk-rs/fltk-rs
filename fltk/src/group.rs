@@ -339,7 +339,7 @@ impl Pack {
     }
 }
 
-/**!
+/**
     Defines a Vertical Grid (custom widget).
     Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
     Requires explicit calls to add, which is overloaded especially for the layout.
@@ -423,7 +423,7 @@ impl DerefMut for VGrid {
     }
 }
 
-/**!
+/**
     Defines a Horizontal Grid (custom widget).
     Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
     Requires explicit calls to add, which is overloaded especially for the layout.

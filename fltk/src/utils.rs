@@ -16,7 +16,7 @@ impl FlString for CString {
     }
 }
 
-/**!
+/**
     Convenience function to convert rgb to hex.
     Example:
     ```rust,no_run
@@ -29,7 +29,7 @@ pub fn rgb2hex(r: u8, g: u8, b: u8) -> u32 {
     u32::from_str_radix(&format!("{:02x}{:02x}{:02x}", r, g, b), 16).unwrap()
 }
 
-/**!
+/**
     Convenience function to convert rgba to hex.
     Example:
     ```rust,no_run
@@ -42,7 +42,7 @@ pub fn rgba2hex(r: u8, g: u8, b: u8, a: u8) -> u32 {
     u32::from_str_radix(&format!("{:02x}{:02x}{:02x}{:02x}", r, g, b, a), 16).unwrap()
 }
 
-/**!
+/**
     Convenience function to convert hex to rgb.
     Example:
     ```rust,no_run
@@ -58,7 +58,7 @@ pub fn hex2rgb(val: u32) -> (u8, u8, u8) {
     (r, g, b)
 }
 
-/**!
+/**
     Convenience function to convert hex to rgba.
     Example:
     ```rust,no_run
