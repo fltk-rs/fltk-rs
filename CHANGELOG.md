@@ -8,6 +8,7 @@
 - Add enums::FrameType::swap_frames() to swap frame types.
 - Free WindowExt::raw_handle() memory on error.
 - Use full font name instead of family name when handling external truetype fonts.
+- Add convenience functions to enums::Font for loading and replacing fonts.
 
 ## [1.0.16] - 2021-06-02
 - Update to latest FLTK with gdi+ support on Windows (for anti-aliased oblique lines and curves).
