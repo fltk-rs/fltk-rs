@@ -4,19 +4,21 @@ use fltk_sys::surface::*;
 use std::ffi::CString;
 use std::path;
 
-/// An image surface object.
-/// Example usage:
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// let but = button::Button::new(0, 0, 80, 40, "Click");
-/// let sur = surface::ImageSurface::new(but.width(), but.height(), false);
-/// surface::ImageSurface::push_current(&sur);
-/// draw::set_draw_color(enums::Color::White);
-/// draw::draw_rectf(0, 0, but.width(), but.height());
-/// sur.draw(&but, 0, 0);
-/// let img = sur.image().unwrap();
-/// surface::ImageSurface::pop_current();
-/// ```
+/**!
+    An image surface object.
+    Example usage:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    let but = button::Button::new(0, 0, 80, 40, "Click");
+    let sur = surface::ImageSurface::new(but.width(), but.height(), false);
+    surface::ImageSurface::push_current(&sur);
+    draw::set_draw_color(enums::Color::White);
+    draw::draw_rectf(0, 0, but.width(), but.height());
+    sur.draw(&but, 0, 0);
+    let img = sur.image().unwrap();
+    surface::ImageSurface::pop_current();
+    ```
+*/
 pub struct ImageSurface {
     inner: *mut Fl_Image_Surface,
 }
@@ -132,21 +134,23 @@ impl Drop for ImageSurface {
     }
 }
 
-/// An SVG image surface object
-/// Example usage:
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// let but = button::Button::new(0, 0, 80, 40, "Click");
-/// // We need the destructor of SvgFileSurface to actually create the image
-/// {
-///     let sur = surface::SvgFileSurface::new(but.width(), but.height(), "temp.svg");
-///     surface::SvgFileSurface::push_current(&sur);
-///     draw::set_draw_color(enums::Color::White);
-///     draw::draw_rectf(0, 0, but.width(), but.height());
-///     sur.draw(&but, 0, 0);
-///     surface::SvgFileSurface::pop_current();
-/// }
-/// ```
+/**!
+    An SVG image surface object
+    Example usage:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    let but = button::Button::new(0, 0, 80, 40, "Click");
+    // We need the destructor of SvgFileSurface to actually create the image
+    {
+        let sur = surface::SvgFileSurface::new(but.width(), but.height(), "temp.svg");
+        surface::SvgFileSurface::push_current(&sur);
+        draw::set_draw_color(enums::Color::White);
+        draw::draw_rectf(0, 0, but.width(), but.height());
+        sur.draw(&but, 0, 0);
+        surface::SvgFileSurface::pop_current();
+    }
+    ```
+*/
 pub struct SvgFileSurface {
     inner: *mut Fl_SVG_File_Surface,
 }

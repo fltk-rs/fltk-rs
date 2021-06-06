@@ -682,15 +682,17 @@ pub fn reset_spot() {
     unsafe { Fl_reset_spot() }
 }
 
-/// Captures part of the window and returns raw data.
-/// Example usage:
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// let mut win = window::Window::default();
-/// let image = draw::capture_window(&mut win).unwrap();
-/// ```
-/// # Errors
-/// The api can fail to capture the window as an image
+/**!
+    Captures part of the window and returns raw data.
+    Example usage:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    let mut win = window::Window::default();
+    let image = draw::capture_window(&mut win).unwrap();
+    ```
+    # Errors
+    The api can fail to capture the window as an image
+*/
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     assert!(!win.was_deleted());
     let cp = win.width() * win.height() * 3;
@@ -828,14 +830,6 @@ pub fn draw_image(
 /// Errors on invalid or unsupported image formats
 /// # Safety
 /// Passing wrong line data can read to over or underflow
-pub unsafe fn draw_image2(
-    data: &[u8],
-    x: i32,
-    y: i32,
-    w: i32,
-    h: i32,
-    depth: i32,
-    line_data: i32,
-) {
+pub unsafe fn draw_image2(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: i32, line_data: i32) {
     Fl_draw_image(data.as_ptr(), x, y, w, h, depth, line_data);
 }

@@ -270,9 +270,7 @@ impl SvgImage {
     /// Rasterize an SvgImage
     pub fn normalize(&mut self) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_SVG_Image_normalize(self.inner)
-        }
+        unsafe { Fl_SVG_Image_normalize(self.inner) }
     }
 }
 
@@ -650,7 +648,13 @@ impl RgbImage {
     /// Errors on invalid or unsupported image format
     /// # Safety
     /// Passing wrong line data can read to over or underflow
-    pub unsafe fn new2(data: &[u8], w: i32, h: i32, depth: i32, line_data: i32) -> Result<RgbImage, FltkError> {
+    pub unsafe fn new2(
+        data: &[u8],
+        w: i32,
+        h: i32,
+        depth: i32,
+        line_data: i32,
+    ) -> Result<RgbImage, FltkError> {
         let img = Fl_RGB_Image_new(data.as_ptr(), w, h, depth, line_data);
         if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
             Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
@@ -674,7 +678,7 @@ impl RgbImage {
         w: i32,
         h: i32,
         depth: i32,
-        line_data: i32
+        line_data: i32,
     ) -> Result<RgbImage, FltkError> {
         let img = Fl_RGB_Image_from_data(data.as_ptr(), w, h, depth, line_data);
         if img.is_null() || Fl_RGB_Image_fail(img) < 0 {
