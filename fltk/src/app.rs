@@ -1185,6 +1185,7 @@ fn load_font(path: &str) -> Result<String, FltkError> {
             } else {
                 f[16] = name.clone();
             }
+            fl::Fl_set_font2(16, ptr);
             Ok(name)
         }
     }
