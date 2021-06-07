@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.18] - 2021-06-08
+- Fix Font::set_font(), FLTK expects a long lived string.
+
 ## [1.0.17] - 2021-06-07
 - Update app::set_callback to reflect WidgetExt::set_callback.
 - Add app::swap_frame_type() to swap the default frame type with a new one.

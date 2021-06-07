@@ -311,7 +311,7 @@ impl Font {
     pub fn set_font(old: Font, new: &str) {
         let new = CString::safe_new(new);
         unsafe {
-            fltk_sys::fl::Fl_set_font2(old.bits, new.as_ptr());
+            fltk_sys::fl::Fl_set_font2(old.bits, new.into_raw() as _);
         }
     }
 
