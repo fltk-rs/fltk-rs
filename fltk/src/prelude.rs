@@ -330,6 +330,8 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// * `width` - The width of the widget
     /// * `heigth` - The height of the widget
     /// * `title` - The title or label of the widget
+    /// The title is expected to be a static str or None. 
+    /// To use dynamic strings use `with_label(self, &str)` or `set_label(&mut self, &str)`
     /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
     /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
     fn new<T: Into<Option<&'static str>>>(
