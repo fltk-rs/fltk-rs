@@ -182,20 +182,22 @@ impl App {
         self
     }
 
-    /// Loads a font from a path.
-    /// On success, returns a String with the ttf Font Family name. The font's index is always 16.
-    /// As such only one font can be loaded at a time.
-    /// The font name can be used with `Font::by_name`, and index with `Font::by_index`.
-    /// # Examples
-    /// ```rust,no_run
-    /// use fltk::{prelude::*, *};
-    /// let app = app::App::default();
-    /// let font = app.load_font("font.ttf").unwrap();
-    /// let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
-    /// frame.set_label_font(enums::Font::by_name(&font));
-    /// ```
-    /// # Errors
-    /// Returns `ResourceNotFound` if the Font file was not found
+    /**
+        Loads a font from a path.
+        On success, returns a String with the ttf Font Family name. The font's index is always 16.
+        As such only one font can be loaded at a time.
+        The font name can be used with `Font::by_name`, and index with `Font::by_index`.
+        # Examples
+        ```rust,no_run
+        use fltk::{prelude::*, *};
+        let app = app::App::default();
+        let font = app.load_font("font.ttf").unwrap();
+        let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
+        frame.set_label_font(enums::Font::by_name(&font));
+        ```
+        # Errors
+        Returns `ResourceNotFound` if the Font file was not found
+    */
     pub fn load_font<P: AsRef<path::Path>>(self, path: P) -> Result<String, FltkError> {
         Self::load_font_(path.as_ref())
     }
@@ -415,19 +417,12 @@ pub fn event_state() -> Shortcut {
 
 /// Returns a pair of the width and height of the screen
 pub fn screen_size() -> (f64, f64) {
-    unsafe {
-        (
-            (fl::Fl_screen_w() as f64),
-            (fl::Fl_screen_h() as f64),
-        )
-    }
+    unsafe { ((fl::Fl_screen_w() as f64), (fl::Fl_screen_h() as f64)) }
 }
 
 /// Returns a pair of the x & y coords of the screen
 pub fn screen_coords() -> (i32, i32) {
-    unsafe {
-        (fl::Fl_screen_x(), fl::Fl_screen_y())
-    }
+    unsafe { (fl::Fl_screen_x(), fl::Fl_screen_y()) }
 }
 
 /// Used for widgets implementing the `InputExt`, pastes content from the clipboard
@@ -444,48 +439,53 @@ where
 /// Sets the callback of a widget
 pub fn set_callback<F, W>(widget: &mut W, cb: F)
 where
-    F: FnMut(),
+    F: FnMut(&mut dyn WidgetExt),
     W: WidgetExt,
 {
     assert!(!widget.was_deleted());
     unsafe {
-        unsafe extern "C" fn shim(_wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-            let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        unsafe extern "C" fn shim(wid: *mut fltk_sys::widget::Fl_Widget, data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> =
+                data as *mut Box<dyn FnMut(&mut dyn WidgetExt)>;
+            let f: &mut (dyn FnMut(&mut dyn WidgetExt)) = &mut **a;
+            let mut wid = crate::widget::Widget::from_widget_ptr(wid);
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(&mut wid)));
         }
         let _old_data = widget.user_data();
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);
         fltk_sys::widget::Fl_Widget_set_callback(widget.as_widget_ptr(), callback, data);
     }
 }
 
-/// Set a widget callback using a C style API
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// use std::os::raw::*;
-/// // data can be anything, even a different widget
-/// fn cb(w: app::WidgetPtr, data: *mut c_void) {
-///     // To access the button
-///     let mut btn = unsafe { button::Button::from_widget_ptr(w) }; // Gets a Widget
-///     btn.set_label("Works!");
-///     // To access the frame
-///     let mut frm = unsafe { widget::Widget::from_widget_ptr(data as app::WidgetPtr) };
-///     frm.set_label("Works!");
-/// }
-/// let mut but = button::Button::default();
-/// let mut frame = frame::Frame::default();
-/// unsafe {
-///     // If no data needs to be passed, you can pass 0 as *mut _
-///     app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(cb));
-///     // Using a closure also works
-///     app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")}));
-/// }
-/// ```
-/// # Safety
-/// The function involves dereferencing externally provided raw pointers
+#[allow(clippy::missing_safety_doc)]
+/**
+    Set a widget callback using a C style API
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    use std::os::raw::*;
+    // data can be anything, even a different widget
+    fn cb(w: app::WidgetPtr, data: *mut c_void) {
+        // To access the button
+        let mut btn = unsafe { button::Button::from_widget_ptr(w) }; // Gets a Widget
+        btn.set_label("Works!");
+        // To access the frame
+        let mut frm = unsafe { widget::Widget::from_widget_ptr(data as app::WidgetPtr) };
+        frm.set_label("Works!");
+    }
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
+    unsafe {
+        // If no data needs to be passed, you can pass 0 as *mut _
+        app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(cb));
+        // Using a closure also works
+        app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")}));
+    }
+    ```
+    # Safety
+    The function involves dereferencing externally provided raw pointers
+*/
 pub unsafe fn set_raw_callback<W>(
     widget: &mut W,
     data: *mut raw::c_void,
@@ -510,6 +510,22 @@ pub fn set_visible_focus(flag: bool) {
 
 /// Set the app's default frame type
 pub fn set_frame_type(new_frame: FrameType) {
+    unsafe {
+        let new_frame = new_frame as i32;
+        let mut curr = CURRENT_FRAME.lock().unwrap();
+        fl::Fl_set_box_type(*curr, new_frame);
+        *curr = new_frame;
+    }
+}
+
+/// Get the app's frame type
+pub fn frame_type() -> FrameType {
+    let curr = CURRENT_FRAME.lock().unwrap();
+    FrameType::by_index(*curr as _)
+}
+
+/// Swap the default frame type with a new frame type
+pub fn swap_frame_type(new_frame: FrameType) {
     unsafe {
         let new_frame = new_frame as i32;
         let mut curr = CURRENT_FRAME.lock().unwrap();
@@ -690,13 +706,16 @@ pub unsafe fn awake_msg<T>(msg: T) {
     fl::Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void);
 }
 
-/// Receives a custom message
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// if let Some(msg) = unsafe { app::thread_msg::<i32>() } { /* do something */ }
-/// ```
-/// # Safety
-/// The type must correspond to the received message
+#[allow(clippy::missing_safety_doc)]
+/**
+    Receives a custom message
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    if let Some(msg) = unsafe { app::thread_msg::<i32>() } { /* do something */ }
+    ```
+    # Safety
+    The type must correspond to the received message
+*/
 pub unsafe fn thread_msg<T>() -> Option<T> {
     let msg = fl::Fl_thread_msg();
     if msg.is_null() {
@@ -819,22 +838,24 @@ pub fn quit() {
     }
 }
 
-/// Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
-/// Example:
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// fn callback() {
-///     println!("TICK");
-///     app::repeat_timeout(1.0, callback);
-/// }
-/// fn main() {
-///     let app = app::App::default();
-///     let mut wind = window::Window::new(100, 100, 400, 300, "");
-///     wind.show();
-///     app::add_timeout(1.0, callback);
-///     app.run().unwrap();
-/// }
-/// ```
+/**
+    Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
+    Example:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    fn callback() {
+        println!("TICK");
+        app::repeat_timeout(1.0, callback);
+    }
+    fn main() {
+        let app = app::App::default();
+        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        wind.show();
+        app::add_timeout(1.0, callback);
+        app.run().unwrap();
+    }
+    ```
+*/
 pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
@@ -849,24 +870,26 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     }
 }
 
-/// Repeats a timeout callback from the expiration of the previous timeout.
-/// You may only call this method inside a timeout callback.
-/// The timeout duration `tm` is indicated in seconds
-/// Example:
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// fn callback() {
-///     println!("TICK");
-///     app::repeat_timeout(1.0, callback);
-/// }
-/// fn main() {
-///     let app = app::App::default();
-///     let mut wind = window::Window::new(100, 100, 400, 300, "");
-///     wind.show();
-///     app::add_timeout(1.0, callback);
-///     app.run().unwrap();
-/// }
-/// ```
+/**
+    Repeats a timeout callback from the expiration of the previous timeout.
+    You may only call this method inside a timeout callback.
+    The timeout duration `tm` is indicated in seconds
+    Example:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    fn callback() {
+        println!("TICK");
+        app::repeat_timeout(1.0, callback);
+    }
+    fn main() {
+        let app = app::App::default();
+        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        wind.show();
+        app::add_timeout(1.0, callback);
+        app.run().unwrap();
+    }
+    ```
+*/
 pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
@@ -936,13 +959,15 @@ pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     unsafe { fl::Fl_event_inside(x, y, w, h) != 0 }
 }
 
-/// Gets the widget that is below the mouse cursor.
-/// This returns an Option<impl WidgetExt> which can be specified in the function call
-/// ```rust,no_run
-/// use fltk::app;
-/// use fltk::widget;
-/// let w = app::belowmouse::<widget::Widget>(); // or by specifying a more concrete type
-/// ```
+/**
+    Gets the widget that is below the mouse cursor.
+    This returns an Option<impl WidgetExt> which can be specified in the function call
+    ```rust,no_run
+    use fltk::app;
+    use fltk::widget;
+    let w = app::belowmouse::<widget::Widget>(); // or by specifying a more concrete type
+    ```
+*/
 pub fn belowmouse<Wid: WidgetExt>() -> Option<impl WidgetExt> {
     unsafe {
         let x = fl::Fl_belowmouse() as *mut fltk_sys::fl::Fl_Widget;
@@ -1225,31 +1250,33 @@ pub fn get_system_colors() {
     unsafe { fl::Fl_get_system_colors() }
 }
 
-/// Send a signal to a window.
-/// Integral values from 0 to 30 are reserved.
-/// Returns Ok(true) if the event was handled.
-/// Returns Ok(false) if the event was not handled.
-/// Returns Err on error or in use of one of the reserved values.
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// const CHANGE_FRAME: i32 = 100;
-/// let mut wind = window::Window::default();
-/// let mut but = button::Button::default();
-/// let mut frame = frame::Frame::default();
-/// but.set_callback(move |_| {
-///     let _ = app::handle(CHANGE_FRAME, &wind).unwrap();
-/// });
-/// frame.handle(move |f, ev| {
-///     if ev == CHANGE_FRAME.into() {
-///         f.set_label("Hello world");
-///         true
-///     } else {
-///         false
-///     }
-/// });
-/// ```
-/// # Errors
-/// Returns Err on error or in use of one of the reserved values.
+/**
+    Send a signal to a window.
+    Integral values from 0 to 30 are reserved.
+    Returns Ok(true) if the event was handled.
+    Returns Ok(false) if the event was not handled.
+    Returns Err on error or in use of one of the reserved values.
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    const CHANGE_FRAME: i32 = 100;
+    let mut wind = window::Window::default();
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
+    but.set_callback(move |_| {
+        let _ = app::handle(CHANGE_FRAME, &wind).unwrap();
+    });
+    frame.handle(move |f, ev| {
+        if ev == CHANGE_FRAME.into() {
+            f.set_label("Hello world");
+            true
+        } else {
+            false
+        }
+    });
+    ```
+    # Errors
+    Returns Err on error or in use of one of the reserved values.
+*/
 pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     msg: I,
     w: &W,
@@ -1263,30 +1290,32 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     }
 }
 
-/// Send a signal to a window.
-/// Integral values from 0 to 30 are reserved.
-/// Returns Ok(true) if the event was handled.
-/// Returns Ok(false) if the event was not handled.
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// const CHANGE_FRAME: i32 = 100;
-/// let mut wind = window::Window::default();
-/// let mut but = button::Button::default();
-/// let mut frame = frame::Frame::default();
-/// but.set_callback(move |_| {
-///     let _ = app::handle_main(CHANGE_FRAME).unwrap();
-/// });
-/// frame.handle(move |f, ev| {
-///     if ev == CHANGE_FRAME.into() {
-///         f.set_label("Hello world");
-///         true
-///     } else {
-///         false
-///     }
-/// });
-/// ```
-/// # Errors
-/// Returns Err on error or in use of one of the reserved values.
+/**
+    Send a signal to a window.
+    Integral values from 0 to 30 are reserved.
+    Returns Ok(true) if the event was handled.
+    Returns Ok(false) if the event was not handled.
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    const CHANGE_FRAME: i32 = 100;
+    let mut wind = window::Window::default();
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
+    but.set_callback(move |_| {
+        let _ = app::handle_main(CHANGE_FRAME).unwrap();
+    });
+    frame.handle(move |f, ev| {
+        if ev == CHANGE_FRAME.into() {
+            f.set_label("Hello world");
+            true
+        } else {
+            false
+        }
+    });
+    ```
+    # Errors
+    Returns Err on error or in use of one of the reserved values.
+*/
 pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
     msg: I,
 ) -> Result<bool, FltkError> {
@@ -1331,9 +1360,7 @@ pub fn screen_count() -> i32 {
 
 /// Get the screen number based on its coordinates
 pub fn screen_num(x: i32, y: i32) -> i32 {
-    unsafe {
-        fl::Fl_screen_num(x, y)
-    }
+    unsafe { fl::Fl_screen_num(x, y) }
 }
 
 /// Get a screen's dpi resolution

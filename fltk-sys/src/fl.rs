@@ -129,6 +129,9 @@ extern "C" {
     pub fn Fl_set_font(arg1: libc::c_int, arg2: libc::c_int);
 }
 extern "C" {
+    pub fn Fl_set_font2(arg1: libc::c_int, arg2: *const libc::c_char);
+}
+extern "C" {
     pub fn Fl_set_font_size(arg1: libc::c_int);
 }
 extern "C" {

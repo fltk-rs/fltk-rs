@@ -1,5 +1,9 @@
 use crate::app::{font_index, FONTS};
+use crate::prelude::{FltkError, FltkErrorKind};
+use crate::utils::FlString;
 use fltk_sys::fl::Fl_get_rgb_color;
+use std::ffi::{CStr, CString};
+use std::path;
 
 /// Defines label types
 #[repr(i32)]
@@ -177,6 +181,15 @@ impl FrameType {
     pub fn dh(self) -> i32 {
         unsafe { fltk_sys::fl::Fl_box_dh(self as i32) }
     }
+
+    /// Swap frames
+    pub fn swap_frames(old_frame: FrameType, new_frame: FrameType) {
+        unsafe {
+            let new_frame = new_frame as i32;
+            let old_frame = old_frame as i32;
+            fltk_sys::fl::Fl_set_box_type(old_frame, new_frame);
+        }
+    }
 }
 
 bitflags! {
@@ -284,6 +297,55 @@ impl Font {
         match font_index(name) {
             Some(val) => Font::by_index(val),
             None => Font::Helvetica,
+        }
+    }
+
+    /**
+        Replace a current font with a loaded font
+        ```rust,no_run
+        use fltk::enums::Font;
+        let font = Font::load_font("font.ttf").unwrap();
+        Font::set_font(Font::Helvetica, &font);
+        ```
+    */
+    pub fn set_font(old: Font, new: &str) {
+        let new = CString::safe_new(new);
+        unsafe {
+            fltk_sys::fl::Fl_set_font2(old.bits, new.as_ptr());
+        }
+    }
+
+    /**
+        Load font from file
+        ```rust,no_run
+        use fltk::enums::Font;
+        let font = Font::load_font("font.ttf").unwrap();
+        Font::set_font(Font::Helvetica, &font);
+        ```
+    */
+    pub fn load_font<P: AsRef<path::Path>>(path: P) -> Result<String, FltkError> {
+        Font::load_font_(path.as_ref())
+    }
+
+    fn load_font_(path: &path::Path) -> Result<String, FltkError> {
+        unsafe {
+            if !path.exists() {
+                return Err::<String, FltkError>(FltkError::Internal(
+                    FltkErrorKind::ResourceNotFound,
+                ));
+            }
+            if let Some(p) = path.to_str() {
+                let path = CString::safe_new(p);
+                let ptr = fltk_sys::fl::Fl_load_font(path.as_ptr());
+                if ptr.is_null() {
+                    Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
+                } else {
+                    let name = CStr::from_ptr(ptr as *mut _).to_string_lossy().to_string();
+                    Ok(name)
+                }
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            }
         }
     }
 }

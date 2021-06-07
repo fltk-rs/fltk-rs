@@ -103,21 +103,23 @@ impl TextBuffer {
         }
     }
 
-    /// Appends to the buffer.
-    /// To append and scroll to the end of the buffer:
-    /// ```rust,no_run
-    /// use fltk::{prelude::*, *};
-    /// let txt = "Some long text!";
-    /// let buf = text::TextBuffer::default();
-    /// let mut disp = text::TextDisplay::default();
-    /// disp.set_buffer(Some(buf));
-    /// disp.buffer().unwrap().append(txt);
-    /// disp.set_insert_position(disp.buffer().unwrap().length());
-    /// disp.scroll(
-    ///     disp.count_lines(0, disp.buffer().unwrap().length(), true),
-    ///     0,
-    /// );
-    /// ```
+    /**
+        Appends to the buffer.
+        To append and scroll to the end of the buffer:
+        ```rust,no_run
+        use fltk::{prelude::*, *};
+        let txt = "Some long text!";
+        let buf = text::TextBuffer::default();
+        let mut disp = text::TextDisplay::default();
+        disp.set_buffer(Some(buf));
+        disp.buffer().unwrap().append(txt);
+        disp.set_insert_position(disp.buffer().unwrap().length());
+        disp.scroll(
+            disp.count_lines(0, disp.buffer().unwrap().length(), true),
+            0,
+        );
+        ```
+    */
     pub fn append(&mut self, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);

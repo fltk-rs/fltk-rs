@@ -597,12 +597,14 @@ impl InputChoice {
     }
 }
 
-/// Creates a `HelpView` widget which supports HTML 2 formatting
-/// ```rust,no_run
-/// use fltk::{prelude::*, *};
-/// let mut h = misc::HelpView::new(10, 10, 380, 280, "");
-/// h.set_value("Hello <b><font color=red>again</font></b>");
-/// ```
+/**
+    Creates a `HelpView` widget which supports HTML 2 formatting
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    let mut h = misc::HelpView::new(10, 10, 380, 280, "");
+    h.set_value("Hello <b><font color=red>again</font></b>");
+    ```
+*/
 #[derive(WidgetBase, WidgetExt, Debug)]
 pub struct HelpView {
     inner: *mut Fl_Help_View,

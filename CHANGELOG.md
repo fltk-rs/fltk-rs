@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.0.17] - 2021-06-07
+- Update app::set_callback to reflect WidgetExt::set_callback.
+- Add app::swap_frame_type() to swap the default frame type with a new one.
+- Add app::frame_type() to get the default frame type.
+- Add enums::FrameType::swap_frames() to swap frame types.
+- Free WindowExt::raw_handle() memory on error.
+- Use full font name instead of family name when handling external truetype fonts.
+- Add convenience functions to enums::Font for loading and replacing fonts.
+
 ## [1.0.16] - 2021-06-02
 - Update to latest FLTK with gdi+ support on Windows (for anti-aliased oblique lines and curves).
 - Fix GroupExt::clear().
