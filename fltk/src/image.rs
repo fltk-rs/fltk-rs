@@ -589,8 +589,8 @@ impl Pixmap {
 /// Creates a struct holding a raw RGB image
 #[derive(ImageExt, Debug)]
 pub struct RgbImage {
-    inner: *mut Fl_RGB_Image,
-    refcount: AtomicUsize,
+    pub(crate) inner: *mut Fl_RGB_Image,
+    pub(crate) refcount: AtomicUsize,
 }
 
 impl RgbImage {

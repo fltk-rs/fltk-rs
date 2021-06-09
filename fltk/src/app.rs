@@ -1413,3 +1413,68 @@ pub unsafe fn open_display() {
 pub unsafe fn close_display() {
     fl::Fl_close_display()
 }
+
+/// Get the clipboard content if it's an image
+pub fn event_clipboard() -> Option<crate::image::RgbImage> {
+    unsafe {
+        let image = fl::Fl_event_clipboard();
+        let image_opt = if image.is_null() {
+            None
+        } else {
+            use std::sync::atomic::AtomicUsize;
+            Some(crate::image::RgbImage {
+                inner: image as _,
+                refcount: AtomicUsize::new(1),
+            })
+        };
+        image_opt
+    }
+}
+
+/// Get the clipboard content type
+pub fn event_clipboard_type() -> Option<String> {
+    unsafe {
+        let txt = fl::Fl_event_clipboard_type();
+        if txt.is_null() {
+            None
+        } else {
+            Some(CStr::from_ptr(txt).to_string_lossy().to_string())
+        }
+    }
+}
+
+/// Send an event directly to a window, with no dispatch in between
+pub fn handle_(ev: Event, win: impl WindowExt) -> bool {
+    unsafe {
+        fl::Fl_handle_(ev.bits(), win.as_widget_ptr() as _) != 0
+    }
+}
+
+/// Send an event directly to the main window, with no dispatch in between
+pub fn handle_main_<I: Into<i32> + Copy + PartialEq + PartialOrd>(
+    msg: I,
+) -> Result<bool, FltkError> {
+    let val = msg.into();
+    if val >= 0 && val <= 30 {
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+    } else {
+        first_window().map_or(
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            |win| {
+                let ret = unsafe { fl::Fl_handle_(val, win.as_widget_ptr() as _) != 0 };
+                Ok(ret)
+            },
+        )
+    }
+}
+
+/// Add an handler which handles events prior to them arriving to a window
+pub fn event_dispatch<W: WindowExt>(f: fn(Event, &W) -> bool) {
+    unsafe {
+        let callback: Option<unsafe extern "C" fn(ev: raw::c_int, win: *mut raw::c_void) -> raw::c_int> =
+            Some(mem::transmute(move |ev, win| {
+                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(ev, win) as i32));
+            }));
+        fl::Fl_event_dispatch(callback);
+    }
+}
