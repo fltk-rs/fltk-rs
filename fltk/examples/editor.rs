@@ -227,7 +227,6 @@ impl MyApp {
                     true
                 }
                 Event::Paste => {
-                    println!("{:?}", app::event_clipboard_type());
                     if dnd && released {
                         let path = app::event_text();
                         let path = std::path::Path::new(&path);
