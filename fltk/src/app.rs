@@ -1435,9 +1435,9 @@ fn event_clipboard_() -> Option<crate::image::RgbImage> {
 pub enum ClipboardEvent {
     /// No clipboard event
     None,
-    /// Text paste
+    /// Text paste event
     Text,
-    /// image paste
+    /// image paste event
     Image(Option<crate::image::RgbImage>),
 }
 
