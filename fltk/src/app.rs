@@ -1415,7 +1415,7 @@ pub unsafe fn close_display() {
 }
 
 /// Get the clipboard content if it's an image
-pub fn event_clipboard() -> Option<crate::image::RgbImage> {
+fn event_clipboard_() -> Option<crate::image::RgbImage> {
     unsafe {
         let image = fl::Fl_event_clipboard();
         let image_opt = if image.is_null() {
@@ -1431,14 +1431,28 @@ pub fn event_clipboard() -> Option<crate::image::RgbImage> {
     }
 }
 
+/// The event clipboard type
+pub enum ClipboardEvent {
+    /// No clipboard event
+    None,
+    /// Text paste
+    Text,
+    /// image paste
+    Image(Option<crate::image::RgbImage>),
+}
+
 /// Get the clipboard content type
-pub fn event_clipboard_type() -> Option<String> {
+pub fn event_clipboard() -> ClipboardEvent {
     unsafe {
         let txt = fl::Fl_event_clipboard_type();
-        if txt.is_null() {
-            None
+        let txt = 
+            CStr::from_ptr(txt).to_string_lossy().to_string();
+        if txt == "text/plain" {
+            ClipboardEvent::Text
+        } else if txt == "image" {
+            ClipboardEvent::Image(event_clipboard_())
         } else {
-            Some(CStr::from_ptr(txt).to_string_lossy().to_string())
+            ClipboardEvent::None
         }
     }
 }
