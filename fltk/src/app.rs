@@ -425,14 +425,60 @@ pub fn screen_coords() -> (i32, i32) {
     unsafe { (fl::Fl_screen_x(), fl::Fl_screen_y()) }
 }
 
-/// Used for widgets implementing the `InputExt`, pastes content from the clipboard
+/// Types of Clipboard contents
+#[derive(Debug, Clone, Copy)]
+pub enum ClipboardContent {
+    /// Textual content
+    Text,
+    /// Image content
+    Image,
+}
+
+/// Check the contents of the clipboard
+pub fn clipboard_contains(content: ClipboardContent) -> bool {
+    use ClipboardContent::*;
+    let txt = match content {
+        Text => "text/plain",
+        Image => "image",
+    };
+    let txt = CString::new(txt).unwrap();
+    unsafe {
+        fl::Fl_clipboard_contains(txt.as_ptr()) != 0
+    }
+}
+
+/// Pastes content from the clipboard
 pub fn paste<T>(widget: &T)
 where
-    T: WidgetBase + InputExt,
+    T: WidgetExt,
+{
+    assert!(!widget.was_deleted());
+    if clipboard_contains(ClipboardContent::Text) {
+        paste_text(widget)
+    } else {
+        paste_image(widget)
+    }
+}
+
+/// Pastes textual content from the clipboard
+pub fn paste_text<T>(widget: &T)
+where
+    T: WidgetExt,
 {
     assert!(!widget.was_deleted());
     unsafe {
-        fl::Fl_paste(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
+        fl::Fl_paste_text(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
+    }
+}
+
+/// Pastes image content from the clipboard
+pub fn paste_image<T>(widget: &T)
+where
+    T: WidgetExt,
+{
+    assert!(!widget.was_deleted());
+    unsafe {
+        fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
     }
 }
 
@@ -1415,7 +1461,7 @@ pub unsafe fn close_display() {
 }
 
 /// Get the clipboard content if it's an image
-fn event_clipboard_() -> Option<crate::image::RgbImage> {
+pub fn event_clipboard_image() -> Option<crate::image::RgbImage> {
     unsafe {
         let image = fl::Fl_event_clipboard();
         let image_opt = if image.is_null() {
@@ -1432,27 +1478,26 @@ fn event_clipboard_() -> Option<crate::image::RgbImage> {
 }
 
 /// The event clipboard type
+#[derive(Debug, Clone)]
 pub enum ClipboardEvent {
-    /// No clipboard event
-    None,
     /// Text paste event
-    Text,
+    Text(String),
     /// image paste event
     Image(Option<crate::image::RgbImage>),
 }
 
 /// Get the clipboard content type
-pub fn event_clipboard() -> ClipboardEvent {
+pub fn event_clipboard() -> Option<ClipboardEvent> {
     unsafe {
         let txt = fl::Fl_event_clipboard_type();
         let txt = 
             CStr::from_ptr(txt).to_string_lossy().to_string();
         if txt == "text/plain" {
-            ClipboardEvent::Text
+            Some(ClipboardEvent::Text(event_text()))
         } else if txt == "image" {
-            ClipboardEvent::Image(event_clipboard_())
+            Some(ClipboardEvent::Image(event_clipboard_image()))
         } else {
-            ClipboardEvent::None
+            None
         }
     }
 }
