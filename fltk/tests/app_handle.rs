@@ -26,7 +26,7 @@ fn app_handle() {
 
     frame.handle(|f, ev| {
         if ev > 30.into() {
-            f.set_label(&format!("{:?}", ev));
+            f.set_label(&format!("{}", ev));
             true
         } else {
             false
