@@ -2453,39 +2453,6 @@ pub union winid {
     pub opaque: *mut libc::c_void,
     _bindgen_union_align: u64,
 }
-#[test]
-fn bindgen_test_layout_winid() {
-    assert_eq!(
-        ::core::mem::size_of::<winid>(),
-        8usize,
-        concat!("Size of: ", stringify!(winid))
-    );
-    assert_eq!(
-        ::core::mem::align_of::<winid>(),
-        8usize,
-        concat!("Alignment of ", stringify!(winid))
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<winid>())).x_id as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(winid),
-            "::",
-            stringify!(x_id)
-        )
-    );
-    assert_eq!(
-        unsafe { &(*(::core::ptr::null::<winid>())).opaque as *const _ as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(winid),
-            "::",
-            stringify!(opaque)
-        )
-    );
-}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Window {

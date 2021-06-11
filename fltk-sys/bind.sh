@@ -5,7 +5,7 @@ bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_text.h -o flt
 bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_input.h -o fltk-sys/src/input.rs
 bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_output.h -o fltk-sys/src/output.rs
 bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_widget.h -o fltk-sys/src/widget.rs
-bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_window.h -o fltk-sys/src/window.rs
+bindgen --no-layout-tests --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_window.h -o fltk-sys/src/window.rs
 bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_menu.h -o fltk-sys/src/menu.rs
 bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_dialog.h -o fltk-sys/src/dialog.rs
 bindgen --use-core --ctypes-prefix libc fltk-sys/cfltk/include/cfl_valuator.h -o fltk-sys/src/valuator.rs

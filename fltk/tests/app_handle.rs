@@ -1,7 +1,6 @@
 use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
-#[test]
-fn app_handle() {
+fn main() {
     let app = app::App::default();
     let mut wind = Window::default()
         .with_size(400, 300)
