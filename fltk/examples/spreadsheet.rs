@@ -87,7 +87,10 @@ impl MyTable {
         let data_c = data.clone();
 
         table.handle(move |_, ev| match ev {
-            enums::Event::Push => {
+            // Event::Push will happen before the focus is moved,
+            // thus giving the previous coordinates.
+            // Event::Released gives an accurate position
+            enums::Event::Released => {
                 let c = cell_c.borrow();
                 inp.resize(c.x, c.y, c.w, c.h);
                 inp.set_value(&data_c.borrow_mut()[c.row as usize][c.col as usize]);
