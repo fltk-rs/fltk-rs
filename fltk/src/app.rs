@@ -455,8 +455,10 @@ where
     assert!(!widget.was_deleted());
     if clipboard_contains(ClipboardContent::Text) {
         paste_text(widget)
-    } else {
+    } else if clipboard_contains(ClipboardContent::Image) {
         paste_image(widget)
+    } else {
+        // Do nothing!
     }
 }
 
