@@ -124,14 +124,17 @@ pub struct PowerButton {
 impl PowerButton {
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> Self {
         let mut frm = Frame::new(x, y, w, h, "");
+        frm.set_frame(FrameType::FlatBox);
+        frm.set_color(Color::Black);
         let on = Rc::from(RefCell::from(false));
         frm.draw({
             let on = on.clone();
+            let power_on_str = POWER.to_string().replace("red", "green");
             move |f| {
                 let image_data = if *on.borrow() {
-                    POWER.to_string().replace("red", "green")
+                    &power_on_str
                 } else {
-                    POWER.to_string()
+                    POWER
                 };
                 let mut svg = SvgImage::from_data(&image_data).unwrap();
                 svg.scale(f.width(), f.height(), true, true);
