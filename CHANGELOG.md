@@ -7,7 +7,7 @@
 - Add several clipboard event handling functions into the app module. app::event_clipboard().
 - Add app::clipboard_contains().
 - Add app::event_dispatch intercept events before they reach widgets’ handlers.
-- Add app::hande_ and handle_main_ to bypass the event_dispatch handler.
+- Add app::handle2 for forwarding events from event_dispatch.
 
 ## [1.0.18] - 2021-06-08
 - Fix Font::set_font(), FLTK expects a long lived string.

@@ -244,7 +244,7 @@ fn main() {
                         if val.len() > 1 {
                             txt.pop();
                             out.set_value(txt.as_str());
-                        } else if val.len() == 1 {
+                        } else {
                             txt.pop();
                             out.set_value("0");
                         }

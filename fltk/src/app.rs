@@ -442,9 +442,7 @@ pub fn clipboard_contains(content: ClipboardContent) -> bool {
         Image => "image",
     };
     let txt = CString::new(txt).unwrap();
-    unsafe {
-        fl::Fl_clipboard_contains(txt.as_ptr()) != 0
-    }
+    unsafe { fl::Fl_clipboard_contains(txt.as_ptr()) != 0 }
 }
 
 /// Pastes content from the clipboard
@@ -1340,7 +1338,7 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
 }
 
 /**
-    Send a signal to a window.
+    Send a signal to the main window.
     Integral values from 0 to 30 are reserved.
     Returns Ok(true) if the event was handled.
     Returns Ok(false) if the event was not handled.
@@ -1466,7 +1464,7 @@ pub unsafe fn close_display() {
 pub fn event_clipboard_image() -> Option<crate::image::RgbImage> {
     unsafe {
         let image = fl::Fl_event_clipboard();
-        let image_opt = if image.is_null() {
+        if image.is_null() {
             None
         } else {
             use std::sync::atomic::AtomicUsize;
@@ -1474,8 +1472,7 @@ pub fn event_clipboard_image() -> Option<crate::image::RgbImage> {
                 inner: image as _,
                 refcount: AtomicUsize::new(1),
             })
-        };
-        image_opt
+        }
     }
 }
 
@@ -1492,8 +1489,7 @@ pub enum ClipboardEvent {
 pub fn event_clipboard() -> Option<ClipboardEvent> {
     unsafe {
         let txt = fl::Fl_event_clipboard_type();
-        let txt = 
-            CStr::from_ptr(txt).to_string_lossy().to_string();
+        let txt = CStr::from_ptr(txt).to_string_lossy().to_string();
         if txt == "text/plain" {
             Some(ClipboardEvent::Text(event_text()))
         } else if txt == "image" {
@@ -1504,38 +1500,54 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
     }
 }
 
-/// Send an event directly to a window, with no dispatch in between
-pub fn handle_(ev: Event, win: impl WindowExt) -> bool {
-    unsafe {
-        fl::Fl_handle_(ev.bits(), win.as_widget_ptr() as _) != 0
-    }
+/**
+    Send a signal to a window from event_dispatch.
+    Returns Ok(true) if the event was handled.
+    Returns Ok(false) if the event was not handled.
+    Returns Err on error or in use of one of the reserved values.
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    const CHANGE_FRAME: i32 = 100;
+    let mut wind = window::Window::default();
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
+    but.set_callback(move |_| {
+        let _ = app::handle2(CHANGE_FRAME, &wind).unwrap();
+    });
+    frame.handle(move |f, ev| {
+        if ev == CHANGE_FRAME.into() {
+            f.set_label("Hello world");
+            true
+        } else {
+            false
+        }
+    });
+    ```
+*/
+pub fn handle2<W: WindowExt>(
+    msg: Event,
+    w: &W,
+) -> bool {
+    unsafe { fl::Fl_handle_(msg.bits(), w.as_widget_ptr() as _) != 0 }
 }
 
-/// Send an event directly to the main window, with no dispatch in between
-pub fn handle_main_<I: Into<i32> + Copy + PartialEq + PartialOrd>(
-    msg: I,
-) -> Result<bool, FltkError> {
-    let val = msg.into();
-    if val >= 0 && val <= 30 {
-        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-    } else {
-        first_window().map_or(
-            Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
-            |win| {
-                let ret = unsafe { fl::Fl_handle_(val, win.as_widget_ptr() as _) != 0 };
-                Ok(ret)
-            },
-        )
-    }
-}
+/**
+    The event dispatch function is called after native events are converted to
+    FLTK events, but before they are handled by FLTK. If the dispatch function
+    handler is set, it is up to the dispatch function to call
+    `app::handle_main2(Event)` or `app::handle2(Event)` or to ignore the event.
 
-/// Add an handler which handles events prior to them arriving to a window
+    The dispatch function itself must return false if it ignored the event,
+    or true if it used the event. If you call `app::handle2()` or `app::handle_main2()`, then
+    this will return the correct value.
+*/
 pub fn event_dispatch<W: WindowExt>(f: fn(Event, &W) -> bool) {
     unsafe {
-        let callback: Option<unsafe extern "C" fn(ev: raw::c_int, win: *mut raw::c_void) -> raw::c_int> =
-            Some(mem::transmute(move |ev, win| {
-                let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(ev, win) as i32));
-            }));
+        let callback: Option<
+            unsafe extern "C" fn(ev: raw::c_int, win: *mut raw::c_void) -> raw::c_int,
+        > = Some(mem::transmute(move |ev, win| {
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(ev, win) as i32));
+        }));
         fl::Fl_event_dispatch(callback);
     }
 }
