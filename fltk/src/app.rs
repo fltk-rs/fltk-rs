@@ -21,6 +21,9 @@ use std::{
 /// Alias Widget ptr
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
+/// Alias Window ptr
+pub type WindowPtr = *mut fltk_sys::window::Fl_Window;
+
 lazy_static! {
     /// The currently chosen font
     static ref CURRENT_FONT: Mutex<i32> = Mutex::new(0);
@@ -1500,20 +1503,23 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
     }
 }
 
+#[allow(clippy::missing_safety_doc)]
 /**
-    Send a signal to a window from event_dispatch.
-    Returns Ok(true) if the event was handled.
-    Returns Ok(false) if the event was not handled.
-    Returns Err on error or in use of one of the reserved values.
+    Send a signal to a window pointer from event_dispatch.
+    Returns true if the event was handled.
+    Returns false if the event was not handled or ignored.
     ```rust,no_run
     use fltk::{prelude::*, *};
     const CHANGE_FRAME: i32 = 100;
     let mut wind = window::Window::default();
     let mut but = button::Button::default();
     let mut frame = frame::Frame::default();
+    wind.end();
+    wind.show();
     but.set_callback(move |_| {
-        let _ = app::handle2(CHANGE_FRAME, &wind).unwrap();
+        let _ = app::handle_main(CHANGE_FRAME).unwrap();
     });
+
     frame.handle(move |f, ev| {
         if ev == CHANGE_FRAME.into() {
             f.set_label("Hello world");
@@ -1522,32 +1528,39 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
             false
         }
     });
+    unsafe {
+        app::event_dispatch(|ev, winptr| {
+            if ev == CHANGE_FRAME.into() {
+                false // ignore CHANGE_FRAME event
+            } else {
+                app::handle_raw(ev, winptr)
+            }
+        });
+    }
     ```
+    # Safety
+    The window pointer must be valid
 */
-pub fn handle2<W: WindowExt>(
-    msg: Event,
-    w: &W,
+pub unsafe fn handle_raw(
+    event: Event,
+    w: WindowPtr,
 ) -> bool {
-    unsafe { fl::Fl_handle_(msg.bits(), w.as_widget_ptr() as _) != 0 }
+    fl::Fl_handle_(event.bits(), w as _) != 0
 }
 
+#[allow(clippy::missing_safety_doc)]
 /**
     The event dispatch function is called after native events are converted to
     FLTK events, but before they are handled by FLTK. If the dispatch function
     handler is set, it is up to the dispatch function to call
-    `app::handle_main2(Event)` or `app::handle2(Event)` or to ignore the event.
+    `app::handle2(Event, WindowPtr)` or to ignore the event.
 
     The dispatch function itself must return false if it ignored the event,
-    or true if it used the event. If you call `app::handle2()` or `app::handle_main2()`, then
+    or true if it used the event. If you call `app::handle2()`, then
     this will return the correct value.
+    # Safety
+    The window pointer must not be invalidated
 */
-pub fn event_dispatch<W: WindowExt>(f: fn(Event, &W) -> bool) {
-    unsafe {
-        let callback: Option<
-            unsafe extern "C" fn(ev: raw::c_int, win: *mut raw::c_void) -> raw::c_int,
-        > = Some(mem::transmute(move |ev, win| {
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(ev, win) as i32));
-        }));
-        fl::Fl_event_dispatch(callback);
-    }
+pub unsafe fn event_dispatch(f: fn(Event, WindowPtr) -> bool) {
+    fl::Fl_event_dispatch(mem::transmute(f));
 }
