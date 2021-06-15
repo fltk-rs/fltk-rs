@@ -545,7 +545,7 @@ pub unsafe trait InputExt: WidgetExt {
     /// Returns the value inside the input/output widget
     fn value(&self) -> String;
     /// Sets the value inside an input/output widget
-    fn set_value(&self, val: &str);
+    fn set_value(&mut self, val: &str);
     /// Returns the maximum size (in bytes) accepted by an input/output widget
     fn maximum_size(&self) -> i32;
     /// Sets the maximum size (in bytes) accepted by an input/output widget
