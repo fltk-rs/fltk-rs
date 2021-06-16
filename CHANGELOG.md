@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.0.19] - Unreleased
+## [1.0.19] - 2021-06-17
 - Fixed spreadsheet example, Thanks @eadf.
 - Fixed calculator example. Thanks @eadf.
 - Add several clipboard event handling functions into the app module. app::event_clipboard().
