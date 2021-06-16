@@ -124,18 +124,23 @@ pub struct PowerButton {
 impl PowerButton {
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> Self {
         let mut frm = Frame::new(x, y, w, h, "");
+        frm.set_frame(FrameType::FlatBox);
+        frm.set_color(Color::Black);
         let on = Rc::from(RefCell::from(false));
         frm.draw({
-            let on = on.clone();
+            // storing two almost identical images here, in a real application this could be optimized
+            let on = Rc::clone(&on);
+            let mut on_svg =
+                SvgImage::from_data(&POWER.to_string().replace("red", "green")).unwrap();
+            on_svg.scale(frm.width(), frm.height(), true, true);
+            let mut off_svg = SvgImage::from_data(&POWER).unwrap();
+            off_svg.scale(frm.width(), frm.height(), true, true);
             move |f| {
-                let image_data = if *on.borrow() {
-                    POWER.to_string().replace("red", "green")
+                if *on.borrow() {
+                    on_svg.draw(f.x(), f.y(), f.width(), f.height());
                 } else {
-                    POWER.to_string()
+                    off_svg.draw(f.x(), f.y(), f.width(), f.height());
                 };
-                let mut svg = SvgImage::from_data(&image_data).unwrap();
-                svg.scale(f.width(), f.height(), true, true);
-                svg.draw(f.x(), f.y(), f.width(), f.height());
             }
         });
         frm.handle({

@@ -21,6 +21,9 @@ use std::{
 /// Alias Widget ptr
 pub type WidgetPtr = *mut fltk_sys::widget::Fl_Widget;
 
+/// Alias Window ptr
+pub type WindowPtr = *mut fltk_sys::window::Fl_Window;
+
 lazy_static! {
     /// The currently chosen font
     static ref CURRENT_FONT: Mutex<i32> = Mutex::new(0);
@@ -425,14 +428,60 @@ pub fn screen_coords() -> (i32, i32) {
     unsafe { (fl::Fl_screen_x(), fl::Fl_screen_y()) }
 }
 
-/// Used for widgets implementing the `InputExt`, pastes content from the clipboard
+/// Types of Clipboard contents
+#[derive(Debug, Clone, Copy)]
+pub enum ClipboardContent {
+    /// Textual content
+    Text,
+    /// Image content
+    Image,
+}
+
+/// Check the contents of the clipboard
+pub fn clipboard_contains(content: ClipboardContent) -> bool {
+    use ClipboardContent::*;
+    let txt = match content {
+        Text => "text/plain",
+        Image => "image",
+    };
+    let txt = CString::new(txt).unwrap();
+    unsafe { fl::Fl_clipboard_contains(txt.as_ptr()) != 0 }
+}
+
+/// Pastes content from the clipboard
 pub fn paste<T>(widget: &T)
 where
-    T: WidgetBase + InputExt,
+    T: WidgetExt,
+{
+    assert!(!widget.was_deleted());
+    if clipboard_contains(ClipboardContent::Text) {
+        paste_text(widget)
+    } else if clipboard_contains(ClipboardContent::Image) {
+        paste_image(widget)
+    } else {
+        // Do nothing!
+    }
+}
+
+/// Pastes textual content from the clipboard
+pub fn paste_text<T>(widget: &T)
+where
+    T: WidgetExt,
 {
     assert!(!widget.was_deleted());
     unsafe {
-        fl::Fl_paste(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
+        fl::Fl_paste_text(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
+    }
+}
+
+/// Pastes image content from the clipboard
+pub fn paste_image<T>(widget: &T)
+where
+    T: WidgetExt,
+{
+    assert!(!widget.was_deleted());
+    unsafe {
+        fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
     }
 }
 
@@ -1292,7 +1341,7 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
 }
 
 /**
-    Send a signal to a window.
+    Send a signal to the main window.
     Integral values from 0 to 30 are reserved.
     Returns Ok(true) if the event was handled.
     Returns Ok(false) if the event was not handled.
@@ -1412,4 +1461,106 @@ pub unsafe fn open_display() {
 /// The display shouldn't be closed while a window is shown
 pub unsafe fn close_display() {
     fl::Fl_close_display()
+}
+
+/// Get the clipboard content if it's an image
+pub fn event_clipboard_image() -> Option<crate::image::RgbImage> {
+    unsafe {
+        let image = fl::Fl_event_clipboard();
+        if image.is_null() {
+            None
+        } else {
+            use std::sync::atomic::AtomicUsize;
+            Some(crate::image::RgbImage {
+                inner: image as _,
+                refcount: AtomicUsize::new(1),
+            })
+        }
+    }
+}
+
+/// The event clipboard type
+#[derive(Debug, Clone)]
+pub enum ClipboardEvent {
+    /// Text paste event
+    Text(String),
+    /// image paste event
+    Image(Option<crate::image::RgbImage>),
+}
+
+/// Get the clipboard content type
+pub fn event_clipboard() -> Option<ClipboardEvent> {
+    unsafe {
+        let txt = fl::Fl_event_clipboard_type();
+        let txt = CStr::from_ptr(txt).to_string_lossy().to_string();
+        if txt == "text/plain" {
+            Some(ClipboardEvent::Text(event_text()))
+        } else if txt == "image" {
+            Some(ClipboardEvent::Image(event_clipboard_image()))
+        } else {
+            None
+        }
+    }
+}
+
+#[allow(clippy::missing_safety_doc)]
+/**
+    Send a signal to a window pointer from event_dispatch.
+    Returns true if the event was handled.
+    Returns false if the event was not handled or ignored.
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    const CHANGE_FRAME: i32 = 100;
+    let mut wind = window::Window::default();
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
+    wind.end();
+    wind.show();
+    but.set_callback(move |_| {
+        let _ = app::handle_main(CHANGE_FRAME).unwrap();
+    });
+
+    frame.handle(move |f, ev| {
+        if ev == CHANGE_FRAME.into() {
+            f.set_label("Hello world");
+            true
+        } else {
+            false
+        }
+    });
+    unsafe {
+        app::event_dispatch(|ev, winptr| {
+            if ev == CHANGE_FRAME.into() {
+                false // ignore CHANGE_FRAME event
+            } else {
+                app::handle_raw(ev, winptr)
+            }
+        });
+    }
+    ```
+    # Safety
+    The window pointer must be valid
+*/
+pub unsafe fn handle_raw(
+    event: Event,
+    w: WindowPtr,
+) -> bool {
+    fl::Fl_handle_(event.bits(), w as _) != 0
+}
+
+#[allow(clippy::missing_safety_doc)]
+/**
+    The event dispatch function is called after native events are converted to
+    FLTK events, but before they are handled by FLTK. If the dispatch function
+    handler is set, it is up to the dispatch function to call
+    `app::handle2(Event, WindowPtr)` or to ignore the event.
+
+    The dispatch function itself must return false if it ignored the event,
+    or true if it used the event. If you call `app::handle2()`, then
+    this will return the correct value.
+    # Safety
+    The window pointer must not be invalidated
+*/
+pub unsafe fn event_dispatch(f: fn(Event, WindowPtr) -> bool) {
+    fl::Fl_event_dispatch(mem::transmute(f));
 }

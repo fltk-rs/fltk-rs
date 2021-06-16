@@ -21,6 +21,10 @@ fn main() {
 
     if cfg!(feature = "fltk-bundled") {
         bundled::get(&target_os, &out_dir);
+    } else if !crate::utils::has_program("git") || !crate::utils::has_program("cmake") {
+        println!("cargo:warning=Could not find invokable CMake or Git, building using the fltk-bundled feature flag!");
+        println!("cargo:warning=If this is not desirable, please ensure CMake and Git are installed and in your PATH!");
+        bundled::get(&target_os, &out_dir);
     } else {
         source::build(&manifest_dir, &target_triple, &out_dir);
     }

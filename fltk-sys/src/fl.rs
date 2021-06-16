@@ -93,7 +93,10 @@ extern "C" {
     pub fn Fl_screen_w() -> libc::c_int;
 }
 extern "C" {
-    pub fn Fl_paste(arg1: *mut Fl_Widget, src: libc::c_int);
+    pub fn Fl_paste_text(arg1: *mut Fl_Widget, src: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_paste_image(arg1: *mut Fl_Widget, src: libc::c_int);
 }
 extern "C" {
     pub fn Fl_set_scheme(scheme: *const libc::c_char);
@@ -297,6 +300,9 @@ extern "C" {
     pub fn Fl_handle(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_handle_(arg1: libc::c_int, arg2: *mut libc::c_void) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_add_idle(
         arg1: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
         arg2: *mut libc::c_void,
@@ -373,4 +379,20 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_mac_os_version() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_event_clipboard() -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_event_clipboard_type() -> *const libc::c_char;
+}
+extern "C" {
+    pub fn Fl_clipboard_contains(typ: *const libc::c_char) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_event_dispatch(
+        cb: ::core::option::Option<
+            unsafe extern "C" fn(event: libc::c_int, arg1: *mut libc::c_void) -> libc::c_int,
+        >,
+    );
 }

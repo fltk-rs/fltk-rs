@@ -52,8 +52,7 @@ fn move_image(mut frm: Frame) {
     });
 }
 
-#[test]
-fn run_animation() {
+fn main() {
     let app = app::App::default();
     let mut wind = Window::default()
         .with_label("timeout")

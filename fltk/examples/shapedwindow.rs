@@ -78,6 +78,5 @@ fn prep_cursor() -> image::RgbImage {
             pixel.copy_from_slice(&[0, 0, 0, 0]);
         }
     }
-    let image = image::RgbImage::new(&fb, 20, 20, enums::ColorDepth::Rgba8).unwrap();
-    image
+    image::RgbImage::new(&fb, 20, 20, enums::ColorDepth::Rgba8).unwrap()
 }

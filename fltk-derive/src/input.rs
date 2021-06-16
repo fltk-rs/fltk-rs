@@ -78,7 +78,7 @@ pub fn impl_input_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn set_value(&self, val: &str) {
+            fn set_value(&mut self, val: &str) {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(val);
                 unsafe {
