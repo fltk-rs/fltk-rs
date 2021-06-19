@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.0.20] - Unreleased
+- Fix dependabot config.
+- Update deps.
+
 ## [1.0.19] - 2021-06-17
 - Fixed spreadsheet example, Thanks @eadf.
 - Fixed calculator example. Thanks @eadf.
