@@ -2,8 +2,9 @@
 
 
 ## [1.0.20] - Unreleased
+- Add alias OFlatBox to OFlatFrame.
 - Fix dependabot config.
-- Update deps.
+- Update dependencies.
 
 ## [1.0.19] - 2021-06-17
 - Fixed spreadsheet example, Thanks @eadf.
