@@ -32,6 +32,10 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_clip_children").as_str(),
         name.span(),
     );
+    let init_sizes = Ident::new(
+        format!("{}_{}", name_str, "init_sizes").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl IntoIterator for #name {
@@ -195,6 +199,13 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                    Fl_Group_draw_children(self.inner as _)
                }
            }
+
+           fn init_sizes(&mut self) {
+            unsafe {
+                assert!(!self.was_deleted());
+                #init_sizes(self.inner)
+                }
+            }
         }
     };
     gen.into()

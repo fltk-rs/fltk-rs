@@ -2,6 +2,8 @@
 
 
 ## [1.0.20] - Unreleased
+- Add app::event_original_key().
+- Add GroupExt::init_sizes().
 - Add alias OFlatBox to OFlatFrame.
 - Fix dependabot config.
 - Update dependencies.

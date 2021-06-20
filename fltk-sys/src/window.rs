@@ -580,6 +580,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Group_clip_children(self_: *mut Fl_Group) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Group_init_sizes(self_: *mut Fl_Group);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Pack {
@@ -880,6 +883,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_clip_children(self_: *mut Fl_Pack) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_init_sizes(self_: *mut Fl_Pack);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1196,6 +1202,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_clip_children(self_: *mut Fl_Scroll) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_init_sizes(self_: *mut Fl_Scroll);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1519,6 +1528,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tabs_clip_children(self_: *mut Fl_Tabs) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Tabs_init_sizes(self_: *mut Fl_Tabs);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tile {
@@ -1813,6 +1825,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_clip_children(self_: *mut Fl_Tile) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_init_sizes(self_: *mut Fl_Tile);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2120,6 +2135,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_clip_children(self_: *mut Fl_Wizard) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Wizard_init_sizes(self_: *mut Fl_Wizard);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2446,6 +2464,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Color_Chooser_clip_children(self_: *mut Fl_Color_Chooser) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Color_Chooser_init_sizes(self_: *mut Fl_Color_Chooser);
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union winid {
@@ -2747,6 +2768,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_clip_children(self_: *mut Fl_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_init_sizes(self_: *mut Fl_Window);
 }
 extern "C" {
     pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: libc::c_uint);
@@ -3179,6 +3203,9 @@ extern "C" {
     pub fn Fl_Single_Window_clip_children(self_: *mut Fl_Single_Window) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Single_Window_init_sizes(self_: *mut Fl_Single_Window);
+}
+extern "C" {
     pub fn Fl_Single_Window_make_modal(arg1: *mut Fl_Single_Window, boolean: libc::c_uint);
 }
 extern "C" {
@@ -3590,6 +3617,9 @@ extern "C" {
     pub fn Fl_Double_Window_clip_children(self_: *mut Fl_Double_Window) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Double_Window_init_sizes(self_: *mut Fl_Double_Window);
+}
+extern "C" {
     pub fn Fl_Double_Window_make_modal(arg1: *mut Fl_Double_Window, boolean: libc::c_uint);
 }
 extern "C" {
@@ -3993,6 +4023,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_clip_children(self_: *mut Fl_Menu_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_init_sizes(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
     pub fn Fl_Menu_Window_make_modal(arg1: *mut Fl_Menu_Window, boolean: libc::c_uint);
@@ -4406,6 +4439,9 @@ extern "C" {
     pub fn Fl_Overlay_Window_clip_children(self_: *mut Fl_Overlay_Window) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Overlay_Window_init_sizes(self_: *mut Fl_Overlay_Window);
+}
+extern "C" {
     pub fn Fl_Overlay_Window_draw_overlay(
         self_: *mut Fl_Overlay_Window,
         cb: custom_draw_callback,
@@ -4812,6 +4848,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_clip_children(self_: *mut Fl_Gl_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_init_sizes(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
     pub fn Fl_Gl_Window_make_modal(arg1: *mut Fl_Gl_Window, boolean: libc::c_uint);
@@ -5284,6 +5323,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_clip_children(self_: *mut Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_init_sizes(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
     pub fn Fl_Glut_Window_make_modal(arg1: *mut Fl_Glut_Window, boolean: libc::c_uint);

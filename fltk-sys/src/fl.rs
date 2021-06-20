@@ -39,6 +39,9 @@ extern "C" {
     pub fn Fl_event_key() -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_event_original_key() -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_event_key_down(arg1: libc::c_int) -> libc::c_int;
 }
 extern "C" {
@@ -96,7 +99,7 @@ extern "C" {
     pub fn Fl_paste_text(arg1: *mut Fl_Widget, src: libc::c_int);
 }
 extern "C" {
-    pub fn Fl_paste_image(arg1: *mut Fl_Widget, src: libc::c_int);
+    pub fn Fl_paste_image(widget: *mut Fl_Widget, src: libc::c_int);
 }
 extern "C" {
     pub fn Fl_set_scheme(scheme: *const libc::c_char);
@@ -387,7 +390,7 @@ extern "C" {
     pub fn Fl_event_clipboard_type() -> *const libc::c_char;
 }
 extern "C" {
-    pub fn Fl_clipboard_contains(typ: *const libc::c_char) -> libc::c_int;
+    pub fn Fl_clipboard_contains(type_: *const libc::c_char) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_event_dispatch(

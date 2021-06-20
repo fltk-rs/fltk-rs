@@ -456,6 +456,8 @@ pub unsafe trait GroupExt: WidgetExt {
         Self: Sized;
     /// Draw children, the call should be in a `WidgetBase::draw` method
     fn draw_children(&mut self);
+    /// Resets the internal array of widget sizes and positions
+    fn init_sizes(&mut self);
 }
 
 /// Defines the methods implemented by all window widgets
@@ -1108,8 +1110,6 @@ pub unsafe trait TableExt: GroupExt {
     /// # Errors
     /// Errors on failure to move the cursor
     fn move_cursor(&mut self, r: i32, c: i32) -> Result<(), FltkError>;
-    /// Resets the internal array of widget sizes and positions.
-    fn init_sizes(&mut self);
     /// Returns the scrollbar size
     fn scrollbar_size(&self) -> i32;
     /// Sets the scrollbar size

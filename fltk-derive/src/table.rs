@@ -175,10 +175,6 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let resize = Ident::new(format!("{}_{}", name_str, "resize").as_str(), name.span());
-    let init_sizes = Ident::new(
-        format!("{}_{}", name_str, "init_sizes").as_str(),
-        name.span(),
-    );
     let scrollbar_size = Ident::new(
         format!("{}_{}", name_str, "scrollbar_size").as_str(),
         name.span(),
@@ -559,13 +555,6 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
                     Ok(())
-                }
-            }
-
-            fn init_sizes(&mut self) {
-                unsafe {
-                    assert!(!self.was_deleted());
-                    #init_sizes(self.inner)
                 }
             }
 
