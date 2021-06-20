@@ -5,7 +5,7 @@ use std::rc::Rc;
 
 #[derive(Debug, Clone)]
 pub struct MyDial {
-    main_wid: frame::Frame,
+    main_wid: group::Group,
     value: Rc<RefCell<i32>>,
     value_frame: frame::Frame,
 }
@@ -13,10 +13,11 @@ pub struct MyDial {
 impl MyDial {
     pub fn new(x: i32, y: i32, w: i32, h: i32, label: &'static str) -> Self {
         let value = Rc::from(RefCell::from(0));
-        let mut main_wid = frame::Frame::new(x, y, w, h, label).with_align(Align::Top);
+        let mut main_wid = group::Group::new(x, y, w, h, label).with_align(Align::Top);
         let mut value_frame =
             frame::Frame::new(main_wid.x(), main_wid.y() + 80, main_wid.w(), 40, "0");
         value_frame.set_label_size(26);
+        main_wid.end();
         let value_c = value.clone();
         main_wid.draw(move |w| {
             draw::set_draw_rgb_color(230, 230, 230);
@@ -57,7 +58,7 @@ impl MyDial {
 }
 
 impl Deref for MyDial {
-    type Target = frame::Frame;
+    type Target = group::Group;
 
     fn deref(&self) -> &Self::Target {
         &self.main_wid
