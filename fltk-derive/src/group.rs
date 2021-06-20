@@ -206,6 +206,20 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 #init_sizes(self.inner)
                 }
             }
+
+            fn bounds(&self) -> Vec<(i32, i32, i32, i32)> {
+                let children = self.children();
+                let mut vec = vec![];
+                for i in 0..children {
+                    let child = self.child(i).unwrap();
+                    let x = child.x();
+                    let y = child.y();
+                    let r = child.w() + x;
+                    let b = child.h() + y;
+                    vec.push((x, y, r, b));
+                }
+                vec
+            }
         }
     };
     gen.into()

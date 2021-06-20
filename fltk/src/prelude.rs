@@ -458,6 +458,8 @@ pub unsafe trait GroupExt: WidgetExt {
     fn draw_children(&mut self);
     /// Resets the internal array of widget sizes and positions
     fn init_sizes(&mut self);
+    /// Get the bounds of all children widgets (left, upper, right, bottom)
+    fn bounds(&self) -> Vec<(i32, i32, i32, i32)>;
 }
 
 /// Defines the methods implemented by all window widgets
