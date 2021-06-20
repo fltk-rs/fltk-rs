@@ -151,59 +151,64 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-           fn set_clip_children(&mut self, flag: bool) {
-               assert!(!self.was_deleted());
-               unsafe {
-                   #set_clip_children(self.inner, flag as i32)
-               }
-           }
+            fn add_resizable<W: WidgetExt>(&mut self, widget: &W) {
+                self.resizable(widget);
+                self.add(widget);
+            }
 
-           fn clip_children(&mut self) -> bool {
-               assert!(!self.was_deleted());
-               unsafe {
-                   #clip_children(self.inner) != 0
-               }
-           }
-
-           fn draw_child<W: WidgetExt>(&self, w: &mut W) {
-               assert!(!self.was_deleted());
-               assert!(!w.was_deleted());
-               unsafe {
-                   crate::app::open_display();
-                   Fl_Group_draw_child(self.inner as _, w.as_widget_ptr() as _)
-               }
-           }
-
-           fn update_child<W: WidgetExt>(&self, w: &mut W) {
-               assert!(!self.was_deleted());
-               assert!(!w.was_deleted());
-               unsafe {
-                    crate::app::open_display();
-                   Fl_Group_update_child(self.inner as _, w.as_widget_ptr() as _)
-               }
-           }
-
-           fn draw_outside_label<W: WidgetExt>(&self, w: &mut W) {
-               assert!(!self.was_deleted());
-               assert!(!w.was_deleted());
-               unsafe {
-                   crate::app::open_display();
-                   Fl_Group_draw_outside_label(self.inner as _, w.as_widget_ptr() as _)
-               }
-           }
-
-           fn draw_children(&mut self) {
-               assert!(!self.was_deleted());
-               unsafe {
-                   crate::app::open_display();
-                   Fl_Group_draw_children(self.inner as _)
-               }
-           }
-
-           fn init_sizes(&mut self) {
-            unsafe {
+            fn set_clip_children(&mut self, flag: bool) {
                 assert!(!self.was_deleted());
-                #init_sizes(self.inner)
+                unsafe {
+                    #set_clip_children(self.inner, flag as i32)
+                }
+            }
+
+            fn clip_children(&mut self) -> bool {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #clip_children(self.inner) != 0
+                }
+            }
+
+            fn draw_child<W: WidgetExt>(&self, w: &mut W) {
+                assert!(!self.was_deleted());
+                assert!(!w.was_deleted());
+                unsafe {
+                    crate::app::open_display();
+                    Fl_Group_draw_child(self.inner as _, w.as_widget_ptr() as _)
+                }
+            }
+
+            fn update_child<W: WidgetExt>(&self, w: &mut W) {
+                assert!(!self.was_deleted());
+                assert!(!w.was_deleted());
+                unsafe {
+                        crate::app::open_display();
+                    Fl_Group_update_child(self.inner as _, w.as_widget_ptr() as _)
+                }
+            }
+
+            fn draw_outside_label<W: WidgetExt>(&self, w: &mut W) {
+                assert!(!self.was_deleted());
+                assert!(!w.was_deleted());
+                unsafe {
+                    crate::app::open_display();
+                    Fl_Group_draw_outside_label(self.inner as _, w.as_widget_ptr() as _)
+                }
+            }
+
+            fn draw_children(&mut self) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    crate::app::open_display();
+                    Fl_Group_draw_children(self.inner as _)
+                }
+            }
+
+            fn init_sizes(&mut self) {
+                unsafe {
+                    assert!(!self.was_deleted());
+                    #init_sizes(self.inner)
                 }
             }
 
