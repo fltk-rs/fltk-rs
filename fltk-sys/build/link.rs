@@ -88,7 +88,6 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
             }
             "windows" => {
-                println!("cargo:rustc-link-lib=dylib=gdiplus");
                 println!("cargo:rustc-link-lib=dylib=ws2_32");
                 println!("cargo:rustc-link-lib=dylib=comctl32");
                 println!("cargo:rustc-link-lib=dylib=gdi32");
@@ -102,6 +101,9 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=dylib=user32");
                 println!("cargo:rustc-link-lib=dylib=kernel32");
                 println!("cargo:rustc-link-lib=dylib=odbc32");
+                if !cfg!(feature = "no-gdiplus") {
+                    println!("cargo:rustc-link-lib=dylib=gdiplus");
+                }
             }
             "android" => {
                 println!("cargo:rustc-link-lib=log");

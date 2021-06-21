@@ -136,6 +136,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("HAVE_STRLCAT", "False");
         }
 
+        if cfg!(feature = "no-gdiplus") {
+            dst.define("OPTION_USE_GDIPLUS", "OFF");
+        }
+
         let _dst = dst
             .profile("Release")
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
