@@ -80,7 +80,7 @@ fn main() {
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
     wind.end();
     wind.show();
-    but.set_callback(move |_| frame.set_label("Hello World!"));
+    but.set_callback(move |_| frame.set_label("Hello World!")); // the closure capture is mutable borrow to our button
     app.run().unwrap();
 }
 ```
@@ -151,10 +151,11 @@ Another way is to use message passing:
     
     while app.wait() {
         let label: i32 = frame.label().parse().unwrap();
-        match r.recv() {
-            Some(Message::Increment) => frame.set_label(&(label + 1).to_string()),
-            Some(Message::Decrement) => frame.set_label(&(label - 1).to_string()),
-            None => (),
+        if let Some(msg) = r.recv() {
+            match msg {
+                Message::Increment => frame.set_label(&(label + 1).to_string()),
+                Message::Decrement => frame.set_label(&(label - 1).to_string()),
+            }
         }
     }
 ```
@@ -164,7 +165,12 @@ For custom event handling, the handle() method can be used:
 ```rust
     some_widget.handle(move |widget, ev: Event| {
         match ev {
-            /* handle ev */
+            Event::Push => {
+                println!("Pushed!");
+                true
+            },
+            /* other events to be handled */
+            _ => false,
         }
     });
 ```
@@ -195,12 +201,12 @@ Themes of individual widgets can be optionally modified using the provided metho
 
 The following are the features offered by the crate:
 - no-pango: Build without pango support on Linux/BSD, if rtl/cjk font support is not needed.
+- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
+- enable-glwindow: Support for drawing using OpenGL functions.
 - use-ninja:  If you have ninja build installed, it builds faster than make or VS
 - system-libpng: Uses the system libpng
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
-- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
-- enable-glwindow: Support for drawing using OpenGL functions.
 
 ## Dependencies
 
@@ -464,6 +470,8 @@ Also a nice implementation of the 7guis tasks can be found [here](https://github
 - [Using FLTK on Android](https://www.youtube.com/watch?v=3jW_vxGmxt0)
 - [Use FLUID (RAD tool) with Rust](https://www.youtube.com/watch?v=k_P0wG3-dNk)
 - [multiple windows and embedding windows](https://www.youtube.com/watch?v=qEPYx1Lw7fY)
+- [FLTK Rust tutorial: Improve FLTK's toggle button appearance!](https://www.youtube.com/watch?v=WCTbPKHXR-o)
+- [FLTK Rust: Customizing your app and widgets](https://www.youtube.com/watch?v=uCZl0PuMVGo)
 
 More videos in the playlist [here](https://www.youtube.com/playlist?list=PLHqrrowPLkDu9U-uk60sGM-YWLOJFfLoE).
 Some of the demo projects can be found [here](https://github.com/fltk-rs/demos).

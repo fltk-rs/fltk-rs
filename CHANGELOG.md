@@ -5,6 +5,7 @@
 - Add app::event_original_key().
 - Add GroupExt::init_sizes(), bounds() and add_resizable().
 - Add alias OFlatBox to OFlatFrame.
+- Add feature `no-gdiplus` to disable gdi+ drawing on Windows.
 - Fix dependabot config.
 - Update dependencies.
 
