@@ -270,17 +270,21 @@ pub fn set_grab<W: WindowExt>(win: Option<W>) {
 /// Returns the latest captured event
 pub fn event() -> Event {
     unsafe {
-        let x = fl::Fl_event();
-        let x: Event = mem::transmute(x);
-        x
+        mem::transmute(fl::Fl_event())
     }
 }
 
 /// Returns the presed key
 pub fn event_key() -> Key {
     unsafe {
-        let x = fl::Fl_event_key();
-        mem::transmute(x)
+        mem::transmute(fl::Fl_event_key())
+    }
+}
+
+/// Returns the original key
+pub fn event_original_key() -> Key {
+    unsafe {
+        mem::transmute(fl::Fl_event_original_key())
     }
 }
 

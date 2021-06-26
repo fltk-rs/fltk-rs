@@ -1,6 +1,14 @@
 version: 2
 updates:
-  - package-ecosystem: "cargo" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "cargo"
+    directory: "/fltk"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "cargo"
+    directory: "/fltk-sys"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "cargo"
+    directory: "/fltk-derive"
     schedule:
       interval: "daily"

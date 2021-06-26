@@ -65,7 +65,7 @@ let mut frame = Frame::new(0, 0, 400, 200, "");
 let mut but = Button::new(160, 210, 80, 40, "Click me!");
 wind.end();
 wind.show();
-but.set_callback(move |_| frame.set_label("Hello World!"));
+but.set_callback(move |_| frame.set_label("Hello World!")); // the closure capture is mutable borrow to our button
 app.run().unwrap();
 ```
 Please check the examples directory for more examples.
@@ -151,7 +151,12 @@ For custom event handling, the handle() method can be used:
 ```rust,ignore
     some_widget.handle(move |widget, ev: Event| {
         match ev {
-            /* handle ev */
+            Event::Push => {
+                println!("Pushed!");
+                true
+            },
+            /* other events to be handled */
+            _ => false,
         }
     });
 ```
@@ -183,13 +188,13 @@ such as `set_color()`, `set_label_font()`, `set_frame()` etc:
 ## Features
 
 The following are the features offered by the crate:
+- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
+- no-pango: Build without pango support on Linux/BSD.
+- enable-glwindow: Support for drawing using OpenGL functions.
 - use-ninja:  If you have ninja build installed, it builds faster than make or VS
 - system-libpng: Uses the system libpng
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
-- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
-- no-pango: Build without pango support on Linux/BSD.
-- enable-glwindow: Support for drawing using OpenGL functions.
 
 ## Dependencies
 

@@ -580,6 +580,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Group_clip_children(self_: *mut Fl_Group) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Group_init_sizes(self_: *mut Fl_Group);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Pack {
@@ -880,6 +883,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_clip_children(self_: *mut Fl_Pack) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_init_sizes(self_: *mut Fl_Pack);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1196,6 +1202,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_clip_children(self_: *mut Fl_Scroll) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_init_sizes(self_: *mut Fl_Scroll);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1519,6 +1528,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tabs_clip_children(self_: *mut Fl_Tabs) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Tabs_init_sizes(self_: *mut Fl_Tabs);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tile {
@@ -1813,6 +1825,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_clip_children(self_: *mut Fl_Tile) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_init_sizes(self_: *mut Fl_Tile);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2120,6 +2135,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_clip_children(self_: *mut Fl_Wizard) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Wizard_init_sizes(self_: *mut Fl_Wizard);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2446,6 +2464,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Color_Chooser_clip_children(self_: *mut Fl_Color_Chooser) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Color_Chooser_init_sizes(self_: *mut Fl_Color_Chooser);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Table {
@@ -2742,6 +2763,9 @@ extern "C" {
     pub fn Fl_Table_clip_children(self_: *mut Fl_Table) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Table_init_sizes(self_: *mut Fl_Table);
+}
+extern "C" {
     pub fn Fl_Table_set_table_box(self_: *mut Fl_Table, val: libc::c_int);
 }
 extern "C" {
@@ -2906,9 +2930,6 @@ extern "C" {
         R: libc::c_int,
         C: libc::c_int,
     ) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Table_init_sizes(self_: *mut Fl_Table);
 }
 extern "C" {
     pub fn Fl_Table_scrollbar_size(self_: *const Fl_Table) -> libc::c_int;
@@ -3260,6 +3281,9 @@ extern "C" {
     pub fn Fl_Table_Row_clip_children(self_: *mut Fl_Table_Row) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Table_Row_init_sizes(self_: *mut Fl_Table_Row);
+}
+extern "C" {
     pub fn Fl_Table_Row_set_table_box(self_: *mut Fl_Table_Row, val: libc::c_int);
 }
 extern "C" {
@@ -3432,9 +3456,6 @@ extern "C" {
         R: libc::c_int,
         C: libc::c_int,
     ) -> libc::c_int;
-}
-extern "C" {
-    pub fn Fl_Table_Row_init_sizes(self_: *mut Fl_Table_Row);
 }
 extern "C" {
     pub fn Fl_Table_Row_scrollbar_size(self_: *const Fl_Table_Row) -> libc::c_int;

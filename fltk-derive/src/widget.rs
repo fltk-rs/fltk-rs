@@ -302,10 +302,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "has_visible_focus").as_str(),
         name.span(),
     );
-    let set_handle_data = Ident::new(
-        format!("{}_{}", name_str, "set_handle_data").as_str(),
-        name.span(),
-    );
     let damage = Ident::new(format!("{}_{}", name_str, "damage").as_str(), name.span());
     let set_damage = Ident::new(
         format!("{}_{}", name_str, "set_damage").as_str(),
@@ -353,7 +349,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
         impl Clone for #name {
             fn clone(&self) -> #name {
-                assert!(!self.was_deleted());                
+                assert!(!self.was_deleted());
                 #name { inner: self.inner, tracker: self.tracker }
             }
         }

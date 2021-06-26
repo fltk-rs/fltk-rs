@@ -432,12 +432,16 @@ pub unsafe trait GroupExt: WidgetExt {
         Self: Sized;
     /// Remove a child widget by its index
     fn remove_by_index(&mut self, idx: i32);
-    /// Make the passed widget resizable
+    /// The resizable widget defines both the resizing frame and the resizing behavior of the group and its children.
     fn resizable<W: WidgetExt>(&self, widget: &W)
     where
         Self: Sized;
-    /// Make the window resizable, should be called before `show`
+    /// Make the group itself resizable, should be called before the widget is shown
     fn make_resizable(&mut self, val: bool);
+    /// Adds a widget to the group and makes it the resizable widget
+    fn add_resizable<W: WidgetExt>(&mut self, widget: &W)
+    where
+        Self: Sized;
     /// Clips children outside the group boundaries
     fn set_clip_children(&mut self, flag: bool);
     /// Get whether `clip_children` is set
@@ -456,6 +460,10 @@ pub unsafe trait GroupExt: WidgetExt {
         Self: Sized;
     /// Draw children, the call should be in a `WidgetBase::draw` method
     fn draw_children(&mut self);
+    /// Resets the internal array of widget sizes and positions
+    fn init_sizes(&mut self);
+    /// Get the bounds of all children widgets (left, upper, right, bottom)
+    fn bounds(&self) -> Vec<(i32, i32, i32, i32)>;
 }
 
 /// Defines the methods implemented by all window widgets
@@ -1108,8 +1116,6 @@ pub unsafe trait TableExt: GroupExt {
     /// # Errors
     /// Errors on failure to move the cursor
     fn move_cursor(&mut self, r: i32, c: i32) -> Result<(), FltkError>;
-    /// Resets the internal array of widget sizes and positions.
-    fn init_sizes(&mut self);
     /// Returns the scrollbar size
     fn scrollbar_size(&self) -> i32;
     /// Sets the scrollbar size

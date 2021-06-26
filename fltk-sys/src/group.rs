@@ -580,6 +580,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Group_clip_children(self_: *mut Fl_Group) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Group_init_sizes(self_: *mut Fl_Group);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Pack {
@@ -880,6 +883,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_clip_children(self_: *mut Fl_Pack) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Pack_init_sizes(self_: *mut Fl_Pack);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1196,6 +1202,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_clip_children(self_: *mut Fl_Scroll) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_init_sizes(self_: *mut Fl_Scroll);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1519,6 +1528,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tabs_clip_children(self_: *mut Fl_Tabs) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Tabs_init_sizes(self_: *mut Fl_Tabs);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tile {
@@ -1813,6 +1825,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_clip_children(self_: *mut Fl_Tile) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Tile_init_sizes(self_: *mut Fl_Tile);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2120,6 +2135,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_clip_children(self_: *mut Fl_Wizard) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Wizard_init_sizes(self_: *mut Fl_Wizard);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2445,4 +2463,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_clip_children(self_: *mut Fl_Color_Chooser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_init_sizes(self_: *mut Fl_Color_Chooser);
 }

@@ -32,6 +32,10 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_clip_children").as_str(),
         name.span(),
     );
+    let init_sizes = Ident::new(
+        format!("{}_{}", name_str, "init_sizes").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl IntoIterator for #name {
@@ -147,54 +151,80 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-           fn set_clip_children(&mut self, flag: bool) {
-               assert!(!self.was_deleted());
-               unsafe {
-                   #set_clip_children(self.inner, flag as i32)
-               }
-           }
+            fn add_resizable<W: WidgetExt>(&mut self, widget: &W) {
+                self.resizable(widget);
+                self.add(widget);
+            }
 
-           fn clip_children(&mut self) -> bool {
-               assert!(!self.was_deleted());
-               unsafe {
-                   #clip_children(self.inner) != 0
-               }
-           }
+            fn set_clip_children(&mut self, flag: bool) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #set_clip_children(self.inner, flag as i32)
+                }
+            }
 
-           fn draw_child<W: WidgetExt>(&self, w: &mut W) {
-               assert!(!self.was_deleted());
-               assert!(!w.was_deleted());
-               unsafe {
-                   crate::app::open_display();
-                   Fl_Group_draw_child(self.inner as _, w.as_widget_ptr() as _)
-               }
-           }
+            fn clip_children(&mut self) -> bool {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #clip_children(self.inner) != 0
+                }
+            }
 
-           fn update_child<W: WidgetExt>(&self, w: &mut W) {
-               assert!(!self.was_deleted());
-               assert!(!w.was_deleted());
-               unsafe {
+            fn draw_child<W: WidgetExt>(&self, w: &mut W) {
+                assert!(!self.was_deleted());
+                assert!(!w.was_deleted());
+                unsafe {
                     crate::app::open_display();
-                   Fl_Group_update_child(self.inner as _, w.as_widget_ptr() as _)
-               }
-           }
+                    Fl_Group_draw_child(self.inner as _, w.as_widget_ptr() as _)
+                }
+            }
 
-           fn draw_outside_label<W: WidgetExt>(&self, w: &mut W) {
-               assert!(!self.was_deleted());
-               assert!(!w.was_deleted());
-               unsafe {
-                   crate::app::open_display();
-                   Fl_Group_draw_outside_label(self.inner as _, w.as_widget_ptr() as _)
-               }
-           }
+            fn update_child<W: WidgetExt>(&self, w: &mut W) {
+                assert!(!self.was_deleted());
+                assert!(!w.was_deleted());
+                unsafe {
+                        crate::app::open_display();
+                    Fl_Group_update_child(self.inner as _, w.as_widget_ptr() as _)
+                }
+            }
 
-           fn draw_children(&mut self) {
-               assert!(!self.was_deleted());
-               unsafe {
-                   crate::app::open_display();
-                   Fl_Group_draw_children(self.inner as _)
-               }
-           }
+            fn draw_outside_label<W: WidgetExt>(&self, w: &mut W) {
+                assert!(!self.was_deleted());
+                assert!(!w.was_deleted());
+                unsafe {
+                    crate::app::open_display();
+                    Fl_Group_draw_outside_label(self.inner as _, w.as_widget_ptr() as _)
+                }
+            }
+
+            fn draw_children(&mut self) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    crate::app::open_display();
+                    Fl_Group_draw_children(self.inner as _)
+                }
+            }
+
+            fn init_sizes(&mut self) {
+                unsafe {
+                    assert!(!self.was_deleted());
+                    #init_sizes(self.inner)
+                }
+            }
+
+            fn bounds(&self) -> Vec<(i32, i32, i32, i32)> {
+                let children = self.children();
+                let mut vec = vec![];
+                for i in 0..children {
+                    let child = self.child(i).unwrap();
+                    let x = child.x();
+                    let y = child.y();
+                    let r = child.w() + x;
+                    let b = child.h() + y;
+                    vec.push((x, y, r, b));
+                }
+                vec
+            }
         }
     };
     gen.into()

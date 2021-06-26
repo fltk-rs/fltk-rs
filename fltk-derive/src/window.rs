@@ -77,8 +77,14 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "default_cursor").as_str(),
         name.span(),
     );
-    let screen_num = Ident::new(format!("{}_{}", name_str, "screen_num").as_str(), name.span());
-    let set_screen_num = Ident::new(format!("{}_{}", name_str, "set_screen_num").as_str(), name.span());
+    let screen_num = Ident::new(
+        format!("{}_{}", name_str, "screen_num").as_str(),
+        name.span(),
+    );
+    let set_screen_num = Ident::new(
+        format!("{}_{}", name_str, "set_screen_num").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl HasRawWindowHandle for #name {
@@ -399,7 +405,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #set_screen_num(self.inner, n)
-                } 
+                }
             }
         }
     };

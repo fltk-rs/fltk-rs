@@ -156,6 +156,8 @@ pub enum FrameType {
 }
 
 impl FrameType {
+    /// Alias OFlatFrame as OFlatBox
+    pub const OFlatBox: FrameType = FrameType::OFlatFrame;
     /// Gets the Frame type by index
     pub fn by_index(idx: usize) -> FrameType {
         let idx = if idx > 56 { 56 } else { idx };
