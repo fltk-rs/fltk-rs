@@ -464,6 +464,11 @@ pub unsafe trait GroupExt: WidgetExt {
     fn init_sizes(&mut self);
     /// Get the bounds of all children widgets (left, upper, right, bottom)
     fn bounds(&self) -> Vec<(i32, i32, i32, i32)>;
+    /// Converts a widget implementing GroupExt into a Group widget
+    /// # Safety
+    /// If the widget wasn't created by fltk-rs, 
+    /// vtable differences mean certain methods can't be overriden (e.g. handle & draw)
+    unsafe fn into_group(&self) -> crate::group::Group;
 }
 
 /// Defines the methods implemented by all window widgets

@@ -225,6 +225,10 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
                 vec
             }
+
+            unsafe fn into_group(&self) -> crate::group::Group {
+                crate::group::Group::from_widget_ptr(self.inner as _)
+            }
         }
     };
     gen.into()

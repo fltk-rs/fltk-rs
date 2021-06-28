@@ -2,6 +2,7 @@
 
 
 ## [1.0.21] - Unreleased
+- Add into_group() method to GroupExt.
 - Pull fixes from FLTK and cfltk.
 - Update changelog.
 
