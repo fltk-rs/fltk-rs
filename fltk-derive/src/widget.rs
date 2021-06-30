@@ -365,12 +365,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_label(&mut self, title: &str) {
                 assert!(!self.was_deleted());
-                let temp = CString::safe_new(title);
                 unsafe {
+                    let temp = CString::safe_new(title);
                     #set_label(
                         self.inner,
                         temp.as_ptr(),
-                    )
+                    );
                 }
             }
 
@@ -424,12 +424,15 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn label(&self) -> String {
                 assert!(!self.was_deleted());
                 unsafe {
+                    fltk_sys::fl::Fl_lock();
                     let ptr = #label(self.inner) as *mut raw::c_char;
-                    if ptr.is_null() {
+                    let s = if ptr.is_null() {
                         String::from("")
                     } else {
                         CStr::from_ptr(ptr).to_string_lossy().to_string()
-                    }
+                    };
+                    fltk_sys::fl::Fl_unlock();
+                    s
                 }
             }
 
@@ -471,12 +474,15 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     let tooltip_ptr = #tooltip(self.inner);
-                    if tooltip_ptr.is_null() {
+                    fltk_sys::fl::Fl_lock();
+                    let s = if tooltip_ptr.is_null() {
                         None
                     } else {
                         Some(CStr::from_ptr(
                             tooltip_ptr as *mut raw::c_char).to_string_lossy().to_string())
-                    }
+                    };
+                    fltk_sys::fl::Fl_unlock();
+                    s
                 }
             }
 
