@@ -7,6 +7,7 @@
 - Update changelog.
 - Allow set_highlight_data to be set even in the absence of a text buffer.
 - Add MenuButton types enum MenuButtonType.
+- Fix MenuItem::set_label() on Windows.
 
 ## [1.0.20] - 2021-06-26
 - Add app::event_original_key().
