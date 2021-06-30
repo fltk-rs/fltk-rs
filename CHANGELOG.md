@@ -1,13 +1,12 @@
 # Changelog
 
 
-## [1.0.21] - Unreleased
-- Add into_group() method to GroupExt.
-- Pull fixes from FLTK and cfltk.
-- Update changelog.
-- Allow set_highlight_data to be set even in the absence of a text buffer.
-- Add MenuButton types enum MenuButtonType.
+## [1.0.21] - 2021-07-01
 - Fix MenuItem::set_label() on Windows.
+- Add into_group() method to GroupExt.
+- Add MenuButton types enum MenuButtonType.
+- Allow DisplayExt::set_highlight_data() to be set even in the absence of a text buffer.
+- Pull fixes from FLTK and cfltk.
 
 ## [1.0.20] - 2021-06-26
 - Add app::event_original_key().

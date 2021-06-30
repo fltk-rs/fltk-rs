@@ -34,10 +34,8 @@ pub fn get_fl_name(txt: String) -> String {
     for c in txt.chars() {
         if c.is_uppercase() {
             fl_name.push('_');
-            fl_name.push(c);
-        } else {
-            fl_name.push(c);
         }
+        fl_name.push(c);
     }
     fl_name
 }

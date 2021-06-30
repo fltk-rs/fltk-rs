@@ -111,19 +111,15 @@ impl FileDialog {
         unsafe {
             let cnt = Fl_Native_File_Chooser_count(self.inner);
             let mut names: Vec<std::path::PathBuf> = vec![];
-            if cnt == 0 {
-                names
-            } else {
-                for i in 0..cnt {
-                    let x = Fl_Native_File_Chooser_filenames(self.inner, i);
-                    names.push(std::path::PathBuf::from(
-                        CStr::from_ptr(x as *mut raw::c_char)
-                            .to_string_lossy()
-                            .to_string(),
-                    ))
-                }
-                names
+            for i in 0..cnt {
+                let x = Fl_Native_File_Chooser_filenames(self.inner, i);
+                names.push(std::path::PathBuf::from(
+                    CStr::from_ptr(x as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                ));
             }
+            names
         }
     }
 
