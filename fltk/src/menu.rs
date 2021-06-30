@@ -162,9 +162,6 @@ impl MenuItem {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Menu_Item_label(self.inner) as *mut raw::c_char;
-            if !ptr.is_null() {
-                let _ = CString::from_raw(ptr);
-            }
             let txt = CString::safe_new(txt);
             Fl_Menu_Item_set_label(self.inner, txt.into_raw());
         }
