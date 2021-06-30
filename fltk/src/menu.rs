@@ -25,6 +25,44 @@ pub struct MenuButton {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
 }
 
+/// Defines the menu button types, which can be changed dynamically using the `set_type()`.
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum MenuButtonType {
+    /// pops up with the mouse 1st button.
+    Popup1 = 1,
+    /// pops up with the mouse 2nd button.
+    Popup2,
+    /// pops up with the mouse 1st or 2nd buttons.
+    Popup12,
+    /// pops up with the mouse 3rd button.
+    Popup3,
+    /// pops up with the mouse 1st or 3rd buttons.
+    Popup13,
+    /// pops up with the mouse 2nd or 3rd buttons.
+    Popup23,
+    /// pops up with any mouse button.
+    Popup123,
+}
+
+impl MenuButton {
+    /// Act exactly as though the user clicked the button or typed the shortcut key
+    pub fn popup(&self) -> Option<MenuItem> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Menu_Button_popup(self.inner);
+            if ptr.is_null() {
+                None
+            } else {
+                let item = MenuItem {
+                    inner: ptr as *mut Fl_Menu_Item,
+                };
+                Some(item)
+            }
+        }
+    }
+}
+
 /// Creates a menu choice
 #[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
 pub struct Choice {
@@ -123,10 +161,6 @@ impl MenuItem {
     pub fn set_label(&mut self, txt: &str) {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Menu_Item_label(self.inner) as *mut raw::c_char;
-            if !ptr.is_null() {
-                let _ = CString::from_raw(ptr);
-            }
             let txt = CString::safe_new(txt);
             Fl_Menu_Item_set_label(self.inner, txt.into_raw());
         }

@@ -133,7 +133,7 @@ impl PowerButton {
             let mut on_svg =
                 SvgImage::from_data(&POWER.to_string().replace("red", "green")).unwrap();
             on_svg.scale(frm.width(), frm.height(), true, true);
-            let mut off_svg = SvgImage::from_data(&POWER).unwrap();
+            let mut off_svg = SvgImage::from_data(POWER).unwrap();
             off_svg.scale(frm.width(), frm.height(), true, true);
             move |f| {
                 if *on.borrow() {

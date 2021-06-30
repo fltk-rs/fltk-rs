@@ -44,7 +44,7 @@ impl TerminalFuncs for SimpleTerminal {
             if args.len() > 1 {
                 if args[0] == "cd" {
                     let path = args[1];
-                    return self.change_dir(&Path::new(path), cwd);
+                    return self.change_dir(Path::new(path), cwd);
                 } else {
                     cmd.args(&args[1..]);
                 }

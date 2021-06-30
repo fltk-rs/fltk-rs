@@ -906,6 +906,9 @@ extern "C" {
     pub fn Fl_Menu_Button_visible_r(self_: *const Fl_Menu_Button) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Menu_Button_popup(self_: *mut Fl_Menu_Button) -> *const Fl_Menu_Item;
+}
+extern "C" {
     pub fn Fl_Menu_Button_add(
         arg1: *mut Fl_Menu_Button,
         name: *const libc::c_char,

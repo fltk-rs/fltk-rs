@@ -312,6 +312,7 @@ pub unsafe trait WidgetExt {
     /// Upcast a `WidgetExt` to a Widget
     /// # Safety
     /// Allows for potentially unsafe casts between incompatible widget types
+    #[allow(clippy::wrong_self_convention)]
     unsafe fn into_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
@@ -330,7 +331,7 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// * `width` - The width of the widget
     /// * `heigth` - The height of the widget
     /// * `title` - The title or label of the widget
-    /// The title is expected to be a static str or None. 
+    /// The title is expected to be a static str or None.
     /// To use dynamic strings use `with_label(self, &str)` or `set_label(&mut self, &str)`
     /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
     /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
@@ -464,6 +465,12 @@ pub unsafe trait GroupExt: WidgetExt {
     fn init_sizes(&mut self);
     /// Get the bounds of all children widgets (left, upper, right, bottom)
     fn bounds(&self) -> Vec<(i32, i32, i32, i32)>;
+    /// Converts a widget implementing GroupExt into a Group widget
+    /// # Safety
+    /// If the widget wasn't created by fltk-rs,
+    /// vtable differences mean certain methods can't be overriden (e.g. handle & draw)
+    #[allow(clippy::wrong_self_convention)]
+    unsafe fn into_group(&self) -> crate::group::Group;
 }
 
 /// Defines the methods implemented by all window widgets

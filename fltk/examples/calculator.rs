@@ -223,11 +223,10 @@ fn main() {
                     }
                     Ops::Back => {
                         let val = out.value();
+                        txt.pop();
                         if val.len() > 1 {
-                            txt.pop();
                             out.set_value(txt.as_str());
                         } else {
-                            txt.pop();
                             out.set_value("0");
                         }
                     }

@@ -404,7 +404,6 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_highlight_data<B: Into<Option<TextBuffer>>>(&mut self, mut style_buffer: B, entries: Vec<StyleTableEntry>) {
                 assert!(!self.was_deleted());
-                assert!(self.buffer().is_some());
                 debug_assert!(entries.len() < 29);
                 if entries.len() == 0 { return; }
                 if let Some(style_buffer) = style_buffer.into() {

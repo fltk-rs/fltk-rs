@@ -269,23 +269,17 @@ pub fn set_grab<W: WindowExt>(win: Option<W>) {
 
 /// Returns the latest captured event
 pub fn event() -> Event {
-    unsafe {
-        mem::transmute(fl::Fl_event())
-    }
+    unsafe { mem::transmute(fl::Fl_event()) }
 }
 
 /// Returns the presed key
 pub fn event_key() -> Key {
-    unsafe {
-        mem::transmute(fl::Fl_event_key())
-    }
+    unsafe { mem::transmute(fl::Fl_event_key()) }
 }
 
 /// Returns the original key
 pub fn event_original_key() -> Key {
-    unsafe {
-        mem::transmute(fl::Fl_event_original_key())
-    }
+    unsafe { mem::transmute(fl::Fl_event_original_key()) }
 }
 
 /// Returns whether the  key is pressed or held down during the last event
@@ -1336,7 +1330,7 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     w: &W,
 ) -> Result<bool, FltkError> {
     let val = msg.into();
-    if val >= 0 && val <= 30 {
+    if (0..=30).contains(&val) {
         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
     } else {
         let ret = unsafe { fl::Fl_handle(val, w.as_widget_ptr() as _) != 0 };
@@ -1374,7 +1368,7 @@ pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
     msg: I,
 ) -> Result<bool, FltkError> {
     let val = msg.into();
-    if val >= 0 && val <= 30 {
+    if (0..=30).contains(&val) {
         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
     } else {
         first_window().map_or(
@@ -1545,10 +1539,7 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
     # Safety
     The window pointer must be valid
 */
-pub unsafe fn handle_raw(
-    event: Event,
-    w: WindowPtr,
-) -> bool {
+pub unsafe fn handle_raw(event: Event, w: WindowPtr) -> bool {
     fl::Fl_handle_(event.bits(), w as _) != 0
 }
 

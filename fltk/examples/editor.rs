@@ -341,17 +341,13 @@ impl MyApp {
                         }
                     },
                     Quit => {
-                        if self.saved {
-                            self.app.quit();
-                        } else {
+                        if !self.saved {
                             let x = dialog::choice(center().0 - 200, center().1 - 100, "Would you like to save your work?", "Yes", "No", "");
                             if x == 0 {
                                 self.save_file().unwrap();
-                                self.app.quit();
-                            } else {
-                                self.app.quit();
                             }
                         }
+                        self.app.quit();
                     },
                     Cut => self.editor.cut(),
                     Copy => self.editor.copy(),

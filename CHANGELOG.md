@@ -1,7 +1,14 @@
 # Changelog
 
 
-## [1.0.20] - Unreleased
+## [1.0.21] - 2021-07-01
+- Fix MenuItem::set_label() on Windows.
+- Add into_group() method to GroupExt.
+- Add MenuButton types enum MenuButtonType.
+- Allow DisplayExt::set_highlight_data() to be set even in the absence of a text buffer.
+- Pull fixes from FLTK and cfltk.
+
+## [1.0.20] - 2021-06-26
 - Add app::event_original_key().
 - Add GroupExt::init_sizes(), bounds() and add_resizable().
 - Add alias OFlatBox to OFlatFrame.

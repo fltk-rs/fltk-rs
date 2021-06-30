@@ -28,10 +28,8 @@ fn main() {
     });
 
     while app.wait() {
-        if let Some(msg) = r.recv() {
-            if let Message::Increment(step) = msg {
-                inc_frame(&mut frame, &mut val, step)
-            }
+        if let Some(Message::Increment(step)) = r.recv() {
+            inc_frame(&mut frame, &mut val, step)
         }
     }
 }
