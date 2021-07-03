@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.0.22] - Unreleased
+- Pull MouseWheel coordinate in subwindows fix from FLTK.
+
 ## [1.0.21] - 2021-07-01
 - Fix MenuItem::set_label() on Windows.
 - Add into_group() method to GroupExt.
