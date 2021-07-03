@@ -346,6 +346,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let gen = quote! {
         unsafe impl Send for #name {}
         unsafe impl Sync for #name {}
+        impl PartialEq for #name {
+            fn eq(&self, other: &Self) -> bool {
+                self.inner == other.inner
+            }
+        }
+        impl Eq for #name {}
 
         impl Clone for #name {
             fn clone(&self) -> #name {
@@ -1002,6 +1008,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     #visible_r(self.inner) != 0
                 }
+            }
+
+            fn is_same<W: WidgetExt>(&self, other: &W) -> bool {
+                unsafe { self.as_widget_ptr() == other.as_widget_ptr() }
             }
         }
     };

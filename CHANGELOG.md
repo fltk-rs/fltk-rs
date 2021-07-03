@@ -3,6 +3,8 @@
 
 ## [1.0.22] - Unreleased
 - Pull MouseWheel coordinate in subwindows fix from FLTK.
+- impl PartialEq for Widgets.
+- Add `fn WidgetExt::is_same<W: WidgetExt>(&self, other: &W)`.
 
 ## [1.0.21] - 2021-07-01
 - Fix MenuItem::set_label() on Windows.
