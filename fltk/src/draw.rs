@@ -52,6 +52,14 @@ unsafe impl Sync for Offscreen {}
 
 unsafe impl Send for Offscreen {}
 
+impl PartialEq for Offscreen {
+    fn eq(&self, other: &Self) -> bool {
+        self.inner == other.inner
+    }
+}
+
+impl Eq for Offscreen {}
+
 impl Offscreen {
     /// Creates a new offscreen type
     pub fn new(w: i32, h: i32) -> Option<Offscreen> {

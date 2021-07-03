@@ -352,7 +352,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             }
         }
         impl Eq for #name {}
-
         impl Clone for #name {
             fn clone(&self) -> #name {
                 assert!(!self.was_deleted());

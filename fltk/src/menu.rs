@@ -412,6 +412,14 @@ unsafe impl Send for MenuItem {}
 
 unsafe impl Sync for MenuItem {}
 
+impl PartialEq for MenuItem {
+    fn eq(&self, other: &Self) -> bool {
+        self.inner == other.inner
+    }
+}
+
+impl Eq for MenuItem {}
+
 impl IntoIterator for MenuItem {
     type Item = MenuItem;
     type IntoIter = std::vec::IntoIter<Self::Item>;

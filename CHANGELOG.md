@@ -3,7 +3,7 @@
 
 ## [1.0.22] - Unreleased
 - Pull MouseWheel coordinate in subwindows fix from FLTK.
-- impl PartialEq for Widgets.
+- impl PartialEq for several FLTK types.
 - Add `fn WidgetExt::is_same<W: WidgetExt>(&self, other: &W)`.
 
 ## [1.0.21] - 2021-07-01
