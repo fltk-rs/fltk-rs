@@ -15,6 +15,24 @@ extern "C" {
     pub fn Fl_run() -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_check() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_ready() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_release();
+}
+extern "C" {
+    pub fn Fl_reload_scheme() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_menu_linespacing() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_set_menu_linespacing(H: libc::c_int);
+}
+extern "C" {
     pub fn Fl_lock() -> libc::c_int;
 }
 extern "C" {

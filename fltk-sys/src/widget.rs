@@ -267,3 +267,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_active(self_: *const Fl_Widget) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
+}

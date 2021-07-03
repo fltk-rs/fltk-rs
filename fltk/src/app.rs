@@ -1381,7 +1381,7 @@ pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
     }
 }
 
-/// Flush the main window
+/// Causes all the windows that need it to be redrawn and graphics forced out through the pipes.
 pub fn flush() {
     unsafe { fl::Fl_flush() }
 }
@@ -1558,4 +1558,50 @@ pub unsafe fn handle_raw(event: Event, w: WindowPtr) -> bool {
 */
 pub unsafe fn event_dispatch(f: fn(Event, WindowPtr) -> bool) {
     fl::Fl_event_dispatch(mem::transmute(f));
+}
+
+/// Calling this during a big calculation will keep the screen up to date and the interface responsive.
+pub fn check() -> bool {
+    unsafe {
+        if !IS_INIT.load(Ordering::Relaxed) {
+            init_all();
+        }
+        fl::Fl_check() != 0
+    }
+}
+
+/// This is similar to app::check() except this does not call app::flush() or any callbacks, 
+/// which is useful if your program is in a state where such callbacks are illegal.
+pub fn ready() -> bool {
+    unsafe {
+        if !IS_INIT.load(Ordering::Relaxed) {
+            init_all();
+        }
+        fl::Fl_ready() != 0
+    }
+}
+
+/// Unset the currently grabbed window
+pub fn release() {
+    unsafe { fl::Fl_release() }
+}
+
+/// Reload the app scheme
+pub fn reload_scheme() -> Result<(), FltkError> {
+    unsafe {
+        match fl::Fl_reload_scheme() {
+            1 => Ok(()),
+            _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+        }
+    }
+}
+
+/// Get the default menu linespacing
+pub fn menu_linespacing() -> i32 {
+    unsafe { fl::Fl_menu_linespacing() }
+}
+
+/// Set the menu linespacing
+pub fn set_menu_linespacing(val: i32) {
+    unsafe { fl::Fl_set_menu_linespacing(val) }
 }

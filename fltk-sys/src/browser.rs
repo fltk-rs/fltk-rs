@@ -267,6 +267,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_active(self_: *const Fl_Widget) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Browser {
@@ -530,6 +536,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_visible_r(self_: *const Fl_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Browser_active(self_: *const Fl_Browser) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Browser_active_r(self_: *const Fl_Browser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Browser_value(arg1: *mut Fl_Browser) -> libc::c_int;
@@ -925,6 +937,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_visible_r(self_: *const Fl_Hold_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_active(self_: *const Fl_Hold_Browser) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_active_r(self_: *const Fl_Hold_Browser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_value(arg1: *mut Fl_Hold_Browser) -> libc::c_int;
@@ -1337,6 +1355,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_visible_r(self_: *const Fl_Select_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_active(self_: *const Fl_Select_Browser) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_active_r(self_: *const Fl_Select_Browser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_value(arg1: *mut Fl_Select_Browser) -> libc::c_int;
@@ -1757,6 +1781,12 @@ extern "C" {
     pub fn Fl_Multi_Browser_visible_r(self_: *const Fl_Multi_Browser) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_active(self_: *const Fl_Multi_Browser) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_active_r(self_: *const Fl_Multi_Browser) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Multi_Browser_value(arg1: *mut Fl_Multi_Browser) -> libc::c_int;
 }
 extern "C" {
@@ -2169,6 +2199,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_visible_r(self_: *const Fl_File_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Browser_active(self_: *const Fl_File_Browser) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_File_Browser_active_r(self_: *const Fl_File_Browser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_File_Browser_iconsize(self_: *const Fl_File_Browser) -> libc::c_uint;
@@ -2596,6 +2632,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Browser_visible_r(self_: *const Fl_Check_Browser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_active(self_: *const Fl_Check_Browser) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_active_r(self_: *const Fl_Check_Browser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Check_Browser_add(

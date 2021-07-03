@@ -342,6 +342,11 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "visible_r").as_str(),
         name.span(),
     );
+    let active = Ident::new(format!("{}_{}", name_str, "active").as_str(), name.span());
+    let active_r = Ident::new(
+        format!("{}_{}", name_str, "active_r").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -1011,6 +1016,20 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn is_same<W: WidgetExt>(&self, other: &W) -> bool {
                 unsafe { self.as_widget_ptr() == other.as_widget_ptr() }
+            }
+
+            fn active(&self) -> bool {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #active(self.inner) != 0
+                }
+            }
+
+            fn active_r(&self) -> bool {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #active_r(self.inner) != 0
+                }
             }
         }
     };
