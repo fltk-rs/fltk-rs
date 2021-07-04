@@ -163,7 +163,7 @@ pub fn focus() -> Option<impl WidgetExt> {
     }
 }
 
-/// Sets the widget which has focus
+/// Sets the widget which has focus at the start of the application
 pub fn set_focus<W: WidgetExt>(wid: &W) {
     unsafe { fl::Fl_set_focus(wid.as_widget_ptr() as *mut raw::c_void) }
 }

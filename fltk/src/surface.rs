@@ -135,7 +135,7 @@ impl Drop for ImageSurface {
 }
 
 /**
-    An SVG image surface object
+    An SVG image surface object which allows drawing to an svg file
     Example usage:
     ```rust,no_run
     use fltk::{prelude::*, *};
