@@ -2,11 +2,12 @@
 
 
 ## [1.0.22] - Unreleased
-- Pull MouseWheel coordinate in subwindows fix from FLTK.
-- impl PartialEq for several FLTK types.
 - Add `fn WidgetExt::is_same<W: WidgetExt>(&self, other: &W)`.
 - Add WidgetExt::active and active_r.
 - Add app::ready, check, release, reload_scheme, menu_line_spacing and set_menu_line_spacing.
+- Fix double free in SvgFileSurface drop impl. Thanks @DBLouis.
+- Pull MouseWheel coordinate in subwindows fix from FLTK.
+- impl PartialEq for several FLTK types.
 
 ## [1.0.21] - 2021-07-01
 - Fix MenuItem::set_label() on Windows.
