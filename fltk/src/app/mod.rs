@@ -14,13 +14,12 @@ mod rt;
 pub use rt::*;
 mod screen;
 pub use screen::*;
-mod utils;
-pub use utils::*;
 mod version;
 pub use version::*;
 mod visual;
 pub use visual::*;
-
+mod widget;
+pub use widget::*;
 
 /// Basic Application struct, used to instatiate, set the scheme and run the event loop
 #[derive(Debug, Copy, Clone)]

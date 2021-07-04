@@ -1,4 +1,4 @@
-use crate::app::utils::first_window;
+use crate::app::widget::first_window;
 use crate::enums::{Event, Key, Shortcut};
 use crate::prelude::*;
 use fltk_sys::fl;
