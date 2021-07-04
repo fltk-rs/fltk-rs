@@ -46,6 +46,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/src/cfl_tree.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_surface.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_printer.cpp");
+    println!("cargo:rerun-if-changed=cfltk/src/cfl_font.cpp");
 
     Command::new("git")
         .args(&["submodule", "update", "--init", "--recursive"])
