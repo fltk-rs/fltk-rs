@@ -1792,6 +1792,14 @@ unsafe impl Send for TreeItem {}
 
 unsafe impl Sync for TreeItem {}
 
+impl PartialEq for TreeItem {
+    fn eq(&self, other: &Self) -> bool {
+        self.inner == other.inner
+    }
+}
+
+impl Eq for TreeItem {}
+
 impl Drop for TreeItemArray {
     fn drop(&mut self) {
         unsafe { Fl_Tree_Item_Array_delete(self.inner) }

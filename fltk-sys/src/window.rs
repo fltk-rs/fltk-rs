@@ -267,6 +267,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_active(self_: *const Fl_Widget) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Group {
@@ -522,6 +528,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_visible_r(self_: *const Fl_Group) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Group_active(self_: *const Fl_Group) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Group_active_r(self_: *const Fl_Group) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Group_current() -> *mut Fl_Group;
@@ -840,6 +852,12 @@ extern "C" {
     pub fn Fl_Pack_visible_r(self_: *const Fl_Pack) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Pack_active(self_: *const Fl_Pack) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Pack_active_r(self_: *const Fl_Pack) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Pack_spacing(self_: *mut Fl_Pack) -> libc::c_int;
 }
 extern "C" {
@@ -1142,6 +1160,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_visible_r(self_: *const Fl_Scroll) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Scroll_active(self_: *const Fl_Scroll) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Scroll_active_r(self_: *const Fl_Scroll) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Scroll_scrollbar(self_: *mut Fl_Scroll) -> *mut libc::c_void;
@@ -1461,6 +1485,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_visible_r(self_: *const Fl_Tabs) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Tabs_active(self_: *const Fl_Tabs) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Tabs_active_r(self_: *const Fl_Tabs) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Tabs_value(self_: *mut Fl_Tabs) -> *mut Fl_Widget;
@@ -1788,6 +1818,12 @@ extern "C" {
     pub fn Fl_Tile_visible_r(self_: *const Fl_Tile) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Tile_active(self_: *const Fl_Tile) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Tile_active_r(self_: *const Fl_Tile) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
 }
 extern "C" {
@@ -2084,6 +2120,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_visible_r(self_: *const Fl_Wizard) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Wizard_active(self_: *const Fl_Wizard) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Wizard_active_r(self_: *const Fl_Wizard) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -2405,6 +2447,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_visible_r(self_: *const Fl_Color_Chooser) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_active(self_: *const Fl_Color_Chooser) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_active_r(self_: *const Fl_Color_Chooser) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
@@ -2729,6 +2777,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_visible_r(self_: *const Fl_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Window_active(self_: *const Fl_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Window_active_r(self_: *const Fl_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
@@ -3154,6 +3208,12 @@ extern "C" {
     pub fn Fl_Single_Window_visible_r(self_: *const Fl_Single_Window) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Single_Window_active(self_: *const Fl_Single_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Single_Window_active_r(self_: *const Fl_Single_Window) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Single_Window_begin(self_: *mut Fl_Single_Window);
 }
 extern "C" {
@@ -3563,6 +3623,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_visible_r(self_: *const Fl_Double_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Double_Window_active(self_: *const Fl_Double_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Double_Window_active_r(self_: *const Fl_Double_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Double_Window_flush(w: *mut Fl_Double_Window);
@@ -3979,6 +4045,12 @@ extern "C" {
     pub fn Fl_Menu_Window_visible_r(self_: *const Fl_Menu_Window) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Menu_Window_active(self_: *const Fl_Menu_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_active_r(self_: *const Fl_Menu_Window) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
@@ -4388,6 +4460,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Overlay_Window_visible_r(self_: *const Fl_Overlay_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_active(self_: *const Fl_Overlay_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_active_r(self_: *const Fl_Overlay_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_begin(self_: *mut Fl_Overlay_Window);
@@ -4809,6 +4887,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_visible_r(self_: *const Fl_Gl_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_active(self_: *const Fl_Gl_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_active_r(self_: *const Fl_Gl_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_begin(self_: *mut Fl_Gl_Window);
@@ -5277,6 +5361,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_visible_r(self_: *const Fl_Glut_Window) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_active(self_: *const Fl_Glut_Window) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_active_r(self_: *const Fl_Glut_Window) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_begin(self_: *mut Fl_Glut_Window);

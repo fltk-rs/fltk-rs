@@ -320,6 +320,14 @@ pub unsafe trait WidgetExt {
     fn visible(&self) -> bool;
     /// Returns whether a widget or any of its parents are visible (recursively)
     fn visible_r(&self) -> bool;
+    /// Return whether two widgets object point to the same widget
+    fn is_same<W: WidgetExt>(&self, other: &W) -> bool
+    where
+        Self: Sized;
+    /// Returns whether a widget is active
+    fn active(&self) -> bool;
+    /// Returns whether a widget or any of its parents are active (recursively)
+    fn active_r(&self) -> bool;
 }
 
 /// Defines the extended methods implemented by all widgets

@@ -267,6 +267,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_active(self_: *const Fl_Widget) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Input {
@@ -522,6 +528,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_visible_r(self_: *const Fl_Input) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Input_active(self_: *const Fl_Input) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Input_active_r(self_: *const Fl_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Input_set_value(arg1: *mut Fl_Input, arg2: *const libc::c_char) -> libc::c_int;
@@ -873,6 +885,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_visible_r(self_: *const Fl_Int_Input) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Int_Input_active(self_: *const Fl_Int_Input) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Int_Input_active_r(self_: *const Fl_Int_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_value(
@@ -1230,6 +1248,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_visible_r(self_: *const Fl_Float_Input) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Float_Input_active(self_: *const Fl_Float_Input) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Float_Input_active_r(self_: *const Fl_Float_Input) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_value(
@@ -1598,6 +1622,12 @@ extern "C" {
     pub fn Fl_Multiline_Input_visible_r(self_: *const Fl_Multiline_Input) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Multiline_Input_active(self_: *const Fl_Multiline_Input) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_active_r(self_: *const Fl_Multiline_Input) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Multiline_Input_set_value(
         arg1: *mut Fl_Multiline_Input,
         arg2: *const libc::c_char,
@@ -1964,6 +1994,12 @@ extern "C" {
     pub fn Fl_Secret_Input_visible_r(self_: *const Fl_Secret_Input) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Secret_Input_active(self_: *const Fl_Secret_Input) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Secret_Input_active_r(self_: *const Fl_Secret_Input) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Secret_Input_set_value(
         arg1: *mut Fl_Secret_Input,
         arg2: *const libc::c_char,
@@ -2321,6 +2357,12 @@ extern "C" {
     pub fn Fl_File_Input_visible_r(self_: *const Fl_File_Input) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_File_Input_active(self_: *const Fl_File_Input) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_File_Input_active_r(self_: *const Fl_File_Input) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_File_Input_set_down_box(self_: *mut Fl_File_Input, box_: libc::c_int);
 }
 extern "C" {
@@ -2671,6 +2713,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Output_visible_r(self_: *const Fl_Output) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Output_active(self_: *const Fl_Output) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Output_active_r(self_: *const Fl_Output) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Output_set_value(arg1: *mut Fl_Output, arg2: *const libc::c_char) -> libc::c_int;
@@ -3043,6 +3091,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Output_visible_r(self_: *const Fl_Multiline_Output) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_active(self_: *const Fl_Multiline_Output) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_active_r(self_: *const Fl_Multiline_Output) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_value(

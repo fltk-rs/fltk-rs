@@ -267,6 +267,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_active(self_: *const Fl_Widget) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Spinner {
@@ -530,6 +536,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Spinner_visible_r(self_: *const Fl_Spinner) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Spinner_active(self_: *const Fl_Spinner) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Spinner_active_r(self_: *const Fl_Spinner) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
@@ -838,6 +850,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Clock_visible_r(self_: *const Fl_Clock) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Clock_active(self_: *const Fl_Clock) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Clock_active_r(self_: *const Fl_Clock) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -1093,6 +1111,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_visible_r(self_: *const Fl_Chart) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Chart_active(self_: *const Fl_Chart) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Chart_active_r(self_: *const Fl_Chart) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -1422,6 +1446,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_visible_r(self_: *const Fl_Progress) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Progress_active(self_: *const Fl_Progress) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Progress_active_r(self_: *const Fl_Progress) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;
@@ -1801,6 +1831,12 @@ extern "C" {
     pub fn Fl_Help_View_visible_r(self_: *const Fl_Help_View) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Help_View_active(self_: *const Fl_Help_View) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Help_View_active_r(self_: *const Fl_Help_View) -> libc::c_int;
+}
+extern "C" {
     pub fn Fl_Help_View_directory(self_: *const Fl_Help_View) -> *const libc::c_char;
 }
 extern "C" {
@@ -2133,6 +2169,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_Choice_visible_r(self_: *const Fl_Input_Choice) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Input_Choice_active(self_: *const Fl_Input_Choice) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Input_Choice_active_r(self_: *const Fl_Input_Choice) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Input_Choice_set_down_box(self_: *mut Fl_Input_Choice, box_: libc::c_int);

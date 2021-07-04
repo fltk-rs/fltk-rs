@@ -267,6 +267,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_active(self_: *const Fl_Widget) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tree {
@@ -522,6 +528,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tree_visible_r(self_: *const Fl_Tree) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Tree_active(self_: *const Fl_Tree) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_Tree_active_r(self_: *const Fl_Tree) -> libc::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

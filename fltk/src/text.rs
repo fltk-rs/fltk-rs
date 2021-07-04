@@ -492,7 +492,16 @@ impl TextBuffer {
 }
 
 unsafe impl Sync for TextBuffer {}
+
 unsafe impl Send for TextBuffer {}
+
+impl PartialEq for TextBuffer {
+    fn eq(&self, other: &Self) -> bool {
+        self.inner == other.inner
+    }
+}
+
+impl Eq for TextBuffer {}
 
 impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {

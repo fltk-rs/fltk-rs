@@ -25,7 +25,16 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         unsafe impl Sync for #name {}
+
         unsafe impl Send for #name {}
+
+        impl PartialEq for #name {
+            fn eq(&self, other: &Self) -> bool {
+                self.inner == other.inner
+            }
+        }
+        
+        impl Eq for #name {}
 
         impl Clone for #name {
             fn clone(&self) -> Self {
