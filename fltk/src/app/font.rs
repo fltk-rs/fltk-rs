@@ -1,3 +1,4 @@
+use crate::app::init::{CURRENT_FONT, FONTS, LOADED_FONT};
 use crate::enums::Font;
 use crate::prelude::*;
 use crate::utils::FlString;
@@ -6,19 +7,7 @@ use std::{
     ffi::{CStr, CString},
     os::raw,
     path,
-    sync::Mutex,
 };
-
-lazy_static! {
-    /// The currently chosen font
-    pub(crate) static ref CURRENT_FONT: Mutex<i32> = Mutex::new(0);
-
-    /// Currently loaded fonts
-    pub(crate) static ref LOADED_FONT: Option<&'static str> = None;
-
-    /// The fonts associated with the application
-    pub(crate) static ref FONTS: Mutex<Vec<String>> = Mutex::new(Vec::new());
-}
 
 /// Set the app's font
 pub fn set_font(new_font: Font) {

@@ -1,15 +1,9 @@
-use crate::app::init_all;
+use crate::app::{
+    font::unload_font, init::init_all, init::IS_INIT, init::LOADED_FONT, utils::windows,
+};
 use crate::prelude::*;
 use fltk_sys::fl;
-use std::{
-    sync::atomic::{AtomicBool, Ordering},
-    thread, time,
-};
-
-lazy_static! {
-    /// Basically a check for global locking
-    pub(crate) static ref IS_INIT: AtomicBool = AtomicBool::new(false);
-}
+use std::{os::raw, panic, sync::atomic::Ordering, thread, time};
 
 /// Runs the event loop
 /// # Errors
@@ -48,6 +42,21 @@ pub fn unlock() {
 /// Trigger event loop handling in the main thread
 pub fn awake() {
     unsafe { fl::Fl_awake() }
+}
+
+/// Registers a function that will be called by the main thread during the next message handling cycle
+pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: fl::Fl_Awake_Handler = Some(shim);
+        fl::Fl_awake_callback(callback, data);
+    }
 }
 
 /// Starts waiting for events.
@@ -115,5 +124,164 @@ pub fn ready() -> bool {
             init_all();
         }
         fl::Fl_ready() != 0
+    }
+}
+
+/// Quit the app
+pub fn quit() {
+    if let Some(loaded_font) = *LOADED_FONT {
+        // Shouldn't fail
+        unload_font(loaded_font).unwrap_or(());
+    }
+    if let Some(wins) = windows() {
+        for mut i in wins {
+            if i.shown() {
+                i.hide();
+            }
+        }
+    }
+}
+
+
+/// Add an idle callback to run within the event loop.
+/// Calls to `WidgetExt::redraw` within the callback require an explicit sleep
+pub fn add_idle<F: FnMut() + 'static>(cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fl::Fl_add_idle(callback, data);
+    }
+}
+
+/// Remove an idle function
+pub fn remove_idle<F: FnMut() + 'static>(cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fl::Fl_remove_idle(callback, data);
+    }
+}
+
+/// Checks whether an idle function is installed
+pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fl::Fl_has_idle(callback, data) != 0
+    }
+}
+
+
+/**
+    Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
+    Example:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    fn callback() {
+        println!("TICK");
+        app::repeat_timeout(1.0, callback);
+    }
+    fn main() {
+        let app = app::App::default();
+        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        wind.show();
+        app::add_timeout(1.0, callback);
+        app.run().unwrap();
+    }
+    ```
+*/
+pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fltk_sys::fl::Fl_add_timeout(tm, callback, data);
+    }
+}
+
+/**
+    Repeats a timeout callback from the expiration of the previous timeout.
+    You may only call this method inside a timeout callback.
+    The timeout duration `tm` is indicated in seconds
+    Example:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    fn callback() {
+        println!("TICK");
+        app::repeat_timeout(1.0, callback);
+    }
+    fn main() {
+        let app = app::App::default();
+        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        wind.show();
+        app::add_timeout(1.0, callback);
+        app.run().unwrap();
+    }
+    ```
+*/
+pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fltk_sys::fl::Fl_repeat_timeout(tm, callback, data);
+    }
+}
+
+/// Removes a timeout callback
+pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fltk_sys::fl::Fl_remove_timeout(callback, data);
+    }
+}
+
+/// Check whether a timeout is installed
+pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
+    unsafe {
+        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let f: &mut (dyn FnMut()) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+        }
+        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
+        fltk_sys::fl::Fl_has_timeout(callback, data) != 0
     }
 }

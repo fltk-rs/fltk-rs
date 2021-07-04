@@ -1,3 +1,4 @@
+use crate::app::utils::first_window;
 use crate::enums::{Event, Key, Shortcut};
 use crate::prelude::*;
 use fltk_sys::fl;
@@ -389,5 +390,88 @@ pub fn add_handler(cb: fn(Event) -> bool) {
                 let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| cb(ev) as i32));
             }));
         fl::Fl_add_handler(callback);
+    }
+}
+
+/**
+    Send a signal to a window.
+    Integral values from 0 to 30 are reserved.
+    Returns Ok(true) if the event was handled.
+    Returns Ok(false) if the event was not handled.
+    Returns Err on error or in use of one of the reserved values.
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    const CHANGE_FRAME: i32 = 100;
+    let mut wind = window::Window::default();
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
+    but.set_callback(move |_| {
+        let _ = app::handle(CHANGE_FRAME, &wind).unwrap();
+    });
+    frame.handle(move |f, ev| {
+        if ev == CHANGE_FRAME.into() {
+            f.set_label("Hello world");
+            true
+        } else {
+            false
+        }
+    });
+    ```
+    # Errors
+    Returns Err on error or in use of one of the reserved values.
+*/
+pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
+    msg: I,
+    w: &W,
+) -> Result<bool, FltkError> {
+    let val = msg.into();
+    if (0..=30).contains(&val) {
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+    } else {
+        let ret = unsafe { fl::Fl_handle(val, w.as_widget_ptr() as _) != 0 };
+        Ok(ret)
+    }
+}
+
+/**
+    Send a signal to the main window.
+    Integral values from 0 to 30 are reserved.
+    Returns Ok(true) if the event was handled.
+    Returns Ok(false) if the event was not handled.
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    const CHANGE_FRAME: i32 = 100;
+    let mut wind = window::Window::default();
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
+    but.set_callback(move |_| {
+        let _ = app::handle_main(CHANGE_FRAME).unwrap();
+    });
+    frame.handle(move |f, ev| {
+        if ev == CHANGE_FRAME.into() {
+            f.set_label("Hello world");
+            true
+        } else {
+            false
+        }
+    });
+    ```
+    # Errors
+    Returns Err on error or in use of one of the reserved values.
+*/
+pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
+    msg: I,
+) -> Result<bool, FltkError> {
+    let val = msg.into();
+    if (0..=30).contains(&val) {
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+    } else {
+        first_window().map_or(
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            |win| {
+                let ret = unsafe { fl::Fl_handle(val, win.as_widget_ptr() as _) != 0 };
+                Ok(ret)
+            },
+        )
     }
 }

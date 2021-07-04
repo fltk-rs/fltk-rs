@@ -1,13 +1,9 @@
-use crate::enums::FrameType;
+use crate::app::init::CURRENT_FRAME;
+use crate::enums::{FrameType, Mode};
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::fl;
-use std::{ffi::CString, sync::Mutex};
-
-lazy_static! {
-    /// The currently chosen frame type
-    pub(crate) static ref CURRENT_FRAME: Mutex<i32> = Mutex::new(2);
-}
+use std::{ffi::CString, os::raw};
 
 /// Set the app scheme
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -152,3 +148,67 @@ pub fn menu_linespacing() -> i32 {
 pub fn set_menu_linespacing(val: i32) {
     unsafe { fl::Fl_set_menu_linespacing(val) }
 }
+
+/// Sets the visual mode of the application
+/// # Errors
+/// Returns Err(FailedOperation) if FLTK failed to set the visual mode
+pub fn set_visual(mode: Mode) -> Result<(), FltkError> {
+    unsafe {
+        match fl::Fl_visual(mode.bits() as i32) {
+            0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            _ => Ok(()),
+        }
+    }
+}
+
+/// The current graphics context of the app, `fl_gc`.
+/// `*mut c_void` to `HDC` on Windows, `CGContextRef` on macOS, `_XGC` on X11
+pub type GraphicsContext = *mut raw::c_void;
+
+/// Get the graphics context, `fl_gc`
+pub fn graphics_context() -> GraphicsContext {
+    unsafe {
+        let ctx = fltk_sys::window::Fl_gc();
+        assert!(!ctx.is_null());
+        ctx
+    }
+}
+
+/// The display global variable, `fl_display`.
+/// `_XDisplay` on X11, `HINSTANCE` on Windows.
+pub type Display = *mut raw::c_void;
+
+/// Gets the display global variable, `fl_display`.
+/// `_XDisplay` on X11, `HINSTANCE` on Windows.
+pub fn display() -> Display {
+    unsafe {
+        let disp = fltk_sys::window::Fl_display();
+        assert!(!disp.is_null());
+        disp
+    }
+}
+
+/// Causes all the windows that need it to be redrawn and graphics forced out through the pipes.
+pub fn flush() {
+    unsafe { fl::Fl_flush() }
+}
+
+/// Redraws everything
+pub fn redraw() {
+    unsafe { fl::Fl_redraw() }
+}
+
+/// Open the current display
+/// # Safety
+/// A correct visual must be set prior to opening the display
+pub unsafe fn open_display() {
+    fl::Fl_open_display()
+}
+
+/// Close the current display
+/// # Safety
+/// The display shouldn't be closed while a window is shown
+pub unsafe fn close_display() {
+    fl::Fl_close_display()
+}
+
