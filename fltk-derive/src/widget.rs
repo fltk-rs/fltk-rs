@@ -1033,9 +1033,19 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn callback(&self) -> Option<unsafe extern "C" fn(arg1: *mut fltk_sys::widget::Fl_Widget, arg2: *mut raw::c_void)> {
+            fn callback(&self) -> Option<Box<dyn FnMut()>> {
+                assert!(!self.was_deleted());
                 unsafe {
-                    mem::transmute(#callback(self.inner))
+                    let cb = #callback(self.inner);
+                    let s = self.clone();
+                    if let Some(cb) = cb {
+                        let cb_1 = Box::new(move || {
+                            cb(s.as_widget_ptr() as _, std::ptr::null_mut());
+                        });
+                        Some(cb_1)
+                    } else {
+                        None
+                    }
                 }
             }
         }
