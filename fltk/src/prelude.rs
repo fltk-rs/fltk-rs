@@ -328,18 +328,17 @@ pub unsafe trait WidgetExt {
     fn active(&self) -> bool;
     /// Returns whether a widget or any of its parents are active (recursively)
     fn active_r(&self) -> bool;
-    /** 
+    /**
         Return the default callback function, this allows storing then running within the overriden callback
         ```rust
             use fltk::{prelude::*, *};
-            static mut CB: Option<Box<dyn FnMut()>> = None;
             let scroll = group::Scroll::default();
             let mut scrollbar = scroll.scrollbar();
             scrollbar.set_callback({
-                unsafe { CB = scrollbar.callback(); }
+            let mut cb = scrollbar.callback();
                 move |_| {
                     println!("print something, and also run the default callback");
-                    if let Some(cb) = unsafe { CB.as_mut() } {
+                    if let Some(cb) = cb.as_mut() {
                         (*cb)();
                     }
                 }
