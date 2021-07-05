@@ -273,6 +273,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_callback(self_: *const Fl_Widget) -> Fl_Callback;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Box {
@@ -530,4 +533,7 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Box_active_r(self_: *const Fl_Box) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Box_callback(self_: *const Fl_Box) -> Fl_Callback;
 }

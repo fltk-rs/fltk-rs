@@ -3,7 +3,7 @@ use crate::enums::{
     Shortcut,
 };
 use std::convert::From;
-use std::{fmt, io};
+use std::{fmt, io, os::raw};
 
 /// Error types returned by fltk-rs + wrappers of std errors
 #[derive(Debug)]
@@ -328,6 +328,26 @@ pub unsafe trait WidgetExt {
     fn active(&self) -> bool;
     /// Returns whether a widget or any of its parents are active (recursively)
     fn active_r(&self) -> bool;
+    /** 
+        Return the default callback function, this allows storing then running within the overriden callback
+        ```rust
+            use fltk::{prelude::*, *};
+            let scroll = group::Scroll::default();
+            let mut scrollbar = scroll.scrollbar();
+            scrollbar.set_callback({
+                let cb = scrollbar.callback();
+                move |s| {
+                    println!("print something, and also run the default callback");
+                    if let Some(cb) = cb {
+                        unsafe {
+                            cb(s.as_widget_ptr(), std::ptr::null_mut());
+                        }
+                    }
+                }
+            });
+        ```
+    */
+    fn callback(&self) -> Option<unsafe extern "C" fn(arg1: *mut fltk_sys::widget::Fl_Widget, arg2: *mut raw::c_void)>;
 }
 
 /// Defines the extended methods implemented by all widgets

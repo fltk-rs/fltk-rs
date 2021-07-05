@@ -347,6 +347,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "active_r").as_str(),
         name.span(),
     );
+    let callback = Ident::new(format!("{}_{}", name_str, "callback").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -1029,6 +1030,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #active_r(self.inner) != 0
+                }
+            }
+
+            fn callback(&self) -> Option<unsafe extern "C" fn(arg1: *mut fltk_sys::widget::Fl_Widget, arg2: *mut raw::c_void)> {
+                unsafe {
+                    mem::transmute(#callback(self.inner))
                 }
             }
         }

@@ -273,6 +273,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_callback(self_: *const Fl_Widget) -> Fl_Callback;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Item {
@@ -547,6 +550,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_active_r(self_: *const Fl_Menu_Bar) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_callback(self_: *const Fl_Menu_Bar) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add(
@@ -922,6 +928,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Button_active_r(self_: *const Fl_Menu_Button) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_callback(self_: *const Fl_Menu_Button) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Menu_Button_popup(self_: *mut Fl_Menu_Button) -> *const Fl_Menu_Item;
@@ -1300,6 +1309,9 @@ extern "C" {
     pub fn Fl_Choice_active_r(self_: *const Fl_Choice) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Choice_callback(self_: *const Fl_Choice) -> Fl_Callback;
+}
+extern "C" {
     pub fn Fl_Choice_add(
         arg1: *mut Fl_Choice,
         name: *const libc::c_char,
@@ -1669,6 +1681,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_active_r(self_: *const Fl_Sys_Menu_Bar) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_callback(self_: *const Fl_Sys_Menu_Bar) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(

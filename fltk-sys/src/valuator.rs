@@ -273,6 +273,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Widget_callback(self_: *const Fl_Widget) -> Fl_Callback;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Slider {
@@ -534,6 +537,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Slider_active_r(self_: *const Fl_Slider) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Slider_callback(self_: *const Fl_Slider) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Slider_slider_size(self_: *const Fl_Slider) -> f32;
@@ -866,6 +872,9 @@ extern "C" {
     pub fn Fl_Nice_Slider_active_r(self_: *const Fl_Nice_Slider) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Nice_Slider_callback(self_: *const Fl_Nice_Slider) -> Fl_Callback;
+}
+extern "C" {
     pub fn Fl_Nice_Slider_set_bounds(arg1: *mut Fl_Nice_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -1183,6 +1192,9 @@ extern "C" {
     pub fn Fl_Counter_active_r(self_: *const Fl_Counter) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Counter_callback(self_: *const Fl_Counter) -> Fl_Callback;
+}
+extern "C" {
     pub fn Fl_Counter_set_bounds(arg1: *mut Fl_Counter, a: f64, b: f64);
 }
 extern "C" {
@@ -1488,6 +1500,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Dial_active_r(self_: *const Fl_Dial) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Dial_callback(self_: *const Fl_Dial) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Dial_angle1(self_: *const Fl_Dial) -> libc::c_short;
@@ -1817,6 +1832,9 @@ extern "C" {
     pub fn Fl_Line_Dial_active_r(self_: *const Fl_Line_Dial) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Line_Dial_callback(self_: *const Fl_Line_Dial) -> Fl_Callback;
+}
+extern "C" {
     pub fn Fl_Line_Dial_set_bounds(arg1: *mut Fl_Line_Dial, a: f64, b: f64);
 }
 extern "C" {
@@ -2122,6 +2140,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Roller_active_r(self_: *const Fl_Roller) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Roller_callback(self_: *const Fl_Roller) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Roller_set_bounds(arg1: *mut Fl_Roller, a: f64, b: f64);
@@ -2437,6 +2458,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scrollbar_active_r(self_: *const Fl_Scrollbar) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Scrollbar_callback(self_: *const Fl_Scrollbar) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Scrollbar_set_bounds(arg1: *mut Fl_Scrollbar, a: f64, b: f64);
@@ -2755,6 +2779,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Slider_active_r(self_: *const Fl_Value_Slider) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Slider_callback(self_: *const Fl_Value_Slider) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Value_Slider_set_text_color(self_: *mut Fl_Value_Slider, c: libc::c_uint);
@@ -3097,6 +3124,9 @@ extern "C" {
     pub fn Fl_Adjuster_active_r(self_: *const Fl_Adjuster) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Adjuster_callback(self_: *const Fl_Adjuster) -> Fl_Callback;
+}
+extern "C" {
     pub fn Fl_Adjuster_set_bounds(arg1: *mut Fl_Adjuster, a: f64, b: f64);
 }
 extern "C" {
@@ -3413,6 +3443,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Value_Input_active_r(self_: *const Fl_Value_Input) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Value_Input_callback(self_: *const Fl_Value_Input) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Value_Input_set_text_color(self_: *mut Fl_Value_Input, c: libc::c_uint);
@@ -3759,6 +3792,9 @@ extern "C" {
     pub fn Fl_Value_Output_active_r(self_: *const Fl_Value_Output) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Value_Output_callback(self_: *const Fl_Value_Output) -> Fl_Callback;
+}
+extern "C" {
     pub fn Fl_Value_Output_set_text_color(self_: *mut Fl_Value_Output, c: libc::c_uint);
 }
 extern "C" {
@@ -4102,6 +4138,9 @@ extern "C" {
     pub fn Fl_Fill_Slider_active_r(self_: *const Fl_Fill_Slider) -> libc::c_int;
 }
 extern "C" {
+    pub fn Fl_Fill_Slider_callback(self_: *const Fl_Fill_Slider) -> Fl_Callback;
+}
+extern "C" {
     pub fn Fl_Fill_Slider_set_bounds(arg1: *mut Fl_Fill_Slider, a: f64, b: f64);
 }
 extern "C" {
@@ -4417,6 +4456,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Fill_Dial_active_r(self_: *const Fl_Fill_Dial) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Fill_Dial_callback(self_: *const Fl_Fill_Dial) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Fill_Dial_set_bounds(arg1: *mut Fl_Fill_Dial, a: f64, b: f64);
@@ -4735,6 +4777,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Slider_active_r(self_: *const Fl_Hor_Slider) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Slider_callback(self_: *const Fl_Hor_Slider) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Hor_Slider_set_bounds(arg1: *mut Fl_Hor_Slider, a: f64, b: f64);
@@ -5062,6 +5107,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_active_r(self_: *const Fl_Hor_Fill_Slider) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Fill_Slider_callback(self_: *const Fl_Hor_Fill_Slider) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Hor_Fill_Slider_set_bounds(arg1: *mut Fl_Hor_Fill_Slider, a: f64, b: f64);
@@ -5396,6 +5444,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_active_r(self_: *const Fl_Hor_Nice_Slider) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Nice_Slider_callback(self_: *const Fl_Hor_Nice_Slider) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Hor_Nice_Slider_set_bounds(arg1: *mut Fl_Hor_Nice_Slider, a: f64, b: f64);
@@ -5739,6 +5790,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_active_r(self_: *const Fl_Hor_Value_Slider) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Hor_Value_Slider_callback(self_: *const Fl_Hor_Value_Slider) -> Fl_Callback;
 }
 extern "C" {
     pub fn Fl_Hor_Value_Slider_set_text_color(self_: *mut Fl_Hor_Value_Slider, c: libc::c_uint);
