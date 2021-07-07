@@ -1915,3 +1915,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Item_image(self_: *mut Fl_Menu_Item, image: *mut libc::c_void);
 }
+extern "C" {
+    pub fn Fl_Menu_Item_add_image(self_: *mut Fl_Menu_Item, image: *mut libc::c_void, on_left: libc::c_int);
+}

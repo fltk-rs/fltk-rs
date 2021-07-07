@@ -14,6 +14,9 @@ Resources:
 - [Written](https://github.com/fltk-rs/fltk-rs/wiki)
 - [Video](https://github.com/fltk-rs/fltk-rs#tutorials)
 - [Discussions](https://github.com/fltk-rs/fltk-rs/discussions)
+- [Demos](https://github.com/fltk-rs/demos)
+- [7guis-fltk-rs](https://github.com/tdryer/7guis-fltk-rs)
+- [FLTK-RS-Examples](https://github.com/wyhinton/FLTK-RS-Examples)
 - Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference. 
 
 Why choose FLTK?
@@ -37,18 +40,18 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^1"
+fltk = "^1.1"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1", git = "https://github.com/fltk-rs/fltk-rs" }
+fltk = { version = "^1.1", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 
 To use the bundled libs (available for x64 windows (msvc & gnu (msys2-mingw)), x64 linux & macos):
 ```toml
 [dependencies]
-fltk = { version = "^1", features = ["fltk-bundled"] }
+fltk = { version = "^1.1", features = ["fltk-bundled"] }
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -331,6 +334,7 @@ Different frame types which can be used with many different widgets such as Fram
 
 More interesting examples can be found in the fltk-rs-demos [repo](https://github.com/fltk-rs/demos).
 Also a nice implementation of the 7guis tasks can be found [here](https://github.com/tdryer/7guis-fltk-rs).
+Various advanced examples can also be found [here](https://github.com/wyhinton/FLTK-RS-Examples).
 
 ## Currently implemented types:
 

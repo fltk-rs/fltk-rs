@@ -327,10 +327,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
     );
-    let set_image_with_size = Ident::new(
-        format!("{}_{}", name_str, "set_image_with_size").as_str(),
-        name.span(),
-    );
     let image = Ident::new(format!("{}_{}", name_str, "image").as_str(), name.span());
     let deimage = Ident::new(format!("{}_{}", name_str, "deimage").as_str(), name.span());
     let set_deimage = Ident::new(
@@ -943,6 +939,17 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>) {
+                assert!(!self.was_deleted());
+                if let Some(mut image) = image {
+                    assert!(!image.was_deleted());
+                    image.scale(self.w(), self.h(), false, true);
+                    unsafe { #set_image(self.inner, image.as_image_ptr() as *mut _) }
+                } else {
+                    unsafe { #set_image(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
+                }
+            }
+
             fn image(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -960,6 +967,17 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 if let Some(image) = image {
                     assert!(!image.was_deleted());
+                    unsafe { #set_deimage(self.inner, image.as_image_ptr() as *mut _) }
+                } else {
+                    unsafe { #set_deimage(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
+                }
+            }
+
+            fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>) {
+                assert!(!self.was_deleted());
+                if let Some(mut image) = image {
+                    assert!(!image.was_deleted());
+                    image.scale(self.w(), self.h(), false, true);
                     unsafe { #set_deimage(self.inner, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_deimage(self.inner, std::ptr::null_mut() as *mut raw::c_void) }

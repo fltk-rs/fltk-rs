@@ -59,6 +59,7 @@ impl SharedImage {
     /// Errors on unsupported `SharedImage` types
     pub fn from_image<I: ImageExt>(image: I) -> Result<SharedImage, FltkError> {
         unsafe {
+            assert!(!image.was_deleted());
             let x = Fl_Shared_Image_from_rgb(image.as_image_ptr() as *mut Fl_RGB_Image, 0);
             if x.is_null() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -533,6 +534,7 @@ impl TiledImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn new<Img: ImageExt>(img: Img, w: i32, h: i32) -> TiledImage {
         unsafe {
+            assert!(!img.was_deleted());
             let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
             assert!(!ptr.is_null());
             TiledImage {
