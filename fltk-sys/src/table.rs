@@ -3058,6 +3058,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Table_callback_context(arg1: *mut Fl_Table) -> libc::c_int;
 }
+extern "C" {
+    pub fn Fl_Table_scrollbar(arg1: *const Fl_Table) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_hscrollbar(arg1: *const Fl_Table) -> *mut libc::c_void;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Table_Row {
@@ -3592,6 +3598,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_Row_callback_context(arg1: *mut Fl_Table_Row) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_scrollbar(arg1: *const Fl_Table_Row) -> *mut libc::c_void;
+}
+extern "C" {
+    pub fn Fl_Table_Row_hscrollbar(arg1: *const Fl_Table_Row) -> *mut libc::c_void;
 }
 extern "C" {
     pub fn Fl_Table_Row_row_selected(self_: *mut Fl_Table_Row, row: libc::c_int) -> libc::c_int;

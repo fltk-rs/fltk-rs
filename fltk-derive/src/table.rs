@@ -211,6 +211,14 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "callback_context").as_str(),
         name.span(),
     );
+    let scrollbar = Ident::new(
+        format!("{}_{}", name_str, "scrollbar").as_str(),
+        name.span(),
+    );
+    let hscrollbar = Ident::new(
+        format!("{}_{}", name_str, "hscrollbar").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         unsafe impl TableExt for #name {
@@ -632,6 +640,24 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
             fn callback_context(&self) -> TableContext {
                 unsafe {
                     mem::transmute(#callback_context(self.inner))
+                }
+            }
+
+            fn scrollbar(&self) -> Box<dyn ValuatorExt> {
+                assert!(!self.was_deleted());
+                unsafe {
+                  let ptr = #scrollbar(self.inner);
+                  assert!(!ptr.is_null());
+                  Box::new(crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                }
+            }
+
+            fn hscrollbar(&self) -> Box<dyn ValuatorExt> {
+                assert!(!self.was_deleted());
+                unsafe {
+                  let ptr = #hscrollbar(self.inner);
+                  assert!(!ptr.is_null());
+                  Box::new(crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
                 }
             }
         }

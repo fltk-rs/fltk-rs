@@ -1176,6 +1176,10 @@ pub unsafe trait TableExt: GroupExt {
     fn callback_row(&self) -> i32;
     /// Get the callback context, should be called from within a callback
     fn callback_context(&self) -> crate::table::TableContext;
+    /// Returns the table's vertical scrollbar
+    fn scrollbar(&self) -> Box<dyn ValuatorExt>;
+    /// Returns the table's horizontal scrollbar
+    fn hscrollbar(&self) -> Box<dyn ValuatorExt>;
 }
 
 /// Defines the methods implemented by all image types

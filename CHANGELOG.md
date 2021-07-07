@@ -3,6 +3,8 @@
 
 ## [1.0.23] - Unreleased
 - Add callback getter.
+- Fix MSRV, turns out it's 1.46!
+- Add TableExt::scrollbar() and hscrollbar().
 
 ## [1.0.22] - 2021-07-05
 - Add `fn WidgetExt::is_same<W: WidgetExt>(&self, other: &W)`.
