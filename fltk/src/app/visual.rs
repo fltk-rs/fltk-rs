@@ -211,4 +211,3 @@ pub unsafe fn open_display() {
 pub unsafe fn close_display() {
     fl::Fl_close_display()
 }
-

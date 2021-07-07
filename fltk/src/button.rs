@@ -16,6 +16,7 @@ use std::{
 pub struct Button {
     inner: *mut Fl_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines the button type, which can be changed dynamically using the `set_type()`.
@@ -37,6 +38,7 @@ pub enum ButtonType {
 pub struct RadioButton {
     inner: *mut Fl_Radio_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl RadioButton {
@@ -60,6 +62,7 @@ impl RadioButton {
 pub struct RadioRoundButton {
     inner: *mut Fl_Radio_Round_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl RadioRoundButton {
@@ -83,6 +86,7 @@ impl RadioRoundButton {
 pub struct RadioLightButton {
     inner: *mut Fl_Radio_Light_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl RadioLightButton {
@@ -106,6 +110,7 @@ impl RadioLightButton {
 pub struct RoundButton {
     inner: *mut Fl_Round_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl RoundButton {
@@ -129,6 +134,7 @@ impl RoundButton {
 pub struct CheckButton {
     inner: *mut Fl_Check_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl CheckButton {
@@ -154,6 +160,7 @@ impl CheckButton {
 pub struct ToggleButton {
     inner: *mut Fl_Toggle_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl ToggleButton {
@@ -177,6 +184,7 @@ impl ToggleButton {
 pub struct LightButton {
     inner: *mut Fl_Light_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl LightButton {
@@ -200,6 +208,7 @@ impl LightButton {
 pub struct RepeatButton {
     inner: *mut Fl_Repeat_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a return button
@@ -207,4 +216,5 @@ pub struct RepeatButton {
 pub struct ReturnButton {
     inner: *mut Fl_Return_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }

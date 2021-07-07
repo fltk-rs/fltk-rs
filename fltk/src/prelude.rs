@@ -260,7 +260,7 @@ pub unsafe trait WidgetExt {
     /// Sets the alignment of the widget
     fn set_align(&mut self, align: Align);
     /// Returns the parent of the widget
-    fn parent(&self) -> Option<Box<dyn GroupExt>>;
+    fn parent(&self) -> Option<crate::group::Group>;
     /// Gets the selection color of the widget
     fn selection_color(&mut self) -> Color;
     /// Sets the selection color of the widget
@@ -304,7 +304,7 @@ pub unsafe trait WidgetExt {
     /// Return the widget as a window if it's a window
     fn as_window(&self) -> Option<Box<dyn WindowExt>>;
     /// Return the widget as a group widget if it's a group widget
-    fn as_group(&self) -> Option<Box<dyn GroupExt>>;
+    fn as_group(&self) -> Option<crate::group::Group>;
     /// INTERNAL: Retakes ownership of the user callback data
     /// # Safety
     /// Can return multiple mutable references to the `user_data`
@@ -440,7 +440,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Return the number of children in a group
     fn children(&self) -> i32;
     /// Return child widget by index
-    fn child(&self, idx: i32) -> Option<Box<dyn WidgetExt>>;
+    fn child(&self, idx: i32) -> Option<crate::widget::Widget>;
     /// Find a widget within a group and return its index
     fn find<W: WidgetExt>(&self, widget: &W) -> i32
     where
@@ -1035,9 +1035,9 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Sorts the items of the browser
     fn sort(&mut self);
     /// Returns the vertical scrollbar
-    fn scrollbar(&self) -> Box<dyn ValuatorExt>;
+    fn scrollbar(&self) -> crate::valuator::Scrollbar;
     /// Returns the horizontal scrollbar
-    fn hscrollbar(&self) -> Box<dyn ValuatorExt>;
+    fn hscrollbar(&self) -> crate::valuator::Scrollbar;
     /// Returns the selected line, returns 0 if no line is selected
     fn value(&self) -> i32;
 }
@@ -1177,9 +1177,9 @@ pub unsafe trait TableExt: GroupExt {
     /// Get the callback context, should be called from within a callback
     fn callback_context(&self) -> crate::table::TableContext;
     /// Returns the table's vertical scrollbar
-    fn scrollbar(&self) -> Box<dyn ValuatorExt>;
+    fn scrollbar(&self) -> crate::valuator::Scrollbar;
     /// Returns the table's horizontal scrollbar
-    fn hscrollbar(&self) -> Box<dyn ValuatorExt>;
+    fn hscrollbar(&self) -> crate::valuator::Scrollbar;
 }
 
 /// Defines the methods implemented by all image types

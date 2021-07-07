@@ -107,6 +107,7 @@ pub enum TreeItemDrawMode {
 pub struct Tree {
     inner: *mut Fl_Tree,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines a tree item
@@ -139,6 +140,7 @@ impl Tree {
             let x = Tree {
                 inner: ptr,
                 tracker,
+                is_derived: false,
             };
             Some(x)
         }
@@ -1159,7 +1161,7 @@ impl TreeItem {
             let tracker =
                 fltk_sys::fl::Fl_Widget_Tracker_new(inner as *mut fltk_sys::fl::Fl_Widget);
             assert!(!tracker.is_null());
-            let tree = Tree { inner, tracker };
+            let tree = Tree { inner, tracker, is_derived: false, };
             let parent = Fl_Tree_Item_parent(ptr);
             let is_root = Fl_Tree_Item_is_root(ptr) != 0;
             let x = TreeItem {
@@ -1319,12 +1321,12 @@ impl TreeItem {
     }
 
     /// Gets the item's associated widget
-    pub fn widget(&self) -> Box<dyn WidgetExt> {
+    pub fn widget(&self) -> Widget {
         assert!(!self.was_deleted());
         unsafe {
-            Box::new(Widget::from_widget_ptr(
+            Widget::from_widget_ptr(
                 Fl_Tree_Item_widget(self.inner) as *mut fltk_sys::widget::Fl_Widget
-            ))
+            )
         }
     }
 

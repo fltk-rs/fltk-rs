@@ -84,6 +84,7 @@ pub enum WindowType {
 pub struct SingleWindow {
     inner: *mut Fl_Single_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl SingleWindow {
@@ -217,6 +218,7 @@ impl SingleWindow {
 pub struct DoubleWindow {
     inner: *mut Fl_Double_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl DoubleWindow {
@@ -357,6 +359,7 @@ impl DoubleWindow {
 pub struct MenuWindow {
     inner: *mut Fl_Menu_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl MenuWindow {
@@ -373,6 +376,7 @@ impl MenuWindow {
 pub struct OverlayWindow {
     inner: *mut Fl_Overlay_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl OverlayWindow {
@@ -512,6 +516,7 @@ pub type GlContext = *mut raw::c_void;
 pub struct GlWindow {
     inner: *mut Fl_Gl_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 #[cfg(feature = "enable-glwindow")]
@@ -660,6 +665,7 @@ impl GlWindow {
 pub struct GlutWindow {
     inner: *mut Fl_Glut_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 #[cfg(feature = "enable-glwindow")]

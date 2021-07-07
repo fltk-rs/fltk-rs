@@ -32,6 +32,7 @@ use std::{
 pub struct Browser {
     inner: *mut Fl_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines the browser type
@@ -75,6 +76,7 @@ pub enum BrowserScrollbar {
 pub struct SelectBrowser {
     inner: *mut Fl_Select_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a multi-browser
@@ -82,6 +84,7 @@ pub struct SelectBrowser {
 pub struct MultiBrowser {
     inner: *mut Fl_Multi_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a hold browser
@@ -89,6 +92,7 @@ pub struct MultiBrowser {
 pub struct HoldBrowser {
     inner: *mut Fl_Hold_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a file browser
@@ -96,6 +100,7 @@ pub struct HoldBrowser {
 pub struct FileBrowser {
     inner: *mut Fl_File_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// File types for the `FileBrowser`
@@ -175,6 +180,7 @@ impl FileBrowser {
 pub struct CheckBrowser {
     inner: *mut Fl_Check_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl CheckBrowser {
@@ -343,26 +349,26 @@ impl CheckBrowser {
     }
 
     /// Returns the vertical scrollbar
-    pub fn scrollbar(&self) -> Box<dyn ValuatorExt> {
+    pub fn scrollbar(&self) -> crate::valuator::Scrollbar {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Check_Browser_scrollbar(self.inner);
             assert!(!ptr.is_null());
-            Box::new(crate::valuator::Scrollbar::from_widget_ptr(
+            crate::valuator::Scrollbar::from_widget_ptr(
                 ptr as *mut fltk_sys::widget::Fl_Widget,
-            ))
+            )
         }
     }
 
     /// Returns the horizontal scrollbar
-    pub fn hscrollbar(&self) -> Box<dyn ValuatorExt> {
+    pub fn hscrollbar(&self) -> crate::valuator::Scrollbar {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Check_Browser_hscrollbar(self.inner);
             assert!(!ptr.is_null());
-            Box::new(crate::valuator::Scrollbar::from_widget_ptr(
+            crate::valuator::Scrollbar::from_widget_ptr(
                 ptr as *mut fltk_sys::widget::Fl_Widget,
-            ))
+            )
         }
     }
 }

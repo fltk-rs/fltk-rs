@@ -142,7 +142,6 @@ pub fn quit() {
     }
 }
 
-
 /// Add an idle callback to run within the event loop.
 /// Calls to `WidgetExt::redraw` within the callback require an explicit sleep
 pub fn add_idle<F: FnMut() + 'static>(cb: F) {
@@ -188,7 +187,6 @@ pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
         fl::Fl_has_idle(callback, data) != 0
     }
 }
-
 
 /**
     Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds

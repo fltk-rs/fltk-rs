@@ -14,6 +14,7 @@ use std::{
 pub struct Output {
     inner: *mut Fl_Output,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a multiline-output widget
@@ -21,4 +22,5 @@ pub struct Output {
 pub struct MultilineOutput {
     inner: *mut Fl_Multiline_Output,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }

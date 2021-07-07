@@ -643,21 +643,21 @@ pub fn impl_table_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn scrollbar(&self) -> Box<dyn ValuatorExt> {
+            fn scrollbar(&self) -> crate::valuator::Scrollbar {
                 assert!(!self.was_deleted());
                 unsafe {
                   let ptr = #scrollbar(self.inner);
                   assert!(!ptr.is_null());
-                  Box::new(crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                  crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
                 }
             }
 
-            fn hscrollbar(&self) -> Box<dyn ValuatorExt> {
+            fn hscrollbar(&self) -> crate::valuator::Scrollbar {
                 assert!(!self.was_deleted());
                 unsafe {
                   let ptr = #hscrollbar(self.inner);
                   assert!(!ptr.is_null());
-                  Box::new(crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                  crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
                 }
             }
         }

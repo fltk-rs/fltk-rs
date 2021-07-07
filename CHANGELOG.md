@@ -1,9 +1,10 @@
 # Changelog
 
 
-## [1.0.23] - Unreleased
+## [1.1.0] - Unreleased
+- Largely simplify getting concrete types, ex. Scroll::scrollbar() now returns a concrete Scrollbar instead of a `Box<dyn ValuatorExt>`.
 - Add callback getter.
-- Fix MSRV, turns out it's 1.46!
+- Fix MSRV, turns out it's 1.46 when using if in const context!
 - Add TableExt::scrollbar() and hscrollbar().
 
 ## [1.0.22] - 2021-07-05

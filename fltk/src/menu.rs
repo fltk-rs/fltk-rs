@@ -16,6 +16,7 @@ use std::{
 pub struct MenuBar {
     inner: *mut Fl_Menu_Bar,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a menu button
@@ -23,6 +24,7 @@ pub struct MenuBar {
 pub struct MenuButton {
     inner: *mut Fl_Menu_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines the menu button types, which can be changed dynamically using the `set_type()`.
@@ -68,6 +70,7 @@ impl MenuButton {
 pub struct Choice {
     inner: *mut Fl_Choice,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a macOS system menu bar on macOS and a normal menu bar on other systems
@@ -75,6 +78,7 @@ pub struct Choice {
 pub struct SysMenuBar {
     inner: *mut Fl_Sys_Menu_Bar,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a menu item

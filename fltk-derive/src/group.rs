@@ -39,11 +39,11 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
 
     let gen = quote! {
         impl IntoIterator for #name {
-            type Item = Box<dyn WidgetExt>;
+            type Item = Widget;
             type IntoIter = std::vec::IntoIter<Self::Item>;
 
             fn into_iter(self) -> Self::IntoIter {
-                let mut v: Vec<Box<dyn WidgetExt>> = vec![];
+                let mut v: Vec<Widget> = vec![];
                 for i in 0..self.children() {
                     v.push(self.child(i).unwrap());
                 }
@@ -80,7 +80,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn child(&self, idx: i32) -> Option<Box<dyn WidgetExt>> {
+            fn child(&self, idx: i32) -> Option<Widget> {
                 unsafe {
                     assert!(!self.was_deleted());
                     if idx >= self.children() || idx < 0 {
@@ -90,7 +90,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     if child_widget.is_null() {
                         None
                     } else {
-                        Some(Box::new(Widget::from_widget_ptr(child_widget as *mut fltk_sys::widget::Fl_Widget)))
+                        Some(Widget::from_widget_ptr(child_widget as *mut fltk_sys::widget::Fl_Widget))
                     }
                 }
             }

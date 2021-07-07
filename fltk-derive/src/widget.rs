@@ -58,6 +58,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     #name {
                         inner: widget_ptr,
                         tracker: tracker,
+                        is_derived: true,
                     }
                 }
             }
@@ -79,6 +80,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 let temp = #name {
                     inner: ptr as *mut #ptr_name,
                     tracker: tracker,
+                    is_derived: false,
                 };
                 fltk_sys::fl::Fl_unlock();
                 temp
@@ -90,6 +92,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
 
             fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
+                assert!(self.is_derived);
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let mut wid = #name::from_widget_ptr(wid as *mut _);
@@ -116,6 +119,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
 
             fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
+                assert!(self.is_derived);
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let mut wid = #name::from_widget_ptr(wid as *mut _);
@@ -361,7 +365,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         impl Clone for #name {
             fn clone(&self) -> #name {
                 assert!(!self.was_deleted());
-                #name { inner: self.inner, tracker: self.tracker }
+                #name { inner: self.inner, tracker: self.tracker, is_derived: self.is_derived }
             }
         }
 
@@ -614,14 +618,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn parent(&self) -> Option<Box<dyn GroupExt>> {
+            fn parent(&self) -> Option<crate::group::Group> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let x = #parent(self.inner);
                     if x.is_null() {
                         None
                     } else {
-                        Some(Box::new(crate::group::Group::from_widget_ptr(x as *mut _)))
+                        Some(crate::group::Group::from_widget_ptr(x as *mut _))
                     }
                 }
             }
@@ -785,14 +789,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn as_group(&self) -> Option<Box<dyn GroupExt>> {
+            fn as_group(&self) -> Option<crate::group::Group> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #as_group(self.inner);
                     if ptr.is_null() {
                         return None;
                     }
-                    Some(Box::new(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)))
+                    Some(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
                 }
             }
 
@@ -997,7 +1001,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 self.set_callback(move |_| sender.send(msg.clone()))
             }
 
-            unsafe fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {
+            unsafe fn into_widget<W: WidgetBase>(&self) -> W {
                 W::from_widget_ptr(self.as_widget_ptr() as *mut _)
             }
 
