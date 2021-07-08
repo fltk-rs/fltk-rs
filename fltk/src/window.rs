@@ -323,7 +323,7 @@ impl DoubleWindow {
         unsafe { Fl_Double_Window_alpha(self.inner) }
     }
 
-    /// Set the window's alpha
+    /// Set the window's alpha, u8::MAX is fully opaque. This should be called on a shown window
     pub fn set_alpha(&mut self, val: u8) {
         assert!(!self.was_deleted());
         assert!(self.shown());
