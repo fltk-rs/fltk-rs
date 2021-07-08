@@ -326,7 +326,7 @@ impl DoubleWindow {
     /// Set the window's alpha
     pub fn set_alpha(&mut self, val: u8) {
         assert!(!self.was_deleted());
-        debug_assert!(self.shown());
+        assert!(self.shown());
         unsafe { Fl_Double_Window_set_alpha(self.inner, val) }
     }
 
