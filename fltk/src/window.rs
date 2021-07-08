@@ -323,7 +323,9 @@ impl DoubleWindow {
         unsafe { Fl_Double_Window_alpha(self.inner) }
     }
 
-    /// Set the window's alpha, u8::MAX is fully opaque. This should be called on a shown window
+    /// Set the window's alpha, u8::MAX is fully opaque.
+    /// This should be called on a shown window.
+    /// On X11, opacity support depends on the window manager.
     pub fn set_alpha(&mut self, val: u8) {
         assert!(!self.was_deleted());
         assert!(self.shown());
