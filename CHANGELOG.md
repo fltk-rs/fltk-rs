@@ -4,6 +4,7 @@
 ## [1.1.0] - Unreleased
 - Largely simplify getting concrete types, ex. Scroll::scrollbar() now returns a concrete Scrollbar instead of a `Box<dyn ValuatorExt>`.
 - Add MenuItem::add_image().
+- Add Window::alpha() and set_alpha() to support window transparency/opacity.
 - Add WidgetExt::set_image_scaled() and set_deimage_scaled().
 - Add callback getter.
 - Fix MSRV, turns out it's 1.46 when using if in const context!

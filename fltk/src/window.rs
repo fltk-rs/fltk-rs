@@ -317,6 +317,19 @@ impl DoubleWindow {
         unsafe { Fl_Double_Window_flush(self.inner) }
     }
 
+    /// Get the window's alpha
+    pub fn alpha(&self) -> u8 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Double_Window_alpha(self.inner) }
+    }
+
+    /// Set the window's alpha
+    pub fn set_alpha(&mut self, val: u8) {
+        assert!(!self.was_deleted());
+        debug_assert!(self.shown());
+        unsafe { Fl_Double_Window_set_alpha(self.inner, val) }
+    }
+
     /// Returns the pixels per unit.
     /// Assumes a factor of 2.0 (Retina) (Retina) on MacOS since `[NSWindow backingScaleFactor]`
     /// requires an info.plist with `NSHighResolutionCapable` set to true.

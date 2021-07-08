@@ -3667,6 +3667,12 @@ extern "C" {
     pub fn Fl_Double_Window_flush(w: *mut Fl_Double_Window);
 }
 extern "C" {
+    pub fn Fl_Double_Window_set_alpha(self_: *mut Fl_Double_Window, val: libc::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Double_Window_alpha(self_: *const Fl_Double_Window) -> libc::c_uchar;
+}
+extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
 }
 extern "C" {
