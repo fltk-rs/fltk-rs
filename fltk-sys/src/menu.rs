@@ -562,7 +562,7 @@ extern "C" {
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
         arg4: libc::c_int,
-    );
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_insert(
@@ -573,7 +573,7 @@ extern "C" {
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
         arg4: libc::c_int,
-    );
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_get_item(
@@ -943,7 +943,7 @@ extern "C" {
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
         arg4: libc::c_int,
-    );
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_insert(
@@ -954,7 +954,7 @@ extern "C" {
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
         arg4: libc::c_int,
-    );
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_get_item(
@@ -1319,7 +1319,7 @@ extern "C" {
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
         arg4: libc::c_int,
-    );
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_insert(
@@ -1330,7 +1330,7 @@ extern "C" {
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
         arg4: libc::c_int,
-    );
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_get_item(arg1: *mut Fl_Choice, name: *const libc::c_char)
@@ -1693,7 +1693,7 @@ extern "C" {
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
         arg4: libc::c_int,
-    );
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_insert(
@@ -1704,7 +1704,7 @@ extern "C" {
         arg2: Fl_Callback,
         arg3: *mut libc::c_void,
         arg4: libc::c_int,
-    );
+    ) -> libc::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_get_item(
@@ -1916,5 +1916,9 @@ extern "C" {
     pub fn Fl_Menu_Item_image(self_: *mut Fl_Menu_Item, image: *mut libc::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Item_add_image(self_: *mut Fl_Menu_Item, image: *mut libc::c_void, on_left: libc::c_int);
+    pub fn Fl_Menu_Item_add_image(
+        self_: *mut Fl_Menu_Item,
+        image: *mut libc::c_void,
+        on_left: libc::c_int,
+    );
 }

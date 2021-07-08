@@ -687,7 +687,7 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) where
+    ) -> i32 where
         Self: Sized;
     /// Inserts a menu item at an index along with its callback.
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
@@ -700,7 +700,7 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) where
+    ) -> i32 where
         Self: Sized;
     /// Add a menu item along with an emit (sender and message).
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
@@ -712,7 +712,7 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    ) where
+    ) -> i32 where
         Self: Sized;
     /// Inserts a menu item along with an emit (sender and message).
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
@@ -725,7 +725,7 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    ) where
+    ) -> i32 where
         Self: Sized;
     /// Remove a menu item by index
     fn remove(&mut self, idx: i32);
