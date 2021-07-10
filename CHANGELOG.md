@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.1.0] - Unreleased
+## [1.1.0] - 2021-07-10
 - Largely simplify getting concrete types, ex. Scroll::scrollbar() now returns a concrete Scrollbar instead of a `Box<dyn ValuatorExt>`, and parent() returns an `Option<Group>` instead of an `Option<Box<dyn GroupExt>>`.
 - Add Window::opacity() and set_opacity() to support window transparency/opacity.
 - Add MenuItem::add_image() to add icons to menu items.
