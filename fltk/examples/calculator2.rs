@@ -1,9 +1,9 @@
 use fltk::{
     app,
     button::Button,
-    enums::{Color, Event, FrameType, Key, Shortcut},
+    enums::{Align, Color, Event, FrameType, Key, Shortcut},
+    frame::Frame,
     group::{Pack, PackType},
-    output::Output,
     prelude::*,
     window::Window,
 };
@@ -105,7 +105,6 @@ fn main() {
     let app = app::App::default();
     app::set_visible_focus(false);
     app::background(0x42, 0x42, 0x42);
-    app::background2(0x1b, 0x1b, 0x1b);
 
     let win_w = 400;
     let win_h = 500;
@@ -121,11 +120,12 @@ fn main() {
         .with_size(win_w, win_h)
         .center_screen();
 
-    let mut out = Output::new(0, 0, win_w, 160, "");
+    let mut out = Frame::new(0, 0, win_w, 160, "").with_align(Align::Right | Align::Inside);
+    out.set_color(Color::from_hex(0x1b1b1b));
     out.set_frame(FrameType::FlatBox);
-    out.set_text_color(Color::White);
-    out.set_text_size(36);
-    out.set_value("0");
+    out.set_label_color(Color::White);
+    out.set_label_size(36);
+    out.set_label("0");
 
     let vpack = Pack::new(0, but_row, win_w, win_h - 170, "");
 
@@ -175,6 +175,7 @@ fn main() {
     wind.show();
 
     app::set_focus(&*but1);
+    app::get_system_colors();
 
     let but_vec = vec![
         &mut but1, &mut but2, &mut but3, &mut but4, &mut but5, &mut but6, &mut but7, &mut but8,
@@ -214,53 +215,53 @@ fn main() {
         if let Some(val) = r.recv() {
             match val {
                 Message::Number(num) => {
-                    if out.value() == "0" {
+                    if out.label() == "0" {
                         txt.clear();
                     }
                     txt.push_str(&num.to_string());
-                    out.set_value(txt.as_str());
+                    out.set_label(txt.as_str());
                 }
                 Message::Dot => {
                     if operation == Ops::Eq {
                         txt.clear();
                         operation = Ops::None;
-                        out.set_value("0.");
+                        out.set_label("0.");
                         txt.push_str("0.");
                     }
                     if !txt.contains('.') {
                         txt.push('.');
-                        out.set_value(txt.as_str());
+                        out.set_label(txt.as_str());
                     }
                 }
                 Message::Op(op) => match op {
                     Ops::Add | Ops::Sub | Ops::Div | Ops::Mul => {
                         old_val.clear();
-                        old_val.push_str(&out.value());
+                        old_val.push_str(&out.label());
                         operation = op;
-                        out.set_value("0");
+                        out.set_label("0");
                     }
                     Ops::Back => {
-                        let val = out.value();
+                        let val = out.label();
                         txt.pop();
                         if val.len() > 1 {
-                            out.set_value(txt.as_str());
+                            out.set_label(txt.as_str());
                         } else {
-                            out.set_value("0");
+                            out.set_label("0");
                         }
                     }
                     Ops::CE => {
                         txt.clear();
                         old_val.clear();
                         txt.push('0');
-                        out.set_value(txt.as_str());
+                        out.set_label(txt.as_str());
                     }
                     Ops::C => {
                         txt.clear();
                         txt.push('0');
-                        out.set_value(txt.as_str());
+                        out.set_label(txt.as_str());
                     }
                     Ops::Eq => {
-                        new_val = out.value();
+                        new_val = out.label();
                         let old: f64 = old_val.parse().unwrap();
                         let new: f64 = new_val.parse().unwrap();
                         let val = match operation {
@@ -272,7 +273,7 @@ fn main() {
                         };
                         operation = Ops::None;
                         txt = String::from("0");
-                        out.set_value(&val.to_string());
+                        out.set_label(&val.to_string());
                     }
                     _ => (),
                 },

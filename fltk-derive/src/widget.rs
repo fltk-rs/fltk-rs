@@ -58,6 +58,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     #name {
                         inner: widget_ptr,
                         tracker: tracker,
+                        is_derived: true,
                     }
                 }
             }
@@ -79,6 +80,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 let temp = #name {
                     inner: ptr as *mut #ptr_name,
                     tracker: tracker,
+                    is_derived: false,
                 };
                 fltk_sys::fl::Fl_unlock();
                 temp
@@ -90,6 +92,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
 
             fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
+                assert!(self.is_derived);
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
                         let mut wid = #name::from_widget_ptr(wid as *mut _);
@@ -116,6 +119,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
 
             fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                 assert!(!self.was_deleted());
+                assert!(self.is_derived);
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
                         let mut wid = #name::from_widget_ptr(wid as *mut _);
@@ -323,10 +327,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_image").as_str(),
         name.span(),
     );
-    let set_image_with_size = Ident::new(
-        format!("{}_{}", name_str, "set_image_with_size").as_str(),
-        name.span(),
-    );
     let image = Ident::new(format!("{}_{}", name_str, "image").as_str(), name.span());
     let deimage = Ident::new(format!("{}_{}", name_str, "deimage").as_str(), name.span());
     let set_deimage = Ident::new(
@@ -347,6 +347,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "active_r").as_str(),
         name.span(),
     );
+    let callback = Ident::new(format!("{}_{}", name_str, "callback").as_str(), name.span());
 
     let gen = quote! {
         unsafe impl Send for #name {}
@@ -360,7 +361,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         impl Clone for #name {
             fn clone(&self) -> #name {
                 assert!(!self.was_deleted());
-                #name { inner: self.inner, tracker: self.tracker }
+                #name { inner: self.inner, tracker: self.tracker, is_derived: self.is_derived }
             }
         }
 
@@ -613,14 +614,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn parent(&self) -> Option<Box<dyn GroupExt>> {
+            fn parent(&self) -> Option<crate::group::Group> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let x = #parent(self.inner);
                     if x.is_null() {
                         None
                     } else {
-                        Some(Box::new(crate::group::Group::from_widget_ptr(x as *mut _)))
+                        Some(crate::group::Group::from_widget_ptr(x as *mut _))
                     }
                 }
             }
@@ -784,14 +785,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn as_group(&self) -> Option<Box<dyn GroupExt>> {
+            fn as_group(&self) -> Option<crate::group::Group> {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = #as_group(self.inner);
                     if ptr.is_null() {
                         return None;
                     }
-                    Some(Box::new(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)))
+                    Some(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
                 }
             }
 
@@ -938,6 +939,17 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>) {
+                assert!(!self.was_deleted());
+                if let Some(mut image) = image {
+                    assert!(!image.was_deleted());
+                    image.scale(self.w(), self.h(), false, true);
+                    unsafe { #set_image(self.inner, image.as_image_ptr() as *mut _) }
+                } else {
+                    unsafe { #set_image(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
+                }
+            }
+
             fn image(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
@@ -955,6 +967,17 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 if let Some(image) = image {
                     assert!(!image.was_deleted());
+                    unsafe { #set_deimage(self.inner, image.as_image_ptr() as *mut _) }
+                } else {
+                    unsafe { #set_deimage(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
+                }
+            }
+
+            fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>) {
+                assert!(!self.was_deleted());
+                if let Some(mut image) = image {
+                    assert!(!image.was_deleted());
+                    image.scale(self.w(), self.h(), false, true);
                     unsafe { #set_deimage(self.inner, image.as_image_ptr() as *mut _) }
                 } else {
                     unsafe { #set_deimage(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
@@ -996,7 +1019,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 self.set_callback(move |_| sender.send(msg.clone()))
             }
 
-            unsafe fn into_widget<W: WidgetBase>(&self) -> W where Self: Sized {
+            unsafe fn into_widget<W: WidgetBase>(&self) -> W {
                 W::from_widget_ptr(self.as_widget_ptr() as *mut _)
             }
 
@@ -1029,6 +1052,22 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #active_r(self.inner) != 0
+                }
+            }
+
+            fn callback(&self) -> Option<Box<dyn FnMut()>> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let cb = #callback(self.inner);
+                    let s = self.clone();
+                    if let Some(cb) = cb {
+                        let cb_1 = Box::new(move || {
+                            cb(s.as_widget_ptr() as _, std::ptr::null_mut());
+                        });
+                        Some(cb_1)
+                    } else {
+                        None
+                    }
                 }
             }
         }

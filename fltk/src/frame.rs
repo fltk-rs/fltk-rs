@@ -14,4 +14,5 @@ use std::{
 pub struct Frame {
     inner: *mut Fl_Box,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }

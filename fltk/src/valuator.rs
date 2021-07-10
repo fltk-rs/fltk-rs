@@ -14,6 +14,7 @@ use std::{
 pub struct Slider {
     inner: *mut Fl_Slider,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Slider implementation
@@ -44,6 +45,7 @@ impl Slider {
 pub struct NiceSlider {
     inner: *mut Fl_Nice_Slider,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Slider implementation
@@ -92,6 +94,7 @@ pub enum SliderType {
 pub struct Dial {
     inner: *mut Fl_Dial,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl Dial {
@@ -122,6 +125,7 @@ impl Dial {
 pub struct LineDial {
     inner: *mut Fl_Line_Dial,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl LineDial {
@@ -164,6 +168,7 @@ pub enum DialType {
 pub struct Counter {
     inner: *mut Fl_Counter,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines counter types
@@ -181,6 +186,7 @@ pub enum CounterType {
 pub struct Scrollbar {
     inner: *mut Fl_Scrollbar,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl Scrollbar {
@@ -228,6 +234,7 @@ pub enum ScrollbarType {
 pub struct Roller {
     inner: *mut Fl_Roller,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a value slider widget
@@ -235,6 +242,7 @@ pub struct Roller {
 pub struct ValueSlider {
     inner: *mut Fl_Value_Slider,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl ValueSlider {
@@ -300,6 +308,7 @@ impl ValueSlider {
 pub struct Adjuster {
     inner: *mut Fl_Adjuster,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates an value input widget, which takes a numeric value.
@@ -308,6 +317,7 @@ pub struct Adjuster {
 pub struct ValueInput {
     inner: *mut Fl_Value_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl ValueInput {
@@ -366,6 +376,7 @@ impl ValueInput {
 pub struct ValueOutput {
     inner: *mut Fl_Value_Output,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl ValueOutput {
@@ -411,6 +422,7 @@ impl ValueOutput {
 pub struct FillSlider {
     inner: *mut Fl_Fill_Slider,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a fill dial
@@ -418,6 +430,7 @@ pub struct FillSlider {
 pub struct FillDial {
     inner: *mut Fl_Fill_Dial,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl FillDial {
@@ -448,6 +461,7 @@ impl FillDial {
 pub struct HorSlider {
     inner: *mut Fl_Hor_Slider,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Slider implementation
@@ -478,6 +492,7 @@ impl HorSlider {
 pub struct HorFillSlider {
     inner: *mut Fl_Hor_Fill_Slider,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Slider implementation
@@ -508,6 +523,7 @@ impl HorFillSlider {
 pub struct HorNiceSlider {
     inner: *mut Fl_Hor_Nice_Slider,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Slider implementation
@@ -538,6 +554,7 @@ impl HorNiceSlider {
 pub struct HorValueSlider {
     inner: *mut Fl_Hor_Value_Slider,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl HorValueSlider {

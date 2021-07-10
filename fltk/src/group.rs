@@ -16,15 +16,16 @@ use std::{
 pub struct Group {
     inner: *mut Fl_Group,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl Group {
     /// Get the current group
-    pub fn current() -> Box<dyn GroupExt> {
+    pub fn current() -> Group {
         unsafe {
             let ptr = Fl_Group_current();
             assert!(!ptr.is_null());
-            Box::new(Group::from_widget_ptr(ptr as _))
+            Group::from_widget_ptr(ptr as _)
         }
     }
 }
@@ -34,6 +35,7 @@ impl Group {
 pub struct Pack {
     inner: *mut Fl_Pack,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines pack types
@@ -51,6 +53,7 @@ pub enum PackType {
 pub struct Scroll {
     inner: *mut Fl_Scroll,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines Scroll types
@@ -77,7 +80,7 @@ pub enum ScrollType {
 
 impl Scroll {
     /// Returns the vertical scrollbar
-    pub fn scrollbar(&self) -> impl ValuatorExt {
+    pub fn scrollbar(&self) -> crate::valuator::Scrollbar {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Scroll_scrollbar(self.inner);
@@ -87,7 +90,7 @@ impl Scroll {
     }
 
     /// Returns the horizontal scrollbar
-    pub fn hscrollbar(&self) -> impl ValuatorExt {
+    pub fn hscrollbar(&self) -> crate::valuator::Scrollbar {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Scroll_hscrollbar(self.inner);
@@ -132,6 +135,7 @@ impl Scroll {
 pub struct Tabs {
     inner: *mut Fl_Tabs,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl Tabs {
@@ -228,6 +232,7 @@ impl Tabs {
 pub struct Tile {
     inner: *mut Fl_Tile,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a wizard widget
@@ -235,6 +240,7 @@ pub struct Tile {
 pub struct Wizard {
     inner: *mut Fl_Wizard,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl Wizard {
@@ -251,12 +257,12 @@ impl Wizard {
     }
 
     /// Gets the underlying widget of the current view
-    pub fn current_widget(&mut self) -> Box<dyn WidgetExt> {
+    pub fn current_widget(&mut self) -> Widget {
         unsafe {
             assert!(!self.was_deleted());
-            Box::new(Widget::from_widget_ptr(
+            Widget::from_widget_ptr(
                 Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget
-            ))
+            )
         }
     }
 
@@ -277,6 +283,7 @@ impl Wizard {
 pub struct ColorChooser {
     inner: *mut Fl_Color_Chooser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl ColorChooser {

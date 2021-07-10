@@ -14,6 +14,7 @@ use std::{
 pub struct Input {
     inner: *mut Fl_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Sets the input widget's type
@@ -43,6 +44,7 @@ pub enum InputType {
 pub struct IntInput {
     inner: *mut Fl_Int_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates an input widget which takes only floats
@@ -50,6 +52,7 @@ pub struct IntInput {
 pub struct FloatInput {
     inner: *mut Fl_Float_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a multiline-input widget
@@ -57,6 +60,7 @@ pub struct FloatInput {
 pub struct MultilineInput {
     inner: *mut Fl_Multiline_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a File-input widget
@@ -64,6 +68,7 @@ pub struct MultilineInput {
 pub struct FileInput {
     inner: *mut Fl_File_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl FileInput {
@@ -85,4 +90,5 @@ impl FileInput {
 pub struct SecretInput {
     inner: *mut Fl_Secret_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }

@@ -185,4 +185,3 @@ pub fn windows() -> Option<Vec<impl WindowExt>> {
         None
     }
 }
-

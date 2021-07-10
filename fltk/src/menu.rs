@@ -16,6 +16,7 @@ use std::{
 pub struct MenuBar {
     inner: *mut Fl_Menu_Bar,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a menu button
@@ -23,6 +24,7 @@ pub struct MenuBar {
 pub struct MenuButton {
     inner: *mut Fl_Menu_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines the menu button types, which can be changed dynamically using the `set_type()`.
@@ -68,6 +70,7 @@ impl MenuButton {
 pub struct Choice {
     inner: *mut Fl_Choice,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a macOS system menu bar on macOS and a normal menu bar on other systems
@@ -75,6 +78,7 @@ pub struct Choice {
 pub struct SysMenuBar {
     inner: *mut Fl_Sys_Menu_Bar,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a menu item
@@ -395,9 +399,58 @@ impl MenuItem {
     /// Set the image of the menu item
     /// # Safety
     /// Trying to add a label after adding an image might lead to undefined behavior
-    pub unsafe fn set_image<I: ImageExt>(&mut self, image: I) {
+    #[doc(hidden)]
+    pub unsafe fn set_image<I: ImageExt>(&mut self, mut image: I) {
         assert!(!self.was_deleted());
+        assert!(!image.was_deleted());
+        image.increment_arc();
         Fl_Menu_Item_image(self.inner, image.as_image_ptr() as _)
+    }
+
+    /**
+        Add an image to a menu item
+        ```rust,no_run
+        use fltk::{prelude::*, *};
+        const PXM: &[&str] = &[
+            "13 11 3 1",
+            "   c None",
+            "x  c #d8d833",
+            "@  c #808011",
+            "             ",
+            "     @@@@    ",
+            "    @xxxx@   ",
+            "@@@@@xxxx@@  ",
+            "@xxxxxxxxx@  ",
+            "@xxxxxxxxx@  ",
+            "@xxxxxxxxx@  ",
+            "@xxxxxxxxx@  ",
+            "@xxxxxxxxx@  ",
+            "@xxxxxxxxx@  ",
+            "@@@@@@@@@@@  "
+        ];
+        let image = image::Pixmap::new(PXM).unwrap();
+        let mut menu = menu::MenuBar::default();
+        menu.add(
+            "&File/Open...\t",
+            enums::Shortcut::Ctrl | 'o',
+            menu::MenuFlag::Normal,
+            |_| println!("Opened file!"),
+        );
+        if let Some(mut item) = menu.find_item("&File/Open...\t") {
+            item.add_image(Some(image), true);
+        }
+        ```
+    */
+    pub fn add_image<I: ImageExt>(&mut self, image: Option<I>, on_left: bool) {
+        assert!(!self.was_deleted());
+        unsafe {
+            if let Some(image) = image {
+                assert!(!image.was_deleted());
+                Fl_Menu_Item_add_image(self.inner, image.as_image_ptr() as _, on_left as i32)
+            } else {
+                Fl_Menu_Item_add_image(self.inner, std::ptr::null_mut(), on_left as i32)
+            }
+        }
     }
 }
 

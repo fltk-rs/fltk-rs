@@ -15,6 +15,7 @@ use std::{
 pub struct Table {
     inner: *mut Fl_Table,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines the `TableContext`
@@ -44,6 +45,7 @@ pub enum TableContext {
 pub struct TableRow {
     inner: *mut Fl_Table_Row,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines the table row select mode

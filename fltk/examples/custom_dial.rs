@@ -40,6 +40,7 @@ impl MyDial {
                 0.,
                 360.,
             );
+            w.draw_children();
         });
         Self {
             main_wid,

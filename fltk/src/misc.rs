@@ -46,6 +46,7 @@ pub enum ClockType {
 pub struct Spinner {
     inner: *mut Fl_Spinner,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl Spinner {
@@ -159,6 +160,7 @@ impl Spinner {
 pub struct Clock {
     inner: *mut Fl_Clock,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates a chart widget
@@ -166,6 +168,7 @@ pub struct Clock {
 pub struct Chart {
     inner: *mut Fl_Chart,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl Chart {
@@ -276,6 +279,7 @@ impl Chart {
 pub struct Progress {
     inner: *mut Fl_Progress,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl Progress {
@@ -385,13 +389,13 @@ impl Tooltip {
     }
 
     /// Returns the current widget under the tooltip
-    pub fn current_widget() -> Box<dyn WidgetExt> {
+    pub fn current_widget() -> Widget {
         unsafe {
             let widget_ptr = Fl_Tooltip_current_widget();
             assert!(!widget_ptr.is_null());
-            Box::new(Widget::from_widget_ptr(
+            Widget::from_widget_ptr(
                 widget_ptr as *mut fltk_sys::widget::Fl_Widget,
-            ))
+            )
         }
     }
 
@@ -486,6 +490,7 @@ impl Tooltip {
 pub struct InputChoice {
     inner: *mut Fl_Input_Choice,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl InputChoice {
@@ -541,22 +546,22 @@ impl InputChoice {
     }
 
     /// Get the associated input widget
-    pub fn input(&self) -> Box<dyn InputExt> {
+    pub fn input(&self) -> crate::input::Input {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Input_Choice_input(self.inner);
             assert!(!ptr.is_null());
-            Box::new(crate::input::Input::from_widget_ptr(ptr as _))
+            crate::input::Input::from_widget_ptr(ptr as _)
         }
     }
 
     /// Get the associated menu button
-    pub fn menu_button(&self) -> Box<dyn MenuExt> {
+    pub fn menu_button(&self) -> crate::menu::MenuButton {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Input_Choice_menu_button(self.inner);
             assert!(!ptr.is_null());
-            Box::new(crate::menu::MenuButton::from_widget_ptr(ptr as _))
+            crate::menu::MenuButton::from_widget_ptr(ptr as _)
         }
     }
 
@@ -609,6 +614,7 @@ impl InputChoice {
 pub struct HelpView {
     inner: *mut Fl_Help_View,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 impl HelpView {

@@ -1,9 +1,7 @@
 use fltk_sys::fl;
-use std::{
-    sync::{
-        atomic::{AtomicBool, Ordering},
-        Mutex,
-    },
+use std::sync::{
+    atomic::{AtomicBool, Ordering},
+    Mutex,
 };
 
 lazy_static! {

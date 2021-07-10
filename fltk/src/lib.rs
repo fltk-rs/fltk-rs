@@ -15,6 +15,11 @@ The fltk crate is a crossplatform lightweight gui library which can be staticall
 Tutorials:
 - [Video](https://github.com/fltk-rs/fltk-rs#tutorials)
 - [Written](https://github.com/fltk-rs/fltk-rs/wiki)
+- [Discussions](https://github.com/fltk-rs/fltk-rs/discussions)
+- [Demos](https://github.com/fltk-rs/demos)
+- [7guis-fltk-rs](https://github.com/tdryer/7guis-fltk-rs)
+- [FLTK-RS-Examples](https://github.com/wyhinton/FLTK-RS-Examples)
+- Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference. 
 
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/fltk-rs/fltk-rs/issues/418).
 
@@ -27,18 +32,18 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^1"
+fltk = "^1.1"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1", git = "https://github.com/fltk-rs/fltk-rs" }
+fltk = { version = "^1.1", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 
 To use the bundled libs (available for x64 windows (msvc & gnu (msys2)), x64 linux & macos):
 ```toml
 [dependencies]
-fltk = { version = "^1", features = ["fltk-bundled"] }
+fltk = { version = "^1.1", features = ["fltk-bundled"] }
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -198,7 +203,7 @@ The following are the features offered by the crate:
 
 ## Dependencies
 
-Rust (version > 1.38), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag (which requires curl and tar to download and unpack the bundled libraries).
+Rust (version > 1.45), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms, this can be enabled using the fltk-bundled feature flag (which requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: No dependencies.
 - MacOS: No dependencies.

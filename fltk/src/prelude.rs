@@ -192,15 +192,23 @@ pub unsafe trait WidgetExt {
     fn set_image<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
+    /// Sets the image of the widget scaled to the widget's size
+    fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>)
+    where
+        Self: Sized;
     /// Gets the image associated with the widget
     fn image(&self) -> Option<Box<dyn ImageExt>>
     where
         Self: Sized;
-    /// Sets the image of the widget
+    /// Sets the deactived image of the widget
     fn set_deimage<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
-    /// Gets the image associated with the widget
+    /// Sets the deactivated image of the widget scaled to the widget's size
+    fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>)
+    where
+        Self: Sized;
+    /// Gets the deactivated image associated with the widget
     fn deimage(&self) -> Option<Box<dyn ImageExt>>
     where
         Self: Sized;
@@ -260,7 +268,7 @@ pub unsafe trait WidgetExt {
     /// Sets the alignment of the widget
     fn set_align(&mut self, align: Align);
     /// Returns the parent of the widget
-    fn parent(&self) -> Option<Box<dyn GroupExt>>;
+    fn parent(&self) -> Option<crate::group::Group>;
     /// Gets the selection color of the widget
     fn selection_color(&mut self) -> Color;
     /// Sets the selection color of the widget
@@ -304,7 +312,7 @@ pub unsafe trait WidgetExt {
     /// Return the widget as a window if it's a window
     fn as_window(&self) -> Option<Box<dyn WindowExt>>;
     /// Return the widget as a group widget if it's a group widget
-    fn as_group(&self) -> Option<Box<dyn GroupExt>>;
+    fn as_group(&self) -> Option<crate::group::Group>;
     /// INTERNAL: Retakes ownership of the user callback data
     /// # Safety
     /// Can return multiple mutable references to the `user_data`
@@ -328,6 +336,24 @@ pub unsafe trait WidgetExt {
     fn active(&self) -> bool;
     /// Returns whether a widget or any of its parents are active (recursively)
     fn active_r(&self) -> bool;
+    /**
+        Return the default callback function, this allows storing then running within the overriden callback
+        ```rust
+            use fltk::{prelude::*, *};
+            let scroll = group::Scroll::default();
+            let mut scrollbar = scroll.scrollbar();
+            scrollbar.set_callback({
+            let mut cb = scrollbar.callback();
+                move |_| {
+                    println!("print something, and also run the default callback");
+                    if let Some(cb) = cb.as_mut() {
+                        (*cb)();
+                    }
+                }
+            });
+        ```
+    */
+    fn callback(&self) -> Option<Box<dyn FnMut()>>;
 }
 
 /// Defines the extended methods implemented by all widgets
@@ -415,6 +441,7 @@ pub unsafe trait GroupExt: WidgetExt {
     fn end(&self);
     /// Clear a group from all widgets
     fn clear(&mut self);
+    #[doc(hidden)]
     /// Clear a group from all widgets using FLTK's clear call.
     /// # Safety
     /// Ignores widget tracking
@@ -422,7 +449,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Return the number of children in a group
     fn children(&self) -> i32;
     /// Return child widget by index
-    fn child(&self, idx: i32) -> Option<Box<dyn WidgetExt>>;
+    fn child(&self, idx: i32) -> Option<crate::widget::Widget>;
     /// Find a widget within a group and return its index
     fn find<W: WidgetExt>(&self, widget: &W) -> i32
     where
@@ -661,7 +688,7 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) where
+    ) -> i32 where
         Self: Sized;
     /// Inserts a menu item at an index along with its callback.
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
@@ -674,7 +701,7 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) where
+    ) -> i32 where
         Self: Sized;
     /// Add a menu item along with an emit (sender and message).
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
@@ -686,7 +713,7 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    ) where
+    ) -> i32 where
         Self: Sized;
     /// Inserts a menu item along with an emit (sender and message).
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
@@ -699,7 +726,7 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    ) where
+    ) -> i32 where
         Self: Sized;
     /// Remove a menu item by index
     fn remove(&mut self, idx: i32);
@@ -1017,9 +1044,9 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Sorts the items of the browser
     fn sort(&mut self);
     /// Returns the vertical scrollbar
-    fn scrollbar(&self) -> Box<dyn ValuatorExt>;
+    fn scrollbar(&self) -> crate::valuator::Scrollbar;
     /// Returns the horizontal scrollbar
-    fn hscrollbar(&self) -> Box<dyn ValuatorExt>;
+    fn hscrollbar(&self) -> crate::valuator::Scrollbar;
     /// Returns the selected line, returns 0 if no line is selected
     fn value(&self) -> i32;
 }
@@ -1158,6 +1185,10 @@ pub unsafe trait TableExt: GroupExt {
     fn callback_row(&self) -> i32;
     /// Get the callback context, should be called from within a callback
     fn callback_context(&self) -> crate::table::TableContext;
+    /// Returns the table's vertical scrollbar
+    fn scrollbar(&self) -> crate::valuator::Scrollbar;
+    /// Returns the table's horizontal scrollbar
+    fn hscrollbar(&self) -> crate::valuator::Scrollbar;
 }
 
 /// Defines the methods implemented by all image types

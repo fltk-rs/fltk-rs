@@ -12,4 +12,5 @@ use std::os::raw;
 pub struct Widget {
     inner: *mut Fl_Widget,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }

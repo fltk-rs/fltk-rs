@@ -562,6 +562,7 @@ pub enum DragType {
 pub struct TextDisplay {
     inner: *mut Fl_Text_Display,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates an editable text display widget
@@ -569,6 +570,7 @@ pub struct TextDisplay {
 pub struct TextEditor {
     inner: *mut Fl_Text_Editor,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Creates an editable text display widget to handle terminal-like behavior, such as
@@ -582,6 +584,7 @@ pub struct TextEditor {
 pub struct SimpleTerminal {
     inner: *mut Fl_Simple_Terminal,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
 }
 
 /// Defines the styles used in the `set_highlight_data`, which is used with style buffers

@@ -85,7 +85,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
         }
 
         unsafe impl MenuExt for #name {
-            fn add<F: FnMut(&mut Self) + 'static>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
+            fn add<F: FnMut(&mut Self) + 'static>(&mut self, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) -> i32 {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(name);
                 unsafe {
@@ -98,11 +98,11 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #add(self.inner, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
+                    #add(self.inner, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32)
                 }
             }
 
-            fn insert<F: FnMut(&mut Self) + 'static>(&mut self, idx: i32, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) {
+            fn insert<F: FnMut(&mut Self) + 'static>(&mut self, idx: i32, name: &str, shortcut: Shortcut, flag: MenuFlag, mut cb: F) -> i32 {
                 assert!(!self.was_deleted());
                 let temp = CString::safe_new(name);
                 unsafe {
@@ -115,7 +115,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #insert(self.inner, idx as i32, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32);
+                    #insert(self.inner, idx as i32, temp.as_ptr(), shortcut.bits() as i32, callback, data, flag as i32)
                 }
             }
 
@@ -126,7 +126,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 flag: crate::menu::MenuFlag,
                 sender: crate::app::Sender<T>,
                 msg: T,
-            ) {
+            ) -> i32 {
                 self.add(label, shortcut, flag, move|_| sender.send(msg.clone()))
             }
 
@@ -138,7 +138,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 flag: crate::menu::MenuFlag,
                 sender: crate::app::Sender<T>,
                 msg: T,
-            ) {
+            ) -> i32 {
                 self.insert(idx, label, shortcut, flag, move|_| sender.send(msg.clone()))
             }
 
