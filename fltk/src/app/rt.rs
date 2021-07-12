@@ -347,13 +347,13 @@ pub fn add_timeout2(tm: f64, cb: fn()) {
     use fltk::{prelude::*, *};
     fn callback() {
         println!("TICK");
-        app::repeat_timeout(1.0, callback);
+        app::repeat_timeout2(1.0, callback);
     }
     fn main() {
         let app = app::App::default();
         let mut wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
-        app::add_timeout(1.0, callback);
+        app::add_timeout2(1.0, callback);
         app.run().unwrap();
     }
     ```
