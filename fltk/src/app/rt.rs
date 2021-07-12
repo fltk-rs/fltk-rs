@@ -3,7 +3,7 @@ use crate::app::{
 };
 use crate::prelude::*;
 use fltk_sys::fl;
-use std::{os::raw, panic, sync::atomic::Ordering, thread, time};
+use std::{mem, os::raw, panic, sync::atomic::Ordering, thread, time};
 
 /// Runs the event loop
 /// # Errors
@@ -188,6 +188,34 @@ pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
     }
 }
 
+/// Add an idle callback to run within the event loop.
+/// Calls to `WidgetExt::redraw` within the callback require an explicit sleep
+pub fn add_idle2(cb: fn()) {
+    unsafe {
+        let data: *mut raw::c_void = std::ptr::null_mut();
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(mem::transmute(cb));
+        fl::Fl_add_idle(callback, data);
+    }
+}
+
+/// Remove an idle function
+pub fn remove_idle2(cb: fn()) {
+    unsafe {
+        let data: *mut raw::c_void = std::ptr::null_mut();
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(mem::transmute(cb));
+        fl::Fl_remove_idle(callback, data);
+    }
+}
+
+/// Checks whether an idle function is installed
+pub fn has_idle2(cb: fn()) -> bool {
+    unsafe {
+        let data: *mut raw::c_void = std::ptr::null_mut();
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(mem::transmute(cb));
+        fl::Fl_has_idle(callback, data) != 0
+    }
+}
+
 /**
     Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
     Example:
@@ -305,7 +333,7 @@ pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
 pub fn add_timeout2(tm: f64, cb: fn()) {
     unsafe {
         let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(std::mem::transmute(cb));
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(mem::transmute(cb));
         fltk_sys::fl::Fl_add_timeout(tm, callback, data);
     }
 }
@@ -333,7 +361,7 @@ pub fn add_timeout2(tm: f64, cb: fn()) {
 pub fn repeat_timeout2(tm: f64, cb: fn()) {
     unsafe {
         let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(std::mem::transmute(cb));
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(mem::transmute(cb));
         fltk_sys::fl::Fl_repeat_timeout(tm, callback, data);
     }
 }
@@ -342,7 +370,7 @@ pub fn repeat_timeout2(tm: f64, cb: fn()) {
 pub fn remove_timeout2(cb: fn()) {
     unsafe {
         let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(std::mem::transmute(cb));
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(mem::transmute(cb));
         fltk_sys::fl::Fl_remove_timeout(callback, data);
     }
 }
@@ -351,7 +379,7 @@ pub fn remove_timeout2(cb: fn()) {
 pub fn has_timeout2(cb: fn()) -> bool {
     unsafe {
         let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(std::mem::transmute(cb));
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(mem::transmute(cb));
         fltk_sys::fl::Fl_has_timeout(callback, data) != 0
     }
 }
