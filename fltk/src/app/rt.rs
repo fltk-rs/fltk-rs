@@ -306,7 +306,7 @@ pub fn add_timeout2(tm: f64, cb: fn()) {
     unsafe {
         let data: *mut raw::c_void = std::ptr::null_mut();
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(std::mem::transmute(cb));
-        fltk_sys::fl::Fl_add_timeout2(tm, callback, data);
+        fltk_sys::fl::Fl_add_timeout(tm, callback, data);
     }
 }
 
