@@ -283,3 +283,75 @@ pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
         fltk_sys::fl::Fl_has_timeout(callback, data) != 0
     }
 }
+
+/**
+    Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
+    Example:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    fn callback() {
+        println!("TICK");
+        app::repeat_timeout2(1.0, callback);
+    }
+    fn main() {
+        let app = app::App::default();
+        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        wind.show();
+        app::add_timeout2(1.0, callback);
+        app.run().unwrap();
+    }
+    ```
+*/
+pub fn add_timeout2(tm: f64, cb: fn()) {
+    unsafe {
+        let data: *mut raw::c_void = std::ptr::null_mut();
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(std::mem::transmute(cb));
+        fltk_sys::fl::Fl_add_timeout2(tm, callback, data);
+    }
+}
+
+/**
+    Repeats a timeout callback from the expiration of the previous timeout.
+    You may only call this method inside a timeout callback.
+    The timeout duration `tm` is indicated in seconds
+    Example:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    fn callback() {
+        println!("TICK");
+        app::repeat_timeout(1.0, callback);
+    }
+    fn main() {
+        let app = app::App::default();
+        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        wind.show();
+        app::add_timeout(1.0, callback);
+        app.run().unwrap();
+    }
+    ```
+*/
+pub fn repeat_timeout2(tm: f64, cb: fn()) {
+    unsafe {
+        let data: *mut raw::c_void = std::ptr::null_mut();
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(std::mem::transmute(cb));
+        fltk_sys::fl::Fl_repeat_timeout(tm, callback, data);
+    }
+}
+
+/// Removes a timeout callback
+pub fn remove_timeout2(cb: fn()) {
+    unsafe {
+        let data: *mut raw::c_void = std::ptr::null_mut();
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(std::mem::transmute(cb));
+        fltk_sys::fl::Fl_remove_timeout(callback, data);
+    }
+}
+
+/// Check whether a timeout is installed
+pub fn has_timeout2(cb: fn()) -> bool {
+    unsafe {
+        let data: *mut raw::c_void = std::ptr::null_mut();
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(std::mem::transmute(cb));
+        fltk_sys::fl::Fl_has_timeout(callback, data) != 0
+    }
+}
