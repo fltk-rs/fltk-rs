@@ -71,9 +71,14 @@ pub fn event_mouse_button() -> MouseButton {
     unsafe { mem::transmute(fl::Fl_event_button()) }
 }
 
-/// Returns the number of clicks
+/// Returns false for a single click and true for more
 pub fn event_clicks() -> bool {
     unsafe { fl::Fl_event_clicks() != 0 }
+}
+
+/// Returns the number of clicks
+pub fn event_clicks_num() -> i32 {
+    unsafe { fl::Fl_event_clicks() }
 }
 
 /// Gets the x coordinate of the mouse in the window
