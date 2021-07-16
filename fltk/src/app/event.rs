@@ -76,7 +76,7 @@ pub fn event_clicks() -> bool {
     unsafe { fl::Fl_event_clicks() != 0 }
 }
 
-/// Returns the number of clicks
+/// Returns the number of clicks - 1
 pub fn event_clicks_num() -> i32 {
     unsafe { fl::Fl_event_clicks() }
 }
