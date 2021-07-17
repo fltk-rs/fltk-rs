@@ -4,6 +4,9 @@
 ## [1.1.1] - Unreleased
 - Add overloads for `app::*_idle` and `app::*_timeout` which accept simple function pointers.
 - Fix app::event_clicks() and add overload for event_clicks_num() for number of clicks.
+- Add a Flex widget (which supports Flexbox layouts).
+- Support `::end` calls for Column and Row widgets.
+- Support `::end` calls for VGrid and HGrid widgets.
 
 ## [1.1.0] - 2021-07-10
 - Largely simplify getting concrete types, ex. Scroll::scrollbar() now returns a concrete Scrollbar instead of a `Box<dyn ValuatorExt>`, and parent() returns an `Option<Group>` instead of an `Option<Box<dyn GroupExt>>`.
