@@ -572,8 +572,8 @@ pub struct Column {
 impl Column {
     /// Create a new column
     pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> Column {
-        let mut p = Pack::new(x, y, w, h, label);
-        Row { p }
+        let p = Pack::new(x, y, w, h, label);
+        Column { p }
     }
 
     /// Default init a column filling the parent
