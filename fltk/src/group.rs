@@ -565,6 +565,7 @@ impl DerefMut for HGrid {
 }
 
 /// A wrapper around a vertical pack, with `auto_layout`ing using the add method
+#[derive(Debug, Clone)]
 pub struct Column {
     p: Pack,
 }
@@ -610,6 +611,7 @@ impl DerefMut for Column {
 }
 
 /// A wrapper around a Horizontal pack, with `auto_layout`ing using the add method
+#[derive(Debug, Clone)]
 pub struct Row {
     p: Pack,
 }
@@ -678,6 +680,7 @@ pub enum FlexType {
     col.end();
     ```
 */
+#[derive(Debug, Clone)]
 pub struct Flex {
     grp: Group,
     dir: FlexType,
