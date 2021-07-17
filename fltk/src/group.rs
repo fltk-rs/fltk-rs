@@ -673,6 +673,7 @@ pub struct Flex {
     setsized: Vec<Widget>,
 }
 
+// Code translated from https://github.com/osen/FL_Flex
 impl Flex {
     /// Create a new Flex widget
     pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> Flex {
