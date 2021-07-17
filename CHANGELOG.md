@@ -5,7 +5,7 @@
 - Add overloads for `app::*_idle` and `app::*_timeout` which accept simple function pointers.
 - Fix app::event_clicks() and add overload for event_clicks_num() for number of clicks.
 - Add a Flex widget (which supports Flexbox layouts).
-- Support `::end` calls for Column and Row widgets.
+- Support `::new` and `::end` calls for Column and Row widgets.
 - Support `::end` calls for VGrid and HGrid widgets.
 
 ## [1.1.0] - 2021-07-10

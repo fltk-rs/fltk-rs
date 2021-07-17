@@ -400,8 +400,7 @@ impl VGrid {
 
     /// Adds widgets to the grid
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        self.current += 1;
-        debug_assert!(self.current <= self.rows * self.cols);
+        debug_assert!(self.current + 1 <= self.rows * self.cols);
         let rem = (self.current - 1) / self.cols;
         if rem < self.rows {
             let hpack = self.vpack.child(rem as i32).unwrap();
@@ -410,6 +409,7 @@ impl VGrid {
             hpack.add(w);
             hpack.auto_layout();
             self.vpack.auto_layout();
+            self.current += 1;
         }
     }
 
@@ -510,8 +510,7 @@ impl HGrid {
 
     /// Adds widgets to the grid
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        self.current += 1;
-        debug_assert!(self.current <= self.rows * self.cols);
+        debug_assert!(self.current + 1 <= self.rows * self.cols);
         let rem = (self.current - 1) / self.rows;
         if rem < self.cols {
             let vpack = self.hpack.child(rem as i32).unwrap();
@@ -520,6 +519,7 @@ impl HGrid {
             vpack.add(w);
             vpack.auto_layout();
             self.hpack.auto_layout();
+            self.current += 1;
         }
     }
 
@@ -570,6 +570,12 @@ pub struct Column {
 }
 
 impl Column {
+    /// Create a new column
+    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> Column {
+        let mut p = Pack::new(x, y, w, h, label);
+        Row { p }
+    }
+
     /// Default init a column filling the parent
     pub fn default() -> Self {
         let mut p = Pack::default().size_of_parent().center_of_parent();
@@ -609,6 +615,13 @@ pub struct Row {
 }
 
 impl Row {
+    /// Create a new row
+    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> Row {
+        let mut p = Pack::new(x, y, w, h, label);
+        p.set_type(PackType::Horizontal);
+        Row { p }
+    }
+
     /// Default init a row filling the parent
     pub fn default() -> Self {
         let mut p = Pack::default().size_of_parent().center_of_parent();
@@ -709,13 +722,11 @@ impl Flex {
     /// Set the size of the widget
     pub fn set_size<W: WidgetExt>(&mut self, wid: &mut W, size: i32) {
         wid.resize(0, 0, size, size);
-
         for i in 0..self.setsized.len() {
             if unsafe { self.setsized[i].as_widget_ptr() == wid.as_widget_ptr() } {
                 return;
             }
         }
-
         self.setsized
             .push(unsafe { Widget::from_widget_ptr(wid.as_widget_ptr()) });
     }
@@ -736,24 +747,17 @@ impl Flex {
                 return true;
             }
         }
-
         return false;
     }
 
     fn resize_row(&mut self, x: i32, y: i32, w: i32, h: i32) {
         let cc = self.grp.children();
         let mut pad_w = w - self.margin * 2;
-
-        // Calculate total width minus padding
         for _i in 0..cc {
             pad_w -= 5;
         }
-
         let mut cx = x + self.margin;
         let mut nrs = 0;
-
-        // Precalculate remaining size to resize to
-        // Calculate non-resizable width total
         for i in 0..cc {
             let c = self.grp.child(i).unwrap();
 
@@ -761,8 +765,6 @@ impl Flex {
                 nrs += c.w();
             }
         }
-
-        // Set children to shared width of remaining
         for i in 0..cc {
             let mut c = self.grp.child(i).unwrap();
 
@@ -784,17 +786,11 @@ impl Flex {
     fn resize_col(&mut self, x: i32, y: i32, w: i32, h: i32) {
         let cc = self.grp.children();
         let mut pad_h = h - self.margin * 2;
-
-        // Calculate total height minus padding
         for _i in 0..cc {
             pad_h -= self.pad;
         }
-
         let mut cy = y + self.margin;
         let mut nrs = 0;
-
-        // Precalculate remaining size to resize to
-        // Calculate non-resizable height total
         for i in 0..cc {
             let c = self.grp.child(i).unwrap();
 
@@ -802,18 +798,11 @@ impl Flex {
                 nrs += c.h();
             }
         }
-
-        // Set children to shared width of remaining
         for i in 0..cc {
             let mut c = self.grp.child(i).unwrap();
-
             if self.is_set_size(&c) {
                 c.resize(x + self.margin, cy, w - self.margin * 2, c.h());
             } else {
-                // [cc - (int)setsized.size()] allows negative.
-                // This is very handy to allow resizable items to have negative height
-                // allowing one on the top and bottom to center contents even if container
-                // is too small.
                 c.resize(
                     x + self.margin,
                     cy,
