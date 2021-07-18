@@ -706,6 +706,11 @@ impl Flex {
         }
     }
 
+    /// Create a default initialized Flex widget
+    pub fn default() -> Self {
+        Self::new(0, 0, 0, 0, None)
+    }
+
     /// Set the direction
     pub fn set_type<T: WidgetType>(&mut self, typ: T) {
         self.dir = FlexType::from_i32(typ.to_i32());
@@ -788,6 +793,9 @@ impl Flex {
 
     fn resize_col(&mut self, x: i32, y: i32, w: i32, h: i32) {
         let cc = self.grp.children();
+        if cc - self.setsized.len() as i32 == 0 {
+            return;
+        }
         let mut pad_h = h - self.margin * 2;
         for _i in 0..cc {
             pad_h -= self.pad;
