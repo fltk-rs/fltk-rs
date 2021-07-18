@@ -215,8 +215,8 @@ The following are the features offered by the crate:
 
 Rust (version > 1.45), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms (win 10 x64, macos 10.15 x64, linux x64), this can be enabled using the `fltk-bundled` feature-flag (which requires curl and tar to download and unpack the bundled libraries).
 
-- Windows: No dependencies.
-- MacOS: No dependencies.
+- Windows: No external dependencies.
+- MacOS: No external dependencies.
 - Linux/BSD: X11 and OpenGL development headers need to be installed for development. The libraries themselves are available on linux distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:
@@ -394,6 +394,7 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
     - HGrid
     - Column (vertical pack supporting auto layout)
     - Row (horizontal pack supporting auto layout)
+    - Flex (Supports flexbox layouts)
 - Text display widgets
     - TextDisplay
     - TextEditor

@@ -260,9 +260,7 @@ impl Wizard {
     pub fn current_widget(&mut self) -> Widget {
         unsafe {
             assert!(!self.was_deleted());
-            Widget::from_widget_ptr(
-                Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget
-            )
+            Widget::from_widget_ptr(Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget)
         }
     }
 
@@ -349,19 +347,19 @@ impl Pack {
 /**
     Defines a Vertical Grid (custom widget).
     Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
-    Requires explicit calls to add, which is overloaded especially for the layout.
     ```rust,no_run
     use fltk::{prelude::*, *};
     let mut grid = group::VGrid::new(0, 0, 400, 300, "");
     grid.set_params(3, 3, 5);
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    grid.end();
     ```
 */
 #[derive(Debug, Clone)]
@@ -376,7 +374,6 @@ impl VGrid {
     /// Creates a new vertical grid
     pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> VGrid {
         let vpack = Pack::new(x, y, w, h, label);
-        vpack.end();
         VGrid {
             vpack,
             rows: 1,
@@ -403,7 +400,8 @@ impl VGrid {
 
     /// Adds widgets to the grid
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        let rem = self.current / self.cols;
+        debug_assert!(self.current + 1 <= self.rows * self.cols);
+        let rem = (self.current - 1) / self.cols;
         if rem < self.rows {
             let hpack = self.vpack.child(rem as i32).unwrap();
             let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
@@ -413,6 +411,32 @@ impl VGrid {
             self.vpack.auto_layout();
             self.current += 1;
         }
+    }
+
+    /// End the grid
+    pub fn end(&mut self) {
+        use std::collections::VecDeque;
+        let children = self.vpack.children();
+        self.current = children - self.rows;
+        debug_assert!(self.current <= self.rows * self.cols);
+        let mut v = VecDeque::new();
+        for i in self.rows..children {
+            let c = self.vpack.child(i).unwrap();
+            v.push_back(c);
+        }
+        for i in 0..self.rows {
+            let hpack = self.vpack.child(i as i32).unwrap();
+            let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
+            hpack.end();
+            for _j in 0..self.cols {
+                if let Some(w) = v.pop_front() {
+                    self.vpack.remove(&w);
+                    hpack.add(&w);
+                }
+                hpack.auto_layout();
+            }
+        }
+        self.vpack.auto_layout();
     }
 }
 
@@ -433,19 +457,19 @@ impl DerefMut for VGrid {
 /**
     Defines a Horizontal Grid (custom widget).
     Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
-    Requires explicit calls to add, which is overloaded especially for the layout.
     ```rust,no_run
     use fltk::{prelude::*, *};
     let mut grid = group::HGrid::new(0, 0, 400, 300, "");
     grid.set_params(3, 3, 5);
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
-    grid.add(&button::Button::default());
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    button::Button::default();
+    grid.end();
     ```
 */
 #[derive(Debug, Clone)]
@@ -461,7 +485,6 @@ impl HGrid {
     pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> HGrid {
         let mut hpack = Pack::new(x, y, w, h, label);
         hpack.set_type(PackType::Horizontal);
-        hpack.end();
         HGrid {
             hpack,
             rows: 1,
@@ -487,7 +510,8 @@ impl HGrid {
 
     /// Adds widgets to the grid
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        let rem = self.current / self.rows;
+        debug_assert!(self.current + 1 <= self.rows * self.cols);
+        let rem = (self.current - 1) / self.rows;
         if rem < self.cols {
             let vpack = self.hpack.child(rem as i32).unwrap();
             let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
@@ -497,6 +521,32 @@ impl HGrid {
             self.hpack.auto_layout();
             self.current += 1;
         }
+    }
+
+    /// End the grid
+    pub fn end(&mut self) {
+        use std::collections::VecDeque;
+        let children = self.hpack.children();
+        self.current = children - self.cols;
+        debug_assert!(self.current <= self.rows * self.cols);
+        let mut v = VecDeque::new();
+        for i in self.cols..children {
+            let c = self.hpack.child(i).unwrap();
+            v.push_back(c);
+        }
+        for i in 0..self.cols {
+            let vpack = self.hpack.child(i as i32).unwrap();
+            let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
+            vpack.end();
+            for _j in 0..self.rows {
+                if let Some(w) = v.pop_front() {
+                    self.hpack.remove(&w);
+                    vpack.add(&w);
+                }
+                vpack.auto_layout();
+            }
+        }
+        self.hpack.auto_layout();
     }
 }
 
@@ -515,21 +565,33 @@ impl DerefMut for HGrid {
 }
 
 /// A wrapper around a vertical pack, with `auto_layout`ing using the add method
+#[derive(Debug, Clone)]
 pub struct Column {
     p: Pack,
 }
 
 impl Column {
+    /// Create a new column
+    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> Column {
+        let p = Pack::new(x, y, w, h, label);
+        Column { p }
+    }
+
     /// Default init a column filling the parent
     pub fn default() -> Self {
         let mut p = Pack::default().size_of_parent().center_of_parent();
         p.set_type(PackType::Vertical);
-        p.end();
         Column { p }
     }
+
     /// Add a widget to the column with automatic layouting
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
         self.p.add(w);
+        self.p.auto_layout();
+    }
+
+    /// End the column
+    pub fn end(&mut self) {
         self.p.auto_layout();
     }
 }
@@ -549,21 +611,34 @@ impl DerefMut for Column {
 }
 
 /// A wrapper around a Horizontal pack, with `auto_layout`ing using the add method
+#[derive(Debug, Clone)]
 pub struct Row {
     p: Pack,
 }
 
 impl Row {
+    /// Create a new row
+    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> Row {
+        let mut p = Pack::new(x, y, w, h, label);
+        p.set_type(PackType::Horizontal);
+        Row { p }
+    }
+
     /// Default init a row filling the parent
     pub fn default() -> Self {
         let mut p = Pack::default().size_of_parent().center_of_parent();
         p.set_type(PackType::Horizontal);
-        p.end();
         Row { p }
     }
+
     /// Add a widget to the row with automatic layouting
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
         self.p.add(w);
+        self.p.auto_layout();
+    }
+
+    /// End the row
+    pub fn end(&mut self) {
         self.p.auto_layout();
     }
 }
@@ -579,5 +654,181 @@ impl Deref for Row {
 impl DerefMut for Row {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.p
+    }
+}
+
+/// Defines Flex types
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum FlexType {
+    /// row direction
+    Row = 0,
+    /// column direction
+    Column,
+}
+
+/** 
+    a Flexbox widget
+    # Example
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    let mut col = group::Flex::new(0, 0, 400, 300, None);
+    col.set_type(group::FlexType::Column);
+    let expanding = button::Button::default().with_label("Expanding");
+    let mut normal = button::Button::default().with_label("Normal");
+    col.set_size(&mut normal, 30);
+    col.end();
+    ```
+*/
+#[derive(Debug, Clone)]
+pub struct Flex {
+    grp: Group,
+    dir: FlexType,
+    margin: i32,
+    pad: i32,
+    setsized: Vec<Widget>,
+}
+
+// Code translated from https://github.com/osen/FL_Flex
+impl Flex {
+    /// Create a new Flex widget
+    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> Flex {
+        let dir = FlexType::Row;
+        let margin = 0;
+        let pad = 5;
+        let grp = Group::new(x, y, w, h, label);
+        Self {
+            grp,
+            dir,
+            margin,
+            pad,
+            setsized: Vec::new(),
+        }
+    }
+
+    /// Set the direction
+    pub fn set_type<T: WidgetType>(&mut self, typ: T) {
+        self.dir = FlexType::from_i32(typ.to_i32());
+    }
+
+    /// Get the direction
+    pub fn get_type<T: WidgetType>(&self) -> T {
+        T::from_i32(self.dir.to_i32())
+    }
+
+    /// End the Flex widget
+    pub fn end(&mut self) {
+        self.grp.end();
+        self.resize(self.grp.x(), self.grp.y(), self.grp.w(), self.grp.h());
+    }
+
+    /// Set the size of the widget
+    pub fn set_size<W: WidgetExt>(&mut self, wid: &mut W, size: i32) {
+        wid.resize(0, 0, size, size);
+        for i in 0..self.setsized.len() {
+            if unsafe { self.setsized[i].as_widget_ptr() == wid.as_widget_ptr() } {
+                return;
+            }
+        }
+        self.setsized
+            .push(unsafe { Widget::from_widget_ptr(wid.as_widget_ptr()) });
+    }
+
+    /// Resize the Flex widget
+    pub fn resize(&mut self, x: i32, y: i32, w: i32, h: i32) {
+        self.grp.resize(x, y, w, h);
+        if self.dir == FlexType::Column {
+            self.resize_col(x, y, w, h);
+        } else {
+            self.resize_row(x, y, w, h);
+        }
+    }
+
+    fn is_set_size<W: WidgetExt>(&self, wid: &W) -> bool {
+        for i in 0..self.setsized.len() {
+            if unsafe { wid.as_widget_ptr() == self.setsized[i].as_widget_ptr() } {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    fn resize_row(&mut self, x: i32, y: i32, w: i32, h: i32) {
+        let cc = self.grp.children();
+        let mut pad_w = w - self.margin * 2;
+        for _i in 0..cc {
+            pad_w -= 5;
+        }
+        let mut cx = x + self.margin;
+        let mut nrs = 0;
+        for i in 0..cc {
+            let c = self.grp.child(i).unwrap();
+
+            if self.is_set_size(&c) {
+                nrs += c.w();
+            }
+        }
+        for i in 0..cc {
+            let mut c = self.grp.child(i).unwrap();
+
+            if self.is_set_size(&c) {
+                c.resize(cx, y + self.margin, c.w(), h - self.margin * 2);
+            } else {
+                c.resize(
+                    cx,
+                    y + self.margin,
+                    (pad_w - nrs) / (cc - self.setsized.len() as i32),
+                    h - self.margin * 2,
+                );
+            }
+
+            cx += c.w() + self.pad;
+        }
+    }
+
+    fn resize_col(&mut self, x: i32, y: i32, w: i32, h: i32) {
+        let cc = self.grp.children();
+        let mut pad_h = h - self.margin * 2;
+        for _i in 0..cc {
+            pad_h -= self.pad;
+        }
+        let mut cy = y + self.margin;
+        let mut nrs = 0;
+        for i in 0..cc {
+            let c = self.grp.child(i).unwrap();
+
+            if self.is_set_size(&c) {
+                nrs += c.h();
+            }
+        }
+        for i in 0..cc {
+            let mut c = self.grp.child(i).unwrap();
+            if self.is_set_size(&c) {
+                c.resize(x + self.margin, cy, w - self.margin * 2, c.h());
+            } else {
+                c.resize(
+                    x + self.margin,
+                    cy,
+                    w - self.margin * 2,
+                    (pad_h - nrs) / (cc - self.setsized.len() as i32),
+                );
+            }
+
+            cy += c.h() + self.pad;
+        }
+    }
+}
+
+impl Deref for Flex {
+    type Target = Group;
+
+    fn deref(&self) -> &Self::Target {
+        &self.grp
+    }
+}
+
+impl DerefMut for Flex {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.grp
     }
 }
