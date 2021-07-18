@@ -1,4 +1,10 @@
 use std::ffi::CString;
+use std::os::raw;
+use fltk_sys::utils::*;
+
+use crate::prelude::FltkError;
+use crate::prelude::FltkErrorKind;
+// use crate::prelude::{FltkError, FltkErrorKind};
 
 pub(crate) trait FlString {
     fn safe_new(s: &str) -> CString;
@@ -72,4 +78,24 @@ pub fn hex2rgba(val: u32) -> (u8, u8, u8, u8) {
     let b = ((val >> 8) & 0xff) as u8;
     let a = (val & 0xff) as u8;
     (r, g, b, a)
+}
+
+/// Expand a filename
+pub fn filename_expand(path: &str) -> Result<String, FltkError> {
+    assert!(path.len() <= 2048);
+    let mut out: Vec<u8> = vec![0u8; 2048];
+    let path = CString::safe_new(path);
+    unsafe {
+        let ret = Fl_filename_expand(out.as_mut_ptr() as *mut raw::c_char, 2048, path.as_ptr() as _);
+        if ret == 0 {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+        } else {
+            let val = out.iter().position(|&x| x == 0).unwrap();
+            let out = out.split_at(val);
+            match String::from_utf8(out.0.to_vec()) {
+                Ok(s) => Ok(s),
+                Err(err) => Err(FltkError::Utf8Error(err)),
+            }
+        }
+    }
 }

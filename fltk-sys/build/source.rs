@@ -23,6 +23,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/include/cfl_table.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_surface.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_printer.h");
+    println!("cargo:rerun-if-changed=cfltk/include/cfl_utils.h");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_lock.hpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_lock.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_new.cpp");
@@ -47,6 +48,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/src/cfl_surface.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_printer.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_font.cpp");
+    println!("cargo:rerun-if-changed=cfltk/src/cfl_utils.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_nswindow.m");
 
     Command::new("git")
