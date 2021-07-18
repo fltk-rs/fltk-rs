@@ -667,7 +667,7 @@ pub enum FlexType {
     Column,
 }
 
-/** 
+/**
     a Flexbox widget
     # Example
     ```rust,no_run
@@ -741,7 +741,9 @@ impl Flex {
 
     /// Resize the Flex widget
     pub fn resize(&mut self, x: i32, y: i32, w: i32, h: i32) {
-        self.grp.resize(x, y, w, h);
+        unsafe {
+            fltk_sys::widget::Fl_Widget_widget_resize(self.grp.as_widget_ptr() as _, x, y, w, h)
+        };
         if self.dir == FlexType::Column {
             self.resize_col(x, y, w, h);
         } else {
