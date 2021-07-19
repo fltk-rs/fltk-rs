@@ -481,6 +481,11 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe { #resize(self.inner, x, y, width, height) }
             }
 
+            fn widget_resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
+                assert!(!self.was_deleted());
+                unsafe { #widget_resize(self.inner, x, y, width, height) }
+            }
+
             fn tooltip(&self) -> Option<String> {
                 assert!(!self.was_deleted());
                 unsafe {

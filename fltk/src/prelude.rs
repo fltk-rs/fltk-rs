@@ -8,6 +8,7 @@ use std::{fmt, io};
 
 /// Error types returned by fltk-rs + wrappers of std errors
 #[derive(Debug)]
+#[non_exhaustive]
 pub enum FltkError {
     /// i/o error
     IoError(io::Error),
@@ -364,6 +365,8 @@ pub unsafe trait WidgetExt {
         ```
     */
     fn callback(&self) -> Option<Box<dyn FnMut()>>;
+    /// Does a simple resize ignoring class-specific resize functionality
+    fn widget_resize(&mut self, x: i32, y: i32, w: i32, h: i32);
 }
 
 /// Defines the extended methods implemented by all widgets
