@@ -1,10 +1,11 @@
 # Changelog
 
 
-## [1.1.1] - 2021-07-18
-- Add overloads for `app::*_idle` and `app::*_timeout` which accept simple function pointers.
+## [1.1.2] - 2021-07-19
 - Fix app::event_clicks() and add overload for event_clicks_num() for number of clicks.
-- Add a Flex widget (which supports Flexbox layouts).
+- Add widget_resize() for simple resizing without class-specific resize functionality.
+- Add overloads for `app::*_idle` and `app::*_timeout` which accept simple function pointers.
+- Add utils::filename_expand().
 - Support `::new` and `::end` calls for Column and Row widgets.
 - Support `::end` calls for VGrid and HGrid widgets.
 - Update libc and FLTK.

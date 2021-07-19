@@ -8,7 +8,7 @@ fn main() {
 
     wind.end();
     wind.show();
-
+    
     but.set_callback(move |_| frame.set_label("Hello world"));
 
     app.run().unwrap();

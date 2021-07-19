@@ -3,13 +3,17 @@ use crate::enums::{
     Shortcut,
 };
 use std::convert::From;
+use std::string::FromUtf8Error;
 use std::{fmt, io};
 
 /// Error types returned by fltk-rs + wrappers of std errors
 #[derive(Debug)]
+#[non_exhaustive]
 pub enum FltkError {
     /// i/o error
     IoError(io::Error),
+    /// Ut8 conversion error
+    Utf8Error(FromUtf8Error),
     /// Null string conversion error
     NullError(std::ffi::NulError),
     /// Internal fltk error
@@ -61,6 +65,7 @@ impl fmt::Display for FltkError {
             FltkError::NullError(ref err) => err.fmt(f),
             FltkError::Internal(ref err) => write!(f, "An internal error occured {:?}", err),
             FltkError::EnvVarError(ref err) => write!(f, "An env var error occured {:?}", err),
+            FltkError::Utf8Error(ref err) => write!(f, "A UTF8 conversion error occured {:?}", err),
             FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {:?}", err),
         }
     }
@@ -81,6 +86,12 @@ impl From<std::ffi::NulError> for FltkError {
 impl From<std::env::VarError> for FltkError {
     fn from(err: std::env::VarError) -> FltkError {
         FltkError::EnvVarError(err)
+    }
+}
+
+impl From<std::string::FromUtf8Error> for FltkError {
+    fn from(err: std::string::FromUtf8Error) -> FltkError {
+        FltkError::Utf8Error(err)
     }
 }
 
@@ -354,6 +365,8 @@ pub unsafe trait WidgetExt {
         ```
     */
     fn callback(&self) -> Option<Box<dyn FnMut()>>;
+    /// Does a simple resize ignoring class-specific resize functionality
+    fn widget_resize(&mut self, x: i32, y: i32, w: i32, h: i32);
 }
 
 /// Defines the extended methods implemented by all widgets
