@@ -407,7 +407,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            unsafe fn set_menu(&mut self, item: Option<crate::menu::MenuItem>) {
+            fn set_menu(&mut self, item: Option<crate::menu::MenuItem>) {
                 assert!(!self.was_deleted());
                 unsafe {
                     let ptr = if let Some(item) = item { item.inner } else { std::ptr::null() };

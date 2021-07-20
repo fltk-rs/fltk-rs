@@ -1815,14 +1815,6 @@ extern "C" {
     pub fn Fl_Menu_Item_new(args: *mut *mut libc::c_char, sz: libc::c_int) -> *mut Fl_Menu_Item;
 }
 extern "C" {
-    pub fn Fl_Menu_Item_new_ext(
-        args: *mut *mut libc::c_char,
-        shortcuts: *mut libc::c_int,
-        flag: *mut libc::c_int,
-        sz: libc::c_int,
-    ) -> *mut Fl_Menu_Item;
-}
-extern "C" {
     pub fn Fl_Menu_Item_delete(self_: *mut Fl_Menu_Item);
 }
 extern "C" {
