@@ -797,6 +797,7 @@ pub unsafe trait MenuExt: WidgetExt {
     fn global(&mut self);
     /// Get the menu element
     fn menu(&self) -> Option<crate::menu::MenuItem>;
+    #[doc(hidden)]
     /// Set the menu element
     /// # Safety
     /// FLTK expects the menu to have static storage
