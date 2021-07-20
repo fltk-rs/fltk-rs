@@ -33,7 +33,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 self.inner == other.inner
             }
         }
-        
+
         impl Eq for #name {}
 
         impl Clone for #name {

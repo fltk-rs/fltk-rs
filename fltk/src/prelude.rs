@@ -199,6 +199,10 @@ pub unsafe trait WidgetExt {
     fn set_type<T: WidgetType>(&mut self, typ: T)
     where
         Self: Sized;
+    /// Set the type of the widget at construction
+    fn with_type<T: WidgetType>(self, typ: T) -> Self
+    where
+        Self: Sized;
     /// Sets the image of the widget
     fn set_image<I: ImageExt>(&mut self, image: Option<I>)
     where
@@ -701,7 +705,8 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) -> i32 where
+    ) -> i32
+    where
         Self: Sized;
     /// Inserts a menu item at an index along with its callback.
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
@@ -714,7 +719,8 @@ pub unsafe trait MenuExt: WidgetExt {
         shortcut: Shortcut,
         flag: crate::menu::MenuFlag,
         cb: F,
-    ) -> i32 where
+    ) -> i32
+    where
         Self: Sized;
     /// Add a menu item along with an emit (sender and message).
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
@@ -726,7 +732,8 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    ) -> i32 where
+    ) -> i32
+    where
         Self: Sized;
     /// Inserts a menu item along with an emit (sender and message).
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
@@ -739,7 +746,8 @@ pub unsafe trait MenuExt: WidgetExt {
         flag: crate::menu::MenuFlag,
         sender: crate::app::Sender<T>,
         msg: T,
-    ) -> i32 where
+    ) -> i32
+    where
         Self: Sized;
     /// Remove a menu item by index
     fn remove(&mut self, idx: i32);
@@ -787,6 +795,12 @@ pub unsafe trait MenuExt: WidgetExt {
     fn down_frame(&self) -> FrameType;
     /// Make a menu globally accessible from any window
     fn global(&mut self);
+    /// Get the menu element
+    fn menu(&self) -> Option<crate::menu::MenuItem>;
+    /// Set the menu element
+    /// # Safety
+    /// FLTK expects the menu to have static storage
+    unsafe fn set_menu(&mut self, item: Option<crate::menu::MenuItem>);
 }
 
 /// Defines the methods implemented by all valuator widgets

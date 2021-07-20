@@ -114,7 +114,7 @@ pub enum MenuFlag {
 }
 
 impl MenuItem {
-    /// Initializes a new window, useful for popup menus
+    /// Initializes a new menu item
     pub fn new(choices: &[&'static str]) -> MenuItem {
         unsafe {
             let sz = choices.len();
@@ -124,6 +124,36 @@ impl MenuItem {
                 temp.push(c.into_raw());
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
+            assert!(!item_ptr.is_null());
+            MenuItem { inner: item_ptr }
+        }
+    }
+
+    /// Initializes a new menu item, with the added menu flag
+    pub fn new_ext(choices: &'static [Option<(&str, Shortcut, MenuFlag)>]) -> MenuItem {
+        unsafe {
+            let sz = choices.len();
+            let mut labels: Vec<*mut raw::c_char> = vec![];
+            let mut shortcuts: Vec<i32> = vec![];
+            let mut flags: Vec<i32> = vec![];
+            for &choice in choices {
+                if let Some(choice) = choice {
+                    let c = CString::safe_new(choice.0);
+                    labels.push(c.into_raw());
+                    shortcuts.push(choice.1.bits() as i32);
+                    flags.push(choice.2 as i32);
+                } else {
+                    labels.push(std::ptr::null_mut());
+                    shortcuts.push(0 as i32);
+                    flags.push(0 as i32);
+                }
+            }
+            let item_ptr = Fl_Menu_Item_new_ext(
+                labels.as_ptr() as *mut *mut raw::c_char,
+                shortcuts.as_mut_ptr(),
+                flags.as_mut_ptr(),
+                sz as i32,
+            );
             assert!(!item_ptr.is_null());
             MenuItem { inner: item_ptr }
         }

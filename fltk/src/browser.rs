@@ -354,9 +354,7 @@ impl CheckBrowser {
         unsafe {
             let ptr = Fl_Check_Browser_scrollbar(self.inner);
             assert!(!ptr.is_null());
-            crate::valuator::Scrollbar::from_widget_ptr(
-                ptr as *mut fltk_sys::widget::Fl_Widget,
-            )
+            crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
         }
     }
 
@@ -366,9 +364,7 @@ impl CheckBrowser {
         unsafe {
             let ptr = Fl_Check_Browser_hscrollbar(self.inner);
             assert!(!ptr.is_null());
-            crate::valuator::Scrollbar::from_widget_ptr(
-                ptr as *mut fltk_sys::widget::Fl_Widget,
-            )
+            crate::valuator::Scrollbar::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)
         }
     }
 }

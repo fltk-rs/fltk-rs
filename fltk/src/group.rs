@@ -400,7 +400,7 @@ impl VGrid {
 
     /// Adds widgets to the grid
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        debug_assert!(self.current + 1 <= self.rows * self.cols);
+        debug_assert!(self.current < self.rows * self.cols);
         let rem = (self.current - 1) / self.cols;
         if rem < self.rows {
             let hpack = self.vpack.child(rem as i32).unwrap();
@@ -510,7 +510,7 @@ impl HGrid {
 
     /// Adds widgets to the grid
     pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        debug_assert!(self.current + 1 <= self.rows * self.cols);
+        debug_assert!(self.current < self.rows * self.cols);
         let rem = (self.current - 1) / self.rows;
         if rem < self.cols {
             let vpack = self.hpack.child(rem as i32).unwrap();
@@ -572,8 +572,14 @@ pub struct Column {
 
 impl Column {
     /// Create a new column
-    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> Column {
-        let p = Pack::new(x, y, w, h, label);
+    pub fn new<T: Into<Option<&'static str>>>(
+        x: i32,
+        y: i32,
+        width: i32,
+        height: i32,
+        label: T,
+    ) -> Column {
+        let p = Pack::new(x, y, width, height, label);
         Column { p }
     }
 
@@ -618,8 +624,14 @@ pub struct Row {
 
 impl Row {
     /// Create a new row
-    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> Row {
-        let mut p = Pack::new(x, y, w, h, label);
+    pub fn new<T: Into<Option<&'static str>>>(
+        x: i32,
+        y: i32,
+        width: i32,
+        height: i32,
+        label: T,
+    ) -> Row {
+        let mut p = Pack::new(x, y, width, height, label);
         p.set_type(PackType::Horizontal);
         Row { p }
     }

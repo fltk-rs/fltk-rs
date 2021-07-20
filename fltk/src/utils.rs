@@ -1,6 +1,6 @@
+use fltk_sys::utils::*;
 use std::ffi::CString;
 use std::os::raw;
-use fltk_sys::utils::*;
 
 use crate::prelude::FltkError;
 use crate::prelude::FltkErrorKind;
@@ -86,7 +86,11 @@ pub fn filename_expand(path: &str) -> Result<String, FltkError> {
     let mut out: Vec<u8> = vec![0u8; 2048];
     let path = CString::safe_new(path);
     unsafe {
-        let ret = Fl_filename_expand(out.as_mut_ptr() as *mut raw::c_char, 2048, path.as_ptr() as _);
+        let ret = Fl_filename_expand(
+            out.as_mut_ptr() as *mut raw::c_char,
+            2048,
+            path.as_ptr() as _,
+        );
         if ret == 0 {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {

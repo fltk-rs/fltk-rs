@@ -69,6 +69,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let global = Ident::new(format!("{}_{}", name_str, "global").as_str(), name.span());
+    let menu = Ident::new(format!("{}_{}", name_str, "menu").as_str(), name.span());
+    let set_menu = Ident::new(format!("{}_{}", name_str, "set_menu").as_str(), name.span());
 
     let gen = quote! {
         impl IntoIterator for #name {
@@ -390,6 +392,26 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #global(self.inner)
+                }
+            }
+
+            fn menu(&self) -> Option<crate::menu::MenuItem> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let ptr = #menu(self.inner);
+                    if ptr.is_null() {
+                        None
+                    } else {
+                        Some(MenuItem { inner: ptr as _ })
+                    }
+                }
+            }
+
+            unsafe fn set_menu(&mut self, item: Option<crate::menu::MenuItem>) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let ptr = if let Some(item) = item { item.inner } else { std::ptr::null() };
+                    #set_menu(self.inner, ptr as _)
                 }
             }
         }

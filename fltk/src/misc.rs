@@ -393,9 +393,7 @@ impl Tooltip {
         unsafe {
             let widget_ptr = Fl_Tooltip_current_widget();
             assert!(!widget_ptr.is_null());
-            Widget::from_widget_ptr(
-                widget_ptr as *mut fltk_sys::widget::Fl_Widget,
-            )
+            Widget::from_widget_ptr(widget_ptr as *mut fltk_sys::widget::Fl_Widget)
         }
     }
 
