@@ -25,7 +25,7 @@ Why choose FLTK?
 - Single executable. No DLLs to deploy.
 - Supports old architectures. 
 - FLTK's permissive license which allows static linking for closed-source applications.
-- Themability (4 supported themes: Base, GTK, Plastic and Gleam).
+- Themability (4 supported schemes: Base, GTK, Plastic and Gleam), and additional theming using [fltk-theme](https://crates.io/crates/fltk-theme).
 - Provides around 80 customizable widgets. 
 - Has inbuilt image support.
 
@@ -181,7 +181,7 @@ Handled or ignored events using the handle method should return true, unhandled 
 
 ### Theming
 
-FLTK offers 4 application themes (called schemes):
+FLTK offers 4 application schemes:
 - Base
 - Gtk
 - Gleam
@@ -199,6 +199,7 @@ Themes of individual widgets can be optionally modified using the provided metho
     some_button.set_frame(FrameType::RoundUpBox);
     some_button.set_font(Font::TimesItalic);
 ```
+For default application colors, fltk-rs provides `app::background()`, `app::background2()` and `app::foreground()`. You can also specify the default application selection/inactive colors, font, label size, frame type, scrollbar size, menu linespacing. Additionally the [fltk-theme](https://crates.io/crates/fltk-theme) crate offers some other color maps (dark theme, tan etc) which can be loaded into your application.
 
 ## Features
 
@@ -272,7 +273,7 @@ $ cargo run --example custom_dial
 ...
 ```
 
-Using custom theming and also FLTK provided default themes like Gtk:
+Using custom theming and also FLTK provided default schemes like Gtk:
 
 - [hello](fltk/examples/hello.rs)
 
