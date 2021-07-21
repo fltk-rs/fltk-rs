@@ -798,7 +798,9 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Get the menu element
     fn menu(&self) -> Option<crate::menu::MenuItem>;
     /// Set the menu element
-    fn set_menu(&mut self, item: Option<crate::menu::MenuItem>);
+    /// # Safety
+    /// The MenuItem must be in a format recognized by FLTK (Null termination after submenus)
+    unsafe fn set_menu(&mut self, item: crate::menu::MenuItem);
 }
 
 /// Defines the methods implemented by all valuator widgets
@@ -1224,6 +1226,8 @@ pub unsafe trait ImageExt {
         Self: Sized;
     /// Draws the image at the presupplied coordinates and size
     fn draw(&mut self, x: i32, y: i32, width: i32, height: i32);
+    /// Draws the image at the presupplied coordinates and size and offset cx, cy
+    fn draw_ext(&mut self, x: i32, y: i32, width: i32, height: i32, cx: i32, cy: i32);
     /// Return the width of the image
     fn width(&self) -> i32;
     /// Return the height of the image

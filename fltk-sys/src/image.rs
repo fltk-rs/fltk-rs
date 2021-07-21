@@ -15,6 +15,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Image_draw_ext(
+        arg1: *mut Fl_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Image_width(arg1: *mut Fl_Image) -> libc::c_int;
 }
 extern "C" {
@@ -71,6 +82,17 @@ extern "C" {
         Y: libc::c_int,
         W: libc::c_int,
         H: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_JPEG_Image_draw_ext(
+        arg1: *mut Fl_JPEG_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
     );
 }
 extern "C" {
@@ -139,6 +161,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_PNG_Image_draw_ext(
+        arg1: *mut Fl_PNG_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_PNG_Image_width(arg1: *mut Fl_PNG_Image) -> libc::c_int;
 }
 extern "C" {
@@ -201,6 +234,17 @@ extern "C" {
         Y: libc::c_int,
         W: libc::c_int,
         H: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_SVG_Image_draw_ext(
+        arg1: *mut Fl_SVG_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
     );
 }
 extern "C" {
@@ -272,6 +316,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_BMP_Image_draw_ext(
+        arg1: *mut Fl_BMP_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_BMP_Image_width(arg1: *mut Fl_BMP_Image) -> libc::c_int;
 }
 extern "C" {
@@ -334,6 +389,17 @@ extern "C" {
         Y: libc::c_int,
         W: libc::c_int,
         H: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_GIF_Image_draw_ext(
+        arg1: *mut Fl_GIF_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
     );
 }
 extern "C" {
@@ -402,6 +468,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Pixmap_draw_ext(
+        arg1: *mut Fl_Pixmap,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Pixmap_width(arg1: *mut Fl_Pixmap) -> libc::c_int;
 }
 extern "C" {
@@ -461,6 +538,17 @@ extern "C" {
         Y: libc::c_int,
         W: libc::c_int,
         H: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_XPM_Image_draw_ext(
+        arg1: *mut Fl_XPM_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
     );
 }
 extern "C" {
@@ -526,6 +614,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_XBM_Image_draw_ext(
+        arg1: *mut Fl_XBM_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_XBM_Image_width(arg1: *mut Fl_XBM_Image) -> libc::c_int;
 }
 extern "C" {
@@ -588,6 +687,17 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_PNM_Image_draw_ext(
+        arg1: *mut Fl_PNM_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_PNM_Image_width(arg1: *mut Fl_PNM_Image) -> libc::c_int;
 }
 extern "C" {
@@ -647,6 +757,17 @@ extern "C" {
         Y: libc::c_int,
         W: libc::c_int,
         H: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_draw_ext(
+        arg1: *mut Fl_Tiled_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
     );
 }
 extern "C" {
@@ -713,6 +834,17 @@ extern "C" {
         Y: libc::c_int,
         W: libc::c_int,
         H: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_RGB_Image_draw_ext(
+        arg1: *mut Fl_RGB_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
     );
 }
 extern "C" {
@@ -790,6 +922,17 @@ extern "C" {
         Y: libc::c_int,
         W: libc::c_int,
         H: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shared_Image_draw_ext(
+        arg1: *mut Fl_Shared_Image,
+        X: libc::c_int,
+        Y: libc::c_int,
+        W: libc::c_int,
+        H: libc::c_int,
+        cx: libc::c_int,
+        cy: libc::c_int,
     );
 }
 extern "C" {

@@ -138,6 +138,18 @@ extern "C" {
     pub fn Fl_set_box_type(arg1: libc::c_int, arg2: libc::c_int);
 }
 extern "C" {
+    pub fn Fl_box_shadow_width() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_set_box_shadow_width(W: libc::c_int);
+}
+extern "C" {
+    pub fn Fl_box_border_radius_max() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_set_box_border_radius_max(R: libc::c_int);
+}
+extern "C" {
     pub fn Fl_get_rgb_color(r: libc::c_uchar, g: libc::c_uchar, b: libc::c_uchar) -> libc::c_uint;
 }
 extern "C" {

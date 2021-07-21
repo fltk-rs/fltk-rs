@@ -1934,3 +1934,9 @@ extern "C" {
         on_left: libc::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Menu_Item_children(self_: *const Fl_Menu_Item) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_at(self_: *const Fl_Menu_Item, idx: libc::c_int) -> *const Fl_Menu_Item;
+}

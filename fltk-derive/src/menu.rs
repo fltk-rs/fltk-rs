@@ -164,6 +164,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(MenuItem {
                             inner: menu_item,
+                            size: Fl_Menu_Item_children(menu_item),
                         })
                     }
                 }
@@ -351,6 +352,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(MenuItem {
                             inner: ptr,
+                            size: Fl_Menu_Item_children(ptr),
                         })
                     }
                 }
@@ -402,16 +404,15 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     if ptr.is_null() {
                         None
                     } else {
-                        Some(MenuItem { inner: ptr as _ })
+                        Some(MenuItem { inner: ptr as _, size: Fl_Menu_Item_children(ptr) })
                     }
                 }
             }
 
-            fn set_menu(&mut self, item: Option<crate::menu::MenuItem>) {
+            unsafe fn set_menu(&mut self, item: crate::menu::MenuItem) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let ptr = if let Some(item) = item { item.inner } else { std::ptr::null() };
-                    #set_menu(self.inner, ptr as _)
+                    #set_menu(self.inner, item.inner)
                 }
             }
         }

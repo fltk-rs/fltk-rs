@@ -58,6 +58,7 @@ impl MenuButton {
             } else {
                 let item = MenuItem {
                     inner: ptr as *mut Fl_Menu_Item,
+                    size: Fl_Menu_Item_children(ptr),
                 };
                 Some(item)
             }
@@ -85,6 +86,7 @@ pub struct SysMenuBar {
 #[derive(Debug, Clone)]
 pub struct MenuItem {
     inner: *mut Fl_Menu_Item,
+    size: i32,
 }
 
 /// Defines the menu flag for any added menu items using the add() method
@@ -125,7 +127,7 @@ impl MenuItem {
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
-            MenuItem { inner: item_ptr }
+            MenuItem { inner: item_ptr, size: choices.len() as i32 }
         }
     }
 
@@ -139,6 +141,7 @@ impl MenuItem {
             } else {
                 let item = MenuItem {
                     inner: item as *mut Fl_Menu_Item,
+                    size: Fl_Menu_Item_children(item),
                 };
                 Some(item)
             }
@@ -293,7 +296,7 @@ impl MenuItem {
         unsafe { Fl_Menu_Item_hide(self.inner) }
     }
 
-    /// Get the next menu item
+    /// Get the next menu item skipping submenus
     pub fn next(&self, idx: i32) -> Option<MenuItem> {
         assert!(!self.was_deleted());
         unsafe {
@@ -305,12 +308,19 @@ impl MenuItem {
             if label_ptr.is_null() {
                 return None;
             }
-            Some(MenuItem { inner: ptr })
+            Some(MenuItem { inner: ptr, size: Fl_Menu_Item_children(ptr) })
         }
     }
 
     /// Get children of `MenuItem`
     pub fn children(&self) -> i32 {
+        unsafe {
+            Fl_Menu_Item_children(self.inner)
+        }
+    }
+
+    /// Get the submenu count
+    pub fn submenus(&self) -> i32 {
         let mut i = 0;
         while let Some(_item) = self.next(i) {
             i += 1;
@@ -318,9 +328,22 @@ impl MenuItem {
         i
     }
 
+    /// Get the size of the MenuItem
+    pub fn size(&self) -> i32 {
+        self.size
+    }
+
     /// Get the menu item at `idx`
     pub fn at(&self, idx: i32) -> Option<MenuItem> {
-        self.next(idx)
+        assert!(idx < self.size);
+        unsafe {
+            let ptr = Fl_Menu_Item_at(self.inner, idx);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(MenuItem { inner: ptr as _, size: Fl_Menu_Item_children(ptr) })
+            }
+        }
     }
 
     /// Get the user data
@@ -480,7 +503,7 @@ impl IntoIterator for MenuItem {
     fn into_iter(self) -> Self::IntoIter {
         let mut v: Vec<MenuItem> = vec![];
         let mut i = 0;
-        while let Some(item) = self.next(i) {
+        while let Some(item) = self.at(i) {
             v.push(item);
             i += 1;
         }
