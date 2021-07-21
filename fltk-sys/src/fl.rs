@@ -429,3 +429,12 @@ extern "C" {
         >,
     );
 }
+extern "C" {
+    pub fn Fl_inactive(c: libc::c_uint) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_lighter(c: libc::c_uint) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_darker(c: libc::c_uint) -> libc::c_uint;
+}

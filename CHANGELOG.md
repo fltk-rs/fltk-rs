@@ -8,6 +8,7 @@
 - Add app:: frame_shadow_width setter and getter.
 - Add app:: frame_border_radius_max setter and getter.
 - Add app::set_color().
+- Add enums::Color::darker() and lighter().
 
 ## [1.1.2] - 2021-07-19
 - Fix app::event_clicks() and add overload for event_clicks_num() for number of clicks.
