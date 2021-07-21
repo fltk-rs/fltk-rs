@@ -1,5 +1,5 @@
 use crate::app::init::CURRENT_FRAME;
-use crate::enums::{FrameType, Mode};
+use crate::enums::{Color, FrameType, Mode};
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::fl;
@@ -147,9 +147,15 @@ pub fn background2(r: u8, g: u8, b: u8) {
 pub fn set_selection_color(r: u8, g: u8, b: u8) {
     unsafe { fl::Fl_selection_color(r, g, b) }
 }
+
 /// Sets the app's default selection color
 pub fn set_inactive_color(r: u8, g: u8, b: u8) {
     unsafe { fl::Fl_inactive_color(r, g, b) }
+}
+
+/// Swap a color with a custom RGB value
+pub fn set_color(old: Color, r: u8, g: u8, b: u8) {
+    unsafe { fl::Fl_set_color(old.bits() as u32, r, g, b) }
 }
 
 /// Gets the system colors

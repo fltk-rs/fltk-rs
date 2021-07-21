@@ -7,6 +7,7 @@
 - Add ImageExt::draw_ext() which allows passing the offset to the image.
 - Add app:: frame_shadow_width setter and getter.
 - Add app:: frame_border_radius_max setter and getter.
+- Add app::set_color().
 
 ## [1.1.2] - 2021-07-19
 - Fix app::event_clicks() and add overload for event_clicks_num() for number of clicks.
