@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.1.3] - 2021-07-21
+- Add WidgetExt::with_type().
+- Add MenuExt::menu and set_menu().
+- Add ImageExt::draw_ext() which allows passing the offset to the image.
+- Add app:: frame_shadow_width setter and getter.
+- Add app:: frame_border_radius_max setter and getter.
+- Add app::set_color().
+- Add enums::Color::darker() and lighter().
+
 ## [1.1.2] - 2021-07-19
 - Fix app::event_clicks() and add overload for event_clicks_num() for number of clicks.
 - Add widget_resize() for simple resizing without class-specific resize functionality.

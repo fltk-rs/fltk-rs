@@ -343,10 +343,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let active = Ident::new(format!("{}_{}", name_str, "active").as_str(), name.span());
-    let active_r = Ident::new(
-        format!("{}_{}", name_str, "active_r").as_str(),
-        name.span(),
-    );
+    let active_r = Ident::new(format!("{}_{}", name_str, "active_r").as_str(), name.span());
     let callback = Ident::new(format!("{}_{}", name_str, "callback").as_str(), name.span());
 
     let gen = quote! {
@@ -932,6 +929,14 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     #set_type(self.inner, typ.to_i32());
                 }
+            }
+
+            fn with_type<T: WidgetType>(mut self, typ: T) -> Self {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #set_type(self.inner, typ.to_i32());
+                }
+                self
             }
 
             fn set_image<I: ImageExt>(&mut self, image: Option<I>) {

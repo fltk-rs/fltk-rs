@@ -10,6 +10,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
     let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
     let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
+    let draw_ext = Ident::new(format!("{}_{}", name_str, "draw_ext").as_str(), name.span());
     let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
     let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
     let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
@@ -33,7 +34,7 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
                 self.inner == other.inner
             }
         }
-        
+
         impl Eq for #name {}
 
         impl Clone for #name {
@@ -73,6 +74,11 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
             fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
                 assert!(!self.was_deleted());
                 unsafe { #draw(self.inner, arg2, arg3, arg4, arg5) }
+            }
+
+            fn draw_ext(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32, cx: i32, cy: i32) {
+                assert!(!self.was_deleted());
+                unsafe { #draw_ext(self.inner, arg2, arg3, arg4, arg5, cx, cy) }
             }
 
             fn width(&self) -> i32 {

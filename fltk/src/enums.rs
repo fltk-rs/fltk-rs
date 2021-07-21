@@ -1,9 +1,8 @@
 use crate::app::{font_index, FONTS};
 use crate::prelude::{FltkError, FltkErrorKind};
 use crate::utils::FlString;
-use fltk_sys::fl::Fl_get_rgb_color;
-use std::ffi::{CStr, CString};
-use std::path;
+use fltk_sys::fl;
+use std::{ffi::{CStr, CString}, mem, path};
 
 /// Defines label types
 #[repr(i32)]
@@ -161,27 +160,27 @@ impl FrameType {
     /// Gets the Frame type by index
     pub fn by_index(idx: usize) -> FrameType {
         let idx = if idx > 56 { 56 } else { idx };
-        unsafe { std::mem::transmute(idx as i32) }
+        unsafe { mem::transmute(idx as i32) }
     }
 
     /// Get the frame's x offset
     pub fn dx(self) -> i32 {
-        unsafe { fltk_sys::fl::Fl_box_dx(self as i32) }
+        unsafe { fl::Fl_box_dx(self as i32) }
     }
 
     /// Get the frame's y offset
     pub fn dy(self) -> i32 {
-        unsafe { fltk_sys::fl::Fl_box_dy(self as i32) }
+        unsafe { fl::Fl_box_dy(self as i32) }
     }
 
     /// Get the frame's width offset
     pub fn dw(self) -> i32 {
-        unsafe { fltk_sys::fl::Fl_box_dw(self as i32) }
+        unsafe { fl::Fl_box_dw(self as i32) }
     }
 
     /// Get the frame's height offset
     pub fn dh(self) -> i32 {
-        unsafe { fltk_sys::fl::Fl_box_dh(self as i32) }
+        unsafe { fl::Fl_box_dh(self as i32) }
     }
 
     /// Swap frames
@@ -189,7 +188,7 @@ impl FrameType {
         unsafe {
             let new_frame = new_frame as i32;
             let old_frame = old_frame as i32;
-            fltk_sys::fl::Fl_set_box_type(old_frame, new_frame);
+            fl::Fl_set_box_type(old_frame, new_frame);
         }
     }
 }
@@ -287,7 +286,7 @@ impl Font {
     pub fn by_index(idx: usize) -> Font {
         unsafe {
             if idx < (*FONTS.lock().unwrap()).len() {
-                std::mem::transmute(idx as i32)
+                mem::transmute(idx as i32)
             } else {
                 Font::Helvetica
             }
@@ -313,7 +312,7 @@ impl Font {
     pub fn set_font(old: Font, new: &str) {
         let new = CString::safe_new(new);
         unsafe {
-            fltk_sys::fl::Fl_set_font2(old.bits, new.into_raw() as _);
+            fl::Fl_set_font2(old.bits, new.into_raw() as _);
         }
     }
 
@@ -338,7 +337,7 @@ impl Font {
             }
             if let Some(p) = path.to_str() {
                 let path = CString::safe_new(p);
-                let ptr = fltk_sys::fl::Fl_load_font(path.as_ptr());
+                let ptr = fl::Fl_load_font(path.as_ptr());
                 if ptr.is_null() {
                     Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
                 } else {
@@ -424,7 +423,7 @@ bitflags! {
 impl Color {
     /// Returns a color from RGB
     pub fn from_rgb(r: u8, g: u8, b: u8) -> Color {
-        unsafe { std::mem::transmute(Fl_get_rgb_color(r, g, b)) }
+        unsafe { mem::transmute(fl::Fl_get_rgb_color(r, g, b)) }
     }
 
     /// Returns a color from hex or decimal
@@ -441,7 +440,22 @@ impl Color {
 
     /// Returns a color by index of RGBI
     pub fn by_index(idx: u8) -> Color {
-        unsafe { std::mem::transmute(idx as u32) }
+        unsafe { mem::transmute(idx as u32) }
+    }
+
+    /// Retuns an inactive form of the color
+    pub fn inactive(&self) -> Color {
+        unsafe { mem::transmute(fl::Fl_inactive(self.bits)) }
+    }
+
+    /// Retuns an darker form of the color
+    pub fn darker(&self) -> Color {
+        unsafe { mem::transmute(fl::Fl_darker(self.bits)) }
+    }
+
+    /// Retuns an lighter form of the color
+    pub fn lighter(&self) -> Color {
+        unsafe { mem::transmute(fl::Fl_lighter(self.bits)) }
     }
 }
 
@@ -552,13 +566,13 @@ bitflags! {
 impl Event {
     /// Creates an event from an i32 value
     pub fn from_i32(val: i32) -> Event {
-        unsafe { std::mem::transmute(val) }
+        unsafe { mem::transmute(val) }
     }
 }
 
 impl From<i32> for Event {
     fn from(val: i32) -> Event {
-        unsafe { std::mem::transmute(val) }
+        unsafe { mem::transmute(val) }
     }
 }
 
@@ -691,12 +705,12 @@ bitflags! {
 impl Key {
     /// Gets a Key from an i32
     pub fn from_i32(val: i32) -> Key {
-        unsafe { std::mem::transmute(val) }
+        unsafe { mem::transmute(val) }
     }
 
     /// Gets a Key from a char
     pub fn from_char(val: char) -> Key {
-        unsafe { std::mem::transmute(val) }
+        unsafe { mem::transmute(val) }
     }
 }
 
@@ -766,7 +780,7 @@ impl Shortcut {
 
     /// Get the button number
     pub fn button(button_num: i32) -> Shortcut {
-        unsafe { std::mem::transmute(0x0080_0000 << button_num) }
+        unsafe { mem::transmute(0x0080_0000 << button_num) }
     }
 }
 
@@ -899,20 +913,20 @@ bitflags! {
 impl std::ops::BitOr<char> for Shortcut {
     type Output = Shortcut;
     fn bitor(self, other: char) -> Self::Output {
-        unsafe { std::mem::transmute(self.bits as i32 | other as i32) }
+        unsafe { mem::transmute(self.bits as i32 | other as i32) }
     }
 }
 
 impl std::ops::BitOr<Key> for Shortcut {
     type Output = Shortcut;
     fn bitor(self, other: Key) -> Self::Output {
-        unsafe { std::mem::transmute(self.bits as i32 | other.bits() as i32) }
+        unsafe { mem::transmute(self.bits as i32 | other.bits() as i32) }
     }
 }
 
 impl std::ops::BitOr<i32> for Align {
     type Output = Align;
     fn bitor(self, rhs: i32) -> Self::Output {
-        unsafe { std::mem::transmute(self.bits | rhs as i32) }
+        unsafe { mem::transmute(self.bits | rhs as i32) }
     }
 }

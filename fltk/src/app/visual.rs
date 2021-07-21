@@ -1,5 +1,5 @@
 use crate::app::init::CURRENT_FRAME;
-use crate::enums::{FrameType, Mode};
+use crate::enums::{Color, FrameType, Mode};
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::fl;
@@ -95,6 +95,34 @@ pub fn swap_frame_type(new_frame: FrameType) {
     }
 }
 
+/// Get the shadwo width for frames types with shadows
+pub fn frame_shadow_width() -> i32 {
+    unsafe {
+        fl::Fl_box_shadow_width()
+    }
+}
+
+/// Set the shadwo width for frames types with shadows
+pub fn set_frame_shadow_width(width: i32) {
+    unsafe {
+        fl::Fl_set_box_shadow_width(width)
+    }
+}
+
+/// Get the max border radius for frame types
+pub fn frame_border_radius_max() -> i32 {
+    unsafe {
+        fl::Fl_box_border_radius_max()
+    }
+}
+
+/// Set the max border radius for frame types
+pub fn set_frame_border_radius_max(radius: i32) {
+    unsafe {
+        fl::Fl_set_box_border_radius_max(radius)
+    }
+}
+
 /// Makes FLTK use its own colormap. This may make FLTK display better
 pub fn own_colormap() {
     unsafe { fl::Fl_own_colormap() }
@@ -119,9 +147,15 @@ pub fn background2(r: u8, g: u8, b: u8) {
 pub fn set_selection_color(r: u8, g: u8, b: u8) {
     unsafe { fl::Fl_selection_color(r, g, b) }
 }
+
 /// Sets the app's default selection color
 pub fn set_inactive_color(r: u8, g: u8, b: u8) {
     unsafe { fl::Fl_inactive_color(r, g, b) }
+}
+
+/// Swap a color with a custom RGB value
+pub fn set_color(old: Color, r: u8, g: u8, b: u8) {
+    unsafe { fl::Fl_set_color(old.bits() as u32, r, g, b) }
 }
 
 /// Gets the system colors

@@ -645,6 +645,9 @@ extern "C" {
     pub fn Fl_Menu_Bar_menu(self_: *const Fl_Menu_Bar) -> *const Fl_Menu_Item;
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_set_menu(self_: *mut Fl_Menu_Bar, item: *const Fl_Menu_Item);
+}
+extern "C" {
     pub fn Fl_Menu_Bar_remove(self_: *mut Fl_Menu_Bar, idx: libc::c_int);
 }
 extern "C" {
@@ -1035,6 +1038,9 @@ extern "C" {
     pub fn Fl_Menu_Button_menu(self_: *const Fl_Menu_Button) -> *const Fl_Menu_Item;
 }
 extern "C" {
+    pub fn Fl_Menu_Button_set_menu(self_: *mut Fl_Menu_Button, item: *const Fl_Menu_Item);
+}
+extern "C" {
     pub fn Fl_Menu_Button_remove(self_: *mut Fl_Menu_Button, idx: libc::c_int);
 }
 extern "C" {
@@ -1396,6 +1402,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_menu(self_: *const Fl_Choice) -> *const Fl_Menu_Item;
+}
+extern "C" {
+    pub fn Fl_Choice_set_menu(self_: *mut Fl_Choice, item: *const Fl_Menu_Item);
 }
 extern "C" {
     pub fn Fl_Choice_remove(self_: *mut Fl_Choice, idx: libc::c_int);
@@ -1788,6 +1797,9 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_menu(self_: *const Fl_Sys_Menu_Bar) -> *const Fl_Menu_Item;
 }
 extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_menu(self_: *mut Fl_Sys_Menu_Bar, item: *const Fl_Menu_Item);
+}
+extern "C" {
     pub fn Fl_Sys_Menu_Bar_remove(self_: *mut Fl_Sys_Menu_Bar, idx: libc::c_int);
 }
 extern "C" {
@@ -1921,4 +1933,10 @@ extern "C" {
         image: *mut libc::c_void,
         on_left: libc::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Menu_Item_children(self_: *const Fl_Menu_Item) -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_at(self_: *const Fl_Menu_Item, idx: libc::c_int) -> *const Fl_Menu_Item;
 }

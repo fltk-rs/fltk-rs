@@ -1161,7 +1161,11 @@ impl TreeItem {
             let tracker =
                 fltk_sys::fl::Fl_Widget_Tracker_new(inner as *mut fltk_sys::fl::Fl_Widget);
             assert!(!tracker.is_null());
-            let tree = Tree { inner, tracker, is_derived: false, };
+            let tree = Tree {
+                inner,
+                tracker,
+                is_derived: false,
+            };
             let parent = Fl_Tree_Item_parent(ptr);
             let is_root = Fl_Tree_Item_is_root(ptr) != 0;
             let x = TreeItem {

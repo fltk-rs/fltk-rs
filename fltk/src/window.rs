@@ -323,7 +323,7 @@ impl DoubleWindow {
         unsafe { Fl_Double_Window_alpha(self.inner) as f64 / 255.0 }
     }
 
-    /// Set the window's opacity, 
+    /// Set the window's opacity,
     /// Ranges from 0.0 to 1.0, where 1.0 is fully opaque and 0.0 is fully transparent.
     /// This should be called on a shown window.
     /// On X11, opacity support depends on the window manager and can be queried:

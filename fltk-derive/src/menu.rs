@@ -69,6 +69,8 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
         name.span(),
     );
     let global = Ident::new(format!("{}_{}", name_str, "global").as_str(), name.span());
+    let menu = Ident::new(format!("{}_{}", name_str, "menu").as_str(), name.span());
+    let set_menu = Ident::new(format!("{}_{}", name_str, "set_menu").as_str(), name.span());
 
     let gen = quote! {
         impl IntoIterator for #name {
@@ -162,6 +164,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(MenuItem {
                             inner: menu_item,
+                            size: Fl_Menu_Item_children(menu_item),
                         })
                     }
                 }
@@ -349,6 +352,7 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         Some(MenuItem {
                             inner: ptr,
+                            size: Fl_Menu_Item_children(ptr),
                         })
                     }
                 }
@@ -390,6 +394,25 @@ pub fn impl_menu_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     #global(self.inner)
+                }
+            }
+
+            fn menu(&self) -> Option<crate::menu::MenuItem> {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let ptr = #menu(self.inner);
+                    if ptr.is_null() {
+                        None
+                    } else {
+                        Some(MenuItem { inner: ptr as _, size: Fl_Menu_Item_children(ptr) })
+                    }
+                }
+            }
+
+            unsafe fn set_menu(&mut self, item: crate::menu::MenuItem) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #set_menu(self.inner, item.inner)
                 }
             }
         }

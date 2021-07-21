@@ -12,6 +12,16 @@ Rust bindings for the FLTK Graphical User Interface library.
 
 The fltk crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
 
+Why choose FLTK?
+- Lightweight. Small binary, around 1mb after stripping. [Small memory footprint](https://szibele.com/memory-footprint-of-gui-toolkits/).
+- Speed. Fast to install, fast to build, fast at startup and fast at runtime. 
+- Single executable. No DLLs to deploy.
+- Supports old architectures. 
+- FLTK's permissive license which allows static linking for closed-source applications.
+- Themability (4 supported schemes: Base, GTK, Plastic and Gleam), and additional theming using [fltk-theme](https://crates.io/crates/fltk-theme).
+- Provides around 80 customizable widgets. 
+- Has inbuilt image support.
+
 Tutorials:
 - [Video](https://github.com/fltk-rs/fltk-rs#tutorials)
 - [Written](https://github.com/fltk-rs/fltk-rs/wiki)
@@ -19,7 +29,7 @@ Tutorials:
 - [Demos](https://github.com/fltk-rs/demos)
 - [7guis-fltk-rs](https://github.com/tdryer/7guis-fltk-rs)
 - [FLTK-RS-Examples](https://github.com/wyhinton/FLTK-RS-Examples)
-- Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference. 
+- Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference.
 
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/fltk-rs/fltk-rs/issues/418).
 
@@ -170,7 +180,7 @@ More examples are available in the examples directory.
 
 ### Theming
 
-FLTK offers 4 application themes (called schemes):
+FLTK offers 4 application schemes:
 - Base
 - Gtk
 - Gleam
@@ -189,6 +199,7 @@ such as `set_color()`, `set_label_font()`, `set_frame()` etc:
     some_button.set_frame(FrameType::RoundUpBox);
     some_button.set_font(Font::TimesItalic);
 ```
+For default application colors, fltk-rs provides `app::background()`, `app::background2()` and `app::foreground()`. You can also specify the default application selection/inactive colors, font, label size, frame type, scrollbar size, menu linespacing. Additionally the [fltk-theme](https://crates.io/crates/fltk-theme) crate offers some other color maps (dark theme, tan etc) which can be loaded into your application.
 
 ## Features
 
