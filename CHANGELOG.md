@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.1.3] - Unreleased
+## [1.1.3] - 2021-07-21
 - Add WidgetExt::with_type().
 - Add MenuExt::menu and set_menu().
 - Add ImageExt::draw_ext() which allows passing the offset to the image.
