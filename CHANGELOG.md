@@ -2,8 +2,10 @@
 
 
 ## [1.1.4] - Unreleased
-- Add app::set_frame_type_cb().
+- Add app::set_frame_type_cb() and set_frame2().
 - Add Color::gray_ramp and color_average().
+- Add app::draw_frame_active().
+- Fix doc of draw::draw_frame and draw_frame2 and add assert.
 
 ## [1.1.3] - 2021-07-21
 - Add WidgetExt::with_type().
