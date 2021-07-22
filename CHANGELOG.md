@@ -3,6 +3,7 @@
 
 ## [1.1.4] - Unreleased
 - Add app::set_frame_type_cb().
+- Add Color::gray_ramp and color_average().
 
 ## [1.1.3] - 2021-07-21
 - Add WidgetExt::with_type().

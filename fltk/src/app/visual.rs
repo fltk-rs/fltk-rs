@@ -2,7 +2,7 @@ use crate::app::init::CURRENT_FRAME;
 use crate::enums::{Color, FrameType, Mode};
 use crate::prelude::*;
 use crate::utils::FlString;
-use fltk_sys::fl;
+use fltk_sys::fl::{self, Fl_draw_box_active};
 use std::{ffi::CString, os::raw};
 
 /// Set the app scheme
@@ -74,6 +74,13 @@ pub fn set_frame_type(new_frame: FrameType) {
         let mut curr = CURRENT_FRAME.lock().unwrap();
         fl::Fl_set_box_type(*curr, new_frame);
         *curr = new_frame;
+    }
+}
+
+/// Set the app's default frame type without storing the old type
+pub fn set_frame_type2(old_frame: FrameType, new_frame: FrameType) {
+    unsafe {
+        fl::Fl_set_box_type(old_frame as i32, new_frame as i32);
     }
 }
 
@@ -250,4 +257,11 @@ pub unsafe fn open_display() {
 /// The display shouldn't be closed while a window is shown
 pub unsafe fn close_display() {
     fl::Fl_close_display()
+}
+
+/// Determines if the currently drawn box is active or inactive
+pub fn draw_frame_active() -> bool {
+    unsafe {
+        Fl_draw_box_active() != 0
+    }
 }

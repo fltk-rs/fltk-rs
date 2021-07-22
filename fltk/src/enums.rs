@@ -157,6 +157,8 @@ pub enum FrameType {
 impl FrameType {
     /// Alias OFlatFrame as OFlatBox
     pub const OFlatBox: FrameType = FrameType::OFlatFrame;
+    /// Alias GtkRoundDownFrame as GtkRoundDownBox
+    pub const GtkRoundDownBox: FrameType = FrameType::GtkRoundDownFrame;
     /// Gets the Frame type by index
     pub fn by_index(idx: usize) -> FrameType {
         let idx = if idx > 56 { 56 } else { idx };
@@ -371,8 +373,12 @@ bitflags! {
         const Inactive = 8;
         /// Selection
         const Selection = 15;
+        /// Free
+        const Free = 16;
         /// Gray0
         const Gray0 = 32;
+        /// GrayRamp
+        const GrayRamp = 32;
         /// Dark3
         const Dark3 = 39;
         /// Dark2
@@ -456,6 +462,16 @@ impl Color {
     /// Retuns an lighter form of the color
     pub fn lighter(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_lighter(self.bits)) }
+    }
+    
+    /// Returns a gray color value from black (i == 0) to white (i == FL_NUM_GRAY - 1)
+    pub fn gray_ramp(val: i32) -> Color {
+        unsafe { mem::transmute(fl::Fl_gray_ramp(val)) }
+    }
+
+    /// Returns a gray color value from black (i == 0) to white (i == FL_NUM_GRAY - 1)
+    pub fn color_average(c1: Color, c2: Color, weight: f32) -> Color {
+        unsafe { mem::transmute(fl::Fl_color_average(c1.bits, c2.bits, weight)) }
     }
 }
 
