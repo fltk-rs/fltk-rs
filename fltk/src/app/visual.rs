@@ -77,6 +77,20 @@ pub fn set_frame_type(new_frame: FrameType) {
     }
 }
 
+/// Set the app's default frame type
+pub fn set_frame_type_cb(
+    old_frame: FrameType,
+    cb: fn(x: i32, y: i32, w: i32, h: i32, c: Color),
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+) {
+    unsafe {
+        fl::Fl_set_box_type_cb(old_frame as i32, Some(std::mem::transmute(cb)), x, y, w, h);
+    }
+}
+
 /// Get the app's frame type
 pub fn frame_type() -> FrameType {
     let curr = CURRENT_FRAME.lock().unwrap();
@@ -97,30 +111,22 @@ pub fn swap_frame_type(new_frame: FrameType) {
 
 /// Get the shadwo width for frames types with shadows
 pub fn frame_shadow_width() -> i32 {
-    unsafe {
-        fl::Fl_box_shadow_width()
-    }
+    unsafe { fl::Fl_box_shadow_width() }
 }
 
 /// Set the shadwo width for frames types with shadows
 pub fn set_frame_shadow_width(width: i32) {
-    unsafe {
-        fl::Fl_set_box_shadow_width(width)
-    }
+    unsafe { fl::Fl_set_box_shadow_width(width) }
 }
 
 /// Get the max border radius for frame types
 pub fn frame_border_radius_max() -> i32 {
-    unsafe {
-        fl::Fl_box_border_radius_max()
-    }
+    unsafe { fl::Fl_box_border_radius_max() }
 }
 
 /// Set the max border radius for frame types
 pub fn set_frame_border_radius_max(radius: i32) {
-    unsafe {
-        fl::Fl_set_box_border_radius_max(radius)
-    }
+    unsafe { fl::Fl_set_box_border_radius_max(radius) }
 }
 
 /// Makes FLTK use its own colormap. This may make FLTK display better
