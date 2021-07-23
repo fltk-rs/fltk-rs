@@ -199,7 +199,7 @@ such as `set_color()`, `set_label_font()`, `set_frame()` etc:
     some_button.set_frame(FrameType::RoundUpBox);
     some_button.set_font(Font::TimesItalic);
 ```
-For default application colors, fltk-rs provides `app::background()`, `app::background2()` and `app::foreground()`. You can also specify the default application selection/inactive colors, font, label size, frame type, scrollbar size, menu linespacing. Additionally the [fltk-theme](https://crates.io/crates/fltk-theme) crate offers some other color maps (dark theme, tan etc) which can be loaded into your application.
+For default application colors, fltk-rs provides `app::background()`, `app::background2()` and `app::foreground()`. You can also specify the default application selection/inactive colors, font, label size, frame type, scrollbar size, menu linespacing. Additionally the [fltk-theme](https://crates.io/crates/fltk-theme) crate offers some other predefined color maps (dark theme, tan etc) and widget themes which can be loaded into your application.
 
 ## Features
 
