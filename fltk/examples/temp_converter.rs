@@ -25,31 +25,27 @@ fn main() {
     inp1.set_trigger(enums::CallbackTrigger::Changed);
     inp2.set_trigger(enums::CallbackTrigger::Changed);
 
-    let (s, r) = app::channel::<bool>();
-
-    inp1.emit(s, true);
-    inp2.emit(s, false);
-
-    while app.wait() {
-        let inp1_val: f64 = if inp1.value().is_empty() {
-            0.0
-        } else {
-            inp1.value().parse().unwrap_or(0.0)
-        };
-        let inp2_val = if inp2.value().is_empty() {
-            0.0
-        } else {
-            inp2.value().parse().unwrap_or(0.0)
-        };
-
-        if let Some(msg) = r.recv() {
-            if msg {
-                inp2.set_value(&format!("{:.4}", c_to_f(inp1_val)));
+    inp1.set_callback({
+        let mut inp2 = inp2.clone();
+        move |i| {
+            let inp1_val: f64 = if i.value().is_empty() {
+                0.0
             } else {
-                inp1.set_value(&format!("{:.4}", f_to_c(inp2_val)));
-            }
+                i.value().parse().unwrap_or(0.0)
+            };
+            inp2.set_value(&format!("{:.4}", c_to_f(inp1_val)));
         }
-    }
+    });
+    inp2.set_callback(move |i| {
+        let inp2_val: f64 = if i.value().is_empty() {
+            0.0
+        } else {
+            i.value().parse().unwrap_or(0.0)
+        };
+        inp1.set_value(&format!("{:.4}", f_to_c(inp2_val)));
+    });
+
+    app.run().unwrap();
 }
 
 fn c_to_f(val: f64) -> f64 {

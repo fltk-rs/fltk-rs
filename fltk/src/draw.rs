@@ -610,15 +610,19 @@ pub fn rtl_draw(txt: &str, x: i32, y: i32) {
     unsafe { Fl_rtl_draw(txt.as_ptr(), len, x, y) }
 }
 
-/// Draws a frame with text
+/// Draws a series of line segments around the given box.
+/// The string must contain groups of 4 letters which specify one of 24 standard grayscale values, 
+/// where 'A' is black and 'X' is white. The order of each set of 4 characters is: top, left, bottom, right.
 pub fn draw_frame(string: &str, x: i32, y: i32, width: i32, height: i32) {
+    assert!(string.len() % 4 == 0);
     let s = CString::safe_new(string);
     unsafe { Fl_frame(s.as_ptr(), x, y, width, height) }
 }
 
-/// Draws a frame with text.
-/// Differs from frame() by the order of the line segments
+/// Draws a series of line segments around the given box
+/// Differs from frame() by the order of the line segments which is bottom, right, top, left.
 pub fn draw_frame2(string: &str, x: i32, y: i32, width: i32, height: i32) {
+    assert!(string.len() % 4 == 0);
     let s = CString::safe_new(string);
     unsafe { Fl_frame2(s.as_ptr(), x, y, width, height) }
 }

@@ -438,3 +438,30 @@ extern "C" {
 extern "C" {
     pub fn Fl_darker(c: libc::c_uint) -> libc::c_uint;
 }
+extern "C" {
+    pub fn Fl_set_box_type_cb(
+        arg1: libc::c_int,
+        cb: ::core::option::Option<
+            unsafe extern "C" fn(
+                arg1: libc::c_int,
+                arg2: libc::c_int,
+                arg3: libc::c_int,
+                arg4: libc::c_int,
+                arg5: libc::c_uint,
+            ),
+        >,
+        arg2: libc::c_int,
+        arg3: libc::c_int,
+        arg4: libc::c_int,
+        arg5: libc::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_draw_box_active() -> libc::c_int;
+}
+extern "C" {
+    pub fn Fl_gray_ramp(i: libc::c_int) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_color_average(arg1: libc::c_uint, arg2: libc::c_uint, f: f32) -> libc::c_uint;
+}
