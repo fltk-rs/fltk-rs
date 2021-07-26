@@ -479,7 +479,7 @@ impl Color {
 
     /// Returns a color that contrasts with the background color.
     pub fn contrast(fg: Color, bg: Color) -> Color {
-        unsafe { mem::transmute(fl::Fl_color_average(fg.bits, bg.bits)) }
+        unsafe { mem::transmute(fl::Fl_contrast(fg.bits, bg.bits)) }
     }
 
     /// Returns the color closest to the passed grayscale value
