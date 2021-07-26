@@ -2,7 +2,10 @@ use crate::app::{font_index, FONTS};
 use crate::prelude::{FltkError, FltkErrorKind};
 use crate::utils::FlString;
 use fltk_sys::fl;
-use std::{ffi::{CStr, CString}, mem, path};
+use std::{
+    ffi::{CStr, CString},
+    mem, path,
+};
 
 /// Defines label types
 #[repr(i32)]
@@ -463,7 +466,7 @@ impl Color {
     pub fn lighter(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_lighter(self.bits)) }
     }
-    
+
     /// Returns a gray color value from black (i == 0) to white (i == FL_NUM_GRAY - 1)
     pub fn gray_ramp(val: i32) -> Color {
         unsafe { mem::transmute(fl::Fl_gray_ramp(val)) }
@@ -472,6 +475,21 @@ impl Color {
     /// Returns a gray color value from black (i == 0) to white (i == FL_NUM_GRAY - 1)
     pub fn color_average(c1: Color, c2: Color, weight: f32) -> Color {
         unsafe { mem::transmute(fl::Fl_color_average(c1.bits, c2.bits, weight)) }
+    }
+
+    /// Returns a color that contrasts with the background color.
+    pub fn contrast(fg: Color, bg: Color) -> Color {
+        unsafe { mem::transmute(fl::Fl_color_average(fg.bits, bg.bits)) }
+    }
+
+    /// Returns the color closest to the passed grayscale value
+    pub fn gray_scale(g: u8) -> Color {
+        unsafe { mem::transmute(fl::Fl_rgb_color2(g)) }
+    }
+
+    /// Returns the color closest to the passed rgb value
+    pub fn rgb_color(r: u8, g: u8, b: u8) -> Color {
+        unsafe { mem::transmute(fl::Fl_rgb_color(r, g, b)) }
     }
 }
 

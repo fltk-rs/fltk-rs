@@ -465,3 +465,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_color_average(arg1: libc::c_uint, arg2: libc::c_uint, f: f32) -> libc::c_uint;
 }
+extern "C" {
+    pub fn Fl_contrast(c1: libc::c_uint, c2: libc::c_uint) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_rgb_color(r: libc::c_uchar, g: libc::c_uchar, b: libc::c_uchar) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_rgb_color2(g: libc::c_uchar) -> libc::c_uint;
+}

@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.1.5] - Unreleased
+- Add Color::contrast, grayscale and rgb_color.
+
 ## [1.1.4] - 2021-07-23
 - Add app::set_frame_type_cb() and set_frame2().
 - Add Color::gray_ramp and color_average().
