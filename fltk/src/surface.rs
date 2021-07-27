@@ -182,8 +182,17 @@ impl SurfaceDevice for SvgFileSurface {
 }
 
 impl SvgFileSurface {
-    /// Returns a new `SvgFileSurface`
+    /// Returns a new `SvgFileSurface`. The path if non-existent will be created
+    /// # Panics
+    /// Panics on File creation failure and on writablity failure
     pub fn new<P: AsRef<path::Path>>(width: i32, height: i32, path: P) -> SvgFileSurface {
+        if path.as_ref().exists() {
+            let f = std::fs::File::open(path.as_ref()).unwrap();
+            assert_eq!(false, f.metadata().unwrap().permissions().readonly());
+        } else {
+            let f = std::fs::File::create(path.as_ref()).unwrap();
+            assert_eq!(false, f.metadata().unwrap().permissions().readonly());
+        }
         let path = CString::safe_new(path.as_ref().to_str().unwrap());
         unsafe {
             let ptr = Fl_SVG_File_Surface_new(width, height, path.as_ptr());
