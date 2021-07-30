@@ -734,6 +734,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
+            fn has_focus(&mut self) -> bool {
+                assert!(!self.was_deleted());
+                unsafe {
+                    fltk_sys::fl::Fl_focus() == self.inner as _
+                }
+            }
+
             fn was_deleted(&self) -> bool {
                 unsafe {
                     self.inner.is_null() || self.tracker.is_null() || fltk_sys::fl::Fl_Widget_Tracker_deleted(self.tracker) != 0
