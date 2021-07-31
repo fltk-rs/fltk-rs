@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.1.5] - 2021-07-31
+- Add Color::contrast, grayscale and rgb_color.
+- Add doc comment that SvgFileSurface can panic on creation.
+- Add WidgetExt::has_focus().
+
 ## [1.1.4] - 2021-07-23
 - Add app::set_frame_type_cb() and set_frame2().
 - Add Color::gray_ramp and color_average().
