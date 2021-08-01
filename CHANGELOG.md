@@ -1,9 +1,10 @@
 # Changelog
 
 
-## [1.1.6] - Unreleased
-- Add Color::to_rgb().
+## [1.1.6] - 2021-08-02
 - Fix high cpu usage due to spurious awakes.
+- Add Color::to_rgb().
+- Add menubutton example, this should be preferable over MenuItem for right click menus.
 
 ## [1.1.5] - 2021-07-31
 - Add Color::contrast, grayscale and rgb_color.
