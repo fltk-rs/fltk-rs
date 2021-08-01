@@ -1,6 +1,6 @@
 use crate::app::{font_index, FONTS};
 use crate::prelude::{FltkError, FltkErrorKind};
-use crate::utils::FlString;
+use crate::utils::{self, FlString};
 use fltk_sys::fl;
 use std::{
     ffi::{CStr, CString},
@@ -437,13 +437,13 @@ impl Color {
 
     /// Returns a color from hex or decimal
     pub fn from_u32(val: u32) -> Color {
-        let (r, g, b) = crate::utils::hex2rgb(val);
+        let (r, g, b) = utils::hex2rgb(val);
         Color::from_rgb(r, g, b)
     }
 
     /// Returns a color from hex or decimal
     pub fn from_hex(val: u32) -> Color {
-        let (r, g, b) = crate::utils::hex2rgb(val);
+        let (r, g, b) = utils::hex2rgb(val);
         Color::from_rgb(r, g, b)
     }
 
@@ -490,6 +490,26 @@ impl Color {
     /// Returns the color closest to the passed rgb value
     pub fn rgb_color(r: u8, g: u8, b: u8) -> Color {
         unsafe { mem::transmute(fl::Fl_rgb_color(r, g, b)) }
+    }
+
+    /// Get the RGB value of the color
+    pub fn to_rgb(&self) -> (u8, u8, u8) {
+        unsafe {
+            let val = self.bits;
+            let r = ((val >> 24) & 0xff) as u8;
+            let g = ((val >> 16) & 0xff) as u8;
+            let b = ((val >> 8) & 0xff) as u8;
+            let i = (val & 0xff) as u8;
+            if i == 0 {
+                (r, g, b)
+            } else {
+                let val = fl::Fl_cmap(val);
+                let r = ((val >> 24) & 0xff) as u8;
+                let g = ((val >> 16) & 0xff) as u8;
+                let b = ((val >> 8) & 0xff) as u8;
+                (r, g, b)
+            }
+        }
     }
 }
 
