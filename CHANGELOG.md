@@ -3,6 +3,7 @@
 
 ## [1.1.6] - Unreleased
 - Add Color::to_rgb().
+- Fix high cpu usage due to spurious awakes.
 
 ## [1.1.5] - 2021-07-31
 - Add Color::contrast, grayscale and rgb_color.
