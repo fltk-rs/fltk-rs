@@ -14,12 +14,12 @@ impl PopupButton {
         but.handle(|b, ev| match ev {
             Event::Enter => {
                 b.set_color(Color::Blue);
-                b.redraw();
+                b.top_window().unwrap().redraw();
                 true
             }
             Event::Leave => {
                 b.set_color(Color::BackGround);
-                b.redraw();
+                b.top_window().unwrap().redraw();
                 true
             }
             _ => false,
