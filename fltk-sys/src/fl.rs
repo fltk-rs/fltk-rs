@@ -474,3 +474,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_rgb_color2(g: libc::c_uchar) -> libc::c_uint;
 }
+extern "C" {
+    pub fn Fl_cmap(c: libc::c_uint) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_box_color(c: libc::c_uint) -> libc::c_uint;
+}
+extern "C" {
+    pub fn Fl_set_box_color(c: libc::c_uint);
+}

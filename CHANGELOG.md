@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.1.6] - 2021-08-02
+- Fix high cpu usage due to spurious awakes during app::wait().
+- Add Color::to_rgb().
+- Add frame_color() and set_frame_color().
+- Add menubutton example, this should be preferable over MenuItem for right click menus.
+
 ## [1.1.5] - 2021-07-31
 - Add Color::contrast, grayscale and rgb_color.
 - Add doc comment that SvgFileSurface can panic on creation.

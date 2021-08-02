@@ -2,8 +2,8 @@ use crate::app::init::CURRENT_FRAME;
 use crate::enums::{Color, FrameType, Mode};
 use crate::prelude::*;
 use crate::utils::FlString;
-use fltk_sys::fl::{self, Fl_draw_box_active};
-use std::{ffi::CString, os::raw};
+use fltk_sys::fl;
+use std::{ffi::CString, mem, os::raw};
 
 /// Set the app scheme
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -262,6 +262,18 @@ pub unsafe fn close_display() {
 /// Determines if the currently drawn box is active or inactive
 pub fn draw_frame_active() -> bool {
     unsafe {
-        Fl_draw_box_active() != 0
+        fl::Fl_draw_box_active() != 0
     }
+}
+
+/// Fl::box_color.
+/// Gets the current frame color within box/frame drawing mode
+pub fn frame_color(col: Color) -> Color {
+    unsafe { mem::transmute(fl::Fl_box_color(col.bits())) }
+}
+
+/// Fl::set_box_color.
+/// Sets the current frame color within box/frame drawing mode
+pub fn set_frame_color(col: Color) {
+    unsafe { fl::Fl_set_box_color(col.bits()) }
 }
