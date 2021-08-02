@@ -2,8 +2,9 @@
 
 
 ## [1.1.6] - 2021-08-02
-- Fix high cpu usage due to spurious awakes.
+- Fix high cpu usage due to spurious awakes during app::wait().
 - Add Color::to_rgb().
+- Add frame_color() and set_frame_color().
 - Add menubutton example, this should be preferable over MenuItem for right click menus.
 
 ## [1.1.5] - 2021-07-31
