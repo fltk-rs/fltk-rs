@@ -420,10 +420,16 @@ pub fn scale_xy(x: f64, y: f64) {
     unsafe { Fl_scale(x, y) }
 }
 
-/// Concatenates scaling transformation onto the current one
+/// Concatenates scaling transformation onto the current one for both x & y
 pub fn scale_x(x: f64) {
     unsafe { Fl_scale2(x) }
 }
+
+/// Concatenates scaling transformation onto the current one for both x & y
+pub fn scale(x: f64) {
+    unsafe { Fl_scale2(x) }
+}
+
 
 /// Concatenates translation transformation onto the current one
 pub fn translate(x: f64, y: f64) {
