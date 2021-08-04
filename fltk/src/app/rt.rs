@@ -247,7 +247,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fltk_sys::fl::Fl_add_timeout(tm, callback, data);
+        fl::Fl_add_timeout(tm, callback, data);
     }
 }
 
@@ -281,7 +281,7 @@ pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fltk_sys::fl::Fl_repeat_timeout(tm, callback, data);
+        fl::Fl_repeat_timeout(tm, callback, data);
     }
 }
 
@@ -296,7 +296,7 @@ pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fltk_sys::fl::Fl_remove_timeout(callback, data);
+        fl::Fl_remove_timeout(callback, data);
     }
 }
 
@@ -311,7 +311,7 @@ pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(shim);
-        fltk_sys::fl::Fl_has_timeout(callback, data) != 0
+        fl::Fl_has_timeout(callback, data) != 0
     }
 }
 
@@ -338,7 +338,7 @@ pub fn add_timeout2(tm: f64, cb: fn()) {
         let data: *mut raw::c_void = std::ptr::null_mut();
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
             Some(mem::transmute(cb));
-        fltk_sys::fl::Fl_add_timeout(tm, callback, data);
+        fl::Fl_add_timeout(tm, callback, data);
     }
 }
 
@@ -367,7 +367,7 @@ pub fn repeat_timeout2(tm: f64, cb: fn()) {
         let data: *mut raw::c_void = std::ptr::null_mut();
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
             Some(mem::transmute(cb));
-        fltk_sys::fl::Fl_repeat_timeout(tm, callback, data);
+        fl::Fl_repeat_timeout(tm, callback, data);
     }
 }
 
@@ -377,7 +377,7 @@ pub fn remove_timeout2(cb: fn()) {
         let data: *mut raw::c_void = std::ptr::null_mut();
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
             Some(mem::transmute(cb));
-        fltk_sys::fl::Fl_remove_timeout(callback, data);
+        fl::Fl_remove_timeout(callback, data);
     }
 }
 
@@ -387,6 +387,20 @@ pub fn has_timeout2(cb: fn()) -> bool {
         let data: *mut raw::c_void = std::ptr::null_mut();
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
             Some(mem::transmute(cb));
-        fltk_sys::fl::Fl_has_timeout(callback, data) != 0
+        fl::Fl_has_timeout(callback, data) != 0
     }
+}
+
+/// Add a system handler
+/// # Safety
+/// FLTK makes no assurances regarding handling by the system handler
+pub unsafe fn add_system_handler(cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>, data: *mut raw::c_void) {
+    fl::Fl_add_system_handler(cb, data);
+}
+
+/// Add a system handler
+/// # Safety
+/// FLTK makes no assurances regarding handling by the system handler
+pub unsafe fn remove_system_handler(cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>) {
+    fl::Fl_remove_system_handler(cb);
 }
