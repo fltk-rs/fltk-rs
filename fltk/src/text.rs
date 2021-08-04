@@ -285,13 +285,13 @@ impl TextBuffer {
     pub fn selection_position(&mut self) -> Option<(i32, i32)> {
         assert!(!self.inner.is_null());
         unsafe {
-            let start: *mut raw::c_int = std::ptr::null_mut();
-            let end: *mut raw::c_int = std::ptr::null_mut();
-            let ret = Fl_Text_Buffer_selection_position(self.inner, start, end);
+            let mut start = 0;
+            let mut end = 0;
+            let ret = Fl_Text_Buffer_selection_position(self.inner, &mut start as _, &mut end as _);
             if ret == 0 {
                 None
             } else {
-                let x = (*start as i32, *end as i32);
+                let x = (start as i32, end as i32);
                 Some(x)
             }
         }
@@ -344,13 +344,13 @@ impl TextBuffer {
     pub fn highlight_position(&mut self) -> Option<(i32, i32)> {
         assert!(!self.inner.is_null());
         unsafe {
-            let start: *mut raw::c_int = std::ptr::null_mut();
-            let end: *mut raw::c_int = std::ptr::null_mut();
-            let ret = Fl_Text_Buffer_highlight_position(self.inner, start, end);
+            let mut start = 0;
+            let mut end = 0;
+            let ret = Fl_Text_Buffer_highlight_position(self.inner, &mut start as _, &mut end as _);
             if ret == 0 {
                 None
             } else {
-                let x = (*start as i32, *end as i32);
+                let x = (start as i32, end as i32);
                 Some(x)
             }
         }

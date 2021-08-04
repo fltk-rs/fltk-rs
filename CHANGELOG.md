@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.1.7] - 2021-08-04
+- Fix invalid cast in TextBuffer::selection_position().
+- Update FLTK.
+- Add draw::scale().
+- Add app::add_system_handler and remove_system_handler.
+
 ## [1.1.6] - 2021-08-02
 - Fix high cpu usage due to spurious awakes during app::wait().
 - Add Color::to_rgb().
