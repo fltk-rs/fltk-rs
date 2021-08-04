@@ -1,7 +1,8 @@
 # Changelog
 
 
-## [1.1.7] - Unreleased
+## [1.1.7] - 2021-08-04
+- Fix invalid cast in TextBuffer::selection_position().
 - Update FLTK.
 - Add draw::scale().
 - Add app::add_system_handler and remove_system_handler.
