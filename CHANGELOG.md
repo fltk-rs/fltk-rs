@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.1.8] - Unreleased
+- Add output::OutputType.
+
 ## [1.1.7] - 2021-08-04
 - Fix invalid cast in TextBuffer::selection_position().
 - Update FLTK.

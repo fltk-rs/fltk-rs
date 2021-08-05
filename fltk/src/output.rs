@@ -9,6 +9,16 @@ use std::{
     os::raw,
 };
 
+/// Sets the input widget's type
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum OutputType {
+    /// Normal input
+    Normal = 8,
+    /// Multiline input
+    Multiline = 12,
+}
+
 /// Creates an output widget
 #[derive(WidgetBase, WidgetExt, InputExt, Debug)]
 pub struct Output {
