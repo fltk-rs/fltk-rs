@@ -354,6 +354,15 @@ impl Font {
             }
         }
     }
+
+    /// Get the font's real name
+    pub fn get_name(&self) -> String {
+        unsafe {
+            CStr::from_ptr(fl::Fl_get_font_name(self.bits as i32))
+                .to_string_lossy()
+                .to_string()
+        }
+    }
 }
 
 bitflags! {

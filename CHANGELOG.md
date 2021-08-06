@@ -5,6 +5,7 @@
 - Add output::OutputType.
 - Add format_text example. Contributed by @mvasi90.
 - Fix some clippy lints.
+- Add Font::get_name().
 
 ## [1.1.7] - 2021-08-04
 - Fix invalid cast in TextBuffer::selection_position().
