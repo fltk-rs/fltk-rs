@@ -3,6 +3,8 @@
 
 ## [1.1.8] - Unreleased
 - Add output::OutputType.
+- Add format_text example. Contributed by @mvasi90.
+- Fix some clippy lints.
 
 ## [1.1.7] - 2021-08-04
 - Fix invalid cast in TextBuffer::selection_position().

@@ -188,10 +188,10 @@ impl SvgFileSurface {
     pub fn new<P: AsRef<path::Path>>(width: i32, height: i32, path: P) -> SvgFileSurface {
         if path.as_ref().exists() {
             let f = std::fs::File::open(path.as_ref()).unwrap();
-            assert_eq!(false, f.metadata().unwrap().permissions().readonly());
+            assert!(!f.metadata().unwrap().permissions().readonly());
         } else {
             let f = std::fs::File::create(path.as_ref()).unwrap();
-            assert_eq!(false, f.metadata().unwrap().permissions().readonly());
+            assert!(!f.metadata().unwrap().permissions().readonly());
         }
         let path = CString::safe_new(path.as_ref().to_str().unwrap());
         unsafe {
