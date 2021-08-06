@@ -701,4 +701,164 @@ impl RgbImage {
         let h = self.data_h();
         (self.to_rgb_data(), w, h)
     }
+
+    /// Convert from one ColorDepth to another ColorDepth
+    pub fn convert(&self, new_depth: ColorDepth) -> Result<RgbImage, FltkError> {
+        let depth = self.depth() as i32;
+        let new_depth = new_depth as i32;
+        if depth == new_depth {
+            Ok(self.copy())
+        } else {
+            let w = self.w();
+            let h = self.h();
+            let mut data = self.to_rgb_data();
+            let mut temp = Vec::new();
+            match depth {
+                1 => match new_depth {
+                    2 => {
+                        for i in data {
+                            temp.push(i);
+                            temp.push(255);
+                        }
+                        assert!(temp.len() as i32 == w * h * 2);
+                        RgbImage::new(&temp, w, h, ColorDepth::La8)
+                    }
+                    3 => {
+                        for i in data {
+                            temp.push(i);
+                            temp.push(i);
+                            temp.push(i);
+                        }
+                        assert!(temp.len() as i32 == w * h * 3);
+                        RgbImage::new(&temp, w, h, ColorDepth::Rgb8)
+                    }
+                    4 => {
+                        for i in data {
+                            temp.push(i);
+                            temp.push(i);
+                            temp.push(i);
+                            temp.push(255);
+                        }
+                        assert!(temp.len() as i32 == w * h * 4);
+                        RgbImage::new(&temp, w, h, ColorDepth::Rgba8)
+                    }
+                    _ => unreachable!(),
+                },
+                2 => match new_depth {
+                    1 => {
+                        for (i, item) in data.iter().enumerate() {
+                            if i % 2 == 0 {
+                                temp.push(*item);
+                            } else {
+                                // skip
+                            }
+                        }
+                        assert!(temp.len() as i32 == w * h);
+                        RgbImage::new(&temp, w, h, ColorDepth::L8)
+                    }
+                    3 => {
+                        for (i, item) in data.iter().enumerate() {
+                            if i % 2 == 0 {
+                                temp.push(*item);
+                                temp.push(*item);
+                                temp.push(*item);
+                            } else {
+                                // skip
+                            }
+                        }
+                        assert!(temp.len() as i32 == w * h * 3);
+                        RgbImage::new(&temp, w, h, ColorDepth::Rgb8)
+                    }
+                    4 => {
+                        for (i, item) in data.iter().enumerate() {
+                            temp.push(*item);
+                            if i % 2 == 0 {
+                                temp.push(*item);
+                                temp.push(*item);
+                            }
+                        }
+                        assert!(temp.len() as i32 == w * h * 4);
+                        RgbImage::new(&temp, w, h, ColorDepth::Rgba8)
+                    }
+                    _ => unreachable!(),
+                },
+                3 => match new_depth {
+                    1 => {
+                        for (_, pixel) in data.chunks_exact_mut(3).enumerate() {
+                            temp.push(
+                                (pixel[0] as f64 * 0.299
+                                    + pixel[1] as f64 * 0.587
+                                    + pixel[2] as f64 * 0.114)
+                                    as u8,
+                            );
+                        }
+                        assert!(temp.len() as i32 == w * h);
+                        RgbImage::new(&temp, w, h, ColorDepth::L8)
+                    }
+                    2 => {
+                        for (_, pixel) in data.chunks_exact_mut(3).enumerate() {
+                            temp.push(
+                                (pixel[0] as f64 * 0.299
+                                    + pixel[1] as f64 * 0.587
+                                    + pixel[2] as f64 * 0.114)
+                                    as u8,
+                            );
+                            temp.push(255);
+                        }
+                        assert!(temp.len() as i32 == w * h * 2);
+                        RgbImage::new(&temp, w, h, ColorDepth::La8)
+                    }
+                    4 => {
+                        for (_, pixel) in data.chunks_exact_mut(3).enumerate() {
+                            temp.push(pixel[0]);
+                            temp.push(pixel[1]);
+                            temp.push(pixel[2]);
+                            temp.push(255);
+                        }
+                        assert!(temp.len() as i32 == w * h * 4);
+                        RgbImage::new(&temp, w, h, ColorDepth::Rgba8)
+                    }
+                    _ => unreachable!(),
+                },
+                4 => match new_depth {
+                    1 => {
+                        for (_, pixel) in data.chunks_exact_mut(4).enumerate() {
+                            temp.push(
+                                (pixel[0] as f64 * 0.299
+                                    + pixel[1] as f64 * 0.587
+                                    + pixel[2] as f64 * 0.114)
+                                    as u8,
+                            );
+                        }
+                        assert!(temp.len() as i32 == w * h);
+                        RgbImage::new(&temp, w, h, ColorDepth::L8)
+                    }
+                    2 => {
+                        for (_, pixel) in data.chunks_exact_mut(4).enumerate() {
+                            temp.push(
+                                (pixel[0] as f64 * 0.299
+                                    + pixel[1] as f64 * 0.587
+                                    + pixel[2] as f64 * 0.114)
+                                    as u8,
+                            );
+                            temp.push(pixel[3]);
+                        }
+                        assert!(temp.len() as i32 == w * h * 2);
+                        RgbImage::new(&temp, w, h, ColorDepth::La8)
+                    }
+                    3 => {
+                        for (_, pixel) in data.chunks_exact_mut(4).enumerate() {
+                            temp.push(pixel[0]);
+                            temp.push(pixel[1]);
+                            temp.push(pixel[2]);
+                        }
+                        assert!(temp.len() as i32 == w * h * 2);
+                        RgbImage::new(&temp, w, h, ColorDepth::La8)
+                    }
+                    _ => unreachable!(),
+                },
+                _ => unreachable!(),
+            }
+        }
+    }
 }
