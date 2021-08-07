@@ -7,7 +7,6 @@ use fltk_sys::group::*;
 use std::{
     ffi::{CStr, CString},
     mem,
-    ops::{Deref, DerefMut},
     os::raw,
 };
 
@@ -440,19 +439,7 @@ impl VGrid {
     }
 }
 
-impl Deref for VGrid {
-    type Target = Pack;
-
-    fn deref(&self) -> &Self::Target {
-        &self.vpack
-    }
-}
-
-impl DerefMut for VGrid {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.vpack
-    }
-}
+crate::widget_derive!(VGrid, Pack, vpack);
 
 /**
     Defines a Horizontal Grid (custom widget).
@@ -550,19 +537,7 @@ impl HGrid {
     }
 }
 
-impl Deref for HGrid {
-    type Target = Pack;
-
-    fn deref(&self) -> &Self::Target {
-        &self.hpack
-    }
-}
-
-impl DerefMut for HGrid {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.hpack
-    }
-}
+crate::widget_derive!(HGrid, Pack, hpack);
 
 /// A wrapper around a vertical pack, with `auto_layout`ing using the add method
 #[derive(Debug, Clone)]
@@ -602,19 +577,7 @@ impl Column {
     }
 }
 
-impl Deref for Column {
-    type Target = Pack;
-
-    fn deref(&self) -> &Self::Target {
-        &self.p
-    }
-}
-
-impl DerefMut for Column {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.p
-    }
-}
+crate::widget_derive!(Column, Pack, p);
 
 /// A wrapper around a Horizontal pack, with `auto_layout`ing using the add method
 #[derive(Debug, Clone)]
@@ -655,16 +618,4 @@ impl Row {
     }
 }
 
-impl Deref for Row {
-    type Target = Pack;
-
-    fn deref(&self) -> &Self::Target {
-        &self.p
-    }
-}
-
-impl DerefMut for Row {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.p
-    }
-}
+crate::widget_derive!(Row, Pack, p);

@@ -1,6 +1,5 @@
 use fltk::{enums::*, prelude::*, *};
 use std::cell::RefCell;
-use std::ops::{Deref, DerefMut};
 use std::rc::Rc;
 
 #[derive(Debug, Clone)]
@@ -58,19 +57,7 @@ impl MyDial {
     }
 }
 
-impl Deref for MyDial {
-    type Target = group::Group;
-
-    fn deref(&self) -> &Self::Target {
-        &self.main_wid
-    }
-}
-
-impl DerefMut for MyDial {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.main_wid
-    }
-}
+widget_derive!(MyDial, group::Group, main_wid);
 
 fn main() {
     let app = app::App::default();
