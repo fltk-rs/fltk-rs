@@ -7,6 +7,7 @@
 - Fix some clippy lints.
 - Add Font::get_name().
 - Add image::RgbImage::convert().
+- Add ColorDepth::from_u8().
 
 ## [1.1.7] - 2021-08-04
 - Fix invalid cast in TextBuffer::selection_position().

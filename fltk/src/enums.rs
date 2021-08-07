@@ -37,6 +37,18 @@ pub enum ColorDepth {
     Rgba8 = 4,
 }
 
+/// Implements some convenience methods for ColorDepth
+impl ColorDepth {
+    /// Create a ColorDepth from an u8 value
+    pub fn from_u8(val: u8) -> Result<ColorDepth, FltkError> {
+        if val < 1 || val > 4 {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+        } else {
+            Ok(unsafe {mem::transmute(val)} )
+        }
+    }
+}
+
 /// Defines the frame types which can be set using the `set_frame()` and `set_down_frame()` methods
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]

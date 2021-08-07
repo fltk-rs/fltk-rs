@@ -25,7 +25,7 @@ pub struct SharedImage {
 impl SharedImage {
     /// Loads a `SharedImage` from a path
     /// # Errors
-    /// Errors on non-existent path or invalid format
+    /// Errors on non-existent path or invalid format, also errors if app::App was not initialized
     pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<SharedImage, FltkError> {
         Self::load_(path.as_ref())
     }
