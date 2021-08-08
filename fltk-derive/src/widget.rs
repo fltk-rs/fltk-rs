@@ -35,19 +35,10 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
             }
         }
 
-        impl #name {
-            /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
-            /// # Arguments
-            /// * `x` - The x coordinate in the screen
-            /// * `y` - The y coordinate in the screen
-            /// * `width` - The width of the widget
-            /// * `heigth` - The height of the widget
-            /// * `title` - The title or label of the widget
-            /// The title is expected to be a static str or None.
-            /// To use dynamic strings use `with_label(self, &str)` or `set_label(&mut self, &str)`
-            /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
-            /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
-            pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, width: i32, height: i32, title: T) -> #name {
+        crate::widget_extends!(#name);
+
+        unsafe impl WidgetBase for #name {
+            fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, width: i32, height: i32, title: T) -> #name {
                 let temp = if let Some(title) = title.into() {
                     CString::safe_new(title).into_raw()
                 } else {
@@ -73,11 +64,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
-        }
 
-        crate::widget_extends!(#name);
-
-        unsafe impl WidgetBase for #name {
             fn delete(mut wid: Self) {
                 assert!(!wid.was_deleted());
                 unsafe {
