@@ -520,6 +520,18 @@ pub unsafe trait WidgetExt {
 
 /// Defines the extended methods implemented by all widgets
 pub unsafe trait WidgetBase: WidgetExt {
+    /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
+    /// # Arguments
+    /// * `x` - The x coordinate in the screen
+    /// * `y` - The y coordinate in the screen
+    /// * `width` - The width of the widget
+    /// * `heigth` - The height of the widget
+    /// * `title` - The title or label of the widget
+    /// The title is expected to be a static str or None.
+    /// To use dynamic strings use `with_label(self, &str)` or `set_label(&mut self, &str)`
+    /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
+    /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
+    fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, width: i32, height: i32, title: T) -> Self;
     /// Deletes widgets and their children.
     fn delete(wid: Self)
     where
