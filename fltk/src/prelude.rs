@@ -103,6 +103,201 @@ pub trait WidgetType {
     fn from_i32(val: i32) -> Self;
 }
 
+
+/// Defines a set of convenience functions for constructing and anchoring custom widgets.
+/// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
+/// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.
+#[macro_export]
+macro_rules! widget_extends {
+    ($widget:ty) => {
+        impl $widget {
+            /// Initialize to position x, y
+            pub fn with_pos(mut self, x: i32, y: i32) -> Self {
+                let w = self.w();
+                let h = self.h();
+                self.resize(x, y, w, h);
+                self
+            }
+
+            /// Initialize to size width, height
+            pub fn with_size(mut self, width: i32, height: i32) -> Self {
+                let x = self.x();
+                let y = self.y();
+                let w = self.width();
+                let h = self.height();
+                if w == 0 || h == 0 {
+                    self.widget_resize(x, y, width, height);
+                } else {
+                    self.resize(x, y, width, height);
+                }
+                self
+            }
+
+            /// Initialize with a label
+            pub fn with_label(mut self, title: &str) -> Self {
+                self.set_label(title);
+                self
+            }
+
+            /// Initialize with alignment
+            pub fn with_align(mut self, align: crate::enums::Align) -> Self {
+                self.set_align(align);
+                self
+            }
+
+            /// Initialize with type
+            pub fn with_type<T: WidgetType>(mut self, typ: T) -> Self {
+                assert!(!self.was_deleted());
+                self.set_type(typ);
+                self
+            }
+
+            /// Initialize at bottom of another widget
+            pub fn below_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+                assert!(!wid.was_deleted());
+                assert!(!self.was_deleted());
+                let w = self.w();
+                let h = self.h();
+                debug_assert!(
+                    w != 0 && h != 0,
+                    "below_of requires the size of the widget to be known!"
+                );
+                self.resize(wid.x(), wid.y() + wid.h() + padding, w, h);
+                self
+            }
+
+            /// Initialize above of another widget
+            pub fn above_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+                assert!(!wid.was_deleted());
+                assert!(!self.was_deleted());
+                let w = self.w();
+                let h = self.h();
+                debug_assert!(
+                    w != 0 && h != 0,
+                    "above_of requires the size of the widget to be known!"
+                );
+                self.resize(wid.x(), wid.y() - padding - h, w, h);
+                self
+            }
+
+            /// Initialize right of another widget
+            pub fn right_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+                assert!(!wid.was_deleted());
+                assert!(!self.was_deleted());
+                let w = self.w();
+                let h = self.h();
+                debug_assert!(
+                    w != 0 && h != 0,
+                    "right_of requires the size of the widget to be known!"
+                );
+                self.resize(wid.x() + wid.width() + padding, wid.y(), w, h);
+                self
+            }
+
+            /// Initialize left of another widget
+            pub fn left_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+                assert!(!wid.was_deleted());
+                assert!(!self.was_deleted());
+                let w = self.w();
+                let h = self.h();
+                debug_assert!(
+                    w != 0 && h != 0,
+                    "left_of requires the size of the widget to be known!"
+                );
+                self.resize(wid.x() - w - padding, wid.y(), w, h);
+                self
+            }
+
+            /// Initialize center of another widget
+            pub fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(
+                    w.width() != 0 && w.height() != 0,
+                    "center_of requires the size of the widget to be known!"
+                );
+                let sw = self.width() as f64;
+                let sh = self.height() as f64;
+                let ww = w.width() as f64;
+                let wh = w.height() as f64;
+                let sx = (ww - sw) / 2.0;
+                let sy = (wh - sh) / 2.0;
+                let wx = if w.as_window().is_some() { 0 } else { w.x() };
+                let wy = if w.as_window().is_some() { 0 } else { w.y() };
+                self.resize(sx as i32 + wx, sy as i32 + wy, sw as i32, sh as i32);
+                self.redraw();
+                self
+            }
+
+            /// Initialize center of parent
+            pub fn center_of_parent(mut self) -> Self {
+                assert!(!self.was_deleted());
+                if let Some(w) = self.parent() {
+                    debug_assert!(
+                        w.width() != 0 && w.height() != 0,
+                        "center_of requires the size of the widget to be known!"
+                    );
+                    let sw = self.width() as f64;
+                    let sh = self.height() as f64;
+                    let ww = w.width() as f64;
+                    let wh = w.height() as f64;
+                    let sx = (ww - sw) / 2.0;
+                    let sy = (wh - sh) / 2.0;
+                    let wx = if w.as_window().is_some() { 0 } else { w.x() };
+                    let wy = if w.as_window().is_some() { 0 } else { w.y() };
+                    self.resize(sx as i32 + wx, sy as i32 + wy, sw as i32, sh as i32);
+                    self.redraw();
+                }
+                self
+            }
+
+            /// Initialize to the size of another widget
+            pub fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(
+                    w.width() != 0 && w.height() != 0,
+                    "size_of requires the size of the widget to be known!"
+                );
+                let x = self.x();
+                let y = self.y();
+                self.resize(x, y, w.width(), w.height());
+                self
+            }
+
+            /// Initialize to the size of the parent
+            pub fn size_of_parent(mut self) -> Self {
+                assert!(!self.was_deleted());
+                if let Some(parent) = self.parent() {
+                    let w = parent.width();
+                    let h = parent.height();
+                    let x = self.x();
+                    let y = self.y();
+                    self.resize(x, y, w, h);
+                }
+                self
+            }
+        }
+    };
+
+    ($widget:ty, $base:ty, $member:tt) => {
+        crate::widget_extends!($widget);
+        impl std::ops::Deref for $widget {
+            type Target = $base;
+
+            fn deref(&self) -> &Self::Target {
+                &self.$member
+            }
+        }
+
+        impl std::ops::DerefMut for $widget {
+            fn deref_mut(&mut self) -> &mut Self::Target {
+                &mut self.$member
+            }
+        }
+    };
+}
+
 /// Defines the methods implemented by all widgets
 pub unsafe trait WidgetExt {
     /// Set to position x, y
@@ -139,54 +334,6 @@ pub unsafe trait WidgetExt {
     /// # Safety
     /// Can return multiple mutable pointers to the same widget
     unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
-    /// Initialize to position x, y, (should only be called on initialization)
-    fn with_pos(self, x: i32, y: i32) -> Self
-    where
-        Self: Sized;
-    /// Initialilze to dimensions width and height, (should only be called on initialization)
-    fn with_size(self, width: i32, height: i32) -> Self
-    where
-        Self: Sized;
-    /// Initialize with label/title, (should only be called on initialization)
-    fn with_label(self, title: &str) -> Self
-    where
-        Self: Sized;
-    /// Sets the initial alignment of the widget, (should only be called on initialization)
-    fn with_align(self, align: Align) -> Self
-    where
-        Self: Sized;
-    /// Positions the widget below w, the size of w should be known
-    fn below_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
-    where
-        Self: Sized;
-    /// Positions the widget above w, the size of w should be known
-    fn above_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
-    where
-        Self: Sized;
-    /// Positions the widget to the right of w, the size of w should be known
-    fn right_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
-    where
-        Self: Sized;
-    /// Positions the widget to the left of w, the size of w should be known
-    fn left_of<W: WidgetExt>(self, w: &W, padding: i32) -> Self
-    where
-        Self: Sized;
-    /// Positions the widget to the center of w, the size of w should be known
-    fn center_of<W: WidgetExt>(self, w: &W) -> Self
-    where
-        Self: Sized;
-    /// Positions the widget to the center of its parent
-    fn center_of_parent(self) -> Self
-    where
-        Self: Sized;
-    /// Takes the size of w, the size of w should be known
-    fn size_of<W: WidgetExt>(self, w: &W) -> Self
-    where
-        Self: Sized;
-    /// Takes the size of the parent group or window
-    fn size_of_parent(self) -> Self
-    where
-        Self: Sized;
     /// Checks whether the self widget is inside another widget
     fn inside<W: WidgetExt>(&self, wid: &W) -> bool
     where
@@ -197,10 +344,6 @@ pub unsafe trait WidgetExt {
         Self: Sized;
     /// Sets the widget type
     fn set_type<T: WidgetType>(&mut self, typ: T)
-    where
-        Self: Sized;
-    /// Set the type of the widget at construction
-    fn with_type<T: WidgetType>(self, typ: T) -> Self
     where
         Self: Sized;
     /// Sets the image of the widget
@@ -377,24 +520,6 @@ pub unsafe trait WidgetExt {
 
 /// Defines the extended methods implemented by all widgets
 pub unsafe trait WidgetBase: WidgetExt {
-    /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
-    /// # Arguments
-    /// * `x` - The x coordinate in the screen
-    /// * `y` - The y coordinate in the screen
-    /// * `width` - The width of the widget
-    /// * `heigth` - The height of the widget
-    /// * `title` - The title or label of the widget
-    /// The title is expected to be a static str or None.
-    /// To use dynamic strings use `with_label(self, &str)` or `set_label(&mut self, &str)`
-    /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
-    /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
-    fn new<T: Into<Option<&'static str>>>(
-        x: i32,
-        y: i32,
-        width: i32,
-        height: i32,
-        title: T,
-    ) -> Self;
     /// Deletes widgets and their children.
     fn delete(wid: Self)
     where
@@ -1304,195 +1429,4 @@ pub trait SurfaceDevice {
     fn push_current(new_current: &Self);
     /// Pop the current surface
     fn pop_current();
-}
-
-/// Defines a set of convenience functions for constructing and anchoring custom widgets.
-/// Usage: fltk::widget_derive!(CustomWidget, BaseWidget, member);
-/// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.
-#[macro_export]
-macro_rules! widget_derive {
-    ($widget:ty, $base:ty, $member:tt) => {
-        impl std::ops::Deref for $widget {
-            type Target = $base;
-
-            fn deref(&self) -> &Self::Target {
-                &self.$member
-            }
-        }
-
-        impl std::ops::DerefMut for $widget {
-            fn deref_mut(&mut self) -> &mut Self::Target {
-                &mut self.$member
-            }
-        }
-
-        impl $widget {
-            /// Initialize to position x, y
-            pub fn with_pos(mut self, x: i32, y: i32) -> Self {
-                let w = self.w();
-                let h = self.h();
-                self.resize(x, y, w, h);
-                self
-            }
-
-            /// Initialize to size width, height
-            pub fn with_size(mut self, width: i32, height: i32) -> Self {
-                let x = self.x();
-                let y = self.y();
-                let w = self.width();
-                let h = self.height();
-                if w == 0 || h == 0 {
-                    self.widget_resize(x, y, width, height);
-                } else {
-                    self.resize(x, y, width, height);
-                }
-                self
-            }
-
-            /// Initialize with a label
-            pub fn with_label(mut self, title: &str) -> Self {
-                self.set_label(title);
-                self
-            }
-
-            /// Initialize with alignment
-            pub fn with_align(mut self, align: crate::enums::Align) -> Self {
-                self.set_align(align);
-                self
-            }
-
-            /// Initialize with type
-            pub fn with_type<T: WidgetType>(mut self, typ: T) -> Self {
-                assert!(!self.was_deleted());
-                self.set_type(typ);
-                self
-            }
-
-            /// Initialize at bottom of another widget
-            pub fn below_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
-                let w = self.w();
-                let h = self.h();
-                debug_assert!(
-                    w != 0 && h != 0,
-                    "below_of requires the size of the widget to be known!"
-                );
-                self.resize(wid.x(), wid.y() + wid.h() + padding, w, h);
-                self
-            }
-
-            /// Initialize above of another widget
-            pub fn above_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
-                let w = self.w();
-                let h = self.h();
-                debug_assert!(
-                    w != 0 && h != 0,
-                    "above_of requires the size of the widget to be known!"
-                );
-                self.resize(wid.x(), wid.y() - padding - h, w, h);
-                self
-            }
-
-            /// Initialize right of another widget
-            pub fn right_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
-                let w = self.w();
-                let h = self.h();
-                debug_assert!(
-                    w != 0 && h != 0,
-                    "right_of requires the size of the widget to be known!"
-                );
-                self.resize(wid.x() + wid.width() + padding, wid.y(), w, h);
-                self
-            }
-
-            /// Initialize left of another widget
-            pub fn left_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
-                let w = self.w();
-                let h = self.h();
-                debug_assert!(
-                    w != 0 && h != 0,
-                    "left_of requires the size of the widget to be known!"
-                );
-                self.resize(wid.x() - w - padding, wid.y(), w, h);
-                self
-            }
-
-            /// Initialize center of another widget
-            pub fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(
-                    w.width() != 0 && w.height() != 0,
-                    "center_of requires the size of the widget to be known!"
-                );
-                let sw = self.width() as f64;
-                let sh = self.height() as f64;
-                let ww = w.width() as f64;
-                let wh = w.height() as f64;
-                let sx = (ww - sw) / 2.0;
-                let sy = (wh - sh) / 2.0;
-                let wx = if w.as_window().is_some() { 0 } else { w.x() };
-                let wy = if w.as_window().is_some() { 0 } else { w.y() };
-                self.resize(sx as i32 + wx, sy as i32 + wy, sw as i32, sh as i32);
-                self.redraw();
-                self
-            }
-
-            /// Initialize center of parent
-            pub fn center_of_parent(mut self) -> Self {
-                assert!(!self.was_deleted());
-                if let Some(w) = self.parent() {
-                    debug_assert!(
-                        w.width() != 0 && w.height() != 0,
-                        "center_of requires the size of the widget to be known!"
-                    );
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let ww = w.width() as f64;
-                    let wh = w.height() as f64;
-                    let sx = (ww - sw) / 2.0;
-                    let sy = (wh - sh) / 2.0;
-                    let wx = if w.as_window().is_some() { 0 } else { w.x() };
-                    let wy = if w.as_window().is_some() { 0 } else { w.y() };
-                    self.resize(sx as i32 + wx, sy as i32 + wy, sw as i32, sh as i32);
-                    self.redraw();
-                }
-                self
-            }
-
-            /// Initialize to the size of another widget
-            pub fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(
-                    w.width() != 0 && w.height() != 0,
-                    "size_of requires the size of the widget to be known!"
-                );
-                let x = self.x();
-                let y = self.y();
-                self.resize(x, y, w.width(), w.height());
-                self
-            }
-
-            /// Initialize to the size of the parent
-            pub fn size_of_parent(mut self) -> Self {
-                assert!(!self.was_deleted());
-                if let Some(parent) = self.parent() {
-                    let w = parent.width();
-                    let h = parent.height();
-                    let x = self.x();
-                    let y = self.y();
-                    self.resize(x, y, w, h);
-                }
-                self
-            }
-        }
-    };
 }

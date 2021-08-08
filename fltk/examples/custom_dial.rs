@@ -57,7 +57,7 @@ impl MyDial {
     }
 }
 
-widget_derive!(MyDial, group::Group, main_wid);
+widget_extends!(MyDial, group::Group, main_wid);
 
 fn main() {
     let app = app::App::default();

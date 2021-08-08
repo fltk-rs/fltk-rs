@@ -64,30 +64,34 @@ An example hello world application:
 
 ```rust,no_run
 use fltk::{app, prelude::*, window::Window};
-let app = app::App::default();
-let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
-wind.end();
-wind.show();
-app.run().unwrap();
+fn main() {
+    let app = app::App::default();
+    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    wind.end();
+    wind.show();
+    app.run().unwrap();
+}
 ```
 
 Another example showing the basic callback functionality:
 ```rust,no_run
 use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
-let app = app::App::default();
-let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
-let mut frame = Frame::new(0, 0, 400, 200, "");
-let mut but = Button::new(160, 210, 80, 40, "Click me!");
-wind.end();
-wind.show();
-but.set_callback(move |_| frame.set_label("Hello World!")); // the closure capture is mutable borrow to our button
-app.run().unwrap();
+fn main() {
+    let app = app::App::default();
+    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    let mut frame = Frame::new(0, 0, 400, 200, "");
+    let mut but = Button::new(160, 210, 80, 40, "Click me!");
+    wind.end();
+    wind.show();
+    but.set_callback(move |_| frame.set_label("Hello World!")); // the closure capture is mutable borrow to our button
+    app.run().unwrap();
+}
 ```
 Please check the examples directory for more examples.
 You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 
 ```rust,no_run
-use fltk::{button::*, prelude::*};
+use fltk::{button::Button, prelude::*};
 let but1 = Button::new(10, 10, 80, 40, "Button 1");
 
 let but2 = Button::default()
@@ -98,40 +102,49 @@ let but2 = Button::default()
 
 An example of a counter showing use of the builder pattern:
 ```rust,no_run
-use fltk::{app, button::*, frame::*, prelude::*, window::*};
-let app = app::App::default();
-let mut wind = Window::default()
-    .with_size(160, 200)
-    .center_screen()
-    .with_label("Counter");
-let mut frame = Frame::default()
-    .with_size(100, 40)
-    .center_of(&wind)
-    .with_label("0");
-let mut but_inc = Button::default()
-    .size_of(&frame)
-    .above_of(&frame, 0)
-    .with_label("+");
-let mut but_dec = Button::default()
-    .size_of(&frame)
-    .below_of(&frame, 0)
-    .with_label("-");
-wind.make_resizable(true);
-wind.end();
-wind.show();
-/* Event handling */
+use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
+fn main() {
+    let app = app::App::default();
+    let mut wind = Window::default()
+        .with_size(160, 200)
+        .center_screen()
+        .with_label("Counter");
+    let mut frame = Frame::default()
+        .with_size(100, 40)
+        .center_of(&wind)
+        .with_label("0");
+    let mut but_inc = Button::default()
+        .size_of(&frame)
+        .above_of(&frame, 0)
+        .with_label("+");
+    let mut but_dec = Button::default()
+        .size_of(&frame)
+        .below_of(&frame, 0)
+        .with_label("-");
+    wind.make_resizable(true);
+    wind.end();
+    wind.show();
+    /* Event handling */
+    app.run().unwrap();
+}
 ```
-Alternatively, you can use packs to layout your widgets:
+Alternatively, you can use packs, columns, rows to layout your widgets (or the [fltk-flex crate](https://github.com/fltk-rs/fltk-flex) for flexbox layouts):
 ```rust,no_run
-use fltk::{button::*, frame::*, group::*, prelude::*, window::*};
-let mut wind = Window::default().with_size(160, 200).with_label("Counter");
-// Vertical is default. You can choose horizontal using pack.set_type(PackType::Horizontal);
-let mut pack = Pack::default().with_size(120, 140).center_of(&wind);
-pack.set_spacing(10);
-let mut but_inc = Button::default().with_size(0, 40).with_label("+");
-let mut frame = Frame::default().with_size(0, 40).with_label("0");
-let mut but_dec = Button::default().with_size(0, 40).with_label("-");
-pack.end();
+use fltk::{app, button::Button, frame::Frame, group::Pack, prelude::*, window::Window};
+fn main() {
+    let app = app::App::default();
+    let mut wind = Window::default().with_size(160, 200).with_label("Counter");
+    // Vertical is default. You can choose horizontal using pack.set_type(PackType::Horizontal);
+    let mut pack = Pack::default().with_size(120, 140).center_of(&wind);
+    pack.set_spacing(10);
+    let mut but_inc = Button::default().with_size(0, 40).with_label("+");
+    let mut frame = Frame::default().with_size(0, 40).with_label("0");
+    let mut but_dec = Button::default().with_size(0, 40).with_label("-");
+    pack.end();
+    wind.end();
+    wind.show();
+    app.run().unwrap();
+}
 ```
 
 ### Events
@@ -140,6 +153,7 @@ Events can be handled using the `set_callback` method (as above) or the availabl
 ```rust,ignore
     /* previous hello world code */
     but.set_callback(move |_| frame.set_label("Hello World!"));
+    another_but.set_callback(|this_button| this_button.set_label("Works"));
     app.run().unwrap();
 ```
 Another way is to use message passing:
@@ -250,6 +264,7 @@ please check the [FAQ](https://github.com/fltk-rs/fltk-rs/blob/master/FAQ.md) pa
 #![allow(non_upper_case_globals)]
 #![warn(missing_docs)]
 #![warn(broken_intra_doc_links)]
+#![allow(clippy::needless_doctest_main)]
 
 /// Application related methods and functions
 pub mod app;

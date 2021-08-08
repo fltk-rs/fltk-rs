@@ -35,8 +35,19 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
             }
         }
 
-        unsafe impl WidgetBase for #name {
-            fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, width: i32, height: i32, title: T) -> #name {
+        impl #name {
+            /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
+            /// # Arguments
+            /// * `x` - The x coordinate in the screen
+            /// * `y` - The y coordinate in the screen
+            /// * `width` - The width of the widget
+            /// * `heigth` - The height of the widget
+            /// * `title` - The title or label of the widget
+            /// The title is expected to be a static str or None.
+            /// To use dynamic strings use `with_label(self, &str)` or `set_label(&mut self, &str)`
+            /// labels support special symbols preceded by an `@` [sign](https://www.fltk.org/doc-1.3/symbols.png).
+            /// and for the [associated formatting](https://www.fltk.org/doc-1.3/common.html).
+            pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, width: i32, height: i32, title: T) -> #name {
                 let temp = if let Some(title) = title.into() {
                     CString::safe_new(title).into_raw()
                 } else {
@@ -62,7 +73,11 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     }
                 }
             }
+        }
 
+        crate::widget_extends!(#name);
+
+        unsafe impl WidgetBase for #name {
             fn delete(mut wid: Self) {
                 assert!(!wid.was_deleted());
                 unsafe {
@@ -805,125 +820,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
             }
 
-            fn below_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(self.width() != 0 && self.height() != 0, "below_of requires the size of the widget to be known!");
-                self.resize(w.x(), w.y() + w.height() + padding, self.width(), self.height());
-                self
-            }
-
-            fn above_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(self.width() != 0 && self.height() != 0, "above_of requires the size of the widget to be known!");
-                self.resize(w.x(), w.y() - padding - self.height(), self.width(), self.height());
-                self
-            }
-
-            fn right_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(self.width() != 0 && self.height() != 0, "right_of requires the size of the widget to be known!");
-                self.resize(w.x() + w.width() + padding, w.y(), self.width(), self.height());
-                self
-            }
-
-            fn left_of<W: WidgetExt>(mut self, w: &W, padding: i32) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(self.width() != 0 && self.height() != 0, "left_of requires the size of the widget to be known!");
-                self.resize(w.x() - self.width() - padding, w.y(), self.width(), self.height());
-                self
-            }
-
-            fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
-                let sw = self.width() as f64;
-                let sh = self.height() as f64;
-                let ww = w.width() as f64;
-                let wh = w.height() as f64;
-                let sx = (ww - sw) / 2.0;
-                let sy = (wh - sh) / 2.0;
-                let wx = if w.as_window().is_some() { 0 } else { w.x() };
-                let wy = if w.as_window().is_some() { 0 } else { w.y() };
-                self.resize(sx as i32 + wx, sy as i32 + wy, self.width(), self.height());
-                self.redraw();
-                self
-            }
-
-            fn center_of_parent(mut self) -> Self {
-                assert!(!self.was_deleted());
-                if let Some(w) = self.parent() {
-                    debug_assert!(w.width() != 0 && w.height() != 0, "center_of requires the size of the widget to be known!");
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let ww = w.width() as f64;
-                    let wh = w.height() as f64;
-                    let sx = (ww - sw) / 2.0;
-                    let sy = (wh - sh) / 2.0;
-                    let wx = if w.as_window().is_some() { 0 } else { w.x() };
-                    let wy = if w.as_window().is_some() { 0 } else { w.y() };
-                    self.resize(sx as i32 + wx, sy as i32 + wy, self.width(), self.height());
-                    self.redraw();
-                }
-                self
-            }
-
-            fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(w.width() != 0 && w.height() != 0, "size_of requires the size of the widget to be known!");
-                self.resize(self.x(), self. y(), w.width(), w.height());
-                self
-            }
-
-            fn size_of_parent(mut self) -> Self {
-                assert!(!self.was_deleted());
-                if let Some(parent) = self.parent() {
-                    let w = parent.width();
-                    let h = parent.height();
-                    self.resize(self.x(), self.y(), w, h);
-                }
-                self
-            }
-
             fn inside<W: WidgetExt>(&self, wid: &W) -> bool {
                 assert!(!self.was_deleted());
                 assert!(!wid.was_deleted());
                 unsafe {
                     #inside(self.inner, wid.as_widget_ptr() as *mut raw::c_void)  != 0
                 }
-            }
-
-            fn with_pos(mut self, x: i32, y: i32) -> Self {
-                self.resize(x, y, self.width(), self.height());
-                self
-            }
-
-            fn with_size(mut self, width: i32, height: i32) -> Self {
-                let x = self.x();
-                let y = self.y();
-                let w = self.width();
-                let h = self.height();
-                if w == 0 || h == 0 {
-                    unsafe { #widget_resize(self.inner, x, y, width, height); }
-                } else {
-                    self.resize(x, y, width, height);
-                }
-                self
-            }
-
-            fn with_label(mut self, title: &str) -> Self {
-                self.set_label(title);
-                self
-            }
-
-            fn with_align(mut self, align: Align) -> Self {
-                self.set_align(align);
-                self
             }
 
             fn get_type<T: WidgetType>(&self) -> T {
@@ -936,14 +838,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     #set_type(self.inner, typ.to_i32());
                 }
-            }
-
-            fn with_type<T: WidgetType>(mut self, typ: T) -> Self {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #set_type(self.inner, typ.to_i32());
-                }
-                self
             }
 
             fn set_image<I: ImageExt>(&mut self, image: Option<I>) {

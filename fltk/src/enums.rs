@@ -41,7 +41,7 @@ pub enum ColorDepth {
 impl ColorDepth {
     /// Create a ColorDepth from an u8 value
     pub fn from_u8(val: u8) -> Result<ColorDepth, FltkError> {
-        if val < 1 || val > 4 {
+        if !(1..=4).contains(&val) {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             Ok(unsafe {mem::transmute(val)} )

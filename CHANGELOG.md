@@ -1,14 +1,14 @@
 # Changelog
 
 
-## [1.1.8] - Unreleased
+## [1.1.8] - 2021-08-08
 - Add output::OutputType.
 - Add format_text example. Contributed by @mvasi90.
 - Fix some clippy lints.
 - Add Font::get_name().
 - Add image::RgbImage::convert().
 - Add ColorDepth::from_u8().
-- Add a widget_derive! macro for custom widgets, which basically implements Deref/DerefMut and adds convenience constructor and anchoring methods.
+- Add a widget_extends! macro for custom widgets, which basically implements Deref/DerefMut and adds convenience constructor and anchoring methods.
 
 ## [1.1.7] - 2021-08-04
 - Fix invalid cast in TextBuffer::selection_position().

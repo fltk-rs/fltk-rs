@@ -348,17 +348,24 @@ impl Pack {
     Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
     ```rust,no_run
     use fltk::{prelude::*, *};
-    let mut grid = group::VGrid::new(0, 0, 400, 300, "");
-    grid.set_params(3, 3, 5);
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    grid.end();
+    fn main() {
+        let app = app::App::default();
+        let mut win = window::Window::default().with_size(400, 300);
+        let mut grid = group::VGrid::new(0, 0, 400, 300, "");
+        grid.set_params(3, 3, 5);
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        grid.end();
+        win.end();
+        win.show();
+        app.run().unwrap();
+    }
     ```
 */
 #[derive(Debug, Clone)]
@@ -439,24 +446,31 @@ impl VGrid {
     }
 }
 
-crate::widget_derive!(VGrid, Pack, vpack);
+crate::widget_extends!(VGrid, Pack, vpack);
 
 /**
     Defines a Horizontal Grid (custom widget).
     Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
     ```rust,no_run
     use fltk::{prelude::*, *};
-    let mut grid = group::HGrid::new(0, 0, 400, 300, "");
-    grid.set_params(3, 3, 5);
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    button::Button::default();
-    grid.end();
+    fn main() {
+        let app = app::App::default();
+        let mut win = window::Window::default().with_size(400, 300);
+        let mut grid = group::HGrid::new(0, 0, 400, 300, "");
+        grid.set_params(3, 3, 5);
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        button::Button::default();
+        grid.end();
+        win.end();
+        win.show();
+        app.run().unwrap();
+    }
     ```
 */
 #[derive(Debug, Clone)]
@@ -537,7 +551,7 @@ impl HGrid {
     }
 }
 
-crate::widget_derive!(HGrid, Pack, hpack);
+crate::widget_extends!(HGrid, Pack, hpack);
 
 /// A wrapper around a vertical pack, with `auto_layout`ing using the add method
 #[derive(Debug, Clone)]
@@ -577,7 +591,7 @@ impl Column {
     }
 }
 
-crate::widget_derive!(Column, Pack, p);
+crate::widget_extends!(Column, Pack, p);
 
 /// A wrapper around a Horizontal pack, with `auto_layout`ing using the add method
 #[derive(Debug, Clone)]
@@ -618,4 +632,4 @@ impl Row {
     }
 }
 
-crate::widget_derive!(Row, Pack, p);
+crate::widget_extends!(Row, Pack, p);

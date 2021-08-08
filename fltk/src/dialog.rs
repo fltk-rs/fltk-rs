@@ -521,35 +521,42 @@ pub fn beep(tp: BeepType) {
     Example:
     ```rust,no_run
     use fltk::{prelude::*, *};
-    let mut chooser = dialog::FileChooser::new(
-        ".",                    // directory
-        "*",                    // filter or pattern
-        dialog::FileChooserType::Multi, // chooser type
-        "Title Of Chooser",     // title
-    );
-    chooser.show();
-    chooser.window().set_pos(300, 300);
-    // Block until user picks something.
-    //     (The other way to do this is to use a callback())
-    //
-    while chooser.shown() {
-        app::wait();
-    }
-    // User hit cancel?
-    if chooser.value(1).is_none() {
-        println!("(User hit 'Cancel')");
-        return;
-    }
-    // Print what the user picked
-    println!("--------------------");
-    println!("DIRECTORY: '{}'", chooser.directory().unwrap());
-    println!("    VALUE: '{}'", chooser.value(1).unwrap()); // value starts at 1!
-    println!("    COUNT: {} files selected", chooser.count());
-    // Multiple files? Show all of them
-    if chooser.count() > 1 {
-        for t in 1..=chooser.count() {
-            println!(" VALUE[{}]: '{}'", t, chooser.value(t).unwrap());
+    fn main() {
+        let app = app::App::default();
+        let mut win = window::Window::default().with_size(900, 300);
+        let mut chooser = dialog::FileChooser::new(
+            ".",                    // directory
+            "*",                    // filter or pattern
+            dialog::FileChooserType::Multi, // chooser type
+            "Title Of Chooser",     // title
+        );
+        chooser.show();
+        chooser.window().set_pos(300, 300);
+        // Block until user picks something.
+        //     (The other way to do this is to use a callback())
+        //
+        while chooser.shown() {
+            app::wait();
         }
+        // User hit cancel?
+        if chooser.value(1).is_none() {
+            println!("(User hit 'Cancel')");
+            return;
+        }
+        // Print what the user picked
+        println!("--------------------");
+        println!("DIRECTORY: '{}'", chooser.directory().unwrap());
+        println!("    VALUE: '{}'", chooser.value(1).unwrap()); // value starts at 1!
+        println!("    COUNT: {} files selected", chooser.count());
+        // Multiple files? Show all of them
+        if chooser.count() > 1 {
+            for t in 1..=chooser.count() {
+                println!(" VALUE[{}]: '{}'", t, chooser.value(t).unwrap());
+            }
+        }
+        win.end();
+        win.show();
+        app.run().unwrap();
     }
     ```
 */
@@ -1070,8 +1077,15 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
     Example:
     ```rust,no_run
     use fltk::{prelude::*, *};
-    let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
-    println!("{}", file);
+    fn main() {
+        let app = app::App::default();
+        let mut win = window::Window::default().with_size(900, 300);
+        let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
+        println!("{}", file);
+        win.end();
+        win.show();
+        app.run().unwrap();
+    }
     ```
 */
 pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> Option<String> {
