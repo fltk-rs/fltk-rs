@@ -35,6 +35,25 @@ pub fn get_font(font: Font) -> String {
     }
 }
 
+/// Get the font's name
+pub fn get_font_name(font: Font) -> String {
+    unsafe {
+        CStr::from_ptr(fl::Fl_get_font_name(font.bits() as i32))
+            .to_string_lossy()
+            .to_string()
+    }
+}
+
+/// Get a font's sizes
+pub fn get_font_sizes(font: Font) -> Vec<i32> {
+    unsafe {
+        let start = vec![0i32; 128];
+        let mut start = std::mem::ManuallyDrop::new(start);
+        let size = fl::Fl_get_font_sizes(font.bits(), &mut start.as_mut_ptr()) as usize;
+        Vec::from_raw_parts(start.as_mut_ptr(), size, 128)
+    }
+}
+
 /// Initializes loaded fonts of a certain pattern `name`
 pub fn set_fonts(name: &str) -> u8 {
     let name = CString::safe_new(name);

@@ -50,7 +50,7 @@ pub struct TableRow {
 
 /// Defines the table row select mode
 #[repr(i32)]
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(WidgetType, Debug, Clone, Copy, PartialEq)]
 pub enum TableRowSelectMode {
     /// Disable select
     None,
@@ -73,18 +73,6 @@ pub enum TableRowSelectFlag {
 }
 
 impl TableRow {
-    /// Sets the type of the table row
-    pub fn set_type(&mut self, val: TableRowSelectMode) {
-        assert!(!self.was_deleted());
-        unsafe { Fl_Table_Row_set_type(self.inner, val as i32) }
-    }
-
-    /// Gets the type of the table row
-    pub fn get_type(&self) -> TableRowSelectMode {
-        assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_Table_Row_get_type(self.inner)) }
-    }
-
     /// Returns whether a row was selected
     pub fn row_selected(&mut self, row: i32) -> bool {
         unsafe {

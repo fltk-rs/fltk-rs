@@ -37,6 +37,18 @@ pub enum ColorDepth {
     Rgba8 = 4,
 }
 
+/// Implements some convenience methods for ColorDepth
+impl ColorDepth {
+    /// Create a ColorDepth from an u8 value
+    pub fn from_u8(val: u8) -> Result<ColorDepth, FltkError> {
+        if !(1..=4).contains(&val) {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+        } else {
+            Ok(unsafe {mem::transmute(val)} )
+        }
+    }
+}
+
 /// Defines the frame types which can be set using the `set_frame()` and `set_down_frame()` methods
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -352,6 +364,15 @@ impl Font {
             } else {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             }
+        }
+    }
+
+    /// Get the font's real name
+    pub fn get_name(&self) -> String {
+        unsafe {
+            CStr::from_ptr(fl::Fl_get_font_name(self.bits as i32))
+                .to_string_lossy()
+                .to_string()
         }
     }
 }
