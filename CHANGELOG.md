@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.1.9] - 2021-08-09
+## [1.1.10] - 2021-08-09
 - Add output::OutputType.
 - Add format_text example. Contributed by @mvasi90.
 - Fix some clippy lints.
