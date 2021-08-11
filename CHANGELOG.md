@@ -1,5 +1,10 @@
 # Changelog
 
+
+## [1.1.11] - 2021-08-12
+- Remove redundant macro expansion.
+- Update deps.
+
 ## [1.1.10] - 2021-08-09
 - Add output::OutputType.
 - Add format_text example. Contributed by @mvasi90.

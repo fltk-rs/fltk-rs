@@ -17,7 +17,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "=1.1.8" }
+fltk-sys = { path = "../fltk-sys", version = "=1.1.11" }
 fltk-derive = { path = "../fltk-derive", version = "=1.1.11" }
 lazy_static = "^1.4.0"
 bitflags = "^1.2.1"
