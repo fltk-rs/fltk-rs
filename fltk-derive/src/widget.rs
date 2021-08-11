@@ -35,8 +35,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
             }
         }
 
-        crate::widget_extends!(#name);
-
         unsafe impl WidgetBase for #name {
             fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, width: i32, height: i32, title: T) -> #name {
                 let temp = if let Some(title) = title.into() {
