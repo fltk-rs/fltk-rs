@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.1.12] - Unreleased
+- Update bitflags and cmake-rs.
+
 ## [1.1.11] - 2021-08-12
 - Remove redundant macro expansion.
 - Update deps.
