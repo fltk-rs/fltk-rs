@@ -17,7 +17,7 @@ path = "src/lib.rs"
 libc = "0.2.99"
 
 [build-dependencies]
-cmake = { git = "https://github.com/alexcrichton/cmake-rs/" }
+cmake = { git = "https://github.com/alexcrichton/cmake-rs/", rev = "9af8515" }
 
 [features]
 default = []
