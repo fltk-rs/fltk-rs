@@ -2,7 +2,8 @@
 
 
 ## [1.1.12] - Unreleased
-- Update bitflags and cmake-rs.
+- Update libc, cmake-rs, bitflags and syn.
+- Fix fltk-shared feature on X11 systems.
 
 ## [1.1.11] - 2021-08-12
 - Remove redundant macro expansion.
