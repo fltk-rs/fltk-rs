@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.1.12] - Unreleased
+## [1.1.12] - 2021-08-21
 - Update libc, cmake-rs, bitflags and syn.
 - Fix fltk-shared feature on X11 systems.
 

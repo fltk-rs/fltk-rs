@@ -55,9 +55,9 @@ pub struct FlatButton {
 }
 
 impl FlatButton {
-    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &'static str) -> FlatButton {
+    pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> FlatButton {
         let mut x = FlatButton {
-            wid: Widget::new(x, y, w, h, label),
+            wid: Widget::new(x, y, w, h, None).with_label(label),
         };
         x.draw();
         x.handle();
