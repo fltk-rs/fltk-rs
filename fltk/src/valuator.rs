@@ -215,6 +215,8 @@ impl Scrollbar {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ScrollbarType {
+    /// No scrollbars
+    None = 0,
     /// Only a horizontal scrollbar
     Horizontal = 1,
     /// Only a vertical scrollbar
