@@ -215,18 +215,20 @@ impl Scrollbar {
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
 pub enum ScrollbarType {
-    /// Vertical scrollbar
-    Vertical = 0,
-    /// Horizontal scrollbar
+    /// Only a horizontal scrollbar
     Horizontal = 1,
-    /// Vertical fill scrollbar
-    VerticalFill = 2,
-    /// Horizontal fill scrollbar
-    HorizontalFill = 3,
-    /// Vertical nice scrollbar
-    VerticalNice = 4,
-    /// Horizontal nice scrollbar
-    HorizontalNice = 5,
+    /// Only a vertical scrollbar
+    Vertical = 2,
+    /// The default is both scrollbars
+    Both = 3,
+    ///
+    AlwaysOn = 4,
+    /// Horizontal scrollbar always on, vertical always off
+    HorizontalAlways = 5,
+    /// Vertical scrollbar always on, horizontal always off
+    VerticalAlways = 6,
+    /// Both always on
+    BothAlways = 7,
 }
 
 /// Creates a roller widget
