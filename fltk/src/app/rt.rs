@@ -129,7 +129,7 @@ pub fn ready() -> bool {
 
 /// Quit the app
 pub fn quit() {
-    if let Some(loaded_font) = *LOADED_FONT {
+    if let Some(loaded_font) = LOADED_FONT {
         // Shouldn't fail
         unload_font(loaded_font).unwrap_or(());
     }
@@ -394,13 +394,18 @@ pub fn has_timeout2(cb: fn()) -> bool {
 /// Add a system handler
 /// # Safety
 /// FLTK makes no assurances regarding handling by the system handler
-pub unsafe fn add_system_handler(cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>, data: *mut raw::c_void) {
+pub unsafe fn add_system_handler(
+    cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>,
+    data: *mut raw::c_void,
+) {
     fl::Fl_add_system_handler(cb, data);
 }
 
 /// Add a system handler
 /// # Safety
 /// FLTK makes no assurances regarding handling by the system handler
-pub unsafe fn remove_system_handler(cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>) {
+pub unsafe fn remove_system_handler(
+    cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>,
+) {
     fl::Fl_remove_system_handler(cb);
 }
