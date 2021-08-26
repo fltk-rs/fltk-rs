@@ -143,8 +143,12 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
 
             fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError> {
                 assert!(!self.was_deleted());
-                let data = self.to_rgb_data();
-                unsafe { RgbImage::new(&data, self.data_w(), self.data_h(), self.depth()) }
+                if self.count() != 1 {
+                    Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+                } else {
+                    let data = self.to_rgb_data();
+                    unsafe { RgbImage::new(&data, self.data_w(), self.data_h(), self.depth()) }
+                }
             }
 
             fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {

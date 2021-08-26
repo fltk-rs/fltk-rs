@@ -5,43 +5,45 @@
 pub struct Fl_Widget {
     _unused: [u8; 0],
 }
-pub type Fl_Callback =
-    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
-pub type custom_handler_callback = ::core::option::Option<
+pub type Fl_Callback = ::std::option::Option<
+    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+>;
+pub type custom_handler_callback = ::std::option::Option<
     unsafe extern "C" fn(
         arg1: *mut Fl_Widget,
-        arg2: libc::c_int,
-        arg3: *mut libc::c_void,
-    ) -> libc::c_int,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int,
 >;
-pub type custom_draw_callback =
-    ::core::option::Option<unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut libc::c_void)>;
+pub type custom_draw_callback = ::std::option::Option<
+    unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+>;
 extern "C" {
     pub fn Fl_Widget_new(
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
-        title: *const libc::c_char,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Widget;
 }
 extern "C" {
-    pub fn Fl_Widget_x(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_x(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_y(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_y(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_width(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_width(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_height(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_height(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_label(arg1: *mut Fl_Widget) -> *const libc::c_char;
+    pub fn Fl_Widget_label(arg1: *mut Fl_Widget) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label(arg1: *mut Fl_Widget, title: *const libc::c_char);
+    pub fn Fl_Widget_set_label(arg1: *mut Fl_Widget, title: *const ::std::os::raw::c_char);
 }
 extern "C" {
     pub fn Fl_Widget_redraw(arg1: *mut Fl_Widget);
@@ -64,78 +66,78 @@ extern "C" {
 extern "C" {
     pub fn Fl_Widget_resize(
         arg1: *mut Fl_Widget,
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Widget_widget_resize(
         arg1: *mut Fl_Widget,
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const libc::c_char;
+    pub fn Fl_Widget_tooltip(arg1: *mut Fl_Widget) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Widget_set_tooltip(arg1: *mut Fl_Widget, txt: *const libc::c_char);
+    pub fn Fl_Widget_set_tooltip(arg1: *mut Fl_Widget, txt: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Widget_get_type(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_get_type(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_type(arg1: *mut Fl_Widget, typ: libc::c_int);
+    pub fn Fl_Widget_set_type(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_color(arg1: *mut Fl_Widget) -> libc::c_uint;
+    pub fn Fl_Widget_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: libc::c_uint);
+    pub fn Fl_Widget_set_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Widget_measure_label(
         arg1: *const Fl_Widget,
-        arg2: *mut libc::c_int,
-        arg3: *mut libc::c_int,
+        arg2: *mut ::std::os::raw::c_int,
+        arg3: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> libc::c_uint;
+    pub fn Fl_Widget_label_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label_color(arg1: *mut Fl_Widget, color: libc::c_uint);
+    pub fn Fl_Widget_set_label_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Widget_label_font(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_label_font(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label_font(arg1: *mut Fl_Widget, font: libc::c_int);
+    pub fn Fl_Widget_set_label_font(arg1: *mut Fl_Widget, font: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_label_size(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_label_size(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label_size(arg1: *mut Fl_Widget, sz: libc::c_int);
+    pub fn Fl_Widget_set_label_size(arg1: *mut Fl_Widget, sz: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_label_type(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_label_type(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_label_type(arg1: *mut Fl_Widget, typ: libc::c_int);
+    pub fn Fl_Widget_set_label_type(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_box(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_box(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_box(arg1: *mut Fl_Widget, typ: libc::c_int);
+    pub fn Fl_Widget_set_box(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_changed(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_changed(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_set_changed(arg1: *mut Fl_Widget);
@@ -144,65 +146,72 @@ extern "C" {
     pub fn Fl_Widget_clear_changed(arg1: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_align(arg1: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_align(arg1: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_set_align(arg1: *mut Fl_Widget, typ: libc::c_int);
+    pub fn Fl_Widget_set_align(arg1: *mut Fl_Widget, typ: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Widget_delete(arg1: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
+    pub fn Fl_Widget_set_image(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Widget_handle(
         self_: *mut Fl_Widget,
         cb: custom_handler_callback,
-        data: *mut libc::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_draw(self_: *mut Fl_Widget, cb: custom_draw_callback, data: *mut libc::c_void);
+    pub fn Fl_Widget_draw(
+        self_: *mut Fl_Widget,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: libc::c_int);
+    pub fn Fl_Widget_set_when(arg1: *mut Fl_Widget, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_parent(self_: *const Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_parent(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_selection_color(arg1: *mut Fl_Widget) -> libc::c_uint;
+    pub fn Fl_Widget_selection_color(arg1: *mut Fl_Widget) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Widget_set_selection_color(arg1: *mut Fl_Widget, color: libc::c_uint);
+    pub fn Fl_Widget_set_selection_color(arg1: *mut Fl_Widget, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Widget_do_callback(arg1: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_inside(self_: *const Fl_Widget, arg1: *mut libc::c_void) -> libc::c_int;
+    pub fn Fl_Widget_inside(
+        self_: *const Fl_Widget,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_window(arg1: *const Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_window(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_top_window(arg1: *const Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_top_window(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_takes_events(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_user_data(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_take_focus(self_: *mut Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_take_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_set_visible_focus(self_: *mut Fl_Widget);
@@ -211,79 +220,83 @@ extern "C" {
     pub fn Fl_Widget_clear_visible_focus(self_: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_visible_focus(self_: *mut Fl_Widget, v: libc::c_int);
+    pub fn Fl_Widget_visible_focus(self_: *mut Fl_Widget, v: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> libc::c_uint;
+    pub fn Fl_Widget_has_visible_focus(self_: *mut Fl_Widget) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut libc::c_void);
+    pub fn Fl_Widget_set_user_data(arg1: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_draw_data(self_: *const Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_draw_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_handle_data(self_: *const Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_handle_data(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_set_draw_data(self_: *mut Fl_Widget, data: *mut libc::c_void);
+    pub fn Fl_Widget_set_draw_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut libc::c_void);
+    pub fn Fl_Widget_set_handle_data(self_: *mut Fl_Widget, data: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> libc::c_uchar;
+    pub fn Fl_Widget_damage(self_: *const Fl_Widget) -> ::std::os::raw::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: libc::c_uchar);
+    pub fn Fl_Widget_set_damage(self_: *mut Fl_Widget, flag: ::std::os::raw::c_uchar);
 }
 extern "C" {
     pub fn Fl_Widget_clear_damage(self_: *mut Fl_Widget);
 }
 extern "C" {
-    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_as_window(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_as_group(self_: *mut Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut libc::c_void);
+    pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut libc::c_void;
+    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Widget_set_callback(arg1: *mut Fl_Widget, arg2: Fl_Callback, arg3: *mut libc::c_void);
+    pub fn Fl_Widget_set_callback(
+        arg1: *mut Fl_Widget,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Widget_set_deleter(
         arg1: *mut Fl_Widget,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Widget_visible(self_: *const Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_visible(self_: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_visible_r(self_: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_active(self_: *const Fl_Widget) -> libc::c_uint;
+    pub fn Fl_Widget_active(self_: *const Fl_Widget) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> libc::c_int;
+    pub fn Fl_Widget_active_r(self_: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Widget_callback(self_: *const Fl_Widget) -> Fl_Callback;
 }
-pub type Fl_Text_Modify_Cb = ::core::option::Option<
+pub type Fl_Text_Modify_Cb = ::std::option::Option<
     unsafe extern "C" fn(
-        pos: libc::c_int,
-        nInserted: libc::c_int,
-        nDeleted: libc::c_int,
-        nRestyled: libc::c_int,
-        deletedText: *const libc::c_char,
-        cbArg: *mut libc::c_void,
+        pos: ::std::os::raw::c_int,
+        nInserted: ::std::os::raw::c_int,
+        nDeleted: ::std::os::raw::c_int,
+        nRestyled: ::std::os::raw::c_int,
+        deletedText: *const ::std::os::raw::c_char,
+        cbArg: *mut ::std::os::raw::c_void,
     ),
 >;
 #[repr(C)]
@@ -298,80 +311,94 @@ extern "C" {
     pub fn Fl_Text_Buffer_delete(arg1: *mut Fl_Text_Buffer);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_text(self_: *mut Fl_Text_Buffer) -> *const libc::c_char;
+    pub fn Fl_Text_Buffer_text(self_: *mut Fl_Text_Buffer) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_set_text(self_: *mut Fl_Text_Buffer, txt: *const libc::c_char);
+    pub fn Fl_Text_Buffer_set_text(self_: *mut Fl_Text_Buffer, txt: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_append(self_: *mut Fl_Text_Buffer, txt: *const libc::c_char);
+    pub fn Fl_Text_Buffer_append(self_: *mut Fl_Text_Buffer, txt: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_remove(self_: *mut Fl_Text_Buffer, start: libc::c_int, end: libc::c_int);
+    pub fn Fl_Text_Buffer_remove(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_length(self_: *const Fl_Text_Buffer) -> libc::c_int;
+    pub fn Fl_Text_Buffer_length(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_text_range(
         self_: *const Fl_Text_Buffer,
-        start: libc::c_int,
-        end: libc::c_int,
-    ) -> *mut libc::c_char;
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_insert(
         self_: *mut Fl_Text_Buffer,
-        pos: libc::c_int,
-        text: *const libc::c_char,
+        pos: ::std::os::raw::c_int,
+        text: *const ::std::os::raw::c_char,
     );
 }
 extern "C" {
     pub fn Fl_Text_Buffer_replace(
         self_: *mut Fl_Text_Buffer,
-        start: libc::c_int,
-        end: libc::c_int,
-        text: *const libc::c_char,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+        text: *const ::std::os::raw::c_char,
     );
 }
 extern "C" {
     pub fn Fl_Text_Buffer_copy(
         self_: *mut Fl_Text_Buffer,
         fromBuf: *mut Fl_Text_Buffer,
-        fromStart: libc::c_int,
-        fromEnd: libc::c_int,
-        toPos: libc::c_int,
+        fromStart: ::std::os::raw::c_int,
+        fromEnd: ::std::os::raw::c_int,
+        toPos: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_undo(self_: *mut Fl_Text_Buffer, cp: *mut libc::c_int) -> libc::c_int;
+    pub fn Fl_Text_Buffer_undo(
+        self_: *mut Fl_Text_Buffer,
+        cp: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_canUndo(self_: *mut Fl_Text_Buffer, flag: libc::c_char);
+    pub fn Fl_Text_Buffer_canUndo(self_: *mut Fl_Text_Buffer, flag: ::std::os::raw::c_char);
 }
 extern "C" {
     pub fn Fl_Text_Buffer_load_file(
         self_: *mut Fl_Text_Buffer,
-        file: *const libc::c_char,
-    ) -> libc::c_int;
+        file: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_save_file(
         self_: *mut Fl_Text_Buffer,
-        file: *const libc::c_char,
-    ) -> libc::c_int;
+        file: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_tab_distance(self_: *const Fl_Text_Buffer) -> libc::c_int;
+    pub fn Fl_Text_Buffer_tab_distance(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_set_tab_distance(self_: *mut Fl_Text_Buffer, tabDist: libc::c_int);
+    pub fn Fl_Text_Buffer_set_tab_distance(
+        self_: *mut Fl_Text_Buffer,
+        tabDist: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_select(self_: *mut Fl_Text_Buffer, start: libc::c_int, end: libc::c_int);
+    pub fn Fl_Text_Buffer_select(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_selected(self_: *const Fl_Text_Buffer) -> libc::c_int;
+    pub fn Fl_Text_Buffer_selected(self_: *const Fl_Text_Buffer) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_unselect(self_: *mut Fl_Text_Buffer);
@@ -379,28 +406,32 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Buffer_selection_position(
         self_: *mut Fl_Text_Buffer,
-        start: *mut libc::c_int,
-        end: *mut libc::c_int,
-    ) -> libc::c_int;
+        start: *mut ::std::os::raw::c_int,
+        end: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_selection_text(self_: *mut Fl_Text_Buffer) -> *mut libc::c_char;
+    pub fn Fl_Text_Buffer_selection_text(self_: *mut Fl_Text_Buffer)
+        -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_remove_selection(self_: *mut Fl_Text_Buffer);
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_replace_selection(self_: *mut Fl_Text_Buffer, text: *const libc::c_char);
+    pub fn Fl_Text_Buffer_replace_selection(
+        self_: *mut Fl_Text_Buffer,
+        text: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Buffer_highlight(
         self_: *mut Fl_Text_Buffer,
-        start: libc::c_int,
-        end: libc::c_int,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_is_highlighted(self_: *mut Fl_Text_Buffer) -> libc::c_int;
+    pub fn Fl_Text_Buffer_is_highlighted(self_: *mut Fl_Text_Buffer) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_unhighlight(self_: *mut Fl_Text_Buffer);
@@ -408,49 +439,57 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Buffer_highlight_position(
         self_: *mut Fl_Text_Buffer,
-        start: *mut libc::c_int,
-        end: *mut libc::c_int,
-    ) -> libc::c_int;
+        start: *mut ::std::os::raw::c_int,
+        end: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_highlight_text(self_: *mut Fl_Text_Buffer) -> *mut libc::c_char;
+    pub fn Fl_Text_Buffer_highlight_text(self_: *mut Fl_Text_Buffer)
+        -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_line_text(
         self_: *const Fl_Text_Buffer,
-        pos: libc::c_int,
-    ) -> *mut libc::c_char;
+        pos: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_line_start(self_: *const Fl_Text_Buffer, pos: libc::c_int)
-        -> libc::c_int;
+    pub fn Fl_Text_Buffer_line_start(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_word_start(self_: *const Fl_Text_Buffer, pos: libc::c_int)
-        -> libc::c_int;
+    pub fn Fl_Text_Buffer_word_start(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Buffer_word_end(self_: *const Fl_Text_Buffer, pos: libc::c_int) -> libc::c_int;
+    pub fn Fl_Text_Buffer_word_end(
+        self_: *const Fl_Text_Buffer,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_count_lines(
         self_: *const Fl_Text_Buffer,
-        startPos: libc::c_int,
-        endPos: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        endPos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Buffer_add_modify_callback(
         self_: *mut Fl_Text_Buffer,
         bufModifiedCB: Fl_Text_Modify_Cb,
-        cbArg: *mut libc::c_void,
+        cbArg: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Buffer_remove_modify_callback(
         self_: *mut Fl_Text_Buffer,
         bufModifiedCB: Fl_Text_Modify_Cb,
-        cbArg: *mut libc::c_void,
+        cbArg: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
@@ -463,30 +502,33 @@ pub struct Fl_Text_Display {
 }
 extern "C" {
     pub fn Fl_Text_Display_new(
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
-        title: *const libc::c_char,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Text_Display;
 }
 extern "C" {
-    pub fn Fl_Text_Display_x(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_x(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_y(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_y(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_width(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_width(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_height(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_height(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_label(arg1: *mut Fl_Text_Display) -> *const libc::c_char;
+    pub fn Fl_Text_Display_label(arg1: *mut Fl_Text_Display) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label(arg1: *mut Fl_Text_Display, title: *const libc::c_char);
+    pub fn Fl_Text_Display_set_label(
+        arg1: *mut Fl_Text_Display,
+        title: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Display_redraw(arg1: *mut Fl_Text_Display);
@@ -509,78 +551,84 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_resize(
         arg1: *mut Fl_Text_Display,
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Display_widget_resize(
         arg1: *mut Fl_Text_Display,
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_tooltip(arg1: *mut Fl_Text_Display) -> *const libc::c_char;
+    pub fn Fl_Text_Display_tooltip(arg1: *mut Fl_Text_Display) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_tooltip(arg1: *mut Fl_Text_Display, txt: *const libc::c_char);
+    pub fn Fl_Text_Display_set_tooltip(
+        arg1: *mut Fl_Text_Display,
+        txt: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_get_type(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_get_type(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_type(arg1: *mut Fl_Text_Display, typ: libc::c_int);
+    pub fn Fl_Text_Display_set_type(arg1: *mut Fl_Text_Display, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_color(arg1: *mut Fl_Text_Display) -> libc::c_uint;
+    pub fn Fl_Text_Display_color(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_color(arg1: *mut Fl_Text_Display, color: libc::c_uint);
+    pub fn Fl_Text_Display_set_color(arg1: *mut Fl_Text_Display, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Display_measure_label(
         arg1: *const Fl_Text_Display,
-        arg2: *mut libc::c_int,
-        arg3: *mut libc::c_int,
+        arg2: *mut ::std::os::raw::c_int,
+        arg3: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_label_color(arg1: *mut Fl_Text_Display) -> libc::c_uint;
+    pub fn Fl_Text_Display_label_color(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label_color(arg1: *mut Fl_Text_Display, color: libc::c_uint);
+    pub fn Fl_Text_Display_set_label_color(
+        arg1: *mut Fl_Text_Display,
+        color: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_label_font(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_label_font(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label_font(arg1: *mut Fl_Text_Display, font: libc::c_int);
+    pub fn Fl_Text_Display_set_label_font(arg1: *mut Fl_Text_Display, font: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_label_size(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_label_size(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label_size(arg1: *mut Fl_Text_Display, sz: libc::c_int);
+    pub fn Fl_Text_Display_set_label_size(arg1: *mut Fl_Text_Display, sz: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_label_type(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_label_type(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_label_type(arg1: *mut Fl_Text_Display, typ: libc::c_int);
+    pub fn Fl_Text_Display_set_label_type(arg1: *mut Fl_Text_Display, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_box(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_box(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_box(arg1: *mut Fl_Text_Display, typ: libc::c_int);
+    pub fn Fl_Text_Display_set_box(arg1: *mut Fl_Text_Display, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_changed(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_changed(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_changed(arg1: *mut Fl_Text_Display);
@@ -589,48 +637,51 @@ extern "C" {
     pub fn Fl_Text_Display_clear_changed(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_align(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_align(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_align(arg1: *mut Fl_Text_Display, typ: libc::c_int);
+    pub fn Fl_Text_Display_set_align(arg1: *mut Fl_Text_Display, typ: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Display_delete(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_image(arg1: *mut Fl_Text_Display, arg2: *mut libc::c_void);
+    pub fn Fl_Text_Display_set_image(arg1: *mut Fl_Text_Display, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Text_Display_handle(
         self_: *mut Fl_Text_Display,
         cb: custom_handler_callback,
-        data: *mut libc::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Display_draw(
         self_: *mut Fl_Text_Display,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_when(arg1: *mut Fl_Text_Display, arg2: libc::c_int);
+    pub fn Fl_Text_Display_set_when(arg1: *mut Fl_Text_Display, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_when(arg1: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_when(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_image(arg1: *const Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_image(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_parent(self_: *const Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_parent(self_: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_selection_color(arg1: *mut Fl_Text_Display) -> libc::c_uint;
+    pub fn Fl_Text_Display_selection_color(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_selection_color(arg1: *mut Fl_Text_Display, color: libc::c_uint);
+    pub fn Fl_Text_Display_set_selection_color(
+        arg1: *mut Fl_Text_Display,
+        color: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Display_do_callback(arg1: *mut Fl_Text_Display);
@@ -638,23 +689,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_inside(
         self_: *const Fl_Text_Display,
-        arg1: *mut libc::c_void,
-    ) -> libc::c_int;
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_window(arg1: *const Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_window(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_top_window(arg1: *const Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_top_window(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_takes_events(arg1: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_takes_events(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_user_data(arg1: *const Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_user_data(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_take_focus(self_: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_take_focus(self_: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_visible_focus(self_: *mut Fl_Text_Display);
@@ -663,71 +714,86 @@ extern "C" {
     pub fn Fl_Text_Display_clear_visible_focus(self_: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_visible_focus(self_: *mut Fl_Text_Display, v: libc::c_int);
+    pub fn Fl_Text_Display_visible_focus(self_: *mut Fl_Text_Display, v: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_has_visible_focus(self_: *mut Fl_Text_Display) -> libc::c_uint;
+    pub fn Fl_Text_Display_has_visible_focus(self_: *mut Fl_Text_Display)
+        -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_user_data(arg1: *mut Fl_Text_Display, data: *mut libc::c_void);
+    pub fn Fl_Text_Display_set_user_data(
+        arg1: *mut Fl_Text_Display,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_draw_data(self_: *const Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_draw_data(self_: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_handle_data(self_: *const Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_handle_data(
+        self_: *const Fl_Text_Display,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_draw_data(self_: *mut Fl_Text_Display, data: *mut libc::c_void);
+    pub fn Fl_Text_Display_set_draw_data(
+        self_: *mut Fl_Text_Display,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_handle_data(self_: *mut Fl_Text_Display, data: *mut libc::c_void);
+    pub fn Fl_Text_Display_set_handle_data(
+        self_: *mut Fl_Text_Display,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_damage(self_: *const Fl_Text_Display) -> libc::c_uchar;
+    pub fn Fl_Text_Display_damage(self_: *const Fl_Text_Display) -> ::std::os::raw::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_damage(self_: *mut Fl_Text_Display, flag: libc::c_uchar);
+    pub fn Fl_Text_Display_set_damage(self_: *mut Fl_Text_Display, flag: ::std::os::raw::c_uchar);
 }
 extern "C" {
     pub fn Fl_Text_Display_clear_damage(self_: *mut Fl_Text_Display);
 }
 extern "C" {
-    pub fn Fl_Text_Display_as_window(self_: *mut Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_as_window(self_: *mut Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_as_group(self_: *mut Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_as_group(self_: *mut Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_deimage(arg1: *mut Fl_Text_Display, arg2: *mut libc::c_void);
+    pub fn Fl_Text_Display_set_deimage(
+        arg1: *mut Fl_Text_Display,
+        arg2: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_deimage(arg1: *const Fl_Text_Display) -> *mut libc::c_void;
+    pub fn Fl_Text_Display_deimage(arg1: *const Fl_Text_Display) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Display_set_callback(
         arg1: *mut Fl_Text_Display,
         arg2: Fl_Callback,
-        arg3: *mut libc::c_void,
+        arg3: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Display_set_deleter(
         arg1: *mut Fl_Text_Display,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_visible(self_: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_visible(self_: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_visible_r(self_: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_visible_r(self_: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_active(self_: *const Fl_Text_Display) -> libc::c_uint;
+    pub fn Fl_Text_Display_active(self_: *const Fl_Text_Display) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_active_r(self_: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_active_r(self_: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_callback(self_: *const Fl_Text_Display) -> Fl_Callback;
@@ -745,131 +811,146 @@ extern "C" {
     pub fn Fl_Text_Display_get_style_buffer(arg1: *mut Fl_Text_Display) -> *mut Fl_Text_Buffer;
 }
 extern "C" {
-    pub fn Fl_Text_Display_text_font(arg1: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_text_font(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_text_font(arg1: *mut Fl_Text_Display, s: libc::c_int);
+    pub fn Fl_Text_Display_set_text_font(arg1: *mut Fl_Text_Display, s: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_text_size(arg1: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_text_size(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_text_size(arg1: *mut Fl_Text_Display, s: libc::c_int);
+    pub fn Fl_Text_Display_set_text_size(arg1: *mut Fl_Text_Display, s: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Display_text_color(arg1: *const Fl_Text_Display) -> libc::c_uint;
+    pub fn Fl_Text_Display_text_color(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_text_color(arg1: *mut Fl_Text_Display, n: libc::c_uint);
+    pub fn Fl_Text_Display_set_text_color(arg1: *mut Fl_Text_Display, n: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Display_scroll(
         arg1: *mut Fl_Text_Display,
-        topLineNum: libc::c_int,
-        horizOffset: libc::c_int,
+        topLineNum: ::std::os::raw::c_int,
+        horizOffset: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_insert(arg1: *mut Fl_Text_Display, text: *const libc::c_char);
+    pub fn Fl_Text_Display_insert(arg1: *mut Fl_Text_Display, text: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_insert_position(arg1: *mut Fl_Text_Display, newPos: libc::c_int);
+    pub fn Fl_Text_Display_set_insert_position(
+        arg1: *mut Fl_Text_Display,
+        newPos: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_insert_position(arg1: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_insert_position(arg1: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_position_to_xy(
         self_: *const Fl_Text_Display,
-        pos: libc::c_int,
-        x: *mut libc::c_int,
-        y: *mut libc::c_int,
-    ) -> libc::c_int;
+        pos: ::std::os::raw::c_int,
+        x: *mut ::std::os::raw::c_int,
+        y: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_count_lines(
         arg1: *const Fl_Text_Display,
-        start: libc::c_int,
-        end: libc::c_int,
-        start_pos_is_line_start: libc::c_int,
-    ) -> libc::c_int;
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+        start_pos_is_line_start: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_move_right(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_move_right(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_move_left(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_move_left(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_move_up(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_move_up(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_move_down(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_move_down(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_show_cursor(arg1: *mut Fl_Text_Display, boolean: libc::c_int);
+    pub fn Fl_Text_Display_show_cursor(arg1: *mut Fl_Text_Display, boolean: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Display_set_highlight_data(
         self_: *mut Fl_Text_Display,
-        sbuf: *mut libc::c_void,
-        color: *mut libc::c_uint,
-        font: *mut libc::c_int,
-        fontsz: *mut libc::c_int,
-        sz: libc::c_int,
+        sbuf: *mut ::std::os::raw::c_void,
+        color: *mut ::std::os::raw::c_uint,
+        font: *mut ::std::os::raw::c_int,
+        fontsz: *mut ::std::os::raw::c_int,
+        sz: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_cursor_style(arg1: *mut Fl_Text_Display, style: libc::c_int);
+    pub fn Fl_Text_Display_set_cursor_style(
+        arg1: *mut Fl_Text_Display,
+        style: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_cursor_color(arg1: *mut Fl_Text_Display, color: libc::c_uint);
+    pub fn Fl_Text_Display_set_cursor_color(
+        arg1: *mut Fl_Text_Display,
+        color: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_scrollbar_size(arg1: *mut Fl_Text_Display, newSize: libc::c_int);
+    pub fn Fl_Text_Display_set_scrollbar_size(
+        arg1: *mut Fl_Text_Display,
+        newSize: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_scrollbar_align(arg1: *mut Fl_Text_Display, align: libc::c_int);
+    pub fn Fl_Text_Display_set_scrollbar_align(
+        arg1: *mut Fl_Text_Display,
+        align: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_cursor_style(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_cursor_style(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_cursor_color(arg1: *mut Fl_Text_Display) -> libc::c_uint;
+    pub fn Fl_Text_Display_cursor_color(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_scrollbar_size(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_scrollbar_size(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_scrollbar_align(arg1: *mut Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_scrollbar_align(arg1: *mut Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_line_start(
         self_: *const Fl_Text_Display,
-        pos: libc::c_int,
-    ) -> libc::c_int;
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_line_end(
         self_: *const Fl_Text_Display,
-        startPos: libc::c_int,
-        startPosIsLineStart: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_skip_lines(
         self_: *mut Fl_Text_Display,
-        startPos: libc::c_int,
-        nLines: libc::c_int,
-        startPosIsLineStart: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_rewind_lines(
         self_: *mut Fl_Text_Display,
-        startPos: libc::c_int,
-        nLines: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_next_word(self_: *mut Fl_Text_Display);
@@ -880,12 +961,14 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_word_start(
         self_: *const Fl_Text_Display,
-        pos: libc::c_int,
-    ) -> libc::c_int;
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_word_end(self_: *const Fl_Text_Display, pos: libc::c_int)
-        -> libc::c_int;
+    pub fn Fl_Text_Display_word_end(
+        self_: *const Fl_Text_Display,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_x_to_col(self_: *const Fl_Text_Display, x: f64) -> f64;
@@ -894,67 +977,91 @@ extern "C" {
     pub fn Fl_Text_Display_col_to_x(self_: *const Fl_Text_Display, col: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_width(self_: *mut Fl_Text_Display, width: libc::c_int);
+    pub fn Fl_Text_Display_set_linenumber_width(
+        self_: *mut Fl_Text_Display,
+        width: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_width(self_: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_linenumber_width(self_: *const Fl_Text_Display)
+        -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_font(self_: *mut Fl_Text_Display, val: libc::c_int);
+    pub fn Fl_Text_Display_set_linenumber_font(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_font(self_: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_linenumber_font(self_: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_size(self_: *mut Fl_Text_Display, val: libc::c_int);
+    pub fn Fl_Text_Display_set_linenumber_size(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_size(self_: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_linenumber_size(self_: *const Fl_Text_Display) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_fgcolor(self_: *mut Fl_Text_Display, val: libc::c_uint);
+    pub fn Fl_Text_Display_set_linenumber_fgcolor(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_fgcolor(self_: *const Fl_Text_Display) -> libc::c_uint;
+    pub fn Fl_Text_Display_linenumber_fgcolor(
+        self_: *const Fl_Text_Display,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_bgcolor(self_: *mut Fl_Text_Display, val: libc::c_uint);
+    pub fn Fl_Text_Display_set_linenumber_bgcolor(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_bgcolor(self_: *const Fl_Text_Display) -> libc::c_uint;
+    pub fn Fl_Text_Display_linenumber_bgcolor(
+        self_: *const Fl_Text_Display,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Display_set_linenumber_align(self_: *mut Fl_Text_Display, val: libc::c_int);
+    pub fn Fl_Text_Display_set_linenumber_align(
+        self_: *mut Fl_Text_Display,
+        val: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Display_linenumber_align(self_: *const Fl_Text_Display) -> libc::c_int;
+    pub fn Fl_Text_Display_linenumber_align(self_: *const Fl_Text_Display)
+        -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_in_selection(
         self_: *const Fl_Text_Display,
-        x: libc::c_int,
-        y: libc::c_int,
-    ) -> libc::c_int;
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_wrap_mode(
         self_: *mut Fl_Text_Display,
-        wrap: libc::c_int,
-        wrap_margin: libc::c_int,
+        wrap: ::std::os::raw::c_int,
+        wrap_margin: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Display_wrapped_column(
         self_: *const Fl_Text_Display,
-        row: libc::c_int,
-        column: libc::c_int,
-    ) -> libc::c_int;
+        row: ::std::os::raw::c_int,
+        column: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Display_wrapped_row(
         self_: *const Fl_Text_Display,
-        row: libc::c_int,
-    ) -> libc::c_int;
+        row: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -963,30 +1070,33 @@ pub struct Fl_Text_Editor {
 }
 extern "C" {
     pub fn Fl_Text_Editor_new(
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
-        title: *const libc::c_char,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Text_Editor;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_x(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_x(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_y(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_y(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_width(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_width(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_height(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_height(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label(arg1: *mut Fl_Text_Editor) -> *const libc::c_char;
+    pub fn Fl_Text_Editor_label(arg1: *mut Fl_Text_Editor) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label(arg1: *mut Fl_Text_Editor, title: *const libc::c_char);
+    pub fn Fl_Text_Editor_set_label(
+        arg1: *mut Fl_Text_Editor,
+        title: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Editor_redraw(arg1: *mut Fl_Text_Editor);
@@ -1009,78 +1119,81 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_resize(
         arg1: *mut Fl_Text_Editor,
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_widget_resize(
         arg1: *mut Fl_Text_Editor,
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_tooltip(arg1: *mut Fl_Text_Editor) -> *const libc::c_char;
+    pub fn Fl_Text_Editor_tooltip(arg1: *mut Fl_Text_Editor) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_tooltip(arg1: *mut Fl_Text_Editor, txt: *const libc::c_char);
+    pub fn Fl_Text_Editor_set_tooltip(
+        arg1: *mut Fl_Text_Editor,
+        txt: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_get_type(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_get_type(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_type(arg1: *mut Fl_Text_Editor, typ: libc::c_int);
+    pub fn Fl_Text_Editor_set_type(arg1: *mut Fl_Text_Editor, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_color(arg1: *mut Fl_Text_Editor) -> libc::c_uint;
+    pub fn Fl_Text_Editor_color(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_color(arg1: *mut Fl_Text_Editor, color: libc::c_uint);
+    pub fn Fl_Text_Editor_set_color(arg1: *mut Fl_Text_Editor, color: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Editor_measure_label(
         arg1: *const Fl_Text_Editor,
-        arg2: *mut libc::c_int,
-        arg3: *mut libc::c_int,
+        arg2: *mut ::std::os::raw::c_int,
+        arg3: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label_color(arg1: *mut Fl_Text_Editor) -> libc::c_uint;
+    pub fn Fl_Text_Editor_label_color(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label_color(arg1: *mut Fl_Text_Editor, color: libc::c_uint);
+    pub fn Fl_Text_Editor_set_label_color(arg1: *mut Fl_Text_Editor, color: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label_font(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_label_font(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label_font(arg1: *mut Fl_Text_Editor, font: libc::c_int);
+    pub fn Fl_Text_Editor_set_label_font(arg1: *mut Fl_Text_Editor, font: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label_size(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_label_size(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label_size(arg1: *mut Fl_Text_Editor, sz: libc::c_int);
+    pub fn Fl_Text_Editor_set_label_size(arg1: *mut Fl_Text_Editor, sz: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_label_type(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_label_type(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_label_type(arg1: *mut Fl_Text_Editor, typ: libc::c_int);
+    pub fn Fl_Text_Editor_set_label_type(arg1: *mut Fl_Text_Editor, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_box(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_box(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_box(arg1: *mut Fl_Text_Editor, typ: libc::c_int);
+    pub fn Fl_Text_Editor_set_box(arg1: *mut Fl_Text_Editor, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_changed(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_changed(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_changed(arg1: *mut Fl_Text_Editor);
@@ -1089,48 +1202,51 @@ extern "C" {
     pub fn Fl_Text_Editor_clear_changed(arg1: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_align(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_align(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_align(arg1: *mut Fl_Text_Editor, typ: libc::c_int);
+    pub fn Fl_Text_Editor_set_align(arg1: *mut Fl_Text_Editor, typ: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Editor_delete(arg1: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_image(arg1: *mut Fl_Text_Editor, arg2: *mut libc::c_void);
+    pub fn Fl_Text_Editor_set_image(arg1: *mut Fl_Text_Editor, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
     pub fn Fl_Text_Editor_handle(
         self_: *mut Fl_Text_Editor,
         cb: custom_handler_callback,
-        data: *mut libc::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_draw(
         self_: *mut Fl_Text_Editor,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_when(arg1: *mut Fl_Text_Editor, arg2: libc::c_int);
+    pub fn Fl_Text_Editor_set_when(arg1: *mut Fl_Text_Editor, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_when(arg1: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_when(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_image(arg1: *const Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_image(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_parent(self_: *const Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_parent(self_: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_selection_color(arg1: *mut Fl_Text_Editor) -> libc::c_uint;
+    pub fn Fl_Text_Editor_selection_color(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_selection_color(arg1: *mut Fl_Text_Editor, color: libc::c_uint);
+    pub fn Fl_Text_Editor_set_selection_color(
+        arg1: *mut Fl_Text_Editor,
+        color: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Editor_do_callback(arg1: *mut Fl_Text_Editor);
@@ -1138,23 +1254,23 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_inside(
         self_: *const Fl_Text_Editor,
-        arg1: *mut libc::c_void,
-    ) -> libc::c_int;
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_window(arg1: *const Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_window(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_top_window(arg1: *const Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_top_window(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_takes_events(arg1: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_takes_events(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_user_data(arg1: *const Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_user_data(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_take_focus(self_: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_take_focus(self_: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_visible_focus(self_: *mut Fl_Text_Editor);
@@ -1163,71 +1279,80 @@ extern "C" {
     pub fn Fl_Text_Editor_clear_visible_focus(self_: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_visible_focus(self_: *mut Fl_Text_Editor, v: libc::c_int);
+    pub fn Fl_Text_Editor_visible_focus(self_: *mut Fl_Text_Editor, v: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_has_visible_focus(self_: *mut Fl_Text_Editor) -> libc::c_uint;
+    pub fn Fl_Text_Editor_has_visible_focus(self_: *mut Fl_Text_Editor) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_user_data(arg1: *mut Fl_Text_Editor, data: *mut libc::c_void);
+    pub fn Fl_Text_Editor_set_user_data(
+        arg1: *mut Fl_Text_Editor,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_draw_data(self_: *const Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_draw_data(self_: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_handle_data(self_: *const Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_handle_data(self_: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_draw_data(self_: *mut Fl_Text_Editor, data: *mut libc::c_void);
+    pub fn Fl_Text_Editor_set_draw_data(
+        self_: *mut Fl_Text_Editor,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_handle_data(self_: *mut Fl_Text_Editor, data: *mut libc::c_void);
+    pub fn Fl_Text_Editor_set_handle_data(
+        self_: *mut Fl_Text_Editor,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_damage(self_: *const Fl_Text_Editor) -> libc::c_uchar;
+    pub fn Fl_Text_Editor_damage(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_damage(self_: *mut Fl_Text_Editor, flag: libc::c_uchar);
+    pub fn Fl_Text_Editor_set_damage(self_: *mut Fl_Text_Editor, flag: ::std::os::raw::c_uchar);
 }
 extern "C" {
     pub fn Fl_Text_Editor_clear_damage(self_: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_as_window(self_: *mut Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_as_window(self_: *mut Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_as_group(self_: *mut Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_as_group(self_: *mut Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_deimage(arg1: *mut Fl_Text_Editor, arg2: *mut libc::c_void);
+    pub fn Fl_Text_Editor_set_deimage(arg1: *mut Fl_Text_Editor, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_deimage(arg1: *const Fl_Text_Editor) -> *mut libc::c_void;
+    pub fn Fl_Text_Editor_deimage(arg1: *const Fl_Text_Editor) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_callback(
         arg1: *mut Fl_Text_Editor,
         arg2: Fl_Callback,
-        arg3: *mut libc::c_void,
+        arg3: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_deleter(
         arg1: *mut Fl_Text_Editor,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_visible(self_: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_visible(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_visible_r(self_: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_visible_r(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_active(self_: *const Fl_Text_Editor) -> libc::c_uint;
+    pub fn Fl_Text_Editor_active(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_active_r(self_: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_active_r(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_callback(self_: *const Fl_Text_Editor) -> Fl_Callback;
@@ -1245,129 +1370,143 @@ extern "C" {
     pub fn Fl_Text_Editor_get_style_buffer(arg1: *mut Fl_Text_Editor) -> *mut Fl_Text_Buffer;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_text_font(arg1: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_text_font(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_text_font(arg1: *mut Fl_Text_Editor, s: libc::c_int);
+    pub fn Fl_Text_Editor_set_text_font(arg1: *mut Fl_Text_Editor, s: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_text_size(arg1: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_text_size(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_text_size(arg1: *mut Fl_Text_Editor, s: libc::c_int);
+    pub fn Fl_Text_Editor_set_text_size(arg1: *mut Fl_Text_Editor, s: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_text_color(arg1: *const Fl_Text_Editor) -> libc::c_uint;
+    pub fn Fl_Text_Editor_text_color(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_text_color(arg1: *mut Fl_Text_Editor, n: libc::c_uint);
+    pub fn Fl_Text_Editor_set_text_color(arg1: *mut Fl_Text_Editor, n: ::std::os::raw::c_uint);
 }
 extern "C" {
     pub fn Fl_Text_Editor_scroll(
         arg1: *mut Fl_Text_Editor,
-        topLineNum: libc::c_int,
-        horizOffset: libc::c_int,
+        topLineNum: ::std::os::raw::c_int,
+        horizOffset: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_insert(arg1: *mut Fl_Text_Editor, text: *const libc::c_char);
+    pub fn Fl_Text_Editor_insert(arg1: *mut Fl_Text_Editor, text: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_insert_position(arg1: *mut Fl_Text_Editor, newPos: libc::c_int);
+    pub fn Fl_Text_Editor_set_insert_position(
+        arg1: *mut Fl_Text_Editor,
+        newPos: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_insert_position(arg1: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_insert_position(arg1: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_position_to_xy(
         self_: *const Fl_Text_Editor,
-        pos: libc::c_int,
-        x: *mut libc::c_int,
-        y: *mut libc::c_int,
-    ) -> libc::c_int;
+        pos: ::std::os::raw::c_int,
+        x: *mut ::std::os::raw::c_int,
+        y: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_count_lines(
         arg1: *const Fl_Text_Editor,
-        start: libc::c_int,
-        end: libc::c_int,
-        start_pos_is_line_start: libc::c_int,
-    ) -> libc::c_int;
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+        start_pos_is_line_start: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_move_right(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_move_right(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_move_left(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_move_left(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_move_up(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_move_up(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_move_down(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_move_down(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_show_cursor(arg1: *mut Fl_Text_Editor, boolean: libc::c_int);
+    pub fn Fl_Text_Editor_show_cursor(arg1: *mut Fl_Text_Editor, boolean: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Text_Editor_set_highlight_data(
         self_: *mut Fl_Text_Editor,
-        sbuf: *mut libc::c_void,
-        color: *mut libc::c_uint,
-        font: *mut libc::c_int,
-        fontsz: *mut libc::c_int,
-        sz: libc::c_int,
+        sbuf: *mut ::std::os::raw::c_void,
+        color: *mut ::std::os::raw::c_uint,
+        font: *mut ::std::os::raw::c_int,
+        fontsz: *mut ::std::os::raw::c_int,
+        sz: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_cursor_style(arg1: *mut Fl_Text_Editor, style: libc::c_int);
+    pub fn Fl_Text_Editor_set_cursor_style(arg1: *mut Fl_Text_Editor, style: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_cursor_color(arg1: *mut Fl_Text_Editor, color: libc::c_uint);
+    pub fn Fl_Text_Editor_set_cursor_color(
+        arg1: *mut Fl_Text_Editor,
+        color: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_scrollbar_size(arg1: *mut Fl_Text_Editor, newSize: libc::c_int);
+    pub fn Fl_Text_Editor_set_scrollbar_size(
+        arg1: *mut Fl_Text_Editor,
+        newSize: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_scrollbar_align(arg1: *mut Fl_Text_Editor, align: libc::c_int);
+    pub fn Fl_Text_Editor_set_scrollbar_align(
+        arg1: *mut Fl_Text_Editor,
+        align: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_cursor_style(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_cursor_style(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_cursor_color(arg1: *mut Fl_Text_Editor) -> libc::c_uint;
+    pub fn Fl_Text_Editor_cursor_color(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_scrollbar_size(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_scrollbar_size(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_scrollbar_align(arg1: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_scrollbar_align(arg1: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_line_start(self_: *const Fl_Text_Editor, pos: libc::c_int)
-        -> libc::c_int;
+    pub fn Fl_Text_Editor_line_start(
+        self_: *const Fl_Text_Editor,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_line_end(
         self_: *const Fl_Text_Editor,
-        startPos: libc::c_int,
-        startPosIsLineStart: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_skip_lines(
         self_: *mut Fl_Text_Editor,
-        startPos: libc::c_int,
-        nLines: libc::c_int,
-        startPosIsLineStart: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_rewind_lines(
         self_: *mut Fl_Text_Editor,
-        startPos: libc::c_int,
-        nLines: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_next_word(self_: *mut Fl_Text_Editor);
@@ -1376,11 +1515,16 @@ extern "C" {
     pub fn Fl_Text_Editor_previous_word(self_: *mut Fl_Text_Editor);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_word_start(self_: *const Fl_Text_Editor, pos: libc::c_int)
-        -> libc::c_int;
+    pub fn Fl_Text_Editor_word_start(
+        self_: *const Fl_Text_Editor,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_word_end(self_: *const Fl_Text_Editor, pos: libc::c_int) -> libc::c_int;
+    pub fn Fl_Text_Editor_word_end(
+        self_: *const Fl_Text_Editor,
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_x_to_col(self_: *const Fl_Text_Editor, x: f64) -> f64;
@@ -1389,154 +1533,200 @@ extern "C" {
     pub fn Fl_Text_Editor_col_to_x(self_: *const Fl_Text_Editor, col: f64) -> f64;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_width(self_: *mut Fl_Text_Editor, width: libc::c_int);
+    pub fn Fl_Text_Editor_set_linenumber_width(
+        self_: *mut Fl_Text_Editor,
+        width: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_width(self_: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_linenumber_width(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_font(self_: *mut Fl_Text_Editor, val: libc::c_int);
+    pub fn Fl_Text_Editor_set_linenumber_font(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_font(self_: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_linenumber_font(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_size(self_: *mut Fl_Text_Editor, val: libc::c_int);
+    pub fn Fl_Text_Editor_set_linenumber_size(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_size(self_: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_linenumber_size(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_fgcolor(self_: *mut Fl_Text_Editor, val: libc::c_uint);
+    pub fn Fl_Text_Editor_set_linenumber_fgcolor(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_fgcolor(self_: *const Fl_Text_Editor) -> libc::c_uint;
+    pub fn Fl_Text_Editor_linenumber_fgcolor(
+        self_: *const Fl_Text_Editor,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_bgcolor(self_: *mut Fl_Text_Editor, val: libc::c_uint);
+    pub fn Fl_Text_Editor_set_linenumber_bgcolor(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_bgcolor(self_: *const Fl_Text_Editor) -> libc::c_uint;
+    pub fn Fl_Text_Editor_linenumber_bgcolor(
+        self_: *const Fl_Text_Editor,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_linenumber_align(self_: *mut Fl_Text_Editor, val: libc::c_int);
+    pub fn Fl_Text_Editor_set_linenumber_align(
+        self_: *mut Fl_Text_Editor,
+        val: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Text_Editor_linenumber_align(self_: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_linenumber_align(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_in_selection(
         self_: *const Fl_Text_Editor,
-        x: libc::c_int,
-        y: libc::c_int,
-    ) -> libc::c_int;
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_wrap_mode(
         self_: *mut Fl_Text_Editor,
-        wrap: libc::c_int,
-        wrap_margin: libc::c_int,
+        wrap: ::std::os::raw::c_int,
+        wrap_margin: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Text_Editor_wrapped_column(
         self_: *const Fl_Text_Editor,
-        row: libc::c_int,
-        column: libc::c_int,
-    ) -> libc::c_int;
+        row: ::std::os::raw::c_int,
+        column: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Text_Editor_wrapped_row(
         self_: *const Fl_Text_Editor,
-        row: libc::c_int,
-    ) -> libc::c_int;
+        row: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_cut(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_cut(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_paste(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_paste(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_undo(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_undo(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_default(c: libc::c_int, e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_default(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_ignore(c: libc::c_int, e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_ignore(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_backspace(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_backspace(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_enter(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_enter(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_move(c: libc::c_int, e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_shift_move(c: libc::c_int, e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_shift_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_ctrl_move(c: libc::c_int, e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_ctrl_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_c_s_move(c: libc::c_int, e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_c_s_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_meta_move(c: libc::c_int, e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_meta_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_m_s_move(c: libc::c_int, e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_m_s_move(
+        c: ::std::os::raw::c_int,
+        e: *mut Fl_Text_Editor,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_home(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_home(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_end(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_end(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_left(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_left(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_up(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_up(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_right(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_right(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_down(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_down(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_page_up(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_page_up(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_page_down(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_page_down(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_insert(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_insert(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_delete(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_delete(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_kf_select_all(e: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_kf_select_all(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_insert_mode(self_: *mut Fl_Text_Editor, b: libc::c_int);
+    pub fn Fl_Text_Editor_set_insert_mode(self_: *mut Fl_Text_Editor, b: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_insert_mode(self_: *mut Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_insert_mode(self_: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Text_Editor_set_tab_nav(self_: *mut Fl_Text_Editor, val: libc::c_int);
+    pub fn Fl_Text_Editor_set_tab_nav(self_: *mut Fl_Text_Editor, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Text_Editor_tab_nav(self_: *const Fl_Text_Editor) -> libc::c_int;
+    pub fn Fl_Text_Editor_tab_nav(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1545,30 +1735,34 @@ pub struct Fl_Simple_Terminal {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_new(
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
-        title: *const libc::c_char,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
     ) -> *mut Fl_Simple_Terminal;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_x(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_x(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_y(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_y(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_width(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_width(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_height(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_height(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label(arg1: *mut Fl_Simple_Terminal) -> *const libc::c_char;
+    pub fn Fl_Simple_Terminal_label(arg1: *mut Fl_Simple_Terminal)
+        -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label(arg1: *mut Fl_Simple_Terminal, title: *const libc::c_char);
+    pub fn Fl_Simple_Terminal_set_label(
+        arg1: *mut Fl_Simple_Terminal,
+        title: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_redraw(arg1: *mut Fl_Simple_Terminal);
@@ -1591,78 +1785,98 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_resize(
         arg1: *mut Fl_Simple_Terminal,
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_widget_resize(
         arg1: *mut Fl_Simple_Terminal,
-        x: libc::c_int,
-        y: libc::c_int,
-        width: libc::c_int,
-        height: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_tooltip(arg1: *mut Fl_Simple_Terminal) -> *const libc::c_char;
+    pub fn Fl_Simple_Terminal_tooltip(
+        arg1: *mut Fl_Simple_Terminal,
+    ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_tooltip(arg1: *mut Fl_Simple_Terminal, txt: *const libc::c_char);
+    pub fn Fl_Simple_Terminal_set_tooltip(
+        arg1: *mut Fl_Simple_Terminal,
+        txt: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_get_type(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_get_type(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_type(arg1: *mut Fl_Simple_Terminal, typ: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_type(arg1: *mut Fl_Simple_Terminal, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_color(arg1: *mut Fl_Simple_Terminal) -> libc::c_uint;
+    pub fn Fl_Simple_Terminal_color(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_color(arg1: *mut Fl_Simple_Terminal, color: libc::c_uint);
+    pub fn Fl_Simple_Terminal_set_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_measure_label(
         arg1: *const Fl_Simple_Terminal,
-        arg2: *mut libc::c_int,
-        arg3: *mut libc::c_int,
+        arg2: *mut ::std::os::raw::c_int,
+        arg3: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label_color(arg1: *mut Fl_Simple_Terminal) -> libc::c_uint;
+    pub fn Fl_Simple_Terminal_label_color(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label_color(arg1: *mut Fl_Simple_Terminal, color: libc::c_uint);
+    pub fn Fl_Simple_Terminal_set_label_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label_font(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_label_font(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label_font(arg1: *mut Fl_Simple_Terminal, font: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_label_font(
+        arg1: *mut Fl_Simple_Terminal,
+        font: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label_size(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_label_size(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label_size(arg1: *mut Fl_Simple_Terminal, sz: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_label_size(
+        arg1: *mut Fl_Simple_Terminal,
+        sz: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_label_type(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_label_type(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_label_type(arg1: *mut Fl_Simple_Terminal, typ: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_label_type(
+        arg1: *mut Fl_Simple_Terminal,
+        typ: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_box(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_box(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_box(arg1: *mut Fl_Simple_Terminal, typ: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_box(arg1: *mut Fl_Simple_Terminal, typ: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_changed(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_changed(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_changed(arg1: *mut Fl_Simple_Terminal);
@@ -1671,50 +1885,58 @@ extern "C" {
     pub fn Fl_Simple_Terminal_clear_changed(arg1: *mut Fl_Simple_Terminal);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_align(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_align(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_align(arg1: *mut Fl_Simple_Terminal, typ: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_align(arg1: *mut Fl_Simple_Terminal, typ: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_delete(arg1: *mut Fl_Simple_Terminal);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_image(arg1: *mut Fl_Simple_Terminal, arg2: *mut libc::c_void);
+    pub fn Fl_Simple_Terminal_set_image(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_handle(
         self_: *mut Fl_Simple_Terminal,
         cb: custom_handler_callback,
-        data: *mut libc::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_draw(
         self_: *mut Fl_Simple_Terminal,
         cb: custom_draw_callback,
-        data: *mut libc::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_when(arg1: *mut Fl_Simple_Terminal, arg2: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_when(arg1: *mut Fl_Simple_Terminal, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_when(arg1: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_when(arg1: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_image(arg1: *const Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_image(arg1: *const Fl_Simple_Terminal)
+        -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_parent(self_: *const Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_parent(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_selection_color(arg1: *mut Fl_Simple_Terminal) -> libc::c_uint;
+    pub fn Fl_Simple_Terminal_selection_color(
+        arg1: *mut Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_selection_color(
         arg1: *mut Fl_Simple_Terminal,
-        color: libc::c_uint,
+        color: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
@@ -1723,23 +1945,31 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_inside(
         self_: *const Fl_Simple_Terminal,
-        arg1: *mut libc::c_void,
-    ) -> libc::c_int;
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_window(arg1: *const Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_window(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_top_window(arg1: *const Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_top_window(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_takes_events(arg1: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_takes_events(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_user_data(arg1: *const Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_user_data(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_take_focus(self_: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_take_focus(self_: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_visible_focus(self_: *mut Fl_Simple_Terminal);
@@ -1748,77 +1978,101 @@ extern "C" {
     pub fn Fl_Simple_Terminal_clear_visible_focus(self_: *mut Fl_Simple_Terminal);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_visible_focus(self_: *mut Fl_Simple_Terminal, v: libc::c_int);
+    pub fn Fl_Simple_Terminal_visible_focus(
+        self_: *mut Fl_Simple_Terminal,
+        v: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_has_visible_focus(self_: *mut Fl_Simple_Terminal) -> libc::c_uint;
+    pub fn Fl_Simple_Terminal_has_visible_focus(
+        self_: *mut Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_user_data(arg1: *mut Fl_Simple_Terminal, data: *mut libc::c_void);
+    pub fn Fl_Simple_Terminal_set_user_data(
+        arg1: *mut Fl_Simple_Terminal,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_draw_data(self_: *const Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_draw_data(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_handle_data(self_: *const Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_handle_data(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_draw_data(
         self_: *mut Fl_Simple_Terminal,
-        data: *mut libc::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_handle_data(
         self_: *mut Fl_Simple_Terminal,
-        data: *mut libc::c_void,
+        data: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_damage(self_: *const Fl_Simple_Terminal) -> libc::c_uchar;
+    pub fn Fl_Simple_Terminal_damage(self_: *const Fl_Simple_Terminal) -> ::std::os::raw::c_uchar;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_damage(self_: *mut Fl_Simple_Terminal, flag: libc::c_uchar);
+    pub fn Fl_Simple_Terminal_set_damage(
+        self_: *mut Fl_Simple_Terminal,
+        flag: ::std::os::raw::c_uchar,
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_clear_damage(self_: *mut Fl_Simple_Terminal);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_as_window(self_: *mut Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_as_window(
+        self_: *mut Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_as_group(self_: *mut Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_as_group(
+        self_: *mut Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_deimage(arg1: *mut Fl_Simple_Terminal, arg2: *mut libc::c_void);
+    pub fn Fl_Simple_Terminal_set_deimage(
+        arg1: *mut Fl_Simple_Terminal,
+        arg2: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_deimage(arg1: *const Fl_Simple_Terminal) -> *mut libc::c_void;
+    pub fn Fl_Simple_Terminal_deimage(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_callback(
         arg1: *mut Fl_Simple_Terminal,
         arg2: Fl_Callback,
-        arg3: *mut libc::c_void,
+        arg3: *mut ::std::os::raw::c_void,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_deleter(
         arg1: *mut Fl_Simple_Terminal,
-        arg2: ::core::option::Option<unsafe extern "C" fn(arg1: *mut libc::c_void)>,
+        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_visible(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_visible(self_: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_visible_r(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_visible_r(self_: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_active(self_: *const Fl_Simple_Terminal) -> libc::c_uint;
+    pub fn Fl_Simple_Terminal_active(self_: *const Fl_Simple_Terminal) -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_active_r(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_active_r(self_: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_callback(self_: *const Fl_Simple_Terminal) -> Fl_Callback;
@@ -1838,31 +2092,49 @@ extern "C" {
     ) -> *mut Fl_Text_Buffer;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_stay_at_bottom(self_: *mut Fl_Simple_Terminal, arg1: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_stay_at_bottom(
+        self_: *mut Fl_Simple_Terminal,
+        arg1: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_stay_at_bottom(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_stay_at_bottom(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_history_lines(self_: *mut Fl_Simple_Terminal, arg1: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_history_lines(
+        self_: *mut Fl_Simple_Terminal,
+        arg1: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_history_lines(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_history_lines(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_ansi(self_: *mut Fl_Simple_Terminal, val: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_ansi(self_: *mut Fl_Simple_Terminal, val: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_ansi(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_ansi(self_: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_append(self_: *mut Fl_Simple_Terminal, s: *const libc::c_char);
+    pub fn Fl_Simple_Terminal_append(
+        self_: *mut Fl_Simple_Terminal,
+        s: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_text(self_: *mut Fl_Simple_Terminal, s: *const libc::c_char);
+    pub fn Fl_Simple_Terminal_set_text(
+        self_: *mut Fl_Simple_Terminal,
+        s: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_text(self_: *const Fl_Simple_Terminal) -> *const libc::c_char;
+    pub fn Fl_Simple_Terminal_text(
+        self_: *const Fl_Simple_Terminal,
+    ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_clear(self_: *mut Fl_Simple_Terminal);
@@ -1870,145 +2142,174 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_remove_lines(
         self_: *mut Fl_Simple_Terminal,
-        start: libc::c_int,
-        count: libc::c_int,
+        start: ::std::os::raw::c_int,
+        count: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_text_font(arg1: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_text_font(arg1: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_text_font(arg1: *mut Fl_Simple_Terminal, s: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_text_font(
+        arg1: *mut Fl_Simple_Terminal,
+        s: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_text_size(arg1: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_text_size(arg1: *const Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_text_size(arg1: *mut Fl_Simple_Terminal, s: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_text_size(
+        arg1: *mut Fl_Simple_Terminal,
+        s: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_text_color(arg1: *const Fl_Simple_Terminal) -> libc::c_uint;
+    pub fn Fl_Simple_Terminal_text_color(arg1: *const Fl_Simple_Terminal)
+        -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_text_color(arg1: *mut Fl_Simple_Terminal, n: libc::c_uint);
+    pub fn Fl_Simple_Terminal_set_text_color(
+        arg1: *mut Fl_Simple_Terminal,
+        n: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_scroll(
         arg1: *mut Fl_Simple_Terminal,
-        topLineNum: libc::c_int,
-        horizOffset: libc::c_int,
+        topLineNum: ::std::os::raw::c_int,
+        horizOffset: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_insert(arg1: *mut Fl_Simple_Terminal, text: *const libc::c_char);
+    pub fn Fl_Simple_Terminal_insert(
+        arg1: *mut Fl_Simple_Terminal,
+        text: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_insert_position(
         arg1: *mut Fl_Simple_Terminal,
-        newPos: libc::c_int,
+        newPos: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_insert_position(arg1: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_insert_position(
+        arg1: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_position_to_xy(
         self_: *const Fl_Simple_Terminal,
-        pos: libc::c_int,
-        x: *mut libc::c_int,
-        y: *mut libc::c_int,
-    ) -> libc::c_int;
+        pos: ::std::os::raw::c_int,
+        x: *mut ::std::os::raw::c_int,
+        y: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_count_lines(
         arg1: *const Fl_Simple_Terminal,
-        start: libc::c_int,
-        end: libc::c_int,
-        start_pos_is_line_start: libc::c_int,
-    ) -> libc::c_int;
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+        start_pos_is_line_start: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_move_right(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_move_right(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_move_left(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_move_left(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_move_up(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_move_up(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_move_down(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_move_down(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_show_cursor(arg1: *mut Fl_Simple_Terminal, boolean: libc::c_int);
+    pub fn Fl_Simple_Terminal_show_cursor(
+        arg1: *mut Fl_Simple_Terminal,
+        boolean: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_highlight_data(
         self_: *mut Fl_Simple_Terminal,
-        sbuf: *mut libc::c_void,
-        color: *mut libc::c_uint,
-        font: *mut libc::c_int,
-        fontsz: *mut libc::c_int,
-        sz: libc::c_int,
+        sbuf: *mut ::std::os::raw::c_void,
+        color: *mut ::std::os::raw::c_uint,
+        font: *mut ::std::os::raw::c_int,
+        fontsz: *mut ::std::os::raw::c_int,
+        sz: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_cursor_style(arg1: *mut Fl_Simple_Terminal, style: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_cursor_style(
+        arg1: *mut Fl_Simple_Terminal,
+        style: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_cursor_color(arg1: *mut Fl_Simple_Terminal, color: libc::c_uint);
+    pub fn Fl_Simple_Terminal_set_cursor_color(
+        arg1: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_uint,
+    );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_scrollbar_size(
         arg1: *mut Fl_Simple_Terminal,
-        newSize: libc::c_int,
+        newSize: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_scrollbar_align(
         arg1: *mut Fl_Simple_Terminal,
-        align: libc::c_int,
+        align: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_cursor_style(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_cursor_style(arg1: *mut Fl_Simple_Terminal) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_cursor_color(arg1: *mut Fl_Simple_Terminal) -> libc::c_uint;
+    pub fn Fl_Simple_Terminal_cursor_color(arg1: *mut Fl_Simple_Terminal)
+        -> ::std::os::raw::c_uint;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_scrollbar_size(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_scrollbar_size(
+        arg1: *mut Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_scrollbar_align(arg1: *mut Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_scrollbar_align(
+        arg1: *mut Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_line_start(
         self_: *const Fl_Simple_Terminal,
-        pos: libc::c_int,
-    ) -> libc::c_int;
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_line_end(
         self_: *const Fl_Simple_Terminal,
-        startPos: libc::c_int,
-        startPosIsLineStart: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_skip_lines(
         self_: *mut Fl_Simple_Terminal,
-        startPos: libc::c_int,
-        nLines: libc::c_int,
-        startPosIsLineStart: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+        startPosIsLineStart: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_rewind_lines(
         self_: *mut Fl_Simple_Terminal,
-        startPos: libc::c_int,
-        nLines: libc::c_int,
-    ) -> libc::c_int;
+        startPos: ::std::os::raw::c_int,
+        nLines: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_next_word(self_: *mut Fl_Simple_Terminal);
@@ -2019,14 +2320,14 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_word_start(
         self_: *const Fl_Simple_Terminal,
-        pos: libc::c_int,
-    ) -> libc::c_int;
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_word_end(
         self_: *const Fl_Simple_Terminal,
-        pos: libc::c_int,
-    ) -> libc::c_int;
+        pos: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_x_to_col(self_: *const Fl_Simple_Terminal, x: f64) -> f64;
@@ -2037,78 +2338,96 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_set_linenumber_width(
         self_: *mut Fl_Simple_Terminal,
-        width: libc::c_int,
+        width: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_width(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_linenumber_width(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_linenumber_font(self_: *mut Fl_Simple_Terminal, val: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_linenumber_font(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_font(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_linenumber_font(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_set_linenumber_size(self_: *mut Fl_Simple_Terminal, val: libc::c_int);
+    pub fn Fl_Simple_Terminal_set_linenumber_size(
+        self_: *mut Fl_Simple_Terminal,
+        val: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_size(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_linenumber_size(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_linenumber_fgcolor(
         self_: *mut Fl_Simple_Terminal,
-        val: libc::c_uint,
+        val: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_fgcolor(self_: *const Fl_Simple_Terminal) -> libc::c_uint;
+    pub fn Fl_Simple_Terminal_linenumber_fgcolor(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_linenumber_bgcolor(
         self_: *mut Fl_Simple_Terminal,
-        val: libc::c_uint,
+        val: ::std::os::raw::c_uint,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_bgcolor(self_: *const Fl_Simple_Terminal) -> libc::c_uint;
+    pub fn Fl_Simple_Terminal_linenumber_bgcolor(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_set_linenumber_align(
         self_: *mut Fl_Simple_Terminal,
-        val: libc::c_int,
+        val: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Simple_Terminal_linenumber_align(self_: *const Fl_Simple_Terminal) -> libc::c_int;
+    pub fn Fl_Simple_Terminal_linenumber_align(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_in_selection(
         self_: *const Fl_Simple_Terminal,
-        x: libc::c_int,
-        y: libc::c_int,
-    ) -> libc::c_int;
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_wrap_mode(
         self_: *mut Fl_Simple_Terminal,
-        wrap: libc::c_int,
-        wrap_margin: libc::c_int,
+        wrap: ::std::os::raw::c_int,
+        wrap_margin: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_wrapped_column(
         self_: *const Fl_Simple_Terminal,
-        row: libc::c_int,
-        column: libc::c_int,
-    ) -> libc::c_int;
+        row: ::std::os::raw::c_int,
+        column: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_wrapped_row(
         self_: *const Fl_Simple_Terminal,
-        row: libc::c_int,
-    ) -> libc::c_int;
+        row: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_delete_stable(arg1: *mut libc::c_void);
+    pub fn Fl_delete_stable(arg1: *mut ::std::os::raw::c_void);
 }

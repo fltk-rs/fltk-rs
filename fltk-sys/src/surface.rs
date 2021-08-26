@@ -9,7 +9,7 @@ extern "C" {
     pub fn Fl_Surface_Device_set_current(self_: *mut Fl_Surface_Device);
 }
 extern "C" {
-    pub fn Fl_Surface_Device_is_current(self_: *mut Fl_Surface_Device) -> libc::c_int;
+    pub fn Fl_Surface_Device_is_current(self_: *mut Fl_Surface_Device) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Surface_Device_surface() -> *mut Fl_Surface_Device;
@@ -27,9 +27,9 @@ pub struct Fl_Image_Surface {
 }
 extern "C" {
     pub fn Fl_Image_Surface_new(
-        w: libc::c_int,
-        h: libc::c_int,
-        high_res: libc::c_int,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+        high_res: ::std::os::raw::c_int,
     ) -> *mut Fl_Image_Surface;
 }
 extern "C" {
@@ -39,26 +39,28 @@ extern "C" {
     pub fn Fl_Image_Surface_set_current(self_: *mut Fl_Image_Surface);
 }
 extern "C" {
-    pub fn Fl_Image_Surface_is_current(self_: *mut Fl_Image_Surface) -> libc::c_int;
+    pub fn Fl_Image_Surface_is_current(self_: *mut Fl_Image_Surface) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Image_Surface_image(self_: *mut Fl_Image_Surface) -> *mut libc::c_void;
+    pub fn Fl_Image_Surface_image(self_: *mut Fl_Image_Surface) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
-    pub fn Fl_Image_Surface_highres_image(self_: *mut Fl_Image_Surface) -> *mut libc::c_void;
+    pub fn Fl_Image_Surface_highres_image(
+        self_: *mut Fl_Image_Surface,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Image_Surface_origin(
         self_: *mut Fl_Image_Surface,
-        x: *mut libc::c_int,
-        y: *mut libc::c_int,
+        x: *mut ::std::os::raw::c_int,
+        y: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Image_Surface_set_origin(
         self_: *mut Fl_Image_Surface,
-        x: libc::c_int,
-        y: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
     );
 }
 extern "C" {
@@ -67,17 +69,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Image_Surface_draw(
         self_: *mut Fl_Image_Surface,
-        widget: *mut libc::c_void,
-        delta_x: libc::c_int,
-        delta_y: libc::c_int,
+        widget: *mut ::std::os::raw::c_void,
+        delta_x: ::std::os::raw::c_int,
+        delta_y: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Image_Surface_draw_decorated_window(
         self_: *mut Fl_Image_Surface,
-        widget: *mut libc::c_void,
-        delta_x: libc::c_int,
-        delta_y: libc::c_int,
+        widget: *mut ::std::os::raw::c_void,
+        delta_x: ::std::os::raw::c_int,
+        delta_y: ::std::os::raw::c_int,
     );
 }
 #[repr(C)]
@@ -87,9 +89,9 @@ pub struct Fl_SVG_File_Surface {
 }
 extern "C" {
     pub fn Fl_SVG_File_Surface_new(
-        width: libc::c_int,
-        height: libc::c_int,
-        file: *const libc::c_char,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        file: *const ::std::os::raw::c_char,
     ) -> *mut Fl_SVG_File_Surface;
 }
 extern "C" {
@@ -98,30 +100,30 @@ extern "C" {
 extern "C" {
     pub fn Fl_SVG_File_Surface_origin(
         self_: *mut Fl_SVG_File_Surface,
-        x: libc::c_int,
-        y: libc::c_int,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_SVG_File_Surface_printable_rect(
         self_: *mut Fl_SVG_File_Surface,
-        w: *mut libc::c_int,
-        h: *mut libc::c_int,
-    ) -> libc::c_int;
+        w: *mut ::std::os::raw::c_int,
+        h: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_SVG_File_Surface_draw(
         self_: *mut Fl_SVG_File_Surface,
-        widget: *mut libc::c_void,
-        delta_x: libc::c_int,
-        delta_y: libc::c_int,
+        widget: *mut ::std::os::raw::c_void,
+        delta_x: ::std::os::raw::c_int,
+        delta_y: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_SVG_File_Surface_draw_decorated_window(
         self_: *mut Fl_SVG_File_Surface,
-        widget: *mut libc::c_void,
-        delta_x: libc::c_int,
-        delta_y: libc::c_int,
+        widget: *mut ::std::os::raw::c_void,
+        delta_x: ::std::os::raw::c_int,
+        delta_y: ::std::os::raw::c_int,
     );
 }

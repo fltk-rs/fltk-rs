@@ -2,8 +2,8 @@
 
 extern "C" {
     pub fn Fl_filename_expand(
-        out: *mut libc::c_char,
-        len: libc::c_int,
-        in_: *const libc::c_char,
-    ) -> libc::c_int;
+        out: *mut ::std::os::raw::c_char,
+        len: ::std::os::raw::c_int,
+        in_: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
 }

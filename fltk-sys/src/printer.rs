@@ -14,36 +14,44 @@ extern "C" {
 extern "C" {
     pub fn Fl_Printer_begin_job(
         self_: *mut Fl_Printer,
-        pagecount: libc::c_int,
-        frompage: *mut libc::c_int,
-        topage: *mut libc::c_int,
-        perr_message: *mut *mut libc::c_char,
-    ) -> libc::c_int;
+        pagecount: ::std::os::raw::c_int,
+        frompage: *mut ::std::os::raw::c_int,
+        topage: *mut ::std::os::raw::c_int,
+        perr_message: *mut *mut ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Printer_begin_page(self_: *mut Fl_Printer) -> libc::c_int;
+    pub fn Fl_Printer_begin_page(self_: *mut Fl_Printer) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Printer_printable_rect(
         self_: *mut Fl_Printer,
-        w: *mut libc::c_int,
-        h: *mut libc::c_int,
-    ) -> libc::c_int;
+        w: *mut ::std::os::raw::c_int,
+        h: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Printer_margins(
         self_: *mut Fl_Printer,
-        left: *mut libc::c_int,
-        top: *mut libc::c_int,
-        right: *mut libc::c_int,
-        bottom: *mut libc::c_int,
+        left: *mut ::std::os::raw::c_int,
+        top: *mut ::std::os::raw::c_int,
+        right: *mut ::std::os::raw::c_int,
+        bottom: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Printer_origin(self_: *mut Fl_Printer, x: *mut libc::c_int, y: *mut libc::c_int);
+    pub fn Fl_Printer_origin(
+        self_: *mut Fl_Printer,
+        x: *mut ::std::os::raw::c_int,
+        y: *mut ::std::os::raw::c_int,
+    );
 }
 extern "C" {
-    pub fn Fl_Printer_set_origin(self_: *mut Fl_Printer, x: libc::c_int, y: libc::c_int);
+    pub fn Fl_Printer_set_origin(
+        self_: *mut Fl_Printer,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Printer_scale(self_: *mut Fl_Printer, scale_x: f32, scale_y: f32);
@@ -52,13 +60,17 @@ extern "C" {
     pub fn Fl_Printer_rotate(self_: *mut Fl_Printer, angle: f32);
 }
 extern "C" {
-    pub fn Fl_Printer_translate(self_: *mut Fl_Printer, x: libc::c_int, y: libc::c_int);
+    pub fn Fl_Printer_translate(
+        self_: *mut Fl_Printer,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Printer_untranslate(self_: *mut Fl_Printer);
 }
 extern "C" {
-    pub fn Fl_Printer_end_page(self_: *mut Fl_Printer) -> libc::c_int;
+    pub fn Fl_Printer_end_page(self_: *mut Fl_Printer) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Printer_end_job(self_: *mut Fl_Printer);
@@ -67,78 +79,78 @@ extern "C" {
     pub fn Fl_Printer_set_current(self_: *mut Fl_Printer);
 }
 extern "C" {
-    pub fn Fl_Printer_is_current(self_: *mut Fl_Printer) -> libc::c_int;
+    pub fn Fl_Printer_is_current(self_: *mut Fl_Printer) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Printer_print_widget(
         self_: *mut Fl_Printer,
-        widget: *mut libc::c_void,
-        delta_x: libc::c_int,
-        delta_y: libc::c_int,
+        widget: *mut ::std::os::raw::c_void,
+        delta_x: ::std::os::raw::c_int,
+        delta_y: ::std::os::raw::c_int,
     );
 }
 extern "C" {
     pub fn Fl_Printer_print_window(
         self_: *mut Fl_Printer,
-        win: *mut libc::c_void,
-        x_offset: libc::c_int,
-        y_offset: libc::c_int,
+        win: *mut ::std::os::raw::c_void,
+        x_offset: ::std::os::raw::c_int,
+        y_offset: ::std::os::raw::c_int,
     );
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_title(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_title(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_printer(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_printer(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_range(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_range(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_copies(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_copies(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_all(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_all(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_pages(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_pages(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_from(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_from(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_to(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_to(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_properties(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_properties(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_copyNo(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_copyNo(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_print_button(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_print_button(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_cancel_button(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_cancel_button(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_dialog_print_to_file(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_dialog_print_to_file(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_property_title(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_property_title(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_property_pagesize(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_property_pagesize(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_property_mode(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_property_mode(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_property_use(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_property_use(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_property_save(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_property_save(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
-    pub fn Fl_Printer_set_property_cancel(msg: *const libc::c_char);
+    pub fn Fl_Printer_set_property_cancel(msg: *const ::std::os::raw::c_char);
 }
