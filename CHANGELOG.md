@@ -4,6 +4,7 @@
 ## [1.1.13] - Unreleased
 - Check for ImageExt::count() when calling ImageExt::to_rgb().
 - Remove libc dependency.
+- Update cfltk.
 
 ## [1.1.12] - 2021-08-21
 - Update libc, cmake-rs, bitflags and syn.
