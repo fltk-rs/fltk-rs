@@ -58,7 +58,10 @@ pub fn init_all() {
         ];
         #[cfg(feature = "enable-glwindow")]
         {
-            gl_loader::init_gl();
+            extern "C" {
+                pub fn open_gl() -> i32;
+            }
+            open_gl();
         }
         if !IS_INIT.load(Ordering::Relaxed) {
             IS_INIT.store(true, Ordering::Relaxed);

@@ -87,6 +87,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
+        #[cfg(feature = "raw-window-handle")]
         unsafe impl HasRawWindowHandle for #name {
             fn raw_window_handle(&self) -> RawWindowHandle {
                 #[cfg(target_os = "windows")]

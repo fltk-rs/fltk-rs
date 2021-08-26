@@ -9,6 +9,7 @@ use crate::prelude::*;
 use crate::utils::FlString;
 use crate::widget::Widget;
 use fltk_sys::window::*;
+#[cfg(feature = "raw-window-handle")]
 use raw_window_handle::*;
 use std::{
     ffi::{CStr, CString},
@@ -192,9 +193,7 @@ impl SingleWindow {
             }
             let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
             if mac_version >= 100700 {
-                factor = unsafe {
-                    my_getScalingFactor(self.raw_handle())
-                };
+                factor = unsafe { my_getScalingFactor(self.raw_handle()) };
                 factor = if factor as i32 == 0 { 2.0 } else { 1.0 };
             }
         }
@@ -358,9 +357,7 @@ impl DoubleWindow {
             }
             let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
             if mac_version >= 100700 {
-                factor = unsafe {
-                    my_getScalingFactor(self.raw_handle())
-                };
+                factor = unsafe { my_getScalingFactor(self.raw_handle()) };
                 // A factor of 0 means no info.plist was found.
                 factor = if factor as i32 == 0 { 2.0 } else { 1.0 };
             }
@@ -556,11 +553,14 @@ impl GlWindow {
 
     /// Gets an opengl function address
     pub fn get_proc_address(&self, s: &str) -> *const raw::c_void {
-        let ret = gl_loader::get_proc_address(s);
+        extern "C" {
+            pub fn get_proc(name: *const raw::c_char) -> *mut raw::c_void;
+        }
+        let s = CString::safe_new(s);
+        let ret = unsafe { get_proc(s.as_ptr() as _) };
         if !ret.is_null() {
             ret as *const _
         } else {
-            let s = CString::safe_new(s);
             unsafe { Fl_Gl_Window_get_proc_address(self.inner, s.as_ptr()) as *const _ }
         }
     }
@@ -705,11 +705,14 @@ impl GlutWindow {
 
     /// Gets an opengl function address
     pub fn get_proc_address(&self, s: &str) -> *const raw::c_void {
-        let ret = gl_loader::get_proc_address(s);
+        extern "C" {
+            pub fn get_proc(name: *const raw::c_char) -> *mut raw::c_void;
+        }
+        let s = CString::safe_new(s);
+        let ret = unsafe { get_proc(s.as_ptr() as _) };
         if !ret.is_null() {
             ret as *const _
         } else {
-            let s = CString::safe_new(s);
             unsafe { Fl_Glut_Window_get_proc_address(self.inner, s.as_ptr()) as *const _ }
         }
     }
