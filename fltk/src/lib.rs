@@ -323,7 +323,3 @@ extern crate lazy_static;
 
 #[macro_use]
 extern crate bitflags;
-
-#[cfg(target_os = "macos")]
-#[macro_use]
-extern crate objc;

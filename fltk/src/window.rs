@@ -187,19 +187,19 @@ impl SingleWindow {
         let mut factor = 1.0;
         #[cfg(target_os = "macos")]
         {
+            extern "C" {
+                pub fn my_getScalingFactor(handle: *mut raw::c_void) -> f64;
+            }
             let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
             if mac_version >= 100700 {
                 factor = unsafe {
-                    msg_send![
-                        self.raw_handle() as *mut objc::runtime::Object,
-                        backingScaleFactor
-                    ]
+                    my_getScalingFactor(self.raw_handle())
                 };
                 factor = if factor as i32 == 0 { 2.0 } else { 1.0 };
             }
         }
         let s = crate::app::screen_scale(self.screen_num());
-        s * factor
+        s * factor as f32
     }
 
     /// Gets the window's width in pixels
@@ -353,20 +353,20 @@ impl DoubleWindow {
         let mut factor = 1.0;
         #[cfg(target_os = "macos")]
         {
+            extern "C" {
+                pub fn my_getScalingFactor(handle: *mut raw::c_void) -> f64;
+            }
             let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
             if mac_version >= 100700 {
                 factor = unsafe {
-                    msg_send![
-                        self.raw_handle() as *mut objc::runtime::Object,
-                        backingScaleFactor
-                    ]
+                    my_getScalingFactor(self.raw_handle())
                 };
                 // A factor of 0 means no info.plist was found.
                 factor = if factor as i32 == 0 { 2.0 } else { 1.0 };
             }
         }
         let s = crate::app::screen_scale(self.screen_num());
-        s * factor
+        s * factor as f32
     }
 
     /// Gets the window's width in pixels

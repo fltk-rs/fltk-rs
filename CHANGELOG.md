@@ -3,7 +3,7 @@
 
 ## [1.1.13] - Unreleased
 - Check for ImageExt::count() when calling ImageExt::to_rgb().
-- Remove libc dependency.
+- Remove libc and objc dependencies.
 - Update cfltk.
 
 ## [1.1.12] - 2021-08-21
