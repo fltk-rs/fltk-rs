@@ -36,6 +36,22 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "init_sizes").as_str(),
         name.span(),
     );
+    let update_child = Ident::new(
+        format!("{}_{}", name_str, "update_child").as_str(),
+        name.span(),
+    );
+    let draw_child = Ident::new(
+        format!("{}_{}", name_str, "draw_child").as_str(),
+        name.span(),
+    );
+    let draw_children = Ident::new(
+        format!("{}_{}", name_str, "draw_children").as_str(),
+        name.span(),
+    );
+    let draw_outside_label = Ident::new(
+        format!("{}_{}", name_str, "draw_outside_label").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl IntoIterator for #name {
@@ -174,7 +190,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!w.was_deleted());
                 unsafe {
                     crate::app::open_display();
-                    Fl_Group_draw_child(self.inner as _, w.as_widget_ptr() as _)
+                    #draw_child(self.inner as _, w.as_widget_ptr() as _)
                 }
             }
 
@@ -183,7 +199,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!w.was_deleted());
                 unsafe {
                         crate::app::open_display();
-                    Fl_Group_update_child(self.inner as _, w.as_widget_ptr() as _)
+                    #update_child(self.inner as _, w.as_widget_ptr() as _)
                 }
             }
 
@@ -192,7 +208,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!w.was_deleted());
                 unsafe {
                     crate::app::open_display();
-                    Fl_Group_draw_outside_label(self.inner as _, w.as_widget_ptr() as _)
+                    #draw_outside_label(self.inner as _, w.as_widget_ptr() as _)
                 }
             }
 
@@ -200,7 +216,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     crate::app::open_display();
-                    Fl_Group_draw_children(self.inner as _)
+                    #draw_children(self.inner as _)
                 }
             }
 

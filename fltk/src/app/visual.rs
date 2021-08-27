@@ -3,7 +3,7 @@ use crate::enums::{Color, FrameType, Mode};
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::fl;
-use std::{ffi::CString, mem, os::raw};
+use std::{ffi::CString, mem, os::raw, sync::atomic::Ordering};
 
 /// Set the app scheme
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -71,9 +71,9 @@ pub fn set_visible_focus(flag: bool) {
 pub fn set_frame_type(new_frame: FrameType) {
     unsafe {
         let new_frame = new_frame as i32;
-        let mut curr = CURRENT_FRAME.lock().unwrap();
-        fl::Fl_set_box_type(*curr, new_frame);
-        *curr = new_frame;
+        let curr = CURRENT_FRAME.load(Ordering::Relaxed);
+        fl::Fl_set_box_type(curr, new_frame);
+        CURRENT_FRAME.store(new_frame, Ordering::Relaxed);
     }
 }
 
@@ -100,19 +100,19 @@ pub fn set_frame_type_cb(
 
 /// Get the app's frame type
 pub fn frame_type() -> FrameType {
-    let curr = CURRENT_FRAME.lock().unwrap();
-    FrameType::by_index(*curr as _)
+    let curr = CURRENT_FRAME.load(Ordering::Relaxed);
+    FrameType::by_index(curr as _)
 }
 
 /// Swap the default frame type with a new frame type
 pub fn swap_frame_type(new_frame: FrameType) {
     unsafe {
         let new_frame = new_frame as i32;
-        let mut curr = CURRENT_FRAME.lock().unwrap();
-        fl::Fl_set_box_type(56, *curr);
-        fl::Fl_set_box_type(*curr, new_frame);
+        let curr = CURRENT_FRAME.load(Ordering::Relaxed);
+        fl::Fl_set_box_type(56, curr);
+        fl::Fl_set_box_type(curr, new_frame);
         fl::Fl_set_box_type(new_frame, 56);
-        *curr = new_frame;
+        CURRENT_FRAME.store(new_frame, Ordering::Relaxed);
     }
 }
 
@@ -261,9 +261,7 @@ pub unsafe fn close_display() {
 
 /// Determines if the currently drawn box is active or inactive
 pub fn draw_frame_active() -> bool {
-    unsafe {
-        fl::Fl_draw_box_active() != 0
-    }
+    unsafe { fl::Fl_draw_box_active() != 0 }
 }
 
 /// Fl::box_color.

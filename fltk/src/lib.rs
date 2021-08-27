@@ -14,12 +14,12 @@ The fltk crate is a crossplatform lightweight gui library which can be staticall
 
 Why choose FLTK?
 - Lightweight. Small binary, around 1mb after stripping. [Small memory footprint](https://szibele.com/memory-footprint-of-gui-toolkits/).
-- Speed. Fast to install, fast to build, fast at startup and fast at runtime. 
+- Speed. Fast to install, fast to build, fast at startup and fast at runtime.
 - Single executable. No DLLs to deploy.
-- Supports old architectures. 
+- Supports old architectures.
 - FLTK's permissive license which allows static linking for closed-source applications.
 - Themability (4 supported schemes: Base, GTK, Plastic and Gleam), and additional theming using [fltk-theme](https://crates.io/crates/fltk-theme).
-- Provides around 80 customizable widgets. 
+- Provides around 80 customizable widgets.
 - Has inbuilt image support.
 
 Tutorials:
@@ -319,11 +319,4 @@ pub mod printer;
 extern crate fltk_derive;
 
 #[macro_use]
-extern crate lazy_static;
-
-#[macro_use]
 extern crate bitflags;
-
-#[cfg(target_os = "macos")]
-#[macro_use]
-extern crate objc;

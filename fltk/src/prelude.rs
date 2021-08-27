@@ -1452,7 +1452,7 @@ pub unsafe trait ImageExt {
     fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError>;
     /// Scales the image
     fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool);
-    /// Return the count of an image
+    /// Return the count of pointers in an image (Pixmaps have more than 1, bitmaps have 0, Rgb based images have 1)
     fn count(&self) -> i32;
     /// Gets the image's data width
     fn data_w(&self) -> i32;

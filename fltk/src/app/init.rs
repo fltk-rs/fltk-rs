@@ -1,25 +1,23 @@
 use fltk_sys::fl;
 use std::sync::{
-    atomic::{AtomicBool, Ordering},
-    Mutex,
+    atomic::{AtomicBool, AtomicI32, Ordering},
+    Arc, Mutex,
 };
 
-lazy_static! {
-    /// The currently chosen font
-    pub(crate) static ref CURRENT_FONT: Mutex<i32> = Mutex::new(0);
+/// Basically a check for global locking
+pub(crate) static mut IS_INIT: AtomicBool = AtomicBool::new(false);
 
-    /// Currently loaded fonts
-    pub(crate) static ref LOADED_FONT: Option<&'static str> = None;
+/// Currently loaded fonts
+pub(crate) static LOADED_FONT: Option<&'static str> = None;
 
-    /// The fonts associated with the application
-    pub(crate) static ref FONTS: Mutex<Vec<String>> = Mutex::new(Vec::new());
+/// The currently chosen font
+pub(crate) static CURRENT_FONT: AtomicI32 = AtomicI32::new(0);
 
-    /// The currently chosen frame type
-    pub(crate) static ref CURRENT_FRAME: Mutex<i32> = Mutex::new(2);
+/// The currently chosen frame type
+pub(crate) static CURRENT_FRAME: AtomicI32 = AtomicI32::new(2);
 
-    /// Basically a check for global locking
-    pub(crate) static ref IS_INIT: AtomicBool = AtomicBool::new(false);
-}
+/// The fonts associated with the application
+pub(crate) static mut FONTS: Option<Arc<Mutex<Vec<String>>>> = None;
 
 /// Registers all images supported by `SharedImage`
 pub(crate) fn register_images() {
@@ -38,7 +36,7 @@ pub fn init_all() {
         }
         register_images();
         // This should never appear!
-        *FONTS.lock().unwrap() = vec![
+        FONTS = Some(Arc::from(Mutex::from(vec![
             "Helvetica".to_owned(),
             "HelveticaBold".to_owned(),
             "HelveticaItalic".to_owned(),
@@ -55,10 +53,13 @@ pub fn init_all() {
             "Screen".to_owned(),
             "ScreenBold".to_owned(),
             "Zapfdingbats".to_owned(),
-        ];
+        ])));
         #[cfg(feature = "enable-glwindow")]
         {
-            gl_loader::init_gl();
+            extern "C" {
+                pub fn open_gl() -> i32;
+            }
+            open_gl();
         }
         if !IS_INIT.load(Ordering::Relaxed) {
             IS_INIT.store(true, Ordering::Relaxed);

@@ -1,6 +1,9 @@
 use crate::enums::Mode;
 use crate::prelude::*;
-use std::path;
+use std::{
+    path,
+    sync::{Arc, Mutex},
+};
 
 mod channel;
 pub use channel::*;
@@ -64,7 +67,9 @@ impl App {
 
     /// Loads system fonts
     pub fn load_system_fonts(self) -> Self {
-        *FONTS.lock().unwrap() = get_font_names();
+        unsafe {
+            FONTS = Some(Arc::from(Mutex::from(get_font_names())));
+        }
         self
     }
 

@@ -87,6 +87,7 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
     );
 
     let gen = quote! {
+        #[cfg(feature = "raw-window-handle")]
         unsafe impl HasRawWindowHandle for #name {
             fn raw_window_handle(&self) -> RawWindowHandle {
                 #[cfg(target_os = "windows")]
@@ -101,9 +102,10 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 #[cfg(target_os = "macos")]
                 {
                     let raw = self.raw_handle();
-                    let cv: *mut objc::runtime::Object = unsafe {
-                        msg_send![raw as *mut objc::runtime::Object, contentView]
-                    };
+                    extern "C" {
+                        pub fn my_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
+                    }
+                    let cv = unsafe { my_getContentView(raw) };
                     return RawWindowHandle::MacOS(macos::MacOSHandle {
                         ns_window: raw,
                         ns_view: cv as _,

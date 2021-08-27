@@ -44,7 +44,7 @@ impl ColorDepth {
         if !(1..=4).contains(&val) {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
-            Ok(unsafe {mem::transmute(val)} )
+            Ok(unsafe { mem::transmute(val) })
         }
     }
 }
@@ -302,8 +302,12 @@ impl Font {
     /// Returns a font by index, can be queried via the `app::get_font_names()`
     pub fn by_index(idx: usize) -> Font {
         unsafe {
-            if idx < (*FONTS.lock().unwrap()).len() {
-                mem::transmute(idx as i32)
+            if let Some(f) = &FONTS {
+                if idx < (f.lock().unwrap()).len() {
+                    mem::transmute(idx as i32)
+                } else {
+                    Font::Helvetica
+                }
             } else {
                 Font::Helvetica
             }

@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.1.13] - Unreleased
+- Check for ImageExt::count() when calling ImageExt::to_rgb().
+- Remove unnecessary deps.
+- Update cfltk.
+
 ## [1.1.12] - 2021-08-21
 - Update libc, cmake-rs, bitflags and syn.
 - Fix fltk-shared feature on X11 systems.

@@ -52,7 +52,7 @@ fn main() {
         }
     });
 
-    while app.wait() {
+    app::add_idle(move || {
         ball.pos.0 += 10 * ball.dir.0 as i32; // The increment in x position
         ball.pos.1 += 10 * ball.dir.1 as i32; // The increment in y position
         if ball.pos.1 == 540 - 40
@@ -78,5 +78,6 @@ fn main() {
         wind.redraw();
         // sleeps are necessary when calling redraw in the event loop
         app::sleep(0.016);
-    }
+    }); 
+    app.run().unwrap();
 }
