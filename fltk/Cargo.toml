@@ -24,18 +24,18 @@ raw-window-handle = { version = "^0.3.3", optional = true }
 
 [features]
 default = ["raw-window-handle"]
-fltk-shared = ["fltk-sys/fltk-shared"] # (Experimental) Builds a shared lib of fltk
+fltk-bundled = ["fltk-sys/fltk-bundled"] # Support for bundled versions of cfltk and fltk (requires curl and tar)
+enable-glwindow = ["fltk-sys/enable-glwindow"] # Support for systems without OpenGL
+no-pango = ["fltk-sys/no-pango"] # You can use this if you don't need rtl or cjk unicode support
+fltk-shared = ["fltk-sys/fltk-shared"] # Builds a shared lib of fltk
 use-ninja = ["fltk-sys/use-ninja"] # If you have ninja build installed, it builds faster than make or VS
-system-fltk = ["fltk-sys/system-fltk"] # (Experimental) If you would like to use the installed fltk library, should be FLTK 1.4
+system-fltk = ["fltk-sys/system-fltk"] # If you would like to use the installed fltk library, should be FLTK 1.4
 system-libpng = ["fltk-sys/system-libpng"] # Uses the system libpng
 system-libjpeg = ["fltk-sys/system-libjpeg"] # Uses the system libjpeg
 system-zlib = ["fltk-sys/system-zlib"] # Uses the system zlib
-legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy OpenGL
-fltk-bundled = ["fltk-sys/fltk-bundled"] # Support for bundled versions of cfltk and fltk (requires curl and tar)
-enable-glwindow = ["fltk-sys/enable-glwindow"] # Support for systems without OpenGL
+no-gdiplus = ["fltk-sys/no-gdiplus"] # Disable gdiplus drawing
 no-images = ["fltk-sys/no-images"] # (Experimental) You can use this feature if your app doesn't use images to reduce binary size
-no-pango = ["fltk-sys/no-pango"] # (Experimental and Linux only) You can use this if you don't need rtl or cjk unicode support
-no-gdiplus = ["fltk-sys/no-gdiplus"] # (Experimental and Windows only) Disable gdiplus drawing
+legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy OpenGL
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
