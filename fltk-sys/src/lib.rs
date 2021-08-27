@@ -13,7 +13,6 @@ pub mod image;
 pub mod input;
 pub mod menu;
 pub mod misc;
-pub mod output;
 pub mod table;
 pub mod text;
 pub mod tree;
