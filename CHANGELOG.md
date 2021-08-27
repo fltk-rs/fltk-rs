@@ -1,10 +1,10 @@
 # Changelog
 
 
-## [1.1.13] - Unreleased
+## [1.1.13] - 2021-08-27
 - Check for ImageExt::count() when calling ImageExt::to_rgb().
 - Remove unnecessary deps.
-- Update cfltk.
+- Refactor cfltk to remove code duplication and reduce build times.
 
 ## [1.1.12] - 2021-08-21
 - Update libc, cmake-rs, bitflags and syn.
