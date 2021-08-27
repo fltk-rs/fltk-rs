@@ -29,7 +29,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: seanmiddleditch/gha-setup-ninja@master
     - name: Build
-      run: cd fltk && cargo build --features=enable-glwindow --release && cd ..
+      run: cargo build --release
       shell: bash
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
