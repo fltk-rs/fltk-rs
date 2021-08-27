@@ -17,7 +17,7 @@ jobs:
     - name: Download deps
       run: |
          if [ "$RUNNER_OS" == "Linux" ]; then
-          sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev
+          sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
          fi
       shell: bash
     - name: xcode-select
@@ -29,7 +29,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: seanmiddleditch/gha-setup-ninja@master
     - name: Build
-      run: cargo build --release
+      run: cd fltk && cargo build --features=enable-glwindow --release && cd ..
       shell: bash
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
