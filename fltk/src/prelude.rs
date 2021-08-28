@@ -547,21 +547,31 @@ pub unsafe trait WidgetExt {
     fn active(&self) -> bool;
     /// Returns whether a widget or any of its parents are active (recursively)
     fn active_r(&self) -> bool;
+    #[doc(hidden)]
     /**
-        Return the default callback function, this allows storing then running within the overriden callback
+        Return the default callback function, this allows storing then running within the overriden callback.
+        Works only for FLTK types (with no callback defined in the Rust side)
         ```rust
             use fltk::{prelude::*, *};
-            let scroll = group::Scroll::default();
-            let mut scrollbar = scroll.scrollbar();
-            scrollbar.set_callback({
-            let mut cb = scrollbar.callback();
-                move |_| {
-                    println!("print something, and also run the default callback");
-                    if let Some(cb) = cb.as_mut() {
-                        (*cb)();
+            fn main() {
+                let a = app::App::default();
+                let mut win = window::Window::default().with_size(400, 300);
+                let scroll = group::Scroll::default().size_of_parent();
+                let _btn = button::Button::new(160, 500, 80, 40, "click");
+                let mut scrollbar = scroll.scrollbar();
+                scrollbar.set_callback({
+                    let mut cb = scrollbar.callback();
+                    move |_| {
+                        println!("print something, and also run the default callback");
+                        if let Some(cb) = cb.as_mut() {
+                            (*cb)();
+                        }
                     }
-                }
-            });
+                });
+                win.end();
+                win.show();
+                a.run().unwrap();
+            }
         ```
     */
     fn callback(&self) -> Option<Box<dyn FnMut()>>;
