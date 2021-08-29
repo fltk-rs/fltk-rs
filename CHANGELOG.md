@@ -4,6 +4,7 @@
 ## [1.1.14] - 2021-09-01
 - Pull FLTK tooltip fix for issue #797.
 - Fix `fn WidgetExt::callback() -> Option<Box<dyn FnMut()>>` (callback getter) to only work for FLTK types with default callbacks.
+- Properly export the widget_extends macro.
 
 ## [1.1.13] - 2021-08-27
 - Check for ImageExt::count() when calling ImageExt::to_rgb().
