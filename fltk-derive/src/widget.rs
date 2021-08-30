@@ -1109,6 +1109,10 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     let cb = #callback(self.inner);
+                    let data = #user_data(self.inner);
+                    if !data.is_null() {
+                        return None;
+                    }
                     let s = self.clone();
                     if let Some(cb) = cb {
                         let cb_1 = Box::new(move || {

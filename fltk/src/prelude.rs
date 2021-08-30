@@ -103,12 +103,13 @@ pub trait WidgetType {
     fn from_i32(val: i32) -> Self;
 }
 
+
 /// Defines a set of convenience functions for constructing and anchoring custom widgets.
 /// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
 /// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.
 #[macro_export]
 macro_rules! widget_extends {
-    ($widget:ty) => {
+    ($widget:ty, $base:ty, $member:tt) => {
         impl $widget {
             /// Initialize to position x, y
             pub fn with_pos(mut self, x: i32, y: i32) -> Self {
@@ -139,20 +140,20 @@ macro_rules! widget_extends {
             }
 
             /// Initialize with alignment
-            pub fn with_align(mut self, align: crate::enums::Align) -> Self {
+            pub fn with_align(mut self, align: $crate::enums::Align) -> Self {
                 self.set_align(align);
                 self
             }
 
             /// Initialize with type
-            pub fn with_type<T: WidgetType>(mut self, typ: T) -> Self {
+            pub fn with_type<T: $crate::prelude::WidgetType>(mut self, typ: T) -> Self {
                 assert!(!self.was_deleted());
                 self.set_type(typ);
                 self
             }
 
             /// Initialize at bottom of another widget
-            pub fn below_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+            pub fn below_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -166,7 +167,7 @@ macro_rules! widget_extends {
             }
 
             /// Initialize above of another widget
-            pub fn above_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+            pub fn above_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -180,7 +181,7 @@ macro_rules! widget_extends {
             }
 
             /// Initialize right of another widget
-            pub fn right_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+            pub fn right_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -194,7 +195,7 @@ macro_rules! widget_extends {
             }
 
             /// Initialize left of another widget
-            pub fn left_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+            pub fn left_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -208,7 +209,7 @@ macro_rules! widget_extends {
             }
 
             /// Initialize center of another widget
-            pub fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
+            pub fn center_of<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(
@@ -251,7 +252,7 @@ macro_rules! widget_extends {
             }
 
             /// Initialize to the size of another widget
-            pub fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
+            pub fn size_of<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(
@@ -277,10 +278,7 @@ macro_rules! widget_extends {
                 self
             }
         }
-    };
 
-    ($widget:ty, $base:ty, $member:tt) => {
-        crate::widget_extends!($widget);
         impl std::ops::Deref for $widget {
             type Target = $base;
 
@@ -547,21 +545,31 @@ pub unsafe trait WidgetExt {
     fn active(&self) -> bool;
     /// Returns whether a widget or any of its parents are active (recursively)
     fn active_r(&self) -> bool;
+    #[doc(hidden)]
     /**
-        Return the default callback function, this allows storing then running within the overriden callback
+        Return the default callback function, this allows storing then running within the overriden callback.
+        Works only for FLTK types (with no callback defined in the Rust side)
         ```rust
             use fltk::{prelude::*, *};
-            let scroll = group::Scroll::default();
-            let mut scrollbar = scroll.scrollbar();
-            scrollbar.set_callback({
-            let mut cb = scrollbar.callback();
-                move |_| {
-                    println!("print something, and also run the default callback");
-                    if let Some(cb) = cb.as_mut() {
-                        (*cb)();
+            fn main() {
+                let a = app::App::default();
+                let mut win = window::Window::default().with_size(400, 300);
+                let scroll = group::Scroll::default().size_of_parent();
+                let _btn = button::Button::new(160, 500, 80, 40, "click");
+                let mut scrollbar = scroll.scrollbar();
+                scrollbar.set_callback({
+                    let mut cb = scrollbar.callback();
+                    move |_| {
+                        println!("print something, and also run the default callback");
+                        if let Some(cb) = cb.as_mut() {
+                            (*cb)();
+                        }
                     }
-                }
-            });
+                });
+                win.end();
+                win.show();
+                a.run().unwrap();
+            }
         ```
     */
     fn callback(&self) -> Option<Box<dyn FnMut()>>;
