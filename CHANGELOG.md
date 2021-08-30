@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.1.14] - 2021-08-30
+## [1.1.14] - 2021-08-31
 - Pull FLTK tooltip fix for issue #797.
 - Fix `fn WidgetExt::callback() -> Option<Box<dyn FnMut()>>` (callback getter) to only work for FLTK types with default callbacks.
 - Properly export the widget_extends macro.
