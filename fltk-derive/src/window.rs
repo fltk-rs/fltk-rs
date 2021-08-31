@@ -103,9 +103,9 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 {
                     let raw = self.raw_handle();
                     extern "C" {
-                        pub fn my_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
+                        pub fn my_getContetView(xid: *mut raw::c_void) -> *mut raw::c_void;
                     }
-                    let cv = unsafe { my_getContentView(raw) };
+                    let cv = unsafe { my_getContetView(raw) };
                     return RawWindowHandle::MacOS(macos::MacOSHandle {
                         ns_window: raw,
                         ns_view: cv as _,
