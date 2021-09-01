@@ -144,8 +144,18 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("OPTION_USE_GDIPLUS", "OFF");
         }
 
+        let profile = if let Ok(prof) = env::var("OPT_LEVEL") {
+            if prof == "z" || prof == "s" {
+                "MinSizeRel"
+            } else {
+                "Release"
+            }
+        } else {
+            "Release"
+        };
+
         let _dst = dst
-            .profile("Release")
+            .profile(profile)
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
