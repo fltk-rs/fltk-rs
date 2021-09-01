@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.1.16] - Unreleased
+- Update fltk.
+- Fix typo in function name.
+
 ## [1.1.15] - 2021-08-31
 - Pull FLTK tooltip fix for issue #797.
 - Fix `fn WidgetExt::callback() -> Option<Box<dyn FnMut()>>` (callback getter) to only work for FLTK types with default callbacks.
