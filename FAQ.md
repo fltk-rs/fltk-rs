@@ -74,6 +74,29 @@ See [here](https://docs.appimage.org/packaging-guide/overview.html#converting-ex
 ### Why is the size of my resulting executable larger than I had expected?
 FLTK is known for it's small applications. Make sure you're building in release, and make sure symbols are stripped using the strip command in Unix-like systems. On Windows it's unnecessary since symbols would end up in the pdb file (which shouldn't be deployed).
 
+If you need an even smaller size, try using opt-level="z":
+```toml
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+```
+
+Newer versions of cargo (>1.46) support automatically stripping binaries in the post-build phase:
+```toml
+cargo-features = ["strip"]
+
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+```
+
+Furthermore, you can build Rust's stdlib optimized for size (it comes optimized for speed by default). More info on that [here](https://github.com/johnthagen/min-sized-rust)
+
 ### Can I cross-compile my application to a mobile platform or WASM?
 FLTK currently doesn't support WASM nor mobile platforms. It is focused on desktop applications.
 
