@@ -1,11 +1,11 @@
 # Changelog
 
 
-## [1.1.16] - Unreleased
-- Update fltk.
-- Fix typo in function name.
+## [1.1.16] - 2021-09-05
+- Fix typo in function name (my_getContentView).
 - Enable building FLTK and cfltk in MinSizeRel profile when using opt-level="s" or "z".
-- Add a single-threaded feature. This builds FLTK in single-threaded mode, no locks, enables better perf for single-threaded apps. (Warning: this disables app::channel() and accessing widgets from other threads).
+- Add a single-threaded feature. This builds FLTK in single-threaded mode, no locks, enables better perf for single-threaded apps. (Warning: this disables accessing/modifying widgets from other threads and app::channel()/Sender/Receiver, other channel mechanisms can still be used).
+- Update fltk and syn.
 
 ## [1.1.15] - 2021-08-31
 - Pull FLTK tooltip fix for issue #797.
