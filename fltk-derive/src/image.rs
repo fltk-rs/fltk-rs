@@ -25,8 +25,9 @@ pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
     let inactive = Ident::new(format!("{}_{}", name_str, "inactive").as_str(), name.span());
 
     let gen = quote! {
+        #[cfg(not(feature = "single-threaded"))]
         unsafe impl Sync for #name {}
-
+        #[cfg(not(feature = "single-threaded"))]
         unsafe impl Send for #name {}
 
         impl PartialEq for #name {

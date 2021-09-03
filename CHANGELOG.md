@@ -4,6 +4,8 @@
 ## [1.1.16] - Unreleased
 - Update fltk.
 - Fix typo in function name.
+- Enable building FLTK and cfltk in MinSizeRel profile when using opt-level="s" or "z".
+- Add a single-threaded feature. This builds FLTK in single-threaded mode, no locks, enables better perf for single-threaded apps. (Warning: this disables app::channel() and accessing widgets from other threads).
 
 ## [1.1.15] - 2021-08-31
 - Pull FLTK tooltip fix for issue #797.
