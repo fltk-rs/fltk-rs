@@ -30,7 +30,7 @@ pub(crate) fn register_images() {
 /// If the current environment lacks threading support. Practically this should never happen!
 pub fn init_all() {
     unsafe {
-        fltk_sys::fl::Fl_init_all();
+        fl::Fl_init_all();
         if fl::Fl_lock() != 0 {
             panic!("fltk-rs requires threading support!");
         }

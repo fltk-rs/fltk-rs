@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.1.16] - 2021-09-04
+- Fix typo in function name (my_getContentView).
+- Enable building FLTK and cfltk in MinSizeRel profile when using opt-level="s" or "z".
+- Add a single-threaded feature. This allows linking X11-based libs not built with threading support. As a side-effect, this disables accessing/modifying widgets from other threads, it also might improve performance. It should not be the default.
+- Update fltk and syn.
+
 ## [1.1.15] - 2021-08-31
 - Pull FLTK tooltip fix for issue #797.
 - Fix `fn WidgetExt::callback() -> Option<Box<dyn FnMut()>>` (callback getter) to only work for FLTK types with default callbacks.

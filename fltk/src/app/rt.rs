@@ -20,6 +20,12 @@ pub fn run() -> Result<(), FltkError> {
     }
 }
 
+/// Enable locks. This is called automatically in the beginning of the app initialization
+pub fn enable_locks() -> Result<(), FltkError> {
+    lock()?;
+    Ok(())
+}
+
 /// Locks the main UI thread
 /// # Errors
 /// Returns `FailedToLock` if locking is unsopported. This is fatal to the app

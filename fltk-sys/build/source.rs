@@ -144,13 +144,29 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("OPTION_USE_GDIPLUS", "OFF");
         }
 
+        if cfg!(feature = "single-threaded") {
+            dst.define("CFLTK_SINGLE_THREADED", "ON");
+        } else {
+            dst.define("CFLTK_SINGLE_THREADED", "OFF");
+        }
+
+        let profile = if let Ok(prof) = env::var("OPT_LEVEL") {
+            if prof == "z" || prof == "s" {
+                "MinSizeRel"
+            } else {
+                "Release"
+            }
+        } else {
+            "Release"
+        };
+
         let _dst = dst
-            .profile("Release")
+            .profile(profile)
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
-            .define("OPTION_USE_THREADS", "ON")
             .define("OPTION_LARGE_FILE", "ON")
+            .define("OPTION_USE_THREADS", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
             .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
             .build();

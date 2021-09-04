@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.1.15"
+version = "1.1.16"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
@@ -17,8 +17,8 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "=1.1.14" }
-fltk-derive = { path = "../fltk-derive", version = "=1.1.15" }
+fltk-sys = { path = "../fltk-sys", version = "=1.1.16" }
+fltk-derive = { path = "../fltk-derive", version = "=1.1.16" }
 bitflags = "^1.3"
 raw-window-handle = { version = "^0.3.3", optional = true }
 
@@ -36,6 +36,7 @@ system-zlib = ["fltk-sys/system-zlib"] # Uses the system zlib
 no-gdiplus = ["fltk-sys/no-gdiplus"] # Disable gdiplus drawing
 no-images = ["fltk-sys/no-images"] # (Experimental) You can use this feature if your app doesn't use images to reduce binary size
 legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy OpenGL
+single-threaded = ["fltk-sys/single-threaded"] # (Experimental) Disable multithreading support when linking X11 libs non-mt x11 libs.
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]

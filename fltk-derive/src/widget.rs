@@ -347,8 +347,11 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let callback = Ident::new(format!("{}_{}", name_str, "callback").as_str(), name.span());
 
     let gen = quote! {
+        #[cfg(not(feature = "single-threaded"))]
         unsafe impl Send for #name {}
+        #[cfg(not(feature = "single-threaded"))]
         unsafe impl Sync for #name {}
+        
         impl PartialEq for #name {
             fn eq(&self, other: &Self) -> bool {
                 self.inner == other.inner
