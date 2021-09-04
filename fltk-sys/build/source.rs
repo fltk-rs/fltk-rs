@@ -146,10 +146,8 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if cfg!(feature = "single-threaded") {
             dst.define("CFLTK_SINGLE_THREADED", "ON");
-            dst.define("OPTION_USE_THREADS", "OFF");
         } else {
             dst.define("CFLTK_SINGLE_THREADED", "OFF");
-            dst.define("OPTION_USE_THREADS", "ON");
         }
 
         let profile = if let Ok(prof) = env::var("OPT_LEVEL") {
@@ -168,6 +166,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
             .define("OPTION_LARGE_FILE", "ON")
+            .define("OPTION_USE_THREADS", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
             .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
             .build();

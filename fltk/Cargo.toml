@@ -36,7 +36,7 @@ system-zlib = ["fltk-sys/system-zlib"] # Uses the system zlib
 no-gdiplus = ["fltk-sys/no-gdiplus"] # Disable gdiplus drawing
 no-images = ["fltk-sys/no-images"] # (Experimental) You can use this feature if your app doesn't use images to reduce binary size
 legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy OpenGL
-single-threaded = ["fltk-sys/single-threaded"] # (Experimental) Disable multithread and app::channel/Sender/Receiver support
+single-threaded = ["fltk-sys/single-threaded"] # (Experimental) Disable multithreading support when linking X11 libs non-mt x11 libs.
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]

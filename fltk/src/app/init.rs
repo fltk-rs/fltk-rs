@@ -31,7 +31,6 @@ pub(crate) fn register_images() {
 pub fn init_all() {
     unsafe {
         fl::Fl_init_all();
-        #[cfg(not(feature = "single-threaded"))]
         if fl::Fl_lock() != 0 {
             panic!("fltk-rs requires threading support!");
         }

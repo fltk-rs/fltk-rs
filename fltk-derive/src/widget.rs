@@ -74,7 +74,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
 
             unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
                 assert!(!ptr.is_null());
-                #[cfg(not(feature = "single-threaded"))]
                 fltk_sys::fl::Fl_lock();
                 let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
                 assert!(!tracker.is_null());
@@ -83,7 +82,6 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                     tracker: tracker,
                     is_derived: false,
                 };
-                #[cfg(not(feature = "single-threaded"))]
                 fltk_sys::fl::Fl_unlock();
                 temp
             }
@@ -591,7 +589,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn label(&self) -> String {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #[cfg(not(feature = "single-threaded"))]
                     fltk_sys::fl::Fl_lock();
                     let ptr = #label(self.inner) as *mut raw::c_char;
                     let s = if ptr.is_null() {
@@ -599,7 +596,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         CStr::from_ptr(ptr).to_string_lossy().to_string()
                     };
-                    #[cfg(not(feature = "single-threaded"))]
                     fltk_sys::fl::Fl_unlock();
                     s
                 }
@@ -648,7 +644,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     let tooltip_ptr = #tooltip(self.inner);
-                    #[cfg(not(feature = "single-threaded"))]
                     fltk_sys::fl::Fl_lock();
                     let s = if tooltip_ptr.is_null() {
                         None
@@ -656,7 +651,6 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                         Some(CStr::from_ptr(
                             tooltip_ptr as *mut raw::c_char).to_string_lossy().to_string())
                     };
-                    #[cfg(not(feature = "single-threaded"))]
                     fltk_sys::fl::Fl_unlock();
                     s
                 }
