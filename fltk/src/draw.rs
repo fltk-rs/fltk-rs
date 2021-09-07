@@ -855,7 +855,7 @@ pub unsafe fn draw_image2(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: i3
 #[cfg(feature = "enable-glwindow")]
 /// Start drawing using OpenGL functions inside a widget's draw routine
 /// # Safety
-/// Requires OpenGL support
+/// Requires OpenGL support, Only works with SingleWindow
 pub unsafe fn gl_start() {
     fltk_sys::window::Fl_gl_start();
 }
@@ -863,7 +863,7 @@ pub unsafe fn gl_start() {
 #[cfg(feature = "enable-glwindow")]
 /// Finish drawing using OpenGL functions inside a widget's draw routine
 /// # Safety
-/// Requires OpenGL support
+/// Requires OpenGL support, Only works with SingleWindow
 pub unsafe fn gl_finish() {
     fltk_sys::window::Fl_gl_finish();
 }
