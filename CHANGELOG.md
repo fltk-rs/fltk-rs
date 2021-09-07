@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.1.16] - Unreleased
+- Add draw::gl_start() and gl_finish().
+- Copy shared lib when building with fltk-shared feature to the target dir.
+
 ## [1.1.16] - 2021-09-04
 - Fix typo in function name (my_getContentView).
 - Enable building FLTK and cfltk in MinSizeRel profile when using opt-level="s" or "z".
