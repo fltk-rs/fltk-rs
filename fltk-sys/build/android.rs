@@ -39,7 +39,6 @@ pub fn build(out_dir: &Path, target_triple: &str) {
     cmd.push("-DCMAKE_BUILD_TYPE=Release".to_string());
     cmd.push("-DCFLTK_SINGLE_THREADED=OFF".to_string());
     cmd.push("-DCFLTK_CARGO_BUILD=ON".to_string());
-    cmd.push 
     cmd.push(format!(
         "-DCMAKE_INSTALL_PREFIX={}",
         out_dir.to_str().unwrap()
