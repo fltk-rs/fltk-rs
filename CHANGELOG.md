@@ -5,6 +5,7 @@
 - Fix image type asserts in Window::set_shape().
 - Add draw::gl_start() and gl_finish(). As well as app::set_gl_visual(Mode).
 - Copy shared lib when building with fltk-shared feature to the target dir.
+- Update docs regarding WidgetExt::trigger(), set_trigger() and enums::CallbackTrigger explaining their provenance.
 
 ## [1.1.16] - 2021-09-04
 - Fix typo in function name (my_getContentView).
