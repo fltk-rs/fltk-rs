@@ -864,7 +864,7 @@ impl Shortcut {
 }
 
 bitflags! {
-    /// Defines the types of triggers for widget callback functions
+    /// Defines the types of triggers for widget callback functions. Equivalent to FL_WHEN
     pub struct CallbackTrigger: i32 {
         /// Never
         const Never = 0;

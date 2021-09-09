@@ -208,6 +208,19 @@ pub fn set_visual(mode: Mode) -> Result<(), FltkError> {
     }
 }
 
+#[cfg(feature = "enable-glwindow")]
+/// Sets the OpenGL visual mode of the application
+/// # Errors
+/// Returns Err(FailedOperation) if FLTK failed to set the visual mode
+pub fn set_gl_visual(mode: Mode) -> Result<(), FltkError> {
+    unsafe {
+        match fl::Fl_gl_visual(mode.bits() as i32) {
+            0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+            _ => Ok(()),
+        }
+    }
+}
+
 /// The current graphics context of the app, `fl_gc`.
 /// `*mut c_void` to `HDC` on Windows, `CGContextRef` on macOS, `_XGC` on X11
 pub type GraphicsContext = *mut raw::c_void;
