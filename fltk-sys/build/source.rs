@@ -163,6 +163,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         let _dst = dst
             .profile(profile)
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
+            .define("CFLTK_CARGO_BUILD", "ON")
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
             .define("OPTION_LARGE_FILE", "ON")
