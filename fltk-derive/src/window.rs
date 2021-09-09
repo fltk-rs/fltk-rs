@@ -340,9 +340,9 @@ pub fn impl_window_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::XbmImage>(), "Xbm is not supported!");
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::PnmImage>(), "Pnm is not supported!");
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::GifImage>(), "Gif is not supported!");
-                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::GifImage>(), "Jpeg is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::JpegImage>(), "Jpeg is not supported!");
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "Svg is not supported!");
-                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(), "Png is not supported!");
+                assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::PngImage>(), "Png is not supported!");
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::Image>(), "Images can't be generic!");
                 assert!(std::any::type_name::<I>() != std::any::type_name::<crate::image::TiledImage>(), "TiledImage is not supported!");
                 unsafe {
