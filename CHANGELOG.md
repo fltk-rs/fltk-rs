@@ -4,6 +4,7 @@
 ## [1.1.18] - Unreleased
 - Open display for certain draw functions when appropriate.
 - Add TextBuffer::search_forward(), search_backward(), find_char_forward() and find_char_backward().
+- Also deploy fltk_gl in the fltk-bundle, use code will still need to call enable-glwindow for it to be linked into the resulting binary.
 
 ## [1.1.17] - 2021-09-10
 - Fix image type asserts in Window::set_shape().
