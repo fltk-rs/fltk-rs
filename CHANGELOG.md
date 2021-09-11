@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.1.18] - Unreleased
+- Open display for certain draw functions when appropriate.
+
 ## [1.1.17] - 2021-09-10
 - Fix image type asserts in Window::set_shape().
 - Add draw::gl_start() and gl_finish(). As well as app::set_gl_visual(Mode).
