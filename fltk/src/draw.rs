@@ -207,17 +207,20 @@ pub fn draw_focus_rect(x: i32, y: i32, w: i32, h: i32) {
 
 /// Sets the drawing color
 pub fn set_draw_hex_color(color: u32) {
+    unsafe { crate::app::open_display(); }
     let (r, g, b) = crate::utils::hex2rgb(color);
     unsafe { Fl_set_color_rgb(r, g, b) }
 }
 
 /// Sets the drawing color
 pub fn set_draw_rgb_color(r: u8, g: u8, b: u8) {
+    unsafe { crate::app::open_display(); }
     unsafe { Fl_set_color_rgb(r, g, b) }
 }
 
 /// Sets the drawing color
 pub fn set_draw_color(color: Color) {
+    unsafe { crate::app::open_display(); }
     unsafe { Fl_set_color_int(color.bits() as u32) }
 }
 
@@ -250,6 +253,7 @@ pub fn draw_pie(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
 /// Sets the line style
 pub fn set_line_style(style: LineStyle, width: i32) {
     unsafe {
+        crate::app::open_display();
         Fl_line_style(
             style.bits(),
             width,
