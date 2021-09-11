@@ -527,6 +527,40 @@ impl TextBuffer {
             }
         }
     }
+
+    /// Forward search for a char
+    pub fn find_char_forward(
+        &self,
+        start_pos: i32,
+        search_char: char,
+    ) -> Option<i32> {
+        unsafe {
+            let mut found_pos = 0;
+            let ret = Fl_Text_Buffer_findchar_forward(self.inner, start_pos, search_char as _, &mut found_pos as _);
+            if ret == 0 {
+                None
+            } else {
+                Some(found_pos)
+            }
+        }
+    }
+
+    /// Backward search for a char
+    pub fn find_char_backward(
+        &self,
+        start_pos: i32,
+        search_char: char,
+    ) -> Option<i32> {
+        unsafe {
+            let mut found_pos = 0;
+            let ret = Fl_Text_Buffer_findchar_backward(self.inner, start_pos, search_char as _, &mut found_pos as _);
+            if ret == 0 {
+                None
+            } else {
+                Some(found_pos)
+            }
+        }
+    }
 }
 
 unsafe impl Sync for TextBuffer {}

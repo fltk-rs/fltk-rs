@@ -242,6 +242,22 @@ extern "C" {
         match_case: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Text_Buffer_findchar_forward(
+        self_: *const Fl_Text_Buffer,
+        start_pos: ::std::os::raw::c_int,
+        search_char: ::std::os::raw::c_uint,
+        found_pos: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_findchar_backward(
+        self_: *const Fl_Text_Buffer,
+        start_pos: ::std::os::raw::c_int,
+        search_char: ::std::os::raw::c_uint,
+        found_pos: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Text_Display {

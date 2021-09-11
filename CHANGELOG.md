@@ -3,7 +3,7 @@
 
 ## [1.1.18] - Unreleased
 - Open display for certain draw functions when appropriate.
-- Add TextBuffer::search_forward() and search_backward().
+- Add TextBuffer::search_forward(), search_backward(), find_char_forward() and find_char_backward().
 
 ## [1.1.17] - 2021-09-10
 - Fix image type asserts in Window::set_shape().
