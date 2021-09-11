@@ -414,9 +414,9 @@ impl MenuItem {
     /// Measure the width and height of a menu item
     pub fn measure(&self) -> (i32, i32) {
         assert!(!self.was_deleted());
-        let h: &mut i32 = &mut 0;
-        let ret = unsafe { Fl_Menu_Item_measure(self.inner, h as _, std::ptr::null()) };
-        (ret, *h)
+        let mut h = 0;
+        let ret = unsafe { Fl_Menu_Item_measure(self.inner, &mut h as _, std::ptr::null()) };
+        (ret, h)
     }
 
     /// Set the image of the menu item
