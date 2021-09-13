@@ -207,20 +207,26 @@ pub fn draw_focus_rect(x: i32, y: i32, w: i32, h: i32) {
 
 /// Sets the drawing color
 pub fn set_draw_hex_color(color: u32) {
-    unsafe { crate::app::open_display(); }
+    unsafe {
+        crate::app::open_display();
+    }
     let (r, g, b) = crate::utils::hex2rgb(color);
     unsafe { Fl_set_color_rgb(r, g, b) }
 }
 
 /// Sets the drawing color
 pub fn set_draw_rgb_color(r: u8, g: u8, b: u8) {
-    unsafe { crate::app::open_display(); }
+    unsafe {
+        crate::app::open_display();
+    }
     unsafe { Fl_set_color_rgb(r, g, b) }
 }
 
 /// Sets the drawing color
 pub fn set_draw_color(color: Color) {
-    unsafe { crate::app::open_display(); }
+    unsafe {
+        crate::app::open_display();
+    }
     unsafe { Fl_set_color_int(color.bits() as u32) }
 }
 
@@ -434,7 +440,6 @@ pub fn scale(x: f64) {
     unsafe { Fl_scale2(x) }
 }
 
-
 /// Concatenates translation transformation onto the current one
 pub fn translate(x: f64, y: f64) {
     unsafe { Fl_translate(x, y) }
@@ -621,7 +626,7 @@ pub fn rtl_draw(txt: &str, x: i32, y: i32) {
 }
 
 /// Draws a series of line segments around the given box.
-/// The string must contain groups of 4 letters which specify one of 24 standard grayscale values, 
+/// The string must contain groups of 4 letters which specify one of 24 standard grayscale values,
 /// where 'A' is black and 'X' is white. The order of each set of 4 characters is: top, left, bottom, right.
 pub fn draw_frame(string: &str, x: i32, y: i32, width: i32, height: i32) {
     assert!(string.len() % 4 == 0);

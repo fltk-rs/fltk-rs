@@ -156,6 +156,21 @@ pub fn background2(r: u8, g: u8, b: u8) {
     unsafe { fl::Fl_background2(r, g, b) }
 }
 
+/// Set the foreground color
+pub fn set_foreground_color(r: u8, g: u8, b: u8) {
+    unsafe { fl::Fl_foreground(r, g, b) }
+}
+
+/// Set the background color
+pub fn set_background_color(r: u8, g: u8, b: u8) {
+    unsafe { fl::Fl_background(r, g, b) }
+}
+
+/// Set the background color for input and text widgets
+pub fn set_background2_color(r: u8, g: u8, b: u8) {
+    unsafe { fl::Fl_background2(r, g, b) }
+}
+
 /// Sets the app's default selection color
 pub fn set_selection_color(r: u8, g: u8, b: u8) {
     unsafe { fl::Fl_selection_color(r, g, b) }

@@ -351,7 +351,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
         unsafe impl Send for #name {}
         #[cfg(not(feature = "single-threaded"))]
         unsafe impl Sync for #name {}
-        
+
         impl PartialEq for #name {
             fn eq(&self, other: &Self) -> bool {
                 self.inner == other.inner
@@ -519,7 +519,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 }
                 self
             }
-            
+
             fn set_pos(&mut self, x: i32, y: i32) {
                 self.resize(x, y, self.width(), self.height());
             }

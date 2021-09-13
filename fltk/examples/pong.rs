@@ -78,6 +78,6 @@ fn main() {
         wind.redraw();
         // sleeps are necessary when calling redraw in the event loop
         app::sleep(0.016);
-    }); 
+    });
     app.run().unwrap();
 }
