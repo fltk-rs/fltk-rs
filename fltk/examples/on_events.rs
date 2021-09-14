@@ -45,7 +45,12 @@ impl MyButton {
                 _ => false,
             }
         });
-        Self { btn, hover_cb, leave_cb, push_cb }
+        Self {
+            btn,
+            hover_cb,
+            leave_cb,
+            push_cb,
+        }
     }
     pub fn on_hover(&mut self, cb: impl FnMut(&mut frame::Frame) + 'static) {
         *self.hover_cb.borrow_mut() = Some(Box::new(cb));

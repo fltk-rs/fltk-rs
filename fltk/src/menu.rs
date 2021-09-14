@@ -127,7 +127,10 @@ impl MenuItem {
             }
             let item_ptr = Fl_Menu_Item_new(temp.as_ptr() as *mut *mut raw::c_char, sz as i32);
             assert!(!item_ptr.is_null());
-            MenuItem { inner: item_ptr, size: choices.len() as i32 }
+            MenuItem {
+                inner: item_ptr,
+                size: choices.len() as i32,
+            }
         }
     }
 
@@ -308,15 +311,16 @@ impl MenuItem {
             if label_ptr.is_null() {
                 return None;
             }
-            Some(MenuItem { inner: ptr, size: Fl_Menu_Item_children(ptr) })
+            Some(MenuItem {
+                inner: ptr,
+                size: Fl_Menu_Item_children(ptr),
+            })
         }
     }
 
     /// Get children of `MenuItem`
     pub fn children(&self) -> i32 {
-        unsafe {
-            Fl_Menu_Item_children(self.inner)
-        }
+        unsafe { Fl_Menu_Item_children(self.inner) }
     }
 
     /// Get the submenu count
@@ -341,7 +345,10 @@ impl MenuItem {
             if ptr.is_null() {
                 None
             } else {
-                Some(MenuItem { inner: ptr as _, size: Fl_Menu_Item_children(ptr) })
+                Some(MenuItem {
+                    inner: ptr as _,
+                    size: Fl_Menu_Item_children(ptr),
+                })
             }
         }
     }

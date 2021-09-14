@@ -417,8 +417,18 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                         sizes.push(entry.size as i32);
                     }
                     unsafe {
-                        #set_highlight_data(self.inner, style_buffer.as_ptr() as *mut raw::c_void, &mut colors[0], &mut fonts[0], &mut sizes[0], entries.len() as i32)
+                        #set_highlight_data(self.inner, style_buffer.as_ptr() as *mut raw::c_void, colors.as_mut_ptr(), fonts.as_mut_ptr(), sizes.as_mut_ptr(), entries.len() as i32)
                     }
+                }
+            }
+
+            fn unset_highlight_data(&mut self, style_buffer: TextBuffer) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    let mut colors = [Color::Black.bits()];
+                    let mut fonts = [Font::Helvetica.bits()];
+                    let mut sizes = [14];
+                    #set_highlight_data(self.inner, style_buffer.as_ptr() as *mut raw::c_void, colors.as_mut_ptr(), fonts.as_mut_ptr(), sizes.as_mut_ptr(), 1)
                 }
             }
 

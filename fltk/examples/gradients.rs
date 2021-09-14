@@ -1,3 +1,5 @@
+#![allow(clippy::many_single_char_names)]
+
 use fltk::{draw::*, enums::*, prelude::*, *};
 
 fn create_vertical_gradient_frame(
@@ -52,7 +54,8 @@ fn main() {
     create_vertical_gradient_frame(0, 0, 200, 100, Color::Red, Color::Cyan);
     create_horizontal_gradient_frame(200, 0, 200, 100, Color::Red, Color::Cyan);
     win.end();
-    win.draw(|w| { // vertical gradient
+    win.draw(|w| {
+        // vertical gradient
         let imax = w.w();
         let d = if imax > 0 { imax } else { 1 };
         for i in 0..=imax {

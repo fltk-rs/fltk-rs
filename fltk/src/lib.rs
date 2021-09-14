@@ -200,6 +200,8 @@ FLTK offers 4 application schemes:
 - Gleam
 - Plastic
 
+(Additional theming can be found in the [fltk-theme](https://crates.io/crates/fltk-theme) crate)
+
 These can be set using the `App::with_scheme()` function.
 ```rust,ignore
 let app = app::App::default().with_scheme(app::Scheme::Gleam);
@@ -214,17 +216,6 @@ such as `set_color()`, `set_label_font()`, `set_frame()` etc:
     some_button.set_font(Font::TimesItalic);
 ```
 For default application colors, fltk-rs provides `app::background()`, `app::background2()` and `app::foreground()`. You can also specify the default application selection/inactive colors, font, label size, frame type, scrollbar size, menu linespacing. Additionally the [fltk-theme](https://crates.io/crates/fltk-theme) crate offers some other predefined color maps (dark theme, tan etc) and widget themes which can be loaded into your application.
-
-## Features
-
-The following are the features offered by the crate:
-- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
-- no-pango: Build without pango support on Linux/BSD.
-- enable-glwindow: Support for drawing using OpenGL functions.
-- use-ninja:  If you have ninja build installed, it builds faster than make or VS
-- system-libpng: Uses the system libpng
-- system-libjpeg: Uses the system libjpeg
-- system-zlib: Uses the system zlib
 
 ## Dependencies
 
@@ -254,7 +245,17 @@ For NixOS (Linux distribution) this `nix-shell` environment can be used:
 ```ignore
 $ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libpng libcerf pango cairo libGL mesa pkg-config
 ```
-- Android(experimental): Android Studio, Android Sdk, Android Ndk.
+
+## Features
+
+The following are the features offered by the crate:
+- fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
+- no-pango: Build without pango support on Linux/BSD.
+- enable-glwindow: Support for drawing using OpenGL functions.
+- use-ninja:  If you have ninja build installed, it builds faster than make or VS
+- system-libpng: Uses the system libpng
+- system-libjpeg: Uses the system libjpeg
+- system-zlib: Uses the system zlib
 
 ## FAQ
 

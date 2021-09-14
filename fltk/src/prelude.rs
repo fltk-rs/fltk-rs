@@ -103,7 +103,6 @@ pub trait WidgetType {
     fn from_i32(val: i32) -> Self;
 }
 
-
 /// Defines a set of convenience functions for constructing and anchoring custom widgets.
 /// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
 /// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.
@@ -153,7 +152,11 @@ macro_rules! widget_extends {
             }
 
             /// Initialize at bottom of another widget
-            pub fn below_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+            pub fn below_of<W: $crate::prelude::WidgetExt>(
+                mut self,
+                wid: &W,
+                padding: i32,
+            ) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -167,7 +170,11 @@ macro_rules! widget_extends {
             }
 
             /// Initialize above of another widget
-            pub fn above_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+            pub fn above_of<W: $crate::prelude::WidgetExt>(
+                mut self,
+                wid: &W,
+                padding: i32,
+            ) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -181,7 +188,11 @@ macro_rules! widget_extends {
             }
 
             /// Initialize right of another widget
-            pub fn right_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+            pub fn right_of<W: $crate::prelude::WidgetExt>(
+                mut self,
+                wid: &W,
+                padding: i32,
+            ) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -1100,6 +1111,8 @@ pub unsafe trait DisplayExt: WidgetExt {
         style_buffer: B,
         entries: Vec<crate::text::StyleTableEntry>,
     );
+    /// Unset the style of the text widget
+    fn unset_highlight_data(&mut self, style_buffer: crate::text::TextBuffer);
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: crate::text::Cursor);
     /// Sets the cursor color
