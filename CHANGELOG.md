@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.1.19] - Unreleased
+- Using fltk-bundled automatically enables glwindow. Note, other bundles can be used via the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL env variables.
+
 ## [1.1.18] - 2021-09-15
 - Open display for certain draw functions when appropriate.
 - Add TextBuffer::search_forward(), search_backward(), find_char_forward() and find_char_backward().
