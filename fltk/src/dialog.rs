@@ -22,13 +22,13 @@ pub enum ColorMode {
     Hsv = 3,
 }
 
-/// Creates a file button
+/// FLTK's NativeFileChooser
 #[derive(Debug)]
 pub struct FileDialog {
     inner: *mut Fl_Native_File_Chooser,
 }
 
-/// Re-alias `FileDialog` to `NativeFileChooser` (`Fl_Native_File_Chooser`)
+/// FLTK's NativeFileChooser
 pub type NativeFileChooser = FileDialog;
 
 /// Defines the type of dialog, which can be changed dynamically using the `set_type()` method
