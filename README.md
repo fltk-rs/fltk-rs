@@ -56,8 +56,6 @@ fltk = { version = "^1.1", features = ["fltk-bundled"] }
 
 The library is automatically built and statically linked to your binary.
 
-For faster builds you can enable ninja builds for the C++ source using the "use-ninja" feature.
-
 An example hello world application:
 
 ```rust
@@ -216,11 +214,11 @@ For default application colors, fltk-rs provides `app::background()`, `app::back
 
 ## Dependencies
 
-Rust (version > 1.45), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. This crate also offers a bundled form of fltk on selected platforms (win 10 x64, macos 10.15 x64, linux x64), this can be enabled using the `fltk-bundled` feature-flag (which requires curl and tar to download and unpack the bundled libraries).
+Rust (version > 1.45), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required, and will be used if found. This crate also offers a bundled form of fltk on selected x86_64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: No external dependencies.
 - MacOS: No external dependencies.
-- Linux/BSD: X11 and OpenGL development headers need to be installed for development. The libraries themselves are available on linux distros with a graphical user interface.
+- Linux/BSD: X11 and OpenGL development headers need to be installed for development. The libraries themselves are normally available on linux/bsd distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:
 ```
@@ -249,7 +247,6 @@ The following are the features offered by the crate:
 - no-pango: Build without pango support on Linux/BSD, if rtl/cjk font support is not needed.
 - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
 - enable-glwindow: Support for drawing using OpenGL functions.
-- use-ninja:  If you have ninja build installed, it builds faster than make or VS
 - system-libpng: Uses the system libpng
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib

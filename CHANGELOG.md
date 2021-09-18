@@ -1,14 +1,16 @@
 # Changelog
 
 
-## [1.1.19] - Unreleased
-- Using fltk-bundled automatically enables glwindow. Note, other bundles can be used via the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL env variables.
+## [1.1.19] - 2021-09-18
+- Fix doc comments about FileDialog and NativeFileChooser.
+- Using fltk-bundled automatically enables glwindow. Note, other user-built bundles can be cached and used via the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL env variables.
+- Remove unnecessary references to use-ninja in the README and main docs since it will be used if found.
+- Update ROADMAP.
 
 ## [1.1.18] - 2021-09-15
 - Open display for certain draw functions when appropriate.
 - Add TextBuffer::search_forward(), search_backward(), find_char_forward() and find_char_backward().
 - Add DisplayExt::unset_highlight_data() convenience method.
-- Also deploy fltk_gl in the fltk-bundle, user code will still need to call enable-glwindow for it to be linked into the resulting binary if needed.
 - Update FLTK to pull nanosvg fixes.
 
 ## [1.1.17] - 2021-09-10
