@@ -1323,7 +1323,6 @@ pub trait SurfaceDevice {
     fn pop_current();
 }
 
-
 /// Defines a set of convenience functions for constructing and anchoring custom widgets.
 /// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
 /// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.

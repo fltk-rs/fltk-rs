@@ -343,7 +343,6 @@ impl Pack {
     }
 }
 
-
 /// Defines Flex types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
@@ -570,7 +569,7 @@ impl HGrid {
     pub fn default_fill() -> Self {
         Self::default().size_of_parent()
     }
-    
+
     /// Creates a new horizontal grid
     pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> HGrid {
         let mut hpack = Pack::new(x, y, w, h, label);
