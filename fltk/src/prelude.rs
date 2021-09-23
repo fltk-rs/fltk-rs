@@ -560,7 +560,7 @@ pub unsafe trait WidgetExt {
     /**
         Return the default callback function, this allows storing then running within the overriden callback.
         Works only for FLTK types (with no callback defined in the Rust side)
-        ```rust
+        ```rust,no_run
             use fltk::{prelude::*, *};
             fn main() {
                 let a = app::App::default();

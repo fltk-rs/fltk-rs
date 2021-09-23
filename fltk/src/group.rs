@@ -634,7 +634,6 @@ impl Row {
 
 crate::widget_extends!(Row, Pack, p);
 
-
 /// Defines Flex types
 #[repr(i32)]
 #[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
@@ -654,7 +653,7 @@ pub enum FlexType {
         let a = app::App::default();
         let mut win = window::Window::default().with_size(400, 300);
         let mut col = group::Flex::default().size_of_parent();
-        col.set_type(FlexType::Column);
+        col.set_type(group::FlexType::Column);
         let expanding = button::Button::default().with_label("Expanding");
         let mut normal = button::Button::default().with_label("Normal");
         col.set_size(&mut normal, 30);
@@ -675,16 +674,12 @@ pub struct Flex {
 impl Flex {
     /// Set the size of the widget
     pub fn set_size<W: WidgetExt>(&mut self, w: &mut W, size: i32) {
-        unsafe {
-            Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size)
-        }
+        unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
     }
 
     /// Debug the flex layout
     pub fn debug(&mut self, flag: bool) {
-        unsafe {
-            Fl_Flex_set_debug(self.inner, flag as _)
-        }
+        unsafe { Fl_Flex_set_debug(self.inner, flag as _) }
     }
 
     /// Set the type to be a column
