@@ -86,7 +86,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
-                println!("cargo:rustc-link-lib=cxx");
+                println!("cargo:rustc-link-lib=c++");
             }
             "windows" => {
                 println!("cargo:rustc-link-lib=dylib=ws2_32");

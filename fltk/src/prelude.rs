@@ -636,6 +636,9 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// # Safety
     /// Can return multiple mutable references to the `handle_data`
     unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
+    /// Perform a callback on resize.
+    /// Avoid resizing the parent or the same widget to avoid infinite recursion
+    fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
 }
 
 /// Defines the methods implemented by all button widgets

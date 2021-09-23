@@ -177,6 +177,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Spinner_resize_callback(
+        self_: *mut Fl_Spinner,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Spinner_set_when(arg1: *mut Fl_Spinner, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -504,6 +520,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Clock_resize_callback(
+        self_: *mut Fl_Clock,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Clock_set_when(arg1: *mut Fl_Clock, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -776,6 +808,22 @@ extern "C" {
     pub fn Fl_Chart_draw(
         self_: *mut Fl_Chart,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Chart_resize_callback(
+        self_: *mut Fl_Chart,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1117,6 +1165,22 @@ extern "C" {
     pub fn Fl_Progress_draw(
         self_: *mut Fl_Progress,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Progress_resize_callback(
+        self_: *mut Fl_Progress,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1509,6 +1573,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Help_View_resize_callback(
+        self_: *mut Fl_Help_View,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Help_View_set_when(arg1: *mut Fl_Help_View, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1866,6 +1946,22 @@ extern "C" {
     pub fn Fl_Input_Choice_draw(
         self_: *mut Fl_Input_Choice,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Input_Choice_resize_callback(
+        self_: *mut Fl_Input_Choice,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }

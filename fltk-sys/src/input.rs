@@ -177,6 +177,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Input_resize_callback(
+        self_: *mut Fl_Input,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Input_set_when(arg1: *mut Fl_Input, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -548,6 +564,22 @@ extern "C" {
     pub fn Fl_Int_Input_draw(
         self_: *mut Fl_Int_Input,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Int_Input_resize_callback(
+        self_: *mut Fl_Int_Input,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -932,6 +964,22 @@ extern "C" {
     pub fn Fl_Float_Input_draw(
         self_: *mut Fl_Float_Input,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Float_Input_resize_callback(
+        self_: *mut Fl_Float_Input,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1346,6 +1394,22 @@ extern "C" {
     pub fn Fl_Multiline_Input_draw(
         self_: *mut Fl_Multiline_Input,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_resize_callback(
+        self_: *mut Fl_Multiline_Input,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1799,6 +1863,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Secret_Input_resize_callback(
+        self_: *mut Fl_Secret_Input,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Secret_Input_set_when(arg1: *mut Fl_Secret_Input, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2192,6 +2272,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_File_Input_resize_callback(
+        self_: *mut Fl_File_Input,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_File_Input_set_when(arg1: *mut Fl_File_Input, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2578,6 +2674,22 @@ extern "C" {
     pub fn Fl_Output_draw(
         self_: *mut Fl_Output,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Output_resize_callback(
+        self_: *mut Fl_Output,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -2986,6 +3098,22 @@ extern "C" {
     pub fn Fl_Multiline_Output_draw(
         self_: *mut Fl_Multiline_Output,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_resize_callback(
+        self_: *mut Fl_Multiline_Output,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }

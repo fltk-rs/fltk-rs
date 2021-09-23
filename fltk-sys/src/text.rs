@@ -426,6 +426,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Text_Display_resize_callback(
+        self_: *mut Fl_Text_Display,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Text_Display_set_when(arg1: *mut Fl_Text_Display, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -987,6 +1003,22 @@ extern "C" {
     pub fn Fl_Text_Editor_draw(
         self_: *mut Fl_Text_Editor,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_resize_callback(
+        self_: *mut Fl_Text_Editor,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1673,6 +1705,22 @@ extern "C" {
     pub fn Fl_Simple_Terminal_draw(
         self_: *mut Fl_Simple_Terminal,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_resize_callback(
+        self_: *mut Fl_Simple_Terminal,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }

@@ -177,6 +177,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Group_resize_callback(
+        self_: *mut Fl_Group,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Group_set_when(arg1: *mut Fl_Group, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -520,6 +536,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Pack_resize_callback(
+        self_: *mut Fl_Pack,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Pack_set_when(arg1: *mut Fl_Pack, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -859,6 +891,22 @@ extern "C" {
     pub fn Fl_Scroll_draw(
         self_: *mut Fl_Scroll,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Scroll_resize_callback(
+        self_: *mut Fl_Scroll,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1221,6 +1269,22 @@ extern "C" {
     pub fn Fl_Tabs_draw(
         self_: *mut Fl_Tabs,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Tabs_resize_callback(
+        self_: *mut Fl_Tabs,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -1589,6 +1653,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Tile_resize_callback(
+        self_: *mut Fl_Tile,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Tile_set_when(arg1: *mut Fl_Tile, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -1922,6 +2002,22 @@ extern "C" {
     pub fn Fl_Wizard_draw(
         self_: *mut Fl_Wizard,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Wizard_resize_callback(
+        self_: *mut Fl_Wizard,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -2286,6 +2382,22 @@ extern "C" {
     pub fn Fl_Color_Chooser_draw(
         self_: *mut Fl_Color_Chooser,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_resize_callback(
+        self_: *mut Fl_Color_Chooser,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }
@@ -2668,6 +2780,22 @@ extern "C" {
     pub fn Fl_Flex_draw(
         self_: *mut Fl_Flex,
         cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Flex_resize_callback(
+        self_: *mut Fl_Flex,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
         data: *mut ::std::os::raw::c_void,
     );
 }

@@ -177,6 +177,22 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Box_resize_callback(
+        self_: *mut Fl_Box,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Box_set_when(arg1: *mut Fl_Box, arg2: ::std::os::raw::c_int);
 }
 extern "C" {
