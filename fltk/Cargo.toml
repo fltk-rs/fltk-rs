@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.2.1"
+version = "1.2.2"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
@@ -39,7 +39,7 @@ legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy Op
 single-threaded = ["fltk-sys/single-threaded"] # (Experimental) Disable multithreading support when linking X11 libs non-mt x11 libs.
 
 [package.metadata.docs.rs]
-features = ["enable-glwindow"]
+features = ["fltk-bundled"]
 
 [[test]]
 name = "app_handle"
