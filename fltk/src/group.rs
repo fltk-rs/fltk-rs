@@ -650,13 +650,19 @@ pub enum FlexType {
     # Example
     ```rust,no_run
     use fltk::{prelude::*, *};
-    use fltk_flex::{Flex, FlexType};
-    let mut col = Flex::new(0, 0, 400, 300, None);
-    col.set_type(FlexType::Column);
-    let expanding = button::Button::default().with_label("Expanding");
-    let mut normal = button::Button::default().with_label("Normal");
-    col.set_size(&mut normal, 30);
-    col.end();
+    fn main() {
+        let a = app::App::default();
+        let mut win = window::Window::default().with_size(400, 300);
+        let mut col = group::Flex::default().size_of_parent();
+        col.set_type(FlexType::Column);
+        let expanding = button::Button::default().with_label("Expanding");
+        let mut normal = button::Button::default().with_label("Normal");
+        col.set_size(&mut normal, 30);
+        col.end();
+        win.end();
+        win.show();
+        a.run().unwrap();
+    }
     ```
 */
 #[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
