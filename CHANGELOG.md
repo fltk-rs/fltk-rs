@@ -87,8 +87,8 @@
 - Add WidgetExt::with_type().
 - Add MenuExt::menu and set_menu().
 - Add ImageExt::draw_ext() which allows passing the offset to the image.
-- Add app:: frame_shadow_width setter and getter.
-- Add app:: frame_border_radius_max setter and getter.
+- Add app::frame_shadow_width setter and getter.
+- Add app::frame_border_radius_max setter and getter.
 - Add app::set_color().
 - Add enums::Color::darker() and lighter().
 
