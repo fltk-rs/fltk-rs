@@ -68,7 +68,7 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
             }
 
             fn default_fill() -> Self {
-                Self::default().size_of_parent()
+                Self::default().size_of_parent().center_of_parent()
             }
 
             fn delete(mut wid: Self) {
