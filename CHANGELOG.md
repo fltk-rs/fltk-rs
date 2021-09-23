@@ -1,9 +1,10 @@
 # Changelog
 
 
-## [1.2.0] - Unreleased
-- Add FL_FLex as submodule and expose a group::Flex widget.
+## [1.2.0] - 2021-09-23
+- Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).
 - Add WidgetBase::resize_callback().
+- Improve some docs.
 
 ## [1.1.19] - 2021-09-18
 - Fix doc comments about FileDialog and NativeFileChooser.
