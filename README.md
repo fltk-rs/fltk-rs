@@ -40,18 +40,18 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^1.1"
+fltk = "^1.2"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1.1", git = "https://github.com/fltk-rs/fltk-rs" }
+fltk = { version = "^1.2", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 
 To use the bundled libs (available for x64 windows (msvc & gnu (msys2-mingw)), x64 linux & macos):
 ```toml
 [dependencies]
-fltk = { version = "^1.1", features = ["fltk-bundled"] }
+fltk = { version = "^1.2", features = ["fltk-bundled"] }
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -404,7 +404,7 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
     - HGrid
     - Column (vertical pack supporting auto layout)
     - Row (horizontal pack supporting auto layout)
-    - Flex (Supports flexbox layouts, provided by the [fltk-flex crate](https://crates.io/crates/fltk-flex))
+    - Flex
 - Text display widgets
     - TextDisplay
     - TextEditor

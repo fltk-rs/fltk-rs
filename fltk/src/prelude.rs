@@ -103,209 +103,6 @@ pub trait WidgetType {
     fn from_i32(val: i32) -> Self;
 }
 
-/// Defines a set of convenience functions for constructing and anchoring custom widgets.
-/// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
-/// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.
-#[macro_export]
-macro_rules! widget_extends {
-    ($widget:ty, $base:ty, $member:tt) => {
-        impl $widget {
-            /// Initialize to position x, y
-            pub fn with_pos(mut self, x: i32, y: i32) -> Self {
-                let w = self.w();
-                let h = self.h();
-                self.resize(x, y, w, h);
-                self
-            }
-
-            /// Initialize to size width, height
-            pub fn with_size(mut self, width: i32, height: i32) -> Self {
-                let x = self.x();
-                let y = self.y();
-                let w = self.width();
-                let h = self.height();
-                if w == 0 || h == 0 {
-                    self.widget_resize(x, y, width, height);
-                } else {
-                    self.resize(x, y, width, height);
-                }
-                self
-            }
-
-            /// Initialize with a label
-            pub fn with_label(mut self, title: &str) -> Self {
-                self.set_label(title);
-                self
-            }
-
-            /// Initialize with alignment
-            pub fn with_align(mut self, align: $crate::enums::Align) -> Self {
-                self.set_align(align);
-                self
-            }
-
-            /// Initialize with type
-            pub fn with_type<T: $crate::prelude::WidgetType>(mut self, typ: T) -> Self {
-                assert!(!self.was_deleted());
-                self.set_type(typ);
-                self
-            }
-
-            /// Initialize at bottom of another widget
-            pub fn below_of<W: $crate::prelude::WidgetExt>(
-                mut self,
-                wid: &W,
-                padding: i32,
-            ) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
-                let w = self.w();
-                let h = self.h();
-                debug_assert!(
-                    w != 0 && h != 0,
-                    "below_of requires the size of the widget to be known!"
-                );
-                self.resize(wid.x(), wid.y() + wid.h() + padding, w, h);
-                self
-            }
-
-            /// Initialize above of another widget
-            pub fn above_of<W: $crate::prelude::WidgetExt>(
-                mut self,
-                wid: &W,
-                padding: i32,
-            ) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
-                let w = self.w();
-                let h = self.h();
-                debug_assert!(
-                    w != 0 && h != 0,
-                    "above_of requires the size of the widget to be known!"
-                );
-                self.resize(wid.x(), wid.y() - padding - h, w, h);
-                self
-            }
-
-            /// Initialize right of another widget
-            pub fn right_of<W: $crate::prelude::WidgetExt>(
-                mut self,
-                wid: &W,
-                padding: i32,
-            ) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
-                let w = self.w();
-                let h = self.h();
-                debug_assert!(
-                    w != 0 && h != 0,
-                    "right_of requires the size of the widget to be known!"
-                );
-                self.resize(wid.x() + wid.width() + padding, wid.y(), w, h);
-                self
-            }
-
-            /// Initialize left of another widget
-            pub fn left_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
-                assert!(!wid.was_deleted());
-                assert!(!self.was_deleted());
-                let w = self.w();
-                let h = self.h();
-                debug_assert!(
-                    w != 0 && h != 0,
-                    "left_of requires the size of the widget to be known!"
-                );
-                self.resize(wid.x() - w - padding, wid.y(), w, h);
-                self
-            }
-
-            /// Initialize center of another widget
-            pub fn center_of<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(
-                    w.width() != 0 && w.height() != 0,
-                    "center_of requires the size of the widget to be known!"
-                );
-                let sw = self.width() as f64;
-                let sh = self.height() as f64;
-                let ww = w.width() as f64;
-                let wh = w.height() as f64;
-                let sx = (ww - sw) / 2.0;
-                let sy = (wh - sh) / 2.0;
-                let wx = if w.as_window().is_some() { 0 } else { w.x() };
-                let wy = if w.as_window().is_some() { 0 } else { w.y() };
-                self.resize(sx as i32 + wx, sy as i32 + wy, sw as i32, sh as i32);
-                self.redraw();
-                self
-            }
-
-            /// Initialize center of parent
-            pub fn center_of_parent(mut self) -> Self {
-                assert!(!self.was_deleted());
-                if let Some(w) = self.parent() {
-                    debug_assert!(
-                        w.width() != 0 && w.height() != 0,
-                        "center_of requires the size of the widget to be known!"
-                    );
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let ww = w.width() as f64;
-                    let wh = w.height() as f64;
-                    let sx = (ww - sw) / 2.0;
-                    let sy = (wh - sh) / 2.0;
-                    let wx = if w.as_window().is_some() { 0 } else { w.x() };
-                    let wy = if w.as_window().is_some() { 0 } else { w.y() };
-                    self.resize(sx as i32 + wx, sy as i32 + wy, sw as i32, sh as i32);
-                    self.redraw();
-                }
-                self
-            }
-
-            /// Initialize to the size of another widget
-            pub fn size_of<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
-                assert!(!w.was_deleted());
-                assert!(!self.was_deleted());
-                debug_assert!(
-                    w.width() != 0 && w.height() != 0,
-                    "size_of requires the size of the widget to be known!"
-                );
-                let x = self.x();
-                let y = self.y();
-                self.resize(x, y, w.width(), w.height());
-                self
-            }
-
-            /// Initialize to the size of the parent
-            pub fn size_of_parent(mut self) -> Self {
-                assert!(!self.was_deleted());
-                if let Some(parent) = self.parent() {
-                    let w = parent.width();
-                    let h = parent.height();
-                    let x = self.x();
-                    let y = self.y();
-                    self.resize(x, y, w, h);
-                }
-                self
-            }
-        }
-
-        impl std::ops::Deref for $widget {
-            type Target = $base;
-
-            fn deref(&self) -> &Self::Target {
-                &self.$member
-            }
-        }
-
-        impl std::ops::DerefMut for $widget {
-            fn deref_mut(&mut self) -> &mut Self::Target {
-                &mut self.$member
-            }
-        }
-    };
-}
-
 /// Defines the methods implemented by all widgets
 pub unsafe trait WidgetExt {
     /// Initialize to a position x, y
@@ -560,7 +357,7 @@ pub unsafe trait WidgetExt {
     /**
         Return the default callback function, this allows storing then running within the overriden callback.
         Works only for FLTK types (with no callback defined in the Rust side)
-        ```rust
+        ```rust,no_run
             use fltk::{prelude::*, *};
             fn main() {
                 let a = app::App::default();
@@ -608,6 +405,8 @@ pub unsafe trait WidgetBase: WidgetExt {
         height: i32,
         title: T,
     ) -> Self;
+    /// Constructs a widget with the size of its parent
+    fn default_fill() -> Self;
     /// Deletes widgets and their children.
     fn delete(wid: Self)
     where
@@ -636,6 +435,9 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// # Safety
     /// Can return multiple mutable references to the `handle_data`
     unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
+    /// Perform a callback on resize.
+    /// Avoid resizing the parent or the same widget to avoid infinite recursion
+    fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
 }
 
 /// Defines the methods implemented by all button widgets
@@ -1519,4 +1321,207 @@ pub trait SurfaceDevice {
     fn push_current(new_current: &Self);
     /// Pop the current surface
     fn pop_current();
+}
+
+/// Defines a set of convenience functions for constructing and anchoring custom widgets.
+/// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
+/// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.
+#[macro_export]
+macro_rules! widget_extends {
+    ($widget:ty, $base:ty, $member:tt) => {
+        impl $widget {
+            /// Initialize to position x, y
+            pub fn with_pos(mut self, x: i32, y: i32) -> Self {
+                let w = self.w();
+                let h = self.h();
+                self.resize(x, y, w, h);
+                self
+            }
+
+            /// Initialize to size width, height
+            pub fn with_size(mut self, width: i32, height: i32) -> Self {
+                let x = self.x();
+                let y = self.y();
+                let w = self.width();
+                let h = self.height();
+                if w == 0 || h == 0 {
+                    self.widget_resize(x, y, width, height);
+                } else {
+                    self.resize(x, y, width, height);
+                }
+                self
+            }
+
+            /// Initialize with a label
+            pub fn with_label(mut self, title: &str) -> Self {
+                self.set_label(title);
+                self
+            }
+
+            /// Initialize with alignment
+            pub fn with_align(mut self, align: $crate::enums::Align) -> Self {
+                self.set_align(align);
+                self
+            }
+
+            /// Initialize with type
+            pub fn with_type<T: $crate::prelude::WidgetType>(mut self, typ: T) -> Self {
+                assert!(!self.was_deleted());
+                self.set_type(typ);
+                self
+            }
+
+            /// Initialize at bottom of another widget
+            pub fn below_of<W: $crate::prelude::WidgetExt>(
+                mut self,
+                wid: &W,
+                padding: i32,
+            ) -> Self {
+                assert!(!wid.was_deleted());
+                assert!(!self.was_deleted());
+                let w = self.w();
+                let h = self.h();
+                debug_assert!(
+                    w != 0 && h != 0,
+                    "below_of requires the size of the widget to be known!"
+                );
+                self.resize(wid.x(), wid.y() + wid.h() + padding, w, h);
+                self
+            }
+
+            /// Initialize above of another widget
+            pub fn above_of<W: $crate::prelude::WidgetExt>(
+                mut self,
+                wid: &W,
+                padding: i32,
+            ) -> Self {
+                assert!(!wid.was_deleted());
+                assert!(!self.was_deleted());
+                let w = self.w();
+                let h = self.h();
+                debug_assert!(
+                    w != 0 && h != 0,
+                    "above_of requires the size of the widget to be known!"
+                );
+                self.resize(wid.x(), wid.y() - padding - h, w, h);
+                self
+            }
+
+            /// Initialize right of another widget
+            pub fn right_of<W: $crate::prelude::WidgetExt>(
+                mut self,
+                wid: &W,
+                padding: i32,
+            ) -> Self {
+                assert!(!wid.was_deleted());
+                assert!(!self.was_deleted());
+                let w = self.w();
+                let h = self.h();
+                debug_assert!(
+                    w != 0 && h != 0,
+                    "right_of requires the size of the widget to be known!"
+                );
+                self.resize(wid.x() + wid.width() + padding, wid.y(), w, h);
+                self
+            }
+
+            /// Initialize left of another widget
+            pub fn left_of<W: $crate::prelude::WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+                assert!(!wid.was_deleted());
+                assert!(!self.was_deleted());
+                let w = self.w();
+                let h = self.h();
+                debug_assert!(
+                    w != 0 && h != 0,
+                    "left_of requires the size of the widget to be known!"
+                );
+                self.resize(wid.x() - w - padding, wid.y(), w, h);
+                self
+            }
+
+            /// Initialize center of another widget
+            pub fn center_of<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(
+                    w.width() != 0 && w.height() != 0,
+                    "center_of requires the size of the widget to be known!"
+                );
+                let sw = self.width() as f64;
+                let sh = self.height() as f64;
+                let ww = w.width() as f64;
+                let wh = w.height() as f64;
+                let sx = (ww - sw) / 2.0;
+                let sy = (wh - sh) / 2.0;
+                let wx = if w.as_window().is_some() { 0 } else { w.x() };
+                let wy = if w.as_window().is_some() { 0 } else { w.y() };
+                self.resize(sx as i32 + wx, sy as i32 + wy, sw as i32, sh as i32);
+                self.redraw();
+                self
+            }
+
+            /// Initialize center of parent
+            pub fn center_of_parent(mut self) -> Self {
+                assert!(!self.was_deleted());
+                if let Some(w) = self.parent() {
+                    debug_assert!(
+                        w.width() != 0 && w.height() != 0,
+                        "center_of requires the size of the widget to be known!"
+                    );
+                    let sw = self.width() as f64;
+                    let sh = self.height() as f64;
+                    let ww = w.width() as f64;
+                    let wh = w.height() as f64;
+                    let sx = (ww - sw) / 2.0;
+                    let sy = (wh - sh) / 2.0;
+                    let wx = if w.as_window().is_some() { 0 } else { w.x() };
+                    let wy = if w.as_window().is_some() { 0 } else { w.y() };
+                    self.resize(sx as i32 + wx, sy as i32 + wy, sw as i32, sh as i32);
+                    self.redraw();
+                }
+                self
+            }
+
+            /// Initialize to the size of another widget
+            pub fn size_of<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
+                assert!(!w.was_deleted());
+                assert!(!self.was_deleted());
+                debug_assert!(
+                    w.width() != 0 && w.height() != 0,
+                    "size_of requires the size of the widget to be known!"
+                );
+                let x = self.x();
+                let y = self.y();
+                self.resize(x, y, w.width(), w.height());
+                self
+            }
+
+            /// Initialize to the size of the parent
+            pub fn size_of_parent(mut self) -> Self {
+                assert!(!self.was_deleted());
+                if let Some(parent) = self.parent() {
+                    let w = parent.width();
+                    let h = parent.height();
+                    let x = self.x();
+                    let y = self.y();
+                    self.resize(x, y, w, h);
+                }
+                self
+            }
+        }
+
+        impl std::ops::Deref for $widget {
+            type Target = $base;
+
+            fn deref(&self) -> &Self::Target {
+                &self.$member
+            }
+        }
+
+        impl std::ops::DerefMut for $widget {
+            fn deref_mut(&mut self) -> &mut Self::Target {
+                &mut self.$member
+            }
+        }
+    };
 }

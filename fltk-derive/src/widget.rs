@@ -27,6 +27,10 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
         format!("{}_{}", name_str, "set_deleter").as_str(),
         name.span(),
     );
+    let resize_callback = Ident::new(
+        format!("{}_{}", name_str, "resize_callback").as_str(),
+        name.span(),
+    );
 
     let gen = quote! {
         impl Default for #name {
@@ -61,6 +65,10 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                         is_derived: true,
                     }
                 }
+            }
+
+            fn default_fill() -> Self {
+                Self::default().size_of_parent().center_of_parent()
             }
 
             fn delete(mut wid: Self) {
@@ -155,6 +163,23 @@ pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
                 let data = Box::from_raw(data);
                 #handle(self.inner, None, std::ptr::null_mut());
                 Some(*data)
+            }
+
+            fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, cb: F) {
+                assert!(!self.was_deleted());
+                assert!(self.is_derived);
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, x: i32, y: i32, w: i32, h: i32, data: *mut raw::c_void) {
+                        let mut wid = #name::from_widget_ptr(wid as *mut _);
+                        let a: *mut Box<dyn FnMut(&mut #name, i32, i32, i32, i32)> = data as *mut Box<dyn FnMut(&mut #name, i32, i32, i32, i32)>;
+                        let f: &mut (dyn FnMut(&mut #name, i32, i32, i32, i32)) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid, x, y, w, h)));
+                    }
+                    let a: *mut Box<dyn FnMut(&mut Self, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: Option<unsafe extern "C" fn(*mut Fl_Widget, i32, i32, i32, i32, *mut raw::c_void)> = Some(shim);
+                    #resize_callback(self.inner, callback, data);
+                }
             }
         }
     };

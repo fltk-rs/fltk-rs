@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [1.2.0] - 2021-09-23
+- Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).
+- Add WidgetBase::resize_callback().
+- Add WidgetBase::default_fill() to construct a widget with the size of its parent.
+- Improve some docs.
+- Derive Default for Column, Row and Grid widgets.
+
 ## [1.1.19] - 2021-09-18
 - Fix doc comments about FileDialog and NativeFileChooser.
 - Using fltk-bundled automatically enables glwindow. Note, other user-built bundles can be cached and used via the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL env variables.
@@ -82,8 +89,8 @@
 - Add WidgetExt::with_type().
 - Add MenuExt::menu and set_menu().
 - Add ImageExt::draw_ext() which allows passing the offset to the image.
-- Add app:: frame_shadow_width setter and getter.
-- Add app:: frame_border_radius_max setter and getter.
+- Add app::frame_shadow_width setter and getter.
+- Add app::frame_border_radius_max setter and getter.
 - Add app::set_color().
 - Add enums::Color::darker() and lighter().
 

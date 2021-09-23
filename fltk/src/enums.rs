@@ -636,7 +636,7 @@ bitflags! {
         /// Zoom Event
         const ZoomEvent = 27;
         /// Window Resize Event.
-        /// Avoid resizing the widget during a resize event
+        /// Avoid resizing the parent during a resize event
         /// to avoid infinite recursion
         const Resize = 28;
     }
