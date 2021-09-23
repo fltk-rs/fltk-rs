@@ -1,13 +1,12 @@
-use fltk::{
-    group::{Flex, FlexType},
-    prelude::*,
-    *,
-};
+use fltk::{prelude::*, *};
 
 fn main() {
     let a = app::App::default().with_scheme(app::Scheme::Gtk);
     let mut win = window::Window::default().with_size(640, 480);
-    let mut col = Flex::new(5, 5, 630, 470, None).with_type(FlexType::Column);
+    let mut col = group::Flex::default()
+        .with_size(630, 470)
+        .center_of_parent()
+        .column();
     main_panel(&mut col);
     col.end();
     win.resizable(&col);
@@ -17,24 +16,26 @@ fn main() {
     a.run().unwrap();
 }
 
-fn buttons_panel(parent: &mut Flex) {
+fn buttons_panel(parent: &mut group::Flex) {
     frame::Frame::default();
     let mut w = frame::Frame::default().with_label("Welcome to Flex Login");
 
-    let mut urow = Flex::default().with_type(FlexType::Row);
+    let mut urow = group::Flex::default().row();
     {
-        let mut b = frame::Frame::default().with_label("Username:");
-        b.set_align(enums::Align::Inside | enums::Align::Right);
+        frame::Frame::default()
+            .with_label("Username:")
+            .with_align(enums::Align::Inside | enums::Align::Right);
         let mut username = input::Input::default();
 
         urow.set_size(&mut username, 180);
         urow.end();
     }
 
-    let mut prow = Flex::default().with_type(FlexType::Row);
+    let mut prow = group::Flex::default().row();
     {
-        let mut b = frame::Frame::default().with_label("Password:");
-        b.set_align(enums::Align::Inside | enums::Align::Right);
+        frame::Frame::default()
+            .with_label("Password:")
+            .with_align(enums::Align::Inside | enums::Align::Right);
         let mut password = input::Input::default();
 
         prow.set_size(&mut password, 180);
@@ -43,7 +44,7 @@ fn buttons_panel(parent: &mut Flex) {
 
     let mut pad = frame::Frame::default();
 
-    let mut brow = Flex::default().with_type(FlexType::Row);
+    let mut brow = group::Flex::default().row();
     {
         frame::Frame::default();
         let mut reg = create_button("Register");
@@ -66,7 +67,7 @@ fn buttons_panel(parent: &mut Flex) {
     parent.set_size(&mut b, 30);
 }
 
-fn middle_panel(parent: &mut Flex) {
+fn middle_panel(parent: &mut group::Flex) {
     frame::Frame::default();
 
     let mut frame = frame::Frame::default().with_label("Image");
@@ -74,9 +75,7 @@ fn middle_panel(parent: &mut Flex) {
     frame.set_color(enums::Color::from_rgb(0, 200, 0));
     let mut spacer = frame::Frame::default();
 
-    let mut bp = Flex::default()
-        .with_size(320, 200)
-        .with_type(FlexType::Column);
+    let mut bp = group::Flex::default().column();
     buttons_panel(&mut bp);
     bp.end();
 
@@ -87,10 +86,10 @@ fn middle_panel(parent: &mut Flex) {
     parent.set_size(&mut bp, 300);
 }
 
-fn main_panel(parent: &mut Flex) {
+fn main_panel(parent: &mut group::Flex) {
     frame::Frame::default();
 
-    let mut mp = Flex::default().with_type(FlexType::Row);
+    let mut mp = group::Flex::default().row();
     middle_panel(&mut mp);
     mp.end();
 
@@ -99,10 +98,8 @@ fn main_panel(parent: &mut Flex) {
     parent.set_size(&mut mp, 200);
 }
 
-fn create_button(caption: &'static str) -> button::Button {
-    let mut rtn = button::Button::default()
-        .with_size(120, 30)
-        .with_label(caption);
-    rtn.set_color(enums::Color::from_rgb(225, 225, 225));
-    rtn
+fn create_button(caption: &str) -> button::Button {
+    let mut btn = button::Button::default().with_label(caption);
+    btn.set_color(enums::Color::from_rgb(225, 225, 225));
+    btn
 }
