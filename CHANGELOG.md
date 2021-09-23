@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.0] - 2021-09-23
+## [1.2.1] - 2021-09-23
 - Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).
 - Add WidgetBase::resize_callback().
 - Add WidgetBase::default_fill() to construct a widget with the size of its parent.
