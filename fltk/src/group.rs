@@ -368,7 +368,7 @@ impl Pack {
     }
     ```
 */
-#[derive(Debug, Clone)]
+#[derive(Default, Debug, Clone)]
 pub struct VGrid {
     vpack: Pack,
     rows: i32,
@@ -377,6 +377,11 @@ pub struct VGrid {
 }
 
 impl VGrid {
+    /// Constructs a widget with the size of its parent
+    pub fn default_fill() -> Self {
+        Self::default().size_of_parent()
+    }
+
     /// Creates a new vertical grid
     pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> VGrid {
         let vpack = Pack::new(x, y, w, h, label);
@@ -473,7 +478,7 @@ crate::widget_extends!(VGrid, Pack, vpack);
     }
     ```
 */
-#[derive(Debug, Clone)]
+#[derive(Default, Debug, Clone)]
 pub struct HGrid {
     hpack: Pack,
     rows: i32,
@@ -482,6 +487,11 @@ pub struct HGrid {
 }
 
 impl HGrid {
+    /// Constructs a widget with the size of its parent
+    pub fn default_fill() -> Self {
+        Self::default().size_of_parent()
+    }
+    
     /// Creates a new horizontal grid
     pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> HGrid {
         let mut hpack = Pack::new(x, y, w, h, label);
@@ -554,12 +564,17 @@ impl HGrid {
 crate::widget_extends!(HGrid, Pack, hpack);
 
 /// A wrapper around a vertical pack, with `auto_layout`ing using the add method
-#[derive(Debug, Clone)]
+#[derive(Default, Debug, Clone)]
 pub struct Column {
     p: Pack,
 }
 
 impl Column {
+    /// Constructs a widget with the size of its parent
+    pub fn default_fill() -> Self {
+        Self::default().size_of_parent()
+    }
+
     /// Create a new column
     pub fn new<T: Into<Option<&'static str>>>(
         x: i32,
@@ -594,12 +609,17 @@ impl Column {
 crate::widget_extends!(Column, Pack, p);
 
 /// A wrapper around a Horizontal pack, with `auto_layout`ing using the add method
-#[derive(Debug, Clone)]
+#[derive(Default, Debug, Clone)]
 pub struct Row {
     p: Pack,
 }
 
 impl Row {
+    /// Constructs a widget with the size of its parent
+    pub fn default_fill() -> Self {
+        Self::default().size_of_parent()
+    }
+
     /// Create a new row
     pub fn new<T: Into<Option<&'static str>>>(
         x: i32,

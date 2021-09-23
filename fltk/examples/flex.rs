@@ -3,16 +3,14 @@ use fltk::{prelude::*, *};
 fn main() {
     let a = app::App::default().with_scheme(app::Scheme::Gtk);
     let mut win = window::Window::default().with_size(640, 480);
-    let mut col = group::Flex::default()
-        .with_size(630, 470)
-        .center_of_parent()
-        .column();
+    let mut col = group::Flex::default_fill().column();
     main_panel(&mut col);
     col.end();
     win.resizable(&col);
     win.set_color(enums::Color::from_rgb(250, 250, 250));
     win.end();
     win.show();
+    win.size_range(600, 400, 0, 0);
     a.run().unwrap();
 }
 

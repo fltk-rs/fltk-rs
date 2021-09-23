@@ -4,7 +4,9 @@
 ## [1.2.0] - 2021-09-23
 - Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).
 - Add WidgetBase::resize_callback().
+- Add WidgetBase::default_fill() to construct a widget with the size of its parent.
 - Improve some docs.
+- Derive Default for Column, Row and Grid widgets.
 
 ## [1.1.19] - 2021-09-18
 - Fix doc comments about FileDialog and NativeFileChooser.
