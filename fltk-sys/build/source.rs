@@ -64,6 +64,12 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .expect("Git is needed to retrieve the fltk source files!");
     }
 
+    Command::new("git")
+        .args(&["apply", "../flex.patch"])
+        .current_dir(manifest_dir.join("cfltk").join("FL_FLex"))
+        .status()
+        .expect("Git is needed to retrieve the fltk source files!");
+
     if !target_triple.contains("android") {
         let mut dst = cmake::Config::new("cfltk");
 
@@ -182,4 +188,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
     }
+
+    Command::new("git")
+        .args(&["reset", "--hard"])
+        .current_dir(manifest_dir.join("cfltk").join("FL_FLex"))
+        .status()
+        .expect("Git is needed to retrieve the fltk source files!");
 }
