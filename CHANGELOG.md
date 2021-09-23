@@ -2,7 +2,7 @@
 
 
 ## [1.2.0] - Unreleased
-- Add FL_FLex as submodule and expose a Flex widget.
+- Add FL_FLex as submodule and expose a group::Flex widget.
 
 ## [1.1.19] - 2021-09-18
 - Fix doc comments about FileDialog and NativeFileChooser.
