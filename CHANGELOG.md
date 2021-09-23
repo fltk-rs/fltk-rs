@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.0] - Unreleased
+- Add FL_FLex as submodule and expose a Flex widget.
+
 ## [1.1.19] - 2021-09-18
 - Fix doc comments about FileDialog and NativeFileChooser.
 - Using fltk-bundled automatically enables glwindow. Note, other user-built bundles can be cached and used via the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL env variables.

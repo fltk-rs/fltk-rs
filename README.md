@@ -404,7 +404,7 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
     - HGrid
     - Column (vertical pack supporting auto layout)
     - Row (horizontal pack supporting auto layout)
-    - Flex (Supports flexbox layouts, provided by the [fltk-flex crate](https://crates.io/crates/fltk-flex))
+    - Flex
 - Text display widgets
     - TextDisplay
     - TextEditor

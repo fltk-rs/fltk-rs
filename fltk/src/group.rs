@@ -633,3 +633,68 @@ impl Row {
 }
 
 crate::widget_extends!(Row, Pack, p);
+
+
+/// Defines Flex types
+#[repr(i32)]
+#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+pub enum FlexType {
+    /// row direction
+    Row = 0,
+    /// column direction
+    Column,
+}
+
+/**
+    a Flexbox widget
+    # Example
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    use fltk_flex::{Flex, FlexType};
+    let mut col = Flex::new(0, 0, 400, 300, None);
+    col.set_type(FlexType::Column);
+    let expanding = button::Button::default().with_label("Expanding");
+    let mut normal = button::Button::default().with_label("Normal");
+    col.set_size(&mut normal, 30);
+    col.end();
+    ```
+*/
+#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
+pub struct Flex {
+    inner: *mut Fl_Flex,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
+}
+
+impl Flex {
+    /// Set the size of the widget
+    pub fn set_size<W: WidgetExt>(&mut self, w: &mut W, size: i32) {
+        unsafe {
+            Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size)
+        }
+    }
+
+    /// Debug the flex layout
+    pub fn debug(&mut self, flag: bool) {
+        unsafe {
+            Fl_Flex_set_debug(self.inner, flag as _)
+        }
+    }
+
+    /// Set the type to be a column
+    pub fn column(mut self) -> Self {
+        self.set_type(FlexType::Column);
+        self
+    }
+
+    /// Set the type to a row
+    pub fn row(mut self) -> Self {
+        self.set_type(FlexType::Row);
+        self
+    }
+
+    /// Recalculate children's coords and sizes
+    pub fn recalc(&mut self) {
+        self.end();
+    }
+}
