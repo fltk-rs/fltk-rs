@@ -39,7 +39,7 @@ legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy Op
 single-threaded = ["fltk-sys/single-threaded"] # (Experimental) Disable multithreading support when linking X11 libs non-mt x11 libs.
 
 [package.metadata.docs.rs]
-features = ["fltk-bundled"]
+features = ["enable-glwindow"]
 
 [[test]]
 name = "app_handle"
