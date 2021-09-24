@@ -387,8 +387,8 @@ impl Flex {
     }
 
     /// Debug the flex layout
-    pub fn debug(&mut self, flag: bool) {
-        unsafe { Fl_Flex_set_debug(self.inner, flag as _) }
+    pub fn debug(flag: bool) {
+        unsafe { Fl_Flex_set_debug(flag as _) }
     }
 
     /// Set the type to be a column
