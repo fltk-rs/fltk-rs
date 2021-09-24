@@ -4,6 +4,7 @@
 - Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).
 - Use fork of FL_Flex to avoid patching, then linking libstd++.
 - Add Flex's margin and pad properties getter and setter.
+- Overload Flex::add to recalculate layout.
 - Add WidgetBase::resize_callback().
 - Add WidgetBase::default_fill() to construct a widget with the size of its parent.
 - Improve some docs.

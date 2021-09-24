@@ -381,6 +381,12 @@ pub struct Flex {
 }
 
 impl Flex {
+    /// Add a widget to the Flex box
+    pub fn add<W: WidgetExt>(&mut self, widget: &W) {
+        <Self as GroupExt>::add(self, widget);
+        self.recalc();
+    }
+    
     /// Set the size of the widget
     pub fn set_size<W: WidgetExt>(&mut self, w: &mut W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
