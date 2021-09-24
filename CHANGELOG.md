@@ -1,12 +1,15 @@
 # Changelog
 
-
-## [1.2.0] - 2021-09-23
+## [1.2.3] - 2021-09-24
 - Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).
+- Use fork of FL_Flex to avoid patching, then linking libstd++.
+- Add Flex's margin and pad properties getter and setter.
+- Overload Flex::add to recalculate layout.
 - Add WidgetBase::resize_callback().
 - Add WidgetBase::default_fill() to construct a widget with the size of its parent.
 - Improve some docs.
 - Derive Default for Column, Row and Grid widgets.
+- Fix cargo doc build issue on docs.rs.
 
 ## [1.1.19] - 2021-09-18
 - Fix doc comments about FileDialog and NativeFileChooser.

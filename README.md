@@ -474,6 +474,7 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
 ## Tutorials
 
 - [Basics](https://www.youtube.com/watch?v=ygP4egJtmzw)
+- [New basics](https://youtu.be/S1NSsHZs6hI) (Uses fltk post 1.0)
 - [User input](https://youtu.be/rIq2O4vg9fQ)
 - [Client-side web todo app](https://youtu.be/tdfFXi4-Yrw)
 - [Create a media player using the vlc crate](https://youtu.be/enxqU3bhCEs)

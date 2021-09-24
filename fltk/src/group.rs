@@ -381,14 +381,20 @@ pub struct Flex {
 }
 
 impl Flex {
+    /// Add a widget to the Flex box
+    pub fn add<W: WidgetExt>(&mut self, widget: &W) {
+        <Self as GroupExt>::add(self, widget);
+        self.recalc();
+    }
+    
     /// Set the size of the widget
     pub fn set_size<W: WidgetExt>(&mut self, w: &mut W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
     }
 
     /// Debug the flex layout
-    pub fn debug(&mut self, flag: bool) {
-        unsafe { Fl_Flex_set_debug(self.inner, flag as _) }
+    pub fn debug(flag: bool) {
+        unsafe { Fl_Flex_set_debug(flag as _) }
     }
 
     /// Set the type to be a column
@@ -406,6 +412,34 @@ impl Flex {
     /// Recalculate children's coords and sizes
     pub fn recalc(&mut self) {
         self.end();
+    }
+
+    /// Set the margin
+    pub fn set_margin(&mut self, m: i32) {
+        unsafe {
+            Fl_Flex_set_margin(self.inner, m)
+        }
+    }
+
+    /// Get the margin
+    pub fn margin(&self) -> i32 {
+        unsafe {
+            Fl_Flex_margin(self.inner)
+        }
+    }
+
+    /// Set the padding
+    pub fn set_pad(&mut self, p: i32) {
+        unsafe {
+            Fl_Flex_set_pad(self.inner, p)
+        }
+    }
+
+    /// Get the padding
+    pub fn pad(&self) -> i32 {
+        unsafe {
+            Fl_Flex_pad(self.inner)
+        }
     }
 }
 

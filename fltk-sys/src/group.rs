@@ -2921,7 +2921,19 @@ extern "C" {
     pub fn Fl_Flex_set_size(self_: *mut Fl_Flex, w: *mut Fl_Widget, size: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Flex_set_debug(self_: *mut Fl_Flex, val: ::std::os::raw::c_int);
+    pub fn Fl_Flex_set_debug(val: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Flex_set_margin(self_: *mut Fl_Flex, m: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Flex_margin(self_: *const Fl_Flex) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Flex_set_pad(self_: *mut Fl_Flex, p: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Flex_pad(self_: *const Fl_Flex) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Flex_begin(self_: *mut Fl_Flex);
