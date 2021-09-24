@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.2.3] - 2021-09-24
+- Use fork of FL_Flex to avoid patching.
+- Add Flex's margin and pad properties getter and setter.
 
 ## [1.2.2] - 2021-09-23
 - Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).

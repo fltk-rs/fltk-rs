@@ -407,6 +407,34 @@ impl Flex {
     pub fn recalc(&mut self) {
         self.end();
     }
+
+    /// Set the margin
+    pub fn set_margin(&mut self, m: i32) {
+        unsafe {
+            Fl_Flex_set_margin(self.inner, m)
+        }
+    }
+
+    /// Get the margin
+    pub fn margin(&self) -> i32 {
+        unsafe {
+            Fl_Flex_margin(self.inner)
+        }
+    }
+
+    /// Set the padding
+    pub fn set_pad(&mut self, p: i32) {
+        unsafe {
+            Fl_Flex_set_pad(self.inner, p)
+        }
+    }
+
+    /// Get the padding
+    pub fn pad(&self) -> i32 {
+        unsafe {
+            Fl_Flex_pad(self.inner)
+        }
+    }
 }
 
 /**
