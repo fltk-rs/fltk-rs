@@ -1,11 +1,9 @@
 # Changelog
 
 ## [1.2.3] - 2021-09-24
+- Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).
 - Use fork of FL_Flex to avoid patching, then linking libstd++.
 - Add Flex's margin and pad properties getter and setter.
-
-## [1.2.2] - 2021-09-23
-- Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).
 - Add WidgetBase::resize_callback().
 - Add WidgetBase::default_fill() to construct a widget with the size of its parent.
 - Improve some docs.
