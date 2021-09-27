@@ -1,7 +1,8 @@
 use crate::app::widget::first_window;
 use crate::enums::{Event, Key, Shortcut};
 use crate::prelude::*;
-use fltk_sys::fl;
+use crate::utils::FlString;
+use fltk_sys::fl::{self, Fl_open_display};
 use std::{
     cmp,
     ffi::{CStr, CString},
@@ -334,7 +335,7 @@ pub fn get_mouse() -> (i32, i32) {
 pub fn compose() -> Option<i32> {
     unsafe {
         let mut del = 0;
-        if Fl_compose(&mut del) != 0 {
+        if fl::Fl_compose(&mut del) != 0 {
             Some(del)
         } else {
             None
@@ -345,43 +346,36 @@ pub fn compose() -> Option<i32> {
 /// Reset the length of bytes of app::compose()
 pub fn compose_reset() {
     unsafe {
-        Fl_compose_reset();
+        fl::Fl_compose_reset();
     }
 }
 
 /// Return the length of bytes written in app::compose()
 pub fn compose_state() -> i32 {
-    unsafe {
-        Fl_compose_state()
-    }
-}
-
-/// Copy text to the clipboard
-pub fn copy(
-    stuff: &str,
-) {
-    unsafe {
-         let len = stuff.len();
-         let stuff = CString::safe_new(stuff);
-         Fl_copy(stuff.as_ptr() as _, len as _, 1);
-    }
+    unsafe { fl::Fl_compose_state() }
 }
 
 /// Reset marked text
 pub fn reset_marked_text() {
     unsafe {
-        Fl_reset_marked_text();
+        fl::Fl_reset_marked_text();
     }
 }
 
 /// Set the insertion point
-pub fn insertion_point_location(
-    x: i32,
-    y: i32,
-    height: i32,
-) {
+pub fn insertion_point_location(x: i32, y: i32, height: i32) {
     unsafe {
-        Fl_insertion_point_location(x, y, height);
+        fl::Fl_insertion_point_location(x, y, height);
+    }
+}
+
+/// Copy text to the clipboard
+pub fn copy(stuff: &str) {
+    unsafe {
+        Fl_open_display();
+        let len = stuff.len();
+        let stuff = CString::safe_new(stuff);
+        fl::Fl_copy(stuff.as_ptr() as _, len as _, 1);
     }
 }
 
