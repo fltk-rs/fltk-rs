@@ -118,6 +118,32 @@ extern "C" {
     pub fn Fl_screen_w() -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_compose(del: *mut ::std::os::raw::c_int) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_compose_reset();
+}
+extern "C" {
+    pub fn Fl_compose_state() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_reset_marked_text();
+}
+extern "C" {
+    pub fn Fl_insertion_point_location(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_copy(
+        stuff: *const ::std::os::raw::c_char,
+        len: ::std::os::raw::c_int,
+        destination: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_paste_text(arg1: *mut Fl_Widget, src: ::std::os::raw::c_int);
 }
 extern "C" {
