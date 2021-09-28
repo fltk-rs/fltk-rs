@@ -5,6 +5,7 @@
 - Pull image fixes from FLTK.
 - Add app::compose, compose_state, reset_marked_text and insertion_point_location.
 - Add app::copy.
+- Check the size of drawn text.
 
 ## [1.2.3] - 2021-09-24
 - Add a new group::Flex widget wrapping [Fl_Flex](https://github.com/osen/FL_Flex).

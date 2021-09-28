@@ -602,7 +602,7 @@ pub fn local_to_latin1(txt: &str, n: i32) -> String {
 
 /// Draws a string starting at the given x, y location
 pub fn draw_text(txt: &str, x: i32, y: i32) {
-    if size() == -1 {
+    if size() == -1 && txt.len() == 1 {
         return;
     }
     let txt = CString::safe_new(txt);
@@ -611,7 +611,7 @@ pub fn draw_text(txt: &str, x: i32, y: i32) {
 
 /// Draws a string starting at the given x, y location with width and height and alignment
 pub fn draw_text2(string: &str, x: i32, y: i32, width: i32, height: i32, align: Align) {
-    if size() == -1 {
+    if size() == -1 && string.len() == 1 {
         return;
     }
     let s = CString::safe_new(string);
@@ -620,7 +620,7 @@ pub fn draw_text2(string: &str, x: i32, y: i32, width: i32, height: i32, align: 
 
 /// Draws a string starting at the given x, y location, rotated to an angle
 pub fn draw_text_angled(angle: i32, txt: &str, x: i32, y: i32) {
-    if size() == -1 {
+    if size() == -1 && txt.len() == 1 {
         return;
     }
     let txt = CString::safe_new(txt);
@@ -629,7 +629,7 @@ pub fn draw_text_angled(angle: i32, txt: &str, x: i32, y: i32) {
 
 /// Draws a UTF-8 string right to left starting at the given x, y location
 pub fn rtl_draw(txt: &str, x: i32, y: i32) {
-    if size() == -1 {
+    if size() == -1 && txt.len() == 1 {
         return;
     }
     let len = txt.len() as i32;
