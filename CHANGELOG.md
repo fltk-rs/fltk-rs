@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.4] - 2021-09-30
+## [1.2.4] - 2021-09-29
 - Pull image fixes from FLTK.
 - Add app::compose, compose_state, reset_marked_text and insertion_point_location.
 - Add app::copy.
