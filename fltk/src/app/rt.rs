@@ -215,6 +215,45 @@ pub fn remove_idle2(cb: fn()) {
     }
 }
 
+/// Register a callback whenever there is a change to the selection buffer or the clipboard.
+/// The clipboard is source 1 and the selection buffer is source 0
+pub fn add_clipboard_notify(cb: fn(source: i32)) {
+    unsafe {
+        let data: *mut raw::c_void = std::ptr::null_mut();
+        let callback: Option<unsafe extern "C" fn(source: i32, arg1: *mut raw::c_void)> =
+            Some(mem::transmute(cb));
+        fl::Fl_add_clipboard_notify(callback, data);
+    }
+}
+
+/// Register a callback whenever there is a change to the selection buffer or the clipboard.
+/// The clipboard is source 1 and the selection buffer is source 0.
+/// A callback via closure cannot be removed!
+pub fn add_clipboard_notify2<F: FnMut(i32) + 'static>(cb: F) {
+    unsafe {
+        unsafe extern "C" fn shim(source: i32, data: *mut raw::c_void) {
+            let a: *mut Box<dyn FnMut(i32)> = data as *mut Box<dyn FnMut(i32)>;
+            let f: &mut (dyn FnMut(i32)) = &mut **a;
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(source)));
+        }
+        let a: *mut Box<dyn FnMut(i32)> = Box::into_raw(Box::new(Box::new(cb)));
+        let data: *mut raw::c_void = a as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(source: i32, arg1: *mut raw::c_void)> = Some(shim);
+        fl::Fl_add_clipboard_notify(callback, data);
+    }
+}
+
+/// Stop calling the specified callback when there are changes to the selection
+/// buffer or the clipboard.
+/// The clipboard is source 1 and the selection buffer is source 0
+pub fn remove_clipboard_notify(cb: fn(source: i32)) {
+    unsafe {
+        let callback: Option<unsafe extern "C" fn(source: i32, arg1: *mut raw::c_void)> =
+            Some(mem::transmute(cb));
+        fl::Fl_remove_clipboard_notify(callback);
+    }
+}
+
 /// Checks whether an idle function is installed
 pub fn has_idle2(cb: fn()) -> bool {
     unsafe {

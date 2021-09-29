@@ -9,3 +9,4 @@
 - DisplayExt::set_hightlight_data() doesn't need to take an optional TextBuffer.
 - Deprecate app::background() etc in favor of app::set_background_color() etc.
 - Rename WidgetExt::into_widget() to as_widget() and GroupExt::into_group() to as_group() to conform to Rust's self convention.
+- Make enable-glwindow one of the default features of fltk-rs.

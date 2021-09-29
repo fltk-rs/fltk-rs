@@ -1,7 +1,8 @@
 use crate::app::widget::first_window;
 use crate::enums::{Event, Key, Shortcut};
 use crate::prelude::*;
-use fltk_sys::fl;
+use crate::utils::FlString;
+use fltk_sys::fl::{self, Fl_open_display};
 use std::{
     cmp,
     ffi::{CStr, CString},
@@ -330,6 +331,64 @@ pub fn get_mouse() -> (i32, i32) {
     }
 }
 
+/// Text editing widget should call this for each FL_KEYBOARD event.
+pub fn compose() -> Option<i32> {
+    unsafe {
+        let mut del = 0;
+        if fl::Fl_compose(&mut del) != 0 {
+            Some(del)
+        } else {
+            None
+        }
+    }
+}
+
+/// Reset the length of bytes of app::compose()
+pub fn compose_reset() {
+    unsafe {
+        fl::Fl_compose_reset();
+    }
+}
+
+/// Return the length of bytes written in app::compose()
+pub fn compose_state() -> i32 {
+    unsafe { fl::Fl_compose_state() }
+}
+
+/// Reset marked text
+pub fn reset_marked_text() {
+    unsafe {
+        fl::Fl_reset_marked_text();
+    }
+}
+
+/// Set the insertion point
+pub fn insertion_point_location(x: i32, y: i32, height: i32) {
+    unsafe {
+        fl::Fl_insertion_point_location(x, y, height);
+    }
+}
+
+/// Copy text to the clipboard
+pub fn copy(stuff: &str) {
+    unsafe {
+        Fl_open_display();
+        let len = stuff.len();
+        let stuff = CString::safe_new(stuff);
+        fl::Fl_copy(stuff.as_ptr() as _, len as _, 1);
+    }
+}
+
+/// Copy text to the selection buffer
+pub fn copy2(stuff: &str) {
+    unsafe {
+        Fl_open_display();
+        let len = stuff.len();
+        let stuff = CString::safe_new(stuff);
+        fl::Fl_copy(stuff.as_ptr() as _, len as _, 0);
+    }
+}
+
 /// Types of Clipboard contents
 #[derive(Debug, Clone, Copy)]
 pub enum ClipboardContent {
@@ -376,6 +435,17 @@ where
     }
 }
 
+/// Pastes textual content from the selection buffer
+pub fn paste_text2<T>(widget: &T)
+where
+    T: WidgetExt,
+{
+    assert!(!widget.was_deleted());
+    unsafe {
+        fl::Fl_paste_text(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 0);
+    }
+}
+
 /// Pastes image content from the clipboard
 pub fn paste_image<T>(widget: &T)
 where
@@ -384,6 +454,17 @@ where
     assert!(!widget.was_deleted());
     unsafe {
         fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
+    }
+}
+
+/// Pastes image content from the selection buffer
+pub fn paste_image2<T>(widget: &T)
+where
+    T: WidgetExt,
+{
+    assert!(!widget.was_deleted());
+    unsafe {
+        fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 0);
     }
 }
 
