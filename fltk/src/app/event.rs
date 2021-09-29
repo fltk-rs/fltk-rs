@@ -379,6 +379,16 @@ pub fn copy(stuff: &str) {
     }
 }
 
+/// Copy text to the selection buffer
+pub fn copy2(stuff: &str) {
+    unsafe {
+        Fl_open_display();
+        let len = stuff.len();
+        let stuff = CString::safe_new(stuff);
+        fl::Fl_copy(stuff.as_ptr() as _, len as _, 0);
+    }
+}
+
 /// Types of Clipboard contents
 #[derive(Debug, Clone, Copy)]
 pub enum ClipboardContent {
@@ -425,6 +435,17 @@ where
     }
 }
 
+/// Pastes textual content from the selection buffer
+pub fn paste_text2<T>(widget: &T)
+where
+    T: WidgetExt,
+{
+    assert!(!widget.was_deleted());
+    unsafe {
+        fl::Fl_paste_text(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 0);
+    }
+}
+
 /// Pastes image content from the clipboard
 pub fn paste_image<T>(widget: &T)
 where
@@ -433,6 +454,17 @@ where
     assert!(!widget.was_deleted());
     unsafe {
         fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 1);
+    }
+}
+
+/// Pastes image content from the selection buffer
+pub fn paste_image2<T>(widget: &T)
+where
+    T: WidgetExt,
+{
+    assert!(!widget.was_deleted());
+    unsafe {
+        fl::Fl_paste_image(widget.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget, 0);
     }
 }
 
