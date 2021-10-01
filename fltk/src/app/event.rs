@@ -511,12 +511,8 @@ pub fn handle<I: Into<i32> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     w: &W,
 ) -> Result<bool, FltkError> {
     let val = msg.into();
-    if (0..=30).contains(&val) {
-        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-    } else {
-        let ret = unsafe { fl::Fl_handle(val, w.as_widget_ptr() as _) != 0 };
-        Ok(ret)
-    }
+    let ret = unsafe { fl::Fl_handle(val, w.as_widget_ptr() as _) != 0 };
+    Ok(ret)
 }
 
 /**
@@ -549,15 +545,11 @@ pub fn handle_main<I: Into<i32> + Copy + PartialEq + PartialOrd>(
     msg: I,
 ) -> Result<bool, FltkError> {
     let val = msg.into();
-    if (0..=30).contains(&val) {
-        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-    } else {
-        first_window().map_or(
-            Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
-            |win| {
-                let ret = unsafe { fl::Fl_handle(val, win.as_widget_ptr() as _) != 0 };
-                Ok(ret)
-            },
-        )
-    }
+    first_window().map_or(
+        Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
+        |win| {
+            let ret = unsafe { fl::Fl_handle(val, win.as_widget_ptr() as _) != 0 };
+            Ok(ret)
+        },
+    )
 }
