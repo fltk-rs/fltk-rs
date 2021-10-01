@@ -1,8 +1,11 @@
 # Changelog
 
 
-## [1.2.4] - Unreleased
+## [1.2.5] - Unreleased
 - Add app::font_size() getter.
+- Handle None in DisplayExt::set_highlight_data().
+- Alias GlutWindow as GlWindow since they are basically the same!
+- Remove wrong implementation of draw::scale_x().
 
 ## [1.2.4] - 2021-09-29
 - Pull image fixes from FLTK.
