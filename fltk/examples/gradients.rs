@@ -20,6 +20,7 @@ fn create_vertical_gradient_frame(
             draw_xyline(f.x(), f.y() + i, f.x() + f.w());
         }
         set_draw_color(Color::Black);
+        set_font(Font::Helvetica, app::font_size());
         draw_text2(&f.label(), f.x(), f.y(), f.w(), f.h(), f.align());
     });
     frame
@@ -43,6 +44,7 @@ fn create_horizontal_gradient_frame(
             draw_yxline(f.x() + i, f.y(), f.y() + f.h());
         }
         set_draw_color(Color::Black);
+        set_font(Font::Helvetica, app::font_size());
         draw_text2(&f.label(), f.x(), f.y(), f.w(), f.h(), f.align());
     });
     frame
