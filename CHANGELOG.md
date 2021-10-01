@@ -7,7 +7,7 @@
 - Alias GlutWindow as GlWindow since they are basically the same!
 - Remove wrong implementation of draw::scale_x().
 - Add WidgetExt::handle_event().
-- Relax app::handle() event requirements.
+- Relax app::handle() event requirements, and use `Into<Event>`.
 
 ## [1.2.4] - 2021-09-29
 - Pull image fixes from FLTK.
