@@ -419,6 +419,11 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
                     unsafe {
                         #set_highlight_data(self.inner, style_buffer.as_ptr() as *mut raw::c_void, colors.as_mut_ptr(), fonts.as_mut_ptr(), sizes.as_mut_ptr(), entries.len() as i32)
                     }
+                } else {
+                    let mut colors = [Color::Black.bits()];
+                    let mut fonts = [Font::Helvetica.bits()];
+                    let mut sizes = [14];
+                    unsafe { #set_highlight_data(self.inner, style_buffer.as_ptr() as *mut raw::c_void, colors.as_mut_ptr(), fonts.as_mut_ptr(), sizes.as_mut_ptr(), 1) }
                 }
             }
 
