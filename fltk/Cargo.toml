@@ -23,7 +23,7 @@ bitflags = "^1.3.2"
 raw-window-handle = { version = "^0.3.3", optional = true }
 
 [features]
-default = ["raw-window-handle"]
+default = ["raw-window-handle", "enable-glwindow"]
 fltk-bundled = ["fltk-sys/fltk-bundled", "enable-glwindow"] # Support for bundled versions of cfltk and fltk (requires curl and tar)
 enable-glwindow = ["fltk-sys/enable-glwindow"] # Support for systems without OpenGL
 no-pango = ["fltk-sys/no-pango"] # You can use this if you don't need rtl or cjk unicode support
@@ -37,9 +37,6 @@ no-gdiplus = ["fltk-sys/no-gdiplus"] # Disable gdiplus drawing
 no-images = ["fltk-sys/no-images"] # (Experimental) You can use this feature if your app doesn't use images to reduce binary size
 legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy OpenGL
 single-threaded = ["fltk-sys/single-threaded"] # (Experimental) Disable multithreading support when linking X11 libs non-mt x11 libs.
-
-[package.metadata.docs.rs]
-features = ["enable-glwindow"]
 
 [[test]]
 name = "app_handle"
