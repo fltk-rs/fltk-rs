@@ -67,18 +67,16 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
         }
 
         if cfg!(any(feature = "enable-glwindow", feature = "fltk-bundled")) {
-            if target_os != "android" {
-                println!("cargo:rustc-link-lib=static=fltk_gl");
-                match target_os {
-                    "macos" => println!("cargo:rustc-link-lib=framework=OpenGL"),
-                    "windows" => {
-                        println!("cargo:rustc-link-lib=dylib=opengl32");
-                        println!("cargo:rustc-link-lib=dylib=glu32");
-                    }
-                    _ => {
-                        println!("cargo:rustc-link-lib=dylib=GL");
-                        println!("cargo:rustc-link-lib=dylib=GLU");
-                    }
+            println!("cargo:rustc-link-lib=static=fltk_gl");
+            match target_os {
+                "macos" => println!("cargo:rustc-link-lib=framework=OpenGL"),
+                "windows" => {
+                    println!("cargo:rustc-link-lib=dylib=opengl32");
+                    println!("cargo:rustc-link-lib=dylib=glu32");
+                }
+                _ => {
+                    println!("cargo:rustc-link-lib=dylib=GL");
+                    println!("cargo:rustc-link-lib=dylib=GLU");
                 }
             }
         }
