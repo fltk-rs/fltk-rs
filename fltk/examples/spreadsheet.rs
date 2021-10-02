@@ -120,6 +120,7 @@ impl MyTable {
             enums::Color::FrameDefault,
         );
         draw::set_draw_color(enums::Color::Black);
+        draw::set_font(enums::Font::Helvetica, 14);
         draw::draw_text2(txt, x, y, w, h, enums::Align::Center);
         draw::pop_clip();
     }
@@ -134,6 +135,7 @@ impl MyTable {
         }
         draw::draw_rectf(x, y, w, h);
         draw::set_draw_color(enums::Color::Gray0);
+        draw::set_font(enums::Font::Helvetica, 14);
         draw::draw_text2(txt, x, y, w, h, enums::Align::Center);
         draw::draw_rect(x, y, w, h);
         draw::pop_clip();

@@ -404,20 +404,33 @@ pub fn impl_display_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_highlight_data<B: Into<Option<TextBuffer>>>(&mut self, mut style_buffer: B, entries: Vec<StyleTableEntry>) {
                 assert!(!self.was_deleted());
-                debug_assert!(entries.len() < 29);
-                if entries.len() == 0 { return; }
-                if let Some(style_buffer) = style_buffer.into() {
+                assert!(entries.len() < 61);
+                let entries = if entries.len() == 0 {
+                    vec![StyleTableEntry {
+                        color: Color::Black,
+                        font: Font::Helvetica,
+                        size: crate::app::font_size(),
+                    }]
+                } else {
+                    entries
+                };
+                let mut colors: Vec<u32> = vec![];
+                let mut fonts: Vec<i32> = vec![];
+                let mut sizes: Vec<i32> = vec![];
+                for entry in entries.iter() {
+                    colors.push(entry.color.bits() as u32);
+                    fonts.push(entry.font.bits() as i32);
+                    sizes.push(entry.size as i32);
+                }
+                let style_buffer = style_buffer.into();
+                if let Some(style_buffer) = style_buffer {
                     let _old_buf = self.style_buffer();
-                    let mut colors: Vec<u32> = vec![];
-                    let mut fonts: Vec<i32> = vec![];
-                    let mut sizes: Vec<i32> = vec![];
-                    for entry in entries.iter() {
-                        colors.push(entry.color.bits() as u32);
-                        fonts.push(entry.font.bits() as i32);
-                        sizes.push(entry.size as i32);
-                    }
                     unsafe {
                         #set_highlight_data(self.inner, style_buffer.as_ptr() as *mut raw::c_void, colors.as_mut_ptr(), fonts.as_mut_ptr(), sizes.as_mut_ptr(), entries.len() as i32)
+                    }
+                } else {
+                    if let Some(buf) = self.style_buffer() {
+                        unsafe { #set_highlight_data(self.inner, buf.as_ptr() as _, colors.as_mut_ptr(), fonts.as_mut_ptr(), sizes.as_mut_ptr(), 1) }
                     }
                 }
             }

@@ -370,6 +370,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
     let active = Ident::new(format!("{}_{}", name_str, "active").as_str(), name.span());
     let active_r = Ident::new(format!("{}_{}", name_str, "active_r").as_str(), name.span());
     let callback = Ident::new(format!("{}_{}", name_str, "callback").as_str(), name.span());
+    let handle_event = Ident::new(format!("{}_{}", name_str, "handle_event").as_str(), name.span());
 
     let gen = quote! {
         #[cfg(not(feature = "single-threaded"))]
@@ -1150,6 +1151,13 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                     } else {
                         None
                     }
+                }
+            }
+
+            fn handle_event(&mut self, event: Event) {
+                assert!(!self.was_deleted());
+                unsafe {
+                    #handle_event(self.inner, event.bits())
                 }
             }
         }

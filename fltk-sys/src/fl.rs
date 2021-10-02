@@ -219,6 +219,9 @@ extern "C" {
     pub fn Fl_set_font_size(arg1: ::std::os::raw::c_int);
 }
 extern "C" {
+    pub fn Fl_font_size() -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_add_handler(
         ev_handler: ::std::option::Option<
             unsafe extern "C" fn(ev: ::std::os::raw::c_int) -> ::std::os::raw::c_int,
