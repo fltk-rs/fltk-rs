@@ -1,3 +1,4 @@
+/// Implements ButtonExt
 #[macro_export]
 macro_rules! impl_button_ext {
     ($name: ident, $flname: ident) => {
@@ -65,3 +66,5 @@ macro_rules! impl_button_ext {
         }
     };
 }
+
+pub(crate) use impl_button_ext;

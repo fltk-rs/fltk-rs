@@ -18,10 +18,10 @@ pub struct Table {
     is_derived: bool,
 }
 
-impl_widget_ext!(Table, Fl_Table);
-impl_widget_base!(Table, Fl_Table);
-impl_group_ext!(Table, Fl_Table);
-impl_table_ext!(Table, Fl_Table);
+crate::macros::widget::impl_widget_ext!(Table, Fl_Table);
+crate::macros::widget::impl_widget_base!(Table, Fl_Table);
+crate::macros::group::impl_group_ext!(Table, Fl_Table);
+crate::macros::table::impl_table_ext!(Table, Fl_Table);
 
 /// Defines the `TableContext`
 #[repr(i32)]
@@ -53,10 +53,10 @@ pub struct TableRow {
     is_derived: bool,
 }
 
-impl_widget_ext!(TableRow, Fl_Table_Row);
-impl_widget_base!(TableRow, Fl_Table_Row);
-impl_group_ext!(TableRow, Fl_Table_Row);
-impl_table_ext!(TableRow, Fl_Table_Row);
+crate::macros::widget::impl_widget_ext!(TableRow, Fl_Table_Row);
+crate::macros::widget::impl_widget_base!(TableRow, Fl_Table_Row);
+crate::macros::group::impl_group_ext!(TableRow, Fl_Table_Row);
+crate::macros::table::impl_table_ext!(TableRow, Fl_Table_Row);
 
 /// Defines the table row select mode
 #[repr(i32)]
@@ -70,7 +70,7 @@ pub enum TableRowSelectMode {
     Multi,
 }
 
-impl_widget_type!(TableRowSelectMode);
+crate::macros::widget::impl_widget_type!(TableRowSelectMode);
 
 /// Defines the table row select flag
 #[repr(i32)]

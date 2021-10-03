@@ -1,3 +1,4 @@
+/// Implements BrowserExt
 #[macro_export]
 macro_rules! impl_browser_ext {
     ($name:tt, $flname:tt) => {
@@ -145,7 +146,7 @@ macro_rules! impl_browser_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let mut img =
+                            let img =
                                 Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
@@ -311,3 +312,5 @@ macro_rules! impl_browser_ext {
         }
     };
 }
+
+pub(crate) use impl_browser_ext;

@@ -80,12 +80,12 @@ pub enum WindowType {
     Double = 241,
 }
 
-impl_widget_type!(WindowType);
+crate::macros::widget::impl_widget_type!(WindowType);
 
-impl_widget_ext!(SingleWindow, Fl_Single_Window);
-impl_widget_base!(SingleWindow, Fl_Single_Window);
-impl_group_ext!(SingleWindow, Fl_Single_Window);
-impl_window_ext!(SingleWindow, Fl_Single_Window);
+crate::macros::widget::impl_widget_ext!(SingleWindow, Fl_Single_Window);
+crate::macros::widget::impl_widget_base!(SingleWindow, Fl_Single_Window);
+crate::macros::group::impl_group_ext!(SingleWindow, Fl_Single_Window);
+crate::macros::window::impl_window_ext!(SingleWindow, Fl_Single_Window);
 
 /// Creates a single (buffered) window widget
 #[derive(Debug)]
@@ -215,10 +215,10 @@ impl SingleWindow {
     }
 }
 
-impl_widget_ext!(DoubleWindow, Fl_Double_Window);
-impl_widget_base!(DoubleWindow, Fl_Double_Window);
-impl_group_ext!(DoubleWindow, Fl_Double_Window);
-impl_window_ext!(DoubleWindow, Fl_Double_Window);
+crate::macros::widget::impl_widget_ext!(DoubleWindow, Fl_Double_Window);
+crate::macros::widget::impl_widget_base!(DoubleWindow, Fl_Double_Window);
+crate::macros::group::impl_group_ext!(DoubleWindow, Fl_Double_Window);
+crate::macros::window::impl_window_ext!(DoubleWindow, Fl_Double_Window);
 
 /// Creates a double (buffered) window widget
 #[derive(Debug)]
@@ -380,10 +380,10 @@ impl DoubleWindow {
     }
 }
 
-impl_widget_ext!(MenuWindow, Fl_Menu_Window);
-impl_widget_base!(MenuWindow, Fl_Menu_Window);
-impl_group_ext!(MenuWindow, Fl_Menu_Window);
-impl_window_ext!(MenuWindow, Fl_Menu_Window);
+crate::macros::widget::impl_widget_ext!(MenuWindow, Fl_Menu_Window);
+crate::macros::widget::impl_widget_base!(MenuWindow, Fl_Menu_Window);
+crate::macros::group::impl_group_ext!(MenuWindow, Fl_Menu_Window);
+crate::macros::window::impl_window_ext!(MenuWindow, Fl_Menu_Window);
 
 /// Creates a Menu window widget
 #[derive(Debug)]
@@ -402,10 +402,10 @@ impl MenuWindow {
     }
 }
 
-impl_widget_ext!(OverlayWindow, Fl_Overlay_Window);
-impl_widget_base!(OverlayWindow, Fl_Overlay_Window);
-impl_group_ext!(OverlayWindow, Fl_Overlay_Window);
-impl_window_ext!(OverlayWindow, Fl_Overlay_Window);
+crate::macros::widget::impl_widget_ext!(OverlayWindow, Fl_Overlay_Window);
+crate::macros::widget::impl_widget_base!(OverlayWindow, Fl_Overlay_Window);
+crate::macros::group::impl_group_ext!(OverlayWindow, Fl_Overlay_Window);
+crate::macros::window::impl_window_ext!(OverlayWindow, Fl_Overlay_Window);
 
 /// Creates an overlay (buffered) window widget
 #[derive(Debug)]
@@ -556,13 +556,13 @@ pub struct GlutWindow {
 }
 
 #[cfg(feature = "enable-glwindow")]
-impl_widget_ext!(GlutWindow, Fl_Glut_Window);
+crate::macros::widget::impl_widget_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
-impl_widget_base!(GlutWindow, Fl_Glut_Window);
+crate::macros::widget::impl_widget_base!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
-impl_group_ext!(GlutWindow, Fl_Glut_Window);
+crate::macros::group::impl_group_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
-impl_window_ext!(GlutWindow, Fl_Glut_Window);
+crate::macros::window::impl_window_ext!(GlutWindow, Fl_Glut_Window);
 
 #[cfg(feature = "enable-glwindow")]
 impl GlutWindow {

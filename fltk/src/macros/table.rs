@@ -1,3 +1,4 @@
+/// Implements TableExt
 #[macro_export]
 macro_rules! impl_table_ext {
     ($name: ident, $flname: ident) => {
@@ -407,7 +408,7 @@ macro_rules! impl_table_ext {
                     cb: F,
                 ) {
                     assert!(!self.was_deleted());
-                    pub type custom_draw_cell_callback = Option<
+                    pub type CustomDrawCellCallback = Option<
                         unsafe extern "C" fn(
                             wid: *mut Fl_Widget,
                             ctx: raw::c_int,
@@ -485,7 +486,7 @@ macro_rules! impl_table_ext {
                             ),
                         > = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut raw::c_void = a as *mut raw::c_void;
-                        let callback: custom_draw_cell_callback = Some(shim);
+                        let callback: CustomDrawCellCallback = Some(shim);
                         [<$flname _draw_cell>](self.inner, callback, data);
                     }
                 }
@@ -538,3 +539,5 @@ macro_rules! impl_table_ext {
         }
     };
 }
+
+pub(crate) use impl_table_ext;

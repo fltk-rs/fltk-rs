@@ -1,3 +1,4 @@
+/// Implements ValuatorExt
 #[macro_export]
 macro_rules! impl_valuator_ext {
     ($name: ident, $flname: ident) => {
@@ -120,3 +121,5 @@ macro_rules! impl_valuator_ext {
         }
     };
 }
+
+pub(crate) use impl_valuator_ext;

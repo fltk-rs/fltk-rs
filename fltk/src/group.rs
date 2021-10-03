@@ -10,9 +10,9 @@ use std::{
     os::raw,
 };
 
-impl_widget_ext!(Group, Fl_Group);
-impl_widget_base!(Group, Fl_Group);
-impl_group_ext!(Group, Fl_Group);
+crate::macros::widget::impl_widget_ext!(Group, Fl_Group);
+crate::macros::widget::impl_widget_base!(Group, Fl_Group);
+crate::macros::group::impl_group_ext!(Group, Fl_Group);
 
 /// Creates a widget group
 #[derive(Debug)]
@@ -33,9 +33,9 @@ impl Group {
     }
 }
 
-impl_widget_ext!(Pack, Fl_Pack);
-impl_widget_base!(Pack, Fl_Pack);
-impl_group_ext!(Pack, Fl_Pack);
+crate::macros::widget::impl_widget_ext!(Pack, Fl_Pack);
+crate::macros::widget::impl_widget_base!(Pack, Fl_Pack);
+crate::macros::group::impl_group_ext!(Pack, Fl_Pack);
 
 /// Creates a widget pack
 #[derive(Debug)]
@@ -45,7 +45,7 @@ pub struct Pack {
     is_derived: bool,
 }
 
-impl_widget_type!(PackType);
+crate::macros::widget::impl_widget_type!(PackType);
 
 /// Defines pack types
 #[repr(i32)]
@@ -57,9 +57,9 @@ pub enum PackType {
     Horizontal = 1,
 }
 
-impl_widget_ext!(Scroll, Fl_Scroll);
-impl_widget_base!(Scroll, Fl_Scroll);
-impl_group_ext!(Scroll, Fl_Scroll);
+crate::macros::widget::impl_widget_ext!(Scroll, Fl_Scroll);
+crate::macros::widget::impl_widget_base!(Scroll, Fl_Scroll);
+crate::macros::group::impl_group_ext!(Scroll, Fl_Scroll);
 
 /// Creates a scroll group
 #[derive(Debug)]
@@ -69,7 +69,7 @@ pub struct Scroll {
     is_derived: bool,
 }
 
-impl_widget_type!(ScrollType);
+crate::macros::widget::impl_widget_type!(ScrollType);
 
 /// Defines Scroll types
 #[repr(i32)]
@@ -145,9 +145,9 @@ impl Scroll {
     }
 }
 
-impl_widget_ext!(Tabs, Fl_Tabs);
-impl_widget_base!(Tabs, Fl_Tabs);
-impl_group_ext!(Tabs, Fl_Tabs);
+crate::macros::widget::impl_widget_ext!(Tabs, Fl_Tabs);
+crate::macros::widget::impl_widget_base!(Tabs, Fl_Tabs);
+crate::macros::group::impl_group_ext!(Tabs, Fl_Tabs);
 
 /// Creates a tab which can contain widgets
 #[derive(Debug)]
@@ -246,9 +246,9 @@ impl Tabs {
     }
 }
 
-impl_widget_ext!(Tile, Fl_Tile);
-impl_widget_base!(Tile, Fl_Tile);
-impl_group_ext!(Tile, Fl_Tile);
+crate::macros::widget::impl_widget_ext!(Tile, Fl_Tile);
+crate::macros::widget::impl_widget_base!(Tile, Fl_Tile);
+crate::macros::group::impl_group_ext!(Tile, Fl_Tile);
 
 /// Creates a tile which can contain widgets
 #[derive(Debug)]
@@ -258,9 +258,9 @@ pub struct Tile {
     is_derived: bool,
 }
 
-impl_widget_ext!(Wizard, Fl_Wizard);
-impl_widget_base!(Wizard, Fl_Wizard);
-impl_group_ext!(Wizard, Fl_Wizard);
+crate::macros::widget::impl_widget_ext!(Wizard, Fl_Wizard);
+crate::macros::widget::impl_widget_base!(Wizard, Fl_Wizard);
+crate::macros::group::impl_group_ext!(Wizard, Fl_Wizard);
 
 /// Creates a wizard widget
 #[derive(Debug)]
@@ -303,9 +303,9 @@ impl Wizard {
     }
 }
 
-impl_widget_ext!(ColorChooser, Fl_Color_Chooser);
-impl_widget_base!(ColorChooser, Fl_Color_Chooser);
-impl_group_ext!(ColorChooser, Fl_Color_Chooser);
+crate::macros::widget::impl_widget_ext!(ColorChooser, Fl_Color_Chooser);
+crate::macros::widget::impl_widget_base!(ColorChooser, Fl_Color_Chooser);
+crate::macros::group::impl_group_ext!(ColorChooser, Fl_Color_Chooser);
 
 /// Creates a color chooser widget
 #[derive(Debug)]
@@ -375,7 +375,7 @@ impl Pack {
     }
 }
 
-impl_widget_type!(FlexType);
+crate::macros::widget::impl_widget_type!(FlexType);
 
 /// Defines Flex types
 #[repr(i32)]
@@ -387,9 +387,9 @@ pub enum FlexType {
     Column,
 }
 
-impl_widget_ext!(Flex, Fl_Flex);
-impl_widget_base!(Flex, Fl_Flex);
-impl_group_ext!(Flex, Fl_Flex);
+crate::macros::widget::impl_widget_ext!(Flex, Fl_Flex);
+crate::macros::widget::impl_widget_base!(Flex, Fl_Flex);
+crate::macros::group::impl_group_ext!(Flex, Fl_Flex);
 
 /**
     a Flexbox widget

@@ -1,3 +1,4 @@
+/// Implements GroupExt
 #[macro_export]
 macro_rules! impl_group_ext {
     ($name: ident, $flname: ident) => {
@@ -35,9 +36,7 @@ macro_rules! impl_group_ext {
 
                 unsafe fn unsafe_clear(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe {
-                        [<$flname _clear>](self.inner);
-                    }
+                    [<$flname _clear>](self.inner);
                 }
 
                 fn children(&self) -> i32 {
@@ -208,3 +207,5 @@ macro_rules! impl_group_ext {
         }
     };
 }
+
+pub(crate) use impl_group_ext;

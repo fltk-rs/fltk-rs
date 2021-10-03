@@ -1,3 +1,4 @@
+/// Implements MenuExt
 #[macro_export]
 macro_rules! impl_menu_ext {
     ($name: ident, $flname: ident) => {
@@ -21,7 +22,7 @@ macro_rules! impl_menu_ext {
                     name: &str,
                     shortcut: Shortcut,
                     flag: MenuFlag,
-                    mut cb: F,
+                    cb: F,
                 ) -> i32 {
                     assert!(!self.was_deleted());
                     let temp = CString::safe_new(name);
@@ -54,7 +55,7 @@ macro_rules! impl_menu_ext {
                     name: &str,
                     shortcut: Shortcut,
                     flag: MenuFlag,
-                    mut cb: F,
+                    cb: F,
                 ) -> i32 {
                     assert!(!self.was_deleted());
                     let temp = CString::safe_new(name);
@@ -242,7 +243,7 @@ macro_rules! impl_menu_ext {
                     if sz > 0 {
                         for i in 0..sz {
                             // Shouldn't fail
-                            let mut c = self.at(i).unwrap();
+                            let c = self.at(i).unwrap();
                             let _ = c.user_data();
                         }
                     }
@@ -273,7 +274,7 @@ macro_rules! impl_menu_ext {
                     let mut i = idx;
                     loop {
                         // Shouldn't fail
-                        let mut item = self.at(i).unwrap();
+                        let item = self.at(i).unwrap();
                         if item.label().is_none() {
                             break;
                         }
@@ -372,9 +373,11 @@ macro_rules! impl_menu_ext {
 
                 unsafe fn set_menu(&mut self, item: crate::menu::MenuItem) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_menu>](self.inner, item.inner) }
+                    [<$flname _set_menu>](self.inner, item.inner)
                 }
             }
         }
     };
 }
+
+pub(crate) use impl_menu_ext;

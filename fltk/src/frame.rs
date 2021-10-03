@@ -17,5 +17,5 @@ pub struct Frame {
     is_derived: bool,
 }
 
-impl_widget_base!(Frame, Fl_Box);
-impl_widget_ext!(Frame, Fl_Box);
+crate::macros::widget::impl_widget_base!(Frame, Fl_Box);
+crate::macros::widget::impl_widget_ext!(Frame, Fl_Box);

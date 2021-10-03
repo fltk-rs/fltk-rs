@@ -1,3 +1,4 @@
+/// Implements ImageExt
 #[macro_export]
 macro_rules! impl_image_ext {
     ($name: ident, $flname: ident) => {
@@ -120,7 +121,7 @@ macro_rules! impl_image_ext {
                         Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
                     } else {
                         let data = self.to_rgb_data();
-                        unsafe { RgbImage::new(&data, self.data_w(), self.data_h(), self.depth()) }
+                        RgbImage::new(&data, self.data_w(), self.data_h(), self.depth())
                     }
                 }
 
@@ -198,3 +199,5 @@ macro_rules! impl_image_ext {
         }
     };
 }
+
+pub(crate) use impl_image_ext;

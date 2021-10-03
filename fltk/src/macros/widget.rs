@@ -1,3 +1,4 @@
+/// Implements WidgetExt
 #[macro_export]
 macro_rules! impl_widget_ext {
     ($name: ident, $flname: ident) => {
@@ -670,7 +671,7 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let mut img =
+                            let img =
                                 Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
@@ -725,7 +726,7 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let mut img =
+                            let img =
                                 Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
@@ -816,6 +817,7 @@ macro_rules! impl_widget_ext {
     };
 }
 
+/// Implements WidgetBase
 #[macro_export]
 macro_rules! impl_widget_base {
     ($name: ident, $flname: ident) => {
@@ -1009,6 +1011,7 @@ macro_rules! impl_widget_base {
     };
 }
 
+/// Implements WidgetType
 #[macro_export]
 macro_rules! impl_widget_type {
     ($name: ident) => {
@@ -1023,3 +1026,7 @@ macro_rules! impl_widget_type {
         }
     };
 }
+
+pub(crate) use impl_widget_ext;
+pub(crate) use impl_widget_base;
+pub(crate) use impl_widget_type;

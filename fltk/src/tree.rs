@@ -110,8 +110,8 @@ pub struct Tree {
     is_derived: bool,
 }
 
-impl_widget_ext!(Tree, Fl_Tree);
-impl_widget_base!(Tree, Fl_Tree);
+crate::macros::widget::impl_widget_ext!(Tree, Fl_Tree);
+crate::macros::widget::impl_widget_base!(Tree, Fl_Tree);
 
 /// Defines a tree item
 #[derive(Debug, Clone)]

@@ -19,9 +19,9 @@ pub struct Button {
     is_derived: bool,
 }
 
-impl_widget_ext!(Button, Fl_Button);
-impl_widget_base!(Button, Fl_Button);
-impl_button_ext!(Button, Fl_Button);
+crate::macros::widget::impl_widget_ext!(Button, Fl_Button);
+crate::macros::widget::impl_widget_base!(Button, Fl_Button);
+crate::macros::button::impl_button_ext!(Button, Fl_Button);
 
 /// Defines the button type, which can be changed dynamically using the `set_type()`.
 #[repr(i32)]
@@ -37,7 +37,7 @@ pub enum ButtonType {
     Hidden = 3,
 }
 
-impl_widget_type!(ButtonType);
+crate::macros::widget::impl_widget_type!(ButtonType);
 
 /// Creates a radio button
 #[derive(Debug)]
@@ -47,9 +47,9 @@ pub struct RadioButton {
     is_derived: bool,
 }
 
-impl_widget_ext!(RadioButton, Fl_Radio_Button);
-impl_widget_base!(RadioButton, Fl_Radio_Button);
-impl_button_ext!(RadioButton, Fl_Radio_Button);
+crate::macros::widget::impl_widget_ext!(RadioButton, Fl_Radio_Button);
+crate::macros::widget::impl_widget_base!(RadioButton, Fl_Radio_Button);
+crate::macros::button::impl_button_ext!(RadioButton, Fl_Radio_Button);
 
 impl RadioButton {
     /// Check whether a `RadioButton` is toggled
@@ -75,9 +75,9 @@ pub struct RadioRoundButton {
     is_derived: bool,
 }
 
-impl_widget_ext!(RadioRoundButton, Fl_Radio_Round_Button);
-impl_widget_base!(RadioRoundButton, Fl_Radio_Round_Button);
-impl_button_ext!(RadioRoundButton, Fl_Radio_Round_Button);
+crate::macros::widget::impl_widget_ext!(RadioRoundButton, Fl_Radio_Round_Button);
+crate::macros::widget::impl_widget_base!(RadioRoundButton, Fl_Radio_Round_Button);
+crate::macros::button::impl_button_ext!(RadioRoundButton, Fl_Radio_Round_Button);
 
 impl RadioRoundButton {
     /// Check whether a `RadioRoundButton` is toggled
@@ -103,9 +103,9 @@ pub struct RadioLightButton {
     is_derived: bool,
 }
 
-impl_widget_ext!(RadioLightButton, Fl_Radio_Light_Button);
-impl_widget_base!(RadioLightButton, Fl_Radio_Light_Button);
-impl_button_ext!(RadioLightButton, Fl_Radio_Light_Button);
+crate::macros::widget::impl_widget_ext!(RadioLightButton, Fl_Radio_Light_Button);
+crate::macros::widget::impl_widget_base!(RadioLightButton, Fl_Radio_Light_Button);
+crate::macros::button::impl_button_ext!(RadioLightButton, Fl_Radio_Light_Button);
 
 impl RadioLightButton {
     /// Check whether a `RadioLightButton` is toggled
@@ -131,9 +131,9 @@ pub struct RoundButton {
     is_derived: bool,
 }
 
-impl_widget_ext!(RoundButton, Fl_Round_Button);
-impl_widget_base!(RoundButton, Fl_Round_Button);
-impl_button_ext!(RoundButton, Fl_Round_Button);
+crate::macros::widget::impl_widget_ext!(RoundButton, Fl_Round_Button);
+crate::macros::widget::impl_widget_base!(RoundButton, Fl_Round_Button);
+crate::macros::button::impl_button_ext!(RoundButton, Fl_Round_Button);
 
 impl RoundButton {
     /// Check whether a `RoundButton` is toggled
@@ -159,9 +159,9 @@ pub struct CheckButton {
     is_derived: bool,
 }
 
-impl_widget_ext!(CheckButton, Fl_Check_Button);
-impl_widget_base!(CheckButton, Fl_Check_Button);
-impl_button_ext!(CheckButton, Fl_Check_Button);
+crate::macros::widget::impl_widget_ext!(CheckButton, Fl_Check_Button);
+crate::macros::widget::impl_widget_base!(CheckButton, Fl_Check_Button);
+crate::macros::button::impl_button_ext!(CheckButton, Fl_Check_Button);
 
 impl CheckButton {
     /// Check whether a `CheckButton` is checked
@@ -189,9 +189,9 @@ pub struct ToggleButton {
     is_derived: bool,
 }
 
-impl_widget_ext!(ToggleButton, Fl_Toggle_Button);
-impl_widget_base!(ToggleButton, Fl_Toggle_Button);
-impl_button_ext!(ToggleButton, Fl_Toggle_Button);
+crate::macros::widget::impl_widget_ext!(ToggleButton, Fl_Toggle_Button);
+crate::macros::widget::impl_widget_base!(ToggleButton, Fl_Toggle_Button);
+crate::macros::button::impl_button_ext!(ToggleButton, Fl_Toggle_Button);
 
 impl ToggleButton {
     /// Check whether a `ToggleButton` is toggled
@@ -217,9 +217,9 @@ pub struct LightButton {
     is_derived: bool,
 }
 
-impl_widget_ext!(LightButton, Fl_Light_Button);
-impl_widget_base!(LightButton, Fl_Light_Button);
-impl_button_ext!(LightButton, Fl_Light_Button);
+crate::macros::widget::impl_widget_ext!(LightButton, Fl_Light_Button);
+crate::macros::widget::impl_widget_base!(LightButton, Fl_Light_Button);
+crate::macros::button::impl_button_ext!(LightButton, Fl_Light_Button);
 
 impl LightButton {
     /// Check whether a `LightButton` is on
@@ -237,9 +237,9 @@ impl LightButton {
     }
 }
 
-impl_widget_ext!(RepeatButton, Fl_Repeat_Button);
-impl_widget_base!(RepeatButton, Fl_Repeat_Button);
-impl_button_ext!(RepeatButton, Fl_Repeat_Button);
+crate::macros::widget::impl_widget_ext!(RepeatButton, Fl_Repeat_Button);
+crate::macros::widget::impl_widget_base!(RepeatButton, Fl_Repeat_Button);
+crate::macros::button::impl_button_ext!(RepeatButton, Fl_Repeat_Button);
 
 /// Creates a repeat button
 #[derive(Debug)]
@@ -249,9 +249,9 @@ pub struct RepeatButton {
     is_derived: bool,
 }
 
-impl_widget_ext!(ReturnButton, Fl_Return_Button);
-impl_widget_base!(ReturnButton, Fl_Return_Button);
-impl_button_ext!(ReturnButton, Fl_Return_Button);
+crate::macros::widget::impl_widget_ext!(ReturnButton, Fl_Return_Button);
+crate::macros::widget::impl_widget_base!(ReturnButton, Fl_Return_Button);
+crate::macros::button::impl_button_ext!(ReturnButton, Fl_Return_Button);
 
 /// Creates a return button
 #[derive(Debug)]

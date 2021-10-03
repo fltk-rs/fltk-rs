@@ -11,9 +11,9 @@ use std::{
     os::raw,
 };
 
-impl_widget_ext!(MenuBar, Fl_Menu_Bar);
-impl_widget_base!(MenuBar, Fl_Menu_Bar);
-impl_menu_ext!(MenuBar, Fl_Menu_Bar);
+crate::macros::widget::impl_widget_ext!(MenuBar, Fl_Menu_Bar);
+crate::macros::widget::impl_widget_base!(MenuBar, Fl_Menu_Bar);
+crate::macros::menu::impl_menu_ext!(MenuBar, Fl_Menu_Bar);
 
 /// Creates a menu bar
 #[derive(Debug)]
@@ -23,9 +23,9 @@ pub struct MenuBar {
     is_derived: bool,
 }
 
-impl_widget_ext!(MenuButton, Fl_Menu_Button);
-impl_widget_base!(MenuButton, Fl_Menu_Button);
-impl_menu_ext!(MenuButton, Fl_Menu_Button);
+crate::macros::widget::impl_widget_ext!(MenuButton, Fl_Menu_Button);
+crate::macros::widget::impl_widget_base!(MenuButton, Fl_Menu_Button);
+crate::macros::menu::impl_menu_ext!(MenuButton, Fl_Menu_Button);
 
 /// Creates a menu button
 #[derive(Debug)]
@@ -55,7 +55,7 @@ pub enum MenuButtonType {
     Popup123,
 }
 
-impl_widget_type!(MenuButtonType);
+crate::macros::widget::impl_widget_type!(MenuButtonType);
 
 impl MenuButton {
     /// Act exactly as though the user clicked the button or typed the shortcut key
@@ -76,9 +76,9 @@ impl MenuButton {
     }
 }
 
-impl_widget_ext!(Choice, Fl_Choice);
-impl_widget_base!(Choice, Fl_Choice);
-impl_menu_ext!(Choice, Fl_Choice);
+crate::macros::widget::impl_widget_ext!(Choice, Fl_Choice);
+crate::macros::widget::impl_widget_base!(Choice, Fl_Choice);
+crate::macros::menu::impl_menu_ext!(Choice, Fl_Choice);
 
 /// Creates a menu choice
 #[derive(Debug)]
@@ -88,9 +88,9 @@ pub struct Choice {
     is_derived: bool,
 }
 
-impl_widget_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
-impl_widget_base!(SysMenuBar, Fl_Sys_Menu_Bar);
-impl_menu_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
+crate::macros::widget::impl_widget_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
+crate::macros::widget::impl_widget_base!(SysMenuBar, Fl_Sys_Menu_Bar);
+crate::macros::menu::impl_menu_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
 
 /// Creates a macOS system menu bar on macOS and a normal menu bar on other systems
 #[derive(Debug)]

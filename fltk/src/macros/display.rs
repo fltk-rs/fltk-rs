@@ -1,3 +1,4 @@
+/// Implements DisplayExt
 #[macro_export]
 macro_rules! impl_display_ext {
     ($name: ident, $flname: ident) => {
@@ -10,7 +11,7 @@ macro_rules! impl_display_ext {
                         if buffer.is_null() {
                             None
                         } else {
-                            let mut buf = TextBuffer::from_ptr(buffer);
+                            let buf = TextBuffer::from_ptr(buffer);
                             Some(buf)
                         }
                     }
@@ -38,7 +39,7 @@ macro_rules! impl_display_ext {
                         if buffer.is_null() {
                             None
                         } else {
-                            let mut buf = TextBuffer::from_ptr(buffer);
+                            let buf = TextBuffer::from_ptr(buffer);
                             Some(buf)
                         }
                     }
@@ -80,14 +81,14 @@ macro_rules! impl_display_ext {
                     unsafe { [<$flname _set_text_size>](self.inner, sz as i32) }
                 }
 
-                fn scroll(&mut self, topLineNum: i32, horizOffset: i32) {
+                fn scroll(&mut self, top_line_num: i32, h_offset: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
                         [<$flname _scroll>](
                             self.inner,
-                            topLineNum as i32,
-                            horizOffset as i32,
+                            top_line_num as i32,
+                            h_offset as i32,
                         )
                     }
                 }
@@ -101,11 +102,11 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_insert_position(&mut self, newPos: i32) {
+                fn set_insert_position(&mut self, new_pos: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
-                        [<$flname _set_insert_position>](self.inner, newPos as i32)
+                        [<$flname _set_insert_position>](self.inner, new_pos as i32)
                     }
                 }
 
@@ -204,7 +205,7 @@ macro_rules! impl_display_ext {
 
                 fn set_highlight_data<B: Into<Option<TextBuffer>>>(
                     &mut self,
-                    mut style_buffer: B,
+                    style_buffer: B,
                     entries: Vec<StyleTableEntry>,
                 ) {
                     assert!(!self.was_deleted());
@@ -539,3 +540,5 @@ macro_rules! impl_display_ext {
         }
     };
 }
+
+pub(crate) use impl_display_ext;

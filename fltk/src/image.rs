@@ -8,7 +8,7 @@ use std::{
     sync::atomic::{AtomicUsize, Ordering},
 };
 
-impl_image_ext!(Image, Fl_Image);
+crate::macros::image::impl_image_ext!(Image, Fl_Image);
 
 /// Wrapper around `Fl_Image`, used to wrap other image types
 #[derive(Debug)]
@@ -17,7 +17,7 @@ pub struct Image {
     refcount: AtomicUsize,
 }
 
-impl_image_ext!(SharedImage, Fl_Shared_Image);
+crate::macros::image::impl_image_ext!(SharedImage, Fl_Shared_Image);
 
 /// Creates a struct holding a shared image
 #[derive(Debug)]
@@ -80,7 +80,7 @@ impl SharedImage {
     }
 }
 
-impl_image_ext!(JpegImage, Fl_JPEG_Image);
+crate::macros::image::impl_image_ext!(JpegImage, Fl_JPEG_Image);
 
 /// Creates a struct holding a Jpeg image
 #[derive(Debug)]
@@ -146,7 +146,7 @@ impl JpegImage {
     }
 }
 
-impl_image_ext!(PngImage, Fl_PNG_Image);
+crate::macros::image::impl_image_ext!(PngImage, Fl_PNG_Image);
 
 /// Creates a struct holding a PNG image
 #[derive(Debug)]
@@ -212,7 +212,7 @@ impl PngImage {
     }
 }
 
-impl_image_ext!(SvgImage, Fl_SVG_Image);
+crate::macros::image::impl_image_ext!(SvgImage, Fl_SVG_Image);
 
 /// Creates a struct holding an SVG image
 #[derive(Debug)]
@@ -285,7 +285,7 @@ impl SvgImage {
     }
 }
 
-impl_image_ext!(BmpImage, Fl_BMP_Image);
+crate::macros::image::impl_image_ext!(BmpImage, Fl_BMP_Image);
 
 /// Creates a struct holding a BMP image
 #[derive(Debug)]
@@ -351,7 +351,7 @@ impl BmpImage {
     }
 }
 
-impl_image_ext!(GifImage, Fl_GIF_Image);
+crate::macros::image::impl_image_ext!(GifImage, Fl_GIF_Image);
 
 /// Creates a struct holding a GIF image
 #[derive(Debug)]
@@ -417,7 +417,7 @@ impl GifImage {
     }
 }
 
-impl_image_ext!(XpmImage, Fl_XPM_Image);
+crate::macros::image::impl_image_ext!(XpmImage, Fl_XPM_Image);
 
 /// Creates a struct holding a XPM image
 #[derive(Debug)]
@@ -459,7 +459,7 @@ impl XpmImage {
     }
 }
 
-impl_image_ext!(XbmImage, Fl_XBM_Image);
+crate::macros::image::impl_image_ext!(XbmImage, Fl_XBM_Image);
 
 /// Creates a struct holding a XBM image
 #[derive(Debug)]
@@ -501,7 +501,7 @@ impl XbmImage {
     }
 }
 
-impl_image_ext!(PnmImage, Fl_PNM_Image);
+crate::macros::image::impl_image_ext!(PnmImage, Fl_PNM_Image);
 
 /// Creates a struct holding a PNM image
 #[derive(Debug)]
@@ -543,7 +543,7 @@ impl PnmImage {
     }
 }
 
-impl_image_ext!(TiledImage, Fl_Tiled_Image);
+crate::macros::image::impl_image_ext!(TiledImage, Fl_Tiled_Image);
 
 /// Creates a struct holding a tiled image
 #[derive(Debug)]
@@ -567,7 +567,7 @@ impl TiledImage {
     }
 }
 
-impl_image_ext!(Pixmap, Fl_Pixmap);
+crate::macros::image::impl_image_ext!(Pixmap, Fl_Pixmap);
 
 /// Creates a struct holding a pixmap image
 #[derive(Debug)]
@@ -612,7 +612,7 @@ impl Pixmap {
     }
 }
 
-impl_image_ext!(RgbImage, Fl_RGB_Image);
+crate::macros::image::impl_image_ext!(RgbImage, Fl_RGB_Image);
 
 /// Creates a struct holding a raw RGB image
 #[derive(Debug)]

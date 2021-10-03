@@ -19,7 +19,7 @@ pub enum OutputType {
     Multiline = 12,
 }
 
-impl_widget_type!(OutputType);
+crate::macros::widget::impl_widget_type!(OutputType);
 
 /// Creates an output widget
 #[derive(Debug)]
@@ -29,9 +29,9 @@ pub struct Output {
     is_derived: bool,
 }
 
-impl_widget_ext!(Output, Fl_Output);
-impl_widget_base!(Output, Fl_Output);
-impl_input_ext!(Output, Fl_Output);
+crate::macros::widget::impl_widget_ext!(Output, Fl_Output);
+crate::macros::widget::impl_widget_base!(Output, Fl_Output);
+crate::macros::input::impl_input_ext!(Output, Fl_Output);
 
 /// Creates a multiline-output widget
 #[derive(Debug)]
@@ -41,6 +41,6 @@ pub struct MultilineOutput {
     is_derived: bool,
 }
 
-impl_widget_ext!(MultilineOutput, Fl_Multiline_Output);
-impl_widget_base!(MultilineOutput, Fl_Multiline_Output);
-impl_input_ext!(MultilineOutput, Fl_Multiline_Output);
+crate::macros::widget::impl_widget_ext!(MultilineOutput, Fl_Multiline_Output);
+crate::macros::widget::impl_widget_base!(MultilineOutput, Fl_Multiline_Output);
+crate::macros::input::impl_input_ext!(MultilineOutput, Fl_Multiline_Output);

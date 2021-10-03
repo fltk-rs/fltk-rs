@@ -1,3 +1,4 @@
+/// Implements InputExt
 #[macro_export]
 macro_rules! impl_input_ext {
     ($name: ident, $flname: ident) => {
@@ -220,3 +221,5 @@ macro_rules! impl_input_ext {
         }
     };
 }
+
+pub(crate) use impl_input_ext;
