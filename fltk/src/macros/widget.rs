@@ -1,5 +1,4 @@
 /// Implements WidgetExt
-#[macro_export]
 macro_rules! impl_widget_ext {
     ($name: ident, $flname: ident) => {
         #[cfg(not(feature = "single-threaded"))]
@@ -24,7 +23,7 @@ macro_rules! impl_widget_ext {
             }
         }
 
-        paste! {
+        paste::paste! {
             unsafe impl WidgetExt for $name {
                 fn with_pos(mut self, x: i32, y: i32) -> Self {
                     let w = self.w();
@@ -818,7 +817,6 @@ macro_rules! impl_widget_ext {
 }
 
 /// Implements WidgetBase
-#[macro_export]
 macro_rules! impl_widget_base {
     ($name: ident, $flname: ident) => {
         impl Default for $name {
@@ -827,7 +825,7 @@ macro_rules! impl_widget_base {
             }
         }
 
-        paste! {
+        paste::paste! {
             unsafe impl WidgetBase for $name {
                 fn new<T: Into<Option<&'static str>>>(
                     x: i32,
@@ -1012,7 +1010,6 @@ macro_rules! impl_widget_base {
 }
 
 /// Implements WidgetType
-#[macro_export]
 macro_rules! impl_widget_type {
     ($name: ident) => {
         impl WidgetType for $name {

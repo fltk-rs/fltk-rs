@@ -1,5 +1,4 @@
 /// Implements MenuExt
-#[macro_export]
 macro_rules! impl_menu_ext {
     ($name: ident, $flname: ident) => {
         impl IntoIterator for $name {
@@ -15,7 +14,7 @@ macro_rules! impl_menu_ext {
             }
         }
 
-        paste! {
+        paste::paste! {
             unsafe impl MenuExt for $name {
                 fn add<F: FnMut(&mut Self) + 'static>(
                     &mut self,

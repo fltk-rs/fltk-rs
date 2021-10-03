@@ -1,8 +1,7 @@
 /// Implements DisplayExt
-#[macro_export]
 macro_rules! impl_display_ext {
     ($name: ident, $flname: ident) => {
-        paste! {
+        paste::paste! {
             unsafe impl DisplayExt for $name {
                 fn buffer(&self) -> Option<TextBuffer> {
                     unsafe {

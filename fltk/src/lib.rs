@@ -315,8 +315,3 @@ pub mod window;
 #[cfg(not(target_os = "android"))]
 pub mod printer;
 
-#[macro_use]
-extern crate paste;
-
-#[macro_use]
-extern crate bitflags;

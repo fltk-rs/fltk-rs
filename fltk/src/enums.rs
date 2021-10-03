@@ -210,7 +210,7 @@ impl FrameType {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines alignment rules used by FLTK for labels
     pub struct Align: i32 {
         /// Center
@@ -260,7 +260,7 @@ bitflags! {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines fonts used by FLTK
     pub struct Font: i32 {
         /// Helvetica
@@ -381,7 +381,7 @@ impl Font {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines colors used by FLTK.
     /// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum.
     /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
@@ -576,7 +576,7 @@ impl std::fmt::Display for Color {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines event types captured by FLTK
     pub struct Event: i32 {
         /// No Event
@@ -702,7 +702,7 @@ impl std::fmt::Display for Event {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines the inputted virtual keycode
     pub struct Key: i32 {
         /// None
@@ -814,7 +814,7 @@ impl Key {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines the modifiers of virtual keycodes
     pub struct Shortcut: i32 {
         /// None
@@ -884,7 +884,7 @@ impl Shortcut {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines the types of triggers for widget callback functions. Equivalent to FL_WHEN
     pub struct CallbackTrigger: i32 {
         /// Never
@@ -954,7 +954,7 @@ pub enum Cursor {
     None = 255,
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines visual mode types (capabilites of the window).
     /// Rgb and Single have a value of zero, so they
     /// are "on" unless you give Index or Double.
@@ -988,7 +988,7 @@ bitflags! {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Damage masks
     pub struct Damage: u8 {
         /// No damage

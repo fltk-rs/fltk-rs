@@ -11,7 +11,7 @@ use std::os::raw;
 #[derive(Copy, Clone, Debug)]
 pub struct Coord<T: Copy>(pub T, pub T);
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines the line styles supported by fltk
     pub struct LineStyle: i32 {
         /// Solid line

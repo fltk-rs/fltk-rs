@@ -1,5 +1,4 @@
 /// Implements WindowExt
-#[macro_export]
 macro_rules! impl_window_ext {
     ($name: ident, $flname: ident) => {
         #[cfg(feature = "raw-window-handle")]
@@ -53,7 +52,7 @@ macro_rules! impl_window_ext {
             }
         }
 
-        paste! {
+        paste::paste! {
             unsafe impl WindowExt for $name {
                 fn center_screen(mut self) -> Self {
                     assert!(!self.was_deleted());

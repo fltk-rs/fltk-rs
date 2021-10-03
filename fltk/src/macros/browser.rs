@@ -1,8 +1,7 @@
 /// Implements BrowserExt
-#[macro_export]
 macro_rules! impl_browser_ext {
     ($name:tt, $flname:tt) => {
-        paste! {
+        paste::paste! {
             unsafe impl BrowserExt for $name {
                 fn remove(&mut self, line: i32) {
                     unsafe {

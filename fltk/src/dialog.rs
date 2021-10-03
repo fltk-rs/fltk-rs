@@ -568,7 +568,7 @@ pub struct FileChooser {
     inner: *mut Fl_File_Chooser,
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// The types of FileChooser
     pub struct FileChooserType: i32 {
         /// Single file

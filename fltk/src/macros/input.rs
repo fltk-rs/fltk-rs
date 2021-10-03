@@ -1,8 +1,7 @@
 /// Implements InputExt
-#[macro_export]
 macro_rules! impl_input_ext {
     ($name: ident, $flname: ident) => {
-        paste! {
+        paste::paste! {
             unsafe impl InputExt for $name {
                 fn value(&self) -> String {
                     unsafe {

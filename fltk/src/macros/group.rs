@@ -1,5 +1,4 @@
 /// Implements GroupExt
-#[macro_export]
 macro_rules! impl_group_ext {
     ($name: ident, $flname: ident) => {
         impl IntoIterator for $name {
@@ -15,7 +14,7 @@ macro_rules! impl_group_ext {
             }
         }
 
-        paste! {
+        paste::paste! {
             unsafe impl GroupExt for $name {
                 fn begin(&self) {
                     assert!(!self.was_deleted());

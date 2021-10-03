@@ -1,5 +1,4 @@
 /// Implements ImageExt
-#[macro_export]
 macro_rules! impl_image_ext {
     ($name: ident, $flname: ident) => {
         #[cfg(not(feature = "single-threaded"))]
@@ -26,7 +25,7 @@ macro_rules! impl_image_ext {
             }
         }
 
-        paste! {
+        paste::paste! {
             impl Drop for $name {
                 fn drop(&mut self) {
                     if !self.was_deleted() {

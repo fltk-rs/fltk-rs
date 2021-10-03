@@ -1,8 +1,7 @@
 /// Implements ValuatorExt
-#[macro_export]
 macro_rules! impl_valuator_ext {
     ($name: ident, $flname: ident) => {
-        paste! {
+        paste::paste! {
             unsafe impl ValuatorExt for $name {
                 fn set_bounds(&mut self, a: f64, b: f64) {
                     unsafe {
