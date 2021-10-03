@@ -20,33 +20,33 @@ macro_rules! impl_group_ext {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _begin>](self.inner) }
                 }
-    
+
                 fn end(&self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _end>](self.inner) }
                 }
-    
+
                 fn clear(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _clear>](self.inner);
                     }
                 }
-    
+
                 unsafe fn unsafe_clear(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _clear>](self.inner);
                     }
                 }
-    
+
                 fn children(&self) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _children>](self.inner) as i32
                     }
                 }
-    
+
                 fn child(&self, idx: i32) -> Option<Widget> {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -63,7 +63,7 @@ macro_rules! impl_group_ext {
                         }
                     }
                 }
-    
+
                 fn find<W: WidgetExt>(&self, widget: &W) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -72,7 +72,7 @@ macro_rules! impl_group_ext {
                             as i32
                     }
                 }
-    
+
                 fn add<W: WidgetExt>(&mut self, widget: &W) {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -80,7 +80,7 @@ macro_rules! impl_group_ext {
                         [<$flname _add>](self.inner, widget.as_widget_ptr() as *mut _)
                     }
                 }
-    
+
                 fn insert<W: WidgetExt>(&mut self, widget: &W, index: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -92,7 +92,7 @@ macro_rules! impl_group_ext {
                         )
                     }
                 }
-    
+
                 fn remove<W: WidgetExt>(&mut self, widget: &W) {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -100,7 +100,7 @@ macro_rules! impl_group_ext {
                         [<$flname _remove>](self.inner, widget.as_widget_ptr() as *mut _)
                     }
                 }
-    
+
                 fn remove_by_index(&mut self, idx: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -108,7 +108,7 @@ macro_rules! impl_group_ext {
                         [<$flname _remove_by_index>](self.inner, idx as i32);
                     }
                 }
-    
+
                 fn resizable<W: WidgetExt>(&self, widget: &W) {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -116,7 +116,7 @@ macro_rules! impl_group_ext {
                         [<$flname _resizable>](self.inner, widget.as_widget_ptr() as *mut _)
                     }
                 }
-    
+
                 fn make_resizable(&mut self, val: bool) {
                     assert!(!self.was_deleted());
                     let ptr = if val {
@@ -126,22 +126,22 @@ macro_rules! impl_group_ext {
                     };
                     unsafe { [<$flname _resizable>](self.inner, ptr as *mut _) }
                 }
-    
+
                 fn add_resizable<W: WidgetExt>(&mut self, widget: &W) {
                     self.resizable(widget);
                     self.add(widget);
                 }
-    
+
                 fn set_clip_children(&mut self, flag: bool) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_clip_children>](self.inner, flag as i32) }
                 }
-    
+
                 fn clip_children(&mut self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _clip_children>](self.inner) != 0 }
                 }
-    
+
                 fn draw_child<W: WidgetExt>(&self, w: &mut W) {
                     assert!(!self.was_deleted());
                     assert!(!w.was_deleted());
@@ -150,7 +150,7 @@ macro_rules! impl_group_ext {
                         [<$flname _draw_child>](self.inner as _, w.as_widget_ptr() as _)
                     }
                 }
-    
+
                 fn update_child<W: WidgetExt>(&self, w: &mut W) {
                     assert!(!self.was_deleted());
                     assert!(!w.was_deleted());
@@ -159,7 +159,7 @@ macro_rules! impl_group_ext {
                         [<$flname _update_child>](self.inner as _, w.as_widget_ptr() as _)
                     }
                 }
-    
+
                 fn draw_outside_label<W: WidgetExt>(&self, w: &mut W) {
                     assert!(!self.was_deleted());
                     assert!(!w.was_deleted());
@@ -171,7 +171,7 @@ macro_rules! impl_group_ext {
                         )
                     }
                 }
-    
+
                 fn draw_children(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -179,14 +179,14 @@ macro_rules! impl_group_ext {
                         [<$flname _draw_children>](self.inner as _)
                     }
                 }
-    
+
                 fn init_sizes(&mut self) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _init_sizes>](self.inner)
                     }
                 }
-    
+
                 fn bounds(&self) -> Vec<(i32, i32, i32, i32)> {
                     let children = self.children();
                     let mut vec = vec![];
@@ -200,11 +200,11 @@ macro_rules! impl_group_ext {
                     }
                     vec
                 }
-    
+
                 unsafe fn into_group(&self) -> crate::group::Group {
                     crate::group::Group::from_widget_ptr(self.inner as _)
                 }
-            }   
+            }
         }
     };
 }

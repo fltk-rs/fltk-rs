@@ -31,7 +31,7 @@ macro_rules! impl_widget_ext {
                     self.resize(x, y, w, h);
                     self
                 }
-    
+
                 fn with_size(mut self, width: i32, height: i32) -> Self {
                     let x = self.x();
                     let y = self.y();
@@ -44,23 +44,23 @@ macro_rules! impl_widget_ext {
                     }
                     self
                 }
-    
+
                 fn with_label(mut self, title: &str) -> Self {
                     self.set_label(title);
                     self
                 }
-    
+
                 fn with_align(mut self, align: crate::enums::Align) -> Self {
                     self.set_align(align);
                     self
                 }
-    
+
                 fn with_type<T: WidgetType>(mut self, typ: T) -> Self {
                     assert!(!self.was_deleted());
                     self.set_type(typ);
                     self
                 }
-    
+
                 fn below_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
                     assert!(!wid.was_deleted());
                     assert!(!self.was_deleted());
@@ -73,7 +73,7 @@ macro_rules! impl_widget_ext {
                     self.resize(wid.x(), wid.y() + wid.h() + padding, w, h);
                     self
                 }
-    
+
                 fn above_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
                     assert!(!wid.was_deleted());
                     assert!(!self.was_deleted());
@@ -86,7 +86,7 @@ macro_rules! impl_widget_ext {
                     self.resize(wid.x(), wid.y() - padding - h, w, h);
                     self
                 }
-    
+
                 fn right_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
                     assert!(!wid.was_deleted());
                     assert!(!self.was_deleted());
@@ -99,7 +99,7 @@ macro_rules! impl_widget_ext {
                     self.resize(wid.x() + wid.width() + padding, wid.y(), w, h);
                     self
                 }
-    
+
                 fn left_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
                     assert!(!wid.was_deleted());
                     assert!(!self.was_deleted());
@@ -112,7 +112,7 @@ macro_rules! impl_widget_ext {
                     self.resize(wid.x() - w - padding, wid.y(), w, h);
                     self
                 }
-    
+
                 fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
                     assert!(!w.was_deleted());
                     assert!(!self.was_deleted());
@@ -132,7 +132,7 @@ macro_rules! impl_widget_ext {
                     self.redraw();
                     self
                 }
-    
+
                 fn center_of_parent(mut self) -> Self {
                     assert!(!self.was_deleted());
                     if let Some(w) = self.parent() {
@@ -153,7 +153,7 @@ macro_rules! impl_widget_ext {
                     }
                     self
                 }
-    
+
                 fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
                     assert!(!w.was_deleted());
                     assert!(!self.was_deleted());
@@ -166,7 +166,7 @@ macro_rules! impl_widget_ext {
                     self.resize(x, y, w.width(), w.height());
                     self
                 }
-    
+
                 fn size_of_parent(mut self) -> Self {
                     assert!(!self.was_deleted());
                     if let Some(parent) = self.parent() {
@@ -178,15 +178,15 @@ macro_rules! impl_widget_ext {
                     }
                     self
                 }
-    
+
                 fn set_pos(&mut self, x: i32, y: i32) {
                     self.resize(x, y, self.width(), self.height());
                 }
-    
+
                 fn set_size(&mut self, width: i32, height: i32) {
                     self.resize(self.x(), self.y(), width, height);
                 }
-    
+
                 fn set_label(&mut self, title: &str) {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -194,54 +194,54 @@ macro_rules! impl_widget_ext {
                         [<$flname _set_label>](self.inner, temp.as_ptr());
                     }
                 }
-    
+
                 fn redraw(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _redraw>](self.inner);
                     }
                 }
-    
+
                 fn show(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _show>](self.inner) }
                 }
-    
+
                 fn hide(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _hide>](self.inner) }
                 }
-    
+
                 fn x(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _x>](self.inner) }
                 }
-    
+
                 fn y(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _y>](self.inner) }
                 }
-    
+
                 fn width(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _width>](self.inner) }
                 }
-    
+
                 fn height(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _height>](self.inner) }
                 }
-    
+
                 fn w(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _width>](self.inner) }
                 }
-    
+
                 fn h(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _height>](self.inner) }
                 }
-    
+
                 fn label(&self) -> String {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -256,7 +256,7 @@ macro_rules! impl_widget_ext {
                         s
                     }
                 }
-    
+
                 fn measure_label(&self) -> (i32, i32) {
                     assert!(!self.was_deleted());
                     let mut x = 0;
@@ -266,36 +266,36 @@ macro_rules! impl_widget_ext {
                     }
                     (x, y)
                 }
-    
+
                 unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
                     self.inner as *mut fltk_sys::widget::Fl_Widget
                 }
-    
+
                 fn activate(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _activate>](self.inner) }
                 }
-    
+
                 fn deactivate(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _deactivate>](self.inner) }
                 }
-    
+
                 fn redraw_label(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _redraw_label>](self.inner) }
                 }
-    
+
                 fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _resize>](self.inner, x, y, width, height) }
                 }
-    
+
                 fn widget_resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _widget_resize>](self.inner, x, y, width, height) }
                 }
-    
+
                 fn tooltip(&self) -> Option<String> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -314,7 +314,7 @@ macro_rules! impl_widget_ext {
                         s
                     }
                 }
-    
+
                 fn set_tooltip(&mut self, txt: &str) {
                     assert!(!self.was_deleted());
                     let txt = CString::safe_new(txt);
@@ -325,109 +325,109 @@ macro_rules! impl_widget_ext {
                         )
                     }
                 }
-    
+
                 fn color(&self) -> Color {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _color>](self.inner)) }
                 }
-    
+
                 fn set_color(&mut self, color: Color) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_color>](self.inner, color.bits() as u32) }
                 }
-    
+
                 fn label_color(&self) -> Color {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _label_color>](self.inner)) }
                 }
-    
+
                 fn set_label_color(&mut self, color: Color) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_label_color>](self.inner, color.bits() as u32)
                     }
                 }
-    
+
                 fn label_font(&self) -> Font {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _label_font>](self.inner)) }
                 }
-    
+
                 fn set_label_font(&mut self, font: Font) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_label_font>](self.inner, font.bits() as i32) }
                 }
-    
+
                 fn label_size(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _label_size>](self.inner) }
                 }
-    
+
                 fn set_label_size(&mut self, sz: i32) {
                     assert!(!self.was_deleted());
                     let sz = if sz < 1 { 1 } else { sz };
                     unsafe { [<$flname _set_label_size>](self.inner, sz) }
                 }
-    
+
                 fn label_type(&self) -> LabelType {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _label_type>](self.inner)) }
                 }
-    
+
                 fn set_label_type(&mut self, typ: LabelType) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_label_type>](self.inner, typ as i32);
                     }
                 }
-    
+
                 fn frame(&self) -> FrameType {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _box>](self.inner)) }
                 }
-    
+
                 fn set_frame(&mut self, typ: FrameType) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_box>](self.inner, typ as i32);
                     }
                 }
-    
+
                 fn changed(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _changed>](self.inner) != 0 }
                 }
-    
+
                 fn set_changed(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_changed>](self.inner) }
                 }
-    
+
                 fn clear_changed(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _clear_changed>](self.inner) }
                 }
-    
+
                 fn align(&self) -> Align {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _align>](self.inner)) }
                 }
-    
+
                 fn set_align(&mut self, align: Align) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_align>](self.inner, align.bits() as i32) }
                 }
-    
+
                 fn set_trigger(&mut self, trigger: CallbackTrigger) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_when>](self.inner, trigger.bits() as i32) }
                 }
-    
+
                 fn trigger(&self) -> CallbackTrigger {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _when>](self.inner)) }
                 }
-    
+
                 fn parent(&self) -> Option<crate::group::Group> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -439,26 +439,26 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn selection_color(&mut self) -> Color {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _selection_color>](self.inner)) }
                 }
-    
+
                 fn set_selection_color(&mut self, color: Color) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_selection_color>](self.inner, color.bits() as u32);
                     }
                 }
-    
+
                 fn do_callback(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _do_callback>](self.inner);
                     }
                 }
-    
+
                 fn window(&self) -> Option<Box<dyn WindowExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -472,7 +472,7 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn top_window(&self) -> Option<Box<dyn WindowExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -486,12 +486,12 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn takes_events(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _takes_events>](self.inner) != 0 }
                 }
-    
+
                 unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
                     let ptr = [<$flname _user_data>](self.inner);
                     if ptr.is_null() {
@@ -503,7 +503,7 @@ macro_rules! impl_widget_ext {
                         Some(*x)
                     }
                 }
-    
+
                 fn take_focus(&mut self) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -513,32 +513,32 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn set_visible_focus(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_visible_focus>](self.inner) }
                 }
-    
+
                 fn clear_visible_focus(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _clear_visible_focus>](self.inner) }
                 }
-    
+
                 fn visible_focus(&mut self, v: bool) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _visible_focus>](self.inner, v as i32) }
                 }
-    
+
                 fn has_visible_focus(&mut self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _has_visible_focus>](self.inner) != 0 }
                 }
-    
+
                 fn has_focus(&mut self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { fltk_sys::fl::Fl_focus() == self.inner as _ }
                 }
-    
+
                 fn was_deleted(&self) -> bool {
                     unsafe {
                         self.inner.is_null()
@@ -546,33 +546,33 @@ macro_rules! impl_widget_ext {
                             || fltk_sys::fl::Fl_Widget_Tracker_deleted(self.tracker) != 0
                     }
                 }
-    
+
                 fn damage(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _damage>](self.inner) != 0 }
                 }
-    
+
                 fn set_damage(&mut self, flag: bool) {
                     assert!(!self.was_deleted());
                     let flag = if flag { 10 } else { 0 };
                     unsafe { [<$flname _set_damage>](self.inner, flag) }
                 }
-    
+
                 fn damage_type(&self) -> Damage {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _damage>](self.inner)) }
                 }
-    
+
                 fn set_damage_type(&mut self, mask: Damage) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_damage>](self.inner, mask.bits()) }
                 }
-    
+
                 fn clear_damage(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _clear_damage>](self.inner) }
                 }
-    
+
                 fn as_window(&self) -> Option<Box<dyn WindowExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -585,7 +585,7 @@ macro_rules! impl_widget_ext {
                         )))
                     }
                 }
-    
+
                 fn as_group(&self) -> Option<crate::group::Group> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -598,7 +598,7 @@ macro_rules! impl_widget_ext {
                         ))
                     }
                 }
-    
+
                 fn inside<W: WidgetExt>(&self, wid: &W) -> bool {
                     assert!(!self.was_deleted());
                     assert!(!wid.was_deleted());
@@ -609,19 +609,19 @@ macro_rules! impl_widget_ext {
                         ) != 0
                     }
                 }
-    
+
                 fn get_type<T: WidgetType>(&self) -> T {
                     assert!(!self.was_deleted());
                     unsafe { T::from_i32([<$flname _get_type>](self.inner)) }
                 }
-    
+
                 fn set_type<T: WidgetType>(&mut self, typ: T) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_type>](self.inner, typ.to_i32());
                     }
                 }
-    
+
                 fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
                     assert!(!self.was_deleted());
                     if let Some(image) = image {
@@ -641,7 +641,7 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>) {
                     assert!(!self.was_deleted());
                     if let Some(mut image) = image {
@@ -662,7 +662,7 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn image(&self) -> Option<Box<dyn ImageExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -676,7 +676,7 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                     assert!(!self.was_deleted());
                     if let Some(image) = image {
@@ -696,7 +696,7 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>) {
                     assert!(!self.was_deleted());
                     if let Some(mut image) = image {
@@ -717,7 +717,7 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn deimage(&self) -> Option<Box<dyn ImageExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -731,7 +731,7 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -749,7 +749,7 @@ macro_rules! impl_widget_ext {
                         [<$flname _set_callback>](self.inner, callback, data);
                     }
                 }
-    
+
                 fn emit<T: 'static + Clone + Send + Sync>(
                     &mut self,
                     sender: crate::app::Sender<T>,
@@ -758,35 +758,35 @@ macro_rules! impl_widget_ext {
                     assert!(!self.was_deleted());
                     self.set_callback(move |_| sender.send(msg.clone()))
                 }
-    
+
                 unsafe fn into_widget<W: WidgetBase>(&self) -> W {
                     W::from_widget_ptr(self.as_widget_ptr() as *mut _)
                 }
-    
+
                 fn visible(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _visible>](self.inner) != 0 }
                 }
-    
+
                 fn visible_r(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _visible_r>](self.inner) != 0 }
                 }
-    
+
                 fn is_same<W: WidgetExt>(&self, other: &W) -> bool {
                     unsafe { self.as_widget_ptr() == other.as_widget_ptr() }
                 }
-    
+
                 fn active(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _active>](self.inner) != 0 }
                 }
-    
+
                 fn active_r(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _active_r>](self.inner) != 0 }
                 }
-    
+
                 fn callback(&self) -> Option<Box<dyn FnMut()>> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -806,7 +806,7 @@ macro_rules! impl_widget_ext {
                         }
                     }
                 }
-    
+
                 fn handle_event(&mut self, event: Event) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _handle_event>](self.inner, event.bits()) }
@@ -860,11 +860,11 @@ macro_rules! impl_widget_base {
                         }
                     }
                 }
-    
+
                 fn default_fill() -> Self {
                     Self::default().size_of_parent().center_of_parent()
                 }
-    
+
                 fn delete(mut wid: Self) {
                     assert!(!wid.was_deleted());
                     unsafe {
@@ -875,7 +875,7 @@ macro_rules! impl_widget_base {
                         wid.tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
                     }
                 }
-    
+
                 unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
                     assert!(!ptr.is_null());
                     fltk_sys::fl::Fl_lock();
@@ -890,11 +890,11 @@ macro_rules! impl_widget_base {
                     fltk_sys::fl::Fl_unlock();
                     temp
                 }
-    
+
                 unsafe fn from_widget<W: WidgetExt>(w: W) -> Self {
                     Self::from_widget_ptr(w.as_widget_ptr() as *mut _)
                 }
-    
+
                 fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
@@ -929,7 +929,7 @@ macro_rules! impl_widget_base {
                         [<$flname _handle>](self.inner, callback, data);
                     }
                 }
-    
+
                 fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
@@ -949,7 +949,7 @@ macro_rules! impl_widget_base {
                         [<$flname _draw>](self.inner, callback, data);
                     }
                 }
-    
+
                 unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
                     let ptr = [<$flname _draw_data>](self.inner);
                     if ptr.is_null() {
@@ -960,7 +960,7 @@ macro_rules! impl_widget_base {
                     [<$flname _draw>](self.inner, None, std::ptr::null_mut());
                     Some(*data)
                 }
-    
+
                 unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
                     let ptr = [<$flname _handle_data>](self.inner);
                     if ptr.is_null() {
@@ -971,7 +971,7 @@ macro_rules! impl_widget_base {
                     [<$flname _handle>](self.inner, None, std::ptr::null_mut());
                     Some(*data)
                 }
-    
+
                 fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(
                     &mut self,
                     cb: F,
