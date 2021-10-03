@@ -249,6 +249,10 @@ pub struct RepeatButton {
     is_derived: bool,
 }
 
+impl_widget_ext!(ReturnButton, Fl_Return_Button);
+impl_widget_base!(ReturnButton, Fl_Return_Button);
+impl_button_ext!(ReturnButton, Fl_Return_Button);
+
 /// Creates a return button
 #[derive(Debug)]
 pub struct ReturnButton {
