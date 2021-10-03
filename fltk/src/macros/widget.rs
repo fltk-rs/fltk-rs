@@ -1027,6 +1027,6 @@ macro_rules! impl_widget_type {
     };
 }
 
-pub(crate) use impl_widget_ext;
 pub(crate) use impl_widget_base;
+pub(crate) use impl_widget_ext;
 pub(crate) use impl_widget_type;
