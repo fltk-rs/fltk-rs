@@ -1,4 +1,8 @@
-use fltk::{app, enums::FrameType, frame::Frame, image::SvgImage, prelude::*, window::Window};
+#![feature(const_fn_transmute)]
+
+use fltk::{app, enums::{FrameType, Key}, frame::Frame, image::SvgImage, prelude::*, window::Window};
+
+// const K: Key = Key::from_i32(1);
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);

@@ -35,16 +35,20 @@ use std::{
     }
     ```
 */
-#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
+#[derive(Debug)]
 pub struct Browser {
     inner: *mut Fl_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(Browser, Fl_Browser);
+impl_widget_base!(Browser, Fl_Browser);
+impl_browser_ext!(Browser, Fl_Browser);
+
 /// Defines the browser type
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum BrowserType {
     /// Normal browser
     Normal = 0,
@@ -55,6 +59,8 @@ pub enum BrowserType {
     /// Multi selection
     Multi = 3,
 }
+
+impl_widget_type!(BrowserType);
 
 /// Defines the type of Scrollbar associated with the browser
 #[repr(u8)]
@@ -79,36 +85,52 @@ pub enum BrowserScrollbar {
 }
 
 /// Creates a select browser
-#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
+#[derive(Debug)]
 pub struct SelectBrowser {
     inner: *mut Fl_Select_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(SelectBrowser, Fl_Select_Browser);
+impl_widget_base!(SelectBrowser, Fl_Select_Browser);
+impl_browser_ext!(SelectBrowser, Fl_Select_Browser);
+
 /// Creates a multi-browser
-#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
+#[derive(Debug)]
 pub struct MultiBrowser {
     inner: *mut Fl_Multi_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(MultiBrowser, Fl_Multi_Browser);
+impl_widget_base!(MultiBrowser, Fl_Multi_Browser);
+impl_browser_ext!(MultiBrowser, Fl_Multi_Browser);
+
 /// Creates a hold browser
-#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
+#[derive(Debug)]
 pub struct HoldBrowser {
     inner: *mut Fl_Hold_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(HoldBrowser, Fl_Hold_Browser);
+impl_widget_base!(HoldBrowser, Fl_Hold_Browser);
+impl_browser_ext!(HoldBrowser, Fl_Hold_Browser);
+
 /// Creates a file browser
-#[derive(WidgetBase, WidgetExt, BrowserExt, Debug)]
+#[derive(Debug)]
 pub struct FileBrowser {
     inner: *mut Fl_File_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(FileBrowser, Fl_File_Browser);
+impl_widget_base!(FileBrowser, Fl_File_Browser);
+impl_browser_ext!(FileBrowser, Fl_File_Browser);
 
 /// File types for the `FileBrowser`
 #[repr(i32)]
@@ -183,12 +205,15 @@ impl FileBrowser {
 }
 
 /// Creates a `CheckBrowser` widget
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct CheckBrowser {
     inner: *mut Fl_Check_Browser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(CheckBrowser, Fl_Check_Browser);
+impl_widget_base!(CheckBrowser, Fl_Check_Browser);
 
 impl CheckBrowser {
     /// Add an item, returns the number of current items

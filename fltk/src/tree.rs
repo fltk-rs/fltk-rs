@@ -103,12 +103,15 @@ pub enum TreeItemDrawMode {
 }
 
 /// Defines a tree widget
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct Tree {
     inner: *mut Fl_Tree,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(Tree, Fl_Tree);
+impl_widget_base!(Tree, Fl_Tree);
 
 /// Defines a tree item
 #[derive(Debug, Clone)]

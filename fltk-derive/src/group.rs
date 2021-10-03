@@ -1,60 +1,7 @@
-use crate::utils::get_fl_name;
-use proc_macro::TokenStream;
-use quote::*;
-use syn::*;
-
-pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
-    let name = &ast.ident;
-    let name_str = get_fl_name(name.to_string());
-
-    let begin = Ident::new(format!("{}_{}", name_str, "begin").as_str(), name.span());
-    let end = Ident::new(format!("{}_{}", name_str, "end").as_str(), name.span());
-    let clear = Ident::new(format!("{}_{}", name_str, "clear").as_str(), name.span());
-    let children = Ident::new(format!("{}_{}", name_str, "children").as_str(), name.span());
-    let child = Ident::new(format!("{}_{}", name_str, "child").as_str(), name.span());
-    let find = Ident::new(format!("{}_{}", name_str, "find").as_str(), name.span());
-    let add = Ident::new(format!("{}_{}", name_str, "add").as_str(), name.span());
-    let insert = Ident::new(format!("{}_{}", name_str, "insert").as_str(), name.span());
-    let remove = Ident::new(format!("{}_{}", name_str, "remove").as_str(), name.span());
-    let remove_by_index = Ident::new(
-        format!("{}_{}", name_str, "remove_by_index").as_str(),
-        name.span(),
-    );
-    let resizable = Ident::new(
-        format!("{}_{}", name_str, "resizable").as_str(),
-        name.span(),
-    );
-    let clip_children = Ident::new(
-        format!("{}_{}", name_str, "clip_children").as_str(),
-        name.span(),
-    );
-    let set_clip_children = Ident::new(
-        format!("{}_{}", name_str, "set_clip_children").as_str(),
-        name.span(),
-    );
-    let init_sizes = Ident::new(
-        format!("{}_{}", name_str, "init_sizes").as_str(),
-        name.span(),
-    );
-    let update_child = Ident::new(
-        format!("{}_{}", name_str, "update_child").as_str(),
-        name.span(),
-    );
-    let draw_child = Ident::new(
-        format!("{}_{}", name_str, "draw_child").as_str(),
-        name.span(),
-    );
-    let draw_children = Ident::new(
-        format!("{}_{}", name_str, "draw_children").as_str(),
-        name.span(),
-    );
-    let draw_outside_label = Ident::new(
-        format!("{}_{}", name_str, "draw_outside_label").as_str(),
-        name.span(),
-    );
-
-    let gen = quote! {
-        impl IntoIterator for #name {
+#[macro_export]
+macro_rules! impl_group_ext {
+    ($name: tt, $flname: tt) => {
+        impl IntoIterator for $name {
             type Item = Widget;
             type IntoIter = std::vec::IntoIter<Self::Item>;
 
@@ -67,31 +14,35 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
             }
         }
 
-        unsafe impl GroupExt for #name {
+        unsafe impl GroupExt for $name {
             fn begin(&self) {
                 assert!(!self.was_deleted());
-                unsafe { #begin(self.inner) }
+                unsafe { concat_idents!($flname, _begin)(self.inner) }
             }
 
             fn end(&self) {
                 assert!(!self.was_deleted());
-                unsafe { #end(self.inner) }
+                unsafe { concat_idents!($flname, _end)(self.inner) }
             }
 
             fn clear(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #clear(self.inner); }
+                unsafe {
+                    concat_idents!($flname, _clear)(self.inner);
+                }
             }
 
             unsafe fn unsafe_clear(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #clear(self.inner); }
+                unsafe {
+                    concat_idents!($flname, _clear)(self.inner);
+                }
             }
 
             fn children(&self) -> i32 {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #children(self.inner) as i32
+                    concat_idents!($flname, _children)(self.inner) as i32
                 }
             }
 
@@ -101,11 +52,13 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                     if idx >= self.children() || idx < 0 {
                         return None;
                     }
-                    let child_widget = #child(self.inner, idx as i32);
+                    let child_widget = concat_idents!($flname, _child)(self.inner, idx as i32);
                     if child_widget.is_null() {
                         None
                     } else {
-                        Some(Widget::from_widget_ptr(child_widget as *mut fltk_sys::widget::Fl_Widget))
+                        Some(Widget::from_widget_ptr(
+                            child_widget as *mut fltk_sys::widget::Fl_Widget,
+                        ))
                     }
                 }
             }
@@ -114,7 +67,8 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #find(self.inner, widget.as_widget_ptr() as *mut _) as i32
+                    concat_idents!($flname, _find)(self.inner, widget.as_widget_ptr() as *mut _)
+                        as i32
                 }
             }
 
@@ -122,7 +76,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #add(self.inner, widget.as_widget_ptr() as *mut _)
+                    concat_idents!($flname, _add)(self.inner, widget.as_widget_ptr() as *mut _)
                 }
             }
 
@@ -130,7 +84,11 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #insert(self.inner, widget.as_widget_ptr() as *mut _, index as i32)
+                    concat_idents!($flname, _insert)(
+                        self.inner,
+                        widget.as_widget_ptr() as *mut _,
+                        index as i32,
+                    )
                 }
             }
 
@@ -138,7 +96,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #remove(self.inner, widget.as_widget_ptr() as *mut _)
+                    concat_idents!($flname, _remove)(self.inner, widget.as_widget_ptr() as *mut _)
                 }
             }
 
@@ -146,7 +104,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(idx < self.children());
-                    #remove_by_index(self.inner, idx as i32);
+                    concat_idents!($flname, _remove_by_index)(self.inner, idx as i32);
                 }
             }
 
@@ -154,16 +112,18 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 unsafe {
                     assert!(!self.was_deleted());
                     assert!(!widget.was_deleted());
-                    #resizable(self.inner, widget.as_widget_ptr() as *mut _)
+                    concat_idents!($flname, _resizable)(self.inner, widget.as_widget_ptr() as *mut _)
                 }
             }
 
             fn make_resizable(&mut self, val: bool) {
                 assert!(!self.was_deleted());
-                let ptr = if val { self.inner } else { std::ptr::null_mut() };
-                unsafe {
-                    #resizable(self.inner, ptr as *mut _)
-                }
+                let ptr = if val {
+                    self.inner
+                } else {
+                    std::ptr::null_mut()
+                };
+                unsafe { concat_idents!($flname, _resizable)(self.inner, ptr as *mut _) }
             }
 
             fn add_resizable<W: WidgetExt>(&mut self, widget: &W) {
@@ -173,16 +133,12 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
 
             fn set_clip_children(&mut self, flag: bool) {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #set_clip_children(self.inner, flag as i32)
-                }
+                unsafe { concat_idents!($flname, _set_clip_children)(self.inner, flag as i32) }
             }
 
             fn clip_children(&mut self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #clip_children(self.inner) != 0
-                }
+                unsafe { concat_idents!($flname, _clip_children)(self.inner) != 0 }
             }
 
             fn draw_child<W: WidgetExt>(&self, w: &mut W) {
@@ -190,7 +146,7 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!w.was_deleted());
                 unsafe {
                     crate::app::open_display();
-                    #draw_child(self.inner as _, w.as_widget_ptr() as _)
+                    concat_idents!($flname, _draw_child)(self.inner as _, w.as_widget_ptr() as _)
                 }
             }
 
@@ -198,8 +154,8 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 assert!(!w.was_deleted());
                 unsafe {
-                        crate::app::open_display();
-                    #update_child(self.inner as _, w.as_widget_ptr() as _)
+                    crate::app::open_display();
+                    concat_idents!($flname, _update_child)(self.inner as _, w.as_widget_ptr() as _)
                 }
             }
 
@@ -208,7 +164,10 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!w.was_deleted());
                 unsafe {
                     crate::app::open_display();
-                    #draw_outside_label(self.inner as _, w.as_widget_ptr() as _)
+                    concat_idents!($flname, _draw_outside_label)(
+                        self.inner as _,
+                        w.as_widget_ptr() as _,
+                    )
                 }
             }
 
@@ -216,14 +175,14 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     crate::app::open_display();
-                    #draw_children(self.inner as _)
+                    concat_idents!($flname, _draw_children)(self.inner as _)
                 }
             }
 
             fn init_sizes(&mut self) {
                 unsafe {
                     assert!(!self.was_deleted());
-                    #init_sizes(self.inner)
+                    concat_idents!($flname, _init_sizes)(self.inner)
                 }
             }
 
@@ -246,5 +205,4 @@ pub fn impl_group_trait(ast: &DeriveInput) -> TokenStream {
             }
         }
     };
-    gen.into()
 }

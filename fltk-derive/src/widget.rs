@@ -1,397 +1,29 @@
-use crate::utils::get_fl_name;
-use proc_macro::TokenStream;
-use quote::*;
-use syn::*;
-
-pub fn impl_widget_base_trait(ast: &DeriveInput) -> TokenStream {
-    let name = &ast.ident;
-
-    let name_str = get_fl_name(name.to_string());
-    let ptr_name = Ident::new(name_str.as_str(), name.span());
-    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
-    let handle = Ident::new(format!("{}_{}", name_str, "handle").as_str(), name.span());
-    let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
-    let handle_data = Ident::new(
-        format!("{}_{}", name_str, "handle_data").as_str(),
-        name.span(),
-    );
-    let draw_data = Ident::new(
-        format!("{}_{}", name_str, "draw_data").as_str(),
-        name.span(),
-    );
-    let set_handle_data = Ident::new(
-        format!("{}_{}", name_str, "set_handle_data").as_str(),
-        name.span(),
-    );
-    let set_deleter = Ident::new(
-        format!("{}_{}", name_str, "set_deleter").as_str(),
-        name.span(),
-    );
-    let resize_callback = Ident::new(
-        format!("{}_{}", name_str, "resize_callback").as_str(),
-        name.span(),
-    );
-
-    let gen = quote! {
-        impl Default for #name {
-            fn default() -> Self {
-                Self::new(0, 0, 0, 0, None)
-            }
-        }
-
-        unsafe impl WidgetBase for #name {
-            fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, width: i32, height: i32, title: T) -> #name {
-                let temp = if let Some(title) = title.into() {
-                    CString::safe_new(title).into_raw()
-                } else {
-                    std::ptr::null_mut()
-                };
-                unsafe {
-                    let widget_ptr = #new(x, y, width, height, temp);
-                    assert!(!widget_ptr.is_null());
-                    let tracker =
-                        fltk_sys::fl::Fl_Widget_Tracker_new(widget_ptr as *mut fltk_sys::fl::Fl_Widget);
-                    assert!(!tracker.is_null());
-                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
-                        if !data.is_null() {
-                            let x = data as *mut Box<dyn FnMut()>;
-                            let _x = Box::from_raw(x);
-                        }
-                    }
-                    #set_deleter(widget_ptr, Some(shim));
-                    #name {
-                        inner: widget_ptr,
-                        tracker: tracker,
-                        is_derived: true,
-                    }
-                }
-            }
-
-            fn default_fill() -> Self {
-                Self::default().size_of_parent().center_of_parent()
-            }
-
-            fn delete(mut wid: Self) {
-                assert!(!wid.was_deleted());
-                unsafe {
-                    fltk_sys::fl::Fl_delete_widget(wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget);
-                    wid.inner = std::ptr::null_mut() as *mut _;
-                    wid.tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
-                }
-            }
-
-            unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
-                assert!(!ptr.is_null());
-                fltk_sys::fl::Fl_lock();
-                let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
-                assert!(!tracker.is_null());
-                let temp = #name {
-                    inner: ptr as *mut #ptr_name,
-                    tracker: tracker,
-                    is_derived: false,
-                };
-                fltk_sys::fl::Fl_unlock();
-                temp
-            }
-
-            unsafe fn from_widget<W: WidgetExt>(w: W) -> Self {
-                Self::from_widget_ptr(w.as_widget_ptr() as *mut _)
-            }
-
-            fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                assert!(self.is_derived);
-                unsafe {
-                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, ev: std::os::raw::c_int, data: *mut raw::c_void) -> i32 {
-                        let mut wid = #name::from_widget_ptr(wid as *mut _);
-                        let ev: Event = mem::transmute(ev);
-                        let a: *mut Box<dyn FnMut(&mut #name, Event) -> bool> = data as *mut Box<dyn FnMut(&mut #name, Event) -> bool>;
-                        let f: &mut (dyn FnMut(&mut #name, Event) -> bool) = &mut **a;
-                        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| match f(&mut wid, ev) {
-                            true => return 1,
-                            false => return 0,
-                        }));
-                        if let Ok(ret) = result {
-                            ret
-                        } else {
-                            0
-                        }
-                    }
-                    let _old_data = self.handle_data();
-                    let a: *mut Box<dyn FnMut(&mut Self, Event) -> bool> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_handler_callback = Some(shim);
-                    #handle(self.inner, callback, data);
-                }
-            }
-
-            fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                assert!(self.is_derived);
-                unsafe {
-                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let mut wid = #name::from_widget_ptr(wid as *mut _);
-                        let a: *mut Box<dyn FnMut(&mut #name)> = data as *mut Box<dyn FnMut(&mut #name)>;
-                        let f: &mut (dyn FnMut(&mut #name)) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
-                    }
-                    let _old_data = self.draw_data();
-                    let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: custom_draw_callback = Some(shim);
-                    #draw(self.inner, callback, data);
-                }
-            }
-
-            unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
-                let ptr = #draw_data(self.inner);
-                if ptr.is_null() {
-                    return None;
-                }
-                let data = ptr as *mut Box<dyn FnMut()>;
-                let data = Box::from_raw(data);
-                #draw(self.inner, None, std::ptr::null_mut());
-                Some(*data)
-            }
-
-            unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
-                let ptr = #handle_data(self.inner);
-                if ptr.is_null() {
-                    return None;
-                }
-                let data = ptr as *mut Box<dyn FnMut(Event) -> bool>;
-                let data = Box::from_raw(data);
-                #handle(self.inner, None, std::ptr::null_mut());
-                Some(*data)
-            }
-
-            fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, cb: F) {
-                assert!(!self.was_deleted());
-                assert!(self.is_derived);
-                unsafe {
-                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, x: i32, y: i32, w: i32, h: i32, data: *mut raw::c_void) {
-                        let mut wid = #name::from_widget_ptr(wid as *mut _);
-                        let a: *mut Box<dyn FnMut(&mut #name, i32, i32, i32, i32)> = data as *mut Box<dyn FnMut(&mut #name, i32, i32, i32, i32)>;
-                        let f: &mut (dyn FnMut(&mut #name, i32, i32, i32, i32)) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid, x, y, w, h)));
-                    }
-                    let a: *mut Box<dyn FnMut(&mut Self, i32, i32, i32, i32)> = Box::into_raw(Box::new(Box::new(cb)));
-                    let data: *mut raw::c_void = a as *mut raw::c_void;
-                    let callback: Option<unsafe extern "C" fn(*mut Fl_Widget, i32, i32, i32, i32, *mut raw::c_void)> = Some(shim);
-                    #resize_callback(self.inner, callback, data);
-                }
-            }
-        }
-    };
-    gen.into()
-}
-
-pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
-    let name = &ast.ident;
-
-    let name_str = get_fl_name(name.to_string());
-    let ptr_name = Ident::new(name_str.as_str(), name.span());
-    let x = Ident::new(format!("{}_{}", name_str, "x").as_str(), name.span());
-    let y = Ident::new(format!("{}_{}", name_str, "y").as_str(), name.span());
-    let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
-    let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
-    let label = Ident::new(format!("{}_{}", name_str, "label").as_str(), name.span());
-    let measure_label = Ident::new(
-        format!("{}_{}", name_str, "measure_label").as_str(),
-        name.span(),
-    );
-    let set_label = Ident::new(
-        format!("{}_{}", name_str, "set_label").as_str(),
-        name.span(),
-    );
-    let redraw = Ident::new(format!("{}_{}", name_str, "redraw").as_str(), name.span());
-    let show = Ident::new(format!("{}_{}", name_str, "show").as_str(), name.span());
-    let hide = Ident::new(format!("{}_{}", name_str, "hide").as_str(), name.span());
-    let activate = Ident::new(format!("{}_{}", name_str, "activate").as_str(), name.span());
-    let deactivate = Ident::new(
-        format!("{}_{}", name_str, "deactivate").as_str(),
-        name.span(),
-    );
-    let redraw_label = Ident::new(
-        format!("{}_{}", name_str, "redraw_label").as_str(),
-        name.span(),
-    );
-    let resize = Ident::new(format!("{}_{}", name_str, "resize").as_str(), name.span());
-    let widget_resize = Ident::new(
-        format!("{}_{}", name_str, "widget_resize").as_str(),
-        name.span(),
-    );
-    let tooltip = Ident::new(format!("{}_{}", name_str, "tooltip").as_str(), name.span());
-    let set_tooltip = Ident::new(
-        format!("{}_{}", name_str, "set_tooltip").as_str(),
-        name.span(),
-    );
-    let color = Ident::new(format!("{}_{}", name_str, "color").as_str(), name.span());
-    let set_color = Ident::new(
-        format!("{}_{}", name_str, "set_color").as_str(),
-        name.span(),
-    );
-    let label_color = Ident::new(
-        format!("{}_{}", name_str, "label_color").as_str(),
-        name.span(),
-    );
-    let set_label_color = Ident::new(
-        format!("{}_{}", name_str, "set_label_color").as_str(),
-        name.span(),
-    );
-    let label_font = Ident::new(
-        format!("{}_{}", name_str, "label_font").as_str(),
-        name.span(),
-    );
-    let set_label_font = Ident::new(
-        format!("{}_{}", name_str, "set_label_font").as_str(),
-        name.span(),
-    );
-    let label_size = Ident::new(
-        format!("{}_{}", name_str, "label_size").as_str(),
-        name.span(),
-    );
-    let set_label_size = Ident::new(
-        format!("{}_{}", name_str, "set_label_size").as_str(),
-        name.span(),
-    );
-    let label_type = Ident::new(
-        format!("{}_{}", name_str, "label_type").as_str(),
-        name.span(),
-    );
-    let set_label_type = Ident::new(
-        format!("{}_{}", name_str, "set_label_type").as_str(),
-        name.span(),
-    );
-    let frame = Ident::new(format!("{}_{}", name_str, "box").as_str(), name.span());
-    let set_frame = Ident::new(format!("{}_{}", name_str, "set_box").as_str(), name.span());
-    let changed = Ident::new(format!("{}_{}", name_str, "changed").as_str(), name.span());
-    let set_changed = Ident::new(
-        format!("{}_{}", name_str, "set_changed").as_str(),
-        name.span(),
-    );
-    let clear_changed = Ident::new(
-        format!("{}_{}", name_str, "clear_changed").as_str(),
-        name.span(),
-    );
-    let align = Ident::new(format!("{}_{}", name_str, "align").as_str(), name.span());
-    let set_align = Ident::new(
-        format!("{}_{}", name_str, "set_align").as_str(),
-        name.span(),
-    );
-    let trigger = Ident::new(format!("{}_{}", name_str, "when").as_str(), name.span());
-    let set_trigger = Ident::new(format!("{}_{}", name_str, "set_when").as_str(), name.span());
-    let parent = Ident::new(format!("{}_{}", name_str, "parent").as_str(), name.span());
-    let selection_color = Ident::new(
-        format!("{}_{}", name_str, "selection_color").as_str(),
-        name.span(),
-    );
-    let set_selection_color = Ident::new(
-        format!("{}_{}", name_str, "set_selection_color").as_str(),
-        name.span(),
-    );
-    let do_callback = Ident::new(
-        format!("{}_{}", name_str, "do_callback").as_str(),
-        name.span(),
-    );
-    let window = Ident::new(format!("{}_{}", name_str, "window").as_str(), name.span());
-    let top_window = Ident::new(
-        format!("{}_{}", name_str, "top_window").as_str(),
-        name.span(),
-    );
-    let takes_events = Ident::new(
-        format!("{}_{}", name_str, "takes_events").as_str(),
-        name.span(),
-    );
-    let set_callback = Ident::new(
-        format!("{}_{}", name_str, "set_callback").as_str(),
-        name.span(),
-    );
-    let user_data = Ident::new(
-        format!("{}_{}", name_str, "user_data").as_str(),
-        name.span(),
-    );
-    let take_focus = Ident::new(
-        format!("{}_{}", name_str, "take_focus").as_str(),
-        name.span(),
-    );
-    let set_visible_focus = Ident::new(
-        format!("{}_{}", name_str, "set_visible_focus").as_str(),
-        name.span(),
-    );
-    let clear_visible_focus = Ident::new(
-        format!("{}_{}", name_str, "clear_visible_focus").as_str(),
-        name.span(),
-    );
-    let visible_focus = Ident::new(
-        format!("{}_{}", name_str, "visible_focus").as_str(),
-        name.span(),
-    );
-    let has_visible_focus = Ident::new(
-        format!("{}_{}", name_str, "has_visible_focus").as_str(),
-        name.span(),
-    );
-    let damage = Ident::new(format!("{}_{}", name_str, "damage").as_str(), name.span());
-    let set_damage = Ident::new(
-        format!("{}_{}", name_str, "set_damage").as_str(),
-        name.span(),
-    );
-    let clear_damage = Ident::new(
-        format!("{}_{}", name_str, "clear_damage").as_str(),
-        name.span(),
-    );
-    let as_window = Ident::new(
-        format!("{}_{}", name_str, "as_window").as_str(),
-        name.span(),
-    );
-    let as_group = Ident::new(format!("{}_{}", name_str, "as_group").as_str(), name.span());
-    let inside = Ident::new(format!("{}_{}", name_str, "inside").as_str(), name.span());
-    let get_type = Ident::new(format!("{}_{}", name_str, "get_type").as_str(), name.span());
-    let set_type = Ident::new(format!("{}_{}", name_str, "set_type").as_str(), name.span());
-    let set_image = Ident::new(
-        format!("{}_{}", name_str, "set_image").as_str(),
-        name.span(),
-    );
-    let image = Ident::new(format!("{}_{}", name_str, "image").as_str(), name.span());
-    let deimage = Ident::new(format!("{}_{}", name_str, "deimage").as_str(), name.span());
-    let set_deimage = Ident::new(
-        format!("{}_{}", name_str, "set_deimage").as_str(),
-        name.span(),
-    );
-    let set_callback = Ident::new(
-        format!("{}_{}", name_str, "set_callback").as_str(),
-        name.span(),
-    );
-    let visible = Ident::new(format!("{}_{}", name_str, "visible").as_str(), name.span());
-    let visible_r = Ident::new(
-        format!("{}_{}", name_str, "visible_r").as_str(),
-        name.span(),
-    );
-    let active = Ident::new(format!("{}_{}", name_str, "active").as_str(), name.span());
-    let active_r = Ident::new(format!("{}_{}", name_str, "active_r").as_str(), name.span());
-    let callback = Ident::new(format!("{}_{}", name_str, "callback").as_str(), name.span());
-    let handle_event = Ident::new(format!("{}_{}", name_str, "handle_event").as_str(), name.span());
-
-    let gen = quote! {
+#[macro_export]
+macro_rules! impl_widget_ext {
+    ($name: tt, $flname: tt) => {
         #[cfg(not(feature = "single-threaded"))]
-        unsafe impl Send for #name {}
+        unsafe impl Send for $name {}
         #[cfg(not(feature = "single-threaded"))]
-        unsafe impl Sync for #name {}
+        unsafe impl Sync for $name {}
 
-        impl PartialEq for #name {
+        impl PartialEq for $name {
             fn eq(&self, other: &Self) -> bool {
                 self.inner == other.inner
             }
         }
-        impl Eq for #name {}
-        impl Clone for #name {
-            fn clone(&self) -> #name {
+        impl Eq for $name {}
+        impl Clone for $name {
+            fn clone(&self) -> $name {
                 assert!(!self.was_deleted());
-                #name { inner: self.inner, tracker: self.tracker, is_derived: self.is_derived }
+                $name {
+                    inner: self.inner,
+                    tracker: self.tracker,
+                    is_derived: self.is_derived,
+                }
             }
         }
 
-        unsafe impl WidgetExt for #name {
+        unsafe impl WidgetExt for $name {
             fn with_pos(mut self, x: i32, y: i32) -> Self {
                 let w = self.w();
                 let h = self.h();
@@ -558,65 +190,62 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     let temp = CString::safe_new(title);
-                    #set_label(
-                        self.inner,
-                        temp.as_ptr(),
-                    );
+                    concat_idents!($flname, _set_label)(self.inner, temp.as_ptr());
                 }
             }
 
             fn redraw(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #redraw(self.inner);
+                    concat_idents!($flname, _redraw)(self.inner);
                 }
             }
 
             fn show(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #show(self.inner) }
+                unsafe { concat_idents!($flname, _show)(self.inner) }
             }
 
             fn hide(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #hide(self.inner) }
+                unsafe { concat_idents!($flname, _hide)(self.inner) }
             }
 
             fn x(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #x(self.inner)}
+                unsafe { concat_idents!($flname, _x)(self.inner) }
             }
 
             fn y(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #y(self.inner) }
+                unsafe { concat_idents!($flname, _y)(self.inner) }
             }
 
             fn width(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #width(self.inner) }
+                unsafe { concat_idents!($flname, _width)(self.inner) }
             }
 
             fn height(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #height(self.inner) }
+                unsafe { concat_idents!($flname, _height)(self.inner) }
             }
 
             fn w(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #width(self.inner) }
+                unsafe { concat_idents!($flname, _width)(self.inner) }
             }
 
             fn h(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #height(self.inner) }
+                unsafe { concat_idents!($flname, _height)(self.inner) }
             }
 
             fn label(&self) -> String {
                 assert!(!self.was_deleted());
                 unsafe {
                     fltk_sys::fl::Fl_lock();
-                    let ptr = #label(self.inner) as *mut raw::c_char;
+                    let ptr = concat_idents!($flname, _label)(self.inner) as *mut raw::c_char;
                     let s = if ptr.is_null() {
                         String::from("")
                     } else {
@@ -632,7 +261,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 let mut x = 0;
                 let mut y = 0;
                 unsafe {
-                    #measure_label(self.inner, &mut x, &mut y);
+                    concat_idents!($flname, _measure_label)(self.inner, &mut x, &mut y);
                 }
                 (x, y)
             }
@@ -643,39 +272,42 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn activate(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #activate(self.inner) }
+                unsafe { concat_idents!($flname, _activate)(self.inner) }
             }
 
             fn deactivate(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #deactivate(self.inner) }
+                unsafe { concat_idents!($flname, _deactivate)(self.inner) }
             }
 
             fn redraw_label(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #redraw_label(self.inner) }
+                unsafe { concat_idents!($flname, _redraw_label)(self.inner) }
             }
 
             fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
                 assert!(!self.was_deleted());
-                unsafe { #resize(self.inner, x, y, width, height) }
+                unsafe { concat_idents!($flname, _resize)(self.inner, x, y, width, height) }
             }
 
             fn widget_resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
                 assert!(!self.was_deleted());
-                unsafe { #widget_resize(self.inner, x, y, width, height) }
+                unsafe { concat_idents!($flname, _widget_resize)(self.inner, x, y, width, height) }
             }
 
             fn tooltip(&self) -> Option<String> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let tooltip_ptr = #tooltip(self.inner);
+                    let tooltip_ptr = concat_idents!($flname, _tooltip)(self.inner);
                     fltk_sys::fl::Fl_lock();
                     let s = if tooltip_ptr.is_null() {
                         None
                     } else {
-                        Some(CStr::from_ptr(
-                            tooltip_ptr as *mut raw::c_char).to_string_lossy().to_string())
+                        Some(
+                            CStr::from_ptr(tooltip_ptr as *mut raw::c_char)
+                                .to_string_lossy()
+                                .to_string(),
+                        )
                     };
                     fltk_sys::fl::Fl_unlock();
                     s
@@ -686,7 +318,7 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 let txt = CString::safe_new(txt);
                 unsafe {
-                    #set_tooltip(
+                    concat_idents!($flname, _set_tooltip)(
                         self.inner,
                         txt.as_ptr() as *mut raw::c_char,
                     )
@@ -695,114 +327,110 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn color(&self) -> Color {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#color(self.inner)) }
+                unsafe { mem::transmute(concat_idents!($flname, _color)(self.inner)) }
             }
 
             fn set_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
-                unsafe { #set_color(self.inner, color.bits() as u32) }
+                unsafe { concat_idents!($flname, _set_color)(self.inner, color.bits() as u32) }
             }
 
             fn label_color(&self) -> Color {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#label_color(self.inner)) }
+                unsafe { mem::transmute(concat_idents!($flname, _label_color)(self.inner)) }
             }
 
             fn set_label_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_color(self.inner, color.bits() as u32) }
+                unsafe {
+                    concat_idents!($flname, _set_label_color)(self.inner, color.bits() as u32)
+                }
             }
 
             fn label_font(&self) -> Font {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#label_font(self.inner)) }
+                unsafe { mem::transmute(concat_idents!($flname, _label_font)(self.inner)) }
             }
 
             fn set_label_font(&mut self, font: Font) {
                 assert!(!self.was_deleted());
-                unsafe { #set_label_font(self.inner, font.bits() as i32) }
+                unsafe { concat_idents!($flname, _set_label_font)(self.inner, font.bits() as i32) }
             }
 
             fn label_size(&self) -> i32 {
                 assert!(!self.was_deleted());
-                unsafe { #label_size(self.inner) }
+                unsafe { concat_idents!($flname, _label_size)(self.inner) }
             }
 
             fn set_label_size(&mut self, sz: i32) {
                 assert!(!self.was_deleted());
                 let sz = if sz < 1 { 1 } else { sz };
-                unsafe { #set_label_size(self.inner, sz) }
+                unsafe { concat_idents!($flname, _set_label_size)(self.inner, sz) }
             }
 
             fn label_type(&self) -> LabelType {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#label_type(self.inner)) }
+                unsafe { mem::transmute(concat_idents!($flname, _label_type)(self.inner)) }
             }
 
             fn set_label_type(&mut self, typ: LabelType) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_label_type(self.inner, typ as i32);
+                    concat_idents!($flname, _set_label_type)(self.inner, typ as i32);
                 }
             }
 
             fn frame(&self) -> FrameType {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#frame(self.inner)) }
+                unsafe { mem::transmute(concat_idents!($flname, _box)(self.inner)) }
             }
 
             fn set_frame(&mut self, typ: FrameType) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_frame(self.inner, typ as i32);
+                    concat_idents!($flname, _set_box)(self.inner, typ as i32);
                 }
             }
 
             fn changed(&self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #changed(self.inner)  != 0
-                }
+                unsafe { concat_idents!($flname, _changed)(self.inner) != 0 }
             }
 
             fn set_changed(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe { #set_changed(self.inner) }
+                unsafe { concat_idents!($flname, _set_changed)(self.inner) }
             }
 
             fn clear_changed(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe {#clear_changed(self.inner) }
+                unsafe { concat_idents!($flname, _clear_changed)(self.inner) }
             }
 
             fn align(&self) -> Align {
                 assert!(!self.was_deleted());
-                unsafe { mem::transmute(#align(self.inner)) }
+                unsafe { mem::transmute(concat_idents!($flname, _align)(self.inner)) }
             }
 
             fn set_align(&mut self, align: Align) {
                 assert!(!self.was_deleted());
-                unsafe { #set_align(self.inner, align.bits() as i32) }
+                unsafe { concat_idents!($flname, _set_align)(self.inner, align.bits() as i32) }
             }
 
             fn set_trigger(&mut self, trigger: CallbackTrigger) {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #set_trigger(self.inner, trigger.bits() as i32)
-                }
+                unsafe { concat_idents!($flname, _set_when)(self.inner, trigger.bits() as i32) }
             }
 
             fn trigger(&self) -> CallbackTrigger {
                 assert!(!self.was_deleted());
-                unsafe {
-                    mem::transmute(#trigger(self.inner))
-                }
+                unsafe { mem::transmute(concat_idents!($flname, _when)(self.inner)) }
             }
 
             fn parent(&self) -> Option<crate::group::Group> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let x = #parent(self.inner);
+                    let x = concat_idents!($flname, _parent)(self.inner);
                     if x.is_null() {
                         None
                     } else {
@@ -813,33 +441,33 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn selection_color(&mut self) -> Color {
                 assert!(!self.was_deleted());
-                unsafe {
-                    mem::transmute(#selection_color(self.inner))
-                }
+                unsafe { mem::transmute(concat_idents!($flname, _selection_color)(self.inner)) }
             }
 
             fn set_selection_color(&mut self, color: Color) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_selection_color(self.inner, color.bits() as u32);
+                    concat_idents!($flname, _set_selection_color)(self.inner, color.bits() as u32);
                 }
             }
 
             fn do_callback(&mut self) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #do_callback(self.inner);
+                    concat_idents!($flname, _do_callback)(self.inner);
                 }
             }
 
             fn window(&self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let wind_ptr = #window(self.inner);
+                    let wind_ptr = concat_idents!($flname, _window)(self.inner);
                     if wind_ptr.is_null() {
                         None
                     } else {
-                        Some(Box::new(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget)))
+                        Some(Box::new(crate::window::Window::from_widget_ptr(
+                            wind_ptr as *mut fltk_sys::widget::Fl_Widget,
+                        )))
                     }
                 }
             }
@@ -847,30 +475,30 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn top_window(&self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let wind_ptr = #top_window(self.inner);
+                    let wind_ptr = concat_idents!($flname, _top_window)(self.inner);
                     if wind_ptr.is_null() {
                         None
                     } else {
-                        Some(Box::new(crate::window::Window::from_widget_ptr(wind_ptr as *mut fltk_sys::widget::Fl_Widget)))
+                        Some(Box::new(crate::window::Window::from_widget_ptr(
+                            wind_ptr as *mut fltk_sys::widget::Fl_Widget,
+                        )))
                     }
                 }
             }
 
             fn takes_events(&self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #takes_events(self.inner)  != 0
-                }
+                unsafe { concat_idents!($flname, _takes_events)(self.inner) != 0 }
             }
 
             unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
-                let ptr = #user_data(self.inner);
+                let ptr = concat_idents!($flname, _user_data)(self.inner);
                 if ptr.is_null() {
                     None
                 } else {
                     let x = ptr as *mut Box<dyn FnMut()>;
                     let x = Box::from_raw(x);
-                    #set_callback(self.inner, None, std::ptr::null_mut());
+                    concat_idents!($flname, _set_callback)(self.inner, None, std::ptr::null_mut());
                     Some(*x)
                 }
             }
@@ -878,113 +506,95 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
             fn take_focus(&mut self) -> Result<(), FltkError> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    match #take_focus(self.inner) {
+                    match concat_idents!($flname, _take_focus)(self.inner) {
                         0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                         _ => Ok(()),
                     }
                 }
             }
 
-
             fn set_visible_focus(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #set_visible_focus(self.inner)
-                }
+                unsafe { concat_idents!($flname, _set_visible_focus)(self.inner) }
             }
-
 
             fn clear_visible_focus(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #clear_visible_focus(self.inner)
-                }
+                unsafe { concat_idents!($flname, _clear_visible_focus)(self.inner) }
             }
-
 
             fn visible_focus(&mut self, v: bool) {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #visible_focus(self.inner, v as i32)
-                }
+                unsafe { concat_idents!($flname, _visible_focus)(self.inner, v as i32) }
             }
-
 
             fn has_visible_focus(&mut self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #has_visible_focus(self.inner) != 0
-                }
+                unsafe { concat_idents!($flname, _has_visible_focus)(self.inner) != 0 }
             }
 
             fn has_focus(&mut self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    fltk_sys::fl::Fl_focus() == self.inner as _
-                }
+                unsafe { fltk_sys::fl::Fl_focus() == self.inner as _ }
             }
 
             fn was_deleted(&self) -> bool {
                 unsafe {
-                    self.inner.is_null() || self.tracker.is_null() || fltk_sys::fl::Fl_Widget_Tracker_deleted(self.tracker) != 0
+                    self.inner.is_null()
+                        || self.tracker.is_null()
+                        || fltk_sys::fl::Fl_Widget_Tracker_deleted(self.tracker) != 0
                 }
             }
 
             fn damage(&self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #damage(self.inner) != 0
-                }
+                unsafe { concat_idents!($flname, _damage)(self.inner) != 0 }
             }
 
             fn set_damage(&mut self, flag: bool) {
                 assert!(!self.was_deleted());
                 let flag = if flag { 10 } else { 0 };
-                unsafe {
-                    #set_damage(self.inner, flag)
-                }
+                unsafe { concat_idents!($flname, _set_damage)(self.inner, flag) }
             }
 
             fn damage_type(&self) -> Damage {
                 assert!(!self.was_deleted());
-                unsafe {
-                    mem::transmute(#damage(self.inner))
-                }
+                unsafe { mem::transmute(concat_idents!($flname, _damage)(self.inner)) }
             }
 
             fn set_damage_type(&mut self, mask: Damage) {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #set_damage(self.inner, mask.bits())
-                }
+                unsafe { concat_idents!($flname, _set_damage)(self.inner, mask.bits()) }
             }
 
             fn clear_damage(&mut self) {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #clear_damage(self.inner)
-                }
+                unsafe { concat_idents!($flname, _clear_damage)(self.inner) }
             }
 
             fn as_window(&self) -> Option<Box<dyn WindowExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let ptr = #as_window(self.inner);
+                    let ptr = concat_idents!($flname, _as_window)(self.inner);
                     if ptr.is_null() {
                         return None;
                     }
-                    Some(Box::new(crate::window::Window::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget)))
+                    Some(Box::new(crate::window::Window::from_widget_ptr(
+                        ptr as *mut fltk_sys::widget::Fl_Widget,
+                    )))
                 }
             }
 
             fn as_group(&self) -> Option<crate::group::Group> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let ptr = #as_group(self.inner);
+                    let ptr = concat_idents!($flname, _as_group)(self.inner);
                     if ptr.is_null() {
                         return None;
                     }
-                    Some(crate::group::Group::from_widget_ptr(ptr as *mut fltk_sys::widget::Fl_Widget))
+                    Some(crate::group::Group::from_widget_ptr(
+                        ptr as *mut fltk_sys::widget::Fl_Widget,
+                    ))
                 }
             }
 
@@ -992,19 +602,22 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 assert!(!wid.was_deleted());
                 unsafe {
-                    #inside(self.inner, wid.as_widget_ptr() as *mut raw::c_void)  != 0
+                    concat_idents!($flname, _inside)(
+                        self.inner,
+                        wid.as_widget_ptr() as *mut raw::c_void,
+                    ) != 0
                 }
             }
 
             fn get_type<T: WidgetType>(&self) -> T {
                 assert!(!self.was_deleted());
-                unsafe { T::from_i32(#get_type(self.inner)) }
+                unsafe { T::from_i32(concat_idents!($flname, _get_type)(self.inner)) }
             }
 
             fn set_type<T: WidgetType>(&mut self, typ: T) {
                 assert!(!self.was_deleted());
                 unsafe {
-                    #set_type(self.inner, typ.to_i32());
+                    concat_idents!($flname, _set_type)(self.inner, typ.to_i32());
                 }
             }
 
@@ -1012,9 +625,19 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 if let Some(image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { #set_image(self.inner, image.as_image_ptr() as *mut _) }
+                    unsafe {
+                        concat_idents!($flname, _set_image)(
+                            self.inner,
+                            image.as_image_ptr() as *mut _,
+                        )
+                    }
                 } else {
-                    unsafe { #set_image(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
+                    unsafe {
+                        concat_idents!($flname, _set_image)(
+                            self.inner,
+                            std::ptr::null_mut() as *mut raw::c_void,
+                        )
+                    }
                 }
             }
 
@@ -1023,20 +646,31 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
                     image.scale(self.w(), self.h(), false, true);
-                    unsafe { #set_image(self.inner, image.as_image_ptr() as *mut _) }
+                    unsafe {
+                        concat_idents!($flname, _set_image)(
+                            self.inner,
+                            image.as_image_ptr() as *mut _,
+                        )
+                    }
                 } else {
-                    unsafe { #set_image(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
+                    unsafe {
+                        concat_idents!($flname, _set_image)(
+                            self.inner,
+                            std::ptr::null_mut() as *mut raw::c_void,
+                        )
+                    }
                 }
             }
 
             fn image(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let image_ptr = #image(self.inner);
+                    let image_ptr = concat_idents!($flname, _image)(self.inner);
                     if image_ptr.is_null() {
                         None
                     } else {
-                        let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                        let mut img =
+                            Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                         Some(Box::new(img))
                     }
                 }
@@ -1046,9 +680,19 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 if let Some(image) = image {
                     assert!(!image.was_deleted());
-                    unsafe { #set_deimage(self.inner, image.as_image_ptr() as *mut _) }
+                    unsafe {
+                        concat_idents!($flname, _set_deimage)(
+                            self.inner,
+                            image.as_image_ptr() as *mut _,
+                        )
+                    }
                 } else {
-                    unsafe { #set_deimage(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
+                    unsafe {
+                        concat_idents!($flname, _set_deimage)(
+                            self.inner,
+                            std::ptr::null_mut() as *mut raw::c_void,
+                        )
+                    }
                 }
             }
 
@@ -1057,20 +701,31 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 if let Some(mut image) = image {
                     assert!(!image.was_deleted());
                     image.scale(self.w(), self.h(), false, true);
-                    unsafe { #set_deimage(self.inner, image.as_image_ptr() as *mut _) }
+                    unsafe {
+                        concat_idents!($flname, _set_deimage)(
+                            self.inner,
+                            image.as_image_ptr() as *mut _,
+                        )
+                    }
                 } else {
-                    unsafe { #set_deimage(self.inner, std::ptr::null_mut() as *mut raw::c_void) }
+                    unsafe {
+                        concat_idents!($flname, _set_deimage)(
+                            self.inner,
+                            std::ptr::null_mut() as *mut raw::c_void,
+                        )
+                    }
                 }
             }
 
             fn deimage(&self) -> Option<Box<dyn ImageExt>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let image_ptr = #deimage(self.inner);
+                    let image_ptr = concat_idents!($flname, _deimage)(self.inner);
                     if image_ptr.is_null() {
                         None
                     } else {
-                        let mut img = Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                        let mut img =
+                            Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                         Some(Box::new(img))
                     }
                 }
@@ -1080,20 +735,25 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
                 assert!(!self.was_deleted());
                 unsafe {
                     unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
-                        let mut wid = #name::from_widget_ptr(wid as *mut _);
-                        let a = data as *mut Box<dyn FnMut(&mut #name)>;
-                        let f: &mut (dyn FnMut(&mut #name)) = &mut **a;
-                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                        let mut wid = $name::from_widget_ptr(wid as *mut _);
+                        let a = data as *mut Box<dyn FnMut(&mut $name)>;
+                        let f: &mut (dyn FnMut(&mut $name)) = &mut **a;
+                        let _ =
+                            std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                     }
                     let _old_data = self.user_data();
                     let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                     let data: *mut raw::c_void = a as *mut raw::c_void;
                     let callback: Fl_Callback = Some(shim);
-                    #set_callback(self.inner, callback, data);
+                    concat_idents!($flname, _set_callback)(self.inner, callback, data);
                 }
             }
 
-            fn emit<T: 'static + Clone + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
+            fn emit<T: 'static + Clone + Send + Sync>(
+                &mut self,
+                sender: crate::app::Sender<T>,
+                msg: T,
+            ) {
                 assert!(!self.was_deleted());
                 self.set_callback(move |_| sender.send(msg.clone()))
             }
@@ -1104,16 +764,12 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn visible(&self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #visible(self.inner) != 0
-                }
+                unsafe { concat_idents!($flname, _visible)(self.inner) != 0 }
             }
 
             fn visible_r(&self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #visible_r(self.inner) != 0
-                }
+                unsafe { concat_idents!($flname, _visible_r)(self.inner) != 0 }
             }
 
             fn is_same<W: WidgetExt>(&self, other: &W) -> bool {
@@ -1122,23 +778,19 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn active(&self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #active(self.inner) != 0
-                }
+                unsafe { concat_idents!($flname, _active)(self.inner) != 0 }
             }
 
             fn active_r(&self) -> bool {
                 assert!(!self.was_deleted());
-                unsafe {
-                    #active_r(self.inner) != 0
-                }
+                unsafe { concat_idents!($flname, _active_r)(self.inner) != 0 }
             }
 
             fn callback(&self) -> Option<Box<dyn FnMut()>> {
                 assert!(!self.was_deleted());
                 unsafe {
-                    let cb = #callback(self.inner);
-                    let data = #user_data(self.inner);
+                    let cb = concat_idents!($flname, _callback)(self.inner);
+                    let data = concat_idents!($flname, _user_data)(self.inner);
                     if !data.is_null() {
                         return None;
                     }
@@ -1156,28 +808,214 @@ pub fn impl_widget_trait(ast: &DeriveInput) -> TokenStream {
 
             fn handle_event(&mut self, event: Event) {
                 assert!(!self.was_deleted());
+                unsafe { concat_idents!($flname, _handle_event)(self.inner, event.bits()) }
+            }
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! impl_widget_base {
+    ($name: tt, $flname: tt) => {
+        impl Default for $name {
+            fn default() -> Self {
+                Self::new(0, 0, 0, 0, None)
+            }
+        }
+
+        unsafe impl WidgetBase for $name {
+            fn new<T: Into<Option<&'static str>>>(
+                x: i32,
+                y: i32,
+                width: i32,
+                height: i32,
+                title: T,
+            ) -> $name {
+                let temp = if let Some(title) = title.into() {
+                    CString::safe_new(title).into_raw()
+                } else {
+                    std::ptr::null_mut()
+                };
                 unsafe {
-                    #handle_event(self.inner, event.bits())
+                    let widget_ptr = concat_idents!($flname, _new)(x, y, width, height, temp);
+                    assert!(!widget_ptr.is_null());
+                    let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(
+                        widget_ptr as *mut fltk_sys::fl::Fl_Widget,
+                    );
+                    assert!(!tracker.is_null());
+                    unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                        if !data.is_null() {
+                            let x = data as *mut Box<dyn FnMut()>;
+                            let _x = Box::from_raw(x);
+                        }
+                    }
+                    concat_idents!($flname, _set_deleter)(widget_ptr, Some(shim));
+                    $name {
+                        inner: widget_ptr,
+                        tracker: tracker,
+                        is_derived: true,
+                    }
+                }
+            }
+
+            fn default_fill() -> Self {
+                Self::default().size_of_parent().center_of_parent()
+            }
+
+            fn delete(mut wid: Self) {
+                assert!(!wid.was_deleted());
+                unsafe {
+                    fltk_sys::fl::Fl_delete_widget(
+                        wid.as_widget_ptr() as *mut fltk_sys::fl::Fl_Widget
+                    );
+                    wid.inner = std::ptr::null_mut() as *mut _;
+                    wid.tracker = std::ptr::null_mut() as *mut fltk_sys::fl::Fl_Widget_Tracker;
+                }
+            }
+
+            unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
+                assert!(!ptr.is_null());
+                fltk_sys::fl::Fl_lock();
+                let tracker =
+                    fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget);
+                assert!(!tracker.is_null());
+                let temp = $name {
+                    inner: ptr as *mut $flname,
+                    tracker: tracker,
+                    is_derived: false,
+                };
+                fltk_sys::fl::Fl_unlock();
+                temp
+            }
+
+            unsafe fn from_widget<W: WidgetExt>(w: W) -> Self {
+                Self::from_widget_ptr(w.as_widget_ptr() as *mut _)
+            }
+
+            fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
+                assert!(!self.was_deleted());
+                assert!(self.is_derived);
+                unsafe {
+                    unsafe extern "C" fn shim(
+                        wid: *mut Fl_Widget,
+                        ev: std::os::raw::c_int,
+                        data: *mut raw::c_void,
+                    ) -> i32 {
+                        let mut wid = $name::from_widget_ptr(wid as *mut _);
+                        let ev: Event = mem::transmute(ev);
+                        let a: *mut Box<dyn FnMut(&mut $name, Event) -> bool> =
+                            data as *mut Box<dyn FnMut(&mut $name, Event) -> bool>;
+                        let f: &mut (dyn FnMut(&mut $name, Event) -> bool) = &mut **a;
+                        let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                            match f(&mut wid, ev) {
+                                true => return 1,
+                                false => return 0,
+                            }
+                        }));
+                        if let Ok(ret) = result {
+                            ret
+                        } else {
+                            0
+                        }
+                    }
+                    let _old_data = self.handle_data();
+                    let a: *mut Box<dyn FnMut(&mut Self, Event) -> bool> =
+                        Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: custom_handler_callback = Some(shim);
+                    concat_idents!($flname, _handle)(self.inner, callback, data);
+                }
+            }
+
+            fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+                assert!(!self.was_deleted());
+                assert!(self.is_derived);
+                unsafe {
+                    unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        let mut wid = $name::from_widget_ptr(wid as *mut _);
+                        let a: *mut Box<dyn FnMut(&mut $name)> =
+                            data as *mut Box<dyn FnMut(&mut $name)>;
+                        let f: &mut (dyn FnMut(&mut $name)) = &mut **a;
+                        let _ =
+                            std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                    }
+                    let _old_data = self.draw_data();
+                    let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: custom_draw_callback = Some(shim);
+                    concat_idents!($flname, _draw)(self.inner, callback, data);
+                }
+            }
+
+            unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
+                let ptr = concat_idents!($flname, _draw_data)(self.inner);
+                if ptr.is_null() {
+                    return None;
+                }
+                let data = ptr as *mut Box<dyn FnMut()>;
+                let data = Box::from_raw(data);
+                concat_idents!($flname, _draw)(self.inner, None, std::ptr::null_mut());
+                Some(*data)
+            }
+
+            unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
+                let ptr = concat_idents!($flname, _handle_data)(self.inner);
+                if ptr.is_null() {
+                    return None;
+                }
+                let data = ptr as *mut Box<dyn FnMut(Event) -> bool>;
+                let data = Box::from_raw(data);
+                concat_idents!($flname, _handle)(self.inner, None, std::ptr::null_mut());
+                Some(*data)
+            }
+
+            fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(
+                &mut self,
+                cb: F,
+            ) {
+                assert!(!self.was_deleted());
+                assert!(self.is_derived);
+                unsafe {
+                    unsafe extern "C" fn shim(
+                        wid: *mut Fl_Widget,
+                        x: i32,
+                        y: i32,
+                        w: i32,
+                        h: i32,
+                        data: *mut raw::c_void,
+                    ) {
+                        let mut wid = $name::from_widget_ptr(wid as *mut _);
+                        let a: *mut Box<dyn FnMut(&mut $name, i32, i32, i32, i32)> =
+                            data as *mut Box<dyn FnMut(&mut $name, i32, i32, i32, i32)>;
+                        let f: &mut (dyn FnMut(&mut $name, i32, i32, i32, i32)) = &mut **a;
+                        let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                            f(&mut wid, x, y, w, h)
+                        }));
+                    }
+                    let a: *mut Box<dyn FnMut(&mut Self, i32, i32, i32, i32)> =
+                        Box::into_raw(Box::new(Box::new(cb)));
+                    let data: *mut raw::c_void = a as *mut raw::c_void;
+                    let callback: Option<
+                        unsafe extern "C" fn(*mut Fl_Widget, i32, i32, i32, i32, *mut raw::c_void),
+                    > = Some(shim);
+                    concat_idents!($flname, _resize_callback)(self.inner, callback, data);
                 }
             }
         }
     };
-    gen.into()
 }
 
-pub fn impl_widget_type(ast: &DeriveInput) -> TokenStream {
-    let name = &ast.ident;
-
-    let gen = quote! {
-        impl WidgetType for #name {
+#[macro_export]
+macro_rules! impl_widget_type {
+    ($name: tt) => {
+        impl WidgetType for $name {
             fn to_i32(self) -> i32 {
                 self as i32
             }
 
-            fn from_i32(val: i32) -> #name {
+            fn from_i32(val: i32) -> $name {
                 unsafe { mem::transmute(val) }
             }
         }
     };
-    gen.into()
 }

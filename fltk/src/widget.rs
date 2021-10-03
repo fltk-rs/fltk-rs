@@ -8,9 +8,12 @@ use std::mem;
 use std::os::raw;
 
 /// An abstract type, shouldn't be instantiated in user code
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct Widget {
     inner: *mut Fl_Widget,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(Widget, Fl_Widget);
+impl_widget_base!(Widget, Fl_Widget);

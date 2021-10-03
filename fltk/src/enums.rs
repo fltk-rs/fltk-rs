@@ -643,8 +643,15 @@ bitflags! {
 }
 
 impl Event {
+    #[cfg(not(has_const_transmute))]
     /// Creates an event from an i32 value
     pub fn from_i32(val: i32) -> Event {
+        unsafe { mem::transmute(val) }
+    }
+
+    #[cfg(has_const_transmute)]
+    /// Creates an event from an i32 value
+    pub const fn from_i32(val: i32) -> Event {
         unsafe { mem::transmute(val) }
     }
 }
@@ -782,11 +789,25 @@ bitflags! {
 }
 
 impl Key {
+    #[cfg(has_const_transmute)]
+    /// Gets a Key from an i32
+    pub const fn from_i32(val: i32) -> Key {
+        unsafe { mem::transmute(val) }
+    }
+
+    #[cfg(not(has_const_transmute))]
     /// Gets a Key from an i32
     pub fn from_i32(val: i32) -> Key {
         unsafe { mem::transmute(val) }
     }
 
+    #[cfg(has_const_transmute)]
+    /// Gets a Key from a char
+    pub const fn from_char(val: char) -> Key {
+        unsafe { mem::transmute(val) }
+    }
+
+    #[cfg(not(has_const_transmute))]
     /// Gets a Key from a char
     pub fn from_char(val: char) -> Key {
         unsafe { mem::transmute(val) }

@@ -10,8 +10,12 @@ use std::{
     os::raw,
 };
 
+impl_widget_ext!(Group, Fl_Group);
+impl_widget_base!(Group, Fl_Group);
+impl_group_ext!(Group, Fl_Group);
+
 /// Creates a widget group
-#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
+#[derive(Debug)]
 pub struct Group {
     inner: *mut Fl_Group,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -29,17 +33,23 @@ impl Group {
     }
 }
 
+impl_widget_ext!(Pack, Fl_Pack);
+impl_widget_base!(Pack, Fl_Pack);
+impl_group_ext!(Pack, Fl_Pack);
+
 /// Creates a widget pack
-#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
+#[derive(Debug)]
 pub struct Pack {
     inner: *mut Fl_Pack,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_type!(PackType);
+
 /// Defines pack types
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum PackType {
     /// Vertical layout pack
     Vertical = 0,
@@ -47,17 +57,23 @@ pub enum PackType {
     Horizontal = 1,
 }
 
+impl_widget_ext!(Scroll, Fl_Scroll);
+impl_widget_base!(Scroll, Fl_Scroll);
+impl_group_ext!(Scroll, Fl_Scroll);
+
 /// Creates a scroll group
-#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
+#[derive(Debug)]
 pub struct Scroll {
     inner: *mut Fl_Scroll,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_type!(ScrollType);
+
 /// Defines Scroll types
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum ScrollType {
     /// Never show bars
     None = 0,
@@ -129,8 +145,12 @@ impl Scroll {
     }
 }
 
+impl_widget_ext!(Tabs, Fl_Tabs);
+impl_widget_base!(Tabs, Fl_Tabs);
+impl_group_ext!(Tabs, Fl_Tabs);
+
 /// Creates a tab which can contain widgets
-#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
+#[derive(Debug)]
 pub struct Tabs {
     inner: *mut Fl_Tabs,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -226,16 +246,24 @@ impl Tabs {
     }
 }
 
+impl_widget_ext!(Tile, Fl_Tile);
+impl_widget_base!(Tile, Fl_Tile);
+impl_group_ext!(Tile, Fl_Tile);
+
 /// Creates a tile which can contain widgets
-#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
+#[derive(Debug)]
 pub struct Tile {
     inner: *mut Fl_Tile,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(Wizard, Fl_Wizard);
+impl_widget_base!(Wizard, Fl_Wizard);
+impl_group_ext!(Wizard, Fl_Wizard);
+
 /// Creates a wizard widget
-#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
+#[derive(Debug)]
 pub struct Wizard {
     inner: *mut Fl_Wizard,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -275,8 +303,12 @@ impl Wizard {
     }
 }
 
+impl_widget_ext!(ColorChooser, Fl_Color_Chooser);
+impl_widget_base!(ColorChooser, Fl_Color_Chooser);
+impl_group_ext!(ColorChooser, Fl_Color_Chooser);
+
 /// Creates a color chooser widget
-#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
+#[derive(Debug)]
 pub struct ColorChooser {
     inner: *mut Fl_Color_Chooser,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -343,15 +375,21 @@ impl Pack {
     }
 }
 
+impl_widget_type!(FlexType);
+
 /// Defines Flex types
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum FlexType {
     /// row direction
     Row = 0,
     /// column direction
     Column,
 }
+
+impl_widget_ext!(Flex, Fl_Flex);
+impl_widget_base!(Flex, Fl_Flex);
+impl_group_ext!(Flex, Fl_Flex);
 
 /**
     a Flexbox widget
@@ -373,7 +411,7 @@ pub enum FlexType {
     }
     ```
 */
-#[derive(WidgetBase, WidgetExt, GroupExt, Debug)]
+#[derive(Debug)]
 pub struct Flex {
     inner: *mut Fl_Flex,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

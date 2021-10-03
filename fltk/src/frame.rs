@@ -10,9 +10,12 @@ use std::{
 };
 
 /// Creates a new frame, an equivalent of `Fl_Box`
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct Frame {
     inner: *mut Fl_Box,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_base!(Frame, Fl_Box);
+impl_widget_ext!(Frame, Fl_Box);
