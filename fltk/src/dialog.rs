@@ -33,7 +33,7 @@ pub type NativeFileChooser = FileDialog;
 
 /// Defines the type of dialog, which can be changed dynamically using the `set_type()` method
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum FileDialogType {
     /// Browse file
     BrowseFile = 0,
@@ -49,12 +49,14 @@ pub enum FileDialogType {
     BrowseSaveDir,
 }
 
+impl_widget_type!(FileDialogType);
+
 /// Alias for `NativeFileChooserType`
 pub type NativeFileChooserType = FileDialogType;
 
 /// Defines the File dialog options, which can be set using the `set_option()` method.
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum FileDialogOptions {
     /// No options
     NoOptions = 0,
@@ -67,6 +69,8 @@ pub enum FileDialogOptions {
     /// Use extension filter
     UseFilterExt = 8,
 }
+
+impl_widget_type!(FileDialogOptions);
 
 /// Alias to `NativeFileChooserOptions`
 pub type NativeFileChooserOptions = FileDialogOptions;

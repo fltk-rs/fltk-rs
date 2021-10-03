@@ -11,16 +11,24 @@ use std::{
     os::raw,
 };
 
+impl_widget_ext!(MenuBar, Fl_Menu_Bar);
+impl_widget_base!(MenuBar, Fl_Menu_Bar);
+impl_menu_ext!(MenuBar, Fl_Menu_Bar);
+
 /// Creates a menu bar
-#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
+#[derive(Debug)]
 pub struct MenuBar {
     inner: *mut Fl_Menu_Bar,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(MenuButton, Fl_Menu_Button);
+impl_widget_base!(MenuButton, Fl_Menu_Button);
+impl_menu_ext!(MenuButton, Fl_Menu_Button);
+
 /// Creates a menu button
-#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
+#[derive(Debug)]
 pub struct MenuButton {
     inner: *mut Fl_Menu_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -29,7 +37,7 @@ pub struct MenuButton {
 
 /// Defines the menu button types, which can be changed dynamically using the `set_type()`.
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum MenuButtonType {
     /// pops up with the mouse 1st button.
     Popup1 = 1,
@@ -46,6 +54,8 @@ pub enum MenuButtonType {
     /// pops up with any mouse button.
     Popup123,
 }
+
+impl_widget_type!(MenuButtonType);
 
 impl MenuButton {
     /// Act exactly as though the user clicked the button or typed the shortcut key
@@ -66,16 +76,24 @@ impl MenuButton {
     }
 }
 
+impl_widget_ext!(Choice, Fl_Choice);
+impl_widget_base!(Choice, Fl_Choice);
+impl_menu_ext!(Choice, Fl_Choice);
+
 /// Creates a menu choice
-#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
+#[derive(Debug)]
 pub struct Choice {
     inner: *mut Fl_Choice,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
+impl_widget_base!(SysMenuBar, Fl_Sys_Menu_Bar);
+impl_menu_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
+
 /// Creates a macOS system menu bar on macOS and a normal menu bar on other systems
-#[derive(WidgetBase, WidgetExt, MenuExt, Debug)]
+#[derive(Debug)]
 pub struct SysMenuBar {
     inner: *mut Fl_Sys_Menu_Bar,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

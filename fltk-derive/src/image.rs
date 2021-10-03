@@ -1,231 +1,200 @@
-use crate::utils::get_fl_name;
-use proc_macro::TokenStream;
-use quote::*;
-use syn::*;
-
-pub fn impl_image_trait(ast: &DeriveInput) -> TokenStream {
-    let name = &ast.ident;
-    let name_str = get_fl_name(name.to_string());
-    let ptr_name = Ident::new(name_str.as_str(), name.span());
-
-    let new = Ident::new(format!("{}_{}", name_str, "new").as_str(), name.span());
-    let draw = Ident::new(format!("{}_{}", name_str, "draw").as_str(), name.span());
-    let draw_ext = Ident::new(format!("{}_{}", name_str, "draw_ext").as_str(), name.span());
-    let width = Ident::new(format!("{}_{}", name_str, "width").as_str(), name.span());
-    let height = Ident::new(format!("{}_{}", name_str, "height").as_str(), name.span());
-    let delete = Ident::new(format!("{}_{}", name_str, "delete").as_str(), name.span());
-    let count = Ident::new(format!("{}_{}", name_str, "count").as_str(), name.span());
-    let data = Ident::new(format!("{}_{}", name_str, "data").as_str(), name.span());
-    let copy = Ident::new(format!("{}_{}", name_str, "copy").as_str(), name.span());
-    let scale = Ident::new(format!("{}_{}", name_str, "scale").as_str(), name.span());
-    let data_w = Ident::new(format!("{}_{}", name_str, "data_w").as_str(), name.span());
-    let data_h = Ident::new(format!("{}_{}", name_str, "data_h").as_str(), name.span());
-    let d = Ident::new(format!("{}_{}", name_str, "d").as_str(), name.span());
-    let ld = Ident::new(format!("{}_{}", name_str, "ld").as_str(), name.span());
-    let inactive = Ident::new(format!("{}_{}", name_str, "inactive").as_str(), name.span());
-
-    let gen = quote! {
+#[macro_export]
+macro_rules! impl_image_ext {
+    ($name: ident, $flname: ident) => {
         #[cfg(not(feature = "single-threaded"))]
-        unsafe impl Sync for #name {}
+        unsafe impl Sync for $name {}
         #[cfg(not(feature = "single-threaded"))]
-        unsafe impl Send for #name {}
+        unsafe impl Send for $name {}
 
-        impl PartialEq for #name {
+        impl PartialEq for $name {
             fn eq(&self, other: &Self) -> bool {
                 self.inner == other.inner
             }
         }
 
-        impl Eq for #name {}
+        impl Eq for $name {}
 
-        impl Clone for #name {
+        impl Clone for $name {
             fn clone(&self) -> Self {
                 assert!(!self.was_deleted());
                 let x = self.refcount.fetch_add(1, Ordering::Relaxed);
-                #name { inner: self.inner, refcount: AtomicUsize::new(x + 1) }
+                $name {
+                    inner: self.inner,
+                    refcount: AtomicUsize::new(x + 1),
+                }
             }
         }
 
-        impl Drop for #name {
-            fn drop(&mut self) {
-                if !self.was_deleted() {
-                    self.refcount.fetch_sub(1, Ordering::Relaxed);
-                    if *self.refcount.get_mut() < 1 {
-                        unsafe {
-                            #delete(self.inner);
+        paste! {
+            impl Drop for $name {
+                fn drop(&mut self) {
+                    if !self.was_deleted() {
+                        self.refcount.fetch_sub(1, Ordering::Relaxed);
+                        if *self.refcount.get_mut() < 1 {
+                            unsafe {
+                                [<$flname _delete>](self.inner);
+                            }
                         }
                     }
                 }
             }
-        }
-
-        unsafe impl ImageExt for #name {
-            fn copy(&self) -> Self {
-                assert!(!self.was_deleted());
-                unsafe {
-                    let img = #copy(self.inner);
-                    assert!(!img.is_null());
-                    #name {
-                        inner: img,
-                        refcount: AtomicUsize::new(1)
+    
+            unsafe impl ImageExt for $name {
+                fn copy(&self) -> Self {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        let img = [<$flname _copy>](self.inner);
+                        assert!(!img.is_null());
+                        $name {
+                            inner: img,
+                            refcount: AtomicUsize::new(1),
+                        }
                     }
                 }
-            }
-
-            fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
-                assert!(!self.was_deleted());
-                unsafe { #draw(self.inner, arg2, arg3, arg4, arg5) }
-            }
-
-            fn draw_ext(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32, cx: i32, cy: i32) {
-                assert!(!self.was_deleted());
-                unsafe { #draw_ext(self.inner, arg2, arg3, arg4, arg5, cx, cy) }
-            }
-
-            fn width(&self) -> i32 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #width(self.inner)
+    
+                fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _draw>](self.inner, arg2, arg3, arg4, arg5) }
                 }
-            }
-
-            fn height(&self) -> i32 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #height(self.inner)
+    
+                fn draw_ext(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32, cx: i32, cy: i32) {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        [<$flname _draw_ext>](self.inner, arg2, arg3, arg4, arg5, cx, cy)
+                    }
                 }
-            }
-
-            fn w(&self) -> i32 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #width(self.inner)
+    
+                fn width(&self) -> i32 {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _width>](self.inner) }
                 }
-            }
-
-            fn h(&self) -> i32 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #height(self.inner)
+    
+                fn height(&self) -> i32 {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _height>](self.inner) }
                 }
-            }
-
-            unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
-                assert!(!self.was_deleted());
-                self.inner as *mut fltk_sys::image::Fl_Image
-            }
-
-            unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
-                assert!(!ptr.is_null());
-                #name {
-                    inner: ptr as *mut #ptr_name,
-                    refcount: AtomicUsize::new(1),
+    
+                fn w(&self) -> i32 {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _width>](self.inner) }
                 }
-            }
-
-            fn to_rgb_data(&self) -> Vec<u8> {
-                assert!(!self.was_deleted());
-                unsafe {
-                    let ptr = #data(self.inner);
+    
+                fn h(&self) -> i32 {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _height>](self.inner) }
+                }
+    
+                unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
+                    assert!(!self.was_deleted());
+                    self.inner as *mut fltk_sys::image::Fl_Image
+                }
+    
+                unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
                     assert!(!ptr.is_null());
-                    assert!(!(*ptr).is_null());
-                    let cnt = self.data_w() * self.data_h() * self.depth() as i32;
-                    let ret: &[u8] = std::slice::from_raw_parts(*ptr as *const u8, cnt as usize);
-                    ret.to_vec()
+                    $name {
+                        inner: ptr as *mut $flname,
+                        refcount: AtomicUsize::new(1),
+                    }
                 }
-            }
-
-            fn to_raw_data(&self) -> *const *const u8 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #data(self.inner) as *const *const u8
+    
+                fn to_rgb_data(&self) -> Vec<u8> {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        let ptr = [<$flname _data>](self.inner);
+                        assert!(!ptr.is_null());
+                        assert!(!(*ptr).is_null());
+                        let cnt = self.data_w() * self.data_h() * self.depth() as i32;
+                        let ret: &[u8] = std::slice::from_raw_parts(*ptr as *const u8, cnt as usize);
+                        ret.to_vec()
+                    }
                 }
-            }
-
-            fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError> {
-                assert!(!self.was_deleted());
-                if self.count() != 1 {
-                    Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
-                } else {
-                    let data = self.to_rgb_data();
-                    unsafe { RgbImage::new(&data, self.data_w(), self.data_h(), self.depth()) }
+    
+                fn to_raw_data(&self) -> *const *const u8 {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _data>](self.inner) as *const *const u8 }
                 }
-            }
-
-            fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #scale(self.inner, width, height, proportional as i32, can_expand as i32)
+    
+                fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError> {
+                    assert!(!self.was_deleted());
+                    if self.count() != 1 {
+                        Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
+                    } else {
+                        let data = self.to_rgb_data();
+                        unsafe { RgbImage::new(&data, self.data_w(), self.data_h(), self.depth()) }
+                    }
                 }
-            }
-
-            fn count(&self) -> i32 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #count(self.inner)
+    
+                fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        [<$flname _scale>](
+                            self.inner,
+                            width,
+                            height,
+                            proportional as i32,
+                            can_expand as i32,
+                        )
+                    }
                 }
-            }
-
-            fn data_w(&self) -> i32 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #data_w(self.inner)
+    
+                fn count(&self) -> i32 {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _count>](self.inner) }
                 }
-            }
-
-            fn data_h(&self) -> i32 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #data_h(self.inner)
+    
+                fn data_w(&self) -> i32 {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _data_w>](self.inner) }
                 }
-            }
-
-            fn depth(&self) -> ColorDepth {
-                assert!(!self.was_deleted());
-                unsafe {
-                    mem::transmute(#d(self.inner) as u8)
+    
+                fn data_h(&self) -> i32 {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _data_h>](self.inner) }
                 }
-            }
-
-            fn ld(&self) -> i32 {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #ld(self.inner)
+    
+                fn depth(&self) -> ColorDepth {
+                    assert!(!self.was_deleted());
+                    unsafe { mem::transmute([<$flname _d>](self.inner) as u8) }
                 }
-            }
-
-            fn inactive(&mut self) {
-                assert!(!self.was_deleted());
-                unsafe {
-                    #inactive(self.inner)
+    
+                fn ld(&self) -> i32 {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _ld>](self.inner) }
                 }
-            }
-
-            unsafe fn delete(mut img: Self) {
-                assert!(!img.inner.is_null());
-                #delete(img.inner);
-                img.inner = std::ptr::null_mut() as *mut #ptr_name;
-            }
-
-            unsafe fn increment_arc(&mut self) {
-                assert!(!self.was_deleted());
-                self.refcount.fetch_add(1, Ordering::Relaxed);
-            }
-
-            unsafe fn decrement_arc(&mut self) {
-                assert!(!self.was_deleted());
-                self.refcount.fetch_sub(1, Ordering::Relaxed);
-                assert!(*self.refcount.get_mut() > 1, "The image should outlive the widget!");
-            }
-
-            fn was_deleted(&self) -> bool {
-                self.inner.is_null()
-            }
-
-            unsafe fn into_image<I: ImageExt>(self) -> I {
-                I::from_image_ptr(self.inner as *mut _)
+    
+                fn inactive(&mut self) {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _inactive>](self.inner) }
+                }
+    
+                unsafe fn delete(mut img: Self) {
+                    assert!(!img.inner.is_null());
+                    [<$flname _delete>](img.inner);
+                    img.inner = std::ptr::null_mut() as *mut $flname;
+                }
+    
+                unsafe fn increment_arc(&mut self) {
+                    assert!(!self.was_deleted());
+                    self.refcount.fetch_add(1, Ordering::Relaxed);
+                }
+    
+                unsafe fn decrement_arc(&mut self) {
+                    assert!(!self.was_deleted());
+                    self.refcount.fetch_sub(1, Ordering::Relaxed);
+                    assert!(
+                        *self.refcount.get_mut() > 1,
+                        "The image should outlive the widget!"
+                    );
+                }
+    
+                fn was_deleted(&self) -> bool {
+                    self.inner.is_null()
+                }
+    
+                unsafe fn into_image<I: ImageExt>(self) -> I {
+                    I::from_image_ptr(self.inner as *mut _)
+                }
             }
         }
     };
-    gen.into()
 }

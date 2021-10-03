@@ -12,16 +12,20 @@ use std::{
 };
 
 /// Creates a normal button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct Button {
     inner: *mut Fl_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(Button, Fl_Button);
+impl_widget_base!(Button, Fl_Button);
+impl_button_ext!(Button, Fl_Button);
+
 /// Defines the button type, which can be changed dynamically using the `set_type()`.
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum ButtonType {
     /// Normal button
     Normal = 0,
@@ -33,13 +37,19 @@ pub enum ButtonType {
     Hidden = 3,
 }
 
+impl_widget_type!(ButtonType);
+
 /// Creates a radio button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct RadioButton {
     inner: *mut Fl_Radio_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(RadioButton, Fl_Radio_Button);
+impl_widget_base!(RadioButton, Fl_Radio_Button);
+impl_button_ext!(RadioButton, Fl_Radio_Button);
 
 impl RadioButton {
     /// Check whether a `RadioButton` is toggled
@@ -58,12 +68,16 @@ impl RadioButton {
 }
 
 /// Creates a radio round button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct RadioRoundButton {
     inner: *mut Fl_Radio_Round_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(RadioRoundButton, Fl_Radio_Round_Button);
+impl_widget_base!(RadioRoundButton, Fl_Radio_Round_Button);
+impl_button_ext!(RadioRoundButton, Fl_Radio_Round_Button);
 
 impl RadioRoundButton {
     /// Check whether a `RadioRoundButton` is toggled
@@ -82,12 +96,16 @@ impl RadioRoundButton {
 }
 
 /// Creates a radio light button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct RadioLightButton {
     inner: *mut Fl_Radio_Light_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(RadioLightButton, Fl_Radio_Light_Button);
+impl_widget_base!(RadioLightButton, Fl_Radio_Light_Button);
+impl_button_ext!(RadioLightButton, Fl_Radio_Light_Button);
 
 impl RadioLightButton {
     /// Check whether a `RadioLightButton` is toggled
@@ -106,12 +124,16 @@ impl RadioLightButton {
 }
 
 /// Creates a round button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct RoundButton {
     inner: *mut Fl_Round_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(RoundButton, Fl_Round_Button);
+impl_widget_base!(RoundButton, Fl_Round_Button);
+impl_button_ext!(RoundButton, Fl_Round_Button);
 
 impl RoundButton {
     /// Check whether a `RoundButton` is toggled
@@ -130,12 +152,16 @@ impl RoundButton {
 }
 
 /// Creates a check button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct CheckButton {
     inner: *mut Fl_Check_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(CheckButton, Fl_Check_Button);
+impl_widget_base!(CheckButton, Fl_Check_Button);
+impl_button_ext!(CheckButton, Fl_Check_Button);
 
 impl CheckButton {
     /// Check whether a `CheckButton` is checked
@@ -156,12 +182,16 @@ impl CheckButton {
 }
 
 /// Creates a toggle button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct ToggleButton {
     inner: *mut Fl_Toggle_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(ToggleButton, Fl_Toggle_Button);
+impl_widget_base!(ToggleButton, Fl_Toggle_Button);
+impl_button_ext!(ToggleButton, Fl_Toggle_Button);
 
 impl ToggleButton {
     /// Check whether a `ToggleButton` is toggled
@@ -180,12 +210,16 @@ impl ToggleButton {
 }
 
 /// Creates a light button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct LightButton {
     inner: *mut Fl_Light_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(LightButton, Fl_Light_Button);
+impl_widget_base!(LightButton, Fl_Light_Button);
+impl_button_ext!(LightButton, Fl_Light_Button);
 
 impl LightButton {
     /// Check whether a `LightButton` is on
@@ -203,16 +237,24 @@ impl LightButton {
     }
 }
 
+impl_widget_ext!(RepeatButton, Fl_Repeat_Button);
+impl_widget_base!(RepeatButton, Fl_Repeat_Button);
+impl_button_ext!(RepeatButton, Fl_Repeat_Button);
+
 /// Creates a repeat button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct RepeatButton {
     inner: *mut Fl_Repeat_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(ReturnButton, Fl_Return_Button);
+impl_widget_base!(ReturnButton, Fl_Return_Button);
+impl_button_ext!(ReturnButton, Fl_Return_Button);
+
 /// Creates a return button
-#[derive(WidgetBase, WidgetExt, ButtonExt, Debug)]
+#[derive(Debug)]
 pub struct ReturnButton {
     inner: *mut Fl_Return_Button,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

@@ -644,20 +644,28 @@ pub enum DragType {
 }
 
 /// Creates a non-editable text display widget
-#[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
+#[derive(Debug)]
 pub struct TextDisplay {
     inner: *mut Fl_Text_Display,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(TextDisplay, Fl_Text_Display);
+impl_widget_base!(TextDisplay, Fl_Text_Display);
+impl_display_ext!(TextDisplay, Fl_Text_Display);
+
 /// Creates an editable text display widget
-#[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
+#[derive(Debug)]
 pub struct TextEditor {
     inner: *mut Fl_Text_Editor,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(TextEditor, Fl_Text_Editor);
+impl_widget_base!(TextEditor, Fl_Text_Editor);
+impl_display_ext!(TextEditor, Fl_Text_Editor);
 
 /// Creates an editable text display widget to handle terminal-like behavior, such as
 /// logging events or debug information.
@@ -666,12 +674,16 @@ pub struct TextEditor {
 /// handle stdio redirection, pipes, pseudo ttys, termio character cooking,
 /// keyboard input processing, screen addressing, random cursor positioning,
 /// curses compatibility, or VT100/xterm emulation.
-#[derive(WidgetBase, WidgetExt, DisplayExt, Debug)]
+#[derive(Debug)]
 pub struct SimpleTerminal {
     inner: *mut Fl_Simple_Terminal,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(SimpleTerminal, Fl_Simple_Terminal);
+impl_widget_base!(SimpleTerminal, Fl_Simple_Terminal);
+impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
 
 /// Defines the styles used in the `set_highlight_data`, which is used with style buffers
 #[derive(Debug, Clone, Copy)]

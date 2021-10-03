@@ -8,15 +8,19 @@ use std::{
     sync::atomic::{AtomicUsize, Ordering},
 };
 
+impl_image_ext!(Image, Fl_Image);
+
 /// Wrapper around `Fl_Image`, used to wrap other image types
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct Image {
     inner: *mut Fl_Image,
     refcount: AtomicUsize,
 }
 
+impl_image_ext!(SharedImage, Fl_Shared_Image);
+
 /// Creates a struct holding a shared image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct SharedImage {
     inner: *mut Fl_Shared_Image,
     refcount: AtomicUsize,
@@ -76,8 +80,10 @@ impl SharedImage {
     }
 }
 
+impl_image_ext!(JpegImage, Fl_JPEG_Image);
+
 /// Creates a struct holding a Jpeg image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct JpegImage {
     inner: *mut Fl_JPEG_Image,
     refcount: AtomicUsize,
@@ -140,8 +146,10 @@ impl JpegImage {
     }
 }
 
+impl_image_ext!(PngImage, Fl_PNG_Image);
+
 /// Creates a struct holding a PNG image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct PngImage {
     inner: *mut Fl_PNG_Image,
     refcount: AtomicUsize,
@@ -204,8 +212,10 @@ impl PngImage {
     }
 }
 
+impl_image_ext!(SvgImage, Fl_SVG_Image);
+
 /// Creates a struct holding an SVG image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct SvgImage {
     inner: *mut Fl_SVG_Image,
     refcount: AtomicUsize,
@@ -275,8 +285,10 @@ impl SvgImage {
     }
 }
 
+impl_image_ext!(BmpImage, Fl_BMP_Image);
+
 /// Creates a struct holding a BMP image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct BmpImage {
     inner: *mut Fl_BMP_Image,
     refcount: AtomicUsize,
@@ -339,8 +351,10 @@ impl BmpImage {
     }
 }
 
+impl_image_ext!(GifImage, Fl_GIF_Image);
+
 /// Creates a struct holding a GIF image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct GifImage {
     inner: *mut Fl_GIF_Image,
     refcount: AtomicUsize,
@@ -403,8 +417,10 @@ impl GifImage {
     }
 }
 
+impl_image_ext!(XpmImage, Fl_XPM_Image);
+
 /// Creates a struct holding a XPM image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct XpmImage {
     inner: *mut Fl_XPM_Image,
     refcount: AtomicUsize,
@@ -443,8 +459,10 @@ impl XpmImage {
     }
 }
 
+impl_image_ext!(XbmImage, Fl_XBM_Image);
+
 /// Creates a struct holding a XBM image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct XbmImage {
     inner: *mut Fl_XBM_Image,
     refcount: AtomicUsize,
@@ -483,8 +501,10 @@ impl XbmImage {
     }
 }
 
+impl_image_ext!(PnmImage, Fl_PNM_Image);
+
 /// Creates a struct holding a PNM image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct PnmImage {
     inner: *mut Fl_PNM_Image,
     refcount: AtomicUsize,
@@ -523,8 +543,10 @@ impl PnmImage {
     }
 }
 
+impl_image_ext!(TiledImage, Fl_Tiled_Image);
+
 /// Creates a struct holding a tiled image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct TiledImage {
     inner: *mut Fl_Tiled_Image,
     refcount: AtomicUsize,
@@ -545,8 +567,10 @@ impl TiledImage {
     }
 }
 
+impl_image_ext!(Pixmap, Fl_Pixmap);
+
 /// Creates a struct holding a pixmap image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct Pixmap {
     inner: *mut Fl_Pixmap,
     refcount: AtomicUsize,
@@ -588,8 +612,10 @@ impl Pixmap {
     }
 }
 
+impl_image_ext!(RgbImage, Fl_RGB_Image);
+
 /// Creates a struct holding a raw RGB image
-#[derive(ImageExt, Debug)]
+#[derive(Debug)]
 pub struct RgbImage {
     pub(crate) inner: *mut Fl_RGB_Image,
     pub(crate) refcount: AtomicUsize,

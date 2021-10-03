@@ -317,4 +317,7 @@ pub mod printer;
 extern crate fltk_derive;
 
 #[macro_use]
+extern crate paste;
+
+#[macro_use]
 extern crate bitflags;

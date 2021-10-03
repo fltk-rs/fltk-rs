@@ -72,7 +72,7 @@ pub type Window = DoubleWindow;
 
 /// Defines the window type
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum WindowType {
     /// Single window
     Normal = 240,
@@ -80,8 +80,15 @@ pub enum WindowType {
     Double = 241,
 }
 
+impl_widget_type!(WindowType);
+
+impl_widget_ext!(SingleWindow, Fl_Single_Window);
+impl_widget_base!(SingleWindow, Fl_Single_Window);
+impl_group_ext!(SingleWindow, Fl_Single_Window);
+impl_window_ext!(SingleWindow, Fl_Single_Window);
+
 /// Creates a single (buffered) window widget
-#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(Debug)]
 pub struct SingleWindow {
     inner: *mut Fl_Single_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -208,8 +215,13 @@ impl SingleWindow {
     }
 }
 
+impl_widget_ext!(DoubleWindow, Fl_Double_Window);
+impl_widget_base!(DoubleWindow, Fl_Double_Window);
+impl_group_ext!(DoubleWindow, Fl_Double_Window);
+impl_window_ext!(DoubleWindow, Fl_Double_Window);
+
 /// Creates a double (buffered) window widget
-#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(Debug)]
 pub struct DoubleWindow {
     inner: *mut Fl_Double_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -368,8 +380,13 @@ impl DoubleWindow {
     }
 }
 
+impl_widget_ext!(MenuWindow, Fl_Menu_Window);
+impl_widget_base!(MenuWindow, Fl_Menu_Window);
+impl_group_ext!(MenuWindow, Fl_Menu_Window);
+impl_window_ext!(MenuWindow, Fl_Menu_Window);
+
 /// Creates a Menu window widget
-#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(Debug)]
 pub struct MenuWindow {
     inner: *mut Fl_Menu_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -385,8 +402,13 @@ impl MenuWindow {
     }
 }
 
+impl_widget_ext!(OverlayWindow, Fl_Overlay_Window);
+impl_widget_base!(OverlayWindow, Fl_Overlay_Window);
+impl_group_ext!(OverlayWindow, Fl_Overlay_Window);
+impl_window_ext!(OverlayWindow, Fl_Overlay_Window);
+
 /// Creates an overlay (buffered) window widget
-#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(Debug)]
 pub struct OverlayWindow {
     inner: *mut Fl_Overlay_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -526,12 +548,21 @@ pub type GlContext = *mut raw::c_void;
 
 /// Creates a OpenGL Glut window widget
 #[cfg(feature = "enable-glwindow")]
-#[derive(WidgetBase, WidgetExt, GroupExt, WindowExt, Debug)]
+#[derive(Debug)]
 pub struct GlutWindow {
     inner: *mut Fl_Glut_Window,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+#[cfg(feature = "enable-glwindow")]
+impl_widget_ext!(GlutWindow, Fl_Glut_Window);
+#[cfg(feature = "enable-glwindow")]
+impl_widget_base!(GlutWindow, Fl_Glut_Window);
+#[cfg(feature = "enable-glwindow")]
+impl_group_ext!(GlutWindow, Fl_Glut_Window);
+#[cfg(feature = "enable-glwindow")]
+impl_window_ext!(GlutWindow, Fl_Glut_Window);
 
 #[cfg(feature = "enable-glwindow")]
 impl GlutWindow {

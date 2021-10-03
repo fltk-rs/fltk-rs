@@ -11,9 +11,11 @@ use std::{
     os::raw,
 };
 
+impl_widget_type!(ChartType);
+
 /// Defines the chart types supported by fltk
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum ChartType {
     /// Bar chart
     Bar = 0,
@@ -31,9 +33,11 @@ pub enum ChartType {
     SpecialPie = 6,
 }
 
+impl_widget_type!(ClockType);
+
 /// Defines the clock types supported by fltk
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum ClockType {
     /// Square clock
     Square = 0,
@@ -41,8 +45,11 @@ pub enum ClockType {
     Round = 1,
 }
 
+impl_widget_ext!(Spinner, Fl_Spinner);
+impl_widget_base!(Spinner, Fl_Spinner);
+
 /// Creates a spinner widget
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct Spinner {
     inner: *mut Fl_Spinner,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -155,16 +162,22 @@ impl Spinner {
     }
 }
 
+impl_widget_ext!(Clock, Fl_Clock);
+impl_widget_base!(Clock, Fl_Clock);
+
 /// Creates a clock widget
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct Clock {
     inner: *mut Fl_Clock,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(Chart, Fl_Chart);
+impl_widget_base!(Chart, Fl_Chart);
+
 /// Creates a chart widget
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct Chart {
     inner: *mut Fl_Chart,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -274,8 +287,11 @@ impl Chart {
     }
 }
 
+impl_widget_ext!(Progress, Fl_Progress);
+impl_widget_base!(Progress, Fl_Progress);
+
 /// Creates a progress bar
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct Progress {
     inner: *mut Fl_Progress,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -483,8 +499,11 @@ impl Tooltip {
     }
 }
 
+impl_widget_ext!(InputChoice, Fl_Input_Choice);
+impl_widget_base!(InputChoice, Fl_Input_Choice);
+
 /// Creates an `InputChoice` widget
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct InputChoice {
     inner: *mut Fl_Input_Choice,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -600,15 +619,19 @@ impl InputChoice {
     }
 }
 
+impl_widget_ext!(HelpView, Fl_Help_View);
+impl_widget_base!(HelpView, Fl_Help_View);
+
 /**
     Creates a `HelpView` widget which supports HTML 2 formatting
     ```rust,no_run
     use fltk::{prelude::*, *};
     let mut h = misc::HelpView::new(10, 10, 380, 280, "");
     h.set_value("Hello <b><font color=red>again</font></b>");
+
     ```
 */
-#[derive(WidgetBase, WidgetExt, Debug)]
+#[derive(Debug)]
 pub struct HelpView {
     inner: *mut Fl_Help_View,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

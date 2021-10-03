@@ -11,12 +11,17 @@ use std::{
 };
 
 /// Creates a table
-#[derive(WidgetBase, WidgetExt, GroupExt, TableExt, Debug)]
+#[derive(Debug)]
 pub struct Table {
     inner: *mut Fl_Table,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+impl_widget_ext!(Table, Fl_Table);
+impl_widget_base!(Table, Fl_Table);
+impl_group_ext!(Table, Fl_Table);
+impl_table_ext!(Table, Fl_Table);
 
 /// Defines the `TableContext`
 #[repr(i32)]
@@ -41,16 +46,21 @@ pub enum TableContext {
 }
 
 /// Creates a table row
-#[derive(WidgetBase, WidgetExt, GroupExt, TableExt, Debug)]
+#[derive(Debug)]
 pub struct TableRow {
     inner: *mut Fl_Table_Row,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(TableRow, Fl_Table_Row);
+impl_widget_base!(TableRow, Fl_Table_Row);
+impl_group_ext!(TableRow, Fl_Table_Row);
+impl_table_ext!(TableRow, Fl_Table_Row);
+
 /// Defines the table row select mode
 #[repr(i32)]
-#[derive(WidgetType, Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum TableRowSelectMode {
     /// Disable select
     None,
@@ -59,6 +69,8 @@ pub enum TableRowSelectMode {
     /// Select several elements
     Multi,
 }
+
+impl_widget_type!(TableRowSelectMode);
 
 /// Defines the table row select flag
 #[repr(i32)]

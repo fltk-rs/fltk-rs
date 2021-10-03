@@ -9,17 +9,23 @@ use std::{
     os::raw,
 };
 
+impl_widget_ext!(Input, Fl_Input);
+impl_widget_base!(Input, Fl_Input);
+impl_input_ext!(Input, Fl_Input);
+
 /// Creates an input widget
-#[derive(WidgetBase, WidgetExt, InputExt, Debug)]
+#[derive(Debug)]
 pub struct Input {
     inner: *mut Fl_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_type!(InputType);
+
 /// Sets the input widget's type
 #[repr(i32)]
-#[derive(WidgetType, Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub enum InputType {
     /// Normal input
     Normal = 0,
@@ -39,32 +45,48 @@ pub enum InputType {
     Wrap = 16,
 }
 
+impl_widget_ext!(IntInput, Fl_Int_Input);
+impl_widget_base!(IntInput, Fl_Int_Input);
+impl_input_ext!(IntInput, Fl_Int_Input);
+
 /// Creates an input widget which takes only integers
-#[derive(WidgetBase, WidgetExt, InputExt, Debug)]
+#[derive(Debug)]
 pub struct IntInput {
     inner: *mut Fl_Int_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(FloatInput, Fl_Float_Input);
+impl_widget_base!(FloatInput, Fl_Float_Input);
+impl_input_ext!(FloatInput, Fl_Float_Input);
+
 /// Creates an input widget which takes only floats
-#[derive(WidgetBase, WidgetExt, InputExt, Debug)]
+#[derive(Debug)]
 pub struct FloatInput {
     inner: *mut Fl_Float_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(MultilineInput, Fl_Multiline_Input);
+impl_widget_base!(MultilineInput, Fl_Multiline_Input);
+impl_input_ext!(MultilineInput, Fl_Multiline_Input);
+
 /// Creates a multiline-input widget
-#[derive(WidgetBase, WidgetExt, InputExt, Debug)]
+#[derive(Debug)]
 pub struct MultilineInput {
     inner: *mut Fl_Multiline_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
 
+impl_widget_ext!(FileInput, Fl_File_Input);
+impl_widget_base!(FileInput, Fl_File_Input);
+impl_input_ext!(FileInput, Fl_File_Input);
+
 /// Creates a File-input widget
-#[derive(WidgetBase, WidgetExt, InputExt, Debug)]
+#[derive(Debug)]
 pub struct FileInput {
     inner: *mut Fl_File_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
@@ -85,8 +107,12 @@ impl FileInput {
     }
 }
 
+impl_widget_ext!(SecretInput, Fl_Secret_Input);
+impl_widget_base!(SecretInput, Fl_Secret_Input);
+impl_input_ext!(SecretInput, Fl_Secret_Input);
+
 /// Creates a secret input widget
-#[derive(WidgetBase, WidgetExt, InputExt, Debug)]
+#[derive(Debug)]
 pub struct SecretInput {
     inner: *mut Fl_Secret_Input,
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,

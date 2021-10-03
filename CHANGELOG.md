@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.6] - Unreleased
+- Remove unnecessary deps in fltk-derive.
+
 ## [1.2.5] - 2021-10-03
 - Add app::font_size() getter.
 - Handle None in DisplayExt::set_highlight_data().
