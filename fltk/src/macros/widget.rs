@@ -857,7 +857,7 @@ macro_rules! impl_widget_base {
                         [<$flname _set_deleter>](widget_ptr, Some(shim));
                         $name {
                             inner: widget_ptr,
-                            tracker: tracker,
+                            tracker,
                             is_derived: true,
                         }
                     }
@@ -886,7 +886,7 @@ macro_rules! impl_widget_base {
                     assert!(!tracker.is_null());
                     let temp = $name {
                         inner: ptr as *mut $flname,
-                        tracker: tracker,
+                        tracker,
                         is_derived: false,
                     };
                     fltk_sys::fl::Fl_unlock();
