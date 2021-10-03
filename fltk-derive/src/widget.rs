@@ -1011,7 +1011,7 @@ macro_rules! impl_widget_base {
 
 #[macro_export]
 macro_rules! impl_widget_type {
-    ($name: tt) => {
+    ($name: ident) => {
         impl WidgetType for $name {
             fn to_i32(self) -> i32 {
                 self as i32
