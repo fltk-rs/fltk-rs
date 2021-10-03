@@ -263,7 +263,6 @@ please check the [FAQ](https://github.com/fltk-rs/fltk-rs/blob/master/FAQ.md) pa
 #![allow(clippy::needless_doctest_main)]
 #![warn(missing_docs)]
 #![warn(broken_intra_doc_links)]
-#![feature(concat_idents)]
 
 /// Application related methods and functions
 pub mod app;
@@ -316,6 +315,9 @@ pub mod printer;
 
 #[macro_use]
 extern crate fltk_derive;
+
+#[macro_use]
+extern crate paste;
 
 #[macro_use]
 extern crate bitflags;
