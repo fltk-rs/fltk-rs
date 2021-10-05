@@ -2,7 +2,8 @@
 
 
 ## [1.2.6] - Unreleased
-- Move macros into fltk and remove reliance on proc-macros.
+- Move macros into fltk and remove dependency on syn & quote.
+- Make raw-window-handle an optional dependency.
 
 ## [1.2.5] - 2021-10-03
 - Add app::font_size() getter.
