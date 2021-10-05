@@ -23,7 +23,7 @@ raw-window-handle = { version = "^0.3.3", optional = true }
 paste = "1"
 
 [features]
-default = ["raw-window-handle"]
+default = []
 fltk-bundled = ["fltk-sys/fltk-bundled", "enable-glwindow"] # Support for bundled versions of cfltk and fltk (requires curl and tar)
 enable-glwindow = ["fltk-sys/enable-glwindow"] # Support for systems without OpenGL
 no-pango = ["fltk-sys/no-pango"] # You can use this if you don't need rtl or cjk unicode support
