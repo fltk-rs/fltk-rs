@@ -460,6 +460,15 @@ impl Color {
         unsafe { mem::transmute(fl::Fl_get_rgb_color(r, g, b)) }
     }
 
+    /// Get a color from an RGBI value, the I stands for the Fltk colormap index.
+    /// This can be used in a const context. 
+    /// The lower 8 bit representation should be 00 for FLTK to treat the upper 24 bits as a color outside its colormap
+    pub const fn from_rgbi(val: u32) -> Color {
+        let mut c = Color::Black;
+        c.bits = val;
+        c
+    }
+
     /// Returns a color from hex or decimal
     pub fn from_u32(val: u32) -> Color {
         let (r, g, b) = utils::hex2rgb(val);
@@ -643,22 +652,17 @@ bitflags::bitflags! {
 }
 
 impl Event {
-    #[cfg(not(has_const_transmute))]
-    /// Creates an event from an i32 value
-    pub fn from_i32(val: i32) -> Event {
-        unsafe { mem::transmute(val) }
-    }
-
-    #[cfg(has_const_transmute)]
     /// Creates an event from an i32 value
     pub const fn from_i32(val: i32) -> Event {
-        unsafe { mem::transmute(val) }
+        let mut ev = Event::NoEvent;
+        ev.bits = val;
+        ev
     }
 }
 
 impl From<i32> for Event {
     fn from(val: i32) -> Event {
-        unsafe { mem::transmute(val) }
+        Event::from_i32(val)
     }
 }
 
@@ -789,28 +793,28 @@ bitflags::bitflags! {
 }
 
 impl Key {
-    #[cfg(has_const_transmute)]
     /// Gets a Key from an i32
     pub const fn from_i32(val: i32) -> Key {
-        unsafe { mem::transmute(val) }
+        let mut k = Key::None;
+        k.bits = val;
+        k
     }
 
-    #[cfg(not(has_const_transmute))]
-    /// Gets a Key from an i32
-    pub fn from_i32(val: i32) -> Key {
-        unsafe { mem::transmute(val) }
-    }
-
-    #[cfg(has_const_transmute)]
     /// Gets a Key from a char
     pub const fn from_char(val: char) -> Key {
-        unsafe { mem::transmute(val) }
+        let mut k = Key::None;
+        k.bits = val as i32;
+        k
     }
 
-    #[cfg(not(has_const_transmute))]
-    /// Gets a Key from a char
-    pub fn from_char(val: char) -> Key {
-        unsafe { mem::transmute(val) }
+    /// Get the char representation of a Key.
+    pub const fn to_char(&self) -> Option<char> {
+        let bits = self.bits;
+        if bits >= 0xD800 && bits <= 0xDFFF {
+            None
+        } else {
+            Some(bits as u8 as char)
+        }
     }
 }
 
@@ -858,29 +862,37 @@ pub type EventState = Shortcut;
 impl Shortcut {
     /// Create a shortcut from a char
     pub fn from_char(c: char) -> Shortcut {
-        Shortcut::None | c
+        let mut s = Shortcut::None;
+        s.bits = c as _;
+        s
     }
 
     /// Create a shortcut from a key
     pub fn from_key(k: Key) -> Shortcut {
-        Shortcut::None | k
+        let mut s = Shortcut::None;
+        s.bits = k.bits();
+        s
     }
 
     /// Create a shortcut from an i32
     pub fn from_i32(v: i32) -> Shortcut {
-        Shortcut::None | Key::from_i32(v)
+        let mut s = Shortcut::None;
+        s.bits = v;
+        s
     }
 
     /// get key mask
-    pub fn key(&self) -> Key {
+    pub const fn key(&self) -> Key {
         let mut temp = self.bits;
         temp &= 0x0000_ffff;
         Key::from_i32(temp)
     }
 
     /// Get the button number
-    pub fn button(button_num: i32) -> Shortcut {
-        unsafe { mem::transmute(0x0080_0000 << button_num) }
+    pub const fn button(button_num: i32) -> Shortcut {
+        let mut s = Shortcut::None;
+        s.bits = 0x0080_0000 << button_num;
+        s
     }
 }
 

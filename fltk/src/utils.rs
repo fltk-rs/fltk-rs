@@ -72,7 +72,7 @@ pub fn hex2rgb(val: u32) -> (u8, u8, u8) {
     let (r, g, b, a) = hex2rgba(0xff0000ff);
     ```
 */
-pub fn hex2rgba(val: u32) -> (u8, u8, u8, u8) {
+pub const fn hex2rgba(val: u32) -> (u8, u8, u8, u8) {
     let r = ((val >> 24) & 0xff) as u8;
     let g = ((val >> 16) & 0xff) as u8;
     let b = ((val >> 8) & 0xff) as u8;
