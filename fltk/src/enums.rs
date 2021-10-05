@@ -210,7 +210,7 @@ impl FrameType {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines alignment rules used by FLTK for labels
     pub struct Align: i32 {
         /// Center
@@ -260,7 +260,7 @@ bitflags! {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines fonts used by FLTK
     pub struct Font: i32 {
         /// Helvetica
@@ -381,7 +381,7 @@ impl Font {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines colors used by FLTK.
     /// Colors are stored as RGBI values, the last being the index for FLTK colors in this enum.
     /// Colors in this enum don't have an RGB stored. However, custom colors have an RGB, and don't have an index.
@@ -458,6 +458,15 @@ impl Color {
     /// Returns a color from RGB
     pub fn from_rgb(r: u8, g: u8, b: u8) -> Color {
         unsafe { mem::transmute(fl::Fl_get_rgb_color(r, g, b)) }
+    }
+
+    /// Get a color from an RGBI value, the I stands for the Fltk colormap index.
+    /// This can be used in a const context. 
+    /// The lower 8 bit representation should be 00 for FLTK to treat the upper 24 bits as a color outside its colormap
+    pub const fn from_rgbi(val: u32) -> Color {
+        let mut c = Color::Black;
+        c.bits = val;
+        c
     }
 
     /// Returns a color from hex or decimal
@@ -576,7 +585,7 @@ impl std::fmt::Display for Color {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines event types captured by FLTK
     pub struct Event: i32 {
         /// No Event
@@ -643,22 +652,17 @@ bitflags! {
 }
 
 impl Event {
-    #[cfg(not(has_const_transmute))]
-    /// Creates an event from an i32 value
-    pub fn from_i32(val: i32) -> Event {
-        unsafe { mem::transmute(val) }
-    }
-
-    #[cfg(has_const_transmute)]
     /// Creates an event from an i32 value
     pub const fn from_i32(val: i32) -> Event {
-        unsafe { mem::transmute(val) }
+        let mut ev = Event::NoEvent;
+        ev.bits = val;
+        ev
     }
 }
 
 impl From<i32> for Event {
     fn from(val: i32) -> Event {
-        unsafe { mem::transmute(val) }
+        Event::from_i32(val)
     }
 }
 
@@ -702,7 +706,7 @@ impl std::fmt::Display for Event {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines the inputted virtual keycode
     pub struct Key: i32 {
         /// None
@@ -789,32 +793,32 @@ bitflags! {
 }
 
 impl Key {
-    #[cfg(has_const_transmute)]
     /// Gets a Key from an i32
     pub const fn from_i32(val: i32) -> Key {
-        unsafe { mem::transmute(val) }
+        let mut k = Key::None;
+        k.bits = val;
+        k
     }
 
-    #[cfg(not(has_const_transmute))]
-    /// Gets a Key from an i32
-    pub fn from_i32(val: i32) -> Key {
-        unsafe { mem::transmute(val) }
-    }
-
-    #[cfg(has_const_transmute)]
     /// Gets a Key from a char
     pub const fn from_char(val: char) -> Key {
-        unsafe { mem::transmute(val) }
+        let mut k = Key::None;
+        k.bits = val as i32;
+        k
     }
 
-    #[cfg(not(has_const_transmute))]
-    /// Gets a Key from a char
-    pub fn from_char(val: char) -> Key {
-        unsafe { mem::transmute(val) }
+    /// Get the char representation of a Key.
+    pub const fn to_char(&self) -> Option<char> {
+        let bits = self.bits;
+        if bits >= 0xD800 && bits <= 0xDFFF {
+            None
+        } else {
+            Some(bits as u8 as char)
+        }
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines the modifiers of virtual keycodes
     pub struct Shortcut: i32 {
         /// None
@@ -858,33 +862,41 @@ pub type EventState = Shortcut;
 impl Shortcut {
     /// Create a shortcut from a char
     pub fn from_char(c: char) -> Shortcut {
-        Shortcut::None | c
+        let mut s = Shortcut::None;
+        s.bits = c as _;
+        s
     }
 
     /// Create a shortcut from a key
     pub fn from_key(k: Key) -> Shortcut {
-        Shortcut::None | k
+        let mut s = Shortcut::None;
+        s.bits = k.bits();
+        s
     }
 
     /// Create a shortcut from an i32
     pub fn from_i32(v: i32) -> Shortcut {
-        Shortcut::None | Key::from_i32(v)
+        let mut s = Shortcut::None;
+        s.bits = v;
+        s
     }
 
     /// get key mask
-    pub fn key(&self) -> Key {
+    pub const fn key(&self) -> Key {
         let mut temp = self.bits;
         temp &= 0x0000_ffff;
         Key::from_i32(temp)
     }
 
     /// Get the button number
-    pub fn button(button_num: i32) -> Shortcut {
-        unsafe { mem::transmute(0x0080_0000 << button_num) }
+    pub const fn button(button_num: i32) -> Shortcut {
+        let mut s = Shortcut::None;
+        s.bits = 0x0080_0000 << button_num;
+        s
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines the types of triggers for widget callback functions. Equivalent to FL_WHEN
     pub struct CallbackTrigger: i32 {
         /// Never
@@ -954,7 +966,7 @@ pub enum Cursor {
     None = 255,
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Defines visual mode types (capabilites of the window).
     /// Rgb and Single have a value of zero, so they
     /// are "on" unless you give Index or Double.
@@ -988,7 +1000,7 @@ bitflags! {
     }
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// Damage masks
     pub struct Damage: u8 {
         /// No damage

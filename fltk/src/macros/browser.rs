@@ -1,7 +1,7 @@
-#[macro_export]
+/// Implements BrowserExt
 macro_rules! impl_browser_ext {
     ($name:tt, $flname:tt) => {
-        paste! {
+        paste::paste! {
             unsafe impl BrowserExt for $name {
                 fn remove(&mut self, line: i32) {
                     unsafe {
@@ -9,43 +9,43 @@ macro_rules! impl_browser_ext {
                         [<$flname _remove>](self.inner, line as i32)
                     }
                 }
-    
+
                 fn add(&mut self, item: &str) {
                     assert!(!self.was_deleted());
                     let item = CString::safe_new(item);
                     unsafe { [<$flname _add>](self.inner, item.as_ptr()) }
                 }
-    
+
                 fn insert(&mut self, line: i32, item: &str) {
                     assert!(!self.was_deleted());
                     let item = CString::safe_new(item);
                     unsafe { [<$flname _insert>](self.inner, line as i32, item.as_ptr()) }
                 }
-    
+
                 fn move_item(&mut self, to: i32, from: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _move>](self.inner, to as i32, from as i32) }
                 }
-    
+
                 fn swap(&mut self, a: i32, b: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _swap>](self.inner, a as i32, b as i32) }
                 }
-    
+
                 fn clear(&mut self) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _clear>](self.inner)
                     }
                 }
-    
+
                 fn size(&self) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _size>](self.inner) as i32
                     }
                 }
-    
+
                 fn select(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     if line <= self.size() {
@@ -54,12 +54,12 @@ macro_rules! impl_browser_ext {
                         }
                     }
                 }
-    
+
                 fn selected(&self, line: i32) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _selected>](self.inner, line as i32) != 0 }
                 }
-    
+
                 fn text(&self, line: i32) -> Option<String> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -75,17 +75,17 @@ macro_rules! impl_browser_ext {
                         }
                     }
                 }
-    
+
                 fn selected_text(&self) -> Option<String> {
                     self.text(self.value())
                 }
-    
+
                 fn set_text(&mut self, line: i32, txt: &str) {
                     assert!(!self.was_deleted());
                     let txt = CString::safe_new(txt);
                     unsafe { [<$flname _set_text>](self.inner, line as i32, txt.as_ptr()) }
                 }
-    
+
                 fn load<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     if !path.as_ref().exists() {
@@ -103,19 +103,19 @@ macro_rules! impl_browser_ext {
                         Ok(())
                     }
                 }
-    
+
                 fn text_size(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _text_size>](self.inner) as i32 }
                 }
-    
+
                 fn set_text_size(&mut self, c: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_size>](self.inner, c as i32)
                     }
                 }
-    
+
                 fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<Img>) {
                     assert!(!self.was_deleted());
                     if let Some(image) = image {
@@ -137,7 +137,7 @@ macro_rules! impl_browser_ext {
                         }
                     }
                 }
-    
+
                 fn icon(&self, line: i32) -> Option<Box<dyn ImageExt>> {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -145,59 +145,59 @@ macro_rules! impl_browser_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let mut img =
+                            let img =
                                 Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
                     }
                 }
-    
+
                 fn remove_icon(&mut self, line: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _remove_icon>](self.inner, line as i32)
                     }
                 }
-    
+
                 fn top_line(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _topline>](self.inner, line as i32) }
                 }
-    
+
                 fn bottom_line(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _bottomline>](self.inner, line as i32) }
                 }
-    
+
                 fn middle_line(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _middleline>](self.inner, line as i32) }
                 }
-    
+
                 fn format_char(&self) -> char {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _format_char>](self.inner) as u8 as char }
                 }
-    
+
                 fn set_format_char(&mut self, c: char) {
                     assert!(!self.was_deleted());
                     debug_assert!(c != 0 as char);
                     let c = if c as i32 > 128 { 128 as char } else { c };
                     unsafe { [<$flname _set_format_char>](self.inner, c as raw::c_char) }
                 }
-    
+
                 fn column_char(&self) -> char {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _column_char>](self.inner) as u8 as char }
                 }
-    
+
                 fn set_column_char(&mut self, c: char) {
                     assert!(!self.was_deleted());
                     debug_assert!(c != 0 as char);
                     let c = if c as i32 > 128 { 128 as char } else { c };
                     unsafe { [<$flname _set_column_char>](self.inner, c as raw::c_char) }
                 }
-    
+
                 fn column_widths(&self) -> Vec<i32> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -213,7 +213,7 @@ macro_rules! impl_browser_ext {
                         v
                     }
                 }
-    
+
                 fn set_column_widths(&mut self, arr: &'static [i32]) {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -223,64 +223,64 @@ macro_rules! impl_browser_ext {
                         [<$flname _set_column_widths>](self.inner, v.as_ptr());
                     }
                 }
-    
+
                 fn displayed(&self, line: i32) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _displayed>](self.inner, line as i32) != 0 }
                 }
-    
+
                 fn make_visible(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _make_visible>](self.inner, line as i32) }
                 }
-    
+
                 fn position(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _position>](self.inner) as i32 }
                 }
-    
+
                 fn set_position(&mut self, pos: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_position>](self.inner, pos as i32) }
                 }
-    
+
                 fn hposition(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _hposition>](self.inner) as i32 }
                 }
-    
+
                 fn set_hposition(&mut self, pos: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_hposition>](self.inner, pos as i32) }
                 }
-    
+
                 fn has_scrollbar(&self) -> BrowserScrollbar {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _has_scrollbar>](self.inner)) }
                 }
-    
+
                 fn set_has_scrollbar(&mut self, mode: BrowserScrollbar) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_has_scrollbar>](self.inner, mode as raw::c_uchar)
                     }
                 }
-    
+
                 fn scrollbar_size(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _scrollbar_size>](self.inner) as i32 }
                 }
-    
+
                 fn set_scrollbar_size(&mut self, new_size: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_scrollbar_size>](self.inner, new_size as i32) }
                 }
-    
+
                 fn sort(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _sort>](self.inner) }
                 }
-    
+
                 fn scrollbar(&self) -> crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -291,7 +291,7 @@ macro_rules! impl_browser_ext {
                         )
                     }
                 }
-    
+
                 fn hscrollbar(&self) -> crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -302,7 +302,7 @@ macro_rules! impl_browser_ext {
                         )
                     }
                 }
-    
+
                 fn value(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _value>](self.inner) as i32 }
@@ -311,3 +311,5 @@ macro_rules! impl_browser_ext {
         }
     };
 }
+
+pub(crate) use impl_browser_ext;

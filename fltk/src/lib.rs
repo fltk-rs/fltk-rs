@@ -284,6 +284,8 @@ pub mod group;
 pub mod image;
 /// Input widgets
 pub mod input;
+/// mod macros;
+mod macros;
 /// Menu widgets
 pub mod menu;
 /// Miscellaneous widgets not fitting a certain group
@@ -313,11 +315,3 @@ pub mod window;
 #[cfg(not(target_os = "android"))]
 pub mod printer;
 
-#[macro_use]
-extern crate fltk_derive;
-
-#[macro_use]
-extern crate paste;
-
-#[macro_use]
-extern crate bitflags;

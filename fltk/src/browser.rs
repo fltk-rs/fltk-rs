@@ -42,9 +42,9 @@ pub struct Browser {
     is_derived: bool,
 }
 
-impl_widget_ext!(Browser, Fl_Browser);
-impl_widget_base!(Browser, Fl_Browser);
-impl_browser_ext!(Browser, Fl_Browser);
+crate::macros::widget::impl_widget_ext!(Browser, Fl_Browser);
+crate::macros::widget::impl_widget_base!(Browser, Fl_Browser);
+crate::macros::browser::impl_browser_ext!(Browser, Fl_Browser);
 
 /// Defines the browser type
 #[repr(i32)]
@@ -60,7 +60,7 @@ pub enum BrowserType {
     Multi = 3,
 }
 
-impl_widget_type!(BrowserType);
+crate::macros::widget::impl_widget_type!(BrowserType);
 
 /// Defines the type of Scrollbar associated with the browser
 #[repr(u8)]
@@ -92,9 +92,9 @@ pub struct SelectBrowser {
     is_derived: bool,
 }
 
-impl_widget_ext!(SelectBrowser, Fl_Select_Browser);
-impl_widget_base!(SelectBrowser, Fl_Select_Browser);
-impl_browser_ext!(SelectBrowser, Fl_Select_Browser);
+crate::macros::widget::impl_widget_ext!(SelectBrowser, Fl_Select_Browser);
+crate::macros::widget::impl_widget_base!(SelectBrowser, Fl_Select_Browser);
+crate::macros::browser::impl_browser_ext!(SelectBrowser, Fl_Select_Browser);
 
 /// Creates a multi-browser
 #[derive(Debug)]
@@ -104,9 +104,9 @@ pub struct MultiBrowser {
     is_derived: bool,
 }
 
-impl_widget_ext!(MultiBrowser, Fl_Multi_Browser);
-impl_widget_base!(MultiBrowser, Fl_Multi_Browser);
-impl_browser_ext!(MultiBrowser, Fl_Multi_Browser);
+crate::macros::widget::impl_widget_ext!(MultiBrowser, Fl_Multi_Browser);
+crate::macros::widget::impl_widget_base!(MultiBrowser, Fl_Multi_Browser);
+crate::macros::browser::impl_browser_ext!(MultiBrowser, Fl_Multi_Browser);
 
 /// Creates a hold browser
 #[derive(Debug)]
@@ -116,9 +116,9 @@ pub struct HoldBrowser {
     is_derived: bool,
 }
 
-impl_widget_ext!(HoldBrowser, Fl_Hold_Browser);
-impl_widget_base!(HoldBrowser, Fl_Hold_Browser);
-impl_browser_ext!(HoldBrowser, Fl_Hold_Browser);
+crate::macros::widget::impl_widget_ext!(HoldBrowser, Fl_Hold_Browser);
+crate::macros::widget::impl_widget_base!(HoldBrowser, Fl_Hold_Browser);
+crate::macros::browser::impl_browser_ext!(HoldBrowser, Fl_Hold_Browser);
 
 /// Creates a file browser
 #[derive(Debug)]
@@ -128,9 +128,9 @@ pub struct FileBrowser {
     is_derived: bool,
 }
 
-impl_widget_ext!(FileBrowser, Fl_File_Browser);
-impl_widget_base!(FileBrowser, Fl_File_Browser);
-impl_browser_ext!(FileBrowser, Fl_File_Browser);
+crate::macros::widget::impl_widget_ext!(FileBrowser, Fl_File_Browser);
+crate::macros::widget::impl_widget_base!(FileBrowser, Fl_File_Browser);
+crate::macros::browser::impl_browser_ext!(FileBrowser, Fl_File_Browser);
 
 /// File types for the `FileBrowser`
 #[repr(i32)]
@@ -212,8 +212,8 @@ pub struct CheckBrowser {
     is_derived: bool,
 }
 
-impl_widget_ext!(CheckBrowser, Fl_Check_Browser);
-impl_widget_base!(CheckBrowser, Fl_Check_Browser);
+crate::macros::widget::impl_widget_ext!(CheckBrowser, Fl_Check_Browser);
+crate::macros::widget::impl_widget_base!(CheckBrowser, Fl_Check_Browser);
 
 impl CheckBrowser {
     /// Add an item, returns the number of current items

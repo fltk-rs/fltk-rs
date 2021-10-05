@@ -149,10 +149,18 @@ impl Term {
                         }
                     }
                     _ => {
-                        let temp = app::event_text();
-                        cmd.push_str(&temp);
-                        t.append_txt(&temp);
-                        true
+                        if let Some(ch) = app::event_text().chars().next() {
+                            if let Some(_) = app::compose() {
+                                let temp = ch.to_string();
+                                cmd.push_str(&temp);
+                                t.append_txt(&temp);
+                                true
+                            } else {
+                                false
+                            }
+                        } else {
+                            false
+                        }
                     }
                 },
                 _ => false,

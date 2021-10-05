@@ -49,7 +49,7 @@ pub enum FileDialogType {
     BrowseSaveDir,
 }
 
-impl_widget_type!(FileDialogType);
+crate::macros::widget::impl_widget_type!(FileDialogType);
 
 /// Alias for `NativeFileChooserType`
 pub type NativeFileChooserType = FileDialogType;
@@ -70,7 +70,7 @@ pub enum FileDialogOptions {
     UseFilterExt = 8,
 }
 
-impl_widget_type!(FileDialogOptions);
+crate::macros::widget::impl_widget_type!(FileDialogOptions);
 
 /// Alias to `NativeFileChooserOptions`
 pub type NativeFileChooserOptions = FileDialogOptions;
@@ -568,7 +568,7 @@ pub struct FileChooser {
     inner: *mut Fl_File_Chooser,
 }
 
-bitflags! {
+bitflags::bitflags! {
     /// The types of FileChooser
     pub struct FileChooserType: i32 {
         /// Single file

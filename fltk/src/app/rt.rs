@@ -238,7 +238,8 @@ pub fn add_clipboard_notify2<F: FnMut(i32) + 'static>(cb: F) {
         }
         let a: *mut Box<dyn FnMut(i32)> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
-        let callback: Option<unsafe extern "C" fn(source: i32, arg1: *mut raw::c_void)> = Some(shim);
+        let callback: Option<unsafe extern "C" fn(source: i32, arg1: *mut raw::c_void)> =
+            Some(shim);
         fl::Fl_add_clipboard_notify(callback, data);
     }
 }

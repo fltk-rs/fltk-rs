@@ -8,7 +8,4 @@ updates:
     directory: "/fltk-sys"
     schedule:
       interval: "daily"
-  - package-ecosystem: "cargo"
-    directory: "/fltk-derive"
-    schedule:
-      interval: "daily"
+

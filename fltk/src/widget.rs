@@ -15,5 +15,5 @@ pub struct Widget {
     is_derived: bool,
 }
 
-impl_widget_ext!(Widget, Fl_Widget);
-impl_widget_base!(Widget, Fl_Widget);
+crate::macros::widget::impl_widget_ext!(Widget, Fl_Widget);
+crate::macros::widget::impl_widget_base!(Widget, Fl_Widget);

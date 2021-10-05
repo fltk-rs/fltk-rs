@@ -1,4 +1,4 @@
-#[macro_export]
+/// Implements MenuExt
 macro_rules! impl_menu_ext {
     ($name: ident, $flname: ident) => {
         impl IntoIterator for $name {
@@ -14,14 +14,14 @@ macro_rules! impl_menu_ext {
             }
         }
 
-        paste! {
+        paste::paste! {
             unsafe impl MenuExt for $name {
                 fn add<F: FnMut(&mut Self) + 'static>(
                     &mut self,
                     name: &str,
                     shortcut: Shortcut,
                     flag: MenuFlag,
-                    mut cb: F,
+                    cb: F,
                 ) -> i32 {
                     assert!(!self.was_deleted());
                     let temp = CString::safe_new(name);
@@ -47,14 +47,14 @@ macro_rules! impl_menu_ext {
                         )
                     }
                 }
-    
+
                 fn insert<F: FnMut(&mut Self) + 'static>(
                     &mut self,
                     idx: i32,
                     name: &str,
                     shortcut: Shortcut,
                     flag: MenuFlag,
-                    mut cb: F,
+                    cb: F,
                 ) -> i32 {
                     assert!(!self.was_deleted());
                     let temp = CString::safe_new(name);
@@ -81,7 +81,7 @@ macro_rules! impl_menu_ext {
                         )
                     }
                 }
-    
+
                 fn add_emit<T: 'static + Clone + Send + Sync>(
                     &mut self,
                     label: &str,
@@ -92,7 +92,7 @@ macro_rules! impl_menu_ext {
                 ) -> i32 {
                     self.add(label, shortcut, flag, move |_| sender.send(msg.clone()))
                 }
-    
+
                 fn insert_emit<T: 'static + Clone + Send + Sync>(
                     &mut self,
                     idx: i32,
@@ -106,7 +106,7 @@ macro_rules! impl_menu_ext {
                         sender.send(msg.clone())
                     })
                 }
-    
+
                 fn remove(&mut self, idx: i32) {
                     assert!(!self.was_deleted());
                     let idx = if idx < self.size() {
@@ -116,7 +116,7 @@ macro_rules! impl_menu_ext {
                     };
                     unsafe { [<$flname _remove>](self.inner, idx as i32) }
                 }
-    
+
                 fn find_item(&self, name: &str) -> Option<MenuItem> {
                     assert!(!self.was_deleted());
                     let name = CString::safe_new(name);
@@ -132,62 +132,62 @@ macro_rules! impl_menu_ext {
                         }
                     }
                 }
-    
+
                 fn set_item(&mut self, item: &MenuItem) -> bool {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_item>](self.inner, item.inner) != 0
                     }
                 }
-    
+
                 fn find_index(&self, label: &str) -> i32 {
                     assert!(!self.was_deleted());
                     let label = CString::safe_new(label);
                     unsafe { [<$flname _find_index>](self.inner, label.as_ptr()) as i32 }
                 }
-    
+
                 fn text_font(&self) -> Font {
                     unsafe {
                         assert!(!self.was_deleted());
                         mem::transmute([<$flname _text_font>](self.inner))
                     }
                 }
-    
+
                 fn set_text_font(&mut self, c: Font) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_font>](self.inner, c.bits() as i32)
                     }
                 }
-    
+
                 fn text_size(&self) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _text_size>](self.inner) as i32
                     }
                 }
-    
+
                 fn set_text_size(&mut self, c: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_size>](self.inner, c as i32)
                     }
                 }
-    
+
                 fn text_color(&self) -> Color {
                     unsafe {
                         assert!(!self.was_deleted());
                         mem::transmute([<$flname _text_color>](self.inner))
                     }
                 }
-    
+
                 fn set_text_color(&mut self, c: Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_color>](self.inner, c.bits() as u32)
                     }
                 }
-    
+
                 fn add_choice(&mut self, text: &str) {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -198,7 +198,7 @@ macro_rules! impl_menu_ext {
                         )
                     }
                 }
-    
+
                 fn choice(&self) -> Option<String> {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -214,41 +214,41 @@ macro_rules! impl_menu_ext {
                         }
                     }
                 }
-    
+
                 fn value(&self) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _value>](self.inner)
                     }
                 }
-    
+
                 fn set_value(&mut self, v: i32) -> bool {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_value>](self.inner, v) != 0
                     }
                 }
-    
+
                 fn clear(&mut self) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _clear>](self.inner);
                     }
                 }
-    
+
                 unsafe fn unsafe_clear(&mut self) {
                     assert!(!self.was_deleted());
                     let sz = self.size();
                     if sz > 0 {
                         for i in 0..sz {
                             // Shouldn't fail
-                            let mut c = self.at(i).unwrap();
+                            let c = self.at(i).unwrap();
                             let _ = c.user_data();
                         }
                     }
                     [<$flname _clear>](self.inner);
                 }
-    
+
                 fn clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -258,7 +258,7 @@ macro_rules! impl_menu_ext {
                         }
                     }
                 }
-    
+
                 unsafe fn unsafe_clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     let x = self.at(idx);
@@ -273,7 +273,7 @@ macro_rules! impl_menu_ext {
                     let mut i = idx;
                     loop {
                         // Shouldn't fail
-                        let mut item = self.at(i).unwrap();
+                        let item = self.at(i).unwrap();
                         if item.label().is_none() {
                             break;
                         }
@@ -285,12 +285,12 @@ macro_rules! impl_menu_ext {
                         _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
                     }
                 }
-    
+
                 fn size(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _size>](self.inner) as i32 }
                 }
-    
+
                 fn text(&self, idx: i32) -> Option<String> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -306,7 +306,7 @@ macro_rules! impl_menu_ext {
                         }
                     }
                 }
-    
+
                 fn at(&self, idx: i32) -> Option<crate::menu::MenuItem> {
                     assert!(!self.was_deleted());
                     if idx >= self.size() || idx < 0 {
@@ -325,36 +325,36 @@ macro_rules! impl_menu_ext {
                         }
                     }
                 }
-    
+
                 fn mode(&self, idx: i32) -> crate::menu::MenuFlag {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _mode>](self.inner, idx as i32)) }
                 }
-    
+
                 fn set_mode(&mut self, idx: i32, flag: crate::menu::MenuFlag) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_mode>](self.inner, idx as i32, flag as i32) }
                 }
-    
+
                 fn end(&mut self) {
                     //
                 }
-    
+
                 fn set_down_frame(&mut self, f: FrameType) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_down_box>](self.inner, f as i32) }
                 }
-    
+
                 fn down_frame(&self) -> FrameType {
                     assert!(!self.was_deleted());
                     unsafe { mem::transmute([<$flname _down_box>](self.inner)) }
                 }
-    
+
                 fn global(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _global>](self.inner) }
                 }
-    
+
                 fn menu(&self) -> Option<crate::menu::MenuItem> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -369,12 +369,14 @@ macro_rules! impl_menu_ext {
                         }
                     }
                 }
-    
+
                 unsafe fn set_menu(&mut self, item: crate::menu::MenuItem) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _set_menu>](self.inner, item.inner) }
+                    [<$flname _set_menu>](self.inner, item.inner)
                 }
             }
         }
     };
 }
+
+pub(crate) use impl_menu_ext;

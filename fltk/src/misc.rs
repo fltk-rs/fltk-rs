@@ -11,7 +11,7 @@ use std::{
     os::raw,
 };
 
-impl_widget_type!(ChartType);
+crate::macros::widget::impl_widget_type!(ChartType);
 
 /// Defines the chart types supported by fltk
 #[repr(i32)]
@@ -33,7 +33,7 @@ pub enum ChartType {
     SpecialPie = 6,
 }
 
-impl_widget_type!(ClockType);
+crate::macros::widget::impl_widget_type!(ClockType);
 
 /// Defines the clock types supported by fltk
 #[repr(i32)]
@@ -45,8 +45,8 @@ pub enum ClockType {
     Round = 1,
 }
 
-impl_widget_ext!(Spinner, Fl_Spinner);
-impl_widget_base!(Spinner, Fl_Spinner);
+crate::macros::widget::impl_widget_ext!(Spinner, Fl_Spinner);
+crate::macros::widget::impl_widget_base!(Spinner, Fl_Spinner);
 
 /// Creates a spinner widget
 #[derive(Debug)]
@@ -162,8 +162,8 @@ impl Spinner {
     }
 }
 
-impl_widget_ext!(Clock, Fl_Clock);
-impl_widget_base!(Clock, Fl_Clock);
+crate::macros::widget::impl_widget_ext!(Clock, Fl_Clock);
+crate::macros::widget::impl_widget_base!(Clock, Fl_Clock);
 
 /// Creates a clock widget
 #[derive(Debug)]
@@ -173,8 +173,8 @@ pub struct Clock {
     is_derived: bool,
 }
 
-impl_widget_ext!(Chart, Fl_Chart);
-impl_widget_base!(Chart, Fl_Chart);
+crate::macros::widget::impl_widget_ext!(Chart, Fl_Chart);
+crate::macros::widget::impl_widget_base!(Chart, Fl_Chart);
 
 /// Creates a chart widget
 #[derive(Debug)]
@@ -287,8 +287,8 @@ impl Chart {
     }
 }
 
-impl_widget_ext!(Progress, Fl_Progress);
-impl_widget_base!(Progress, Fl_Progress);
+crate::macros::widget::impl_widget_ext!(Progress, Fl_Progress);
+crate::macros::widget::impl_widget_base!(Progress, Fl_Progress);
 
 /// Creates a progress bar
 #[derive(Debug)]
@@ -499,8 +499,8 @@ impl Tooltip {
     }
 }
 
-impl_widget_ext!(InputChoice, Fl_Input_Choice);
-impl_widget_base!(InputChoice, Fl_Input_Choice);
+crate::macros::widget::impl_widget_ext!(InputChoice, Fl_Input_Choice);
+crate::macros::widget::impl_widget_base!(InputChoice, Fl_Input_Choice);
 
 /// Creates an `InputChoice` widget
 #[derive(Debug)]
@@ -619,8 +619,8 @@ impl InputChoice {
     }
 }
 
-impl_widget_ext!(HelpView, Fl_Help_View);
-impl_widget_base!(HelpView, Fl_Help_View);
+crate::macros::widget::impl_widget_ext!(HelpView, Fl_Help_View);
+crate::macros::widget::impl_widget_base!(HelpView, Fl_Help_View);
 
 /**
     Creates a `HelpView` widget which supports HTML 2 formatting

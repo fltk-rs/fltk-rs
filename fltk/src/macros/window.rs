@@ -1,4 +1,4 @@
-#[macro_export]
+/// Implements WindowExt
 macro_rules! impl_window_ext {
     ($name: ident, $flname: ident) => {
         #[cfg(feature = "raw-window-handle")]
@@ -52,7 +52,7 @@ macro_rules! impl_window_ext {
             }
         }
 
-        paste! {
+        paste::paste! {
             unsafe impl WindowExt for $name {
                 fn center_screen(mut self) -> Self {
                     assert!(!self.was_deleted());
@@ -71,22 +71,22 @@ macro_rules! impl_window_ext {
                     );
                     self
                 }
-    
+
                 fn make_modal(&mut self, val: bool) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _make_modal>](self.inner, val as u32) }
                 }
-    
+
                 fn fullscreen(&mut self, val: bool) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _fullscreen>](self.inner, val as u32) }
                 }
-    
+
                 fn make_current(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _make_current>](self.inner) }
                 }
-    
+
                 fn icon(&self) -> Option<Box<dyn ImageExt>> {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -94,13 +94,13 @@ macro_rules! impl_window_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let mut img =
+                            let img =
                                 Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
                     }
                 }
-    
+
                 fn set_icon<T: ImageExt>(&mut self, image: Option<T>) {
                     assert!(!self.was_deleted());
                     assert!(
@@ -165,39 +165,39 @@ macro_rules! impl_window_ext {
                         }
                     }
                 }
-    
+
                 fn set_cursor(&mut self, cursor: Cursor) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_cursor>](self.inner, cursor as i32) }
                 }
-    
+
                 fn shown(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _shown>](self.inner) != 0 }
                 }
-    
+
                 fn set_border(&mut self, flag: bool) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_border>](self.inner, flag as i32) }
                 }
-    
+
                 fn border(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _border>](self.inner) != 0 }
                 }
-    
+
                 fn free_position(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _free_position>](self.inner) }
                 }
-    
+
                 fn raw_handle(&self) -> RawHandle {
                     assert!(!self.was_deleted());
                     unsafe {
                         let ptr = [<$flname _raw_handle>](self.inner);
                         assert!(!ptr.is_null());
                         let winid = resolve_raw_handle(ptr);
-    
+
                         #[cfg(any(
                             target_os = "windows",
                             target_os = "macos",
@@ -205,7 +205,7 @@ macro_rules! impl_window_ext {
                             target_os = "ios"
                         ))]
                         return winid.opaque;
-    
+
                         #[cfg(any(
                             target_os = "linux",
                             target_os = "dragonfly",
@@ -216,10 +216,10 @@ macro_rules! impl_window_ext {
                         return winid.x_id as RawHandle;
                     }
                 }
-    
+
                 unsafe fn set_raw_handle(&mut self, handle: RawHandle) {
                     assert!(!self.was_deleted());
-    
+
                     #[cfg(any(
                         target_os = "windows",
                         target_os = "macos",
@@ -227,7 +227,7 @@ macro_rules! impl_window_ext {
                         target_os = "ios"
                     ))]
                     assert!(!handle.is_null());
-    
+
                     #[cfg(any(
                         target_os = "linux",
                         target_os = "dragonfly",
@@ -236,10 +236,10 @@ macro_rules! impl_window_ext {
                         target_os = "openbsd",
                     ))]
                     assert!(handle != 0);
-    
+
                     Fl_Window_set_raw_handle(self.inner as *mut Fl_Window, mem::transmute(&handle));
                 }
-    
+
                 fn region(&self) -> crate::draw::Region {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -248,46 +248,46 @@ macro_rules! impl_window_ext {
                         ptr
                     }
                 }
-    
+
                 unsafe fn set_region(&mut self, region: crate::draw::Region) {
                     assert!(!self.was_deleted());
                     assert!(!region.is_null());
                     [<$flname _set_region>](self.inner, region)
                 }
-    
+
                 fn iconize(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _iconize>](self.inner) }
                 }
-    
+
                 fn fullscreen_active(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _fullscreen_active>](self.inner) != 0 }
                 }
-    
+
                 fn decorated_w(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _decorated_w>](self.inner) }
                 }
-    
+
                 fn decorated_h(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _decorated_h>](self.inner) }
                 }
-    
+
                 fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _size_range>](self.inner, min_w, min_h, max_w, max_h);
                     }
                 }
-    
+
                 fn hotspot<W: WidgetExt>(&mut self, w: &W) {
                     assert!(!self.was_deleted());
                     assert!(!w.was_deleted());
                     unsafe { [<$flname _hotspot>](self.inner, w.as_widget_ptr() as _) }
                 }
-    
+
                 fn set_shape<I: ImageExt>(&mut self, image: Option<I>) {
                     assert!(!self.was_deleted());
                     assert!(self.w() != 0);
@@ -338,7 +338,7 @@ macro_rules! impl_window_ext {
                         };
                     }
                 }
-    
+
                 fn shape(&self) -> Option<Box<dyn ImageExt>> {
                     assert!(!self.was_deleted());
                     unsafe {
@@ -346,23 +346,23 @@ macro_rules! impl_window_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let mut img =
+                            let img =
                                 Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
                     }
                 }
-    
+
                 fn x_root(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _x_root>](self.inner) }
                 }
-    
+
                 fn y_root(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _y_root>](self.inner) }
                 }
-    
+
                 fn set_cursor_image(
                     &mut self,
                     mut image: crate::image::RgbImage,
@@ -381,17 +381,17 @@ macro_rules! impl_window_ext {
                         )
                     }
                 }
-    
+
                 fn default_cursor(&mut self, cursor: Cursor) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _default_cursor>](self.inner, cursor as i32) }
                 }
-    
+
                 fn screen_num(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _screen_num>](self.inner) }
                 }
-    
+
                 fn set_screen_num(&mut self, n: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_screen_num>](self.inner, n) }
@@ -400,3 +400,5 @@ macro_rules! impl_window_ext {
         }
     };
 }
+
+pub(crate) use impl_window_ext;
