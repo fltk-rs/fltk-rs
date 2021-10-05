@@ -1,14 +1,14 @@
 # Changelog
 
 
-## [1.2.6] - 2021-10-06
+## [1.2.6] - 2021-10-05
 - Move macros into fltk and remove dependency on syn & quote.
 - Make raw-window-handle an optional dependency.
 - Constify Key, Event and Shortcut constructors.
 - Add const Key::to_char().
 - Add const Color::from_rgbi().
 
-## [1.2.5] - 2021-10-03
+## [1.2.5] - 2021-10-02
 - Add app::font_size() getter.
 - Handle None in DisplayExt::set_highlight_data().
 - Alias GlutWindow as GlWindow since they are basically the same!
