@@ -456,27 +456,48 @@ bitflags::bitflags! {
 
 impl Color {
     /// Returns a color from RGB
-    pub fn from_rgb(r: u8, g: u8, b: u8) -> Color {
-        unsafe { mem::transmute(fl::Fl_get_rgb_color(r, g, b)) }
+    pub const fn from_rgb(r: u8, g: u8, b: u8) -> Color {
+        let r = r as u32;
+        let g = g as u32;
+        let b = b as u32;
+        let val: u32 = ((r & 0xff) << 24) + ((g & 0xff) << 16) + ((b & 0xff) << 8) + (0 & 0xff);
+        Color::from_rgbi(val)
     }
 
     /// Get a color from an RGBI value, the I stands for the Fltk colormap index.
-    /// This can be used in a const context. 
-    /// The lower 8 bit representation should be 00 for FLTK to treat the upper 24 bits as a color outside its colormap
     pub const fn from_rgbi(val: u32) -> Color {
         let mut c = Color::Black;
         c.bits = val;
         c
     }
 
+    /// Create color from RGBA using alpha compositing
+    pub fn from_rgba_tuple(tup: (u8, u8, u8, u8)) -> Color {
+        let bg_col = if let Some(grp) = crate::group::Group::try_current() {
+            use crate::prelude::WidgetExt;
+            grp.color()
+        } else {
+            Color::BackGround
+        };
+        let bg_col = bg_col.to_rgb();
+        let alpha = tup.3 as f32 / 255.0;
+        let r = alpha * tup.0 as f32 + (1.0 - alpha) * bg_col.0 as f32;
+        let r = r as u8;
+        let g = alpha * tup.1 as f32 + (1.0 - alpha) * bg_col.1 as f32;
+        let g = g as u8;
+        let b = alpha * tup.2 as f32 + (1.0 - alpha) * bg_col.2 as f32;
+        let b = b as u8;
+        Color::from_rgb(r, g, b)
+    }
+
     /// Returns a color from hex or decimal
-    pub fn from_u32(val: u32) -> Color {
+    pub const fn from_u32(val: u32) -> Color {
         let (r, g, b) = utils::hex2rgb(val);
         Color::from_rgb(r, g, b)
     }
 
     /// Returns a color from hex or decimal
-    pub fn from_hex(val: u32) -> Color {
+    pub const fn from_hex(val: u32) -> Color {
         let (r, g, b) = utils::hex2rgb(val);
         Color::from_rgb(r, g, b)
     }
@@ -861,21 +882,21 @@ pub type EventState = Shortcut;
 
 impl Shortcut {
     /// Create a shortcut from a char
-    pub fn from_char(c: char) -> Shortcut {
+    pub const fn from_char(c: char) -> Shortcut {
         let mut s = Shortcut::None;
         s.bits = c as _;
         s
     }
 
     /// Create a shortcut from a key
-    pub fn from_key(k: Key) -> Shortcut {
+    pub const fn from_key(k: Key) -> Shortcut {
         let mut s = Shortcut::None;
         s.bits = k.bits();
         s
     }
 
     /// Create a shortcut from an i32
-    pub fn from_i32(v: i32) -> Shortcut {
+    pub const fn from_i32(v: i32) -> Shortcut {
         let mut s = Shortcut::None;
         s.bits = v;
         s
