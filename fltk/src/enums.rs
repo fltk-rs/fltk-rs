@@ -460,7 +460,7 @@ impl Color {
         let r = r as u32;
         let g = g as u32;
         let b = b as u32;
-        let val: u32 = ((r & 0xff) << 24) + ((g & 0xff) << 16) + ((b & 0xff) << 8) + (0 & 0xff);
+        let val: u32 = ((r & 0xff) << 24) + ((g & 0xff) << 16) + ((b & 0xff) << 8);
         Color::from_rgbi(val)
     }
 

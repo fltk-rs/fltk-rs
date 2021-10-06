@@ -436,7 +436,7 @@ impl Flex {
         <Self as GroupExt>::add(self, widget);
         self.recalc();
     }
-    
+
     /// Set the size of the widget
     pub fn set_size<W: WidgetExt>(&mut self, w: &mut W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
@@ -466,30 +466,22 @@ impl Flex {
 
     /// Set the margin
     pub fn set_margin(&mut self, m: i32) {
-        unsafe {
-            Fl_Flex_set_margin(self.inner, m)
-        }
+        unsafe { Fl_Flex_set_margin(self.inner, m) }
     }
 
     /// Get the margin
     pub fn margin(&self) -> i32 {
-        unsafe {
-            Fl_Flex_margin(self.inner)
-        }
+        unsafe { Fl_Flex_margin(self.inner) }
     }
 
     /// Set the padding
     pub fn set_pad(&mut self, p: i32) {
-        unsafe {
-            Fl_Flex_set_pad(self.inner, p)
-        }
+        unsafe { Fl_Flex_set_pad(self.inner, p) }
     }
 
     /// Get the padding
     pub fn pad(&self) -> i32 {
-        unsafe {
-            Fl_Flex_pad(self.inner)
-        }
+        unsafe { Fl_Flex_pad(self.inner) }
     }
 }
 

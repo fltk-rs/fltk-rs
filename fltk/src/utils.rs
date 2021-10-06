@@ -50,8 +50,7 @@ pub const fn rgba2hex(r: u8, g: u8, b: u8, a: u8) -> u32 {
     let g = g as u32;
     let b = b as u32;
     let a = a as u32;
-    ((r & 0xff) << 24) + ((g & 0xff) << 16) + ((b & 0xff) << 8)
-    + (a & 0xff)
+    ((r & 0xff) << 24) + ((g & 0xff) << 16) + ((b & 0xff) << 8) + (a & 0xff)
 }
 
 /**

@@ -1,12 +1,13 @@
 # Changelog
 
 
-## [1.2.7] - 2021-10-08
+## [1.2.7] - 2021-10-07
 - Add Group::try_current().
 - Add Color::from_rgba_tuple().
 - Constify more enums::Color and Shortcut methods.
 - Constify utils functions.
-- Update FLTK.
+- Formatting and clippy.
+- Update FLTK and cfltk.
 
 ## [1.2.6] - 2021-10-05
 - Move macros into fltk and remove dependency on syn & quote.
