@@ -31,6 +31,18 @@ impl Group {
             Group::from_widget_ptr(ptr as _)
         }
     }
+
+    /// Tries to get the current group
+    pub fn try_current() -> Option<Group> {
+        unsafe {
+            let ptr = Fl_Group_current();
+            if ptr.is_null() {
+                None
+            } else {
+                Some(Group::from_widget_ptr(ptr as _))
+            }
+        }
+    }
 }
 
 crate::macros::widget::impl_widget_ext!(Pack, Fl_Pack);

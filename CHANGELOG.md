@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.7] - Unreleased
+- Add Group::try_current().
+
 ## [1.2.6] - 2021-10-05
 - Move macros into fltk and remove dependency on syn & quote.
 - Make raw-window-handle an optional dependency.
