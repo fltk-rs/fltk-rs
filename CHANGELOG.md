@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.8] - 2021-10-12
+- Fix floating point exception in Flex inner vector not properly resizing.
+
 ## [1.2.7] - 2021-10-07
 - Add Group::try_current().
 - Add Color::from_rgba_tuple().
