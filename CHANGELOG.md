@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.8] - 2021-10-12
+## [1.2.8] - 2021-10-11
 - Fix floating point exception in Flex inner vector not properly resizing with set_size().
 - Fix crates.io links by using absolute urls.
 
