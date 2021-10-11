@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.2.8] - 2021-10-11
+- Fix floating point exception in Flex inner vector not properly resizing with set_size().
+- Fix crates.io links by using absolute urls.
+
 ## [1.2.7] - 2021-10-07
 - Add Group::try_current().
 - Add Color::from_rgba_tuple().

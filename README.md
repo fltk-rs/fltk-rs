@@ -85,7 +85,7 @@ fn main() {
     app.run().unwrap();
 }
 ```
-Please check the [examples](fltk/examples) directory for more examples.
+Please check the [examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples) directory for more examples.
 You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 
 ```rust
@@ -171,7 +171,7 @@ Another way is to use message passing:
         }
     }
 ```
-For the remainder of the code, check the full example [here](fltk/examples/counter2.rs).
+For the remainder of the code, check the full example [here](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter2.rs).
 
 For custom event handling, the handle() method can be used:
 ```rust
@@ -284,61 +284,61 @@ $ cargo run --example custom_dial
 
 Using custom theming and also FLTK provided default schemes like Gtk:
 
-- [hello](fltk/examples/hello.rs)
+- [hello](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/hello.rs)
 
-![alt_test](screenshots/hello.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/hello.jpg)
 
-- [calculator2](fltk/examples/calculator2.rs)
+- [calculator2](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/calculator2.rs)
 
-![alt_test](screenshots/calc2.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/calc2.jpg)
 
-- [custom_widgets](fltk/examples/custom_widgets.rs)
+- [custom_widgets](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/custom_widgets.rs)
 
-![alt_test](screenshots/custom.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/custom.jpg)
 
-- [counter3](fltk/examples/counter3.rs)
+- [counter3](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter3.rs)
 
-![alt_test](screenshots/flutter_like.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/flutter_like.jpg)
 
-- [custom_dial](fltk/examples/custom_dial.rs)
+- [custom_dial](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/custom_dial.rs)
 
-![alt_test](screenshots/dial.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/dial.jpg)
 
-- [calculator](fltk/examples/calculator.rs)
+- [calculator](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/calculator.rs)
 
-![alt_test](screenshots/calc.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/calc.jpg)
 
-- [tabs](fltk/examples/tabs.rs)
+- [tabs](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/tabs.rs)
 
-![alt_test](screenshots/tabs.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/tabs.jpg)
 
-- [counter](fltk/examples/counter.rs)
+- [counter](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter.rs)
 
-![alt_test](screenshots/counter.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/counter.jpg)
 
-- [editor](fltk/examples/editor.rs)
+- [editor](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/editor.rs)
 
-![alt_test](screenshots/editor.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/editor.jpg)
 
-- [terminal](fltk/examples/terminal.rs)
+- [terminal](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/terminal.rs)
 
-![alt_test](screenshots/terminal.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/terminal.jpg)
 
-- [table](fltk/examples/table.rs)
+- [table](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/table.rs)
 
-![alt_test](screenshots/table.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/table.jpg)
 
-- [charts](fltk/examples/charts.rs)
+- [charts](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/charts.rs)
 
-![alt_test](screenshots/charts.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/charts.jpg)
 
-- [pong](fltk/examples/pong.rs)
+- [pong](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/pong.rs)
 
-![alt_test](screenshots/pong.gif)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/pong.gif)
 
-- [frames](fltk/examples/frames.rs)
+- [frames](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/frames.rs)
 
-![alt_test](screenshots/frames.jpg)
+- ![alt_test](https://github.com/fltk-rs/fltk-rs/blob/master/screenshots/frames.jpg)
 
 Different frame types which can be used with many different widgets such as Frame, Button widgets, In/Output widgets...etc.
 
