@@ -612,6 +612,16 @@ impl Pixmap {
     }
 }
 
+/// The scaling algorithm to use for RGB images
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum RgbScaling {
+    /// Default RGB image scaling algorithm
+    Nearest = 0,
+    /// More accurate, but slower RGB image scaling algorithm
+    Bilinear,
+}
+
 crate::macros::image::impl_image_ext!(RgbImage, Fl_RGB_Image);
 
 /// Creates a struct holding a raw RGB image
@@ -885,6 +895,20 @@ impl RgbImage {
                 },
                 _ => unreachable!(),
             }
+        }
+    }
+
+    /// Sets the scaling algorithm
+    pub fn set_scaling_algorithm(algorithm: RgbScaling) {
+        unsafe {
+            Fl_Image_set_scaling_algorithm(algorithm as i32)
+        }
+    }
+
+    /// Gets the scaling algorithm
+    pub fn scaling_algorithm() -> RgbScaling {
+        unsafe {
+            mem::transmute(Fl_Image_scaling_algorithm())
         }
     }
 }
