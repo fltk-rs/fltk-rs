@@ -1,11 +1,14 @@
 # Changelog
 
 
-## [1.2.9] - Unreleased
+## [1.2.9] - 2021-10-19
+- Fix image links in crates.io.
 - Adds image::RgbScaling enum.
 - Adds RgbImage::scaling_algorithm() and set_scaling_algorithm().
+- Add ImageExt::to_rgb_image().
 - Add RgbImage::from_pixmap().
-- Fix image links in crates.io.
+- Assert image size in WindowExt::set_cursor_image().
+- Scale returned RgbImage in ImageExt::to_rgb().
 - Update FLTK.
 
 ## [1.2.8] - 2021-10-11

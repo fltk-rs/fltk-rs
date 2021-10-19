@@ -730,8 +730,8 @@ impl RgbImage {
     }
 
     /// Creates an RgbImage from a pixmap
-    pub unsafe fn from_pixmap(image: &Pixmap) -> RgbImage {
-        RgbImage::from_image_ptr(Fl_RGB_Image_from_pixmap(image.inner as _) as _)
+    pub fn from_pixmap(image: &Pixmap) -> RgbImage {
+        unsafe { RgbImage::from_image_ptr(Fl_RGB_Image_from_pixmap(image.inner as _) as _) }
     }
 
     /// Deconstructs a raw `RgbImage` into parts
