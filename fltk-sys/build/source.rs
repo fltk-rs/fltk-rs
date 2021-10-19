@@ -66,7 +66,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     }
 
     if !target_triple.contains("android") {
-        let cmake_build_dir = out_dir.join("cmake_build").to_str().unwrap().to_string();
+        let cmake_build_dir = out_dir.to_str().unwrap().to_string();
         let mut cmd = vec![];
         cmd.push(format!("-B{}", cmake_build_dir));
 
