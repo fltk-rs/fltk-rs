@@ -14,7 +14,7 @@ name = "fltk_sys"
 path = "src/lib.rs"
 
 [build-dependencies]
-cmake = "0.1.45"
+cmake = "0.1"
 
 [features]
 default = []

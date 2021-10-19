@@ -120,8 +120,14 @@ macro_rules! impl_image_ext {
                         Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
                     } else {
                         let data = self.to_rgb_data();
-                        RgbImage::new(&data, self.data_w(), self.data_h(), self.depth())
+                        let mut img = RgbImage::new(&data, self.data_w(), self.data_h(), self.depth())?;
+                        img.scale(self.w(), self.h(), false, true);
+                        Ok(img)
                     }
+                }
+
+                fn to_rgb_image(&self) -> Result<crate::image::RgbImage, FltkError> {
+                    self.to_rgb()
                 }
 
                 fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {

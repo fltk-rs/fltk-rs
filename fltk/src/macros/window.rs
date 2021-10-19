@@ -370,6 +370,8 @@ macro_rules! impl_window_ext {
                     hot_y: i32,
                 ) {
                     assert!(!self.was_deleted());
+                    assert!(image.data_w() == image.w());
+                    assert!(image.data_h() == image.h());
                     unsafe {
                         assert!(!image.was_deleted());
                         image.increment_arc();

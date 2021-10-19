@@ -1,4 +1,11 @@
-use fltk::{app, enums::Color, frame::Frame, image::Pixmap, prelude::*, window::Window};
+use fltk::{
+    app,
+    enums::Color,
+    frame::Frame,
+    image::{Pixmap, RgbImage},
+    prelude::*,
+    window::Window,
+};
 
 const PXM: &[&str] = &[
     "50 34 4 1",
@@ -51,7 +58,7 @@ fn main() {
     let mut frame = Frame::new(-30, 200, 30, 30, "");
     let mut pxm = Pixmap::new(PXM).unwrap();
     pxm.scale(200, 200, true, true);
-    frame.set_image(Some(pxm));
+    frame.set_image(Some(pxm.clone()));
     wind.set_color(Color::White);
     wind.end();
     wind.show_with_env_args();

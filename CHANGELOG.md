@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [1.2.9] - 2021-10-19
+- Fix image links in crates.io.
+- Adds image::RgbScaling enum.
+- Adds RgbImage::scaling_algorithm() and set_scaling_algorithm().
+- Add ImageExt::to_rgb_image().
+- Add RgbImage::from_pixmap().
+- Assert image size in WindowExt::set_cursor_image().
+- Scale returned RgbImage in ImageExt::to_rgb().
+- Update FLTK.
+
 ## [1.2.8] - 2021-10-11
 - Fix floating point exception in Flex inner vector not properly resizing with set_size().
 - Fix crates.io links by using absolute urls.
