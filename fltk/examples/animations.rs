@@ -1,4 +1,11 @@
-use fltk::{app, enums::Color, frame::Frame, image::{Pixmap, RgbImage}, prelude::*, window::Window};
+use fltk::{
+    app,
+    enums::Color,
+    frame::Frame,
+    image::{Pixmap, RgbImage},
+    prelude::*,
+    window::Window,
+};
 
 const PXM: &[&str] = &[
     "50 34 4 1",
@@ -42,46 +49,6 @@ const PXM: &[&str] = &[
     "##################################################",
 ];
 
-const CURSOR: &[&str] = &[
-    "16 27 9 1",
-" 	c None",
-".	c #FFFFFF",
-"+	c #DBDBDB",
-"@	c #242424",
-"#	c #000000",
-"$	c #494949",
-"%	c #6D6D6D",
-"&	c #929292",
-"*	c #B6B6B6",
-"                ",
-".               ",
-".+              ",
-".@+             ",
-".#@+            ",
-".##@.           ",
-".###@.          ",
-".####@.         ",
-".#####$.        ",
-".######$.       ",
-".#######$.      ",
-".#####@@@%.     ",
-".#####+.....    ",
-".##$%#%.        ",
-".#$..@#.        ",
-".$. .&#%.       ",
-"..   .##. ....  ",
-".    .&#.+%$%&. ",
-"      ...*#@##%.",
-"         ++.*#@.",
-"           .%#$.",
-"          .%#@. ",
-"          .##+  ",
-"          .++.  ",
-"          +##.  ",
-"          +##.  ",
-"          ....  "
-];
-
 fn main() {
     let app = app::App::default();
     let mut wind = Window::default()
@@ -90,13 +57,11 @@ fn main() {
         .center_screen();
     let mut frame = Frame::new(-30, 200, 30, 30, "");
     let mut pxm = Pixmap::new(PXM).unwrap();
-    let cursor = Pixmap::new(CURSOR).unwrap();
     pxm.scale(200, 200, true, true);
     frame.set_image(Some(pxm.clone()));
     wind.set_color(Color::White);
     wind.end();
     wind.show_with_env_args();
-    wind.set_cursor_image(unsafe { RgbImage::from_pixmap(&pxm)}, 0, 0);
 
     app::add_idle(move || {
         let x = frame.x();
