@@ -729,6 +729,11 @@ impl RgbImage {
         }
     }
 
+    /// Creates an RgbImage from a pixmap
+    pub unsafe fn from_pixmap(image: &Pixmap) -> RgbImage {
+        RgbImage::from_image_ptr(Fl_RGB_Image_from_pixmap(image.inner as _) as _)
+    }
+
     /// Deconstructs a raw `RgbImage` into parts
     /// # Safety
     /// Destructures the image into its raw elements
@@ -900,15 +905,11 @@ impl RgbImage {
 
     /// Sets the scaling algorithm
     pub fn set_scaling_algorithm(algorithm: RgbScaling) {
-        unsafe {
-            Fl_Image_set_scaling_algorithm(algorithm as i32)
-        }
+        unsafe { Fl_Image_set_scaling_algorithm(algorithm as i32) }
     }
 
     /// Gets the scaling algorithm
     pub fn scaling_algorithm() -> RgbScaling {
-        unsafe {
-            mem::transmute(Fl_Image_scaling_algorithm())
-        }
+        unsafe { mem::transmute(Fl_Image_scaling_algorithm()) }
     }
 }

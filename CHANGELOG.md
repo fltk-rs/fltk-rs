@@ -4,6 +4,7 @@
 ## [1.2.9] - Unreleased
 - Adds image::RgbScaling enum.
 - Adds RgbImage::scaling_algorithm() and set_scaling_algorithm().
+- Add RgbImage::from_pixmap().
 - Update FLTK.
 
 ## [1.2.8] - 2021-10-11
