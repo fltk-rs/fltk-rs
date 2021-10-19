@@ -911,28 +911,4 @@ impl RgbImage {
             mem::transmute(Fl_Image_scaling_algorithm())
         }
     }
-
-    /// Create an RgbImage from a pixmap
-    pub fn from_pixmap(image: &Pixmap) -> Result<RgbImage, FltkError> {
-        unsafe {
-            let ptr = Fl_RGB_Image_from_pixmap(image.inner as _);
-            if ptr.is_null() {
-                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-            } else {
-                Ok(RgbImage::from_image_ptr(ptr as _))
-            }
-        }
-    }
-
-    // /// Create an RgbImage from an xpm image
-    // pub fn from_xpm(image: &XpmImage) -> Result<RgbImage, FltkError> {
-    //     unsafe {
-    //         let ptr = Fl_RGB_Image_from_xpm(image.inner);
-    //         if ptr.is_null() {
-    //             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-    //         } else {
-    //             Ok(RgbImage::from_image_ptr(ptr as _))
-    //         }
-    //     }
-    // }
 }
