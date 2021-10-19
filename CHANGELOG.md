@@ -5,6 +5,7 @@
 - Adds image::RgbScaling enum.
 - Adds RgbImage::scaling_algorithm() and set_scaling_algorithm().
 - Add RgbImage::from_pixmap().
+- Fix image links in crates.io.
 - Update FLTK.
 
 ## [1.2.8] - 2021-10-11
