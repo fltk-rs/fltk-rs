@@ -919,6 +919,12 @@ extern "C" {
         ld: ::std::os::raw::c_int,
     ) -> *mut Fl_RGB_Image;
 }
+extern "C" {
+    pub fn Fl_RGB_Image_from_pixmap(image: *const Fl_Pixmap) -> *mut Fl_RGB_Image;
+}
+extern "C" {
+    pub fn Fl_RGB_Image_from_xpm(image: *const Fl_XPM_Image) -> *mut Fl_RGB_Image;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Shared_Image {
