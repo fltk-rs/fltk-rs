@@ -1,4 +1,5 @@
 use std::{env, path::Path, process::Command};
+use crate::utils;
 
 pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-env-changed=CC");
@@ -65,18 +66,20 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     }
 
     if !target_triple.contains("android") {
-        let mut dst = cmake::Config::new("cfltk");
+        let cmake_build_dir = out_dir.join("cmake_build").to_str().unwrap().to_string();
+        let mut cmd = vec![];
+        cmd.push(format!("-B{}", cmake_build_dir));
 
         if cfg!(feature = "fltk-shared") {
-            dst.define("CFLTK_BUILD_SHARED", "ON");
+            cmd.push("-DCFLTK_BUILD_SHARED=ON".to_string());
         }
 
         if cfg!(feature = "use-ninja") || crate::utils::has_program("ninja") {
-            dst.generator("Ninja");
+            cmd.push("-GNinja".to_string());
         }
 
         if cfg!(feature = "system-fltk") {
-            dst.define("USE_SYSTEM_FLTK", "ON");
+            cmd.push("-DUSE_SYSTEM_FLTK=ON".to_string());
         }
 
         if cfg!(feature = "system-libpng")
@@ -84,70 +87,70 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
                 && !target_triple.contains("windows")
                 && !target_triple.contains("android"))
         {
-            dst.define("OPTION_USE_SYSTEM_LIBPNG", "ON");
+            cmd.push("-DOPTION_USE_SYSTEM_LIBPNG=ON".to_string());
         } else {
-            dst.define("OPTION_USE_SYSTEM_LIBPNG", "OFF");
+            cmd.push("-DOPTION_USE_SYSTEM_LIBPNG=OFF".to_string());
         }
 
         if cfg!(feature = "system-libjpeg") {
-            dst.define("OPTION_USE_SYSTEM_LIBJPEG", "ON");
+            cmd.push("-DOPTION_USE_SYSTEM_LIBJPEG=ON".to_string());
         } else {
-            dst.define("OPTION_USE_SYSTEM_LIBJPEG", "OFF");
+            cmd.push("-DOPTION_USE_SYSTEM_LIBJPEG=OFF".to_string());
         }
 
         if cfg!(feature = "system-zlib") {
-            dst.define("OPTION_USE_SYSTEM_ZLIB", "ON");
+            cmd.push("-DOPTION_USE_SYSTEM_ZLIB=ON".to_string());
         } else {
-            dst.define("OPTION_USE_SYSTEM_ZLIB", "OFF");
+            cmd.push("-DOPTION_USE_SYSTEM_ZLIB=OFF".to_string());
         }
 
         if cfg!(feature = "no-images") {
-            dst.define("CFLTK_LINK_IMAGES", "OFF");
+            cmd.push("-DCFLTK_LINK_IMAGES=OFF".to_string());
         } else {
-            dst.define("CFLTK_LINK_IMAGES", "ON");
+            cmd.push("-DCFLTK_LINK_IMAGES=ON".to_string());
         }
 
         if cfg!(feature = "legacy-opengl") {
-            dst.define("OpenGL_GL_PREFERENCE", "LEGACY");
+            cmd.push("-DOpenGL_GL_PREFERENCE=LEGACY".to_string());
         } else {
-            dst.define("OpenGL_GL_PREFERENCE", "GLVND");
+            cmd.push("-DOpenGL_GL_PREFERENCE=GLVND".to_string());
         }
 
         if cfg!(feature = "enable-glwindow") {
-            dst.define("OPTION_USE_GL", "ON");
-            dst.define("CFLTK_USE_OPENGL", "ON");
+            cmd.push("-DOPTION_USE_GL=ON".to_string());
+            cmd.push("-DCFLTK_USE_OPENGL=ON".to_string());
         } else {
-            dst.define("OPTION_USE_GL", "OFF");
-            dst.define("CFLTK_USE_OPENGL", "OFF");
+            cmd.push("-DOPTION_USE_GL=OFF".to_string());
+            cmd.push("-DCFLTK_USE_OPENGL=OFF".to_string());
         }
 
         if let Ok(toolchain) = env::var("CFLTK_TOOLCHAIN") {
-            dst.define("CMAKE_TOOLCHAIN_FILE", &toolchain);
+            cmd.push(format!("-DCMAKE_TOOLCHAIN_FILE={}", &toolchain));
         }
 
         if target_triple.contains("linux") && !target_triple.contains("android") {
             if cfg!(feature = "no-pango") {
-                dst.define("OPTION_USE_PANGO", "OFF");
+                cmd.push("-DOPTION_USE_PANGO=OFF".to_string());
             } else {
-                dst.define("OPTION_USE_PANGO", "ON");
+                cmd.push("-DOPTION_USE_PANGO=ON".to_string());
             }
         }
 
         if target_triple.contains("unknown-linux-musl") {
-            dst.define("CMAKE_C_COMPILER", "musl-gcc");
-            dst.define("CMAKE_CXX_COMPILER", "musl-gcc");
-            dst.define("HAVE_STRLCPY", "False");
-            dst.define("HAVE_STRLCAT", "False");
+            cmd.push("-DCMAKE_C_COMPILER=musl-gcc".to_string());
+            cmd.push("-DCMAKE_CXX_COMPILER=musl-gcc".to_string());
+            cmd.push("-DHAVE_STRLCPY=False".to_string());
+            cmd.push("-DHAVE_STRLCAT=False".to_string());
         }
 
         if cfg!(feature = "no-gdiplus") {
-            dst.define("OPTION_USE_GDIPLUS", "OFF");
+            cmd.push("-DOPTION_USE_GDIPLUS=OFF".to_string());
         }
 
         if cfg!(feature = "single-threaded") {
-            dst.define("CFLTK_SINGLE_THREADED", "ON");
+            cmd.push("-DCFLTK_SINGLE_THREADED=ON".to_string());
         } else {
-            dst.define("CFLTK_SINGLE_THREADED", "OFF");
+            cmd.push("-DCFLTK_SINGLE_THREADED=OFF".to_string());
         }
 
         let profile = if let Ok(prof) = env::var("OPT_LEVEL") {
@@ -160,17 +163,41 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             "Release"
         };
 
-        let _dst = dst
-            .profile(profile)
-            .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
-            .define("CFLTK_CARGO_BUILD", "ON")
-            .define("FLTK_BUILD_EXAMPLES", "OFF")
-            .define("FLTK_BUILD_TEST", "OFF")
-            .define("OPTION_LARGE_FILE", "ON")
-            .define("OPTION_USE_THREADS", "ON")
-            .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
-            .define("OPTION_BUILD_PDF_DOCUMENTATION", "OFF")
-            .build();
+        cmd.push(format!(
+            "-DCMAKE_INSTALL_PREFIX={}",
+            out_dir.to_str().unwrap()
+        ));
+        cmd.push(format!("-DCMAKE_BUILD_TYPE={}", profile));
+        cmd.push("-DCMAKE_EXPORT_COMPILE_COMMANDS=ON".to_string());
+        cmd.push("-DCFLTK_CARGO_BUILD=ON".to_string());
+        cmd.push("-DFLTK_BUILD_EXAMPLES=OFF".to_string());
+        cmd.push("-DFLTK_BUILD_TEST=OFF".to_string());
+        cmd.push("-DOPTION_LARGE_FILE=ON".to_string());
+        cmd.push("-DOPTION_USE_THREADS=ON".to_string());
+        cmd.push("-DOPTION_BUILD_HTML_DOCUMENTATION=OFF".to_string());
+        cmd.push("-DOPTION_BUILD_PDF_DOCUMENTATION=OFF".to_string());
+
+        Command::new("cmake")
+            .args(&cmd)
+            .current_dir("cfltk")
+            .status()
+            .expect("CMake is needed for from-source builds!");
+
+        Command::new("cmake")
+            .args(&[
+                "--build",
+                &cmake_build_dir,
+                if utils::cmake_has_parallel() {
+                    "--parallel"
+                } else {
+                    ""
+                },
+                "--target",
+                "install",
+            ])
+            .current_dir("cfltk")
+            .status()
+            .expect("CMake is needed for from-source builds!");
     } else {
         crate::android::build(out_dir, target_triple);
     }
