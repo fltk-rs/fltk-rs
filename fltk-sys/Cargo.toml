@@ -13,6 +13,9 @@ license = "MIT"
 name = "fltk_sys"
 path = "src/lib.rs"
 
+[build-dependencies]
+cmake = "0.1.45"
+
 [features]
 default = []
 fltk-shared = []
