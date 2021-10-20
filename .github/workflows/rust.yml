@@ -22,7 +22,6 @@ jobs:
          fi
       shell: bash
     - uses: actions/checkout@v2
-    - uses: seanmiddleditch/gha-setup-ninja@master
     - name: Build
       shell: bash
       run: cargo build --examples --verbose
