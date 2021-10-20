@@ -2,7 +2,7 @@ use fltk::{
     app,
     enums::Color,
     frame::Frame,
-    image::{Pixmap, RgbImage},
+    image::Pixmap,
     prelude::*,
     window::Window,
 };

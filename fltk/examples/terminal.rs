@@ -140,7 +140,7 @@ impl Term {
                     Key::BackSpace => {
                         if !cmd.is_empty() {
                             let c = cmd.pop().unwrap();
-                            let len = my_charlen(c) as i32;
+                            let len = if c.is_ascii() { 1 } else { my_charlen(c) as i32 };
                             let text_len = t.text().len() as i32;
                             t.buffer().unwrap().remove(text_len - len, text_len);
                             sbuf.remove(text_len - len, text_len);
