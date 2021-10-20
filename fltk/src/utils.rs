@@ -4,7 +4,6 @@ use std::os::raw;
 
 use crate::prelude::FltkError;
 use crate::prelude::FltkErrorKind;
-// use crate::prelude::{FltkError, FltkErrorKind};
 
 pub(crate) trait FlString {
     fn safe_new(s: &str) -> CString;
@@ -106,4 +105,22 @@ pub fn filename_expand(path: &str) -> Result<String, FltkError> {
             }
         }
     }
+}
+
+/// Get the length of a char in terms of C strings
+pub fn char_len(c: char) -> usize {
+    extern "C" {
+        pub fn strlen(s: *const std::os::raw::c_char) -> usize;
+    }
+    let s = std::ffi::CString::new(c.to_string()).unwrap();
+    unsafe { strlen(s.as_ptr() as _) }
+}
+
+#[cfg(target_os = "macos")]
+/// Get a window's content view
+pub fn content_view<W: crate::prelude::WindowExt>(w: &W) -> *const raw::c_void {
+    extern "C" {
+        pub fn my_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
+    }
+    unsafe { my_getContentView(w.raw_handle() as _) as _ }
 }

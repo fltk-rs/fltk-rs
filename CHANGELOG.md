@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.2.10] - Unreleased
+- Remove dependence on cmake-rs.
+- Add utils::char_len() and content_view().
+- Remove cmake-rs dep.
+
 ## [1.2.9] - 2021-10-19
 - Fix image links in crates.io.
 - Adds image::RgbScaling enum.

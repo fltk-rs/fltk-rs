@@ -3,6 +3,7 @@ use fltk::{
     enums::{Color, Event, Font, Key},
     prelude::{DisplayExt, GroupExt, WidgetBase, WidgetExt},
     text::{SimpleTerminal, StyleTableEntry, TextBuffer},
+    utils,
     window::Window,
 };
 use std::ops::{Deref, DerefMut};
@@ -140,7 +141,7 @@ impl Term {
                     Key::BackSpace => {
                         if !cmd.is_empty() {
                             let c = cmd.pop().unwrap();
-                            let len = if c.is_ascii() { 1 } else { my_charlen(c) as i32 };
+                            let len = if c.is_ascii() { 1 } else { utils::char_len(c) as i32 };
                             let text_len = t.text().len() as i32;
                             t.buffer().unwrap().remove(text_len - len, text_len);
                             sbuf.remove(text_len - len, text_len);
@@ -199,12 +200,4 @@ fn main() {
     wind.show();
 
     app.run().unwrap();
-}
-
-fn my_charlen(c: char) -> usize {
-    extern "C" {
-        pub fn strlen(s: *const std::os::raw::c_char) -> usize;
-    }
-    let s = std::ffi::CString::new(c.to_string()).unwrap();
-    unsafe { strlen(s.as_ptr() as _) }
 }
