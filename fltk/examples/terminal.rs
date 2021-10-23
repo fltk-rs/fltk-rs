@@ -6,6 +6,7 @@ use fltk::{
     utils,
     window::Window,
 };
+use std::io::{self, BufRead, BufReader};
 use std::ops::{Deref, DerefMut};
 use std::path::Path;
 use std::process::{Command, Stdio};
@@ -17,8 +18,8 @@ pub trait TerminalFuncs {
     fn append_txt(&mut self, txt: &str);
     fn append_dir(&mut self, dir: &str);
     fn append_error(&mut self, txt: &str);
-    fn run_command(&mut self, cmd: &str, cwd: &mut String) -> String;
-    fn change_dir(&mut self, path: &Path, current: &mut String) -> String;
+    fn run_command(&mut self, cmd: &str, cwd: &mut String);
+    fn change_dir(&mut self, path: &Path, current: &mut String) -> io::Result<()>;
 }
 
 impl TerminalFuncs for SimpleTerminal {
@@ -37,45 +38,59 @@ impl TerminalFuncs for SimpleTerminal {
         self.style_buffer().unwrap().append(&"B".repeat(txt.len()));
     }
 
-    fn run_command(&mut self, cmd: &str, cwd: &mut String) -> String {
-        let args: Vec<&str> = cmd.split_whitespace().collect();
+    fn run_command(&mut self, cmd: &str, cwd: &mut String) {
+        let args: Vec<String> = cmd.split_whitespace().map(|s| s.to_owned()).collect();
 
         if !args.is_empty() {
-            let mut cmd = Command::new(args[0]);
-            if args.len() > 1 {
-                if args[0] == "cd" {
-                    let path = args[1];
-                    return self.change_dir(Path::new(path), cwd);
-                } else {
-                    cmd.args(&args[1..]);
+            let mut cmd_c = Command::new(&args[0]);
+            if args[0] == "cd" {
+                let path = &args[1];
+                match self.change_dir(Path::new(&path), cwd) {
+                    Ok(_) => self.append_dir(cwd),
+                    _ => {
+                        self.append_error("Path does not exist!");
+                        self.append_txt("\n");
+                        self.append_dir(cwd);
+                    }
                 }
-            }
-            let out = cmd.stdout(Stdio::piped()).stderr(Stdio::piped()).output();
-            if let Ok(out) = out {
-                let stdout = out.stdout;
-                String::from_utf8_lossy(&stdout).to_string()
             } else {
-                let msg = format!("{}: command not found!\n", args[0]);
-                msg
+                let proc = cmd_c
+                    .args(&args[1..])
+                    .stderr(Stdio::piped())
+                    .stdout(Stdio::piped())
+                    .spawn();
+
+                if proc.is_err() {
+                    self.append_error("Command not found!");
+                    self.append_txt("\n");
+                    self.append_dir(cwd);
+                    return;
+                }
+
+                let reader = BufReader::new(proc.unwrap().stdout.unwrap());
+                let mut term = self.clone();
+                let cwd = cwd.clone();
+                std::thread::spawn(move || {
+                    reader
+                        .lines()
+                        .filter_map(|line| line.ok())
+                        .for_each(|line| {
+                            term.append_txt(&line);
+                            term.append_txt("\n");
+                            app::awake();
+                        });
+                    term.append_dir(&cwd);
+                });
             }
-        } else {
-            String::from("")
         }
     }
 
-    fn change_dir(&mut self, path: &Path, current: &mut String) -> String {
-        if path.exists() && path.is_dir() {
-            std::env::set_current_dir(path).unwrap();
-            let mut path = std::env::current_dir()
-                .unwrap()
-                .to_string_lossy()
-                .to_string();
-            path.push_str("$ ");
-            *current = path;
-            String::new()
-        } else {
-            String::from("Path does not exist!\n")
-        }
+    fn change_dir(&mut self, path: &Path, current: &mut String) -> io::Result<()> {
+        std::env::set_current_dir(path)?;
+        let mut path = std::env::current_dir()?.to_string_lossy().to_string();
+        path.push_str("$ ");
+        *current = path;
+        Ok(())
     }
 }
 
@@ -128,20 +143,18 @@ impl Term {
                 Event::KeyDown => match app::event_key() {
                     Key::Enter => {
                         t.append_txt("\n");
-                        let out = t.run_command(&cmd, &mut curr);
-                        if out.contains("not found") {
-                            t.append_error(&out);
-                        } else {
-                            t.append_txt(&out);
-                        }
-                        t.append_dir(&curr);
+                        t.run_command(&cmd, &mut curr);
                         cmd.clear();
                         true
                     }
                     Key::BackSpace => {
                         if !cmd.is_empty() {
                             let c = cmd.pop().unwrap();
-                            let len = if c.is_ascii() { 1 } else { utils::char_len(c) as i32 };
+                            let len = if c.is_ascii() {
+                                1
+                            } else {
+                                utils::char_len(c) as i32
+                            };
                             let text_len = t.text().len() as i32;
                             t.buffer().unwrap().remove(text_len - len, text_len);
                             sbuf.remove(text_len - len, text_len);
@@ -152,7 +165,7 @@ impl Term {
                     }
                     _ => {
                         if let Some(ch) = app::event_text().chars().next() {
-                            if let Some(_) = app::compose() {
+                            if app::compose().is_some() {
                                 let temp = ch.to_string();
                                 cmd.push_str(&temp);
                                 t.append_txt(&temp);
