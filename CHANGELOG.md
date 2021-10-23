@@ -3,6 +3,7 @@
 
 ## [1.2.10] - Unreleased
 - Add utils::char_len() and content_view().
+- Remove asserts in WindowExt::set_cursor_image() and just rescale if image had been modified.
 
 ## [1.2.9] - 2021-10-19
 - Fix image links in crates.io.
