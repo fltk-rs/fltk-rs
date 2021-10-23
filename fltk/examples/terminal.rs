@@ -7,7 +7,6 @@ use fltk::{
     window::Window,
 };
 use std::io::{self, BufRead, BufReader};
-use std::ops::{Deref, DerefMut};
 use std::path::Path;
 use std::process::{Command, Stdio};
 
@@ -75,7 +74,7 @@ impl TerminalFuncs for SimpleTerminal {
                         .lines()
                         .filter_map(|line| line.ok())
                         .try_for_each(|line| {
-                            if let Some(msg) = r.recv() {
+                            if let Some(msg) = receiver.recv() {
                                 match msg {
                                     true => {
                                         term.append_error("Received sigint signal!\n");
@@ -206,20 +205,6 @@ impl Term {
         });
 
         Self { term }
-    }
-}
-
-impl Deref for Term {
-    type Target = SimpleTerminal;
-
-    fn deref(&self) -> &Self::Target {
-        &self.term
-    }
-}
-
-impl DerefMut for Term {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.term
     }
 }
 
