@@ -18,7 +18,7 @@ pub trait TerminalFuncs {
     fn append_txt(&mut self, txt: &str);
     fn append_dir(&mut self, dir: &str);
     fn append_error(&mut self, txt: &str);
-    fn run_command(&mut self, cmd: &str, cwd: &mut String, r: app::Receiver<bool>);
+    fn run_command(&mut self, cmd: &str, cwd: &mut String, receiver: app::Receiver<bool>);
     fn change_dir(&mut self, path: &Path, current: &mut String) -> io::Result<()>;
 }
 
@@ -38,7 +38,7 @@ impl TerminalFuncs for SimpleTerminal {
         self.style_buffer().unwrap().append(&"B".repeat(txt.len()));
     }
 
-    fn run_command(&mut self, cmd: &str, cwd: &mut String, r: app::Receiver<bool>) {
+    fn run_command(&mut self, cmd: &str, cwd: &mut String, receiver: app::Receiver<bool>) {
         let args: Vec<String> = cmd.split_whitespace().map(|s| s.to_owned()).collect();
 
         if !args.is_empty() {
