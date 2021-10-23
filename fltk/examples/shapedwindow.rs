@@ -1,5 +1,30 @@
 use fltk::{prelude::*, *};
 
+const WAIT_CURSOR: &[&str] = &[
+    "13 18 3 1",
+    "  c None",
+    ". c #FFFFFF",
+    "B c #000000",
+    "  ........   ",
+    "  .BBBBBB.   ",
+    "  .BBBBBB.   ",
+    "  .BBBBBB.   ",
+    "  .BBBBBB.   ",
+    " .B......B.  ",
+    ".B....B...B. ",
+    ".B....B...B. ",
+    ".B....B...BB.",
+    ".B.BBBB...BB.",
+    ".B........B. ",
+    ".B........B. ",
+    " .B......B.  ",
+    "  .BBBBBB.   ",
+    "  .BBBBBB.   ",
+    "  .BBBBBB.   ",
+    "  .BBBBBB.   ",
+    "  ........   ",
+];
+
 pub struct ShapedWindow {
     wind: window::Window,
 }
@@ -68,15 +93,6 @@ fn prep_shape() -> image::RgbImage {
 }
 
 fn prep_cursor() -> image::RgbImage {
-    let mut fb: Vec<u8> = vec![0u8; 20 * 20 * 4];
-    for (iter, pixel) in fb.chunks_exact_mut(4).enumerate() {
-        let x = iter % 20;
-        let y = iter / 20;
-        if x > 5 && x < 15 && y > 5 && y < 15 {
-            pixel.copy_from_slice(&[255, 0, 0, 255]);
-        } else {
-            pixel.copy_from_slice(&[0, 0, 0, 0]);
-        }
-    }
-    image::RgbImage::new(&fb, 20, 20, enums::ColorDepth::Rgba8).unwrap()
+    let cursor = image::Pixmap::new(WAIT_CURSOR).unwrap();
+    image::RgbImage::from_pixmap(&cursor)
 }
