@@ -1,6 +1,6 @@
 use fltk::{
     app,
-    enums::{Color, Event, Font, Key},
+    enums::{Color, Event, Shortcut, Font, Key},
     prelude::{DisplayExt, GroupExt, WidgetBase, WidgetExt},
     text::{SimpleTerminal, StyleTableEntry, TextBuffer},
     utils,
@@ -18,7 +18,7 @@ pub trait TerminalFuncs {
     fn append_txt(&mut self, txt: &str);
     fn append_dir(&mut self, dir: &str);
     fn append_error(&mut self, txt: &str);
-    fn run_command(&mut self, cmd: &str, cwd: &mut String);
+    fn run_command(&mut self, cmd: &str, cwd: &mut String, r: app::Receiver<bool>);
     fn change_dir(&mut self, path: &Path, current: &mut String) -> io::Result<()>;
 }
 
@@ -38,7 +38,7 @@ impl TerminalFuncs for SimpleTerminal {
         self.style_buffer().unwrap().append(&"B".repeat(txt.len()));
     }
 
-    fn run_command(&mut self, cmd: &str, cwd: &mut String) {
+    fn run_command(&mut self, cmd: &str, cwd: &mut String, r: app::Receiver<bool>) {
         let args: Vec<String> = cmd.split_whitespace().map(|s| s.to_owned()).collect();
 
         if !args.is_empty() {
@@ -74,14 +74,27 @@ impl TerminalFuncs for SimpleTerminal {
                     reader
                         .lines()
                         .filter_map(|line| line.ok())
-                        .for_each(|line| {
+                        .try_for_each(|line| {
+                            if let Some(msg) = r.recv() {
+                                match msg {
+                                    true => {
+                                        term.append_error("Received sigint signal!\n");
+                                        app::awake();
+                                        return None;
+                                    },
+                                    false => (),
+                                }
+                            }
                             term.append_txt(&line);
                             term.append_txt("\n");
                             app::awake();
+                            Some(())
                         });
                     term.append_dir(&cwd);
                 });
             }
+        } else {
+            self.append_dir(&cwd);
         }
     }
 
@@ -135,6 +148,8 @@ impl Term {
 
         term.append_dir(&curr);
 
+        let (s, r) = app::channel();
+
         term.handle(move |t, ev| {
             // println!("{:?}", app::event());
             // println!("{:?}", app::event_key());
@@ -143,7 +158,7 @@ impl Term {
                 Event::KeyDown => match app::event_key() {
                     Key::Enter => {
                         t.append_txt("\n");
-                        t.run_command(&cmd, &mut curr);
+                        t.run_command(&cmd, &mut curr, r);
                         cmd.clear();
                         true
                     }
@@ -178,6 +193,14 @@ impl Term {
                         }
                     }
                 },
+                Event::KeyUp => {
+                    if app::event_state() == Shortcut::Ctrl {
+                        if app::event_key() == Key::from_char('c') {
+                            s.send(true);
+                        }
+                    }
+                    false
+                }
                 _ => false,
             }
         });
