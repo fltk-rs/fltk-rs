@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.11] - Unreleased
+- Pull FLTK focus box fix.
+
 ## [1.2.10] - 2021-10-23
 - Add utils::char_len() and content_view().
 - Remove asserts in WindowExt::set_cursor_image() and just rescale if image had been modified.
