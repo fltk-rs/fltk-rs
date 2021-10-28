@@ -3,6 +3,7 @@
 
 ## [1.2.11] - Unreleased
 - Pull FLTK focus box fix.
+- Fix Flex::Row set_pad().
 
 ## [1.2.10] - 2021-10-23
 - Add utils::char_len() and content_view().
