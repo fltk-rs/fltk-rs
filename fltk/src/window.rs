@@ -384,8 +384,8 @@ impl DoubleWindow {
     pub unsafe fn platform_show(&self) {
         #[cfg(target_os = "windows")]
         {
-            extern "C" {
-                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: i32) -> bool;
+            extern "system" {
+                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
             }
             ShowWindow(self.raw_handle(), 9);
         }
@@ -412,8 +412,8 @@ impl DoubleWindow {
     pub unsafe fn platform_hide(&self) {
         #[cfg(target_os = "windows")]
         {
-            extern "C" {
-                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: i32) -> bool;
+            extern "system" {
+                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
             }
             ShowWindow(self.raw_handle(), 0);
         }

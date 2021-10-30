@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.12] - 2021-10-30
+- Fix 32bit Windows broken build in version 1.2.11, by changing ShowWindow extern calling convention.
+
 ## [1.2.11] - 2021-10-30
 - Pull FLTK focus box fix.
 - Fix Flex::Row set_pad().
