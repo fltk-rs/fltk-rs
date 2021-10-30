@@ -14,7 +14,7 @@ crate::macros::widget::impl_widget_ext!(Group, Fl_Group);
 crate::macros::widget::impl_widget_base!(Group, Fl_Group);
 crate::macros::group::impl_group_ext!(Group, Fl_Group);
 
-/// Creates a widget group
+/// Creates a group widget
 #[derive(Debug)]
 pub struct Group {
     inner: *mut Fl_Group,
@@ -800,7 +800,8 @@ crate::macros::widget::impl_widget_ext!(Flow, Fl_Flow);
 crate::macros::widget::impl_widget_base!(Flow, Fl_Flow);
 crate::macros::group::impl_group_ext!(Flow, Fl_Flow);
 
-/// Creates a widget group
+#[doc(hidden)]
+/// Creates a flow widget
 #[derive(Debug)]
 pub struct Flow {
     inner: *mut Fl_Flow,
@@ -808,7 +809,9 @@ pub struct Flow {
     is_derived: bool,
 }
 
+#[doc(hidden)]
 impl Flow {
+    #[doc(hidden)]
     /// Set the flow's rule
     pub fn rule<W: WidgetExt>(&mut self, w: &W, inst: &str) {
         unsafe {
