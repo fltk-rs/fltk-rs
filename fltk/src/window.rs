@@ -378,6 +378,48 @@ impl DoubleWindow {
     pub fn pixel_h(&self) -> i32 {
         (self.pixels_per_unit() * self.h() as f32) as i32
     }
+
+    #[doc(hidden)]
+    /// Show a window after it had been hidden. Works on Windows and X11 systems
+    pub unsafe fn platform_show(&self) {
+        #[cfg(target_os = "windows")]
+        {
+            extern "C" {
+                fn ShowWindow(hwnd: HWND, nCmdShow: i32) -> bool;
+            }
+            ShowWindow(self.raw_handle(), 9);
+        }
+        #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+        {
+            enum Display {}
+            extern "C" {
+                fn XMapWindow(display: *mut Display, win: u64);
+            }
+            XMapWindow(crate::app::display() as _, self.raw_handle());
+            crate::app::flush();
+        }
+    }
+
+    #[doc(hidden)]
+    /// Hide a window using the platforms hide call. Works on Windows and X11 systems
+    pub unsafe fn platform_hide(&self) {
+        #[cfg(target_os = "windows")]
+        {
+            extern "C" {
+                fn ShowWindow(hwnd: HWND, nCmdShow: i32) -> bool;
+            }
+            ShowWindow(self.raw_handle(), 0);
+        }
+        #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+        {
+            enum Display {}
+            extern "C" {
+                fn XUnmapWindow(display: *mut Display, win: u64);
+            }
+            XUnmapWindow(crate::app::display() as _, self.raw_handle());
+            crate::app::flush();
+        }
+    }
 }
 
 crate::macros::widget::impl_widget_ext!(MenuWindow, Fl_Menu_Window);
