@@ -384,23 +384,23 @@ impl DoubleWindow {
     pub unsafe fn platform_show(&self) {
         #[cfg(target_os = "windows")]
         {
-            extern "C" {
-                pub fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
+            extern "system" {
+                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
             }
             ShowWindow(self.raw_handle(), 9);
         }
         #[cfg(target_os = "macos")]
         {
             extern "C" {
-                pub fn my_winShow(xid: *mut raw::c_void);
+                fn my_winShow(xid: *mut raw::c_void);
             }
             my_winShow(self.raw_handle());
         }
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         {
-            pub enum Display {}
+            enum Display {}
             extern "C" {
-                pub fn XMapWindow(display: *mut Display, win: u64);
+                fn XMapWindow(display: *mut Display, win: u64);
             }
             XMapWindow(crate::app::display() as _, self.raw_handle());
             crate::app::flush();
@@ -412,23 +412,23 @@ impl DoubleWindow {
     pub unsafe fn platform_hide(&self) {
         #[cfg(target_os = "windows")]
         {
-            extern "C" {
-                pub fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
+            extern "system" {
+                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
             }
             ShowWindow(self.raw_handle(), 0);
         }
         #[cfg(target_os = "macos")]
         {
             extern "C" {
-                pub fn my_winHide(xid: *mut raw::c_void);
+                fn my_winHide(xid: *mut raw::c_void);
             }
             my_winHide(self.raw_handle());
         }
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         {
-            pub enum Display {}
+            enum Display {}
             extern "C" {
-                pub fn XUnmapWindow(display: *mut Display, win: u64);
+                fn XUnmapWindow(display: *mut Display, win: u64);
             }
             XUnmapWindow(crate::app::display() as _, self.raw_handle());
             crate::app::flush();
