@@ -389,6 +389,13 @@ impl DoubleWindow {
             }
             ShowWindow(self.raw_handle(), 9);
         }
+        #[cfg(target_os = "macos")]
+        {
+            extern "C" {
+                fn my_winShow(xid: *mut raw::c_void);
+            }
+            my_winShow(self.raw_handle());
+        }
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         {
             enum Display {}
@@ -409,6 +416,13 @@ impl DoubleWindow {
                 fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: i32) -> bool;
             }
             ShowWindow(self.raw_handle(), 0);
+        }
+        #[cfg(target_os = "macos")]
+        {
+            extern "C" {
+                fn my_winHide(xid: *mut raw::c_void);
+            }
+            my_winHide(self.raw_handle());
         }
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         {
