@@ -1,9 +1,11 @@
 # Changelog
 
 
-## [1.2.11] - Unreleased
+## [1.2.11] - 2021-10-30
 - Pull FLTK focus box fix.
 - Fix Flex::Row set_pad().
+- Add experimental Flow widget.
+- Add Window::platform_show() and platform_hide() which calls the platforms show and hide routines.
 
 ## [1.2.10] - 2021-10-23
 - Add utils::char_len() and content_view().
