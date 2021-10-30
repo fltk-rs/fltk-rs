@@ -385,7 +385,7 @@ impl DoubleWindow {
         #[cfg(target_os = "windows")]
         {
             extern "C" {
-                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: i32) -> bool;
+                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: i32) -> i32;
             }
             ShowWindow(self.raw_handle(), 9);
         }
@@ -413,7 +413,7 @@ impl DoubleWindow {
         #[cfg(target_os = "windows")]
         {
             extern "C" {
-                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: i32) -> bool;
+                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: i32) -> i32;
             }
             ShowWindow(self.raw_handle(), 0);
         }
