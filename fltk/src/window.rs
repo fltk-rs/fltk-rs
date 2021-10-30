@@ -385,22 +385,22 @@ impl DoubleWindow {
         #[cfg(target_os = "windows")]
         {
             extern "C" {
-                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: i32) -> i32;
+                pub fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
             }
             ShowWindow(self.raw_handle(), 9);
         }
         #[cfg(target_os = "macos")]
         {
             extern "C" {
-                fn my_winShow(xid: *mut raw::c_void);
+                pub fn my_winShow(xid: *mut raw::c_void);
             }
             my_winShow(self.raw_handle());
         }
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         {
-            enum Display {}
+            pub enum Display {}
             extern "C" {
-                fn XMapWindow(display: *mut Display, win: u64);
+                pub fn XMapWindow(display: *mut Display, win: u64);
             }
             XMapWindow(crate::app::display() as _, self.raw_handle());
             crate::app::flush();
@@ -413,22 +413,22 @@ impl DoubleWindow {
         #[cfg(target_os = "windows")]
         {
             extern "C" {
-                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: i32) -> i32;
+                pub fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
             }
             ShowWindow(self.raw_handle(), 0);
         }
         #[cfg(target_os = "macos")]
         {
             extern "C" {
-                fn my_winHide(xid: *mut raw::c_void);
+                pub fn my_winHide(xid: *mut raw::c_void);
             }
             my_winHide(self.raw_handle());
         }
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         {
-            enum Display {}
+            pub enum Display {}
             extern "C" {
-                fn XUnmapWindow(display: *mut Display, win: u64);
+                pub fn XUnmapWindow(display: *mut Display, win: u64);
             }
             XUnmapWindow(crate::app::display() as _, self.raw_handle());
             crate::app::flush();
