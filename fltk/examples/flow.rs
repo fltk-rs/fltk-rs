@@ -6,7 +6,7 @@ fn main() {
     let a = app::App::default().with_scheme(app::Scheme::Gtk);
 
     let mut win = window::Window::default().with_size(640, 480);
-    let mut flow = group::Flow::default_fill();
+    let mut flow = group::experimental::Flow::default_fill();
     let btn = button::Button::default().with_size(100, 30).with_label("Button1");
     let inp = input::Input::default().with_size(150, 30);
     let mut sep = frame::Frame::default().with_size(10, 1);
