@@ -39,17 +39,20 @@ fn main() {
     }
 
     let offs = Rc::from(RefCell::from(offs));
-    let offs_rc = offs.clone();
 
-    frame.draw(move |_| {
-        if offs_rc.borrow().is_valid() {
-            offs_rc.borrow_mut().rescale();
-            offs_rc.borrow().copy(5, 5, WIDTH - 10, HEIGHT - 10, 0, 0);
-        } else {
-            offs_rc.borrow_mut().begin();
-            set_draw_color(Color::White);
-            draw_rectf(0, 0, WIDTH - 10, HEIGHT - 10);
-            offs_rc.borrow_mut().end();
+    frame.draw({
+        let offs = offs.clone();
+        move |_| {
+            let mut offs = offs.borrow_mut();
+            if offs.is_valid() {
+                offs.rescale();
+                offs.copy(5, 5, WIDTH - 10, HEIGHT - 10, 0, 0);
+            } else {
+                offs.begin();
+                set_draw_color(Color::White);
+                draw_rectf(0, 0, WIDTH - 10, HEIGHT - 10);
+                offs.end();
+            }
         }
     });
 
@@ -60,28 +63,29 @@ fn main() {
         // println!("{}", ev);
         // println!("coords {:?}", app::event_coords());
         // println!("get mouse {:?}", app::get_mouse());
+        let offs = offs.borrow_mut();
         match ev {
             Event::Push => {
-                offs.borrow().begin();
+                offs.begin();
                 set_draw_color(Color::Red);
                 set_line_style(LineStyle::Solid, 3);
                 let coords = app::event_coords();
                 x = coords.0;
                 y = coords.1;
                 draw_point(x, y);
-                offs.borrow().end();
+                offs.end();
                 f.redraw();
                 true
             }
             Event::Drag => {
-                offs.borrow().begin();
+                offs.begin();
                 set_draw_color(Color::Red);
                 set_line_style(LineStyle::Solid, 3);
                 let coords = app::event_coords();
                 draw_line(x, y, coords.0, coords.1);
                 x = coords.0;
                 y = coords.1;
-                offs.borrow().end();
+                offs.end();
                 f.redraw();
                 true
             }
