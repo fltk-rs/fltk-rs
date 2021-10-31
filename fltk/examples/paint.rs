@@ -43,6 +43,7 @@ fn main() {
 
     frame.draw(move |_| {
         if offs_rc.borrow().is_valid() {
+            offs_rc.borrow_mut().rescale();
             offs_rc.borrow().copy(5, 5, WIDTH - 10, HEIGHT - 10, 0, 0);
         } else {
             offs_rc.borrow_mut().begin();
