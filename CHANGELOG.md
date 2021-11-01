@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.2.13] - 2021-11-01
+- Unlink C++ std lib to enable cross-compiling to Windows.
+- Fix draw::Offscreen::rescale().
+- Update FLTK device code.
+
 ## [1.2.12] - 2021-10-30
 - Fix 32bit Windows broken build in version 1.2.11, by changing ShowWindow extern calling convention.
 

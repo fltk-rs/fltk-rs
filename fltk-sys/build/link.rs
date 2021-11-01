@@ -86,7 +86,6 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
-                println!("cargo:rustc-link-lib=dylib=c++");
             }
             "windows" => {
                 println!("cargo:rustc-link-lib=dylib=ws2_32");
@@ -104,9 +103,6 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=dylib=odbc32");
                 if !cfg!(feature = "no-gdiplus") {
                     println!("cargo:rustc-link-lib=dylib=gdiplus");
-                }
-                if target_triple.contains("gnu") {
-                    println!("cargo:rustc-link-lib=dylib=stdc++");
                 }
             }
             "android" => {
@@ -128,7 +124,6 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=dylib=Xfixes");
                 println!("cargo:rustc-link-lib=dylib=Xft");
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
-                println!("cargo:rustc-link-lib=dylib=stdc++");
                 if !cfg!(feature = "no-pango") {
                     println!("cargo:rustc-link-lib=dylib=pango-1.0");
                     println!("cargo:rustc-link-lib=dylib=pangoxft-1.0");

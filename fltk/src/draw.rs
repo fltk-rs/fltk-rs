@@ -103,7 +103,7 @@ impl Offscreen {
     /// Rescales the offscreen
     pub fn rescale(&mut self) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_rescale_offscreen(self.inner) }
+        unsafe { Fl_rescale_offscreen(&mut self.inner) }
     }
 
     /// Checks the validity of the offscreen
