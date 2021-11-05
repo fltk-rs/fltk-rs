@@ -188,6 +188,8 @@ For custom event handling, the handle() method can be used:
 ```
 Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the fltk/examples directory.
 
+For an alternative event handling mechanism using `on_<event>` methods, check the [fltk-evented crate](https://crates.io/crates/fltk-evented).
+
 ### Theming
 
 FLTK offers 4 application schemes:
@@ -460,6 +462,7 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
 - Table widgets
     - Table
     - TableRow
+    - SmartTable (via the [fltk-table crate](https://crates.io/crates/fltk-table))
 - Trees
     - Tree
     - TreeItem
@@ -488,6 +491,8 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
 - [multiple windows and embedding windows](https://www.youtube.com/watch?v=qEPYx1Lw7fY)
 - [FLTK Rust tutorial: Improve FLTK's toggle button appearance!](https://www.youtube.com/watch?v=WCTbPKHXR-o)
 - [FLTK Rust: Customizing your app and widgets](https://www.youtube.com/watch?v=uCZl0PuMVGo)
+- [FLTK Rust: fltk-table, a boilerplate-less table creating crate](https://www.youtube.com/watch?v=pVJ8Yq1kDGs)
+- [FLTK Rust: intro into the fltk-evented crate](https://www.youtube.com/watch?v=rAVHBl3W9W8)
 
 More videos in the playlist [here](https://www.youtube.com/playlist?list=PLHqrrowPLkDu9U-uk60sGM-YWLOJFfLoE).
 Some of the demo projects can be found [here](https://github.com/fltk-rs/demos).

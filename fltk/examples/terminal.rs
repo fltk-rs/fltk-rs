@@ -93,7 +93,7 @@ impl TerminalFuncs for SimpleTerminal {
                 });
             }
         } else {
-            self.append_dir(&cwd);
+            self.append_dir(cwd);
         }
     }
 
@@ -193,10 +193,8 @@ impl Term {
                     }
                 },
                 Event::KeyUp => {
-                    if app::event_state() == Shortcut::Ctrl {
-                        if app::event_key() == Key::from_char('c') {
-                            s.send(true);
-                        }
+                    if app::event_state() == Shortcut::Ctrl && app::event_key() == Key::from_char('c') {
+                        s.send(true);
                     }
                     false
                 }

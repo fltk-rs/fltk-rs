@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.2.14] - Unreleased
+- Mark Window::platform_hide() and platform_show() as safe.
+- Update README with tutorial links and reference to fltk-table and fltk-evented.
+- Cleanup and reorganize macro ordering to be after structs.
+- Formatting and lints.
+
 ## [1.2.13] - 2021-11-01
 - Unlink C++ std lib to enable cross-compiling to Windows.
 - Fix draw::Offscreen::rescale().

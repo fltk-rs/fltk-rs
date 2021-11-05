@@ -237,10 +237,6 @@ impl LightButton {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(RepeatButton, Fl_Repeat_Button);
-crate::macros::widget::impl_widget_base!(RepeatButton, Fl_Repeat_Button);
-crate::macros::button::impl_button_ext!(RepeatButton, Fl_Repeat_Button);
-
 /// Creates a repeat button
 #[derive(Debug)]
 pub struct RepeatButton {
@@ -249,9 +245,9 @@ pub struct RepeatButton {
     is_derived: bool,
 }
 
-crate::macros::widget::impl_widget_ext!(ReturnButton, Fl_Return_Button);
-crate::macros::widget::impl_widget_base!(ReturnButton, Fl_Return_Button);
-crate::macros::button::impl_button_ext!(ReturnButton, Fl_Return_Button);
+crate::macros::widget::impl_widget_ext!(RepeatButton, Fl_Repeat_Button);
+crate::macros::widget::impl_widget_base!(RepeatButton, Fl_Repeat_Button);
+crate::macros::button::impl_button_ext!(RepeatButton, Fl_Repeat_Button);
 
 /// Creates a return button
 #[derive(Debug)]
@@ -260,3 +256,7 @@ pub struct ReturnButton {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(ReturnButton, Fl_Return_Button);
+crate::macros::widget::impl_widget_base!(ReturnButton, Fl_Return_Button);
+crate::macros::button::impl_button_ext!(ReturnButton, Fl_Return_Button);

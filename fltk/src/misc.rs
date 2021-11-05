@@ -11,8 +11,6 @@ use std::{
     os::raw,
 };
 
-crate::macros::widget::impl_widget_type!(ChartType);
-
 /// Defines the chart types supported by fltk
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -33,7 +31,7 @@ pub enum ChartType {
     SpecialPie = 6,
 }
 
-crate::macros::widget::impl_widget_type!(ClockType);
+crate::macros::widget::impl_widget_type!(ChartType);
 
 /// Defines the clock types supported by fltk
 #[repr(i32)]
@@ -45,8 +43,7 @@ pub enum ClockType {
     Round = 1,
 }
 
-crate::macros::widget::impl_widget_ext!(Spinner, Fl_Spinner);
-crate::macros::widget::impl_widget_base!(Spinner, Fl_Spinner);
+crate::macros::widget::impl_widget_type!(ClockType);
 
 /// Creates a spinner widget
 #[derive(Debug)]
@@ -55,6 +52,9 @@ pub struct Spinner {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(Spinner, Fl_Spinner);
+crate::macros::widget::impl_widget_base!(Spinner, Fl_Spinner);
 
 impl Spinner {
     /// Returns the minimum value of the spinner widget
@@ -162,9 +162,6 @@ impl Spinner {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(Clock, Fl_Clock);
-crate::macros::widget::impl_widget_base!(Clock, Fl_Clock);
-
 /// Creates a clock widget
 #[derive(Debug)]
 pub struct Clock {
@@ -173,8 +170,8 @@ pub struct Clock {
     is_derived: bool,
 }
 
-crate::macros::widget::impl_widget_ext!(Chart, Fl_Chart);
-crate::macros::widget::impl_widget_base!(Chart, Fl_Chart);
+crate::macros::widget::impl_widget_ext!(Clock, Fl_Clock);
+crate::macros::widget::impl_widget_base!(Clock, Fl_Clock);
 
 /// Creates a chart widget
 #[derive(Debug)]
@@ -183,6 +180,9 @@ pub struct Chart {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(Chart, Fl_Chart);
+crate::macros::widget::impl_widget_base!(Chart, Fl_Chart);
 
 impl Chart {
     /// Clears the chart
@@ -287,9 +287,6 @@ impl Chart {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(Progress, Fl_Progress);
-crate::macros::widget::impl_widget_base!(Progress, Fl_Progress);
-
 /// Creates a progress bar
 #[derive(Debug)]
 pub struct Progress {
@@ -297,6 +294,9 @@ pub struct Progress {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(Progress, Fl_Progress);
+crate::macros::widget::impl_widget_base!(Progress, Fl_Progress);
 
 impl Progress {
     /// Returns the minimum value of the progress bar
@@ -405,7 +405,7 @@ impl Tooltip {
     }
 
     /// Returns the current widget under the tooltip
-    pub fn current_widget() -> Widget {
+    pub fn current_widget() -> impl WidgetExt {
         unsafe {
             let widget_ptr = Fl_Tooltip_current_widget();
             assert!(!widget_ptr.is_null());
@@ -499,9 +499,6 @@ impl Tooltip {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(InputChoice, Fl_Input_Choice);
-crate::macros::widget::impl_widget_base!(InputChoice, Fl_Input_Choice);
-
 /// Creates an `InputChoice` widget
 #[derive(Debug)]
 pub struct InputChoice {
@@ -509,6 +506,9 @@ pub struct InputChoice {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(InputChoice, Fl_Input_Choice);
+crate::macros::widget::impl_widget_base!(InputChoice, Fl_Input_Choice);
 
 impl InputChoice {
     /// Set the `down_box` of the widget
@@ -619,9 +619,6 @@ impl InputChoice {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(HelpView, Fl_Help_View);
-crate::macros::widget::impl_widget_base!(HelpView, Fl_Help_View);
-
 /**
     Creates a `HelpView` widget which supports HTML 2 formatting
     ```rust,no_run
@@ -637,6 +634,9 @@ pub struct HelpView {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(HelpView, Fl_Help_View);
+crate::macros::widget::impl_widget_base!(HelpView, Fl_Help_View);
 
 impl HelpView {
     /// Return the directory

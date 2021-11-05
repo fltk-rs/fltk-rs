@@ -82,11 +82,6 @@ pub enum WindowType {
 
 crate::macros::widget::impl_widget_type!(WindowType);
 
-crate::macros::widget::impl_widget_ext!(SingleWindow, Fl_Single_Window);
-crate::macros::widget::impl_widget_base!(SingleWindow, Fl_Single_Window);
-crate::macros::group::impl_group_ext!(SingleWindow, Fl_Single_Window);
-crate::macros::window::impl_window_ext!(SingleWindow, Fl_Single_Window);
-
 /// Creates a single (buffered) window widget
 #[derive(Debug)]
 pub struct SingleWindow {
@@ -94,6 +89,11 @@ pub struct SingleWindow {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(SingleWindow, Fl_Single_Window);
+crate::macros::widget::impl_widget_base!(SingleWindow, Fl_Single_Window);
+crate::macros::group::impl_group_ext!(SingleWindow, Fl_Single_Window);
+crate::macros::window::impl_window_ext!(SingleWindow, Fl_Single_Window);
 
 impl SingleWindow {
     /// Creates a default initialized single window
@@ -215,11 +215,6 @@ impl SingleWindow {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(DoubleWindow, Fl_Double_Window);
-crate::macros::widget::impl_widget_base!(DoubleWindow, Fl_Double_Window);
-crate::macros::group::impl_group_ext!(DoubleWindow, Fl_Double_Window);
-crate::macros::window::impl_window_ext!(DoubleWindow, Fl_Double_Window);
-
 /// Creates a double (buffered) window widget
 #[derive(Debug)]
 pub struct DoubleWindow {
@@ -227,6 +222,11 @@ pub struct DoubleWindow {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(DoubleWindow, Fl_Double_Window);
+crate::macros::widget::impl_widget_base!(DoubleWindow, Fl_Double_Window);
+crate::macros::group::impl_group_ext!(DoubleWindow, Fl_Double_Window);
+crate::macros::window::impl_window_ext!(DoubleWindow, Fl_Double_Window);
 
 impl DoubleWindow {
     /// Creates a default initialized double window
@@ -379,67 +379,64 @@ impl DoubleWindow {
         (self.pixels_per_unit() * self.h() as f32) as i32
     }
 
-    #[doc(hidden)]
     /// Show a window after it had been hidden. Works on Windows and X11 systems
-    pub unsafe fn platform_show(&self) {
-        #[cfg(target_os = "windows")]
-        {
-            extern "system" {
-                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
+    pub fn platform_show(&self) {
+        unsafe {
+            #[cfg(target_os = "windows")]
+            {
+                extern "system" {
+                    fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
+                }
+                ShowWindow(self.raw_handle(), 9);
             }
-            ShowWindow(self.raw_handle(), 9);
-        }
-        #[cfg(target_os = "macos")]
-        {
-            extern "C" {
-                fn my_winShow(xid: *mut raw::c_void);
+            #[cfg(target_os = "macos")]
+            {
+                extern "C" {
+                    fn my_winShow(xid: *mut raw::c_void);
+                }
+                my_winShow(self.raw_handle());
             }
-            my_winShow(self.raw_handle());
-        }
-        #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-        {
-            enum Display {}
-            extern "C" {
-                fn XMapWindow(display: *mut Display, win: u64);
+            #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+            {
+                enum Display {}
+                extern "C" {
+                    fn XMapWindow(display: *mut Display, win: u64);
+                }
+                XMapWindow(crate::app::display() as _, self.raw_handle());
+                crate::app::flush();
             }
-            XMapWindow(crate::app::display() as _, self.raw_handle());
-            crate::app::flush();
         }
     }
 
-    #[doc(hidden)]
     /// Hide a window using the platforms hide call. Works on Windows and X11 systems
-    pub unsafe fn platform_hide(&self) {
-        #[cfg(target_os = "windows")]
-        {
-            extern "system" {
-                fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
+    pub fn platform_hide(&self) {
+        unsafe {
+            #[cfg(target_os = "windows")]
+            {
+                extern "system" {
+                    fn ShowWindow(hwnd: *mut raw::c_void, nCmdShow: raw::c_int) -> raw::c_int;
+                }
+                ShowWindow(self.raw_handle(), 0);
             }
-            ShowWindow(self.raw_handle(), 0);
-        }
-        #[cfg(target_os = "macos")]
-        {
-            extern "C" {
-                fn my_winHide(xid: *mut raw::c_void);
+            #[cfg(target_os = "macos")]
+            {
+                extern "C" {
+                    fn my_winHide(xid: *mut raw::c_void);
+                }
+                my_winHide(self.raw_handle());
             }
-            my_winHide(self.raw_handle());
-        }
-        #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-        {
-            enum Display {}
-            extern "C" {
-                fn XUnmapWindow(display: *mut Display, win: u64);
+            #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+            {
+                enum Display {}
+                extern "C" {
+                    fn XUnmapWindow(display: *mut Display, win: u64);
+                }
+                XUnmapWindow(crate::app::display() as _, self.raw_handle());
+                crate::app::flush();
             }
-            XUnmapWindow(crate::app::display() as _, self.raw_handle());
-            crate::app::flush();
         }
     }
 }
-
-crate::macros::widget::impl_widget_ext!(MenuWindow, Fl_Menu_Window);
-crate::macros::widget::impl_widget_base!(MenuWindow, Fl_Menu_Window);
-crate::macros::group::impl_group_ext!(MenuWindow, Fl_Menu_Window);
-crate::macros::window::impl_window_ext!(MenuWindow, Fl_Menu_Window);
 
 /// Creates a Menu window widget
 #[derive(Debug)]
@@ -448,6 +445,11 @@ pub struct MenuWindow {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(MenuWindow, Fl_Menu_Window);
+crate::macros::widget::impl_widget_base!(MenuWindow, Fl_Menu_Window);
+crate::macros::group::impl_group_ext!(MenuWindow, Fl_Menu_Window);
+crate::macros::window::impl_window_ext!(MenuWindow, Fl_Menu_Window);
 
 impl MenuWindow {
     /// Creates a default initialized menu window
@@ -458,11 +460,6 @@ impl MenuWindow {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(OverlayWindow, Fl_Overlay_Window);
-crate::macros::widget::impl_widget_base!(OverlayWindow, Fl_Overlay_Window);
-crate::macros::group::impl_group_ext!(OverlayWindow, Fl_Overlay_Window);
-crate::macros::window::impl_window_ext!(OverlayWindow, Fl_Overlay_Window);
-
 /// Creates an overlay (buffered) window widget
 #[derive(Debug)]
 pub struct OverlayWindow {
@@ -470,6 +467,11 @@ pub struct OverlayWindow {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(OverlayWindow, Fl_Overlay_Window);
+crate::macros::widget::impl_widget_base!(OverlayWindow, Fl_Overlay_Window);
+crate::macros::group::impl_group_ext!(OverlayWindow, Fl_Overlay_Window);
+crate::macros::window::impl_window_ext!(OverlayWindow, Fl_Overlay_Window);
 
 impl OverlayWindow {
     /// Creates a default initialized overlay window
@@ -784,16 +786,4 @@ impl AndroidWindow {
     }
 }
 
-impl Deref for AndroidWindow {
-    type Target = Window;
-
-    fn deref(&self) -> &Self::Target {
-        &self.win
-    }
-}
-
-impl DerefMut for AndroidWindow {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.win
-    }
-}
+crate::widget_extends!(AndroidWindow, Window, win);

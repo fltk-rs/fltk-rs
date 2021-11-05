@@ -1,4 +1,4 @@
-// Basically a table where the cell contents can be modified
+// For a simpler boilerplate-less table, check the fltk-table crate
 
 use fltk::{
     app, draw, enums, input,
