@@ -264,7 +264,7 @@ please check the [FAQ](https://github.com/fltk-rs/fltk-rs/blob/master/FAQ.md) pa
 #![allow(non_upper_case_globals)]
 #![allow(clippy::needless_doctest_main)]
 #![warn(missing_docs)]
-#![warn(broken_intra_doc_links)]
+#![warn(rustdoc::broken_intra_doc_links)]
 
 /// Application related methods and functions
 pub mod app;
