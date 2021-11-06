@@ -624,6 +624,9 @@ pub unsafe trait WindowExt: GroupExt {
     fn screen_num(&self) -> i32;
     /// Set the screen number
     fn set_screen_num(&mut self, n: i32);
+    /// wait for the window to be displayed after calling `show()`.
+    /// More info here: https://www.fltk.org/doc-1.4/classFl__Window.html#aafbec14ca8ff8abdaff77a35ebb23dd8
+    fn wait_for_expose(&self);
 }
 
 /// Defines the methods implemented by all input and output widgets

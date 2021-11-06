@@ -399,6 +399,11 @@ macro_rules! impl_window_ext {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_screen_num>](self.inner, n) }
                 }
+
+                fn wait_for_expose(&self) {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _wait_for_expose>](self.inner) }
+                }
             }
         }
     };
