@@ -56,7 +56,7 @@ pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -155,7 +155,7 @@ pub fn add_idle<F: FnMut() + 'static>(cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -170,7 +170,7 @@ pub fn remove_idle<F: FnMut() + 'static>(cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -185,7 +185,7 @@ pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -288,7 +288,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -322,7 +322,7 @@ pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -337,7 +337,7 @@ pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
@@ -352,7 +352,7 @@ pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f()));
+            let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;

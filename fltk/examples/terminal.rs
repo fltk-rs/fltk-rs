@@ -108,6 +108,7 @@ impl TerminalFuncs for SimpleTerminal {
 
 #[derive(Debug, Clone)]
 struct Term {
+    #[allow(dead_code)]
     term: SimpleTerminal,
 }
 
