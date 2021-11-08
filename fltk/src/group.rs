@@ -438,7 +438,7 @@ impl Flex {
     }
 
     /// Set the size of the widget
-    pub fn set_size<W: WidgetExt>(&mut self, w: &mut W, size: i32) {
+    pub fn set_size<W: WidgetExt>(&mut self, w: &W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
     }
 
@@ -460,7 +460,7 @@ impl Flex {
     }
 
     /// Recalculate children's coords and sizes
-    pub fn recalc(&mut self) {
+    pub fn recalc(&self) {
         self.end();
     }
 

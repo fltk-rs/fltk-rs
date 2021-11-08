@@ -5,6 +5,8 @@
 - Mark Window::platform_hide() and platform_show() as safe.
 - Add WindowExt::wait_for_expose().
 - Fix div by zero in Flex orphaned space.
+- Flex::set_size() no longer needs a mutable widget ref.
+- Flex::end() and recalc() no longer need mutable ref to self.
 - Pull FLTK fixes.
 - Update README with tutorial links and reference to fltk-table and fltk-evented.
 - Cleanup and reorganize macro ordering to be after structs.
