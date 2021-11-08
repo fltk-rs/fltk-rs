@@ -1,6 +1,17 @@
 # Changelog
 
 
+## [1.2.14] - 2021-11-09
+- Mark Window::platform_hide() and platform_show() as safe.
+- Add WindowExt::wait_for_expose().
+- Fix div by zero in Flex orphaned space.
+- Flex::set_size() no longer needs a mutable widget ref.
+- Flex::end() and recalc() no longer need mutable ref to self.
+- Pull FLTK fixes.
+- Update README with tutorial links and reference to fltk-table and fltk-evented.
+- Cleanup and reorganize macro ordering to be after structs.
+- Formatting and lints.
+
 ## [1.2.13] - 2021-11-01
 - Unlink C++ std lib to enable cross-compiling to Windows.
 - Fix draw::Offscreen::rescale().

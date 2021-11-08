@@ -11,10 +11,6 @@ use std::{
     os::raw,
 };
 
-crate::macros::widget::impl_widget_ext!(MenuBar, Fl_Menu_Bar);
-crate::macros::widget::impl_widget_base!(MenuBar, Fl_Menu_Bar);
-crate::macros::menu::impl_menu_ext!(MenuBar, Fl_Menu_Bar);
-
 /// Creates a menu bar
 #[derive(Debug)]
 pub struct MenuBar {
@@ -23,9 +19,9 @@ pub struct MenuBar {
     is_derived: bool,
 }
 
-crate::macros::widget::impl_widget_ext!(MenuButton, Fl_Menu_Button);
-crate::macros::widget::impl_widget_base!(MenuButton, Fl_Menu_Button);
-crate::macros::menu::impl_menu_ext!(MenuButton, Fl_Menu_Button);
+crate::macros::widget::impl_widget_ext!(MenuBar, Fl_Menu_Bar);
+crate::macros::widget::impl_widget_base!(MenuBar, Fl_Menu_Bar);
+crate::macros::menu::impl_menu_ext!(MenuBar, Fl_Menu_Bar);
 
 /// Creates a menu button
 #[derive(Debug)]
@@ -34,6 +30,10 @@ pub struct MenuButton {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(MenuButton, Fl_Menu_Button);
+crate::macros::widget::impl_widget_base!(MenuButton, Fl_Menu_Button);
+crate::macros::menu::impl_menu_ext!(MenuButton, Fl_Menu_Button);
 
 /// Defines the menu button types, which can be changed dynamically using the `set_type()`.
 #[repr(i32)]
@@ -76,10 +76,6 @@ impl MenuButton {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(Choice, Fl_Choice);
-crate::macros::widget::impl_widget_base!(Choice, Fl_Choice);
-crate::macros::menu::impl_menu_ext!(Choice, Fl_Choice);
-
 /// Creates a menu choice
 #[derive(Debug)]
 pub struct Choice {
@@ -88,9 +84,9 @@ pub struct Choice {
     is_derived: bool,
 }
 
-crate::macros::widget::impl_widget_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
-crate::macros::widget::impl_widget_base!(SysMenuBar, Fl_Sys_Menu_Bar);
-crate::macros::menu::impl_menu_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
+crate::macros::widget::impl_widget_ext!(Choice, Fl_Choice);
+crate::macros::widget::impl_widget_base!(Choice, Fl_Choice);
+crate::macros::menu::impl_menu_ext!(Choice, Fl_Choice);
 
 /// Creates a macOS system menu bar on macOS and a normal menu bar on other systems
 #[derive(Debug)]
@@ -99,6 +95,10 @@ pub struct SysMenuBar {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
+crate::macros::widget::impl_widget_base!(SysMenuBar, Fl_Sys_Menu_Bar);
+crate::macros::menu::impl_menu_ext!(SysMenuBar, Fl_Sys_Menu_Bar);
 
 /// Creates a menu item
 #[derive(Debug, Clone)]

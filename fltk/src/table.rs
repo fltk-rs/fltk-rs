@@ -11,6 +11,7 @@ use std::{
 };
 
 /// Creates a table
+/// For a simpler boilerplate-less table, check the [fltk-table crate](https://crates.io/crates/fltk-table)
 #[derive(Debug)]
 pub struct Table {
     inner: *mut Fl_Table,

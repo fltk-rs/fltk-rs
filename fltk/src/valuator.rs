@@ -79,8 +79,6 @@ impl NiceSlider {
     }
 }
 
-crate::macros::widget::impl_widget_type!(SliderType);
-
 /// Defines slider types
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -98,6 +96,8 @@ pub enum SliderType {
     /// Horizontal nice slider
     HorizontalNice = 5,
 }
+
+crate::macros::widget::impl_widget_type!(SliderType);
 
 /// Creates a dial widget
 #[derive(Debug)]
@@ -169,8 +169,6 @@ impl LineDial {
     }
 }
 
-crate::macros::widget::impl_widget_type!(DialType);
-
 /// Defines dial types
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -182,6 +180,8 @@ pub enum DialType {
     /// Filled dial
     Fill = 2,
 }
+
+crate::macros::widget::impl_widget_type!(DialType);
 
 /// Creates a counter widget
 #[derive(Debug)]
@@ -195,8 +195,6 @@ crate::macros::widget::impl_widget_ext!(Counter, Fl_Counter);
 crate::macros::widget::impl_widget_base!(Counter, Fl_Counter);
 crate::macros::valuator::impl_valuator_ext!(Counter, Fl_Counter);
 
-crate::macros::widget::impl_widget_type!(CounterType);
-
 /// Defines counter types
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -206,6 +204,8 @@ pub enum CounterType {
     /// Simple counter
     Simple = 1,
 }
+
+crate::macros::widget::impl_widget_type!(CounterType);
 
 /// Creates a scrollbar widget
 #[derive(Debug)]
@@ -241,8 +241,6 @@ impl Scrollbar {
     }
 }
 
-crate::macros::widget::impl_widget_type!(ScrollbarType);
-
 /// Defines scrollbar types
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
@@ -260,6 +258,8 @@ pub enum ScrollbarType {
     /// Horizontal nice scrollbar
     HorizontalNice = 5,
 }
+
+crate::macros::widget::impl_widget_type!(ScrollbarType);
 
 /// Creates a roller widget
 #[derive(Debug)]

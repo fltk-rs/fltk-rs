@@ -1,4 +1,4 @@
-// Slightly modified translation of https://github.com/fltk/fltk/blob/master/examples/table-simple.cxx
+// For a simpler boilerplate-less table, check the fltk-table crate
 
 use fltk::{prelude::*, *};
 

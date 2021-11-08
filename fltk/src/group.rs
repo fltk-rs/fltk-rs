@@ -10,10 +10,6 @@ use std::{
     os::raw,
 };
 
-crate::macros::widget::impl_widget_ext!(Group, Fl_Group);
-crate::macros::widget::impl_widget_base!(Group, Fl_Group);
-crate::macros::group::impl_group_ext!(Group, Fl_Group);
-
 /// Creates a group widget
 #[derive(Debug)]
 pub struct Group {
@@ -21,6 +17,10 @@ pub struct Group {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(Group, Fl_Group);
+crate::macros::widget::impl_widget_base!(Group, Fl_Group);
+crate::macros::group::impl_group_ext!(Group, Fl_Group);
 
 impl Group {
     /// Get the current group
@@ -45,10 +45,6 @@ impl Group {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(Pack, Fl_Pack);
-crate::macros::widget::impl_widget_base!(Pack, Fl_Pack);
-crate::macros::group::impl_group_ext!(Pack, Fl_Pack);
-
 /// Creates a widget pack
 #[derive(Debug)]
 pub struct Pack {
@@ -57,7 +53,9 @@ pub struct Pack {
     is_derived: bool,
 }
 
-crate::macros::widget::impl_widget_type!(PackType);
+crate::macros::widget::impl_widget_ext!(Pack, Fl_Pack);
+crate::macros::widget::impl_widget_base!(Pack, Fl_Pack);
+crate::macros::group::impl_group_ext!(Pack, Fl_Pack);
 
 /// Defines pack types
 #[repr(i32)]
@@ -69,9 +67,47 @@ pub enum PackType {
     Horizontal = 1,
 }
 
-crate::macros::widget::impl_widget_ext!(Scroll, Fl_Scroll);
-crate::macros::widget::impl_widget_base!(Scroll, Fl_Scroll);
-crate::macros::group::impl_group_ext!(Scroll, Fl_Scroll);
+crate::macros::widget::impl_widget_type!(PackType);
+
+impl Pack {
+    /// Get the spacing of the pack
+    pub fn spacing(&self) -> i32 {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Pack_spacing(self.inner) }
+    }
+
+    /// Set the spacing of the pack
+    pub fn set_spacing(&mut self, spacing: i32) {
+        unsafe {
+            assert!(!self.was_deleted());
+            Fl_Pack_set_spacing(self.inner, spacing);
+        }
+    }
+
+    /// Layout the children of the pack automatically.
+    /// Must be called on existing children
+    pub fn auto_layout(&mut self) {
+        let children = self.children() as i32;
+        if children == 0 {
+            return;
+        }
+        let spacing = self.spacing() * (children - 1);
+        let t = self.get_type::<PackType>();
+        let w = (self.width() - spacing) / children;
+        let h = (self.height() - spacing) / children;
+
+        for i in 0..children {
+            let mut c = self.child(i as i32).unwrap();
+            let c_w = c.width();
+            let c_h = c.height();
+            if t == PackType::Vertical {
+                c.set_size(c_w, h);
+            } else {
+                c.set_size(w, c_h);
+            }
+        }
+    }
+}
 
 /// Creates a scroll group
 #[derive(Debug)]
@@ -81,7 +117,9 @@ pub struct Scroll {
     is_derived: bool,
 }
 
-crate::macros::widget::impl_widget_type!(ScrollType);
+crate::macros::widget::impl_widget_ext!(Scroll, Fl_Scroll);
+crate::macros::widget::impl_widget_base!(Scroll, Fl_Scroll);
+crate::macros::group::impl_group_ext!(Scroll, Fl_Scroll);
 
 /// Defines Scroll types
 #[repr(i32)]
@@ -104,6 +142,8 @@ pub enum ScrollType {
     /// Always show both horizontal and vertical bars
     BothAlways = 7,
 }
+
+crate::macros::widget::impl_widget_type!(ScrollType);
 
 impl Scroll {
     /// Returns the vertical scrollbar
@@ -157,10 +197,6 @@ impl Scroll {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(Tabs, Fl_Tabs);
-crate::macros::widget::impl_widget_base!(Tabs, Fl_Tabs);
-crate::macros::group::impl_group_ext!(Tabs, Fl_Tabs);
-
 /// Creates a tab which can contain widgets
 #[derive(Debug)]
 pub struct Tabs {
@@ -168,6 +204,10 @@ pub struct Tabs {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(Tabs, Fl_Tabs);
+crate::macros::widget::impl_widget_base!(Tabs, Fl_Tabs);
+crate::macros::group::impl_group_ext!(Tabs, Fl_Tabs);
 
 impl Tabs {
     /// Gets the currently visible group
@@ -258,10 +298,6 @@ impl Tabs {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(Tile, Fl_Tile);
-crate::macros::widget::impl_widget_base!(Tile, Fl_Tile);
-crate::macros::group::impl_group_ext!(Tile, Fl_Tile);
-
 /// Creates a tile which can contain widgets
 #[derive(Debug)]
 pub struct Tile {
@@ -270,9 +306,9 @@ pub struct Tile {
     is_derived: bool,
 }
 
-crate::macros::widget::impl_widget_ext!(Wizard, Fl_Wizard);
-crate::macros::widget::impl_widget_base!(Wizard, Fl_Wizard);
-crate::macros::group::impl_group_ext!(Wizard, Fl_Wizard);
+crate::macros::widget::impl_widget_ext!(Tile, Fl_Tile);
+crate::macros::widget::impl_widget_base!(Tile, Fl_Tile);
+crate::macros::group::impl_group_ext!(Tile, Fl_Tile);
 
 /// Creates a wizard widget
 #[derive(Debug)]
@@ -281,6 +317,10 @@ pub struct Wizard {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(Wizard, Fl_Wizard);
+crate::macros::widget::impl_widget_base!(Wizard, Fl_Wizard);
+crate::macros::group::impl_group_ext!(Wizard, Fl_Wizard);
 
 impl Wizard {
     /// Gets the next view of the wizard
@@ -315,10 +355,6 @@ impl Wizard {
     }
 }
 
-crate::macros::widget::impl_widget_ext!(ColorChooser, Fl_Color_Chooser);
-crate::macros::widget::impl_widget_base!(ColorChooser, Fl_Color_Chooser);
-crate::macros::group::impl_group_ext!(ColorChooser, Fl_Color_Chooser);
-
 /// Creates a color chooser widget
 #[derive(Debug)]
 pub struct ColorChooser {
@@ -326,6 +362,10 @@ pub struct ColorChooser {
     tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
     is_derived: bool,
 }
+
+crate::macros::widget::impl_widget_ext!(ColorChooser, Fl_Color_Chooser);
+crate::macros::widget::impl_widget_base!(ColorChooser, Fl_Color_Chooser);
+crate::macros::group::impl_group_ext!(ColorChooser, Fl_Color_Chooser);
 
 impl ColorChooser {
     /// Return the rgb color
@@ -347,46 +387,6 @@ impl ColorChooser {
     }
 }
 
-impl Pack {
-    /// Get the spacing of the pack
-    pub fn spacing(&self) -> i32 {
-        assert!(!self.was_deleted());
-        unsafe { Fl_Pack_spacing(self.inner) }
-    }
-
-    /// Set the spacing of the pack
-    pub fn set_spacing(&mut self, spacing: i32) {
-        unsafe {
-            assert!(!self.was_deleted());
-            Fl_Pack_set_spacing(self.inner, spacing);
-        }
-    }
-
-    /// Layout the children of the pack automatically.
-    /// Must be called on existing children
-    pub fn auto_layout(&mut self) {
-        let children = self.children() as i32;
-        if children == 0 {
-            return;
-        }
-        let spacing = self.spacing() * (children - 1);
-        let t = self.get_type::<PackType>();
-        let w = (self.width() - spacing) / children;
-        let h = (self.height() - spacing) / children;
-
-        for i in 0..children {
-            let mut c = self.child(i as i32).unwrap();
-            let c_w = c.width();
-            let c_h = c.height();
-            if t == PackType::Vertical {
-                c.set_size(c_w, h);
-            } else {
-                c.set_size(w, c_h);
-            }
-        }
-    }
-}
-
 crate::macros::widget::impl_widget_type!(FlexType);
 
 /// Defines Flex types
@@ -398,10 +398,6 @@ pub enum FlexType {
     /// column direction
     Column,
 }
-
-crate::macros::widget::impl_widget_ext!(Flex, Fl_Flex);
-crate::macros::widget::impl_widget_base!(Flex, Fl_Flex);
-crate::macros::group::impl_group_ext!(Flex, Fl_Flex);
 
 /**
     a Flexbox widget
@@ -430,6 +426,10 @@ pub struct Flex {
     is_derived: bool,
 }
 
+crate::macros::widget::impl_widget_ext!(Flex, Fl_Flex);
+crate::macros::widget::impl_widget_base!(Flex, Fl_Flex);
+crate::macros::group::impl_group_ext!(Flex, Fl_Flex);
+
 impl Flex {
     /// Add a widget to the Flex box
     pub fn add<W: WidgetExt>(&mut self, widget: &W) {
@@ -438,7 +438,7 @@ impl Flex {
     }
 
     /// Set the size of the widget
-    pub fn set_size<W: WidgetExt>(&mut self, w: &mut W, size: i32) {
+    pub fn set_size<W: WidgetExt>(&mut self, w: &W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
     }
 
@@ -460,7 +460,7 @@ impl Flex {
     }
 
     /// Recalculate children's coords and sizes
-    pub fn recalc(&mut self) {
+    pub fn recalc(&self) {
         self.end();
     }
 
@@ -795,15 +795,10 @@ impl Row {
 
 crate::widget_extends!(Row, Flex, p);
 
-#[doc(hidden)]
 /// Experimental group widgets
 pub mod experimental {
     use super::*;
-    
-    crate::macros::widget::impl_widget_ext!(Flow, Fl_Flow);
-    crate::macros::widget::impl_widget_base!(Flow, Fl_Flow);
-    crate::macros::group::impl_group_ext!(Flow, Fl_Flow);
-    
+
     #[doc(hidden)]
     /// Creates a flow widget
     #[derive(Debug)]
@@ -812,7 +807,11 @@ pub mod experimental {
         tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
         is_derived: bool,
     }
-    
+
+    crate::macros::widget::impl_widget_ext!(Flow, Fl_Flow);
+    crate::macros::widget::impl_widget_base!(Flow, Fl_Flow);
+    crate::macros::group::impl_group_ext!(Flow, Fl_Flow);
+
     #[doc(hidden)]
     impl Flow {
         #[doc(hidden)]

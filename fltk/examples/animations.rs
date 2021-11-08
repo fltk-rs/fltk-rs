@@ -58,7 +58,7 @@ fn main() {
     let mut frame = Frame::new(-30, 200, 30, 30, "");
     let mut pxm = Pixmap::new(PXM).unwrap();
     pxm.scale(200, 200, true, true);
-    frame.set_image(Some(pxm.clone()));
+    frame.set_image(Some(pxm));
     wind.set_color(Color::White);
     wind.end();
     wind.show_with_env_args();
