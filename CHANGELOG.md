@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.14] - Unreleased
+## [1.2.14] - 2021-11-09
 - Mark Window::platform_hide() and platform_show() as safe.
 - Add WindowExt::wait_for_expose().
 - Fix div by zero in Flex orphaned space.
