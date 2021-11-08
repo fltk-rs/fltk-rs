@@ -4,6 +4,7 @@
 ## [1.2.14] - Unreleased
 - Mark Window::platform_hide() and platform_show() as safe.
 - Add WindowExt::wait_for_expose().
+- Fix div by zero in Flex orphaned space.
 - Pull FLTK fixes.
 - Update README with tutorial links and reference to fltk-table and fltk-evented.
 - Cleanup and reorganize macro ordering to be after structs.
