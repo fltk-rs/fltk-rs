@@ -396,7 +396,7 @@ impl DoubleWindow {
                 }
                 my_winShow(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
                 enum Display {}
                 extern "C" {
@@ -425,7 +425,7 @@ impl DoubleWindow {
                 }
                 my_winHide(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
                 enum Display {}
                 extern "C" {
