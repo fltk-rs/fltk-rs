@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.15] - Unreleased
+- Fix android build (break introduced with version 1.2.11).
+
 ## [1.2.14] - 2021-11-09
 - Mark Window::platform_hide() and platform_show() as safe.
 - Add WindowExt::wait_for_expose().
