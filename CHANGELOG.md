@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.15] - Unreleased
+## [1.2.15] - 2021-11-11
 - Fix android build (break introduced with version 1.2.11).
 
 ## [1.2.14] - 2021-11-09
