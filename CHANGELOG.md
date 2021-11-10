@@ -2,7 +2,7 @@
 
 
 ## [1.2.15] - 2021-11-11
-- Fix android build (break introduced with version 1.2.11).
+- Fix android build (break introduced with version 1.2.11). Thanks @Ar37-rs. 
 - Don't assert that window is shown with set_opacity.
 
 ## [1.2.14] - 2021-11-09
