@@ -339,15 +339,16 @@ impl DoubleWindow {
     /// ```
     pub fn set_opacity(&mut self, val: f64) {
         assert!(!self.was_deleted());
-        assert!(self.shown());
-        let val: u8 = if val > 1.0 {
-            255
-        } else if val < 0.0 {
-            0
-        } else {
-            (val * 255.0).round() as u8
-        };
-        unsafe { Fl_Double_Window_set_alpha(self.inner, val) }
+        if self.shown() {
+            let val: u8 = if val > 1.0 {
+                255
+            } else if val < 0.0 {
+                0
+            } else {
+                (val * 255.0).round() as u8
+            };
+            unsafe { Fl_Double_Window_set_alpha(self.inner, val) }
+        }
     }
 
     /// Returns the pixels per unit.
@@ -396,7 +397,7 @@ impl DoubleWindow {
                 }
                 my_winShow(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
                 enum Display {}
                 extern "C" {
@@ -425,7 +426,7 @@ impl DoubleWindow {
                 }
                 my_winHide(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
                 enum Display {}
                 extern "C" {
