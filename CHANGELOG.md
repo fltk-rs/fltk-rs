@@ -2,6 +2,7 @@
 
 
 ## [1.2.16] - Unreleased
+- Add WidgetExt::center_x() and center_y().
 - Allow scraping examples for docs.rs.
 - Expose WidgetExt::raw_user_data() and set_raw_user_data().
 
