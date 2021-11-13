@@ -332,10 +332,21 @@ pub unsafe trait WidgetExt {
     fn as_window(&self) -> Option<Box<dyn WindowExt>>;
     /// Return the widget as a group widget if it's a group widget
     fn as_group(&self) -> Option<crate::group::Group>;
+    #[doc(hidden)]
     /// INTERNAL: Retakes ownership of the user callback data
     /// # Safety
     /// Can return multiple mutable references to the `user_data`
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
+    #[doc(hidden)]
+    /// INTERNAL: Retakes ownership of the user callback data
+    /// # Safety
+    /// Can return multiple mutable references to the `user_data`
+    unsafe fn raw_user_data(&self) -> *mut std::os::raw::c_void;
+    #[doc(hidden)]
+    /// INTERNAL: Retakes ownership of the user callback data
+    /// # Safety
+    /// Can return multiple mutable references to the `user_data`
+    unsafe fn set_raw_user_data(&mut self, data: *mut std::os::raw::c_void);
     /// Upcast a `WidgetExt` to a Widget
     /// # Safety
     /// Allows for potentially unsafe casts between incompatible widget types
@@ -433,10 +444,12 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// takes the widget as a closure argument.
     /// macOS requires that `WidgetBase::draw` actually calls drawing functions
     fn draw<F: FnMut(&mut Self) + 'static>(&mut self, cb: F);
+    #[doc(hidden)]
     /// INTERNAL: Retrieve the draw data
     /// # Safety
     /// Can return multiple mutable references to the `draw_data`
     unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
+    #[doc(hidden)]
     /// INTERNAL: Retrieve the handle data
     /// # Safety
     /// Can return multiple mutable references to the `handle_data`
@@ -586,6 +599,7 @@ pub unsafe trait WindowExt: GroupExt {
     fn free_position(&mut self);
     /// Get the raw system handle of the window
     fn raw_handle(&self) -> crate::window::RawHandle;
+    #[doc(hidden)]
     /// Set the window associated with a raw handle.
     /// `RawHandle` is a void pointer to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
@@ -807,6 +821,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// # Safety
     /// Deletes `user_data` and any captured objects in the callback
     unsafe fn unsafe_clear(&mut self);
+    #[doc(hidden)]
     /// Clears a submenu by index, failure return `FltkErrorKind::FailedOperation`. Also recursively force-cleans capturing callbacks
     /// # Safety
     /// Deletes `user_data` and any captured objects in the callback
@@ -1248,6 +1263,7 @@ pub unsafe trait TableExt: GroupExt {
         &mut self,
         cb: F,
     );
+    #[doc(hidden)]
     /// INTERNAL: Retrieve the draw cell data
     /// # Safety
     /// Can return multiple mutable references to the `draw_cell_data`
@@ -1328,10 +1344,12 @@ pub unsafe trait ImageExt {
         Self: Sized;
     /// Checks if the image was deleted
     fn was_deleted(&self) -> bool;
+    #[doc(hidden)]
     /// INTERNAL: Manually increment the atomic refcount
     /// # Safety
     /// The underlying image pointer must be valid
     unsafe fn increment_arc(&mut self);
+    #[doc(hidden)]
     /// INTERNAL: Manually decrement the atomic refcount
     /// # Safety
     /// The underlying image pointer must be valid

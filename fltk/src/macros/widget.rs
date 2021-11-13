@@ -504,6 +504,14 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
+                unsafe fn raw_user_data(&self) -> *mut std::os::raw::c_void {
+                    [<$flname _user_data>](self.inner)
+                }
+
+                unsafe fn set_raw_user_data(&mut self, data: *mut std::os::raw::c_void) {
+                    [<$flname _set_user_data>](self.inner, data)
+                }
+
                 fn take_focus(&mut self) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     unsafe {
