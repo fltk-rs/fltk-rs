@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.2.15"
+version = "1.2.16"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
@@ -17,7 +17,7 @@ name = "fltk"
 path = "src/lib.rs"
 
 [dependencies]
-fltk-sys = { path = "../fltk-sys", version = "=1.2.14" }
+fltk-sys = { path = "../fltk-sys", version = "=1.2.16" }
 bitflags = "^1.3"
 paste = "1"
 raw-window-handle = { version = "^0.3", optional = true }
@@ -40,7 +40,7 @@ single-threaded = ["fltk-sys/single-threaded"] # (Experimental) Disable multithr
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
-# cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples=examples"]
+cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples=examples"]
 
 [[test]]
 name = "app_handle"
