@@ -4,6 +4,7 @@
 ## [1.2.16] - Unreleased
 - Add WidgetExt::center_x() and center_y().
 - Allow scraping examples for docs.rs.
+- Add Fl_Flex::remove to C wrapper.
 - Expose WidgetExt::raw_user_data() and set_raw_user_data().
 
 ## [1.2.15] - 2021-11-11
