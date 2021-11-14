@@ -147,11 +147,11 @@ pub unsafe trait WidgetExt {
     fn center_of<W: WidgetExt>(self, w: &W) -> Self
     where
         Self: Sized;
-    /// Initialize center of another widget
+    /// Initialize center of another widget on the x axis
     fn center_x<W: WidgetExt>(self, w: &W) -> Self
     where
         Self: Sized;
-    /// Initialize center of another widget
+    /// Initialize center of another widget on the y axis
     fn center_y<W: WidgetExt>(self, w: &W) -> Self
     where
         Self: Sized;
@@ -346,12 +346,12 @@ pub unsafe trait WidgetExt {
     /// Can return multiple mutable references to the `user_data`
     unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>>;
     #[doc(hidden)]
-    /// INTERNAL: Retakes ownership of the user callback data
+    /// INTERNAL: Get the raw user data of the widget
     /// # Safety
     /// Can return multiple mutable references to the `user_data`
     unsafe fn raw_user_data(&self) -> *mut std::os::raw::c_void;
     #[doc(hidden)]
-    /// INTERNAL: Retakes ownership of the user callback data
+    /// INTERNAL: Set the raw user data of the widget
     /// # Safety
     /// Can return multiple mutable references to the `user_data`
     unsafe fn set_raw_user_data(&mut self, data: *mut std::os::raw::c_void);
@@ -1519,7 +1519,7 @@ macro_rules! widget_extends {
                 self
             }
 
-            /// Initialize center of another widget
+            /// Initialize center of another widget on the x axis
             pub fn center_x<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
@@ -1538,7 +1538,7 @@ macro_rules! widget_extends {
                 self
             }
 
-            /// Initialize center of another widget
+            /// Initialize center of another widget on the y axis
             pub fn center_y<W: $crate::prelude::WidgetExt>(mut self, w: &W) -> Self {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());

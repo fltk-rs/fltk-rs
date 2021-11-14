@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.16] - Unreleased
+## [1.2.16] - 2021-11-15
 - Add WidgetExt::center_x() and center_y().
 - Allow scraping examples for docs.rs.
 - Add Fl_Flex::remove to C wrapper.
