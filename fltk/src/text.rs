@@ -1002,6 +1002,15 @@ impl SimpleTerminal {
         unsafe { Fl_Simple_Terminal_append(self.inner, s.into_raw()) }
     }
 
+    /// Appends text to the terminal buffer
+    pub fn append2(&mut self, s: &[u8], len: i32) {
+        assert!(!self.was_deleted());
+        assert!(self.buffer().is_some());
+        assert!(len as usize <= s.len());
+        let s = CString::new(s).unwrap();
+        unsafe { Fl_Simple_Terminal_append2(self.inner, s.into_raw(), len) }
+    }
+
     /// Sets the text of the terminal buffer
     pub fn set_text(&mut self, s: &str) {
         assert!(!self.was_deleted());

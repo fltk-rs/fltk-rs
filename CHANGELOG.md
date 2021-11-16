@@ -4,6 +4,7 @@
 ## [1.2.17] - Unreleased
 - Add draw::draw_check().
 - Link to FLTK bundled libpng on Linux.
+- Add SimpleTerminal::append2.
 
 ## [1.2.16] - 2021-11-15
 - Add WidgetExt::center_x() and center_y().
