@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.2.17] - Unreleased
+- Add draw::draw_check().
+- Link to FLTK bundled libpng on Linux.
+
 ## [1.2.16] - 2021-11-15
 - Add WidgetExt::center_x() and center_y().
 - Allow scraping examples for docs.rs.

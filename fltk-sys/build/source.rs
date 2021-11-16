@@ -82,11 +82,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("USE_SYSTEM_FLTK", "ON");
         }
 
-        if cfg!(feature = "system-libpng")
-            || (!target_triple.contains("apple")
-                && !target_triple.contains("windows")
-                && !target_triple.contains("android"))
-        {
+        if cfg!(feature = "system-libpng") {
             dst.define("OPTION_USE_SYSTEM_LIBPNG", "ON");
         } else {
             dst.define("OPTION_USE_SYSTEM_LIBPNG", "OFF");

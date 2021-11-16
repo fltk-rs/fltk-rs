@@ -666,3 +666,12 @@ extern "C" {
         align: ::std::os::raw::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_draw_check(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+        col: ::std::os::raw::c_uint,
+    );
+}

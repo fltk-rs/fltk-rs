@@ -43,11 +43,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
         if !cfg!(features = "no-images") {
             println!("cargo:rustc-link-lib=static=fltk_images");
 
-            if cfg!(feature = "system-libpng")
-                || (!target_triple.contains("apple")
-                    && !target_triple.contains("windows")
-                    && !target_triple.contains("android"))
-            {
+            if cfg!(feature = "system-libpng") {
                 println!("cargo:rustc-link-lib=dylib=png");
             } else {
                 println!("cargo:rustc-link-lib=static=fltk_png");
