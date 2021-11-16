@@ -1,6 +1,6 @@
 use std::path::Path;
 
-pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
+pub fn link(target_os: &str, out_dir: &Path) {
     println!(
         "cargo:rustc-link-search=native={}",
         out_dir.join("build").display()
