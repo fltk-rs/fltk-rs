@@ -159,6 +159,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             "Release"
         };
 
+        if target_triple == "aarch64-apple-darwin" {
+            dst.define("CMAKE_OSX_ARCHITECTURE", "arm64");
+        }
+
         let _dst = dst
             .profile(profile)
             .define("CMAKE_EXPORT_COMPILE_COMMANDS", "ON")
