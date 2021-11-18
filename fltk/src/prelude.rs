@@ -496,7 +496,35 @@ pub unsafe trait ButtonExt: WidgetExt {
     fn down_frame(&self) -> FrameType;
 }
 
-/// Defines the methods implemented by all group widgets
+/// Defines the methods implemented by all group widgets.
+/// Widgets implementing the GroupExt trait, are characterized by having to call `::end()` method to basically close them.
+/// ```rust
+/// use fltk::{button::Button, window::Window, prelude::GroupExt};
+/// let win = Window::default();
+/// let btn = Button::default();
+/// // Instantiate other widgets
+/// win.end();
+/// ```
+/// In the above example, the button `btn` will be parented by the window.
+/// After `end`ing such GroupExt widgets, any other widgets instantiated after the `end` call, will be instantiated outside. 
+/// These can still be added using the `::add(&other_widget)` method (or using `::insert`):
+/// ```rust
+/// use fltk::{button::Button, window::Window, prelude::GroupExt};
+/// let mut win = Window::default();
+/// win.end();
+/// let btn = Button::default();
+/// win.add(&btn);
+/// ```
+/// Another option is to reopen the widget:
+/// ```rust
+/// use fltk::{button::Button, window::Window, prelude::GroupExt};
+/// let win = Window::default();
+/// win.end();
+/// win.begin();
+/// let btn = Button::default();
+/// // other widgets
+/// win.end();
+/// ```
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 pub unsafe trait GroupExt: WidgetExt {
