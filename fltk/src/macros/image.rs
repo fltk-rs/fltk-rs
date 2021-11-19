@@ -1,3 +1,4 @@
+#[macro_export]
 /// Implements ImageExt
 macro_rules! impl_image_ext {
     ($name: ident, $flname: ident) => {
@@ -205,4 +206,4 @@ macro_rules! impl_image_ext {
     };
 }
 
-pub(crate) use impl_image_ext;
+pub use impl_image_ext;

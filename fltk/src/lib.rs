@@ -287,7 +287,7 @@ pub mod image;
 /// Input widgets
 pub mod input;
 /// mod macros;
-mod macros;
+pub mod macros;
 /// Menu widgets
 pub mod menu;
 /// Miscellaneous widgets not fitting a certain group

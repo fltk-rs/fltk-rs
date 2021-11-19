@@ -5,7 +5,9 @@ use std::os::raw;
 use crate::prelude::FltkError;
 use crate::prelude::FltkErrorKind;
 
-pub(crate) trait FlString {
+/// A helper trait to get CStrings from Strings without paniciking
+pub trait FlString {
+    /// Get CStrings from Strings without paniciking
     fn safe_new(s: &str) -> CString;
 }
 

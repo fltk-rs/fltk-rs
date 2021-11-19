@@ -1,3 +1,4 @@
+#[macro_export]
 /// Implements BrowserExt
 macro_rules! impl_browser_ext {
     ($name:tt, $flname:tt) => {
@@ -312,4 +313,4 @@ macro_rules! impl_browser_ext {
     };
 }
 
-pub(crate) use impl_browser_ext;
+pub use impl_browser_ext;

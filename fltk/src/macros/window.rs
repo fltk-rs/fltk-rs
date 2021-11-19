@@ -1,3 +1,4 @@
+#[macro_export]
 /// Implements WindowExt
 macro_rules! impl_window_ext {
     ($name: ident, $flname: ident) => {
@@ -409,4 +410,4 @@ macro_rules! impl_window_ext {
     };
 }
 
-pub(crate) use impl_window_ext;
+pub use impl_window_ext;

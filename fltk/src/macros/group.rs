@@ -1,3 +1,4 @@
+#[macro_export]
 /// Implements GroupExt
 macro_rules! impl_group_ext {
     ($name: ident, $flname: ident) => {
@@ -207,4 +208,4 @@ macro_rules! impl_group_ext {
     };
 }
 
-pub(crate) use impl_group_ext;
+pub use impl_group_ext;
