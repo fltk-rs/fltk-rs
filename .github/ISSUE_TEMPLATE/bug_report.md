@@ -28,10 +28,11 @@ Add any other context about the problem here.
 
 ## Build failures
 If you're having build difficulties, please check:
-- The required dependencies for your platform
-- The FAQ
-- That you have a working CMake and C++11 compiler
+- The required dependencies for your platform, mentioned in the [README](https://github.com/fltk-rs/fltk-rs#dependencies).
+- The [FAQ](https://github.com/fltk-rs/fltk-rs/blob/master/FAQ.md). 
+- That you have a working CMake and C++11 compiler. At least CMake should be in your PATH. 
 - That your Rust's target arch is similar to your C/C++ target arch. 
+- The [Setup wiki](https://github.com/fltk-rs/fltk-rs/wiki/Setup). 
 
 Otherwise you can open a github discussion [here](https://github.com/fltk-rs/fltk-rs/discussions) describing your difficulties.
 
