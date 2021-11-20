@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.2.16"
+version = "1.2.17"
 authors = ["MoAlyousef <mohammed.alyousef@neurosrg.com>"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
