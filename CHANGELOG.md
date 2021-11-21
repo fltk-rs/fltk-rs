@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.17] - Unreleased
+## [1.2.17] - 2021-11-21
 - Add draw::draw_check().
 - Link to FLTK bundled libpng on Linux.
 - Add SimpleTerminal::append2.
