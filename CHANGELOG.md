@@ -6,7 +6,6 @@
 - Link to FLTK bundled libpng on Linux.
 - Add SimpleTerminal::append2.
 - Build thin binaries on MacOS 11 M1 since cargo/rust still don't support universal binaries.
-- Update to raw-window-handle version 0.4.
 
 ## [1.2.16] - 2021-11-15
 - Add WidgetExt::center_x() and center_y().
