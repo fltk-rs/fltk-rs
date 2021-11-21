@@ -1,3 +1,4 @@
+#[macro_export]
 /// Implements DisplayExt
 macro_rules! impl_display_ext {
     ($name: ident, $flname: ident) => {
@@ -540,4 +541,4 @@ macro_rules! impl_display_ext {
     };
 }
 
-pub(crate) use impl_display_ext;
+pub use impl_display_ext;

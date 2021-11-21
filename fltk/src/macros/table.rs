@@ -1,3 +1,4 @@
+#[macro_export]
 /// Implements TableExt
 macro_rules! impl_table_ext {
     ($name: ident, $flname: ident) => {
@@ -539,4 +540,4 @@ macro_rules! impl_table_ext {
     };
 }
 
-pub(crate) use impl_table_ext;
+pub use impl_table_ext;

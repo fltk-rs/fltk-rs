@@ -855,6 +855,13 @@ pub fn draw_image(
     Ok(())
 }
 
+/// Draw a check mark
+pub fn draw_check(x: i32, y: i32, w: i32, h: i32, col: Color) {
+    unsafe {
+        Fl_draw_check(x, y, w, h, col.bits());
+    }
+}
+
 /// Draw an image into a widget.
 /// Requires a call to `app::set_visual(Mode::Rgb8).unwrap()`.
 /// A negative depth flips the image horizontally,

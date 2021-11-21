@@ -141,9 +141,6 @@ This is the default behavior in FLTK. You can easily override it by setting a ca
 ### My app panics when I try to handle events, how can I fix it?
 This is due to a debug_assert which checks that the involved widget and the window are capable of handling events. Although most events would be handled correctly, some events require that the aforementioned conditions be met. Thus it is advisable to place your event handling code after the main drawing is done, i.e after calling your main window's show() method. Another point is that event handling and drawing should be done in the main thread. Panics accross FFI boundaries are undefined behavior, as such, the wrapper never throws. Furthermore, all panics which might arise in callbacks are caught on the Rust side using catch_unwind.
 
-### My app crashes on certain linux distros when I use a NativeFileDialog, how can I fix it?
-FLTK vendors libpng by default, sometimes version mismatches can cause problems if the Gtk native dialog expects a different version. In that case, you can use the feature "system-libpng" which would link to the distro's libpng.
-
 ## Memory and unsafety
 
 ### How memory-safe is fltk-rs?

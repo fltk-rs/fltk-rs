@@ -1,3 +1,4 @@
+#[macro_export]
 /// Implements MenuExt
 macro_rules! impl_menu_ext {
     ($name: ident, $flname: ident) => {
@@ -379,4 +380,4 @@ macro_rules! impl_menu_ext {
     };
 }
 
-pub(crate) use impl_menu_ext;
+pub use impl_menu_ext;

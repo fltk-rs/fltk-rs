@@ -219,7 +219,7 @@ For default application colors, fltk-rs provides `app::background()`, `app::back
 
 ## Dependencies
 
-Rust (version > 1.45), CMake (version > 3.0), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required, and will be used if found. This crate also offers a bundled form of fltk on selected x86_64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
+Rust (version > 1.45), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required, and will be used if found. This crate also offers a bundled form of fltk on selected x86_64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: No external dependencies.
 - MacOS: No external dependencies.
@@ -227,23 +227,23 @@ Rust (version > 1.45), CMake (version > 3.0), Git and a C++11 compiler need to b
 
 For Debian-based GUI distributions, that means running:
 ```ignore
-$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
+$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev
 ```
 For RHEL-based GUI distributions, that means running:
 ```ignore
-$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libpng-devel
+$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel
 ```
 For Arch-based GUI distributions, that means running:
 ```ignore
-$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes libpng pango cairo libgl mesa --needed
+$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango cairo libgl mesa --needed
 ```
 For Alpine linux:
 ```ignore
-$ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev libpng-dev mesa-gl
+$ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev mesa-gl
 ```
 For NixOS (Linux distribution) this `nix-shell` environment can be used:
 ```ignore
-$ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libpng libcerf pango cairo libGL mesa pkg-config
+$ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libcerf pango cairo libGL mesa pkg-config
 ```
 
 ## Features
@@ -264,55 +264,78 @@ please check the [FAQ](https://github.com/fltk-rs/fltk-rs/blob/master/FAQ.md) pa
 #![allow(non_upper_case_globals)]
 #![allow(clippy::needless_doctest_main)]
 #![warn(missing_docs)]
-#![warn(rustdoc::broken_intra_doc_links)]
 
 /// Application related methods and functions
 pub mod app;
+
 /// Browser widgets
 pub mod browser;
+
 /// Button widgets
 pub mod button;
+
 /// Dialog widgets
 pub mod dialog;
+
 /// Drawing primitives
 pub mod draw;
+
 /// Fltk defined enums: Color, Font, `CallbackTrigger` etc
 pub mod enums;
+
 /// Basic fltk box/frame widget
 pub mod frame;
+
 /// Group widgets
 pub mod group;
+
 /// Image types supported by fltk
 pub mod image;
+
 /// Input widgets
 pub mod input;
+
+#[doc(hidden)]
 /// mod macros;
-mod macros;
+pub mod macros;
+
 /// Menu widgets
 pub mod menu;
+
 /// Miscellaneous widgets not fitting a certain group
 pub mod misc;
+
 /// Output widgets
 pub mod output;
+
 /// All fltk widget traits and flt error types
 pub mod prelude;
+
 /// Widget surface to image functions
 pub mod surface;
+
 /// Table widgets
 pub mod table;
+
 /// Text display widgets
 pub mod text;
+
 /// Tree widgets
 pub mod tree;
+
 /// General utility functions
 pub mod utils;
+
 /// Valuator widgets
 pub mod valuator;
+
 /// Basic empty widget
 pub mod widget;
+
 /// Window widgets
 pub mod window;
 
 /// Printing related functions
 #[cfg(not(target_os = "android"))]
 pub mod printer;
+

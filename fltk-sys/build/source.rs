@@ -24,7 +24,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/include/cfl_printer.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_utils.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_macros.h");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_lock.hpp");
+    println!("cargo:rerun-if-changed=cfltk/include/cfl_lock.h");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_lock.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_new.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl.cpp");
@@ -82,11 +82,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("USE_SYSTEM_FLTK", "ON");
         }
 
-        if cfg!(feature = "system-libpng")
-            || (!target_triple.contains("apple")
-                && !target_triple.contains("windows")
-                && !target_triple.contains("android"))
-        {
+        if cfg!(feature = "system-libpng") {
             dst.define("OPTION_USE_SYSTEM_LIBPNG", "ON");
         } else {
             dst.define("OPTION_USE_SYSTEM_LIBPNG", "OFF");
@@ -162,6 +158,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         } else {
             "Release"
         };
+
+        if target_triple == "aarch64-apple-darwin" {
+            dst.define("CMAKE_OSX_ARCHITECTURE", "arm64");
+        }
 
         let _dst = dst
             .profile(profile)

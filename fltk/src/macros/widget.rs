@@ -1,3 +1,4 @@
+#[macro_export]
 /// Implements WidgetExt
 macro_rules! impl_widget_ext {
     ($name: ident, $flname: ident) => {
@@ -862,6 +863,7 @@ macro_rules! impl_widget_ext {
     };
 }
 
+#[macro_export]
 /// Implements WidgetBase
 macro_rules! impl_widget_base {
     ($name: ident, $flname: ident) => {
@@ -1055,6 +1057,7 @@ macro_rules! impl_widget_base {
     };
 }
 
+#[macro_export]
 /// Implements WidgetType
 macro_rules! impl_widget_type {
     ($name: ident) => {
@@ -1070,6 +1073,6 @@ macro_rules! impl_widget_type {
     };
 }
 
-pub(crate) use impl_widget_base;
-pub(crate) use impl_widget_ext;
-pub(crate) use impl_widget_type;
+pub use impl_widget_base;
+pub use impl_widget_ext;
+pub use impl_widget_type;
