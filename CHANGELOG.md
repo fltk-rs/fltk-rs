@@ -1,8 +1,12 @@
 # Changelog
 
 
+## [1.2.18] - Unreleased
+- Add menu::mac_set_about(). Thanks @hannesbraun.
+
 ## [1.2.17] - 2021-11-21
 - Add draw::draw_check().
+- Expose trait macros.
 - Link to FLTK bundled libpng on Linux.
 - Add SimpleTerminal::append2.
 - Build thin binaries on MacOS 11 M1 since cargo/rust still don't support universal binaries.
