@@ -1900,3 +1900,10 @@ extern "C" {
         idx: ::std::os::raw::c_int,
     ) -> *const Fl_Menu_Item;
 }
+extern "C" {
+    pub fn Fl_mac_set_about(
+        c: Fl_Callback,
+        user_data: *mut ::std::os::raw::c_void,
+        shortcut: ::std::os::raw::c_int,
+    );
+}
