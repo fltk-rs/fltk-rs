@@ -1146,3 +1146,19 @@ pub fn color_chooser_with_default(name: &str, cmode: ColorMode, col: (u8, u8, u8
         }
     }
 }
+
+/// Set the next dialog's title
+pub fn message_title(title: &str) {
+    let title = CString::safe_new(title);
+    unsafe {
+        Fl_message_title(title)
+    }
+}
+
+/// Set the next dialog's title
+pub fn message_title_default(title: &str) {
+    let title = CString::safe_new(title);
+    unsafe {
+        Fl_message_title_default(title)
+    }
+}
