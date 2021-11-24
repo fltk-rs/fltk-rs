@@ -1151,7 +1151,7 @@ pub fn color_chooser_with_default(name: &str, cmode: ColorMode, col: (u8, u8, u8
 pub fn message_title(title: &str) {
     let title = CString::safe_new(title);
     unsafe {
-        Fl_message_title(title)
+        Fl_message_title(title.as_ptr() as _)
     }
 }
 
@@ -1159,6 +1159,6 @@ pub fn message_title(title: &str) {
 pub fn message_title_default(title: &str) {
     let title = CString::safe_new(title);
     unsafe {
-        Fl_message_title_default(title)
+        Fl_message_title_default(title.as_ptr() as _)
     }
 }
