@@ -804,30 +804,5 @@ crate::widget_extends!(Row, Flex, p);
 
 /// Experimental group widgets
 pub mod experimental {
-    use super::*;
-
-    #[doc(hidden)]
-    /// Creates a flow widget
-    #[derive(Debug)]
-    pub struct Flow {
-        inner: *mut Fl_Flow,
-        tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
-        is_derived: bool,
-    }
-
-    crate::macros::widget::impl_widget_ext!(Flow, Fl_Flow);
-    crate::macros::widget::impl_widget_base!(Flow, Fl_Flow);
-    crate::macros::group::impl_group_ext!(Flow, Fl_Flow);
-
-    #[doc(hidden)]
-    impl Flow {
-        #[doc(hidden)]
-        /// Set the flow's rule
-        pub fn rule<W: WidgetExt>(&mut self, w: &W, inst: &str) {
-            unsafe {
-                let inst = CString::safe_new(inst);
-                Fl_Flow_rule(self.inner, w.as_widget_ptr() as _, inst.as_ptr());
-            }
-        }
-    }
+    // use super::*;
 }
