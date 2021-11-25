@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.18] - Unreleased
+## [1.3.0] - Unreleased
 - [Security break] TreeItem::widget and Wizard::current_widget return an optional.
 - Add menu::mac_set_about(). Thanks @hannesbraun.
 - Add app::version_str().
