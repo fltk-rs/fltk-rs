@@ -2,6 +2,7 @@
 
 
 ## [1.2.18] - Unreleased
+- [Security break] TreeItem::widget and Wizard::current_widget return an optional.
 - Add menu::mac_set_about(). Thanks @hannesbraun.
 - Add app::version_str().
 - Add dialog::message_title() and message_title_default().

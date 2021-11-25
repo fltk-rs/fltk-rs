@@ -336,10 +336,12 @@ impl Wizard {
     }
 
     /// Gets the underlying widget of the current view
-    pub fn current_widget(&mut self) -> Widget {
+    pub fn current_widget(&mut self) -> Option<Box<dyn WidgetExt>> {
         unsafe {
             assert!(!self.was_deleted());
-            Widget::from_widget_ptr(Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget)
+            Some(Box::new(Widget::from_widget_ptr(
+                Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget,
+            )))
         }
     }
 
