@@ -1328,12 +1328,15 @@ impl TreeItem {
     }
 
     /// Gets the item's associated widget
-    pub fn widget(&self) -> Widget {
+    pub fn widget(&self) -> Option<Widget> {
         assert!(!self.was_deleted());
         unsafe {
-            Widget::from_widget_ptr(
-                Fl_Tree_Item_widget(self.inner) as *mut fltk_sys::widget::Fl_Widget
-            )
+            let ptr = Fl_Tree_Item_widget(self.inner) as *mut fltk_sys::widget::Fl_Widget;
+            if ptr.is_null() {
+                None
+            } else {
+                Some(Widget::from_widget_ptr(ptr))
+            }
         }
     }
 
