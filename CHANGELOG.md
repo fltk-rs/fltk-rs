@@ -6,7 +6,7 @@
 - Add menu::mac_set_about(). Thanks @hannesbraun.
 - Add app::version_str().
 - Add dialog::message_title() and message_title_default().
-- Shift experimental Flow widget to its own crate.
+- Shift experimental Flow widget to its own [crate](https://github.com/MoAlyousef/fltk-flow).
 
 ## [1.2.17] - 2021-11-21
 - Add draw::draw_check().
