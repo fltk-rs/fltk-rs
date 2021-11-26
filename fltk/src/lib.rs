@@ -22,9 +22,10 @@ Why choose FLTK?
 - Provides around 80 customizable widgets.
 - Has inbuilt image support.
 
-Tutorials:
+Resources:
+- [Documenation](https://docs.rs/fltk)
 - [Video](https://github.com/fltk-rs/fltk-rs#tutorials)
-- [Written](https://github.com/fltk-rs/fltk-rs/wiki)
+- [Wiki](https://github.com/fltk-rs/fltk-rs/wiki)
 - [Discussions](https://github.com/fltk-rs/fltk-rs/discussions)
 - [Demos](https://github.com/fltk-rs/demos)
 - [7guis-fltk-rs](https://github.com/tdryer/7guis-fltk-rs)
@@ -34,7 +35,7 @@ Tutorials:
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/fltk-rs/fltk-rs/issues/418).
 
 - [Link](https://github.com/fltk/fltk) to the official FLTK repository.
-- [Link](https://www.fltk.org/doc-1.3/index.html) to the official documentation.
+- [Link](https://www.fltk.org/doc-1.4/index.html) to the official documentation.
 
 ## Usage
 
