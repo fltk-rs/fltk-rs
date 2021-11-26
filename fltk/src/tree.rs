@@ -1689,6 +1689,32 @@ impl TreeItem {
             }
         }
     }
+
+    /// Gets the user icon
+    pub fn user_icon(&self) -> Option<Box<dyn ImageExt>> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let image_ptr = Fl_Tree_Item_usericon(self.inner);
+            if image_ptr.is_null() {
+                None
+            } else {
+                Some(Box::new(Image::from_image_ptr(
+                    image_ptr as *mut fltk_sys::image::Fl_Image,
+                )))
+            }
+        }
+    }
+
+    /// Sets the user icon
+    pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
+        assert!(!self.was_deleted());
+        if let Some(image) = image {
+            assert!(!image.was_deleted());
+            unsafe { Fl_Tree_Item_set_usericon(self.inner, image.as_image_ptr() as *mut _) }
+        } else {
+            unsafe { Fl_Tree_Item_set_usericon(self.inner, std::ptr::null_mut::<raw::c_void>()) }
+        }
+    }
 }
 
 impl Iterator for TreeItem {
