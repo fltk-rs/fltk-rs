@@ -8,7 +8,7 @@
 - Add dialog::message_title() and message_title_default().
 - Shift experimental Flow widget to its own [crate](https://github.com/MoAlyousef/fltk-flow).
 - Add TreeItem::draw_item_content.
-- Add macros::widget::impl_widget_ext_via!() macro.
+- Expose several macros that assist in implementing some traits (WidgetExt, WidgetBase, GroupExt), useful for creating custom widgets.
 - Deprecate TreeItem::widget(), wizard::current_widget() and Group::current().
 
 ## [1.2.17] - 2021-11-21
