@@ -1193,18 +1193,18 @@ impl TreeItem {
     }
 
     /// Creates a new TreeItem
-    /// # Safety
-    /// Requires the draw_item_content function to be overriden
-    pub unsafe fn new(tree: &Tree, label: &str) -> Self {
+    pub fn new(tree: &Tree, label: &str) -> Self {
         let label = CString::safe_new(label);
-        let ptr = Fl_Tree_Item_new(tree.inner, label.as_ptr());
-        assert!(!ptr.is_null());
-        Self {
-            inner: ptr,
-            parent: ptr,
-            tree: tree.clone(),
-            is_root: true,
-            is_derived: true,
+        unsafe {
+            let ptr = Fl_Tree_Item_new(tree.inner, label.as_ptr());
+            assert!(!ptr.is_null());
+            Self {
+                inner: ptr,
+                parent: ptr,
+                tree: tree.clone(),
+                is_root: true,
+                is_derived: true,
+            }
         }
     }
 
@@ -1214,7 +1214,7 @@ impl TreeItem {
        ```rust,no_run
        use fltk::{draw, enums::*, tree};
        let mut tree = tree::Tree::default();
-       let mut item = unsafe { tree::TreeItem::new(&tree, "Hello") };
+       let mut item = tree::TreeItem::new(&tree, "Hello");
        item.draw_item_content(|item, render| {
            // Our item's dimensions + text content
            let x = item.label_x();
