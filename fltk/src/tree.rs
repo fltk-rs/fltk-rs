@@ -120,6 +120,7 @@ pub struct TreeItem {
     parent: *const Fl_Tree_Item,
     tree: Tree,
     is_root: bool,
+    is_derived: bool,
 }
 
 /// Defines a tree item array
@@ -196,6 +197,16 @@ impl Tree {
         let path = CString::safe_new(path);
         unsafe {
             let x = Fl_Tree_add(self.inner, path.as_ptr() as *mut raw::c_char);
+            TreeItem::from_raw(x)
+        }
+    }
+
+    /// Adds a `TreeItem`
+    pub fn add_item(&mut self, path: &str, item: &TreeItem) -> Option<TreeItem> {
+        assert!(!self.was_deleted());
+        let path = CString::safe_new(path);
+        unsafe {
+            let x = Fl_Tree_add_item(self.inner, path.as_ptr() as *mut raw::c_char, item.inner);
             TreeItem::from_raw(x)
         }
     }
@@ -1171,13 +1182,97 @@ impl TreeItem {
             };
             let parent = Fl_Tree_Item_parent(ptr);
             let is_root = Fl_Tree_Item_is_root(ptr) != 0;
-            let x = TreeItem {
+            Some(TreeItem {
                 inner: ptr,
                 parent,
                 tree,
                 is_root,
-            };
-            Some(x)
+                is_derived: false,
+            })
+        }
+    }
+
+    /// Creates a new TreeItem
+    /// # Safety
+    /// Requires the draw_item_content function to be overriden
+    pub unsafe fn new(tree: &Tree, label: &str) -> Self {
+        let label = CString::safe_new(label);
+        let ptr = Fl_Tree_Item_new(tree.inner, label.as_ptr());
+        assert!(!ptr.is_null());
+        Self {
+            inner: ptr,
+            parent: ptr,
+            tree: tree.clone(),
+            is_root: true,
+            is_derived: true,
+        }
+    }
+
+    /**
+    Overrides the draw_item_content method
+    Example usage:
+       ```rust,no_run
+       use fltk::{draw, enums::*, tree};
+       let mut tree = tree::Tree::default();
+       let mut item = unsafe { tree::TreeItem::new(&tree, "Hello") };
+       item.draw_item_content(|item, render| {
+           // Our item's dimensions + text content
+           let x = item.label_x();
+           let y = item.label_y();
+           let w = item.label_w();
+           let h = item.label_h();
+           let txt = if let Some(txt) = item.label() {
+               txt
+           } else {
+               String::new()
+           };
+           if render {
+               // Draw bg -- a filled rectangle
+               draw::draw_rect_fill(x, y, w, h, item.label_bgcolor());
+               // Draw label
+               draw::set_font(Font::Helvetica, 14);
+               draw::set_draw_color(Color::ForeGround); // use recommended fg color
+               draw::draw_text2(&txt, x, y, w, h, Align::Left); // draw the item's label
+           }
+           // Rendered or not, we must calculate content's max X position
+           let (lw, _) = draw::measure(&txt, true); // get width of label text
+           return x + lw; // return X + label width
+       });
+       // Add our custom item to a path
+       let _third = tree.add_item("first/second/thrid", &item).unwrap();
+       ```
+    */
+    pub fn draw_item_content<F: FnMut(&mut Self, bool) -> i32>(&mut self, cb: F) {
+        assert!(!self.was_deleted());
+        assert!(self.is_derived);
+        unsafe {
+            unsafe extern "C" fn shim(
+                item: *mut Fl_Tree_Item,
+                render: i32,
+                data: *mut raw::c_void,
+            ) -> i32 {
+                let mut item = TreeItem::from_raw(item).unwrap();
+                let a = data as *mut Box<dyn FnMut(&mut TreeItem, bool) -> i32>;
+                let f: &mut (dyn FnMut(&mut TreeItem, bool) -> i32) = &mut **a;
+                if let Ok(ret) = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                    f(&mut item, render != 0)
+                })) {
+                    ret
+                } else {
+                    0
+                }
+            }
+            let a: *mut Box<dyn FnMut(&mut Self, bool) -> i32> =
+                Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut raw::c_void = a as *mut raw::c_void;
+            let callback: Option<
+                unsafe extern "C" fn(
+                    self_: *mut Fl_Tree_Item,
+                    arg1: i32,
+                    arg2: *mut raw::c_void,
+                ) -> i32,
+            > = Some(shim);
+            Fl_Tree_Item_draw_item_content(self.inner, callback, data);
         }
     }
 
@@ -1249,13 +1344,14 @@ impl TreeItem {
         unsafe {
             let x = Fl_Tree_Item_label(self.inner);
             if x.is_null() {
-                return None;
+                None
+            } else {
+                Some(
+                    CStr::from_ptr(x as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
             }
-            Some(
-                CStr::from_ptr(x as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string(),
-            )
         }
     }
 

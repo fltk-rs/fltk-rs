@@ -41,4 +41,3 @@ pub mod widget;
 #[doc(hidden)]
 /// Provides the default implementation macro for window widgets
 pub mod window;
-

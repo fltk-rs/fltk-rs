@@ -348,6 +348,13 @@ extern "C" {
     ) -> *mut Fl_Tree_Item;
 }
 extern "C" {
+    pub fn Fl_Tree_add_item(
+        self_: *mut Fl_Tree,
+        name: *const ::std::os::raw::c_char,
+        item: *mut Fl_Tree_Item,
+    ) -> *mut Fl_Tree_Item;
+}
+extern "C" {
     pub fn Fl_Tree_insert_above(
         self_: *mut Fl_Tree,
         above: *mut Fl_Tree_Item,
@@ -776,6 +783,25 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tree_callback_reason(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Tree_Item_new(
+        tree: *mut Fl_Tree,
+        txt: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Tree_Item;
+}
+extern "C" {
+    pub fn Fl_Tree_Item_draw_item_content(
+        item: *mut Fl_Tree_Item,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                self_: *mut Fl_Tree_Item,
+                arg1: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ) -> ::std::os::raw::c_int,
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Tree_Item_x(self_: *const Fl_Tree_Item) -> ::std::os::raw::c_int;

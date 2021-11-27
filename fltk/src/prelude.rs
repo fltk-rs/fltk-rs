@@ -506,7 +506,7 @@ pub unsafe trait ButtonExt: WidgetExt {
 /// win.end();
 /// ```
 /// In the above example, the button `btn` will be parented by the window.
-/// After `end`ing such GroupExt widgets, any other widgets instantiated after the `end` call, will be instantiated outside. 
+/// After `end`ing such GroupExt widgets, any other widgets instantiated after the `end` call, will be instantiated outside.
 /// These can still be added using the `::add(&other_widget)` method (or using `::insert`):
 /// ```rust
 /// use fltk::{button::Button, window::Window, prelude::GroupExt};

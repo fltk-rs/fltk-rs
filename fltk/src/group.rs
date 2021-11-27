@@ -339,9 +339,7 @@ impl Wizard {
     pub fn current_widget(&mut self) -> Option<impl WidgetExt> {
         unsafe {
             assert!(!self.was_deleted());
-            let ptr = 
-                Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget
-            ;
+            let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
             if ptr.is_null() {
                 None
             } else {

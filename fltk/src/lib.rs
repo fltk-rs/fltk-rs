@@ -339,4 +339,3 @@ pub mod window;
 /// Printing related functions
 #[cfg(not(target_os = "android"))]
 pub mod printer;
-
