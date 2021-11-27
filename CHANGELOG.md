@@ -1,13 +1,15 @@
 # Changelog
 
 
-## [1.2.18] - Unreleased
-- [Security break] TreeItem::widget and Wizard::current_widget return an optional.
+## [1.2.18] - 2021-11-27
 - Add menu::mac_set_about(). Thanks @hannesbraun.
+- Add TreeItem::try_widget() and Wizard::try_current_widget().
 - Add app::version_str().
 - Add dialog::message_title() and message_title_default().
 - Shift experimental Flow widget to its own [crate](https://github.com/MoAlyousef/fltk-flow).
 - Add TreeItem::draw_item_content.
+- Add macros::widget::impl_widget_ext_via!() macro.
+- Deprecate TreeItem::widget(), wizard::current_widget() and Group::current().
 
 ## [1.2.17] - 2021-11-21
 - Add draw::draw_check().

@@ -1423,8 +1423,19 @@ impl TreeItem {
         unsafe { Fl_Tree_Item_set_widget(self.inner, val.as_widget_ptr() as *mut Fl_Widget) }
     }
 
+    #[deprecated(since="1.2.18", note="please use `try_widget` instead")]
     /// Gets the item's associated widget
-    pub fn widget(&self) -> Option<impl WidgetExt> {
+    pub fn widget(&self) -> Widget {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Tree_Item_widget(self.inner) as *mut fltk_sys::widget::Fl_Widget;
+            assert!(!ptr.is_null());
+            Widget::from_widget_ptr(ptr)
+        }
+    }
+
+    /// Gets the item's associated widget
+    pub fn try_widget(&self) -> Option<impl WidgetExt> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tree_Item_widget(self.inner) as *mut fltk_sys::widget::Fl_Widget;
