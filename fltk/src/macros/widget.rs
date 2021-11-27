@@ -1080,6 +1080,7 @@ pub use impl_widget_base;
 pub use impl_widget_ext;
 pub use impl_widget_type;
 
+
 #[macro_export]
 /// Implements WidgetExt via a member
 macro_rules! impl_widget_ext_via {
@@ -1216,7 +1217,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.measure_label()
             }
 
-            unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
+            unsafe fn as_widget_ptr(&self) -> crate::app::WidgetPtr {
                 self.$member.as_widget_ptr()
             }
 
@@ -1533,7 +1534,7 @@ macro_rules! impl_widget_base_via {
                 <$base>::delete(wid.$member)
             }
 
-            unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
+            unsafe fn from_widget_ptr(ptr: crate::app::WidgetPtr) -> Self {
                 let $member = <$base>::from_widget_ptr(ptr);
                 Self {
                     $member,
