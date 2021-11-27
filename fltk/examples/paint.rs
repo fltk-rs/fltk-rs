@@ -1,7 +1,7 @@
 use fltk::{
     app,
     draw::{
-        draw_line, draw_point, draw_rectf, set_draw_color, set_line_style, LineStyle, Offscreen,
+        draw_line, draw_point, draw_rect_fill, set_draw_color, set_line_style, LineStyle, Offscreen,
     },
     enums::{Color, Event, FrameType},
     frame::Frame,
@@ -33,8 +33,7 @@ fn main() {
     #[cfg(not(target_os = "macos"))]
     {
         offs.begin();
-        set_draw_color(Color::White);
-        draw_rectf(0, 0, WIDTH - 10, HEIGHT - 10);
+        draw_rect_fill(0, 0, WIDTH - 10, HEIGHT - 10, Color::White);
         offs.end();
     }
 
@@ -49,8 +48,8 @@ fn main() {
                 offs.copy(5, 5, WIDTH - 10, HEIGHT - 10, 0, 0);
             } else {
                 offs.begin();
-                set_draw_color(Color::White);
-                draw_rectf(0, 0, WIDTH - 10, HEIGHT - 10);
+                draw_rect_fill(0, 0, WIDTH - 10, HEIGHT - 10, Color::White);
+                offs.copy(5, 5, WIDTH - 10, HEIGHT - 10, 0, 0);
                 offs.end();
             }
         }

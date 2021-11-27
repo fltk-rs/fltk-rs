@@ -23,6 +23,7 @@ crate::macros::widget::impl_widget_base!(Group, Fl_Group);
 crate::macros::group::impl_group_ext!(Group, Fl_Group);
 
 impl Group {
+    #[deprecated(since="1.2.18", note="please use `try_current` instead")]
     /// Get the current group
     pub fn current() -> Group {
         unsafe {
@@ -335,11 +336,27 @@ impl Wizard {
         unsafe { Fl_Wizard_prev(self.inner) }
     }
 
+    #[deprecated(since="1.2.18", note="please use `try_current_widget` instead")]
     /// Gets the underlying widget of the current view
     pub fn current_widget(&mut self) -> Widget {
         unsafe {
             assert!(!self.was_deleted());
-            Widget::from_widget_ptr(Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget)
+            let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
+            assert!(!ptr.is_null());
+            Widget::from_widget_ptr(ptr)
+        }
+    }
+
+    /// Gets the underlying widget of the current view
+    pub fn try_current_widget(&mut self) -> Option<impl WidgetExt> {
+        unsafe {
+            assert!(!self.was_deleted());
+            let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
+            if ptr.is_null() {
+                None
+            } else {
+                Some(Widget::from_widget_ptr(ptr))
+            }
         }
     }
 
@@ -797,30 +814,5 @@ crate::widget_extends!(Row, Flex, p);
 
 /// Experimental group widgets
 pub mod experimental {
-    use super::*;
-
-    #[doc(hidden)]
-    /// Creates a flow widget
-    #[derive(Debug)]
-    pub struct Flow {
-        inner: *mut Fl_Flow,
-        tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
-        is_derived: bool,
-    }
-
-    crate::macros::widget::impl_widget_ext!(Flow, Fl_Flow);
-    crate::macros::widget::impl_widget_base!(Flow, Fl_Flow);
-    crate::macros::group::impl_group_ext!(Flow, Fl_Flow);
-
-    #[doc(hidden)]
-    impl Flow {
-        #[doc(hidden)]
-        /// Set the flow's rule
-        pub fn rule<W: WidgetExt>(&mut self, w: &W, inst: &str) {
-            unsafe {
-                let inst = CString::safe_new(inst);
-                Fl_Flow_rule(self.inner, w.as_widget_ptr() as _, inst.as_ptr());
-            }
-        }
-    }
+    // use super::*;
 }

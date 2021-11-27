@@ -1,8 +1,19 @@
 # Changelog
 
 
+## [1.2.18] - 2021-11-27
+- Add menu::mac_set_about(). Thanks @hannesbraun.
+- Add TreeItem::try_widget() and Wizard::try_current_widget().
+- Add app::version_str().
+- Add dialog::message_title() and message_title_default().
+- Shift experimental Flow widget to its own [crate](https://github.com/MoAlyousef/fltk-flow).
+- Add TreeItem::draw_item_content.
+- Expose several macros that assist in implementing some traits (WidgetExt, WidgetBase, GroupExt), useful for creating custom widgets.
+- Deprecate TreeItem::widget(), wizard::current_widget() and Group::current().
+
 ## [1.2.17] - 2021-11-21
 - Add draw::draw_check().
+- Expose trait macros.
 - Link to FLTK bundled libpng on Linux.
 - Add SimpleTerminal::append2.
 - Build thin binaries on MacOS 11 M1 since cargo/rust still don't support universal binaries.

@@ -51,7 +51,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/src/cfl_nswindow.m");
     println!("cargo:rerun-if-changed=cfltk/FL_FLex/FL_Flex.H");
     println!("cargo:rerun-if-changed=cfltk/FL_FLex/FL_Flex.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/Fl_Flow.H");
+    println!("cargo:rerun-if-changed=cfltk/src/cfl_vec.hpp");
 
     Command::new("git")
         .args(&["submodule", "update", "--init", "--recursive"])

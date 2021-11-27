@@ -80,8 +80,8 @@ impl<T: Send + Sync> Receiver<T> {
 }
 
 /// Creates a channel returning a Sender and Receiver structs (mpsc).
-/// FLTK doesn't give access to the message queue, only to the last message in the queue, 
-/// so a messages sent in WidgetBase::handle() can push other messages down the queue. 
+/// FLTK doesn't give access to the message queue, only to the last message in the queue,
+/// so a messages sent in WidgetBase::handle() can push other messages down the queue.
 /// If you need access to the queue, you might be better served by another channel implementation with a try_iter() method.
 // The implementation could really use generic statics
 pub fn channel<T: Send + Sync>() -> (Sender<T>, Receiver<T>) {
