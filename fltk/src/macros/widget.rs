@@ -1079,3 +1079,501 @@ macro_rules! impl_widget_type {
 pub use impl_widget_base;
 pub use impl_widget_ext;
 pub use impl_widget_type;
+
+#[macro_export]
+/// Implements WidgetExt via a member
+macro_rules! impl_widget_ext_via {
+    ($widget:ty, $member:tt) => {
+        unsafe impl WidgetExt for $widget {
+            fn with_pos(mut self, x: i32, y: i32) -> Self {
+                self.$member = self.$member.with_pos(x, y);
+                self
+            }
+
+            fn with_size(mut self, width: i32, height: i32) -> Self {
+                self.$member = self.$member.with_size(width, height);
+                self
+            }
+
+            fn with_label(mut self, title: &str) -> Self {
+                self.$member = self.$member.with_label(title);
+                self
+            }
+
+            fn with_align(mut self, align: crate::enums::Align) -> Self {
+                self.$member = self.$member.with_align(align);
+                self
+            }
+
+            fn with_type<T: WidgetType>(mut self, typ: T) -> Self {
+                self.$member = self.$member.with_type(typ);
+                self
+            }
+
+            fn below_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+                self.$member = self.$member.below_of(wid, padding);
+                self
+            }
+
+            fn above_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+                self.$member = self.$member.above_of(wid, padding);
+                self
+            }
+
+            fn right_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+                self.$member = self.$member.right_of(wid, padding);
+                self
+            }
+
+            fn left_of<W: WidgetExt>(mut self, wid: &W, padding: i32) -> Self {
+                self.$member = self.$member.left_of(wid, padding);
+                self
+            }
+
+            fn center_of<W: WidgetExt>(mut self, w: &W) -> Self {
+                self.$member = self.$member.center_of(w);
+                self
+            }
+
+            fn center_x<W: WidgetExt>(mut self, w: &W) -> Self {
+                self.$member = self.$member.center_x(w);
+                self
+            }
+
+            fn center_y<W: WidgetExt>(mut self, w: &W) -> Self {
+                self.$member = self.$member.center_y(w);
+                self
+            }
+
+            fn center_of_parent(mut self) -> Self {
+                self.$member = self.$member.center_of_parent();
+                self
+            }
+
+            fn size_of<W: WidgetExt>(mut self, w: &W) -> Self {
+                self.$member = self.$member.size_of(w);
+                self
+            }
+
+            fn size_of_parent(mut self) -> Self {
+                self.$member = self.$member.size_of_parent();
+                self
+            }
+
+            fn set_pos(&mut self, x: i32, y: i32) {
+                self.$member.set_pos(x, y)
+            }
+
+            fn set_size(&mut self, width: i32, height: i32) {
+                self.$member.set_size(width, height)
+            }
+
+            fn set_label(&mut self, title: &str) {
+                self.$member.set_label(title)
+            }
+
+            fn redraw(&mut self) {
+                self.$member.redraw()
+            }
+
+            fn show(&mut self) {
+                self.$member.show()
+            }
+
+            fn hide(&mut self) {
+                self.$member.hide()
+            }
+
+            fn x(&self) -> i32 {
+                self.$member.x()
+            }
+
+            fn y(&self) -> i32 {
+                self.$member.y()
+            }
+
+            fn width(&self) -> i32 {
+                self.$member.width()
+            }
+
+            fn height(&self) -> i32 {
+                self.$member.height()
+            }
+
+            fn w(&self) -> i32 {
+                self.$member.w()
+            }
+
+            fn h(&self) -> i32 {
+                self.$member.h()
+            }
+
+            fn label(&self) -> String {
+                self.$member.label()
+            }
+
+            fn measure_label(&self) -> (i32, i32) {
+                self.$member.measure_label()
+            }
+
+            unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
+                self.$member.as_widget_ptr()
+            }
+
+            fn inside<W: WidgetExt>(&self, wid: &W) -> bool {
+                self.$member.inside(wid)
+            }
+
+            fn get_type<T: WidgetType>(&self) -> T {
+                self.$member.get_type()
+            }
+
+            fn set_type<T: WidgetType>(&mut self, typ: T) {
+                self.$member.set_type(typ)
+            }
+
+            fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
+                self.$member.set_image(image)
+            }
+
+            fn set_image_scaled<I: ImageExt>(&mut self, image: Option<I>) {
+                self.$member.set_image_scaled(image)
+            }
+
+            fn image(&self) -> Option<Box<dyn ImageExt>> {
+                self.$member.image()
+            }
+
+            fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
+                self.$member.set_deimage(image)
+            }
+
+            fn set_deimage_scaled<I: ImageExt>(&mut self, image: Option<I>) {
+                self.$member.set_deimage_scaled(image)
+            }
+
+            fn deimage(&self) -> Option<Box<dyn ImageExt>> {
+                self.$member.deimage()
+            }
+
+            fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, mut cb: F) {
+                let mut widget = self.clone();
+                self.$member.set_callback(move |_| {
+                    cb(&mut widget);
+                });
+            }
+
+            fn emit<T: 'static + Clone + Send + Sync>(
+                &mut self,
+                sender: crate::app::Sender<T>,
+                msg: T,
+            ) {
+                self.$member.emit(sender, msg)
+            }
+
+            fn activate(&mut self) {
+                self.$member.activate()
+            }
+
+            fn deactivate(&mut self) {
+                self.$member.deactivate()
+            }
+
+            fn redraw_label(&mut self) {
+                self.$member.redraw_label()
+            }
+
+            fn resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
+                self.$member.resize(x, y, width, height)
+            }
+
+            fn tooltip(&self) -> Option<String> {
+                self.$member.tooltip()
+            }
+
+            fn set_tooltip(&mut self, txt: &str) {
+                self.$member.set_tooltip(txt)
+            }
+
+            fn color(&self) -> Color {
+                self.$member.color()
+            }
+
+            fn set_color(&mut self, color: Color) {
+                self.$member.set_color(color)
+            }
+
+            fn label_color(&self) -> Color {
+                self.$member.label_color()
+            }
+
+            fn set_label_color(&mut self, color: Color) {
+                self.$member.set_label_color(color)
+            }
+
+            fn label_font(&self) -> Font {
+                self.$member.label_font()
+            }
+
+            fn set_label_font(&mut self, font: Font) {
+                self.$member.set_label_font(font)
+            }
+
+            fn label_size(&self) -> i32 {
+                self.$member.label_size()
+            }
+
+            fn set_label_size(&mut self, sz: i32) {
+                self.$member.set_label_size(sz)
+            }
+
+            fn label_type(&self) -> LabelType {
+                self.$member.label_type()
+            }
+
+            fn set_label_type(&mut self, typ: LabelType) {
+                self.$member.set_label_type(typ)
+            }
+
+            fn frame(&self) -> FrameType {
+                self.$member.frame()
+            }
+
+            fn set_frame(&mut self, typ: FrameType) {
+                self.$member.set_frame(typ)
+            }
+
+            fn changed(&self) -> bool {
+                self.$member.changed()
+            }
+
+            fn set_changed(&mut self) {
+                self.$member.set_changed()
+            }
+
+            fn clear_changed(&mut self) {
+                self.$member.clear_changed()
+            }
+
+            fn align(&self) -> Align {
+                self.$member.align()
+            }
+
+            fn set_align(&mut self, align: Align) {
+                self.$member.set_align(align)
+            }
+
+            fn parent(&self) -> Option<crate::group::Group> {
+                self.$member.parent()
+            }
+
+            fn selection_color(&mut self) -> Color {
+                self.$member.selection_color()
+            }
+
+            fn set_selection_color(&mut self, color: Color) {
+                self.$member.set_selection_color(color)
+            }
+
+            fn do_callback(&mut self) {
+                self.$member.do_callback()
+            }
+
+            fn window(&self) -> Option<Box<dyn WindowExt>> {
+                self.$member.window()
+            }
+
+            fn top_window(&self) -> Option<Box<dyn WindowExt>> {
+                self.$member.top_window()
+            }
+
+            fn takes_events(&self) -> bool {
+                self.$member.takes_events()
+            }
+
+            fn take_focus(&mut self) -> Result<(), FltkError> {
+                self.$member.take_focus()
+            }
+
+            fn set_visible_focus(&mut self) {
+                self.$member.set_visible_focus()
+            }
+
+            fn clear_visible_focus(&mut self) {
+                self.$member.clear_visible_focus()
+            }
+
+            fn visible_focus(&mut self, v: bool) {
+                self.$member.visible_focus(v)
+            }
+
+            fn has_visible_focus(&mut self) -> bool {
+                self.$member.has_visible_focus()
+            }
+
+            fn has_focus(&mut self) -> bool {
+                self.$member.has_focus()
+            }
+
+            fn was_deleted(&self) -> bool {
+                self.$member.was_deleted()
+            }
+
+            fn damage(&self) -> bool {
+                self.$member.damage()
+            }
+
+            fn set_damage(&mut self, flag: bool) {
+                self.$member.set_damage(flag)
+            }
+
+            fn damage_type(&self) -> Damage {
+                self.$member.damage_type()
+            }
+
+            fn set_damage_type(&mut self, mask: Damage) {
+                self.$member.set_damage_type(mask)
+            }
+
+            fn clear_damage(&mut self) {
+                self.$member.clear_damage()
+            }
+
+            fn set_trigger(&mut self, trigger: CallbackTrigger) {
+                self.$member.set_trigger(trigger)
+            }
+
+            fn trigger(&self) -> CallbackTrigger {
+                self.$member.trigger()
+            }
+
+            fn as_window(&self) -> Option<Box<dyn WindowExt>> {
+                self.$member.as_window()
+            }
+
+            fn as_group(&self) -> Option<crate::group::Group> {
+                self.$member.as_group()
+            }
+
+            unsafe fn user_data(&self) -> Option<Box<dyn FnMut()>> {
+                self.$member.user_data()
+            }
+
+            unsafe fn raw_user_data(&self) -> *mut std::os::raw::c_void {
+                self.$member.raw_user_data()
+            }
+
+            unsafe fn set_raw_user_data(&mut self, data: *mut std::os::raw::c_void) {
+                self.$member.set_raw_user_data(data)
+            }
+
+            unsafe fn into_widget<W: WidgetBase>(&self) -> W {
+                self.$member.into_widget()
+            }
+
+            fn visible(&self) -> bool {
+                self.$member.visible()
+            }
+
+            fn visible_r(&self) -> bool {
+                self.$member.visible_r()
+            }
+
+            fn is_same<W: WidgetExt>(&self, other: &W) -> bool {
+                self.$member.is_same(other)
+            }
+
+            fn active(&self) -> bool {
+                self.$member.active()
+            }
+
+            fn active_r(&self) -> bool {
+                self.$member.active_r()
+            }
+
+            fn callback(&self) -> Option<Box<dyn FnMut()>> {
+                self.$member.callback()
+            }
+
+            fn widget_resize(&mut self, x: i32, y: i32, w: i32, h: i32) {
+                self.$member.widget_resize(x, y, w, h)
+            }
+
+            fn handle_event(&mut self, event: Event) {
+                self.$member.handle_event(event)
+            }
+        }
+    };
+}
+
+#[macro_export]
+/// Implements WidgetBase via a member
+macro_rules! impl_widget_base_via {
+    ($widget:ty, $base:ty, $member:tt) => {        
+        unsafe impl WidgetBase for $widget {
+            fn new<T: Into<Option<&'static str>>>(
+                x: i32,
+                y: i32,
+                width: i32,
+                height: i32,
+                title: T,
+            ) -> Self {
+                let $member = <$base>::new(x, y, width, height, title);
+                Self {
+                    $member,
+                    ..Default::default()
+                }
+            }
+
+            fn default_fill() -> Self {
+                Self::new(0, 0, 0, 0, None).size_of_parent().center_of_parent()
+            }
+
+            fn delete(wid: Self) {
+                <$base>::delete(wid.$member)
+            }
+
+            unsafe fn from_widget_ptr(ptr: *mut fltk_sys::widget::Fl_Widget) -> Self {
+                let $member = <$base>::from_widget_ptr(ptr);
+                Self {
+                    $member,
+                    ..Default::default()
+                }
+            }
+
+            unsafe fn from_widget<W: WidgetExt>(w: W) -> Self {
+                let $member = <$base>::from_widget(w);
+                Self {
+                    $member,
+                    ..Default::default()
+                }
+            }
+
+            fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, mut cb: F) {
+                let mut widget = self.clone();
+                self.$member.handle(move |_, ev| cb(&mut widget, ev));
+            }
+
+            fn draw<F: FnMut(&mut Self) + 'static>(&mut self, mut cb: F) {
+                let mut widget = self.clone();
+                self.$member.draw(move |_| cb(&mut widget))
+            }
+
+            unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
+                self.$member.draw_data()
+            }
+
+            unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
+                self.$member.handle_data()
+            }
+
+            fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, mut cb: F) {
+                let mut widget = self.clone();
+                self.$member.resize_callback(move |_, x, y, w, h| cb(&mut widget, x, y, w, h))
+            }
+        }
+    };
+}
+
+pub use impl_widget_ext_via;
+pub use impl_widget_base_via;

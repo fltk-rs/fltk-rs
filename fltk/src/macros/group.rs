@@ -209,3 +209,105 @@ macro_rules! impl_group_ext {
 }
 
 pub use impl_group_ext;
+
+#[macro_export]
+/// Implements GroupExt via a member
+macro_rules! impl_group_ext_via {
+    ($widget:ty, $member:tt) => {        
+        unsafe impl GroupExt for $widget {       
+            fn begin(&self) {
+                self.$member.begin()
+            }
+
+            fn end(&self) {
+                self.$member.end()
+            }
+
+            fn clear(&mut self) {
+                self.$member.clear()
+            }
+
+            unsafe fn unsafe_clear(&mut self) {
+                self.$member.unsafe_clear()
+            }
+
+            fn children(&self) -> i32 {
+                self.$member.children()
+            }
+
+            fn child(&self, idx: i32) -> Option<Widget> {
+                self.$member.child(idx)
+            }
+
+            fn find<W: WidgetExt>(&self, widget: &W) -> i32 {
+                self.$member.find(widget)
+            }
+
+            fn add<W: WidgetExt>(&mut self, widget: &W) {
+                self.$member.add(widget)
+            }
+
+            fn insert<W: WidgetExt>(&mut self, widget: &W, index: i32) {
+                self.$member.insert(widget, index)
+            }
+
+            fn remove<W: WidgetExt>(&mut self, widget: &W) {
+                self.$member.remove(widget)
+            }
+
+            fn remove_by_index(&mut self, idx: i32) {
+                self.$member.remove_by_index(idx)
+            }
+
+            fn resizable<W: WidgetExt>(&self, widget: &W) {
+                self.$member.resizable(widget)
+            }
+
+            fn make_resizable(&mut self, val: bool) {
+                self.$member.make_resizable(val)
+            }
+
+            fn add_resizable<W: WidgetExt>(&mut self, widget: &W) {
+                self.$member.add_resizable(widget)
+            }
+
+            fn set_clip_children(&mut self, flag: bool) {
+                self.$member.set_clip_children(flag)
+            }
+
+            fn clip_children(&mut self) -> bool {
+                self.$member.clip_children()
+            }
+
+            fn draw_child<W: WidgetExt>(&self, w: &mut W) {
+                self.$member.draw_child(w)
+            }
+
+            fn update_child<W: WidgetExt>(&self, w: &mut W) {
+                self.$member.update_child(w)
+            }
+
+            fn draw_outside_label<W: WidgetExt>(&self, w: &mut W) {
+                self.$member.draw_outside_label(w)
+            }
+
+            fn draw_children(&mut self) {
+                self.$member.draw_children()
+            }
+
+            fn init_sizes(&mut self) {
+                self.$member.init_sizes()
+            }
+
+            fn bounds(&self) -> Vec<(i32, i32, i32, i32)> {
+                self.$member.bounds()
+            }
+
+            unsafe fn into_group(&self) -> crate::group::Group {
+                self.$member.into_group()
+            }
+        }
+    };
+}
+
+pub use impl_group_ext_via;
