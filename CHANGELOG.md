@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.2.19] - Unreleased
+- Fix docs for dialog::message_title_default(). Thanks @hannesbraun.
+- Add TreeItem::set_label_fgcolor() and label_fgcolor(), deprecate the older names. Thanks @AshfordN.
+
 ## [1.2.18] - 2021-11-27
 - Add menu::mac_set_about(). Thanks @hannesbraun.
 - Add TreeItem::try_widget() and Wizard::try_current_widget().

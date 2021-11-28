@@ -1392,6 +1392,20 @@ impl TreeItem {
         unsafe { mem::transmute(Fl_Tree_Item_labelfgcolor(self.inner)) }
     }
 
+    #[deprecated(since="1.2.19", note="please use `set_label_fgcolor` instead")]
+    /// Sets the label's foreground color
+    pub fn set_label_fg_color(&mut self, val: Color) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Tree_Item_set_labelfgcolor(self.inner, val.bits() as u32) }
+    }
+
+    #[deprecated(since="1.2.19", note="please use `label_fgcolor` instead")]
+    /// Gets the label's foreground color
+    pub fn label_fg_color(&self) -> Color {
+        assert!(!self.was_deleted());
+        unsafe { mem::transmute(Fl_Tree_Item_labelfgcolor(self.inner)) }
+    }
+
     /// Sets the label's color
     pub fn set_label_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
