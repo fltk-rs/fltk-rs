@@ -1381,13 +1381,13 @@ impl TreeItem {
     }
 
     /// Sets the label's foreground color
-    pub fn set_label_fg_color(&mut self, val: Color) {
+    pub fn set_label_fgcolor(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_labelfgcolor(self.inner, val.bits() as u32) }
     }
 
     /// Gets the label's foreground color
-    pub fn label_fg_color(&self) -> Color {
+    pub fn label_fgcolor(&self) -> Color {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_Item_labelfgcolor(self.inner)) }
     }
