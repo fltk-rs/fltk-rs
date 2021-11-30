@@ -66,6 +66,3 @@ harness = false
 name = "timeouts"
 path = "tests/timeouts.rs"
 harness = false
-
-[dev-dependencies]
-lazy_static = "*"
