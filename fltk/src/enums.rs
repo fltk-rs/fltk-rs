@@ -868,13 +868,8 @@ impl Key {
     }
 
     /// Return the corresponding function key
-    pub const fn fn_key(val: i32) -> Option<Key> {
-        let key = Key::F1.bits() + (val - 1);
-        if key < Key::FLast.bits() {
-            Some(Key::from_i32(key))
-        } else {
-            None
-        }
+    pub const fn fn_key(val: i32) -> Key {
+        Key::from_i32(Key::F1.bits() - 1 + val;)
     }
 }
 
