@@ -6,6 +6,7 @@
 - Add TreeItem::set_label_fgcolor() and label_fgcolor(), deprecate the older names. Thanks @AshfordN.
 - Add TreeItem::as_ptr().
 - Add Tree::item_pathname().
+- Add enums::Key::F1 to F12, Key::is_fn_key() and Key::fn_key(i32).
 
 ## [1.2.18] - 2021-11-27
 - Add menu::mac_set_about(). Thanks @hannesbraun.

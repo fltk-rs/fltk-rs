@@ -788,7 +788,31 @@ bitflags::bitflags! {
         const KPEnter = 0xff8d;
         /// Keypad Last
         const KPLast = 0xffbd;
-        /// FLast
+        /// F1
+        const F1 = 0xffbd + 1;
+        /// F2
+        const F2 = 0xffbd + 2;
+        /// F3
+        const F3 = 0xffbd + 3;
+        /// F4
+        const F4 = 0xffbd + 4;
+        /// F5
+        const F5 = 0xffbd + 5;
+        /// F6
+        const F6 = 0xffbd + 6;
+        /// F7
+        const F7 = 0xffbd + 7;
+        /// F8
+        const F8 = 0xffbd + 8;
+        /// F9
+        const F9 = 0xffbd + 9;
+        /// F10
+        const F10 = 0xffbd + 10;
+        /// F11
+        const F11 = 0xffbd + 11;
+        /// F12
+        const F12 = 0xffbd + 12;
+        /// Function key last
         const FLast = 0xffe0;
         /// Shift Left
         const ShiftL = 0xffe1;
@@ -835,6 +859,21 @@ impl Key {
             None
         } else {
             Some(bits as u8 as char)
+        }
+    }
+
+    /// Returns whether a key is a function key
+    pub const fn is_fn_key(key: Key) -> bool {
+        key.bits() >= Key::F1.bits() && key.bits() < Key::FLast.bits()
+    }
+
+    /// Return the corresponding function key
+    pub const fn fn_key(val: i32) -> Option<Key> {
+        let key = Key::F1.bits() + (val - 1);
+        if key < Key::FLast.bits() {
+            Some(Key::from_i32(key))
+        } else {
+            None
         }
     }
 }
