@@ -4,6 +4,7 @@ use crate::enums::{
 use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
+use crate::window::Window;
 use fltk_sys::button::*;
 use std::{
     ffi::{CStr, CString},

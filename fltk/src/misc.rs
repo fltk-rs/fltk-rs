@@ -2,8 +2,8 @@ use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType
 use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
-use crate::widget::Widget;
 use crate::window::Window;
+use crate::widget::Widget;
 use fltk_sys::misc::*;
 use std::{
     ffi::{CStr, CString},

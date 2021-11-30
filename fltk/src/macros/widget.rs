@@ -51,7 +51,7 @@ macro_rules! impl_widget_ext {
                     self
                 }
 
-                fn with_align(mut self, align: crate::enums::Align) -> Self {
+                fn with_align(mut self, align: Align) -> Self {
                     self.set_align(align);
                     self
                 }
@@ -505,7 +505,7 @@ macro_rules! impl_widget_ext {
                         if wind_ptr.is_null() {
                             None
                         } else {
-                            Some(Box::new(crate::window::Window::from_widget_ptr(
+                            Some(Box::new(Window::from_widget_ptr(
                                 wind_ptr as *mut fltk_sys::widget::Fl_Widget,
                             )))
                         }
@@ -519,7 +519,7 @@ macro_rules! impl_widget_ext {
                         if wind_ptr.is_null() {
                             None
                         } else {
-                            Some(Box::new(crate::window::Window::from_widget_ptr(
+                            Some(Box::new(Window::from_widget_ptr(
                                 wind_ptr as *mut fltk_sys::widget::Fl_Widget,
                             )))
                         }
@@ -627,7 +627,7 @@ macro_rules! impl_widget_ext {
                         if ptr.is_null() {
                             return None;
                         }
-                        Some(Box::new(crate::window::Window::from_widget_ptr(
+                        Some(Box::new(Window::from_widget_ptr(
                             ptr as *mut fltk_sys::widget::Fl_Widget,
                         )))
                     }
@@ -1101,7 +1101,7 @@ macro_rules! impl_widget_ext_via {
                 self
             }
 
-            fn with_align(mut self, align: crate::enums::Align) -> Self {
+            fn with_align(mut self, align: Align) -> Self {
                 self.$member = self.$member.with_align(align);
                 self
             }
