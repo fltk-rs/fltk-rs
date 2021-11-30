@@ -869,7 +869,7 @@ impl Key {
 
     /// Return the corresponding function key
     pub const fn fn_key(val: i32) -> Key {
-        Key::from_i32(Key::F1.bits() - 1 + val;)
+        Key::from_i32(Key::F1.bits() - 1 + val)
     }
 }
 
