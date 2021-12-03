@@ -785,6 +785,14 @@ extern "C" {
     pub fn Fl_Tree_callback_reason(self_: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Tree_item_pathname(
+        self_: *const Fl_Tree,
+        pathname: *mut ::std::os::raw::c_char,
+        pathnamelen: ::std::os::raw::c_int,
+        item: *const Fl_Tree_Item,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Tree_Item_new(
         tree: *mut Fl_Tree,
         txt: *const ::std::os::raw::c_char,

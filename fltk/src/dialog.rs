@@ -1153,7 +1153,7 @@ pub fn message_title(title: &str) {
     unsafe { Fl_message_title(title.as_ptr() as _) }
 }
 
-/// Set the next dialog's title
+/// Set the default title for a dialog
 pub fn message_title_default(title: &str) {
     let title = CString::safe_new(title);
     unsafe { Fl_message_title_default(title.as_ptr() as _) }

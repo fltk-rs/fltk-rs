@@ -2,6 +2,7 @@ use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType
 use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
+use crate::window::Window;
 use crate::widget::Widget;
 use fltk_sys::tree::*;
 use std::{
@@ -1149,6 +1150,23 @@ impl Tree {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tree_callback_reason(self.inner)) }
     }
+
+    /// Get an item's pathname
+    pub fn item_pathname(&self, item: &TreeItem) -> Result<String, FltkError> {
+        assert!(!self.was_deleted());
+        let mut temp = vec![0u8; 256];
+        unsafe {
+            let ret = Fl_Tree_item_pathname(self.inner, temp.as_mut_ptr() as _, 256, item.inner);
+            if ret == 0 {
+                if let Some(pos) =  temp.iter().position(|x| *x == 0) {
+                    temp = temp.split_at(pos).0.to_vec();
+                }
+                Ok(String::from_utf8_lossy(&temp).to_string())
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+            }
+        }
+    }
 }
 
 impl IntoIterator for Tree {
@@ -1381,11 +1399,25 @@ impl TreeItem {
     }
 
     /// Sets the label's foreground color
+    pub fn set_label_fgcolor(&mut self, val: Color) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Tree_Item_set_labelfgcolor(self.inner, val.bits() as u32) }
+    }
+
+    /// Gets the label's foreground color
+    pub fn label_fgcolor(&self) -> Color {
+        assert!(!self.was_deleted());
+        unsafe { mem::transmute(Fl_Tree_Item_labelfgcolor(self.inner)) }
+    }
+
+    #[deprecated(since="1.2.19", note="please use `set_label_fgcolor` instead")]
+    /// Sets the label's foreground color
     pub fn set_label_fg_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_labelfgcolor(self.inner, val.bits() as u32) }
     }
 
+    #[deprecated(since="1.2.19", note="please use `label_fgcolor` instead")]
     /// Gets the label's foreground color
     pub fn label_fg_color(&self) -> Color {
         assert!(!self.was_deleted());
@@ -1821,6 +1853,11 @@ impl TreeItem {
         } else {
             unsafe { Fl_Tree_Item_set_usericon(self.inner, std::ptr::null_mut::<raw::c_void>()) }
         }
+    }
+
+    /// Return the internal pointer of the tree item
+    pub fn as_ptr(&self) -> *mut Fl_Tree_Item {
+        self.inner
     }
 }
 

@@ -29,6 +29,7 @@ unsafe impl Sync for FltkError {}
 
 /// Error kinds enum for `FltkError`
 #[derive(Clone, Copy, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+#[non_exhaustive]
 pub enum FltkErrorKind {
     /// Failed to run the application
     FailedToRun,
