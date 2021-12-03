@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.19] - Unreleased
+## [1.2.19] - 2021-12-03
 - Fix docs for dialog::message_title_default(). Thanks @hannesbraun.
 - Add TreeItem::set_label_fgcolor() and label_fgcolor(), deprecate the older names. Thanks @AshfordN.
 - Add TreeItem::as_ptr().
