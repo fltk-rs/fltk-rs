@@ -510,7 +510,7 @@ impl Color {
         Color::from_hex(col)
     }
 
-    /// Returns an html color format
+    /// Returns the color in html format
     pub fn to_html_color(&self) -> String {
         let (r, g, b) = self.to_rgb();
         format!("#{:x}{:x}{:x}", r, g, b)
