@@ -502,7 +502,7 @@ impl Color {
         Color::from_rgb(r, g, b)
     }
 
-    /// Return a Color from an html color format
+    /// Return a Color from an html color format (`#xxxxxx`)
     pub fn from_html_color(col: &str) -> Result<Color, FltkError> {
         if !col.starts_with('#') || col.len() != 7 {
             Err(FltkError::Internal(FltkErrorKind::InvalidColor))
