@@ -57,9 +57,8 @@ impl MyPopup {
         let idx = RefCell::from(0);
         let mut win = window::Window::default().with_size(120, choices.len() as i32 * 25);
         win.set_color(Color::White);
-        let mut pack = group::Pack::default().size_of_parent();
-        pack.set_frame(FrameType::ThinUpFrame);
-        pack.set_color(Color::White);
+        win.set_frame(FrameType::BorderBox);
+        let mut pack = group::Pack::new(1, 1, win.w() - 2, win.h() -2, None);
         win.set_border(false);
         win.make_modal(true);
         win.end();
