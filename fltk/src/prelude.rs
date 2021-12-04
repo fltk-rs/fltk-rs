@@ -20,6 +20,8 @@ pub enum FltkError {
     Internal(FltkErrorKind),
     /// Error using an errorneous env variable
     EnvVarError(std::env::VarError),
+    /// Parsing error
+    ParseIntError(std::num::ParseIntError),
     /// Unknown error
     Unknown(String),
 }
@@ -47,6 +49,8 @@ pub enum FltkErrorKind {
     TableError,
     /// Error due to printing
     PrintError,
+    /// Invalid color
+    InvalidColor,
 }
 
 impl std::error::Error for FltkError {
@@ -67,6 +71,7 @@ impl fmt::Display for FltkError {
             FltkError::Internal(ref err) => write!(f, "An internal error occured {:?}", err),
             FltkError::EnvVarError(ref err) => write!(f, "An env var error occured {:?}", err),
             FltkError::Utf8Error(ref err) => write!(f, "A UTF8 conversion error occured {:?}", err),
+            FltkError::ParseIntError(ref err) => write!(f, "An int parsing error occured {:?}", err),
             FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {:?}", err),
         }
     }
@@ -93,6 +98,12 @@ impl From<std::env::VarError> for FltkError {
 impl From<std::string::FromUtf8Error> for FltkError {
     fn from(err: std::string::FromUtf8Error) -> FltkError {
         FltkError::Utf8Error(err)
+    }
+}
+
+impl From<std::num::ParseIntError> for FltkError {
+    fn from(err: std::num::ParseIntError) -> FltkError {
+        FltkError::ParseIntError(err)
     }
 }
 

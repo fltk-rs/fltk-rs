@@ -503,11 +503,12 @@ impl Color {
     }
 
     /// Return a Color from an html color format
-    /// # Panics
-    /// The accepted format is `#xxxxxx`
-    pub fn from_html_color(col: &str) -> Color {
-        let col = u32::from_str_radix(&col[1..7], 16).unwrap();
-        Color::from_hex(col)
+    pub fn from_html_color(col: &str) -> Result<Color, FltkError> {
+        if !col.starts_with('#') || col.len() != 7 {
+            Err(FltkError::Internal(FltkErrorKind::InvalidColor))
+        } else {
+            Ok(Color::from_hex(u32::from_str_radix(&col[1..7], 16)?))
+        }
     }
 
     /// Returns the color in html format
