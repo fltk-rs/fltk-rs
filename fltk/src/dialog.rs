@@ -262,7 +262,7 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     }
 }
 
-#[doc(Hidden)]
+#[doc(hidden)]
 /// Displays a choice box with upto three choices.
 /// An empty choice will not be shown
 pub fn choice2(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
@@ -345,7 +345,7 @@ pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     }
 }
 
-#[doc(Hidden)]
+#[doc(hidden)]
 /// Displays a choice box with upto three choices.
 /// An empty choice will not be shown
 pub fn choice2_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
@@ -1081,7 +1081,7 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_set_show_label(msg.into_raw()) }
     }
 
-    /// Set "Hidden" label
+    /// Set "hidden" label
     pub fn set_hidden_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_File_Chooser_set_hidden_label(msg.into_raw()) }
