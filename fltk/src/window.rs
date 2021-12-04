@@ -226,7 +226,8 @@ impl SingleWindow {
         }
     }
 
-    /// Set the default XA_WM_CLASS property for all windows of your application
+    /// Set the default XA_WM_CLASS property for all windows of your application.
+    /// This should be called before showing with window
     pub fn set_default_xclass(s: &str) {
         let s = CString::safe_new(s);
         unsafe {
@@ -247,7 +248,8 @@ impl SingleWindow {
         }
     }
 
-    /// Set the window's XA_WM_CLASS property
+    /// Set the window's XA_WM_CLASS property.
+    /// This should be called before showing the window
     pub fn set_xclass(&mut self, s: &str) {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
@@ -492,7 +494,8 @@ impl DoubleWindow {
         }
     }
 
-    /// Set the default XA_WM_CLASS property for all windows of your application
+    /// Set the default XA_WM_CLASS property for all windows of your application.
+    /// This should be called before showing with window
     pub fn set_default_xclass(s: &str) {
         let s = CString::safe_new(s);
         unsafe {
@@ -513,7 +516,8 @@ impl DoubleWindow {
         }
     }
 
-    /// Set the window's XA_WM_CLASS property
+    /// Set the window's XA_WM_CLASS property.
+    /// This should be called before showing the window
     pub fn set_xclass(&mut self, s: &str) {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
