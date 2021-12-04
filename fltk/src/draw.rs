@@ -257,6 +257,8 @@ pub fn draw_pie(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
 }
 
 /// Sets the line style
+/// # Warning
+/// You are required to change this back to `set_line_style(LineStyle::Solid, 0)` after finishing
 pub fn set_line_style(style: LineStyle, width: i32) {
     unsafe {
         crate::app::open_display();
