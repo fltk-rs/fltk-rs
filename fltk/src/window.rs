@@ -213,6 +213,48 @@ impl SingleWindow {
     pub fn pixel_h(&self) -> i32 {
         (self.pixels_per_unit() * self.h() as f32) as i32
     }
+
+    /// Get the default XA_WM_CLASS property for all windows of your application
+    pub fn default_xclass() -> Option<String> {
+        unsafe {
+            let ptr = Fl_Window_default_xclass();
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set the default XA_WM_CLASS property for all windows of your application
+    pub fn set_default_xclass(s: &str) {
+        let s = CString::safe_new(s);
+        unsafe {
+            Fl_Window_set_default_xclass(s.as_ptr())
+        }
+    }
+    
+    /// Get the window's XA_WM_CLASS property
+    pub fn xclass(&self) -> Option<String> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Window_xclass(self.inner as _);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set the window's XA_WM_CLASS property
+    pub fn set_xclass(&mut self, s: &str) {
+        assert!(!self.was_deleted());
+        let s = CString::safe_new(s);
+        unsafe {
+            Fl_Window_set_xclass(self.inner as _, s.as_ptr())
+        }
+    }
 }
 
 /// Creates a double (buffered) window widget
@@ -435,6 +477,48 @@ impl DoubleWindow {
                 XUnmapWindow(crate::app::display() as _, self.raw_handle());
                 crate::app::flush();
             }
+        }
+    }
+
+    /// Get the default XA_WM_CLASS property for all windows of your application
+    pub fn default_xclass() -> Option<String> {
+        unsafe {
+            let ptr = Fl_Window_default_xclass();
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set the default XA_WM_CLASS property for all windows of your application
+    pub fn set_default_xclass(s: &str) {
+        let s = CString::safe_new(s);
+        unsafe {
+            Fl_Window_set_default_xclass(s.as_ptr())
+        }
+    }
+    
+    /// Get the window's XA_WM_CLASS property
+    pub fn xclass(&self) -> Option<String> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Window_xclass(self.inner as _);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set the window's XA_WM_CLASS property
+    pub fn set_xclass(&mut self, s: &str) {
+        assert!(!self.was_deleted());
+        let s = CString::safe_new(s);
+        unsafe {
+            Fl_Window_set_xclass(self.inner as _, s.as_ptr())
         }
     }
 }

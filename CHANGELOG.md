@@ -3,6 +3,7 @@
 
 ## [1.2.20] - Unreleased
 - Update doc comment on draw::set_line_style().
+- Add Window xclass and default_xclass setter and getter. (Changes the XA_WM_CLASS property of the window)
 
 ## [1.2.19] - 2021-12-03
 - Fix docs for dialog::message_title_default(). Thanks @hannesbraun.
