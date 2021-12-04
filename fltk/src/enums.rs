@@ -502,6 +502,20 @@ impl Color {
         Color::from_rgb(r, g, b)
     }
 
+    /// Return a Color from an html color format
+    /// # Panics
+    /// The accepted format is `#xxxxxx`
+    pub fn from_html_color(col: &str) -> Color {
+        let col = u32::from_str_radix(&col[1..7], 16).unwrap();
+        Color::from_hex(col)
+    }
+
+    /// Returns an html color format
+    pub fn to_html_color(&self) -> String {
+        let (r, g, b) = self.to_rgb();
+        format!("#{:x}{:x}{:x}", r, g, b)
+    }
+
     /// Returns a color by index of RGBI
     pub fn by_index(idx: u8) -> Color {
         unsafe { mem::transmute(idx as u32) }
