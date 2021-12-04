@@ -84,7 +84,7 @@ impl MyPopup {
     pub fn popup(&mut self, x: i32, y: i32) -> (String, i32) {
         self.win.show();
         self.win
-            .set_pos(app::event_x_root() - x, app::event_y_root() + y);
+            .set_pos(app::event_x_root() - x, app::event_y_root() + y + 10);
         while self.win.shown() {
             app::wait();
         }
@@ -114,7 +114,7 @@ impl MyChoice {
             let mut f = frame.clone();
             move |b| {
                 let mut menu = MyPopup::new(&*c.borrow());
-                let s = menu.popup(b.w() * 4, b.h() - 10);
+                let s = menu.popup(b.w() * 4, 0);
                 f.set_label(&s.0);
             }
         });
