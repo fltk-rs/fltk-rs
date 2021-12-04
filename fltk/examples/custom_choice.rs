@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use fltk::{enums::*, prelude::*, *};
 use std::cell::RefCell;
 use std::ops::{Deref, DerefMut};
@@ -61,8 +63,7 @@ impl MyPopup {
         win.set_border(false);
         win.make_modal(true);
         win.end();
-        let mut i = 0;
-        for choice in choices {
+        for (i, choice) in choices.iter().enumerate() {
             let mut but = PopupButton::new(choice);
             but.clear_visible_focus();
             but.set_callback({
@@ -71,12 +72,11 @@ impl MyPopup {
                 let idx = idx.clone();
                 move |b| {
                     *val.borrow_mut() = b.label();
-                    *idx.borrow_mut() = i;
+                    *idx.borrow_mut() = i as i32;
                     win.hide();
                 }
             });
             pack.add(&*but);
-            i += 1;
         }
         pack.auto_layout();
         Self { win, val, idx }
@@ -101,7 +101,7 @@ struct MyChoice {
 
 impl MyChoice {
     pub fn new<S: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: S) -> Self {
-        let mut grp = group::Group::new(x, y, w, h, label).with_align(Align::Left);
+        let grp = group::Group::new(x, y, w, h, label).with_align(Align::Left);
         let mut frame = frame::Frame::new(x, y, w - w / 4, h, None);
         frame.set_frame(FrameType::DownBox);
         frame.set_color(Color::BackGround2);

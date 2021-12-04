@@ -543,7 +543,7 @@ pub fn mac_set_about<F: FnMut() + 'static>(cb: F) {
         unsafe extern "C" fn shim(_wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
-            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f()));
+            let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(f));
         }
         let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut std::ffi::c_void;
