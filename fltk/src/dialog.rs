@@ -262,9 +262,8 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     }
 }
 
-#[doc(hidden)]
 /// Displays a choice box with upto three choices.
-/// An empty choice will not be shown
+/// An empty choice will not be shown. Closing the dialog returns None
 pub fn choice2(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
         let txt = CString::safe_new(txt);
@@ -345,9 +344,8 @@ pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     }
 }
 
-#[doc(hidden)]
 /// Displays a choice box with upto three choices.
-/// An empty choice will not be shown
+/// An empty choice will not be shown. Closing the dialog returns None
 pub fn choice2_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
         let txt = CString::safe_new(txt);
