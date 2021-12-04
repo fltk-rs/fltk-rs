@@ -48,13 +48,13 @@ impl DerefMut for PopupButton {
 pub struct MyPopup {
     win: window::Window,
     val: Rc<RefCell<String>>,
-    idx: Rc<RefCell<i32>>,
+    idx: RefCell<i32>,
 }
 
 impl MyPopup {
     pub fn new(choices: &[&str]) -> Self {
         let val = Rc::from(RefCell::from(String::from("")));
-        let idx = Rc::from(RefCell::from(0));
+        let idx = RefCell::from(0);
         let mut win = window::Window::default().with_size(120, choices.len() as i32 * 25);
         win.set_color(Color::White);
         let mut pack = group::Pack::default().size_of_parent();
