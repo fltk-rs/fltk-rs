@@ -3,11 +3,11 @@
 macro_rules! impl_group_ext {
     ($name: ident, $flname: ident) => {
         impl IntoIterator for $name {
-            type Item = Widget;
+            type Item = $crate::widget::Widget;
             type IntoIter = std::vec::IntoIter<Self::Item>;
 
             fn into_iter(self) -> Self::IntoIter {
-                let mut v: Vec<Widget> = vec![];
+                let mut v: Vec<$crate::widget::Widget> = vec![];
                 for i in 0..self.children() {
                     v.push(self.child(i).unwrap());
                 }
@@ -46,7 +46,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn child(&self, idx: i32) -> Option<Widget> {
+                fn child(&self, idx: i32) -> Option<$crate::widget::Widget> {
                     unsafe {
                         assert!(!self.was_deleted());
                         if idx >= self.children() || idx < 0 {
@@ -56,7 +56,7 @@ macro_rules! impl_group_ext {
                         if child_widget.is_null() {
                             None
                         } else {
-                            Some(Widget::from_widget_ptr(
+                            Some($crate::widget::Widget::from_widget_ptr(
                                 child_widget as *mut fltk_sys::widget::Fl_Widget,
                             ))
                         }
@@ -145,7 +145,7 @@ macro_rules! impl_group_ext {
                     assert!(!self.was_deleted());
                     assert!(!w.was_deleted());
                     unsafe {
-                        crate::app::open_display();
+                        $crate::app::open_display();
                         [<$flname _draw_child>](self.inner as _, w.as_widget_ptr() as _)
                     }
                 }
@@ -154,7 +154,7 @@ macro_rules! impl_group_ext {
                     assert!(!self.was_deleted());
                     assert!(!w.was_deleted());
                     unsafe {
-                        crate::app::open_display();
+                        $crate::app::open_display();
                         [<$flname _update_child>](self.inner as _, w.as_widget_ptr() as _)
                     }
                 }
@@ -163,7 +163,7 @@ macro_rules! impl_group_ext {
                     assert!(!self.was_deleted());
                     assert!(!w.was_deleted());
                     unsafe {
-                        crate::app::open_display();
+                        $crate::app::open_display();
                         [<$flname _draw_outside_label>](
                             self.inner as _,
                             w.as_widget_ptr() as _,
@@ -174,7 +174,7 @@ macro_rules! impl_group_ext {
                 fn draw_children(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        crate::app::open_display();
+                        $crate::app::open_display();
                         [<$flname _draw_children>](self.inner as _)
                     }
                 }
@@ -200,8 +200,8 @@ macro_rules! impl_group_ext {
                     vec
                 }
 
-                unsafe fn into_group(&self) -> crate::group::Group {
-                    crate::group::Group::from_widget_ptr(self.inner as _)
+                unsafe fn into_group(&self) -> $crate::group::Group {
+                    $crate::group::Group::from_widget_ptr(self.inner as _)
                 }
             }
         }
@@ -213,8 +213,8 @@ pub use impl_group_ext;
 #[macro_export]
 /// Implements GroupExt via a member
 macro_rules! impl_group_ext_via {
-    ($widget:ty, $member:tt) => {        
-        unsafe impl GroupExt for $widget {       
+    ($widget:ty, $member:tt) => {
+        unsafe impl GroupExt for $widget {
             fn begin(&self) {
                 self.$member.begin()
             }
@@ -235,7 +235,7 @@ macro_rules! impl_group_ext_via {
                 self.$member.children()
             }
 
-            fn child(&self, idx: i32) -> Option<Widget> {
+            fn child(&self, idx: i32) -> Option<$crate::widget::Widget> {
                 self.$member.child(idx)
             }
 
@@ -303,7 +303,7 @@ macro_rules! impl_group_ext_via {
                 self.$member.bounds()
             }
 
-            unsafe fn into_group(&self) -> crate::group::Group {
+            unsafe fn into_group(&self) -> $crate::group::Group {
                 self.$member.into_group()
             }
         }

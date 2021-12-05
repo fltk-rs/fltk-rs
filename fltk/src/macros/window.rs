@@ -9,7 +9,7 @@ macro_rules! impl_window_ext {
                 {
                     return RawWindowHandle::Windows(windows::WindowsHandle {
                         hwnd: self.raw_handle(),
-                        hinstance: crate::app::display(),
+                        hinstance: $crate::app::display(),
                         ..windows::WindowsHandle::empty()
                     });
                 }
@@ -46,7 +46,7 @@ macro_rules! impl_window_ext {
                 {
                     return RawWindowHandle::Xlib(unix::XlibHandle {
                         window: self.raw_handle(),
-                        display: crate::app::display(),
+                        display: $crate::app::display(),
                         ..unix::XlibHandle::empty()
                     });
                 }
@@ -54,7 +54,7 @@ macro_rules! impl_window_ext {
                 // {
                 //     let mut handle = Win32Handle::empty();
                 //     handle.hwnd = self.raw_handle();
-                //     handle.hinstance = crate::app::display();
+                //     handle.hinstance = $crate::app::display();
                 //     return RawWindowHandle::Win32(handle);
                 // }
 
@@ -88,7 +88,7 @@ macro_rules! impl_window_ext {
                 // {
                 //     let mut handle = XlibHandle::empty();
                 //     handle.window = self.raw_handle();
-                //     handle.display = crate::app::display();
+                //     handle.display = $crate::app::display();
                 //     return RawWindowHandle::Xlib(handle);
                 // }
             }
@@ -137,7 +137,7 @@ macro_rules! impl_window_ext {
                             None
                         } else {
                             let img =
-                                Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
                     }
@@ -147,40 +147,40 @@ macro_rules! impl_window_ext {
                     assert!(!self.was_deleted());
                     assert!(
                         std::any::type_name::<T>()
-                            != std::any::type_name::<crate::image::SharedImage>(),
+                            != std::any::type_name::<$crate::image::SharedImage>(),
                         "SharedImage icons are not supported!"
                     );
                     assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<crate::image::Pixmap>(),
+                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::Pixmap>(),
                         "Pixmap icons are not supported!"
                     );
                     assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<crate::image::XpmImage>(),
+                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::XpmImage>(),
                         "Xpm icons are not supported!"
                     );
                     assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<crate::image::XbmImage>(),
+                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::XbmImage>(),
                         "Xbm icons are not supported!"
                     );
                     assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<crate::image::PnmImage>(),
+                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::PnmImage>(),
                         "Pnm icons are not supported!"
                     );
                     assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<crate::image::GifImage>(),
+                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::GifImage>(),
                         "Gif icons are not supported!"
                     );
                     assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<crate::image::Image>(),
+                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::Image>(),
                         "Icon images can't be generic!"
                     );
                     assert!(
-                        std::any::type_name::<T>() != std::any::type_name::<crate::image::TiledImage>(),
+                        std::any::type_name::<T>() != std::any::type_name::<$crate::image::TiledImage>(),
                         "TiledImage icons are not supported!"
                     );
                     if let Some(mut image) = image {
                         assert!(!image.was_deleted());
-                        if std::any::type_name::<T>() == std::any::type_name::<crate::image::SvgImage>()
+                        if std::any::type_name::<T>() == std::any::type_name::<$crate::image::SvgImage>()
                         {
                             unsafe {
                                 image.increment_arc();
@@ -282,7 +282,7 @@ macro_rules! impl_window_ext {
                     Fl_Window_set_raw_handle(self.inner as *mut Fl_Window, mem::transmute(&handle));
                 }
 
-                fn region(&self) -> crate::draw::Region {
+                fn region(&self) -> $crate::draw::Region {
                     assert!(!self.was_deleted());
                     unsafe {
                         let ptr = [<$flname _region>](self.inner);
@@ -291,7 +291,7 @@ macro_rules! impl_window_ext {
                     }
                 }
 
-                unsafe fn set_region(&mut self, region: crate::draw::Region) {
+                unsafe fn set_region(&mut self, region: $crate::draw::Region) {
                     assert!(!self.was_deleted());
                     assert!(!region.is_null());
                     [<$flname _set_region>](self.inner, region)
@@ -336,39 +336,39 @@ macro_rules! impl_window_ext {
                     assert!(self.h() != 0);
                     assert!(
                         std::any::type_name::<I>()
-                            != std::any::type_name::<crate::image::SharedImage>(),
+                            != std::any::type_name::<$crate::image::SharedImage>(),
                         "SharedImage is not supported!"
                     );
                     assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<crate::image::XbmImage>(),
+                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::XbmImage>(),
                         "Xbm is not supported!"
                     );
                     assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<crate::image::PnmImage>(),
+                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::PnmImage>(),
                         "Pnm is not supported!"
                     );
                     assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<crate::image::GifImage>(),
+                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::GifImage>(),
                         "Gif is not supported!"
                     );
                     assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<crate::image::JpegImage>(),
+                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::JpegImage>(),
                         "Jpeg is not supported!"
                     );
                     assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<crate::image::SvgImage>(),
+                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::SvgImage>(),
                         "Svg is not supported!"
                     );
                     assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<crate::image::PngImage>(),
+                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::PngImage>(),
                         "Png is not supported!"
                     );
                     assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<crate::image::Image>(),
+                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::Image>(),
                         "Images can't be generic!"
                     );
                     assert!(
-                        std::any::type_name::<I>() != std::any::type_name::<crate::image::TiledImage>(),
+                        std::any::type_name::<I>() != std::any::type_name::<$crate::image::TiledImage>(),
                         "TiledImage is not supported!"
                     );
                     unsafe {
@@ -389,7 +389,7 @@ macro_rules! impl_window_ext {
                             None
                         } else {
                             let img =
-                                Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
                     }
@@ -407,7 +407,7 @@ macro_rules! impl_window_ext {
 
                 fn set_cursor_image(
                     &mut self,
-                    mut image: crate::image::RgbImage,
+                    mut image: $crate::image::RgbImage,
                     hot_x: i32,
                     hot_y: i32,
                 ) {

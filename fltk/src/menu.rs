@@ -1,10 +1,6 @@
-use crate::enums::{
-    Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType, Shortcut,
-};
-use crate::image::Image;
+use crate::enums::{Color, Font, LabelType};
 use crate::prelude::*;
 use crate::utils::FlString;
-use crate::window::Window;
 use fltk_sys::menu::*;
 use std::{
     ffi::{CStr, CString},

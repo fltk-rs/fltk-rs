@@ -230,11 +230,9 @@ impl SingleWindow {
     /// This should be called before showing with window
     pub fn set_default_xclass(s: &str) {
         let s = CString::safe_new(s);
-        unsafe {
-            Fl_Window_set_default_xclass(s.as_ptr())
-        }
+        unsafe { Fl_Window_set_default_xclass(s.as_ptr()) }
     }
-    
+
     /// Get the window's XA_WM_CLASS property
     pub fn xclass(&self) -> Option<String> {
         assert!(!self.was_deleted());
@@ -253,9 +251,7 @@ impl SingleWindow {
     pub fn set_xclass(&mut self, s: &str) {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
-        unsafe {
-            Fl_Window_set_xclass(self.inner as _, s.as_ptr())
-        }
+        unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
     }
 }
 
@@ -498,11 +494,9 @@ impl DoubleWindow {
     /// This should be called before showing with window
     pub fn set_default_xclass(s: &str) {
         let s = CString::safe_new(s);
-        unsafe {
-            Fl_Window_set_default_xclass(s.as_ptr())
-        }
+        unsafe { Fl_Window_set_default_xclass(s.as_ptr()) }
     }
-    
+
     /// Get the window's XA_WM_CLASS property
     pub fn xclass(&self) -> Option<String> {
         assert!(!self.was_deleted());
@@ -521,9 +515,7 @@ impl DoubleWindow {
     pub fn set_xclass(&mut self, s: &str) {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
-        unsafe {
-            Fl_Window_set_xclass(self.inner as _, s.as_ptr())
-        }
+        unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
     }
 }
 

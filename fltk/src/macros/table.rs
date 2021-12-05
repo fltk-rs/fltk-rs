@@ -11,17 +11,17 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_table_frame(&mut self, frame: FrameType) {
+                fn set_table_frame(&mut self, frame: $crate::enums::FrameType) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_table_box>](self.inner, frame as i32)
                     }
                 }
 
-                fn table_frame(&self) -> FrameType {
+                fn table_frame(&self) -> $crate::enums::FrameType {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _table_box>](self.inner))
+                        std::mem::transmute([<$flname _table_box>](self.inner))
                     }
                 }
 
@@ -190,31 +190,31 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_row_header_color(&mut self, val: Color) {
+                fn set_row_header_color(&mut self, val: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_row_header_color>](self.inner, val.bits() as u32)
                     }
                 }
 
-                fn row_header_color(&self) -> Color {
+                fn row_header_color(&self) -> $crate::enums::Color {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _row_header_color>](self.inner))
+                        std::mem::transmute([<$flname _row_header_color>](self.inner))
                     }
                 }
 
-                fn set_col_header_color(&mut self, val: Color) {
+                fn set_col_header_color(&mut self, val: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_col_header_color>](self.inner, val.bits() as u32)
                     }
                 }
 
-                fn col_header_color(&self) -> Color {
+                fn col_header_color(&self) -> $crate::enums::Color {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _col_header_color>](self.inner))
+                        std::mem::transmute([<$flname _col_header_color>](self.inner))
                     }
                 }
 
@@ -401,7 +401,7 @@ macro_rules! impl_table_ext {
                 }
 
                 fn draw_cell<
-                    F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32)
+                    F: FnMut(&mut Self, $crate::table::TableContext, i32, i32, i32, i32, i32, i32)
                         + 'static,
                 >(
                     &mut self,
@@ -411,34 +411,34 @@ macro_rules! impl_table_ext {
                     pub type CustomDrawCellCallback = Option<
                         unsafe extern "C" fn(
                             wid: *mut Fl_Widget,
-                            ctx: raw::c_int,
-                            arg2: raw::c_int,
-                            arg3: raw::c_int,
-                            arg4: raw::c_int,
-                            arg5: raw::c_int,
-                            arg6: raw::c_int,
-                            arg7: raw::c_int,
-                            data: *mut raw::c_void,
+                            ctx: std::os::raw::c_int,
+                            arg2: std::os::raw::c_int,
+                            arg3: std::os::raw::c_int,
+                            arg4: std::os::raw::c_int,
+                            arg5: std::os::raw::c_int,
+                            arg6: std::os::raw::c_int,
+                            arg7: std::os::raw::c_int,
+                            data: *mut std::os::raw::c_void,
                         ),
                     >;
                     unsafe {
                         unsafe extern "C" fn shim(
                             wid: *mut Fl_Widget,
-                            ctx: raw::c_int,
-                            arg2: raw::c_int,
-                            arg3: raw::c_int,
-                            arg4: raw::c_int,
-                            arg5: raw::c_int,
-                            arg6: raw::c_int,
-                            arg7: raw::c_int,
-                            data: *mut raw::c_void,
+                            ctx: std::os::raw::c_int,
+                            arg2: std::os::raw::c_int,
+                            arg3: std::os::raw::c_int,
+                            arg4: std::os::raw::c_int,
+                            arg5: std::os::raw::c_int,
+                            arg6: std::os::raw::c_int,
+                            arg7: std::os::raw::c_int,
+                            data: *mut std::os::raw::c_void,
                         ) {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
-                            let ctx: TableContext = mem::transmute(ctx);
+                            let ctx: TableContext = std::mem::transmute(ctx);
                             let a: *mut Box<
                                 dyn FnMut(
                                     &mut $name,
-                                    crate::table::TableContext,
+                                    $crate::table::TableContext,
                                     i32,
                                     i32,
                                     i32,
@@ -449,7 +449,7 @@ macro_rules! impl_table_ext {
                             > = data as *mut Box<
                                 dyn FnMut(
                                     &mut $name,
-                                    crate::table::TableContext,
+                                    $crate::table::TableContext,
                                     i32,
                                     i32,
                                     i32,
@@ -460,7 +460,7 @@ macro_rules! impl_table_ext {
                             >;
                             let f: &mut (dyn FnMut(
                                 &mut $name,
-                                crate::table::TableContext,
+                                $crate::table::TableContext,
                                 i32,
                                 i32,
                                 i32,
@@ -476,7 +476,7 @@ macro_rules! impl_table_ext {
                         let a: *mut Box<
                             dyn FnMut(
                                 &mut Self,
-                                crate::table::TableContext,
+                                $crate::table::TableContext,
                                 i32,
                                 i32,
                                 i32,
@@ -485,7 +485,7 @@ macro_rules! impl_table_ext {
                                 i32,
                             ),
                         > = Box::into_raw(Box::new(Box::new(cb)));
-                        let data: *mut raw::c_void = a as *mut raw::c_void;
+                        let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: CustomDrawCellCallback = Some(shim);
                         [<$flname _draw_cell>](self.inner, callback, data);
                     }
@@ -511,26 +511,26 @@ macro_rules! impl_table_ext {
                 }
 
                 fn callback_context(&self) -> TableContext {
-                    unsafe { mem::transmute([<$flname _callback_context>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _callback_context>](self.inner)) }
                 }
 
-                fn scrollbar(&self) -> crate::valuator::Scrollbar {
+                fn scrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
                     unsafe {
                         let ptr = [<$flname _scrollbar>](self.inner);
                         assert!(!ptr.is_null());
-                        crate::valuator::Scrollbar::from_widget_ptr(
+                        $crate::valuator::Scrollbar::from_widget_ptr(
                             ptr as *mut fltk_sys::widget::Fl_Widget,
                         )
                     }
                 }
 
-                fn hscrollbar(&self) -> crate::valuator::Scrollbar {
+                fn hscrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
                     unsafe {
                         let ptr = [<$flname _hscrollbar>](self.inner);
                         assert!(!ptr.is_null());
-                        crate::valuator::Scrollbar::from_widget_ptr(
+                        $crate::valuator::Scrollbar::from_widget_ptr(
                             ptr as *mut fltk_sys::widget::Fl_Widget,
                         )
                     }

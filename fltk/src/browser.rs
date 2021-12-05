@@ -1,8 +1,6 @@
-use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
-use crate::image::Image;
+use crate::enums::{Color, Font};
 use crate::prelude::*;
 use crate::utils::FlString;
-use crate::window::Window;
 use fltk_sys::browser::*;
 use std::{
     ffi::{CStr, CString},

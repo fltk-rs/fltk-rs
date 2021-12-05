@@ -18,10 +18,10 @@ macro_rules! impl_image_ext {
         impl Clone for $name {
             fn clone(&self) -> Self {
                 assert!(!self.was_deleted());
-                let x = self.refcount.fetch_add(1, Ordering::Relaxed);
+                let x = self.refcount.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
                 $name {
                     inner: self.inner,
-                    refcount: AtomicUsize::new(x + 1),
+                    refcount: std::sync::atomic::AtomicUsize::new(x + 1),
                 }
             }
         }
@@ -30,7 +30,7 @@ macro_rules! impl_image_ext {
             impl Drop for $name {
                 fn drop(&mut self) {
                     if !self.was_deleted() {
-                        self.refcount.fetch_sub(1, Ordering::Relaxed);
+                        self.refcount.fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
                         if *self.refcount.get_mut() < 1 {
                             unsafe {
                                 [<$flname _delete>](self.inner);
@@ -48,7 +48,7 @@ macro_rules! impl_image_ext {
                         assert!(!img.is_null());
                         $name {
                             inner: img,
-                            refcount: AtomicUsize::new(1),
+                            refcount: std::sync::atomic::AtomicUsize::new(1),
                         }
                     }
                 }
@@ -94,7 +94,7 @@ macro_rules! impl_image_ext {
                     assert!(!ptr.is_null());
                     $name {
                         inner: ptr as *mut $flname,
-                        refcount: AtomicUsize::new(1),
+                        refcount: std::sync::atomic::AtomicUsize::new(1),
                     }
                 }
 
@@ -115,19 +115,19 @@ macro_rules! impl_image_ext {
                     unsafe { [<$flname _data>](self.inner) as *const *const u8 }
                 }
 
-                fn to_rgb(&self) -> Result<crate::image::RgbImage, FltkError> {
+                fn to_rgb(&self) -> Result<$crate::image::RgbImage, FltkError> {
                     assert!(!self.was_deleted());
                     if self.count() != 1 {
                         Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
                     } else {
                         let data = self.to_rgb_data();
-                        let mut img = RgbImage::new(&data, self.data_w(), self.data_h(), self.depth())?;
+                        let mut img = $crate::image::RgbImage::new(&data, self.data_w(), self.data_h(), self.depth())?;
                         img.scale(self.w(), self.h(), false, true);
                         Ok(img)
                     }
                 }
 
-                fn to_rgb_image(&self) -> Result<crate::image::RgbImage, FltkError> {
+                fn to_rgb_image(&self) -> Result<$crate::image::RgbImage, FltkError> {
                     self.to_rgb()
                 }
 
@@ -159,9 +159,9 @@ macro_rules! impl_image_ext {
                     unsafe { [<$flname _data_h>](self.inner) }
                 }
 
-                fn depth(&self) -> ColorDepth {
+                fn depth(&self) -> $crate::enums::ColorDepth {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _d>](self.inner) as u8) }
+                    unsafe { std::mem::transmute([<$flname _d>](self.inner) as u8) }
                 }
 
                 fn ld(&self) -> i32 {
@@ -182,12 +182,12 @@ macro_rules! impl_image_ext {
 
                 unsafe fn increment_arc(&mut self) {
                     assert!(!self.was_deleted());
-                    self.refcount.fetch_add(1, Ordering::Relaxed);
+                    self.refcount.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
                 }
 
                 unsafe fn decrement_arc(&mut self) {
                     assert!(!self.was_deleted());
-                    self.refcount.fetch_sub(1, Ordering::Relaxed);
+                    self.refcount.fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
                     assert!(
                         *self.refcount.get_mut() > 1,
                         "The image should outlive the widget!"
