@@ -518,7 +518,7 @@ impl Color {
     /// Returns the color in hex string format
     pub fn to_hex_str(&self) -> String {
         let (r, g, b) = self.to_rgb();
-        format!("#{:x}{:x}{:x}", r, g, b)
+        format!("#{:02x}{:02x}{:02x}", r, g, b)
     }
 
     /// Returns a color by index of RGBI
