@@ -4,14 +4,14 @@ macro_rules! impl_button_ext {
     ($name: ident, $flname: ident) => {
         paste::paste! {
             unsafe impl ButtonExt for $name {
-                fn shortcut(&self) -> Shortcut {
+                fn shortcut(&self) -> $crate::enums::Shortcut {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _shortcut>](self.inner))
+                        std::mem::transmute([<$flname _shortcut>](self.inner))
                     }
                 }
 
-                fn set_shortcut(&mut self, shortcut: Shortcut) {
+                fn set_shortcut(&mut self, shortcut: $crate::enums::Shortcut) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_shortcut>](self.inner, shortcut.bits() as i32)
@@ -53,14 +53,14 @@ macro_rules! impl_button_ext {
                     }
                 }
 
-                fn set_down_frame(&mut self, f: FrameType) {
+                fn set_down_frame(&mut self, f: $crate::enums::FrameType) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_down_box>](self.inner, f as i32) }
                 }
 
-                fn down_frame(&self) -> FrameType {
+                fn down_frame(&self) -> $crate::enums::FrameType {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _down_box>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _down_box>](self.inner)) }
                 }
             }
         }

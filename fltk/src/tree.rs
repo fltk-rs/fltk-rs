@@ -1,8 +1,7 @@
-use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, Key, LabelType};
+use crate::enums::{Color, Font, FrameType, Key};
 use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
-use crate::window::Window;
 use crate::widget::Widget;
 use fltk_sys::tree::*;
 use std::{
@@ -1158,7 +1157,7 @@ impl Tree {
         unsafe {
             let ret = Fl_Tree_item_pathname(self.inner, temp.as_mut_ptr() as _, 256, item.inner);
             if ret == 0 {
-                if let Some(pos) =  temp.iter().position(|x| *x == 0) {
+                if let Some(pos) = temp.iter().position(|x| *x == 0) {
                     temp = temp.split_at(pos).0.to_vec();
                 }
                 Ok(String::from_utf8_lossy(&temp).to_string())
@@ -1410,14 +1409,14 @@ impl TreeItem {
         unsafe { mem::transmute(Fl_Tree_Item_labelfgcolor(self.inner)) }
     }
 
-    #[deprecated(since="1.2.19", note="please use `set_label_fgcolor` instead")]
+    #[deprecated(since = "1.2.19", note = "please use `set_label_fgcolor` instead")]
     /// Sets the label's foreground color
     pub fn set_label_fg_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_labelfgcolor(self.inner, val.bits() as u32) }
     }
 
-    #[deprecated(since="1.2.19", note="please use `label_fgcolor` instead")]
+    #[deprecated(since = "1.2.19", note = "please use `label_fgcolor` instead")]
     /// Gets the label's foreground color
     pub fn label_fg_color(&self) -> Color {
         assert!(!self.was_deleted());
@@ -1455,7 +1454,7 @@ impl TreeItem {
         unsafe { Fl_Tree_Item_set_widget(self.inner, val.as_widget_ptr() as *mut Fl_Widget) }
     }
 
-    #[deprecated(since="1.2.18", note="please use `try_widget` instead")]
+    #[deprecated(since = "1.2.18", note = "please use `try_widget` instead")]
     /// Gets the item's associated widget
     pub fn widget(&self) -> Widget {
         assert!(!self.was_deleted());

@@ -1,12 +1,7 @@
-use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
-use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
-use crate::window::Window;
 use fltk_sys::widget::*;
 use std::ffi::{CStr, CString};
-use std::mem;
-use std::os::raw;
 
 /// An abstract type, shouldn't be instantiated in user code
 #[derive(Debug)]

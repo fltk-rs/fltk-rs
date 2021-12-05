@@ -1,14 +1,11 @@
-use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
-use crate::image::Image;
+use crate::enums::Align;
 use crate::prelude::*;
 use crate::utils::FlString;
-use crate::window::Window;
 use crate::widget::Widget;
 use fltk_sys::group::*;
 use std::{
     ffi::{CStr, CString},
     mem,
-    os::raw,
 };
 
 /// Creates a group widget
@@ -24,7 +21,7 @@ crate::macros::widget::impl_widget_base!(Group, Fl_Group);
 crate::macros::group::impl_group_ext!(Group, Fl_Group);
 
 impl Group {
-    #[deprecated(since="1.2.18", note="please use `try_current` instead")]
+    #[deprecated(since = "1.2.18", note = "please use `try_current` instead")]
     /// Get the current group
     pub fn current() -> Group {
         unsafe {
@@ -337,7 +334,7 @@ impl Wizard {
         unsafe { Fl_Wizard_prev(self.inner) }
     }
 
-    #[deprecated(since="1.2.18", note="please use `try_current_widget` instead")]
+    #[deprecated(since = "1.2.18", note = "please use `try_current_widget` instead")]
     /// Gets the underlying widget of the current view
     pub fn current_widget(&mut self) -> Widget {
         unsafe {

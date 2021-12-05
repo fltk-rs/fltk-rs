@@ -2,11 +2,7 @@ use crate::enums::ColorDepth;
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::image::*;
-use std::{
-    ffi::CString,
-    mem,
-    sync::atomic::{AtomicUsize, Ordering},
-};
+use std::{ffi::CString, mem, sync::atomic::AtomicUsize};
 
 /// Wrapper around `Fl_Image`, used to wrap other image types
 #[derive(Debug)]
