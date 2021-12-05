@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements ValuatorExt
 macro_rules! impl_valuator_ext {

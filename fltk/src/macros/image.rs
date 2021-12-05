@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements ImageExt
 macro_rules! impl_image_ext {

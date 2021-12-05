@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements WindowExt
 macro_rules! impl_window_ext {

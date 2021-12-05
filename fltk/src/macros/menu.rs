@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements MenuExt
 macro_rules! impl_menu_ext {

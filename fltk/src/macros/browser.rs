@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements BrowserExt
 macro_rules! impl_browser_ext {

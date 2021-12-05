@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements InputExt
 macro_rules! impl_input_ext {

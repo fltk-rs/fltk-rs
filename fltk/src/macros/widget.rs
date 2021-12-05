@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetExt
 macro_rules! impl_widget_ext {
@@ -863,6 +864,7 @@ macro_rules! impl_widget_ext {
     };
 }
 
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetBase
 macro_rules! impl_widget_base {
@@ -1060,6 +1062,7 @@ macro_rules! impl_widget_base {
     };
 }
 
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetType
 macro_rules! impl_widget_type {
@@ -1080,6 +1083,7 @@ pub use impl_widget_base;
 pub use impl_widget_ext;
 pub use impl_widget_type;
 
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetExt via a member
 macro_rules! impl_widget_ext_via {
@@ -1506,6 +1510,7 @@ macro_rules! impl_widget_ext_via {
     };
 }
 
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetBase via a member
 macro_rules! impl_widget_base_via {

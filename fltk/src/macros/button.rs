@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements ButtonExt
 macro_rules! impl_button_ext {

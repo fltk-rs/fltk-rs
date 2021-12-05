@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements DisplayExt
 macro_rules! impl_display_ext {

@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements GroupExt
 macro_rules! impl_group_ext {
@@ -210,6 +211,7 @@ macro_rules! impl_group_ext {
 
 pub use impl_group_ext;
 
+#[doc(hidden)]
 #[macro_export]
 /// Implements GroupExt via a member
 macro_rules! impl_group_ext_via {

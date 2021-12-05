@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements TableExt
 macro_rules! impl_table_ext {
