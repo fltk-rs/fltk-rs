@@ -1336,7 +1336,7 @@ impl TreeItem {
         unsafe { Fl_Tree_Item_label_w(self.inner) }
     }
 
-    /// Sets the label's width
+    /// Gets the label's height
     pub fn label_h(&self) -> i32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_label_h(self.inner) }
