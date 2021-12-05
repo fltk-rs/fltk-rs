@@ -473,21 +473,25 @@ impl Color {
 
     /// Create color from RGBA using alpha compositing
     pub fn from_rgba_tuple(tup: (u8, u8, u8, u8)) -> Color {
-        let bg_col = if let Some(grp) = crate::group::Group::try_current() {
-            use crate::prelude::WidgetExt;
-            grp.color()
+        if tup.3 != 255 {
+            let bg_col = if let Some(grp) = crate::group::Group::try_current() {
+                use crate::prelude::WidgetExt;
+                grp.color()
+            } else {
+                Color::BackGround
+            };
+            let bg_col = bg_col.to_rgb();
+            let alpha = tup.3 as f32 / 255.0;
+            let r = alpha * tup.0 as f32 + (1.0 - alpha) * bg_col.0 as f32;
+            let r = r as u8;
+            let g = alpha * tup.1 as f32 + (1.0 - alpha) * bg_col.1 as f32;
+            let g = g as u8;
+            let b = alpha * tup.2 as f32 + (1.0 - alpha) * bg_col.2 as f32;
+            let b = b as u8;
+            Color::from_rgb(r, g, b)
         } else {
-            Color::BackGround
-        };
-        let bg_col = bg_col.to_rgb();
-        let alpha = tup.3 as f32 / 255.0;
-        let r = alpha * tup.0 as f32 + (1.0 - alpha) * bg_col.0 as f32;
-        let r = r as u8;
-        let g = alpha * tup.1 as f32 + (1.0 - alpha) * bg_col.1 as f32;
-        let g = g as u8;
-        let b = alpha * tup.2 as f32 + (1.0 - alpha) * bg_col.2 as f32;
-        let b = b as u8;
-        Color::from_rgb(r, g, b)
+            Color::from_rgb(tup.0, tup.1, tup.2)
+        }
     }
 
     /// Returns a color from hex or decimal
@@ -502,8 +506,8 @@ impl Color {
         Color::from_rgb(r, g, b)
     }
 
-    /// Return a Color from an html color format (`#xxxxxx`)
-    pub fn from_html_color(col: &str) -> Result<Color, FltkError> {
+    /// Return a Color from a hex color format (`#xxxxxx`)
+    pub fn from_hex_str(col: &str) -> Result<Color, FltkError> {
         if !col.starts_with('#') || col.len() != 7 {
             Err(FltkError::Internal(FltkErrorKind::InvalidColor))
         } else {
@@ -511,8 +515,8 @@ impl Color {
         }
     }
 
-    /// Returns the color in html format
-    pub fn to_html_color(&self) -> String {
+    /// Returns the color in hex string format
+    pub fn to_hex_str(&self) -> String {
         let (r, g, b) = self.to_rgb();
         format!("#{:x}{:x}{:x}", r, g, b)
     }

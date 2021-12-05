@@ -4,7 +4,8 @@
 ## [1.2.20] - Unreleased
 - Update doc comment on draw::set_line_style().
 - Add Window xclass and default_xclass setter and getter. (Changes the XA_WM_CLASS property of the window)
-- Add `Color::from_html_color(&str)` and `to_html_color()`.
+- Add `Color::from_hex_str(&str)` and `to_hex_str()`.
+- Optimize Color::from_rgba_tuple().
 
 ## [1.2.19] - 2021-12-03
 - Fix docs for dialog::message_title_default(). Thanks @hannesbraun.
