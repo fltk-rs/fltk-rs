@@ -193,11 +193,11 @@ impl SingleWindow {
         #[cfg(target_os = "macos")]
         {
             extern "C" {
-                pub fn my_getScalingFactor(handle: *mut raw::c_void) -> f64;
+                pub fn cfltk_getScalingFactor(handle: *mut raw::c_void) -> f64;
             }
             let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
             if mac_version >= 100700 {
-                factor = unsafe { my_getScalingFactor(self.raw_handle()) };
+                factor = unsafe { cfltk_getScalingFactor(self.raw_handle()) };
             }
         }
         let s = crate::app::screen_scale(self.screen_num());
@@ -399,11 +399,11 @@ impl DoubleWindow {
         #[cfg(target_os = "macos")]
         {
             extern "C" {
-                pub fn my_getScalingFactor(handle: *mut raw::c_void) -> f64;
+                pub fn cfltk_getScalingFactor(handle: *mut raw::c_void) -> f64;
             }
             let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
             if mac_version >= 100700 {
-                factor = unsafe { my_getScalingFactor(self.raw_handle()) };
+                factor = unsafe { cfltk_getScalingFactor(self.raw_handle()) };
             }
         }
         let s = crate::app::screen_scale(self.screen_num());
@@ -433,9 +433,9 @@ impl DoubleWindow {
             #[cfg(target_os = "macos")]
             {
                 extern "C" {
-                    fn my_winShow(xid: *mut raw::c_void);
+                    fn cfltk_winShow(xid: *mut raw::c_void);
                 }
-                my_winShow(self.raw_handle());
+                cfltk_winShow(self.raw_handle());
             }
             #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
@@ -443,7 +443,7 @@ impl DoubleWindow {
                 extern "C" {
                     fn XMapWindow(display: *mut Display, win: u64);
                 }
-                XMapWindow(crate::app::display() as _, self.raw_handle());
+                XMapWindow(crate::app::display() as _, self.raw_handle() as _);
                 crate::app::flush();
             }
         }
@@ -462,9 +462,9 @@ impl DoubleWindow {
             #[cfg(target_os = "macos")]
             {
                 extern "C" {
-                    fn my_winHide(xid: *mut raw::c_void);
+                    fn cfltk_winHide(xid: *mut raw::c_void);
                 }
-                my_winHide(self.raw_handle());
+                cfltk_winHide(self.raw_handle());
             }
             #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
@@ -472,7 +472,7 @@ impl DoubleWindow {
                 extern "C" {
                     fn XUnmapWindow(display: *mut Display, win: u64);
                 }
-                XUnmapWindow(crate::app::display() as _, self.raw_handle());
+                XUnmapWindow(crate::app::display() as _, self.raw_handle() as _);
                 crate::app::flush();
             }
         }

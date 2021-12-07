@@ -568,6 +568,19 @@ pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
     (x, y)
 }
 
+/// Measure the coordinates and size of the text where a bounding box using the returned data would fit the text
+pub fn text_extents(txt: &str) -> (i32, i32, i32, i32) {
+    let txt = CString::safe_new(txt);
+    let mut x = 0;
+    let mut y = 0;
+    let mut w = 0;
+    let mut h = 0;
+    unsafe {
+        Fl_text_extents(txt.as_ptr(), &mut x, &mut y, &mut w, &mut h);
+    }
+    (x, y, w, h)
+}
+
 /// Returns the typographical width of a single character
 pub fn char_width(c: char) -> f64 {
     unsafe { Fl_width3(c as u32) }

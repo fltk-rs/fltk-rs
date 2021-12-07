@@ -19,9 +19,9 @@ macro_rules! impl_window_ext {
                 {
                     let raw = self.raw_handle();
                     extern "C" {
-                        pub fn my_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
+                        pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
                     }
-                    let cv = unsafe { my_getContentView(raw) };
+                    let cv = unsafe { cfltk_getContentView(raw) };
                     return RawWindowHandle::MacOS(macos::MacOSHandle {
                         ns_window: raw,
                         ns_view: cv as _,
@@ -63,9 +63,9 @@ macro_rules! impl_window_ext {
                 // {
                 //     let raw = self.raw_handle();
                 //     extern "C" {
-                //         pub fn my_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
+                //         pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
                 //     }
-                //     let cv = unsafe { my_getContentView(raw) };
+                //     let cv = unsafe { cfltk_getContentView(raw) };
                 //     let mut handle = AppKitHandle::empty();
                 //     handle.ns_window = raw;
                 //     handle.ns_view = cv as _;
