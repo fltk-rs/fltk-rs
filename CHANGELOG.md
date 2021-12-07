@@ -2,6 +2,7 @@
 
 
 ## [1.2.20] - Unreleased
+- Cleanup macros and surrounding api. Thanks @AshfordN.
 - Update doc comment on draw::set_line_style().
 - Add Window xclass and default_xclass setter and getter. (Changes the XA_WM_CLASS property of the window)
 - Add `Color::from_hex_str(&str)` and `to_hex_str()`.
