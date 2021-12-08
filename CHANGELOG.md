@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.21] - Unreleased
+- Fix GroupExt::remove_by_index() virtual call.
+
 ## [1.2.20] - 2021-12-09
 - Cleanup macros and surrounding api. Thanks @AshfordN.
 - Update doc comment on draw::set_line_style().
