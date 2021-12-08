@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements BrowserExt
 macro_rules! impl_browser_ext {
@@ -147,7 +148,7 @@ macro_rules! impl_browser_ext {
                             None
                         } else {
                             let img =
-                                Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
                     }
@@ -220,7 +221,7 @@ macro_rules! impl_browser_ext {
                     unsafe {
                         let mut v = arr.to_vec();
                         v.push(0);
-                        let v = mem::ManuallyDrop::new(v);
+                        let v = std::mem::ManuallyDrop::new(v);
                         [<$flname _set_column_widths>](self.inner, v.as_ptr());
                     }
                 }
@@ -255,12 +256,12 @@ macro_rules! impl_browser_ext {
                     unsafe { [<$flname _set_hposition>](self.inner, pos as i32) }
                 }
 
-                fn has_scrollbar(&self) -> BrowserScrollbar {
+                fn has_scrollbar(&self) -> $crate::browser::BrowserScrollbar {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _has_scrollbar>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _has_scrollbar>](self.inner)) }
                 }
 
-                fn set_has_scrollbar(&mut self, mode: BrowserScrollbar) {
+                fn set_has_scrollbar(&mut self, mode: $crate::browser::BrowserScrollbar) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_has_scrollbar>](self.inner, mode as raw::c_uchar)
@@ -282,23 +283,23 @@ macro_rules! impl_browser_ext {
                     unsafe { [<$flname _sort>](self.inner) }
                 }
 
-                fn scrollbar(&self) -> crate::valuator::Scrollbar {
+                fn scrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
                     unsafe {
                         let ptr = [<$flname _scrollbar>](self.inner);
                         assert!(!ptr.is_null());
-                        crate::valuator::Scrollbar::from_widget_ptr(
+                        $crate::valuator::Scrollbar::from_widget_ptr(
                             ptr as *mut fltk_sys::widget::Fl_Widget,
                         )
                     }
                 }
 
-                fn hscrollbar(&self) -> crate::valuator::Scrollbar {
+                fn hscrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
                     unsafe {
                         let ptr = [<$flname _hscrollbar>](self.inner);
                         assert!(!ptr.is_null());
-                        crate::valuator::Scrollbar::from_widget_ptr(
+                        $crate::valuator::Scrollbar::from_widget_ptr(
                             ptr as *mut fltk_sys::widget::Fl_Widget,
                         )
                     }

@@ -74,6 +74,7 @@ fn main() {
                 draw_point(x, y);
                 offs.end();
                 f.redraw();
+                set_line_style(LineStyle::Solid, 0);
                 true
             }
             Event::Drag => {
@@ -86,6 +87,7 @@ fn main() {
                 y = coords.1;
                 offs.end();
                 f.redraw();
+                set_line_style(LineStyle::Solid, 0);
                 true
             }
             _ => false,

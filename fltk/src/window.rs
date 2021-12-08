@@ -193,11 +193,11 @@ impl SingleWindow {
         #[cfg(target_os = "macos")]
         {
             extern "C" {
-                pub fn my_getScalingFactor(handle: *mut raw::c_void) -> f64;
+                pub fn cfltk_getScalingFactor(handle: *mut raw::c_void) -> f64;
             }
             let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
             if mac_version >= 100700 {
-                factor = unsafe { my_getScalingFactor(self.raw_handle()) };
+                factor = unsafe { cfltk_getScalingFactor(self.raw_handle()) };
             }
         }
         let s = crate::app::screen_scale(self.screen_num());
@@ -212,6 +212,46 @@ impl SingleWindow {
     /// Gets the window's height in pixels
     pub fn pixel_h(&self) -> i32 {
         (self.pixels_per_unit() * self.h() as f32) as i32
+    }
+
+    /// Get the default XA_WM_CLASS property for all windows of your application
+    pub fn default_xclass() -> Option<String> {
+        unsafe {
+            let ptr = Fl_Window_default_xclass();
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set the default XA_WM_CLASS property for all windows of your application.
+    /// This should be called before showing with window
+    pub fn set_default_xclass(s: &str) {
+        let s = CString::safe_new(s);
+        unsafe { Fl_Window_set_default_xclass(s.as_ptr()) }
+    }
+
+    /// Get the window's XA_WM_CLASS property
+    pub fn xclass(&self) -> Option<String> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Window_xclass(self.inner as _);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set the window's XA_WM_CLASS property.
+    /// This should be called before showing the window
+    pub fn set_xclass(&mut self, s: &str) {
+        assert!(!self.was_deleted());
+        let s = CString::safe_new(s);
+        unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
     }
 }
 
@@ -359,11 +399,11 @@ impl DoubleWindow {
         #[cfg(target_os = "macos")]
         {
             extern "C" {
-                pub fn my_getScalingFactor(handle: *mut raw::c_void) -> f64;
+                pub fn cfltk_getScalingFactor(handle: *mut raw::c_void) -> f64;
             }
             let mac_version = unsafe { fltk_sys::fl::Fl_mac_os_version() };
             if mac_version >= 100700 {
-                factor = unsafe { my_getScalingFactor(self.raw_handle()) };
+                factor = unsafe { cfltk_getScalingFactor(self.raw_handle()) };
             }
         }
         let s = crate::app::screen_scale(self.screen_num());
@@ -393,9 +433,9 @@ impl DoubleWindow {
             #[cfg(target_os = "macos")]
             {
                 extern "C" {
-                    fn my_winShow(xid: *mut raw::c_void);
+                    fn cfltk_winShow(xid: *mut raw::c_void);
                 }
-                my_winShow(self.raw_handle());
+                cfltk_winShow(self.raw_handle());
             }
             #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
@@ -403,7 +443,7 @@ impl DoubleWindow {
                 extern "C" {
                     fn XMapWindow(display: *mut Display, win: u64);
                 }
-                XMapWindow(crate::app::display() as _, self.raw_handle());
+                XMapWindow(crate::app::display() as _, self.raw_handle() as _);
                 crate::app::flush();
             }
         }
@@ -422,9 +462,9 @@ impl DoubleWindow {
             #[cfg(target_os = "macos")]
             {
                 extern "C" {
-                    fn my_winHide(xid: *mut raw::c_void);
+                    fn cfltk_winHide(xid: *mut raw::c_void);
                 }
-                my_winHide(self.raw_handle());
+                cfltk_winHide(self.raw_handle());
             }
             #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
             {
@@ -432,10 +472,50 @@ impl DoubleWindow {
                 extern "C" {
                     fn XUnmapWindow(display: *mut Display, win: u64);
                 }
-                XUnmapWindow(crate::app::display() as _, self.raw_handle());
+                XUnmapWindow(crate::app::display() as _, self.raw_handle() as _);
                 crate::app::flush();
             }
         }
+    }
+
+    /// Get the default XA_WM_CLASS property for all windows of your application
+    pub fn default_xclass() -> Option<String> {
+        unsafe {
+            let ptr = Fl_Window_default_xclass();
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set the default XA_WM_CLASS property for all windows of your application.
+    /// This should be called before showing with window
+    pub fn set_default_xclass(s: &str) {
+        let s = CString::safe_new(s);
+        unsafe { Fl_Window_set_default_xclass(s.as_ptr()) }
+    }
+
+    /// Get the window's XA_WM_CLASS property
+    pub fn xclass(&self) -> Option<String> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ptr = Fl_Window_xclass(self.inner as _);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+            }
+        }
+    }
+
+    /// Set the window's XA_WM_CLASS property.
+    /// This should be called before showing the window
+    pub fn set_xclass(&mut self, s: &str) {
+        assert!(!self.was_deleted());
+        let s = CString::safe_new(s);
+        unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
     }
 }
 

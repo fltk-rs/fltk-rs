@@ -20,6 +20,8 @@ pub enum FltkError {
     Internal(FltkErrorKind),
     /// Error using an errorneous env variable
     EnvVarError(std::env::VarError),
+    /// Parsing error
+    ParseIntError(std::num::ParseIntError),
     /// Unknown error
     Unknown(String),
 }
@@ -47,6 +49,8 @@ pub enum FltkErrorKind {
     TableError,
     /// Error due to printing
     PrintError,
+    /// Invalid color
+    InvalidColor,
 }
 
 impl std::error::Error for FltkError {
@@ -67,6 +71,7 @@ impl fmt::Display for FltkError {
             FltkError::Internal(ref err) => write!(f, "An internal error occured {:?}", err),
             FltkError::EnvVarError(ref err) => write!(f, "An env var error occured {:?}", err),
             FltkError::Utf8Error(ref err) => write!(f, "A UTF8 conversion error occured {:?}", err),
+            FltkError::ParseIntError(ref err) => write!(f, "An int parsing error occured {:?}", err),
             FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {:?}", err),
         }
     }
@@ -96,6 +101,12 @@ impl From<std::string::FromUtf8Error> for FltkError {
     }
 }
 
+impl From<std::num::ParseIntError> for FltkError {
+    fn from(err: std::num::ParseIntError) -> FltkError {
+        FltkError::ParseIntError(err)
+    }
+}
+
 /// A trait defined for all enums passable to the `WidgetExt::set_type()` method
 pub trait WidgetType {
     /// Get the integral representation of the widget type
@@ -107,6 +118,10 @@ pub trait WidgetType {
 /// Defines the methods implemented by all widgets
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait WidgetExt {
     /// Initialize to a position x, y
     fn with_pos(self, x: i32, y: i32) -> Self
@@ -412,6 +427,10 @@ pub unsafe trait WidgetExt {
 /// Defines the extended methods implemented by all widgets
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait WidgetBase: WidgetExt {
     /// Creates a new widget, takes an x, y coordinates, as well as a width and height, plus a title
     /// # Arguments
@@ -471,6 +490,10 @@ pub unsafe trait WidgetBase: WidgetExt {
 /// Defines the methods implemented by all button widgets
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait ButtonExt: WidgetExt {
     /// Gets the shortcut associated with a button
     fn shortcut(&self) -> Shortcut;
@@ -528,6 +551,10 @@ pub unsafe trait ButtonExt: WidgetExt {
 /// ```
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait GroupExt: WidgetExt {
     /// Begins a group, used for widgets implementing the group trait
     fn begin(&self);
@@ -605,6 +632,10 @@ pub unsafe trait GroupExt: WidgetExt {
 /// Defines the methods implemented by all window widgets
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait WindowExt: GroupExt {
     /// Positions the window to the center of the screen
     fn center_screen(self) -> Self
@@ -693,6 +724,10 @@ pub unsafe trait WindowExt: GroupExt {
 /// Defines the methods implemented by all input and output widgets
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait InputExt: WidgetExt {
     /// Returns the value inside the input/output widget
     fn value(&self) -> String;
@@ -763,6 +798,10 @@ pub unsafe trait InputExt: WidgetExt {
 /// Defines the methods implemented by all menu widgets
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait MenuExt: WidgetExt {
     /// Get a menu item by name
     fn find_item(&self, name: &str) -> Option<crate::menu::MenuItem>;
@@ -894,6 +933,10 @@ pub unsafe trait MenuExt: WidgetExt {
 /// Defines the methods implemented by all valuator widgets
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait ValuatorExt: WidgetExt {
     /// Set bounds of a valuator
     fn set_bounds(&mut self, a: f64, b: f64);
@@ -933,6 +976,10 @@ pub unsafe trait ValuatorExt: WidgetExt {
 /// Defines the methods implemented by `TextDisplay` and `TextEditor`
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait DisplayExt: WidgetExt {
     /// Get the associated `TextBuffer`
     fn buffer(&self) -> Option<crate::text::TextBuffer>;
@@ -1068,6 +1115,10 @@ pub unsafe trait DisplayExt: WidgetExt {
 /// Defines the methods implemented by all browser types
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait BrowserExt: WidgetExt {
     /// Removes the specified line.
     /// Lines start at 1
@@ -1177,6 +1228,10 @@ pub unsafe trait BrowserExt: WidgetExt {
 /// Defines the methods implemented by table types
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait TableExt: GroupExt {
     /// Clears the table
     fn clear(&mut self);
@@ -1320,6 +1375,10 @@ pub unsafe trait TableExt: GroupExt {
 /// Defines the methods implemented by all image types
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
+/// # Warning
+/// fltk-rs traits are non-exhaustive,
+/// to avoid future breakage if you try to implement them manually,
+/// use the Deref and DerefMut pattern
 pub unsafe trait ImageExt {
     /// Performs a deep copy of the image
     fn copy(&self) -> Self

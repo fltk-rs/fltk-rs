@@ -498,6 +498,18 @@ extern "C" {
 extern "C" {
     pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut ::std::os::raw::c_void);
 }
+extern "C" {
+    pub fn Fl_Window_default_xclass() -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Window_xclass(self_: *const Fl_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Window_set_default_xclass(s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Window_set_xclass(self_: *mut Fl_Window, s: *const ::std::os::raw::c_char);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Single_Window {

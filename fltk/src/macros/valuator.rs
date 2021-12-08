@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements ValuatorExt
 macro_rules! impl_valuator_ext {
@@ -88,7 +89,7 @@ macro_rules! impl_valuator_ext {
                         let arg2 = CString::safe_new(arg2);
                         let x = [<$flname _format>](
                             self.inner,
-                            arg2.as_ptr() as *mut raw::c_char,
+                            arg2.as_ptr() as *mut std::os::raw::c_char,
                         );
                         if x < 0 {
                             return Err(FltkError::Internal(FltkErrorKind::FailedOperation));

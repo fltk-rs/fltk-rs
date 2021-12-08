@@ -1,23 +1,24 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements DisplayExt
 macro_rules! impl_display_ext {
     ($name: ident, $flname: ident) => {
         paste::paste! {
             unsafe impl DisplayExt for $name {
-                fn buffer(&self) -> Option<TextBuffer> {
+                fn buffer(&self) -> Option<$crate::text::TextBuffer> {
                     unsafe {
                         assert!(!self.was_deleted());
                         let buffer = [<$flname _get_buffer>](self.inner);
                         if buffer.is_null() {
                             None
                         } else {
-                            let buf = TextBuffer::from_ptr(buffer);
+                            let buf = $crate::text::TextBuffer::from_ptr(buffer);
                             Some(buf)
                         }
                     }
                 }
 
-                fn set_buffer<B: Into<Option<crate::text::TextBuffer>>>(&mut self, buffer: B) {
+                fn set_buffer<B: Into<Option<$crate::text::TextBuffer>>>(&mut self, buffer: B) {
                     unsafe {
                         assert!(!self.was_deleted());
                         if let Some(buffer) = buffer.into() {
@@ -32,38 +33,38 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn style_buffer(&self) -> Option<TextBuffer> {
+                fn style_buffer(&self) -> Option<$crate::text::TextBuffer> {
                     unsafe {
                         assert!(!self.was_deleted());
                         let buffer = [<$flname _get_style_buffer>](self.inner);
                         if buffer.is_null() {
                             None
                         } else {
-                            let buf = TextBuffer::from_ptr(buffer);
+                            let buf = $crate::text::TextBuffer::from_ptr(buffer);
                             Some(buf)
                         }
                     }
                 }
 
-                fn text_font(&self) -> Font {
+                fn text_font(&self) -> $crate::enums::Font {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    unsafe { mem::transmute([<$flname _text_font>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _text_font>](self.inner)) }
                 }
 
-                fn set_text_font(&mut self, font: Font) {
+                fn set_text_font(&mut self, font: $crate::enums::Font) {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
                     unsafe { [<$flname _set_text_font>](self.inner, font.bits() as i32) }
                 }
 
-                fn text_color(&self) -> Color {
+                fn text_color(&self) -> $crate::enums::Color {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
-                    unsafe { mem::transmute([<$flname _text_color>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _text_color>](self.inner)) }
                 }
 
-                fn set_text_color(&mut self, color: Color) {
+                fn set_text_color(&mut self, color: $crate::enums::Color) {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
                     unsafe { [<$flname _set_text_color>](self.inner, color.bits() as u32) }
@@ -203,18 +204,18 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_highlight_data<B: Into<Option<TextBuffer>>>(
+                fn set_highlight_data<B: Into<Option<$crate::text::TextBuffer>>>(
                     &mut self,
                     style_buffer: B,
-                    entries: Vec<StyleTableEntry>,
+                    entries: Vec<$crate::text::StyleTableEntry>,
                 ) {
                     assert!(!self.was_deleted());
                     assert!(entries.len() < 61);
                     let entries = if entries.len() == 0 {
-                        vec![StyleTableEntry {
-                            color: Color::Black,
-                            font: Font::Helvetica,
-                            size: crate::app::font_size(),
+                        vec![$crate::text::StyleTableEntry {
+                            color: $crate::enums::Color::Black,
+                            font: $crate::enums::Font::Helvetica,
+                            size: $crate::app::font_size(),
                         }]
                     } else {
                         entries
@@ -256,11 +257,11 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn unset_highlight_data(&mut self, style_buffer: TextBuffer) {
+                fn unset_highlight_data(&mut self, style_buffer: $crate::text::TextBuffer) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let mut colors = [Color::Black.bits()];
-                        let mut fonts = [Font::Helvetica.bits()];
+                        let mut colors = [$crate::enums::Color::Black.bits()];
+                        let mut fonts = [$crate::enums::Font::Helvetica.bits()];
                         let mut sizes = [14];
                         [<$flname _set_highlight_data>](
                             self.inner,
@@ -273,14 +274,14 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_cursor_style(&mut self, style: crate::text::Cursor) {
+                fn set_cursor_style(&mut self, style: $crate::text::Cursor) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_cursor_style>](self.inner, style as i32)
                     }
                 }
 
-                fn set_cursor_color(&mut self, color: Color) {
+                fn set_cursor_color(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_cursor_color>](self.inner, color.bits() as u32)
@@ -294,24 +295,24 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_scrollbar_align(&mut self, align: Align) {
+                fn set_scrollbar_align(&mut self, align: $crate::enums::Align) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_scrollbar_align>](self.inner, align.bits() as i32)
                     }
                 }
 
-                fn cursor_style(&self) -> crate::text::Cursor {
+                fn cursor_style(&self) -> $crate::text::Cursor {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _cursor_style>](self.inner))
+                        std::mem::transmute([<$flname _cursor_style>](self.inner))
                     }
                 }
 
-                fn cursor_color(&self) -> Color {
+                fn cursor_color(&self) -> $crate::enums::Color {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _cursor_color>](self.inner))
+                        std::mem::transmute([<$flname _cursor_color>](self.inner))
                     }
                 }
 
@@ -322,10 +323,10 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn scrollbar_align(&self) -> Align {
+                fn scrollbar_align(&self) -> $crate::enums::Align {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _scrollbar_align>](self.inner))
+                        std::mem::transmute([<$flname _scrollbar_align>](self.inner))
                     }
                 }
 
@@ -436,17 +437,17 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_linenumber_font(&mut self, font: Font) {
+                fn set_linenumber_font(&mut self, font: $crate::enums::Font) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_font>](self.inner, font.bits() as i32)
                     }
                 }
 
-                fn linenumber_font(&self) -> Font {
+                fn linenumber_font(&self) -> $crate::enums::Font {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _linenumber_font>](self.inner))
+                        std::mem::transmute([<$flname _linenumber_font>](self.inner))
                     }
                 }
 
@@ -464,7 +465,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_linenumber_fgcolor(&mut self, color: Color) {
+                fn set_linenumber_fgcolor(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_fgcolor>](
@@ -474,14 +475,14 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn linenumber_fgcolor(&self) -> Color {
+                fn linenumber_fgcolor(&self) -> $crate::enums::Color {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _linenumber_fgcolor>](self.inner))
+                        std::mem::transmute([<$flname _linenumber_fgcolor>](self.inner))
                     }
                 }
 
-                fn set_linenumber_bgcolor(&mut self, color: Color) {
+                fn set_linenumber_bgcolor(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_bgcolor>](
@@ -491,24 +492,24 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn linenumber_bgcolor(&self) -> Color {
+                fn linenumber_bgcolor(&self) -> $crate::enums::Color {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _linenumber_bgcolor>](self.inner))
+                        std::mem::transmute([<$flname _linenumber_bgcolor>](self.inner))
                     }
                 }
 
-                fn set_linenumber_align(&mut self, align: Align) {
+                fn set_linenumber_align(&mut self, align: $crate::enums::Align) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_align>](self.inner, align.bits() as i32)
                     }
                 }
 
-                fn linenumber_align(&self) -> Align {
+                fn linenumber_align(&self) -> $crate::enums::Align {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _linenumber_align>](self.inner))
+                        std::mem::transmute([<$flname _linenumber_align>](self.inner))
                     }
                 }
 
@@ -520,7 +521,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn wrap_mode(&mut self, wrap: crate::text::WrapMode, wrap_margin: i32) {
+                fn wrap_mode(&mut self, wrap: $crate::text::WrapMode, wrap_margin: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _wrap_mode>](self.inner, wrap as i32, wrap_margin) }
                 }

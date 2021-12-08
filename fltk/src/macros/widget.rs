@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetExt
 macro_rules! impl_widget_ext {
@@ -51,7 +52,7 @@ macro_rules! impl_widget_ext {
                     self
                 }
 
-                fn with_align(mut self, align: Align) -> Self {
+                fn with_align(mut self, align: $crate::enums::Align) -> Self {
                     self.set_align(align);
                     self
                 }
@@ -285,7 +286,7 @@ macro_rules! impl_widget_ext {
                     assert!(!self.was_deleted());
                     unsafe {
                         fltk_sys::fl::Fl_lock();
-                        let ptr = [<$flname _label>](self.inner) as *mut raw::c_char;
+                        let ptr = [<$flname _label>](self.inner) as *mut std::os::raw::c_char;
                         let s = if ptr.is_null() {
                             String::from("")
                         } else {
@@ -344,7 +345,7 @@ macro_rules! impl_widget_ext {
                             None
                         } else {
                             Some(
-                                CStr::from_ptr(tooltip_ptr as *mut raw::c_char)
+                                CStr::from_ptr(tooltip_ptr as *mut std::os::raw::c_char)
                                     .to_string_lossy()
                                     .to_string(),
                             )
@@ -360,39 +361,39 @@ macro_rules! impl_widget_ext {
                     unsafe {
                         [<$flname _set_tooltip>](
                             self.inner,
-                            txt.as_ptr() as *mut raw::c_char,
+                            txt.as_ptr() as *mut std::os::raw::c_char,
                         )
                     }
                 }
 
-                fn color(&self) -> Color {
+                fn color(&self) -> $crate::enums::Color {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _color>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _color>](self.inner)) }
                 }
 
-                fn set_color(&mut self, color: Color) {
+                fn set_color(&mut self, color: $crate::enums::Color) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_color>](self.inner, color.bits() as u32) }
                 }
 
-                fn label_color(&self) -> Color {
+                fn label_color(&self) -> $crate::enums::Color {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _label_color>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _label_color>](self.inner)) }
                 }
 
-                fn set_label_color(&mut self, color: Color) {
+                fn set_label_color(&mut self, color: $crate::enums::Color) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_label_color>](self.inner, color.bits() as u32)
                     }
                 }
 
-                fn label_font(&self) -> Font {
+                fn label_font(&self) -> $crate::enums::Font {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _label_font>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _label_font>](self.inner)) }
                 }
 
-                fn set_label_font(&mut self, font: Font) {
+                fn set_label_font(&mut self, font: $crate::enums::Font) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_label_font>](self.inner, font.bits() as i32) }
                 }
@@ -408,24 +409,24 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _set_label_size>](self.inner, sz) }
                 }
 
-                fn label_type(&self) -> LabelType {
+                fn label_type(&self) -> $crate::enums::LabelType {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _label_type>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _label_type>](self.inner)) }
                 }
 
-                fn set_label_type(&mut self, typ: LabelType) {
+                fn set_label_type(&mut self, typ: $crate::enums::LabelType) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_label_type>](self.inner, typ as i32);
                     }
                 }
 
-                fn frame(&self) -> FrameType {
+                fn frame(&self) -> $crate::enums::FrameType {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _box>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _box>](self.inner)) }
                 }
 
-                fn set_frame(&mut self, typ: FrameType) {
+                fn set_frame(&mut self, typ: $crate::enums::FrameType) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_box>](self.inner, typ as i32);
@@ -447,44 +448,44 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _clear_changed>](self.inner) }
                 }
 
-                fn align(&self) -> Align {
+                fn align(&self) -> $crate::enums::Align {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _align>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _align>](self.inner)) }
                 }
 
-                fn set_align(&mut self, align: Align) {
+                fn set_align(&mut self, align: $crate::enums::Align) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_align>](self.inner, align.bits() as i32) }
                 }
 
-                fn set_trigger(&mut self, trigger: CallbackTrigger) {
+                fn set_trigger(&mut self, trigger: $crate::enums::CallbackTrigger) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_when>](self.inner, trigger.bits() as i32) }
                 }
 
-                fn trigger(&self) -> CallbackTrigger {
+                fn trigger(&self) -> $crate::enums::CallbackTrigger {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _when>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _when>](self.inner)) }
                 }
 
-                fn parent(&self) -> Option<crate::group::Group> {
+                fn parent(&self) -> Option<$crate::group::Group> {
                     assert!(!self.was_deleted());
                     unsafe {
                         let x = [<$flname _parent>](self.inner);
                         if x.is_null() {
                             None
                         } else {
-                            Some(crate::group::Group::from_widget_ptr(x as *mut _))
+                            Some($crate::group::Group::from_widget_ptr(x as *mut _))
                         }
                     }
                 }
 
-                fn selection_color(&mut self) -> Color {
+                fn selection_color(&mut self) -> $crate::enums::Color {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _selection_color>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _selection_color>](self.inner)) }
                 }
 
-                fn set_selection_color(&mut self, color: Color) {
+                fn set_selection_color(&mut self, color: $crate::enums::Color) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_selection_color>](self.inner, color.bits() as u32);
@@ -505,7 +506,7 @@ macro_rules! impl_widget_ext {
                         if wind_ptr.is_null() {
                             None
                         } else {
-                            Some(Box::new(Window::from_widget_ptr(
+                            Some(Box::new($crate::window::Window::from_widget_ptr(
                                 wind_ptr as *mut fltk_sys::widget::Fl_Widget,
                             )))
                         }
@@ -519,7 +520,7 @@ macro_rules! impl_widget_ext {
                         if wind_ptr.is_null() {
                             None
                         } else {
-                            Some(Box::new(Window::from_widget_ptr(
+                            Some(Box::new($crate::window::Window::from_widget_ptr(
                                 wind_ptr as *mut fltk_sys::widget::Fl_Widget,
                             )))
                         }
@@ -605,12 +606,12 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _set_damage>](self.inner, flag) }
                 }
 
-                fn damage_type(&self) -> Damage {
+                fn damage_type(&self) -> $crate::enums::Damage {
                     assert!(!self.was_deleted());
-                    unsafe { mem::transmute([<$flname _damage>](self.inner)) }
+                    unsafe { std::mem::transmute([<$flname _damage>](self.inner)) }
                 }
 
-                fn set_damage_type(&mut self, mask: Damage) {
+                fn set_damage_type(&mut self, mask: $crate::enums::Damage) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_damage>](self.inner, mask.bits()) }
                 }
@@ -627,20 +628,20 @@ macro_rules! impl_widget_ext {
                         if ptr.is_null() {
                             return None;
                         }
-                        Some(Box::new(Window::from_widget_ptr(
+                        Some(Box::new($crate::window::Window::from_widget_ptr(
                             ptr as *mut fltk_sys::widget::Fl_Widget,
                         )))
                     }
                 }
 
-                fn as_group(&self) -> Option<crate::group::Group> {
+                fn as_group(&self) -> Option<$crate::group::Group> {
                     assert!(!self.was_deleted());
                     unsafe {
                         let ptr = [<$flname _as_group>](self.inner);
                         if ptr.is_null() {
                             return None;
                         }
-                        Some(crate::group::Group::from_widget_ptr(
+                        Some($crate::group::Group::from_widget_ptr(
                             ptr as *mut fltk_sys::widget::Fl_Widget,
                         ))
                     }
@@ -652,7 +653,7 @@ macro_rules! impl_widget_ext {
                     unsafe {
                         [<$flname _inside>](
                             self.inner,
-                            wid.as_widget_ptr() as *mut raw::c_void,
+                            wid.as_widget_ptr() as *mut std::os::raw::c_void,
                         ) != 0
                     }
                 }
@@ -683,7 +684,7 @@ macro_rules! impl_widget_ext {
                         unsafe {
                             [<$flname _set_image>](
                                 self.inner,
-                                std::ptr::null_mut() as *mut raw::c_void,
+                                std::ptr::null_mut() as *mut std::os::raw::c_void,
                             )
                         }
                     }
@@ -704,7 +705,7 @@ macro_rules! impl_widget_ext {
                         unsafe {
                             [<$flname _set_image>](
                                 self.inner,
-                                std::ptr::null_mut() as *mut raw::c_void,
+                                std::ptr::null_mut() as *mut std::os::raw::c_void,
                             )
                         }
                     }
@@ -718,7 +719,7 @@ macro_rules! impl_widget_ext {
                             None
                         } else {
                             let img =
-                                Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
                     }
@@ -738,7 +739,7 @@ macro_rules! impl_widget_ext {
                         unsafe {
                             [<$flname _set_deimage>](
                                 self.inner,
-                                std::ptr::null_mut() as *mut raw::c_void,
+                                std::ptr::null_mut() as *mut std::os::raw::c_void,
                             )
                         }
                     }
@@ -759,7 +760,7 @@ macro_rules! impl_widget_ext {
                         unsafe {
                             [<$flname _set_deimage>](
                                 self.inner,
-                                std::ptr::null_mut() as *mut raw::c_void,
+                                std::ptr::null_mut() as *mut std::os::raw::c_void,
                             )
                         }
                     }
@@ -773,7 +774,7 @@ macro_rules! impl_widget_ext {
                             None
                         } else {
                             let img =
-                                Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
                     }
@@ -782,7 +783,7 @@ macro_rules! impl_widget_ext {
                 fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
                             let a = data as *mut Box<dyn FnMut(&mut $name)>;
                             let f: &mut (dyn FnMut(&mut $name)) = &mut **a;
@@ -791,7 +792,7 @@ macro_rules! impl_widget_ext {
                         }
                         let _old_data = self.user_data();
                         let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
-                        let data: *mut raw::c_void = a as *mut raw::c_void;
+                        let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
                         [<$flname _set_callback>](self.inner, callback, data);
                     }
@@ -799,7 +800,7 @@ macro_rules! impl_widget_ext {
 
                 fn emit<T: 'static + Clone + Send + Sync>(
                     &mut self,
-                    sender: crate::app::Sender<T>,
+                    sender: $crate::app::Sender<T>,
                     msg: T,
                 ) {
                     assert!(!self.was_deleted());
@@ -854,7 +855,7 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn handle_event(&mut self, event: Event) {
+                fn handle_event(&mut self, event: $crate::enums::Event) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _handle_event>](self.inner, event.bits()) }
                 }
@@ -863,6 +864,7 @@ macro_rules! impl_widget_ext {
     };
 }
 
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetBase
 macro_rules! impl_widget_base {
@@ -894,7 +896,7 @@ macro_rules! impl_widget_base {
                             widget_ptr as *mut fltk_sys::fl::Fl_Widget,
                         );
                         assert!(!tracker.is_null());
-                        unsafe extern "C" fn shim(data: *mut raw::c_void) {
+                        unsafe extern "C" fn shim(data: *mut std::os::raw::c_void) {
                             if !data.is_null() {
                                 let x = data as *mut Box<dyn FnMut()>;
                                 let _x = Box::from_raw(x);
@@ -946,20 +948,20 @@ macro_rules! impl_widget_base {
                     Self::from_widget_ptr(w.as_widget_ptr() as *mut _)
                 }
 
-                fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, cb: F) {
+                fn handle<F: FnMut(&mut Self, $crate::enums::Event) -> bool + 'static>(&mut self, cb: F) {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
                     unsafe {
                         unsafe extern "C" fn shim(
                             wid: *mut Fl_Widget,
                             ev: std::os::raw::c_int,
-                            data: *mut raw::c_void,
+                            data: *mut std::os::raw::c_void,
                         ) -> i32 {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
-                            let ev: Event = mem::transmute(ev);
-                            let a: *mut Box<dyn FnMut(&mut $name, Event) -> bool> =
-                                data as *mut Box<dyn FnMut(&mut $name, Event) -> bool>;
-                            let f: &mut (dyn FnMut(&mut $name, Event) -> bool) = &mut **a;
+                            let ev: $crate::enums::Event = std::mem::transmute(ev);
+                            let a: *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool> =
+                                data as *mut Box<dyn FnMut(&mut $name, $crate::enums::Event) -> bool>;
+                            let f: &mut (dyn FnMut(&mut $name, $crate::enums::Event) -> bool) = &mut **a;
                             let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                                 match f(&mut wid, ev) {
                                     true => return 1,
@@ -973,9 +975,9 @@ macro_rules! impl_widget_base {
                             }
                         }
                         let _old_data = self.handle_data();
-                        let a: *mut Box<dyn FnMut(&mut Self, Event) -> bool> =
+                        let a: *mut Box<dyn FnMut(&mut Self, $crate::enums::Event) -> bool> =
                             Box::into_raw(Box::new(Box::new(cb)));
-                        let data: *mut raw::c_void = a as *mut raw::c_void;
+                        let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: custom_handler_callback = Some(shim);
                         [<$flname _handle>](self.inner, callback, data);
                     }
@@ -985,7 +987,7 @@ macro_rules! impl_widget_base {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
                     unsafe {
-                        unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
+                        unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
                             let a: *mut Box<dyn FnMut(&mut $name)> =
                                 data as *mut Box<dyn FnMut(&mut $name)>;
@@ -995,7 +997,7 @@ macro_rules! impl_widget_base {
                         }
                         let _old_data = self.draw_data();
                         let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
-                        let data: *mut raw::c_void = a as *mut raw::c_void;
+                        let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: custom_draw_callback = Some(shim);
                         [<$flname _draw>](self.inner, callback, data);
                     }
@@ -1012,12 +1014,12 @@ macro_rules! impl_widget_base {
                     Some(*data)
                 }
 
-                unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
+                unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut($crate::enums::Event) -> bool>> {
                     let ptr = [<$flname _handle_data>](self.inner);
                     if ptr.is_null() {
                         return None;
                     }
-                    let data = ptr as *mut Box<dyn FnMut(Event) -> bool>;
+                    let data = ptr as *mut Box<dyn FnMut($crate::enums::Event) -> bool>;
                     let data = Box::from_raw(data);
                     [<$flname _handle>](self.inner, None, std::ptr::null_mut());
                     Some(*data)
@@ -1036,7 +1038,7 @@ macro_rules! impl_widget_base {
                             y: i32,
                             w: i32,
                             h: i32,
-                            data: *mut raw::c_void,
+                            data: *mut std::os::raw::c_void,
                         ) {
                             let mut wid = $name::from_widget_ptr(wid as *mut _);
                             let a: *mut Box<dyn FnMut(&mut $name, i32, i32, i32, i32)> =
@@ -1048,9 +1050,9 @@ macro_rules! impl_widget_base {
                         }
                         let a: *mut Box<dyn FnMut(&mut Self, i32, i32, i32, i32)> =
                             Box::into_raw(Box::new(Box::new(cb)));
-                        let data: *mut raw::c_void = a as *mut raw::c_void;
+                        let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Option<
-                            unsafe extern "C" fn(*mut Fl_Widget, i32, i32, i32, i32, *mut raw::c_void),
+                            unsafe extern "C" fn(*mut Fl_Widget, i32, i32, i32, i32, *mut std::os::raw::c_void),
                         > = Some(shim);
                         [<$flname _resize_callback>](self.inner, callback, data);
                     }
@@ -1060,6 +1062,7 @@ macro_rules! impl_widget_base {
     };
 }
 
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetType
 macro_rules! impl_widget_type {
@@ -1070,7 +1073,7 @@ macro_rules! impl_widget_type {
             }
 
             fn from_i32(val: i32) -> $name {
-                unsafe { mem::transmute(val) }
+                unsafe { std::mem::transmute(val) }
             }
         }
     };
@@ -1080,7 +1083,7 @@ pub use impl_widget_base;
 pub use impl_widget_ext;
 pub use impl_widget_type;
 
-
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetExt via a member
 macro_rules! impl_widget_ext_via {
@@ -1101,7 +1104,7 @@ macro_rules! impl_widget_ext_via {
                 self
             }
 
-            fn with_align(mut self, align: Align) -> Self {
+            fn with_align(mut self, align: $crate::enums::Align) -> Self {
                 self.$member = self.$member.with_align(align);
                 self
             }
@@ -1217,7 +1220,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.measure_label()
             }
 
-            unsafe fn as_widget_ptr(&self) -> crate::app::WidgetPtr {
+            unsafe fn as_widget_ptr(&self) -> $crate::app::WidgetPtr {
                 self.$member.as_widget_ptr()
             }
 
@@ -1266,7 +1269,7 @@ macro_rules! impl_widget_ext_via {
 
             fn emit<T: 'static + Clone + Send + Sync>(
                 &mut self,
-                sender: crate::app::Sender<T>,
+                sender: $crate::app::Sender<T>,
                 msg: T,
             ) {
                 self.$member.emit(sender, msg)
@@ -1296,27 +1299,27 @@ macro_rules! impl_widget_ext_via {
                 self.$member.set_tooltip(txt)
             }
 
-            fn color(&self) -> Color {
+            fn color(&self) -> $crate::enums::Color {
                 self.$member.color()
             }
 
-            fn set_color(&mut self, color: Color) {
+            fn set_color(&mut self, color: $crate::enums::Color) {
                 self.$member.set_color(color)
             }
 
-            fn label_color(&self) -> Color {
+            fn label_color(&self) -> $crate::enums::Color {
                 self.$member.label_color()
             }
 
-            fn set_label_color(&mut self, color: Color) {
+            fn set_label_color(&mut self, color: $crate::enums::Color) {
                 self.$member.set_label_color(color)
             }
 
-            fn label_font(&self) -> Font {
+            fn label_font(&self) -> $crate::enums::Font {
                 self.$member.label_font()
             }
 
-            fn set_label_font(&mut self, font: Font) {
+            fn set_label_font(&mut self, font: $crate::enums::Font) {
                 self.$member.set_label_font(font)
             }
 
@@ -1328,19 +1331,19 @@ macro_rules! impl_widget_ext_via {
                 self.$member.set_label_size(sz)
             }
 
-            fn label_type(&self) -> LabelType {
+            fn label_type(&self) -> $crate::enums::LabelType {
                 self.$member.label_type()
             }
 
-            fn set_label_type(&mut self, typ: LabelType) {
+            fn set_label_type(&mut self, typ: $crate::enums::LabelType) {
                 self.$member.set_label_type(typ)
             }
 
-            fn frame(&self) -> FrameType {
+            fn frame(&self) -> $crate::enums::FrameType {
                 self.$member.frame()
             }
 
-            fn set_frame(&mut self, typ: FrameType) {
+            fn set_frame(&mut self, typ: $crate::enums::FrameType) {
                 self.$member.set_frame(typ)
             }
 
@@ -1356,23 +1359,23 @@ macro_rules! impl_widget_ext_via {
                 self.$member.clear_changed()
             }
 
-            fn align(&self) -> Align {
+            fn align(&self) -> $crate::enums::Align {
                 self.$member.align()
             }
 
-            fn set_align(&mut self, align: Align) {
+            fn set_align(&mut self, align: $crate::enums::Align) {
                 self.$member.set_align(align)
             }
 
-            fn parent(&self) -> Option<crate::group::Group> {
+            fn parent(&self) -> Option<$crate::group::Group> {
                 self.$member.parent()
             }
 
-            fn selection_color(&mut self) -> Color {
+            fn selection_color(&mut self) -> $crate::enums::Color {
                 self.$member.selection_color()
             }
 
-            fn set_selection_color(&mut self, color: Color) {
+            fn set_selection_color(&mut self, color: $crate::enums::Color) {
                 self.$member.set_selection_color(color)
             }
 
@@ -1428,11 +1431,11 @@ macro_rules! impl_widget_ext_via {
                 self.$member.set_damage(flag)
             }
 
-            fn damage_type(&self) -> Damage {
+            fn damage_type(&self) -> $crate::enums::Damage {
                 self.$member.damage_type()
             }
 
-            fn set_damage_type(&mut self, mask: Damage) {
+            fn set_damage_type(&mut self, mask: $crate::enums::Damage) {
                 self.$member.set_damage_type(mask)
             }
 
@@ -1440,11 +1443,11 @@ macro_rules! impl_widget_ext_via {
                 self.$member.clear_damage()
             }
 
-            fn set_trigger(&mut self, trigger: CallbackTrigger) {
+            fn set_trigger(&mut self, trigger: $crate::enums::CallbackTrigger) {
                 self.$member.set_trigger(trigger)
             }
 
-            fn trigger(&self) -> CallbackTrigger {
+            fn trigger(&self) -> $crate::enums::CallbackTrigger {
                 self.$member.trigger()
             }
 
@@ -1452,7 +1455,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.as_window()
             }
 
-            fn as_group(&self) -> Option<crate::group::Group> {
+            fn as_group(&self) -> Option<$crate::group::Group> {
                 self.$member.as_group()
             }
 
@@ -1500,17 +1503,18 @@ macro_rules! impl_widget_ext_via {
                 self.$member.widget_resize(x, y, w, h)
             }
 
-            fn handle_event(&mut self, event: Event) {
+            fn handle_event(&mut self, event: $crate::enums::Event) {
                 self.$member.handle_event(event)
             }
         }
     };
 }
 
+#[doc(hidden)]
 #[macro_export]
 /// Implements WidgetBase via a member
 macro_rules! impl_widget_base_via {
-    ($widget:ty, $base:ty, $member:tt) => {        
+    ($widget:ty, $base:ty, $member:tt) => {
         unsafe impl WidgetBase for $widget {
             fn new<T: Into<Option<&'static str>>>(
                 x: i32,
@@ -1527,14 +1531,16 @@ macro_rules! impl_widget_base_via {
             }
 
             fn default_fill() -> Self {
-                Self::new(0, 0, 0, 0, None).size_of_parent().center_of_parent()
+                Self::new(0, 0, 0, 0, None)
+                    .size_of_parent()
+                    .center_of_parent()
             }
 
             fn delete(wid: Self) {
                 <$base>::delete(wid.$member)
             }
 
-            unsafe fn from_widget_ptr(ptr: crate::app::WidgetPtr) -> Self {
+            unsafe fn from_widget_ptr(ptr: $crate::app::WidgetPtr) -> Self {
                 let $member = <$base>::from_widget_ptr(ptr);
                 Self {
                     $member,
@@ -1550,7 +1556,10 @@ macro_rules! impl_widget_base_via {
                 }
             }
 
-            fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&mut self, mut cb: F) {
+            fn handle<F: FnMut(&mut Self, $crate::enums::Event) -> bool + 'static>(
+                &mut self,
+                mut cb: F,
+            ) {
                 let mut widget = self.clone();
                 self.$member.handle(move |_, ev| cb(&mut widget, ev));
             }
@@ -1564,17 +1573,23 @@ macro_rules! impl_widget_base_via {
                 self.$member.draw_data()
             }
 
-            unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>> {
+            unsafe fn handle_data(
+                &mut self,
+            ) -> Option<Box<dyn FnMut($crate::enums::Event) -> bool>> {
                 self.$member.handle_data()
             }
 
-            fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, mut cb: F) {
+            fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(
+                &mut self,
+                mut cb: F,
+            ) {
                 let mut widget = self.clone();
-                self.$member.resize_callback(move |_, x, y, w, h| cb(&mut widget, x, y, w, h))
+                self.$member
+                    .resize_callback(move |_, x, y, w, h| cb(&mut widget, x, y, w, h))
             }
         }
     };
 }
 
-pub use impl_widget_ext_via;
 pub use impl_widget_base_via;
+pub use impl_widget_ext_via;

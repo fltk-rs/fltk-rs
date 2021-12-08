@@ -296,7 +296,6 @@ pub mod image;
 /// Input widgets
 pub mod input;
 
-#[doc(hidden)]
 /// mod macros;
 pub mod macros;
 

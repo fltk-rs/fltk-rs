@@ -1,14 +1,7 @@
-use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
-use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
-use crate::window::Window;
 use fltk_sys::frame::*;
-use std::{
-    ffi::{CStr, CString},
-    mem,
-    os::raw,
-};
+use std::ffi::{CStr, CString};
 
 /// Creates a new frame, an equivalent of `Fl_Box`
 #[derive(Debug)]

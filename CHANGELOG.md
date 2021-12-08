@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [1.2.20] - 2021-12-09
+- Cleanup macros and surrounding api. Thanks @AshfordN.
+- Update doc comment on draw::set_line_style().
+- Add Window xclass and default_xclass setter and getter. (Changes the XA_WM_CLASS property of the window)
+- Add `Color::from_hex_str(&str)` and `to_hex_str()`.
+- Optimize Color::from_rgba_tuple().
+- Add draw::text_extents().
+- Properly `cfltk_` prefix extern Cocoa wrapper functions.
+- Fix build on 32-bit X11 systems (introduced in 1.2.11 by Window::platform_hide() and platform_show()).
+
 ## [1.2.19] - 2021-12-03
 - Fix docs for dialog::message_title_default(). Thanks @hannesbraun.
 - Add TreeItem::set_label_fgcolor() and label_fgcolor(), deprecate the older names. Thanks @AshfordN.

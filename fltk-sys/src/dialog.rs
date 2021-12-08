@@ -100,6 +100,16 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_choice_n(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        txt: *const ::std::os::raw::c_char,
+        b0: *const ::std::os::raw::c_char,
+        b1: *const ::std::os::raw::c_char,
+        b2: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_input(
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
@@ -123,6 +133,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_choice2(
+        txt: *const ::std::os::raw::c_char,
+        b0: *const ::std::os::raw::c_char,
+        b1: *const ::std::os::raw::c_char,
+        b2: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_choice2_n(
         txt: *const ::std::os::raw::c_char,
         b0: *const ::std::os::raw::c_char,
         b1: *const ::std::os::raw::c_char,

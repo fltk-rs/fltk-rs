@@ -1,15 +1,7 @@
-use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
-use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
-use crate::window::Window;
-use crate::widget::Widget;
 use fltk_sys::table::*;
-use std::{
-    ffi::{CStr, CString},
-    mem,
-    os::raw,
-};
+use std::ffi::{CStr, CString};
 
 /// Creates a table
 /// For a simpler boilerplate-less table, check the [fltk-table crate](https://crates.io/crates/fltk-table)

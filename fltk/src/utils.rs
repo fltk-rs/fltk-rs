@@ -123,7 +123,7 @@ pub fn char_len(c: char) -> usize {
 /// Get a window's content view
 pub fn content_view<W: crate::prelude::WindowExt>(w: &W) -> *const raw::c_void {
     extern "C" {
-        pub fn my_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
+        pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
     }
-    unsafe { my_getContentView(w.raw_handle() as _) as _ }
+    unsafe { cfltk_getContentView(w.raw_handle() as _) as _ }
 }

@@ -1,3 +1,4 @@
+#[doc(hidden)]
 #[macro_export]
 /// Implements InputExt
 macro_rules! impl_input_ext {
@@ -9,7 +10,7 @@ macro_rules! impl_input_ext {
                         assert!(!self.was_deleted());
                         let value_ptr = [<$flname _value>](self.inner);
                         assert!(!value_ptr.is_null());
-                        CStr::from_ptr(value_ptr as *mut raw::c_char)
+                        CStr::from_ptr(value_ptr as *mut std::os::raw::c_char)
                             .to_string_lossy()
                             .to_string()
                     }
@@ -148,28 +149,28 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn text_font(&self) -> Font {
+                fn text_font(&self) -> $crate::enums::Font {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _text_font>](self.inner))
+                        std::mem::transmute([<$flname _text_font>](self.inner))
                     }
                 }
 
-                fn set_text_font(&mut self, font: Font) {
+                fn set_text_font(&mut self, font: $crate::enums::Font) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_font>](self.inner, font.bits() as i32)
                     }
                 }
 
-                fn text_color(&self) -> Color {
+                fn text_color(&self) -> $crate::enums::Color {
                     unsafe {
                         assert!(!self.was_deleted());
-                        mem::transmute([<$flname _text_color>](self.inner))
+                        std::mem::transmute([<$flname _text_color>](self.inner))
                     }
                 }
 
-                fn set_text_color(&mut self, color: Color) {
+                fn set_text_color(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_color>](self.inner, color.bits() as u32)

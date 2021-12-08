@@ -1,14 +1,7 @@
-use crate::enums::{Align, CallbackTrigger, Color, Damage, Event, Font, FrameType, LabelType};
-use crate::image::Image;
 use crate::prelude::*;
 use crate::utils::FlString;
-use crate::window::Window;
 use fltk_sys::input::*;
-use std::{
-    ffi::{CStr, CString},
-    mem,
-    os::raw,
-};
+use std::ffi::{CStr, CString};
 
 /// Sets the input widget's type
 #[repr(i32)]

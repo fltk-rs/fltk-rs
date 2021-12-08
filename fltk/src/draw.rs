@@ -257,6 +257,8 @@ pub fn draw_pie(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
 }
 
 /// Sets the line style
+/// # Warning
+/// You are required to change this back to `set_line_style(LineStyle::Solid, 0)` after finishing
 pub fn set_line_style(style: LineStyle, width: i32) {
     unsafe {
         crate::app::open_display();
@@ -564,6 +566,19 @@ pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
         Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
     }
     (x, y)
+}
+
+/// Measure the coordinates and size of the text where a bounding box using the returned data would fit the text
+pub fn text_extents(txt: &str) -> (i32, i32, i32, i32) {
+    let txt = CString::safe_new(txt);
+    let mut x = 0;
+    let mut y = 0;
+    let mut w = 0;
+    let mut h = 0;
+    unsafe {
+        Fl_text_extents(txt.as_ptr(), &mut x, &mut y, &mut w, &mut h);
+    }
+    (x, y, w, h)
 }
 
 /// Returns the typographical width of a single character

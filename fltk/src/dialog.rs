@@ -262,6 +262,23 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     }
 }
 
+/// Displays a choice box with upto three choices.
+/// An empty choice will not be shown. Closing the dialog returns None
+pub fn choice2(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
+    unsafe {
+        let txt = CString::safe_new(txt);
+        let b0 = CString::safe_new(b0);
+        let b1 = CString::safe_new(b1);
+        let b2 = CString::safe_new(b2);
+        let ret = Fl_choice_n(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32;
+        if ret < 0 {
+            None
+        } else {
+            Some(ret)
+        }
+    }
+}
+
 /// Displays an input box, which returns the inputted string.
 /// Can be used for gui io
 pub fn input(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
@@ -324,6 +341,23 @@ pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
         Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32
+    }
+}
+
+/// Displays a choice box with upto three choices.
+/// An empty choice will not be shown. Closing the dialog returns None
+pub fn choice2_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
+    unsafe {
+        let txt = CString::safe_new(txt);
+        let b0 = CString::safe_new(b0);
+        let b1 = CString::safe_new(b1);
+        let b2 = CString::safe_new(b2);
+        let ret = Fl_choice2_n(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32;
+        if ret < 0 {
+            None
+        } else {
+            Some(ret)
+        }
     }
 }
 
@@ -1045,7 +1079,7 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_set_show_label(msg.into_raw()) }
     }
 
-    /// Set "Hidden" label
+    /// Set "hidden" label
     pub fn set_hidden_label(msg: &'static str) {
         let msg = CString::safe_new(msg);
         unsafe { Fl_File_Chooser_set_hidden_label(msg.into_raw()) }
