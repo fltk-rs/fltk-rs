@@ -419,11 +419,13 @@ pub fn repeat_timeout2(tm: f64, cb: fn()) {
 
 /// Removes a timeout callback
 pub fn remove_timeout2(cb: fn()) {
-    unsafe {
-        let data: *mut raw::c_void = std::ptr::null_mut();
-        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
-            Some(mem::transmute(cb));
-        fl::Fl_remove_timeout(callback, data);
+    if has_timeout2(cb) {
+        unsafe {
+            let data: *mut raw::c_void = std::ptr::null_mut();
+            let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
+                Some(mem::transmute(cb));
+            fl::Fl_remove_timeout(callback, data);
+        }
     }
 }
 
