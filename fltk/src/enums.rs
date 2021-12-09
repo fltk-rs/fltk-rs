@@ -350,6 +350,7 @@ impl Font {
     }
 
     fn load_font_(path: &path::Path) -> Result<String, FltkError> {
+        let orig = path;
         unsafe {
             if !path.exists() {
                 return Err::<String, FltkError>(FltkError::Internal(
@@ -363,7 +364,31 @@ impl Font {
                     Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
                 } else {
                     let name = CStr::from_ptr(ptr as *mut _).to_string_lossy().to_string();
-                    Ok(name)
+                    if name.is_empty() {
+                        let mut v = vec![];
+                        // shouldn't fail
+                        let orig = orig
+                            .file_stem()
+                            .unwrap()
+                            .to_str()
+                            .unwrap()
+                            .replace('-', "")
+                            .as_bytes()
+                            .to_vec();
+                        v.push(orig[0]);
+                        for i in 1..orig.len() {
+                            let c = orig[i];
+                            if c.is_ascii_uppercase() {
+                                v.push(' ' as _);
+                                v.push(c);
+                            } else {
+                                v.push(orig[i]);
+                            }
+                        }
+                        Ok(String::from_utf8_lossy(&v).to_string())
+                    } else {
+                        Ok(name)
+                    }
                 }
             } else {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
