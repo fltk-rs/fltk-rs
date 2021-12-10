@@ -367,6 +367,7 @@ impl Font {
                     if name.is_empty() {
                         let mut v = vec![];
                         // shouldn't fail
+                        // only runs in case stb couldn't get the font name!
                         let orig = orig
                             .file_stem()
                             .unwrap()
