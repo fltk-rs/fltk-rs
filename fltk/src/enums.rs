@@ -375,7 +375,8 @@ impl Font {
                             .replace('-', "")
                             .as_bytes()
                             .to_vec();
-                        v.push(orig[0]);
+                        let c = orig[0] as char;
+                        v.push(c.to_ascii_uppercase() as u8);
                         for i in 1..orig.len() {
                             let c = orig[i];
                             if c.is_ascii_uppercase() {
