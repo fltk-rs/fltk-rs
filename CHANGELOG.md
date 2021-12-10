@@ -5,6 +5,7 @@
 - Fix GroupExt::remove_by_index() virtual call.
 - Improve font documentation.
 - Add hack to find a font's name based on the file name when stb fails to get it.
+- Fix documentation typo. Thanks @mark-summerfield.
 
 ## [1.2.20] - 2021-12-09
 - Cleanup macros and surrounding api. Thanks @AshfordN.
