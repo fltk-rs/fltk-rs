@@ -28,7 +28,7 @@ pub fn enable_locks() -> Result<(), FltkError> {
 
 /// Locks the main UI thread
 /// # Errors
-/// Returns `FailedToLock` if locking is unsopported. This is fatal to the app
+/// Returns `FailedToLock` if locking is unsupported. This is fatal to the app
 pub fn lock() -> Result<(), FltkError> {
     unsafe {
         match fl::Fl_lock() {
