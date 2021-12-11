@@ -31,7 +31,8 @@ pub enum ButtonType {
 
 crate::macros::widget::impl_widget_type!(ButtonType);
 
-/// Creates a radio button
+/// Creates a radio button.
+/// Radio meaning only one can be toggled in the same group
 #[derive(Debug)]
 pub struct RadioButton {
     inner: *mut Fl_Radio_Button,
@@ -59,7 +60,8 @@ impl RadioButton {
     }
 }
 
-/// Creates a radio round button
+/// Creates a radio round button.
+/// Radio meaning only one can be toggled in the same group
 #[derive(Debug)]
 pub struct RadioRoundButton {
     inner: *mut Fl_Radio_Round_Button,
@@ -87,7 +89,8 @@ impl RadioRoundButton {
     }
 }
 
-/// Creates a radio light button
+/// Creates a radio light button.
+/// Radio meaning only one can be toggled in the same group
 #[derive(Debug)]
 pub struct RadioLightButton {
     inner: *mut Fl_Radio_Light_Button,
