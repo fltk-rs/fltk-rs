@@ -521,7 +521,9 @@ pub unsafe trait ButtonExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all group widgets.
+/// These widgets include Window types and others found in the group module: Group, Scroll, Pack, Tile, Flex ...etc.
 /// Widgets implementing the GroupExt trait, are characterized by having to call `::end()` method to basically close them.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/group_widgets).
 /// ```rust
 /// use fltk::{button::Button, window::Window, prelude::GroupExt};
 /// let win = Window::default();
@@ -630,6 +632,7 @@ pub unsafe trait GroupExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all window widgets
+/// Windows (which can be found in the window module) implement GroupExt as well.
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -796,6 +799,8 @@ pub unsafe trait InputExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all menu widgets
+/// These are found in the menu module: MenuBar, SysMenuBar, Choice, MenuButton ...etc.
+/// Menus function in 2 main ways which are discussed in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/menus)
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
