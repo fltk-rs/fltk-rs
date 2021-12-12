@@ -4,7 +4,7 @@
 ## [1.2.21] - Unreleased
 - Fix GroupExt::remove_by_index() virtual call.
 - Improve font documentation.
-- Add hack to find a font's name based on the file name when stb fails to get it.
+- Add hack to find a font's name based on the file name when stb fails to get the name.
 - Fix documentation typo. Thanks @mark-summerfield.
 - Add more to radio button docs.
 - Fix BmpImage::from_data() not passing the correct len.
