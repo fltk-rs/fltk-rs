@@ -5,10 +5,10 @@
 - Fix BmpImage::from_data() not passing the correct len.
 - Fix GroupExt::remove_by_index() virtual call.
 - Fix documentation typo. Thanks @mark-summerfield.
-- HelpDialog refactoring, add HelpDialog::shown().
+- Add HelpDialog::shown().
 - Improve font documentation.
 - Add hack to find a font's name based on the file name when stb fails to get the name.
-- Add more to radio button docs.
+- Improve radio button docs.
 - Pull FLTK IME fixes.
 - Deprecate Tree::set_item_clicked().
 - Relax mutability requirements for several methods.
