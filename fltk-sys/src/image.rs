@@ -384,7 +384,10 @@ extern "C" {
     pub fn Fl_BMP_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_BMP_Image;
 }
 extern "C" {
-    pub fn Fl_BMP_Image_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_BMP_Image;
+    pub fn Fl_BMP_Image_from(
+        data: *const ::std::os::raw::c_uchar,
+        len: ::std::os::raw::c_long,
+    ) -> *mut Fl_BMP_Image;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -460,7 +463,10 @@ extern "C" {
     pub fn Fl_GIF_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_GIF_Image;
 }
 extern "C" {
-    pub fn Fl_GIF_Image_from(data: *const ::std::os::raw::c_uchar) -> *mut Fl_GIF_Image;
+    pub fn Fl_GIF_Image_from(
+        data: *const ::std::os::raw::c_uchar,
+        len: ::std::os::raw::c_ulong,
+    ) -> *mut Fl_GIF_Image;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
