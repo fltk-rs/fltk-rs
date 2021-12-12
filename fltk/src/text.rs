@@ -280,7 +280,7 @@ impl TextBuffer {
     }
 
     /// Returns the selection position
-    pub fn selection_position(&mut self) -> Option<(i32, i32)> {
+    pub fn selection_position(&self) -> Option<(i32, i32)> {
         assert!(!self.inner.is_null());
         unsafe {
             let mut start = 0;
@@ -296,7 +296,7 @@ impl TextBuffer {
     }
 
     /// Returns the selection text
-    pub fn selection_text(&mut self) -> String {
+    pub fn selection_text(&self) -> String {
         assert!(!self.inner.is_null());
         unsafe {
             let x = Fl_Text_Buffer_selection_text(self.inner);
@@ -327,7 +327,7 @@ impl TextBuffer {
     }
 
     /// Returns whether text is highlighted
-    pub fn is_highlighted(&mut self) -> bool {
+    pub fn is_highlighted(&self) -> bool {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_is_highlighted(self.inner) != 0 }
     }
@@ -339,7 +339,7 @@ impl TextBuffer {
     }
 
     /// Returns the highlight position
-    pub fn highlight_position(&mut self) -> Option<(i32, i32)> {
+    pub fn highlight_position(&self) -> Option<(i32, i32)> {
         assert!(!self.inner.is_null());
         unsafe {
             let mut start = 0;
@@ -355,7 +355,7 @@ impl TextBuffer {
     }
 
     /// Returns the highlighted text
-    pub fn highlight_text(&mut self) -> String {
+    pub fn highlight_text(&self) -> String {
         assert!(!self.inner.is_null());
         unsafe {
             let x = Fl_Text_Buffer_highlight_text(self.inner);

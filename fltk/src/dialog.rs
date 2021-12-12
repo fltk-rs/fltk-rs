@@ -647,7 +647,7 @@ impl FileChooser {
     }
 
     /// Gets the new button of the `FileChooser`
-    pub fn new_button(&mut self) -> Option<impl ButtonExt> {
+    pub fn new_button(&self) -> Option<impl ButtonExt> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_newButton(self.inner);
@@ -660,7 +660,7 @@ impl FileChooser {
     }
 
     /// Gets the preview button of the `FileChooser`
-    pub fn preview_button(&mut self) -> Option<impl ButtonExt> {
+    pub fn preview_button(&self) -> Option<impl ButtonExt> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_previewButton(self.inner);
@@ -675,7 +675,7 @@ impl FileChooser {
     }
 
     /// Gets the show hidden button of the `FileChooser`
-    pub fn show_hidden_button(&mut self) -> Option<impl ButtonExt> {
+    pub fn show_hidden_button(&self) -> Option<impl ButtonExt> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_showHiddenButton(self.inner);
@@ -717,13 +717,13 @@ impl FileChooser {
     }
 
     /// Gets the color of the `FileChooser`
-    pub fn color(&mut self) -> Color {
+    pub fn color(&self) -> Color {
         assert!(!self.inner.is_null());
         unsafe { mem::transmute(Fl_File_Chooser_color(self.inner)) }
     }
 
     /// Gets the count of chosen items
-    pub fn count(&mut self) -> i32 {
+    pub fn count(&self) -> i32 {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_count(self.inner) as i32 }
     }
@@ -736,7 +736,7 @@ impl FileChooser {
     }
 
     /// Gets the directory of the `FileChooser`
-    pub fn directory(&mut self) -> Option<String> {
+    pub fn directory(&self) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_directory(self.inner);
@@ -765,7 +765,7 @@ impl FileChooser {
     }
 
     /// Gets the filter of the `FileChooser`
-    pub fn filter(&mut self) -> Option<String> {
+    pub fn filter(&self) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_filter(self.inner);
@@ -782,7 +782,7 @@ impl FileChooser {
     }
 
     /// Gets the current filename filter selection
-    pub fn filter_value(&mut self) -> i32 {
+    pub fn filter_value(&self) -> i32 {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_filter_value(self.inner) as i32 }
     }
@@ -811,7 +811,7 @@ impl FileChooser {
     }
 
     /// Gets the icon size of the `FileChooser`
-    pub fn icon_size(&mut self) -> u8 {
+    pub fn icon_size(&self) -> u8 {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_iconsize(self.inner) }
     }
@@ -824,7 +824,7 @@ impl FileChooser {
     }
 
     /// Gets the label of the `FileChooser`
-    pub fn label(&mut self) -> String {
+    pub fn label(&self) -> String {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_label(self.inner);
@@ -846,7 +846,7 @@ impl FileChooser {
     }
 
     /// Gets the label of the Ok button
-    pub fn ok_label(&mut self) -> String {
+    pub fn ok_label(&self) -> String {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_ok_label(self.inner);
@@ -903,7 +903,7 @@ impl FileChooser {
     }
 
     /// Gets the text color of the file chooser
-    pub fn text_color(&mut self) -> Color {
+    pub fn text_color(&self) -> Color {
         assert!(!self.inner.is_null());
         unsafe { mem::transmute(Fl_File_Chooser_text_color(self.inner)) }
     }
@@ -915,7 +915,7 @@ impl FileChooser {
     }
 
     /// Gets the text font of the file chooser
-    pub fn text_font(&mut self) -> Font {
+    pub fn text_font(&self) -> Font {
         assert!(!self.inner.is_null());
         unsafe { mem::transmute(Fl_File_Chooser_text_font(self.inner)) }
     }
@@ -927,7 +927,7 @@ impl FileChooser {
     }
 
     /// Gets the text size of the file chooser
-    pub fn text_size(&mut self) -> i32 {
+    pub fn text_size(&self) -> i32 {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_text_size(self.inner) as i32 }
     }
@@ -939,7 +939,7 @@ impl FileChooser {
     }
 
     /// Gets the type of the `FileChooser`
-    pub fn get_type(&mut self) -> FileChooserType {
+    pub fn get_type(&self) -> FileChooserType {
         assert!(!self.inner.is_null());
         unsafe { mem::transmute(Fl_File_Chooser_type(self.inner)) }
     }
@@ -985,13 +985,13 @@ impl FileChooser {
     }
 
     /// Returns whether the `FileChooser` is visible or not
-    pub fn visible(&mut self) -> bool {
+    pub fn visible(&self) -> bool {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_visible(self.inner) != 0 }
     }
 
     /// Return dialog window
-    pub fn window(&mut self) -> impl WindowExt {
+    pub fn window(&self) -> impl WindowExt {
         // Shouldn't fail
         unsafe {
             let win_ptr = self

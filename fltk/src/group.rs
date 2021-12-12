@@ -210,7 +210,7 @@ crate::macros::group::impl_group_ext!(Tabs, Fl_Tabs);
 
 impl Tabs {
     /// Gets the currently visible group
-    pub fn value(&mut self) -> Option<impl GroupExt> {
+    pub fn value(&self) -> Option<impl GroupExt> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tabs_value(self.inner);
@@ -272,7 +272,7 @@ impl Tabs {
     }
 
     /// Returns the position and size available to be used by its children
-    pub fn client_area(&mut self) -> (i32, i32, i32, i32) {
+    pub fn client_area(&self) -> (i32, i32, i32, i32) {
         assert!(!self.was_deleted());
         unsafe {
             let mut i1 = 0;
@@ -336,7 +336,7 @@ impl Wizard {
 
     #[deprecated(since = "1.2.18", note = "please use `try_current_widget` instead")]
     /// Gets the underlying widget of the current view
-    pub fn current_widget(&mut self) -> Widget {
+    pub fn current_widget(&self) -> Widget {
         unsafe {
             assert!(!self.was_deleted());
             let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
@@ -346,7 +346,7 @@ impl Wizard {
     }
 
     /// Gets the underlying widget of the current view
-    pub fn try_current_widget(&mut self) -> Option<impl WidgetExt> {
+    pub fn try_current_widget(&self) -> Option<impl WidgetExt> {
         unsafe {
             assert!(!self.was_deleted());
             let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;

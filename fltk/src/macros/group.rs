@@ -137,7 +137,7 @@ macro_rules! impl_group_ext {
                     unsafe { [<$flname _set_clip_children>](self.inner, flag as i32) }
                 }
 
-                fn clip_children(&mut self) -> bool {
+                fn clip_children(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _clip_children>](self.inner) != 0 }
                 }
@@ -277,7 +277,7 @@ macro_rules! impl_group_ext_via {
                 self.$member.set_clip_children(flag)
             }
 
-            fn clip_children(&mut self) -> bool {
+            fn clip_children(&self) -> bool {
                 self.$member.clip_children()
             }
 

@@ -2,14 +2,16 @@
 
 
 ## [1.2.21] - Unreleased
+- Fix BmpImage::from_data() not passing the correct len.
 - Fix GroupExt::remove_by_index() virtual call.
+- Fix documentation typo. Thanks @mark-summerfield.
+- HelpDialog refactoring, add HelpDialog::shown().
 - Improve font documentation.
 - Add hack to find a font's name based on the file name when stb fails to get the name.
-- Fix documentation typo. Thanks @mark-summerfield.
 - Add more to radio button docs.
-- Fix BmpImage::from_data() not passing the correct len.
-- HelpDialog refactoring, add HelpDialog::shown().
 - Pull FLTK IME fixes.
+- Deprecate Tree::set_item_clicked().
+- Relax mutability requirements for several methods.
 
 ## [1.2.20] - 2021-12-09
 - Cleanup macros and surrounding api. Thanks @AshfordN.

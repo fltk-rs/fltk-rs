@@ -480,7 +480,7 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn selection_color(&mut self) -> $crate::enums::Color {
+                fn selection_color(&self) -> $crate::enums::Color {
                     assert!(!self.was_deleted());
                     unsafe { std::mem::transmute([<$flname _selection_color>](self.inner)) }
                 }
@@ -577,12 +577,12 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _visible_focus>](self.inner, v as i32) }
                 }
 
-                fn has_visible_focus(&mut self) -> bool {
+                fn has_visible_focus(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _has_visible_focus>](self.inner) != 0 }
                 }
 
-                fn has_focus(&mut self) -> bool {
+                fn has_focus(&self) -> bool {
                     assert!(!self.was_deleted());
                     unsafe { fltk_sys::fl::Fl_focus() == self.inner as _ }
                 }
@@ -1003,7 +1003,7 @@ macro_rules! impl_widget_base {
                     }
                 }
 
-                unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
+                unsafe fn draw_data(&self) -> Option<Box<dyn FnMut()>> {
                     let ptr = [<$flname _draw_data>](self.inner);
                     if ptr.is_null() {
                         return None;
@@ -1014,7 +1014,7 @@ macro_rules! impl_widget_base {
                     Some(*data)
                 }
 
-                unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut($crate::enums::Event) -> bool>> {
+                unsafe fn handle_data(&self) -> Option<Box<dyn FnMut($crate::enums::Event) -> bool>> {
                     let ptr = [<$flname _handle_data>](self.inner);
                     if ptr.is_null() {
                         return None;
@@ -1371,7 +1371,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.parent()
             }
 
-            fn selection_color(&mut self) -> $crate::enums::Color {
+            fn selection_color(&self) -> $crate::enums::Color {
                 self.$member.selection_color()
             }
 
@@ -1411,11 +1411,11 @@ macro_rules! impl_widget_ext_via {
                 self.$member.visible_focus(v)
             }
 
-            fn has_visible_focus(&mut self) -> bool {
+            fn has_visible_focus(&self) -> bool {
                 self.$member.has_visible_focus()
             }
 
-            fn has_focus(&mut self) -> bool {
+            fn has_focus(&self) -> bool {
                 self.$member.has_focus()
             }
 
@@ -1569,12 +1569,12 @@ macro_rules! impl_widget_base_via {
                 self.$member.draw(move |_| cb(&mut widget))
             }
 
-            unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>> {
+            unsafe fn draw_data(&self) -> Option<Box<dyn FnMut()>> {
                 self.$member.draw_data()
             }
 
             unsafe fn handle_data(
-                &mut self,
+                &self,
             ) -> Option<Box<dyn FnMut($crate::enums::Event) -> bool>> {
                 self.$member.handle_data()
             }

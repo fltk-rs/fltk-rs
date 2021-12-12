@@ -311,7 +311,7 @@ pub unsafe trait WidgetExt {
     /// Returns the parent of the widget
     fn parent(&self) -> Option<crate::group::Group>;
     /// Gets the selection color of the widget
-    fn selection_color(&mut self) -> Color;
+    fn selection_color(&self) -> Color;
     /// Sets the selection color of the widget
     fn set_selection_color(&mut self, color: Color);
     /// Runs the already registered callback
@@ -333,9 +333,9 @@ pub unsafe trait WidgetExt {
     /// Set the visible focus using a flag
     fn visible_focus(&mut self, v: bool);
     /// Return whether the widget has visible focus
-    fn has_visible_focus(&mut self) -> bool;
+    fn has_visible_focus(&self) -> bool;
     /// Return whether the widget has focus
-    fn has_focus(&mut self) -> bool;
+    fn has_focus(&self) -> bool;
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
     /// Return whether the widget was damaged
@@ -476,12 +476,12 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// INTERNAL: Retrieve the draw data
     /// # Safety
     /// Can return multiple mutable references to the `draw_data`
-    unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
+    unsafe fn draw_data(&self) -> Option<Box<dyn FnMut()>>;
     #[doc(hidden)]
     /// INTERNAL: Retrieve the handle data
     /// # Safety
     /// Can return multiple mutable references to the `handle_data`
-    unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
+    unsafe fn handle_data(&self) -> Option<Box<dyn FnMut(Event) -> bool>>;
     /// Perform a callback on resize.
     /// Avoid resizing the parent or the same widget to avoid infinite recursion
     fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
@@ -604,7 +604,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Clips children outside the group boundaries
     fn set_clip_children(&mut self, flag: bool);
     /// Get whether `clip_children` is set
-    fn clip_children(&mut self) -> bool;
+    fn clip_children(&self) -> bool;
     /// Draw a child widget, the call should be in a `WidgetBase::draw` method
     fn draw_child<W: WidgetExt>(&self, w: &mut W)
     where

@@ -294,26 +294,27 @@ impl Tree {
         }
     }
 
+    #[deprecated(since = "1.2.21", note = "use callback_item() instead")]
     /// Set the item that was last clicked.
-    pub fn set_item_clicked(&mut self) -> Option<TreeItem> {
+    pub fn set_item_clicked(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_item_clicked(self.inner)) }
     }
 
     /// Gets the first tree item
-    pub fn first(&mut self) -> Option<TreeItem> {
+    pub fn first(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_first(self.inner)) }
     }
 
     /// Gets the first visible tree item
-    pub fn first_visible_item(&mut self) -> Option<TreeItem> {
+    pub fn first_visible_item(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_first_visible_item(self.inner)) }
     }
 
     /// Gets the next tree item
-    pub fn next(&mut self, item: &TreeItem) -> Option<TreeItem> {
+    pub fn next(&self, item: &TreeItem) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if item.inner.is_null() {
             return None;
@@ -322,7 +323,7 @@ impl Tree {
     }
 
     /// Gets the previous tree item
-    pub fn prev(&mut self, item: &TreeItem) -> Option<TreeItem> {
+    pub fn prev(&self, item: &TreeItem) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if item.inner.is_null() {
             return None;
@@ -331,19 +332,19 @@ impl Tree {
     }
 
     /// Gets the last tree item
-    pub fn last(&mut self) -> Option<TreeItem> {
+    pub fn last(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_last(self.inner)) }
     }
 
     /// Gets the last visible tree item
-    pub fn last_visible_item(&mut self) -> Option<TreeItem> {
+    pub fn last_visible_item(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_last_visible_item(self.inner)) }
     }
 
     /// Gets the next visible tree item
-    pub fn next_visible_item(&mut self, start: &TreeItem, direction_key: Key) -> Option<TreeItem> {
+    pub fn next_visible_item(&self, start: &TreeItem, direction_key: Key) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if start.inner.is_null() {
             return None;
@@ -358,20 +359,20 @@ impl Tree {
     }
 
     /// Gets the first selected tree item
-    pub fn first_selected_item(&mut self) -> Option<TreeItem> {
+    pub fn first_selected_item(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_first_selected_item(self.inner)) }
     }
 
     /// Gets the last selected tree item
-    pub fn last_selected_item(&mut self) -> Option<TreeItem> {
+    pub fn last_selected_item(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_last_selected_item(self.inner)) }
     }
 
     /// Gets the next tree item, `direction_key` is by default `Key::Down`
     pub fn next_item(
-        &mut self,
+        &self,
         item: &TreeItem,
         direction_key: Key,
         visible: bool,
@@ -406,7 +407,7 @@ impl Tree {
     }
 
     /// Gets the selected tree items
-    pub fn get_selected_items(&mut self) -> Option<Vec<TreeItem>> {
+    pub fn get_selected_items(&self) -> Option<Vec<TreeItem>> {
         assert!(!self.was_deleted());
         unsafe {
             let mut items = TreeItemArray {
@@ -1133,7 +1134,7 @@ impl Tree {
     }
 
     /// Get the callback item
-    pub fn callback_item(&mut self) -> Option<TreeItem> {
+    pub fn callback_item(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         unsafe { TreeItem::from_raw(Fl_Tree_callback_item(self.inner)) }
     }
