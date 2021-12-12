@@ -487,7 +487,8 @@ pub unsafe trait WidgetBase: WidgetExt {
     fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
 }
 
-/// Defines the methods implemented by all button widgets
+/// Defines the methods implemented by all button widgets.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/buttons).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -631,7 +632,8 @@ pub unsafe trait GroupExt: WidgetExt {
     unsafe fn into_group(&self) -> crate::group::Group;
 }
 
-/// Defines the methods implemented by all window widgets
+/// Defines the methods implemented by all window widgets.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/windows).
 /// Windows (which can be found in the window module) implement GroupExt as well.
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
@@ -724,7 +726,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn wait_for_expose(&self);
 }
 
-/// Defines the methods implemented by all input and output widgets
+/// Defines the methods implemented by all input and output widgets.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/inout_widgets).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -936,6 +939,7 @@ pub unsafe trait MenuExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all valuator widgets
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/valuators).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -979,6 +983,7 @@ pub unsafe trait ValuatorExt: WidgetExt {
 }
 
 /// Defines the methods implemented by `TextDisplay` and `TextEditor`
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/text).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -1118,6 +1123,7 @@ pub unsafe trait DisplayExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all browser types
+/// More info can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/browsers)
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -1230,7 +1236,8 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn value(&self) -> i32;
 }
 
-/// Defines the methods implemented by table types
+/// Defines the methods implemented by table types.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/tables).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
