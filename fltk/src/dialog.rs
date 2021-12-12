@@ -467,7 +467,7 @@ impl HelpDialog {
     }
 
     /// Returns the text size
-    pub fn text_size(&mut self) -> i32 {
+    pub fn text_size(&self) -> i32 {
         unsafe { Fl_Help_Dialog_text_size(self.inner) as i32 }
     }
 
@@ -490,37 +490,42 @@ impl HelpDialog {
     }
 
     /// Returs whether the help dialog is visible
-    pub fn visible(&mut self) -> bool {
+    pub fn visible(&self) -> bool {
+        unsafe { Fl_Help_Dialog_visible(self.inner) != 0 }
+    }
+
+    /// Returs whether the help dialog is visible
+    pub fn shown(&self) -> bool {
         unsafe { Fl_Help_Dialog_visible(self.inner) != 0 }
     }
 
     /// Returns the width of the help dialog
-    pub fn width(&mut self) -> i32 {
+    pub fn width(&self) -> i32 {
         unsafe { Fl_Help_Dialog_w(self.inner) }
     }
 
     /// Returns the height of the help dialog
-    pub fn height(&mut self) -> i32 {
+    pub fn height(&self) -> i32 {
         unsafe { Fl_Help_Dialog_h(self.inner) }
     }
 
     /// Returns the width of the help dialog
-    pub fn w(&mut self) -> i32 {
+    pub fn w(&self) -> i32 {
         unsafe { Fl_Help_Dialog_w(self.inner) }
     }
 
     /// Returns the height of the help dialog
-    pub fn h(&mut self) -> i32 {
+    pub fn h(&self) -> i32 {
         unsafe { Fl_Help_Dialog_h(self.inner) }
     }
 
     /// Returns the x position of the help dialog
-    pub fn x(&mut self) -> i32 {
+    pub fn x(&self) -> i32 {
         unsafe { Fl_Help_Dialog_x(self.inner) }
     }
 
     /// Returns the y position of the help dialog
-    pub fn y(&mut self) -> i32 {
+    pub fn y(&self) -> i32 {
         unsafe { Fl_Help_Dialog_y(self.inner) }
     }
 }
