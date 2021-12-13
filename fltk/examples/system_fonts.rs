@@ -19,9 +19,9 @@
 //
 // The system fonts depend on the system, and are not loaded by default.
 // These can be loaded using the App::load_system_fonts() method.
-// The fonts can then be aquired using the app::fonts() function
+// The fonts can then be acquired using the app::fonts() function
 // or be queried using the app::font_count(), app::font_name() and app::font_index() functions.
-// And the can be used using the Font::by_index() or Font::by_name() methods.
+// And then can be used using the Font::by_index() or Font::by_name() methods.
 
 use fltk::{prelude::*, *};
 
