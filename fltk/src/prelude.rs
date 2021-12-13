@@ -311,7 +311,7 @@ pub unsafe trait WidgetExt {
     /// Returns the parent of the widget
     fn parent(&self) -> Option<crate::group::Group>;
     /// Gets the selection color of the widget
-    fn selection_color(&mut self) -> Color;
+    fn selection_color(&self) -> Color;
     /// Sets the selection color of the widget
     fn set_selection_color(&mut self, color: Color);
     /// Runs the already registered callback
@@ -333,9 +333,9 @@ pub unsafe trait WidgetExt {
     /// Set the visible focus using a flag
     fn visible_focus(&mut self, v: bool);
     /// Return whether the widget has visible focus
-    fn has_visible_focus(&mut self) -> bool;
+    fn has_visible_focus(&self) -> bool;
     /// Return whether the widget has focus
-    fn has_focus(&mut self) -> bool;
+    fn has_focus(&self) -> bool;
     /// Check if a widget was deleted
     fn was_deleted(&self) -> bool;
     /// Return whether the widget was damaged
@@ -476,18 +476,19 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// INTERNAL: Retrieve the draw data
     /// # Safety
     /// Can return multiple mutable references to the `draw_data`
-    unsafe fn draw_data(&mut self) -> Option<Box<dyn FnMut()>>;
+    unsafe fn draw_data(&self) -> Option<Box<dyn FnMut()>>;
     #[doc(hidden)]
     /// INTERNAL: Retrieve the handle data
     /// # Safety
     /// Can return multiple mutable references to the `handle_data`
-    unsafe fn handle_data(&mut self) -> Option<Box<dyn FnMut(Event) -> bool>>;
+    unsafe fn handle_data(&self) -> Option<Box<dyn FnMut(Event) -> bool>>;
     /// Perform a callback on resize.
     /// Avoid resizing the parent or the same widget to avoid infinite recursion
     fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
 }
 
-/// Defines the methods implemented by all button widgets
+/// Defines the methods implemented by all button widgets.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/buttons).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -521,7 +522,9 @@ pub unsafe trait ButtonExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all group widgets.
+/// These widgets include Window types and others found in the group module: Group, Scroll, Pack, Tile, Flex ...etc.
 /// Widgets implementing the GroupExt trait, are characterized by having to call `::end()` method to basically close them.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/group_widgets).
 /// ```rust
 /// use fltk::{button::Button, window::Window, prelude::GroupExt};
 /// let win = Window::default();
@@ -602,7 +605,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Clips children outside the group boundaries
     fn set_clip_children(&mut self, flag: bool);
     /// Get whether `clip_children` is set
-    fn clip_children(&mut self) -> bool;
+    fn clip_children(&self) -> bool;
     /// Draw a child widget, the call should be in a `WidgetBase::draw` method
     fn draw_child<W: WidgetExt>(&self, w: &mut W)
     where
@@ -629,7 +632,9 @@ pub unsafe trait GroupExt: WidgetExt {
     unsafe fn into_group(&self) -> crate::group::Group;
 }
 
-/// Defines the methods implemented by all window widgets
+/// Defines the methods implemented by all window widgets.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/windows).
+/// Windows (which can be found in the window module) implement GroupExt as well.
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -721,7 +726,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn wait_for_expose(&self);
 }
 
-/// Defines the methods implemented by all input and output widgets
+/// Defines the methods implemented by all input and output widgets.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/inout_widgets).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -796,6 +802,8 @@ pub unsafe trait InputExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all menu widgets
+/// These are found in the menu module: MenuBar, SysMenuBar, Choice, MenuButton ...etc.
+/// Menus function in 2 main ways which are discussed in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/menus)
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -931,6 +939,7 @@ pub unsafe trait MenuExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all valuator widgets
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/valuators).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -974,6 +983,7 @@ pub unsafe trait ValuatorExt: WidgetExt {
 }
 
 /// Defines the methods implemented by `TextDisplay` and `TextEditor`
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/text).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -1113,6 +1123,7 @@ pub unsafe trait DisplayExt: WidgetExt {
 }
 
 /// Defines the methods implemented by all browser types
+/// More info can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/browsers)
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -1225,7 +1236,8 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn value(&self) -> i32;
 }
 
-/// Defines the methods implemented by table types
+/// Defines the methods implemented by table types.
+/// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/tables).
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning

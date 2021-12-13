@@ -61,9 +61,11 @@ pub fn get_font_sizes(font: Font) -> Vec<i32> {
 }
 
 /// Initializes loaded fonts of a certain pattern `name`
-pub fn set_fonts(name: &str) -> u8 {
+/// Returns the number of fonts found.
+/// For safety purposes, the name can be queried using `get_font_name(unsafe { transmute(index) })`
+pub fn set_fonts(name: &str) -> i32 {
     let name = CString::safe_new(name);
-    unsafe { fl::Fl_set_fonts(name.as_ptr() as *mut raw::c_char) as u8 }
+    unsafe { fl::Fl_set_fonts(name.as_ptr() as *mut raw::c_char) }
 }
 
 /// Gets the name of a font through its index

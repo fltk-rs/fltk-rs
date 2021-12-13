@@ -510,6 +510,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Window_set_xclass(self_: *mut Fl_Window, s: *const ::std::os::raw::c_char);
 }
+extern "C" {
+    pub fn Fl_Window_clear_modal_states(self_: *mut Fl_Window);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Single_Window {
@@ -1383,6 +1386,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_alpha(self_: *const Fl_Double_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Double_Window_force_position(
+        self_: *mut Fl_Double_Window,
+        flag: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);

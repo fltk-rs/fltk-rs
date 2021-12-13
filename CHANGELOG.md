@@ -1,6 +1,20 @@
 # Changelog
 
 
+## [1.2.21] - 2021-12-14
+- Fix BmpImage::from_data() not passing the correct len.
+- Fix GroupExt::remove_by_index() virtual call.
+- Fix documentation typo. Thanks @mark-summerfield.
+- Add HelpDialog::shown().
+- Add Window::clear_modal_states().
+- Add Window::force_position().
+- Improve font documentation.
+- Add hack to find a font's name based on the file name when stb fails to get the name.
+- Improve radio button docs.
+- Pull FLTK IME fixes.
+- Deprecate Tree::set_item_clicked().
+- Relax mutability requirements for several methods.
+
 ## [1.2.20] - 2021-12-09
 - Cleanup macros and surrounding api. Thanks @AshfordN.
 - Update doc comment on draw::set_line_style().

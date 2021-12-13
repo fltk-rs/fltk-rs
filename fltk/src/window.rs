@@ -253,6 +253,14 @@ impl SingleWindow {
         let s = CString::safe_new(s);
         unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
     }
+
+    /// Clear the modal state of the window
+    pub fn clear_modal_states(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_clear_modal_states(self.inner as _)
+        }
+    }
 }
 
 /// Creates a double (buffered) window widget
@@ -516,6 +524,22 @@ impl DoubleWindow {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
         unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
+    }
+
+    /// Clear the modal state of the window
+    pub fn clear_modal_states(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_clear_modal_states(self.inner as _)
+        }
+    }
+
+    /// Force the position of the window
+    pub fn force_position(&mut self, flag: bool) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Double_Window_force_position(self.inner, flag as _)
+        }
     }
 }
 
@@ -814,19 +838,19 @@ impl GlutWindow {
     }
 
     /// Returns the pixels per unit
-    pub fn pixels_per_unit(&mut self) -> f32 {
+    pub fn pixels_per_unit(&self) -> f32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_pixels_per_unit(self.inner) }
     }
 
     /// Gets the window's width in pixels
-    pub fn pixel_w(&mut self) -> i32 {
+    pub fn pixel_w(&self) -> i32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_pixel_w(self.inner) }
     }
 
     /// Gets the window's height in pixels
-    pub fn pixel_h(&mut self) -> i32 {
+    pub fn pixel_h(&self) -> i32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_pixel_h(self.inner) }
     }

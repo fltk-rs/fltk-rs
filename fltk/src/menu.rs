@@ -267,7 +267,7 @@ impl MenuItem {
     }
 
     /// Returns whether the menu item is active
-    pub fn active(&mut self) -> bool {
+    pub fn active(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_active(self.inner) != 0 }
     }

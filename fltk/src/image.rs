@@ -330,7 +330,7 @@ impl BmpImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
-                let x = Fl_BMP_Image_from(data.as_ptr());
+                let x = Fl_BMP_Image_from(data.as_ptr(), data.len() as _);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
@@ -396,7 +396,7 @@ impl GifImage {
             if data.is_empty() {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
             } else {
-                let x = Fl_GIF_Image_from(data.as_ptr());
+                let x = Fl_GIF_Image_from(data.as_ptr(), data.len() as _);
                 if x.is_null() {
                     Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 } else {
