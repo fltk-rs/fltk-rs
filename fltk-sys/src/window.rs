@@ -510,6 +510,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Window_set_xclass(self_: *mut Fl_Window, s: *const ::std::os::raw::c_char);
 }
+extern "C" {
+    pub fn Fl_Window_clear_modal_states(self_: *mut Fl_Window);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Single_Window {

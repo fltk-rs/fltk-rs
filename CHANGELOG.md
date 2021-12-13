@@ -1,11 +1,12 @@
 # Changelog
 
 
-## [1.2.21] - Unreleased
+## [1.2.21] - 2021-12-14
 - Fix BmpImage::from_data() not passing the correct len.
 - Fix GroupExt::remove_by_index() virtual call.
 - Fix documentation typo. Thanks @mark-summerfield.
 - Add HelpDialog::shown().
+- Add Window::clear_modal_states().
 - Improve font documentation.
 - Add hack to find a font's name based on the file name when stb fails to get the name.
 - Improve radio button docs.

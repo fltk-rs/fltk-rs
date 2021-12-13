@@ -253,6 +253,14 @@ impl SingleWindow {
         let s = CString::safe_new(s);
         unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
     }
+
+    /// Clear the modal state of the window
+    pub fn clear_modal_states(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_clear_modal_states(self.inner as _)
+        }
+    }
 }
 
 /// Creates a double (buffered) window widget
@@ -516,6 +524,14 @@ impl DoubleWindow {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
         unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
+    }
+
+    /// Clear the modal state of the window
+    pub fn clear_modal_states(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Window_clear_modal_states(self.inner as _)
+        }
     }
 }
 
