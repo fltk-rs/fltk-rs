@@ -7,6 +7,7 @@
 - Fix documentation typo. Thanks @mark-summerfield.
 - Add HelpDialog::shown().
 - Add Window::clear_modal_states().
+- Add Window::force_position().
 - Improve font documentation.
 - Add hack to find a font's name based on the file name when stb fails to get the name.
 - Improve radio button docs.

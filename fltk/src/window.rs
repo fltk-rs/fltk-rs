@@ -533,6 +533,14 @@ impl DoubleWindow {
             Fl_Window_clear_modal_states(self.inner as _)
         }
     }
+
+    /// Force the position of the window
+    pub fn force_position(&mut self, flag: bool) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Double_Window_force_position(self.inner, flag as _)
+        }
+    }
 }
 
 /// Creates a Menu window widget

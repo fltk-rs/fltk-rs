@@ -1388,6 +1388,12 @@ extern "C" {
     pub fn Fl_Double_Window_alpha(self_: *const Fl_Double_Window) -> ::std::os::raw::c_uchar;
 }
 extern "C" {
+    pub fn Fl_Double_Window_force_position(
+        self_: *mut Fl_Double_Window,
+        flag: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
 }
 extern "C" {
