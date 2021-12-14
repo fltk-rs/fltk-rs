@@ -15,6 +15,7 @@ Resources:
 - [Wiki](https://github.com/fltk-rs/fltk-rs/wiki)
 - [Videos](https://github.com/fltk-rs/fltk-rs#tutorials)
 - [Discussions](https://github.com/fltk-rs/fltk-rs/discussions)
+- [Examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples)
 - [Demos](https://github.com/fltk-rs/demos)
 - [7guis-fltk-rs](https://github.com/tdryer/7guis-fltk-rs)
 - [FLTK-RS-Examples](https://github.com/wyhinton/FLTK-RS-Examples)
