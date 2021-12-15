@@ -55,42 +55,43 @@ fn main() {
         }
     });
 
-    let mut x = 0;
-    let mut y = 0;
-
-    frame.handle(move |f, ev| {
-        // println!("{}", ev);
-        // println!("coords {:?}", app::event_coords());
-        // println!("get mouse {:?}", app::get_mouse());
-        let offs = offs.borrow_mut();
-        match ev {
-            Event::Push => {
-                offs.begin();
-                set_draw_color(Color::Red);
-                set_line_style(LineStyle::Solid, 3);
-                let coords = app::event_coords();
-                x = coords.0;
-                y = coords.1;
-                draw_point(x, y);
-                offs.end();
-                f.redraw();
-                set_line_style(LineStyle::Solid, 0);
-                true
+    frame.handle({
+        let mut x = 0;
+        let mut y = 0;
+        move |f, ev| {
+            // println!("{}", ev);
+            // println!("coords {:?}", app::event_coords());
+            // println!("get mouse {:?}", app::get_mouse());
+            let offs = offs.borrow_mut();
+            match ev {
+                Event::Push => {
+                    offs.begin();
+                    set_draw_color(Color::Red);
+                    set_line_style(LineStyle::Solid, 3);
+                    let coords = app::event_coords();
+                    x = coords.0;
+                    y = coords.1;
+                    draw_point(x, y);
+                    offs.end();
+                    f.redraw();
+                    set_line_style(LineStyle::Solid, 0);
+                    true
+                }
+                Event::Drag => {
+                    offs.begin();
+                    set_draw_color(Color::Red);
+                    set_line_style(LineStyle::Solid, 3);
+                    let coords = app::event_coords();
+                    draw_line(x, y, coords.0, coords.1);
+                    x = coords.0;
+                    y = coords.1;
+                    offs.end();
+                    f.redraw();
+                    set_line_style(LineStyle::Solid, 0);
+                    true
+                }
+                _ => false,
             }
-            Event::Drag => {
-                offs.begin();
-                set_draw_color(Color::Red);
-                set_line_style(LineStyle::Solid, 3);
-                let coords = app::event_coords();
-                draw_line(x, y, coords.0, coords.1);
-                x = coords.0;
-                y = coords.1;
-                offs.end();
-                f.redraw();
-                set_line_style(LineStyle::Solid, 0);
-                true
-            }
-            _ => false,
         }
     });
 
