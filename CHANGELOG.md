@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.2.22] - Unreleased
+- Fix doc typo. Thanks @ctrl-81.
+- Guard against division by zero in Flex code.
+
 ## [1.2.21] - 2021-12-14
 - Fix BmpImage::from_data() not passing the correct len.
 - Fix GroupExt::remove_by_index() virtual call.
