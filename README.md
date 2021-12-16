@@ -13,7 +13,6 @@ The fltk crate is a crossplatform lightweight gui library which can be staticall
 Resources:
 - [Book](https://fltk-rs.github.io/fltk-book/)
 - [Documentation](https://docs.rs/fltk)
-- [Wiki](https://github.com/fltk-rs/fltk-rs/wiki)
 - [Videos](https://github.com/fltk-rs/fltk-rs#tutorials)
 - [Discussions](https://github.com/fltk-rs/fltk-rs/discussions)
 - [Examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples)
