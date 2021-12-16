@@ -229,6 +229,9 @@ macro_rules! impl_widget_ext {
 
                 fn set_label(&mut self, title: &str) {
                     assert!(!self.was_deleted());
+                    if self.as_window().is_some() {
+                        assert!($crate::app::is_ui_thread());
+                    }
                     unsafe {
                         let temp = CString::safe_new(title);
                         [<$flname _set_label>](self.inner, temp.as_ptr());
@@ -244,11 +247,17 @@ macro_rules! impl_widget_ext {
 
                 fn show(&mut self) {
                     assert!(!self.was_deleted());
+                    if self.as_window().is_some() {
+                        assert!($crate::app::is_ui_thread());
+                    }
                     unsafe { [<$flname _show>](self.inner) }
                 }
 
                 fn hide(&mut self) {
                     assert!(!self.was_deleted());
+                    if self.as_window().is_some() {
+                        assert!($crate::app::is_ui_thread());
+                    }
                     unsafe { [<$flname _hide>](self.inner) }
                 }
 
@@ -892,6 +901,10 @@ macro_rules! impl_widget_base {
                     unsafe {
                         let widget_ptr = [<$flname _new>](x, y, width, height, temp);
                         assert!(!widget_ptr.is_null());
+                        let win = [<$flname _as_window>](widget_ptr as _);
+                        if !win.is_null() {
+                            assert!($crate::app::is_ui_thread());
+                        }
                         let tracker = fltk_sys::fl::Fl_Widget_Tracker_new(
                             widget_ptr as *mut fltk_sys::fl::Fl_Widget,
                         );
@@ -1573,9 +1586,7 @@ macro_rules! impl_widget_base_via {
                 self.$member.draw_data()
             }
 
-            unsafe fn handle_data(
-                &self,
-            ) -> Option<Box<dyn FnMut($crate::enums::Event) -> bool>> {
+            unsafe fn handle_data(&self) -> Option<Box<dyn FnMut($crate::enums::Event) -> bool>> {
                 self.$member.handle_data()
             }
 

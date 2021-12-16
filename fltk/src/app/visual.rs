@@ -265,6 +265,7 @@ pub fn display() -> Display {
 
 /// Causes all the windows that need it to be redrawn and graphics forced out through the pipes.
 pub fn flush() {
+    assert!(crate::app::is_ui_thread());
     unsafe { fl::Fl_flush() }
 }
 

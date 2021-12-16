@@ -70,8 +70,12 @@ impl fmt::Display for FltkError {
             FltkError::NullError(ref err) => err.fmt(f),
             FltkError::Internal(ref err) => write!(f, "An internal error occurred {:?}", err),
             FltkError::EnvVarError(ref err) => write!(f, "An env var error occurred {:?}", err),
-            FltkError::Utf8Error(ref err) => write!(f, "A UTF8 conversion error occurred {:?}", err),
-            FltkError::ParseIntError(ref err) => write!(f, "An int parsing error occurred {:?}", err),
+            FltkError::Utf8Error(ref err) => {
+                write!(f, "A UTF8 conversion error occurred {:?}", err)
+            }
+            FltkError::ParseIntError(ref err) => {
+                write!(f, "An int parsing error occurred {:?}", err)
+            }
             FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {:?}", err),
         }
     }

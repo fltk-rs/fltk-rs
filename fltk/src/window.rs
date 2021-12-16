@@ -107,7 +107,10 @@ crate::macros::window::impl_window_ext!(SingleWindow, Fl_Single_Window);
 
 impl SingleWindow {
     /// Creates a default initialized single window
+    ///
+    /// Note: Only call this from the main thread.
     pub fn default() -> SingleWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <SingleWindow as Default>::default();
         win.free_position();
         win
@@ -267,9 +270,7 @@ impl SingleWindow {
     /// Clear the modal state of the window
     pub fn clear_modal_states(&mut self) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_clear_modal_states(self.inner as _)
-        }
+        unsafe { Fl_Window_clear_modal_states(self.inner as _) }
     }
 }
 
@@ -291,6 +292,7 @@ impl DoubleWindow {
     ///
     /// Note: Only call this from the main thread.
     pub fn default() -> DoubleWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <DoubleWindow as Default>::default();
         win.free_position();
         win
@@ -541,17 +543,13 @@ impl DoubleWindow {
     /// Clear the modal state of the window
     pub fn clear_modal_states(&mut self) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_clear_modal_states(self.inner as _)
-        }
+        unsafe { Fl_Window_clear_modal_states(self.inner as _) }
     }
 
     /// Force the position of the window
     pub fn force_position(&mut self, flag: bool) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Double_Window_force_position(self.inner, flag as _)
-        }
+        unsafe { Fl_Double_Window_force_position(self.inner, flag as _) }
     }
 }
 
