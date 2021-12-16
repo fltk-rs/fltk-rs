@@ -422,8 +422,12 @@ bitflags::bitflags! {
     pub struct Color: u32 {
         /// ForeGround, label colors
         const ForeGround = 0;
+        /// Foreground, label colors
+        const Foreground = 0;
         /// BackGround2, Is the color inside input, output and text display widgets
         const BackGround2 = 7;
+        /// Background2, Is the color inside input, output and text display widgets
+        const Background2 = 7;
         /// Inactive
         const Inactive = 8;
         /// Selection
@@ -444,6 +448,8 @@ bitflags::bitflags! {
         const FrameDefault = 49;
         /// BackGround
         const BackGround = 49;
+        /// Background
+        const Background = 49;
         /// Light1
         const Light1 = 50;
         /// Light2
@@ -782,6 +788,8 @@ bitflags::bitflags! {
         const Button = 0xfee8;
         /// BackSpace
         const BackSpace = 0xff08;
+        /// Backspace
+        const Backspace = 0xff08;
         /// Tab
         const Tab = 0xff09;
         /// IsoKey
