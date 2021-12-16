@@ -330,10 +330,8 @@ pub mod utils;
 /// Valuator widgets
 pub mod valuator;
 
-/// Basic empty widget
 pub mod widget;
 
-/// Window widgets
 pub mod window;
 
 /// Printing related functions
