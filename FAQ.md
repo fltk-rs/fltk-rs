@@ -21,10 +21,10 @@ If you're building using the MSVC toolchain, make sure you run your build (at le
 If you're building for the GNU toolchain, make sure that Make is also installed, which usually comes installed in MSYS2 and Cygwin.
 
 ### Build fails on MacOS 11 with an Apple M1 chip, what can I do?
-If you're getting "file too small to be an archive" error, you might be hitting these issues: https://github.com/rust-lang/cargo/issues/8875, https://github.com/rust-lang/rust/issues/50220. MacOS's native C/C++ toolchain shouldn't have this issue, and can be installed by running `xcode-select --install` or by installing XCode. Make sure the corresponding Rust toolchain (aarch64-apple-darwin) is installed as well. You can uninstall other Rust apple-darwin toolchains or use cargo-lipo instead if you need universal/fat binaries.
+If you're getting "file too small to be an archive" error, you might be hitting this [issues](https://github.com/rust-lang/cargo/issues/8875) or this [issue](https://github.com/rust-lang/rust/issues/50220). MacOS's native C/C++ toolchain shouldn't have this issue, and can be installed by running `xcode-select --install` or by installing XCode. Make sure the corresponding Rust toolchain (aarch64-apple-darwin) is installed as well. You can uninstall other Rust apple-darwin toolchains or use cargo-lipo instead if you need universal/fat binaries.
 
 ### Why do I get a Link error while using the mingw toolchain on windows?
-If the linking fails because of this issue: https://github.com/rust-lang/rust/issues/47048 with older toolchains, it should work by using the fltk-shared feature (an issue with older compilers). Which would also generate a dynamic library which would need to be deployed with your application.
+If the linking fails because of this [issue](https://github.com/rust-lang/rust/issues/47048) with older toolchains, it should work by using the fltk-shared feature (an issue with older compilers). Which would also generate a dynamic library which would need to be deployed with your application.
 ```toml
 [dependencies]
 fltk = { version = "^1.2", features = ["fltk-shared"] }
@@ -104,8 +104,8 @@ FLTK currently doesn't support WASM nor mobile platforms. It is focused on deskt
 
 ### Can I use this crate in a commercial application?
 Yes. This crate has an MIT license which requires acknowledgment. FLTK (the C++ library) is licensed under the LGPL license with an exception allowing static linking for commercial/closed-source use. You can find the full terms of both licenses here:
-- https://github.com/fltk/fltk/blob/master/COPYING
-- https://github.com/fltk-rs/fltk-rs/blob/master/LICENSE
+- [COPYING](https://github.com/fltk/fltk/blob/master/COPYING)
+- [LICENSE](https://github.com/fltk-rs/fltk-rs/blob/master/LICENSE)
 
 ## Alignment
 
