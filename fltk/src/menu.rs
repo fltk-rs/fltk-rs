@@ -81,7 +81,7 @@ impl MenuButton {
 /// via the app scheme or by globally changin the draw function of
 /// [`DownBox`](crate::enums::FrameType::DownBox):
 ///
-/// ```rust
+/// ```rust,no_run
 ///use fltk::{enums::*, prelude::*, *};
 ///
 ///fn my_down_box(x: i32, y: i32, w: i32, h: i32, col: Color) {
