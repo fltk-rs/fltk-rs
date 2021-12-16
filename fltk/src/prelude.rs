@@ -116,6 +116,9 @@ pub trait WidgetType {
 }
 
 /// Defines the methods implemented by all widgets
+///
+/// For multithreaded usage, see the [`widget` module documentation's
+/// note](crate::widget)
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
