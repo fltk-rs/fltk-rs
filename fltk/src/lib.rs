@@ -23,14 +23,16 @@ Why choose FLTK?
 - Has inbuilt image support.
 
 Resources:
-- [Documenation](https://docs.rs/fltk)
-- [Video](https://github.com/fltk-rs/fltk-rs#tutorials)
+- [Book](https://fltk-rs.github.io/fltk-book/)
+- [Documentation](https://docs.rs/fltk)
 - [Wiki](https://github.com/fltk-rs/fltk-rs/wiki)
+- [Videos](https://github.com/fltk-rs/fltk-rs#tutorials)
 - [Discussions](https://github.com/fltk-rs/fltk-rs/discussions)
+- [Examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples)
 - [Demos](https://github.com/fltk-rs/demos)
 - [7guis-fltk-rs](https://github.com/tdryer/7guis-fltk-rs)
 - [FLTK-RS-Examples](https://github.com/wyhinton/FLTK-RS-Examples)
-- Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference.
+- Erco's FLTK cheat [page](http://seriss.com/people/erco/fltk/), which is an excellent FLTK C++ reference. 
 
 Here is a [list](https://en.wikipedia.org/wiki/FLTK#Use) of software using FLTK. For software using fltk-rs, check [here](https://github.com/fltk-rs/fltk-rs/issues/418).
 
