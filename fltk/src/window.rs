@@ -1,15 +1,14 @@
+#![allow(unused_imports)]
+
 //! Window widgets
 //!
 //! **Multithreaded** applications should always create/show/open/close windows
 //! from the main thread (This might or might not work on your specific target,
-//! due to fltk calling the underlying plattform's window code. If you want
+//! due to fltk calling the underlying platform's window code. If you want
 //! portability, avoid it.) If you need to trigger showing a windows from
 //! another thread, use [`messages`](crate::app::channel) to notify the main
 //! thread that the window needs showing. An alternative to that is
 //! [`awake_callback`](crate::app::awake_callback)
-
-#![allow(unused_imports)]
-
 
 use crate::app::screen_size;
 use crate::enums::{

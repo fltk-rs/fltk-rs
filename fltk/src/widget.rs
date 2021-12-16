@@ -3,6 +3,7 @@
 //! **Multithreaded** applications can call widget methods from non-main
 //! threads, but will need to call [`app::awake()`](`crate::app::awake`) to make
 //! the main thread run the event loop.
+
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::widget::*;
