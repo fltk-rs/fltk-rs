@@ -12,13 +12,13 @@ use std::{fmt, io};
 pub enum FltkError {
     /// i/o error
     IoError(io::Error),
-    /// Ut8 conversion error
+    /// Utf-8 conversion error
     Utf8Error(FromUtf8Error),
     /// Null string conversion error
     NullError(std::ffi::NulError),
     /// Internal fltk error
     Internal(FltkErrorKind),
-    /// Error using an errorneous env variable
+    /// Error using an erroneous env variable
     EnvVarError(std::env::VarError),
     /// Parsing error
     ParseIntError(std::num::ParseIntError),
@@ -43,7 +43,7 @@ pub enum FltkErrorKind {
     FailedOperation,
     /// System resource (file, image) not found
     ResourceNotFound,
-    /// Image format error when opening an image of an unsopported format
+    /// Image format error when opening an image of an unsupported format
     ImageFormatError,
     /// Error filling table
     TableError,
@@ -68,10 +68,10 @@ impl fmt::Display for FltkError {
         match *self {
             FltkError::IoError(ref err) => err.fmt(f),
             FltkError::NullError(ref err) => err.fmt(f),
-            FltkError::Internal(ref err) => write!(f, "An internal error occured {:?}", err),
-            FltkError::EnvVarError(ref err) => write!(f, "An env var error occured {:?}", err),
-            FltkError::Utf8Error(ref err) => write!(f, "A UTF8 conversion error occured {:?}", err),
-            FltkError::ParseIntError(ref err) => write!(f, "An int parsing error occured {:?}", err),
+            FltkError::Internal(ref err) => write!(f, "An internal error occurred {:?}", err),
+            FltkError::EnvVarError(ref err) => write!(f, "An env var error occurred {:?}", err),
+            FltkError::Utf8Error(ref err) => write!(f, "A UTF8 conversion error occurred {:?}", err),
+            FltkError::ParseIntError(ref err) => write!(f, "An int parsing error occurred {:?}", err),
             FltkError::Unknown(ref err) => write!(f, "An unknown error occurred {:?}", err),
         }
     }
@@ -241,7 +241,7 @@ pub unsafe trait WidgetExt {
     fn image(&self) -> Option<Box<dyn ImageExt>>
     where
         Self: Sized;
-    /// Sets the deactived image of the widget
+    /// Sets the deactivated image of the widget
     fn set_deimage<I: ImageExt>(&mut self, image: Option<I>)
     where
         Self: Sized;
@@ -392,7 +392,7 @@ pub unsafe trait WidgetExt {
     fn active_r(&self) -> bool;
     #[doc(hidden)]
     /**
-        Return the default callback function, this allows storing then running within the overriden callback.
+        Return the default callback function, this allows storing then running within the overridden callback.
         Works only for FLTK types (with no callback defined in the Rust side)
         ```rust,no_run
             use fltk::{prelude::*, *};
@@ -627,7 +627,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// Converts a widget implementing GroupExt into a Group widget
     /// # Safety
     /// If the widget wasn't created by fltk-rs,
-    /// vtable differences mean certain methods can't be overriden (e.g. handle & draw)
+    /// vtable differences mean certain methods can't be overridden (e.g. handle & draw)
     #[allow(clippy::wrong_self_convention)]
     unsafe fn into_group(&self) -> crate::group::Group;
 }
@@ -745,7 +745,7 @@ pub unsafe trait InputExt: WidgetExt {
     fn set_maximum_size(&mut self, val: i32);
     /// Returns the index position inside an input/output widget
     fn position(&self) -> i32;
-    /// Sets the index postion inside an input/output widget
+    /// Sets the index position inside an input/output widget
     /// # Errors
     /// Errors on failure to set the cursor position in the text
     fn set_position(&mut self, val: i32) -> Result<(), FltkError>;
@@ -1308,21 +1308,21 @@ pub unsafe trait TableExt: GroupExt {
     fn set_row_height(&mut self, row: i32, height: i32);
     /// Gets the row's height
     fn row_height(&self, row: i32) -> i32;
-    /// Sets the columns's width
+    /// Sets the column's width
     fn set_col_width(&mut self, col: i32, width: i32);
-    /// Gets the columns's width
+    /// Gets the column's width
     fn col_width(&self, col: i32) -> i32;
     /// Sets all rows height
     fn set_row_height_all(&mut self, height: i32);
-    /// Sets all columns's width
+    /// Sets all column's width
     fn set_col_width_all(&mut self, width: i32);
     /// Sets the row's position
     fn set_row_position(&mut self, row: i32);
-    /// Sets the columns's position
+    /// Sets the column's position
     fn set_col_position(&mut self, col: i32);
     /// Gets the row's position
     fn row_position(&self) -> i32;
-    /// Gets the columns's position
+    /// Gets the column's position
     fn col_position(&self) -> i32;
     /// Sets the top row
     fn set_top_row(&mut self, row: i32);
@@ -1408,7 +1408,7 @@ pub unsafe trait ImageExt {
     fn w(&self) -> i32;
     /// Return the height of the image
     fn h(&self) -> i32;
-    /// Retunrs a pointer of the image
+    /// Returns a pointer of the image
     /// # Safety
     /// Can return multiple mutable pointers to the image
     unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;

@@ -6,9 +6,9 @@ use crate::prelude::FltkError;
 use crate::prelude::FltkErrorKind;
 
 #[doc(hidden)]
-/// A helper trait to get CStrings from Strings without paniciking
+/// A helper trait to get CStrings from Strings without panicking
 pub trait FlString {
-    /// Get CStrings from Strings without paniciking
+    /// Get CStrings from Strings without panicking
     fn safe_new(s: &str) -> CString;
 }
 

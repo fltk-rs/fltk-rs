@@ -553,17 +553,17 @@ impl Color {
         unsafe { mem::transmute(idx as u32) }
     }
 
-    /// Retuns an inactive form of the color
+    /// Returns an inactive form of the color
     pub fn inactive(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_inactive(self.bits)) }
     }
 
-    /// Retuns an darker form of the color
+    /// Returns an darker form of the color
     pub fn darker(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_darker(self.bits)) }
     }
 
-    /// Retuns an lighter form of the color
+    /// Returns an lighter form of the color
     pub fn lighter(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_lighter(self.bits)) }
     }
@@ -1068,7 +1068,7 @@ pub enum Cursor {
 }
 
 bitflags::bitflags! {
-    /// Defines visual mode types (capabilites of the window).
+    /// Defines visual mode types (capabilities of the window).
     /// Rgb and Single have a value of zero, so they
     /// are "on" unless you give Index or Double.
     pub struct Mode: i32 {
@@ -1090,7 +1090,7 @@ bitflags::bitflags! {
         const Stencil = 32;
         /// Rgb8 color with at least 8 bits of each color
         const Rgb8 = 64;
-        /// MultiSample antialiasing
+        /// MultiSample anti-aliasing
         const MultiSample = 128;
         /// Stereoscopic rendering
         const Stereo = 256;

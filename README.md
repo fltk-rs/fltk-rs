@@ -8,7 +8,7 @@
 
 Rust bindings for the FLTK Graphical User Interface library. 
 
-The fltk crate is a crossplatform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
+The fltk crate is a cross-platform lightweight gui library which can be statically linked to produce small, self-contained and fast gui applications.
 
 Resources:
 - [Book](https://fltk-rs.github.io/fltk-book/)
@@ -27,7 +27,7 @@ Why choose FLTK?
 - Single executable. No DLLs to deploy.
 - Supports old architectures. 
 - FLTK's permissive license which allows static linking for closed-source applications.
-- Themability (4 supported schemes: Base, GTK, Plastic and Gleam), and additional theming using [fltk-theme](https://crates.io/crates/fltk-theme).
+- Themeability (4 supported schemes: Base, GTK, Plastic and Gleam), and additional theming using [fltk-theme](https://crates.io/crates/fltk-theme).
 - Provides around 80 customizable widgets. 
 - Has inbuilt image support.
 
@@ -214,11 +214,11 @@ Themes of individual widgets can be optionally modified using the provided metho
     some_button.set_frame(FrameType::RoundUpBox);
     some_button.set_font(Font::TimesItalic);
 ```
-For default application colors, fltk-rs provides `app::background()`, `app::background2()` and `app::foreground()`. You can also specify the default application selection/inactive colors, font, label size, frame type, scrollbar size, menu linespacing. Additionally the [fltk-theme](https://crates.io/crates/fltk-theme) crate offers some other predefined color maps (dark theme, tan etc) and widget themes which can be loaded into your application.
+For default application colors, fltk-rs provides `app::background()`, `app::background2()` and `app::foreground()`. You can also specify the default application selection/inactive colors, font, label size, frame type, scrollbar size, menu line-spacing. Additionally the [fltk-theme](https://crates.io/crates/fltk-theme) crate offers some other predefined color maps (dark theme, tan etc) and widget themes which can be loaded into your application.
 
 ## Dependencies
 
-Rust (version > 1.45), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a crossplatform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required, and will be used if found. This crate also offers a bundled form of fltk on selected x86_64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
+Rust (version > 1.45), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required, and will be used if found. This crate also offers a bundled form of fltk on selected x86_64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: No external dependencies.
 - MacOS: No external dependencies.

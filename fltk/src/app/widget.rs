@@ -127,7 +127,7 @@ pub fn delete_widget<Wid: WidgetBase>(wid: Wid) {
     WidgetBase::delete(wid)
 }
 
-/// Sets the damage to true or false, illiciting a redraw by the application
+/// Sets the damage to true or false, eliciting a redraw by the application
 pub fn set_damage(flag: bool) {
     unsafe { fl::Fl_set_damage(flag as i32) }
 }

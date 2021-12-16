@@ -103,7 +103,7 @@ impl SingleWindow {
         win
     }
 
-    /// Find an `Fl_Window` through a raw handle. The window must have been instatiated by the app.
+    /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
     /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent.
@@ -284,7 +284,7 @@ impl DoubleWindow {
         win
     }
 
-    /// Find an `Fl_Window` through a raw handle. The window must have been instatiated by the app.
+    /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
     /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent.
@@ -586,7 +586,7 @@ impl OverlayWindow {
         win
     }
 
-    /// Find an `Fl_Window` through a raw handle. The window must have been instatiated by the app.
+    /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
     /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent.

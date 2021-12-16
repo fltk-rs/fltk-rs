@@ -116,12 +116,12 @@ pub fn swap_frame_type(new_frame: FrameType) {
     }
 }
 
-/// Get the shadwo width for frames types with shadows
+/// Get the shadow width for frames types with shadows
 pub fn frame_shadow_width() -> i32 {
     unsafe { fl::Fl_box_shadow_width() }
 }
 
-/// Set the shadwo width for frames types with shadows
+/// Set the shadow width for frames types with shadows
 pub fn set_frame_shadow_width(width: i32) {
     unsafe { fl::Fl_set_box_shadow_width(width) }
 }
@@ -201,12 +201,12 @@ pub fn reload_scheme() -> Result<(), FltkError> {
     }
 }
 
-/// Get the default menu linespacing
+/// Get the default menu line-spacing
 pub fn menu_linespacing() -> i32 {
     unsafe { fl::Fl_menu_linespacing() }
 }
 
-/// Set the menu linespacing
+/// Set the menu line-spacing
 pub fn set_menu_linespacing(val: i32) {
     unsafe { fl::Fl_set_menu_linespacing(val) }
 }

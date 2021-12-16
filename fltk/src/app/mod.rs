@@ -24,7 +24,7 @@ pub use visual::*;
 mod widget;
 pub use widget::*;
 
-/// Basic Application struct, used to instatiate, set the scheme and run the event loop
+/// Basic Application struct, used to instantiate, set the scheme and run the event loop
 #[derive(Debug, Copy, Clone)]
 pub struct App {}
 

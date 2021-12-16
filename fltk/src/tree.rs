@@ -927,7 +927,7 @@ impl Tree {
         unsafe { Fl_Tree_set_showcollapse(self.inner, flag as i32) }
     }
 
-    /// Returs whether the root is shown
+    /// Returns whether the root is shown
     pub fn show_root(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_showroot(self.inner) != 0 }

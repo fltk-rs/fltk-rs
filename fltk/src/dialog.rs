@@ -189,11 +189,11 @@ impl FileDialog {
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (eg. `"*.txt"`).
-    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`).
-    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`).
-    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`).
-    /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
+    /// A single wildcard (e.g. `"*.txt"`).
+    /// Multiple wildcards (e.g. `"*.{cxx,h,H}"`).
+    /// A descriptive name followed by a `\t` and a wildcard (e.g. `"Text Files\t*.txt"`).
+    /// A list of separate wildcards with a `\n` between each (e.g. `"*.{cxx,H}\n*.txt"`).
+    /// A list of descriptive names and wildcards (e.g. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
     pub fn set_filter(&mut self, f: &str) {
         assert!(!self.inner.is_null());
         let f = CString::safe_new(f);
@@ -250,7 +250,7 @@ pub fn alert(x: i32, y: i32, txt: &str) {
     }
 }
 
-/// Displays a choice box with upto three choices.
+/// Displays a choice box with up to three choices.
 /// An empty choice will not be shown
 pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     unsafe {
@@ -262,7 +262,7 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     }
 }
 
-/// Displays a choice box with upto three choices.
+/// Displays a choice box with up to three choices.
 /// An empty choice will not be shown. Closing the dialog returns None
 pub fn choice2(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
@@ -332,7 +332,7 @@ pub fn alert_default(txt: &str) {
     }
 }
 
-/// Displays a choice box with upto three choices.
+/// Displays a choice box with up to three choices.
 /// An empty choice will not be shown
 pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     unsafe {
@@ -344,7 +344,7 @@ pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     }
 }
 
-/// Displays a choice box with upto three choices.
+/// Displays a choice box with up to three choices.
 /// An empty choice will not be shown. Closing the dialog returns None
 pub fn choice2_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
@@ -489,12 +489,12 @@ impl HelpDialog {
         }
     }
 
-    /// Returs whether the help dialog is visible
+    /// Returns whether the help dialog is visible
     pub fn visible(&self) -> bool {
         unsafe { Fl_Help_Dialog_visible(self.inner) != 0 }
     }
 
-    /// Returs whether the help dialog is visible
+    /// Returns whether the help dialog is visible
     pub fn shown(&self) -> bool {
         unsafe { Fl_Help_Dialog_visible(self.inner) != 0 }
     }
@@ -753,11 +753,11 @@ impl FileChooser {
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (eg. `"*.txt"`).
-    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`).
-    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`).
-    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`).
-    /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
+    /// A single wildcard (e.g. `"*.txt"`).
+    /// Multiple wildcards (e.g. `"*.{cxx,h,H}"`).
+    /// A descriptive name followed by a `\t` and a wildcard (e.g. `"Text Files\t*.txt"`).
+    /// A list of separate wildcards with a `\n` between each (e.g. `"*.{cxx,H}\n*.txt"`).
+    /// A list of descriptive names and wildcards (e.g. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
     pub fn set_filter(&mut self, pattern: &str) {
         assert!(!self.inner.is_null());
         let pattern = CString::safe_new(pattern);
@@ -788,11 +788,11 @@ impl FileChooser {
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (eg. `"*.txt"`).
-    /// Multiple wildcards (eg. `"*.{cxx,h,H}"`).
-    /// A descriptive name followed by a `\t` and a wildcard (eg. `"Text Files\t*.txt"`).
-    /// A list of separate wildcards with a `\n` between each (eg. `"*.{cxx,H}\n*.txt"`).
-    /// A list of descriptive names and wildcards (eg. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
+    /// A single wildcard (e.g. `"*.txt"`).
+    /// Multiple wildcards (e.g. `"*.{cxx,h,H}"`).
+    /// A descriptive name followed by a `\t` and a wildcard (e.g. `"Text Files\t*.txt"`).
+    /// A list of separate wildcards with a `\n` between each (e.g. `"*.{cxx,H}\n*.txt"`).
+    /// A list of descriptive names and wildcards (e.g. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
     pub fn set_filter_value(&mut self, f: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_filter_value(self.inner, f as i32) }

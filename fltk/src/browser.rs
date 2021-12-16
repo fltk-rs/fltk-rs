@@ -258,7 +258,7 @@ impl CheckBrowser {
         unsafe { Fl_Check_Browser_set_checked(self.inner, item) }
     }
 
-    /// Ckeck all of the items
+    /// Check all of the items
     pub fn check_all(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_check_all(self.inner) }
