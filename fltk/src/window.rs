@@ -569,6 +569,7 @@ crate::macros::window::impl_window_ext!(MenuWindow, Fl_Menu_Window);
 impl MenuWindow {
     /// Creates a default initialized menu window
     pub fn default() -> MenuWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <MenuWindow as Default>::default();
         win.free_position();
         win
@@ -591,6 +592,7 @@ crate::macros::window::impl_window_ext!(OverlayWindow, Fl_Overlay_Window);
 impl OverlayWindow {
     /// Creates a default initialized overlay window
     pub fn default() -> OverlayWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <OverlayWindow as Default>::default();
         win.free_position();
         win
@@ -741,6 +743,7 @@ crate::macros::window::impl_window_ext!(GlutWindow, Fl_Glut_Window);
 impl GlutWindow {
     /// Creates a default initialized glut window
     pub fn default() -> GlutWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <GlutWindow as Default>::default();
         win.free_position();
         win
