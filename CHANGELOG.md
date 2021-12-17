@@ -2,6 +2,7 @@
 
 
 ## [1.2.22] - Unreleased
+- Add doc comments. Thanks @KillTheMule.
 - Fix doc typos. Thanks @ctrl-81.
 - Fix doc typos. Thanks @AshfordN.
 - Guard against division by zero in Flex code.

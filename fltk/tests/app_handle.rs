@@ -15,6 +15,7 @@ fn main() {
         std::thread::spawn(move || {
             for i in 31..1000 {
                 app::sleep(0.010);
+				app::awake();
                 let ret = app::handle_main(i);
                 if let Ok(ret) = ret {
                     println!("Handled? {}", ret);
