@@ -19,6 +19,8 @@ pub(crate) static CURRENT_FRAME: AtomicI32 = AtomicI32::new(2);
 /// The fonts associated with the application
 pub(crate) static mut FONTS: Option<Arc<Mutex<Vec<String>>>> = None;
 
+pub(crate) static mut UI_THREAD: Option<std::thread::ThreadId> = None;
+
 /// Registers all images supported by `SharedImage`
 pub(crate) fn register_images() {
     unsafe { fltk_sys::image::Fl_register_images() }
@@ -35,6 +37,7 @@ pub fn init_all() {
             panic!("fltk-rs requires threading support!");
         }
         register_images();
+        UI_THREAD = Some(std::thread::current().id());
         // This should never appear!
         FONTS = Some(Arc::from(Mutex::from(vec![
             "Helvetica".to_owned(),
@@ -70,7 +73,7 @@ pub fn init_all() {
 /// Check whether we're in the ui thread
 pub(crate) fn is_ui_thread() -> bool {
     if let Some(name) = std::thread::current().name() {
-        name == "main"
+        name == "main" && unsafe { UI_THREAD.unwrap() == std::thread::current().id() }
     } else {
         false
     }
