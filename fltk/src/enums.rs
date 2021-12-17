@@ -626,6 +626,10 @@ impl std::fmt::Display for Color {
         match *self {
             Color::ForeGround => write!(f, "Color::ForeGround"),
             Color::BackGround => write!(f, "Color::BackGround"),
+            Color::BackGround2 => write!(f, "Color::BackGround2"),
+            Color::Foreground => write!(f, "Color::Foreground"),
+            Color::Background => write!(f, "Color::Background"),
+            Color::Background2 => write!(f, "Color::Background2"),
             Color::Inactive => write!(f, "Color::Inactive"),
             Color::Selection => write!(f, "Color::Selection"),
             Color::Gray0 => write!(f, "Color::Gray0"),
@@ -788,8 +792,6 @@ bitflags::bitflags! {
         const Button = 0xfee8;
         /// BackSpace
         const BackSpace = 0xff08;
-        /// Backspace
-        const Backspace = 0xff08;
         /// Tab
         const Tab = 0xff09;
         /// IsoKey
