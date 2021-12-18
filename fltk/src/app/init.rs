@@ -78,3 +78,8 @@ pub fn init_all() {
 pub(crate) fn is_ui_thread() -> bool {
     unsafe { UI_THREAD.unwrap() == std::thread::current().id() }
 }
+
+/// Check if fltk-rs was initialized
+pub fn is_initialized() -> bool {
+    unsafe { IS_INIT.load(Ordering::Relaxed) }
+}

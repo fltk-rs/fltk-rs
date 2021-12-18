@@ -1,16 +1,16 @@
 use crate::app::{
-    font::unload_font, init::init_all, init::IS_INIT, init::LOADED_FONT, widget::windows,
+    font::unload_font, init::init_all, init::is_initialized, init::LOADED_FONT, widget::windows,
 };
 use crate::prelude::*;
 use fltk_sys::fl;
-use std::{mem, os::raw, panic, sync::atomic::Ordering, thread, time};
+use std::{mem, os::raw, panic, thread, time};
 
 /// Runs the event loop
 /// # Errors
 /// Returns `FailedToRun`, this is fatal to the app
 pub fn run() -> Result<(), FltkError> {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
         }
         if !crate::app::is_ui_thread() {
@@ -72,7 +72,7 @@ pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
 /// Calls to redraw within wait require an explicit sleep
 pub fn wait() -> bool {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
         }
         assert!(crate::app::is_ui_thread());
@@ -93,7 +93,7 @@ pub fn sleep(dur: f64) {
 /// Can error out on X11 system if interrupted by a signal
 pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
         }
         if !crate::app::is_ui_thread() {
@@ -122,7 +122,7 @@ pub fn program_should_quit(flag: bool) {
 /// Calling this during a big calculation will keep the screen up to date and the interface responsive.
 pub fn check() -> bool {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
         }
         assert!(crate::app::is_ui_thread());
@@ -134,7 +134,7 @@ pub fn check() -> bool {
 /// which is useful if your program is in a state where such callbacks are illegal.
 pub fn ready() -> bool {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
         }
         assert!(crate::app::is_ui_thread());

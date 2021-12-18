@@ -7,6 +7,7 @@
 - Fix doc typos. Thanks @AshfordN.
 - Guard against division by zero in Flex code.
 - Check that certain calls are only done in the main thread.
+- Add app::is_initialized().
 
 ## [1.2.21] - 2021-12-14
 - Fix BmpImage::from_data() not passing the correct len.
