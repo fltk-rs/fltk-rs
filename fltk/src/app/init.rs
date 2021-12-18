@@ -72,9 +72,5 @@ pub fn init_all() {
 
 /// Check whether we're in the ui thread
 pub(crate) fn is_ui_thread() -> bool {
-    if let Some(name) = std::thread::current().name() {
-        name == "main" && unsafe { UI_THREAD.unwrap() == std::thread::current().id() }
-    } else {
-        false
-    }
+    unsafe { UI_THREAD.unwrap() == std::thread::current().id() }
 }
