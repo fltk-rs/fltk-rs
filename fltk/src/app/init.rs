@@ -1,3 +1,5 @@
+#![allow(unused_imports)]
+
 use fltk_sys::{draw, fl};
 use std::sync::{
     atomic::{AtomicBool, AtomicI32, Ordering},
