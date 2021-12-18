@@ -37,7 +37,7 @@ If you're having build difficulties, please check:
 - The [Setup chapter](https://fltk-rs.github.io/fltk-book/Setup.html). 
 
 Otherwise you can open a github discussion [here](https://github.com/fltk-rs/fltk-rs/discussions) describing your difficulties, along with the output of:
-- `cargo install -vv fltk-check-env -f && fltk-check-env`
+- `cargo install fltk-check-env && fltk-check-env`
 - `cargo build -vv`
 
 Please only open a bug report if the repo/crate used to build and currently fails. The github-actions CI already checks for the 3 major desktop platforms. Also include the outputs of:
