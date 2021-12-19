@@ -1,17 +1,20 @@
 use crate::app::{
-    font::unload_font, init::init_all, init::IS_INIT, init::LOADED_FONT, widget::windows,
+    font::unload_font, init::init_all, init::is_initialized, init::LOADED_FONT, widget::windows,
 };
 use crate::prelude::*;
 use fltk_sys::fl;
-use std::{mem, os::raw, panic, sync::atomic::Ordering, thread, time};
+use std::{mem, os::raw, panic, thread, time};
 
 /// Runs the event loop
 /// # Errors
 /// Returns `FailedToRun`, this is fatal to the app
 pub fn run() -> Result<(), FltkError> {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
+        }
+        if !crate::app::is_ui_thread() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedToRun));
         }
         match fl::Fl_run() {
             0 => Ok(()),
@@ -69,9 +72,10 @@ pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
 /// Calls to redraw within wait require an explicit sleep
 pub fn wait() -> bool {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
         }
+        assert!(crate::app::is_ui_thread());
         fl::Fl_wait() != 0
     }
 }
@@ -89,14 +93,17 @@ pub fn sleep(dur: f64) {
 /// Can error out on X11 system if interrupted by a signal
 pub fn wait_for(dur: f64) -> Result<bool, FltkError> {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
+        }
+        if !crate::app::is_ui_thread() {
+            return Err(FltkError::Internal(FltkErrorKind::FailedToRun));
         }
         match fl::Fl_wait_for(dur) as i32 {
             0 => Ok(false),
             1 => Ok(true),
             _ => Err(FltkError::Unknown(String::from(
-                "An unknown error occured!",
+                "An unknown error occurred!",
             ))),
         }
     }
@@ -115,9 +122,10 @@ pub fn program_should_quit(flag: bool) {
 /// Calling this during a big calculation will keep the screen up to date and the interface responsive.
 pub fn check() -> bool {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
         }
+        assert!(crate::app::is_ui_thread());
         fl::Fl_check() != 0
     }
 }
@@ -126,9 +134,10 @@ pub fn check() -> bool {
 /// which is useful if your program is in a state where such callbacks are illegal.
 pub fn ready() -> bool {
     unsafe {
-        if !IS_INIT.load(Ordering::Relaxed) {
+        if !is_initialized() {
             init_all();
         }
+        assert!(crate::app::is_ui_thread());
         fl::Fl_ready() != 0
     }
 }
@@ -285,6 +294,7 @@ pub fn has_idle2(cb: fn()) -> bool {
 */
 pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     unsafe {
+        assert!(crate::app::is_ui_thread());
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
             let f: &mut (dyn FnMut()) = &mut **a;
@@ -318,6 +328,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     ```
 */
 pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
+    assert!(crate::app::is_ui_thread());
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -333,6 +344,7 @@ pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
 
 /// Removes a timeout callback
 pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
+    assert!(crate::app::is_ui_thread());
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
             let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
@@ -380,6 +392,7 @@ pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
     ```
 */
 pub fn add_timeout2(tm: f64, cb: fn()) {
+    assert!(crate::app::is_ui_thread());
     unsafe {
         let data: *mut raw::c_void = std::ptr::null_mut();
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
@@ -409,6 +422,7 @@ pub fn add_timeout2(tm: f64, cb: fn()) {
     ```
 */
 pub fn repeat_timeout2(tm: f64, cb: fn()) {
+    assert!(crate::app::is_ui_thread());
     unsafe {
         let data: *mut raw::c_void = std::ptr::null_mut();
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> =
@@ -419,6 +433,7 @@ pub fn repeat_timeout2(tm: f64, cb: fn()) {
 
 /// Removes a timeout callback
 pub fn remove_timeout2(cb: fn()) {
+    assert!(crate::app::is_ui_thread());
     if has_timeout2(cb) {
         unsafe {
             let data: *mut raw::c_void = std::ptr::null_mut();
@@ -446,6 +461,7 @@ pub unsafe fn add_system_handler(
     cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>,
     data: *mut raw::c_void,
 ) {
+    assert!(crate::app::is_ui_thread());
     fl::Fl_add_system_handler(cb, data);
 }
 
@@ -455,5 +471,6 @@ pub unsafe fn add_system_handler(
 pub unsafe fn remove_system_handler(
     cb: Option<unsafe extern "C" fn(*mut raw::c_void, *mut raw::c_void) -> i32>,
 ) {
+    assert!(crate::app::is_ui_thread());
     fl::Fl_remove_system_handler(cb);
 }

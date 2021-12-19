@@ -422,8 +422,12 @@ bitflags::bitflags! {
     pub struct Color: u32 {
         /// ForeGround, label colors
         const ForeGround = 0;
+        /// Foreground, label colors
+        const Foreground = 0;
         /// BackGround2, Is the color inside input, output and text display widgets
         const BackGround2 = 7;
+        /// Background2, Is the color inside input, output and text display widgets
+        const Background2 = 7;
         /// Inactive
         const Inactive = 8;
         /// Selection
@@ -444,6 +448,8 @@ bitflags::bitflags! {
         const FrameDefault = 49;
         /// BackGround
         const BackGround = 49;
+        /// Background
+        const Background = 49;
         /// Light1
         const Light1 = 50;
         /// Light2
@@ -553,17 +559,17 @@ impl Color {
         unsafe { mem::transmute(idx as u32) }
     }
 
-    /// Retuns an inactive form of the color
+    /// Returns an inactive form of the color
     pub fn inactive(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_inactive(self.bits)) }
     }
 
-    /// Retuns an darker form of the color
+    /// Returns an darker form of the color
     pub fn darker(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_darker(self.bits)) }
     }
 
-    /// Retuns an lighter form of the color
+    /// Returns an lighter form of the color
     pub fn lighter(&self) -> Color {
         unsafe { mem::transmute(fl::Fl_lighter(self.bits)) }
     }
@@ -620,6 +626,10 @@ impl std::fmt::Display for Color {
         match *self {
             Color::ForeGround => write!(f, "Color::ForeGround"),
             Color::BackGround => write!(f, "Color::BackGround"),
+            Color::BackGround2 => write!(f, "Color::BackGround2"),
+            Color::Foreground => write!(f, "Color::Foreground"),
+            Color::Background => write!(f, "Color::Background"),
+            Color::Background2 => write!(f, "Color::Background2"),
             Color::Inactive => write!(f, "Color::Inactive"),
             Color::Selection => write!(f, "Color::Selection"),
             Color::Gray0 => write!(f, "Color::Gray0"),
@@ -1068,7 +1078,7 @@ pub enum Cursor {
 }
 
 bitflags::bitflags! {
-    /// Defines visual mode types (capabilites of the window).
+    /// Defines visual mode types (capabilities of the window).
     /// Rgb and Single have a value of zero, so they
     /// are "on" unless you give Index or Double.
     pub struct Mode: i32 {
@@ -1090,7 +1100,7 @@ bitflags::bitflags! {
         const Stencil = 32;
         /// Rgb8 color with at least 8 bits of each color
         const Rgb8 = 64;
-        /// MultiSample antialiasing
+        /// MultiSample anti-aliasing
         const MultiSample = 128;
         /// Stereoscopic rendering
         const Stereo = 256;

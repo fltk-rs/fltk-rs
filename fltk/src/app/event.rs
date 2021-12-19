@@ -19,7 +19,7 @@ pub fn event() -> Event {
     unsafe { mem::transmute(fl::Fl_event()) }
 }
 
-/// Returns the presed key
+/// Returns the pressed key
 pub fn event_key() -> Key {
     unsafe { mem::transmute(fl::Fl_event_key()) }
 }
@@ -158,7 +158,7 @@ pub fn event_state() -> Shortcut {
     unsafe { mem::transmute(fl::Fl_event_state()) }
 }
 
-/// Returns whether an event occured within a widget
+/// Returns whether an event occurred within a widget
 pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
     assert!(!wid.was_deleted());
     let x = wid.x();
@@ -168,7 +168,7 @@ pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
     unsafe { fl::Fl_event_inside(x, y, w, h) != 0 }
 }
 
-/// Returns whether an event occured within a region
+/// Returns whether an event occurred within a region
 pub fn event_inside(x: i32, y: i32, w: i32, h: i32) -> bool {
     unsafe { fl::Fl_event_inside(x, y, w, h) != 0 }
 }

@@ -221,6 +221,7 @@ macro_rules! impl_window_ext {
 
                 fn set_border(&mut self, flag: bool) {
                     assert!(!self.was_deleted());
+                    assert!($crate::app::is_ui_thread());
                     unsafe { [<$flname _set_border>](self.inner, flag as i32) }
                 }
 

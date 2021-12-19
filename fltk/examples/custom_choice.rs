@@ -58,9 +58,8 @@ impl MyPopup {
         let mut win = window::Window::default().with_size(120, choices.len() as i32 * 25);
         win.set_color(Color::White);
         win.set_frame(FrameType::BorderBox);
-        let mut pack = group::Pack::new(1, 1, win.w() - 2, win.h() -2, None);
+        let mut pack = group::Pack::new(1, 1, win.w() - 2, win.h() - 2, None);
         win.set_border(false);
-        win.make_modal(true);
         win.end();
         for (i, choice) in choices.iter().enumerate() {
             let mut but = PopupButton::new(choice);
@@ -78,12 +77,19 @@ impl MyPopup {
             pack.add(&*but);
         }
         pack.auto_layout();
+        win.handle(|w, ev| match ev {
+            Event::Unfocus => {
+                w.hide();
+                true
+            }
+            _ => false,
+        });
         Self { win, val, idx }
     }
     pub fn popup(&mut self, x: i32, y: i32) -> (String, i32) {
         self.win.show();
-        self.win
-            .set_pos(app::event_x_root() - x, app::event_y_root() + y + 10);
+        self.win.force_position(true);
+        self.win.set_pos(x, y);
         while self.win.shown() {
             app::wait();
         }
@@ -111,9 +117,10 @@ impl MyChoice {
         btn.set_callback({
             let c = choices.clone();
             let mut f = frame.clone();
+            let btn_win = btn.window().unwrap();
             move |b| {
                 let mut menu = MyPopup::new(&*c.borrow());
-                let s = menu.popup(b.w() * 4, 0);
+                let s = menu.popup(b.x() + btn_win.x() - f.w(), b.y() + btn_win.y() + b.h());
                 f.set_label(&s.0);
             }
         });
@@ -143,6 +150,19 @@ impl MyChoice {
 
     pub fn set_current_choice(&mut self, idx: i32) {
         self.frame.set_label(self.choices.borrow()[idx as usize])
+    }
+
+    pub fn choice(&self) -> String {
+        self.frame.label().clone()
+    }
+
+    pub fn value(&self) -> i32 {
+        let choice = self.choice();
+        if let Some(val) = self.choices.borrow().iter().position(|x| x == &choice) {
+            val as _
+        } else {
+            -1
+        }
     }
 }
 

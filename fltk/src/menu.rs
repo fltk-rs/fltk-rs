@@ -74,6 +74,36 @@ impl MenuButton {
 }
 
 /// Creates a menu choice
+///
+/// The [`set_frame`](crate::prelude::WidgetExt::set_frame) method styles the
+/// dropdown menu. `Choice` does not expose it's uderlying widget (a
+/// [`DownBox`](crate::enums::FrameType::DownBox)). It can only be changed
+/// via the app scheme or by globally changin the draw function of
+/// [`DownBox`](crate::enums::FrameType::DownBox):
+///
+/// ```rust,no_run
+///use fltk::{enums::*, prelude::*, *};
+///
+///fn my_down_box(x: i32, y: i32, w: i32, h: i32, col: Color) {
+///    draw::draw_rect_fill(x, y, w, h, Color::Red);
+///    draw::draw_rect_fill(x + 1, y + 1, w - 2, h - 2, Color::BackGround2); // change values to change thickness
+///}
+///
+///fn main() {
+///     let a = app::App::default();
+///     app::set_frame_type_cb(FrameType::DownBox, my_down_box, 0, 0, 0, 0);
+///     let mut win = window::Window::new(100, 100, 400, 300, None);
+///     win.set_color(Color::from_rgb(211, 211, 211));
+///     let mut inp = input::Input::new(50, 10, 100, 30, None); // would work for any widget which has a DownBox frame type
+///     let mut choice = menu::Choice::new(50, 100, 100, 30, None);
+///     choice.add_choice("Choice 1| Choice 2| choice 3");
+///     win.end();
+///     win.show();
+///     a.run().unwrap();
+///}
+///```
+///
+/// For more extensive options see the `custom_choice` example.
 #[derive(Debug)]
 pub struct Choice {
     inner: *mut Fl_Choice,

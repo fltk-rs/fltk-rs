@@ -1,5 +1,16 @@
 #![allow(unused_imports)]
 
+//! Window widgets
+//!
+//! **Multithreaded** applications should always create/show/open/close windows
+//! from the main thread (This might or might not work on your specific target,
+//! due to fltk calling the underlying platform's window code. If you want
+//! portability, avoid it.) If you need to trigger showing a windows from
+//! another thread, use [`messages`](crate::app::channel) to notify the main
+//! thread that the window needs showing. An example of this can be found in the
+//! [`threads_windows`](crate::examples::threads_windows) example. An alternative to that is
+//! [`awake_callback`](crate::app::awake_callback)
+
 use crate::app::screen_size;
 use crate::enums::{
     Align, CallbackTrigger, Color, Cursor, Damage, Event, Font, FrameType, LabelType, Mode,
@@ -97,13 +108,16 @@ crate::macros::window::impl_window_ext!(SingleWindow, Fl_Single_Window);
 
 impl SingleWindow {
     /// Creates a default initialized single window
+    ///
+    /// Note: Only call this from the main thread.
     pub fn default() -> SingleWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <SingleWindow as Default>::default();
         win.free_position();
         win
     }
 
-    /// Find an `Fl_Window` through a raw handle. The window must have been instatiated by the app.
+    /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
     /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent.
@@ -257,9 +271,7 @@ impl SingleWindow {
     /// Clear the modal state of the window
     pub fn clear_modal_states(&mut self) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_clear_modal_states(self.inner as _)
-        }
+        unsafe { Fl_Window_clear_modal_states(self.inner as _) }
     }
 }
 
@@ -278,13 +290,16 @@ crate::macros::window::impl_window_ext!(DoubleWindow, Fl_Double_Window);
 
 impl DoubleWindow {
     /// Creates a default initialized double window
+    ///
+    /// Note: Only call this from the main thread.
     pub fn default() -> DoubleWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <DoubleWindow as Default>::default();
         win.free_position();
         win
     }
 
-    /// Find an `Fl_Window` through a raw handle. The window must have been instatiated by the app.
+    /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
     /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent.
@@ -529,17 +544,13 @@ impl DoubleWindow {
     /// Clear the modal state of the window
     pub fn clear_modal_states(&mut self) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Window_clear_modal_states(self.inner as _)
-        }
+        unsafe { Fl_Window_clear_modal_states(self.inner as _) }
     }
 
     /// Force the position of the window
     pub fn force_position(&mut self, flag: bool) {
         assert!(!self.was_deleted());
-        unsafe {
-            Fl_Double_Window_force_position(self.inner, flag as _)
-        }
+        unsafe { Fl_Double_Window_force_position(self.inner, flag as _) }
     }
 }
 
@@ -559,6 +570,7 @@ crate::macros::window::impl_window_ext!(MenuWindow, Fl_Menu_Window);
 impl MenuWindow {
     /// Creates a default initialized menu window
     pub fn default() -> MenuWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <MenuWindow as Default>::default();
         win.free_position();
         win
@@ -581,12 +593,13 @@ crate::macros::window::impl_window_ext!(OverlayWindow, Fl_Overlay_Window);
 impl OverlayWindow {
     /// Creates a default initialized overlay window
     pub fn default() -> OverlayWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <OverlayWindow as Default>::default();
         win.free_position();
         win
     }
 
-    /// Find an `Fl_Window` through a raw handle. The window must have been instatiated by the app.
+    /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
     /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
     /// The data must be valid and is OS-dependent.
@@ -731,6 +744,7 @@ crate::macros::window::impl_window_ext!(GlutWindow, Fl_Glut_Window);
 impl GlutWindow {
     /// Creates a default initialized glut window
     pub fn default() -> GlutWindow {
+        assert!(crate::app::is_ui_thread());
         let mut win = <GlutWindow as Default>::default();
         win.free_position();
         win

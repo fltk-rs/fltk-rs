@@ -863,7 +863,7 @@ impl Tree {
         }
     }
 
-    /// Gets the opne icon
+    /// Gets the open icon
     pub fn open_icon(&self) -> Option<Box<dyn ImageExt>> {
         assert!(!self.was_deleted());
         unsafe {
@@ -878,7 +878,7 @@ impl Tree {
         }
     }
 
-    /// Sets the opne icon
+    /// Sets the open icon
     pub fn set_open_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
         if let Some(image) = image {
@@ -904,7 +904,7 @@ impl Tree {
         }
     }
 
-    /// Sets the opne icon
+    /// Sets the close icon
     pub fn set_close_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
         if let Some(image) = image {
@@ -927,7 +927,7 @@ impl Tree {
         unsafe { Fl_Tree_set_showcollapse(self.inner, flag as i32) }
     }
 
-    /// Returs whether the root is shown
+    /// Returns whether the root is shown
     pub fn show_root(&self) -> bool {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_showroot(self.inner) != 0 }

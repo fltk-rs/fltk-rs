@@ -62,7 +62,7 @@ impl Spinner {
         unsafe { Fl_Spinner_minimum(self.inner) }
     }
 
-    /// Sets the minimu value of the spinner widget
+    /// Sets the minimum value of the spinner widget
     pub fn set_minimum(&mut self, a: f64) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_minimum(self.inner, a) }
@@ -271,7 +271,7 @@ impl Chart {
         unsafe { Fl_Chart_set_text_color(self.inner, color.bits() as u32) }
     }
 
-    /// Returns wheter the chart is autosizable
+    /// Returns whether the chart is autosizable
     pub fn is_autosize(&self) -> bool {
         unsafe {
             assert!(!self.was_deleted());
@@ -304,7 +304,7 @@ impl Progress {
         unsafe { Fl_Progress_minimum(self.inner) }
     }
 
-    /// Sets the minimu value of the progress bar
+    /// Sets the minimum value of the progress bar
     pub fn set_minimum(&mut self, a: f64) {
         assert!(!self.was_deleted());
         unsafe { Fl_Progress_set_minimum(self.inner, a) }

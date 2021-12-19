@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.2.22] - 2021-12-19
+- Add doc comments and example comments. Thanks @KillTheMule.
+- Fix doc typos. Thanks @ctrl-81.
+- Fix doc typos. Thanks @AshfordN.
+- Guard against division by zero in Flex code.
+- Check that certain calls are only done in the main thread.
+- Add app::is_initialized().
+- Use ninja only via feature flag.
+
 ## [1.2.21] - 2021-12-14
 - Fix BmpImage::from_data() not passing the correct len.
 - Fix GroupExt::remove_by_index() virtual call.
@@ -1184,7 +1193,7 @@
 ## [0.6.2] - 2020-06-12
 ### Changes
 - Mark Widget::into<WidgetExt>() as unsafe.
-- Add App::windows() method which returs an optional Vector of the application's windows.
+- Add App::windows() method which returns an optional Vector of the application's windows.
 - Widget deletion calls app::delete_widget instead of raw delete.
 - Add add_emit and insert_emit to MenuExt, also emit to MenuItem.
 - Add support for systems without OpenGL using the no-opengl feature flag.
