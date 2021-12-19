@@ -285,6 +285,8 @@ pub mod draw;
 /// Fltk defined enums: Color, Font, `CallbackTrigger` etc
 pub mod enums;
 
+pub mod examples;
+
 /// Basic fltk box/frame widget
 pub mod frame;
 

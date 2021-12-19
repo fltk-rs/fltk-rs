@@ -7,7 +7,8 @@
 //! due to fltk calling the underlying platform's window code. If you want
 //! portability, avoid it.) If you need to trigger showing a windows from
 //! another thread, use [`messages`](crate::app::channel) to notify the main
-//! thread that the window needs showing. An alternative to that is
+//! thread that the window needs showing. An example of this can be found in the
+//! [`threads_windows`](crate::examples::threads_windows) example. An alternative to that is
 //! [`awake_callback`](crate::app::awake_callback)
 
 use crate::app::screen_size;
