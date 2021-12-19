@@ -218,7 +218,7 @@ For default application colors, fltk-rs provides `app::background()`, `app::back
 
 ## Dependencies
 
-Rust (version > 1.45), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required, and will be used if found. This crate also offers a bundled form of fltk on selected x86_64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
+Rust (version > 1.45), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected x86_64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: 
     - MSVC: Windows SDK
@@ -250,6 +250,7 @@ $ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXine
 ## Features
 
 The following are the features offered by the crate:
+- use-ninja: Uses the ninja build system for a faster build, especially on Windows.
 - no-pango: Build without pango support on Linux/BSD, if rtl/cjk font support is not needed.
 - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
 - enable-glwindow: Support for drawing using OpenGL functions.
