@@ -10,7 +10,7 @@
 
 Rust bindings for the FLTK Graphical User Interface library.
 
-The fltk crate is a cross-platform lightweight gui library which can be statically linked to produce small, self-contained (no dependencies) and fast gui applications.
+The fltk crate is a cross-platform lightweight gui library which can be statically linked to produce small, self-contained (no external dependencies) and fast gui applications.
 
 Why choose FLTK?
 - Lightweight. Small binary, around 1mb after stripping. [Small memory footprint](https://szibele.com/memory-footprint-of-gui-toolkits/).
@@ -223,8 +223,10 @@ For default application colors, fltk-rs provides `app::background()`, `app::back
 
 Rust (version > 1.45), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required, and will be used if found. This crate also offers a bundled form of fltk on selected x86_64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
-- Windows: No external dependencies.
-- MacOS: No external dependencies.
+- Windows: 
+    - MSVC: Windows SDK
+    - Gnu: No dependencies
+- MacOS: No dependencies.
 - Linux/BSD: X11 and OpenGL development headers need to be installed for development. The libraries themselves are normally available on linux distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:

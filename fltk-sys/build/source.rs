@@ -74,7 +74,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("CFLTK_BUILD_SHARED", "ON");
         }
 
-        if cfg!(feature = "use-ninja") || crate::utils::has_program("ninja") {
+        if cfg!(feature = "use-ninja") {
             dst.generator("Ninja");
         }
 
