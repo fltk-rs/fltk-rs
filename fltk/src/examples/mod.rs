@@ -39,5 +39,6 @@ pub mod table;
 pub mod tabs;
 pub mod temp_converter;
 pub mod terminal;
+pub mod threads_windows;
 pub mod tree;
 pub mod wizard;
