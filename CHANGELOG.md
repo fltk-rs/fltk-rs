@@ -2,6 +2,7 @@
 
 
 ## [1.2.23] - Unreleased
+- Update raw-window-handle to 0.4.
 - Make Offscreen aware of single-threaded feature.
 
 ## [1.2.22] - 2021-12-19

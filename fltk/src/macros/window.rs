@@ -8,11 +8,10 @@ macro_rules! impl_window_ext {
             fn raw_window_handle(&self) -> RawWindowHandle {
                 #[cfg(target_os = "windows")]
                 {
-                    return RawWindowHandle::Windows(windows::WindowsHandle {
-                        hwnd: self.raw_handle(),
-                        hinstance: $crate::app::display(),
-                        ..windows::WindowsHandle::empty()
-                    });
+                    let mut handle = Win32Handle::empty();
+                    handle.hwnd = self.raw_handle();
+                    handle.hinstance = $crate::app::display();
+                    return RawWindowHandle::Win32(handle);
                 }
 
                 #[cfg(target_os = "macos")]
@@ -22,19 +21,17 @@ macro_rules! impl_window_ext {
                         pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
                     }
                     let cv = unsafe { cfltk_getContentView(raw) };
-                    return RawWindowHandle::MacOS(macos::MacOSHandle {
-                        ns_window: raw,
-                        ns_view: cv as _,
-                        ..macos::MacOSHandle::empty()
-                    });
+                    let mut handle = AppKitHandle::empty();
+                    handle.ns_window = raw;
+                    handle.ns_view = cv as _;
+                    return RawWindowHandle::AppKit(handle);
                 }
 
                 #[cfg(target_os = "android")]
                 {
-                    return RawWindowHandle::Android(android::AndroidHandle {
-                        a_native_window: self.raw_handle(),
-                        ..android::AndroidHandle::empty()
-                    });
+                    let mut handle = AndroidNdkHandle::empty();
+                    handle.a_native_window = self.raw_handle();
+                    return RawWindowHandle::AndroidNdk(handle);
                 }
 
                 #[cfg(any(
@@ -45,53 +42,11 @@ macro_rules! impl_window_ext {
                     target_os = "openbsd",
                 ))]
                 {
-                    return RawWindowHandle::Xlib(unix::XlibHandle {
-                        window: self.raw_handle(),
-                        display: $crate::app::display(),
-                        ..unix::XlibHandle::empty()
-                    });
+                    let mut handle = XlibHandle::empty();
+                    handle.window = self.raw_handle();
+                    handle.display = $crate::app::display();
+                    return RawWindowHandle::Xlib(handle);
                 }
-                // #[cfg(target_os = "windows")]
-                // {
-                //     let mut handle = Win32Handle::empty();
-                //     handle.hwnd = self.raw_handle();
-                //     handle.hinstance = $crate::app::display();
-                //     return RawWindowHandle::Win32(handle);
-                // }
-
-                // #[cfg(target_os = "macos")]
-                // {
-                //     let raw = self.raw_handle();
-                //     extern "C" {
-                //         pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
-                //     }
-                //     let cv = unsafe { cfltk_getContentView(raw) };
-                //     let mut handle = AppKitHandle::empty();
-                //     handle.ns_window = raw;
-                //     handle.ns_view = cv as _;
-                //     return RawWindowHandle::AppKit(handle);
-                // }
-
-                // #[cfg(target_os = "android")]
-                // {
-                //     let mut handle = AndroidNdkHandle::empty();
-                //     handle.a_native_window = self.raw_handle();
-                //     return RawWindowHandle::AndroidNdk(handle);
-                // }
-
-                // #[cfg(any(
-                //     target_os = "linux",
-                //     target_os = "dragonfly",
-                //     target_os = "freebsd",
-                //     target_os = "netbsd",
-                //     target_os = "openbsd",
-                // ))]
-                // {
-                //     let mut handle = XlibHandle::empty();
-                //     handle.window = self.raw_handle();
-                //     handle.display = $crate::app::display();
-                //     return RawWindowHandle::Xlib(handle);
-                // }
             }
         }
 
