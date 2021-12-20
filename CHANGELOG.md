@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.23] - Unreleased
+- Make Offscreen aware of single-threaded feature.
+
 ## [1.2.22] - 2021-12-19
 - Add doc comments and example comments. Thanks @KillTheMule.
 - Fix doc typos. Thanks @ctrl-81.
