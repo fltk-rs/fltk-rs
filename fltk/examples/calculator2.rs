@@ -194,8 +194,7 @@ fn main() {
     }
 
     for mut but in but_op_vec {
-        let label = but.label().clone();
-        let op = match label.as_str() {
+        let op = match but.label().as_str() {
             "+" => Ops::Add,
             "-" => Ops::Sub,
             "x" => Ops::Mul,
