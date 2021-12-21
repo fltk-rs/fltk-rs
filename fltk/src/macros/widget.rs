@@ -342,6 +342,7 @@ macro_rules! impl_widget_ext {
 
                 fn widget_resize(&mut self, x: i32, y: i32, width: i32, height: i32) {
                     assert!(!self.was_deleted());
+                    assert!(self.is_derived);
                     unsafe { [<$flname _widget_resize>](self.inner, x, y, width, height) }
                 }
 

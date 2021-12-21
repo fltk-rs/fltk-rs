@@ -409,6 +409,7 @@ macro_rules! impl_table_ext {
                     cb: F,
                 ) {
                     assert!(!self.was_deleted());
+                    assert!(self.is_derived);
                     pub type CustomDrawCellCallback = Option<
                         unsafe extern "C" fn(
                             wid: *mut Fl_Widget,
@@ -517,6 +518,7 @@ macro_rules! impl_table_ext {
 
                 fn scrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
+                    assert!(self.is_derived);
                     unsafe {
                         let ptr = [<$flname _scrollbar>](self.inner);
                         assert!(!ptr.is_null());
@@ -528,12 +530,35 @@ macro_rules! impl_table_ext {
 
                 fn hscrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
+                    assert!(self.is_derived);
                     unsafe {
                         let ptr = [<$flname _hscrollbar>](self.inner);
                         assert!(!ptr.is_null());
                         $crate::valuator::Scrollbar::from_widget_ptr(
                             ptr as *mut fltk_sys::widget::Fl_Widget,
                         )
+                    }
+                }
+
+                fn find_cell(
+                    &self,
+                    ctx: crate::table::TableContext,
+                    row: i32,
+                    col: i32,
+                ) -> Option<(i32, i32, i32, i32)> {
+                    assert!(!self.was_deleted());
+                    assert!(self.is_derived);
+                    let mut x = 0;
+                    let mut y = 0;
+                    let mut w = 0;
+                    let mut h = 0;
+                    unsafe {
+                        let ret = [<$flname _find_cell>](self.inner, ctx as i32, row, col, &mut x, &mut y, &mut w, &mut h);
+                        if ret == 0 {
+                            Some((x, y, w, h))
+                        } else {
+                            None
+                        }
                     }
                 }
             }

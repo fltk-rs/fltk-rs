@@ -206,7 +206,7 @@ fn main() {
         let mut text_editor1 = text_editor.clone();
         let style_rc1 = Rc::clone(&style);
         move |font| {
-            if let Some(mut buf) = text_editor1.buffer() {
+            if let Some(buf) = text_editor1.buffer() {
                 if let Some((s, e)) = buf.selection_position() {
                     let mut style = style_rc1.borrow_mut();
                     let color = Color::from_u32(
@@ -236,7 +236,7 @@ fn main() {
         let mut text_editor1 = text_editor.clone();
         let style_rc1 = Rc::clone(&style);
         move |size| {
-            if let Some(mut buf) = text_editor1.buffer() {
+            if let Some(buf) = text_editor1.buffer() {
                 if let Some((s, e)) = buf.selection_position() {
                     let mut style = style_rc1.borrow_mut();
                     let color = Color::from_u32(
@@ -266,7 +266,7 @@ fn main() {
         let mut text_editor1 = text_editor.clone();
         let style_rc1 = Rc::clone(&style);
         move |color| {
-            if let Some(mut buf) = text_editor1.buffer() {
+            if let Some(buf) = text_editor1.buffer() {
                 if let Some((s, e)) = buf.selection_position() {
                     let mut style = style_rc1.borrow_mut();
                     let color = Color::from_u32(

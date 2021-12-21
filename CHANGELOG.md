@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.2.24] - Unreleased
+- Improve calculator examples. Thanks @peter-scholtens.
+- Add TableExt::find_cell().
+
 ## [1.2.23] - 2021-12-21
 - Update raw-window-handle to 0.4.
 - Make Offscreen aware of single-threaded feature.

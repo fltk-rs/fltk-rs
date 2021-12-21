@@ -1389,6 +1389,13 @@ pub unsafe trait TableExt: GroupExt {
     fn scrollbar(&self) -> crate::valuator::Scrollbar;
     /// Returns the table's horizontal scrollbar
     fn hscrollbar(&self) -> crate::valuator::Scrollbar;
+    /// Find a cell's coords and size by row and column
+    fn find_cell(
+        &self,
+        ctx: crate::table::TableContext,
+        row: i32,
+        col: i32,
+    ) -> Option<(i32, i32, i32, i32)>;
 }
 
 /// Defines the methods implemented by all image types

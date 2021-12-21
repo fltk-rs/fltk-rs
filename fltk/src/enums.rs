@@ -378,13 +378,12 @@ impl Font {
                             .to_vec();
                         let c = orig[0] as char;
                         v.push(c.to_ascii_uppercase() as u8);
-                        for i in 1..orig.len() {
-                            let c = orig[i];
-                            if c.is_ascii_uppercase() {
-                                v.push(' ' as _);
-                                v.push(c);
+                        for i in orig.iter().skip(1) {
+                            if i.is_ascii_uppercase() {
+                                v.push(b' ');
+                                v.push(*i);
                             } else {
-                                v.push(orig[i]);
+                                v.push(*i);
                             }
                         }
                         Ok(String::from_utf8_lossy(&v).to_string())

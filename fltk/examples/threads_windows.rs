@@ -35,7 +35,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     but_inc.set_callback({
         move |_| {
-            let s = s.clone();
             s.send(Message::Deactivate);
             thread::spawn(move || {
                 thread::sleep(Duration::from_secs(1));
@@ -47,7 +46,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     });
     but_dec.set_callback({
         move |_| {
-            let s = s.clone();
             s.send(Message::Deactivate);
             thread::spawn(move || {
                 thread::sleep(Duration::from_secs(1));
