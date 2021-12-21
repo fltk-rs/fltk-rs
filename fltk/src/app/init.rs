@@ -71,8 +71,9 @@ pub fn init_all() {
     }
 }
 
+#[doc(hidden)]
 /// Check whether we're in the ui thread
-pub(crate) fn is_ui_thread() -> bool {
+pub fn is_ui_thread() -> bool {
     unsafe { UI_THREAD.unwrap() == std::thread::current().id() }
 }
 
