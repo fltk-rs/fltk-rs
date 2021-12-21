@@ -1,9 +1,11 @@
 # Changelog
 
 
-## [1.2.23] - Unreleased
+## [1.2.23] - 2021-12-21
 - Update raw-window-handle to 0.4.
 - Make Offscreen aware of single-threaded feature.
+- Fix visibility of is_ui_thread().
+- Update FLTK.
 
 ## [1.2.22] - 2021-12-19
 - Add doc comments and example comments. Thanks @KillTheMule.
