@@ -48,8 +48,9 @@ pub struct Offscreen {
     inner: *mut raw::c_void,
 }
 
+#[cfg(not(feature = "single-threaded"))]
 unsafe impl Sync for Offscreen {}
-
+#[cfg(not(feature = "single-threaded"))]
 unsafe impl Send for Offscreen {}
 
 impl PartialEq for Offscreen {

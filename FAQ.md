@@ -1,5 +1,7 @@
 # FAQ
 
+(An updated FAQ can be found in the fltk-rs [book](https://fltk-rs.github.io/fltk-book/FAQ.html))
+
 ## Build issues
 
 ### Why does the build fails when I follow one of the tutorials?
