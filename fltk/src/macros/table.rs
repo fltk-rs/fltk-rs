@@ -72,6 +72,15 @@ macro_rules! impl_table_ext {
                     }
                 }
 
+                fn try_visible_cells(&self) -> Option<(i32, i32, i32, i32)> {
+                    let (a, b, c, d) = self.visible_cells();
+                    if a == -1 || b == -1 || c == -1 || d == -1 {
+                        None
+                    } else {
+                        Some((a, b, c, d))
+                    }
+                }
+
                 fn is_interactive_resize(&self) -> bool {
                     unsafe {
                         assert!(!self.was_deleted());
@@ -325,6 +334,17 @@ macro_rules! impl_table_ext {
                             &mut col_right,
                         );
                         (row_top, col_left, row_bot, col_right)
+                    }
+                }
+
+                fn try_get_selection(&self) -> Option<(i32, i32, i32, i32)> {
+                    let (a, b, c, d) = self.get_selection();
+                    if a < 0 && b < 0 && c >= 0 && d >= 0 {
+                        Some((0, 0, c, d))
+                    } else if a >= 0 && b >=0 && c >=0 && d >= 0 {
+                        Some((a, b, c, d))
+                    } else {
+                        None
                     }
                 }
 

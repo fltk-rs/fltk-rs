@@ -3,7 +3,7 @@
 
 ## [1.2.24] - Unreleased
 - Improve calculator examples. Thanks @peter-scholtens.
-- Add TableExt::find_cell().
+- Add TableExt::find_cell(), TableExt::try_get_selection() and try_visible_cells().
 
 ## [1.2.23] - 2021-12-21
 - Update raw-window-handle to 0.4.
