@@ -6,6 +6,7 @@ use std::{
     ffi::{CStr, CString},
     mem,
     os::raw,
+    path::{Path, PathBuf},
 };
 
 /// Color modes to be used with the color chooser
@@ -93,15 +94,15 @@ impl FileDialog {
     }
 
     /// Returns the chosen file name
-    pub fn filename(&self) -> std::path::PathBuf {
+    pub fn filename(&self) -> PathBuf {
         assert!(!self.inner.is_null());
         unsafe {
             let cnt = Fl_Native_File_Chooser_count(self.inner);
             if cnt == 0 {
-                return std::path::PathBuf::from("");
+                return PathBuf::from("");
             }
             let x = Fl_Native_File_Chooser_filenames(self.inner, 0);
-            std::path::PathBuf::from(
+            PathBuf::from(
                 CStr::from_ptr(x as *mut raw::c_char)
                     .to_string_lossy()
                     .to_string(),
@@ -110,14 +111,14 @@ impl FileDialog {
     }
 
     /// Returns the chosen file names
-    pub fn filenames(&self) -> Vec<std::path::PathBuf> {
+    pub fn filenames(&self) -> Vec<PathBuf> {
         assert!(!self.inner.is_null());
         unsafe {
             let cnt = Fl_Native_File_Chooser_count(self.inner);
-            let mut names: Vec<std::path::PathBuf> = vec![];
+            let mut names: Vec<PathBuf> = vec![];
             for i in 0..cnt {
                 let x = Fl_Native_File_Chooser_filenames(self.inner, i);
-                names.push(std::path::PathBuf::from(
+                names.push(PathBuf::from(
                     CStr::from_ptr(x as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
@@ -128,14 +129,14 @@ impl FileDialog {
     }
 
     /// Returns the preset directory
-    pub fn directory(&self) -> std::path::PathBuf {
+    pub fn directory(&self) -> PathBuf {
         assert!(!self.inner.is_null());
         unsafe {
             let x = Fl_Native_File_Chooser_directory(self.inner);
             if x.is_null() {
-                std::path::PathBuf::from("")
+                PathBuf::from("")
             } else {
-                std::path::PathBuf::from(
+                PathBuf::from(
                     CStr::from_ptr(x as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
@@ -147,12 +148,12 @@ impl FileDialog {
     /// Sets the starting directory
     /// # Errors
     /// Errors on non-existent path
-    pub fn set_directory<P: AsRef<std::path::Path>>(&mut self, dir: P) -> Result<(), FltkError> {
+    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: &P) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         self.set_directory_(dir.as_ref())
     }
 
-    fn set_directory_(&mut self, dir: &std::path::Path) -> Result<(), FltkError> {
+    fn set_directory_(&mut self, dir: &Path) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         let dir = CString::new(dir.to_str().ok_or_else(|| {
             FltkError::Unknown(String::from("Failed to convert path to string"))
@@ -429,11 +430,11 @@ impl HelpDialog {
     /// Loads a file for the help dialog
     /// # Errors
     /// Errors on non-existent path
-    pub fn load<P: AsRef<std::path::Path>>(&mut self, file: P) -> Result<(), FltkError> {
+    pub fn load<P: AsRef<Path>>(&mut self, file: P) -> Result<(), FltkError> {
         self.load_(file.as_ref())
     }
 
-    fn load_(&mut self, file: &std::path::Path) -> Result<(), FltkError> {
+    fn load_(&mut self, file: &Path) -> Result<(), FltkError> {
         let f = file
             .to_str()
             .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
@@ -623,7 +624,16 @@ bitflags::bitflags! {
 
 impl FileChooser {
     /// Instantiates a new `FileChooser`
-    pub fn new(dir: &str, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
+    pub fn new<P: AsRef<Path>>(dir: P, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
+        Self::new_(dir.as_ref(), pattern, typ, title)
+    }
+
+    fn new_(dir: &Path, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
+        let dir = if let Some(dir) = dir.to_str() {
+            dir
+        } else {
+            "."
+        };
         let dir = CString::safe_new(dir);
         let pattern = CString::safe_new(pattern);
         let title = CString::safe_new(title);
@@ -638,7 +648,6 @@ impl FileChooser {
             FileChooser { inner: ptr }
         }
     }
-
     /// Deletes a `FileChooser`
     /// # Safety
     /// Can invalidate the underlying pointer
@@ -729,10 +738,16 @@ impl FileChooser {
     }
 
     /// Sets the directory of the `FileChooser`
-    pub fn set_directory(&mut self, dir: &str) {
+    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: &P) {
+        self.set_directory_(dir.as_ref())
+    }
+
+    fn set_directory_(&mut self, dir: &Path) {
         assert!(!self.inner.is_null());
-        let dir = CString::safe_new(dir);
-        unsafe { Fl_File_Chooser_set_directory(self.inner, dir.as_ptr()) }
+        if let Some(dir) = dir.to_str() {
+            let dir = CString::safe_new(dir);
+            unsafe { Fl_File_Chooser_set_directory(self.inner, dir.as_ptr()) }
+        }
     }
 
     /// Gets the directory of the `FileChooser`
@@ -753,11 +768,10 @@ impl FileChooser {
     }
 
     /// Sets the filter for the dialog, can be:
-    /// A single wildcard (e.g. `"*.txt"`).
-    /// Multiple wildcards (e.g. `"*.{cxx,h,H}"`).
-    /// A descriptive name followed by a `\t` and a wildcard (e.g. `"Text Files\t*.txt"`).
-    /// A list of separate wildcards with a `\n` between each (e.g. `"*.{cxx,H}\n*.txt"`).
-    /// A list of descriptive names and wildcards (e.g. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
+    /// Multiple patterns can be used by separating them with tabs, like "*.jpg\t*.png\t*.gif\t*". 
+    /// In addition, you can provide human-readable labels with the patterns inside parenthesis, 
+    /// like "JPEG Files (*.jpg)\tPNG Files (*.png)\tGIF Files (*.gif)\tAll Files (*)
+    /// And "Rust Files (*.{rs,txt,toml})"
     pub fn set_filter(&mut self, pattern: &str) {
         assert!(!self.inner.is_null());
         let pattern = CString::safe_new(pattern);
@@ -787,12 +801,7 @@ impl FileChooser {
         unsafe { Fl_File_Chooser_filter_value(self.inner) as i32 }
     }
 
-    /// Sets the filter for the dialog, can be:
-    /// A single wildcard (e.g. `"*.txt"`).
-    /// Multiple wildcards (e.g. `"*.{cxx,h,H}"`).
-    /// A descriptive name followed by a `\t` and a wildcard (e.g. `"Text Files\t*.txt"`).
-    /// A list of separate wildcards with a `\n` between each (e.g. `"*.{cxx,H}\n*.txt"`).
-    /// A list of descriptive names and wildcards (e.g. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
+    /// Sets the filter value using an index to the '\t'separated filters
     pub fn set_filter_value(&mut self, f: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_filter_value(self.inner, f as i32) }
@@ -1117,6 +1126,7 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
 
 /**
     Shows a file chooser returning a String.
+    The pattern field takes the same argument the [`FileChooser::set_filter`](`crate::dialog::FileChooser::set_filter`) method.
     Example:
     ```rust,no_run
     use fltk::{prelude::*, *};
@@ -1131,26 +1141,34 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
     }
     ```
 */
-pub fn file_chooser(message: &str, pattern: &str, dir: &str, relative: bool) -> Option<String> {
-    let message = CString::safe_new(message);
-    let pattern = CString::safe_new(pattern);
-    let dir = CString::safe_new(dir);
-    unsafe {
-        let ptr = Fl_file_chooser(
-            message.as_ptr(),
-            pattern.as_ptr(),
-            dir.as_ptr(),
-            relative as i32,
-        );
-        if ptr.is_null() {
-            None
-        } else {
-            Some(
-                CStr::from_ptr(ptr as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string(),
-            )
+pub fn file_chooser<P: AsRef<Path>>(message: &str, pattern: &str, dir: P, relative: bool) -> Option<String> {
+    file_chooser_(message, pattern, dir.as_ref(), relative)
+}
+
+fn file_chooser_(message: &str, pattern: &str, dir: &Path, relative: bool) -> Option<String> {
+    if let Some(dir) = dir.to_str() {
+        let message = CString::safe_new(message);
+        let pattern = CString::safe_new(pattern);
+        let dir = CString::safe_new(dir);
+        unsafe {
+            let ptr = Fl_file_chooser(
+                message.as_ptr(),
+                pattern.as_ptr(),
+                dir.as_ptr(),
+                relative as i32,
+            );
+            if ptr.is_null() {
+                None
+            } else {
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
+            }
         }
+    } else {
+        None
     }
 }
 
