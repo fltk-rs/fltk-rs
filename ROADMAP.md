@@ -4,3 +4,4 @@
 - Rename TreeItem::try_widget() to widget() and remove old widget() method.
 - Rename Wizard::try_current_widget() to current_widget() and remove old current_widget() method.
 - Rename TableExt::try_get_selection() and try_visible_cells() to get_selection and visible_cells().
+- FileChooser::directory() should return a PathBuf.
