@@ -153,7 +153,7 @@ impl MyChoice {
     }
 
     pub fn choice(&self) -> String {
-        self.frame.label().clone()
+        self.frame.label()
     }
 
     pub fn value(&self) -> i32 {

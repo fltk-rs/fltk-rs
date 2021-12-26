@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.2.24] - 2021-12-27
+- Improve calculator examples. Thanks @peter-scholtens.
+- Add TableExt::find_cell(), TableExt::try_get_selection() and try_visible_cells().
+- Fix FileChooser filter docs. FileChooser also accepts Paths in addition to strings.
+- Use crossbeam-channel internally to avoid conflicts with app::awake().
+
 ## [1.2.23] - 2021-12-21
 - Update raw-window-handle to 0.4.
 - Make Offscreen aware of single-threaded feature.

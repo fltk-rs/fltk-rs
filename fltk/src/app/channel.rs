@@ -3,6 +3,10 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::{any, marker, mem, os::raw};
 
+pub(crate) static mut SENDER: Option<crossbeam_channel::Sender<*mut raw::c_void>> = None;
+pub(crate) static mut RECEIVER: Option<crossbeam_channel::Receiver<*mut raw::c_void>> = None;
+
+#[doc(hidden)]
 /// Sends a custom message
 /// # Safety
 /// The type must be Send and Sync safe
@@ -11,6 +15,7 @@ pub unsafe fn awake_msg<T>(msg: T) {
 }
 
 #[allow(clippy::missing_safety_doc)]
+#[doc(hidden)]
 /**
     Receives a custom message
     ```rust,no_run
@@ -53,7 +58,13 @@ impl<T: Send + Sync> Sender<T> {
             sz: self.sz,
             msg: val,
         };
-        unsafe { awake_msg(msg) }
+        unsafe {
+            if let Some(s) = &SENDER {
+                s.try_send(Box::into_raw(Box::from(msg)) as *mut raw::c_void)
+                    .ok();
+                crate::app::awake();
+            }
+        }
     }
 }
 
@@ -68,14 +79,24 @@ pub struct Receiver<T: Send + Sync> {
 impl<T: Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
-        let data: Option<Message<T>> = unsafe { thread_msg() };
-        data.and_then(|data| {
-            if data.sz == self.sz && data.hash == self.hash {
-                Some(data.msg)
+        if let Some(r) = unsafe { &RECEIVER } {
+            if let Ok(msg) = r.try_recv() {
+                if !msg.is_null() {
+                    let data = unsafe { Box::from_raw(msg as *const _ as *mut Message<T>) };
+                    if data.sz == self.sz && data.hash == self.hash {
+                        Some(data.msg)
+                    } else {
+                        None
+                    }
+                } else {
+                    None
+                }
             } else {
                 None
             }
-        })
+        } else {
+            None
+        }
     }
 }
 
@@ -85,6 +106,13 @@ impl<T: Send + Sync> Receiver<T> {
 /// If you need access to the queue, you might be better served by another channel implementation with a try_iter() method.
 // The implementation could really use generic statics
 pub fn channel<T: Send + Sync>() -> (Sender<T>, Receiver<T>) {
+    unsafe {
+        if SENDER.is_none() || RECEIVER.is_none() {
+            let (s, r) = crossbeam_channel::unbounded();
+            SENDER = Some(s);
+            RECEIVER = Some(r);
+        }
+    }
     let msg_sz = mem::size_of::<T>();
     let type_name = any::type_name::<T>();
     let mut hasher = DefaultHasher::new();

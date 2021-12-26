@@ -390,6 +390,7 @@ impl DoubleWindow {
     /// Get the window's opacity
     pub fn opacity(&self) -> f64 {
         assert!(!self.was_deleted());
+        assert!(self.is_derived);
         unsafe { Fl_Double_Window_alpha(self.inner) as f64 / 255.0 }
     }
 
@@ -402,6 +403,7 @@ impl DoubleWindow {
     /// ```
     pub fn set_opacity(&mut self, val: f64) {
         assert!(!self.was_deleted());
+        assert!(self.is_derived);
         if self.shown() {
             let val: u8 = if val > 1.0 {
                 255
@@ -550,6 +552,7 @@ impl DoubleWindow {
     /// Force the position of the window
     pub fn force_position(&mut self, flag: bool) {
         assert!(!self.was_deleted());
+        assert!(self.is_derived);
         unsafe { Fl_Double_Window_force_position(self.inner, flag as _) }
     }
 }
@@ -690,6 +693,7 @@ impl OverlayWindow {
     /// Draw overlay
     pub fn draw_overlay<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
         assert!(!self.was_deleted());
+        assert!(self.is_derived);
         unsafe {
             unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut raw::c_void) {
                 let mut wid = OverlayWindow::from_widget_ptr(wid as *mut _);

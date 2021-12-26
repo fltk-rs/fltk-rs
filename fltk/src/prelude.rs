@@ -1269,6 +1269,9 @@ pub unsafe trait TableExt: GroupExt {
     /// The range of row and column numbers for all visible and partially visible cells in the table.
     /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`)
     fn visible_cells(&self) -> (i32, i32, i32, i32);
+    /// The range of row and column numbers for all visible and partially visible cells in the table.
+    /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`)
+    fn try_visible_cells(&self) -> Option<(i32, i32, i32, i32)>;
     /// Returns whether the resize is interactive
     fn is_interactive_resize(&self) -> bool;
     /// Returns whether a row is resizable
@@ -1338,8 +1341,12 @@ pub unsafe trait TableExt: GroupExt {
     /// Returns whether a cell is selected
     fn is_selected(&self, r: i32, c: i32) -> bool;
     /// Gets the selection.
-    /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`)
+    /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`).
+    /// Returns -1 if no selection.
     fn get_selection(&self) -> (i32, i32, i32, i32);
+    /// Tries to get the selection.
+    /// Returns an Option((`row_top`, `col_left`, `row_bot`, `col_right`))
+    fn try_get_selection(&self) -> Option<(i32, i32, i32, i32)>;
     /// Sets the selection
     fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
     /// Unset selection
@@ -1389,6 +1396,13 @@ pub unsafe trait TableExt: GroupExt {
     fn scrollbar(&self) -> crate::valuator::Scrollbar;
     /// Returns the table's horizontal scrollbar
     fn hscrollbar(&self) -> crate::valuator::Scrollbar;
+    /// Find a cell's coords and size by row and column
+    fn find_cell(
+        &self,
+        ctx: crate::table::TableContext,
+        row: i32,
+        col: i32,
+    ) -> Option<(i32, i32, i32, i32)>;
 }
 
 /// Defines the methods implemented by all image types
