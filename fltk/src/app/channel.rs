@@ -3,8 +3,8 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::{any, marker, mem, os::raw};
 
-pub(crate) static mut SENDER: Option<crossbeam_channel::Sender<*mut raw::c_void>> = None;
-pub(crate) static mut RECEIVER: Option<crossbeam_channel::Receiver<*mut raw::c_void>> = None;
+static mut SENDER: Option<crossbeam_channel::Sender<*mut raw::c_void>> = None;
+static mut RECEIVER: Option<crossbeam_channel::Receiver<*mut raw::c_void>> = None;
 
 #[doc(hidden)]
 /// Sends a custom message
