@@ -492,6 +492,12 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// Perform a callback on resize.
     /// Avoid resizing the parent or the same widget to avoid infinite recursion
     fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
+    /// Makes the widget derived
+    /// # Safety
+    /// Calling this on a non-derived widget can cause undefined behavior
+    unsafe fn make_derived(&mut self) {
+        unimplemented!();
+    }
 }
 
 /// Defines the methods implemented by all button widgets.

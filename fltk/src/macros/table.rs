@@ -538,7 +538,6 @@ macro_rules! impl_table_ext {
 
                 fn scrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
-                    // assert!(self.is_derived);
                     unsafe {
                         let ptr = [<$flname _scrollbar>](self.inner);
                         assert!(!ptr.is_null());
@@ -550,7 +549,6 @@ macro_rules! impl_table_ext {
 
                 fn hscrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
-                    // assert!(self.is_derived);
                     unsafe {
                         let ptr = [<$flname _hscrollbar>](self.inner);
                         assert!(!ptr.is_null());
@@ -567,7 +565,6 @@ macro_rules! impl_table_ext {
                     col: i32,
                 ) -> Option<(i32, i32, i32, i32)> {
                     assert!(!self.was_deleted());
-                    // assert!(self.is_derived);
                     let mut x = 0;
                     let mut y = 0;
                     let mut w = 0;

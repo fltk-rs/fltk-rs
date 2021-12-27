@@ -1071,6 +1071,10 @@ macro_rules! impl_widget_base {
                         [<$flname _resize_callback>](self.inner, callback, data);
                     }
                 }
+
+                unsafe fn make_derived(&mut self) {
+                    self.is_derived = true
+                }
             }
         }
     };
@@ -1598,6 +1602,10 @@ macro_rules! impl_widget_base_via {
                 let mut widget = self.clone();
                 self.$member
                     .resize_callback(move |_, x, y, w, h| cb(&mut widget, x, y, w, h))
+            }
+
+            unsafe fn make_derived(&mut self) {
+                unimplemented!();
             }
         }
     };
