@@ -1072,7 +1072,7 @@ macro_rules! impl_widget_base {
                     }
                 }
 
-                unsafe fn make_derived(&mut self) {
+                unsafe fn assume_derived(&mut self) {
                     self.is_derived = true
                 }
             }
@@ -1604,8 +1604,8 @@ macro_rules! impl_widget_base_via {
                     .resize_callback(move |_, x, y, w, h| cb(&mut widget, x, y, w, h))
             }
 
-            unsafe fn make_derived(&mut self) {
-                self.make_derived()
+            unsafe fn assume_derived(&mut self) {
+                self.assume_derived()
             }
         }
     };

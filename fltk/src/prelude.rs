@@ -495,7 +495,7 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// Makes the widget derived
     /// # Safety
     /// Calling this on a non-derived widget can cause undefined behavior
-    unsafe fn make_derived(&mut self) {
+    unsafe fn assume_derived(&mut self) {
         unimplemented!();
     }
 }
