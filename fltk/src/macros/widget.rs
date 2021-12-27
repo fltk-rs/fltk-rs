@@ -1605,7 +1605,7 @@ macro_rules! impl_widget_base_via {
             }
 
             unsafe fn make_derived(&mut self) {
-                unimplemented!();
+                self.make_derived()
             }
         }
     };
