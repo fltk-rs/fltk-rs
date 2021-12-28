@@ -560,7 +560,7 @@ macro_rules! impl_table_ext {
 
                 fn find_cell(
                     &self,
-                    ctx: crate::table::TableContext,
+                    ctx: $crate::table::TableContext,
                     row: i32,
                     col: i32,
                 ) -> Option<(i32, i32, i32, i32)> {
@@ -576,6 +576,36 @@ macro_rules! impl_table_ext {
                         } else {
                             None
                         }
+                    }
+                }
+
+                fn cursor2rowcol(
+                    &self,
+                ) -> (
+                    $crate::table::TableContext,
+                    Option<i32>,
+                    Option<i32>,
+                    $crate::table::TableResizeFlag,
+                ) {
+                    assert!(!self.was_deleted());
+                    let mut r = 0;
+                    let mut c = 0;
+                    let mut flag = 0;
+                    unsafe {
+                        let ret = [<$flname _cursor2rowcol>](self.inner, &mut r, &mut c, &mut flag);
+                        let ctx: $crate::table::TableContext = std::mem::transmute(ret);
+                        let flag: $crate::table::TableResizeFlag = std::mem::transmute(flag);
+                        let r = if r < 0 {
+                            None
+                        } else {
+                            Some(r)
+                        };
+                        let c = if c < 0 {
+                            None
+                        } else {
+                            Some(c)
+                        };
+                        (ctx, r, c, flag)
                     }
                 }
             }

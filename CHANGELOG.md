@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.2.25] - Unreleased
+- Relax derive requirement for TableExt::scrollbar().
+- Add TableExt::cursor2rowcol().
+- Add WidgetBase::assume_derived().
+
 ## [1.2.24] - 2021-12-27
 - Improve calculator examples. Thanks @peter-scholtens.
 - Add TableExt::find_cell(), TableExt::try_get_selection() and try_visible_cells().
