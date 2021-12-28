@@ -98,7 +98,7 @@ panic = "abort"
 Furthermore, you can build Rust's stdlib optimized for size (it comes optimized for speed by default). More info on that [here](https://github.com/johnthagen/min-sized-rust)
 
 ### Can I cross-compile my application to a mobile platform or WASM?
-FLTK currently doesn't support WASM nor mobile platforms. It is focused on desktop applications.
+FLTK currently doesn't support WASM nor iOS. It has experimental support for Android (YMMV). It is focused on desktop applications.
 
 ## Licensing
 
@@ -115,7 +115,7 @@ FLTK has some known issues with text alignment.
 ## Concurrency
 
 ### Do you plan on supporting multithreading or async/await?
-FLTK supports multithreaded and concurrent applications. See the examples directory for examples on usage with threads, messages, async_std and tokio.
+FLTK supports multithreaded and concurrent applications. See the examples dir and the [fltk-rs demos repo](https://github.com/fltk-rs/demos) for examples on usage with threads, messages, async_std and tokio (web-todo examples).
 
 ### Should I explicitly call app::lock() and app::unlock()?
 fltk-rs surrounds all mutating calls to widgets with a lock on the C++ wrapper side. Normally you wouldn't have to call app::lock() and app::unlock(). 
