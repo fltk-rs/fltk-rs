@@ -4,6 +4,7 @@
 ## [1.2.25] - Unreleased
 - Relax derive requirement for TableExt::scrollbar().
 - Add TableExt::cursor2rowcol().
+- Add enum table::TableResizeFlag.
 - Add WidgetBase::assume_derived().
 
 ## [1.2.24] - 2021-12-27
