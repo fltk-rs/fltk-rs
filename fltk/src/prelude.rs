@@ -1412,12 +1412,12 @@ pub unsafe trait TableExt: GroupExt {
     /// Get the cursor to row/col
     fn cursor2rowcol(
         &self,
-    ) -> (
+    ) -> Option<(
         crate::table::TableContext,
-        Option<i32>,
-        Option<i32>,
+        i32,
+        i32,
         crate::table::TableResizeFlag,
-    );
+    )>;
 }
 
 /// Defines the methods implemented by all image types
