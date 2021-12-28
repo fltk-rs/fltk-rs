@@ -595,12 +595,12 @@ macro_rules! impl_table_ext {
                         let ret = [<$flname _cursor2rowcol>](self.inner, &mut r, &mut c, &mut flag);
                         let ctx: $crate::table::TableContext = std::mem::transmute(ret);
                         let flag: $crate::table::TableResizeFlag = std::mem::transmute(flag);
-                        let r = if r < 0 {
+                        let r = if r < 0 || ctx == $crate::table::TableContext::None {
                             None
                         } else {
                             Some(r)
                         };
-                        let c = if c < 0 {
+                        let c = if c < 0 || ctx == $crate::table::TableContext::None {
                             None
                         } else {
                             Some(c)
