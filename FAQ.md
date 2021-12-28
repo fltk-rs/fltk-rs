@@ -1,7 +1,5 @@
 # FAQ
 
-(An updated FAQ can be found in the fltk-rs [book](https://fltk-rs.github.io/fltk-book/FAQ.html))
-
 ## Build issues
 
 ### Why does the build fails when I follow one of the tutorials?
@@ -146,7 +144,8 @@ This is due to a debug_assert which checks that the involved widget and the wind
 ## Memory and unsafety
 
 ### How memory-safe is fltk-rs?
-The callback mechanism consists of a closure as a void pointer with a shim which dereferences the void pointer into a function pointer and calls the function. This is technically undefined behavior, however most implementations permit it and it's the method used by most wrappers to handle callbacks across FFI boundaries.
+The callback mechanism consists of a closure as a void pointer with a shim which dereferences the void pointer into a function pointer and calls the function. This is technically undefined behavior, however most implementations permit it and it's the method used by most wrappers to handle callbacks across FFI boundaries. [link](https://rust-lang.github.io/unsafe-code-guidelines/layout/function-pointers.html#representation)
+
 As stated before, panics accross FFI boundaries are undefined behavior, as such, the C++ wrapper never throws. Furthermore, all panics which might arise in callbacks are caught on the Rust side using catch_unwind.
 
 FLTK manages it's own memory. Any widget is automatically owned by a parent which does the book-keeping as well and deletion, this is the enclosing widget implementing GroupExt such as windws etc. This is done in the C++ FLTK library itself. Any constructed widget calls the current() method which detects the enclosing group widget, and calls its add() method rending ownership to the group widget. Upon destruction of the group widget, all owned widgets are freed. Also all widgets are wrapped in a mutex for all mutating methods, and their lifetimes are tracked using an Fl_Widget_Tracker, That means widgets have interior mutability as if wrapped in an Arc<Mutex<widget>> and have a tracking pointer to detect deletion. Cloning a widget performs a memcpy of the underlying pointer and allows for interior mutability; it does not create a new widget.
@@ -155,7 +154,38 @@ This locking might lead to some performance degradation as compared to the origi
 
 Overriding drawing methods will box data to be sent to the C++ library, so the data should optimally be limited to widgets or plain old data types to avoid unnecessary leaks if a custom drawn widget might be deleted during the lifetime of the program.
 
-That said, fltk-rs is still in active development, and has not yet been fuzzed nor thouroughly tested for memory safety issues.
+### Can I get memory leaks with fltk-rs?
+Non-parented widgets that can no longer be accessed are a memory leak. Otherwise, as mentioned in the previous section all parented widgets lifetimes' are managed by the parent.
+An example of a leaking widget:
+```rust
+fn main() {
+    let a = app::App::default();
+    let mut win = window::Window::default();
+    win.end();
+    win.show();
+
+    {
+        button::Button::default(); // this leaks since it's not parented by the window, and has no handle in main
+    }
+}
+```
+
+A more subtle cause of leaks, is removing a widget from a group, then the scope ends without it being added to another group or deleted:
+```rust
+fn main() {
+    let a = app::App::default();
+    let mut win = window::Window::default();
+    {
+        button::Button::default(); // This doesn't leak since the parent is the window
+    }
+    win.end();
+    win.show();
+
+    {
+        win.remove_by_index(0); // the button leaks here since it's removed and we no longer have access to it
+    }
+}
+```
 
 ### Why is fltk-rs using so much unsafe code?
 Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so the unsafe keyword is needed.
