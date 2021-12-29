@@ -754,9 +754,9 @@ pub unsafe trait WindowExt: GroupExt {
     fn set_xclass(&mut self, s: &str);
     /// Clear the modal state of the window
     fn clear_modal_states(&mut self);
-    /// removes the window border and sets the window on top
+    /// removes the window border and sets the window on top, by settings the NOBORDER and OVERRIDE flags
     fn set_override(&mut self);
-    /// Checks whether set_override was called
+    /// Checks whether the OVERRIDE flag was set
     fn is_override(&self) -> bool;
     /// Forces the position of the window
     fn force_position(&mut self, flag: bool);
