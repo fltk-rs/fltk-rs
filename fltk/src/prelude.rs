@@ -659,6 +659,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn center_screen(self) -> Self
     where
         Self: Sized;
+    /// removes the window border and sets the window on top
+    fn set_override(&mut self);
     /// Makes a window modal, should be called before `show`
     fn make_modal(&mut self, val: bool);
     /// Makes a window fullscreen
