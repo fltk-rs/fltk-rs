@@ -382,6 +382,9 @@ extern "C" {
     pub fn Fl_Window_draw_children(self_: *mut Fl_Window);
 }
 extern "C" {
+    pub fn Fl_Window_set_override(arg1: *mut Fl_Window);
+}
+extern "C" {
     pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: ::std::os::raw::c_uint);
 }
 extern "C" {
@@ -922,6 +925,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Single_Window_draw_children(self_: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_override(arg1: *mut Fl_Single_Window);
 }
 extern "C" {
     pub fn Fl_Single_Window_make_modal(
@@ -1467,6 +1473,9 @@ extern "C" {
     pub fn Fl_Double_Window_draw_children(self_: *mut Fl_Double_Window);
 }
 extern "C" {
+    pub fn Fl_Double_Window_set_override(arg1: *mut Fl_Double_Window);
+}
+extern "C" {
     pub fn Fl_Double_Window_make_modal(
         arg1: *mut Fl_Double_Window,
         boolean: ::std::os::raw::c_uint,
@@ -1960,6 +1969,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_draw_children(self_: *mut Fl_Menu_Window);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_override(arg1: *mut Fl_Menu_Window);
 }
 extern "C" {
     pub fn Fl_Menu_Window_make_modal(arg1: *mut Fl_Menu_Window, boolean: ::std::os::raw::c_uint);
@@ -2512,6 +2524,9 @@ extern "C" {
         -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Overlay_Window_set_override(arg1: *mut Fl_Overlay_Window);
+}
+extern "C" {
     pub fn Fl_Overlay_Window_make_modal(
         arg1: *mut Fl_Overlay_Window,
         boolean: ::std::os::raw::c_uint,
@@ -3001,6 +3016,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_draw_children(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_override(arg1: *mut Fl_Gl_Window);
 }
 extern "C" {
     pub fn Fl_Gl_Window_make_modal(arg1: *mut Fl_Gl_Window, boolean: ::std::os::raw::c_uint);
@@ -3540,6 +3558,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_draw_children(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_override(arg1: *mut Fl_Glut_Window);
 }
 extern "C" {
     pub fn Fl_Glut_Window_make_modal(arg1: *mut Fl_Glut_Window, boolean: ::std::os::raw::c_uint);

@@ -70,6 +70,11 @@ macro_rules! impl_window_ext {
                     self
                 }
 
+                fn set_override(&mut self) {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _set_override>](self.inner) }
+                }
+
                 fn make_modal(&mut self, val: bool) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _make_modal>](self.inner, val as u32) }
