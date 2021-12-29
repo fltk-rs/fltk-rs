@@ -659,8 +659,6 @@ pub unsafe trait WindowExt: GroupExt {
     fn center_screen(self) -> Self
     where
         Self: Sized;
-    /// removes the window border and sets the window on top
-    fn set_override(&mut self);
     /// Makes a window modal, should be called before `show`
     fn make_modal(&mut self, val: bool);
     /// Makes a window fullscreen
@@ -739,6 +737,29 @@ pub unsafe trait WindowExt: GroupExt {
     /// wait for the window to be displayed after calling `show()`.
     /// More info [here](https://www.fltk.org/doc-1.4/classFl__Window.html#aafbec14ca8ff8abdaff77a35ebb23dd8)
     fn wait_for_expose(&self);
+    /// Get the window's opacity
+    fn opacity(&self) -> f64;
+    /// Set the window's opacity,
+    /// Ranges from 0.0 to 1.0, where 1.0 is fully opaque and 0.0 is fully transparent.
+    /// This should be called on a shown window.
+    /// On X11, opacity support depends on the window manager and can be queried:
+    /// ```ignore
+    /// $ xprop -root _NET_SUPPORTED | grep -o _NET_WM_WINDOW_OPACITY
+    /// ```
+    fn set_opacity(&mut self, val: f64);
+    /// Get the window's XA_WM_CLASS property
+    fn xclass(&self) -> Option<String>;
+    /// Set the window's XA_WM_CLASS property.
+    /// This should be called before showing the window
+    fn set_xclass(&mut self, s: &str);
+    /// Clear the modal state of the window
+    fn clear_modal_states(&mut self);
+    /// removes the window border and sets the window on top
+    fn set_override(&mut self);
+    /// Checks whether set_override was called
+    fn is_override(&self) -> bool;
+    /// Forces the position of the window
+    fn force_position(&mut self, flag: bool);
 }
 
 /// Defines the methods implemented by all input and output widgets.

@@ -2,10 +2,11 @@
 
 
 ## [1.2.25] - Unreleased
-- Relax derive requirement for TableExt::scrollbar().
+- Add WindowExt::set_override() by @AshfordN.
 - Add TableExt::cursor2rowcol().
 - Add enum table::TableResizeFlag.
 - Add WidgetBase::assume_derived().
+- Relax derive requirement for TableExt::scrollbar().
 
 ## [1.2.24] - 2021-12-27
 - Improve calculator examples. Thanks @peter-scholtens.

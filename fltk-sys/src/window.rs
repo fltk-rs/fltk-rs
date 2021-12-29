@@ -382,9 +382,6 @@ extern "C" {
     pub fn Fl_Window_draw_children(self_: *mut Fl_Window);
 }
 extern "C" {
-    pub fn Fl_Window_set_override(arg1: *mut Fl_Window);
-}
-extern "C" {
     pub fn Fl_Window_make_modal(arg1: *mut Fl_Window, boolean: ::std::os::raw::c_uint);
 }
 extern "C" {
@@ -480,6 +477,36 @@ extern "C" {
     pub fn Fl_Window_wait_for_expose(arg1: *mut Fl_Window);
 }
 extern "C" {
+    pub fn Fl_Window_set_alpha(self_: *mut Fl_Window, val: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Window_alpha(self_: *const Fl_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Window_force_position(self_: *mut Fl_Window, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Window_default_xclass() -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Window_xclass(self_: *const Fl_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Window_set_default_xclass(s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Window_set_xclass(self_: *mut Fl_Window, s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Window_clear_modal_states(self_: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_set_override(arg1: *mut Fl_Window);
+}
+extern "C" {
+    pub fn Fl_Window_override(arg1: *const Fl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Window_find_by_handle(handle: *mut ::std::os::raw::c_void) -> *mut Fl_Window;
 }
 extern "C" {
@@ -500,21 +527,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_set_raw_handle(self_: *mut Fl_Window, handle: *mut ::std::os::raw::c_void);
-}
-extern "C" {
-    pub fn Fl_Window_default_xclass() -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn Fl_Window_xclass(self_: *const Fl_Window) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-    pub fn Fl_Window_set_default_xclass(s: *const ::std::os::raw::c_char);
-}
-extern "C" {
-    pub fn Fl_Window_set_xclass(self_: *mut Fl_Window, s: *const ::std::os::raw::c_char);
-}
-extern "C" {
-    pub fn Fl_Window_clear_modal_states(self_: *mut Fl_Window);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -927,9 +939,6 @@ extern "C" {
     pub fn Fl_Single_Window_draw_children(self_: *mut Fl_Single_Window);
 }
 extern "C" {
-    pub fn Fl_Single_Window_set_override(arg1: *mut Fl_Single_Window);
-}
-extern "C" {
     pub fn Fl_Single_Window_make_modal(
         arg1: *mut Fl_Single_Window,
         boolean: ::std::os::raw::c_uint,
@@ -1046,6 +1055,43 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Single_Window_wait_for_expose(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_alpha(self_: *mut Fl_Single_Window, val: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Single_Window_alpha(self_: *const Fl_Single_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Single_Window_force_position(
+        self_: *mut Fl_Single_Window,
+        flag: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_default_xclass() -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Single_Window_xclass(self_: *const Fl_Single_Window)
+        -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_default_xclass(s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_xclass(
+        self_: *mut Fl_Single_Window,
+        s: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_clear_modal_states(self_: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_override(arg1: *mut Fl_Single_Window);
+}
+extern "C" {
+    pub fn Fl_Single_Window_override(arg1: *const Fl_Single_Window) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1388,18 +1434,6 @@ extern "C" {
     pub fn Fl_Double_Window_flush(w: *mut Fl_Double_Window);
 }
 extern "C" {
-    pub fn Fl_Double_Window_set_alpha(self_: *mut Fl_Double_Window, val: ::std::os::raw::c_uchar);
-}
-extern "C" {
-    pub fn Fl_Double_Window_alpha(self_: *const Fl_Double_Window) -> ::std::os::raw::c_uchar;
-}
-extern "C" {
-    pub fn Fl_Double_Window_force_position(
-        self_: *mut Fl_Double_Window,
-        flag: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_Double_Window_begin(self_: *mut Fl_Double_Window);
 }
 extern "C" {
@@ -1471,9 +1505,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_draw_children(self_: *mut Fl_Double_Window);
-}
-extern "C" {
-    pub fn Fl_Double_Window_set_override(arg1: *mut Fl_Double_Window);
 }
 extern "C" {
     pub fn Fl_Double_Window_make_modal(
@@ -1592,6 +1623,43 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_wait_for_expose(arg1: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_alpha(self_: *mut Fl_Double_Window, val: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Double_Window_alpha(self_: *const Fl_Double_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Double_Window_force_position(
+        self_: *mut Fl_Double_Window,
+        flag: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Double_Window_default_xclass() -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Double_Window_xclass(self_: *const Fl_Double_Window)
+        -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_default_xclass(s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_xclass(
+        self_: *mut Fl_Double_Window,
+        s: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Double_Window_clear_modal_states(self_: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_override(arg1: *mut Fl_Double_Window);
+}
+extern "C" {
+    pub fn Fl_Double_Window_override(arg1: *const Fl_Double_Window) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1971,9 +2039,6 @@ extern "C" {
     pub fn Fl_Menu_Window_draw_children(self_: *mut Fl_Menu_Window);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_set_override(arg1: *mut Fl_Menu_Window);
-}
-extern "C" {
     pub fn Fl_Menu_Window_make_modal(arg1: *mut Fl_Menu_Window, boolean: ::std::os::raw::c_uint);
 }
 extern "C" {
@@ -2074,6 +2139,36 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_wait_for_expose(arg1: *mut Fl_Menu_Window);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_alpha(self_: *mut Fl_Menu_Window, val: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_alpha(self_: *const Fl_Menu_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_force_position(self_: *mut Fl_Menu_Window, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_default_xclass() -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_xclass(self_: *const Fl_Menu_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_default_xclass(s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_xclass(self_: *mut Fl_Menu_Window, s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_clear_modal_states(self_: *mut Fl_Menu_Window);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_override(arg1: *mut Fl_Menu_Window);
+}
+extern "C" {
+    pub fn Fl_Menu_Window_override(arg1: *const Fl_Menu_Window) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2524,9 +2619,6 @@ extern "C" {
         -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_set_override(arg1: *mut Fl_Overlay_Window);
-}
-extern "C" {
     pub fn Fl_Overlay_Window_make_modal(
         arg1: *mut Fl_Overlay_Window,
         boolean: ::std::os::raw::c_uint,
@@ -2648,6 +2740,44 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Overlay_Window_wait_for_expose(arg1: *mut Fl_Overlay_Window);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_set_alpha(self_: *mut Fl_Overlay_Window, val: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_alpha(self_: *const Fl_Overlay_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_force_position(
+        self_: *mut Fl_Overlay_Window,
+        flag: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_default_xclass() -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_xclass(
+        self_: *const Fl_Overlay_Window,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_set_default_xclass(s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_set_xclass(
+        self_: *mut Fl_Overlay_Window,
+        s: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_clear_modal_states(self_: *mut Fl_Overlay_Window);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_set_override(arg1: *mut Fl_Overlay_Window);
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_override(arg1: *const Fl_Overlay_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_gl_start();
@@ -3018,9 +3148,6 @@ extern "C" {
     pub fn Fl_Gl_Window_draw_children(self_: *mut Fl_Gl_Window);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_set_override(arg1: *mut Fl_Gl_Window);
-}
-extern "C" {
     pub fn Fl_Gl_Window_make_modal(arg1: *mut Fl_Gl_Window, boolean: ::std::os::raw::c_uint);
 }
 extern "C" {
@@ -3114,6 +3241,36 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_wait_for_expose(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_alpha(self_: *mut Fl_Gl_Window, val: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_alpha(self_: *const Fl_Gl_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_force_position(self_: *mut Fl_Gl_Window, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_default_xclass() -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_xclass(self_: *const Fl_Gl_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_default_xclass(s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_xclass(self_: *mut Fl_Gl_Window, s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_clear_modal_states(self_: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_override(arg1: *mut Fl_Gl_Window);
+}
+extern "C" {
+    pub fn Fl_Gl_Window_override(arg1: *const Fl_Gl_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);
@@ -3560,9 +3717,6 @@ extern "C" {
     pub fn Fl_Glut_Window_draw_children(self_: *mut Fl_Glut_Window);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_set_override(arg1: *mut Fl_Glut_Window);
-}
-extern "C" {
     pub fn Fl_Glut_Window_make_modal(arg1: *mut Fl_Glut_Window, boolean: ::std::os::raw::c_uint);
 }
 extern "C" {
@@ -3663,6 +3817,36 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_wait_for_expose(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_alpha(self_: *mut Fl_Glut_Window, val: ::std::os::raw::c_uchar);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_alpha(self_: *const Fl_Glut_Window) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_force_position(self_: *mut Fl_Glut_Window, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_default_xclass() -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_xclass(self_: *const Fl_Glut_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_default_xclass(s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_xclass(self_: *mut Fl_Glut_Window, s: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_clear_modal_states(self_: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_override(arg1: *mut Fl_Glut_Window);
+}
+extern "C" {
+    pub fn Fl_Glut_Window_override(arg1: *const Fl_Glut_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Glut_Window_flush(self_: *mut Fl_Glut_Window);

@@ -199,7 +199,7 @@ impl SingleWindow {
         }
     }
 
-    /// Returns the pixels per unit
+    /// Returns the pixels per unit/point
     pub fn pixels_per_unit(&self) -> f32 {
         assert!(!self.was_deleted());
         #[allow(unused_mut)]
@@ -231,7 +231,7 @@ impl SingleWindow {
     /// Get the default XA_WM_CLASS property for all windows of your application
     pub fn default_xclass() -> Option<String> {
         unsafe {
-            let ptr = Fl_Window_default_xclass();
+            let ptr = Fl_Single_Window_default_xclass();
             if ptr.is_null() {
                 None
             } else {
@@ -239,39 +239,11 @@ impl SingleWindow {
             }
         }
     }
-
     /// Set the default XA_WM_CLASS property for all windows of your application.
     /// This should be called before showing with window
     pub fn set_default_xclass(s: &str) {
         let s = CString::safe_new(s);
-        unsafe { Fl_Window_set_default_xclass(s.as_ptr()) }
-    }
-
-    /// Get the window's XA_WM_CLASS property
-    pub fn xclass(&self) -> Option<String> {
-        assert!(!self.was_deleted());
-        unsafe {
-            let ptr = Fl_Window_xclass(self.inner as _);
-            if ptr.is_null() {
-                None
-            } else {
-                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
-            }
-        }
-    }
-
-    /// Set the window's XA_WM_CLASS property.
-    /// This should be called before showing the window
-    pub fn set_xclass(&mut self, s: &str) {
-        assert!(!self.was_deleted());
-        let s = CString::safe_new(s);
-        unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
-    }
-
-    /// Clear the modal state of the window
-    pub fn clear_modal_states(&mut self) {
-        assert!(!self.was_deleted());
-        unsafe { Fl_Window_clear_modal_states(self.inner as _) }
+        unsafe { Fl_Single_Window_set_default_xclass(s.as_ptr()) }
     }
 }
 
@@ -387,36 +359,7 @@ impl DoubleWindow {
         unsafe { Fl_Double_Window_flush(self.inner) }
     }
 
-    /// Get the window's opacity
-    pub fn opacity(&self) -> f64 {
-        assert!(!self.was_deleted());
-        assert!(self.is_derived);
-        unsafe { Fl_Double_Window_alpha(self.inner) as f64 / 255.0 }
-    }
-
-    /// Set the window's opacity,
-    /// Ranges from 0.0 to 1.0, where 1.0 is fully opaque and 0.0 is fully transparent.
-    /// This should be called on a shown window.
-    /// On X11, opacity support depends on the window manager and can be queried:
-    /// ```ignore
-    /// $ xprop -root _NET_SUPPORTED | grep -o _NET_WM_WINDOW_OPACITY
-    /// ```
-    pub fn set_opacity(&mut self, val: f64) {
-        assert!(!self.was_deleted());
-        assert!(self.is_derived);
-        if self.shown() {
-            let val: u8 = if val > 1.0 {
-                255
-            } else if val < 0.0 {
-                0
-            } else {
-                (val * 255.0).round() as u8
-            };
-            unsafe { Fl_Double_Window_set_alpha(self.inner, val) }
-        }
-    }
-
-    /// Returns the pixels per unit.
+    /// Returns the pixels per unit./point
     pub fn pixels_per_unit(&self) -> f32 {
         assert!(!self.was_deleted());
         #[allow(unused_mut)]
@@ -506,7 +449,7 @@ impl DoubleWindow {
     /// Get the default XA_WM_CLASS property for all windows of your application
     pub fn default_xclass() -> Option<String> {
         unsafe {
-            let ptr = Fl_Window_default_xclass();
+            let ptr = Fl_Double_Window_default_xclass();
             if ptr.is_null() {
                 None
             } else {
@@ -514,46 +457,11 @@ impl DoubleWindow {
             }
         }
     }
-
     /// Set the default XA_WM_CLASS property for all windows of your application.
     /// This should be called before showing with window
     pub fn set_default_xclass(s: &str) {
         let s = CString::safe_new(s);
-        unsafe { Fl_Window_set_default_xclass(s.as_ptr()) }
-    }
-
-    /// Get the window's XA_WM_CLASS property
-    pub fn xclass(&self) -> Option<String> {
-        assert!(!self.was_deleted());
-        unsafe {
-            let ptr = Fl_Window_xclass(self.inner as _);
-            if ptr.is_null() {
-                None
-            } else {
-                Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
-            }
-        }
-    }
-
-    /// Set the window's XA_WM_CLASS property.
-    /// This should be called before showing the window
-    pub fn set_xclass(&mut self, s: &str) {
-        assert!(!self.was_deleted());
-        let s = CString::safe_new(s);
-        unsafe { Fl_Window_set_xclass(self.inner as _, s.as_ptr()) }
-    }
-
-    /// Clear the modal state of the window
-    pub fn clear_modal_states(&mut self) {
-        assert!(!self.was_deleted());
-        unsafe { Fl_Window_clear_modal_states(self.inner as _) }
-    }
-
-    /// Force the position of the window
-    pub fn force_position(&mut self, flag: bool) {
-        assert!(!self.was_deleted());
-        assert!(self.is_derived);
-        unsafe { Fl_Double_Window_force_position(self.inner, flag as _) }
+        unsafe { Fl_Double_Window_set_default_xclass(s.as_ptr()) }
     }
 }
 
@@ -855,7 +763,7 @@ impl GlutWindow {
         unsafe { Fl_Glut_Window_make_overlay_current(self.inner) }
     }
 
-    /// Returns the pixels per unit
+    /// Returns the pixels per unit/point
     pub fn pixels_per_unit(&self) -> f32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_pixels_per_unit(self.inner) }
