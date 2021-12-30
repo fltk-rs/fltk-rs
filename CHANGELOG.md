@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.25] - Unreleased
+## [1.2.25] - 2021-12-30
 - Add WindowExt::set_override() by @AshfordN.
 - Add draw::wrap_measure() by @AshfordN.
 - Add TableExt::cursor2rowcol().
