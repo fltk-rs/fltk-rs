@@ -538,7 +538,6 @@ macro_rules! impl_table_ext {
 
                 fn scrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
-                    assert!(self.is_derived);
                     unsafe {
                         let ptr = [<$flname _scrollbar>](self.inner);
                         assert!(!ptr.is_null());
@@ -550,7 +549,6 @@ macro_rules! impl_table_ext {
 
                 fn hscrollbar(&self) -> $crate::valuator::Scrollbar {
                     assert!(!self.was_deleted());
-                    assert!(self.is_derived);
                     unsafe {
                         let ptr = [<$flname _hscrollbar>](self.inner);
                         assert!(!ptr.is_null());
@@ -562,12 +560,11 @@ macro_rules! impl_table_ext {
 
                 fn find_cell(
                     &self,
-                    ctx: crate::table::TableContext,
+                    ctx: $crate::table::TableContext,
                     row: i32,
                     col: i32,
                 ) -> Option<(i32, i32, i32, i32)> {
                     assert!(!self.was_deleted());
-                    assert!(self.is_derived);
                     let mut x = 0;
                     let mut y = 0;
                     let mut w = 0;
@@ -578,6 +575,30 @@ macro_rules! impl_table_ext {
                             Some((x, y, w, h))
                         } else {
                             None
+                        }
+                    }
+                }
+
+                fn cursor2rowcol(
+                    &self,
+                ) -> Option<(
+                    $crate::table::TableContext,
+                    i32,
+                    i32,
+                    $crate::table::TableResizeFlag,
+                )> {
+                    assert!(!self.was_deleted());
+                    let mut r = 0;
+                    let mut c = 0;
+                    let mut flag = 0;
+                    unsafe {
+                        let ret = [<$flname _cursor2rowcol>](self.inner, &mut r, &mut c, &mut flag);
+                        let ctx: $crate::table::TableContext = std::mem::transmute(ret);
+                        if ctx == $crate::table::TableContext::None {
+                            None
+                        } else {
+                            let flag: $crate::table::TableResizeFlag = std::mem::transmute(flag);
+                            Some((ctx, r, c, flag))
                         }
                     }
                 }

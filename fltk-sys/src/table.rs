@@ -618,6 +618,14 @@ extern "C" {
         h: *mut ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Table_cursor2rowcol(
+        self_: *const Fl_Table,
+        r: *mut ::std::os::raw::c_int,
+        c: *mut ::std::os::raw::c_int,
+        flag: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Table_Row {
@@ -1234,6 +1242,14 @@ extern "C" {
         y: *mut ::std::os::raw::c_int,
         w: *mut ::std::os::raw::c_int,
         h: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Table_Row_cursor2rowcol(
+        self_: *const Fl_Table_Row,
+        r: *mut ::std::os::raw::c_int,
+        c: *mut ::std::os::raw::c_int,
+        flag: *mut ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {

@@ -1,0 +1,29 @@
+# This is the list of fltk-rs' authors for copyright purposes.
+#
+# This does not necessarily list everyone who has contributed code, since in
+# some cases, their employer may be the copyright holder.
+# The list was retrieved using `git log --format=format:'%aN <%aE>' | awk '!x[$0]++'`
+# and follows the guidelines described in https://opensource.google/docs/releasing/authors/
+
+Mohammed Alyousef <may642_2000@hotmail.com>
+AshfordN <ashford.nichols@gmail.com>
+Peter C. S. Scholtens <peter.scholtens@freedom.nl>
+KillTheMule <KillTheMule@users.noreply.github.com>
+ctrl-81 <96100184+ctrl-81@users.noreply.github.com>
+Mark <mark@qtrac.eu>
+Hannes Braun <hannesbraun@mail.de>
+Adia Robbie <adyaro37@gmail.com>
+eadf <ead.fritz@gmail.com>
+Florian Bruder <florian.bruder@posteo.de>
+Kevin Wojniak <kainjow@users.noreply.github.com>
+Casey Borders <TheBeast.13@gmail.com>
+Tom Dryer <tomdryer.com@gmail.com>
+legendofa <34162874+legendofa@users.noreply.github.com>
+dheatovwil <tgtay@outlook.com>
+Nicolas Salguero <nicolas.salguero@laposte.net>
+Nicolas BAUW <nbauw@hotmail.com>
+Zalasus <niklas.weissner@gmail.com>
+basedtho <60894565+basedtho@users.noreply.github.com>
+Marty B <mrbm74@gmail.com>
+eddylin83 <linzuobin@foxmail.com>
+HMH <henry@freedesk.net>

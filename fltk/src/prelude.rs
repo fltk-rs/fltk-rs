@@ -492,6 +492,12 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// Perform a callback on resize.
     /// Avoid resizing the parent or the same widget to avoid infinite recursion
     fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&mut self, cb: F);
+    /// Makes the widget derived
+    /// # Safety
+    /// Calling this on a non-derived widget can cause undefined behavior
+    unsafe fn assume_derived(&mut self) {
+        unimplemented!();
+    }
 }
 
 /// Defines the methods implemented by all button widgets.
@@ -731,6 +737,29 @@ pub unsafe trait WindowExt: GroupExt {
     /// wait for the window to be displayed after calling `show()`.
     /// More info [here](https://www.fltk.org/doc-1.4/classFl__Window.html#aafbec14ca8ff8abdaff77a35ebb23dd8)
     fn wait_for_expose(&self);
+    /// Get the window's opacity
+    fn opacity(&self) -> f64;
+    /// Set the window's opacity,
+    /// Ranges from 0.0 to 1.0, where 1.0 is fully opaque and 0.0 is fully transparent.
+    /// This should be called on a shown window.
+    /// On X11, opacity support depends on the window manager and can be queried:
+    /// ```ignore
+    /// $ xprop -root _NET_SUPPORTED | grep -o _NET_WM_WINDOW_OPACITY
+    /// ```
+    fn set_opacity(&mut self, val: f64);
+    /// Get the window's XA_WM_CLASS property
+    fn xclass(&self) -> Option<String>;
+    /// Set the window's XA_WM_CLASS property.
+    /// This should be called before showing the window
+    fn set_xclass(&mut self, s: &str);
+    /// Clear the modal state of the window
+    fn clear_modal_states(&mut self);
+    /// removes the window border and sets the window on top, by settings the NOBORDER and OVERRIDE flags
+    fn set_override(&mut self);
+    /// Checks whether the OVERRIDE flag was set
+    fn is_override(&self) -> bool;
+    /// Forces the position of the window
+    fn force_position(&mut self, flag: bool);
 }
 
 /// Defines the methods implemented by all input and output widgets.
@@ -1403,6 +1432,15 @@ pub unsafe trait TableExt: GroupExt {
         row: i32,
         col: i32,
     ) -> Option<(i32, i32, i32, i32)>;
+    /// Get the cursor to row/col
+    fn cursor2rowcol(
+        &self,
+    ) -> Option<(
+        crate::table::TableContext,
+        i32,
+        i32,
+        crate::table::TableResizeFlag,
+    )>;
 }
 
 /// Defines the methods implemented by all image types

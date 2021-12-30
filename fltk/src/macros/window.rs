@@ -403,6 +403,66 @@ macro_rules! impl_window_ext {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _wait_for_expose>](self.inner) }
                 }
+
+                fn opacity(&self) -> f64 {
+                    assert!(!self.was_deleted());
+                    assert!(self.is_derived);
+                    unsafe { [<$flname _alpha>](self.inner) as f64 / 255.0 }
+                }
+
+                fn set_opacity(&mut self, val: f64) {
+                    assert!(!self.was_deleted());
+                    assert!(self.is_derived);
+                    if self.shown() {
+                        let val: u8 = if val > 1.0 {
+                            255
+                        } else if val < 0.0 {
+                            0
+                        } else {
+                            (val * 255.0).round() as u8
+                        };
+                        unsafe { [<$flname _set_alpha>](self.inner, val) }
+                    }
+                }
+
+                fn xclass(&self) -> Option<String> {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        let ptr = [<$flname _xclass>](self.inner as _);
+                        if ptr.is_null() {
+                            None
+                        } else {
+                            Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
+                        }
+                    }
+                }
+
+                fn set_xclass(&mut self, s: &str) {
+                    assert!(!self.was_deleted());
+                    let s = CString::safe_new(s);
+                    unsafe { [<$flname _set_xclass>](self.inner as _, s.as_ptr()) }
+                }
+
+                fn clear_modal_states(&mut self) {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _clear_modal_states>](self.inner as _) }
+                }
+
+                fn force_position(&mut self, flag: bool) {
+                    assert!(!self.was_deleted());
+                    assert!(self.is_derived);
+                    unsafe { [<$flname _force_position>](self.inner, flag as _) }
+                }
+
+                fn set_override(&mut self) {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _set_override>](self.inner) }
+                }
+
+                fn is_override(&self) -> bool {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _override>](self.inner) != 0 }
+                }
             }
         }
     };

@@ -1,7 +1,5 @@
 # FAQ
 
-(An updated FAQ can be found in the fltk-rs [book](https://fltk-rs.github.io/fltk-book/FAQ.html))
-
 ## Build issues
 
 ### Why does the build fails when I follow one of the tutorials?
@@ -18,9 +16,10 @@ fltk = "^1.2"
 Furthermore, the fltk-bundled flag assumes you have curl and tar installed (for Windows, they're available in the Native Tools Command Prompt).
 
 ### Build fails on windows, why can't CMake find my toolchain?
-If you're building using the MSVC toolchain, make sure you run your build (at least your initial build) using the Native Tools Command Prompt, which should appear once you start typing "native" in the start menu, choose the version corresponding to your installed Rust toolchain (x86 or x64). The Native Tools Command Prompt has all the environment variables set correctly for native development.
+If you're building using the MSVC toolchain, make sure you run your build (at least your initial build) using the Native Tools Command Prompt, which should appear once you start typing "native" in the start menu, choose the version corresponding to your installed Rust toolchain (x86 or x64). The Native Tools Command Prompt has all the environment variables set correctly for native development. [cmake-rs](https://github.com/alexcrichton/cmake-rs) which the bindings use might not be able to find the Visual Studio 2022 generator, in which case, you can try to use the fltk-bundled feature, or use ninja via the use-ninja feature. This requires installing [Ninja](https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages) which can be installed with Chocolatey, Scoop or manually.
 
-If you're building for the GNU toolchain, make sure that Make is also installed, which usually comes installed in MSYS2 and Cygwin.
+If you're building for the GNU toolchain, make sure that Make is also installed, which usually comes installed in mingw64 toolchain.
+
 
 ### Build fails on MacOS 11 with an Apple M1 chip, what can I do?
 If you're getting "file too small to be an archive" error, you might be hitting this [issues](https://github.com/rust-lang/cargo/issues/8875) or this [issue](https://github.com/rust-lang/rust/issues/50220). MacOS's native C/C++ toolchain shouldn't have this issue, and can be installed by running `xcode-select --install` or by installing XCode. Make sure the corresponding Rust toolchain (aarch64-apple-darwin) is installed as well. You can uninstall other Rust apple-darwin toolchains or use cargo-lipo instead if you need universal/fat binaries.
@@ -53,7 +52,7 @@ $ cargo run
 CMake caches the C++ compiler variable after it's first run, so if the above failed because of a previous run, you would have to run ```cargo clean``` or you can manually delete the CMakeCache.txt file in the build directory.
 
 ### Can I accelerate the build speed?
-You can use the "use-ninja" feature flag if you have ninja installed. Or you can set the NUM_JOBS environment variable, which the cmake crate picks up and tries to parallelize the build.
+You can use the "use-ninja" feature flag if you have ninja installed. 
 
 ### Can I cache a previous build of the FLTK library?
 You can use the fltk-bundled feature and use either the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL to point to the location of your cached cfltk and fltk libraries.
@@ -100,7 +99,7 @@ panic = "abort"
 Furthermore, you can build Rust's stdlib optimized for size (it comes optimized for speed by default). More info on that [here](https://github.com/johnthagen/min-sized-rust)
 
 ### Can I cross-compile my application to a mobile platform or WASM?
-FLTK currently doesn't support WASM nor mobile platforms. It is focused on desktop applications.
+FLTK currently doesn't support WASM nor iOS. It has experimental support for Android (YMMV). It is focused on desktop applications.
 
 ## Licensing
 
@@ -117,7 +116,7 @@ FLTK has some known issues with text alignment.
 ## Concurrency
 
 ### Do you plan on supporting multithreading or async/await?
-FLTK supports multithreaded and concurrent applications. See the examples directory for examples on usage with threads, messages, async_std and tokio.
+FLTK supports multithreaded and concurrent applications. See the examples dir and the [fltk-rs demos repo](https://github.com/fltk-rs/demos) for examples on usage with threads, messages, async_std and tokio (web-todo examples).
 
 ### Should I explicitly call app::lock() and app::unlock()?
 fltk-rs surrounds all mutating calls to widgets with a lock on the C++ wrapper side. Normally you wouldn't have to call app::lock() and app::unlock(). 
@@ -146,7 +145,8 @@ This is due to a debug_assert which checks that the involved widget and the wind
 ## Memory and unsafety
 
 ### How memory-safe is fltk-rs?
-The callback mechanism consists of a closure as a void pointer with a shim which dereferences the void pointer into a function pointer and calls the function. This is technically undefined behavior, however most implementations permit it and it's the method used by most wrappers to handle callbacks across FFI boundaries.
+The callback mechanism consists of a closure as a void pointer with a shim which dereferences the void pointer into a function pointer and calls the function. This is technically undefined behavior, however most implementations permit it and it's the method used by most wrappers to handle callbacks across FFI boundaries. [link](https://rust-lang.github.io/unsafe-code-guidelines/layout/function-pointers.html#representation)
+
 As stated before, panics accross FFI boundaries are undefined behavior, as such, the C++ wrapper never throws. Furthermore, all panics which might arise in callbacks are caught on the Rust side using catch_unwind.
 
 FLTK manages it's own memory. Any widget is automatically owned by a parent which does the book-keeping as well and deletion, this is the enclosing widget implementing GroupExt such as windws etc. This is done in the C++ FLTK library itself. Any constructed widget calls the current() method which detects the enclosing group widget, and calls its add() method rending ownership to the group widget. Upon destruction of the group widget, all owned widgets are freed. Also all widgets are wrapped in a mutex for all mutating methods, and their lifetimes are tracked using an Fl_Widget_Tracker, That means widgets have interior mutability as if wrapped in an Arc<Mutex<widget>> and have a tracking pointer to detect deletion. Cloning a widget performs a memcpy of the underlying pointer and allows for interior mutability; it does not create a new widget.
@@ -155,7 +155,38 @@ This locking might lead to some performance degradation as compared to the origi
 
 Overriding drawing methods will box data to be sent to the C++ library, so the data should optimally be limited to widgets or plain old data types to avoid unnecessary leaks if a custom drawn widget might be deleted during the lifetime of the program.
 
-That said, fltk-rs is still in active development, and has not yet been fuzzed nor thouroughly tested for memory safety issues.
+### Can I get memory leaks with fltk-rs?
+Non-parented widgets that can no longer be accessed are a memory leak. Otherwise, as mentioned in the previous section all parented widgets lifetimes' are managed by the parent.
+An example of a leaking widget:
+```rust
+fn main() {
+    let a = app::App::default();
+    let mut win = window::Window::default();
+    win.end();
+    win.show();
+
+    {
+        button::Button::default(); // this leaks since it's not parented by the window, and has no handle in main
+    }
+}
+```
+
+A more subtle cause of leaks, is removing a widget from a group, then the scope ends without it being added to another group or deleted:
+```rust
+fn main() {
+    let a = app::App::default();
+    let mut win = window::Window::default();
+    {
+        button::Button::default(); // This doesn't leak since the parent is the window
+    }
+    win.end();
+    win.show();
+
+    {
+        win.remove_by_index(0); // the button leaks here since it's removed and we no longer have access to it
+    }
+}
+```
 
 ### Why is fltk-rs using so much unsafe code?
 Interfacing with C++ or C code can't be reasoned about by the Rust compiler, so the unsafe keyword is needed.

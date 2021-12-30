@@ -39,6 +39,22 @@ pub enum TableContext {
     RcResize = 0x40,
 }
 
+/// Defines the `TableResizeFlag`
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq)]
+pub enum TableResizeFlag {
+    /// Non resizable
+    None = 0,
+    /// Resizes on the left of the column
+    ColLeft = 1,
+    /// Resizes on the right of the column
+    ColRight = 2,
+    /// Resizes to above the row
+    RowAbove = 3,
+    /// Resizes to below the row
+    RowBelow = 4,
+}
+
 /// Creates a table row
 #[derive(Debug)]
 pub struct TableRow {

@@ -214,49 +214,49 @@ bitflags::bitflags! {
     /// Defines alignment rules used by FLTK for labels
     pub struct Align: i32 {
         /// Center
-        const Center = 0;
+        const Center = 0x0000;
         /// Top
-        const Top = 1;
+        const Top = 0x0001;
         /// Bottom
-        const Bottom = 2;
+        const Bottom = 0x0002;
         /// Left
-        const Left = 4;
+        const Left = 0x0004;
         /// Right
-        const Right = 8;
+        const Right = 0x0008;
         /// Inside
-        const Inside = 16;
+        const Inside = 0x0010;
         /// Text Over Image
-        const TextOverImage = 20;
+        const TextOverImage = 0x0020;
         /// Clip
-        const Clip = 40;
+        const Clip = 0x0040;
         /// Wrap
-        const Wrap = 80;
+        const Wrap = 0x0080;
         /// Image Next To Text
-        const ImageNextToText = 100;
+        const ImageNextToText = 0x0100;
         /// Text Next To Image
-        const TextNextToImage = 120;
+        const TextNextToImage = 0x0120;
         /// Image Backdrop
-        const ImageBackdrop = 200;
+        const ImageBackdrop = 0x0200;
         /// Top Left
-        const TopLeft = 1 | 4;
+        const TopLeft = 0x0001 | 0x0004;
         /// Top Right
-        const TopRight = 1 | 8;
+        const TopRight = 0x0001 | 0x0008;
         /// Bottom Left
-        const BottomLeft = 2 | 4;
+        const BottomLeft = 0x0002 | 0x0004;
         /// Bottom Right
-        const BottomRight = 2 | 8;
+        const BottomRight = 0x0002 | 0x0008;
         /// Left Top
-        const LeftTop = 7;
+        const LeftTop = 0x0007;
         /// Right Top
-        const RightTop = 11;
+        const RightTop = 0x000B;
         /// Left Bottom
-        const LeftBottom = 13;
+        const LeftBottom = 0x000D;
         /// Right Bottom
-        const RightBottom = 14;
+        const RightBottom = 0x000E;
         /// Position Mask
-        const PositionMask = 15;
+        const PositionMask = 0x000F;
         /// Image Mask
-        const ImageMask = 320;
+        const ImageMask = 0x0320;
     }
 }
 

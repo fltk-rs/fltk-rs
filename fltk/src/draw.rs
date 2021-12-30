@@ -569,6 +569,18 @@ pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
     (x, y)
 }
 
+/// Measure the width and height of a text
+/// If `width` is non-zero, it will wrap to that width
+pub fn wrap_measure(txt: &str, width: i32, draw_symbols: bool) -> (i32, i32) {
+    let txt = CString::safe_new(txt);
+    let mut x = width;
+    let mut y = 0;
+    unsafe {
+        Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
+    }
+    (x, y)
+}
+
 /// Measure the coordinates and size of the text where a bounding box using the returned data would fit the text
 pub fn text_extents(txt: &str) -> (i32, i32, i32, i32) {
     let txt = CString::safe_new(txt);

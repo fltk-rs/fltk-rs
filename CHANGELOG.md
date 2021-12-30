@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.2.25] - 2021-12-30
+- Add WindowExt::set_override() by @AshfordN.
+- Add draw::wrap_measure() by @AshfordN.
+- Add TableExt::cursor2rowcol().
+- Add enum table::TableResizeFlag.
+- Add WidgetBase::assume_derived().
+- Relax derive requirement for TableExt::scrollbar().
+- Removed use of function-like macros in doc attribute which requires Rust 1.54.
+
 ## [1.2.24] - 2021-12-27
 - Improve calculator examples. Thanks @peter-scholtens.
 - Add TableExt::find_cell(), TableExt::try_get_selection() and try_visible_cells().
