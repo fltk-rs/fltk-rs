@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         rust:
-          - stable
           - 1.46.0
     steps:
       - name: Checkout sources
