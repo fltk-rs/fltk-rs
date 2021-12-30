@@ -52,7 +52,7 @@ $ cargo run
 CMake caches the C++ compiler variable after it's first run, so if the above failed because of a previous run, you would have to run ```cargo clean``` or you can manually delete the CMakeCache.txt file in the build directory.
 
 ### Can I accelerate the build speed?
-You can use the "use-ninja" feature flag if you have ninja installed. Or you can set the NUM_JOBS environment variable, which the cmake crate picks up and tries to parallelize the build.
+You can use the "use-ninja" feature flag if you have ninja installed. 
 
 ### Can I cache a previous build of the FLTK library?
 You can use the fltk-bundled feature and use either the CFLTK_BUNDLE_DIR or CFLTK_BUNDLE_URL to point to the location of your cached cfltk and fltk libraries.
