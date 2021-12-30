@@ -78,7 +78,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
 
         if cfg!(feature = "use-ninja")
-            || (target_triple.contains("windows-msvc") && utils::has_program("ninja"))
+            || (target_triple.contains("windows-msvc") && crate::utils::has_program("ninja"))
         {
             dst.generator("Ninja");
         }
