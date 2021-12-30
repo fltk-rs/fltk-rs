@@ -7,6 +7,7 @@
 - Add enum table::TableResizeFlag.
 - Add WidgetBase::assume_derived().
 - Relax derive requirement for TableExt::scrollbar().
+- Removed use of function-like macros in doc attribute which requires Rust 1.54.
 
 ## [1.2.24] - 2021-12-27
 - Improve calculator examples. Thanks @peter-scholtens.
