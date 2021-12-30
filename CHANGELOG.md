@@ -3,6 +3,7 @@
 
 ## [1.2.25] - Unreleased
 - Add WindowExt::set_override() by @AshfordN.
+- Add draw::wrap_measure() by @AshfordN.
 - Add TableExt::cursor2rowcol().
 - Add enum table::TableResizeFlag.
 - Add WidgetBase::assume_derived().
