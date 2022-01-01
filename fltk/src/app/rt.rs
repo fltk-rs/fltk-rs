@@ -275,26 +275,24 @@ pub fn has_idle2(cb: fn()) -> bool {
 }
 
 unsafe extern "C" fn timeout_shim(data: *mut raw::c_void) {
-    let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
-    let f: &mut (dyn FnMut()) = &mut **a;
-    let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
+    let a: *mut Box<dyn FnMut(*mut Box<dyn FnMut()>)> =
+        data as *mut Box<dyn FnMut(*mut Box<dyn FnMut()>)>;
+    let f: &mut (dyn FnMut(*mut Box<dyn FnMut()>)) = &mut **a;
+    let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| (*f)(data as _)));
 }
 
-pub fn add_timeout3<F: FnMut() + 'static>(tm: f64, cb: F) -> *mut Box<dyn FnMut()> {
+pub fn add_timeout3<F: FnMut(*mut Box<dyn FnMut()>) + 'static>(
+    tm: f64,
+    cb: F,
+) -> *mut Box<dyn FnMut()> {
     unsafe {
         assert!(crate::app::is_ui_thread());
-        let a: *mut Box<dyn FnMut()> = Box::into_raw(Box::new(Box::new(cb)));
+        let a: *mut Box<dyn FnMut(*mut Box<dyn FnMut()>)> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(timeout_shim);
         fl::Fl_add_timeout(tm, callback, data);
 
-        // analysis of the shim function and data variable
-        println!(
-            "A --> shim: {:p}, data: {:p}",
-            timeout_shim as *const (), data
-        );
-
-        a
+        data as _
     }
 }
 
@@ -304,12 +302,15 @@ pub fn remove_timeout3(cb: *mut Box<dyn FnMut()>) {
         let data: *mut raw::c_void = cb as *mut raw::c_void;
         let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(timeout_shim);
         fl::Fl_remove_timeout(callback, data);
+    }
+}
 
-        // analysis of the shim function and data variable
-        println!(
-            "R --> shim: {:p}, data: {:p}",
-            timeout_shim as *const (), data
-        );
+pub fn repeat_timeout3(tm: f64, cb: *mut Box<dyn FnMut()>) {
+    assert!(crate::app::is_ui_thread());
+    unsafe {
+        let data: *mut raw::c_void = cb as *mut raw::c_void;
+        let callback: Option<unsafe extern "C" fn(arg1: *mut raw::c_void)> = Some(timeout_shim);
+        fl::Fl_repeat_timeout(tm, callback, data);
     }
 }
 
