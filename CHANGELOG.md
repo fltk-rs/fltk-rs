@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.2.26] - Unreleased
+- Add timeout3, idle3 functions which properly handle removal of callbacks, by @AshfordN.
+- Deprecate app::release in favor of app::set_grab(None), by @AshfordN.
+
 ## [1.2.25] - 2021-12-30
 - Add WindowExt::set_override() by @AshfordN.
 - Add draw::wrap_measure() by @AshfordN.
