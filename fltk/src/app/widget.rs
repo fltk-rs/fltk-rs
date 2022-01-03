@@ -28,6 +28,7 @@ pub fn set_grab<W: WindowExt>(win: Option<W>) {
     }
 }
 
+#[deprecated = "use app::set_grab(None) instead"]
 /// Unset the currently grabbed window
 pub fn release() {
     unsafe { fl::Fl_release() }
