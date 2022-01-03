@@ -244,6 +244,7 @@ unsafe extern "C" fn idle_shim(data: *mut raw::c_void) {
 }
 
 /// Add an idle callback to run within the event loop.
+/// This function returns a handle that can be used for future interaction with the callback.
 /// Calls to `WidgetExt::redraw` within the callback require an explicit sleep
 pub fn add_idle3<F: FnMut(IdleHandle) + 'static>(cb: F) -> IdleHandle {
     unsafe {
@@ -256,7 +257,7 @@ pub fn add_idle3<F: FnMut(IdleHandle) + 'static>(cb: F) -> IdleHandle {
     }
 }
 
-/// Remove an idle function
+/// Remove the idle function associated with the handle
 pub fn remove_idle3(handle: IdleHandle) {
     unsafe {
         let data: *mut raw::c_void = handle as *mut raw::c_void;
@@ -265,7 +266,7 @@ pub fn remove_idle3(handle: IdleHandle) {
     }
 }
 
-/// Checks whether an idle function is installed
+/// Checks whether the idle function, associated with the handle, is installed
 pub fn has_idle3(handle: IdleHandle) -> bool {
     unsafe {
         let data: *mut raw::c_void = handle as *mut raw::c_void;
@@ -535,6 +536,7 @@ unsafe extern "C" fn timeout_shim(data: *mut raw::c_void) {
 
 /**
     Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
+    This function returns a handle that can be use for future interaction with the timeout
     Example:
     ```rust,no_run
     use fltk::{prelude::*, *};
@@ -564,7 +566,7 @@ pub fn add_timeout3<F: FnMut(TimeoutHandle) + 'static>(tm: f64, cb: F) -> Timeou
 }
 
 /**
-    Repeats a timeout callback from the expiration of the previous timeout.
+    Repeats the timeout callback, associated with the hadle, from the expiration of the previous timeout.
     You may only call this method inside a timeout callback.
     The timeout duration `tm` is indicated in seconds
     Example:
@@ -594,7 +596,7 @@ pub fn repeat_timeout3(tm: f64, handle: TimeoutHandle) {
 }
 
 /**
-    Removes a timeout callback
+    Removes the timeout callback associated with the handle
     ```rust,no_run
     use fltk::{prelude::*, *};
     fn main() {
