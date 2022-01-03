@@ -157,6 +157,7 @@ pub fn quit() {
     }
 }
 
+#[deprecated(since = "1.2.26", note = "please use `add_idle3` instead")]
 /// Add an idle callback to run within the event loop.
 /// Calls to `WidgetExt::redraw` within the callback require an explicit sleep
 pub fn add_idle<F: FnMut() + 'static>(cb: F) {
@@ -173,6 +174,7 @@ pub fn add_idle<F: FnMut() + 'static>(cb: F) {
     }
 }
 
+#[deprecated(since = "1.2.26", note = "please use `remove_idle3` instead")]
 /// Remove an idle function
 pub fn remove_idle<F: FnMut() + 'static>(cb: F) {
     unsafe {
@@ -188,6 +190,7 @@ pub fn remove_idle<F: FnMut() + 'static>(cb: F) {
     }
 }
 
+#[deprecated(since = "1.2.26", note = "please use `has_idle3` instead")]
 /// Checks whether an idle function is installed
 pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
     unsafe {
@@ -297,6 +300,7 @@ pub fn remove_clipboard_notify(cb: fn(source: i32)) {
     }
 }
 
+#[deprecated(since = "1.2.26", note = "please use `add_clipboard_notify3` instead")]
 /// Register a callback whenever there is a change to the selection buffer or the clipboard.
 /// The clipboard is source 1 and the selection buffer is source 0.
 /// A callback via closure cannot be removed!
@@ -345,6 +349,7 @@ pub fn remove_clipboard_notify3() {
     }
 }
 
+#[deprecated(since = "1.2.26", note = "please use `add_timeout3` instead")]
 /**
     Adds a one-shot timeout callback. The timeout duration `tm` is indicated in seconds
     Example:
@@ -378,6 +383,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     }
 }
 
+#[deprecated(since = "1.2.26", note = "please use `repeat_timeout3` instead")]
 /**
     Repeats a timeout callback from the expiration of the previous timeout.
     You may only call this method inside a timeout callback.
@@ -413,6 +419,7 @@ pub fn repeat_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     }
 }
 
+#[deprecated(since = "1.2.26", note = "please use `remove_timeout3` instead")]
 /// Removes a timeout callback
 pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
     assert!(crate::app::is_ui_thread());
@@ -429,6 +436,7 @@ pub fn remove_timeout<F: FnMut() + 'static>(cb: F) {
     }
 }
 
+#[deprecated(since = "1.2.26", note = "please use `has_timeout3` instead")]
 /// Check whether a timeout is installed
 pub fn has_timeout<F: FnMut() + 'static>(cb: F) -> bool {
     unsafe {
