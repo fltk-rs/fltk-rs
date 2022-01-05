@@ -238,7 +238,7 @@ pub fn has_idle2(cb: fn()) -> bool {
 }
 
 /// Handle object for interacting with idle callbacks
-pub type IdleHandle = *mut Box<dyn FnMut()>;
+pub type IdleHandle = *mut ();
 
 unsafe extern "C" fn idle_shim(data: *mut raw::c_void) {
     let a: *mut Box<dyn FnMut(IdleHandle)> = data as *mut Box<dyn FnMut(IdleHandle)>;
@@ -534,7 +534,7 @@ pub fn has_timeout2(cb: fn()) -> bool {
 }
 
 /// Handle object for interacting with timeouts
-pub type TimeoutHandle = *mut Box<dyn FnMut()>;
+pub type TimeoutHandle = *mut ();
 
 unsafe extern "C" fn timeout_shim(data: *mut raw::c_void) {
     let a: *mut Box<dyn FnMut(TimeoutHandle)> = data as *mut Box<dyn FnMut(TimeoutHandle)>;
