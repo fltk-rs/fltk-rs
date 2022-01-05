@@ -62,8 +62,3 @@ harness = false
 name = "threads"
 path = "tests/threads.rs"
 harness = false
-
-[[test]]
-name = "timeouts"
-path = "tests/timeouts.rs"
-harness = false
