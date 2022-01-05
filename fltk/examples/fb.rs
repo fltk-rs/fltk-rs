@@ -28,7 +28,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         draw::draw_rgba_nocopy(&mut frame, &framebuf);
     }
 
-    app::add_idle(move || {
+    app::add_idle3(move |_| {
         world.update();
         world.draw(&mut framebuf);
         // draw::draw_rgba(&mut frame, &framebuf).unwrap(); // A safe variant of draw_rgba_nocopy
