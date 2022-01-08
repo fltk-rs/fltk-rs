@@ -43,11 +43,22 @@ struct Message<T: Send + Sync> {
 }
 
 /// Creates a sender struct
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Copy)]
 pub struct Sender<T: Send + Sync> {
     data: marker::PhantomData<T>,
     hash: u64,
     sz: usize,
+}
+
+// Manually create the impl so there's no Clone bound on T
+impl<T: Send + Sync> Clone for Sender<T> {
+  fn clone(&self) -> Self {
+    Sender {
+      data: marker::PhantomData,
+      hash: self.hash.clone(),
+      sz: self.sz.clone()
+    }
+  }
 }
 
 impl<T: Send + Sync> Sender<T> {
@@ -69,11 +80,22 @@ impl<T: Send + Sync> Sender<T> {
 }
 
 /// Creates a receiver struct
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Copy)]
 pub struct Receiver<T: Send + Sync> {
     data: marker::PhantomData<T>,
     hash: u64,
     sz: usize,
+}
+//
+// Manually create the impl so there's no Clone bound on T
+impl<T: Send + Sync> Clone for Receiver<T> {
+  fn clone(&self) -> Self {
+    Receiver {
+      data: marker::PhantomData,
+      hash: self.hash.clone(),
+      sz: self.sz.clone()
+    }
+  }
 }
 
 impl<T: Send + Sync> Receiver<T> {
