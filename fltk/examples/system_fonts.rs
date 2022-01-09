@@ -27,7 +27,7 @@ use fltk::{prelude::*, *};
 
 fn main() {
     let app = app::App::default().load_system_fonts();
-    // To load a font by path, check the app::load_font() function
+    // To load a font by path, check the App::load_font() method
     let fonts = app::fonts();
     // println!("{:?}", fonts);
     let mut wind = window::Window::default().with_size(400, 300);
