@@ -221,8 +221,8 @@ macro_rules! impl_browser_ext {
                     unsafe {
                         let mut v = arr.to_vec();
                         v.push(0);
-                        let v = std::mem::ManuallyDrop::new(v);
-                        [<$flname _set_column_widths>](self.inner, v.as_ptr());
+                        let v = v.into_boxed_slice();
+                        [<$flname _set_column_widths>](self.inner, Box::into_raw(v) as _);
                     }
                 }
 
