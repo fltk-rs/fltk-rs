@@ -55,8 +55,8 @@ impl<T: Send + Sync> Clone for Sender<T> {
   fn clone(&self) -> Self {
     Sender {
       data: marker::PhantomData,
-      hash: self.hash.clone(),
-      sz: self.sz.clone()
+      hash: self.hash,
+      sz: self.sz,
     }
   }
 }
@@ -92,8 +92,8 @@ impl<T: Send + Sync> Clone for Receiver<T> {
   fn clone(&self) -> Self {
     Receiver {
       data: marker::PhantomData,
-      hash: self.hash.clone(),
-      sz: self.sz.clone()
+      hash: self.hash,
+      sz: self.sz,
     }
   }
 }

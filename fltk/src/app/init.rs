@@ -1,4 +1,4 @@
-use fltk_sys::{draw, fl};
+use fltk_sys::fl;
 use std::sync::{
     atomic::{AtomicBool, AtomicI32, Ordering},
     Arc, Mutex,
@@ -33,7 +33,6 @@ pub(crate) fn register_images() {
 pub fn init_all() {
     unsafe {
         fl::Fl_init_all();
-        draw::Fl_set_draw_font(0, 14);
         if fl::Fl_lock() != 0 {
             panic!("fltk-rs requires threading support!");
         }

@@ -125,27 +125,40 @@ pub fn fonts() -> Vec<String> {
 /// Load a font from a file
 pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
     unsafe {
-        let path = CString::new(path)?;
-        if let Some(load_font) = LOADED_FONT {
-            unload_font(load_font)?;
-        }
-        let ptr = fl::Fl_load_font(path.as_ptr());
-        if ptr.is_null() {
-            Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
-        } else {
-            let name = CStr::from_ptr(ptr as *mut _).to_string_lossy().to_string();
-            if let Some(f) = &FONTS {
-                let mut f = f.lock().unwrap();
-                if f.len() < 17 {
-                    f.push(name.clone());
-                } else {
-                    f[16] = name.clone();
-                }
-                fl::Fl_set_font2(16, ptr);
-                Ok(name)
-            } else {
-                Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
+        let font_data = std::fs::read(path)?;
+        let face = match ttf_parser::Face::from_slice(&font_data, 0) {
+            Ok(f) => f,
+            Err(_) => {
+                return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
             }
+        };
+        let family_name = face
+            .names()
+            .into_iter()
+            .find(|name| name.name_id == ttf_parser::name_id::FULL_NAME)
+            .and_then(|name| name.to_string());
+        if let Some(family_name) = family_name {
+            let path = CString::new(path)?;
+            if let Some(load_font) = LOADED_FONT {
+                unload_font(load_font)?;
+            }
+            let ret = fl::Fl_load_font(path.as_ptr());
+            if ret == 1 {
+                if let Some(f) = &FONTS {
+                    let mut f = f.lock().unwrap();
+                    if f.len() < 17 {
+                        f.push(family_name.clone());
+                    } else {
+                        f[16] = family_name.clone();
+                    }
+                    fl::Fl_set_font2(16, CString::safe_new(&family_name).into_raw());
+                }
+                Ok(family_name)
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+            }
+        } else {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         }
     }
 }

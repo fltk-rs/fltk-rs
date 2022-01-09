@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.2.27] - Unreleased
+- Add custom impl of Clone for app::Sender & Receiver by @KillTheMule.
+- Remove dependency on stb_truetype in favor of ttf-parser.
+
 ## [1.2.26] - 2022-01-05
 - Add timeout3, idle3 functions which properly handle removal of callbacks, by @AshfordN.
 - Deprecate app::release in favor of app::set_grab(None), by @AshfordN.
