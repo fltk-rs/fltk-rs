@@ -372,7 +372,7 @@ impl Font {
                 if let Some(family_name) = family_name {
                     let path = CString::safe_new(p);
                     let ret = fl::Fl_load_font(path.as_ptr());
-                    if ret == 1 {
+                    if ret > 0 {
                         Ok(family_name)
                     } else {
                         Err(FltkError::Internal(FltkErrorKind::FailedOperation))

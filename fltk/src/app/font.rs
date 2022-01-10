@@ -143,7 +143,7 @@ pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
                 unload_font(load_font)?;
             }
             let ret = fl::Fl_load_font(path.as_ptr());
-            if ret == 1 {
+            if ret > 0 {
                 if let Some(f) = &FONTS {
                     let mut f = f.lock().unwrap();
                     if f.len() < 17 {
