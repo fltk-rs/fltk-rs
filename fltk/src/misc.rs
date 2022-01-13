@@ -167,10 +167,10 @@ impl Spinner {
     }
 
     /// Sets wrap for the spinner
-    pub fn set_wrap(&mut self, arg2: bool) {
+    pub fn set_wrap(&mut self, flag: bool) {
         unsafe {
             assert!(!self.was_deleted());
-            Fl_Spinner_set_wrap(self.inner, arg2);
+            Fl_Spinner_set_wrap(self.inner, flag as _);
         }
     }
 }
