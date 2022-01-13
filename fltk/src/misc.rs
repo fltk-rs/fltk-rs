@@ -159,6 +159,20 @@ impl Spinner {
             Fl_Spinner_set_value(self.inner, arg2);
         }
     }
+
+    /// Returns whether wrap is set
+    pub fn wrap(&self) -> bool {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Spinner_wrap(self.inner) != 0 }
+    }
+
+    /// Sets wrap for the spinner
+    pub fn set_wrap(&mut self, arg2: bool) {
+        unsafe {
+            assert!(!self.was_deleted());
+            Fl_Spinner_set_wrap(self.inner, arg2);
+        }
+    }
 }
 
 /// Creates a clock widget
