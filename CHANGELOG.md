@@ -5,7 +5,8 @@
 - Add custom impl of Clone for app::Sender & Receiver by @KillTheMule.
 - Remove dependency on stb_truetype in favor of ttf-parser.
 - Add Spinner::set_wrap() and wrap().
-- Pull FLTK InputChoice changes.
+- Improve editor example, #1105 by @peter-scholtens.
+- Pull FLTK InputChoice changes and other fixes.
 
 ## [1.2.26] - 2022-01-05
 - Add timeout3, idle3 functions which properly handle removal of callbacks, by @AshfordN.
