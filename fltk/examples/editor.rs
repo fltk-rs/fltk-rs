@@ -167,6 +167,7 @@ pub struct MyApp {
     modified: bool,
     filename: Option<PathBuf>,
     r: app::Receiver<Message>,
+    main_win: window::Window,
     menu: MyMenu,
     buf: text::TextBuffer,
     editor: MyEditor,
@@ -259,6 +260,7 @@ impl MyApp {
             modified,
             filename,
             r,
+            main_win,
             menu,
             buf,
             editor,
@@ -275,6 +277,11 @@ impl MyApp {
                 self.modified = false;
                 self.menu.menu.find_item("&File/Save\t").unwrap().deactivate();
                 self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Black);
+                let name = match &self.filename {
+                    Some(f) => f.to_string_lossy().to_string(),
+                    None => "(Untitled)".to_string(),
+                };
+                self.main_win.set_label(&format!("{} - RustyEd",name));
                 return Ok(true)
             }
             None => {
@@ -298,6 +305,7 @@ impl MyApp {
         self.menu.menu.find_item("&File/Save\t").unwrap().deactivate();
         self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Black);
         self.filename = Some(dlg.filename());
+        self.main_win.set_label(&format!("{} - RustyEd",self.filename.as_ref().unwrap().to_string_lossy().to_string()));
         return Ok(true)
     }
 
@@ -312,6 +320,11 @@ impl MyApp {
                             self.modified = true;
                             self.menu.menu.find_item("&File/Save\t").unwrap().activate();
                             self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Red);
+                            let name = match &self.filename {
+                                Some(f) => f.to_string_lossy().to_string(),
+                                None => "(Untitled)".to_string(),
+                            };
+                            self.main_win.set_label(&format!("* {} - RustyEd",name));
                         }
                     }
                     New => {
