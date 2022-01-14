@@ -350,7 +350,6 @@ impl Font {
     }
 
     fn load_font_(path: &path::Path) -> Result<String, FltkError> {
-        let orig = path;
         unsafe {
             if !path.exists() {
                 return Err::<String, FltkError>(FltkError::Internal(
@@ -358,38 +357,28 @@ impl Font {
                 ));
             }
             if let Some(p) = path.to_str() {
-                let path = CString::safe_new(p);
-                let ptr = fl::Fl_load_font(path.as_ptr());
-                if ptr.is_null() {
-                    Err::<String, FltkError>(FltkError::Internal(FltkErrorKind::FailedOperation))
-                } else {
-                    let name = CStr::from_ptr(ptr as *mut _).to_string_lossy().to_string();
-                    if name.is_empty() {
-                        let mut v = vec![];
-                        // shouldn't fail
-                        // only runs in case stb couldn't get the font name!
-                        let orig = orig
-                            .file_stem()
-                            .unwrap()
-                            .to_str()
-                            .unwrap()
-                            .replace('-', "")
-                            .as_bytes()
-                            .to_vec();
-                        let c = orig[0] as char;
-                        v.push(c.to_ascii_uppercase() as u8);
-                        for i in orig.iter().skip(1) {
-                            if i.is_ascii_uppercase() {
-                                v.push(b' ');
-                                v.push(*i);
-                            } else {
-                                v.push(*i);
-                            }
-                        }
-                        Ok(String::from_utf8_lossy(&v).to_string())
-                    } else {
-                        Ok(name)
+                let font_data = std::fs::read(path)?;
+                let face = match ttf_parser::Face::from_slice(&font_data, 0) {
+                    Ok(f) => f,
+                    Err(_) => {
+                        return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
                     }
+                };
+                let family_name = face
+                    .names()
+                    .into_iter()
+                    .find(|name| name.name_id == ttf_parser::name_id::FULL_NAME)
+                    .and_then(|name| name.to_string());
+                if let Some(family_name) = family_name {
+                    let path = CString::safe_new(p);
+                    let ret = fl::Fl_load_font(path.as_ptr());
+                    if ret > 0 {
+                        Ok(family_name)
+                    } else {
+                        Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+                    }
+                } else {
+                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
                 }
             } else {
                 Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))

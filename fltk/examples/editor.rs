@@ -10,6 +10,7 @@ use std::{
     ops::{Deref, DerefMut},
     panic, path,
 };
+use std::path::PathBuf;
 
 #[derive(Copy, Clone)]
 pub enum Message {
@@ -70,7 +71,7 @@ impl DerefMut for MyEditor {
 }
 
 pub struct MyMenu {
-    _menu: menu::SysMenuBar,
+    menu: menu::SysMenuBar,
 }
 
 impl MyMenu {
@@ -157,19 +158,16 @@ impl MyMenu {
             Message::About,
         );
 
-        if let Some(mut item) = menu.find_item("&File/Quit\t") {
-            item.set_label_color(Color::Red);
-        }
-
-        Self { _menu: menu }
+        Self { menu: menu }
     }
 }
 
 pub struct MyApp {
     app: app::App,
-    saved: bool,
-    filename: String,
+    modified: bool,
+    filename: Option<PathBuf>,
     r: app::Receiver<Message>,
+    menu: MyMenu,
     buf: text::TextBuffer,
     editor: MyEditor,
     printable: text::TextDisplay,
@@ -186,7 +184,9 @@ impl MyApp {
             .with_size(800, 600)
             .center_screen()
             .with_label("RustyEd");
-        let _menu = MyMenu::new(&s);
+        let menu = MyMenu::new(&s);
+        let modified = false;
+        menu.menu.find_item("&File/Save\t").unwrap().deactivate();
         let mut editor = MyEditor::new(buf.clone());
         editor.emit(s, Message::Changed);
         main_win.make_resizable(true);
@@ -206,9 +206,9 @@ impl MyApp {
                 "An error occurred while opening the file!"
             );
             buf.load_file(&args[1]).unwrap();
-            args[1].clone()
+            Some(PathBuf::from(args[1].clone()))
         } else {
-            String::new()
+            None
         };
 
         // Handle drag and drop
@@ -256,55 +256,64 @@ impl MyApp {
 
         Self {
             app,
-            saved: true,
+            modified,
             filename,
             r,
+            menu,
             buf,
             editor,
             printable,
         }
     }
 
-    pub fn save_file(&mut self) -> Result<(), Box<dyn error::Error>> {
-        let mut filename = self.filename.clone();
-        if self.saved {
-            if filename.is_empty() {
-                let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseSaveFile);
-                dlg.set_option(dialog::FileDialogOptions::SaveAsConfirm);
-                dlg.show();
-                filename = dlg.filename().to_string_lossy().to_string();
-                if !filename.is_empty() {
-                    self.buf.save_file(&filename).unwrap_or_else(|_| {
-                        dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
-                    });
-                    self.saved = true;
-                }
-            } else if path::Path::new(&filename).exists() {
-                self.buf.save_file(&filename)?;
-                self.saved = true;
-            } else {
-                dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
+    /** Called by "Save", test if file can be written, otherwise call save_file_as()
+     * afterwards. Will return true if the file is succesfully saved. */
+    pub fn save_file(&mut self) -> Result<bool, Box<dyn error::Error>> {
+        match &self.filename {
+            Some(f) => {
+                self.buf.save_file(f)?;
+                self.modified = false;
+                self.menu.menu.find_item("&File/Save\t").unwrap().deactivate();
+                self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Black);
+                return Ok(true)
             }
-        } else {
-            let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseSaveFile);
-            dlg.set_option(dialog::FileDialogOptions::SaveAsConfirm);
-            dlg.show();
-            filename = dlg.filename().to_string_lossy().to_string();
-            if !filename.is_empty() {
-                self.buf.save_file(&filename).unwrap_or_else(|_| {
-                    dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!")
-                });
-                self.saved = true;
+            None => {
+                self.save_file_as()
             }
         }
-        Ok(())
     }
+
+    /** Called by "Save As..." or by "Save" in case no file was set yet.
+     * Returns true if the file was succesfully saved. */
+    pub fn save_file_as(&mut self) -> Result<bool, Box<dyn error::Error>> {
+        let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseSaveFile);
+        dlg.set_option(dialog::FileDialogOptions::SaveAsConfirm);
+        dlg.show();
+        if dlg.filename().to_string_lossy().to_string().is_empty() {
+            dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
+            return Ok(false)
+        }
+        self.buf.save_file(&dlg.filename())?;
+        self.modified = false;
+        self.menu.menu.find_item("&File/Save\t").unwrap().deactivate();
+        self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Black);
+        self.filename = Some(dlg.filename());
+        return Ok(true)
+    }
+
     pub fn launch(&mut self) {
         while self.app.wait() {
             use Message::*;
             if let Some(msg) = self.r.recv() {
                 match msg {
-                    Changed => self.saved = false,
+                    Changed => {
+                        println!("Changed!");
+                        if self.modified == false {
+                            self.modified = true;
+                            self.menu.menu.find_item("&File/Save\t").unwrap().activate();
+                            self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Red);
+                        }
+                    }
                     New => {
                         if self.buf.text() != "" {
                             let x = dialog::choice(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "");
@@ -318,12 +327,18 @@ impl MyApp {
                         dlg.set_option(dialog::FileDialogOptions::NoOptions);
                         dlg.set_filter("*.{txt,rs,toml}");
                         dlg.show();
-                        let filename = dlg.filename().to_string_lossy().to_string();
-                        if !filename.is_empty() {
-                            if path::Path::new(&filename).exists() { self.buf.load_file(&filename).unwrap(); self.filename = filename; } else { dialog::alert(center().0 - 200, center().1 - 100, "File does not exist!") }
+                        let filename = dlg.filename();
+                        if !filename.to_string_lossy().to_string().is_empty() {
+                            if filename.exists() {
+                                self.buf.load_file(&filename).unwrap();
+                                self.filename = Some(filename);
+                            } else {
+                                dialog::alert(center().0 - 200, center().1 - 100, "File does not exist!")
+                            }
                         }
                     },
-                    Save | SaveAs => self.save_file().unwrap(),
+                    Save => { self.save_file().unwrap(); () },
+                    SaveAs => { self.save_file_as().unwrap(); },
                     Print => {
                         let mut printer = printer::Printer::default();
                         if printer.begin_job(0).is_ok() {
@@ -341,13 +356,16 @@ impl MyApp {
                         }
                     },
                     Quit => {
-                        if !self.saved {
-                            let x = dialog::choice(center().0 - 200, center().1 - 100, "Would you like to save your work?", "Yes", "No", "");
-                            if x == 0 {
-                                self.save_file().unwrap();
+                        if self.modified {
+                            match dialog::choice2(center().0 - 200, center().1 - 100,
+                                "Would you like to save your work?", "Yes", "No", "") {
+                                Some(0) => { self.save_file().unwrap(); },
+                                Some(1) => { self.app.quit() },
+                                Some(_) | None  => (),
                             }
+                        } else {
+                            self.app.quit();
                         }
-                        self.app.quit();
                     },
                     Cut => self.editor.cut(),
                     Copy => self.editor.copy(),
@@ -360,13 +378,6 @@ impl MyApp {
 }
 
 fn main() {
-    panic::set_hook(Box::new(|info| {
-        if let Some(s) = info.payload().downcast_ref::<&str>() {
-            dialog::message(center().0 - 200, center().1 - 100, s);
-        } else {
-            dialog::message(center().0 - 200, center().1 - 100, &info.to_string());
-        }
-    }));
     let args: Vec<_> = std::env::args().collect();
     let mut app = MyApp::new(args);
     app.launch();

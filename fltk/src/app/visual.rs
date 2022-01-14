@@ -304,3 +304,16 @@ pub fn frame_color(col: Color) -> Color {
 pub fn set_frame_color(col: Color) {
     unsafe { fl::Fl_set_box_color(col.bits()) }
 }
+
+/// Add a new symbol, that can be accessed using the `@` prefix
+pub fn add_symbol(label: &str, scalable: bool, draw_cb: fn(Color)) -> Result<(), FltkError> {
+    unsafe {
+        let label = CString::safe_new(label);
+        let ret = fltk_sys::draw::Fl_add_symbol(label.into_raw() as _, mem::transmute(Some(draw_cb)), scalable as _);
+        if ret == 0 {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+        } else {
+            Ok(())
+        }
+    }
+}

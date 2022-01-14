@@ -355,20 +355,6 @@ pub fn compose_state() -> i32 {
     unsafe { fl::Fl_compose_state() }
 }
 
-/// Reset marked text
-pub fn reset_marked_text() {
-    unsafe {
-        fl::Fl_reset_marked_text();
-    }
-}
-
-/// Set the insertion point
-pub fn insertion_point_location(x: i32, y: i32, height: i32) {
-    unsafe {
-        fl::Fl_insertion_point_location(x, y, height);
-    }
-}
-
 /// Copy text to the clipboard
 pub fn copy(stuff: &str) {
     unsafe {

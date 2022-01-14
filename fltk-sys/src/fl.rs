@@ -127,16 +127,6 @@ extern "C" {
     pub fn Fl_compose_state() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_reset_marked_text();
-}
-extern "C" {
-    pub fn Fl_insertion_point_location(
-        x: ::std::os::raw::c_int,
-        y: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-    );
-}
-extern "C" {
     pub fn Fl_copy(
         stuff: *const ::std::os::raw::c_char,
         len: ::std::os::raw::c_int,
@@ -359,7 +349,7 @@ extern "C" {
     pub fn Fl_abi_version() -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_load_font(path: *const ::std::os::raw::c_char) -> *const ::std::os::raw::c_char;
+    pub fn Fl_load_font(path: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_unload_font(path: *const ::std::os::raw::c_char);
