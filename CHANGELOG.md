@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.2.28] - Unreleased
+- Expose TreeItem user_data.
+- Documentation fix by @AshfordN.
+- Further improvement to the editor example (updates title bar with status of the file) by @peter-scholtens.
+
 ## [1.2.27] - 2022-01-14
 - Add custom impl of Clone for app::Sender & Receiver by @KillTheMule.
 - Remove dependency on stb_truetype in favor of ttf-parser.
