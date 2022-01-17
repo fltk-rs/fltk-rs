@@ -1295,7 +1295,7 @@ impl TreeItem {
     }
 
     /// Set the internal data of the tree item
-    pub fn set_user_data<T: Clone>(&mut self, data: T) {
+    pub fn set_user_data<T: Clone + 'static>(&mut self, data: T) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Tree_Item_set_user_data(self.inner, Box::into_raw(Box::from(data.clone())) as _);
@@ -1303,7 +1303,7 @@ impl TreeItem {
     }
 
     /// Get the stored data in the tree item
-    pub unsafe fn user_data<T: Clone>(&self) -> Option<T> {
+    pub unsafe fn user_data<T: Clone + 'static>(&self) -> Option<T> {
         assert!(!self.was_deleted());
         let ptr = Fl_Tree_Item_user_data(self.inner);
         if ptr.is_null() {
