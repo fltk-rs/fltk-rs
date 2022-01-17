@@ -1300,7 +1300,7 @@ impl TreeItem {
     pub fn set_user_data<T: Clone + 'static>(&mut self, data: T) {
         assert!(!self.was_deleted());
         unsafe {
-            Fl_Tree_Item_set_user_data(self.inner, Box::into_raw(Box::from(data.clone())) as _);
+            Fl_Tree_Item_set_user_data(self.inner, Box::into_raw(Box::from(data)) as _);
         }
     }
 
