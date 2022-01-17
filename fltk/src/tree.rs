@@ -1295,6 +1295,8 @@ impl TreeItem {
     }
 
     /// Set the internal data of the tree item
+    /// # Warning
+    /// This method doesn't store the type information of the passed data
     pub fn set_user_data<T: Clone + 'static>(&mut self, data: T) {
         assert!(!self.was_deleted());
         unsafe {
@@ -1303,6 +1305,8 @@ impl TreeItem {
     }
 
     /// Get the stored data in the tree item
+    /// # Safety
+    /// Setting the user data doesn't store type information, as such it's on the developer to maintain the correct type
     pub unsafe fn user_data<T: Clone + 'static>(&self) -> Option<T> {
         assert!(!self.was_deleted());
         let ptr = Fl_Tree_Item_user_data(self.inner);
