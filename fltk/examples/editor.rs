@@ -206,8 +206,17 @@ impl MyApp {
                 file.exists() && file.is_file(),
                 "An error occurred while opening the file!"
             );
-            buf.load_file(&args[1]).unwrap();
-            Some(PathBuf::from(args[1].clone()))
+            match buf.load_file(&args[1]) {
+                Ok(_) => Some(PathBuf::from(args[1].clone())),
+                Err(e) => {
+                    dialog::alert(
+                        center().0 - 200,
+                        center().1 - 100,
+                        &format!("An issue occured while loading the file: {}", e),
+                    );
+                    None
+                }
+            }
         } else {
             None
         };
@@ -237,8 +246,13 @@ impl MyApp {
                             // we use a timeout to avoid pasting the path into the buffer
                             app::add_timeout3(0.0, {
                                 let mut buf = buf.clone();
-                                move |_| {
-                                    buf.load_file(&path).unwrap();
+                                move |_| match buf.load_file(&path) {
+                                    Ok(_) => (),
+                                    Err(e) => dialog::alert(
+                                        center().0 - 200,
+                                        center().1 - 100,
+                                        &format!("An issue occured while loading the file: {}", e),
+                                    ),
                                 }
                             });
                         }
@@ -372,8 +386,10 @@ impl MyApp {
                         let filename = dlg.filename();
                         if !filename.to_string_lossy().to_string().is_empty() {
                             if filename.exists() {
-                                self.buf.load_file(&filename).unwrap();
-                                self.filename = Some(filename);
+                                match self.buf.load_file(&filename) {
+                                    Ok(_) => self.filename = Some(filename),
+                                    Err(e) => dialog::alert(center().0 - 200, center().1 - 100, &format!("An issue occured while loading the file: {}", e)),
+                                }
                             } else {
                                 dialog::alert(center().0 - 200, center().1 - 100, "File does not exist!")
                             }
@@ -420,14 +436,6 @@ impl MyApp {
 }
 
 fn main() {
-    // We set a panic hook mainly for unsupported files
-    std::panic::set_hook(Box::new(|info| {
-        if let Some(s) = info.payload().downcast_ref::<&str>() {
-            dialog::message(center().0 - 200, center().1 - 100, s);
-        } else {
-            dialog::message(center().0 - 200, center().1 - 100, &info.to_string());
-        }
-    }));
     let args: Vec<_> = std::env::args().collect();
     let mut app = MyApp::new(args);
     app.launch();
