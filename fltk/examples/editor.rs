@@ -5,12 +5,12 @@ use fltk::{
     prelude::*,
     printer, text, window,
 };
+use std::path::PathBuf;
 use std::{
     error,
     ops::{Deref, DerefMut},
     panic, path,
 };
-use std::path::PathBuf;
 
 #[derive(Copy, Clone)]
 pub enum Message {
@@ -230,12 +230,16 @@ impl MyApp {
                 Event::Paste => {
                     if dnd && released {
                         let path = app::event_text();
+                        len = path.len();
+                        let path = path.trim();
+                        let path = path.replace("file://", "");
                         let path = std::path::Path::new(&path);
                         assert!(path.exists());
-                        buf.load_file(&path).unwrap();
+                        let s = std::fs::read_to_string(path).unwrap();
+                        buf.set_text(&s);
                         dnd = false;
                         released = false;
-                        true
+                        false
                     } else {
                         false
                     }
@@ -275,18 +279,24 @@ impl MyApp {
             Some(f) => {
                 self.buf.save_file(f)?;
                 self.modified = false;
-                self.menu.menu.find_item("&File/Save\t").unwrap().deactivate();
-                self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Black);
+                self.menu
+                    .menu
+                    .find_item("&File/Save\t")
+                    .unwrap()
+                    .deactivate();
+                self.menu
+                    .menu
+                    .find_item("&File/Quit\t")
+                    .unwrap()
+                    .set_label_color(Color::Black);
                 let name = match &self.filename {
                     Some(f) => f.to_string_lossy().to_string(),
                     None => "(Untitled)".to_string(),
                 };
-                self.main_win.set_label(&format!("{} - RustyEd",name));
-                return Ok(true)
+                self.main_win.set_label(&format!("{} - RustyEd", name));
+                return Ok(true);
             }
-            None => {
-                self.save_file_as()
-            }
+            None => self.save_file_as(),
         }
     }
 
@@ -298,15 +308,30 @@ impl MyApp {
         dlg.show();
         if dlg.filename().to_string_lossy().to_string().is_empty() {
             dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
-            return Ok(false)
+            return Ok(false);
         }
         self.buf.save_file(&dlg.filename())?;
         self.modified = false;
-        self.menu.menu.find_item("&File/Save\t").unwrap().deactivate();
-        self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Black);
+        self.menu
+            .menu
+            .find_item("&File/Save\t")
+            .unwrap()
+            .deactivate();
+        self.menu
+            .menu
+            .find_item("&File/Quit\t")
+            .unwrap()
+            .set_label_color(Color::Black);
         self.filename = Some(dlg.filename());
-        self.main_win.set_label(&format!("{} - RustyEd",self.filename.as_ref().unwrap().to_string_lossy().to_string()));
-        return Ok(true)
+        self.main_win.set_label(&format!(
+            "{} - RustyEd",
+            self.filename
+                .as_ref()
+                .unwrap()
+                .to_string_lossy()
+                .to_string()
+        ));
+        return Ok(true);
     }
 
     pub fn launch(&mut self) {
@@ -315,7 +340,6 @@ impl MyApp {
             if let Some(msg) = self.r.recv() {
                 match msg {
                     Changed => {
-                        println!("Changed!");
                         if self.modified == false {
                             self.modified = true;
                             self.menu.menu.find_item("&File/Save\t").unwrap().activate();
