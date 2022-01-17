@@ -420,6 +420,7 @@ impl MyApp {
 }
 
 fn main() {
+    // We set a panic hook mainly for unsupported files
     std::panic::set_hook(Box::new(|info| {
         if let Some(s) = info.payload().downcast_ref::<&str>() {
             dialog::message(center().0 - 200, center().1 - 100, s);
