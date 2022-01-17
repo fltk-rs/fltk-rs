@@ -216,7 +216,7 @@ impl MyApp {
         editor.handle({
             let mut dnd = false;
             let mut released = false;
-            let mut buf = buf.clone();
+            let buf = buf.clone();
             move |_, ev| match ev {
                 Event::DndEnter => {
                     dnd = true;
@@ -232,13 +232,19 @@ impl MyApp {
                         let path = app::event_text();
                         let path = path.trim();
                         let path = path.replace("file://", "");
-                        let path = std::path::Path::new(&path);
-                        assert!(path.exists());
-                        let s = std::fs::read_to_string(path).unwrap();
-                        buf.set_text(&s);
+                        let path = std::path::PathBuf::from(&path);
+                        if path.exists() {
+                            // we use a timeout to avoid pasting the path into the buffer
+                            app::add_timeout3(0.0, {
+                                let mut buf = buf.clone();
+                                move |_| {
+                                    buf.load_file(&path).unwrap();
+                                }
+                            });
+                        }
                         dnd = false;
                         released = false;
-                        false
+                        true
                     } else {
                         false
                     }
@@ -414,6 +420,13 @@ impl MyApp {
 }
 
 fn main() {
+    std::panic::set_hook(Box::new(|info| {
+        if let Some(s) = info.payload().downcast_ref::<&str>() {
+            dialog::message(center().0 - 200, center().1 - 100, s);
+        } else {
+            dialog::message(center().0 - 200, center().1 - 100, &info.to_string());
+        }
+    }));
     let args: Vec<_> = std::env::args().collect();
     let mut app = MyApp::new(args);
     app.launch();
