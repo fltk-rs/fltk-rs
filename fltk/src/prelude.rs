@@ -954,9 +954,9 @@ pub unsafe trait MenuExt: WidgetExt {
     fn text(&self, idx: i32) -> Option<String>;
     /// Get the menu item at an index
     fn at(&self, idx: i32) -> Option<crate::menu::MenuItem>;
-    /// Set the mode of a menu item by index and flag
+    /// Get the mode of a menu item by index and flag
     fn mode(&self, idx: i32) -> crate::menu::MenuFlag;
-    /// Get the mode of a menu item
+    /// Set the mode of a menu item
     fn set_mode(&mut self, idx: i32, flag: crate::menu::MenuFlag);
     /// End the menu
     fn end(&mut self);
