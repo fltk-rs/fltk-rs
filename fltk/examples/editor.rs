@@ -230,7 +230,6 @@ impl MyApp {
                 Event::Paste => {
                     if dnd && released {
                         let path = app::event_text();
-                        len = path.len();
                         let path = path.trim();
                         let path = path.replace("file://", "");
                         let path = std::path::Path::new(&path);
