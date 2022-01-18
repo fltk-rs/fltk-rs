@@ -9,7 +9,7 @@ use std::path::PathBuf;
 use std::{
     error,
     ops::{Deref, DerefMut},
-    panic, path,
+    path,
 };
 
 #[derive(Copy, Clone)]
@@ -417,7 +417,11 @@ impl MyApp {
                         if self.modified {
                             match dialog::choice2(center().0 - 200, center().1 - 100,
                                 "Would you like to save your work?", "Yes", "No", "") {
-                                Some(0) => { self.save_file().unwrap(); },
+                                Some(0) => {
+                                    if self.save_file().unwrap() {
+                                        self.app.quit();
+                                    }
+                                },
                                 Some(1) => { self.app.quit() },
                                 Some(_) | None  => (),
                             }
