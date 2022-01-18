@@ -134,6 +134,16 @@ macro_rules! impl_image_ext {
 
                 fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {
                     assert!(!self.was_deleted());
+                    let width = if width == 0 {
+                        1
+                    } else {
+                        width
+                    };
+                    let height = if height == 0 {
+                        1
+                    } else {
+                        height
+                    };
                     unsafe {
                         [<$flname _scale>](
                             self.inner,
