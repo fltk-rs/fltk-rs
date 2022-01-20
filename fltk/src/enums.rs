@@ -369,19 +369,19 @@ impl Font {
                     .into_iter()
                     .find(|name| name.name_id == ttf_parser::name_id::FULL_NAME)
                     .and_then(|name| name.to_string());
+                let path = CString::safe_new(p);
+                let ret = fl::Fl_load_font(path.as_ptr());
                 if let Some(family_name) = family_name {
-                    let path = CString::safe_new(p);
-                    let ret = fl::Fl_load_font(path.as_ptr());
                     if ret > 0 {
                         Ok(family_name)
                     } else {
                         Err(FltkError::Internal(FltkErrorKind::FailedOperation))
                     }
                 } else {
-                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+                    Err(FltkError::Internal(FltkErrorKind::FailedOperation))
                 }
             } else {
-                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
             }
         }
     }
