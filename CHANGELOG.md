@@ -1,10 +1,12 @@
 # Changelog
 
 
-## [1.2.28] - Unreleased
+## [1.2.28] - 2022-01-22
 - Expose TreeItem user_data.
 - Documentation fix by @AshfordN.
 - Further improvement to the editor example (updates title bar with status of the file) by @peter-scholtens.
+- Check image size in ImageExt::scale().
+- Add debug assert checking if browser column widths contains 0.
 
 ## [1.2.27] - 2022-01-14
 - Add custom impl of Clone for app::Sender & Receiver by @KillTheMule.

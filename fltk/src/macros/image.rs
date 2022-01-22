@@ -134,12 +134,12 @@ macro_rules! impl_image_ext {
 
                 fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {
                     assert!(!self.was_deleted());
-                    let width = if width == 0 {
+                    let width = if width < 1 {
                         1
                     } else {
                         width
                     };
-                    let height = if height == 0 {
+                    let height = if height < 1 {
                         1
                     } else {
                         height
