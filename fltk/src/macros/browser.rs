@@ -218,11 +218,16 @@ macro_rules! impl_browser_ext {
 
                 fn set_column_widths(&mut self, arr: &'static [i32]) {
                     assert!(!self.was_deleted());
+                    debug_assert!(!arr.contains(&0), "FLTK uses 0 as a sentinel value for the array/slice. To hide a column, use -1!");
                     unsafe {
+                        let old = [<$flname _column_widths>](self.inner);
                         let mut v = arr.to_vec();
                         v.push(0);
                         let v = v.into_boxed_slice();
                         [<$flname _set_column_widths>](self.inner, Box::into_raw(v) as _);
+                        if !old.is_null() && *old.offset(0) != 0 {
+                            Box::from_raw(old as *mut i32);
+                        }
                     }
                 }
 

@@ -812,6 +812,12 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Tree_Item_set_user_data(item: *mut Fl_Tree_Item, data: *mut ::std::os::raw::c_void);
+}
+extern "C" {
+    pub fn Fl_Tree_Item_user_data(item: *const Fl_Tree_Item) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_Tree_Item_x(self_: *const Fl_Tree_Item) -> ::std::os::raw::c_int;
 }
 extern "C" {

@@ -1,4 +1,4 @@
-use crate::app::init::{CURRENT_FONT, FONTS, LOADED_FONT};
+use crate::app::init::{CURRENT_FONT, FONTS};
 use crate::enums::Font;
 use crate::prelude::*;
 use crate::utils::FlString;
@@ -137,12 +137,9 @@ pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
             .into_iter()
             .find(|name| name.name_id == ttf_parser::name_id::FULL_NAME)
             .and_then(|name| name.to_string());
+        let path = CString::new(path)?;
+        let ret = fl::Fl_load_font(path.as_ptr());
         if let Some(family_name) = family_name {
-            let path = CString::new(path)?;
-            if let Some(load_font) = LOADED_FONT {
-                unload_font(load_font)?;
-            }
-            let ret = fl::Fl_load_font(path.as_ptr());
             if ret > 0 {
                 if let Some(f) = &FONTS {
                     let mut f = f.lock().unwrap();

@@ -5,12 +5,12 @@ use fltk::{
     prelude::*,
     printer, text, window,
 };
+use std::path::PathBuf;
 use std::{
     error,
     ops::{Deref, DerefMut},
-    panic, path,
+    path,
 };
-use std::path::PathBuf;
 
 #[derive(Copy, Clone)]
 pub enum Message {
@@ -167,6 +167,7 @@ pub struct MyApp {
     modified: bool,
     filename: Option<PathBuf>,
     r: app::Receiver<Message>,
+    main_win: window::Window,
     menu: MyMenu,
     buf: text::TextBuffer,
     editor: MyEditor,
@@ -205,8 +206,17 @@ impl MyApp {
                 file.exists() && file.is_file(),
                 "An error occurred while opening the file!"
             );
-            buf.load_file(&args[1]).unwrap();
-            Some(PathBuf::from(args[1].clone()))
+            match buf.load_file(&args[1]) {
+                Ok(_) => Some(PathBuf::from(args[1].clone())),
+                Err(e) => {
+                    dialog::alert(
+                        center().0 - 200,
+                        center().1 - 100,
+                        &format!("An issue occured while loading the file: {}", e),
+                    );
+                    None
+                }
+            }
         } else {
             None
         };
@@ -215,7 +225,7 @@ impl MyApp {
         editor.handle({
             let mut dnd = false;
             let mut released = false;
-            let mut buf = buf.clone();
+            let buf = buf.clone();
             move |_, ev| match ev {
                 Event::DndEnter => {
                     dnd = true;
@@ -229,9 +239,23 @@ impl MyApp {
                 Event::Paste => {
                     if dnd && released {
                         let path = app::event_text();
-                        let path = std::path::Path::new(&path);
-                        assert!(path.exists());
-                        buf.load_file(&path).unwrap();
+                        let path = path.trim();
+                        let path = path.replace("file://", "");
+                        let path = std::path::PathBuf::from(&path);
+                        if path.exists() {
+                            // we use a timeout to avoid pasting the path into the buffer
+                            app::add_timeout3(0.0, {
+                                let mut buf = buf.clone();
+                                move |_| match buf.load_file(&path) {
+                                    Ok(_) => (),
+                                    Err(e) => dialog::alert(
+                                        center().0 - 200,
+                                        center().1 - 100,
+                                        &format!("An issue occured while loading the file: {}", e),
+                                    ),
+                                }
+                            });
+                        }
                         dnd = false;
                         released = false;
                         true
@@ -259,6 +283,7 @@ impl MyApp {
             modified,
             filename,
             r,
+            main_win,
             menu,
             buf,
             editor,
@@ -273,13 +298,24 @@ impl MyApp {
             Some(f) => {
                 self.buf.save_file(f)?;
                 self.modified = false;
-                self.menu.menu.find_item("&File/Save\t").unwrap().deactivate();
-                self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Black);
-                return Ok(true)
+                self.menu
+                    .menu
+                    .find_item("&File/Save\t")
+                    .unwrap()
+                    .deactivate();
+                self.menu
+                    .menu
+                    .find_item("&File/Quit\t")
+                    .unwrap()
+                    .set_label_color(Color::Black);
+                let name = match &self.filename {
+                    Some(f) => f.to_string_lossy().to_string(),
+                    None => "(Untitled)".to_string(),
+                };
+                self.main_win.set_label(&format!("{} - RustyEd", name));
+                return Ok(true);
             }
-            None => {
-                self.save_file_as()
-            }
+            None => self.save_file_as(),
         }
     }
 
@@ -291,14 +327,30 @@ impl MyApp {
         dlg.show();
         if dlg.filename().to_string_lossy().to_string().is_empty() {
             dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
-            return Ok(false)
+            return Ok(false);
         }
         self.buf.save_file(&dlg.filename())?;
         self.modified = false;
-        self.menu.menu.find_item("&File/Save\t").unwrap().deactivate();
-        self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Black);
+        self.menu
+            .menu
+            .find_item("&File/Save\t")
+            .unwrap()
+            .deactivate();
+        self.menu
+            .menu
+            .find_item("&File/Quit\t")
+            .unwrap()
+            .set_label_color(Color::Black);
         self.filename = Some(dlg.filename());
-        return Ok(true)
+        self.main_win.set_label(&format!(
+            "{} - RustyEd",
+            self.filename
+                .as_ref()
+                .unwrap()
+                .to_string_lossy()
+                .to_string()
+        ));
+        return Ok(true);
     }
 
     pub fn launch(&mut self) {
@@ -307,11 +359,15 @@ impl MyApp {
             if let Some(msg) = self.r.recv() {
                 match msg {
                     Changed => {
-                        println!("Changed!");
                         if self.modified == false {
                             self.modified = true;
                             self.menu.menu.find_item("&File/Save\t").unwrap().activate();
                             self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Red);
+                            let name = match &self.filename {
+                                Some(f) => f.to_string_lossy().to_string(),
+                                None => "(Untitled)".to_string(),
+                            };
+                            self.main_win.set_label(&format!("* {} - RustyEd",name));
                         }
                     }
                     New => {
@@ -330,8 +386,10 @@ impl MyApp {
                         let filename = dlg.filename();
                         if !filename.to_string_lossy().to_string().is_empty() {
                             if filename.exists() {
-                                self.buf.load_file(&filename).unwrap();
-                                self.filename = Some(filename);
+                                match self.buf.load_file(&filename) {
+                                    Ok(_) => self.filename = Some(filename),
+                                    Err(e) => dialog::alert(center().0 - 200, center().1 - 100, &format!("An issue occured while loading the file: {}", e)),
+                                }
                             } else {
                                 dialog::alert(center().0 - 200, center().1 - 100, "File does not exist!")
                             }
@@ -359,7 +417,11 @@ impl MyApp {
                         if self.modified {
                             match dialog::choice2(center().0 - 200, center().1 - 100,
                                 "Would you like to save your work?", "Yes", "No", "") {
-                                Some(0) => { self.save_file().unwrap(); },
+                                Some(0) => {
+                                    if self.save_file().unwrap() {
+                                        self.app.quit();
+                                    }
+                                },
                                 Some(1) => { self.app.quit() },
                                 Some(_) | None  => (),
                             }
