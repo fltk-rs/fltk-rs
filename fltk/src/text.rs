@@ -695,6 +695,9 @@ pub struct StyleTableEntry {
 }
 
 impl TextEditor {
+    /// Any state/shortcut
+    pub const AnyState: crate::enums::Shortcut = crate::enums::Shortcut::from_i32(-1);
+
     /// Set to insert mode
     pub fn set_insert_mode(&mut self, b: bool) {
         assert!(!self.was_deleted());
@@ -945,6 +948,32 @@ impl TextEditor {
         assert!(self.buffer().is_some());
         unsafe {
             Fl_Text_Editor_kf_select_all(self.inner);
+        }
+    }
+
+    /// Add a key binding
+    pub fn add_key_binding(
+        &mut self,
+        key: crate::enums::Key,
+        shortcut: crate::enums::Shortcut,
+        cb: fn(key: crate::enums::Key, editor: *mut Fl_Text_Editor) -> i32,
+    ) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Text_Editor_add_key_binding(
+                self.inner,
+                key.bits(),
+                shortcut.bits(),
+                std::mem::transmute(Some(cb)),
+            );
+        }
+    }
+
+    /// Remove a key binding
+    pub fn remove_key_binding(&mut self, key: crate::enums::Key, shortcut: crate::enums::Shortcut) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Text_Editor_remove_key_binding(self.inner, key.bits(), shortcut.bits());
         }
     }
 }

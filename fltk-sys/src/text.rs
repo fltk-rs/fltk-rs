@@ -1529,6 +1529,26 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_tab_nav(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Text_Editor_add_key_binding(
+        self_: *mut Fl_Text_Editor,
+        key: ::std::os::raw::c_int,
+        state: ::std::os::raw::c_int,
+        kf: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: ::std::os::raw::c_int,
+                arg2: *mut Fl_Text_Editor,
+            ) -> ::std::os::raw::c_int,
+        >,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_remove_key_binding(
+        self_: *mut Fl_Text_Editor,
+        key: ::std::os::raw::c_int,
+        state: ::std::os::raw::c_int,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Simple_Terminal {
