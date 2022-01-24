@@ -665,6 +665,9 @@ crate::macros::widget::impl_widget_ext!(TextEditor, Fl_Text_Editor);
 crate::macros::widget::impl_widget_base!(TextEditor, Fl_Text_Editor);
 crate::macros::display::impl_display_ext!(TextEditor, Fl_Text_Editor);
 
+/// Alias Fl_Text_Editor for use in `add_key_binding`
+pub type TextEditorPtr = *mut Fl_Text_Editor;
+
 /// Creates an editable text display widget to handle terminal-like behavior, such as
 /// logging events or debug information.
 /// `SimpleTerminal` already has an internal buffer.
@@ -956,7 +959,7 @@ impl TextEditor {
         &mut self,
         key: crate::enums::Key,
         shortcut: crate::enums::Shortcut,
-        cb: fn(key: crate::enums::Key, editor: *mut Fl_Text_Editor) -> i32,
+        cb: fn(key: crate::enums::Key, editor: TextEditorPtr) -> i32,
     ) {
         assert!(!self.was_deleted());
         unsafe {
