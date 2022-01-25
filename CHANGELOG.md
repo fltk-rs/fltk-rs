@@ -4,6 +4,8 @@
 ## [1.2.29] - Unreleased
 - Add TextEditor::AnyState const value.
 - Add TextEditor::add_key_binding() and remove_key_binding().
+- Fix for unicode fonts.
+- Update FLTK (removes experimental drivers).
 
 ## [1.2.28] - 2022-01-22
 - Expose TreeItem user_data.
