@@ -7,7 +7,7 @@ fn main() {
     let mut but = Button::new(160, 210, 80, 40, "Click me!");
     wind.end();
     wind.show();
-    but.deactivate();
+
     but.set_callback(move |_| frame.set_label("Hello world"));
 
     app.run().unwrap();
