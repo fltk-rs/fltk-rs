@@ -663,10 +663,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_set_highlight_data(
         self_: *mut Fl_Text_Display,
-        sbuf: *mut ::std::os::raw::c_void,
+        sbuff: *mut ::std::os::raw::c_void,
         color: *mut ::std::os::raw::c_uint,
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
+        attr: *mut ::std::os::raw::c_int,
+        bgcolor: *mut ::std::os::raw::c_int,
         sz: ::std::os::raw::c_int,
     );
 }
@@ -1241,10 +1243,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_set_highlight_data(
         self_: *mut Fl_Text_Editor,
-        sbuf: *mut ::std::os::raw::c_void,
+        sbuff: *mut ::std::os::raw::c_void,
         color: *mut ::std::os::raw::c_uint,
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
+        attr: *mut ::std::os::raw::c_int,
+        bgcolor: *mut ::std::os::raw::c_int,
         sz: ::std::os::raw::c_int,
     );
 }
@@ -2085,10 +2089,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_set_highlight_data(
         self_: *mut Fl_Simple_Terminal,
-        sbuf: *mut ::std::os::raw::c_void,
+        sbuff: *mut ::std::os::raw::c_void,
         color: *mut ::std::os::raw::c_uint,
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
+        attr: *mut ::std::os::raw::c_int,
+        bgcolor: *mut ::std::os::raw::c_int,
         sz: ::std::os::raw::c_int,
     );
 }

@@ -223,10 +223,14 @@ macro_rules! impl_display_ext {
                     let mut colors: Vec<u32> = vec![];
                     let mut fonts: Vec<i32> = vec![];
                     let mut sizes: Vec<i32> = vec![];
+                    let mut attrs: Vec<i32> = vec![];
+                    let mut bgcols: Vec<i32> = vec![];
                     for entry in entries.iter() {
                         colors.push(entry.color.bits() as u32);
                         fonts.push(entry.font.bits() as i32);
                         sizes.push(entry.size as i32);
+                        attrs.push(0);
+                        bgcols.push(0);
                     }
                     let style_buffer = style_buffer.into();
                     if let Some(style_buffer) = style_buffer {
@@ -238,6 +242,8 @@ macro_rules! impl_display_ext {
                                 colors.as_mut_ptr(),
                                 fonts.as_mut_ptr(),
                                 sizes.as_mut_ptr(),
+                                attrs.as_mut_ptr(),
+                                bgcols.as_mut_ptr(),
                                 entries.len() as i32,
                             )
                         }
@@ -249,6 +255,8 @@ macro_rules! impl_display_ext {
                                     buf.as_ptr() as _,
                                     colors.as_mut_ptr(),
                                     fonts.as_mut_ptr(),
+                                    attrs.as_mut_ptr(),
+                                    bgcols.as_mut_ptr(),
                                     sizes.as_mut_ptr(),
                                     1,
                                 )

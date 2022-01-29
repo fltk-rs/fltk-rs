@@ -686,6 +686,26 @@ crate::macros::widget::impl_widget_ext!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::widget::impl_widget_base!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::display::impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
 
+/// The attribute of the style entry
+#[derive(Debug, Clone, Copy)]
+#[non_exhaustive]
+pub enum Attr {
+    /// Use the background color in the `bgcolor` field
+    BgColor = 0x0001,
+    /// Extend background color to the end of the line
+    BgColorExt = 0x0003,
+    /// A single underline, underline types are mutually exclusive
+    Underline = 0x0004,
+    /// Grammar suggestion (blue dotted underline)
+    Grammar = 0x0008,
+    /// Spelling suggestion (red dotted underline)
+    Spelling = 0x000C,
+    /// Line through the middle of the text
+    StrikeThrough = 0x0010,
+    /// The mask for all underline and strike through types
+    LinesMask = 0x001C,
+}
+
 /// Defines the styles used in the `set_highlight_data`, which is used with style buffers
 #[derive(Debug, Clone, Copy)]
 pub struct StyleTableEntry {
@@ -695,6 +715,21 @@ pub struct StyleTableEntry {
     pub font: Font,
     /// Font size
     pub size: i32,
+}
+
+/// Defines the styles used in the `set_highlight_data`, which is used with style buffers
+#[derive(Debug, Clone, Copy)]
+pub struct StyleTableEntryEx {
+    /// Font color
+    pub color: Color,
+    /// Font type
+    pub font: Font,
+    /// Font size
+    pub size: i32,
+    /// attribute
+    pub attr: Attr,
+    /// background color
+    pub bgcolor: Color,
 }
 
 impl TextEditor {
