@@ -1,7 +1,9 @@
+#![allow(dead_code)]
+
 mod closable_tab {
     use fltk::{
         app, button,
-        enums::{Align, Color, Event, FrameType},
+        enums::{Align, Color, FrameType},
         group,
         prelude::*,
     };
@@ -54,13 +56,13 @@ mod closable_tab {
         pub fn add(&mut self, child: & mut group::Group, label: &str) {
             child.resize(self.contents.x(), self.contents.y(), self.contents.w(), self.contents.h());
             self.contents.add(child);
-            let mut but = create_tab_button(&label);
+            let but = create_tab_button(&label);
             self.tab_labels.add(&but);
             but.child(1).unwrap().set_callback({
                 let curr_child = child.clone();
-                let mut contents = self.contents.clone();
+                let contents = self.contents.clone();
                 let sndb         = self.snd.clone();
-                move |x| {
+                move |_| {
                     let idx = contents.find(&curr_child);
                     sndb.send(Message::DeleteTab(idx));
                     app::redraw();
@@ -68,9 +70,9 @@ mod closable_tab {
             });
             but.child(0).unwrap().set_callback({
                 let curr_child = child.clone();
-                let mut contents = self.contents.clone();
+                let contents = self.contents.clone();
                 let sndb         = self.snd.clone();
-                move |x| {
+                move |_| {
                     let idx = contents.find(&curr_child);
                     sndb.send(Message::ForegroundTab(idx));
                     app::redraw();
@@ -153,7 +155,7 @@ fn main() {
                 DeleteTab(idx) => {
                     tabs.remove(idx);
                 },
-                InsertNewTab(i32) => {},
+                InsertNewTab(_) => {},
             }
         }
     }
