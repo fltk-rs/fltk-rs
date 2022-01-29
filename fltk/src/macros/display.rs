@@ -271,12 +271,16 @@ macro_rules! impl_display_ext {
                         let mut colors = [$crate::enums::Color::Black.bits()];
                         let mut fonts = [$crate::enums::Font::Helvetica.bits()];
                         let mut sizes = [14];
+                        let mut attrs = [0];
+                        let mut bgcols = [0];
                         [<$flname _set_highlight_data>](
                             self.inner,
                             style_buffer.as_ptr() as *mut raw::c_void,
                             colors.as_mut_ptr(),
                             fonts.as_mut_ptr(),
                             sizes.as_mut_ptr(),
+                            attrs.as_mut_ptr(),
+                            bgcols.as_mut_ptr(),
                             1,
                         )
                     }
