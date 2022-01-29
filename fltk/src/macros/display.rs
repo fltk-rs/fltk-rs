@@ -223,8 +223,8 @@ macro_rules! impl_display_ext {
                     let mut colors: Vec<u32> = vec![];
                     let mut fonts: Vec<i32> = vec![];
                     let mut sizes: Vec<i32> = vec![];
-                    let mut attrs: Vec<i32> = vec![];
-                    let mut bgcols: Vec<i32> = vec![];
+                    let mut attrs: Vec<u32> = vec![];
+                    let mut bgcols: Vec<u32> = vec![];
                     for entry in entries.iter() {
                         colors.push(entry.color.bits() as u32);
                         fonts.push(entry.font.bits() as i32);
@@ -255,9 +255,72 @@ macro_rules! impl_display_ext {
                                     buf.as_ptr() as _,
                                     colors.as_mut_ptr(),
                                     fonts.as_mut_ptr(),
+                                    sizes.as_mut_ptr(),
                                     attrs.as_mut_ptr(),
                                     bgcols.as_mut_ptr(),
+                                    1,
+                                )
+                            }
+                        }
+                    }
+                }
+
+                fn set_highlight_data_ext<B: Into<Option<$crate::text::TextBuffer>>>(
+                    &mut self,
+                    style_buffer: B,
+                    entries: Vec<$crate::text::StyleTableEntryExt>,
+                ) {
+                    assert!(!self.was_deleted());
+                    assert!(entries.len() < 61);
+                    let entries = if entries.len() == 0 {
+                        vec![$crate::text::StyleTableEntryExt {
+                            color: $crate::enums::Color::Black,
+                            font: $crate::enums::Font::Helvetica,
+                            size: $crate::app::font_size(),
+                            attr: $crate::text::Attr::None,
+                            bgcolor: $crate::enums::Color::Black,
+                        }]
+                    } else {
+                        entries
+                    };
+                    let mut colors: Vec<u32> = vec![];
+                    let mut fonts: Vec<i32> = vec![];
+                    let mut sizes: Vec<i32> = vec![];
+                    let mut attrs: Vec<u32> = vec![];
+                    let mut bgcols: Vec<u32> = vec![];
+                    for entry in entries.iter() {
+                        colors.push(entry.color.bits() as u32);
+                        fonts.push(entry.font.bits() as i32);
+                        sizes.push(entry.size as i32);
+                        attrs.push(entry.attr as u32);
+                        bgcols.push(entry.bgcolor.bits() as u32);
+                    }
+                    let style_buffer = style_buffer.into();
+                    if let Some(style_buffer) = style_buffer {
+                        let _old_buf = self.style_buffer();
+                        unsafe {
+                            [<$flname _set_highlight_data>](
+                                self.inner,
+                                style_buffer.as_ptr() as *mut raw::c_void,
+                                colors.as_mut_ptr(),
+                                fonts.as_mut_ptr(),
+                                sizes.as_mut_ptr(),
+                                attrs.as_mut_ptr(),
+                                bgcols.as_mut_ptr(),
+                                entries.len() as i32,
+                            )
+                        }
+                    } else {
+                        if let Some(buf) = self.style_buffer() {
+                            unsafe {
+                                [<$flname _set_highlight_data>](
+                                    self.inner,
+                                    buf.as_ptr() as _,
+                                    colors.as_mut_ptr(),
+                                    fonts.as_mut_ptr(),
                                     sizes.as_mut_ptr(),
+                                    attrs.as_mut_ptr(),
+                                    bgcols.as_mut_ptr(),
                                     1,
                                 )
                             }

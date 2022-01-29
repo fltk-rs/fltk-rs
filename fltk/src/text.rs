@@ -688,12 +688,13 @@ crate::macros::display::impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
 
 /// The attribute of the style entry
 #[derive(Debug, Clone, Copy)]
+#[repr(u32)]
 #[non_exhaustive]
 pub enum Attr {
+    /// No attribute
+    None = 0x0000,
     /// Use the background color in the `bgcolor` field
     BgColor = 0x0001,
-    /// Extend background color to the end of the line
-    BgColorExt = 0x0003,
     /// A single underline, underline types are mutually exclusive
     Underline = 0x0004,
     /// Grammar suggestion (blue dotted underline)
@@ -702,8 +703,6 @@ pub enum Attr {
     Spelling = 0x000C,
     /// Line through the middle of the text
     StrikeThrough = 0x0010,
-    /// The mask for all underline and strike through types
-    LinesMask = 0x001C,
 }
 
 /// Defines the styles used in the `set_highlight_data`, which is used with style buffers
@@ -719,7 +718,7 @@ pub struct StyleTableEntry {
 
 /// Defines the styles used in the `set_highlight_data`, which is used with style buffers
 #[derive(Debug, Clone, Copy)]
-pub struct StyleTableEntryEx {
+pub struct StyleTableEntryExt {
     /// Font color
     pub color: Color,
     /// Font type

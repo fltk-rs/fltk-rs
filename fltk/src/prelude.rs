@@ -1081,6 +1081,12 @@ pub unsafe trait DisplayExt: WidgetExt {
         style_buffer: B,
         entries: Vec<crate::text::StyleTableEntry>,
     );
+    /// Sets the style of the text widget
+    fn set_highlight_data_ext<B: Into<Option<crate::text::TextBuffer>>>(
+        &mut self,
+        style_buffer: B,
+        entries: Vec<crate::text::StyleTableEntryExt>,
+    );
     /// Unset the style of the text widget
     fn unset_highlight_data(&mut self, style_buffer: crate::text::TextBuffer);
     /// Sets the cursor style

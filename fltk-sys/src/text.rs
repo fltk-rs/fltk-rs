@@ -667,8 +667,8 @@ extern "C" {
         color: *mut ::std::os::raw::c_uint,
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
-        attr: *mut ::std::os::raw::c_int,
-        bgcolor: *mut ::std::os::raw::c_int,
+        attr: *mut ::std::os::raw::c_uint,
+        bgcolor: *mut ::std::os::raw::c_uint,
         sz: ::std::os::raw::c_int,
     );
 }
@@ -1247,8 +1247,8 @@ extern "C" {
         color: *mut ::std::os::raw::c_uint,
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
-        attr: *mut ::std::os::raw::c_int,
-        bgcolor: *mut ::std::os::raw::c_int,
+        attr: *mut ::std::os::raw::c_uint,
+        bgcolor: *mut ::std::os::raw::c_uint,
         sz: ::std::os::raw::c_int,
     );
 }
@@ -2093,8 +2093,8 @@ extern "C" {
         color: *mut ::std::os::raw::c_uint,
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
-        attr: *mut ::std::os::raw::c_int,
-        bgcolor: *mut ::std::os::raw::c_int,
+        attr: *mut ::std::os::raw::c_uint,
+        bgcolor: *mut ::std::os::raw::c_uint,
         sz: ::std::os::raw::c_int,
     );
 }
