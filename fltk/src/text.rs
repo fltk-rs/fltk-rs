@@ -320,6 +320,69 @@ impl TextBuffer {
         unsafe { Fl_Text_Buffer_replace_selection(self.inner, text.as_ptr()) }
     }
 
+    /// Secondary selects the text from start to end
+    pub fn secondary_select(&mut self, start: i32, end: i32) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_secondary_select(self.inner, start as i32, end as i32) }
+    }
+
+    /// Returns whether text is secondary selected
+    pub fn secondary_selected(&self) -> bool {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_secondary_selected(self.inner) != 0 }
+    }
+
+    /// Unselects text (secondary selection)
+    pub fn secondary_unselect(&mut self) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_secondary_unselect(self.inner) }
+    }
+
+    /// Returns the secondary selection position
+    pub fn secondary_selection_position(&self) -> Option<(i32, i32)> {
+        assert!(!self.inner.is_null());
+        unsafe {
+            let mut start = 0;
+            let mut end = 0;
+            let ret = Fl_Text_Buffer_secondary_selection_position(
+                self.inner,
+                &mut start as _,
+                &mut end as _,
+            );
+            if ret == 0 {
+                None
+            } else {
+                let x = (start as i32, end as i32);
+                Some(x)
+            }
+        }
+    }
+
+    /// Returns the secondary selection text
+    pub fn secondary_selection_text(&self) -> String {
+        assert!(!self.inner.is_null());
+        unsafe {
+            let x = Fl_Text_Buffer_secondary_selection_text(self.inner);
+            assert!(!x.is_null());
+            CStr::from_ptr(x as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
+        }
+    }
+
+    /// Removes the secondary selection
+    pub fn remove_secondary_selection(&mut self) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_remove_secondary_selection(self.inner) }
+    }
+
+    /// Replaces the secondary selection
+    pub fn replace_secondary_selection(&mut self, text: &str) {
+        assert!(!self.inner.is_null());
+        let text = CString::safe_new(text);
+        unsafe { Fl_Text_Buffer_replace_secondary_selection(self.inner, text.as_ptr()) }
+    }
+
     /// Highlights selection
     pub fn highlight(&mut self, start: i32, end: i32) {
         assert!(!self.inner.is_null());

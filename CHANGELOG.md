@@ -1,9 +1,10 @@
 # Changelog
 
 
-## [1.2.29] - Unreleased
+## [1.2.29] - 2022-01-31
 - Add TextEditor::AnyState const value.
 - Add TextEditor::add_key_binding() and remove_key_binding().
+- Add TextBuffer methods of secondary selection.
 - Fix for unicode fonts.
 - Add DisplayExt::set_highlight_data_ext() and text::StyleTableEntryExt (supports underline, strikethrough, background color...etc).
 - Pull FLTK menu fixes.

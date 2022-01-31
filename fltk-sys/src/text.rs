@@ -153,6 +153,40 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Text_Buffer_secondary_select(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_secondary_selected(self_: *mut Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_secondary_unselect(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_secondary_selection_position(
+        self_: *mut Fl_Text_Buffer,
+        start: *mut ::std::os::raw::c_int,
+        end: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_secondary_selection_text(
+        self_: *mut Fl_Text_Buffer,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_remove_secondary_selection(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_replace_secondary_selection(
+        self_: *mut Fl_Text_Buffer,
+        text: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
     pub fn Fl_Text_Buffer_highlight(
         self_: *mut Fl_Text_Buffer,
         start: ::std::os::raw::c_int,
