@@ -753,7 +753,7 @@ crate::macros::display::impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
 #[derive(Debug, Clone, Copy)]
 #[repr(u32)]
 #[non_exhaustive]
-pub enum Attr {
+pub enum TextAttr {
     /// No attribute
     None = 0x0000,
     /// Use the background color in the `bgcolor` field
@@ -789,7 +789,7 @@ pub struct StyleTableEntryExt {
     /// Font size
     pub size: i32,
     /// attribute
-    pub attr: Attr,
+    pub attr: TextAttr,
     /// background color
     pub bgcolor: Color,
 }

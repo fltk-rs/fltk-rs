@@ -277,7 +277,7 @@ macro_rules! impl_display_ext {
                             color: $crate::enums::Color::Black,
                             font: $crate::enums::Font::Helvetica,
                             size: $crate::app::font_size(),
-                            attr: $crate::text::Attr::None,
+                            attr: $crate::text::TextAttr::None,
                             bgcolor: $crate::enums::Color::Black,
                         }]
                     } else {
