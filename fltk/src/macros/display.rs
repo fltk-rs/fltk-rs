@@ -612,6 +612,48 @@ macro_rules! impl_display_ext {
                     assert!(self.buffer().is_some());
                     unsafe { [<$flname _wrapped_row>](self.inner, row) }
                 }
+
+                fn set_grammar_underline_color(&mut self, color: $crate::enums::Color) {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        [<$flname _set_grammar_underline_color>](self.inner, color.bits() as u32)
+                    }
+                }
+
+                fn grammar_underline_color(&self) -> $crate::enums::Color {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        std::mem::transmute([<$flname _grammar_underline_color>](self.inner))
+                    }
+                }
+
+                fn set_spelling_underline_color(&mut self, color: $crate::enums::Color) {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        [<$flname _set_spelling_underline_color>](self.inner, color.bits() as u32)
+                    }
+                }
+
+                fn spelling_underline_color(&self) -> $crate::enums::Color {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        std::mem::transmute([<$flname _spelling_underline_color>](self.inner))
+                    }
+                }
+
+                fn set_secondary_selection_color(&mut self, color: $crate::enums::Color) {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        [<$flname _set_secondary_selection_color>](self.inner, color.bits() as u32)
+                    }
+                }
+
+                fn secondary_selection_color(&self) -> $crate::enums::Color {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        std::mem::transmute([<$flname _secondary_selection_color>](self.inner))
+                    }
+                }
             }
         }
     };

@@ -1162,6 +1162,18 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn wrapped_column(&self, row: i32, column: i32) -> i32;
     /// Correct a row number from an unconstrained position
     fn wrapped_row(&self, row: i32) -> i32;
+    /// Set the grammar underline color
+    fn set_grammar_underline_color(&mut self, color: Color);
+    /// Get the grammar underline color
+    fn grammar_underline_color(&self) -> Color;
+    /// Set the spelling underline color
+    fn set_spelling_underline_color(&mut self, color: Color);
+    /// Get the spelling underline color
+    fn spelling_underline_color(&self) -> Color;
+    /// Set the secondary selection color
+    fn set_secondary_selection_color(&mut self, color: Color);
+    /// Get the secondary selection color
+    fn secondary_selection_color(&self) -> Color;
 }
 
 /// Defines the methods implemented by all browser types
