@@ -320,6 +320,69 @@ impl TextBuffer {
         unsafe { Fl_Text_Buffer_replace_selection(self.inner, text.as_ptr()) }
     }
 
+    /// Secondary selects the text from start to end
+    pub fn secondary_select(&mut self, start: i32, end: i32) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_secondary_select(self.inner, start as i32, end as i32) }
+    }
+
+    /// Returns whether text is secondary selected
+    pub fn secondary_selected(&self) -> bool {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_secondary_selected(self.inner) != 0 }
+    }
+
+    /// Unselects text (secondary selection)
+    pub fn secondary_unselect(&mut self) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_secondary_unselect(self.inner) }
+    }
+
+    /// Returns the secondary selection position
+    pub fn secondary_selection_position(&self) -> Option<(i32, i32)> {
+        assert!(!self.inner.is_null());
+        unsafe {
+            let mut start = 0;
+            let mut end = 0;
+            let ret = Fl_Text_Buffer_secondary_selection_position(
+                self.inner,
+                &mut start as _,
+                &mut end as _,
+            );
+            if ret == 0 {
+                None
+            } else {
+                let x = (start as i32, end as i32);
+                Some(x)
+            }
+        }
+    }
+
+    /// Returns the secondary selection text
+    pub fn secondary_selection_text(&self) -> String {
+        assert!(!self.inner.is_null());
+        unsafe {
+            let x = Fl_Text_Buffer_secondary_selection_text(self.inner);
+            assert!(!x.is_null());
+            CStr::from_ptr(x as *mut raw::c_char)
+                .to_string_lossy()
+                .to_string()
+        }
+    }
+
+    /// Removes the secondary selection
+    pub fn remove_secondary_selection(&mut self) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_Text_Buffer_remove_secondary_selection(self.inner) }
+    }
+
+    /// Replaces the secondary selection
+    pub fn replace_secondary_selection(&mut self, text: &str) {
+        assert!(!self.inner.is_null());
+        let text = CString::safe_new(text);
+        unsafe { Fl_Text_Buffer_replace_secondary_selection(self.inner, text.as_ptr()) }
+    }
+
     /// Highlights selection
     pub fn highlight(&mut self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
@@ -665,6 +728,9 @@ crate::macros::widget::impl_widget_ext!(TextEditor, Fl_Text_Editor);
 crate::macros::widget::impl_widget_base!(TextEditor, Fl_Text_Editor);
 crate::macros::display::impl_display_ext!(TextEditor, Fl_Text_Editor);
 
+/// Alias Fl_Text_Editor for use in `add_key_binding`
+pub type TextEditorPtr = *mut Fl_Text_Editor;
+
 /// Creates an editable text display widget to handle terminal-like behavior, such as
 /// logging events or debug information.
 /// `SimpleTerminal` already has an internal buffer.
@@ -683,6 +749,25 @@ crate::macros::widget::impl_widget_ext!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::widget::impl_widget_base!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::display::impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
 
+/// The attribute of the style entry
+#[derive(Debug, Clone, Copy)]
+#[repr(u32)]
+#[non_exhaustive]
+pub enum TextAttr {
+    /// No attribute
+    None = 0x0000,
+    /// Use the background color in the `bgcolor` field
+    BgColor = 0x0001,
+    /// A single underline, underline types are mutually exclusive
+    Underline = 0x0004,
+    /// Grammar suggestion (blue dotted underline)
+    Grammar = 0x0008,
+    /// Spelling suggestion (red dotted underline)
+    Spelling = 0x000C,
+    /// Line through the middle of the text
+    StrikeThrough = 0x0010,
+}
+
 /// Defines the styles used in the `set_highlight_data`, which is used with style buffers
 #[derive(Debug, Clone, Copy)]
 pub struct StyleTableEntry {
@@ -694,7 +779,25 @@ pub struct StyleTableEntry {
     pub size: i32,
 }
 
+/// Defines the styles used in the `set_highlight_data`, which is used with style buffers
+#[derive(Debug, Clone, Copy)]
+pub struct StyleTableEntryExt {
+    /// Font color
+    pub color: Color,
+    /// Font type
+    pub font: Font,
+    /// Font size
+    pub size: i32,
+    /// attribute
+    pub attr: TextAttr,
+    /// background color
+    pub bgcolor: Color,
+}
+
 impl TextEditor {
+    /// Any state/shortcut
+    pub const AnyState: crate::enums::Shortcut = crate::enums::Shortcut::from_i32(-1);
+
     /// Set to insert mode
     pub fn set_insert_mode(&mut self, b: bool) {
         assert!(!self.was_deleted());
@@ -945,6 +1048,32 @@ impl TextEditor {
         assert!(self.buffer().is_some());
         unsafe {
             Fl_Text_Editor_kf_select_all(self.inner);
+        }
+    }
+
+    /// Add a key binding
+    pub fn add_key_binding(
+        &mut self,
+        key: crate::enums::Key,
+        shortcut: crate::enums::Shortcut,
+        cb: fn(key: crate::enums::Key, editor: TextEditorPtr) -> i32,
+    ) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Text_Editor_add_key_binding(
+                self.inner,
+                key.bits(),
+                shortcut.bits(),
+                std::mem::transmute(Some(cb)),
+            );
+        }
+    }
+
+    /// Remove a key binding
+    pub fn remove_key_binding(&mut self, key: crate::enums::Key, shortcut: crate::enums::Shortcut) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Text_Editor_remove_key_binding(self.inner, key.bits(), shortcut.bits());
         }
     }
 }

@@ -1,6 +1,16 @@
 # Changelog
 
 
+## [1.2.29] - 2022-01-31
+- Add TextEditor::AnyState const value.
+- Add TextEditor::add_key_binding() and remove_key_binding().
+- Add TextBuffer methods of secondary selection.
+- Fix for unicode fonts.
+- Add DisplayExt::set_highlight_data_ext() and text::StyleTableEntryExt (supports underline, strikethrough, background color...etc).
+- Add setters & getters for secondary selection, spelling and grammar colors.
+- Pull FLTK menu fixes.
+- Update FLTK (removes experimental drivers).
+
 ## [1.2.28] - 2022-01-22
 - Expose TreeItem user_data.
 - Documentation fix by @AshfordN.

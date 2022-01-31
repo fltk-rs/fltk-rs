@@ -223,10 +223,14 @@ macro_rules! impl_display_ext {
                     let mut colors: Vec<u32> = vec![];
                     let mut fonts: Vec<i32> = vec![];
                     let mut sizes: Vec<i32> = vec![];
+                    let mut attrs: Vec<u32> = vec![];
+                    let mut bgcols: Vec<u32> = vec![];
                     for entry in entries.iter() {
                         colors.push(entry.color.bits() as u32);
                         fonts.push(entry.font.bits() as i32);
                         sizes.push(entry.size as i32);
+                        attrs.push(0);
+                        bgcols.push(0);
                     }
                     let style_buffer = style_buffer.into();
                     if let Some(style_buffer) = style_buffer {
@@ -238,6 +242,8 @@ macro_rules! impl_display_ext {
                                 colors.as_mut_ptr(),
                                 fonts.as_mut_ptr(),
                                 sizes.as_mut_ptr(),
+                                attrs.as_mut_ptr(),
+                                bgcols.as_mut_ptr(),
                                 entries.len() as i32,
                             )
                         }
@@ -250,6 +256,71 @@ macro_rules! impl_display_ext {
                                     colors.as_mut_ptr(),
                                     fonts.as_mut_ptr(),
                                     sizes.as_mut_ptr(),
+                                    attrs.as_mut_ptr(),
+                                    bgcols.as_mut_ptr(),
+                                    1,
+                                )
+                            }
+                        }
+                    }
+                }
+
+                fn set_highlight_data_ext<B: Into<Option<$crate::text::TextBuffer>>>(
+                    &mut self,
+                    style_buffer: B,
+                    entries: Vec<$crate::text::StyleTableEntryExt>,
+                ) {
+                    assert!(!self.was_deleted());
+                    assert!(entries.len() < 61);
+                    let entries = if entries.len() == 0 {
+                        vec![$crate::text::StyleTableEntryExt {
+                            color: $crate::enums::Color::Black,
+                            font: $crate::enums::Font::Helvetica,
+                            size: $crate::app::font_size(),
+                            attr: $crate::text::TextAttr::None,
+                            bgcolor: $crate::enums::Color::Black,
+                        }]
+                    } else {
+                        entries
+                    };
+                    let mut colors: Vec<u32> = vec![];
+                    let mut fonts: Vec<i32> = vec![];
+                    let mut sizes: Vec<i32> = vec![];
+                    let mut attrs: Vec<u32> = vec![];
+                    let mut bgcols: Vec<u32> = vec![];
+                    for entry in entries.iter() {
+                        colors.push(entry.color.bits() as u32);
+                        fonts.push(entry.font.bits() as i32);
+                        sizes.push(entry.size as i32);
+                        attrs.push(entry.attr as u32);
+                        bgcols.push(entry.bgcolor.bits() as u32);
+                    }
+                    let style_buffer = style_buffer.into();
+                    if let Some(style_buffer) = style_buffer {
+                        let _old_buf = self.style_buffer();
+                        unsafe {
+                            [<$flname _set_highlight_data>](
+                                self.inner,
+                                style_buffer.as_ptr() as *mut raw::c_void,
+                                colors.as_mut_ptr(),
+                                fonts.as_mut_ptr(),
+                                sizes.as_mut_ptr(),
+                                attrs.as_mut_ptr(),
+                                bgcols.as_mut_ptr(),
+                                entries.len() as i32,
+                            )
+                        }
+                    } else {
+                        if let Some(buf) = self.style_buffer() {
+                            unsafe {
+                                [<$flname _set_highlight_data>](
+                                    self.inner,
+                                    buf.as_ptr() as _,
+                                    colors.as_mut_ptr(),
+                                    fonts.as_mut_ptr(),
+                                    sizes.as_mut_ptr(),
+                                    attrs.as_mut_ptr(),
+                                    bgcols.as_mut_ptr(),
                                     1,
                                 )
                             }
@@ -263,12 +334,16 @@ macro_rules! impl_display_ext {
                         let mut colors = [$crate::enums::Color::Black.bits()];
                         let mut fonts = [$crate::enums::Font::Helvetica.bits()];
                         let mut sizes = [14];
+                        let mut attrs = [0];
+                        let mut bgcols = [0];
                         [<$flname _set_highlight_data>](
                             self.inner,
                             style_buffer.as_ptr() as *mut raw::c_void,
                             colors.as_mut_ptr(),
                             fonts.as_mut_ptr(),
                             sizes.as_mut_ptr(),
+                            attrs.as_mut_ptr(),
+                            bgcols.as_mut_ptr(),
                             1,
                         )
                     }
@@ -536,6 +611,48 @@ macro_rules! impl_display_ext {
                     assert!(!self.was_deleted());
                     assert!(self.buffer().is_some());
                     unsafe { [<$flname _wrapped_row>](self.inner, row) }
+                }
+
+                fn set_grammar_underline_color(&mut self, color: $crate::enums::Color) {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        [<$flname _set_grammar_underline_color>](self.inner, color.bits() as u32)
+                    }
+                }
+
+                fn grammar_underline_color(&self) -> $crate::enums::Color {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        std::mem::transmute([<$flname _grammar_underline_color>](self.inner))
+                    }
+                }
+
+                fn set_spelling_underline_color(&mut self, color: $crate::enums::Color) {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        [<$flname _set_spelling_underline_color>](self.inner, color.bits() as u32)
+                    }
+                }
+
+                fn spelling_underline_color(&self) -> $crate::enums::Color {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        std::mem::transmute([<$flname _spelling_underline_color>](self.inner))
+                    }
+                }
+
+                fn set_secondary_selection_color(&mut self, color: $crate::enums::Color) {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        [<$flname _set_secondary_selection_color>](self.inner, color.bits() as u32)
+                    }
+                }
+
+                fn secondary_selection_color(&self) -> $crate::enums::Color {
+                    assert!(self.was_deleted());
+                    unsafe {
+                        std::mem::transmute([<$flname _secondary_selection_color>](self.inner))
+                    }
                 }
             }
         }

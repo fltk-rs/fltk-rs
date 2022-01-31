@@ -153,6 +153,40 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Text_Buffer_secondary_select(
+        self_: *mut Fl_Text_Buffer,
+        start: ::std::os::raw::c_int,
+        end: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_secondary_selected(self_: *mut Fl_Text_Buffer) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_secondary_unselect(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_secondary_selection_position(
+        self_: *mut Fl_Text_Buffer,
+        start: *mut ::std::os::raw::c_int,
+        end: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_secondary_selection_text(
+        self_: *mut Fl_Text_Buffer,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_remove_secondary_selection(self_: *mut Fl_Text_Buffer);
+}
+extern "C" {
+    pub fn Fl_Text_Buffer_replace_secondary_selection(
+        self_: *mut Fl_Text_Buffer,
+        text: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
     pub fn Fl_Text_Buffer_highlight(
         self_: *mut Fl_Text_Buffer,
         start: ::std::os::raw::c_int,
@@ -663,10 +697,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Display_set_highlight_data(
         self_: *mut Fl_Text_Display,
-        sbuf: *mut ::std::os::raw::c_void,
+        sbuff: *mut ::std::os::raw::c_void,
         color: *mut ::std::os::raw::c_uint,
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
+        attr: *mut ::std::os::raw::c_uint,
+        bgcolor: *mut ::std::os::raw::c_uint,
         sz: ::std::os::raw::c_int,
     );
 }
@@ -844,6 +880,39 @@ extern "C" {
         self_: *const Fl_Text_Display,
         row: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_grammar_underline_color(
+        self_: *mut Fl_Text_Display,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_grammar_underline_color(
+        self_: *const Fl_Text_Display,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_spelling_underline_color(
+        self_: *mut Fl_Text_Display,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_spelling_underline_color(
+        self_: *const Fl_Text_Display,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Display_set_secondary_selection_color(
+        self_: *mut Fl_Text_Display,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Display_secondary_selection_color(
+        self_: *const Fl_Text_Display,
+    ) -> ::std::os::raw::c_uint;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1241,10 +1310,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Text_Editor_set_highlight_data(
         self_: *mut Fl_Text_Editor,
-        sbuf: *mut ::std::os::raw::c_void,
+        sbuff: *mut ::std::os::raw::c_void,
         color: *mut ::std::os::raw::c_uint,
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
+        attr: *mut ::std::os::raw::c_uint,
+        bgcolor: *mut ::std::os::raw::c_uint,
         sz: ::std::os::raw::c_int,
     );
 }
@@ -1419,6 +1490,39 @@ extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Text_Editor_set_grammar_underline_color(
+        self_: *mut Fl_Text_Editor,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_grammar_underline_color(
+        self_: *const Fl_Text_Editor,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_spelling_underline_color(
+        self_: *mut Fl_Text_Editor,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_spelling_underline_color(
+        self_: *const Fl_Text_Editor,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_set_secondary_selection_color(
+        self_: *mut Fl_Text_Editor,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_secondary_selection_color(
+        self_: *const Fl_Text_Editor,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
     pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -1528,6 +1632,26 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_tab_nav(self_: *const Fl_Text_Editor) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Text_Editor_add_key_binding(
+        self_: *mut Fl_Text_Editor,
+        key: ::std::os::raw::c_int,
+        state: ::std::os::raw::c_int,
+        kf: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: ::std::os::raw::c_int,
+                arg2: *mut Fl_Text_Editor,
+            ) -> ::std::os::raw::c_int,
+        >,
+    );
+}
+extern "C" {
+    pub fn Fl_Text_Editor_remove_key_binding(
+        self_: *mut Fl_Text_Editor,
+        key: ::std::os::raw::c_int,
+        state: ::std::os::raw::c_int,
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2065,10 +2189,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Simple_Terminal_set_highlight_data(
         self_: *mut Fl_Simple_Terminal,
-        sbuf: *mut ::std::os::raw::c_void,
+        sbuff: *mut ::std::os::raw::c_void,
         color: *mut ::std::os::raw::c_uint,
         font: *mut ::std::os::raw::c_int,
         fontsz: *mut ::std::os::raw::c_int,
+        attr: *mut ::std::os::raw::c_uint,
+        bgcolor: *mut ::std::os::raw::c_uint,
         sz: ::std::os::raw::c_int,
     );
 }
@@ -2257,6 +2383,39 @@ extern "C" {
         self_: *const Fl_Simple_Terminal,
         row: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_grammar_underline_color(
+        self_: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_grammar_underline_color(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_spelling_underline_color(
+        self_: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_spelling_underline_color(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_set_secondary_selection_color(
+        self_: *mut Fl_Simple_Terminal,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_secondary_selection_color(
+        self_: *const Fl_Simple_Terminal,
+    ) -> ::std::os::raw::c_uint;
 }
 extern "C" {
     pub fn Fl_delete_stable(arg1: *mut ::std::os::raw::c_void);

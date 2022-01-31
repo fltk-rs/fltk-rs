@@ -491,7 +491,6 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
 - [Drawing things with fltk](https://www.youtube.com/watch?v=r9MOpvfBPWs)
 - [Working with images](https://www.youtube.com/watch?v=Rn2sjfAX4WI)
 - [Audio player with custom widgets](https://www.youtube.com/watch?v=okdFx6tv7ds)
-- [Using FLTK on Android](https://www.youtube.com/watch?v=3jW_vxGmxt0)
 - [Use FLUID (RAD tool) with Rust](https://www.youtube.com/watch?v=k_P0wG3-dNk)
 - [multiple windows and embedding windows](https://www.youtube.com/watch?v=qEPYx1Lw7fY)
 - [FLTK Rust tutorial: Improve FLTK's toggle button appearance!](https://www.youtube.com/watch?v=WCTbPKHXR-o)
