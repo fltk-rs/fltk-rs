@@ -3,6 +3,8 @@
 
 ## [1.2.30] - Unreleased
 - Add MenuItem::add, add_emit, insert and insert_emit.
+- Add details to channel docs by @peter-scholtens.
+- Derive PartialEq for TextAttr.
 
 ## [1.2.29] - 2022-01-31
 - Add TextEditor::AnyState const value.
