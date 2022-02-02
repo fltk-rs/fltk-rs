@@ -284,7 +284,7 @@ impl MenuItem {
         unsafe { Fl_Menu_Item_set(self.inner) }
     }
 
-    /// Clears the menu item
+    /// Turns the check or radio item "off" for the menu item
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_clear(self.inner) }
