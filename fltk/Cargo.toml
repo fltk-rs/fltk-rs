@@ -63,3 +63,8 @@ harness = false
 name = "threads"
 path = "tests/threads.rs"
 harness = false
+
+[[test]]
+name = "modify_submenu"
+path = "tests/modify_submenu.rs"
+harness = false

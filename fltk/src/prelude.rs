@@ -539,7 +539,8 @@ pub unsafe trait ButtonExt: WidgetExt {
 /// Widgets implementing the GroupExt trait, are characterized by having to call `::end()` method to basically close them.
 /// More details can be found in the [wiki](https://github.com/fltk-rs/fltk-rs/wiki/group_widgets).
 /// ```rust
-/// use fltk::{button::Button, window::Window, prelude::GroupExt};
+/// use fltk::{app, button::Button, window::Window, prelude::GroupExt};
+/// let a = app::App::default();
 /// let win = Window::default();
 /// let btn = Button::default();
 /// // Instantiate other widgets
@@ -549,7 +550,8 @@ pub unsafe trait ButtonExt: WidgetExt {
 /// After `end`ing such GroupExt widgets, any other widgets instantiated after the `end` call, will be instantiated outside.
 /// These can still be added using the `::add(&other_widget)` method (or using `::insert`):
 /// ```rust
-/// use fltk::{button::Button, window::Window, prelude::GroupExt};
+/// use fltk::{app, button::Button, window::Window, prelude::GroupExt};
+/// let a = app::App::default();
 /// let mut win = Window::default();
 /// win.end();
 /// let btn = Button::default();
@@ -557,7 +559,8 @@ pub unsafe trait ButtonExt: WidgetExt {
 /// ```
 /// Another option is to reopen the widget:
 /// ```rust
-/// use fltk::{button::Button, window::Window, prelude::GroupExt};
+/// use fltk::{app, button::Button, window::Window, prelude::GroupExt};
+/// let a = app::App::default();
 /// let win = Window::default();
 /// win.end();
 /// win.begin();
