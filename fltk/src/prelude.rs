@@ -709,7 +709,8 @@ pub unsafe trait WindowExt: GroupExt {
     fn decorated_w(&self) -> i32;
     /// Returns the decorated height
     fn decorated_h(&self) -> i32;
-    /// Set the window's minimum width, minimum height, max width and max height
+    /// Set the window's minimum width, minimum height, max width and max height.
+    /// You can pass 0 as max_w and max_h to allow unlimited upward resize of the window.
     fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32);
     /// Set the hotspot widget of the window
     fn hotspot<W: WidgetExt>(&mut self, w: &W)

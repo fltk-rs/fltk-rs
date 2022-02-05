@@ -276,6 +276,16 @@ macro_rules! impl_window_ext {
 
                 fn size_range(&mut self, min_w: i32, min_h: i32, max_w: i32, max_h: i32) {
                     assert!(!self.was_deleted());
+                    let max_w = if max_w > u16::MAX as i32 {
+                        0
+                    } else {
+                        max_w
+                    };
+                    let max_h = if max_h > u16::MAX as i32 {
+                        0
+                    } else {
+                        max_h
+                    };
                     unsafe {
                         [<$flname _size_range>](self.inner, min_w, min_h, max_w, max_h);
                     }
