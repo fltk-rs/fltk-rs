@@ -35,8 +35,9 @@ fn main() {
         menu::MenuFlag::Normal,
         |_| {},
     );
-    let mut btn1 = button::Button::new(100, 200, 80, 30, "Modify");
-    let mut btn2 = button::Button::new(200, 200, 80, 30, "Clear");
+    let mut btn1 = button::Button::new(160, 150, 80, 30, "Modify 1");
+    let mut btn2 = button::Button::new(160, 200, 80, 30, "Modify 2");
+    let mut clear = button::Button::new(160, 250, 80, 30, "Clear");
     win.end();
     win.show();
 
@@ -60,7 +61,25 @@ fn main() {
         }
     });
 
-    btn2.set_callback(move |_| {
+    btn2.set_callback({
+        let mut menubar = menubar.clone();
+        move |_| {
+            menubar.add(
+                "File/Recent/Fifth\t",
+                Shortcut::None,
+                menu::MenuFlag::Normal,
+                |_| {},
+            );
+            menubar.add(
+                "File/Recent/Sixth\t",
+                Shortcut::None,
+                menu::MenuFlag::Normal,
+                |_| {},
+            );
+        }
+    });
+
+    clear.set_callback(move |_| {
         menubar.clear_submenu(idx).unwrap();
     });
 

@@ -5,6 +5,7 @@
 - Add MenuItem::add, add_emit, insert and insert_emit.
 - Add details to channel docs by @peter-scholtens.
 - Derive PartialEq for TextAttr.
+- Update FLTK.
 
 ## [1.2.29] - 2022-01-31
 - Add TextEditor::AnyState const value.
