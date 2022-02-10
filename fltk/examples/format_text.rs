@@ -8,19 +8,19 @@ use fltk::{
     menu::Choice,
     misc::Spinner,
     prelude::*,
-    text::{StyleTableEntry, TextBuffer, TextEditor},
+    text::{StyleTableEntryExt, TextAttr, TextBuffer, TextEditor},
     window::Window,
 };
 use std::{cell::RefCell, char, rc::Rc};
 
 struct Style {
-    style_table: Vec<StyleTableEntry>,
+    style_table: Vec<StyleTableEntryExt>,
 }
 
 impl Style {
     fn new() -> Style {
         Style {
-            style_table: Vec::<StyleTableEntry>::new(),
+            style_table: Vec::<StyleTableEntryExt>::new(),
         }
     }
 
@@ -38,6 +38,7 @@ impl Style {
         font: Font,
         size: i32,
         color: Color,
+        attr: TextAttr,
         text_editor: &mut TextEditor,
     ) {
         let mut style_buffer = match text_editor.style_buffer() {
@@ -46,17 +47,22 @@ impl Style {
         };
 
         // get existent style or create new one
-        let style_char = match self
-            .style_table
-            .iter()
-            .position(|s| s.font == font && s.size == size && s.color == color)
-        {
-            Some(i) => ((i + 65) as u8 as char).to_string(),
-            None => {
-                self.style_table.push(StyleTableEntry { color, font, size });
-                ((self.style_table.len() + 64) as u8 as char).to_string()
-            }
-        };
+        let style_char =
+            match self.style_table.iter().position(|s| {
+                s.font == font && s.size == size && s.color == color && s.attr == attr
+            }) {
+                Some(i) => ((i + 65) as u8 as char).to_string(),
+                None => {
+                    self.style_table.push(StyleTableEntryExt {
+                        color,
+                        font,
+                        size,
+                        attr,
+                        bgcolor: Color::Black,
+                    });
+                    ((self.style_table.len() + 64) as u8 as char).to_string()
+                }
+            };
 
         // insert, delete or replace char index style to the style_buffer
         match ins_items {
@@ -109,7 +115,7 @@ impl Style {
         // remove unused indexes
         //self.style_table = self.style_table.drain(in_buff.len()..).collect();
         self.style_table.truncate(style_index.len());
-        text_editor.set_highlight_data(style_buffer, self.style_table.to_owned());
+        text_editor.set_highlight_data_ext(style_buffer, self.style_table.to_owned());
 
         // uncomment this line to see that the style_table is compact
         // println!("total styles: {}", self.style_table.len());
@@ -121,15 +127,16 @@ fn main() {
 
     let app = App::default().with_scheme(Scheme::Gleam);
     let mut wind = Window::default()
-        .with_size(400, 200)
+        .with_size(500, 200)
         .with_label("Highlight");
-    let mut vpack = Pack::new(4, 4, 392, 192, "");
+    let mut vpack = Pack::new(4, 4, 492, 192, "");
     vpack.set_spacing(4);
-    let mut text_editor = TextEditor::default().with_size(392, 163);
+    let mut text_editor = TextEditor::default().with_size(492, 163);
 
-    let mut hpack = Pack::new(4, 4, 392, 25, "").with_type(PackType::Horizontal);
-    hpack.set_spacing(4);
-    let mut font = Choice::default().with_size(176, 25);
+    let mut hpack = Pack::new(4, 4, 492, 25, "").with_type(PackType::Horizontal);
+    hpack.set_spacing(8);
+    let mut font = Choice::default().with_size(130, 25);
+    let mut choice = Choice::default().with_size(130, 25);
     let mut size = Spinner::default().with_size(60, 25);
 
     let mut color = Choice::default().with_size(100, 25);
@@ -147,25 +154,28 @@ fn main() {
     font.set_value(0);
     font.set_tooltip("Font");
 
+    choice.add_choice("Normal|Underline|Strike");
+    choice.set_value(0);
+
     size.set_value(18.0);
     size.set_step(1.0);
     size.set_range(12.0, 28.0);
     size.set_tooltip("Size");
 
     color.set_tooltip("Color");
-    color.add_choice("000000|ff0000|00ff00|0000ff|ffff00|00ffff");
+    color.add_choice("#000000|#ff0000|#00ff00|#0000ff|#ffff00|#00ffff");
     color.set_value(0);
 
     btn_clear.set_label_color(Color::Red);
     btn_clear.set_tooltip("Clear style");
 
-    let color1 = color.clone();
-
     // set colors
-    for mut item in color1 {
+    for mut item in color.clone() {
         if let Some(lbl) = item.label() {
             item.set_label_color(Color::from_u32(
-                u32::from_str_radix(lbl.trim(), 16).ok().unwrap(),
+                u32::from_str_radix(lbl.trim().strip_prefix('#').unwrap(), 16)
+                    .ok()
+                    .unwrap(),
             ));
         }
     }
@@ -177,13 +187,29 @@ fn main() {
         let font1 = font.clone();
         let size1 = size.clone();
         let color1 = color.clone();
+        let choice1 = choice.clone();
         move |pos: i32, ins_items: i32, del_items: i32, _: i32, _: &str| {
+            let attr = if choice1.value() == 1 {
+                TextAttr::Underline
+            } else if choice1.value() == 2 {
+                TextAttr::StrikeThrough
+            } else {
+                TextAttr::None
+            };
             if ins_items > 0 || del_items > 0 {
                 let mut style = style_rc1.borrow_mut();
                 let color = Color::from_u32(
-                    u32::from_str_radix(color1.text(color1.value()).unwrap().trim(), 16)
-                        .ok()
-                        .unwrap(),
+                    u32::from_str_radix(
+                        color1
+                            .text(color1.value())
+                            .unwrap()
+                            .trim()
+                            .strip_prefix('#')
+                            .unwrap(),
+                        16,
+                    )
+                    .ok()
+                    .unwrap(),
                 );
                 style.apply_style(
                     Some(pos),
@@ -194,25 +220,41 @@ fn main() {
                     Font::by_name(font1.text(font1.value()).unwrap().trim()),
                     size1.value() as i32,
                     color,
+                    attr,
                     &mut text_editor1,
                 );
             }
         }
     });
 
-    font.set_callback({
-        let size1 = size.clone();
-        let color1 = color.clone();
-        let mut text_editor1 = text_editor.clone();
+    color.set_callback({
+        let size = size.clone();
+        let font = font.clone();
+        let choice = choice.clone();
+        let mut text_editor = text_editor.clone();
         let style_rc1 = Rc::clone(&style);
-        move |font| {
-            if let Some(buf) = text_editor1.buffer() {
+        move |color| {
+            let attr = match choice.value() {
+                0 => TextAttr::None,
+                1 => TextAttr::Underline,
+                2 => TextAttr::StrikeThrough,
+                _ => unreachable!(),
+            };
+            if let Some(buf) = text_editor.buffer() {
                 if let Some((s, e)) = buf.selection_position() {
                     let mut style = style_rc1.borrow_mut();
                     let color = Color::from_u32(
-                        u32::from_str_radix(color1.text(color1.value()).unwrap().trim(), 16)
-                            .ok()
-                            .unwrap(),
+                        u32::from_str_radix(
+                            color
+                                .text(color.value())
+                                .unwrap()
+                                .trim()
+                                .strip_prefix('#')
+                                .unwrap(),
+                            16,
+                        )
+                        .ok()
+                        .unwrap(),
                     );
                     style.apply_style(
                         None,
@@ -221,69 +263,10 @@ fn main() {
                         Some(s),
                         Some(e),
                         Font::by_name(font.text(font.value()).unwrap().trim()),
-                        size1.value() as i32,
-                        color,
-                        &mut text_editor1,
-                    );
-                }
-            }
-        }
-    });
-
-    size.set_callback({
-        let font1 = font.clone();
-        let color1 = color.clone();
-        let mut text_editor1 = text_editor.clone();
-        let style_rc1 = Rc::clone(&style);
-        move |size| {
-            if let Some(buf) = text_editor1.buffer() {
-                if let Some((s, e)) = buf.selection_position() {
-                    let mut style = style_rc1.borrow_mut();
-                    let color = Color::from_u32(
-                        u32::from_str_radix(color1.text(color1.value()).unwrap().trim(), 16)
-                            .ok()
-                            .unwrap(),
-                    );
-                    style.apply_style(
-                        None,
-                        None,
-                        None,
-                        Some(s),
-                        Some(e),
-                        Font::by_name(font1.text(font1.value()).unwrap().trim()),
                         size.value() as i32,
                         color,
-                        &mut text_editor1,
-                    );
-                }
-            }
-        }
-    });
-
-    color.set_callback({
-        let size1 = size.clone();
-        let font1 = font.clone();
-        let mut text_editor1 = text_editor.clone();
-        let style_rc1 = Rc::clone(&style);
-        move |color| {
-            if let Some(buf) = text_editor1.buffer() {
-                if let Some((s, e)) = buf.selection_position() {
-                    let mut style = style_rc1.borrow_mut();
-                    let color = Color::from_u32(
-                        u32::from_str_radix(color.text(color.value()).unwrap().trim(), 16)
-                            .ok()
-                            .unwrap(),
-                    );
-                    style.apply_style(
-                        None,
-                        None,
-                        None,
-                        Some(s),
-                        Some(e),
-                        Font::by_name(font1.text(font1.value()).unwrap().trim()),
-                        size1.value() as i32,
-                        color,
-                        &mut text_editor1,
+                        attr,
+                        &mut text_editor,
                     );
                 }
             }
@@ -327,6 +310,21 @@ fn main() {
         }
     });
 
+    choice.set_callback({
+        let mut color1 = color.clone();
+        move |_| color1.do_callback()
+    });
+
+    font.set_callback({
+        let mut color1 = color.clone();
+        move |_| color1.do_callback()
+    });
+
+    size.set_callback({
+        let mut color1 = color.clone();
+        move |_| color1.do_callback()
+    });
+
     // clear style of the current selection or, if no text is selected, clear all text style
     btn_clear.set_callback({
         let style_rc1 = Rc::clone(&style);
@@ -337,6 +335,7 @@ fn main() {
                     font.set_value(0);
                     size.set_value(18.0);
                     color.set_value(0);
+                    choice.set_value(0);
                     color.do_callback();
                 }
                 None => {
@@ -350,8 +349,9 @@ fn main() {
                         Some(0),
                         Some(text_editor1.buffer().unwrap().length()),
                         Font::Courier,
-                        18,
+                        16,
                         Color::Black,
+                        TextAttr::None,
                         &mut text_editor,
                     );
                 }

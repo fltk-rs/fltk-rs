@@ -750,7 +750,7 @@ crate::macros::widget::impl_widget_base!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::display::impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
 
 /// The attribute of the style entry
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 #[repr(u32)]
 #[non_exhaustive]
 pub enum TextAttr {
@@ -758,6 +758,8 @@ pub enum TextAttr {
     None = 0x0000,
     /// Use the background color in the `bgcolor` field
     BgColor = 0x0001,
+    /// Use the background color in the `bgcolor` field to highlight the whole line
+    BgColorExt = 0x0003,
     /// A single underline, underline types are mutually exclusive
     Underline = 0x0004,
     /// Grammar suggestion (blue dotted underline)

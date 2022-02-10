@@ -284,7 +284,7 @@ impl MenuItem {
         unsafe { Fl_Menu_Item_set(self.inner) }
     }
 
-    /// Clears the menu item
+    /// Turns the check or radio item "off" for the menu item
     pub fn clear(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_clear(self.inner) }
@@ -526,6 +526,101 @@ impl MenuItem {
                 Fl_Menu_Item_add_image(self.inner, std::ptr::null_mut(), on_left as i32)
             }
         }
+    }
+
+    /// Add a menu item
+    pub fn add<F: FnMut(&mut dyn MenuExt) + 'static>(
+        &mut self,
+        name: &str,
+        shortcut: crate::enums::Shortcut,
+        flag: MenuFlag,
+        cb: F,
+    ) -> i32 {
+        assert!(!self.was_deleted());
+        let temp = CString::safe_new(name);
+        unsafe {
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
+                let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
+                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
+                    data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                let _ =
+                    std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+            }
+            let a: *mut Box<dyn FnMut(&mut dyn MenuExt)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
+            let callback: Fl_Callback = Some(shim);
+            Fl_Menu_Item_add(
+                self.inner,
+                temp.as_ptr(),
+                shortcut.bits() as i32,
+                callback,
+                data,
+                flag as i32,
+            )
+        }
+    }
+
+    /// Insert a menu item
+    pub fn insert<F: FnMut(&mut dyn MenuExt) + 'static>(
+        &mut self,
+        idx: i32,
+        name: &str,
+        shortcut: crate::enums::Shortcut,
+        flag: MenuFlag,
+        cb: F,
+    ) -> i32 {
+        assert!(!self.was_deleted());
+        let temp = CString::safe_new(name);
+        unsafe {
+            unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
+                let mut wid = crate::widget::Widget::from_widget_ptr(wid as *mut _);
+                let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
+                    data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
+                let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
+                let _ =
+                    std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+            }
+            let a: *mut Box<dyn FnMut(&mut dyn MenuExt)> = Box::into_raw(Box::new(Box::new(cb)));
+            let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
+            let callback: Fl_Callback = Some(shim);
+            Fl_Menu_Item_insert(
+                self.inner,
+                idx as i32,
+                temp.as_ptr(),
+                shortcut.bits() as i32,
+                callback,
+                data,
+                flag as i32,
+            )
+        }
+    }
+
+    /// Add a menu item along with an emit (sender and message).
+    pub fn add_emit<T: 'static + Clone + Send + Sync>(
+        &mut self,
+        label: &str,
+        shortcut: crate::enums::Shortcut,
+        flag: MenuFlag,
+        sender: crate::app::Sender<T>,
+        msg: T,
+    ) -> i32 {
+        self.add(label, shortcut, flag, move |_| sender.send(msg.clone()))
+    }
+
+    /// Insert a menu item along with an emit (sender and message).
+    pub fn insert_emit<T: 'static + Clone + Send + Sync>(
+        &mut self,
+        idx: i32,
+        label: &str,
+        shortcut: crate::enums::Shortcut,
+        flag: MenuFlag,
+        sender: crate::app::Sender<T>,
+        msg: T,
+    ) -> i32 {
+        self.insert(idx, label, shortcut, flag, move |_| {
+            sender.send(msg.clone())
+        })
     }
 }
 
