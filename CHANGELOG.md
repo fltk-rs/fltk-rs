@@ -1,10 +1,11 @@
 # Changelog
 
 
-## [1.2.30] - Unreleased
+## [1.2.30] - 2022-02-10
 - Add MenuItem::add, add_emit, insert and insert_emit.
 - Add details to channel docs by @peter-scholtens.
 - Derive PartialEq for TextAttr.
+- Update patch to detect Event::Enter for windows on Windows.
 - Update FLTK.
 
 ## [1.2.29] - 2022-01-31
