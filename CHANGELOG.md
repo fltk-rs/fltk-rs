@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.30] - Unreleased
+## [1.2.31] - Unreleased
 - Add dialog::message_icon().
 
 ## [1.2.30] - 2022-02-10
