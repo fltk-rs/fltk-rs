@@ -1215,3 +1215,8 @@ pub fn message_title_default(title: &str) {
     let title = CString::safe_new(title);
     unsafe { Fl_message_title_default(title.as_ptr() as _) }
 }
+
+/// Get the frame holding the icon of FLTK's dialog boxes
+pub fn message_icon() -> impl WidgetExt {
+    unsafe { crate::frame::Frame::from_widget_ptr(Fl_message_icon() as _) }
+}

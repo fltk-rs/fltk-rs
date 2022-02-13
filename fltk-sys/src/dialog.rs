@@ -461,3 +461,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_message_title_default(title: *const ::std::os::raw::c_char);
 }
+extern "C" {
+    pub fn Fl_message_icon() -> *mut ::std::os::raw::c_void;
+}

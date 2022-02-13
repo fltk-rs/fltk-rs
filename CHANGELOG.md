@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.30] - Unreleased
+- Add dialog::message_icon().
+
 ## [1.2.30] - 2022-02-10
 - Add MenuItem::add, add_emit, insert and insert_emit.
 - Add details to channel docs by @peter-scholtens.
