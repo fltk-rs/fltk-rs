@@ -3,6 +3,8 @@
 
 ## [1.2.31] - Unreleased
 - Add dialog::message_icon().
+- Add dialog::FileChooser size and position methods.
+- Add dialog::message_set_hotspot(), message_hotspot() and set_font().
 
 ## [1.2.30] - 2022-02-10
 - Add MenuItem::add, add_emit, insert and insert_emit.

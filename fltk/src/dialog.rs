@@ -1266,3 +1266,18 @@ pub fn message_title_default(title: &str) {
 pub fn message_icon() -> impl WidgetExt {
     unsafe { crate::frame::Frame::from_widget_ptr(Fl_message_icon() as _) }
 }
+
+/// Set whether hotspot is enabled for FLTK's dialog boxes
+pub fn message_set_hotspot(enabled: bool) {
+    unsafe { Fl_message_set_hotspot(enabled as _) }
+}
+
+/// Get whether hotspot is enabled for FLTK's dialog boxes
+pub fn message_hotspot() -> bool {
+    unsafe { Fl_message_hotspot() != 0 }
+}
+
+/// Set the font and font size of FLTK's dialog boxes
+pub fn message_set_font(font: Font, sz: i32) {
+    unsafe { Fl_message_set_font(font.bits(), sz) }
+}

@@ -490,3 +490,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_message_icon() -> *mut ::std::os::raw::c_void;
 }
+extern "C" {
+    pub fn Fl_message_set_hotspot(enable: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_message_hotspot() -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_message_set_font(f: ::std::os::raw::c_int, s: ::std::os::raw::c_int);
+}
