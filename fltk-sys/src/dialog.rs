@@ -432,6 +432,32 @@ extern "C" {
     pub fn Fl_File_Chooser_set_hidden_label(msg: *const ::std::os::raw::c_char);
 }
 extern "C" {
+    pub fn Fl_File_Chooser_set_position(
+        self_: *mut Fl_File_Chooser,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Chooser_set_size(
+        self_: *mut Fl_File_Chooser,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_File_Chooser_x(self_: *const Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_y(self_: *const Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_w(self_: *const Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_File_Chooser_h(self_: *const Fl_File_Chooser) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_dir_chooser(
         message: *const ::std::os::raw::c_char,
         fname: *const ::std::os::raw::c_char,

@@ -1098,6 +1098,52 @@ impl FileChooser {
         let msg = CString::safe_new(msg);
         unsafe { Fl_File_Chooser_set_hidden_label(msg.into_raw()) }
     }
+
+    /// Set the position of the file chooser
+    pub fn set_position(&mut self, x: i32, y: i32) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_position(self.inner, x, y) }
+    }
+
+    /// Set the size of the file chooser
+    pub fn set_size(&mut self, w: i32, h: i32) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_size(self.inner, w, h) }
+    }
+
+    /// Get the x pos of the file chooser
+    pub fn x(&self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_x(self.inner) }
+    }
+
+    /// Get the y pos of the file chooser
+    pub fn y(&self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_y(self.inner) }
+    }
+
+    /// Get the width of the file chooser
+    pub fn w(&self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_w(self.inner) }
+    }
+
+    /// Get the width of the file chooser
+    pub fn h(&self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_h(self.inner) }
+    }
+
+    /// Get the size of the file chooser
+    pub fn size(&self) -> (i32, i32) {
+        (self.w(), self.h())
+    }
+
+    /// Get the position of the file chooser
+    pub fn pos(&self) -> (i32, i32) {
+        (self.x(), self.y())
+    }
 }
 
 impl Drop for FileChooser {
