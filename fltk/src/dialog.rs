@@ -1281,3 +1281,9 @@ pub fn message_hotspot() -> bool {
 pub fn message_set_font(font: Font, sz: i32) {
     unsafe { Fl_message_set_font(font.bits(), sz) }
 }
+
+/// Set the next dialog's icon label
+pub fn message_icon_label(label: &str) {
+    let label = CString::safe_new(label);
+    unsafe { Fl_message_icon_label(label.into_raw() as _) }
+}
