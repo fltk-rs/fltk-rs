@@ -738,7 +738,7 @@ impl FileChooser {
     }
 
     /// Sets the directory of the `FileChooser`
-    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: &P) {
+    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: P) {
         self.set_directory_(dir.as_ref())
     }
 
@@ -826,10 +826,10 @@ impl FileChooser {
     }
 
     /// Sets the label of the `FileChooser`
-    pub fn set_label(&mut self, l: &str) {
+    pub fn set_label(&mut self, l: &'static str) {
         assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
-        unsafe { Fl_File_Chooser_set_label(self.inner, l.as_ptr()) }
+        unsafe { Fl_File_Chooser_set_label(self.inner, l.into_raw()) }
     }
 
     /// Gets the label of the `FileChooser`
@@ -848,10 +848,10 @@ impl FileChooser {
     }
 
     /// Sets the label of the Ok button
-    pub fn set_ok_label(&mut self, l: &str) {
+    pub fn set_ok_label(&mut self, l: &'static str) {
         assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
-        unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.as_ptr()) }
+        unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.into_raw()) }
     }
 
     /// Gets the label of the Ok button
