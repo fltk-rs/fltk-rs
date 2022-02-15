@@ -826,9 +826,10 @@ impl FileChooser {
     }
 
     /// Sets the label of the `FileChooser`
-    pub fn set_label(&mut self, l: &'static str) {
+    pub fn set_label(&mut self, l: &str) {
         assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
+        let _old = unsafe { CString::from_raw(Fl_File_Chooser_label(self.inner) as _) };
         unsafe { Fl_File_Chooser_set_label(self.inner, l.into_raw()) }
     }
 
