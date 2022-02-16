@@ -800,7 +800,10 @@ macro_rules! impl_widget_ext {
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                         }
-                        let _old_data = self.user_data();
+                        let mut _old_data = None;
+                        if self.is_derived {
+                            _old_data = self.user_data();
+                        }
                         let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
@@ -868,6 +871,10 @@ macro_rules! impl_widget_ext {
                 fn handle_event(&mut self, event: $crate::enums::Event) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _handle_event>](self.inner, event.bits()) }
+                }
+
+                fn is_derived(&self) -> bool {
+                    self.is_derived
                 }
             }
         }
@@ -988,7 +995,10 @@ macro_rules! impl_widget_base {
                                 0
                             }
                         }
-                        let _old_data = self.handle_data();
+                        let mut _old_data = None;
+                        if self.is_derived {
+                            _old_data = self.handle_data();
+                        }
                         let a: *mut Box<dyn FnMut(&mut Self, $crate::enums::Event) -> bool> =
                             Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
@@ -1009,7 +1019,10 @@ macro_rules! impl_widget_base {
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                         }
-                        let _old_data = self.draw_data();
+                        let mut _old_data = None;
+                        if self.is_derived {
+                            _old_data = self.draw_data();
+                        }
                         let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: custom_draw_callback = Some(shim);
@@ -1523,6 +1536,10 @@ macro_rules! impl_widget_ext_via {
 
             fn handle_event(&mut self, event: $crate::enums::Event) {
                 self.$member.handle_event(event)
+            }
+
+            fn is_derived(&self) -> bool {
+                self.$member.is_derived()
             }
         }
     };

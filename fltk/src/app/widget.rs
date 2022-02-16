@@ -49,7 +49,10 @@ where
             let mut wid = crate::widget::Widget::from_widget_ptr(wid);
             let _ = panic::catch_unwind(panic::AssertUnwindSafe(|| f(&mut wid)));
         }
-        let _old_data = widget.user_data();
+        let mut _old_data = None;
+        if widget.is_derived() {
+            _old_data = widget.user_data();
+        }
         let a: *mut Box<dyn FnMut(&mut dyn WidgetExt)> = Box::into_raw(Box::new(Box::new(cb)));
         let data: *mut raw::c_void = a as *mut raw::c_void;
         let callback: fltk_sys::widget::Fl_Callback = Some(shim);

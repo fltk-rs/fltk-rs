@@ -610,7 +610,10 @@ impl OverlayWindow {
                 let f: &mut (dyn FnMut(&mut OverlayWindow)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
-            let _old_data = self.draw_data();
+            let mut _old_data = None;
+            if self.is_derived {
+                _old_data = self.draw_data();
+            }
             let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: custom_draw_callback = Some(shim);
