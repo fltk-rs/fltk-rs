@@ -7,6 +7,7 @@ edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
 repository = "https://github.com/fltk-rs/fltk-rs"
 keywords = ["gui", "bindings", "graphics"]
+readme = "README.md"
 license = "MIT"
 
 [lib]
