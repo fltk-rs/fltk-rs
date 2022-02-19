@@ -57,7 +57,7 @@ pub fn awake() {
 pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let mut a: Box<Box<dyn FnMut()>> = Box::from_raw(data as *mut Box<dyn FnMut()>);
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
@@ -372,7 +372,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     unsafe {
         assert!(crate::app::is_ui_thread());
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let mut a: Box<Box<dyn FnMut()>> = Box::from_raw(data as *mut Box<dyn FnMut()>);
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
