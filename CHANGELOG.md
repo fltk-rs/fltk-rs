@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.2.31] - Unreleased
+## [1.2.31] - 2022-02-19
 - Add dialog::message_icon().
 - Add dialog::FileChooser size and position methods.
 - Add dialog::message_set_hotspot(), message_hotspot() and set_font().
