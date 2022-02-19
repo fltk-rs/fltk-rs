@@ -738,7 +738,7 @@ impl FileChooser {
     }
 
     /// Sets the directory of the `FileChooser`
-    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: &P) {
+    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: P) {
         self.set_directory_(dir.as_ref())
     }
 
@@ -829,7 +829,8 @@ impl FileChooser {
     pub fn set_label(&mut self, l: &str) {
         assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
-        unsafe { Fl_File_Chooser_set_label(self.inner, l.as_ptr()) }
+        let _old = unsafe { CString::from_raw(Fl_File_Chooser_label(self.inner) as _) };
+        unsafe { Fl_File_Chooser_set_label(self.inner, l.into_raw()) }
     }
 
     /// Gets the label of the `FileChooser`
@@ -848,10 +849,10 @@ impl FileChooser {
     }
 
     /// Sets the label of the Ok button
-    pub fn set_ok_label(&mut self, l: &str) {
+    pub fn set_ok_label(&mut self, l: &'static str) {
         assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
-        unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.as_ptr()) }
+        unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.into_raw()) }
     }
 
     /// Gets the label of the Ok button
@@ -1098,6 +1099,52 @@ impl FileChooser {
         let msg = CString::safe_new(msg);
         unsafe { Fl_File_Chooser_set_hidden_label(msg.into_raw()) }
     }
+
+    /// Set the position of the file chooser
+    pub fn set_position(&mut self, x: i32, y: i32) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_position(self.inner, x, y) }
+    }
+
+    /// Set the size of the file chooser
+    pub fn set_size(&mut self, w: i32, h: i32) {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_set_size(self.inner, w, h) }
+    }
+
+    /// Get the x pos of the file chooser
+    pub fn x(&self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_x(self.inner) }
+    }
+
+    /// Get the y pos of the file chooser
+    pub fn y(&self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_y(self.inner) }
+    }
+
+    /// Get the width of the file chooser
+    pub fn w(&self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_w(self.inner) }
+    }
+
+    /// Get the width of the file chooser
+    pub fn h(&self) -> i32 {
+        assert!(!self.inner.is_null());
+        unsafe { Fl_File_Chooser_h(self.inner) }
+    }
+
+    /// Get the size of the file chooser
+    pub fn size(&self) -> (i32, i32) {
+        (self.w(), self.h())
+    }
+
+    /// Get the position of the file chooser
+    pub fn pos(&self) -> (i32, i32) {
+        (self.x(), self.y())
+    }
 }
 
 impl Drop for FileChooser {
@@ -1214,4 +1261,30 @@ pub fn message_title(title: &str) {
 pub fn message_title_default(title: &str) {
     let title = CString::safe_new(title);
     unsafe { Fl_message_title_default(title.as_ptr() as _) }
+}
+
+/// Get the frame holding the icon of FLTK's dialog boxes
+pub fn message_icon() -> impl WidgetExt {
+    unsafe { crate::frame::Frame::from_widget_ptr(Fl_message_icon() as _) }
+}
+
+/// Set whether hotspot is enabled for FLTK's dialog boxes
+pub fn message_set_hotspot(enabled: bool) {
+    unsafe { Fl_message_set_hotspot(enabled as _) }
+}
+
+/// Get whether hotspot is enabled for FLTK's dialog boxes
+pub fn message_hotspot() -> bool {
+    unsafe { Fl_message_hotspot() != 0 }
+}
+
+/// Set the font and font size of FLTK's dialog boxes
+pub fn message_set_font(font: Font, sz: i32) {
+    unsafe { Fl_message_set_font(font.bits(), sz) }
+}
+
+/// Set the next dialog's icon label
+pub fn message_icon_label(label: &str) {
+    let label = CString::safe_new(label);
+    unsafe { Fl_message_icon_label(label.into_raw() as _) }
 }

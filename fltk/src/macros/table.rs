@@ -494,7 +494,10 @@ macro_rules! impl_table_ext {
                                 f(&mut wid, ctx, arg2, arg3, arg4, arg5, arg6, arg7)
                             }));
                         }
-                        let _old_data = self.draw_cell_data();
+                        let mut _old_data = None;
+                        if self.is_derived {
+                            _old_data = self.draw_cell_data();
+                        }
                         let a: *mut Box<
                             dyn FnMut(
                                 &mut Self,

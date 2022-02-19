@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.2.31] - 2022-02-19
+- Add dialog::message_icon().
+- Add dialog::FileChooser size and position methods.
+- Add dialog::message_set_hotspot(), message_hotspot() and set_font().
+- Fix FileChooser::set_label() and set_ok_label().
+
 ## [1.2.30] - 2022-02-10
 - Add MenuItem::add, add_emit, insert and insert_emit.
 - Add details to channel docs by @peter-scholtens.

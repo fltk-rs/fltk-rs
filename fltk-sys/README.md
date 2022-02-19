@@ -1,4 +1,3 @@
-/*!
 # fltk-sys
 
 Raw bindings for FLTK. These are generated using bindgen on the cfltk headers.
@@ -10,7 +9,7 @@ fltk-sys = "1.2"
 ```
 
 Example code:
-```rust,no_run
+```rust
 use fltk_sys::*;
 use std::os::raw::*;
 
@@ -46,28 +45,3 @@ CMake > 3.14, git and a C++11 compiler. The dev dependencies are basically the s
 - fltk-sys, although memory and thread unsafe, is panic-safe.
 - You need a no-std gui library, in such case, you can replace the `std::` prefix with the `libc` via bindgen (requires adding libc as a dependency).
 - Wrapping a 3rd-party widget like in [fltk-flow](https://github.com/fltk-rs/fltk-flow).
-*/
-#![allow(non_camel_case_types)]
-#![allow(dead_code)]
-#![allow(non_upper_case_globals)]
-
-pub mod browser;
-pub mod button;
-pub mod dialog;
-pub mod draw;
-pub mod fl;
-pub mod frame;
-pub mod group;
-pub mod image;
-pub mod input;
-pub mod menu;
-pub mod misc;
-pub mod table;
-pub mod text;
-pub mod tree;
-pub mod valuator;
-pub mod widget;
-pub mod window;
-pub mod surface;
-pub mod printer;
-pub mod utils;

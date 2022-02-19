@@ -1,13 +1,16 @@
 [package]
 name = "fltk-sys"
-version = "1.2.29"
+version = "1.2.31"
 authors = ["The fltk-rs Authors"]
 build = "build/main.rs"
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
 repository = "https://github.com/fltk-rs/fltk-rs"
 keywords = ["gui", "bindings", "graphics"]
+categories = ["gui"]
+readme = "README.md"
 license = "MIT"
+links = "fltk"
 
 [lib]
 name = "fltk_sys"
