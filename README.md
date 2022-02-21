@@ -398,7 +398,7 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
     - MenuWindow
     - OverlayWindow
     - GlWindow (requires the "enable-glwindow" flag)
-    - GlutWindow (requires the "enable-glwindow" flag)
+    - Experimental GlWidgetWindow (requires the "enable-glwindow" flag)
 - Groups
     - Group
     - Pack (Horizontal and Vertical)
