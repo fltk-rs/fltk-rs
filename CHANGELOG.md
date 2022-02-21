@@ -5,6 +5,7 @@
 - Free singleshot heap-allocated trait-object(callbacks) in app::awake_callback() and add_timeout() by @mosolovsa.
 - Fix TiledImage refcount.
 - Add experimental GlWidgetWindow.
+- Add app::set_color_with_alpha().
 
 ## [1.2.31] - 2022-02-19
 - Add dialog::message_icon().

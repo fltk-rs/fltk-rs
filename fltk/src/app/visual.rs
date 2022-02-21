@@ -186,6 +186,11 @@ pub fn set_color(old: Color, r: u8, g: u8, b: u8) {
     unsafe { fl::Fl_set_color(old.bits() as u32, r, g, b) }
 }
 
+/// Swap a color with a custom RGBA value
+pub fn set_color_with_alpha(old: Color, r: u8, g: u8, b: u8, a: u8) {
+    unsafe { fl::Fl_set_color_with_alpha(old.bits() as u32, r, g, b, a) }
+}
+
 /// Gets the system colors
 pub fn get_system_colors() {
     unsafe { fl::Fl_get_system_colors() }
