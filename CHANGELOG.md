@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.2.32] - Unreleased
+- Free singleshot heap-allocated trait-object(callbacks) in app::awake_callback() and add_timeout() by @mosolovsa.
+- Fix TiledImage refcount.
+
 ## [1.2.31] - 2022-02-19
 - Add dialog::message_icon().
 - Add dialog::FileChooser size and position methods.
