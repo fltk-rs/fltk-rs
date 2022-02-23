@@ -111,7 +111,7 @@ impl From<std::num::ParseIntError> for FltkError {
     }
 }
 
-/// A trait defined for all enums passable to the `WidgetExt::set_type()` method
+/// A trait defined for all enums passable to the [`WidgetExt::set_type()`](`crate::prelude::WidgetExt::set_type`) method
 pub trait WidgetType {
     /// Get the integral representation of the widget type
     fn to_i32(self) -> i32;
@@ -121,8 +121,7 @@ pub trait WidgetType {
 
 /// Defines the methods implemented by all widgets
 ///
-/// For multithreaded usage, see the [`widget` module documentation's
-/// note](crate::widget)
+/// For multithreaded usage, see the [`widget` module documentation's note](crate::widget)
 /// # Safety
 /// fltk-rs traits depend on some FLTK internal code
 /// # Warning
@@ -626,19 +625,19 @@ pub unsafe trait GroupExt: WidgetExt {
     fn set_clip_children(&mut self, flag: bool);
     /// Get whether `clip_children` is set
     fn clip_children(&self) -> bool;
-    /// Draw a child widget, the call should be in a `WidgetBase::draw` method
+    /// Draw a child widget, the call should be in a [`WidgetBase::draw`](`crate::prelude::WidgetBase::draw`) method
     fn draw_child<W: WidgetExt>(&self, w: &mut W)
     where
         Self: Sized;
-    /// Update a child widget, the call should be in a `WidgetBase::draw` method
+    /// Update a child widget, the call should be in a [`WidgetBase::draw`](`crate::prelude::WidgetBase::draw`) method
     fn update_child<W: WidgetExt>(&self, w: &mut W)
     where
         Self: Sized;
-    /// Draw the outside label, the call should be in a `WidgetBase::draw` method
+    /// Draw the outside label, the call should be in a [`WidgetBase::draw`](`crate::prelude::WidgetBase::draw`) method
     fn draw_outside_label<W: WidgetExt>(&self, w: &mut W)
     where
         Self: Sized;
-    /// Draw children, the call should be in a `WidgetBase::draw` method
+    /// Draw children, the call should be in a [`WidgetBase::draw`](`crate::prelude::WidgetBase::draw`) method
     fn draw_children(&mut self);
     /// Resets the internal array of widget sizes and positions
     fn init_sizes(&mut self);
@@ -941,18 +940,18 @@ pub unsafe trait MenuExt: WidgetExt {
     fn set_value(&mut self, v: i32) -> bool;
     /// Clears the items in a menu, effectively deleting them.
     fn clear(&mut self);
-    /// Clears a submenu by index, failure return `FltkErrorKind::FailedOperation`
+    /// Clears a submenu by index
     /// # Errors
-    /// Errors on failure to clear the submenu
+    /// Errors on failure to clear the submenu, failure returns an [`FltkErrorKind::FailedOperation`](`crate::prelude::FltkErrorKind::FailedOperation`)
     fn clear_submenu(&mut self, idx: i32) -> Result<(), FltkError>;
     /// Clears the items in a menu, effectively deleting them, and recursively force-cleans capturing callbacks
     /// # Safety
     /// Deletes `user_data` and any captured objects in the callback
     unsafe fn unsafe_clear(&mut self);
     #[doc(hidden)]
-    /// Clears a submenu by index, failure return `FltkErrorKind::FailedOperation`. Also recursively force-cleans capturing callbacks
+    /// Clears a submenu by index. Also recursively force-cleans capturing callbacks
     /// # Safety
-    /// Deletes `user_data` and any captured objects in the callback
+    /// Deletes `user_data` and any captured objects in the callback, , failure returns an [`FltkErrorKind::FailedOperation`](`crate::prelude::FltkErrorKind::FailedOperation`)
     /// # Errors
     /// Errors on failure to clear the submenu
     unsafe fn unsafe_clear_submenu(&mut self, idx: i32) -> Result<(), FltkError>;

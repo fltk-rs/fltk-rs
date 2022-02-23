@@ -299,7 +299,7 @@ bitflags::bitflags! {
 }
 
 impl Font {
-    /// Returns a font by index, can be queried via the `app::get_font_names()`
+    /// Returns a font by index, can be queried via the [`app::get_font_names()`](`crate::app::get_font_names()`)
     pub fn by_index(idx: usize) -> Font {
         unsafe {
             if let Some(f) = &FONTS {
@@ -314,7 +314,7 @@ impl Font {
         }
     }
 
-    /// Gets the font by its name, can be queried via the `app::get_font_names()`
+    /// Gets the font by its name, can be queried via the [`app::get_font_names()`](`crate::app::get_font_names`)
     pub fn by_name(name: &str) -> Font {
         match font_index(name) {
             Some(val) => Font::by_index(val),

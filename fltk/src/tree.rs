@@ -370,7 +370,7 @@ impl Tree {
         unsafe { TreeItem::from_raw(Fl_Tree_last_selected_item(self.inner)) }
     }
 
-    /// Gets the next tree item, `direction_key` is by default `Key::Down`
+    /// Gets the next tree item, `direction_key` is by default [`Key::Down`](`crate::enums::Key::Down`)
     pub fn next_item(
         &self,
         item: &TreeItem,
@@ -391,7 +391,7 @@ impl Tree {
         }
     }
 
-    /// Gets the next selected tree item, `direction_key` is by default `Key::Down`
+    /// Gets the next selected tree item, `direction_key` is by default [`Key::Down`](`crate::enums::Key::Down`)
     pub fn next_selected_item(&mut self, item: &TreeItem, direction_key: Key) -> Option<TreeItem> {
         assert!(!self.was_deleted());
         if item.inner.is_null() {
