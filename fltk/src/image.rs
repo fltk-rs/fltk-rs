@@ -550,9 +550,10 @@ crate::macros::image::impl_image_ext!(TiledImage, Fl_Tiled_Image);
 
 impl TiledImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
-    pub fn new<Img: ImageExt>(img: Img, w: i32, h: i32) -> TiledImage {
+    pub fn new<Img: ImageExt>(mut img: Img, w: i32, h: i32) -> TiledImage {
         unsafe {
             assert!(!img.was_deleted());
+            img.increment_arc();
             let ptr = Fl_Tiled_Image_new(img.as_image_ptr(), w, h);
             assert!(!ptr.is_null());
             TiledImage {
