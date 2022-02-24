@@ -6,6 +6,10 @@ fn menu_cb(m: &mut impl MenuExt) {
             "New\t" => println!("New"),
             "Open\t" => println!("Open"),
             "Third" => println!("Third"),
+            "Quit\t" => {
+                println!("Quitting");
+                app::quit();
+            },
             _ => println!("{}", choice),
         }
     }
