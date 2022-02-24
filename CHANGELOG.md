@@ -6,6 +6,7 @@
 - Fix TiledImage refcount.
 - Add experimental GlWidgetWindow.
 - Add app::set_color_with_alpha().
+- Fix MenuItem::add() and insert().
 
 ## [1.2.31] - 2022-02-19
 - Add dialog::message_icon().
