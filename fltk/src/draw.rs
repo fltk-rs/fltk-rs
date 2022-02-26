@@ -259,7 +259,7 @@ pub fn draw_pie(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
 
 /// Sets the line style
 /// # Warning
-/// You are required to change this back to `set_line_style(LineStyle::Solid, 0)` after finishing
+/// You are required to change this back to [`set_line_style(LineStyle::Solid, 0)`](`crate::draw::set_line_style`) after finishing
 pub fn set_line_style(style: LineStyle, width: i32) {
     unsafe {
         crate::app::open_display();
@@ -862,7 +862,7 @@ pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
 }
 
 /// Draw an image into a widget.
-/// Requires a call to `app::set_visual(Mode::Rgb8).unwrap()`
+/// Requires a call to [`app::set_visual(Mode::Rgb8).unwrap()`](`crate::app::set_visual`)
 /// # Errors
 /// Errors on invalid or unsupported image formats
 pub fn draw_image(
@@ -891,7 +891,7 @@ pub fn draw_check(x: i32, y: i32, w: i32, h: i32, col: Color) {
 }
 
 /// Draw an image into a widget.
-/// Requires a call to `app::set_visual(Mode::Rgb8).unwrap()`.
+/// Requires a call to [`app::set_visual(Mode::Rgb8).unwrap()`](`crate::app::set_visual`).
 /// A negative depth flips the image horizontally,
 /// while a negative line data flips it vertically.
 /// Allows passing a line-data parameter

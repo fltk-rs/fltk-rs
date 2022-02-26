@@ -185,6 +185,15 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_set_color_with_alpha(
+        c: ::std::os::raw::c_uint,
+        r: ::std::os::raw::c_uchar,
+        g: ::std::os::raw::c_uchar,
+        b: ::std::os::raw::c_uchar,
+        a: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
     pub fn Fl_get_font(idx: ::std::os::raw::c_int) -> *const ::std::os::raw::c_char;
 }
 extern "C" {

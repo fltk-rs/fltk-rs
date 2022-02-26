@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [1.2.32] - 2022-02-26
+- Free singleshot heap-allocated trait-object(callbacks) in app::awake_callback() and add_timeout() by @mosolovsa.
+- Fix TiledImage refcount.
+- Fix MenuItem::add() and insert().
+- Add experimental GlWidgetWindow, gated under the enable-glwindow feature.
+- Add app::set_color_with_alpha(), gated under the enable-glwindow feature.
+- Update ttf-parser to 0.15.
+
 ## [1.2.31] - 2022-02-19
 - Add dialog::message_icon().
 - Add dialog::FileChooser size and position methods.

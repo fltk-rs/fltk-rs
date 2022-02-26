@@ -57,7 +57,7 @@ pub fn awake() {
 pub fn awake_callback<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let mut a: Box<Box<dyn FnMut()>> = Box::from_raw(data as *mut Box<dyn FnMut()>);
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
@@ -159,7 +159,7 @@ pub fn quit() {
 
 #[deprecated(since = "1.2.26", note = "please use `add_idle3` instead")]
 /// Add an idle callback to run within the event loop.
-/// Calls to `WidgetExt::redraw` within the callback require an explicit sleep
+/// Calls to [`WidgetExt::redraw`](`crate::prelude::WidgetExt::redraw`) within the callback require an explicit sleep
 pub fn add_idle<F: FnMut() + 'static>(cb: F) {
     unsafe {
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
@@ -207,7 +207,7 @@ pub fn has_idle<F: FnMut() + 'static>(cb: F) -> bool {
 }
 
 /// Add an idle callback to run within the event loop.
-/// Calls to `WidgetExt::redraw` within the callback require an explicit sleep
+/// Calls to [`WidgetExt::redraw`](`crate::prelude::WidgetExt::redraw`) within the callback require an explicit sleep
 pub fn add_idle2(cb: fn()) {
     unsafe {
         let data: *mut raw::c_void = std::ptr::null_mut();
@@ -248,7 +248,7 @@ unsafe extern "C" fn idle_shim(data: *mut raw::c_void) {
 
 /// Add an idle callback to run within the event loop.
 /// This function returns a handle that can be used for future interaction with the callback.
-/// Calls to `WidgetExt::redraw` within the callback require an explicit sleep
+/// Calls to [`WidgetExt::redraw`](`crate::prelude::WidgetExt::redraw`) within the callback require an explicit sleep
 pub fn add_idle3<F: FnMut(IdleHandle) + 'static>(cb: F) -> IdleHandle {
     unsafe {
         let a: *mut Box<dyn FnMut(IdleHandle)> = Box::into_raw(Box::new(Box::new(cb)));
@@ -372,7 +372,7 @@ pub fn add_timeout<F: FnMut() + 'static>(tm: f64, cb: F) {
     unsafe {
         assert!(crate::app::is_ui_thread());
         unsafe extern "C" fn shim(data: *mut raw::c_void) {
-            let a: *mut Box<dyn FnMut()> = data as *mut Box<dyn FnMut()>;
+            let mut a: Box<Box<dyn FnMut()>> = Box::from_raw(data as *mut Box<dyn FnMut()>);
             let f: &mut (dyn FnMut()) = &mut **a;
             let _ = panic::catch_unwind(panic::AssertUnwindSafe(f));
         }
