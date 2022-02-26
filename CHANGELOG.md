@@ -4,9 +4,9 @@
 ## [1.2.32] - Unreleased
 - Free singleshot heap-allocated trait-object(callbacks) in app::awake_callback() and add_timeout() by @mosolovsa.
 - Fix TiledImage refcount.
-- Add experimental GlWidgetWindow.
-- Add app::set_color_with_alpha().
 - Fix MenuItem::add() and insert().
+- Add experimental GlWidgetWindow, gated under the enable-glwindow feature.
+- Add app::set_color_with_alpha(), gated under the enable-glwindow feature.
 
 ## [1.2.31] - 2022-02-19
 - Add dialog::message_icon().
