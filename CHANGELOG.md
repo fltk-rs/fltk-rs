@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.2.33] - Unreleased
+- Pull FLTK dialog [fix](https://github.com/fltk/fltk/issues/401).
+
 ## [1.2.32] - 2022-02-26
 - Free singleshot heap-allocated trait-object(callbacks) in app::awake_callback() and add_timeout() by @mosolovsa.
 - Fix TiledImage refcount.
