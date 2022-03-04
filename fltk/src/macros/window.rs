@@ -42,24 +42,22 @@ macro_rules! impl_window_ext {
                     target_os = "openbsd",
                 ))]
                 {
-                    let mut handle = XlibHandle::empty();
-                    handle.window = self.raw_handle();
-                    handle.display = $crate::app::display();
-                    return RawWindowHandle::Xlib(handle);
-                }
+                    #[cfg(not(feature = "use-wayland"))]
+                    {
+                        let mut handle = XlibHandle::empty();
+                        handle.window = self.raw_handle();
+                        handle.display = $crate::app::display();
+                        return RawWindowHandle::Xlib(handle);
+                    }
 
-                #[cfg(any(
-                    target_os = "linux",
-                    target_os = "dragonfly",
-                    target_os = "freebsd",
-                    target_os = "netbsd",
-                    target_os = "openbsd",
-                ))]
-                {
-                    let mut handle = WaylandHandle::empty();
-                    handle.surface = self.raw_handle();
-                    handle.display = $crate::app::display();
-                    return RawWindowHandle::Wayland(handle);
+
+                    #[cfg(feature = "use-wayland")]
+                    {
+                        let mut handle = WaylandHandle::empty();
+                        handle.surface = self.raw_handle();
+                        handle.display = $crate::app::display();
+                        return RawWindowHandle::Wayland(handle);
+                    }
                 }
             }
         }
@@ -248,7 +246,14 @@ macro_rules! impl_window_ext {
                         target_os = "netbsd",
                         target_os = "openbsd",
                     ))]
-                    assert!(handle != 0);
+                    {
+                        #[cfg(feature = "use-wayland")]
+                        assert!(!handle.is_null());
+
+                        #[cfg(not(feature = "use-wayland"))]
+                        assert!(handle != 0);
+                    }
+                    
 
                     Fl_Window_set_raw_handle(self.inner as *mut Fl_Window, mem::transmute(&handle));
                 }

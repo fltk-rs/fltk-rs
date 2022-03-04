@@ -393,6 +393,7 @@ impl DoubleWindow {
 
     /// Show a window after it had been hidden. Works on Windows and X11 systems
     pub fn platform_show(&self) {
+        #[allow(unused_unsafe)]
         unsafe {
             #[cfg(target_os = "windows")]
             {
@@ -422,6 +423,7 @@ impl DoubleWindow {
 
     /// Hide a window using the platforms hide call. Works on Windows and X11 systems
     pub fn platform_hide(&self) {
+        #[allow(unused_unsafe)]
         unsafe {
             #[cfg(target_os = "windows")]
             {
