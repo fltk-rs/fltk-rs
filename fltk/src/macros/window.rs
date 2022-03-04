@@ -34,13 +34,13 @@ macro_rules! impl_window_ext {
                     return RawWindowHandle::AndroidNdk(handle);
                 }
 
-                #[cfg(all(any(
+                #[cfg(any(
                     target_os = "linux",
                     target_os = "dragonfly",
                     target_os = "freebsd",
                     target_os = "netbsd",
                     target_os = "openbsd",
-                ),not(feature="use-wayland")))]
+                ))]
                 {
                     let mut handle = XlibHandle::empty();
                     handle.window = self.raw_handle();
@@ -54,7 +54,6 @@ macro_rules! impl_window_ext {
                     target_os = "freebsd",
                     target_os = "netbsd",
                     target_os = "openbsd",
-                    feature="use-wayland"
                 ))]
                 {
                     let mut handle = WaylandHandle::empty();
@@ -220,24 +219,14 @@ macro_rules! impl_window_ext {
                         ))]
                         return winid.opaque;
 
-                        #[cfg(all(any(
-                            target_os = "linux",
-                            target_os = "dragonfly",
-                            target_os = "freebsd",
-                            target_os = "netbsd",
-                            target_os = "openbsd",
-                        ),not(feature="use-wayland")))]
-                        return winid.x_id as RawHandle;
-
                         #[cfg(any(
                             target_os = "linux",
                             target_os = "dragonfly",
                             target_os = "freebsd",
                             target_os = "netbsd",
                             target_os = "openbsd",
-                            feature="use-wayland"
                         ))]
-                        return winid.opaque as RawHandle;
+                        return winid.x_id as RawHandle;
                     }
                 }
 
@@ -252,24 +241,14 @@ macro_rules! impl_window_ext {
                     ))]
                     assert!(!handle.is_null());
 
-                    #[cfg(all(any(
-                        target_os = "linux",
-                        target_os = "dragonfly",
-                        target_os = "freebsd",
-                        target_os = "netbsd",
-                        target_os = "openbsd",
-                    ),not(feature="use-wayland")))]
-                    assert!(handle != 0);
-
                     #[cfg(any(
                         target_os = "linux",
                         target_os = "dragonfly",
                         target_os = "freebsd",
                         target_os = "netbsd",
                         target_os = "openbsd",
-                        feature = "use-wayland"
                     ))]
-                    assert!(!handle.is_null());
+                    assert!(handle != 0);
 
                     Fl_Window_set_raw_handle(self.inner as *mut Fl_Window, mem::transmute(&handle));
                 }
