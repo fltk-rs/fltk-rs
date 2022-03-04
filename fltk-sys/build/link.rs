@@ -71,6 +71,10 @@ pub fn link(target_os: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib=dylib=glu32");
                 }
                 _ => {
+                    if cfg!(feature = "use-wayland") {
+                        println!("cargo:rustc-link-lib=dylib=wayland-egl");
+                        println!("cargo:rustc-link-lib=dylib=EGL");
+                    }
                     println!("cargo:rustc-link-lib=dylib=GL");
                     println!("cargo:rustc-link-lib=dylib=GLU");
                 }
@@ -112,13 +116,32 @@ pub fn link(target_os: &str, out_dir: &Path) {
             }
             _ => {
                 println!("cargo:rustc-link-lib=dylib=pthread");
-                println!("cargo:rustc-link-lib=dylib=X11");
-                println!("cargo:rustc-link-lib=dylib=Xext");
-                println!("cargo:rustc-link-lib=dylib=Xinerama");
-                println!("cargo:rustc-link-lib=dylib=Xcursor");
-                println!("cargo:rustc-link-lib=dylib=Xrender");
-                println!("cargo:rustc-link-lib=dylib=Xfixes");
-                println!("cargo:rustc-link-lib=dylib=Xft");
+                if cfg!(feature = "use-wayland") {
+                    let lflags = std::process::Command::new("pkg-config")
+                        .args(&["--libs", "gtk+-3.0"])
+                        .output()
+                        .expect("Needs pkg-config and gtk installed");
+                    let lflags = String::from_utf8_lossy(&lflags.stdout).to_string();
+                    let lflags: Vec<&str> = lflags.split_ascii_whitespace().collect();
+                    for flag in lflags {
+                        println!(
+                            "cargo:rustc-link-lib=dylib={}",
+                            flag.strip_prefix("-l").unwrap()
+                        );
+                    }
+                    println!("cargo:rustc-link-lib=dylib=wayland-client");
+                    println!("cargo:rustc-link-lib=dylib=wayland-cursor");
+                    println!("cargo:rustc-link-lib=dylib=xkbcommon");
+                    println!("cargo:rustc-link-lib=dylib=dbus-1");
+                } else {
+                    println!("cargo:rustc-link-lib=dylib=X11");
+                    println!("cargo:rustc-link-lib=dylib=Xext");
+                    println!("cargo:rustc-link-lib=dylib=Xinerama");
+                    println!("cargo:rustc-link-lib=dylib=Xcursor");
+                    println!("cargo:rustc-link-lib=dylib=Xrender");
+                    println!("cargo:rustc-link-lib=dylib=Xfixes");
+                    println!("cargo:rustc-link-lib=dylib=Xft");
+                }
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
                 if !cfg!(feature = "no-pango") {
                     println!("cargo:rustc-link-lib=dylib=pango-1.0");

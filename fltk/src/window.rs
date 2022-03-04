@@ -405,7 +405,7 @@ impl DoubleWindow {
                 }
                 cfltk_winShow(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
             {
                 enum Display {}
                 extern "C" {
@@ -434,7 +434,7 @@ impl DoubleWindow {
                 }
                 cfltk_winHide(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
             {
                 enum Display {}
                 extern "C" {
