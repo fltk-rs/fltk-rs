@@ -34,18 +34,33 @@ macro_rules! impl_window_ext {
                     return RawWindowHandle::AndroidNdk(handle);
                 }
 
+                #[cfg(all(any(
+                    target_os = "linux",
+                    target_os = "dragonfly",
+                    target_os = "freebsd",
+                    target_os = "netbsd",
+                    target_os = "openbsd",
+                ),not(feature="use-wayland")))]
+                {
+                    let mut handle = XlibHandle::empty();
+                    handle.window = self.raw_handle();
+                    handle.display = $crate::app::display();
+                    return RawWindowHandle::Xlib(handle);
+                }
+
                 #[cfg(any(
                     target_os = "linux",
                     target_os = "dragonfly",
                     target_os = "freebsd",
                     target_os = "netbsd",
                     target_os = "openbsd",
+                    feature="use-wayland"
                 ))]
                 {
-                    let mut handle = XlibHandle::empty();
-                    handle.window = self.raw_handle();
+                    let mut handle = WaylandHandle::empty();
+                    handle.surface = self.raw_handle();
                     handle.display = $crate::app::display();
-                    return RawWindowHandle::Xlib(handle);
+                    return RawWindowHandle::Wayland(handle);
                 }
             }
         }
@@ -205,14 +220,24 @@ macro_rules! impl_window_ext {
                         ))]
                         return winid.opaque;
 
+                        #[cfg(all(any(
+                            target_os = "linux",
+                            target_os = "dragonfly",
+                            target_os = "freebsd",
+                            target_os = "netbsd",
+                            target_os = "openbsd",
+                        ),not(feature="use-wayland")))]
+                        return winid.x_id as RawHandle;
+
                         #[cfg(any(
                             target_os = "linux",
                             target_os = "dragonfly",
                             target_os = "freebsd",
                             target_os = "netbsd",
                             target_os = "openbsd",
+                            feature="use-wayland"
                         ))]
-                        return winid.x_id as RawHandle;
+                        return winid.opaque as RawHandle;
                     }
                 }
 
@@ -223,9 +248,18 @@ macro_rules! impl_window_ext {
                         target_os = "windows",
                         target_os = "macos",
                         target_os = "android",
-                        target_os = "ios"
+                        target_os = "ios",
                     ))]
                     assert!(!handle.is_null());
+
+                    #[cfg(all(any(
+                        target_os = "linux",
+                        target_os = "dragonfly",
+                        target_os = "freebsd",
+                        target_os = "netbsd",
+                        target_os = "openbsd",
+                    ),not(feature="use-wayland")))]
+                    assert!(handle != 0);
 
                     #[cfg(any(
                         target_os = "linux",
@@ -233,8 +267,9 @@ macro_rules! impl_window_ext {
                         target_os = "freebsd",
                         target_os = "netbsd",
                         target_os = "openbsd",
+                        feature = "use-wayland"
                     ))]
-                    assert!(handle != 0);
+                    assert!(!handle.is_null());
 
                     Fl_Window_set_raw_handle(self.inner as *mut Fl_Window, mem::transmute(&handle));
                 }

@@ -35,7 +35,8 @@ use std::{
     target_os = "windows",
     target_os = "macos",
     target_os = "ios",
-    target_os = "android"
+    target_os = "android",
+    feature = "use-wayland"
 ))]
 pub type RawHandle = *mut raw::c_void;
 
@@ -45,7 +46,8 @@ pub type RawHandle = *mut raw::c_void;
         target_os = "windows",
         target_os = "macos",
         target_os = "ios",
-        target_os = "android"
+        target_os = "android",
+        feature = "use-wayland"
     )),
     any(
         target_arch = "arm",
@@ -65,7 +67,8 @@ pub type RawHandle = u32;
         target_os = "windows",
         target_os = "macos",
         target_os = "ios",
-        target_os = "android"
+        target_os = "android",
+        feature = "use-wayland"
     )),
     any(
         target_arch = "aarch64",
