@@ -1,9 +1,10 @@
 # Changelog
 
 
-## [1.2.33] - Unreleased
+## [1.3.0] - Unreleased
 - Pull FLTK dialog [fix](https://github.com/fltk/fltk/issues/401).
 - Pull FLTK's wayland support.
+- Enable building using the wayland backend, requires the use-wayland feature flag.
 
 ## [1.2.32] - 2022-02-26
 - Free singleshot heap-allocated trait-object(callbacks) in app::awake_callback() and add_timeout() by @mosolovsa.
