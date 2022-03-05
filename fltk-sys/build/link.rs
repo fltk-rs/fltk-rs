@@ -1,4 +1,5 @@
 use std::path::Path;
+use std::process::Command;
 
 pub fn link(target_os: &str, out_dir: &Path) {
     println!(
@@ -117,17 +118,18 @@ pub fn link(target_os: &str, out_dir: &Path) {
             _ => {
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 if cfg!(feature = "use-wayland") {
-                    let lflags = std::process::Command::new("pkg-config")
+                    if let Ok(lflags) = Command::new("pkg-config")
                         .args(&["--libs", "gtk+-3.0"])
                         .output()
-                        .expect("Needs pkg-config and gtk installed");
-                    let lflags = String::from_utf8_lossy(&lflags.stdout).to_string();
-                    let lflags: Vec<&str> = lflags.split_ascii_whitespace().collect();
-                    for flag in lflags {
-                        println!(
-                            "cargo:rustc-link-lib=dylib={}",
-                            flag.strip_prefix("-l").unwrap()
-                        );
+                    {
+                        let lflags = String::from_utf8_lossy(&lflags.stdout).to_string();
+                        let lflags: Vec<&str> = lflags.split_ascii_whitespace().collect();
+                        for flag in lflags {
+                            println!(
+                                "cargo:rustc-link-lib=dylib={}",
+                                flag.strip_prefix("-l").unwrap()
+                            );
+                        }
                     }
                     println!("cargo:rustc-link-lib=dylib=wayland-client");
                     println!("cargo:rustc-link-lib=dylib=wayland-cursor");

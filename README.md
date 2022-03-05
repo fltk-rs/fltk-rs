@@ -257,6 +257,7 @@ The following are the features offered by the crate:
 - system-libpng: Uses the system libpng
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
+- use-wayland: Uses FLTK's wayland backend. Requires libwayland-dev, wayland-protocols, libdbus-1-dev, libxkbcommon-dev, libgtk-3-dev (optional, for the GTK-style titlebar), in place of the X11 development packages.
 
 ## FAQ
 
