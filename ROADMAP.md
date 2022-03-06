@@ -8,3 +8,4 @@
 - Rename TableExt::try_get_selection() and try_visible_cells() to get_selection and visible_cells().
 - FileChooser::directory() should return a PathBuf.
 - Rename timeout3 functions to timeout, as well as idle and clipboard callbacks.
+- Support opacity and platform_hide/platform_show for the wayland backend.

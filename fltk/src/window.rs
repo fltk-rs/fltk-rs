@@ -35,7 +35,8 @@ use std::{
     target_os = "windows",
     target_os = "macos",
     target_os = "ios",
-    target_os = "android"
+    target_os = "android",
+    feature = "use-wayland"
 ))]
 pub type RawHandle = *mut raw::c_void;
 
@@ -45,7 +46,8 @@ pub type RawHandle = *mut raw::c_void;
         target_os = "windows",
         target_os = "macos",
         target_os = "ios",
-        target_os = "android"
+        target_os = "android",
+        feature = "use-wayland"
     )),
     any(
         target_arch = "arm",
@@ -65,7 +67,8 @@ pub type RawHandle = u32;
         target_os = "windows",
         target_os = "macos",
         target_os = "ios",
-        target_os = "android"
+        target_os = "android",
+        feature = "use-wayland"
     )),
     any(
         target_arch = "aarch64",
@@ -390,6 +393,7 @@ impl DoubleWindow {
 
     /// Show a window after it had been hidden. Works on Windows and X11 systems
     pub fn platform_show(&self) {
+        #[allow(unused_unsafe)]
         unsafe {
             #[cfg(target_os = "windows")]
             {
@@ -405,7 +409,7 @@ impl DoubleWindow {
                 }
                 cfltk_winShow(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
             {
                 enum Display {}
                 extern "C" {
@@ -419,6 +423,7 @@ impl DoubleWindow {
 
     /// Hide a window using the platforms hide call. Works on Windows and X11 systems
     pub fn platform_hide(&self) {
+        #[allow(unused_unsafe)]
         unsafe {
             #[cfg(target_os = "windows")]
             {
@@ -434,7 +439,7 @@ impl DoubleWindow {
                 }
                 cfltk_winHide(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows")))]
+            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
             {
                 enum Display {}
                 extern "C" {

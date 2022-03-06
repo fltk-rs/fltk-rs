@@ -150,6 +150,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("OPTION_USE_GDIPLUS", "OFF");
         }
 
+        if cfg!(feature = "use-wayland") {
+            dst.define("OPTION_USE_WAYLAND", "ON");
+        }
+
         if cfg!(feature = "single-threaded") {
             dst.define("CFLTK_SINGLE_THREADED", "ON");
         } else {
