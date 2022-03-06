@@ -42,18 +42,18 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^1.2"
+fltk = "^1.3"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1.2", git = "https://github.com/fltk-rs/fltk-rs" }
+fltk = { version = "^1.3", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 
 To use the bundled libs (available for x64 windows (msvc & gnu (msys2-mingw)), x64 linux & macos):
 ```toml
 [dependencies]
-fltk = { version = "^1.2", features = ["fltk-bundled"] }
+fltk = { version = "^1.3", features = ["fltk-bundled"] }
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -257,7 +257,7 @@ The following are the features offered by the crate:
 - system-libpng: Uses the system libpng
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
-- use-wayland: Uses FLTK's wayland backend. Requires libwayland-dev, wayland-protocols, libdbus-1-dev, libxkbcommon-dev, libgtk-3-dev (optional, for the GTK-style titlebar), in place of the X11 development packages.
+- use-wayland: Uses FLTK's wayland backend. Requires libwayland-dev, wayland-protocols, libdbus-1-dev, libxkbcommon-dev, libgtk-3-dev (optional, for the GTK-style titlebar), in place of the X11 development packages. Sample [CI](https://github.com/MoAlyousef/test_wayland/blob/main/.github/workflows/rust.yml).
 
 ## FAQ
 

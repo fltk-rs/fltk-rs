@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.3.0] - Unreleased
+## [1.3.0] - 2022-03-06
 - Pull FLTK dialog [fix](https://github.com/fltk/fltk/issues/401).
 - Pull FLTK's wayland support.
 - Enable building using the wayland backend, requires the use-wayland feature flag.
@@ -53,7 +53,7 @@
 
 ## [1.2.26] - 2022-01-05
 - Add timeout3, idle3 functions which properly handle removal of callbacks, by @AshfordN.
-- Deprecate app::release in favor of app::set_grab(None), by @AshfordN.
+- Deprecate app::release() in favor of app::set_grab(None), by @AshfordN.
 - Pull FLTK fixes.
 
 ## [1.2.25] - 2021-12-30
