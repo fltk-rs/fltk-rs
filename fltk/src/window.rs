@@ -418,6 +418,10 @@ impl DoubleWindow {
                 XMapWindow(crate::app::display() as _, self.raw_handle() as _);
                 crate::app::flush();
             }
+            #[cfg(feature = "use-wayland")]
+            {
+                Fl_Double_Window_show(self.inner);
+            }
         }
     }
 
@@ -447,6 +451,14 @@ impl DoubleWindow {
                 }
                 XUnmapWindow(crate::app::display() as _, self.raw_handle() as _);
                 crate::app::flush();
+            }
+            #[cfg(feature = "use-wayland")]
+            {
+                extern "C" {
+                    fn wl_proxy_marshal(proxy: *mut raw::c_void, opcode: u32, ...);
+                }
+                wl_proxy_marshal(self.raw_handle() as _, 1, std::ptr::null_mut() as *mut raw::c_void, 0, 0); // attach
+                wl_proxy_marshal(self.raw_handle() as _, 6); // commit
             }
         }
     }
