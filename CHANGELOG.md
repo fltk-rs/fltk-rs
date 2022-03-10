@@ -4,6 +4,7 @@
 ## [1.3.1] - Unreleased
 - Pull updated Wayland backend code from FLTK.
 - Fix HasRawWindowHandle implementation on Wayland.
+- Improve TreeItem::move* docs.
 
 ## [1.3.0] - 2022-03-06
 - Pull FLTK dialog [fix](https://github.com/fltk/fltk/issues/401).
