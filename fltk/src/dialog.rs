@@ -251,8 +251,8 @@ pub fn alert(x: i32, y: i32, txt: &str) {
     }
 }
 
-/// Displays a choice box with up to three choices.
-/// An empty choice will not be shown
+#[deprecated(since = "1.3.1", note = "please use `choice2` instead")]
+/// Displays a choice box with up to three choices. Choosing a value returns its index from the arguments
 pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     unsafe {
         let txt = CString::safe_new(txt);
@@ -263,8 +263,8 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     }
 }
 
-/// Displays a choice box with up to three choices.
-/// An empty choice will not be shown. Closing the dialog returns None
+/// Displays a choice box with up to three choices. 
+/// Closing the dialog returns None. Choosing a value returns its index from the arguments.
 pub fn choice2(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
         let txt = CString::safe_new(txt);
@@ -317,7 +317,7 @@ pub fn password(x: i32, y: i32, txt: &str, deflt: &str) -> Option<String> {
     }
 }
 
-/// Displays a message box
+/// Displays a message box, the dialog is positioned at the pointer hotspot
 pub fn message_default(txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
@@ -325,7 +325,7 @@ pub fn message_default(txt: &str) {
     }
 }
 
-/// Displays an alert box
+/// Displays an alert box, the dialog is positioned at the pointer hotspot
 pub fn alert_default(txt: &str) {
     unsafe {
         let txt = CString::safe_new(txt);
@@ -333,8 +333,9 @@ pub fn alert_default(txt: &str) {
     }
 }
 
+#[deprecated(since = "1.3.1", note = "please use `choice2_default` instead")]
 /// Displays a choice box with up to three choices.
-/// An empty choice will not be shown
+/// The dialog is positioned at the pointer hotspot
 pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     unsafe {
         let txt = CString::safe_new(txt);
@@ -346,7 +347,8 @@ pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
 }
 
 /// Displays a choice box with up to three choices.
-/// An empty choice will not be shown. Closing the dialog returns None
+/// An empty choice will not be shown. Closing the dialog returns None. Choosing a value returns its index from the arguments.
+/// The dialog is positioned at the pointer hotspot
 pub fn choice2_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
         let txt = CString::safe_new(txt);
@@ -363,7 +365,8 @@ pub fn choice2_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
 }
 
 /// Displays an input box, which returns the inputted string.
-/// Can be used for gui io
+/// Can be used for gui io.
+/// The dialog is positioned at the pointer hotspot
 pub fn input_default(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::safe_new(deflt);
@@ -381,7 +384,8 @@ pub fn input_default(txt: &str, deflt: &str) -> Option<String> {
     }
 }
 
-/// Shows an input box, but with hidden string
+/// Shows an input box, but with hidden string.
+/// The dialog is positioned at the pointer hotspot
 pub fn password_default(txt: &str, deflt: &str) -> Option<String> {
     unsafe {
         let temp = CString::safe_new(deflt);
