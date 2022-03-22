@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [1.3.1] - 2022-03-22
+- Pull updated Wayland backend code from FLTK.
+- Fix HasRawWindowHandle implementation on Wayland.
+- Improve TreeItem::move* docs.
+- Deprecate dialog::choice() and choice_default() in favor of choice2() and choice2_default().
+- Fix BrowserExt::set_icon() leak after calling BrowserExt::clear().
+
 ## [1.3.0] - 2022-03-06
 - Pull FLTK dialog [fix](https://github.com/fltk/fltk/issues/401).
 - Pull FLTK's wayland support.

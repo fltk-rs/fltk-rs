@@ -443,6 +443,7 @@ macro_rules! impl_window_ext {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
                     if self.shown() {
+                        self.wait_for_expose();
                         let val: u8 = if val > 1.0 {
                             255
                         } else if val < 0.0 {

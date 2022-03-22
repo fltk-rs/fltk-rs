@@ -1629,7 +1629,7 @@ impl TreeItem {
         }
     }
 
-    /// Move item
+    /// Move the item 'from' to sibling position of 'to'.
     /// # Errors
     /// Errors on failure to move item   
     pub fn move_item(&mut self, to: i32, from: i32) -> Result<(), FltkError> {
@@ -1642,7 +1642,7 @@ impl TreeItem {
         }
     }
 
-    /// Move item above another item
+    /// Move the current item above the specified `item`
     /// # Errors
     /// Errors on failure to move item   
     pub fn move_above(&mut self, item: &TreeItem) -> Result<(), FltkError> {
@@ -1655,7 +1655,7 @@ impl TreeItem {
         }
     }
 
-    /// Move item below another item
+    /// Move the current item below the specified `item`
     /// # Errors
     /// Errors on failure to move item   
     pub fn move_below(&mut self, item: &TreeItem) -> Result<(), FltkError> {
@@ -1668,7 +1668,7 @@ impl TreeItem {
         }
     }
 
-    /// Move item into another item
+    /// Parent the current item as a child of the specified `item`.
     /// # Errors
     /// Errors on failure to move item    
     pub fn move_into(&mut self, item: &TreeItem, pos: i32) -> Result<(), FltkError> {
