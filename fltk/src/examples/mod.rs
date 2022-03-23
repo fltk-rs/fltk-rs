@@ -29,6 +29,7 @@ pub mod flex;
 pub mod format_text;
 pub mod frames;
 pub mod gradients;
+pub mod grid;
 pub mod hello;
 pub mod hello_button;
 pub mod image;
