@@ -1,6 +1,6 @@
 use std::ops::{Add, Sub};
 
-use super::{Coordinates};
+use super::Coordinates;
 
 /// Defines a rectangular bounding box
 #[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -26,7 +26,12 @@ impl<T: Copy + Add<Output = T> + Sub<Output = T>> Rectangle<T> {
     /// Returns a new `Rectangle` from its top-left corner position,
     /// and the length of its sides.
     pub fn new(x: T, y: T, width: T, height: T) -> Self {
-        Self { x, y, w: width, h: height, }
+        Self {
+            x,
+            y,
+            w: width,
+            h: height,
+        }
     }
 
     /// Returns a new `Rectangle` from the position of its `top_left`
@@ -53,23 +58,33 @@ impl<T: Copy + Add<Output = T> + Sub<Output = T>> Rectangle<T> {
 
 // Conversions From/Into array and tuple
 
-impl<T: Copy + Add<Output=T> + Sub<Output=T>> From<[T; 4]> for Rectangle<T> {
+impl<T: Copy + Add<Output = T> + Sub<Output = T>> From<[T; 4]> for Rectangle<T> {
     fn from(array: [T; 4]) -> Self {
-        Self { x: array[0], y: array[1], w: array[2], h: array[3] }
+        Self {
+            x: array[0],
+            y: array[1],
+            w: array[2],
+            h: array[3],
+        }
     }
 }
-impl<T: Copy + Add<Output=T> + Sub<Output=T>> From<Rectangle<T>> for [T; 4] {
+impl<T: Copy + Add<Output = T> + Sub<Output = T>> From<Rectangle<T>> for [T; 4] {
     fn from(c: Rectangle<T>) -> Self {
         [c.x, c.y, c.w, c.h]
     }
 }
 
-impl<T: Copy + Add<Output=T> + Sub<Output=T>> From<(T, T, T, T)> for Rectangle<T> {
+impl<T: Copy + Add<Output = T> + Sub<Output = T>> From<(T, T, T, T)> for Rectangle<T> {
     fn from(tuple: (T, T, T, T)) -> Self {
-        Self { x: tuple.0, y: tuple.1, w: tuple.2, h: tuple.3 }
+        Self {
+            x: tuple.0,
+            y: tuple.1,
+            w: tuple.2,
+            h: tuple.3,
+        }
     }
 }
-impl<T: Copy + Add<Output=T> + Sub<Output=T>> From<Rectangle<T>> for (T, T, T, T) {
+impl<T: Copy + Add<Output = T> + Sub<Output = T>> From<Rectangle<T>> for (T, T, T, T) {
     fn from(c: Rectangle<T>) -> Self {
         (c.x, c.y, c.w, c.h)
     }

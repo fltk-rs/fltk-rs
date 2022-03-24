@@ -3,9 +3,10 @@
 use fltk_sys::fl;
 
 use crate::{
-    draw::{Coord, Rect},
+    draw::{Coordinates, Rect},
     prelude::{FltkError, FltkErrorKind},
 };
+type Coord = Coordinates<i32>; // TEMP
 
 /// An available screen
 ///
@@ -284,9 +285,9 @@ impl Screen {
     // of any current work area boundaries, or `false` otherwise.
     fn is_coord_inside_any_work_area<C: Into<Coord> + Copy>(c: C) -> bool {
         let c: Coord = c.into();
-        let main_wa = screen_work_area(0);
+        let main_wa: Rect = screen_work_area(0).into();
         // returns false if we get `0` but the coords are outside main screen's
-        !(screen_num(c) == 0
+        !(screen_num(c.x, c.y) == 0
             && (c.x < main_wa.x
                 || c.y < main_wa.y
                 || c.x >= main_wa.bottom_right().x
@@ -304,9 +305,9 @@ impl Screen {
     // of any current screen xywh boundaries, or `false` otherwise.
     fn is_coord_inside_any_xywh<C: Into<Coord> + Copy>(c: C) -> bool {
         let c: Coord = c.into();
-        let main_xywh = screen_xywh(0);
+        let main_xywh: Rect = screen_xywh(0).into();
         // returns false if we get `0` but the coords are outside main screen's
-        !(screen_num(c) == 0
+        !(screen_num(c.x, c.y) == 0
             && (c.x < main_xywh.x
                 || c.y < main_xywh.y
                 || c.x >= main_xywh.bottom_right().x
@@ -356,12 +357,12 @@ pub fn screen_count() -> i32 {
     unsafe { fl::Fl_screen_count() }
 }
 
-/// Returns the screen number of a screen that contains the specified screen position
+/// Returns the screen number of a screen that contains the specified position
 ///
 /// If the coordinates are out of bounds, the main screen's number (`0`)
 /// will be returned instead.
-pub fn screen_num<C: Into<Coord> + Copy>(pos: C) -> i32 {
-    unsafe { fl::Fl_screen_num(pos.into().x, pos.into().y) }
+pub fn screen_num(x: i32, y: i32) -> i32 {
+    unsafe { fl::Fl_screen_num(x, y) }
 }
 
 /// Returns the screen number for the screen which intersects the most with
@@ -387,22 +388,22 @@ pub fn screen_dpi(screen_num: i32) -> (f32, f32) {
 ///
 /// If `screen_num` doesn't correspond to a valid screen number,
 /// the main screen's number (`0`) will be used instead.
-pub fn screen_xywh(screen_num: i32) -> Rect {
+pub fn screen_xywh(screen_num: i32) -> (i32, i32, i32, i32) {
     let (mut x, mut y, mut w, mut h) = (0, 0, 0, 0);
     unsafe {
         fl::Fl_screen_xywh(&mut x, &mut y, &mut w, &mut h, screen_num);
     }
-    (x, y, w, h).into()
+    (x, y, w, h)
 }
 
 /// Get a screen's working area
 ///
 /// If `screen_num` doesn't correspond to a valid screen number,
 /// the main screen's number (`0`) will be used instead.
-pub fn screen_work_area(screen_num: i32) -> Rect {
+pub fn screen_work_area(screen_num: i32) -> (i32, i32, i32, i32) {
     let (mut x, mut y, mut w, mut h) = (0, 0, 0, 0);
     unsafe {
         fl::Fl_screen_work_area(&mut x, &mut y, &mut w, &mut h, screen_num);
     }
-    (x, y, w, h).into()
+    (x, y, w, h)
 }

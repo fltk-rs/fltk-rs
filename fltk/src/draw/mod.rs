@@ -8,9 +8,9 @@ use std::mem;
 use std::os::raw;
 
 mod coord;
-pub use coord::{Coordinates, Coord, Coord_f64};
+pub use coord::{Coord, Coord_f64, Coordinates};
 mod rect;
-pub use rect::{Rectangle, Rect, Rect_f64};
+pub use rect::{Rect, Rect_f64, Rectangle};
 
 bitflags::bitflags! {
     /// Defines the line styles supported by fltk
@@ -152,8 +152,8 @@ pub fn draw_line(x1: i32, y1: i32, x2: i32, y2: i32) {
 }
 
 /// Draws a line from (x,y) to (x1,y1) and another from (x1,y1) to (x2,y2)
-pub fn draw_line2(pos1: Coord, pos2: Coord, pos3: Coord) {
-    unsafe { Fl_line2(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
+pub fn draw_line2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
+    unsafe { Fl_line2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
 }
 
 /// Draws a point
@@ -162,18 +162,18 @@ pub fn draw_point(x: i32, y: i32) {
 }
 
 /// Draws a point
-pub fn draw_point2(pos: Coord) {
-    unsafe { Fl_point(pos.x, pos.y) }
+pub fn draw_point2(pos: Coord<i32>) {
+    unsafe { Fl_point(pos.0, pos.1) }
 }
 
 /// Draws a rectangle
-pub fn draw_rect(r: Rect) {
-    unsafe { Fl_rect(r.x, r.y, r.w, r.h) }
+pub fn draw_rect(x: i32, y: i32, w: i32, h: i32) {
+    unsafe { Fl_rect(x, y, w, h) }
 }
 
 /// Draws a rectangle with border color
-pub fn draw_rect_with_color(r: Rect, color: Color) {
-    unsafe { Fl_rect_with_color(r.x, r.y, r.w, r.h, color.bits() as u32) }
+pub fn draw_rect_with_color(x: i32, y: i32, w: i32, h: i32, color: Color) {
+    unsafe { Fl_rect_with_color(x, y, w, h, color.bits() as u32) }
 }
 
 /// Draws a non-filled 3-sided polygon
@@ -184,15 +184,15 @@ pub fn draw_loop(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
 }
 
 /// Draws a non-filled 3-sided polygon
-pub fn draw_loop2(pos1: Coord, pos2: Coord, pos3: Coord) {
-    unsafe { Fl_loop(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
+pub fn draw_loop2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
+    unsafe { Fl_loop(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
 }
 
 /// Draws a non-filled 4-sided polygon
-pub fn draw_loop3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
+pub fn draw_loop3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
     unsafe {
         Fl_loop2(
-            pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
+            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
         )
     }
 }
@@ -240,9 +240,9 @@ pub fn draw_circle(x: f64, y: f64, r: f64) {
 }
 
 /// Draws an arc
-pub fn draw_arc(r: Rect, a: f64, b: f64) {
+pub fn draw_arc(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
     unsafe {
-        Fl_arc(r.x, r.y, r.w, r.h, a, b);
+        Fl_arc(x, y, width, height, a, b);
     }
 }
 
@@ -252,9 +252,9 @@ pub fn draw_arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
 }
 
 /// Draws a filled pie
-pub fn draw_pie(r: Rect, a: f64, b: f64) {
+pub fn draw_pie(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
     unsafe {
-        Fl_pie(r.x, r.y, r.w, r.h, a, b);
+        Fl_pie(x, y, width, height, a, b);
     }
 }
 
@@ -368,24 +368,24 @@ pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
 }
 
 /// Fills a 3-sided polygon. The polygon must be convex
-pub fn draw_polygon2(pos1: Coord, pos2: Coord, pos3: Coord) {
-    unsafe { Fl_polygon(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
+pub fn draw_polygon2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
+    unsafe { Fl_polygon(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
 }
 
 /// Fills a 4-sided polygon. The polygon must be convex
-pub fn draw_polygon3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
+pub fn draw_polygon3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
     unsafe {
         Fl_polygon2(
-            pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
+            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
         )
     }
 }
 
 /// Adds a series of points on a Bezier curve to the path
-pub fn draw_curve(pos1: Coord_f64, pos2: Coord_f64, pos3: Coord_f64, pos4: Coord_f64) {
+pub fn draw_curve(pos1: Coord<f64>, pos2: Coord<f64>, pos3: Coord<f64>, pos4: Coord<f64>) {
     unsafe {
         Fl_curve(
-            pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
+            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
         )
     }
 }
@@ -563,36 +563,36 @@ pub fn width2(txt: &str, n: i32) -> f64 {
 }
 
 /// Measure the width and height of a text
-pub fn measure(txt: &str, draw_symbols: bool) -> Coord {
+pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
     let txt = CString::safe_new(txt);
     let (mut x, mut y) = (0, 0);
     unsafe {
         Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
     }
-    Coord::new(x, y)
+    (x, y)
 }
 
 /// Measure the width and height of a text
 ///
 /// If `width` is non-zero, it will wrap to that width
-pub fn wrap_measure(txt: &str, width: i32, draw_symbols: bool) -> Coord {
+pub fn wrap_measure(txt: &str, width: i32, draw_symbols: bool) -> (i32, i32) {
     let txt = CString::safe_new(txt);
     let (mut x, mut y) = (width, 0);
     unsafe {
         Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
     }
-    Coord::new(x, y)
+    (x, y)
 }
 
 /// Measure the coordinates and size of the text where a bounding box using the
 /// returned data would fit the text
-pub fn text_extents(txt: &str) -> Rect {
+pub fn text_extents(txt: &str) -> (i32, i32, i32, i32) {
     let txt = CString::safe_new(txt);
     let (mut x, mut y, mut w, mut h) = (0, 0, 0, 0);
     unsafe {
         Fl_text_extents(txt.as_ptr(), &mut x, &mut y, &mut w, &mut h);
     }
-    Rect::new(x, y, w, h)
+    (x, y, w, h)
 }
 
 /// Returns the typographical width of a single character
