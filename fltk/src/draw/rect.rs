@@ -3,7 +3,7 @@ use std::ops::{Add, Sub};
 use super::{Coordinates};
 
 /// Defines a rectangular bounding box
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Rectangle<T: Copy + Add<Output = T> + Sub<Output = T>> {
     /// Leftmost corner
     pub x: T,

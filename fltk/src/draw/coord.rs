@@ -1,6 +1,6 @@
 
 /// Defines a pair of `x, y` coordinates
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Coordinates<T: Copy> {
     /// Horizontal X coordinate
     pub x: T,
