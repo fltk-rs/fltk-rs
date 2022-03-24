@@ -5,11 +5,91 @@ use crate::utils::FlString;
 use fltk_sys::draw::*;
 use std::ffi::{CStr, CString};
 use std::mem;
+use std::ops::{Add, Sub};
 use std::os::raw;
 
-/// Defines a coordinate of x and y
+/// Defines a rectangular bounding box
 #[derive(Copy, Clone, Debug)]
-pub struct Coord<T: Copy>(pub T, pub T);
+pub struct Rectangle<T: Copy + Add<Output = T> + Sub<Output = T>> {
+    /// Leftmost corner
+    pub x: T,
+    /// Topmost corner
+    pub y: T,
+    /// Width
+    pub w: T,
+    /// Height
+    pub h: T,
+}
+
+/// `i32` Coordinates
+pub type Rect = Rectangle<i32>;
+
+/// `f64` Coordinates
+#[allow(non_camel_case_types)]
+pub type Rect_f64 = Rectangle<f64>;
+
+impl<T: Copy + Add<Output = T> + Sub<Output = T>> Rectangle<T> {
+    /// Returns a new `Rectangle` from its top-left corner position,
+    /// and the length of its sides.
+    pub fn new(x: T, y: T, width: T, height: T) -> Self {
+        Self { x, y, w: width, h: height, }
+    }
+
+    /// Returns a new `Rectangle` from the position of its `top_left`
+    /// and `bottom_right` corners.
+    pub fn from_coords(top_left: Coordinates<T>, bottom_right: Coordinates<T>) -> Self {
+        Self {
+            x: top_left.x,
+            y: top_left.y,
+            w: bottom_right.x - top_left.x,
+            h: bottom_right.y - top_left.y,
+        }
+    }
+
+    /// Returns the coordinates of the top-left corner
+    pub fn top_left(&self) -> Coordinates<T> {
+        Coordinates::new(self.x, self.y)
+    }
+
+    /// Returns the coordinates of the bottom-right corner
+    pub fn bottom_right(&self) -> Coordinates<T> {
+        Coordinates::new(self.x + self.w, self.y + self.h)
+    }
+}
+
+/// Defines a pair of `x, y` coordinates
+#[derive(Copy, Clone, Debug)]
+pub struct Coordinates<T: Copy> {
+    /// Horizontal X coordinate
+    pub x: T,
+    /// Vertical Y coordinate
+    pub y: T,
+}
+
+/// `i32` Coordinates
+pub type Coord = Coordinates<i32>;
+
+/// `f64` Coordinates
+#[allow(non_camel_case_types)]
+pub type Coord_f64 = Coordinates<f64>;
+
+impl<T: Copy> Coordinates<T> {
+    /// Returns a new pair of `x, y` coordinates
+    pub fn new(x: T, y: T) -> Self {
+        Coordinates { x, y }
+    }
+
+    /// Returns `x` interpreted as width.
+    #[inline]
+    pub fn w(&self) -> T {
+        self.x
+    }
+    /// Returns `y` interpreted as height.
+    #[inline]
+    pub fn h(&self) -> T {
+        self.y
+    }
+}
 
 bitflags::bitflags! {
     /// Defines the line styles supported by fltk
@@ -151,8 +231,8 @@ pub fn draw_line(x1: i32, y1: i32, x2: i32, y2: i32) {
 }
 
 /// Draws a line from (x,y) to (x1,y1) and another from (x1,y1) to (x2,y2)
-pub fn draw_line2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
-    unsafe { Fl_line2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+pub fn draw_line2(pos1: Coord, pos2: Coord, pos3: Coord) {
+    unsafe { Fl_line2(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
 }
 
 /// Draws a point
@@ -161,18 +241,18 @@ pub fn draw_point(x: i32, y: i32) {
 }
 
 /// Draws a point
-pub fn draw_point2(pos: Coord<i32>) {
-    unsafe { Fl_point(pos.0, pos.1) }
+pub fn draw_point2(pos: Coord) {
+    unsafe { Fl_point(pos.x, pos.y) }
 }
 
 /// Draws a rectangle
-pub fn draw_rect(x: i32, y: i32, w: i32, h: i32) {
-    unsafe { Fl_rect(x, y, w, h) }
+pub fn draw_rect(r: Rect) {
+    unsafe { Fl_rect(r.x, r.y, r.w, r.h) }
 }
 
 /// Draws a rectangle with border color
-pub fn draw_rect_with_color(x: i32, y: i32, w: i32, h: i32, color: Color) {
-    unsafe { Fl_rect_with_color(x, y, w, h, color.bits() as u32) }
+pub fn draw_rect_with_color(r: Rect, color: Color) {
+    unsafe { Fl_rect_with_color(r.x, r.y, r.w, r.h, color.bits() as u32) }
 }
 
 /// Draws a non-filled 3-sided polygon
@@ -183,15 +263,15 @@ pub fn draw_loop(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
 }
 
 /// Draws a non-filled 3-sided polygon
-pub fn draw_loop2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
-    unsafe { Fl_loop(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+pub fn draw_loop2(pos1: Coord, pos2: Coord, pos3: Coord) {
+    unsafe { Fl_loop(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
 }
 
 /// Draws a non-filled 4-sided polygon
-pub fn draw_loop3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+pub fn draw_loop3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
     unsafe {
         Fl_loop2(
-            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+            pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
         )
     }
 }
@@ -239,9 +319,9 @@ pub fn draw_circle(x: f64, y: f64, r: f64) {
 }
 
 /// Draws an arc
-pub fn draw_arc(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
+pub fn draw_arc(r: Rect, a: f64, b: f64) {
     unsafe {
-        Fl_arc(x, y, width, height, a, b);
+        Fl_arc(r.x, r.y, r.w, r.h, a, b);
     }
 }
 
@@ -251,9 +331,9 @@ pub fn draw_arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
 }
 
 /// Draws a filled pie
-pub fn draw_pie(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
+pub fn draw_pie(r: Rect, a: f64, b: f64) {
     unsafe {
-        Fl_pie(x, y, width, height, a, b);
+        Fl_pie(r.x, r.y, r.w, r.h, a, b);
     }
 }
 
@@ -364,24 +444,24 @@ pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
 }
 
 /// Fills a 3-sided polygon. The polygon must be convex
-pub fn draw_polygon2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
-    unsafe { Fl_polygon(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+pub fn draw_polygon2(pos1: Coord, pos2: Coord, pos3: Coord) {
+    unsafe { Fl_polygon(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
 }
 
 /// Fills a 4-sided polygon. The polygon must be convex
-pub fn draw_polygon3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+pub fn draw_polygon3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
     unsafe {
         Fl_polygon2(
-            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+            pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
         )
     }
 }
 
 /// Adds a series of points on a Bezier curve to the path
-pub fn draw_curve(pos1: Coord<f64>, pos2: Coord<f64>, pos3: Coord<f64>, pos4: Coord<f64>) {
+pub fn draw_curve(pos1: Coord_f64, pos2: Coord_f64, pos3: Coord_f64, pos4: Coord_f64) {
     unsafe {
         Fl_curve(
-            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+            pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
         )
     }
 }
@@ -559,39 +639,36 @@ pub fn width2(txt: &str, n: i32) -> f64 {
 }
 
 /// Measure the width and height of a text
-pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
+pub fn measure(txt: &str, draw_symbols: bool) -> Coord {
     let txt = CString::safe_new(txt);
-    let mut x = 0;
-    let mut y = 0;
+    let (mut x, mut y) = (0, 0);
     unsafe {
         Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
     }
-    (x, y)
+    Coord::new(x, y)
 }
 
 /// Measure the width and height of a text
+///
 /// If `width` is non-zero, it will wrap to that width
-pub fn wrap_measure(txt: &str, width: i32, draw_symbols: bool) -> (i32, i32) {
+pub fn wrap_measure(txt: &str, width: i32, draw_symbols: bool) -> Coord {
     let txt = CString::safe_new(txt);
-    let mut x = width;
-    let mut y = 0;
+    let (mut x, mut y) = (width, 0);
     unsafe {
         Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
     }
-    (x, y)
+    Coord::new(x, y)
 }
 
-/// Measure the coordinates and size of the text where a bounding box using the returned data would fit the text
-pub fn text_extents(txt: &str) -> (i32, i32, i32, i32) {
+/// Measure the coordinates and size of the text where a bounding box using the
+/// returned data would fit the text
+pub fn text_extents(txt: &str) -> Rect {
     let txt = CString::safe_new(txt);
-    let mut x = 0;
-    let mut y = 0;
-    let mut w = 0;
-    let mut h = 0;
+    let (mut x, mut y, mut w, mut h) = (0, 0, 0, 0);
     unsafe {
         Fl_text_extents(txt.as_ptr(), &mut x, &mut y, &mut w, &mut h);
     }
-    (x, y, w, h)
+    Rect::new(x, y, w, h)
 }
 
 /// Returns the typographical width of a single character
