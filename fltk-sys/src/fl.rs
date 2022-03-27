@@ -451,6 +451,12 @@ extern "C" {
         x: ::std::os::raw::c_int,
         y: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
+    pub fn Fl_screen_num_inside(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        w: ::std::os::raw::c_int,
+        h: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_screen_xywh(
@@ -459,6 +465,30 @@ extern "C" {
         W: *mut ::std::os::raw::c_int,
         H: *mut ::std::os::raw::c_int,
         n: ::std::os::raw::c_int,
+    );
+    pub fn Fl_screen_xywh_at(
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
+        mx: ::std::os::raw::c_int,
+        my: ::std::os::raw::c_int,
+    );
+    pub fn Fl_screen_xywh_inside(
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
+        mx: ::std::os::raw::c_int,
+        my: ::std::os::raw::c_int,
+        mw: ::std::os::raw::c_int,
+        mh: ::std::os::raw::c_int,
+    );
+    pub fn Fl_screen_xywh_mouse(
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
     );
 }
 extern "C" {
@@ -471,6 +501,25 @@ extern "C" {
         W: *mut ::std::os::raw::c_int,
         H: *mut ::std::os::raw::c_int,
         n: ::std::os::raw::c_int,
+    );
+    pub fn Fl_screen_work_area_mouse(
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
+    );
+    pub fn Fl_screen_work_area_at(
+        X: *mut ::std::os::raw::c_int,
+        Y: *mut ::std::os::raw::c_int,
+        W: *mut ::std::os::raw::c_int,
+        H: *mut ::std::os::raw::c_int,
+        mx: ::std::os::raw::c_int,
+        my: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_keyboard_screen_scaling(
+        value: ::std::os::raw::c_int,
     );
 }
 extern "C" {
