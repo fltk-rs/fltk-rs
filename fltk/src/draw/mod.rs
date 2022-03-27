@@ -7,10 +7,8 @@ use std::ffi::{CStr, CString};
 use std::mem;
 use std::os::raw;
 
-mod coord;
-pub use coord::{Coord, Coord_f64, Coordinates};
-mod rect;
-pub use rect::{Rect, Rect_f64, Rectangle};
+mod types;
+pub use types::{Coord, Coord_f64, Coordinates, Rect, Rect_f64, Rectangle};
 
 bitflags::bitflags! {
     /// Defines the line styles supported by fltk
