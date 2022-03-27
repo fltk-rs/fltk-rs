@@ -38,6 +38,7 @@ impl<T: Copy> From<[T; 2]> for Coordinates<T> {
         }
     }
 }
+
 impl<T: Copy> From<Coordinates<T>> for [T; 2] {
     fn from(c: Coordinates<T>) -> Self {
         [c.x, c.y]
@@ -52,26 +53,28 @@ impl<T: Copy> From<(T, T)> for Coordinates<T> {
         }
     }
 }
+
 impl<T: Copy> From<Coordinates<T>> for (T, T) {
     fn from(c: Coordinates<T>) -> Self {
         (c.x, c.y)
     }
 }
 
-/// Defines a pair of `x, y` coordinates
+/// Defines a pair of `w, h` (width, height) values representing size
 #[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Size {
-    /// Horizontal X coordinate
+    /// Width
     pub w: i32,
-    /// Vertical Y coordinate
+    /// Height
     pub h: i32,
 }
 
 impl Size {
-    /// Returns a new pair of `x, y` coordinates
+    /// Returns a new pair of `w, h` (width, height) values
     pub fn new(w: i32, h: i32) -> Self {
         Size { w, h }
     }
+
     /// Returns a tuple of the values
     pub fn tup(&self) -> (i32, i32) {
         (self.w, self.h)
@@ -110,7 +113,7 @@ impl From<Size> for (i32, i32) {
 }
 
 
-/// Defines a pair of `x, y` coordinates
+/// Defines a pair of `r, c` (row, column) representing a Cell
 #[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Cell {
     /// Horizontal X coordinate
@@ -120,10 +123,11 @@ pub struct Cell {
 }
 
 impl Cell {
-    /// Returns a new pair of `x, y` coordinates
+    /// Returns a new pair of `r, c` (row, column) cell
     pub fn new(r: i32, c: i32) -> Self {
         Cell { r, c }
     }
+
     /// Returns a tuple of the values
     pub fn tup(&self) -> (i32, i32) {
         (self.r, self.c)
@@ -211,6 +215,7 @@ impl<T: Copy + Add<Output = T> + Sub<Output = T>> Rectangle<T> {
     pub fn bottom_right(&self) -> Coordinates<T> {
         Coordinates::new(self.x + self.w, self.y + self.h)
     }
+
     /// Returns a tuple of the values
     pub fn tup(&self) -> (T, T, T, T) {
         (self.x, self.y, self.w, self.h)
@@ -229,6 +234,7 @@ impl<T: Copy + Add<Output = T> + Sub<Output = T>> From<[T; 4]> for Rectangle<T> 
         }
     }
 }
+
 impl<T: Copy + Add<Output = T> + Sub<Output = T>> From<Rectangle<T>> for [T; 4] {
     fn from(c: Rectangle<T>) -> Self {
         [c.x, c.y, c.w, c.h]
@@ -245,6 +251,7 @@ impl<T: Copy + Add<Output = T> + Sub<Output = T>> From<(T, T, T, T)> for Rectang
         }
     }
 }
+
 impl<T: Copy + Add<Output = T> + Sub<Output = T>> From<Rectangle<T>> for (T, T, T, T) {
     fn from(c: Rectangle<T>) -> Self {
         (c.x, c.y, c.w, c.h)

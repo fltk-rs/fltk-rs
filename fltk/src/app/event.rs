@@ -309,10 +309,10 @@ pub unsafe fn handle_raw(event: Event, w: WindowPtr) -> bool {
     The event dispatch function is called after native events are converted to
     FLTK events, but before they are handled by FLTK. If the dispatch function
     handler is set, it is up to the dispatch function to call
-    [`app::handle(Event, WindowPtr)`](crate::app::handle) or to ignore the event.
+    [`app::handle_raw(Event, WindowPtr)`](crate::app::handle_raw) or to ignore the event.
 
     The dispatch function itself must return false if it ignored the event,
-    or true if it used the event. If you call [`app::handle()`](crate::app::handle),
+    or true if it used the event. If you call [`app::handle_raw()`](crate::app::handle_raw),
     then this will return the correct value.
     # Safety
     The window pointer must not be invalidated
