@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.3.2] - Unreleased
+- Add Screen type as well as related screen functions and screens_info example, by @joseluis.
+- Add Rect and new Coordinates type, by @joseluis.
+- Add Size and Cell types.
+- Improve grid example.
+
 ## [1.3.1] - 2022-03-22
 - Pull updated Wayland backend code from FLTK.
 - Fix HasRawWindowHandle implementation on Wayland.
