@@ -8,7 +8,7 @@ pub struct Coordinates<T: Copy> {
 }
 
 /// `i32` Coordinates
-#[deprecated]
+#[derive(Debug, Copy, Clone)]
 pub struct Coord<T: Copy>(pub T, pub T);
 // pub type Coord = Coordinates<i32>; // TODO for 2.0
 

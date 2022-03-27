@@ -1,7 +1,8 @@
 use fltk::{
     app::Screen,
-    draw::{Coord, Rect},
+    draw::{Coordinates, Rect},
 };
+type Coord = Coordinates<i32>;
 
 fn main() {
     let screens = Screen::all_screens();
