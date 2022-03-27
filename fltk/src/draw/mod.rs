@@ -8,7 +8,7 @@ use std::mem;
 use std::os::raw;
 
 mod types;
-pub use types::{Coord, Coord_f64, Coordinates, Rect, Rect_f64, Rectangle};
+pub use types::{Coord, Coord_f64, Coordinates, Rect, Rectangle};
 
 bitflags::bitflags! {
     /// Defines the line styles supported by fltk

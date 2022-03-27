@@ -179,10 +179,6 @@ pub struct Rectangle<T: Copy + Add<Output = T> + Sub<Output = T>> {
 /// `i32` Coordinates
 pub type Rect = Rectangle<i32>;
 
-/// `f64` Coordinates
-#[allow(non_camel_case_types)]
-pub type Rect_f64 = Rectangle<f64>;
-
 impl<T: Copy + Add<Output = T> + Sub<Output = T>> Rectangle<T> {
     /// Returns a new `Rectangle` from its top-left corner position,
     /// and the length of its sides.
