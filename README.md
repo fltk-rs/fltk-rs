@@ -128,19 +128,18 @@ fn main() {
     app.run().unwrap();
 }
 ```
-Alternatively, you can use packs, columns, rows to layout your widgets (or the [fltk-flex crate](https://github.com/fltk-rs/fltk-flex) for flexbox layouts):
+
+Alternatively, you can use Pack, Flex (for flexbox layouts) or [Grid](https://github.com/fltk-rs/fltk-grid):
 ```rust
-use fltk::{app, button::Button, frame::Frame, group::Pack, prelude::*, window::Window};
+use fltk::{app, button::Button, frame::Frame, group::Flex, prelude::*, window::Window};
 fn main() {
     let app = app::App::default();
     let mut wind = Window::default().with_size(160, 200).with_label("Counter");
-    // Vertical is default. You can choose horizontal using pack.set_type(PackType::Horizontal);
-    let mut pack = Pack::default().with_size(120, 140).center_of(&wind);
-    pack.set_spacing(10);
-    let mut but_inc = Button::default().with_size(0, 40).with_label("+");
-    let mut frame = Frame::default().with_size(0, 40).with_label("0");
-    let mut but_dec = Button::default().with_size(0, 40).with_label("-");
-    pack.end();
+    let mut flex = Flex::default().with_size(120, 140).center_of_parent().column();
+    let mut but_inc = Button::default().with_label("+");
+    let mut frame = Frame::default().with_label("0");
+    let mut but_dec = Button::default().with_label("-");
+    flex.end();
     wind.end();
     wind.show();
     app.run().unwrap();
@@ -408,11 +407,8 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
     - Tile
     - Wizard
     - ColorChooser
-    - VGrid
-    - HGrid
-    - Column (vertical pack supporting auto layout)
-    - Row (horizontal pack supporting auto layout)
-    - Flex
+    - Flex (Column and Row)
+    - [Grid](https://github.com/fltk-rs/fltk-grid)
 - Text display widgets
     - TextDisplay
     - TextEditor
