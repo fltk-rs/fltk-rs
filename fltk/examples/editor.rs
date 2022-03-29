@@ -366,11 +366,7 @@ impl MyApp {
                     New => {
                         if self.buf.text() != "" {
                             let clear = if let Some(x) = dialog::choice(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "") {
-                                if x == 0 {
-                                    true
-                                } else {
-                                    false
-                                }
+                                x == 0
                             } else {
                                 false
                             };
