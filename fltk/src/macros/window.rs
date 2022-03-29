@@ -71,11 +71,11 @@ macro_rules! impl_window_ext {
                         "center_screen requires the size of the widget to be known!"
                     );
                     let (mut x, mut y) = screen_size();
-                    x -= self.width() as f64;
-                    y -= self.height() as f64;
+                    x -= self.width();
+                    y -= self.height();
                     self.resize(
-                        (x / 2.0) as i32,
-                        (y / 2.0) as i32,
+                        x / 2,
+                        y / 2,
                         self.width(),
                         self.height(),
                     );

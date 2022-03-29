@@ -1,3 +1,4 @@
+use crate::draw::types::*;
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::table::*;

@@ -132,7 +132,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         }
 
         if target_triple.contains("linux") && !target_triple.contains("android") {
-            if cfg!(feature = "no-pango") {
+            if cfg!(feature = "no-pango-cairo") {
                 dst.define("OPTION_USE_PANGO", "OFF");
             } else {
                 dst.define("OPTION_USE_PANGO", "ON");

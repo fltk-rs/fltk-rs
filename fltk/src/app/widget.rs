@@ -176,11 +176,11 @@ pub fn set_focus<W: WidgetExt>(wid: &W) {
 pub fn windows() -> Option<Vec<impl WindowExt>> {
     let mut v: Vec<Window> = vec![];
     if let Some(first) = first_window() {
-        let first: Window = unsafe { first.into_widget() };
+        let first: Window = unsafe { first.as_widget() };
         v.push(first.clone());
         let mut win = first;
         while let Some(wind) = next_window(&win) {
-            let w = unsafe { wind.into_widget::<Window>() };
+            let w = unsafe { wind.as_widget::<Window>() };
             v.push(w.clone());
             win = w;
         }

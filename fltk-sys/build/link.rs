@@ -145,7 +145,7 @@ pub fn link(target_os: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib=dylib=Xft");
                 }
                 println!("cargo:rustc-link-lib=dylib=fontconfig");
-                if !cfg!(feature = "no-pango") {
+                if !cfg!(feature = "no-pango-cairo") {
                     println!("cargo:rustc-link-lib=dylib=pango-1.0");
                     println!("cargo:rustc-link-lib=dylib=pangoxft-1.0");
                     println!("cargo:rustc-link-lib=dylib=gobject-2.0");

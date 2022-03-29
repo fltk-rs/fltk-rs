@@ -1,4 +1,4 @@
-use super::types::Coord;
+use super::types::{Coord, Coordf};
 use crate::enums::{Align, Color, ColorDepth, Cursor, Font, FrameType, Shortcut};
 use crate::image::RgbImage;
 use crate::prelude::*;
@@ -148,8 +148,8 @@ pub fn draw_line(x1: i32, y1: i32, x2: i32, y2: i32) {
 }
 
 /// Draws a line from (x,y) to (x1,y1) and another from (x1,y1) to (x2,y2)
-pub fn draw_line2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
-    unsafe { Fl_line2(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+pub fn draw_line2(pos1: Coord, pos2: Coord, pos3: Coord) {
+    unsafe { Fl_line2(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
 }
 
 /// Draws a point
@@ -158,8 +158,8 @@ pub fn draw_point(x: i32, y: i32) {
 }
 
 /// Draws a point
-pub fn draw_point2(pos: Coord<i32>) {
-    unsafe { Fl_point(pos.0, pos.1) }
+pub fn draw_point2(pos: Coord) {
+    unsafe { Fl_point(pos.x, pos.y) }
 }
 
 /// Draws a rectangle
@@ -180,15 +180,15 @@ pub fn draw_loop(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
 }
 
 /// Draws a non-filled 3-sided polygon
-pub fn draw_loop2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
-    unsafe { Fl_loop(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+pub fn draw_loop2(pos1: Coord, pos2: Coord, pos3: Coord) {
+    unsafe { Fl_loop(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
 }
 
 /// Draws a non-filled 4-sided polygon
-pub fn draw_loop3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+pub fn draw_loop3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
     unsafe {
         Fl_loop2(
-            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+            pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
         )
     }
 }
@@ -364,24 +364,24 @@ pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
 }
 
 /// Fills a 3-sided polygon. The polygon must be convex
-pub fn draw_polygon2(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>) {
-    unsafe { Fl_polygon(pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1) }
+pub fn draw_polygon2(pos1: Coord, pos2: Coord, pos3: Coord) {
+    unsafe { Fl_polygon(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
 }
 
 /// Fills a 4-sided polygon. The polygon must be convex
-pub fn draw_polygon3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Coord<i32>) {
+pub fn draw_polygon3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
     unsafe {
         Fl_polygon2(
-            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+            pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
         )
     }
 }
 
 /// Adds a series of points on a Bezier curve to the path
-pub fn draw_curve(pos1: Coord<f64>, pos2: Coord<f64>, pos3: Coord<f64>, pos4: Coord<f64>) {
+pub fn draw_curve(pos1: Coordf, pos2: Coordf, pos3: Coordf, pos4: Coordf) {
     unsafe {
         Fl_curve(
-            pos1.0, pos1.1, pos2.0, pos2.1, pos3.0, pos3.1, pos4.0, pos4.1,
+            pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
         )
     }
 }

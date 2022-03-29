@@ -2,7 +2,7 @@
 name = "fltk"
 version = "1.3.2"
 authors = ["The fltk-rs Authors"]
-edition = "2018"
+edition = "2021"
 description = "Rust bindings for the FLTK GUI library"
 repository = "https://github.com/fltk-rs/fltk-rs"
 documentation = "https://docs.rs/fltk"
@@ -28,7 +28,7 @@ raw-window-handle = { version = "^0.4", optional = true }
 default = []
 fltk-bundled = ["fltk-sys/fltk-bundled", "enable-glwindow"] # Support for bundled versions of cfltk and fltk (requires curl and tar)
 enable-glwindow = ["fltk-sys/enable-glwindow"] # Support for systems without OpenGL
-no-pango = ["fltk-sys/no-pango"] # You can use this if you don't need rtl or cjk unicode support
+no-pango-cairo = ["fltk-sys/no-pango-cairo"] # You can use this if you don't need rtl or cjk unicode support
 fltk-shared = ["fltk-sys/fltk-shared"] # Builds a shared lib of fltk
 use-ninja = ["fltk-sys/use-ninja"] # If you have ninja build installed or it's available, it builds faster than make or VS
 system-fltk = ["fltk-sys/system-fltk"] # If you would like to use the installed fltk library, should be FLTK 1.4

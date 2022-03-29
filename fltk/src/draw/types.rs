@@ -8,9 +8,7 @@ pub struct Coordinates<T: Copy> {
 }
 
 /// `i32` Coordinates
-#[derive(Debug, Copy, Clone)]
-pub struct Coord<T: Copy>(pub T, pub T);
-// pub type Coord = Coordinates<i32>; // TODO for 2.0
+pub type Coord = Coordinates<i32>;
 
 /// `f64` Coordinates
 pub type Coordf = Coordinates<f64>;

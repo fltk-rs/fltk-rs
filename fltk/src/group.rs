@@ -21,18 +21,8 @@ crate::macros::widget::impl_widget_base!(Group, Fl_Group);
 crate::macros::group::impl_group_ext!(Group, Fl_Group);
 
 impl Group {
-    #[deprecated(since = "1.2.18", note = "please use `try_current` instead")]
-    /// Get the current group
-    pub fn current() -> Group {
-        unsafe {
-            let ptr = Fl_Group_current();
-            assert!(!ptr.is_null());
-            Group::from_widget_ptr(ptr as _)
-        }
-    }
-
     /// Tries to get the current group
-    pub fn try_current() -> Option<Group> {
+    pub fn current() -> Option<Group> {
         unsafe {
             let ptr = Fl_Group_current();
             if ptr.is_null() {
@@ -334,19 +324,8 @@ impl Wizard {
         unsafe { Fl_Wizard_prev(self.inner) }
     }
 
-    #[deprecated(since = "1.2.18", note = "please use `try_current_widget` instead")]
     /// Gets the underlying widget of the current view
-    pub fn current_widget(&self) -> Widget {
-        unsafe {
-            assert!(!self.was_deleted());
-            let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
-            assert!(!ptr.is_null());
-            Widget::from_widget_ptr(ptr)
-        }
-    }
-
-    /// Gets the underlying widget of the current view
-    pub fn try_current_widget(&self) -> Option<impl WidgetExt> {
+    pub fn current_widget(&self) -> Option<impl WidgetExt> {
         unsafe {
             assert!(!self.was_deleted());
             let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
