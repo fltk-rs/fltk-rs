@@ -1,4 +1,4 @@
-use super::types::{Coord, Coordf, Rect};
+use super::types::{Coord, Coordf};
 use crate::enums::{Align, Color, ColorDepth, Cursor, Font, FrameType, Shortcut};
 use crate::image::RgbImage;
 use crate::prelude::*;
