@@ -1,6 +1,6 @@
 use fltk::{
     app,
-    enums::{Color, Event, Shortcut, Font, Key},
+    enums::{Color, Event, Font, Key, Shortcut},
     prelude::{DisplayExt, GroupExt, WidgetBase, WidgetExt},
     text::{SimpleTerminal, StyleTableEntry, TextBuffer},
     utils,
@@ -80,7 +80,7 @@ impl TerminalFuncs for SimpleTerminal {
                                         term.append_error("Received sigint signal!\n");
                                         app::awake();
                                         return None;
-                                    },
+                                    }
                                     false => (),
                                 }
                             }
@@ -194,7 +194,9 @@ impl Term {
                     }
                 },
                 Event::KeyUp => {
-                    if app::event_state() == Shortcut::Ctrl && app::event_key() == Key::from_char('c') {
+                    if app::event_state() == Shortcut::Ctrl
+                        && app::event_key() == Key::from_char('c')
+                    {
                         s.send(true);
                     }
                     false

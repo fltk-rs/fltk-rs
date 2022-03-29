@@ -251,21 +251,9 @@ pub fn alert(x: i32, y: i32, txt: &str) {
     }
 }
 
-#[deprecated(since = "1.3.1", note = "please use `choice2` instead")]
-/// Displays a choice box with up to three choices. Choosing a value returns its index from the arguments
-pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
-    unsafe {
-        let txt = CString::safe_new(txt);
-        let b0 = CString::safe_new(b0);
-        let b1 = CString::safe_new(b1);
-        let b2 = CString::safe_new(b2);
-        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32
-    }
-}
-
-/// Displays a choice box with up to three choices. 
+/// Displays a choice box with up to three choices.
 /// Closing the dialog returns None. Choosing a value returns its index from the arguments.
-pub fn choice2(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
+pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
         let txt = CString::safe_new(txt);
         let b0 = CString::safe_new(b0);
@@ -333,23 +321,10 @@ pub fn alert_default(txt: &str) {
     }
 }
 
-#[deprecated(since = "1.3.1", note = "please use `choice2_default` instead")]
-/// Displays a choice box with up to three choices.
-/// The dialog is positioned at the pointer hotspot
-pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
-    unsafe {
-        let txt = CString::safe_new(txt);
-        let b0 = CString::safe_new(b0);
-        let b1 = CString::safe_new(b1);
-        let b2 = CString::safe_new(b2);
-        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32
-    }
-}
-
 /// Displays a choice box with up to three choices.
 /// An empty choice will not be shown. Closing the dialog returns None. Choosing a value returns its index from the arguments.
 /// The dialog is positioned at the pointer hotspot
-pub fn choice2_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
+pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
         let txt = CString::safe_new(txt);
         let b0 = CString::safe_new(b0);
@@ -628,7 +603,12 @@ bitflags::bitflags! {
 
 impl FileChooser {
     /// Instantiates a new `FileChooser`
-    pub fn new<P: AsRef<Path>>(dir: P, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
+    pub fn new<P: AsRef<Path>>(
+        dir: P,
+        pattern: &str,
+        typ: FileChooserType,
+        title: &str,
+    ) -> FileChooser {
         Self::new_(dir.as_ref(), pattern, typ, title)
     }
 
@@ -755,25 +735,25 @@ impl FileChooser {
     }
 
     /// Gets the directory of the `FileChooser`
-    pub fn directory(&self) -> Option<String> {
+    pub fn directory(&self) -> Option<PathBuf> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_directory(self.inner);
             if ptr.is_null() {
                 None
             } else {
-                Some(
+                Some(PathBuf::from(
                     CStr::from_ptr(ptr as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
-                )
+                ))
             }
         }
     }
 
     /// Sets the filter for the dialog, can be:
-    /// Multiple patterns can be used by separating them with tabs, like "*.jpg\t*.png\t*.gif\t*". 
-    /// In addition, you can provide human-readable labels with the patterns inside parenthesis, 
+    /// Multiple patterns can be used by separating them with tabs, like "*.jpg\t*.png\t*.gif\t*".
+    /// In addition, you can provide human-readable labels with the patterns inside parenthesis,
     /// like "JPEG Files (*.jpg)\tPNG Files (*.png)\tGIF Files (*.gif)\tAll Files (*)
     /// And "Rust Files (*.{rs,txt,toml})"
     pub fn set_filter(&mut self, pattern: &str) {
@@ -1192,7 +1172,12 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
     }
     ```
 */
-pub fn file_chooser<P: AsRef<Path>>(message: &str, pattern: &str, dir: P, relative: bool) -> Option<String> {
+pub fn file_chooser<P: AsRef<Path>>(
+    message: &str,
+    pattern: &str,
+    dir: P,
+    relative: bool,
+) -> Option<String> {
     file_chooser_(message, pattern, dir.as_ref(), relative)
 }
 

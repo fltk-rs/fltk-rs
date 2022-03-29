@@ -4,6 +4,6 @@ pub fn has_program(prog: &str) -> bool {
         _ => {
             println!("cargo:warning=Could not find invokable {}!", prog);
             false
-        },
+        }
     }
 }

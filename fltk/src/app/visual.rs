@@ -315,7 +315,11 @@ pub fn set_frame_color(col: Color) {
 pub fn add_symbol(label: &str, scalable: bool, draw_cb: fn(Color)) -> Result<(), FltkError> {
     unsafe {
         let label = CString::safe_new(label);
-        let ret = fltk_sys::draw::Fl_add_symbol(label.into_raw() as _, mem::transmute(Some(draw_cb)), scalable as _);
+        let ret = fltk_sys::draw::Fl_add_symbol(
+            label.into_raw() as _,
+            mem::transmute(Some(draw_cb)),
+            scalable as _,
+        );
         if ret == 0 {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {

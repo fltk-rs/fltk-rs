@@ -8,17 +8,17 @@ mod closable_tab {
         prelude::*,
     };
 
-#[derive(Copy, Clone)]
+    #[derive(Copy, Clone)]
     pub enum Message {
         ForegroundTab(i32),
         DeleteTab(i32),
         InsertNewTab(i32),
-}
+    }
 
     fn create_tab_button(label: &str) -> group::Group {
         let mut grp = group::Group::new(0, 0, 150, 40, None);
         grp.set_align(Align::Left | Align::Inside);
-        let mut but_handle = button::Button::new(grp.x()+5, grp.y()+5, 110, 30, "");
+        let mut but_handle = button::Button::new(grp.x() + 5, grp.y() + 5, 110, 30, "");
         but_handle.set_align(Align::Left | Align::Inside);
         but_handle.set_label(label);
         let mut but_close = button::Button::new(grp.x() + 120, grp.y() + 10, 20, 20, "@1+");
@@ -32,7 +32,7 @@ mod closable_tab {
 
     // Public
     pub struct ClosableTab<'a> {
-        current: Option<i32>,  // The tab which is visible on the foreground
+        current: Option<i32>, // The tab which is visible on the foreground
         snd: &'a app::Sender<Message>,
         contents: group::Group,
         tab_labels: group::Pack,
@@ -50,18 +50,28 @@ mod closable_tab {
             contents.set_frame(FrameType::NoBox);
             contents.end();
             parent_grp.end();
-            Self {current, snd, contents, tab_labels }
+            Self {
+                current,
+                snd,
+                contents,
+                tab_labels,
+            }
         }
 
-        pub fn add(&mut self, child: & mut group::Group, label: &str) {
-            child.resize(self.contents.x(), self.contents.y(), self.contents.w(), self.contents.h());
+        pub fn add(&mut self, child: &mut group::Group, label: &str) {
+            child.resize(
+                self.contents.x(),
+                self.contents.y(),
+                self.contents.w(),
+                self.contents.h(),
+            );
             self.contents.add(child);
             let but = create_tab_button(&label);
             self.tab_labels.add(&but);
             but.child(1).unwrap().set_callback({
                 let curr_child = child.clone();
                 let contents = self.contents.clone();
-                let sndb         = self.snd.clone();
+                let sndb = self.snd.clone();
                 move |_| {
                     let idx = contents.find(&curr_child);
                     sndb.send(Message::DeleteTab(idx));
@@ -71,7 +81,7 @@ mod closable_tab {
             but.child(0).unwrap().set_callback({
                 let curr_child = child.clone();
                 let contents = self.contents.clone();
-                let sndb         = self.snd.clone();
+                let sndb = self.snd.clone();
                 move |_| {
                     let idx = contents.find(&curr_child);
                     sndb.send(Message::ForegroundTab(idx));
@@ -85,7 +95,7 @@ mod closable_tab {
             self.tab_labels.remove_by_index(idx);
             if self.current == Some(idx) {
                 if idx > 1 {
-                    self.set_foreground(idx-1);
+                    self.set_foreground(idx - 1);
                 } else {
                     if self.contents.children() > 0 {
                         self.set_foreground(0);
@@ -99,14 +109,32 @@ mod closable_tab {
             for idx in 0..self.contents.children() {
                 if idx != fg_idx {
                     self.contents.child(idx).unwrap().hide();
-                    self.tab_labels.child(idx).unwrap().set_label_color(fltk::enums::Color::Inactive);
-                    self.tab_labels.child(idx).unwrap().set_color(fltk::enums::Color::Inactive);
-                    self.tab_labels.child(idx).unwrap().set_frame(FrameType::DownFrame);
+                    self.tab_labels
+                        .child(idx)
+                        .unwrap()
+                        .set_label_color(fltk::enums::Color::Inactive);
+                    self.tab_labels
+                        .child(idx)
+                        .unwrap()
+                        .set_color(fltk::enums::Color::Inactive);
+                    self.tab_labels
+                        .child(idx)
+                        .unwrap()
+                        .set_frame(FrameType::DownFrame);
                 } else {
                     self.contents.child(idx).unwrap().show();
-                    self.tab_labels.child(idx).unwrap().set_label_color(Color::Selection);
-                    self.tab_labels.child(idx).unwrap().set_color(fltk::enums::Color::Selection);
-                    self.tab_labels.child(idx).unwrap().set_frame(FrameType::NoBox);
+                    self.tab_labels
+                        .child(idx)
+                        .unwrap()
+                        .set_label_color(Color::Selection);
+                    self.tab_labels
+                        .child(idx)
+                        .unwrap()
+                        .set_color(fltk::enums::Color::Selection);
+                    self.tab_labels
+                        .child(idx)
+                        .unwrap()
+                        .set_frame(FrameType::NoBox);
                 }
                 self.tab_labels.child(idx).unwrap().set_damage(true);
                 self.tab_labels.child(idx).unwrap().redraw();
@@ -126,9 +154,15 @@ fn main() {
     // Create groups to be used as content for tabs
     pub fn create_tab(from: i32, to: i32) -> group::Group {
         let grp = group::Group::new(0, 0, 800, 600, None);
-        for idx in from .. to {
-            button::Button::new( idx*10 + (idx-from) * 42, idx*10 + (idx-from) * 42, 80, 40, None)
-                .with_label(&format!("button {}", idx));
+        for idx in from..to {
+            button::Button::new(
+                idx * 10 + (idx - from) * 42,
+                idx * 10 + (idx - from) * 42,
+                80,
+                40,
+                None,
+            )
+            .with_label(&format!("button {}", idx));
         }
         grp.end();
         grp
@@ -136,14 +170,14 @@ fn main() {
     let app = app::App::default();
     let mut win = window::Window::default().with_size(800, 600);
     let (s, r) = app::channel::<closable_tab::Message>();
-    let mut tabs = closable_tab::ClosableTab::new(0, 0, 800, 600,&s);
+    let mut tabs = closable_tab::ClosableTab::new(0, 0, 800, 600, &s);
     win.end();
     win.show();
-    tabs.add(&mut create_tab( 1, 3),"tab 1");
-    tabs.add(&mut create_tab( 4, 7),"tab 2");
-    tabs.add(&mut create_tab( 8,11),"tab 3");
-    tabs.add(&mut create_tab(12,15),"tab 4");
-    tabs.add(&mut create_tab(16,22),"tab 5");
+    tabs.add(&mut create_tab(1, 3), "tab 1");
+    tabs.add(&mut create_tab(4, 7), "tab 2");
+    tabs.add(&mut create_tab(8, 11), "tab 3");
+    tabs.add(&mut create_tab(12, 15), "tab 4");
+    tabs.add(&mut create_tab(16, 22), "tab 5");
     tabs.set_foreground(2);
     while app.wait() {
         use closable_tab::Message::*;
@@ -151,11 +185,11 @@ fn main() {
             match msg {
                 ForegroundTab(idx) => {
                     tabs.set_foreground(idx);
-                },
+                }
                 DeleteTab(idx) => {
                     tabs.remove(idx);
-                },
-                InsertNewTab(_) => {},
+                }
+                InsertNewTab(_) => {}
             }
         }
     }

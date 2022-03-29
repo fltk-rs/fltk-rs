@@ -367,7 +367,9 @@ impl Font {
                 let family_name = face
                     .names()
                     .into_iter()
-                    .find(|name| name.name_id == ttf_parser::name_id::FULL_NAME && name.is_unicode())
+                    .find(|name| {
+                        name.name_id == ttf_parser::name_id::FULL_NAME && name.is_unicode()
+                    })
                     .and_then(|name| name.to_string());
                 let path = CString::safe_new(p);
                 let ret = fl::Fl_load_font(path.as_ptr());
@@ -495,7 +497,7 @@ impl Color {
     /// Create color from RGBA using alpha compositing
     pub fn from_rgba_tuple(tup: (u8, u8, u8, u8)) -> Color {
         if tup.3 != 255 {
-            let bg_col = if let Some(grp) = crate::group::Group::try_current() {
+            let bg_col = if let Some(grp) = crate::group::Group::current() {
                 use crate::prelude::WidgetExt;
                 grp.color()
             } else {

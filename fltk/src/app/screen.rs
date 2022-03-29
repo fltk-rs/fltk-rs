@@ -6,7 +6,7 @@ use crate::{
     draw::{Coordinates, Rect},
     prelude::{FltkError, FltkErrorKind},
 };
-type Coord = Coordinates<i32>; // TEMP
+type Coord = Coordinates<i32>;
 
 /// An available screen
 ///
@@ -325,8 +325,8 @@ impl Screen {
 // standalone functions
 
 /// Returns a pair of the width and height of the screen
-pub fn screen_size() -> (f64, f64) {
-    unsafe { ((fl::Fl_screen_w() as f64), (fl::Fl_screen_h() as f64)) }
+pub fn screen_size() -> (i32, i32) {
+    unsafe { (fl::Fl_screen_w(), fl::Fl_screen_h()) }
 }
 
 /// Returns a pair of the x & y coords of the screen

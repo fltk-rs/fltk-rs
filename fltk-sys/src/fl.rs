@@ -518,9 +518,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_keyboard_screen_scaling(
-        value: ::std::os::raw::c_int,
-    );
+    pub fn Fl_keyboard_screen_scaling(value: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_open_display();
