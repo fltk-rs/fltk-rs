@@ -1,3 +1,5 @@
+use std::ops::{Add, Sub};
+
 /// Defines a pair of `x, y` coordinates
 #[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Coordinates<T: Copy> {
@@ -160,8 +162,6 @@ impl From<Cell> for (i32, i32) {
         (c.r, c.c)
     }
 }
-
-use std::ops::{Add, Sub};
 
 /// Defines a rectangular bounding box
 #[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
