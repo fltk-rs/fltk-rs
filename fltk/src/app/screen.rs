@@ -3,10 +3,9 @@
 use fltk_sys::fl;
 
 use crate::{
-    draw::{Coordinates, Rect},
+    draw::{Coord, Rect},
     prelude::{FltkError, FltkErrorKind},
 };
-type Coord = Coordinates<i32>;
 
 /// An available screen
 ///
