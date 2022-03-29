@@ -544,8 +544,7 @@ impl MenuItem {
                 let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
                     data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
                 let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
-                let _ =
-                    std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
@@ -578,8 +577,7 @@ impl MenuItem {
                 let a: *mut Box<dyn FnMut(&mut crate::widget::Widget)> =
                     data as *mut Box<dyn FnMut(&mut crate::widget::Widget)>;
                 let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
-                let _ =
-                    std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
+                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;

@@ -409,7 +409,12 @@ impl DoubleWindow {
                 }
                 cfltk_winShow(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
+            #[cfg(not(any(
+                target_os = "macos",
+                target_os = "android",
+                target_os = "windows",
+                feature = "use-wayland"
+            )))]
             {
                 enum Display {}
                 extern "C" {
@@ -443,7 +448,12 @@ impl DoubleWindow {
                 }
                 cfltk_winHide(self.raw_handle());
             }
-            #[cfg(not(any(target_os = "macos", target_os = "android", target_os = "windows", feature = "use-wayland")))]
+            #[cfg(not(any(
+                target_os = "macos",
+                target_os = "android",
+                target_os = "windows",
+                feature = "use-wayland"
+            )))]
             {
                 enum Display {}
                 extern "C" {
@@ -457,7 +467,13 @@ impl DoubleWindow {
                 extern "C" {
                     fn wl_proxy_marshal(proxy: *mut raw::c_void, opcode: u32, ...);
                 }
-                wl_proxy_marshal(self.raw_handle() as _, 1, std::ptr::null_mut() as *mut raw::c_void, 0, 0); // attach
+                wl_proxy_marshal(
+                    self.raw_handle() as _,
+                    1,
+                    std::ptr::null_mut() as *mut raw::c_void,
+                    0,
+                    0,
+                ); // attach
                 wl_proxy_marshal(self.raw_handle() as _, 6); // commit
             }
         }

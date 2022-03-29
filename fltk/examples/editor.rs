@@ -158,7 +158,7 @@ impl MyMenu {
             Message::About,
         );
 
-        Self { menu: menu }
+        Self { menu }
     }
 }
 
@@ -313,7 +313,7 @@ impl MyApp {
                     None => "(Untitled)".to_string(),
                 };
                 self.main_win.set_label(&format!("{} - RustyEd", name));
-                return Ok(true);
+                Ok(true)
             }
             None => self.save_file_as(),
         }
@@ -343,14 +343,10 @@ impl MyApp {
             .set_label_color(Color::Black);
         self.filename = Some(dlg.filename());
         self.main_win.set_label(&format!(
-            "{} - RustyEd",
-            self.filename
-                .as_ref()
-                .unwrap()
-                .to_string_lossy()
-                .to_string()
+            "{:?} - RustyEd",
+            self.filename.as_ref().unwrap()
         ));
-        return Ok(true);
+        Ok(true)
     }
 
     pub fn launch(&mut self) {
@@ -359,7 +355,7 @@ impl MyApp {
             if let Some(msg) = self.r.recv() {
                 match msg {
                     Changed => {
-                        if self.modified == false {
+                        if !self.modified {
                             self.modified = true;
                             self.menu.menu.find_item("&File/Save\t").unwrap().activate();
                             self.menu.menu.find_item("&File/Quit\t").unwrap().set_label_color(Color::Red);
@@ -372,8 +368,12 @@ impl MyApp {
                     }
                     New => {
                         if self.buf.text() != "" {
-                            let x = dialog::choice(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "");
-                            if x == 0 {
+                            let clear = if let Some(x) = dialog::choice2(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "") {
+                                x == 0
+                            } else {
+                                false
+                            };
+                            if clear {
                                 self.buf.set_text("");
                             }
                         }
@@ -395,7 +395,7 @@ impl MyApp {
                             }
                         }
                     },
-                    Save => { self.save_file().unwrap(); () },
+                    Save => { self.save_file().unwrap(); },
                     SaveAs => { self.save_file_as().unwrap(); },
                     Print => {
                         let mut printer = printer::Printer::default();

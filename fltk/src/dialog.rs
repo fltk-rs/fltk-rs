@@ -263,7 +263,7 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
     }
 }
 
-/// Displays a choice box with up to three choices. 
+/// Displays a choice box with up to three choices.
 /// Closing the dialog returns None. Choosing a value returns its index from the arguments.
 pub fn choice2(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
@@ -628,7 +628,12 @@ bitflags::bitflags! {
 
 impl FileChooser {
     /// Instantiates a new `FileChooser`
-    pub fn new<P: AsRef<Path>>(dir: P, pattern: &str, typ: FileChooserType, title: &str) -> FileChooser {
+    pub fn new<P: AsRef<Path>>(
+        dir: P,
+        pattern: &str,
+        typ: FileChooserType,
+        title: &str,
+    ) -> FileChooser {
         Self::new_(dir.as_ref(), pattern, typ, title)
     }
 
@@ -772,8 +777,8 @@ impl FileChooser {
     }
 
     /// Sets the filter for the dialog, can be:
-    /// Multiple patterns can be used by separating them with tabs, like "*.jpg\t*.png\t*.gif\t*". 
-    /// In addition, you can provide human-readable labels with the patterns inside parenthesis, 
+    /// Multiple patterns can be used by separating them with tabs, like "*.jpg\t*.png\t*.gif\t*".
+    /// In addition, you can provide human-readable labels with the patterns inside parenthesis,
     /// like "JPEG Files (*.jpg)\tPNG Files (*.png)\tGIF Files (*.gif)\tAll Files (*)
     /// And "Rust Files (*.{rs,txt,toml})"
     pub fn set_filter(&mut self, pattern: &str) {
@@ -1192,7 +1197,12 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
     }
     ```
 */
-pub fn file_chooser<P: AsRef<Path>>(message: &str, pattern: &str, dir: P, relative: bool) -> Option<String> {
+pub fn file_chooser<P: AsRef<Path>>(
+    message: &str,
+    pattern: &str,
+    dir: P,
+    relative: bool,
+) -> Option<String> {
     file_chooser_(message, pattern, dir.as_ref(), relative)
 }
 

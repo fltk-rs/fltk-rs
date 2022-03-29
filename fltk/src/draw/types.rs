@@ -112,7 +112,6 @@ impl From<Size> for (i32, i32) {
     }
 }
 
-
 /// Defines a pair of `r, c` (row, column) representing a Cell
 #[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 pub struct Cell {

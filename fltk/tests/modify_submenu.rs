@@ -9,7 +9,7 @@ fn menu_cb(m: &mut impl MenuExt) {
             "Quit\t" => {
                 println!("Quitting");
                 app::quit();
-            },
+            }
             _ => println!("{}", choice),
         }
     }
@@ -19,7 +19,12 @@ fn main() {
     let a = app::App::default();
     let mut win = window::Window::default().with_size(400, 300);
     let mut menubar = menu::MenuBar::new(0, 0, 400, 40, "rew");
-    menubar.add("File/New\t", Shortcut::None, menu::MenuFlag::Normal, menu_cb);
+    menubar.add(
+        "File/New\t",
+        Shortcut::None,
+        menu::MenuFlag::Normal,
+        menu_cb,
+    );
     menubar.add(
         "File/Open\t",
         Shortcut::None,
