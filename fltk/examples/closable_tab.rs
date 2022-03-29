@@ -10,9 +10,9 @@ mod closable_tab {
 
     #[derive(Copy, Clone)]
     pub enum Message {
-        ForegroundTab(i32),
-        DeleteTab(i32),
-        InsertNewTab(i32),
+        Foreground(i32),
+        Delete(i32),
+        InsertNew(i32),
     }
 
     fn create_tab_button(label: &str) -> group::Group {
@@ -66,25 +66,25 @@ mod closable_tab {
                 self.contents.h(),
             );
             self.contents.add(child);
-            let but = create_tab_button(&label);
+            let but = create_tab_button(label);
             self.tab_labels.add(&but);
             but.child(1).unwrap().set_callback({
                 let curr_child = child.clone();
                 let contents = self.contents.clone();
-                let sndb = self.snd.clone();
+                let sndb = *self.snd;
                 move |_| {
                     let idx = contents.find(&curr_child);
-                    sndb.send(Message::DeleteTab(idx));
+                    sndb.send(Message::Delete(idx));
                     app::redraw();
                 }
             });
             but.child(0).unwrap().set_callback({
                 let curr_child = child.clone();
                 let contents = self.contents.clone();
-                let sndb = self.snd.clone();
+                let sndb = *self.snd;
                 move |_| {
                     let idx = contents.find(&curr_child);
-                    sndb.send(Message::ForegroundTab(idx));
+                    sndb.send(Message::Foreground(idx));
                     app::redraw();
                 }
             });
@@ -96,10 +96,10 @@ mod closable_tab {
             if self.current == Some(idx) {
                 if idx > 1 {
                     self.set_foreground(idx - 1);
-                } else {
-                    if self.contents.children() > 0 {
+                } else if 
+                    self.contents.children() > 0 {
                         self.set_foreground(0);
-                    }
+                    
                 }
             }
         }
@@ -183,13 +183,13 @@ fn main() {
         use closable_tab::Message::*;
         if let Some(msg) = r.recv() {
             match msg {
-                ForegroundTab(idx) => {
+                Foreground(idx) => {
                     tabs.set_foreground(idx);
                 }
-                DeleteTab(idx) => {
+                Delete(idx) => {
                     tabs.remove(idx);
                 }
-                InsertNewTab(_) => {}
+                InsertNew(_) => {}
             }
         }
     }

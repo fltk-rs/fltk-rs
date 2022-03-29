@@ -396,7 +396,6 @@ pub unsafe trait WidgetExt {
     fn active(&self) -> bool;
     /// Returns whether a widget or any of its parents are active (recursively)
     fn active_r(&self) -> bool;
-    #[doc(hidden)]
     /**
         Return the default callback function, this allows storing then running within the overridden callback.
         Works only for FLTK types (with no callback defined in the Rust side)

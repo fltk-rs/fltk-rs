@@ -471,17 +471,6 @@ impl MenuItem {
         (ret, h)
     }
 
-    /// Set the image of the menu item
-    /// # Safety
-    /// Trying to add a label after adding an image might lead to undefined behavior
-    #[doc(hidden)]
-    pub unsafe fn set_image<I: ImageExt>(&mut self, mut image: I) {
-        assert!(!self.was_deleted());
-        assert!(!image.was_deleted());
-        image.increment_arc();
-        Fl_Menu_Item_image(self.inner, image.as_image_ptr() as _)
-    }
-
     /**
         Add an image to a menu item
         ```rust,no_run
