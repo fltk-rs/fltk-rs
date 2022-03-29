@@ -1,3 +1,4 @@
+use crate::draw::types::*;
 use crate::enums::{
     Align, CallbackTrigger, Color, ColorDepth, Cursor, Damage, Event, Font, FrameType, LabelType,
     Shortcut,
@@ -380,8 +381,7 @@ pub unsafe trait WidgetExt {
     /// Upcast a `WidgetExt` to a Widget
     /// # Safety
     /// Allows for potentially unsafe casts between incompatible widget types
-    #[allow(clippy::wrong_self_convention)]
-    unsafe fn into_widget<W: WidgetBase>(&self) -> W
+    unsafe fn as_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
     /// Returns whether a widget is visible
@@ -647,8 +647,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// # Safety
     /// If the widget wasn't created by fltk-rs,
     /// vtable differences mean certain methods can't be overridden (e.g. handle & draw)
-    #[allow(clippy::wrong_self_convention)]
-    unsafe fn into_group(&self) -> crate::group::Group;
+    unsafe fn as_group(&self) -> crate::group::Group;
 }
 
 /// Defines the methods implemented by all window widgets.
@@ -1322,10 +1321,7 @@ pub unsafe trait TableExt: GroupExt {
     fn cols(&self) -> i32;
     /// The range of row and column numbers for all visible and partially visible cells in the table.
     /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`)
-    fn visible_cells(&self) -> (i32, i32, i32, i32);
-    /// The range of row and column numbers for all visible and partially visible cells in the table.
-    /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`)
-    fn try_visible_cells(&self) -> Option<(i32, i32, i32, i32)>;
+    fn visible_cells(&self) -> Option<(i32, i32, i32, i32)>;
     /// Returns whether the resize is interactive
     fn is_interactive_resize(&self) -> bool;
     /// Returns whether a row is resizable
@@ -1394,13 +1390,9 @@ pub unsafe trait TableExt: GroupExt {
     fn top_row(&self) -> i32;
     /// Returns whether a cell is selected
     fn is_selected(&self, r: i32, c: i32) -> bool;
-    /// Gets the selection.
-    /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`).
-    /// Returns -1 if no selection.
-    fn get_selection(&self) -> (i32, i32, i32, i32);
     /// Tries to get the selection.
     /// Returns an Option((`row_top`, `col_left`, `row_bot`, `col_right`))
-    fn try_get_selection(&self) -> Option<(i32, i32, i32, i32)>;
+    fn get_selection(&self) -> Option<(i32, i32, i32, i32)>;
     /// Sets the selection
     fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
     /// Unset selection
@@ -1429,9 +1421,7 @@ pub unsafe trait TableExt: GroupExt {
     /// Override `draw_cell`.
     /// callback args: &mut self, `TableContext`, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32.
     /// takes the widget as a closure argument
-    fn draw_cell<
-        F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static,
-    >(
+    fn draw_cell<F: FnMut(&mut Self, crate::table::TableContext, Cell, Rect) + 'static>(
         &mut self,
         cb: F,
     );

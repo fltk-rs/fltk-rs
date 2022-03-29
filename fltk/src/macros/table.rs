@@ -54,8 +54,8 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn visible_cells(&self) -> (i32, i32, i32, i32) {
-                    unsafe {
+                fn visible_cells(&self) -> Option<(i32, i32, i32, i32)> {
+                    let (a, b, c, d) = unsafe {
                         assert!(!self.was_deleted());
                         let mut row_top = 0;
                         let mut col_left = 0;
@@ -69,11 +69,7 @@ macro_rules! impl_table_ext {
                             &mut col_right,
                         );
                         (row_top, col_left, row_bot, col_right)
-                    }
-                }
-
-                fn try_visible_cells(&self) -> Option<(i32, i32, i32, i32)> {
-                    let (a, b, c, d) = self.visible_cells();
+                    };
                     if a == -1 || b == -1 || c == -1 || d == -1 {
                         None
                     } else {
@@ -319,8 +315,8 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn get_selection(&self) -> (i32, i32, i32, i32) {
-                    unsafe {
+                fn get_selection(&self) -> Option<(i32, i32, i32, i32)> {
+                    let (a, b, c, d) = unsafe {
                         assert!(!self.was_deleted());
                         let mut row_top = 0;
                         let mut col_left = 0;
@@ -334,11 +330,7 @@ macro_rules! impl_table_ext {
                             &mut col_right,
                         );
                         (row_top, col_left, row_bot, col_right)
-                    }
-                }
-
-                fn try_get_selection(&self) -> Option<(i32, i32, i32, i32)> {
-                    let (a, b, c, d) = self.get_selection();
+                    };
                     if a < 0 && b < 0 && c >= 0 && d >= 0 {
                         Some((0, 0, c, d))
                     } else if a >= 0 && b >=0 && c >=0 && d >= 0 {
@@ -422,7 +414,7 @@ macro_rules! impl_table_ext {
                 }
 
                 fn draw_cell<
-                    F: FnMut(&mut Self, $crate::table::TableContext, i32, i32, i32, i32, i32, i32)
+                    F: FnMut(&mut Self, $crate::table::TableContext, Cell, Rect)
                         + 'static,
                 >(
                     &mut self,
@@ -461,37 +453,25 @@ macro_rules! impl_table_ext {
                                 dyn FnMut(
                                     &mut $name,
                                     $crate::table::TableContext,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
+                                    Cell,
+                                    Rect,
                                 ),
                             > = data as *mut Box<
                                 dyn FnMut(
                                     &mut $name,
                                     $crate::table::TableContext,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
-                                    i32,
+                                    Cell,
+                                    Rect,
                                 ),
                             >;
                             let f: &mut (dyn FnMut(
                                 &mut $name,
                                 $crate::table::TableContext,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
+                                Cell,
+                                Rect,
                             )) = &mut **a;
                             let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                                f(&mut wid, ctx, arg2, arg3, arg4, arg5, arg6, arg7)
+                                f(&mut wid, ctx, [arg2, arg3].into(), [arg4, arg5, arg6, arg7].into())
                             }));
                         }
                         let mut _old_data = None;
@@ -502,12 +482,8 @@ macro_rules! impl_table_ext {
                             dyn FnMut(
                                 &mut Self,
                                 $crate::table::TableContext,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
-                                i32,
+                                Cell,
+                                Rect,
                             ),
                         > = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;

@@ -28,10 +28,7 @@ pub enum Message {
 }
 
 pub fn center() -> (i32, i32) {
-    (
-        (app::screen_size().0 / 2.0) as i32,
-        (app::screen_size().1 / 2.0) as i32,
-    )
+    ((app::screen_size().0 / 2), (app::screen_size().1 / 2))
 }
 
 pub struct MyEditor {
@@ -244,7 +241,7 @@ impl MyApp {
                         let path = std::path::PathBuf::from(&path);
                         if path.exists() {
                             // we use a timeout to avoid pasting the path into the buffer
-                            app::add_timeout3(0.0, {
+                            app::add_timeout(0.0, {
                                 let mut buf = buf.clone();
                                 move |_| match buf.load_file(&path) {
                                     Ok(_) => (),
@@ -368,8 +365,12 @@ impl MyApp {
                     }
                     New => {
                         if self.buf.text() != "" {
-                            let clear = if let Some(x) = dialog::choice2(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "") {
-                                x == 0
+                            let clear = if let Some(x) = dialog::choice(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "") {
+                                if x == 0 {
+                                    true
+                                } else {
+                                    false
+                                }
                             } else {
                                 false
                             };
@@ -415,7 +416,7 @@ impl MyApp {
                     },
                     Quit => {
                         if self.modified {
-                            match dialog::choice2(center().0 - 200, center().1 - 100,
+                            match dialog::choice(center().0 - 200, center().1 - 100,
                                 "Would you like to save your work?", "Yes", "No", "") {
                                 Some(0) => {
                                     if self.save_file().unwrap() {

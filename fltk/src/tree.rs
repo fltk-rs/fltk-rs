@@ -294,13 +294,6 @@ impl Tree {
         }
     }
 
-    #[deprecated(since = "1.2.21", note = "use callback_item() instead")]
-    /// Set the item that was last clicked.
-    pub fn set_item_clicked(&self) -> Option<TreeItem> {
-        assert!(!self.was_deleted());
-        unsafe { TreeItem::from_raw(Fl_Tree_item_clicked(self.inner)) }
-    }
-
     /// Gets the first tree item
     pub fn first(&self) -> Option<TreeItem> {
         assert!(!self.was_deleted());
@@ -1434,20 +1427,6 @@ impl TreeItem {
         unsafe { mem::transmute(Fl_Tree_Item_labelfgcolor(self.inner)) }
     }
 
-    #[deprecated(since = "1.2.19", note = "please use `set_label_fgcolor` instead")]
-    /// Sets the label's foreground color
-    pub fn set_label_fg_color(&mut self, val: Color) {
-        assert!(!self.was_deleted());
-        unsafe { Fl_Tree_Item_set_labelfgcolor(self.inner, val.bits() as u32) }
-    }
-
-    #[deprecated(since = "1.2.19", note = "please use `label_fgcolor` instead")]
-    /// Gets the label's foreground color
-    pub fn label_fg_color(&self) -> Color {
-        assert!(!self.was_deleted());
-        unsafe { mem::transmute(Fl_Tree_Item_labelfgcolor(self.inner)) }
-    }
-
     /// Sets the label's color
     pub fn set_label_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
@@ -1479,19 +1458,8 @@ impl TreeItem {
         unsafe { Fl_Tree_Item_set_widget(self.inner, val.as_widget_ptr() as *mut Fl_Widget) }
     }
 
-    #[deprecated(since = "1.2.18", note = "please use `try_widget` instead")]
     /// Gets the item's associated widget
-    pub fn widget(&self) -> Widget {
-        assert!(!self.was_deleted());
-        unsafe {
-            let ptr = Fl_Tree_Item_widget(self.inner) as *mut fltk_sys::widget::Fl_Widget;
-            assert!(!ptr.is_null());
-            Widget::from_widget_ptr(ptr)
-        }
-    }
-
-    /// Gets the item's associated widget
-    pub fn try_widget(&self) -> Option<impl WidgetExt> {
+    pub fn widget(&self) -> Option<impl WidgetExt> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Tree_Item_widget(self.inner) as *mut fltk_sys::widget::Fl_Widget;

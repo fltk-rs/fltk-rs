@@ -820,7 +820,7 @@ macro_rules! impl_widget_ext {
                     self.set_callback(move |_| sender.send(msg.clone()))
                 }
 
-                unsafe fn into_widget<W: WidgetBase>(&self) -> W {
+                unsafe fn as_widget<W: WidgetBase>(&self) -> W {
                     W::from_widget_ptr(self.as_widget_ptr() as *mut _)
                 }
 
@@ -1502,8 +1502,8 @@ macro_rules! impl_widget_ext_via {
                 self.$member.set_raw_user_data(data)
             }
 
-            unsafe fn into_widget<W: WidgetBase>(&self) -> W {
-                self.$member.into_widget()
+            unsafe fn as_widget<W: WidgetBase>(&self) -> W {
+                self.$member.as_widget()
             }
 
             fn visible(&self) -> bool {
