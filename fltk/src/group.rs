@@ -82,13 +82,13 @@ impl Pack {
         }
         let spacing = self.spacing() * (children - 1);
         let t = self.get_type::<PackType>();
-        let w = (self.width() - spacing) / children;
-        let h = (self.height() - spacing) / children;
+        let w = (self.w() - spacing) / children;
+        let h = (self.h() - spacing) / children;
 
         for i in 0..children {
             let mut c = self.child(i as i32).unwrap();
-            let c_w = c.width();
-            let c_h = c.height();
+            let c_w = c.w();
+            let c_h = c.h();
             if t == PackType::Vertical {
                 c.set_size(c_w, h);
             } else {

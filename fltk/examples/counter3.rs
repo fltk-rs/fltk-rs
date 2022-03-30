@@ -40,7 +40,7 @@ fn main() {
     bar.set_color(BLUE);
     bar.draw(|b| {
         draw::set_draw_rgb_color(211, 211, 211);
-        draw::draw_rectf(0, b.height(), b.width(), 3);
+        draw::draw_rectf(0, b.h(), b.w(), 3);
     });
 
     text.set_label_size(18);

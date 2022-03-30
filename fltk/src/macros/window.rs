@@ -67,17 +67,17 @@ macro_rules! impl_window_ext {
                 fn center_screen(mut self) -> Self {
                     assert!(!self.was_deleted());
                     debug_assert!(
-                        self.width() != 0 && self.height() != 0,
+                        self.w() != 0 && self.h() != 0,
                         "center_screen requires the size of the widget to be known!"
                     );
                     let (mut x, mut y) = screen_size();
-                    x -= self.width();
-                    y -= self.height();
+                    x -= self.w();
+                    y -= self.h();
                     self.resize(
                         x / 2,
                         y / 2,
-                        self.width(),
-                        self.height(),
+                        self.w(),
+                        self.h(),
                     );
                     self
                 }
