@@ -422,7 +422,7 @@ macro_rules! impl_table_ext {
                 ) {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
-                    pub type CustomDrawCellCallback = Option<
+                    type CustomDrawCellCallback = Option<
                         unsafe extern "C" fn(
                             wid: *mut Fl_Widget,
                             ctx: std::os::raw::c_int,

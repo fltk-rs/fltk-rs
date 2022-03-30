@@ -44,9 +44,6 @@ pub fn scheme() -> Scheme {
     }
 }
 
-/// Alias Scheme to `AppScheme`
-pub type AppScheme = Scheme;
-
 /// Set the application's scrollbar size
 pub fn set_scrollbar_size(sz: i32) {
     unsafe { fl::Fl_set_scrollbar_size(sz as i32) }

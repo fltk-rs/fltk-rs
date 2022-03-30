@@ -1019,22 +1019,3 @@ pub mod experimental {
         }
     }
 }
-
-/// An Android window
-pub struct AndroidWindow {
-    win: Window,
-}
-
-impl AndroidWindow {
-    /// Creates a default initialized Android Window
-    pub fn default() -> Self {
-        let (w, h) = screen_size();
-        let mut w = AndroidWindow {
-            win: Window::new(0, 30, w, h - 30, ""),
-        };
-        w.win.set_color(Color::White);
-        w
-    }
-}
-
-crate::widget_extends!(AndroidWindow, Window, win);
