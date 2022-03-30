@@ -225,9 +225,9 @@ pub fn set_draw_color(color: Color) {
 }
 
 /// Draws a circle
-pub fn draw_circle(x: i32, y: i32, r: f64) {
+pub fn draw_circle(x: f64, y: f64, r: f64) {
     unsafe {
-        Fl_circle(x as f64, y as f64, r);
+        Fl_circle(x, y, r);
     }
 }
 
