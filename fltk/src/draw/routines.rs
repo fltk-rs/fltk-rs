@@ -1,4 +1,4 @@
-use super::types::{Coord, Coordf};
+use super::types::{Coord, Coordf, Rect};
 use crate::enums::{Align, Color, ColorDepth, Cursor, Font, FrameType, Shortcut};
 use crate::image::RgbImage;
 use crate::prelude::*;
@@ -141,8 +141,9 @@ pub fn get_color() -> Color {
 }
 
 /// Draws a line
-pub fn draw_line(x1: i32, y1: i32, x2: i32, y2: i32) {
+pub fn draw_line(pos1: Coord, pos2: Coord) {
     unsafe {
+        let ((x1, y1), (x2, y2)) = (pos1.into(), pos2.into());
         Fl_line(x1, y1, x2, y2);
     }
 }
@@ -173,19 +174,14 @@ pub fn draw_rect_with_color(x: i32, y: i32, w: i32, h: i32, color: Color) {
 }
 
 /// Draws a non-filled 3-sided polygon
-pub fn draw_loop(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
+pub fn draw_loop(pos1: Coord, pos2: Coord, pos3: Coord) {
     unsafe {
-        Fl_loop(x1, y1, x2, y2, x3, y3);
+        Fl_loop(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y);
     }
 }
 
-/// Draws a non-filled 3-sided polygon
-pub fn draw_loop2(pos1: Coord, pos2: Coord, pos3: Coord) {
-    unsafe { Fl_loop(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
-}
-
 /// Draws a non-filled 4-sided polygon
-pub fn draw_loop3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
+pub fn draw_loop2(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
     unsafe {
         Fl_loop2(
             pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
@@ -229,9 +225,9 @@ pub fn set_draw_color(color: Color) {
 }
 
 /// Draws a circle
-pub fn draw_circle(x: f64, y: f64, r: f64) {
+pub fn draw_circle(x: i32, y: i32, r: f64) {
     unsafe {
-        Fl_circle(x, y, r);
+        Fl_circle(x as f64, y as f64, r);
     }
 }
 
@@ -243,8 +239,8 @@ pub fn draw_arc(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
 }
 
 /// Draws an arc
-pub fn draw_arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
-    unsafe { Fl_arc2(x, y, r, start, end) }
+pub fn draw_arc2(x: i32, y: i32, r: i32, start: f64, end: f64) {
+    unsafe { Fl_arc2(x as f64, y as f64, r as f64, start, end) }
 }
 
 /// Draws a filled pie
@@ -346,30 +342,17 @@ pub fn draw_rectf(x: i32, y: i32, w: i32, h: i32) {
 }
 
 /// Draws a filled rectangle with specified RGB color
-pub fn draw_rectf_with_rgb(
-    x: i32,
-    y: i32,
-    width: i32,
-    height: i32,
-    color_r: u8,
-    color_g: u8,
-    color_b: u8,
-) {
-    unsafe { Fl_rectf_with_rgb(x, y, width, height, color_r, color_g, color_b) }
+pub fn draw_rectf_with_rgb(rect: Rect, color_r: u8, color_g: u8, color_b: u8) {
+    unsafe { Fl_rectf_with_rgb(rect.x, rect.y, rect.w, rect.h, color_r, color_g, color_b) }
 }
 
 /// Fills a 3-sided polygon. The polygon must be convex
-pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
-    unsafe { Fl_polygon(x, y, x1, y1, x2, y2) }
-}
-
-/// Fills a 3-sided polygon. The polygon must be convex
-pub fn draw_polygon2(pos1: Coord, pos2: Coord, pos3: Coord) {
+pub fn draw_polygon(pos1: Coord, pos2: Coord, pos3: Coord) {
     unsafe { Fl_polygon(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
 }
 
 /// Fills a 4-sided polygon. The polygon must be convex
-pub fn draw_polygon3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
+pub fn draw_polygon2(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
     unsafe {
         Fl_polygon2(
             pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
@@ -773,92 +756,6 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
             )?)
         }
     }
-}
-
-/// Draw a framebuffer (rgba) into a widget
-/// # Errors
-/// Errors on invalid or unsupported image formats
-pub fn draw_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
-    let width = wid.width();
-    let height = wid.height();
-    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.width();
-        let h = s.height();
-        img.scale(w, h, false, true);
-        img.draw(x, y, w, h);
-    });
-    Ok(())
-}
-
-/// Draw a framebuffer (rgba) into a widget
-/// # Safety
-/// The data passed should be valid and outlive the widget
-pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
-    let ptr = fb.as_ptr();
-    let len = fb.len();
-    let width = wid.width();
-    let height = wid.height();
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.width();
-        let h = s.height();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(
-            std::slice::from_raw_parts(ptr, len),
-            width,
-            height,
-            ColorDepth::Rgba8,
-        ) {
-            img.scale(w, h, false, true);
-            img.draw(x, y, w, h);
-        }
-    });
-}
-
-/// Draw a framebuffer (rgba) into a widget
-/// # Errors
-/// Errors on invalid or unsupported image formats
-pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
-    let width = wid.width();
-    let height = wid.height();
-    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.width();
-        let h = s.height();
-        img.scale(w, h, false, true);
-        img.draw(x, y, w, h);
-    });
-    Ok(())
-}
-
-/// Draw a framebuffer (rgba) into a widget
-/// # Safety
-/// The data passed should be valid and outlive the widget
-pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
-    let ptr = fb.as_ptr();
-    let len = fb.len();
-    let width = wid.width();
-    let height = wid.height();
-    wid.draw(move |s| {
-        let x = s.x();
-        let y = s.y();
-        let w = s.width();
-        let h = s.height();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(
-            std::slice::from_raw_parts(ptr, len),
-            width,
-            height,
-            ColorDepth::Rgb8,
-        ) {
-            img.scale(w, h, false, true);
-            img.draw(x, y, w, h);
-        }
-    });
 }
 
 /// Draw an image into a widget.
