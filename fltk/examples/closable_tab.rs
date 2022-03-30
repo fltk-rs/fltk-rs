@@ -96,10 +96,8 @@ mod closable_tab {
             if self.current == Some(idx) {
                 if idx > 1 {
                     self.set_foreground(idx - 1);
-                } else if 
-                    self.contents.children() > 0 {
-                        self.set_foreground(0);
-                    
+                } else if self.contents.children() > 0 {
+                    self.set_foreground(0);
                 }
             }
         }

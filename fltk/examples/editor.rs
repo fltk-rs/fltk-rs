@@ -339,12 +339,8 @@ impl MyApp {
             .unwrap()
             .set_label_color(Color::Black);
         self.filename = Some(dlg.filename());
-        self.main_win.set_label(&format!(
-            "{:?} - RustyEd",
-            self.filename
-                .as_ref()
-                .unwrap()
-        ));
+        self.main_win
+            .set_label(&format!("{:?} - RustyEd", self.filename.as_ref().unwrap()));
         Ok(true)
     }
 

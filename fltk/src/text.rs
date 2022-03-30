@@ -33,6 +33,36 @@ pub struct TextBuffer {
     refcount: AtomicUsize,
 }
 
+/// Handle object for interacting with text buffer modify callbacks
+pub type ModifyCallbackHandle = *mut ();
+
+unsafe extern "C" fn modify_callback_shim(
+    pos: raw::c_int,
+    inserted: raw::c_int,
+    deleted: raw::c_int,
+    restyled: raw::c_int,
+    deleted_text: *const raw::c_char,
+    data: *mut raw::c_void,
+) {
+    let temp = if deleted_text.is_null() {
+        String::from("")
+    } else {
+        CStr::from_ptr(deleted_text).to_string_lossy().to_string()
+    };
+    let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
+        data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
+    let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
+    let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        f(
+            pos as i32,
+            inserted as i32,
+            deleted as i32,
+            restyled as i32,
+            &temp,
+        )
+    }));
+}
+
 impl TextBuffer {
     /// Initialized a default text buffer
     pub fn default() -> TextBuffer {
@@ -471,82 +501,42 @@ impl TextBuffer {
         unsafe { Fl_Text_Buffer_call_modify_callbacks(self.inner) }
     }
 
-    /// Adds a modify callback.
-    /// callback args:
-    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
-    pub fn add_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {
+    fn add_modify_callback_<F: FnMut(i32, i32, i32, i32, &str) + 'static>(
+        &mut self,
+        cb: F,
+    ) -> ModifyCallbackHandle {
         assert!(!self.inner.is_null());
         unsafe {
-            unsafe extern "C" fn shim(
-                pos: raw::c_int,
-                inserted: raw::c_int,
-                deleted: raw::c_int,
-                restyled: raw::c_int,
-                deleted_text: *const raw::c_char,
-                data: *mut raw::c_void,
-            ) {
-                let temp = if deleted_text.is_null() {
-                    String::from("")
-                } else {
-                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
-                };
-                let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
-                    data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
-                let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                    f(
-                        pos as i32,
-                        inserted as i32,
-                        deleted as i32,
-                        restyled as i32,
-                        &temp,
-                    )
-                }));
-            }
             let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
-            let callback: Fl_Text_Modify_Cb = Some(shim);
+            let callback: Fl_Text_Modify_Cb = Some(modify_callback_shim);
             Fl_Text_Buffer_add_modify_callback(self.inner, callback, data);
+            data as _
         }
+    }
+
+    /// Adds a modify callback.
+    /// callback args:
+    /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
+    pub fn add_modify_callback<F: FnMut(&mut Self, i32, i32, i32, i32, &str) + 'static>(
+        &mut self,
+        mut cb: F,
+    ) -> ModifyCallbackHandle {
+        let mut s = self.clone();
+        self.add_modify_callback_(move |pos, ins, del, restyled, txt| {
+            cb(&mut s, pos, ins, del, restyled, txt);
+        })
     }
 
     /// Removes a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
-    pub fn remove_modify_callback<F: FnMut(i32, i32, i32, i32, &str) + 'static>(&mut self, cb: F) {
+    pub fn remove_modify_callback(&mut self, cb: ModifyCallbackHandle) {
         assert!(!self.inner.is_null());
         unsafe {
-            unsafe extern "C" fn shim(
-                pos: raw::c_int,
-                inserted: raw::c_int,
-                deleted: raw::c_int,
-                restyled: raw::c_int,
-                deleted_text: *const raw::c_char,
-                data: *mut raw::c_void,
-            ) {
-                let temp = if deleted_text.is_null() {
-                    String::from("")
-                } else {
-                    CStr::from_ptr(deleted_text).to_string_lossy().to_string()
-                };
-                let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
-                    data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
-                let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
-                let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                    f(
-                        pos as i32,
-                        inserted as i32,
-                        deleted as i32,
-                        restyled as i32,
-                        &temp,
-                    )
-                }));
-            }
-            let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
-                Box::into_raw(Box::new(Box::new(cb)));
-            let data: *mut raw::c_void = a as *mut std::ffi::c_void;
-            let callback: Fl_Text_Modify_Cb = Some(shim);
+            let data: *mut raw::c_void = cb as *mut std::ffi::c_void;
+            let callback: Fl_Text_Modify_Cb = Some(modify_callback_shim);
             Fl_Text_Buffer_remove_modify_callback(self.inner, callback, data);
         }
     }
