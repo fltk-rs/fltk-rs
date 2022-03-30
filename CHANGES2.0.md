@@ -17,3 +17,5 @@
 - Rename timeout3 functions to timeout, as well as idle and clipboard callbacks.
 - TextBuffer::add_modify_callback() now returns an opaque handle which can be used by remove_modify_callback().
 - draw_rgb* functions moved to utils modules, and renamed to blit_rgb*.
+- Removes VGrid and HGrid, Row, Column and AndroidWindow.
+- Remove confusing alias FileDialog. Stick to FileChooser and NativeFileChooser.

@@ -25,17 +25,14 @@ pub enum ColorMode {
 
 /// FLTK's NativeFileChooser
 #[derive(Debug)]
-pub struct FileDialog {
+pub struct NativeFileChooser {
     inner: *mut Fl_Native_File_Chooser,
 }
-
-/// FLTK's NativeFileChooser
-pub type NativeFileChooser = FileDialog;
 
 /// Defines the type of dialog, which can be changed dynamically using the `set_type()` method
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub enum FileDialogType {
+pub enum NativeFileChooserType {
     /// Browse file
     BrowseFile = 0,
     /// Browse dir
@@ -50,15 +47,12 @@ pub enum FileDialogType {
     BrowseSaveDir,
 }
 
-crate::macros::widget::impl_widget_type!(FileDialogType);
-
-/// Alias for `NativeFileChooserType`
-pub type NativeFileChooserType = FileDialogType;
+crate::macros::widget::impl_widget_type!(NativeFileChooserType);
 
 /// Defines the File dialog options, which can be set using the `set_option()` method.
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub enum FileDialogOptions {
+pub enum NativeFileChooserOptions {
     /// No options
     NoOptions = 0,
     /// Confirm on save as
@@ -71,25 +65,22 @@ pub enum FileDialogOptions {
     UseFilterExt = 8,
 }
 
-crate::macros::widget::impl_widget_type!(FileDialogOptions);
+crate::macros::widget::impl_widget_type!(NativeFileChooserOptions);
 
-/// Alias to `NativeFileChooserOptions`
-pub type NativeFileChooserOptions = FileDialogOptions;
-
-impl std::ops::BitOr<FileDialogOptions> for FileDialogOptions {
-    type Output = FileDialogOptions;
-    fn bitor(self, other: FileDialogOptions) -> Self::Output {
+impl std::ops::BitOr<NativeFileChooserOptions> for NativeFileChooserOptions {
+    type Output = NativeFileChooserOptions;
+    fn bitor(self, other: NativeFileChooserOptions) -> Self::Output {
         unsafe { std::mem::transmute(self as i32 | other as i32) }
     }
 }
 
-impl FileDialog {
+impl NativeFileChooser {
     /// Creates an new file dialog
-    pub fn new(op: FileDialogType) -> FileDialog {
+    pub fn new(op: NativeFileChooserType) -> NativeFileChooser {
         unsafe {
             let file_dialog = Fl_Native_File_Chooser_new(mem::transmute(op));
             assert!(!file_dialog.is_null());
-            FileDialog { inner: file_dialog }
+            NativeFileChooser { inner: file_dialog }
         }
     }
 
@@ -171,13 +162,13 @@ impl FileDialog {
     }
 
     /// Sets the option for the dialog
-    pub fn set_option(&mut self, opt: FileDialogOptions) {
+    pub fn set_option(&mut self, opt: NativeFileChooserOptions) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Native_File_Chooser_set_option(self.inner, opt as i32) }
     }
 
     /// Sets the type for the dialog
-    pub fn set_type(&mut self, op: FileDialogType) {
+    pub fn set_type(&mut self, op: NativeFileChooserType) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Native_File_Chooser_set_type(self.inner, op as i32) }
     }
@@ -226,7 +217,7 @@ impl FileDialog {
     }
 }
 
-impl Drop for FileDialog {
+impl Drop for NativeFileChooser {
     fn drop(&mut self) {
         if !self.inner.is_null() {
             unsafe { Fl_Native_File_Chooser_delete(self.inner) }
@@ -540,7 +531,7 @@ pub fn beep(tp: BeepType) {
 }
 
 /**
-    FLTK's own `FileChooser`. Which differs for the Native `FileDialog`
+    FLTK's own `FileChooser`. Which differs for the Native `NativeFileChooser`
     Example:
     ```rust,no_run
     use fltk::{prelude::*, *};
