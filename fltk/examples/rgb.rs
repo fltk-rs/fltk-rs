@@ -17,8 +17,8 @@ fn main() {
     wind.show();
     let mut image = image::RgbImage::new(&fb, 128, 128, enums::ColorDepth::Rgb8).unwrap();
     frame.draw(move |f| {
-        image.scale(f.width(), f.height(), false, true);
-        image.draw(f.x(), f.y(), f.width(), f.height());
+        image.scale(f.w(), f.h(), false, true);
+        image.draw(f.x(), f.y(), f.w(), f.h());
     });
 
     app.run().unwrap();

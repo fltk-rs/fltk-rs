@@ -66,16 +66,6 @@ macro_rules! impl_image_ext {
                     }
                 }
 
-                fn width(&self) -> i32 {
-                    assert!(!self.was_deleted());
-                    unsafe { [<$flname _width>](self.inner) }
-                }
-
-                fn height(&self) -> i32 {
-                    assert!(!self.was_deleted());
-                    unsafe { [<$flname _height>](self.inner) }
-                }
-
                 fn w(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _width>](self.inner) }

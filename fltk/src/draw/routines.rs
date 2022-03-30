@@ -740,20 +740,15 @@ pub fn reset_spot() {
 */
 pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     assert!(!win.was_deleted());
-    let cp = win.width() * win.height() * 3;
+    let cp = win.w() * win.h() * 3;
     win.show();
     unsafe {
-        let x = Fl_read_image(std::ptr::null_mut(), 0, 0, win.width(), win.height(), 0);
+        let x = Fl_read_image(std::ptr::null_mut(), 0, 0, win.w(), win.h(), 0);
         if x.is_null() {
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
-            Ok(RgbImage::new(
-                x,
-                win.width(),
-                win.height(),
-                ColorDepth::Rgb8,
-            )?)
+            Ok(RgbImage::new(x, win.w(), win.h(), ColorDepth::Rgb8)?)
         }
     }
 }

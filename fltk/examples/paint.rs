@@ -29,7 +29,7 @@ fn main() {
     wind.end();
     wind.show();
 
-    let offs = Offscreen::new(frame.width(), frame.height()).unwrap();
+    let offs = Offscreen::new(frame.w(), frame.h()).unwrap();
     #[cfg(not(target_os = "macos"))]
     {
         offs.begin();
