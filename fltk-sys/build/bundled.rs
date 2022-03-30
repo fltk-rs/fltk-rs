@@ -30,7 +30,7 @@ pub fn get(target_os: &str, out_dir: &Path) {
         };
 
         let curl_status = Command::new("curl")
-            .args(&["-LOk", url.to_str().unwrap()])
+            .args(&["-LOkf", url.to_str().unwrap()])
             .current_dir(out_dir)
             .status()
             .expect("Curl is needed to download the bundled libraries!");
