@@ -2,8 +2,11 @@ use fltk_sys::utils::*;
 use std::ffi::CString;
 use std::os::raw;
 
+use crate::enums::ColorDepth;
 use crate::prelude::FltkError;
 use crate::prelude::FltkErrorKind;
+use crate::prelude::ImageExt;
+use crate::prelude::WidgetBase;
 
 #[doc(hidden)]
 /// A helper trait to get CStrings from Strings without panicking
@@ -126,4 +129,90 @@ pub fn content_view<W: crate::prelude::WindowExt>(w: &W) -> *const raw::c_void {
         pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
     }
     unsafe { cfltk_getContentView(w.raw_handle() as _) as _ }
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Errors
+/// Errors on invalid or unsupported image formats
+pub fn blit_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
+    let width = wid.width();
+    let height = wid.height();
+    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.width();
+        let h = s.height();
+        img.scale(w, h, false, true);
+        img.draw(x, y, w, h);
+    });
+    Ok(())
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Safety
+/// The data passed should be valid and outlive the widget
+pub unsafe fn blit_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
+    let ptr = fb.as_ptr();
+    let len = fb.len();
+    let width = wid.width();
+    let height = wid.height();
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.width();
+        let h = s.height();
+        if let Ok(mut img) = crate::image::RgbImage::from_data(
+            std::slice::from_raw_parts(ptr, len),
+            width,
+            height,
+            ColorDepth::Rgba8,
+        ) {
+            img.scale(w, h, false, true);
+            img.draw(x, y, w, h);
+        }
+    });
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Errors
+/// Errors on invalid or unsupported image formats
+pub fn blit_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
+    let width = wid.width();
+    let height = wid.height();
+    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.width();
+        let h = s.height();
+        img.scale(w, h, false, true);
+        img.draw(x, y, w, h);
+    });
+    Ok(())
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Safety
+/// The data passed should be valid and outlive the widget
+pub unsafe fn blit_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
+    let ptr = fb.as_ptr();
+    let len = fb.len();
+    let width = wid.width();
+    let height = wid.height();
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.width();
+        let h = s.height();
+        if let Ok(mut img) = crate::image::RgbImage::from_data(
+            std::slice::from_raw_parts(ptr, len),
+            width,
+            height,
+            ColorDepth::Rgb8,
+        ) {
+            img.scale(w, h, false, true);
+            img.draw(x, y, w, h);
+        }
+    });
 }
