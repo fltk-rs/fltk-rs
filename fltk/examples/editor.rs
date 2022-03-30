@@ -319,8 +319,8 @@ impl MyApp {
     /** Called by "Save As..." or by "Save" in case no file was set yet.
      * Returns true if the file was succesfully saved. */
     pub fn save_file_as(&mut self) -> Result<bool, Box<dyn error::Error>> {
-        let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseSaveFile);
-        dlg.set_option(dialog::FileDialogOptions::SaveAsConfirm);
+        let mut dlg = dialog::NativeFileChooser::new(dialog::NativeFileChooserType::BrowseSaveFile);
+        dlg.set_option(dialog::NativeFileChooserOptions::SaveAsConfirm);
         dlg.show();
         if dlg.filename().to_string_lossy().to_string().is_empty() {
             dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
@@ -374,8 +374,8 @@ impl MyApp {
                         }
                     },
                     Open => {
-                        let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseFile);
-                        dlg.set_option(dialog::FileDialogOptions::NoOptions);
+                        let mut dlg = dialog::NativeFileChooser::new(dialog::NativeFileChooserType::BrowseFile);
+                        dlg.set_option(dialog::NativeFileChooserOptions::NoOptions);
                         dlg.set_filter("*.{txt,rs,toml}");
                         dlg.show();
                         let filename = dlg.filename();
