@@ -111,8 +111,8 @@ pub enum FrameType {
     OShadowBox,
     /// Oval Frame
     OvalFrame,
-    /// Oval Flat Frame
-    OFlatFrame,
+    /// Oval Flat Box
+    OFlatBox,
     /// Plastic Up Box
     PlasticUpBox,
     /// Plastic Down Box
@@ -145,10 +145,10 @@ pub enum FrameType {
     GtkThinUpFrame,
     /// Gtk Thin Down Frame
     GtkThinDownFrame,
-    /// Gtk Round Up Frame
-    GtkRoundUpFrame,
-    /// Gtk Round Down Frame
-    GtkRoundDownFrame,
+    /// Gtk Round Up Box
+    GtkRoundUpBox,
+    /// Gtk Round Down Box
+    GtkRoundDownBox,
     /// Gleam Up Box
     GleamUpBox,
     /// Gleam Down Box
@@ -170,10 +170,6 @@ pub enum FrameType {
 }
 
 impl FrameType {
-    /// Alias OFlatFrame as OFlatBox
-    pub const OFlatBox: FrameType = FrameType::OFlatFrame;
-    /// Alias GtkRoundDownFrame as GtkRoundDownBox
-    pub const GtkRoundDownBox: FrameType = FrameType::GtkRoundDownFrame;
     /// Gets the Frame type by index
     pub fn by_index(idx: usize) -> FrameType {
         let idx = if idx > 56 { 56 } else { idx };
@@ -410,12 +406,8 @@ bitflags::bitflags! {
     /// For convenience, the fmt::Display trait is implemented so that the name of the Color is shown
     /// when there is one, otherwise the RGB value is given.
     pub struct Color: u32 {
-        /// ForeGround, label colors
-        const ForeGround = 0;
         /// Foreground, label colors
         const Foreground = 0;
-        /// BackGround2, Is the color inside input, output and text display widgets
-        const BackGround2 = 7;
         /// Background2, Is the color inside input, output and text display widgets
         const Background2 = 7;
         /// Inactive
@@ -436,8 +428,6 @@ bitflags::bitflags! {
         const Dark1 = 47;
         /// FrameDefault
         const FrameDefault = 49;
-        /// BackGround
-        const BackGround = 49;
         /// Background
         const Background = 49;
         /// Light1
@@ -501,7 +491,7 @@ impl Color {
                 use crate::prelude::WidgetExt;
                 grp.color()
             } else {
-                Color::BackGround
+                Color::Background
             };
             let bg_col = bg_col.to_rgb();
             let alpha = tup.3 as f32 / 255.0;
@@ -614,9 +604,6 @@ impl Color {
 impl std::fmt::Display for Color {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         match *self {
-            Color::ForeGround => write!(f, "Color::ForeGround"),
-            Color::BackGround => write!(f, "Color::BackGround"),
-            Color::BackGround2 => write!(f, "Color::BackGround2"),
             Color::Foreground => write!(f, "Color::Foreground"),
             Color::Background => write!(f, "Color::Background"),
             Color::Background2 => write!(f, "Color::Background2"),

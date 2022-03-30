@@ -12,7 +12,7 @@ impl MyButton {
         grp.set_color(enums::Color::from_u32(0x01579b));
         grp.set_align(enums::Align::Center);
         let mut btn = button::Button::new(grp.x() + 420, grp.y() + 35, 15, 15, "X");
-        btn.set_frame(enums::FrameType::OFlatFrame);
+        btn.set_frame(enums::FrameType::OFlatBox);
         btn.set_color(enums::Color::from_u32(0xf49da9));
         btn.set_callback(move |b| b.parent().unwrap().hide());
         grp.end();
