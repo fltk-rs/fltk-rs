@@ -225,9 +225,9 @@ pub fn set_draw_color(color: Color) {
 }
 
 /// Draws a circle
-pub fn draw_circle(x: i32, y: i32, r: f64) {
+pub fn draw_circle(x: f64, y: f64, r: f64) {
     unsafe {
-        Fl_circle(x as f64, y as f64, r);
+        Fl_circle(x, y, r);
     }
 }
 
@@ -238,9 +238,9 @@ pub fn draw_arc(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
     }
 }
 
-/// Draws an arc
-pub fn draw_arc2(x: i32, y: i32, r: i32, start: f64, end: f64) {
-    unsafe { Fl_arc2(x as f64, y as f64, r as f64, start, end) }
+/// Draws an arc as part of a complex polygon
+pub fn draw_arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
+    unsafe { Fl_arc2(x, y, r, start, end) }
 }
 
 /// Draws a filled pie
