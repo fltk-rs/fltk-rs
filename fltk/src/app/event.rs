@@ -163,8 +163,8 @@ pub fn event_inside_widget<Wid: WidgetExt>(wid: &Wid) -> bool {
     assert!(!wid.was_deleted());
     let x = wid.x();
     let y = wid.y();
-    let w = wid.width();
-    let h = wid.height();
+    let w = wid.w();
+    let h = wid.h();
     unsafe { fl::Fl_event_inside(x, y, w, h) != 0 }
 }
 
