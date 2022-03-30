@@ -3,10 +3,9 @@
 use fltk_sys::fl;
 
 use crate::{
-    draw::{Coordinates, Rect},
+    draw::{Xy, Rect},
     prelude::{FltkError, FltkErrorKind},
 };
-type Coord = Coordinates<i32>; // TEMP
 
 /// An available screen
 ///
@@ -45,11 +44,11 @@ impl Screen {
     /// Returns the `Screen` that contains the specified screen position
     ///
     /// Returns an error if the provided coordinates are out of bounds.
-    pub fn new_at<C: Into<Coord> + Copy>(pos: C) -> Result<Screen, FltkError> {
-        let pos: Coord = pos.into();
+    pub fn new_at<C: Into<Xy> + Copy>(pos: C) -> Result<Screen, FltkError> {
+        let pos: Xy = pos.into();
 
         let s = Screen {
-            n: unsafe { fl::Fl_screen_num(pos.x, pos.y) },
+            n: unsafe { fl::Fl_screen_num(pos.x(), pos.y()) },
         };
 
         if Self::is_coord_inside_any_work_area(pos) {
@@ -97,10 +96,10 @@ impl Screen {
     /// the specified screen position coordinates
     ///
     /// Returns an error if the provided coordinates are out of bounds.
-    pub fn num_at<C: Into<Coord> + Copy>(pos: C) -> Result<i32, FltkError> {
-        let pos: Coord = pos.into();
+    pub fn num_at<C: Into<Xy> + Copy>(pos: C) -> Result<i32, FltkError> {
+        let pos: Xy = pos.into();
         if Self::is_coord_inside_any_work_area(pos) {
-            Ok(unsafe { fl::Fl_screen_num(pos.x, pos.y) })
+            Ok(unsafe { fl::Fl_screen_num(pos.x(), pos.y()) })
         } else {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
         }
@@ -110,11 +109,11 @@ impl Screen {
     /// contains the specified screen position coordinates
     ///
     /// Returns an error if the provided coordinates are out of bounds.
-    pub fn work_area_at<C: Into<Coord> + Copy>(pos: C) -> Result<Rect, FltkError> {
-        let pos: Coord = pos.into();
+    pub fn work_area_at<C: Into<Xy> + Copy>(pos: C) -> Result<Rect, FltkError> {
+        let pos: Xy = pos.into();
         if Self::is_coord_inside_any_work_area(pos) {
             let (mut x, mut y, mut w, mut h) = (0, 0, 0, 0);
-            unsafe { fl::Fl_screen_work_area_at(&mut x, &mut y, &mut w, &mut h, pos.x, pos.y) }
+            unsafe { fl::Fl_screen_work_area_at(&mut x, &mut y, &mut w, &mut h, pos.x(), pos.y()) }
             Ok(Rect { x, y, w, h })
         } else {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -148,11 +147,11 @@ impl Screen {
     /// contains the specified screen position coordinates
     ///
     /// Returns an error if the provided coordinates are out of bounds.
-    pub fn xywh_at<C: Into<Coord> + Copy>(pos: C) -> Result<Rect, FltkError> {
-        let pos: Coord = pos.into();
+    pub fn xywh_at<C: Into<Xy> + Copy>(pos: C) -> Result<Rect, FltkError> {
+        let pos: Xy = pos.into();
         if Self::is_coord_inside_any_xywh(pos) {
             let (mut x, mut y, mut w, mut h) = (0, 0, 0, 0);
-            unsafe { fl::Fl_screen_xywh_at(&mut x, &mut y, &mut w, &mut h, pos.x, pos.y) }
+            unsafe { fl::Fl_screen_xywh_at(&mut x, &mut y, &mut w, &mut h, pos.x(), pos.y()) }
             Ok(Rect { x, y, w, h })
         } else {
             Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
@@ -270,12 +269,12 @@ impl Screen {
     }
 
     /// Returns the top-left `x,y` coordinates of the current screen's work area
-    pub fn top_left(&self) -> Coord {
+    pub fn top_left(&self) -> Xy {
         self.work_area().top_left()
     }
 
     /// Returns the bottom-right `x+w, y+h` coordinates of the current screen's work area
-    pub fn bottom_right(&self) -> Coord {
+    pub fn bottom_right(&self) -> Xy {
         self.work_area().bottom_right()
     }
 
@@ -283,15 +282,15 @@ impl Screen {
 
     // returns `true` if the provided position is inside the bounds
     // of any current work area boundaries, or `false` otherwise.
-    fn is_coord_inside_any_work_area<C: Into<Coord> + Copy>(c: C) -> bool {
-        let c: Coord = c.into();
+    fn is_coord_inside_any_work_area<C: Into<Xy> + Copy>(c: C) -> bool {
+        let c: Xy = c.into();
         let main_wa: Rect = screen_work_area(0).into();
         // returns false if we get `0` but the coords are outside main screen's
-        !(screen_num(c.x, c.y) == 0
-            && (c.x < main_wa.x
-                || c.y < main_wa.y
-                || c.x >= main_wa.bottom_right().x
-                || c.y >= main_wa.bottom_right().y))
+        !(screen_num(c.x(), c.y()) == 0
+            && (c.x() < main_wa.x
+                || c.y() < main_wa.y
+                || c.x() >= main_wa.bottom_right().x()
+                || c.y() >= main_wa.bottom_right().y()))
     }
     // returns `true` if the provided rect is fully inside the bounds
     // of any current work area boundaries, or `false` otherwise.
@@ -303,15 +302,15 @@ impl Screen {
 
     // returns `true` if the provided position is inside the bounds
     // of any current screen xywh boundaries, or `false` otherwise.
-    fn is_coord_inside_any_xywh<C: Into<Coord> + Copy>(c: C) -> bool {
-        let c: Coord = c.into();
+    fn is_coord_inside_any_xywh<C: Into<Xy> + Copy>(c: C) -> bool {
+        let c: Xy = c.into();
         let main_xywh: Rect = screen_xywh(0).into();
         // returns false if we get `0` but the coords are outside main screen's
-        !(screen_num(c.x, c.y) == 0
-            && (c.x < main_xywh.x
-                || c.y < main_xywh.y
-                || c.x >= main_xywh.bottom_right().x
-                || c.y >= main_xywh.bottom_right().y))
+        !(screen_num(c.x(), c.y()) == 0
+            && (c.x() < main_xywh.x
+                || c.y() < main_xywh.y
+                || c.x() >= main_xywh.bottom_right().x()
+                || c.y() >= main_xywh.bottom_right().y()))
     }
     // returns `true` if the provided rect is fully inside the bounds
     // of any current screeen xywh boundaries, or `false` otherwise.

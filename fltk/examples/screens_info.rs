@@ -1,8 +1,7 @@
 use fltk::{
     app::Screen,
-    draw::{Coordinates, Rect},
+    draw::{Xy, Rect},
 };
-type Coord = Coordinates<i32>;
 
 fn main() {
     let screens = Screen::all_screens();
@@ -13,11 +12,11 @@ fn main() {
     println!("- at all = {}", Screen::scaling_supported());
     println!("- separately = {}", Screen::scaling_supported_separately());
 
-    let coord: Coord = [100, 100].into();
+    let coord: Xy = [100, 100].into();
     let rect: Rect = [100, 100, 100, 100].into();
 
     // uncomment these lines to see out-of-boundaries errors:
-    // let coord: Coord = [-100, 10_000].into();
+    // let coord: Xy = [-100, 10_000].into();
     // let rect: Rect = [-100, 100, 10_000, 10_000].into();
 
     println!("\nScreen found:");
