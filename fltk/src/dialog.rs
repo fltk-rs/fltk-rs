@@ -812,9 +812,11 @@ impl FileChooser {
             if ptr.is_null() {
                 None
             } else {
-                Some(CStr::from_ptr(ptr as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string())
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
             }
         }
     }
@@ -838,9 +840,11 @@ impl FileChooser {
             if ptr.is_null() {
                 None
             } else {
-                Some(CStr::from_ptr(ptr as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string())
+                Some(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                )
             }
         }
     }

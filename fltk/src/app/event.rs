@@ -41,9 +41,11 @@ pub fn event_text() -> Option<String> {
         if text.is_null() {
             None
         } else {
-            Some(CStr::from_ptr(text as *mut raw::c_char)
-                .to_string_lossy()
-                .to_string())
+            Some(
+                CStr::from_ptr(text as *mut raw::c_char)
+                    .to_string_lossy()
+                    .to_string(),
+            )
         }
     }
 }
@@ -253,11 +255,7 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
         let txt = fl::Fl_event_clipboard_type();
         let txt = CStr::from_ptr(txt).to_string_lossy().to_string();
         if txt == "text/plain" {
-            if let Some(event_text) = event_text() {
-                Some(ClipboardEvent::Text(event_text))
-            } else {
-                None
-            }
+            event_text().map(ClipboardEvent::Text)
         } else if txt == "image" {
             Some(ClipboardEvent::Image(event_clipboard_image()))
         } else {

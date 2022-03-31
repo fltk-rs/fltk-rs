@@ -33,6 +33,8 @@ pub struct TextBuffer {
     refcount: AtomicUsize,
 }
 
+type BoxedModifyCallbackHandle = *mut Box<dyn FnMut(i32, i32, i32, i32, Option<&str>)>;
+
 /// Handle object for interacting with text buffer modify callbacks
 pub type ModifyCallbackHandle = *mut ();
 
@@ -46,15 +48,12 @@ unsafe extern "C" fn modify_callback_shim(
 ) {
     let temp = if deleted_text.is_null() {
         None
+    } else if let Ok(tmp) = CStr::from_ptr(deleted_text).to_str() {
+        Some(tmp)
     } else {
-        if let Ok(tmp) = CStr::from_ptr(deleted_text).to_str() {
-            Some(tmp)
-        } else {
-            None
-        }
+        None
     };
-    let a: *mut Box<dyn FnMut(i32, i32, i32, i32, Option<&str>)> =
-        data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, Option<&'r str>)>;
+    let a = data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, Option<&'r str>)>;
     let f: &mut (dyn FnMut(i32, i32, i32, i32, Option<&str>)) = &mut **a;
     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
         f(
@@ -511,8 +510,7 @@ impl TextBuffer {
     ) -> ModifyCallbackHandle {
         assert!(!self.inner.is_null());
         unsafe {
-            let a: *mut Box<dyn FnMut(i32, i32, i32, i32, Option<&str>)> =
-                Box::into_raw(Box::new(Box::new(cb)));
+            let a: BoxedModifyCallbackHandle = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(modify_callback_shim);
             Fl_Text_Buffer_add_modify_callback(self.inner, callback, data);
