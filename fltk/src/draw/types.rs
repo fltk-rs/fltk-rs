@@ -13,8 +13,7 @@ pub struct Coord<T: Copy>(pub T, pub T);
 // pub type Coord = Coordinates<i32>; // TODO for 2.0
 
 /// `f64` Coordinates
-#[allow(non_camel_case_types)]
-pub type Coord_f64 = Coordinates<f64>;
+pub type Coordf = Coordinates<f64>;
 
 impl<T: Copy> Coordinates<T> {
     /// Returns a new pair of `x, y` coordinates
