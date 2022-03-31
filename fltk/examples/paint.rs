@@ -29,7 +29,7 @@ fn main() {
     wind.end();
     wind.show();
 
-    let offs = Offscreen::new(frame.width(), frame.height()).unwrap();
+    let offs = Offscreen::new(frame.w(), frame.h()).unwrap();
     #[cfg(not(target_os = "macos"))]
     {
         offs.begin();
@@ -82,7 +82,7 @@ fn main() {
                     set_draw_color(Color::Red);
                     set_line_style(LineStyle::Solid, 3);
                     let coords = app::event_coords();
-                    draw_line(x, y, coords.0, coords.1);
+                    draw_line((x, y).into(), (coords.0, coords.1).into());
                     x = coords.0;
                     y = coords.1;
                     offs.end();

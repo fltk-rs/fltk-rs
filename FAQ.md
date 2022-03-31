@@ -36,7 +36,7 @@ This crate targets FLTK 1.4, while currently most distros distribute an older ve
 
 ### Build fails on Arch linux because of pango or cairo?
 Pango changed its include paths which caused build failures across many projects. There are 2 solutions:
-- Use the no-pango feature. Downsides: loss of rtl and cjk language support.
+- Use the no-pango-cairo feature. Downsides: loss of rtl and cjk language support.
 - Set the CFLAGS and CXXFLAGS to correct the global include paths.
 ```
 $ export CFLAGS="-isystem /usr/include/harfbuzz -isystem /usr/include/cairo"

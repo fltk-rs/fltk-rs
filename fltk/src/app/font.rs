@@ -23,8 +23,8 @@ pub fn set_font(new_font: Font) {
 }
 
 /// Set the app's font size
-pub fn set_font_size<I: Into<i32>>(sz: I) {
-    unsafe { fl::Fl_set_font_size(sz.into() as i32) }
+pub fn set_font_size(sz: i32) {
+    unsafe { fl::Fl_set_font_size(sz) }
 }
 
 /// Get the app's font size

@@ -52,7 +52,7 @@ fn main() {
         }
     });
 
-    app::add_idle3(move |_| {
+    app::add_idle(move |_| {
         ball.pos.0 += 10 * ball.dir.0 as i32; // The increment in x position
         ball.pos.1 += 10 * ball.dir.1 as i32; // The increment in y position
         if ball.pos.1 == 540 - 40

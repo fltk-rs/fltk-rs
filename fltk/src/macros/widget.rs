@@ -37,8 +37,8 @@ macro_rules! impl_widget_ext {
                 fn with_size(mut self, width: i32, height: i32) -> Self {
                     let x = self.x();
                     let y = self.y();
-                    let w = self.width();
-                    let h = self.height();
+                    let w = self.w();
+                    let h = self.h();
                     if w == 0 || h == 0 {
                         self.widget_resize(x, y, width, height);
                     } else {
@@ -98,7 +98,7 @@ macro_rules! impl_widget_ext {
                         w != 0 && h != 0,
                         "right_of requires the size of the widget to be known!"
                     );
-                    self.resize(wid.x() + wid.width() + padding, wid.y(), w, h);
+                    self.resize(wid.x() + wid.w() + padding, wid.y(), w, h);
                     self
                 }
 
@@ -119,13 +119,13 @@ macro_rules! impl_widget_ext {
                     assert!(!w.was_deleted());
                     assert!(!self.was_deleted());
                     debug_assert!(
-                        w.width() != 0 && w.height() != 0,
+                        w.w() != 0 && w.h() != 0,
                         "center_of requires the size of the widget to be known!"
                     );
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let ww = w.width() as f64;
-                    let wh = w.height() as f64;
+                    let sw = self.w() as f64;
+                    let sh = self.h() as f64;
+                    let ww = w.w() as f64;
+                    let wh = w.h() as f64;
                     let sx = (ww - sw) / 2.0;
                     let sy = (wh - sh) / 2.0;
                     let wx = if w.as_window().is_some() { 0 } else { w.x() };
@@ -140,12 +140,12 @@ macro_rules! impl_widget_ext {
                     assert!(!w.was_deleted());
                     assert!(!self.was_deleted());
                     debug_assert!(
-                        w.width() != 0 && w.height() != 0,
+                        w.w() != 0 && w.h() != 0,
                         "center_of requires the size of the widget to be known!"
                     );
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let ww = w.width() as f64;
+                    let sw = self.w() as f64;
+                    let sh = self.h() as f64;
+                    let ww = w.w() as f64;
                     let sx = (ww - sw) / 2.0;
                     let sy = self.y();
                     let wx = if w.as_window().is_some() { 0 } else { w.x() };
@@ -159,12 +159,12 @@ macro_rules! impl_widget_ext {
                     assert!(!w.was_deleted());
                     assert!(!self.was_deleted());
                     debug_assert!(
-                        w.width() != 0 && w.height() != 0,
+                        w.w() != 0 && w.h() != 0,
                         "center_of requires the size of the widget to be known!"
                     );
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let wh = w.height() as f64;
+                    let sw = self.w() as f64;
+                    let sh = self.h() as f64;
+                    let wh = w.h() as f64;
                     let sx = self.x();
                     let sy = (wh - sh) / 2.0;
                     let wy = if w.as_window().is_some() { 0 } else { w.y() };
@@ -177,13 +177,13 @@ macro_rules! impl_widget_ext {
                     assert!(!self.was_deleted());
                     if let Some(w) = self.parent() {
                         debug_assert!(
-                            w.width() != 0 && w.height() != 0,
+                            w.w() != 0 && w.h() != 0,
                             "center_of requires the size of the widget to be known!"
                         );
-                        let sw = self.width() as f64;
-                        let sh = self.height() as f64;
-                        let ww = w.width() as f64;
-                        let wh = w.height() as f64;
+                        let sw = self.w() as f64;
+                        let sh = self.h() as f64;
+                        let ww = w.w() as f64;
+                        let wh = w.h() as f64;
                         let sx = (ww - sw) / 2.0;
                         let sy = (wh - sh) / 2.0;
                         let wx = if w.as_window().is_some() { 0 } else { w.x() };
@@ -198,20 +198,20 @@ macro_rules! impl_widget_ext {
                     assert!(!w.was_deleted());
                     assert!(!self.was_deleted());
                     debug_assert!(
-                        w.width() != 0 && w.height() != 0,
+                        w.w() != 0 && w.h() != 0,
                         "size_of requires the size of the widget to be known!"
                     );
                     let x = self.x();
                     let y = self.y();
-                    self.resize(x, y, w.width(), w.height());
+                    self.resize(x, y, w.w(), w.h());
                     self
                 }
 
                 fn size_of_parent(mut self) -> Self {
                     assert!(!self.was_deleted());
                     if let Some(parent) = self.parent() {
-                        let w = parent.width();
-                        let h = parent.height();
+                        let w = parent.w();
+                        let h = parent.h();
                         let x = self.x();
                         let y = self.y();
                         self.resize(x, y, w, h);
@@ -220,7 +220,7 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn set_pos(&mut self, x: i32, y: i32) {
-                    self.resize(x, y, self.width(), self.height());
+                    self.resize(x, y, self.w(), self.h());
                 }
 
                 fn set_size(&mut self, width: i32, height: i32) {
@@ -269,16 +269,6 @@ macro_rules! impl_widget_ext {
                 fn y(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _y>](self.inner) }
-                }
-
-                fn width(&self) -> i32 {
-                    assert!(!self.was_deleted());
-                    unsafe { [<$flname _width>](self.inner) }
-                }
-
-                fn height(&self) -> i32 {
-                    assert!(!self.was_deleted());
-                    unsafe { [<$flname _height>](self.inner) }
                 }
 
                 fn w(&self) -> i32 {
@@ -820,7 +810,7 @@ macro_rules! impl_widget_ext {
                     self.set_callback(move |_| sender.send(msg.clone()))
                 }
 
-                unsafe fn into_widget<W: WidgetBase>(&self) -> W {
+                unsafe fn as_widget<W: WidgetBase>(&self) -> W {
                     W::from_widget_ptr(self.as_widget_ptr() as *mut _)
                 }
 
@@ -1227,14 +1217,6 @@ macro_rules! impl_widget_ext_via {
                 self.$member.y()
             }
 
-            fn width(&self) -> i32 {
-                self.$member.width()
-            }
-
-            fn height(&self) -> i32 {
-                self.$member.height()
-            }
-
             fn w(&self) -> i32 {
                 self.$member.w()
             }
@@ -1502,8 +1484,8 @@ macro_rules! impl_widget_ext_via {
                 self.$member.set_raw_user_data(data)
             }
 
-            unsafe fn into_widget<W: WidgetBase>(&self) -> W {
-                self.$member.into_widget()
+            unsafe fn as_widget<W: WidgetBase>(&self) -> W {
+                self.$member.as_widget()
             }
 
             fn visible(&self) -> bool {

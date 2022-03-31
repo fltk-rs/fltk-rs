@@ -39,7 +39,7 @@ impl ShapedWindow {
             .with_label("Button")
             .with_size(80, 80)
             .center_of_parent();
-        but.set_frame(enums::FrameType::OFlatFrame);
+        but.set_frame(enums::FrameType::OFlatBox);
         but.set_color(enums::Color::Cyan);
         but.clear_visible_focus();
         wind.end();

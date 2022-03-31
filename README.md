@@ -250,7 +250,7 @@ $ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXine
 
 The following are the features offered by the crate:
 - use-ninja: Uses the ninja build system if available for a faster build, especially on Windows.
-- no-pango: Build without pango support on Linux/BSD, if rtl/cjk font support is not needed.
+- no-pango-cairo: Build without pango support on Linux/BSD, if rtl/cjk font support is not needed.
 - fltk-bundled: Support for bundled versions of cfltk and fltk on selected platforms (requires curl and tar)
 - enable-glwindow: Support for drawing using OpenGL functions.
 - system-libpng: Uses the system libpng

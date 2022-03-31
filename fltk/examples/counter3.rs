@@ -40,7 +40,7 @@ fn main() {
     bar.set_color(BLUE);
     bar.draw(|b| {
         draw::set_draw_rgb_color(211, 211, 211);
-        draw::draw_rectf(0, b.height(), b.width(), 3);
+        draw::draw_rectf(0, b.h(), b.w(), 3);
     });
 
     text.set_label_size(18);
@@ -52,7 +52,7 @@ fn main() {
     but.set_color(BLUE);
     but.set_selection_color(SEL_BLUE);
     but.set_label_color(Color::White);
-    but.set_frame(FrameType::OFlatFrame);
+    but.set_frame(FrameType::OFlatBox);
     // End theming
 
     but.set_callback(move |_| {

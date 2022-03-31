@@ -28,10 +28,7 @@ pub enum Message {
 }
 
 pub fn center() -> (i32, i32) {
-    (
-        (app::screen_size().0 / 2.0) as i32,
-        (app::screen_size().1 / 2.0) as i32,
-    )
+    ((app::screen_size().0 / 2), (app::screen_size().1 / 2))
 }
 
 pub struct MyEditor {
@@ -244,7 +241,7 @@ impl MyApp {
                         let path = std::path::PathBuf::from(&path);
                         if path.exists() {
                             // we use a timeout to avoid pasting the path into the buffer
-                            app::add_timeout3(0.0, {
+                            app::add_timeout(0.0, {
                                 let mut buf = buf.clone();
                                 move |_| match buf.load_file(&path) {
                                     Ok(_) => (),
@@ -322,8 +319,8 @@ impl MyApp {
     /** Called by "Save As..." or by "Save" in case no file was set yet.
      * Returns true if the file was succesfully saved. */
     pub fn save_file_as(&mut self) -> Result<bool, Box<dyn error::Error>> {
-        let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseSaveFile);
-        dlg.set_option(dialog::FileDialogOptions::SaveAsConfirm);
+        let mut dlg = dialog::NativeFileChooser::new(dialog::NativeFileChooserType::BrowseSaveFile);
+        dlg.set_option(dialog::NativeFileChooserOptions::SaveAsConfirm);
         dlg.show();
         if dlg.filename().to_string_lossy().to_string().is_empty() {
             dialog::alert(center().0 - 200, center().1 - 100, "Please specify a file!");
@@ -342,10 +339,8 @@ impl MyApp {
             .unwrap()
             .set_label_color(Color::Black);
         self.filename = Some(dlg.filename());
-        self.main_win.set_label(&format!(
-            "{:?} - RustyEd",
-            self.filename.as_ref().unwrap()
-        ));
+        self.main_win
+            .set_label(&format!("{:?} - RustyEd", self.filename.as_ref().unwrap()));
         Ok(true)
     }
 
@@ -368,7 +363,7 @@ impl MyApp {
                     }
                     New => {
                         if self.buf.text() != "" {
-                            let clear = if let Some(x) = dialog::choice2(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "") {
+                            let clear = if let Some(x) = dialog::choice(center().0 - 200, center().1 - 100, "File unsaved, Do you wish to continue?", "Yes", "No!", "") {
                                 x == 0
                             } else {
                                 false
@@ -379,8 +374,8 @@ impl MyApp {
                         }
                     },
                     Open => {
-                        let mut dlg = dialog::FileDialog::new(dialog::FileDialogType::BrowseFile);
-                        dlg.set_option(dialog::FileDialogOptions::NoOptions);
+                        let mut dlg = dialog::NativeFileChooser::new(dialog::NativeFileChooserType::BrowseFile);
+                        dlg.set_option(dialog::NativeFileChooserOptions::NoOptions);
                         dlg.set_filter("*.{txt,rs,toml}");
                         dlg.show();
                         let filename = dlg.filename();
@@ -415,7 +410,7 @@ impl MyApp {
                     },
                     Quit => {
                         if self.modified {
-                            match dialog::choice2(center().0 - 200, center().1 - 100,
+                            match dialog::choice(center().0 - 200, center().1 - 100,
                                 "Would you like to save your work?", "Yes", "No", "") {
                                 Some(0) => {
                                     if self.save_file().unwrap() {

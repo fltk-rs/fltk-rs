@@ -25,17 +25,14 @@ pub enum ColorMode {
 
 /// FLTK's NativeFileChooser
 #[derive(Debug)]
-pub struct FileDialog {
+pub struct NativeFileChooser {
     inner: *mut Fl_Native_File_Chooser,
 }
-
-/// FLTK's NativeFileChooser
-pub type NativeFileChooser = FileDialog;
 
 /// Defines the type of dialog, which can be changed dynamically using the `set_type()` method
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub enum FileDialogType {
+pub enum NativeFileChooserType {
     /// Browse file
     BrowseFile = 0,
     /// Browse dir
@@ -50,15 +47,12 @@ pub enum FileDialogType {
     BrowseSaveDir,
 }
 
-crate::macros::widget::impl_widget_type!(FileDialogType);
-
-/// Alias for `NativeFileChooserType`
-pub type NativeFileChooserType = FileDialogType;
+crate::macros::widget::impl_widget_type!(NativeFileChooserType);
 
 /// Defines the File dialog options, which can be set using the `set_option()` method.
 #[repr(i32)]
 #[derive(Debug, Copy, Clone, PartialEq)]
-pub enum FileDialogOptions {
+pub enum NativeFileChooserOptions {
     /// No options
     NoOptions = 0,
     /// Confirm on save as
@@ -71,25 +65,22 @@ pub enum FileDialogOptions {
     UseFilterExt = 8,
 }
 
-crate::macros::widget::impl_widget_type!(FileDialogOptions);
+crate::macros::widget::impl_widget_type!(NativeFileChooserOptions);
 
-/// Alias to `NativeFileChooserOptions`
-pub type NativeFileChooserOptions = FileDialogOptions;
-
-impl std::ops::BitOr<FileDialogOptions> for FileDialogOptions {
-    type Output = FileDialogOptions;
-    fn bitor(self, other: FileDialogOptions) -> Self::Output {
+impl std::ops::BitOr<NativeFileChooserOptions> for NativeFileChooserOptions {
+    type Output = NativeFileChooserOptions;
+    fn bitor(self, other: NativeFileChooserOptions) -> Self::Output {
         unsafe { std::mem::transmute(self as i32 | other as i32) }
     }
 }
 
-impl FileDialog {
+impl NativeFileChooser {
     /// Creates an new file dialog
-    pub fn new(op: FileDialogType) -> FileDialog {
+    pub fn new(op: NativeFileChooserType) -> NativeFileChooser {
         unsafe {
             let file_dialog = Fl_Native_File_Chooser_new(mem::transmute(op));
             assert!(!file_dialog.is_null());
-            FileDialog { inner: file_dialog }
+            NativeFileChooser { inner: file_dialog }
         }
     }
 
@@ -171,13 +162,13 @@ impl FileDialog {
     }
 
     /// Sets the option for the dialog
-    pub fn set_option(&mut self, opt: FileDialogOptions) {
+    pub fn set_option(&mut self, opt: NativeFileChooserOptions) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Native_File_Chooser_set_option(self.inner, opt as i32) }
     }
 
     /// Sets the type for the dialog
-    pub fn set_type(&mut self, op: FileDialogType) {
+    pub fn set_type(&mut self, op: NativeFileChooserType) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Native_File_Chooser_set_type(self.inner, op as i32) }
     }
@@ -226,7 +217,7 @@ impl FileDialog {
     }
 }
 
-impl Drop for FileDialog {
+impl Drop for NativeFileChooser {
     fn drop(&mut self) {
         if !self.inner.is_null() {
             unsafe { Fl_Native_File_Chooser_delete(self.inner) }
@@ -251,21 +242,9 @@ pub fn alert(x: i32, y: i32, txt: &str) {
     }
 }
 
-#[deprecated(since = "1.3.1", note = "please use `choice2` instead")]
-/// Displays a choice box with up to three choices. Choosing a value returns its index from the arguments
-pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
-    unsafe {
-        let txt = CString::safe_new(txt);
-        let b0 = CString::safe_new(b0);
-        let b1 = CString::safe_new(b1);
-        let b2 = CString::safe_new(b2);
-        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32
-    }
-}
-
 /// Displays a choice box with up to three choices.
 /// Closing the dialog returns None. Choosing a value returns its index from the arguments.
-pub fn choice2(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
+pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
         let txt = CString::safe_new(txt);
         let b0 = CString::safe_new(b0);
@@ -333,23 +312,10 @@ pub fn alert_default(txt: &str) {
     }
 }
 
-#[deprecated(since = "1.3.1", note = "please use `choice2_default` instead")]
-/// Displays a choice box with up to three choices.
-/// The dialog is positioned at the pointer hotspot
-pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
-    unsafe {
-        let txt = CString::safe_new(txt);
-        let b0 = CString::safe_new(b0);
-        let b1 = CString::safe_new(b1);
-        let b2 = CString::safe_new(b2);
-        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32
-    }
-}
-
 /// Displays a choice box with up to three choices.
 /// An empty choice will not be shown. Closing the dialog returns None. Choosing a value returns its index from the arguments.
 /// The dialog is positioned at the pointer hotspot
-pub fn choice2_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
+pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
     unsafe {
         let txt = CString::safe_new(txt);
         let b0 = CString::safe_new(b0);
@@ -505,16 +471,6 @@ impl HelpDialog {
     }
 
     /// Returns the width of the help dialog
-    pub fn width(&self) -> i32 {
-        unsafe { Fl_Help_Dialog_w(self.inner) }
-    }
-
-    /// Returns the height of the help dialog
-    pub fn height(&self) -> i32 {
-        unsafe { Fl_Help_Dialog_h(self.inner) }
-    }
-
-    /// Returns the width of the help dialog
     pub fn w(&self) -> i32 {
         unsafe { Fl_Help_Dialog_w(self.inner) }
     }
@@ -565,7 +521,7 @@ pub fn beep(tp: BeepType) {
 }
 
 /**
-    FLTK's own `FileChooser`. Which differs for the Native `FileDialog`
+    FLTK's own `FileChooser`. Which differs for the Native `NativeFileChooser`
     Example:
     ```rust,no_run
     use fltk::{prelude::*, *};
@@ -760,18 +716,18 @@ impl FileChooser {
     }
 
     /// Gets the directory of the `FileChooser`
-    pub fn directory(&self) -> Option<String> {
+    pub fn directory(&self) -> Option<PathBuf> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_directory(self.inner);
             if ptr.is_null() {
                 None
             } else {
-                Some(
+                Some(PathBuf::from(
                     CStr::from_ptr(ptr as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
-                )
+                ))
             }
         }
     }

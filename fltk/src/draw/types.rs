@@ -1,170 +1,77 @@
-/// Defines a pair of `x, y` coordinates
-#[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
-pub struct Coordinates<T: Copy> {
-    /// Horizontal X coordinate
-    pub x: T,
-    /// Vertical Y coordinate
-    pub y: T,
-}
-
-/// `i32` Coordinates
-#[derive(Debug, Copy, Clone)]
-pub struct Coord<T: Copy>(pub T, pub T);
-// pub type Coord = Coordinates<i32>; // TODO for 2.0
-
-/// `f64` Coordinates
-#[allow(non_camel_case_types)]
-pub type Coord_f64 = Coordinates<f64>;
-
-impl<T: Copy> Coordinates<T> {
-    /// Returns a new pair of `x, y` coordinates
-    pub fn new(x: T, y: T) -> Self {
-        Coordinates { x, y }
-    }
-
-    /// Returns a tuple of the values
-    pub fn tup(&self) -> (T, T) {
-        (self.x, self.y)
-    }
-}
-
-// Conversions From/Into array and tuple
-
-impl<T: Copy> From<[T; 2]> for Coordinates<T> {
-    fn from(array: [T; 2]) -> Self {
-        Self {
-            x: array[0],
-            y: array[1],
-        }
-    }
-}
-
-impl<T: Copy> From<Coordinates<T>> for [T; 2] {
-    fn from(c: Coordinates<T>) -> Self {
-        [c.x, c.y]
-    }
-}
-
-impl<T: Copy> From<(T, T)> for Coordinates<T> {
-    fn from(tuple: (T, T)) -> Self {
-        Self {
-            x: tuple.0,
-            y: tuple.1,
-        }
-    }
-}
-
-impl<T: Copy> From<Coordinates<T>> for (T, T) {
-    fn from(c: Coordinates<T>) -> Self {
-        (c.x, c.y)
-    }
-}
-
-/// Defines a pair of `w, h` (width, height) values representing size
-#[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
-pub struct Size {
-    /// Width
-    pub w: i32,
-    /// Height
-    pub h: i32,
-}
-
-impl Size {
-    /// Returns a new pair of `w, h` (width, height) values
-    pub fn new(w: i32, h: i32) -> Self {
-        Size { w, h }
-    }
-
-    /// Returns a tuple of the values
-    pub fn tup(&self) -> (i32, i32) {
-        (self.w, self.h)
-    }
-}
-
-// Conversions From/Into array and tuple
-
-impl From<[i32; 2]> for Size {
-    fn from(array: [i32; 2]) -> Self {
-        Self {
-            w: array[0],
-            h: array[1],
-        }
-    }
-}
-
-impl From<Size> for [i32; 2] {
-    fn from(c: Size) -> Self {
-        [c.w, c.h]
-    }
-}
-
-impl From<(i32, i32)> for Size {
-    fn from(tuple: (i32, i32)) -> Self {
-        Self {
-            w: tuple.0,
-            h: tuple.1,
-        }
-    }
-}
-impl From<Size> for (i32, i32) {
-    fn from(c: Size) -> Self {
-        (c.w, c.h)
-    }
-}
-
-/// Defines a pair of `r, c` (row, column) representing a Cell
-#[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
-pub struct Cell {
-    /// Horizontal X coordinate
-    pub r: i32,
-    /// Vertical Y coordinate
-    pub c: i32,
-}
-
-impl Cell {
-    /// Returns a new pair of `r, c` (row, column) cell
-    pub fn new(r: i32, c: i32) -> Self {
-        Cell { r, c }
-    }
-
-    /// Returns a tuple of the values
-    pub fn tup(&self) -> (i32, i32) {
-        (self.r, self.c)
-    }
-}
-
-// Conversions From/Into array and tuple
-
-impl From<[i32; 2]> for Cell {
-    fn from(array: [i32; 2]) -> Self {
-        Cell {
-            r: array[0],
-            c: array[1],
-        }
-    }
-}
-
-impl From<Cell> for [i32; 2] {
-    fn from(c: Cell) -> Self {
-        [c.r, c.c]
-    }
-}
-
-impl From<(i32, i32)> for Cell {
-    fn from(tuple: (i32, i32)) -> Self {
-        Self {
-            r: tuple.0,
-            c: tuple.1,
-        }
-    }
-}
-impl From<Cell> for (i32, i32) {
-    fn from(c: Cell) -> Self {
-        (c.r, c.c)
-    }
-}
-
 use std::ops::{Add, Sub};
+
+macro_rules! vec2 {
+    ($t: ident, $i1: ident, $i2: ident) => {
+        #[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+        /// A generic pair type
+        pub struct $t<T: Copy> {
+            /// First member
+            pub $i1: T,
+            /// Second member
+            pub $i2: T,
+        }
+
+        impl<T: Copy> $t<T> {
+            /// Constructor
+            pub fn new($i1: T, $i2: T) -> Self {
+                $t { $i1, $i2 }
+            }
+
+            /// returns a tuple representation
+            pub fn tup(&self) -> (T, T) {
+                (self.$i1, self.$i2)
+            }
+        }
+
+        impl<T: Copy> From<[T; 2]> for $t<T> {
+            fn from(array: [T; 2]) -> Self {
+                Self {
+                    $i1: array[0],
+                    $i2: array[1],
+                }
+            }
+        }
+
+        impl<T: Copy> From<$t<T>> for [T; 2] {
+            fn from(c: $t<T>) -> Self {
+                [c.$i1, c.$i2]
+            }
+        }
+
+        impl<T: Copy> From<(T, T)> for $t<T> {
+            fn from(tuple: (T, T)) -> Self {
+                Self {
+                    $i1: tuple.0,
+                    $i2: tuple.1,
+                }
+            }
+        }
+
+        impl<T: Copy> From<$t<T>> for (T, T) {
+            fn from(c: $t<T>) -> Self {
+                (c.$i1, c.$i2)
+            }
+        }
+    };
+}
+
+vec2!(Coordinates, x, y);
+
+vec2!(GSize, w, h);
+
+vec2!(GCell, r, c);
+
+/// `i32` Coordinates holding an `x, y` members
+pub type Coord = Coordinates<i32>;
+
+/// `f64` Coordinates holding an `x, y` members
+pub type Coordf = Coordinates<f64>;
+
+/// `i32` Cell holding a `r, c` (row and column)
+pub type Cell = GCell<i32>;
+
+// /// `i32` Size holding a `w, h` (width and height)
+// pub type Size = GSize<i32>;
 
 /// Defines a rectangular bounding box
 #[derive(Copy, Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -202,6 +109,16 @@ impl<T: Copy + Add<Output = T> + Sub<Output = T>> Rectangle<T> {
             y: top_left.y,
             w: bottom_right.x - top_left.x,
             h: bottom_right.y - top_left.y,
+        }
+    }
+
+    /// Returns a new `Rectangle` from the position of its Coords and Size
+    pub fn from_coords_size(pos: Coordinates<T>, size: GSize<T>) -> Self {
+        Self {
+            x: pos.x,
+            y: pos.y,
+            w: size.w,
+            h: size.h,
         }
     }
 

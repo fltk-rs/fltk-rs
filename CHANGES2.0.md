@@ -1,0 +1,22 @@
+# Changes
+
+- Moved to edition 2021
+- Renamed WidgetExt::into_widget() to as_widget().
+- Renamed GroupExt::into_group() to GroupExt::as_group().
+- Group::current() now returns an Option.
+- TreeItem::widget() returns an Option.
+- GroupExt::current() now returns an Option.
+- Remove deprecated methods:
+    - TreeItem::label_fg_color in favor of TreeItem::label_fgcolor
+    - TreeItem::label_bg_color in favor of TreeItem::label_bgcolor
+- Wizard::current_widget now returns an Option.
+- FileChooser::directory() noew returns a PathBuf.
+- Renamed no-pango feature to no-pango-cairo, to better reflect the linked libs.
+- app::screen_size() returns (i32, i32)
+- Refactor drawing code to use Coord and Rect.
+- Rename timeout3 functions to timeout, as well as idle and clipboard callbacks.
+- TextBuffer::add_modify_callback() now returns an opaque handle which can be used by remove_modify_callback().
+- draw_rgb* functions moved to utils modules, and renamed to blit_rgb*.
+- Removes VGrid and HGrid, Row, Column and AndroidWindow.
+- Remove confusing alias FileDialog. Stick to FileChooser and NativeFileChooser.
+- Remove WidgetExt/ImageExt::width/height in favor of w/h methods.

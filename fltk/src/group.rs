@@ -21,18 +21,8 @@ crate::macros::widget::impl_widget_base!(Group, Fl_Group);
 crate::macros::group::impl_group_ext!(Group, Fl_Group);
 
 impl Group {
-    #[deprecated(since = "1.2.18", note = "please use `try_current` instead")]
-    /// Get the current group
-    pub fn current() -> Group {
-        unsafe {
-            let ptr = Fl_Group_current();
-            assert!(!ptr.is_null());
-            Group::from_widget_ptr(ptr as _)
-        }
-    }
-
     /// Tries to get the current group
-    pub fn try_current() -> Option<Group> {
+    pub fn current() -> Option<Group> {
         unsafe {
             let ptr = Fl_Group_current();
             if ptr.is_null() {
@@ -92,13 +82,13 @@ impl Pack {
         }
         let spacing = self.spacing() * (children - 1);
         let t = self.get_type::<PackType>();
-        let w = (self.width() - spacing) / children;
-        let h = (self.height() - spacing) / children;
+        let w = (self.w() - spacing) / children;
+        let h = (self.h() - spacing) / children;
 
         for i in 0..children {
             let mut c = self.child(i as i32).unwrap();
-            let c_w = c.width();
-            let c_h = c.height();
+            let c_w = c.w();
+            let c_h = c.h();
             if t == PackType::Vertical {
                 c.set_size(c_w, h);
             } else {
@@ -334,19 +324,8 @@ impl Wizard {
         unsafe { Fl_Wizard_prev(self.inner) }
     }
 
-    #[deprecated(since = "1.2.18", note = "please use `try_current_widget` instead")]
     /// Gets the underlying widget of the current view
-    pub fn current_widget(&self) -> Widget {
-        unsafe {
-            assert!(!self.was_deleted());
-            let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
-            assert!(!ptr.is_null());
-            Widget::from_widget_ptr(ptr)
-        }
-    }
-
-    /// Gets the underlying widget of the current view
-    pub fn try_current_widget(&self) -> Option<impl WidgetExt> {
+    pub fn current_widget(&self) -> Option<impl WidgetExt> {
         unsafe {
             assert!(!self.was_deleted());
             let ptr = Fl_Wizard_value(self.inner) as *mut fltk_sys::widget::Fl_Widget;
@@ -499,316 +478,6 @@ impl Flex {
         unsafe { Fl_Flex_pad(self.inner) }
     }
 }
-
-/**
-    Defines a Vertical Grid (custom widget).
-    Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
-    ```rust,no_run
-    use fltk::{prelude::*, *};
-    fn main() {
-        let app = app::App::default();
-        let mut win = window::Window::default().with_size(400, 300);
-        let mut grid = group::VGrid::new(0, 0, 400, 300, "");
-        grid.set_params(3, 3, 5);
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        grid.end();
-        win.end();
-        win.show();
-        app.run().unwrap();
-    }
-    ```
-*/
-#[derive(Debug, Clone)]
-pub struct VGrid {
-    vpack: Pack,
-    rows: i32,
-    cols: i32,
-    current: i32,
-}
-
-impl Default for VGrid {
-    fn default() -> Self {
-        Self::new(0, 0, 0, 0, None)
-    }
-}
-
-impl VGrid {
-    /// Constructs a widget with the size of its parent
-    pub fn default_fill() -> Self {
-        Self::default().size_of_parent()
-    }
-
-    /// Creates a new vertical grid
-    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> VGrid {
-        let vpack = Pack::new(x, y, w, h, label);
-        VGrid {
-            vpack,
-            rows: 1,
-            cols: 1,
-            current: 0,
-        }
-    }
-
-    /// Sets the params for the grid
-    pub fn set_params(&mut self, rows: i32, cols: i32, spacing: i32) {
-        self.vpack.set_spacing(spacing);
-        let rows = if rows < 1 { 1 } else { rows };
-        let cols = if cols < 1 { 1 } else { cols };
-        self.rows = rows;
-        self.cols = cols;
-        for _ in 0..rows {
-            let mut p = Pack::new(0, 0, self.vpack.width(), 0, "");
-            p.set_type(PackType::Horizontal);
-            p.set_spacing(spacing);
-            p.end();
-            self.vpack.add(&p);
-        }
-    }
-
-    /// Adds widgets to the grid
-    pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        debug_assert!(self.current < self.rows * self.cols);
-        let rem = (self.current - 1) / self.cols;
-        if rem < self.rows {
-            let hpack = self.vpack.child(rem as i32).unwrap();
-            let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
-            hpack.end();
-            hpack.add(w);
-            hpack.auto_layout();
-            self.vpack.auto_layout();
-            self.current += 1;
-        }
-    }
-
-    /// End the grid
-    pub fn end(&mut self) {
-        use std::collections::VecDeque;
-        let children = self.vpack.children();
-        self.current = children - self.rows;
-        debug_assert!(self.current <= self.rows * self.cols);
-        let mut v = VecDeque::new();
-        for i in self.rows..children {
-            let c = self.vpack.child(i).unwrap();
-            v.push_back(c);
-        }
-        for i in 0..self.rows {
-            let hpack = self.vpack.child(i as i32).unwrap();
-            let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
-            hpack.end();
-            for _j in 0..self.cols {
-                if let Some(w) = v.pop_front() {
-                    self.vpack.remove(&w);
-                    hpack.add(&w);
-                }
-                hpack.auto_layout();
-            }
-        }
-        self.vpack.auto_layout();
-    }
-}
-
-crate::widget_extends!(VGrid, Pack, vpack);
-
-/**
-    Defines a Horizontal Grid (custom widget).
-    Requires setting the params manually using the `set_params` method, which takes the rows, columns and spacing.
-    ```rust,no_run
-    use fltk::{prelude::*, *};
-    fn main() {
-        let app = app::App::default();
-        let mut win = window::Window::default().with_size(400, 300);
-        let mut grid = group::HGrid::new(0, 0, 400, 300, "");
-        grid.set_params(3, 3, 5);
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        button::Button::default();
-        grid.end();
-        win.end();
-        win.show();
-        app.run().unwrap();
-    }
-    ```
-*/
-#[derive(Debug, Clone)]
-pub struct HGrid {
-    hpack: Pack,
-    rows: i32,
-    cols: i32,
-    current: i32,
-}
-
-impl Default for HGrid {
-    fn default() -> Self {
-        Self::new(0, 0, 0, 0, None)
-    }
-}
-
-impl HGrid {
-    /// Constructs a widget with the size of its parent
-    pub fn default_fill() -> Self {
-        Self::default().size_of_parent()
-    }
-
-    /// Creates a new horizontal grid
-    pub fn new<T: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: T) -> HGrid {
-        let mut hpack = Pack::new(x, y, w, h, label);
-        hpack.set_type(PackType::Horizontal);
-        HGrid {
-            hpack,
-            rows: 1,
-            cols: 1,
-            current: 0,
-        }
-    }
-
-    /// Sets the params for the grid
-    pub fn set_params(&mut self, rows: i32, cols: i32, spacing: i32) {
-        self.hpack.set_spacing(spacing);
-        let rows = if rows < 1 { 1 } else { rows };
-        let cols = if cols < 1 { 1 } else { cols };
-        self.rows = rows;
-        self.cols = cols;
-        for _ in 0..cols {
-            let mut p = Pack::new(0, 0, 0, self.hpack.height(), "");
-            p.set_spacing(spacing);
-            p.end();
-            self.hpack.add(&p);
-        }
-    }
-
-    /// Adds widgets to the grid
-    pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        debug_assert!(self.current < self.rows * self.cols);
-        let rem = (self.current - 1) / self.rows;
-        if rem < self.cols {
-            let vpack = self.hpack.child(rem as i32).unwrap();
-            let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
-            vpack.end();
-            vpack.add(w);
-            vpack.auto_layout();
-            self.hpack.auto_layout();
-            self.current += 1;
-        }
-    }
-
-    /// End the grid
-    pub fn end(&mut self) {
-        use std::collections::VecDeque;
-        let children = self.hpack.children();
-        self.current = children - self.cols;
-        debug_assert!(self.current <= self.rows * self.cols);
-        let mut v = VecDeque::new();
-        for i in self.cols..children {
-            let c = self.hpack.child(i).unwrap();
-            v.push_back(c);
-        }
-        for i in 0..self.cols {
-            let vpack = self.hpack.child(i as i32).unwrap();
-            let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
-            vpack.end();
-            for _j in 0..self.rows {
-                if let Some(w) = v.pop_front() {
-                    self.hpack.remove(&w);
-                    vpack.add(&w);
-                }
-                vpack.auto_layout();
-            }
-        }
-        self.hpack.auto_layout();
-    }
-}
-
-crate::widget_extends!(HGrid, Pack, hpack);
-
-/// A wrapper around a vertical pack, with `auto_layout`ing using the add method
-#[derive(Debug, Clone)]
-pub struct Column {
-    p: Flex,
-}
-
-impl Default for Column {
-    fn default() -> Self {
-        Self::new(0, 0, 0, 0, None)
-    }
-}
-
-impl Column {
-    /// Constructs a widget with the size of its parent
-    pub fn default_fill() -> Self {
-        Self::default().size_of_parent()
-    }
-
-    /// Create a new column
-    pub fn new<T: Into<Option<&'static str>>>(
-        x: i32,
-        y: i32,
-        width: i32,
-        height: i32,
-        label: T,
-    ) -> Column {
-        let mut p = Flex::new(x, y, width, height, label);
-        p.set_type(FlexType::Column);
-        Column { p }
-    }
-
-    /// Add a widget to the column with automatic layouting
-    pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        self.p.add(w);
-    }
-}
-
-crate::widget_extends!(Column, Flex, p);
-
-/// A wrapper around a Horizontal pack, with `auto_layout`ing using the add method
-#[derive(Debug, Clone)]
-pub struct Row {
-    p: Flex,
-}
-
-impl Default for Row {
-    fn default() -> Self {
-        Self::new(0, 0, 0, 0, None)
-    }
-}
-
-impl Row {
-    /// Constructs a widget with the size of its parent
-    pub fn default_fill() -> Self {
-        Self::default().size_of_parent().center_of_parent()
-    }
-
-    /// Create a new row
-    pub fn new<T: Into<Option<&'static str>>>(
-        x: i32,
-        y: i32,
-        width: i32,
-        height: i32,
-        label: T,
-    ) -> Row {
-        let mut p = Flex::new(x, y, width, height, label);
-        p.set_type(FlexType::Row);
-        Row { p }
-    }
-
-    /// Add a widget to the row with automatic layouting
-    pub fn add<W: WidgetExt>(&mut self, w: &W) {
-        self.p.add(w);
-    }
-}
-
-crate::widget_extends!(Row, Flex, p);
 
 /// Experimental group widgets
 pub mod experimental {

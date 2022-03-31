@@ -1,3 +1,4 @@
+use crate::draw::types::*;
 use crate::enums::{
     Align, CallbackTrigger, Color, ColorDepth, Cursor, Damage, Event, Font, FrameType, LabelType,
     Shortcut,
@@ -208,10 +209,6 @@ pub unsafe trait WidgetExt {
     /// Returns the y coordinate of the widget
     fn y(&self) -> i32;
     /// Returns the width of the widget
-    fn width(&self) -> i32;
-    /// Returns the height of the widget
-    fn height(&self) -> i32;
-    /// Returns the width of the widget
     fn w(&self) -> i32;
     /// Returns the height of the widget
     fn h(&self) -> i32;
@@ -380,8 +377,7 @@ pub unsafe trait WidgetExt {
     /// Upcast a `WidgetExt` to a Widget
     /// # Safety
     /// Allows for potentially unsafe casts between incompatible widget types
-    #[allow(clippy::wrong_self_convention)]
-    unsafe fn into_widget<W: WidgetBase>(&self) -> W
+    unsafe fn as_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
     /// Returns whether a widget is visible
@@ -396,7 +392,6 @@ pub unsafe trait WidgetExt {
     fn active(&self) -> bool;
     /// Returns whether a widget or any of its parents are active (recursively)
     fn active_r(&self) -> bool;
-    #[doc(hidden)]
     /**
         Return the default callback function, this allows storing then running within the overridden callback.
         Works only for FLTK types (with no callback defined in the Rust side)
@@ -647,8 +642,7 @@ pub unsafe trait GroupExt: WidgetExt {
     /// # Safety
     /// If the widget wasn't created by fltk-rs,
     /// vtable differences mean certain methods can't be overridden (e.g. handle & draw)
-    #[allow(clippy::wrong_self_convention)]
-    unsafe fn into_group(&self) -> crate::group::Group;
+    unsafe fn as_group(&self) -> crate::group::Group;
 }
 
 /// Defines the methods implemented by all window widgets.
@@ -1322,10 +1316,7 @@ pub unsafe trait TableExt: GroupExt {
     fn cols(&self) -> i32;
     /// The range of row and column numbers for all visible and partially visible cells in the table.
     /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`)
-    fn visible_cells(&self) -> (i32, i32, i32, i32);
-    /// The range of row and column numbers for all visible and partially visible cells in the table.
-    /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`)
-    fn try_visible_cells(&self) -> Option<(i32, i32, i32, i32)>;
+    fn visible_cells(&self) -> Option<(i32, i32, i32, i32)>;
     /// Returns whether the resize is interactive
     fn is_interactive_resize(&self) -> bool;
     /// Returns whether a row is resizable
@@ -1394,13 +1385,9 @@ pub unsafe trait TableExt: GroupExt {
     fn top_row(&self) -> i32;
     /// Returns whether a cell is selected
     fn is_selected(&self, r: i32, c: i32) -> bool;
-    /// Gets the selection.
-    /// Returns (`row_top`, `col_left`, `row_bot`, `col_right`).
-    /// Returns -1 if no selection.
-    fn get_selection(&self) -> (i32, i32, i32, i32);
     /// Tries to get the selection.
     /// Returns an Option((`row_top`, `col_left`, `row_bot`, `col_right`))
-    fn try_get_selection(&self) -> Option<(i32, i32, i32, i32)>;
+    fn get_selection(&self) -> Option<(i32, i32, i32, i32)>;
     /// Sets the selection
     fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32);
     /// Unset selection
@@ -1429,9 +1416,7 @@ pub unsafe trait TableExt: GroupExt {
     /// Override `draw_cell`.
     /// callback args: &mut self, `TableContext`, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32.
     /// takes the widget as a closure argument
-    fn draw_cell<
-        F: FnMut(&mut Self, crate::table::TableContext, i32, i32, i32, i32, i32, i32) + 'static,
-    >(
+    fn draw_cell<F: FnMut(&mut Self, crate::table::TableContext, Cell, Rect) + 'static>(
         &mut self,
         cb: F,
     );
@@ -1484,10 +1469,6 @@ pub unsafe trait ImageExt {
     fn draw(&mut self, x: i32, y: i32, width: i32, height: i32);
     /// Draws the image at the presupplied coordinates and size and offset cx, cy
     fn draw_ext(&mut self, x: i32, y: i32, width: i32, height: i32, cx: i32, cy: i32);
-    /// Return the width of the image
-    fn width(&self) -> i32;
-    /// Return the height of the image
-    fn height(&self) -> i32;
     /// Return the width of the image
     fn w(&self) -> i32;
     /// Return the height of the image
@@ -1585,8 +1566,8 @@ macro_rules! widget_extends {
             pub fn with_size(mut self, width: i32, height: i32) -> Self {
                 let x = self.x();
                 let y = self.y();
-                let w = self.width();
-                let h = self.height();
+                let w = self.w();
+                let h = self.h();
                 if w == 0 || h == 0 {
                     self.widget_resize(x, y, width, height);
                 } else {
@@ -1664,7 +1645,7 @@ macro_rules! widget_extends {
                     w != 0 && h != 0,
                     "right_of requires the size of the widget to be known!"
                 );
-                self.resize(wid.x() + wid.width() + padding, wid.y(), w, h);
+                self.resize(wid.x() + wid.w() + padding, wid.y(), w, h);
                 self
             }
 
@@ -1687,13 +1668,13 @@ macro_rules! widget_extends {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(
-                    w.width() != 0 && w.height() != 0,
+                    w.w() != 0 && w.h() != 0,
                     "center_of requires the size of the widget to be known!"
                 );
-                let sw = self.width() as f64;
-                let sh = self.height() as f64;
-                let ww = w.width() as f64;
-                let wh = w.height() as f64;
+                let sw = self.w() as f64;
+                let sh = self.h() as f64;
+                let ww = w.w() as f64;
+                let wh = w.h() as f64;
                 let sx = (ww - sw) / 2.0;
                 let sy = (wh - sh) / 2.0;
                 let wx = if w.as_window().is_some() { 0 } else { w.x() };
@@ -1708,12 +1689,12 @@ macro_rules! widget_extends {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(
-                    w.width() != 0 && w.height() != 0,
+                    w.w() != 0 && w.h() != 0,
                     "center_of requires the size of the widget to be known!"
                 );
-                let sw = self.width() as f64;
-                let sh = self.height() as f64;
-                let ww = w.width() as f64;
+                let sw = self.w() as f64;
+                let sh = self.h() as f64;
+                let ww = w.w() as f64;
                 let sx = (ww - sw) / 2.0;
                 let sy = self.y();
                 let wx = if w.as_window().is_some() { 0 } else { w.x() };
@@ -1727,12 +1708,12 @@ macro_rules! widget_extends {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(
-                    w.width() != 0 && w.height() != 0,
+                    w.w() != 0 && w.h() != 0,
                     "center_of requires the size of the widget to be known!"
                 );
-                let sw = self.width() as f64;
-                let sh = self.height() as f64;
-                let wh = w.height() as f64;
+                let sw = self.w() as f64;
+                let sh = self.h() as f64;
+                let wh = w.h() as f64;
                 let sx = self.x();
                 let sy = (wh - sh) / 2.0;
                 let wy = if w.as_window().is_some() { 0 } else { w.y() };
@@ -1746,13 +1727,13 @@ macro_rules! widget_extends {
                 assert!(!self.was_deleted());
                 if let Some(w) = self.parent() {
                     debug_assert!(
-                        w.width() != 0 && w.height() != 0,
+                        w.w() != 0 && w.h() != 0,
                         "center_of requires the size of the widget to be known!"
                     );
-                    let sw = self.width() as f64;
-                    let sh = self.height() as f64;
-                    let ww = w.width() as f64;
-                    let wh = w.height() as f64;
+                    let sw = self.w() as f64;
+                    let sh = self.h() as f64;
+                    let ww = w.w() as f64;
+                    let wh = w.h() as f64;
                     let sx = (ww - sw) / 2.0;
                     let sy = (wh - sh) / 2.0;
                     let wx = if w.as_window().is_some() { 0 } else { w.x() };
@@ -1768,12 +1749,12 @@ macro_rules! widget_extends {
                 assert!(!w.was_deleted());
                 assert!(!self.was_deleted());
                 debug_assert!(
-                    w.width() != 0 && w.height() != 0,
+                    w.w() != 0 && w.h() != 0,
                     "size_of requires the size of the widget to be known!"
                 );
                 let x = self.x();
                 let y = self.y();
-                self.resize(x, y, w.width(), w.height());
+                self.resize(x, y, w.w(), w.h());
                 self
             }
 
@@ -1781,8 +1762,8 @@ macro_rules! widget_extends {
             pub fn size_of_parent(mut self) -> Self {
                 assert!(!self.was_deleted());
                 if let Some(parent) = self.parent() {
-                    let w = parent.width();
-                    let h = parent.height();
+                    let w = parent.w();
+                    let h = parent.h();
                     let x = self.x();
                     let y = self.y();
                     self.resize(x, y, w, h);

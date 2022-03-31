@@ -23,21 +23,25 @@ fn main() {
     wind.show();
 
     // Called when the table is drawn then when it's redrawn due to events
-    table.draw_cell(move |t, ctx, row, col, x, y, w, h| match ctx {
-        table::TableContext::StartPage => draw::set_font(enums::Font::Helvetica, 14),
-        table::TableContext::ColHeader => {
-            draw_header(&format!("{}", (col + 65) as u8 as char), x, y, w, h)
-        } // Column titles
-        table::TableContext::RowHeader => draw_header(&format!("{}", row + 1), x, y, w, h), // Row titles
-        table::TableContext::Cell => draw_data(
-            &format!("{}", row + col),
-            x,
-            y,
-            w,
-            h,
-            t.is_selected(row, col),
-        ), // Data in cells
-        _ => (),
+    table.draw_cell(move |t, ctx, cell, rect| {
+        let (row, col) = cell.tup();
+        let (x, y, w, h) = rect.into();
+        match ctx {
+            table::TableContext::StartPage => draw::set_font(enums::Font::Helvetica, 14),
+            table::TableContext::ColHeader => {
+                draw_header(&format!("{}", (col + 65) as u8 as char), x, y, w, h)
+            } // Column titles
+            table::TableContext::RowHeader => draw_header(&format!("{}", row + 1), x, y, w, h), // Row titles
+            table::TableContext::Cell => draw_data(
+                &format!("{}", row + col),
+                x,
+                y,
+                w,
+                h,
+                t.is_selected(row, col),
+            ), // Data in cells
+            _ => (),
+        }
     });
 
     app.run().unwrap();

@@ -71,20 +71,13 @@ impl FlatButton {
                 FrameType::FlatBox,
                 b.x(),
                 b.y(),
-                b.width(),
-                b.height(),
+                b.w(),
+                b.h(),
                 Color::from_u32(0x304FFE),
             );
             draw::set_draw_color(Color::White);
             draw::set_font(Font::Courier, 24);
-            draw::draw_text2(
-                &b.label(),
-                b.x(),
-                b.y(),
-                b.width(),
-                b.height(),
-                Align::Center,
-            );
+            draw::draw_text2(&b.label(), b.x(), b.y(), b.w(), b.h(), Align::Center);
         });
     }
 
@@ -132,14 +125,14 @@ impl PowerButton {
             let on = Rc::clone(&on);
             let mut on_svg =
                 SvgImage::from_data(&POWER.to_string().replace("red", "green")).unwrap();
-            on_svg.scale(frm.width(), frm.height(), true, true);
+            on_svg.scale(frm.w(), frm.h(), true, true);
             let mut off_svg = SvgImage::from_data(POWER).unwrap();
-            off_svg.scale(frm.width(), frm.height(), true, true);
+            off_svg.scale(frm.w(), frm.h(), true, true);
             move |f| {
                 if *on.borrow() {
-                    on_svg.draw(f.x(), f.y(), f.width(), f.height());
+                    on_svg.draw(f.x(), f.y(), f.w(), f.h());
                 } else {
-                    off_svg.draw(f.x(), f.y(), f.width(), f.height());
+                    off_svg.draw(f.x(), f.y(), f.w(), f.h());
                 };
             }
         });
