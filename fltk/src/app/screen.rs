@@ -204,14 +204,10 @@ impl Screen {
     /// This function should be called before `app::open_display` runs.
     /// If it is not called, the default is to handle these keys for window scaling.
     ///
-    /// Pass a `value` of `0` to stop recognition of ctrl/+/-/0/
+    /// Pass a `value` of `false` to stop recognition of ctrl/+/-/0/
     /// (or cmd/+/-/0/ under macOS) keys as window scaling.
-    ///
-    /// # Panics
-    /// Panics if `value` != 0.
-    pub fn keyboard_scaling(value: i32) {
-        assert_eq![0, value];
-        unsafe { fl::Fl_keyboard_screen_scaling(value) }
+    pub fn keyboard_scaling(value: bool) {
+        unsafe { fl::Fl_keyboard_screen_scaling(value as _) }
     }
 
     // methods
@@ -406,4 +402,15 @@ pub fn screen_work_area(screen_num: i32) -> (i32, i32, i32, i32) {
         fl::Fl_screen_work_area(&mut x, &mut y, &mut w, &mut h, screen_num);
     }
     (x, y, w, h)
+}
+
+/// Controls the possibility to scale all windows by ctrl/+/-/0/ or cmd/+/-/0/
+///
+/// This function should be called before `app::open_display` runs.
+/// If it is not called, the default is to handle these keys for window scaling.
+///
+/// Pass a `value` of `false` to stop recognition of ctrl/+/-/0/
+/// (or cmd/+/-/0/ under macOS) keys as window scaling.
+pub fn keyboard_screen_scaling(value: bool) {
+    unsafe { fl::Fl_keyboard_screen_scaling(value as _) }
 }
