@@ -23,21 +23,30 @@ pub fn get(target_os: &str, out_dir: &Path) {
             }
 
             PathBuf::from(format!(
-                "https://github.com/fltk-rs/fltk-rs/releases/download/{}/lib_x64-{}.tar.gz",
+                "{}/{}/lib_x64-{}.tar.gz",
+                env::var("CFLTK_BUNDLE_URL_PREFIX").unwrap_or(String::from("https://github.com/fltk-rs/fltk-rs/releases/download")),
                 pkg_version, platform
             ))
         };
 
-        Command::new("curl")
-            .args(&["-LOk", url.to_str().unwrap()])
+        let curl_status = Command::new("curl")
+            .args(&["-LOkf", url.to_str().unwrap()])
             .current_dir(out_dir)
             .status()
-            .expect("Curl and Tar are needed to download and upack the bundled libraries!");
+            .expect("Curl is needed to download the bundled libraries!");
 
-        Command::new("tar")
+        if ! curl_status.success() {
+            panic!("Download bundled libraries from {:?} failed", url)
+        }
+
+        let tar_status = Command::new("tar")
             .args(&["-xzvf", url.file_name().unwrap().to_str().unwrap()])
             .current_dir(out_dir)
             .status()
-            .expect("Curl and Tar are needed to download and upack the bundled libraries!");
+            .expect("Tar is needed to upack the bundled libraries!");
+
+        if ! tar_status.success() {
+            panic!("Unpack bundled libraries failed")
+        }
     }
 }
