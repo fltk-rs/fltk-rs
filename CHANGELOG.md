@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [1.3.2] - 2022-03-31
+- Add Screen type as well as related screen functions and screens_info example, by @joseluis.
+- Add Rect and new Coordinates type, by @joseluis.
+- Add Size and Cell types.
+- Add link to fltk-grid.
+- Add CFLTK_BUNDLE_PREFIX_URL by @aaronps.
+- Check curl and tar error codes when using fltk-bundled feature flags and properly report them, by @aaronps.
+
 ## [1.3.1] - 2022-03-22
 - Pull updated Wayland backend code from FLTK.
 - Fix HasRawWindowHandle implementation on Wayland.

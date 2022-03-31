@@ -253,7 +253,7 @@ macro_rules! impl_window_ext {
                         #[cfg(not(feature = "use-wayland"))]
                         assert!(handle != 0);
                     }
-                    
+
 
                     Fl_Window_set_raw_handle(self.inner as *mut Fl_Window, mem::transmute(&handle));
                 }

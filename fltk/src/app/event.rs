@@ -118,7 +118,7 @@ pub enum MouseWheel {
 }
 
 /// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
-/// Returns [`MouseWheel::None`](`crate::enums::MouseWheel::None`), `Right` or `Left`
+/// Returns [`MouseWheel::None`], `Right` or `Left`
 pub fn event_dx() -> MouseWheel {
     match 0.cmp(unsafe { &fl::Fl_event_dx() }) {
         cmp::Ordering::Greater => MouseWheel::Right,
@@ -128,7 +128,7 @@ pub fn event_dx() -> MouseWheel {
 }
 
 /// Returns the current horizontal mouse scrolling associated with the Mousewheel event.
-/// Returns [`MouseWheel::None`](`crate::enums::MouseWheel::None`), `Up` or `Down`.
+/// Returns [`MouseWheel::None`], `Up` or `Down`.
 /// Doesn't indicate scrolling direction which depends on system preferences
 pub fn event_dy() -> MouseWheel {
     match 0.cmp(unsafe { &fl::Fl_event_dy() }) {
@@ -309,11 +309,11 @@ pub unsafe fn handle_raw(event: Event, w: WindowPtr) -> bool {
     The event dispatch function is called after native events are converted to
     FLTK events, but before they are handled by FLTK. If the dispatch function
     handler is set, it is up to the dispatch function to call
-    [`app::handle2(Event, WindowPtr)`](crate::app::handle2) or to ignore the event.
+    [`app::handle_raw(Event, WindowPtr)`](crate::app::handle_raw) or to ignore the event.
 
     The dispatch function itself must return false if it ignored the event,
-    or true if it used the event. If you call [`app::handle2()`](crate::app::handle2), then
-    this will return the correct value.
+    or true if it used the event. If you call [`app::handle_raw()`](crate::app::handle_raw),
+    then this will return the correct value.
     # Safety
     The window pointer must not be invalidated
 */

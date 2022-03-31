@@ -39,6 +39,7 @@ pub mod pong;
 pub mod popup_browser;
 pub mod rgb;
 pub mod rounded_images;
+pub mod screens_info;
 pub mod shapedwindow;
 pub mod spreadsheet;
 pub mod system_fonts;

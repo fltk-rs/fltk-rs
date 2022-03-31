@@ -10,3 +10,5 @@
 - Rename timeout3 functions to timeout, as well as idle and clipboard callbacks.
 - Support opacity and platform_hide/platform_show for the wayland backend.
 - Rename no-pango feature to no-pango-cairo, to better reflect the linked libs.
+- app::screen_size() should return (i32, i32) since the implementation changed.
+- Refactor drawing code to use Coord and Rect.

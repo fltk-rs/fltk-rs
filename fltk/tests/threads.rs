@@ -18,7 +18,7 @@ fn main() {
         std::thread::spawn(move || {
             for i in 0..1000 {
                 app::sleep(0.010);
-				app::awake();
+                app::awake();
                 let mut frame = frame.lock().unwrap();
                 frame.set_label(format!("Hello {}", i).as_str());
             }

@@ -1,3 +1,4 @@
+use super::types::Coord;
 use crate::enums::{Align, Color, ColorDepth, Cursor, Font, FrameType, Shortcut};
 use crate::image::RgbImage;
 use crate::prelude::*;
@@ -6,10 +7,6 @@ use fltk_sys::draw::*;
 use std::ffi::{CStr, CString};
 use std::mem;
 use std::os::raw;
-
-/// Defines a coordinate of x and y
-#[derive(Copy, Clone, Debug)]
-pub struct Coord<T: Copy>(pub T, pub T);
 
 bitflags::bitflags! {
     /// Defines the line styles supported by fltk
@@ -258,8 +255,11 @@ pub fn draw_pie(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
 }
 
 /// Sets the line style
+///
 /// # Warning
-/// You are required to change this back to [`set_line_style(LineStyle::Solid, 0)`](`crate::draw::set_line_style`) after finishing
+/// You are required to change this back to
+/// [`set_line_style(LineStyle::Solid, 0)`](crate::draw::set_line_style)
+/// after finishing
 pub fn set_line_style(style: LineStyle, width: i32) {
     unsafe {
         crate::app::open_display();
@@ -412,7 +412,7 @@ pub fn draw_yxline2(x: i32, y: i32, y1: i32, x2: i32) {
     unsafe { Fl_yxline2(x, y, y1, x2) }
 }
 
-///  Draws a vertical line from (x,y) to (x,y1) then a horizontal from (x,y1)
+/// Draws a vertical line from (x,y) to (x,y1) then a horizontal from (x,y1)
 /// to (x2,y1), then another vertical from (x2,y1) to (x2,y3)
 pub fn draw_yxline3(x: i32, y: i32, y1: i32, x2: i32, y3: i32) {
     unsafe { Fl_yxline3(x, y, y1, x2, y3) }
@@ -561,8 +561,7 @@ pub fn width2(txt: &str, n: i32) -> f64 {
 /// Measure the width and height of a text
 pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
     let txt = CString::safe_new(txt);
-    let mut x = 0;
-    let mut y = 0;
+    let (mut x, mut y) = (0, 0);
     unsafe {
         Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
     }
@@ -570,24 +569,22 @@ pub fn measure(txt: &str, draw_symbols: bool) -> (i32, i32) {
 }
 
 /// Measure the width and height of a text
+///
 /// If `width` is non-zero, it will wrap to that width
 pub fn wrap_measure(txt: &str, width: i32, draw_symbols: bool) -> (i32, i32) {
     let txt = CString::safe_new(txt);
-    let mut x = width;
-    let mut y = 0;
+    let (mut x, mut y) = (width, 0);
     unsafe {
         Fl_measure(txt.as_ptr(), &mut x, &mut y, draw_symbols as i32);
     }
     (x, y)
 }
 
-/// Measure the coordinates and size of the text where a bounding box using the returned data would fit the text
+/// Measure the coordinates and size of the text where a bounding box using the
+/// returned data would fit the text
 pub fn text_extents(txt: &str) -> (i32, i32, i32, i32) {
     let txt = CString::safe_new(txt);
-    let mut x = 0;
-    let mut y = 0;
-    let mut w = 0;
-    let mut h = 0;
+    let (mut x, mut y, mut w, mut h) = (0, 0, 0, 0);
     unsafe {
         Fl_text_extents(txt.as_ptr(), &mut x, &mut y, &mut w, &mut h);
     }
@@ -661,8 +658,10 @@ pub fn rtl_draw(txt: &str, x: i32, y: i32) {
 }
 
 /// Draws a series of line segments around the given box.
-/// The string must contain groups of 4 letters which specify one of 24 standard grayscale values,
-/// where 'A' is black and 'X' is white. The order of each set of 4 characters is: top, left, bottom, right.
+///
+/// The string must contain groups of 4 letters which specify one of 24 standard
+/// grayscale values, where 'A' is black and 'X' is white.
+/// The order of each set of 4 characters is: top, left, bottom, right.
 pub fn draw_frame(string: &str, x: i32, y: i32, width: i32, height: i32) {
     assert!(string.len() % 4 == 0);
     let s = CString::safe_new(string);
@@ -670,6 +669,7 @@ pub fn draw_frame(string: &str, x: i32, y: i32, width: i32, height: i32) {
 }
 
 /// Draws a series of line segments around the given box
+///
 /// Differs from frame() by the order of the line segments which is bottom, right, top, left.
 pub fn draw_frame2(string: &str, x: i32, y: i32, width: i32, height: i32) {
     assert!(string.len() % 4 == 0);

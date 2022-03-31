@@ -5,7 +5,9 @@ use fltk::{prelude::*, *};
 fn main() {
     let a = app::App::default();
     let mut win = window::Window::default().with_size(500, 400);
-    let mut table = table::Table::default().with_size(400, 130).center_of_parent();
+    let mut table = table::Table::default()
+        .with_size(400, 130)
+        .center_of_parent();
     table.set_frame(enums::FrameType::NoBox);
     table.set_scrollbar_size(-1);
     table.set_rows(5);

@@ -114,7 +114,7 @@ impl Dial {
     /// Get the angles of the dial
     pub fn angles(&self) -> (i32, i32) {
         let angle1 = unsafe { Fl_Dial_angle1(self.inner) };
-        let angle2 = unsafe { Fl_Dial_angle1(self.inner) };
+        let angle2 = unsafe { Fl_Dial_angle2(self.inner) };
         (angle1 as i32, angle2 as i32)
     }
 
@@ -149,7 +149,7 @@ impl LineDial {
     /// Get the angles of the dial
     pub fn angles(&self) -> (i32, i32) {
         let angle1 = unsafe { Fl_Dial_angle1(self.inner as _) };
-        let angle2 = unsafe { Fl_Dial_angle1(self.inner as _) };
+        let angle2 = unsafe { Fl_Dial_angle2(self.inner as _) };
         (angle1 as i32, angle2 as i32)
     }
 
@@ -496,7 +496,7 @@ impl FillDial {
     /// Get the angles of the dial
     pub fn angles(&self) -> (i32, i32) {
         let angle1 = unsafe { Fl_Dial_angle1(self.inner as _) };
-        let angle2 = unsafe { Fl_Dial_angle1(self.inner as _) };
+        let angle2 = unsafe { Fl_Dial_angle2(self.inner as _) };
         (angle1 as i32, angle2 as i32)
     }
 

@@ -216,7 +216,7 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn set_column_widths(&mut self, arr: &'static [i32]) {
+                fn set_column_widths(&mut self, arr: &[i32]) {
                     assert!(!self.was_deleted());
                     debug_assert!(!arr.contains(&0), "FLTK uses 0 as a sentinel value for the array/slice. To hide a column, use -1!");
                     unsafe {

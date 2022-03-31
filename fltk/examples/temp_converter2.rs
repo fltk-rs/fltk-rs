@@ -62,7 +62,7 @@ impl MyApp {
             inp1.set_trigger(CallbackTrigger::Changed);
             inp2.set_trigger(CallbackTrigger::Changed);
 
-            inp1.emit(s.clone(), Message::CelciusChanged);
+            inp1.emit(s, Message::CelciusChanged);
             inp2.emit(s, Message::FahrenheitChanged);
 
             (inp1, inp2)
