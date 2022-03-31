@@ -56,7 +56,7 @@ fn main() {
     // End theming
 
     but.set_callback(move |_| {
-        let label = (count.label().parse::<i32>().unwrap() + 1).to_string();
+        let label = (count.label().unwrap().parse::<i32>().unwrap() + 1).to_string();
         count.set_label(&label);
     });
 

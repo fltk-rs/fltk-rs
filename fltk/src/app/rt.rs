@@ -304,7 +304,7 @@ unsafe extern "C" fn timeout_shim(data: *mut raw::c_void) {
         let app = app::App::default();
         let mut wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
-        let _handle = app::add_timeout3(1.0, callback);
+        let _handle = app::add_timeout(1.0, callback);
         app.run().unwrap();
     }
     ```
@@ -331,13 +331,13 @@ pub fn add_timeout<F: FnMut(TimeoutHandle) + 'static>(tm: f64, cb: F) -> Timeout
     fn main() {
         let callback = |handle| {
             println!("TICK");
-            app::repeat_timeout3(1.0, handle);
+            app::repeat_timeout(1.0, handle);
         };
 
         let app = app::App::default();
         let mut wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
-        app::add_timeout3(1.0, callback);
+        app::add_timeout(1.0, callback);
         app.run().unwrap();
     }
     ```
@@ -363,8 +363,8 @@ pub fn repeat_timeout(tm: f64, handle: TimeoutHandle) {
         let app = app::App::default();
         let mut wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
-        let handle = app::add_timeout3(1.0, callback);
-        app::remove_timeout3(handle);
+        let handle = app::add_timeout(1.0, callback);
+        app::remove_timeout(handle);
         app.run().unwrap();
     }
     ```

@@ -153,7 +153,7 @@ pub unsafe trait WidgetExt {
     /// Returns the height of the widget
     fn h(&self) -> i32;
     /// Returns the label of the widget
-    fn label(&self) -> String;
+    fn label(&self) -> Option<String>;
     /// Measures the label's width and height
     fn measure_label(&self) -> (i32, i32);
     /// transforms a widget to a base `Fl_Widget`, for internal use
@@ -1709,7 +1709,7 @@ macro_rules! widget_builder {
                 self
             }
         }
-    }
+    };
 }
 
 /// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);

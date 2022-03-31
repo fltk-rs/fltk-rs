@@ -86,7 +86,7 @@ impl MenuButton {
 ///
 ///fn my_down_box(x: i32, y: i32, w: i32, h: i32, col: Color) {
 ///    draw::draw_rect_fill(x, y, w, h, Color::Red);
-///    draw::draw_rect_fill(x + 1, y + 1, w - 2, h - 2, Color::BackGround2); // change values to change thickness
+///    draw::draw_rect_fill(x + 1, y + 1, w - 2, h - 2, Color::Background2); // change values to change thickness
 ///}
 ///
 ///fn main() {

@@ -1242,7 +1242,7 @@ impl TreeItem {
                draw::draw_rect_fill(x, y, w, h, item.label_bgcolor());
                // Draw label
                draw::set_font(Font::Helvetica, 14);
-               draw::set_draw_color(Color::ForeGround); // use recommended fg color
+               draw::set_draw_color(Color::Foreground); // use recommended fg color
                draw::draw_text2(&txt, x, y, w, h, Align::Left); // draw the item's label
            }
            // Rendered or not, we must calculate content's max X position

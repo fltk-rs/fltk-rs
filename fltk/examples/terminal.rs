@@ -179,7 +179,7 @@ impl Term {
                         }
                     }
                     _ => {
-                        if let Some(ch) = app::event_text().chars().next() {
+                        if let Some(ch) = app::event_text().unwrap().chars().next() {
                             if app::compose().is_some() {
                                 let temp = ch.to_string();
                                 cmd.push_str(&temp);

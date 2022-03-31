@@ -69,7 +69,7 @@ impl MyPopup {
                 let val = val.clone();
                 let idx = idx.clone();
                 move |b| {
-                    *val.borrow_mut() = b.label();
+                    *val.borrow_mut() = b.label().unwrap();
                     *idx.borrow_mut() = i as i32;
                     win.hide();
                 }
@@ -152,12 +152,12 @@ impl MyChoice {
         self.frame.set_label(self.choices.borrow()[idx as usize])
     }
 
-    pub fn choice(&self) -> String {
+    pub fn choice(&self) -> Option<String> {
         self.frame.label()
     }
 
     pub fn value(&self) -> i32 {
-        let choice = self.choice();
+        let choice = self.choice().unwrap();
         if let Some(val) = self.choices.borrow().iter().position(|x| x == &choice) {
             val as _
         } else {

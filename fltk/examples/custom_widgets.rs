@@ -77,7 +77,7 @@ impl FlatButton {
             );
             draw::set_draw_color(Color::White);
             draw::set_font(Font::Courier, 24);
-            draw::draw_text2(&b.label(), b.x(), b.y(), b.w(), b.h(), Align::Center);
+            draw::draw_text2(&b.label().unwrap(), b.x(), b.y(), b.w(), b.h(), Align::Center);
         });
     }
 
@@ -264,7 +264,7 @@ fn main() {
         app::redraw();
     });
     but.set_callback(move |_| {
-        frame.set_label(&(frame.label().parse::<i32>().unwrap() + 1).to_string())
+        frame.set_label(&(frame.label().unwrap().parse::<i32>().unwrap() + 1).to_string())
     });
 
     power.set_callback(move |_| {

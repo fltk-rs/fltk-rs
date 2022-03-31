@@ -35,15 +35,15 @@ pub fn event_key_down(key: Key) -> bool {
 }
 
 /// Returns a textual representation of the latest event
-pub fn event_text() -> String {
+pub fn event_text() -> Option<String> {
     unsafe {
         let text = fl::Fl_event_text();
         if text.is_null() {
-            String::from("")
+            None
         } else {
-            CStr::from_ptr(text as *mut raw::c_char)
+            Some(CStr::from_ptr(text as *mut raw::c_char)
                 .to_string_lossy()
-                .to_string()
+                .to_string())
         }
     }
 }
@@ -253,7 +253,11 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
         let txt = fl::Fl_event_clipboard_type();
         let txt = CStr::from_ptr(txt).to_string_lossy().to_string();
         if txt == "text/plain" {
-            Some(ClipboardEvent::Text(event_text()))
+            if let Some(event_text) = event_text() {
+                Some(ClipboardEvent::Text(event_text))
+            } else {
+                None
+            }
         } else if txt == "image" {
             Some(ClipboardEvent::Image(event_clipboard_image()))
         } else {

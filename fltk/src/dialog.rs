@@ -139,7 +139,7 @@ impl NativeFileChooser {
     /// Sets the starting directory
     /// # Errors
     /// Errors on non-existent path
-    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: &P) -> Result<(), FltkError> {
+    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: P) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         self.set_directory_(dir.as_ref())
     }
@@ -193,10 +193,16 @@ impl NativeFileChooser {
     }
 
     /// Sets the preset filter for the dialog
-    pub fn set_preset_file(&mut self, f: &str) {
+    pub fn set_preset_file(&mut self, f: &Path) {
+        self.set_preset_file_(f.as_ref());
+    }
+
+    fn set_preset_file_(&mut self, f: &Path) {
         assert!(!self.inner.is_null());
-        let f = CString::safe_new(f);
-        unsafe { Fl_Native_File_Chooser_set_preset_file(self.inner, f.as_ptr()) }
+        if let Some(f) = f.to_str() {
+            let f = CString::safe_new(f);
+            unsafe { Fl_Native_File_Chooser_set_preset_file(self.inner, f.as_ptr()) }
+        }
     }
 
     /// returns the error message from the file dialog
@@ -549,13 +555,13 @@ pub fn beep(tp: BeepType) {
         }
         // Print what the user picked
         println!("--------------------");
-        println!("DIRECTORY: '{}'", chooser.directory().unwrap());
-        println!("    VALUE: '{}'", chooser.value(1).unwrap()); // value starts at 1!
+        println!("DIRECTORY: '{:?}'", chooser.directory().unwrap());
+        println!("    VALUE: '{:?}'", chooser.value(1).unwrap()); // value starts at 1!
         println!("    COUNT: {} files selected", chooser.count());
         // Multiple files? Show all of them
         if chooser.count() > 1 {
             for t in 1..=chooser.count() {
-                println!(" VALUE[{}]: '{}'", t, chooser.value(t).unwrap());
+                println!(" VALUE[{}]: '{:?}'", t, chooser.value(t).unwrap());
             }
         }
         win.end();
@@ -799,38 +805,42 @@ impl FileChooser {
     }
 
     /// Gets the label of the `FileChooser`
-    pub fn label(&self) -> String {
+    pub fn label(&self) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_label(self.inner);
             if ptr.is_null() {
-                String::from("")
+                None
             } else {
-                CStr::from_ptr(ptr as *mut raw::c_char)
+                Some(CStr::from_ptr(ptr as *mut raw::c_char)
                     .to_string_lossy()
-                    .to_string()
+                    .to_string())
             }
         }
     }
 
     /// Sets the label of the Ok button
-    pub fn set_ok_label(&mut self, l: &'static str) {
+    pub fn set_ok_label(&mut self, l: Option<&'static str>) {
         assert!(!self.inner.is_null());
-        let l = CString::safe_new(l);
-        unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.into_raw()) }
+        if let Some(l) = l {
+            let l = CString::safe_new(l);
+            unsafe { Fl_File_Chooser_set_ok_label(self.inner, l.into_raw()) }
+        } else {
+            unsafe { Fl_File_Chooser_set_ok_label(self.inner, std::ptr::null_mut()) }
+        }
     }
 
     /// Gets the label of the Ok button
-    pub fn ok_label(&self) -> String {
+    pub fn ok_label(&self) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
             let ptr = Fl_File_Chooser_ok_label(self.inner);
             if ptr.is_null() {
-                String::from("")
+                None
             } else {
-                CStr::from_ptr(ptr as *mut raw::c_char)
+                Some(CStr::from_ptr(ptr as *mut raw::c_char)
                     .to_string_lossy()
-                    .to_string()
+                    .to_string())
             }
         }
     }
@@ -935,7 +945,7 @@ impl FileChooser {
     }
 
     /// Gets the file or dir name chosen by the `FileChooser`
-    pub fn value(&mut self, f: i32) -> Option<String> {
+    pub fn value(&self, f: i32) -> Option<PathBuf> {
         assert!(!self.inner.is_null());
         let f = if f == 0 { 1 } else { f };
         unsafe {
@@ -943,20 +953,38 @@ impl FileChooser {
             if ptr.is_null() {
                 None
             } else {
-                Some(
+                Some(PathBuf::from(
                     CStr::from_ptr(ptr as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
-                )
+                ))
             }
         }
     }
 
     /// Sets the file or dir name chosen by the `FileChooser`
-    pub fn set_value(&mut self, filename: &str) {
+    pub fn set_value<P: AsRef<Path>>(&mut self, filename: P) {
+        self.set_value_(filename.as_ref())
+    }
+
+    fn set_value_(&mut self, filename: &Path) {
         assert!(!self.inner.is_null());
-        let filename = CString::safe_new(filename);
-        unsafe { Fl_File_Chooser_set_value(self.inner, filename.as_ptr()) }
+        if let Some(filename) = filename.to_str() {
+            let filename = CString::safe_new(filename);
+            unsafe { Fl_File_Chooser_set_value(self.inner, filename.as_ptr()) }
+        }
+    }
+
+    /// Get the values returned by the FileChooser
+    pub fn values(&self) -> Vec<PathBuf> {
+        let mut t = vec![];
+        let cnt = self.count();
+        for i in 0..cnt {
+            if let Some(v) = self.value(i) {
+                t.push(v);
+            }
+        }
+        t
     }
 
     /// Returns whether the `FileChooser` is visible or not
@@ -1118,20 +1146,28 @@ impl Drop for FileChooser {
     }
 }
 
-/// Shows a directory chooser returning a String
-pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String> {
+/// Shows a directory chooser returning a PathBuf
+pub fn dir_chooser<P: AsRef<Path>>(message: &str, fname: P, relative: bool) -> Option<PathBuf> {
+    dir_chooser_(message, fname.as_ref(), relative)
+}
+
+fn dir_chooser_(message: &str, fname: &Path, relative: bool) -> Option<PathBuf> {
     unsafe {
-        let message = CString::safe_new(message);
-        let fname = CString::safe_new(fname);
-        let ptr = Fl_dir_chooser(message.as_ptr(), fname.as_ptr(), relative as i32);
-        if ptr.is_null() {
-            None
+        if let Some(fname) = fname.to_str() {
+            let message = CString::safe_new(message);
+            let fname = CString::safe_new(fname);
+            let ptr = Fl_dir_chooser(message.as_ptr(), fname.as_ptr(), relative as i32);
+            if ptr.is_null() {
+                None
+            } else {
+                Some(PathBuf::from(
+                    CStr::from_ptr(ptr as *mut raw::c_char)
+                        .to_string_lossy()
+                        .to_string(),
+                ))
+            }
         } else {
-            Some(
-                CStr::from_ptr(ptr as *mut raw::c_char)
-                    .to_string_lossy()
-                    .to_string(),
-            )
+            None
         }
     }
 }
@@ -1146,7 +1182,7 @@ pub fn dir_chooser(message: &str, fname: &str, relative: bool) -> Option<String>
         let app = app::App::default();
         let mut win = window::Window::default().with_size(900, 300);
         let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
-        println!("{}", file);
+        println!("{:?}", file);
         win.end();
         win.show();
         app.run().unwrap();
@@ -1158,11 +1194,11 @@ pub fn file_chooser<P: AsRef<Path>>(
     pattern: &str,
     dir: P,
     relative: bool,
-) -> Option<String> {
+) -> Option<PathBuf> {
     file_chooser_(message, pattern, dir.as_ref(), relative)
 }
 
-fn file_chooser_(message: &str, pattern: &str, dir: &Path, relative: bool) -> Option<String> {
+fn file_chooser_(message: &str, pattern: &str, dir: &Path, relative: bool) -> Option<PathBuf> {
     if let Some(dir) = dir.to_str() {
         let message = CString::safe_new(message);
         let pattern = CString::safe_new(pattern);
@@ -1177,11 +1213,11 @@ fn file_chooser_(message: &str, pattern: &str, dir: &Path, relative: bool) -> Op
             if ptr.is_null() {
                 None
             } else {
-                Some(
+                Some(PathBuf::from(
                     CStr::from_ptr(ptr as *mut raw::c_char)
                         .to_string_lossy()
                         .to_string(),
-                )
+                ))
             }
         }
     } else {

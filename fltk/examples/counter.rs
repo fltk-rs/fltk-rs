@@ -36,13 +36,13 @@ fn main() {
     but_inc.set_callback({
         let mut frame = frame.clone();
         move |_| {
-            let label = (frame.label().parse::<i32>().unwrap() + 1).to_string();
+            let label = (frame.label().unwrap().parse::<i32>().unwrap() + 1).to_string();
             frame.set_label(&label);
         }
     });
 
     but_dec.set_callback(move |_| {
-        let label = (frame.label().parse::<i32>().unwrap() - 1).to_string();
+        let label = (frame.label().unwrap().parse::<i32>().unwrap() - 1).to_string();
         frame.set_label(&label);
     });
 

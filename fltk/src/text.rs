@@ -45,20 +45,24 @@ unsafe extern "C" fn modify_callback_shim(
     data: *mut raw::c_void,
 ) {
     let temp = if deleted_text.is_null() {
-        String::from("")
+        None
     } else {
-        CStr::from_ptr(deleted_text).to_string_lossy().to_string()
+        if let Ok(tmp) = CStr::from_ptr(deleted_text).to_str() {
+            Some(tmp)
+        } else {
+            None
+        }
     };
-    let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
-        data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
-    let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
+    let a: *mut Box<dyn FnMut(i32, i32, i32, i32, Option<&str>)> =
+        data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, Option<&'r str>)>;
+    let f: &mut (dyn FnMut(i32, i32, i32, i32, Option<&str>)) = &mut **a;
     let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
         f(
             pos as i32,
             inserted as i32,
             deleted as i32,
             restyled as i32,
-            &temp,
+            temp,
         )
     }));
 }
@@ -501,13 +505,13 @@ impl TextBuffer {
         unsafe { Fl_Text_Buffer_call_modify_callbacks(self.inner) }
     }
 
-    fn add_modify_callback_<F: FnMut(i32, i32, i32, i32, &str) + 'static>(
+    fn add_modify_callback_<F: FnMut(i32, i32, i32, i32, Option<&str>) + 'static>(
         &mut self,
         cb: F,
     ) -> ModifyCallbackHandle {
         assert!(!self.inner.is_null());
         unsafe {
-            let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
+            let a: *mut Box<dyn FnMut(i32, i32, i32, i32, Option<&str>)> =
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(modify_callback_shim);
@@ -519,7 +523,7 @@ impl TextBuffer {
     /// Adds a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
-    pub fn add_modify_callback<F: FnMut(&mut Self, i32, i32, i32, i32, &str) + 'static>(
+    pub fn add_modify_callback<F: FnMut(&mut Self, i32, i32, i32, i32, Option<&str>) + 'static>(
         &mut self,
         mut cb: F,
     ) -> ModifyCallbackHandle {

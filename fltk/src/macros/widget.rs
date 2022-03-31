@@ -91,15 +91,15 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _height>](self.inner) }
                 }
 
-                fn label(&self) -> String {
+                fn label(&self) -> Option<String> {
                     assert!(!self.was_deleted());
                     unsafe {
                         fltk_sys::fl::Fl_lock();
                         let ptr = [<$flname _label>](self.inner) as *mut std::os::raw::c_char;
                         let s = if ptr.is_null() {
-                            String::from("")
+                            None
                         } else {
-                            CStr::from_ptr(ptr).to_string_lossy().to_string()
+                            Some(CStr::from_ptr(ptr).to_string_lossy().to_string())
                         };
                         fltk_sys::fl::Fl_unlock();
                         s
@@ -920,7 +920,7 @@ pub use impl_widget_type;
 macro_rules! impl_widget_ext_via {
     ($widget:ty, $member:tt) => {
         $crate::widget_builder!($widget);
-        
+
         unsafe impl WidgetExt for $widget {
             fn set_pos(&mut self, x: i32, y: i32) {
                 self.$member.set_pos(x, y)

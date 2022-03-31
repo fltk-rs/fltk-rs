@@ -24,7 +24,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     but_dec.emit(s, Message::Decrement);
 
     while app.wait() {
-        let label: i32 = frame.label().parse()?;
+        let label: i32 = frame.label().unwrap().parse()?;
 
         if let Some(msg) = r.recv() {
             match msg {
