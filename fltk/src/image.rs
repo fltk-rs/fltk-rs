@@ -731,7 +731,8 @@ impl RgbImage {
         unsafe { RgbImage::from_image_ptr(Fl_RGB_Image_from_pixmap(image.inner as _) as _) }
     }
 
-    /// Deconstructs a raw `RgbImage` into parts
+    /// Deconstructs a raw `RgbImage` into parts.
+    /// Returns the data in a vec as well as the width and height
     /// # Safety
     /// Destructures the image into its raw elements
     pub unsafe fn into_parts(self) -> (Vec<u8>, i32, i32) {

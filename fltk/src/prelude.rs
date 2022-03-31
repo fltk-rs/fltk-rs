@@ -130,66 +130,6 @@ pub trait WidgetType {
 /// to avoid future breakage if you try to implement them manually,
 /// use the Deref and DerefMut pattern or the `widget_extends!` macro
 pub unsafe trait WidgetExt {
-    /// Initialize to a position x, y
-    fn with_pos(self, x: i32, y: i32) -> Self
-    where
-        Self: Sized;
-    /// Initialize to size width, height
-    fn with_size(self, width: i32, height: i32) -> Self
-    where
-        Self: Sized;
-    /// Initialize with a label
-    fn with_label(self, title: &str) -> Self
-    where
-        Self: Sized;
-    /// Initialize with alignment
-    fn with_align(self, align: crate::enums::Align) -> Self
-    where
-        Self: Sized;
-    /// Initialize with type
-    fn with_type<T: WidgetType>(self, typ: T) -> Self
-    where
-        Self: Sized;
-    /// Initialize at bottom of another widget
-    fn below_of<W: WidgetExt>(self, wid: &W, padding: i32) -> Self
-    where
-        Self: Sized;
-    /// Initialize above of another widget
-    fn above_of<W: WidgetExt>(self, wid: &W, padding: i32) -> Self
-    where
-        Self: Sized;
-    /// Initialize right of another widget
-    fn right_of<W: WidgetExt>(self, wid: &W, padding: i32) -> Self
-    where
-        Self: Sized;
-    /// Initialize left of another widget
-    fn left_of<W: WidgetExt>(self, wid: &W, padding: i32) -> Self
-    where
-        Self: Sized;
-    /// Initialize center of another widget
-    fn center_of<W: WidgetExt>(self, w: &W) -> Self
-    where
-        Self: Sized;
-    /// Initialize center of another widget on the x axis
-    fn center_x<W: WidgetExt>(self, w: &W) -> Self
-    where
-        Self: Sized;
-    /// Initialize center of another widget on the y axis
-    fn center_y<W: WidgetExt>(self, w: &W) -> Self
-    where
-        Self: Sized;
-    /// Initialize center of parent
-    fn center_of_parent(self) -> Self
-    where
-        Self: Sized;
-    /// Initialize to the size of another widget
-    fn size_of<W: WidgetExt>(self, w: &W) -> Self
-    where
-        Self: Sized;
-    /// Initialize to the size of the parent
-    fn size_of_parent(self) -> Self
-    where
-        Self: Sized;
     /// Set to position x, y
     fn set_pos(&mut self, x: i32, y: i32);
     /// Set to dimensions width and height
@@ -1548,11 +1488,9 @@ pub trait SurfaceDevice {
 }
 
 /// Defines a set of convenience functions for constructing and anchoring custom widgets.
-/// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
-/// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.
 #[macro_export]
-macro_rules! widget_extends {
-    ($widget:ty, $base:ty, $member:tt) => {
+macro_rules! widget_builder {
+    ($widget:ty) => {
         impl $widget {
             /// Initialize to position x, y
             pub fn with_pos(mut self, x: i32, y: i32) -> Self {
@@ -1771,6 +1709,15 @@ macro_rules! widget_extends {
                 self
             }
         }
+    }
+}
+
+/// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
+/// It basically implements Deref and DerefMut on the custom widget
+#[macro_export]
+macro_rules! widget_extends {
+    ($widget:ty, $base:ty, $member:tt) => {
+        widget_builder!($widget);
 
         impl std::ops::Deref for $widget {
             type Target = $base;
