@@ -189,8 +189,8 @@ fn main() {
     let (s, r) = app::channel::<Message>();
 
     for but in but_vec {
-        let label = but.label().unwrap();
-        but.emit(s, Message::Number(label.parse().unwrap()));
+        let label: i32 = but.label().unwrap().parse().unwrap();
+        but.emit(s, Message::Number(label));
     }
 
     for mut but in but_op_vec {
