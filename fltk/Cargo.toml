@@ -69,3 +69,6 @@ harness = false
 name = "modify_submenu"
 path = "tests/modify_submenu.rs"
 harness = false
+
+[dev-dependencies]
+lazy_static = "1"
