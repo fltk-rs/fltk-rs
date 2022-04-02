@@ -13,7 +13,7 @@ pub trait WidgetId<W> where W: WidgetExt {
 
 impl<W> WidgetId<W> for W where W: WidgetExt {
     fn set_id(&mut self, id: &'static str) {
-        WIDGET_MAP.lock().unwrap().insert(id, unsafe { self.into_widget() });
+        WIDGET_MAP.lock().unwrap().insert(id, unsafe { self.as_widget() });
     }
     fn with_id(mut self, id: &'static str) -> Self {
         self.set_id(id);
@@ -44,7 +44,7 @@ impl<W> OnTrigger<W> for W where W: WidgetExt {
 // For calls inside a closure
 fn increment_by(step: i32) {
     if let Some(mut frame) = from_id("my_frame") {
-        let label: i32 = frame.label().parse().unwrap();
+        let label: i32 = frame.label().unwrap().parse().unwrap();
         frame.set_label(&(label + step).to_string());
     }
 }
@@ -52,7 +52,7 @@ fn increment_by(step: i32) {
 // To pass a function object directly!
 fn increment(_w: &mut impl WidgetExt) {
     if let Some(mut frame) = from_id("my_frame") {
-        let label: i32 = frame.label().parse().unwrap();
+        let label: i32 = frame.label().unwrap().parse().unwrap();
         frame.set_label(&(label + 1).to_string());
     }
 }
