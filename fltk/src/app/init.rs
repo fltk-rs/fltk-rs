@@ -23,6 +23,7 @@ pub(crate) static mut UI_THREAD: Option<std::thread::ThreadId> = None;
 
 /// Registers all images supported by `SharedImage`
 pub(crate) fn register_images() {
+    #[cfg(not(feature = "no-images"))]
     unsafe { fltk_sys::image::Fl_register_images() }
 }
 
