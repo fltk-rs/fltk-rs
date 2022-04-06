@@ -11,7 +11,7 @@ use std::{
 };
 
 /// Set the app's font
-pub fn set_font(new_font: Font) {
+pub fn set_font(new_font: &Font) {
     unsafe {
         let new_font = new_font.bits() as i32;
         let f = CURRENT_FONT.load(Ordering::Relaxed);
@@ -33,7 +33,7 @@ pub fn font_size() -> i32 {
 }
 
 /// Get the font's name
-pub fn get_font(font: Font) -> String {
+pub fn get_font(font: &Font) -> String {
     unsafe {
         CStr::from_ptr(fl::Fl_get_font(font.bits() as i32))
             .to_string_lossy()
@@ -42,7 +42,7 @@ pub fn get_font(font: Font) -> String {
 }
 
 /// Get the font's name
-pub fn get_font_name(font: Font) -> String {
+pub fn get_font_name(font: &Font) -> String {
     unsafe {
         CStr::from_ptr(fl::Fl_get_font_name(font.bits() as i32))
             .to_string_lossy()
@@ -51,7 +51,7 @@ pub fn get_font_name(font: Font) -> String {
 }
 
 /// Get a font's sizes
-pub fn get_font_sizes(font: Font) -> Vec<i32> {
+pub fn get_font_sizes(font: &Font) -> Vec<i32> {
     unsafe {
         let start = vec![0i32; 128];
         let mut start = std::mem::ManuallyDrop::new(start);

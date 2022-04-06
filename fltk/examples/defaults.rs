@@ -8,7 +8,7 @@ fn main() {
     // global theming
     app::background(r, g, b); // background color. For input/output and text widgets, use app::background2
     app::foreground(20, 20, 20); // labels
-    app::set_font(enums::Font::Courier);
+    app::set_font(&enums::Font::Courier);
     app::set_font_size(16);
     app::set_frame_type(enums::FrameType::RFlatBox);
     app::set_visible_focus(false);
