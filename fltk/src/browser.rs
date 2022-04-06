@@ -240,6 +240,11 @@ impl CheckBrowser {
         unsafe { Fl_Check_Browser_nitems(self.inner) as usize }
     }
 
+    /// Return the number of items
+    pub fn size(&self) -> usize {
+        self.nitems()
+    }
+
     /// Get the number of checked items
     pub fn nchecked(&self) -> usize {
         assert!(!self.was_deleted());
