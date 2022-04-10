@@ -171,7 +171,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         };
 
         if target_triple == "aarch64-apple-darwin" {
-            dst.define("CMAKE_OSX_ARCHITECTURE", "arm64");
+            dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
         }
 
         let _dst = dst

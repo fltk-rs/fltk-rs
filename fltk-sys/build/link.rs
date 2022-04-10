@@ -63,7 +63,7 @@ pub fn link(target_os: &str, out_dir: &Path) {
             }
         }
 
-        if cfg!(any(feature = "enable-glwindow", feature = "fltk-bundled")) {
+        if cfg!(feature = "enable-glwindow") {
             println!("cargo:rustc-link-lib=static=fltk_gl");
             match target_os {
                 "macos" => println!("cargo:rustc-link-lib=framework=OpenGL"),
