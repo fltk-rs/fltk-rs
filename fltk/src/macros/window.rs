@@ -263,14 +263,14 @@ macro_rules! impl_window_ext {
                     unsafe {
                         let ptr = [<$flname _region>](self.inner);
                         assert!(!ptr.is_null());
-                        ptr
+                        $crate::draw::Region(ptr)
                     }
                 }
 
                 unsafe fn set_region(&mut self, region: $crate::draw::Region) {
                     assert!(!self.was_deleted());
-                    assert!(!region.is_null());
-                    [<$flname _set_region>](self.inner, region)
+                    assert!(!region.0.is_null());
+                    [<$flname _set_region>](self.inner, region.0)
                 }
 
                 fn iconize(&mut self) {

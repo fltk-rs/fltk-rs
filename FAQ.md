@@ -31,6 +31,9 @@ If the linking fails because of this [issue](https://github.com/rust-lang/rust/i
 fltk = { version = "^1.3", features = ["fltk-shared"] }
 ```
 
+### Why does my msys2 mingw built fltk app using, fltk-bundled, isn't self-contained and requires several dlls?
+If you have installed libgdiplus via pacman, it would require those dependencies on other systems. If you're using the windows sdk-provided libgdiplus, it shouldn't require extra dlls. You can either uninstall libgdiplus that was installed via pacman, or or you can build using the feature flag: `no-gdiplus`.
+
 ### Why do I get link errors when I use the system-fltk feature?
 This crate targets FLTK 1.4, while currently most distros distribute an older version of FLTK (1.3.5). You can try to install FLTK (C++) by building from source.
 
