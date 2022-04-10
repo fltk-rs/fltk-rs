@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.3.3] - 2022-04-10
+- Pull FLTK fixes.
+- Some refactoring.
+
 ## [1.3.2] - 2022-03-31
 - Add Screen type as well as related screen functions and screens_info example, by @joseluis.
 - Add Rect and new Coordinates type, by @joseluis.
