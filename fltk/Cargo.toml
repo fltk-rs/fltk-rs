@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.3.3"
+version = "1.3.4"
 authors = ["The fltk-rs Authors"]
 edition = "2018"
 description = "Rust bindings for the FLTK GUI library"
@@ -26,7 +26,7 @@ raw-window-handle = { version = "^0.4", optional = true }
 
 [features]
 default = []
-fltk-bundled = ["fltk-sys/fltk-bundled", "enable-glwindow"] # Support for bundled versions of cfltk and fltk (requires curl and tar)
+fltk-bundled = ["fltk-sys/fltk-bundled"] # Support for bundled versions of cfltk and fltk (requires curl and tar)
 enable-glwindow = ["fltk-sys/enable-glwindow"] # Support for systems without OpenGL
 no-pango = ["fltk-sys/no-pango"] # You can use this if you don't need rtl or cjk unicode support
 fltk-shared = ["fltk-sys/fltk-shared"] # Builds a shared lib of fltk
