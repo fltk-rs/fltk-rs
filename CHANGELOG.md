@@ -2,7 +2,7 @@
 
 
 ## [1.3.5] - Unreleased
-- Add BrowserExt::data() and set_data() methods.
+- Add BrowserExt::data(), set_data(), add_with_data() and insert_with_data() methods.
 
 ## [1.3.4] - 2022-04-10
 - Pull FLTK fixes.

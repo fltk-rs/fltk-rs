@@ -18,10 +18,20 @@ macro_rules! impl_browser_ext {
                     unsafe { [<$flname _add>](self.inner, item.as_ptr()) }
                 }
 
+                fn add_with_data<T: Clone + 'static>(&mut self, item: &str, data: T) {
+                    self.add(item);
+                    self.set_data(self.size(), data);
+                }
+
                 fn insert(&mut self, line: i32, item: &str) {
                     assert!(!self.was_deleted());
                     let item = CString::safe_new(item);
                     unsafe { [<$flname _insert>](self.inner, line as i32, item.as_ptr()) }
+                }
+
+                fn insert_with_data<T: Clone + 'static>(&mut self, line: i32, item: &str, data: T) {
+                    self.insert(line, item);
+                    self.set_data(line, data);
                 }
 
                 fn move_item(&mut self, to: i32, from: i32) {
