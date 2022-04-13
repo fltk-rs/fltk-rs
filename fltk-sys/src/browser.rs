@@ -3060,16 +3060,3 @@ extern "C" {
 extern "C" {
     pub fn Fl_Check_Browser_text_size(self_: *mut Fl_Check_Browser) -> ::std::os::raw::c_int;
 }
-extern "C" {
-    pub fn Fl_Check_Browser_data(
-        self_: *const Fl_Check_Browser,
-        line: ::std::os::raw::c_int,
-    ) -> *mut ::std::os::raw::c_void;
-}
-extern "C" {
-    pub fn Fl_Check_Browser_set_data(
-        self_: *mut Fl_Check_Browser,
-        line: ::std::os::raw::c_int,
-        data: *mut ::std::os::raw::c_void,
-    );
-}
