@@ -314,6 +314,24 @@ macro_rules! impl_browser_ext {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _value>](self.inner) as i32 }
                 }
+
+                fn set_data<T: Clone + 'static>(&mut self, line: i32, data: T) {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        [<$flname _set_data>](self.inner, line, Box::into_raw(Box::from(data)) as _);
+                    }
+                }
+            
+                unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T> {
+                    assert!(!self.was_deleted());
+                    let ptr = [<$flname _data>](self.inner, line);
+                    if ptr.is_null() {
+                        None
+                    } else {
+                        let data = ptr as *const _ as *mut T;
+                        Some((*data).clone())
+                    }
+                }
             }
         }
     };
