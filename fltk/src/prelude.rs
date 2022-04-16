@@ -1197,9 +1197,14 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn remove(&mut self, line: i32);
     /// Adds an item
     fn add(&mut self, item: &str);
+    /// Adds an item with associated data
+    fn add_with_data<T: Clone + 'static>(&mut self, item: &str, data: T);
     /// Inserts an item at an index.
     /// Lines start at 1
     fn insert(&mut self, line: i32, item: &str);
+    /// Inserts an item at an index with associated data.
+    /// Lines start at 1
+    fn insert_with_data<T: Clone + 'static>(&mut self, line: i32, item: &str, data: T);
     /// Moves an item.
     /// Lines start at 1
     fn move_item(&mut self, to: i32, from: i32);
@@ -1295,6 +1300,12 @@ pub unsafe trait BrowserExt: WidgetExt {
     fn hscrollbar(&self) -> crate::valuator::Scrollbar;
     /// Returns the selected line, returns 0 if no line is selected
     fn value(&self) -> i32;
+    /// Set the data associated with the line
+    fn set_data<T: Clone + 'static>(&mut self, line: i32, data: T);
+    /// Get the data associated with the line
+    /// # Safety
+    /// Type correctness is insured by the developer
+    unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T>;
 }
 
 /// Defines the methods implemented by table types.
