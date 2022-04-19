@@ -43,7 +43,10 @@ use-wayland = ["fltk-sys/use-wayland"] # Use FLTK's wayland backend on linux sys
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
-cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples=examples"]
+# cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples=examples"]
+
+[dev-dependencies]
+lazy_static = "1"
 
 [[test]]
 name = "app_handle"
@@ -69,6 +72,3 @@ harness = false
 name = "modify_submenu"
 path = "tests/modify_submenu.rs"
 harness = false
-
-[dev-dependencies]
-lazy_static = "1"
