@@ -35,7 +35,7 @@ struct MyButton {
 
 impl MyButton {
     pub fn new(title: &'static str) -> MyButton {
-        let mut b = MyButton {
+        let b = MyButton {
             btn: Button::new(0, 0, 100, 0, title),
         };
         b.set_label_size(24);
@@ -115,12 +115,12 @@ fn main() {
     let mut old_val = String::from("0");
     let mut new_val: String;
 
-    let mut wind = Window::default()
+    let wind = Window::default()
         .with_label("FLTK Calc")
         .with_size(win_w, win_h)
         .center_screen();
 
-    let mut out = Frame::new(0, 0, win_w, 160, "").with_align(Align::Right | Align::Inside);
+    let out = Frame::new(0, 0, win_w, 160, "").with_align(Align::Right | Align::Inside);
     out.set_color(Color::from_hex(0x1b1b1b));
     out.set_frame(FrameType::FlatBox);
     out.set_label_color(Color::White);
@@ -129,7 +129,7 @@ fn main() {
 
     let vpack = Pack::new(0, but_row, win_w, win_h - 170, "");
 
-    let mut hpack = Pack::new(0, 0, win_w, 68, "");
+    let hpack = Pack::new(0, 0, win_w, 68, "");
     let but_ce = MyButton::new("CE");
     let but_c = MyButton::new("C");
     let but_back = MyButton::new("@<-");
@@ -137,33 +137,33 @@ fn main() {
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, win_w, 68, "");
-    let mut but7 = MyButton::new("7");
-    let mut but8 = MyButton::new("8");
-    let mut but9 = MyButton::new("9");
+    let hpack = Pack::new(0, 0, win_w, 68, "");
+    let but7 = MyButton::new("7");
+    let but8 = MyButton::new("8");
+    let but9 = MyButton::new("9");
     let but_mul = MyButton::new("x");
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, win_w, 68, "");
-    let mut but4 = MyButton::new("4");
-    let mut but5 = MyButton::new("5");
-    let mut but6 = MyButton::new("6");
+    let hpack = Pack::new(0, 0, win_w, 68, "");
+    let but4 = MyButton::new("4");
+    let but5 = MyButton::new("5");
+    let but6 = MyButton::new("6");
     let but_sub = MyButton::new("-");
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, win_w, 68, "");
-    let mut but1 = MyButton::new("1");
-    let mut but2 = MyButton::new("2");
-    let mut but3 = MyButton::new("3");
+    let hpack = Pack::new(0, 0, win_w, 68, "");
+    let but1 = MyButton::new("1");
+    let but2 = MyButton::new("2");
+    let but3 = MyButton::new("3");
     let but_add = MyButton::new("+");
     hpack.end();
     hpack.set_type(PackType::Horizontal);
 
-    let mut hpack = Pack::new(0, 0, win_w, 68, "");
-    let mut but_dot = MyButton::new(".");
-    let mut but0 = MyButton::new("0");
+    let hpack = Pack::new(0, 0, win_w, 68, "");
+    let but_dot = MyButton::new(".");
+    let but0 = MyButton::new("0");
     let but_eq = MyButton::new("=");
     hpack.end();
     hpack.set_type(PackType::Horizontal);
@@ -178,8 +178,8 @@ fn main() {
     app::get_system_colors();
 
     let but_vec = vec![
-        &mut but1, &mut but2, &mut but3, &mut but4, &mut but5, &mut but6, &mut but7, &mut but8,
-        &mut but9, &mut but0,
+        &but1, &but2, &but3, &but4, &but5, &but6, &but7, &but8,
+        &but9, &but0,
     ];
 
     let but_op_vec = vec![
@@ -193,7 +193,7 @@ fn main() {
         but.emit(s, Message::Number(label));
     }
 
-    for mut but in but_op_vec {
+    for but in but_op_vec {
         let op = match but.label().unwrap().as_str() {
             "+" => Ops::Add,
             "-" => Ops::Sub,

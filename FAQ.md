@@ -164,7 +164,7 @@ An example of a leaking widget:
 ```rust
 fn main() {
     let a = app::App::default();
-    let mut win = window::Window::default();
+    let win = window::Window::default();
     win.end();
     win.show();
 
@@ -178,7 +178,7 @@ A more subtle cause of leaks, is removing a widget from a group, then the scope 
 ```rust
 fn main() {
     let a = app::App::default();
-    let mut win = window::Window::default();
+    let win = window::Window::default();
     {
         button::Button::default(); // This doesn't leak since the parent is the window
     }

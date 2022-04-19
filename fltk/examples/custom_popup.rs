@@ -9,7 +9,7 @@ pub struct PopupButton {
 
 impl PopupButton {
     pub fn new(label: &str) -> Self {
-        let mut but = button::Button::default().with_label(label);
+        let but = button::Button::default().with_label(label);
         but.set_frame(FrameType::FlatBox);
         but.handle(|b, ev| match ev {
             Event::Enter => {
@@ -50,18 +50,18 @@ pub struct MyPopup {
 impl MyPopup {
     pub fn new(choices: &[&str]) -> Self {
         let val = Rc::from(RefCell::from(String::from("")));
-        let mut win = window::Window::default().with_size(120, choices.len() as i32 * 25);
-        let mut pack = group::Pack::default().size_of_parent();
+        let win = window::Window::default().with_size(120, choices.len() as i32 * 25);
+        let pack = group::Pack::default().size_of_parent();
         pack.set_frame(FrameType::ThinUpFrame);
         pack.set_color(Color::Black);
         win.set_border(false);
         win.make_modal(true);
         win.end();
         for choice in choices {
-            let mut but = PopupButton::new(choice);
+            let but = PopupButton::new(choice);
             but.clear_visible_focus();
             but.set_callback({
-                let mut win = win.clone();
+                let win = win.clone();
                 let val = val.clone();
                 move |b| {
                     *val.borrow_mut() = b.label().unwrap();
@@ -86,8 +86,8 @@ impl MyPopup {
 
 fn main() {
     let app = app::App::default();
-    let mut win = window::Window::default().with_size(400, 300);
-    let mut frame = frame::Frame::default()
+    let win = window::Window::default().with_size(400, 300);
+    let frame = frame::Frame::default()
         .with_size(200, 100)
         .with_label("Right click me!")
         .center_of_parent();

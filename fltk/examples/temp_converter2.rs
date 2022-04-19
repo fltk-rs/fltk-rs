@@ -11,7 +11,7 @@ pub enum Message {
 }
 
 fn make_label(label: &str) -> frame::Frame {
-    let mut f = frame::Frame::default()
+    let f = frame::Frame::default()
         .with_label(label)
         .with_align(Align::Inside | Align::Bottom);
     f.set_label_type(LabelType::Engraved);
@@ -40,15 +40,15 @@ impl MyApp {
         let (s, r) = app::channel();
 
         let (inp1, inp2) = {
-            let mut win = window::Window::default().with_size(150, 200);
-            let mut flex = group::Flex::default()
+            let win = window::Window::default().with_size(150, 200);
+            let flex = group::Flex::default()
                 .with_size(130, 180)
                 .center_of(&win)
                 .column();
             make_label("Celcius");
-            let mut inp1 = input::FloatInput::default().with_size(0, 40);
+            let inp1 = input::FloatInput::default().with_size(0, 40);
             make_label("Fahrenheit");
-            let mut inp2 = input::FloatInput::default().with_size(0, 40);
+            let inp2 = input::FloatInput::default().with_size(0, 40);
             flex.set_size(&inp1, 30);
             flex.set_size(&inp2, 30);
             flex.end();

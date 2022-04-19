@@ -5,7 +5,7 @@ macro_rules! impl_valuator_ext {
     ($name: ident, $flname: ident) => {
         paste::paste! {
             unsafe impl ValuatorExt for $name {
-                fn set_bounds(&mut self, a: f64, b: f64) {
+                fn set_bounds(&self, a: f64, b: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_bounds>](self.inner, a, b)
@@ -19,7 +19,7 @@ macro_rules! impl_valuator_ext {
                     }
                 }
 
-                fn set_minimum(&mut self, a: f64) {
+                fn set_minimum(&self, a: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_minimum>](self.inner, a)
@@ -33,21 +33,21 @@ macro_rules! impl_valuator_ext {
                     }
                 }
 
-                fn set_maximum(&mut self, a: f64) {
+                fn set_maximum(&self, a: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_maximum>](self.inner, a)
                     }
                 }
 
-                fn set_range(&mut self, a: f64, b: f64) {
+                fn set_range(&self, a: f64, b: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_range>](self.inner, a, b)
                     }
                 }
 
-                fn set_step(&mut self, a: f64, b: i32) {
+                fn set_step(&self, a: f64, b: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(b != 0);
@@ -62,7 +62,7 @@ macro_rules! impl_valuator_ext {
                     }
                 }
 
-                fn set_precision(&mut self, digits: i32) {
+                fn set_precision(&self, digits: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_precision>](self.inner, digits)
@@ -76,14 +76,14 @@ macro_rules! impl_valuator_ext {
                     }
                 }
 
-                fn set_value(&mut self, arg2: f64) {
+                fn set_value(&self, arg2: f64) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_value>](self.inner, arg2);
                     }
                 }
 
-                fn format(&mut self, arg2: &str) -> Result<(), FltkError> {
+                fn format(&self, arg2: &str) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         let arg2 = CString::safe_new(arg2);
@@ -112,7 +112,7 @@ macro_rules! impl_valuator_ext {
                     }
                 }
 
-                fn increment(&mut self, arg2: f64, arg3: i32) -> f64 {
+                fn increment(&self, arg2: f64, arg3: i32) -> f64 {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _increment>](self.inner, arg2, arg3)

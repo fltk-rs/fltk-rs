@@ -115,7 +115,7 @@ impl SingleWindow {
     /// Note: Only call this from the main thread.
     pub fn default() -> SingleWindow {
         assert!(crate::app::is_ui_thread());
-        let mut win = <SingleWindow as Default>::default();
+        let win = <SingleWindow as Default>::default();
         win.free_position();
         win
     }
@@ -153,7 +153,7 @@ impl SingleWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_env_args(&mut self) {
+    pub fn show_with_env_args(&self) {
         assert!(!self.was_deleted());
         unsafe {
             let args: Vec<String> = std::env::args().collect();
@@ -186,7 +186,7 @@ impl SingleWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_args(&mut self, args: &[&str]) {
+    pub fn show_with_args(&self, args: &[&str]) {
         assert!(!self.was_deleted());
         unsafe {
             let mut temp = vec![""];
@@ -269,7 +269,7 @@ impl DoubleWindow {
     /// Note: Only call this from the main thread.
     pub fn default() -> DoubleWindow {
         assert!(crate::app::is_ui_thread());
-        let mut win = <DoubleWindow as Default>::default();
+        let win = <DoubleWindow as Default>::default();
         win.free_position();
         win
     }
@@ -307,7 +307,7 @@ impl DoubleWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_env_args(&mut self) {
+    pub fn show_with_env_args(&self) {
         assert!(!self.was_deleted());
         unsafe {
             let args: Vec<String> = std::env::args().collect();
@@ -340,7 +340,7 @@ impl DoubleWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_args(&mut self, args: &[&str]) {
+    pub fn show_with_args(&self, args: &[&str]) {
         assert!(!self.was_deleted());
         unsafe {
             let mut temp = vec![""];
@@ -357,7 +357,7 @@ impl DoubleWindow {
     }
 
     /// Forces the window to be drawn, this window is also made current and calls draw()
-    pub fn flush(&mut self) {
+    pub fn flush(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Double_Window_flush(self.inner) }
     }
@@ -515,7 +515,7 @@ impl MenuWindow {
     /// Creates a default initialized menu window
     pub fn default() -> MenuWindow {
         assert!(crate::app::is_ui_thread());
-        let mut win = <MenuWindow as Default>::default();
+        let win = <MenuWindow as Default>::default();
         win.free_position();
         win
     }
@@ -538,7 +538,7 @@ impl OverlayWindow {
     /// Creates a default initialized overlay window
     pub fn default() -> OverlayWindow {
         assert!(crate::app::is_ui_thread());
-        let mut win = <OverlayWindow as Default>::default();
+        let win = <OverlayWindow as Default>::default();
         win.free_position();
         win
     }
@@ -576,7 +576,7 @@ impl OverlayWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_env_args(&mut self) {
+    pub fn show_with_env_args(&self) {
         assert!(!self.was_deleted());
         unsafe {
             let args: Vec<String> = std::env::args().collect();
@@ -609,7 +609,7 @@ impl OverlayWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_args(&mut self, args: &[&str]) {
+    pub fn show_with_args(&self, args: &[&str]) {
         assert!(!self.was_deleted());
         unsafe {
             let mut temp = vec![""];
@@ -626,13 +626,13 @@ impl OverlayWindow {
     }
 
     /// Forces the window to be drawn, this window is also made current and calls draw()
-    pub fn flush(&mut self) {
+    pub fn flush(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Double_Window_flush(self.inner as _) }
     }
 
     /// Draw overlay
-    pub fn draw_overlay<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+    pub fn draw_overlay<F: FnMut(&Self) + 'static>(&self, cb: F) {
         assert!(!self.was_deleted());
         assert!(self.is_derived);
         unsafe {
@@ -647,7 +647,7 @@ impl OverlayWindow {
             if self.is_derived {
                 _old_data = self.draw_data();
             }
-            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: custom_draw_callback = Some(shim);
             Fl_Overlay_Window_draw_overlay(self.inner, callback, data);
@@ -693,7 +693,7 @@ impl GlutWindow {
     /// Creates a default initialized glut window
     pub fn default() -> GlutWindow {
         assert!(crate::app::is_ui_thread());
-        let mut win = <GlutWindow as Default>::default();
+        let win = <GlutWindow as Default>::default();
         win.free_position();
         win
     }
@@ -713,7 +713,7 @@ impl GlutWindow {
     }
 
     /// Forces the window to be drawn, this window is also made current and calls draw()
-    pub fn flush(&mut self) {
+    pub fn flush(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_flush(self.inner) }
     }
@@ -725,7 +725,7 @@ impl GlutWindow {
     }
 
     /// Mark the OpeGL context as still valid
-    pub fn set_valid(&mut self, v: bool) {
+    pub fn set_valid(&self, v: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_set_valid(self.inner, v as raw::c_char) }
     }
@@ -737,7 +737,7 @@ impl GlutWindow {
     }
 
     /// Mark the context as valid upon creation
-    pub fn set_context_valid(&mut self, v: bool) {
+    pub fn set_context_valid(&self, v: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_set_context_valid(self.inner, v as raw::c_char) }
     }
@@ -756,21 +756,21 @@ impl GlutWindow {
     }
 
     /// Sets the GlContext
-    pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
+    pub fn set_context(&self, ctx: GlContext, destroy_flag: bool) {
         assert!(!self.was_deleted());
         assert!(!ctx.is_null());
         unsafe { Fl_Glut_Window_set_context(self.inner, ctx, destroy_flag as i32) }
     }
 
     /// Swaps the back and front buffers
-    pub fn swap_buffers(&mut self) {
+    pub fn swap_buffers(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_swap_buffers(self.inner) }
     }
 
     /// Sets the projection so 0,0 is in the lower left of the window
     /// and each pixel is 1 unit wide/tall.
-    pub fn ortho(&mut self) {
+    pub fn ortho(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_ortho(self.inner) }
     }
@@ -782,19 +782,19 @@ impl GlutWindow {
     }
 
     /// Redraws the overlay
-    pub fn redraw_overlay(&mut self) {
+    pub fn redraw_overlay(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_redraw_overlay(self.inner) }
     }
 
     /// Hides the overlay
-    pub fn hide_overlay(&mut self) {
+    pub fn hide_overlay(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_hide_overlay(self.inner) }
     }
 
     /// Makes the overlay current
-    pub fn make_overlay_current(&mut self) {
+    pub fn make_overlay_current(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_make_overlay_current(self.inner) }
     }
@@ -824,7 +824,7 @@ impl GlutWindow {
     }
 
     /// Set the Mode of the GlutWindow
-    pub fn set_mode(&mut self, mode: Mode) {
+    pub fn set_mode(&self, mode: Mode) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Glut_Window_set_mode(self.inner, mode.bits());
@@ -864,7 +864,7 @@ pub mod experimental {
         /// Creates a default initialized glut window
         pub fn default() -> GlWidgetWindow {
             assert!(crate::app::is_ui_thread());
-            let mut win = <GlWidgetWindow as Default>::default();
+            let win = <GlWidgetWindow as Default>::default();
             win.free_position();
             win.set_frame(FrameType::FlatBox);
             win.begin();
@@ -879,7 +879,7 @@ pub mod experimental {
             h: i32,
             label: T,
         ) -> GlWidgetWindow {
-            let mut win = <GlWidgetWindow as WidgetBase>::new(x, y, w, h, label);
+            let win = <GlWidgetWindow as WidgetBase>::new(x, y, w, h, label);
             win.set_frame(FrameType::FlatBox);
             win.begin();
             win
@@ -900,7 +900,7 @@ pub mod experimental {
         }
 
         /// Forces the window to be drawn, this window is also made current and calls draw()
-        pub fn flush(&mut self) {
+        pub fn flush(&self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_flush(self.inner) }
         }
@@ -912,7 +912,7 @@ pub mod experimental {
         }
 
         /// Mark the OpeGL context as still valid
-        pub fn set_valid(&mut self, v: bool) {
+        pub fn set_valid(&self, v: bool) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_set_valid(self.inner, v as raw::c_char) }
         }
@@ -924,7 +924,7 @@ pub mod experimental {
         }
 
         /// Mark the context as valid upon creation
-        pub fn set_context_valid(&mut self, v: bool) {
+        pub fn set_context_valid(&self, v: bool) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_set_context_valid(self.inner, v as raw::c_char) }
         }
@@ -943,21 +943,21 @@ pub mod experimental {
         }
 
         /// Sets the GlContext
-        pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
+        pub fn set_context(&self, ctx: GlContext, destroy_flag: bool) {
             assert!(!self.was_deleted());
             assert!(!ctx.is_null());
             unsafe { Fl_Gl_Window_set_context(self.inner, ctx, destroy_flag as i32) }
         }
 
         /// Swaps the back and front buffers
-        pub fn swap_buffers(&mut self) {
+        pub fn swap_buffers(&self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_swap_buffers(self.inner) }
         }
 
         /// Sets the projection so 0,0 is in the lower left of the window
         /// and each pixel is 1 unit wide/tall.
-        pub fn ortho(&mut self) {
+        pub fn ortho(&self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_ortho(self.inner) }
         }
@@ -969,19 +969,19 @@ pub mod experimental {
         }
 
         /// Redraws the overlay
-        pub fn redraw_overlay(&mut self) {
+        pub fn redraw_overlay(&self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_redraw_overlay(self.inner) }
         }
 
         /// Hides the overlay
-        pub fn hide_overlay(&mut self) {
+        pub fn hide_overlay(&self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_hide_overlay(self.inner) }
         }
 
         /// Makes the overlay current
-        pub fn make_overlay_current(&mut self) {
+        pub fn make_overlay_current(&self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_make_overlay_current(self.inner) }
         }
@@ -1011,7 +1011,7 @@ pub mod experimental {
         }
 
         /// Set the Mode of the GlutWindow
-        pub fn set_mode(&mut self, mode: Mode) {
+        pub fn set_mode(&self, mode: Mode) {
             assert!(!self.was_deleted());
             unsafe {
                 Fl_Gl_Window_set_mode(self.inner, mode.bits());

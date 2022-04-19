@@ -14,7 +14,7 @@ use std::ffi::{CStr, CString};
 /// use fltk::{prelude::*, *};
 /// fn main() {
 ///     let a = app::App::default();
-///     let mut win = window::Window::default();
+///     let win = window::Window::default();
 ///     let mut wid = widget::Widget::default();
 ///     win.end();
 ///     win.show();

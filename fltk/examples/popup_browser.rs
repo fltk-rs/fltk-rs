@@ -6,8 +6,8 @@ fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     app::background(211, 211, 211);
 
-    let mut win = window::Window::default().with_size(900, 300);
-    let mut b = browser::HoldBrowser::default()
+    let win = window::Window::default().with_size(900, 300);
+    let b = browser::HoldBrowser::default()
         .with_size(900 - 10, 300 - 10)
         .center_of(&win);
     let widths = &[50, 50, 50, 70, 70, 40, 40, 70, 70, 50];

@@ -6,15 +6,15 @@ pub enum Message {
     Decrement(i32),
 }
 
-fn inc_frame(frame: &mut Frame, val: &mut i32, step: i32) {
+fn inc_frame(frame: &Frame, val: &mut i32, step: i32) {
     *val += step;
     frame.set_label(&val.to_string());
 }
 
 fn main() {
     let app = app::App::default();
-    let mut wind = Window::default().with_size(400, 300);
-    let mut frame = Frame::default().size_of(&wind).with_label("0");
+    let wind = Window::default().with_size(400, 300);
+    let frame = Frame::default().size_of(&wind).with_label("0");
 
     let mut val = 0;
 
@@ -29,7 +29,7 @@ fn main() {
 
     while app.wait() {
         if let Some(Message::Increment(step)) = r.recv() {
-            inc_frame(&mut frame, &mut val, step)
+            inc_frame(&frame, &mut val, step)
         }
     }
 }

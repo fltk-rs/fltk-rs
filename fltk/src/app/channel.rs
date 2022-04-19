@@ -1,39 +1,9 @@
-use fltk_sys::fl;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::{any, marker, mem, os::raw};
 
 static mut SENDER: Option<crossbeam_channel::Sender<*mut raw::c_void>> = None;
 static mut RECEIVER: Option<crossbeam_channel::Receiver<*mut raw::c_void>> = None;
-
-#[doc(hidden)]
-/// Sends a custom message
-/// # Safety
-/// The type must be Send and Sync safe
-pub unsafe fn awake_msg<T>(msg: T) {
-    fl::Fl_awake_msg(Box::into_raw(Box::from(msg)) as *mut raw::c_void);
-}
-
-#[allow(clippy::missing_safety_doc)]
-#[doc(hidden)]
-/**
-    Receives a custom message
-    ```rust,no_run
-    use fltk::{prelude::*, *};
-    if let Some(msg) = unsafe { app::thread_msg::<i32>() } { /* do something */ }
-    ```
-    # Safety
-    The type must correspond to the received message
-*/
-pub unsafe fn thread_msg<T>() -> Option<T> {
-    let msg = fl::Fl_thread_msg();
-    if msg.is_null() {
-        None
-    } else {
-        let msg = Box::from_raw(msg as *const _ as *mut T);
-        Some(*msg)
-    }
-}
 
 #[repr(C)]
 struct Message<T: Send + Sync> {

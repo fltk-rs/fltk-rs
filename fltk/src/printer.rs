@@ -8,7 +8,7 @@ use std::ffi::CString;
     Example usage:
     ```rust,no_run
     use fltk::{prelude::*, *};
-    let mut but = button::Button::default();
+    let but = button::Button::default();
     but.set_callback(|widget| {
         let mut printer = printer::Printer::default();
         if printer.begin_job(1).is_ok() {
@@ -45,7 +45,7 @@ impl Printer {
     /// Returns a tuple (frompage, topage) indicating the chosen pages by the user
     /// # Errors
     /// Errors on failure to print
-    pub fn begin_job(&mut self, pagecount: i32) -> Result<(Option<i32>, Option<i32>), FltkError> {
+    pub fn begin_job(&self, pagecount: i32) -> Result<(Option<i32>, Option<i32>), FltkError> {
         let mut frompage_ = 0;
         let mut topage_ = 0;
         unsafe {
@@ -77,7 +77,7 @@ impl Printer {
     /// End the print page
     /// # Errors
     /// Errors on failure to end the page
-    pub fn end_page(&mut self) -> Result<(), FltkError> {
+    pub fn end_page(&self) -> Result<(), FltkError> {
         unsafe {
             if Fl_Printer_end_page(self.inner) == 0 {
                 Ok(())
@@ -88,14 +88,14 @@ impl Printer {
     }
 
     /// Ends the print job
-    pub fn end_job(&mut self) {
+    pub fn end_job(&self) {
         unsafe { Fl_Printer_end_job(self.inner) }
     }
 
     /// Begins a print page
     /// # Errors
     /// Errors on failure to begin the page
-    pub fn begin_page(&mut self) -> Result<(), FltkError> {
+    pub fn begin_page(&self) -> Result<(), FltkError> {
         unsafe {
             if Fl_Printer_begin_page(self.inner) == 0 {
                 Ok(())
@@ -139,27 +139,27 @@ impl Printer {
     }
 
     /// Set the origin coordinates of the printable rect
-    pub fn set_origin(&mut self, x: i32, y: i32) {
+    pub fn set_origin(&self, x: i32, y: i32) {
         unsafe { Fl_Printer_set_origin(self.inner, x, y) }
     }
 
     /// Scale the printable rect
-    pub fn scale(&mut self, scale_x: f32, scale_y: f32) {
+    pub fn scale(&self, scale_x: f32, scale_y: f32) {
         unsafe { Fl_Printer_scale(self.inner, scale_x, scale_y) }
     }
 
     /// Rotate the printable rect
-    pub fn rotate(&mut self, angle: f32) {
+    pub fn rotate(&self, angle: f32) {
         unsafe { Fl_Printer_rotate(self.inner, angle) }
     }
 
     /// Translate the printable rect
-    pub fn translate(&mut self, x: i32, y: i32) {
+    pub fn translate(&self, x: i32, y: i32) {
         unsafe { Fl_Printer_translate(self.inner, x, y) }
     }
 
     /// Untranslate the printable rect
-    pub fn untranslate(&mut self) {
+    pub fn untranslate(&self) {
         unsafe { Fl_Printer_untranslate(self.inner) }
     }
 
@@ -169,7 +169,7 @@ impl Printer {
     }
 
     /// Set the printer to be the current printer
-    pub fn set_current(&mut self) {
+    pub fn set_current(&self) {
         unsafe { Fl_Printer_set_current(self.inner) }
     }
 

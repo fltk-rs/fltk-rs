@@ -5,14 +5,14 @@ macro_rules! impl_table_ext {
     ($name: ident, $flname: ident) => {
         paste::paste! {
             unsafe impl TableExt for $name {
-                fn clear(&mut self) {
+                fn clear(&self) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _clear>](self.inner)
                     }
                 }
 
-                fn set_table_frame(&mut self, frame: $crate::enums::FrameType) {
+                fn set_table_frame(&self, frame: $crate::enums::FrameType) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_table_box>](self.inner, frame as i32)
@@ -26,7 +26,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_rows(&mut self, val: i32) {
+                fn set_rows(&self, val: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_rows>](self.inner, val as i32)
@@ -40,7 +40,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_cols(&mut self, val: i32) {
+                fn set_cols(&self, val: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_cols>](self.inner, val as i32)
@@ -91,7 +91,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_row_resize(&mut self, flag: bool) {
+                fn set_row_resize(&self, flag: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_row_resize>](self.inner, flag as i32)
@@ -105,7 +105,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_col_resize(&mut self, flag: bool) {
+                fn set_col_resize(&self, flag: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_col_resize>](self.inner, flag as i32)
@@ -119,7 +119,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_col_resize_min(&mut self, val: i32) {
+                fn set_col_resize_min(&self, val: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_col_resize_min>](self.inner, val as i32)
@@ -133,7 +133,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_row_resize_min(&mut self, val: i32) {
+                fn set_row_resize_min(&self, val: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_row_resize_min>](self.inner, val as i32)
@@ -147,7 +147,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_row_header(&mut self, flag: bool) {
+                fn set_row_header(&self, flag: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_row_header>](self.inner, flag as i32)
@@ -161,14 +161,14 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_col_header(&mut self, flag: bool) {
+                fn set_col_header(&self, flag: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_col_header>](self.inner, flag as i32)
                     }
                 }
 
-                fn set_col_header_height(&mut self, height: i32) {
+                fn set_col_header_height(&self, height: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_col_header_height>](self.inner, height)
@@ -182,7 +182,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_row_header_width(&mut self, width: i32) {
+                fn set_row_header_width(&self, width: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_row_header_width>](self.inner, width)
@@ -196,7 +196,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_row_header_color(&mut self, val: $crate::enums::Color) {
+                fn set_row_header_color(&self, val: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_row_header_color>](self.inner, val.bits() as u32)
@@ -210,7 +210,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_col_header_color(&mut self, val: $crate::enums::Color) {
+                fn set_col_header_color(&self, val: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_col_header_color>](self.inner, val.bits() as u32)
@@ -224,7 +224,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_row_height(&mut self, row: i32, height: i32) {
+                fn set_row_height(&self, row: i32, height: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_row_height>](self.inner, row, height)
@@ -238,7 +238,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_col_width(&mut self, col: i32, width: i32) {
+                fn set_col_width(&self, col: i32, width: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_col_width>](self.inner, col, width)
@@ -252,28 +252,28 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_row_height_all(&mut self, height: i32) {
+                fn set_row_height_all(&self, height: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_row_height_all>](self.inner, height)
                     }
                 }
 
-                fn set_col_width_all(&mut self, width: i32) {
+                fn set_col_width_all(&self, width: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_col_width_all>](self.inner, width)
                     }
                 }
 
-                fn set_row_position(&mut self, row: i32) {
+                fn set_row_position(&self, row: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_row_position>](self.inner, row as i32)
                     }
                 }
 
-                fn set_col_position(&mut self, col: i32) {
+                fn set_col_position(&self, col: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_col_position>](self.inner, col as i32)
@@ -294,7 +294,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_top_row(&mut self, row: i32) {
+                fn set_top_row(&self, row: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_top_row>](self.inner, row as i32)
@@ -340,7 +340,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_selection(&mut self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32) {
+                fn set_selection(&self, row_top: i32, col_left: i32, row_bot: i32, col_right: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_selection>](
@@ -349,12 +349,12 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn unset_selection(&mut self) {
+                fn unset_selection(&self) {
                     self.set_selection(-1, -1, -1, -1)
                 }
 
                 fn move_cursor_with_shift_select(
-                    &mut self,
+                    &self,
                     r: i32,
                     c: i32,
                     shiftselect: bool,
@@ -374,7 +374,7 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn move_cursor(&mut self, r: i32, c: i32) -> Result<(), FltkError> {
+                fn move_cursor(&self, r: i32, c: i32) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         let x = [<$flname _move_cursor>](self.inner, r, c);
@@ -392,14 +392,14 @@ macro_rules! impl_table_ext {
                     }
                 }
 
-                fn set_scrollbar_size(&mut self, new_size: i32) {
+                fn set_scrollbar_size(&self, new_size: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_scrollbar_size>](self.inner, new_size as i32)
                     }
                 }
 
-                fn set_tab_cell_nav(&mut self, val: bool) {
+                fn set_tab_cell_nav(&self, val: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_tab_cell_nav>](self.inner, val as i32)
@@ -414,10 +414,10 @@ macro_rules! impl_table_ext {
                 }
 
                 fn draw_cell<
-                    F: FnMut(&mut Self, $crate::table::TableContext, Cell, Rect)
+                    F: FnMut(&Self, $crate::table::TableContext, Cell, Rect)
                         + 'static,
                 >(
-                    &mut self,
+                    &self,
                     cb: F,
                 ) {
                     assert!(!self.was_deleted());
@@ -480,7 +480,7 @@ macro_rules! impl_table_ext {
                         }
                         let a: *mut Box<
                             dyn FnMut(
-                                &mut Self,
+                                &Self,
                                 $crate::table::TableContext,
                                 Cell,
                                 Rect,

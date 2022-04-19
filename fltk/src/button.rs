@@ -54,7 +54,7 @@ impl RadioButton {
     }
 
     /// Sets whether the `RadioButton` is toggled or not
-    pub fn toggle(&mut self, val: bool) {
+    pub fn toggle(&self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Radio_Button_toggle(self.inner, val as i32) }
     }
@@ -83,7 +83,7 @@ impl RadioRoundButton {
     }
 
     /// Sets whether the `RadioRoundButton` is toggled or not
-    pub fn toggle(&mut self, val: bool) {
+    pub fn toggle(&self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Radio_Round_Button_toggle(self.inner, val as i32) }
     }
@@ -112,7 +112,7 @@ impl RadioLightButton {
     }
 
     /// Sets whether the `RadioLightButton` is toggled or not
-    pub fn toggle(&mut self, val: bool) {
+    pub fn toggle(&self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Radio_Light_Button_toggle(self.inner, val as i32) }
     }
@@ -140,7 +140,7 @@ impl RoundButton {
     }
 
     /// Sets whether the `RoundButton` is toggled or not
-    pub fn toggle(&mut self, val: bool) {
+    pub fn toggle(&self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Round_Button_toggle(self.inner, val as i32) }
     }
@@ -198,7 +198,7 @@ impl ToggleButton {
     }
 
     /// Sets whether the `ToggleButton` is toggled or not
-    pub fn toggle(&mut self, val: bool) {
+    pub fn toggle(&self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Toggle_Button_toggle(self.inner, val as i32) }
     }
@@ -226,7 +226,7 @@ impl LightButton {
     }
 
     /// Sets whether the `LightButton` is on or not
-    pub fn turn_on(&mut self, on: bool) {
+    pub fn turn_on(&self, on: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Light_Button_turn_on(self.inner, on as i32) }
     }

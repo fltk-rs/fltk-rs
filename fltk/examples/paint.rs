@@ -17,10 +17,10 @@ const HEIGHT: i32 = 600;
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
 
-    let mut wind = Window::default()
+    let wind = Window::default()
         .with_size(WIDTH, HEIGHT)
         .with_label("RustyPainter");
-    let mut frame = Frame::default()
+    let frame = Frame::default()
         .with_size(WIDTH - 10, HEIGHT - 10)
         .center_of(&wind);
     frame.set_color(Color::White);

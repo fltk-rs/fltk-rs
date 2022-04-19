@@ -114,7 +114,7 @@ impl TextBuffer {
     }
 
     /// Sets the text of the buffer
-    pub fn set_text(&mut self, txt: &str) {
+    pub fn set_text(&self, txt: &str) {
         assert!(!self.inner.is_null());
         unsafe {
             let txt = CString::safe_new(txt);
@@ -151,7 +151,7 @@ impl TextBuffer {
         );
         ```
     */
-    pub fn append(&mut self, text: &str) {
+    pub fn append(&self, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_append(self.inner, text.as_ptr()) }
@@ -164,7 +164,7 @@ impl TextBuffer {
     }
 
     /// Removes from the buffer
-    pub fn remove(&mut self, start: i32, end: i32) {
+    pub fn remove(&self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
         unsafe {
             Fl_Text_Buffer_remove(self.inner, start as i32, end as i32);
@@ -189,21 +189,21 @@ impl TextBuffer {
     }
 
     /// Inserts text into a position
-    pub fn insert(&mut self, pos: i32, text: &str) {
+    pub fn insert(&self, pos: i32, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_insert(self.inner, pos as i32, text.as_ptr()) }
     }
 
     /// Replaces text from position `start` to `end`
-    pub fn replace(&mut self, start: i32, end: i32, text: &str) {
+    pub fn replace(&self, start: i32, end: i32, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_replace(self.inner, start as i32, end as i32, text.as_ptr()) }
     }
 
     /// Copies text from a source buffer into the current buffer
-    pub fn copy_from(&mut self, source_buf: &TextBuffer, start: i32, end: i32, to: i32) {
+    pub fn copy_from(&self, source_buf: &TextBuffer, start: i32, end: i32, to: i32) {
         assert!(!self.inner.is_null());
         unsafe {
             Fl_Text_Buffer_copy(
@@ -219,7 +219,7 @@ impl TextBuffer {
     /// Copies whole text from a source buffer into a new buffer
     pub fn copy(&self) -> TextBuffer {
         assert!(!self.inner.is_null());
-        let mut temp = TextBuffer::default();
+        let temp = TextBuffer::default();
         temp.copy_from(self, 0, 0, self.length());
         temp
     }
@@ -227,7 +227,7 @@ impl TextBuffer {
     /// Performs an undo operation on the buffer
     /// # Errors
     /// Errors on failure to undo
-    pub fn undo(&mut self) -> Result<(), FltkError> {
+    pub fn undo(&self) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         unsafe {
             match Fl_Text_Buffer_undo(self.inner, std::ptr::null_mut()) {
@@ -238,7 +238,7 @@ impl TextBuffer {
     }
 
     /// Sets whether the buffer can undo
-    pub fn can_undo(&mut self, flag: bool) {
+    pub fn can_undo(&self, flag: bool) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_canUndo(self.inner, flag as raw::c_char) }
     }
@@ -246,7 +246,7 @@ impl TextBuffer {
     /// Loads a file into the buffer
     /// # Errors
     /// Errors on failure to load file
-    pub fn load_file<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
+    pub fn load_file<P: AsRef<std::path::Path>>(&self, path: P) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         if !path.as_ref().exists() {
             return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -267,7 +267,7 @@ impl TextBuffer {
     /// Saves a buffer into a file
     /// # Errors
     /// Errors on failure to save file
-    pub fn save_file<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
+    pub fn save_file<P: AsRef<std::path::Path>>(&self, path: P) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         let path = path
             .as_ref()
@@ -289,13 +289,13 @@ impl TextBuffer {
     }
 
     /// Sets the tab distance
-    pub fn set_tab_distance(&mut self, tab_dist: i32) {
+    pub fn set_tab_distance(&self, tab_dist: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_set_tab_distance(self.inner, tab_dist as i32) }
     }
 
     /// Selects the text from start to end
-    pub fn select(&mut self, start: i32, end: i32) {
+    pub fn select(&self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_select(self.inner, start as i32, end as i32) }
     }
@@ -307,7 +307,7 @@ impl TextBuffer {
     }
 
     /// Unselects text
-    pub fn unselect(&mut self) {
+    pub fn unselect(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_unselect(self.inner) }
     }
@@ -341,20 +341,20 @@ impl TextBuffer {
     }
 
     /// Removes the selection
-    pub fn remove_selection(&mut self) {
+    pub fn remove_selection(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_remove_selection(self.inner) }
     }
 
     /// Replaces selection
-    pub fn replace_selection(&mut self, text: &str) {
+    pub fn replace_selection(&self, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_replace_selection(self.inner, text.as_ptr()) }
     }
 
     /// Secondary selects the text from start to end
-    pub fn secondary_select(&mut self, start: i32, end: i32) {
+    pub fn secondary_select(&self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_secondary_select(self.inner, start as i32, end as i32) }
     }
@@ -366,7 +366,7 @@ impl TextBuffer {
     }
 
     /// Unselects text (secondary selection)
-    pub fn secondary_unselect(&mut self) {
+    pub fn secondary_unselect(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_secondary_unselect(self.inner) }
     }
@@ -404,20 +404,20 @@ impl TextBuffer {
     }
 
     /// Removes the secondary selection
-    pub fn remove_secondary_selection(&mut self) {
+    pub fn remove_secondary_selection(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_remove_secondary_selection(self.inner) }
     }
 
     /// Replaces the secondary selection
-    pub fn replace_secondary_selection(&mut self, text: &str) {
+    pub fn replace_secondary_selection(&self, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
         unsafe { Fl_Text_Buffer_replace_secondary_selection(self.inner, text.as_ptr()) }
     }
 
     /// Highlights selection
-    pub fn highlight(&mut self, start: i32, end: i32) {
+    pub fn highlight(&self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_highlight(self.inner, start as i32, end as i32) }
     }
@@ -429,7 +429,7 @@ impl TextBuffer {
     }
 
     /// Unhighlights text
-    pub fn unhighlight(&mut self) {
+    pub fn unhighlight(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_unhighlight(self.inner) }
     }
@@ -499,13 +499,13 @@ impl TextBuffer {
     }
 
     /// Calls the modify callbacks
-    pub fn call_modify_callbacks(&mut self) {
+    pub fn call_modify_callbacks(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_call_modify_callbacks(self.inner) }
     }
 
     fn add_modify_callback_<F: FnMut(i32, i32, i32, i32, Option<&str>) + 'static>(
-        &mut self,
+        &self,
         cb: F,
     ) -> ModifyCallbackHandle {
         assert!(!self.inner.is_null());
@@ -521,8 +521,8 @@ impl TextBuffer {
     /// Adds a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
-    pub fn add_modify_callback<F: FnMut(&mut Self, i32, i32, i32, i32, Option<&str>) + 'static>(
-        &mut self,
+    pub fn add_modify_callback<F: FnMut(&Self, i32, i32, i32, i32, Option<&str>) + 'static>(
+        &self,
         mut cb: F,
     ) -> ModifyCallbackHandle {
         let mut s = self.clone();
@@ -534,7 +534,7 @@ impl TextBuffer {
     /// Removes a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
-    pub fn remove_modify_callback(&mut self, cb: ModifyCallbackHandle) {
+    pub fn remove_modify_callback(&self, cb: ModifyCallbackHandle) {
         assert!(!self.inner.is_null());
         unsafe {
             let data: *mut raw::c_void = cb as *mut std::ffi::c_void;
@@ -793,7 +793,7 @@ impl TextEditor {
     pub const AnyState: crate::enums::Shortcut = crate::enums::Shortcut::from_i32(-1);
 
     /// Set to insert mode
-    pub fn set_insert_mode(&mut self, b: bool) {
+    pub fn set_insert_mode(&self, b: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Text_Editor_set_insert_mode(self.inner, b as i32) }
@@ -807,7 +807,7 @@ impl TextEditor {
     }
 
     /// Set tab navigation
-    pub fn set_tab_nav(&mut self, val: bool) {
+    pub fn set_tab_nav(&self, val: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Text_Editor_set_tab_nav(self.inner, val as i32) }
@@ -857,7 +857,7 @@ impl TextEditor {
     }
 
     /// Inserts the text associated with key 'c'
-    pub fn kf_default(&mut self, c: Key) {
+    pub fn kf_default(&self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -866,7 +866,7 @@ impl TextEditor {
     }
 
     /// Ignores the key 'c' in editor
-    pub fn kf_ignore(&mut self, c: Key) {
+    pub fn kf_ignore(&self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -875,7 +875,7 @@ impl TextEditor {
     }
 
     /// Does a backspace
-    pub fn kf_backspace(&mut self) {
+    pub fn kf_backspace(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -884,7 +884,7 @@ impl TextEditor {
     }
 
     /// Inserts a new line
-    pub fn kf_enter(&mut self) {
+    pub fn kf_enter(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -893,7 +893,7 @@ impl TextEditor {
     }
 
     /// Moves the cursor in the direction indicated by the key
-    pub fn kf_move(&mut self, c: Key) {
+    pub fn kf_move(&self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -902,7 +902,7 @@ impl TextEditor {
     }
 
     /// Extends the current selection in the direction of key 'c'
-    pub fn kf_shift_move(&mut self, c: Key) {
+    pub fn kf_shift_move(&self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -911,7 +911,7 @@ impl TextEditor {
     }
 
     /// Moves the current text cursor in the direction indicated by control key 'c'
-    pub fn kf_ctrl_move(&mut self, c: Key) {
+    pub fn kf_ctrl_move(&self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -920,7 +920,7 @@ impl TextEditor {
     }
 
     /// Extends the current selection in the direction indicated by control key 'c'
-    pub fn kf_c_s_move(&mut self, c: Key) {
+    pub fn kf_c_s_move(&self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -929,7 +929,7 @@ impl TextEditor {
     }
 
     /// Moves the current text cursor in the direction indicated by meta key 'c'
-    pub fn kf_meta_move(&mut self, c: Key) {
+    pub fn kf_meta_move(&self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -938,7 +938,7 @@ impl TextEditor {
     }
 
     /// Extends the current selection in the direction indicated by meta key 'c'
-    pub fn kf_m_s_move(&mut self, c: Key) {
+    pub fn kf_m_s_move(&self, c: Key) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -947,7 +947,7 @@ impl TextEditor {
     }
 
     /// Moves the text cursor to the beginning of the current line
-    pub fn kf_home(&mut self) {
+    pub fn kf_home(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -956,7 +956,7 @@ impl TextEditor {
     }
 
     /// Moves the text cursor to the end of the current line
-    pub fn kf_end(&mut self) {
+    pub fn kf_end(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -965,7 +965,7 @@ impl TextEditor {
     }
 
     /// Moves the text cursor one character to the left
-    pub fn kf_left(&mut self) {
+    pub fn kf_left(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -974,7 +974,7 @@ impl TextEditor {
     }
 
     /// Moves the text cursor one line up
-    pub fn kf_up(&mut self) {
+    pub fn kf_up(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -983,7 +983,7 @@ impl TextEditor {
     }
 
     /// Moves the text cursor one character to the right
-    pub fn kf_right(&mut self) {
+    pub fn kf_right(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -992,7 +992,7 @@ impl TextEditor {
     }
 
     /// Moves the text cursor one line down
-    pub fn kf_down(&mut self) {
+    pub fn kf_down(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -1001,7 +1001,7 @@ impl TextEditor {
     }
 
     /// Moves the text cursor up one page
-    pub fn kf_page_up(&mut self) {
+    pub fn kf_page_up(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -1010,7 +1010,7 @@ impl TextEditor {
     }
 
     /// Moves the text cursor down one page
-    pub fn kf_page_down(&mut self) {
+    pub fn kf_page_down(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -1019,7 +1019,7 @@ impl TextEditor {
     }
 
     /// Toggles the insert mode for the editor
-    pub fn kf_insert(&mut self) {
+    pub fn kf_insert(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -1028,7 +1028,7 @@ impl TextEditor {
     }
 
     /// Does a delete of selected text or the current character in the current buffer
-    pub fn kf_delete(&mut self) {
+    pub fn kf_delete(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -1037,7 +1037,7 @@ impl TextEditor {
     }
 
     /// Selects all text in the associated buffer
-    pub fn kf_select_all(&mut self) {
+    pub fn kf_select_all(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe {
@@ -1047,7 +1047,7 @@ impl TextEditor {
 
     /// Add a key binding
     pub fn add_key_binding(
-        &mut self,
+        &self,
         key: crate::enums::Key,
         shortcut: crate::enums::Shortcut,
         cb: fn(key: crate::enums::Key, editor: TextEditorPtr) -> i32,
@@ -1064,7 +1064,7 @@ impl TextEditor {
     }
 
     /// Remove a key binding
-    pub fn remove_key_binding(&mut self, key: crate::enums::Key, shortcut: crate::enums::Shortcut) {
+    pub fn remove_key_binding(&self, key: crate::enums::Key, shortcut: crate::enums::Shortcut) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Text_Editor_remove_key_binding(self.inner, key.bits(), shortcut.bits());
@@ -1074,7 +1074,7 @@ impl TextEditor {
 
 impl SimpleTerminal {
     /// Sets whether the terminal automatically stays at the bottom
-    pub fn set_stay_at_bottom(&mut self, arg1: bool) {
+    pub fn set_stay_at_bottom(&self, arg1: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self.inner, arg1 as i32) }
@@ -1088,7 +1088,7 @@ impl SimpleTerminal {
     }
 
     /// Sets the max lines allowed in history
-    pub fn set_history_lines(&mut self, arg1: i32) {
+    pub fn set_history_lines(&self, arg1: i32) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_set_history_lines(self.inner, arg1 as i32) }
@@ -1102,7 +1102,7 @@ impl SimpleTerminal {
     }
 
     /// Enables ANSI sequences within the text to control text colors
-    pub fn set_ansi(&mut self, val: bool) {
+    pub fn set_ansi(&self, val: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_set_ansi(self.inner, val as i32) }
@@ -1116,7 +1116,7 @@ impl SimpleTerminal {
     }
 
     /// Appends text to the terminal buffer
-    pub fn append(&mut self, s: &str) {
+    pub fn append(&self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         let s = CString::safe_new(s);
@@ -1124,7 +1124,7 @@ impl SimpleTerminal {
     }
 
     /// Appends data to the terminal buffer
-    pub fn append2(&mut self, s: &[u8]) {
+    pub fn append2(&self, s: &[u8]) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         let s = CString::new(s).unwrap();
@@ -1132,7 +1132,7 @@ impl SimpleTerminal {
     }
 
     /// Sets the text of the terminal buffer
-    pub fn set_text(&mut self, s: &str) {
+    pub fn set_text(&self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         let s = CString::safe_new(s);
@@ -1153,14 +1153,14 @@ impl SimpleTerminal {
     }
 
     /// Clears the terminal
-    pub fn clear(&mut self) {
+    pub fn clear(&self) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_clear(self.inner) }
     }
 
     /// Removes `count` lines from `start`
-    pub fn remove_lines(&mut self, start: i32, count: i32) {
+    pub fn remove_lines(&self, start: i32, count: i32) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_remove_lines(self.inner, start as i32, count as i32) }

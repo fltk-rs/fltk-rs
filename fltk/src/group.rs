@@ -66,7 +66,7 @@ impl Pack {
     }
 
     /// Set the spacing of the pack
-    pub fn set_spacing(&mut self, spacing: i32) {
+    pub fn set_spacing(&self, spacing: i32) {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Pack_set_spacing(self.inner, spacing);
@@ -75,7 +75,7 @@ impl Pack {
 
     /// Layout the children of the pack automatically.
     /// Must be called on existing children
-    pub fn auto_layout(&mut self) {
+    pub fn auto_layout(&self) {
         let children = self.children() as i32;
         if children == 0 {
             return;
@@ -86,7 +86,7 @@ impl Pack {
         let h = (self.h() - spacing) / children;
 
         for i in 0..children {
-            let mut c = self.child(i as i32).unwrap();
+            let c = self.child(i as i32).unwrap();
             let c_w = c.w();
             let c_h = c.h();
             if t == PackType::Vertical {
@@ -168,7 +168,7 @@ impl Scroll {
     }
 
     /// Scrolls from `from` to `to`
-    pub fn scroll_to(&mut self, from: i32, to: i32) {
+    pub fn scroll_to(&self, from: i32, to: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Scroll_scroll_to(self.inner, from as i32, to as i32) }
     }
@@ -180,7 +180,7 @@ impl Scroll {
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&mut self, new_size: i32) {
+    pub fn set_scrollbar_size(&self, new_size: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Scroll_set_scrollbar_size(self.inner, new_size as i32) }
     }
@@ -217,7 +217,7 @@ impl Tabs {
     /// Sets the currently visible group
     /// # Errors
     /// Errors when the value can't be set for the group widget
-    pub fn set_value<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
+    pub fn set_value<Grp: GroupExt>(&self, w: &Grp) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_value(
@@ -248,7 +248,7 @@ impl Tabs {
     /// This is called by the tab widget's handle() method to set the tab group widget the user last pushed
     /// # Errors
     /// Errors if `set_push` can't be set for the group widget
-    pub fn set_push<Grp: GroupExt>(&mut self, w: &Grp) -> Result<(), FltkError> {
+    pub fn set_push<Grp: GroupExt>(&self, w: &Grp) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
             match Fl_Tabs_set_push(
@@ -275,7 +275,7 @@ impl Tabs {
     }
 
     /// Sets the tab label alignment
-    pub fn set_tab_align(&mut self, a: Align) {
+    pub fn set_tab_align(&self, a: Align) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tabs_set_tab_align(self.inner, a.bits() as i32) }
     }
@@ -313,13 +313,13 @@ crate::macros::group::impl_group_ext!(Wizard, Fl_Wizard);
 
 impl Wizard {
     /// Gets the next view of the wizard
-    pub fn next(&mut self) {
+    pub fn next(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Wizard_next(self.inner) }
     }
 
     /// Gets the previous view of the wizard
-    pub fn prev(&mut self) {
+    pub fn prev(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Wizard_prev(self.inner) }
     }
@@ -338,7 +338,7 @@ impl Wizard {
     }
 
     /// Sets the underlying widget of the current view
-    pub fn set_current_widget<W: WidgetExt>(&mut self, w: &W) {
+    pub fn set_current_widget<W: WidgetExt>(&self, w: &W) {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Wizard_set_value(
@@ -400,7 +400,7 @@ pub enum FlexType {
     use fltk::{prelude::*, *};
     fn main() {
         let a = app::App::default();
-        let mut win = window::Window::default().with_size(400, 300);
+        let win = window::Window::default().with_size(400, 300);
         let mut col = group::Flex::default().size_of_parent();
         col.set_type(group::FlexType::Column);
         let expanding = button::Button::default().with_label("Expanding");
@@ -426,13 +426,13 @@ crate::macros::group::impl_group_ext!(Flex, Fl_Flex);
 
 impl Flex {
     /// Add a widget to the Flex box
-    pub fn add<W: WidgetExt>(&mut self, widget: &W) {
+    pub fn add<W: WidgetExt>(&self, widget: &W) {
         <Self as GroupExt>::add(self, widget);
         self.recalc();
     }
 
     /// Set the size of the widget
-    pub fn set_size<W: WidgetExt>(&mut self, w: &W, size: i32) {
+    pub fn set_size<W: WidgetExt>(&self, w: &W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
     }
 
@@ -442,13 +442,13 @@ impl Flex {
     }
 
     /// Set the type to be a column
-    pub fn column(mut self) -> Self {
+    pub fn column(self) -> Self {
         self.set_type(FlexType::Column);
         self
     }
 
     /// Set the type to a row
-    pub fn row(mut self) -> Self {
+    pub fn row(self) -> Self {
         self.set_type(FlexType::Row);
         self
     }
@@ -459,7 +459,7 @@ impl Flex {
     }
 
     /// Set the margin
-    pub fn set_margin(&mut self, m: i32) {
+    pub fn set_margin(&self, m: i32) {
         unsafe { Fl_Flex_set_margin(self.inner, m) }
     }
 
@@ -469,7 +469,7 @@ impl Flex {
     }
 
     /// Set the padding
-    pub fn set_pad(&mut self, p: i32) {
+    pub fn set_pad(&self, p: i32) {
         unsafe { Fl_Flex_set_pad(self.inner, p) }
     }
 

@@ -92,7 +92,7 @@ impl MenuButton {
 ///fn main() {
 ///     let a = app::App::default();
 ///     app::set_frame_type_cb(FrameType::DownBox, my_down_box, 0, 0, 0, 0);
-///     let mut win = window::Window::new(100, 100, 400, 300, None);
+///     let win = window::Window::new(100, 100, 400, 300, None);
 ///     win.set_color(Color::from_rgb(211, 211, 211));
 ///     let mut inp = input::Input::new(50, 10, 100, 30, None); // would work for any widget which has a DownBox frame type
 ///     let mut choice = menu::Choice::new(50, 100, 100, 30, None);
@@ -213,7 +213,7 @@ impl MenuItem {
     }
 
     /// Sets the label of the menu item
-    pub fn set_label(&mut self, txt: &str) {
+    pub fn set_label(&self, txt: &str) {
         assert!(!self.was_deleted());
         unsafe {
             let txt = CString::safe_new(txt);
@@ -228,7 +228,7 @@ impl MenuItem {
     }
 
     /// Sets the label type of the menu item
-    pub fn set_label_type(&mut self, typ: LabelType) {
+    pub fn set_label_type(&self, typ: LabelType) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Menu_Item_set_label_type(self.inner, typ as i32);
@@ -242,7 +242,7 @@ impl MenuItem {
     }
 
     /// Sets the label color of the menu item
-    pub fn set_label_color(&mut self, color: Color) {
+    pub fn set_label_color(&self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_set_label_color(self.inner, color.bits() as u32) }
     }
@@ -254,7 +254,7 @@ impl MenuItem {
     }
 
     /// Sets the label font of the menu item
-    pub fn set_label_font(&mut self, font: Font) {
+    pub fn set_label_font(&self, font: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_set_label_font(self.inner, font.bits() as i32) }
     }
@@ -266,7 +266,7 @@ impl MenuItem {
     }
 
     /// Sets the label size of the menu item
-    pub fn set_label_size(&mut self, sz: i32) {
+    pub fn set_label_size(&self, sz: i32) {
         assert!(!self.was_deleted());
         let sz = if sz < 1 { 1 } else { sz };
         unsafe { Fl_Menu_Item_set_label_size(self.inner, sz) }
@@ -414,7 +414,7 @@ impl MenuItem {
     }
 
     /// Set a callback for the menu item
-    pub fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+    pub fn set_callback<F: FnMut(&mut Self) + 'static>(&self, cb: F) {
         assert!(!self.was_deleted());
         unsafe {
             unsafe extern "C" fn shim(wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
@@ -434,7 +434,7 @@ impl MenuItem {
 
     /// Use a sender to send a message during callback
     pub fn emit<T: 'static + Clone + Send + Sync>(
-        &mut self,
+        &self,
         sender: crate::app::Sender<T>,
         msg: T,
     ) {
@@ -505,7 +505,7 @@ impl MenuItem {
         }
         ```
     */
-    pub fn add_image<I: ImageExt>(&mut self, image: Option<I>, on_left: bool) {
+    pub fn add_image<I: ImageExt>(&self, image: Option<I>, on_left: bool) {
         assert!(!self.was_deleted());
         unsafe {
             if let Some(image) = image {
@@ -518,8 +518,8 @@ impl MenuItem {
     }
 
     /// Add a menu item
-    pub fn add<F: FnMut(&mut Choice) + 'static>(
-        &mut self,
+    pub fn add<F: FnMut(&Choice) + 'static>(
+        &self,
         name: &str,
         shortcut: crate::enums::Shortcut,
         flag: MenuFlag,
@@ -535,7 +535,7 @@ impl MenuItem {
                 let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
-            let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(&Choice)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
             let callback: Fl_Callback = Some(shim);
             Fl_Menu_Item_add(
@@ -551,7 +551,7 @@ impl MenuItem {
 
     /// Insert a menu item
     pub fn insert<F: FnMut(&mut Choice) + 'static>(
-        &mut self,
+        &self,
         idx: i32,
         name: &str,
         shortcut: crate::enums::Shortcut,
@@ -585,7 +585,7 @@ impl MenuItem {
 
     /// Add a menu item along with an emit (sender and message).
     pub fn add_emit<T: 'static + Clone + Send + Sync>(
-        &mut self,
+        &self,
         label: &str,
         shortcut: crate::enums::Shortcut,
         flag: MenuFlag,
@@ -597,7 +597,7 @@ impl MenuItem {
 
     /// Insert a menu item along with an emit (sender and message).
     pub fn insert_emit<T: 'static + Clone + Send + Sync>(
-        &mut self,
+        &self,
         idx: i32,
         label: &str,
         shortcut: crate::enums::Shortcut,

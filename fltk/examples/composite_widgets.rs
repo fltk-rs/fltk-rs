@@ -7,11 +7,11 @@ struct MyButton {
 
 impl MyButton {
     pub fn new(w: i32, h: i32) -> MyButton {
-        let mut grp = group::Group::new(0, 0, w, h, None);
+        let grp = group::Group::new(0, 0, w, h, None);
         grp.set_frame(enums::FrameType::RFlatBox);
         grp.set_color(enums::Color::from_u32(0x01579b));
         grp.set_align(enums::Align::Center);
-        let mut btn = button::Button::new(grp.x() + 420, grp.y() + 35, 15, 15, "X");
+        let btn = button::Button::new(grp.x() + 420, grp.y() + 35, 15, 15, "X");
         btn.set_frame(enums::FrameType::OFlatBox);
         btn.set_color(enums::Color::from_u32(0xf49da9));
         btn.set_callback(move |b| b.parent().unwrap().hide());
@@ -42,15 +42,15 @@ impl DerefMut for MyButton {
 fn main() {
     let app = app::App::default();
     app::set_visible_focus(false);
-    let mut win = window::Window::default().with_size(500, 400);
+    let win = window::Window::default().with_size(500, 400);
     win.make_resizable(true);
     win.set_color(enums::Color::Black);
-    let mut pack = group::Pack::default().size_of(&win);
+    let pack = group::Pack::default().size_of(&win);
     pack.set_spacing(10);
 
     for i in 0..3 {
         let label = format!("Button {}", i + 1);
-        let mut but = MyButton::new(500, 100);
+        let but = MyButton::new(500, 100);
         but.set_label(&label);
         but.set_callback(move |_| println!("{}", label));
     }

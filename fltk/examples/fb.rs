@@ -13,10 +13,10 @@ struct World {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let app = app::App::default();
-    let mut win = Window::default()
+    let win = Window::default()
         .with_size(WIDTH, HEIGHT)
         .with_label("Framebuffer");
-    let mut frame = frame::Frame::default().size_of(&win);
+    let frame = frame::Frame::default().size_of(&win);
     win.end();
     win.make_resizable(true);
     win.show();
@@ -25,7 +25,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut world = World::new();
 
     unsafe {
-        utils::blit_rgba_nocopy(&mut frame, &framebuf);
+        utils::blit_rgba_nocopy(&frame, &mut framebuf);
     }
 
     app::add_idle(move |_| {

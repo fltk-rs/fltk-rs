@@ -149,7 +149,7 @@ pub fn quit() {
         unload_font(loaded_font).unwrap_or(());
     }
     if let Some(wins) = windows() {
-        for mut i in wins {
+        for i in wins {
             if i.shown() {
                 i.hide();
             }
@@ -302,7 +302,7 @@ unsafe extern "C" fn timeout_shim(data: *mut raw::c_void) {
         };
 
         let app = app::App::default();
-        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        let wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
         let _handle = app::add_timeout(1.0, callback);
         app.run().unwrap();
@@ -335,7 +335,7 @@ pub fn add_timeout<F: FnMut(TimeoutHandle) + 'static>(tm: f64, cb: F) -> Timeout
         };
 
         let app = app::App::default();
-        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        let wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
         app::add_timeout(1.0, callback);
         app.run().unwrap();
@@ -361,7 +361,7 @@ pub fn repeat_timeout(tm: f64, handle: TimeoutHandle) {
         };
 
         let app = app::App::default();
-        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        let wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
         let handle = app::add_timeout(1.0, callback);
         app::remove_timeout(handle);
@@ -399,7 +399,7 @@ pub fn has_timeout(handle: TimeoutHandle) -> bool {
     }
     fn main() {
         let app = app::App::default();
-        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        let wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
         app::add_timeout2(1.0, callback);
         app.run().unwrap();
@@ -429,7 +429,7 @@ pub fn add_timeout2(tm: f64, cb: fn()) {
     }
     fn main() {
         let app = app::App::default();
-        let mut wind = window::Window::new(100, 100, 400, 300, "");
+        let wind = window::Window::new(100, 100, 400, 300, "");
         wind.show();
         app::add_timeout2(1.0, callback);
         app.run().unwrap();

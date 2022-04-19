@@ -139,12 +139,12 @@ impl NativeFileChooser {
     /// Sets the starting directory
     /// # Errors
     /// Errors on non-existent path
-    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: P) -> Result<(), FltkError> {
+    pub fn set_directory<P: AsRef<Path>>(&self, dir: P) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         self.set_directory_(dir.as_ref())
     }
 
-    fn set_directory_(&mut self, dir: &Path) -> Result<(), FltkError> {
+    fn set_directory_(&self, dir: &Path) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         let dir = CString::new(dir.to_str().ok_or_else(|| {
             FltkError::Unknown(String::from("Failed to convert path to string"))
@@ -154,7 +154,7 @@ impl NativeFileChooser {
     }
 
     /// Shows the file dialog
-    pub fn show(&mut self) {
+    pub fn show(&self) {
         assert!(!self.inner.is_null());
         unsafe {
             Fl_Native_File_Chooser_show(self.inner);
@@ -162,19 +162,19 @@ impl NativeFileChooser {
     }
 
     /// Sets the option for the dialog
-    pub fn set_option(&mut self, opt: NativeFileChooserOptions) {
+    pub fn set_option(&self, opt: NativeFileChooserOptions) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Native_File_Chooser_set_option(self.inner, opt as i32) }
     }
 
     /// Sets the type for the dialog
-    pub fn set_type(&mut self, op: NativeFileChooserType) {
+    pub fn set_type(&self, op: NativeFileChooserType) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Native_File_Chooser_set_type(self.inner, op as i32) }
     }
 
     /// Sets the title for the dialog
-    pub fn set_title(&mut self, title: &str) {
+    pub fn set_title(&self, title: &str) {
         assert!(!self.inner.is_null());
         let title = CString::safe_new(title);
         unsafe { Fl_Native_File_Chooser_set_title(self.inner, title.as_ptr()) }
@@ -186,18 +186,18 @@ impl NativeFileChooser {
     /// A descriptive name followed by a `\t` and a wildcard (e.g. `"Text Files\t*.txt"`).
     /// A list of separate wildcards with a `\n` between each (e.g. `"*.{cxx,H}\n*.txt"`).
     /// A list of descriptive names and wildcards (e.g. `"C++ Files\t*.{cxx,H}\nTxt Files\t*.txt"`)
-    pub fn set_filter(&mut self, f: &str) {
+    pub fn set_filter(&self, f: &str) {
         assert!(!self.inner.is_null());
         let f = CString::safe_new(f);
         unsafe { Fl_Native_File_Chooser_set_filter(self.inner, f.as_ptr()) }
     }
 
     /// Sets the preset filter for the dialog
-    pub fn set_preset_file(&mut self, f: &Path) {
+    pub fn set_preset_file(&self, f: &Path) {
         self.set_preset_file_(f.as_ref());
     }
 
-    fn set_preset_file_(&mut self, f: &Path) {
+    fn set_preset_file_(&self, f: &Path) {
         assert!(!self.inner.is_null());
         if let Some(f) = f.to_str() {
             let f = CString::safe_new(f);
@@ -393,24 +393,24 @@ impl HelpDialog {
 
     /// Creates a new Help dialog with position(x, y) and size(w, h)
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> HelpDialog {
-        let mut temp = HelpDialog::default();
+        let temp = HelpDialog::default();
         temp.resize(x, y, w, h);
         temp
     }
 
     /// Hides the help dialog
-    pub fn hide(&mut self) {
+    pub fn hide(&self) {
         unsafe { Fl_Help_Dialog_hide(self.inner) }
     }
 
     /// Loads a file for the help dialog
     /// # Errors
     /// Errors on non-existent path
-    pub fn load<P: AsRef<Path>>(&mut self, file: P) -> Result<(), FltkError> {
+    pub fn load<P: AsRef<Path>>(&self, file: P) -> Result<(), FltkError> {
         self.load_(file.as_ref())
     }
 
-    fn load_(&mut self, file: &Path) -> Result<(), FltkError> {
+    fn load_(&self, file: &Path) -> Result<(), FltkError> {
         let f = file
             .to_str()
             .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
@@ -424,22 +424,22 @@ impl HelpDialog {
     }
 
     /// Sets the position of the help dialog
-    pub fn position(&mut self, x: i32, y: i32) {
+    pub fn position(&self, x: i32, y: i32) {
         unsafe { Fl_Help_Dialog_position(self.inner, x, y) }
     }
 
     /// Resizes the help dialog
-    pub fn resize(&mut self, x: i32, y: i32, w: i32, h: i32) {
+    pub fn resize(&self, x: i32, y: i32, w: i32, h: i32) {
         unsafe { Fl_Help_Dialog_resize(self.inner, x, y, w, h) }
     }
 
     /// Shows the help dialog
-    pub fn show(&mut self) {
+    pub fn show(&self) {
         unsafe { Fl_Help_Dialog_show(self.inner) }
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: i32) {
+    pub fn set_text_size(&self, s: i32) {
         unsafe { Fl_Help_Dialog_set_text_size(self.inner, s as i32) }
     }
 
@@ -449,7 +449,7 @@ impl HelpDialog {
     }
 
     /// Sets the value of the help dialog
-    pub fn set_value(&mut self, f: &str) {
+    pub fn set_value(&self, f: &str) {
         let f = CString::safe_new(f);
         unsafe { Fl_Help_Dialog_set_value(self.inner, f.as_ptr()) }
     }
@@ -533,7 +533,7 @@ pub fn beep(tp: BeepType) {
     use fltk::{prelude::*, *};
     fn main() {
         let app = app::App::default();
-        let mut win = window::Window::default().with_size(900, 300);
+        let win = window::Window::default().with_size(900, 300);
         let mut chooser = dialog::FileChooser::new(
             ".",                    // directory
             "*",                    // filter or pattern
@@ -670,7 +670,7 @@ impl FileChooser {
     }
 
     /// Sets the callback of the `FileChooser`
-    pub fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+    pub fn set_callback<F: FnMut(&Self) + 'static>(&self, cb: F) {
         assert!(!self.inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
@@ -681,7 +681,7 @@ impl FileChooser {
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let _old_data = self.user_data();
-            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: Option<
                 unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),
@@ -691,7 +691,7 @@ impl FileChooser {
     }
 
     /// Sets the color of the `FileChooser`
-    pub fn set_color(&mut self, c: Color) {
+    pub fn set_color(&self, c: Color) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_color(self.inner, c.bits() as u32) }
     }
@@ -709,11 +709,11 @@ impl FileChooser {
     }
 
     /// Sets the directory of the `FileChooser`
-    pub fn set_directory<P: AsRef<Path>>(&mut self, dir: P) {
+    pub fn set_directory<P: AsRef<Path>>(&self, dir: P) {
         self.set_directory_(dir.as_ref())
     }
 
-    fn set_directory_(&mut self, dir: &Path) {
+    fn set_directory_(&self, dir: &Path) {
         assert!(!self.inner.is_null());
         if let Some(dir) = dir.to_str() {
             let dir = CString::safe_new(dir);
@@ -743,7 +743,7 @@ impl FileChooser {
     /// In addition, you can provide human-readable labels with the patterns inside parenthesis,
     /// like "JPEG Files (*.jpg)\tPNG Files (*.png)\tGIF Files (*.gif)\tAll Files (*)
     /// And "Rust Files (*.{rs,txt,toml})"
-    pub fn set_filter(&mut self, pattern: &str) {
+    pub fn set_filter(&self, pattern: &str) {
         assert!(!self.inner.is_null());
         let pattern = CString::safe_new(pattern);
         unsafe { Fl_File_Chooser_set_filter(self.inner, pattern.as_ptr()) }
@@ -773,19 +773,19 @@ impl FileChooser {
     }
 
     /// Sets the filter value using an index to the '\t'separated filters
-    pub fn set_filter_value(&mut self, f: i32) {
+    pub fn set_filter_value(&self, f: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_filter_value(self.inner, f as i32) }
     }
 
     /// Hides the file chooser
-    pub fn hide(&mut self) {
+    pub fn hide(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_hide(self.inner) }
     }
 
     /// Sets the icon size of the `FileChooser`
-    pub fn set_icon_size(&mut self, s: u8) {
+    pub fn set_icon_size(&self, s: u8) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_iconsize(self.inner, s) }
     }
@@ -797,7 +797,7 @@ impl FileChooser {
     }
 
     /// Sets the label of the `FileChooser`
-    pub fn set_label(&mut self, l: &str) {
+    pub fn set_label(&self, l: &str) {
         assert!(!self.inner.is_null());
         let l = CString::safe_new(l);
         let _old = unsafe { CString::from_raw(Fl_File_Chooser_label(self.inner) as _) };
@@ -822,7 +822,7 @@ impl FileChooser {
     }
 
     /// Sets the label of the Ok button
-    pub fn set_ok_label(&mut self, l: Option<&'static str>) {
+    pub fn set_ok_label(&self, l: Option<&'static str>) {
         assert!(!self.inner.is_null());
         if let Some(l) = l {
             let l = CString::safe_new(l);
@@ -850,7 +850,7 @@ impl FileChooser {
     }
 
     /// Add preview to the `FileChooser`
-    pub fn set_preview(&mut self, e: bool) {
+    pub fn set_preview(&self, e: bool) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_preview(self.inner, e as i32) }
     }
@@ -862,19 +862,19 @@ impl FileChooser {
     }
 
     /// Rescan the directory
-    pub fn rescan(&mut self) {
+    pub fn rescan(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_rescan(self.inner) }
     }
 
     /// Rescan the directory while keeping the file name
-    pub fn rescan_keep_filename(&mut self) {
+    pub fn rescan_keep_filename(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_rescan_keep_filename(self.inner) }
     }
 
     /// Shows the File Chooser
-    pub fn show(&mut self) {
+    pub fn show(&self) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_show(self.inner) }
     }
@@ -886,7 +886,7 @@ impl FileChooser {
     }
 
     /// Sets the text color of the file chooser
-    pub fn set_text_color(&mut self, c: Color) {
+    pub fn set_text_color(&self, c: Color) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_text_color(self.inner, c.bits() as u32) }
     }
@@ -898,7 +898,7 @@ impl FileChooser {
     }
 
     /// Sets the text font of the file chooser
-    pub fn set_text_font(&mut self, f: Font) {
+    pub fn set_text_font(&self, f: Font) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -910,7 +910,7 @@ impl FileChooser {
     }
 
     /// Sets the text size of the file chooser
-    pub fn set_text_size(&mut self, s: i32) {
+    pub fn set_text_size(&self, s: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_text_size(self.inner, s as i32) }
     }
@@ -922,7 +922,7 @@ impl FileChooser {
     }
 
     /// Sets the type of the `FileChooser`
-    pub fn set_type(&mut self, t: FileChooserType) {
+    pub fn set_type(&self, t: FileChooserType) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_type(self.inner, t.bits as i32) }
     }
@@ -967,11 +967,11 @@ impl FileChooser {
     }
 
     /// Sets the file or dir name chosen by the `FileChooser`
-    pub fn set_value<P: AsRef<Path>>(&mut self, filename: P) {
+    pub fn set_value<P: AsRef<Path>>(&self, filename: P) {
         self.set_value_(filename.as_ref())
     }
 
-    fn set_value_(&mut self, filename: &Path) {
+    fn set_value_(&self, filename: &Path) {
         assert!(!self.inner.is_null());
         if let Some(filename) = filename.to_str() {
             let filename = CString::safe_new(filename);
@@ -1098,13 +1098,13 @@ impl FileChooser {
     }
 
     /// Set the position of the file chooser
-    pub fn set_position(&mut self, x: i32, y: i32) {
+    pub fn set_position(&self, x: i32, y: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_position(self.inner, x, y) }
     }
 
     /// Set the size of the file chooser
-    pub fn set_size(&mut self, w: i32, h: i32) {
+    pub fn set_size(&self, w: i32, h: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_File_Chooser_set_size(self.inner, w, h) }
     }
@@ -1184,7 +1184,7 @@ fn dir_chooser_(message: &str, fname: &Path, relative: bool) -> Option<PathBuf> 
     use fltk::{prelude::*, *};
     fn main() {
         let app = app::App::default();
-        let mut win = window::Window::default().with_size(900, 300);
+        let win = window::Window::default().with_size(900, 300);
         let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
         println!("{:?}", file);
         win.end();

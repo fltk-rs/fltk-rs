@@ -2,14 +2,14 @@ use fltk::{enums::*, prelude::*, *};
 
 fn main() {
     let app = app::App::default();
-    let mut win = window::Window::default().with_size(400, 300);
-    let mut frame = frame::Frame::default()
+    let win = window::Window::default().with_size(400, 300);
+    let frame = frame::Frame::default()
         .with_size(200, 100)
         .with_label("Right click me!")
         .center_of_parent();
     frame.set_frame(FrameType::BorderFrame);
     frame.set_color(Color::Red);
-    let mut menu = menu::MenuButton::default()
+    let menu = menu::MenuButton::default()
         .size_of(&frame)
         .center_of(&frame)
         .with_type(menu::MenuButtonType::Popup3);

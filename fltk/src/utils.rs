@@ -137,7 +137,7 @@ pub fn content_view<W: crate::prelude::WindowExt>(w: &W) -> *const raw::c_void {
 pub fn blit_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
     let width = wid.w();
     let height = wid.h();
-    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
+    let img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
     wid.draw(move |s| {
         let x = s.x();
         let y = s.y();
@@ -152,7 +152,7 @@ pub fn blit_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), 
 /// Draw a framebuffer (rgba) into a widget
 /// # Safety
 /// The data passed should be valid and outlive the widget
-pub unsafe fn blit_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
+pub unsafe fn blit_rgba_nocopy<T: WidgetBase>(wid: &T, fb: &[u8]) {
     let ptr = fb.as_ptr();
     let len = fb.len();
     let width = wid.w();
@@ -162,7 +162,7 @@ pub unsafe fn blit_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
         let y = s.y();
         let w = s.w();
         let h = s.h();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(
+        if let Ok(img) = crate::image::RgbImage::from_data(
             std::slice::from_raw_parts(ptr, len),
             width,
             height,
@@ -180,7 +180,7 @@ pub unsafe fn blit_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
 pub fn blit_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
     let width = wid.w();
     let height = wid.h();
-    let mut img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
+    let img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
     wid.draw(move |s| {
         let x = s.x();
         let y = s.y();
@@ -205,7 +205,7 @@ pub unsafe fn blit_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
         let y = s.y();
         let w = s.w();
         let h = s.h();
-        if let Ok(mut img) = crate::image::RgbImage::from_data(
+        if let Ok(img) = crate::image::RgbImage::from_data(
             std::slice::from_raw_parts(ptr, len),
             width,
             height,

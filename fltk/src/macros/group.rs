@@ -28,16 +28,11 @@ macro_rules! impl_group_ext {
                     unsafe { [<$flname _end>](self.inner) }
                 }
 
-                fn clear(&mut self) {
+                fn clear(&self) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _clear>](self.inner);
                     }
-                }
-
-                unsafe fn unsafe_clear(&mut self) {
-                    assert!(!self.was_deleted());
-                    [<$flname _clear>](self.inner);
                 }
 
                 fn children(&self) -> i32 {
@@ -73,7 +68,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn add<W: WidgetExt>(&mut self, widget: &W) {
+                fn add<W: WidgetExt>(&self, widget: &W) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(!widget.was_deleted());
@@ -81,7 +76,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn insert<W: WidgetExt>(&mut self, widget: &W, index: i32) {
+                fn insert<W: WidgetExt>(&self, widget: &W, index: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(!widget.was_deleted());
@@ -93,7 +88,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn remove<W: WidgetExt>(&mut self, widget: &W) {
+                fn remove<W: WidgetExt>(&self, widget: &W) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(!widget.was_deleted());
@@ -101,7 +96,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn remove_by_index(&mut self, idx: i32) {
+                fn remove_by_index(&self, idx: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(idx < self.children());
@@ -117,7 +112,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn make_resizable(&mut self, val: bool) {
+                fn make_resizable(&self, val: bool) {
                     assert!(!self.was_deleted());
                     let ptr = if val {
                         self.inner
@@ -127,12 +122,12 @@ macro_rules! impl_group_ext {
                     unsafe { [<$flname _resizable>](self.inner, ptr as *mut _) }
                 }
 
-                fn add_resizable<W: WidgetExt>(&mut self, widget: &W) {
+                fn add_resizable<W: WidgetExt>(&self, widget: &W) {
                     self.resizable(widget);
                     self.add(widget);
                 }
 
-                fn set_clip_children(&mut self, flag: bool) {
+                fn set_clip_children(&self, flag: bool) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_clip_children>](self.inner, flag as i32) }
                 }
@@ -172,7 +167,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn draw_children(&mut self) {
+                fn draw_children(&self) {
                     assert!(!self.was_deleted());
                     unsafe {
                         $crate::app::open_display();
@@ -180,7 +175,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn init_sizes(&mut self) {
+                fn init_sizes(&self) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _init_sizes>](self.inner)
@@ -225,12 +220,8 @@ macro_rules! impl_group_ext_via {
                 self.$member.end()
             }
 
-            fn clear(&mut self) {
+            fn clear(&self) {
                 self.$member.clear()
-            }
-
-            unsafe fn unsafe_clear(&mut self) {
-                self.$member.unsafe_clear()
             }
 
             fn children(&self) -> i32 {
@@ -245,19 +236,19 @@ macro_rules! impl_group_ext_via {
                 self.$member.find(widget)
             }
 
-            fn add<W: WidgetExt>(&mut self, widget: &W) {
+            fn add<W: WidgetExt>(&self, widget: &W) {
                 self.$member.add(widget)
             }
 
-            fn insert<W: WidgetExt>(&mut self, widget: &W, index: i32) {
+            fn insert<W: WidgetExt>(&self, widget: &W, index: i32) {
                 self.$member.insert(widget, index)
             }
 
-            fn remove<W: WidgetExt>(&mut self, widget: &W) {
+            fn remove<W: WidgetExt>(&self, widget: &W) {
                 self.$member.remove(widget)
             }
 
-            fn remove_by_index(&mut self, idx: i32) {
+            fn remove_by_index(&self, idx: i32) {
                 self.$member.remove_by_index(idx)
             }
 
@@ -265,15 +256,15 @@ macro_rules! impl_group_ext_via {
                 self.$member.resizable(widget)
             }
 
-            fn make_resizable(&mut self, val: bool) {
+            fn make_resizable(&self, val: bool) {
                 self.$member.make_resizable(val)
             }
 
-            fn add_resizable<W: WidgetExt>(&mut self, widget: &W) {
+            fn add_resizable<W: WidgetExt>(&self, widget: &W) {
                 self.$member.add_resizable(widget)
             }
 
-            fn set_clip_children(&mut self, flag: bool) {
+            fn set_clip_children(&self, flag: bool) {
                 self.$member.set_clip_children(flag)
             }
 
@@ -293,11 +284,11 @@ macro_rules! impl_group_ext_via {
                 self.$member.draw_outside_label(w)
             }
 
-            fn draw_children(&mut self) {
+            fn draw_children(&self) {
                 self.$member.draw_children()
             }
 
-            fn init_sizes(&mut self) {
+            fn init_sizes(&self) {
                 self.$member.init_sizes()
             }
 

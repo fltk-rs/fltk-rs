@@ -97,7 +97,7 @@ pub enum TableRowSelectFlag {
 
 impl TableRow {
     /// Returns whether a row was selected
-    pub fn row_selected(&mut self, row: i32) -> bool {
+    pub fn row_selected(&self, row: i32) -> bool {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Table_Row_row_selected(self.inner, row) != 0
@@ -108,7 +108,7 @@ impl TableRow {
     /// # Errors
     /// Errors on failure to select row
     pub fn select_row(
-        &mut self,
+        &self,
         row: i32,
         selection_flag: TableRowSelectFlag,
     ) -> Result<(), FltkError> {
@@ -123,7 +123,7 @@ impl TableRow {
     }
 
     /// Selects all rows
-    pub fn select_all_rows(&mut self, selection_flag: TableRowSelectFlag) {
+    pub fn select_all_rows(&self, selection_flag: TableRowSelectFlag) {
         assert!(!self.was_deleted());
         unsafe { Fl_Table_Row_select_all_rows(self.inner, selection_flag as i32) }
     }

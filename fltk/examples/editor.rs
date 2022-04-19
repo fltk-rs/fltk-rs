@@ -37,7 +37,7 @@ pub struct MyEditor {
 
 impl MyEditor {
     pub fn new(buf: text::TextBuffer) -> Self {
-        let mut editor = text::TextEditor::new(5, 35, 790, 560, "");
+        let editor = text::TextEditor::new(5, 35, 790, 560, "");
         editor.set_buffer(Some(buf));
 
         #[cfg(target_os = "macos")]
@@ -73,7 +73,7 @@ pub struct MyMenu {
 
 impl MyMenu {
     pub fn new(s: &app::Sender<Message>) -> Self {
-        let mut menu = menu::SysMenuBar::default().with_size(800, 35);
+        let menu = menu::SysMenuBar::default().with_size(800, 35);
         menu.set_frame(FrameType::FlatBox);
         menu.add_emit(
             "&File/New...\t",
@@ -176,16 +176,16 @@ impl MyApp {
         let app = app::App::default().with_scheme(app::Scheme::Gtk);
         app::background(211, 211, 211);
         let (s, r) = app::channel::<Message>();
-        let mut buf = text::TextBuffer::default();
+        let buf = text::TextBuffer::default();
         buf.set_tab_distance(4);
-        let mut main_win = window::Window::default()
+        let main_win = window::Window::default()
             .with_size(800, 600)
             .center_screen()
             .with_label("RustyEd");
         let menu = MyMenu::new(&s);
         let modified = false;
         menu.menu.find_item("&File/Save\t").unwrap().deactivate();
-        let mut editor = MyEditor::new(buf.clone());
+        let editor = MyEditor::new(buf.clone());
         editor.emit(s, Message::Changed);
         main_win.make_resizable(true);
         // only resize editor, not the menu bar
@@ -242,7 +242,7 @@ impl MyApp {
                         if path.exists() {
                             // we use a timeout to avoid pasting the path into the buffer
                             app::add_timeout(0.0, {
-                                let mut buf = buf.clone();
+                                let buf = buf.clone();
                                 move |_| match buf.load_file(&path) {
                                     Ok(_) => (),
                                     Err(e) => dialog::alert(
@@ -270,7 +270,7 @@ impl MyApp {
         });
 
         // What shows when we attempt to print
-        let mut printable = text::TextDisplay::default();
+        let printable = text::TextDisplay::default();
         printable.set_frame(FrameType::NoBox);
         printable.set_scrollbar_size(0);
         printable.set_buffer(Some(buf.clone()));
@@ -319,7 +319,7 @@ impl MyApp {
     /** Called by "Save As..." or by "Save" in case no file was set yet.
      * Returns true if the file was succesfully saved. */
     pub fn save_file_as(&mut self) -> Result<bool, Box<dyn error::Error>> {
-        let mut dlg = dialog::NativeFileChooser::new(dialog::NativeFileChooserType::BrowseSaveFile);
+        let dlg = dialog::NativeFileChooser::new(dialog::NativeFileChooserType::BrowseSaveFile);
         dlg.set_option(dialog::NativeFileChooserOptions::SaveAsConfirm);
         dlg.show();
         if dlg.filename().to_string_lossy().to_string().is_empty() {
@@ -374,7 +374,7 @@ impl MyApp {
                         }
                     },
                     Open => {
-                        let mut dlg = dialog::NativeFileChooser::new(dialog::NativeFileChooserType::BrowseFile);
+                        let dlg = dialog::NativeFileChooser::new(dialog::NativeFileChooserType::BrowseFile);
                         dlg.set_option(dialog::NativeFileChooserOptions::NoOptions);
                         dlg.set_filter("*.{txt,rs,toml}");
                         dlg.show();
@@ -393,7 +393,7 @@ impl MyApp {
                     Save => { self.save_file().unwrap(); },
                     SaveAs => { self.save_file_as().unwrap(); },
                     Print => {
-                        let mut printer = printer::Printer::default();
+                        let printer = printer::Printer::default();
                         if printer.begin_job(0).is_ok() {
                             let (w, h) = printer.printable_rect();
                             self.printable.set_size(w - 40, h - 40);

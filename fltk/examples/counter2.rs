@@ -8,12 +8,12 @@ pub enum Message {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let app = app::App::default();
-    let mut wind = Window::default().with_size(160, 200).with_label("Counter");
-    let mut pack = Pack::default().with_size(120, 140).center_of(&wind);
+    let wind = Window::default().with_size(160, 200).with_label("Counter");
+    let pack = Pack::default().with_size(120, 140).center_of(&wind);
     pack.set_spacing(10);
-    let mut but_inc = Button::default().with_size(0, 40).with_label("+");
-    let mut frame = Frame::default().with_size(0, 40).with_label("0");
-    let mut but_dec = Button::default().with_size(0, 40).with_label("-");
+    let but_inc = Button::default().with_size(0, 40).with_label("+");
+    let frame = Frame::default().with_size(0, 40).with_label("0");
+    let but_dec = Button::default().with_size(0, 40).with_label("-");
     pack.end();
     wind.end();
     wind.show();

@@ -21,3 +21,4 @@
 - Remove confusing alias FileDialog. Stick to FileChooser and NativeFileChooser.
 - Remove WidgetExt/ImageExt::width/height in favor of w/h methods.
 - WidgetExt::label() now returns an Option.
+- Relax mutability requirements for widgets.

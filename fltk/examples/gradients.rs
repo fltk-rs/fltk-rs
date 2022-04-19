@@ -10,7 +10,7 @@ fn create_vertical_gradient_frame(
     col1: Color,
     col2: Color,
 ) -> frame::Frame {
-    let mut frame = frame::Frame::new(x, y, w, h, "Vertical");
+    let frame = frame::Frame::new(x, y, w, h, "Vertical");
     frame.draw(move |f| {
         let imax = f.h();
         let d = if imax > 0 { imax } else { 1 };
@@ -34,7 +34,7 @@ fn create_horizontal_gradient_frame(
     col1: Color,
     col2: Color,
 ) -> frame::Frame {
-    let mut frame = frame::Frame::new(x, y, w, h, "Horizontal");
+    let frame = frame::Frame::new(x, y, w, h, "Horizontal");
     frame.draw(move |f| {
         let imax = f.w();
         let d = if imax > 0 { imax } else { 1 };
@@ -52,7 +52,7 @@ fn create_horizontal_gradient_frame(
 
 fn main() {
     let a = app::App::default();
-    let mut win = window::Window::default().with_size(400, 300);
+    let win = window::Window::default().with_size(400, 300);
     create_vertical_gradient_frame(0, 0, 200, 100, Color::Red, Color::Cyan);
     create_horizontal_gradient_frame(200, 0, 200, 100, Color::Red, Color::Cyan);
     win.end();

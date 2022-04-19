@@ -732,13 +732,13 @@ pub fn reset_spot() {
     Example usage:
     ```rust,no_run
     use fltk::{prelude::*, *};
-    let mut win = window::Window::default();
-    let image = draw::capture_window(&mut win).unwrap();
+    let win = window::Window::default();
+    let image = draw::capture_window(&win).unwrap();
     ```
     # Errors
     The api can fail to capture the window as an image
 */
-pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
+pub fn capture_window<Win: WindowExt>(win: &Win) -> Result<RgbImage, FltkError> {
     assert!(!win.was_deleted());
     let cp = win.w() * win.h() * 3;
     win.show();

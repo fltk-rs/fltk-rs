@@ -63,26 +63,26 @@ where
     // data can be anything, even a different widget
     fn cb(w: app::WidgetPtr, data: *mut c_void) {
         // To access the button
-        let mut btn = unsafe { button::Button::from_widget_ptr(w) }; // Gets a Widget
+        let btn = unsafe { button::Button::from_widget_ptr(w) }; // Gets a Widget
         btn.set_label("Works!");
         // To access the frame
         let mut frm = unsafe { widget::Widget::from_widget_ptr(data as app::WidgetPtr) };
         frm.set_label("Works!");
     }
-    let mut but = button::Button::default();
-    let mut frame = frame::Frame::default();
+    let but = button::Button::default();
+    let frame = frame::Frame::default();
     unsafe {
         // If no data needs to be passed, you can pass 0 as *mut _
-        app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(cb));
+        app::set_raw_callback(&but, frame.as_widget_ptr() as *mut _, Some(cb));
         // Using a closure also works
-        app::set_raw_callback(&mut but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")}));
+        app::set_raw_callback(&but, frame.as_widget_ptr() as *mut _, Some(|_ , _| { println!("Also works!")}));
     }
     ```
     # Safety
     The function involves dereferencing externally provided raw pointers
 */
 pub unsafe fn set_raw_callback<W>(
-    widget: &mut W,
+    widget: &W,
     data: *mut raw::c_void,
     cb: Option<fn(WidgetPtr, *mut raw::c_void)>,
 ) where

@@ -31,11 +31,11 @@ pub fn from_id(id: &'static str) -> Option<widget::Widget> {
 
 // So we can do `widget.on_trigger()` and get self back. Useful for chaining methods.
 trait OnTrigger<W> where W: WidgetExt {
-    fn on_trigger<F: 'static + FnMut(&mut Self)>(self, cb: F) -> Self where Self: Sized;
+    fn on_trigger<F: 'static + FnMut(&Self)>(self, cb: F) -> Self where Self: Sized;
 }
 
 impl<W> OnTrigger<W> for W where W: WidgetExt {
-    fn on_trigger<F: 'static + FnMut(&mut Self)>(mut self, mut cb: F) -> Self {
+    fn on_trigger<F: 'static + FnMut(&Self)>(self, mut cb: F) -> Self {
         self.set_callback(move |s| cb(s));
         self
     }
@@ -43,15 +43,15 @@ impl<W> OnTrigger<W> for W where W: WidgetExt {
 
 // For calls inside a closure
 fn increment_by(step: i32) {
-    if let Some(mut frame) = from_id("my_frame") {
+    if let Some(frame) = from_id("my_frame") {
         let label: i32 = frame.label().unwrap().parse().unwrap();
         frame.set_label(&(label + step).to_string());
     }
 }
 
 // To pass a function object directly!
-fn increment(_w: &mut impl WidgetExt) {
-    if let Some(mut frame) = from_id("my_frame") {
+fn increment(_w: &impl WidgetExt) {
+    if let Some(frame) = from_id("my_frame") {
         let label: i32 = frame.label().unwrap().parse().unwrap();
         frame.set_label(&(label + 1).to_string());
     }
@@ -60,7 +60,7 @@ fn increment(_w: &mut impl WidgetExt) {
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
 
-    let mut wind = window::Window::default()
+    let wind = window::Window::default()
         .with_size(160, 200)
         .with_label("Counter");
     let col = group::Flex::default_fill().column();

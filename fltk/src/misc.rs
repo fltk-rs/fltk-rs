@@ -63,7 +63,7 @@ impl Spinner {
     }
 
     /// Sets the minimum value of the spinner widget
-    pub fn set_minimum(&mut self, a: f64) {
+    pub fn set_minimum(&self, a: f64) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_minimum(self.inner, a) }
     }
@@ -75,19 +75,19 @@ impl Spinner {
     }
 
     /// Sets the minimum value of the spinner widget
-    pub fn set_maximum(&mut self, a: f64) {
+    pub fn set_maximum(&self, a: f64) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_maximum(self.inner, a) }
     }
 
     /// Sets the range of the spinner widget
-    pub fn set_range(&mut self, a: f64, b: f64) {
+    pub fn set_range(&self, a: f64, b: f64) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_range(self.inner, a, b) }
     }
 
     /// Sets the step of the spinner widget
-    pub fn set_step(&mut self, a: f64) {
+    pub fn set_step(&self, a: f64) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_step(self.inner, a) }
     }
@@ -105,7 +105,7 @@ impl Spinner {
     }
 
     /// Sets the maximum size supported by the spinner widget
-    pub fn set_maximum_size(&mut self, s: i32) {
+    pub fn set_maximum_size(&self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_maxsize(self.inner, s as i32) }
     }
@@ -117,7 +117,7 @@ impl Spinner {
     }
 
     /// Sets the text font
-    pub fn set_text_font(&mut self, f: Font) {
+    pub fn set_text_font(&self, f: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -129,7 +129,7 @@ impl Spinner {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: i32) {
+    pub fn set_text_size(&self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_text_size(self.inner, s as i32) }
     }
@@ -141,7 +141,7 @@ impl Spinner {
     }
 
     /// Sets the text's color
-    pub fn set_text_color(&mut self, color: Color) {
+    pub fn set_text_color(&self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Spinner_set_text_color(self.inner, color.bits() as u32) }
     }
@@ -153,7 +153,7 @@ impl Spinner {
     }
 
     /// Sets the value of the spinner
-    pub fn set_value(&mut self, arg2: f64) {
+    pub fn set_value(&self, arg2: f64) {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Spinner_set_value(self.inner, arg2);
@@ -167,7 +167,7 @@ impl Spinner {
     }
 
     /// Sets wrap for the spinner
-    pub fn set_wrap(&mut self, flag: bool) {
+    pub fn set_wrap(&self, flag: bool) {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Spinner_set_wrap(self.inner, flag as _);
@@ -199,34 +199,34 @@ crate::macros::widget::impl_widget_base!(Chart, Fl_Chart);
 
 impl Chart {
     /// Clears the chart
-    pub fn clear(&mut self) {
+    pub fn clear(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_clear(self.inner) }
     }
 
     /// Adds an entry
-    pub fn add(&mut self, val: f64, txt: &str, col: Color) {
+    pub fn add(&self, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_add(self.inner, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Inserts an entry at an index
-    pub fn insert(&mut self, idx: i32, val: f64, txt: &str, col: Color) {
+    pub fn insert(&self, idx: i32, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_insert(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Replaces an entry at an index
-    pub fn replace(&mut self, idx: i32, val: f64, txt: &str, col: Color) {
+    pub fn replace(&self, idx: i32, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_replace(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Sets the bounds of the chart
-    pub fn set_bounds(&mut self, a: f64, b: f64) {
+    pub fn set_bounds(&self, a: f64, b: f64) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_bounds(self.inner, a, b) }
     }
@@ -244,7 +244,7 @@ impl Chart {
     }
 
     /// Sets the maximum supported size of the chart
-    pub fn set_maximum_size(&mut self, s: i32) {
+    pub fn set_maximum_size(&self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_maxsize(self.inner, s as i32) }
     }
@@ -256,7 +256,7 @@ impl Chart {
     }
 
     /// Sets the text font
-    pub fn set_text_font(&mut self, f: Font) {
+    pub fn set_text_font(&self, f: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -268,7 +268,7 @@ impl Chart {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: i32) {
+    pub fn set_text_size(&self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_text_size(self.inner, s as i32) }
     }
@@ -280,7 +280,7 @@ impl Chart {
     }
 
     /// Sets the text's color
-    pub fn set_text_color(&mut self, color: Color) {
+    pub fn set_text_color(&self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_set_text_color(self.inner, color.bits() as u32) }
     }
@@ -294,7 +294,7 @@ impl Chart {
     }
 
     /// Sets the ability of the chart to be autosizable
-    pub fn make_autosize(&mut self, val: bool) {
+    pub fn make_autosize(&self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_make_autosize(self.inner, val as i32) }
     }
@@ -319,7 +319,7 @@ impl Progress {
     }
 
     /// Sets the minimum value of the progress bar
-    pub fn set_minimum(&mut self, a: f64) {
+    pub fn set_minimum(&self, a: f64) {
         assert!(!self.was_deleted());
         unsafe { Fl_Progress_set_minimum(self.inner, a) }
     }
@@ -331,7 +331,7 @@ impl Progress {
     }
 
     /// Sets the minimum value of the progress bar
-    pub fn set_maximum(&mut self, a: f64) {
+    pub fn set_maximum(&self, a: f64) {
         assert!(!self.was_deleted());
         unsafe { Fl_Progress_set_maximum(self.inner, a) }
     }
@@ -343,7 +343,7 @@ impl Progress {
     }
 
     /// Sets the value of the progress bar
-    pub fn set_value(&mut self, arg2: f64) {
+    pub fn set_value(&self, arg2: f64) {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Progress_set_value(self.inner, arg2);
@@ -525,7 +525,7 @@ crate::macros::widget::impl_widget_base!(InputChoice, Fl_Input_Choice);
 
 impl InputChoice {
     /// Set the `down_box` of the widget
-    pub fn set_down_frame(&mut self, f: FrameType) {
+    pub fn set_down_frame(&self, f: FrameType) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_set_down_box(self.inner, f as i32) }
     }
@@ -537,14 +537,14 @@ impl InputChoice {
     }
 
     /// Add an element to the input choice
-    pub fn add(&mut self, s: &str) {
+    pub fn add(&self, s: &str) {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
         unsafe { Fl_Input_Choice_add(self.inner, s.as_ptr()) }
     }
 
     /// Clear the input choice widget
-    pub fn clear(&mut self) {
+    pub fn clear(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_clear(self.inner) }
     }
@@ -563,14 +563,14 @@ impl InputChoice {
     }
 
     /// Set the value to a string
-    pub fn set_value(&mut self, val: &str) {
+    pub fn set_value(&self, val: &str) {
         assert!(!self.was_deleted());
         let val = CString::safe_new(val);
         unsafe { Fl_Input_Choice_set_value(self.inner, val.as_ptr()) }
     }
 
     /// Set the value of the input choice to the element at `idx`
-    pub fn set_value_index(&mut self, idx: i32) {
+    pub fn set_value_index(&self, idx: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_set_value2(self.inner, idx as i32) }
     }
@@ -602,7 +602,7 @@ impl InputChoice {
     }
 
     /// Sets the text font
-    pub fn set_text_font(&mut self, f: Font) {
+    pub fn set_text_font(&self, f: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -614,7 +614,7 @@ impl InputChoice {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: i32) {
+    pub fn set_text_size(&self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_set_text_size(self.inner, s as i32) }
     }
@@ -626,7 +626,7 @@ impl InputChoice {
     }
 
     /// Sets the text's color
-    pub fn set_text_color(&mut self, color: Color) {
+    pub fn set_text_color(&self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_set_text_color(self.inner, color.bits() as u32) }
     }
@@ -713,33 +713,33 @@ impl HelpView {
     }
 
     /// Set value of the widget
-    pub fn set_value(&mut self, val: &str) {
+    pub fn set_value(&self, val: &str) {
         assert!(!self.was_deleted());
         let val = CString::safe_new(val);
         unsafe { Fl_Help_View_set_value(self.inner, val.as_ptr()) }
     }
 
     /// Clear selection
-    pub fn clear_selection(&mut self) {
+    pub fn clear_selection(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_clear_selection(self.inner) }
     }
 
     /// Select all
-    pub fn select_all(&mut self) {
+    pub fn select_all(&self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_select_all(self.inner) }
     }
 
     /// Set the top line string
-    pub fn set_top_line_string(&mut self, n: &str) {
+    pub fn set_top_line_string(&self, n: &str) {
         assert!(!self.was_deleted());
         let n = CString::safe_new(n);
         unsafe { Fl_Help_View_set_topline(self.inner, n.as_ptr()) }
     }
 
     /// Set the top line position
-    pub fn set_top_line(&mut self, line: i32) {
+    pub fn set_top_line(&self, line: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_topline2(self.inner, line) }
     }
@@ -751,7 +751,7 @@ impl HelpView {
     }
 
     /// Set the left line position
-    pub fn set_left_line(&mut self, arg1: i32) {
+    pub fn set_left_line(&self, arg1: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_leftline(self.inner, arg1) }
     }
@@ -769,7 +769,7 @@ impl HelpView {
     }
 
     /// Sets the text font
-    pub fn set_text_font(&mut self, f: Font) {
+    pub fn set_text_font(&self, f: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -781,7 +781,7 @@ impl HelpView {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&mut self, s: i32) {
+    pub fn set_text_size(&self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_text_size(self.inner, s as i32) }
     }
@@ -793,7 +793,7 @@ impl HelpView {
     }
 
     /// Sets the text's color
-    pub fn set_text_color(&mut self, color: Color) {
+    pub fn set_text_color(&self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_text_color(self.inner, color.bits() as u32) }
     }
@@ -805,7 +805,7 @@ impl HelpView {
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&mut self, new_size: i32) {
+    pub fn set_scrollbar_size(&self, new_size: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_set_scrollbar_size(self.inner, new_size as i32) }
     }
@@ -813,7 +813,7 @@ impl HelpView {
     /// Load a view from a file or URI
     /// # Errors
     /// Errors on non-existent path
-    pub fn load(&mut self, f: &str) -> Result<(), FltkError> {
+    pub fn load(&self, f: &str) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let f = CString::safe_new(f);
         unsafe {

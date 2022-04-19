@@ -14,30 +14,30 @@ const WIDTH: i32 = 640;
 const HEIGHT: i32 = 480;
 
 pub trait TerminalFuncs {
-    fn append_txt(&mut self, txt: &str);
-    fn append_dir(&mut self, dir: &str);
-    fn append_error(&mut self, txt: &str);
-    fn run_command(&mut self, cmd: &str, cwd: &mut String, receiver: app::Receiver<bool>);
-    fn change_dir(&mut self, path: &Path, current: &mut String) -> io::Result<()>;
+    fn append_txt(&self, txt: &str);
+    fn append_dir(&self, dir: &str);
+    fn append_error(&self, txt: &str);
+    fn run_command(&self, cmd: &str, cwd: &mut String, receiver: app::Receiver<bool>);
+    fn change_dir(&self, path: &Path, current: &mut String) -> io::Result<()>;
 }
 
 impl TerminalFuncs for SimpleTerminal {
-    fn append_txt(&mut self, txt: &str) {
+    fn append_txt(&self, txt: &str) {
         self.append(txt);
         self.style_buffer().unwrap().append(&"A".repeat(txt.len()));
     }
 
-    fn append_dir(&mut self, dir: &str) {
+    fn append_dir(&self, dir: &str) {
         self.append(dir);
         self.style_buffer().unwrap().append(&"C".repeat(dir.len()));
     }
 
-    fn append_error(&mut self, txt: &str) {
+    fn append_error(&self, txt: &str) {
         self.append(txt);
         self.style_buffer().unwrap().append(&"B".repeat(txt.len()));
     }
 
-    fn run_command(&mut self, cmd: &str, cwd: &mut String, receiver: app::Receiver<bool>) {
+    fn run_command(&self, cmd: &str, cwd: &mut String, receiver: app::Receiver<bool>) {
         let args: Vec<String> = cmd.split_whitespace().map(|s| s.to_owned()).collect();
 
         if !args.is_empty() {
@@ -67,7 +67,7 @@ impl TerminalFuncs for SimpleTerminal {
                 }
 
                 let reader = BufReader::new(proc.unwrap().stdout.unwrap());
-                let mut term = self.clone();
+                let term = self.clone();
                 let cwd = cwd.clone();
                 std::thread::spawn(move || {
                     reader
@@ -97,7 +97,7 @@ impl TerminalFuncs for SimpleTerminal {
         }
     }
 
-    fn change_dir(&mut self, path: &Path, current: &mut String) -> io::Result<()> {
+    fn change_dir(&self, path: &Path, current: &mut String) -> io::Result<()> {
         std::env::set_current_dir(path)?;
         let mut path = std::env::current_dir()?.to_string_lossy().to_string();
         path.push_str("$ ");
@@ -135,8 +135,8 @@ impl Term {
             },
         ];
 
-        let mut sbuf = TextBuffer::default();
-        let mut term = SimpleTerminal::new(5, 5, WIDTH - 10, HEIGHT - 10, "");
+        let sbuf = TextBuffer::default();
+        let term = SimpleTerminal::new(5, 5, WIDTH - 10, HEIGHT - 10, "");
 
         term.set_highlight_data(sbuf.clone(), styles);
 
@@ -211,7 +211,7 @@ impl Term {
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Plastic);
-    let mut wind = Window::default()
+    let wind = Window::default()
         .with_size(WIDTH, HEIGHT)
         .with_label("ColorTerminal");
 

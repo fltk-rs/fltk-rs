@@ -18,8 +18,8 @@ macro_rules! impl_menu_ext {
 
         paste::paste! {
             unsafe impl MenuExt for $name {
-                fn add<F: FnMut(&mut Self) + 'static>(
-                    &mut self,
+                fn add<F: FnMut(&Self) + 'static>(
+                    &self,
                     name: &str,
                     shortcut: $crate::enums::Shortcut,
                     flag: MenuFlag,
@@ -36,7 +36,7 @@ macro_rules! impl_menu_ext {
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                         }
-                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
                         [<$flname _add>](
@@ -50,8 +50,8 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn insert<F: FnMut(&mut Self) + 'static>(
-                    &mut self,
+                fn insert<F: FnMut(&Self) + 'static>(
+                    &self,
                     idx: i32,
                     name: &str,
                     shortcut: $crate::enums::Shortcut,
@@ -69,7 +69,7 @@ macro_rules! impl_menu_ext {
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                         }
-                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
                         [<$flname _insert>](
@@ -85,7 +85,7 @@ macro_rules! impl_menu_ext {
                 }
 
                 fn add_emit<T: 'static + Clone + Send + Sync>(
-                    &mut self,
+                    &self,
                     label: &str,
                     shortcut: $crate::enums::Shortcut,
                     flag: $crate::menu::MenuFlag,
@@ -96,7 +96,7 @@ macro_rules! impl_menu_ext {
                 }
 
                 fn insert_emit<T: 'static + Clone + Send + Sync>(
-                    &mut self,
+                    &self,
                     idx: i32,
                     label: &str,
                     shortcut: $crate::enums::Shortcut,
@@ -109,7 +109,7 @@ macro_rules! impl_menu_ext {
                     })
                 }
 
-                fn remove(&mut self, idx: i32) {
+                fn remove(&self, idx: i32) {
                     assert!(!self.was_deleted());
                     let idx = if idx < self.size() {
                         idx
@@ -135,7 +135,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn set_item(&mut self, item: &MenuItem) -> bool {
+                fn set_item(&self, item: &MenuItem) -> bool {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_item>](self.inner, item.inner) != 0
@@ -155,7 +155,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn set_text_font(&mut self, c: $crate::enums::Font) {
+                fn set_text_font(&self, c: $crate::enums::Font) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_font>](self.inner, c.bits() as i32)
@@ -169,7 +169,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn set_text_size(&mut self, c: i32) {
+                fn set_text_size(&self, c: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_size>](self.inner, c as i32)
@@ -183,14 +183,14 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn set_text_color(&mut self, c: $crate::enums::Color) {
+                fn set_text_color(&self, c: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_color>](self.inner, c.bits() as u32)
                     }
                 }
 
-                fn add_choice(&mut self, text: &str) {
+                fn add_choice(&self, text: &str) {
                     unsafe {
                         assert!(!self.was_deleted());
                         let arg2 = CString::safe_new(text);
@@ -224,21 +224,21 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn set_value(&mut self, v: i32) -> bool {
+                fn set_value(&self, v: i32) -> bool {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_value>](self.inner, v) != 0
                     }
                 }
 
-                fn clear(&mut self) {
+                fn clear(&self) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _clear>](self.inner);
                     }
                 }
 
-                unsafe fn unsafe_clear(&mut self) {
+                unsafe fn unsafe_clear(&self) {
                     assert!(!self.was_deleted());
                     let sz = self.size();
                     if sz > 0 {
@@ -251,7 +251,7 @@ macro_rules! impl_menu_ext {
                     [<$flname _clear>](self.inner);
                 }
 
-                fn clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
+                fn clear_submenu(&self, idx: i32) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         match [<$flname _clear_submenu>](self.inner, idx as i32) {
@@ -261,7 +261,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                unsafe fn unsafe_clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
+                unsafe fn unsafe_clear_submenu(&self, idx: i32) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     let x = self.at(idx);
                     if x.is_none() {
@@ -333,16 +333,16 @@ macro_rules! impl_menu_ext {
                     unsafe { std::mem::transmute([<$flname _mode>](self.inner, idx as i32)) }
                 }
 
-                fn set_mode(&mut self, idx: i32, flag: $crate::menu::MenuFlag) {
+                fn set_mode(&self, idx: i32, flag: $crate::menu::MenuFlag) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_mode>](self.inner, idx as i32, flag as i32) }
                 }
 
-                fn end(&mut self) {
+                fn end(&self) {
                     //
                 }
 
-                fn set_down_frame(&mut self, f: $crate::enums::FrameType) {
+                fn set_down_frame(&self, f: $crate::enums::FrameType) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_down_box>](self.inner, f as i32) }
                 }
@@ -352,7 +352,7 @@ macro_rules! impl_menu_ext {
                     unsafe { std::mem::transmute([<$flname _down_box>](self.inner)) }
                 }
 
-                fn global(&mut self) {
+                fn global(&self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _global>](self.inner) }
                 }
@@ -372,7 +372,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                unsafe fn set_menu(&mut self, item: $crate::menu::MenuItem) {
+                unsafe fn set_menu(&self, item: $crate::menu::MenuItem) {
                     assert!(!self.was_deleted());
                     [<$flname _set_menu>](self.inner, item.inner)
                 }

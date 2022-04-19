@@ -16,12 +16,12 @@ mod closable_tab {
     }
 
     fn create_tab_button(label: &str) -> group::Group {
-        let mut grp = group::Group::new(0, 0, 150, 40, None);
+        let grp = group::Group::new(0, 0, 150, 40, None);
         grp.set_align(Align::Left | Align::Inside);
-        let mut but_handle = button::Button::new(grp.x() + 5, grp.y() + 5, 110, 30, "");
+        let but_handle = button::Button::new(grp.x() + 5, grp.y() + 5, 110, 30, "");
         but_handle.set_align(Align::Left | Align::Inside);
         but_handle.set_label(label);
-        let mut but_close = button::Button::new(grp.x() + 120, grp.y() + 10, 20, 20, "@1+");
+        let but_close = button::Button::new(grp.x() + 120, grp.y() + 10, 20, 20, "@1+");
         but_handle.set_frame(FrameType::FlatBox);
         but_handle.clear_visible_focus();
         but_close.set_frame(FrameType::FlatBox);
@@ -42,11 +42,11 @@ mod closable_tab {
         pub fn new(x: i32, y: i32, w: i32, h: i32, snd: &'a app::Sender<Message>) -> Self {
             let current = None;
             let parent_grp = group::Group::new(x, y, w, h, None);
-            let mut tab_labels = group::Pack::new(x + 5, y, w - 10, 40, None);
+            let tab_labels = group::Pack::new(x + 5, y, w - 10, 40, None);
             tab_labels.set_spacing(3);
             tab_labels.set_type(group::PackType::Horizontal);
             tab_labels.end();
-            let mut contents = group::Group::new(x, y + 40, w, h - 40, None);
+            let contents = group::Group::new(x, y + 40, w, h - 40, None);
             contents.set_frame(FrameType::NoBox);
             contents.end();
             parent_grp.end();
@@ -166,7 +166,7 @@ fn main() {
         grp
     }
     let app = app::App::default();
-    let mut win = window::Window::default().with_size(800, 600);
+    let win = window::Window::default().with_size(800, 600);
     let (s, r) = app::channel::<closable_tab::Message>();
     let mut tabs = closable_tab::ClosableTab::new(0, 0, 800, 600, &s);
     win.end();

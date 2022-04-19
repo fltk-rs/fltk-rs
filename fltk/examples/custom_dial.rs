@@ -12,10 +12,10 @@ pub struct MyDial {
 impl MyDial {
     pub fn new(x: i32, y: i32, w: i32, h: i32, label: &str) -> Self {
         let value = Rc::from(RefCell::from(0));
-        let mut main_wid = group::Group::new(x, y, w, h, None)
+        let main_wid = group::Group::new(x, y, w, h, None)
             .with_label(label)
             .with_align(Align::Top);
-        let mut value_frame =
+        let value_frame =
             frame::Frame::new(main_wid.x(), main_wid.y() + 80, main_wid.w(), 40, "0");
         value_frame.set_label_size(26);
         main_wid.end();
@@ -64,7 +64,7 @@ widget_extends!(MyDial, group::Group, main_wid);
 fn main() {
     let app = app::App::default();
     app::background(255, 255, 255);
-    let mut win = window::Window::default().with_size(400, 300);
+    let win = window::Window::default().with_size(400, 300);
     let mut dial = MyDial::new(100, 100, 200, 200, "CPU Load %");
     dial.set_label_size(22);
     dial.set_label_color(Color::from_u32(0x797979));

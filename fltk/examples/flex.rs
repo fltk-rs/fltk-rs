@@ -2,7 +2,7 @@ use fltk::{prelude::*, *};
 
 fn main() {
     let a = app::App::default().with_scheme(app::Scheme::Gtk);
-    let mut win = window::Window::default().with_size(640, 480);
+    let win = window::Window::default().with_size(640, 480);
     let mut col = group::Flex::default_fill().column();
     main_panel(&mut col);
     col.end();
@@ -18,7 +18,7 @@ fn buttons_panel(parent: &mut group::Flex) {
     frame::Frame::default();
     let w = frame::Frame::default().with_label("Welcome to Flex Login");
 
-    let mut urow = group::Flex::default().row();
+    let urow = group::Flex::default().row();
     {
         frame::Frame::default()
             .with_label("Username:")
@@ -29,7 +29,7 @@ fn buttons_panel(parent: &mut group::Flex) {
         urow.end();
     }
 
-    let mut prow = group::Flex::default().row();
+    let prow = group::Flex::default().row();
     {
         frame::Frame::default()
             .with_label("Password:")
@@ -42,7 +42,7 @@ fn buttons_panel(parent: &mut group::Flex) {
 
     let pad = frame::Frame::default();
 
-    let mut brow = group::Flex::default().row();
+    let brow = group::Flex::default().row();
     {
         frame::Frame::default();
         let reg = create_button("Register");
@@ -68,7 +68,7 @@ fn buttons_panel(parent: &mut group::Flex) {
 fn middle_panel(parent: &mut group::Flex) {
     frame::Frame::default();
 
-    let mut frame = frame::Frame::default().with_label("Image");
+    let frame = frame::Frame::default().with_label("Image");
     frame.set_frame(enums::FrameType::BorderBox);
     frame.set_color(enums::Color::from_rgb(0, 200, 0));
     let spacer = frame::Frame::default();
@@ -97,7 +97,7 @@ fn main_panel(parent: &mut group::Flex) {
 }
 
 fn create_button(caption: &str) -> button::Button {
-    let mut btn = button::Button::default().with_label(caption);
+    let btn = button::Button::default().with_label(caption);
     btn.set_color(enums::Color::from_rgb(225, 225, 225));
     btn
 }
