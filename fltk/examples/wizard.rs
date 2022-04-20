@@ -4,7 +4,7 @@ use fltk::{
     window,
 };
 
-pub fn show_wizard(_but: &button::Button) {
+pub fn show_wizard(_but: &mut button::Button) {
     let win = window::Window::default()
         .with_size(400, 300)
         .with_label("Wizard");

@@ -670,7 +670,7 @@ impl FileChooser {
     }
 
     /// Sets the callback of the `FileChooser`
-    pub fn set_callback<F: FnMut(&Self) + 'static>(&self, cb: F) {
+    pub fn set_callback<F: FnMut(&mut Self) + 'static>(&self, cb: F) {
         assert!(!self.inner.is_null());
         unsafe {
             unsafe extern "C" fn shim(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void) {
@@ -681,7 +681,7 @@ impl FileChooser {
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let _old_data = self.user_data();
-            let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: Option<
                 unsafe extern "C" fn(arg1: *mut Fl_File_Chooser, data: *mut raw::c_void),

@@ -518,7 +518,7 @@ impl MenuItem {
     }
 
     /// Add a menu item
-    pub fn add<F: FnMut(&Choice) + 'static>(
+    pub fn add<F: FnMut(&mut Choice) + 'static>(
         &self,
         name: &str,
         shortcut: crate::enums::Shortcut,
@@ -535,7 +535,7 @@ impl MenuItem {
                 let f: &mut (dyn FnMut(&mut crate::widget::Widget)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
-            let a: *mut Box<dyn FnMut(&Choice)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
             let callback: Fl_Callback = Some(shim);
             Fl_Menu_Item_add(

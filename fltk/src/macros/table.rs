@@ -414,7 +414,7 @@ macro_rules! impl_table_ext {
                 }
 
                 fn draw_cell<
-                    F: FnMut(&Self, $crate::table::TableContext, Cell, Rect)
+                    F: FnMut(&mut Self, $crate::table::TableContext, Cell, Rect)
                         + 'static,
                 >(
                     &self,
@@ -480,7 +480,7 @@ macro_rules! impl_table_ext {
                         }
                         let a: *mut Box<
                             dyn FnMut(
-                                &Self,
+                                &mut Self,
                                 $crate::table::TableContext,
                                 Cell,
                                 Rect,

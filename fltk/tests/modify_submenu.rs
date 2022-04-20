@@ -1,6 +1,6 @@
 use fltk::{enums::*, prelude::*, *};
 
-fn menu_cb(m: &impl MenuExt) {
+fn menu_cb(m: &mut impl MenuExt) {
     if let Some(choice) = m.choice() {
         match choice.as_str() {
             "New\t" => println!("New"),

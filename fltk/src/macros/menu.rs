@@ -18,7 +18,7 @@ macro_rules! impl_menu_ext {
 
         paste::paste! {
             unsafe impl MenuExt for $name {
-                fn add<F: FnMut(&Self) + 'static>(
+                fn add<F: FnMut(&mut Self) + 'static>(
                     &self,
                     name: &str,
                     shortcut: $crate::enums::Shortcut,
@@ -36,7 +36,7 @@ macro_rules! impl_menu_ext {
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                         }
-                        let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
                         [<$flname _add>](
@@ -50,7 +50,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn insert<F: FnMut(&Self) + 'static>(
+                fn insert<F: FnMut(&mut Self) + 'static>(
                     &self,
                     idx: i32,
                     name: &str,
@@ -69,7 +69,7 @@ macro_rules! impl_menu_ext {
                             let _ =
                                 std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
                         }
-                        let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
                         [<$flname _insert>](

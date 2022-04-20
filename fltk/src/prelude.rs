@@ -91,7 +91,7 @@ pub unsafe trait WidgetExt {
         Self: Sized;
     /// Sets the callback when the widget is triggered (clicks for example)
     /// takes the widget as a closure argument
-    fn set_callback<F: FnMut(&Self) + 'static>(&self, cb: F)
+    fn set_callback<F: FnMut(&mut Self) + 'static>(&self, cb: F)
     where
         Self: Sized;
     /// Emits a message on callback using a sender
@@ -305,11 +305,11 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// Set a custom handler, where events are managed manually, akin to `Fl_Widget::handle(int)`.
     /// Handled or ignored events should return true, unhandled events should return false.
     /// takes the widget as a closure argument
-    fn handle<F: FnMut(&Self, Event) -> bool + 'static>(&self, cb: F);
+    fn handle<F: FnMut(&mut Self, Event) -> bool + 'static>(&self, cb: F);
     /// Set a custom draw method.
     /// takes the widget as a closure argument.
     /// macOS requires that `WidgetBase::draw` actually calls drawing functions
-    fn draw<F: FnMut(&Self) + 'static>(&self, cb: F);
+    fn draw<F: FnMut(&mut Self) + 'static>(&self, cb: F);
     #[doc(hidden)]
     /// INTERNAL: Retrieve the draw data
     /// # Safety
@@ -322,7 +322,7 @@ pub unsafe trait WidgetBase: WidgetExt {
     unsafe fn handle_data(&self) -> Option<Box<dyn FnMut(Event) -> bool>>;
     /// Perform a callback on resize.
     /// Avoid resizing the parent or the same widget to avoid infinite recursion
-    fn resize_callback<F: FnMut(&Self, i32, i32, i32, i32) + 'static>(&self, cb: F);
+    fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(&self, cb: F);
     /// Makes the widget derived
     /// # Safety
     /// Calling this on a non-derived widget can cause undefined behavior
@@ -698,7 +698,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     /// Takes the menu item as a closure argument
-    fn add<F: FnMut(&Self) + 'static>(
+    fn add<F: FnMut(&mut Self) + 'static>(
         &self,
         name: &str,
         shortcut: Shortcut,
@@ -711,7 +711,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// The characters "&", "/", "\\", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
     /// Takes the menu item as a closure argument
-    fn insert<F: FnMut(&Self) + 'static>(
+    fn insert<F: FnMut(&mut Self) + 'static>(
         &self,
         idx: i32,
         name: &str,
@@ -1255,7 +1255,7 @@ pub unsafe trait TableExt: GroupExt {
     /// Override `draw_cell`.
     /// callback args: &self, `TableContext`, Row: i32, Column: i32, X: i32, Y: i32, Width: i32 and Height: i32.
     /// takes the widget as a closure argument
-    fn draw_cell<F: FnMut(&Self, crate::table::TableContext, Cell, Rect) + 'static>(
+    fn draw_cell<F: FnMut(&mut Self, crate::table::TableContext, Cell, Rect) + 'static>(
         &self,
         cb: F,
     );

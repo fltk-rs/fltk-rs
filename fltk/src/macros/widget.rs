@@ -590,7 +590,7 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn set_callback<F: FnMut(&Self) + 'static>(&self, cb: F) {
+                fn set_callback<F: FnMut(&mut Self) + 'static>(&self, cb: F) {
                     assert!(!self.was_deleted());
                     unsafe {
                         unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
@@ -604,7 +604,7 @@ macro_rules! impl_widget_ext {
                         if self.is_derived {
                             _old_data = self.user_data();
                         }
-                        let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Fl_Callback = Some(shim);
                         [<$flname _set_callback>](self.inner, callback, data);
@@ -769,7 +769,7 @@ macro_rules! impl_widget_base {
                     Self::from_widget_ptr(w.as_widget_ptr() as *mut _)
                 }
 
-                fn handle<F: FnMut(&Self, $crate::enums::Event) -> bool + 'static>(&self, cb: F) {
+                fn handle<F: FnMut(&mut Self, $crate::enums::Event) -> bool + 'static>(&self, cb: F) {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
                     unsafe {
@@ -799,7 +799,7 @@ macro_rules! impl_widget_base {
                         if self.is_derived {
                             _old_data = self.handle_data();
                         }
-                        let a: *mut Box<dyn FnMut(&Self, $crate::enums::Event) -> bool> =
+                        let a: *mut Box<dyn FnMut(&mut Self, $crate::enums::Event) -> bool> =
                             Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: custom_handler_callback = Some(shim);
@@ -807,7 +807,7 @@ macro_rules! impl_widget_base {
                     }
                 }
 
-                fn draw<F: FnMut(&Self) + 'static>(&self, cb: F) {
+                fn draw<F: FnMut(&mut Self) + 'static>(&self, cb: F) {
                     assert!(!self.was_deleted());
                     assert!(self.is_derived);
                     unsafe {
@@ -823,7 +823,7 @@ macro_rules! impl_widget_base {
                         if self.is_derived {
                             _old_data = self.draw_data();
                         }
-                        let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
+                        let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: custom_draw_callback = Some(shim);
                         [<$flname _draw>](self.inner, callback, data);
@@ -852,7 +852,7 @@ macro_rules! impl_widget_base {
                     Some(*data)
                 }
 
-                fn resize_callback<F: FnMut(&Self, i32, i32, i32, i32) + 'static>(
+                fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(
                     &self,
                     cb: F,
                 ) {
@@ -875,7 +875,7 @@ macro_rules! impl_widget_base {
                                 f(&mut wid, x, y, w, h)
                             }));
                         }
-                        let a: *mut Box<dyn FnMut(&Self, i32, i32, i32, i32)> =
+                        let a: *mut Box<dyn FnMut(&mut Self, i32, i32, i32, i32)> =
                             Box::into_raw(Box::new(Box::new(cb)));
                         let data: *mut std::os::raw::c_void = a as *mut std::os::raw::c_void;
                         let callback: Option<
@@ -1010,7 +1010,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.deimage()
             }
 
-            fn set_callback<F: FnMut(&Self) + 'static>(&self, mut cb: F) {
+            fn set_callback<F: FnMut(&mut Self) + 'static>(&self, mut cb: F) {
                 let mut widget = self.clone();
                 self.$member.set_callback(move |_| {
                     cb(&mut widget);
@@ -1310,7 +1310,7 @@ macro_rules! impl_widget_base_via {
                 }
             }
 
-            fn handle<F: FnMut(&Self, $crate::enums::Event) -> bool + 'static>(
+            fn handle<F: FnMut(&mut Self, $crate::enums::Event) -> bool + 'static>(
                 &self,
                 mut cb: F,
             ) {
@@ -1318,7 +1318,7 @@ macro_rules! impl_widget_base_via {
                 self.$member.handle(move |_, ev| cb(&mut widget, ev));
             }
 
-            fn draw<F: FnMut(&Self) + 'static>(&self, mut cb: F) {
+            fn draw<F: FnMut(&mut Self) + 'static>(&self, mut cb: F) {
                 let mut widget = self.clone();
                 self.$member.draw(move |_| cb(&mut widget))
             }
@@ -1331,7 +1331,7 @@ macro_rules! impl_widget_base_via {
                 self.$member.handle_data()
             }
 
-            fn resize_callback<F: FnMut(&Self, i32, i32, i32, i32) + 'static>(
+            fn resize_callback<F: FnMut(&mut Self, i32, i32, i32, i32) + 'static>(
                 &self,
                 mut cb: F,
             ) {

@@ -632,7 +632,7 @@ impl OverlayWindow {
     }
 
     /// Draw overlay
-    pub fn draw_overlay<F: FnMut(&Self) + 'static>(&self, cb: F) {
+    pub fn draw_overlay<F: FnMut(&mut Self) + 'static>(&self, cb: F) {
         assert!(!self.was_deleted());
         assert!(self.is_derived);
         unsafe {
@@ -647,7 +647,7 @@ impl OverlayWindow {
             if self.is_derived {
                 _old_data = self.draw_data();
             }
-            let a: *mut Box<dyn FnMut(&Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: custom_draw_callback = Some(shim);
             Fl_Overlay_Window_draw_overlay(self.inner, callback, data);

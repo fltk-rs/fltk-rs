@@ -1253,7 +1253,7 @@ impl TreeItem {
        let _third = tree.add_item("first/second/thrid", &item).unwrap();
        ```
     */
-    pub fn draw_item_content<F: FnMut(&Self, bool) -> i32>(&self, cb: F) {
+    pub fn draw_item_content<F: FnMut(&mut Self, bool) -> i32>(&self, cb: F) {
         assert!(!self.was_deleted());
         assert!(self.is_derived);
         unsafe {
@@ -1273,7 +1273,7 @@ impl TreeItem {
                     0
                 }
             }
-            let a: *mut Box<dyn FnMut(&Self, bool) -> i32> =
+            let a: *mut Box<dyn FnMut(&mut Self, bool) -> i32> =
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut raw::c_void;
             let callback: Option<

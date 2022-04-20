@@ -521,7 +521,7 @@ impl TextBuffer {
     /// Adds a modify callback.
     /// callback args:
     /// pos: i32, inserted items: i32, deleted items: i32, restyled items: i32, `deleted_text`
-    pub fn add_modify_callback<F: FnMut(&Self, i32, i32, i32, i32, Option<&str>) + 'static>(
+    pub fn add_modify_callback<F: FnMut(&mut Self, i32, i32, i32, i32, Option<&str>) + 'static>(
         &self,
         mut cb: F,
     ) -> ModifyCallbackHandle {
