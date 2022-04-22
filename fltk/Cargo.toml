@@ -1,6 +1,6 @@
 [package]
 name = "fltk"
-version = "1.3.5"
+version = "1.3.6"
 authors = ["The fltk-rs Authors"]
 edition = "2021"
 description = "Rust bindings for the FLTK GUI library"
@@ -43,7 +43,7 @@ use-wayland = ["fltk-sys/use-wayland"] # Use FLTK's wayland backend on linux sys
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
-# cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples=examples"]
+cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples=examples"]
 
 [dev-dependencies]
 lazy_static = "1"
