@@ -49,7 +49,7 @@ impl<T: Send + Sync> Clone for Sender<T> {
     }
 }
 
-impl<T: 'static + Send + Sync> Sender<T> {
+impl<T: 'static + Send + Sync + Clone> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
         unsafe {
@@ -76,13 +76,13 @@ impl<T: Send + Sync> Clone for Receiver<T> {
     }
 }
 
-impl<T: 'static + Send + Sync> Receiver<T> {
+impl<T: 'static + Send + Sync + Clone> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         if let Some(r) = unsafe { &RECEIVER } {
             if let Ok(msg) = r.try_recv() {
-                if let Ok(message) = msg.downcast() {
-                    Some(*message)
+                if let Some(message) = msg.downcast_ref::<T>() {
+                    Some((*message).clone())
                 } else {
                     None
                 }
