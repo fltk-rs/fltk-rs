@@ -2,8 +2,10 @@ use fltk_sys::fl;
 use std::marker;
 use std::any::Any;
 
+type Chan = (crossbeam_channel::Sender<Box<dyn Any + Send + Sync>>, crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>>);
+
 lazy_static::lazy_static! {
-    static ref CHANNEL: (crossbeam_channel::Sender<Box<dyn Any + Send + Sync>>, crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>>) = crossbeam_channel::unbounded();
+    static ref CHANNEL: Chan = crossbeam_channel::unbounded();
     static ref SENDER: crossbeam_channel::Sender<Box<dyn Any + Send + Sync>> = CHANNEL.clone().0;
     static ref RECEIVER: crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>> = CHANNEL.clone().1;
 }
@@ -85,11 +87,7 @@ impl<T: 'static + Send + Sync + Clone> Receiver<T> {
     pub fn recv(&self) -> Option<T> {
         // if let Some(r) = &*RECEIVER {
         if let Ok(msg) = RECEIVER.try_recv() {
-            if let Some(message) = msg.downcast_ref::<T>() {
-                Some((*message).clone())
-            } else {
-                None
-            }
+            msg.downcast_ref::<T>().map(|message| (*message).clone())
         } else {
             None
         }
