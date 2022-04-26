@@ -23,6 +23,7 @@ paste = "1"
 crossbeam-channel = "0.5"
 ttf-parser = "0.15"
 raw-window-handle = { version = "^0.4", optional = true }
+lazy_static = "1"
 
 [features]
 default = []
@@ -44,9 +45,6 @@ use-wayland = ["fltk-sys/use-wayland"] # Use FLTK's wayland backend on linux sys
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
 cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples=examples"]
-
-[dev-dependencies]
-lazy_static = "1"
 
 [[test]]
 name = "app_handle"

@@ -5,7 +5,7 @@ use std::sync::{
 };
 
 /// Basically a check for global locking
-pub(crate) static mut IS_INIT: AtomicBool = AtomicBool::new(false);
+pub(crate) static IS_INIT: AtomicBool = AtomicBool::new(false);
 
 /// Currently loaded fonts
 pub(crate) static LOADED_FONT: Option<&'static str> = None;
@@ -16,15 +16,35 @@ pub(crate) static CURRENT_FONT: AtomicI32 = AtomicI32::new(0);
 /// The currently chosen frame type
 pub(crate) static CURRENT_FRAME: AtomicI32 = AtomicI32::new(2);
 
-/// The fonts associated with the application
-pub(crate) static mut FONTS: Option<Arc<Mutex<Vec<String>>>> = None;
-
-pub(crate) static mut UI_THREAD: Option<std::thread::ThreadId> = None;
+lazy_static::lazy_static! {
+    /// The fonts associated with the application
+    pub(crate) static ref FONTS: Arc<Mutex<Vec<String>>> = Arc::from(Mutex::from(vec![
+        "Helvetica".to_owned(),
+        "HelveticaBold".to_owned(),
+        "HelveticaItalic".to_owned(),
+        "HelveticaBoldItalic".to_owned(),
+        "Courier".to_owned(),
+        "CourierBold".to_owned(),
+        "CourierItalic".to_owned(),
+        "CourierBoldItalic".to_owned(),
+        "Times".to_owned(),
+        "TimesBold".to_owned(),
+        "TimesItalic".to_owned(),
+        "TimesBoldItalic".to_owned(),
+        "Symbol".to_owned(),
+        "Screen".to_owned(),
+        "ScreenBold".to_owned(),
+        "Zapfdingbats".to_owned(),
+    ]));
+    static ref UI_THREAD: std::thread::ThreadId = std::thread::current().id();
+}
 
 /// Registers all images supported by `SharedImage`
 pub(crate) fn register_images() {
     #[cfg(not(feature = "no-images"))]
-    unsafe { fltk_sys::image::Fl_register_images() }
+    unsafe {
+        fltk_sys::image::Fl_register_images()
+    }
 }
 
 /// Inits all styles, fonts and images available to FLTK.
@@ -38,26 +58,6 @@ pub fn init_all() {
             panic!("fltk-rs requires threading support!");
         }
         register_images();
-        UI_THREAD = Some(std::thread::current().id());
-        // This should never appear!
-        FONTS = Some(Arc::from(Mutex::from(vec![
-            "Helvetica".to_owned(),
-            "HelveticaBold".to_owned(),
-            "HelveticaItalic".to_owned(),
-            "HelveticaBoldItalic".to_owned(),
-            "Courier".to_owned(),
-            "CourierBold".to_owned(),
-            "CourierItalic".to_owned(),
-            "CourierBoldItalic".to_owned(),
-            "Times".to_owned(),
-            "TimesBold".to_owned(),
-            "TimesItalic".to_owned(),
-            "TimesBoldItalic".to_owned(),
-            "Symbol".to_owned(),
-            "Screen".to_owned(),
-            "ScreenBold".to_owned(),
-            "Zapfdingbats".to_owned(),
-        ])));
         #[cfg(feature = "enable-glwindow")]
         {
             extern "C" {
@@ -73,10 +73,10 @@ pub fn init_all() {
 
 /// Check whether we're in the ui thread
 pub fn is_ui_thread() -> bool {
-    unsafe { UI_THREAD.unwrap() == std::thread::current().id() }
+    *UI_THREAD == std::thread::current().id()
 }
 
 /// Check if fltk-rs was initialized
 pub fn is_initialized() -> bool {
-    unsafe { IS_INIT.load(Ordering::Relaxed) }
+    IS_INIT.load(Ordering::Relaxed)
 }

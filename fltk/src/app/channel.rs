@@ -2,8 +2,11 @@ use fltk_sys::fl;
 use std::marker;
 use std::any::Any;
 
-static mut SENDER: Option<crossbeam_channel::Sender<Box<dyn Any + Send + Sync>>> = None;
-static mut RECEIVER: Option<crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>>> = None;
+lazy_static::lazy_static! {
+    static ref CHANNEL: (crossbeam_channel::Sender<Box<dyn Any + Send + Sync>>, crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>>) = crossbeam_channel::unbounded();
+    static ref SENDER: crossbeam_channel::Sender<Box<dyn Any + Send + Sync>> = CHANNEL.clone().0;
+    static ref RECEIVER: crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>> = CHANNEL.clone().1;
+}
 
 #[doc(hidden)]
 /// Sends a custom message
@@ -40,6 +43,9 @@ pub struct Sender<T: Send + Sync> {
     data: marker::PhantomData<T>,
 }
 
+unsafe impl<T: Send + Sync> Send for Sender<T> {}
+unsafe impl<T: Send + Sync> Sync for Sender<T> {}
+
 // Manually create the impl so there's no Clone bound on T
 impl<T: Send + Sync> Clone for Sender<T> {
     fn clone(&self) -> Self {
@@ -49,15 +55,10 @@ impl<T: Send + Sync> Clone for Sender<T> {
     }
 }
 
-impl<T: 'static + Send + Sync + Clone> Sender<T> {
+impl<T: 'static + Send + Sync> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
-        unsafe {
-            if let Some(s) = &SENDER {
-                s.try_send(Box::new(val))
-                    .ok();
-            }
-        }
+        SENDER.try_send(Box::new(val)).ok();
     }
 }
 
@@ -66,6 +67,9 @@ impl<T: 'static + Send + Sync + Clone> Sender<T> {
 pub struct Receiver<T: Send + Sync> {
     data: marker::PhantomData<T>,
 }
+
+unsafe impl<T: Send + Sync> Send for Receiver<T> {}
+unsafe impl<T: Send + Sync> Sync for Receiver<T> {}
 
 // Manually create the impl so there's no Clone bound on T
 impl<T: Send + Sync> Clone for Receiver<T> {
@@ -79,13 +83,10 @@ impl<T: Send + Sync> Clone for Receiver<T> {
 impl<T: 'static + Send + Sync + Clone> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
-        if let Some(r) = unsafe { &RECEIVER } {
-            if let Ok(msg) = r.try_recv() {
-                if let Some(message) = msg.downcast_ref::<T>() {
-                    Some((*message).clone())
-                } else {
-                    None
-                }
+        // if let Some(r) = &*RECEIVER {
+        if let Ok(msg) = RECEIVER.try_recv() {
+            if let Some(message) = msg.downcast_ref::<T>() {
+                Some((*message).clone())
             } else {
                 None
             }
@@ -95,17 +96,8 @@ impl<T: 'static + Send + Sync + Clone> Receiver<T> {
     }
 }
 
-
 /// Creates a channel returning a Sender and Receiver structs (mpsc: multiple producer single consumer).
 pub fn channel<T: Send + Sync>() -> (Sender<T>, Receiver<T>) {
-    unsafe {
-        if SENDER.is_none() || RECEIVER.is_none() {
-            let (s, r) = crossbeam_channel::unbounded();
-            SENDER = Some(s);
-            RECEIVER = Some(r);
-        }
-    }
-
     let s = Sender {
         data: marker::PhantomData,
     };

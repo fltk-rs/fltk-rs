@@ -70,12 +70,8 @@ pub fn set_fonts(name: &str) -> i32 {
 
 /// Gets the name of a font through its index
 pub fn font_name(idx: usize) -> Option<String> {
-    if let Some(f) = unsafe { &FONTS } {
-        let f = f.lock().unwrap();
+        let f = FONTS.lock().unwrap();
         Some(f[idx].clone())
-    } else {
-        None
-    }
 }
 
 /// Returns a list of available fonts to the application
@@ -95,31 +91,19 @@ pub fn get_font_names() -> Vec<String> {
 
 /// Finds the index of a font through its name
 pub fn font_index(name: &str) -> Option<usize> {
-    if let Some(f) = unsafe { &FONTS } {
-        let f = f.lock().unwrap();
-        f.iter().position(|i| i == name)
-    } else {
-        None
-    }
+    let f = FONTS.lock().unwrap();
+    f.iter().position(|i| i == name)
 }
 
 /// Gets the number of loaded fonts
 pub fn font_count() -> usize {
-    if let Some(f) = unsafe { &FONTS } {
-        let f = f.lock().unwrap();
-        f.len()
-    } else {
-        0
-    }
+    let f = FONTS.lock().unwrap();
+    f.len()
 }
 
 /// Gets a Vector<String> of loaded fonts
 pub fn fonts() -> Vec<String> {
-    if let Some(f) = unsafe { &FONTS } {
-        (f.lock().unwrap()).clone()
-    } else {
-        vec![]
-    }
+    (FONTS.lock().unwrap()).clone()
 }
 
 /// Load a font from a file
@@ -141,15 +125,13 @@ pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
         let ret = fl::Fl_load_font(path.as_ptr());
         if let Some(family_name) = family_name {
             if ret > 0 {
-                if let Some(f) = &FONTS {
-                    let mut f = f.lock().unwrap();
-                    if f.len() < 17 {
-                        f.push(family_name.clone());
-                    } else {
-                        f[16] = family_name.clone();
-                    }
-                    fl::Fl_set_font2(16, CString::safe_new(&family_name).into_raw());
+                let mut f = FONTS.lock().unwrap();
+                if f.len() < 17 {
+                    f.push(family_name.clone());
+                } else {
+                    f[16] = family_name.clone();
                 }
+                fl::Fl_set_font2(16, CString::safe_new(&family_name).into_raw());
                 Ok(family_name)
             } else {
                 Err(FltkError::Internal(FltkErrorKind::FailedOperation))
