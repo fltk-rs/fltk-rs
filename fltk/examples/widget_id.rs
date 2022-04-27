@@ -67,8 +67,8 @@ struct Counter {
 // For calls inside a closure
 fn increment_by(step: i32) {
     if let Some(mut frame) = from_id("my_frame") {
-        let state = app::AppState::<Counter>::get();
-        let count = state.modify(move |c| {
+        let state = app::GlobalState::<Counter>::get();
+        let count = state.with(move |c| {
             c.count += step;
             c.count
         });
@@ -79,8 +79,8 @@ fn increment_by(step: i32) {
 // To pass a function object directly!
 fn increment(_w: &mut impl WidgetExt) {
     if let Some(mut frame) = from_id("my_frame") {
-        let state = app::AppState::<Counter>::get();
-        let count = state.modify(move |c| {
+        let state = app::GlobalState::<Counter>::get();
+        let count = state.with(move |c| {
             c.count += 1;
             c.count
         });
@@ -90,7 +90,7 @@ fn increment(_w: &mut impl WidgetExt) {
 
 fn main() {
     let counter = Counter { count: 0 };
-    let _state = app::AppState::new(counter);
+    let _state = app::GlobalState::new(counter);
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     let mut wind = window::Window::default()
         .with_size(160, 200)

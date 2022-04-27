@@ -70,3 +70,8 @@ harness = false
 name = "modify_submenu"
 path = "tests/modify_submenu.rs"
 harness = false
+
+[[test]]
+name = "global_state"
+path = "tests/global_state.rs"
+harness = false
