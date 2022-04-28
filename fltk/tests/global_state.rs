@@ -6,14 +6,39 @@ use fltk::{
     window::Window,
 };
 
+trait App {
+    fn run(self);
+}
+
 #[derive(Copy, Clone)]
 struct Counter {
     count: i32,
 }
 
-fn view() {
+impl App for Counter {
+    fn run(self) {
+        app::GlobalState::new(self);
+        let a = app::App::default().with_scheme(app::Scheme::Gtk);
+        let (s, r) = app::channel();
+        let mut wind = Window::default().with_size(160, 200).with_label("Counter");
+        view(s);
+        wind.end(); 
+        wind.show();
+        while a.wait() {
+            if let Some(msg) = r.recv() {
+                if msg {
+                    wind.clear();
+                    wind.begin();
+                    view(s);
+                    wind.end();
+                }
+            }
+        }
+    }
+}
+
+fn view(s: app::Sender<bool>) {
     let state = app::GlobalState::<Counter>::get();
-    let sender = app::Sender::<bool>::get();
     let mut frame = Frame::default()
         .with_size(100, 40)
         .center_of_parent()
@@ -30,32 +55,15 @@ fn view() {
     
     but_inc.set_callback(move |_| {
         state.with(|c| c.count += 1);
-        sender.send(true);
+        s.send(true);
     });
 
     but_dec.set_callback(move |_| {
         state.with(|c| c.count -= 1);
-        sender.send(true);
+        s.send(true);
     });
 }
 
 fn main() {
-    let app = app::App::default().with_scheme(app::Scheme::Gtk);
-    let _state = app::GlobalState::new(Counter { count: 0 });
-    let (_, r) = app::channel();
-    let mut wind = Window::default().with_size(160, 200).with_label("Counter");
-    view();
-    wind.end();
-    wind.show();
-
-    while app.wait() {
-        if let Some(msg) = r.recv() {
-            if msg {
-                wind.clear();
-                wind.begin();
-                view();
-                wind.end();
-            }
-        }
-    }
+    Counter { count: 0 }.run();
 }
