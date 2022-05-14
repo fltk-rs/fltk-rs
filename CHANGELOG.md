@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.3.7] - Unreleased
+- Add app::GlobalState.
+- Add DisplayExt::show_insert_position by @degaart
+- Relax some DisplayExt method asserts checking for an existing buffer by @degaart.
+- Pull fixes from FLTK.
+
 ## [1.3.6] - 2022-04-23
 - Re-enable doc example scraping after upstream nightly rustdoc fix.
 
