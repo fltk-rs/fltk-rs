@@ -716,6 +716,16 @@ crate::macros::widget::impl_widget_ext!(TextDisplay, Fl_Text_Display);
 crate::macros::widget::impl_widget_base!(TextDisplay, Fl_Text_Display);
 crate::macros::display::impl_display_ext!(TextDisplay, Fl_Text_Display);
 
+impl TextDisplay {
+    /// Scrolls the text buffer to show the current insert position
+    pub fn show_insert_position(&mut self) {
+        assert!(!self.was_deleted());
+        unsafe {
+            Fl_Text_Display_show_insert_position(self.inner);
+        }
+    }
+}
+
 /// Creates an editable text display widget
 #[derive(Debug)]
 pub struct TextEditor {
