@@ -55,7 +55,7 @@ impl<W> OnTrigger<W> for W
 where
     W: WidgetExt,
 {
-    fn on_trigger<F: 'static + FnMut(&mut Self)>(mut self, mut cb: F) -> Self {
+    fn on_trigger<F: 'static + FnMut(&mut Self)>(self, mut cb: F) -> Self {
         self.set_callback(move |s| cb(s));
         self
     }
@@ -67,7 +67,7 @@ struct Counter {
 
 // For calls inside a closure
 fn increment_by(step: i32) {
-    let mut frame: frame::Frame = from_id("my_frame").unwrap();
+    let frame: frame::Frame = from_id("my_frame").unwrap();
     let state = app::GlobalState::<Counter>::get();
     let count = state.with(move |c| {
         c.count += step;
@@ -78,7 +78,7 @@ fn increment_by(step: i32) {
 
 // To pass a function object directly!
 fn increment(_w: &mut impl WidgetExt) {
-    let mut frame: frame::Frame = from_id("my_frame").unwrap();
+    let frame: frame::Frame = from_id("my_frame").unwrap();
     let state = app::GlobalState::<Counter>::get();
     let count = state.with(|c| {
         c.count += 1;
@@ -91,7 +91,7 @@ fn main() {
     let counter = Counter { count: 0 };
     let _state = app::GlobalState::new(counter);
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
-    let mut wind = window::Window::default()
+    let wind = window::Window::default()
         .with_size(160, 200)
         .with_label("Counter");
     let col = group::Flex::default_fill().column();
