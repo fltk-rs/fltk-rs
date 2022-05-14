@@ -651,6 +651,12 @@ macro_rules! impl_display_ext {
                         std::mem::transmute([<$flname _secondary_selection_color>](self.inner))
                     }
                 }
+                fn show_insert_position(&mut self) {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        [<$flname _show_insert_position>](self.inner);
+                    }
+                }
             }
         }
     };
