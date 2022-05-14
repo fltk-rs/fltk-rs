@@ -54,7 +54,6 @@ macro_rules! impl_display_ext {
 
                 fn set_text_font(&self, font: $crate::enums::Font) {
                     assert!(!self.was_deleted());
-                    assert!(self.buffer().is_some());
                     unsafe { [<$flname _set_text_font>](self.inner, font.bits() as i32) }
                 }
 
@@ -66,7 +65,6 @@ macro_rules! impl_display_ext {
 
                 fn set_text_color(&self, color: $crate::enums::Color) {
                     assert!(!self.was_deleted());
-                    assert!(self.buffer().is_some());
                     unsafe { [<$flname _set_text_color>](self.inner, color.bits() as u32) }
                 }
 
@@ -78,7 +76,6 @@ macro_rules! impl_display_ext {
 
                 fn set_text_size(&self, sz: i32) {
                     assert!(!self.was_deleted());
-                    assert!(self.buffer().is_some());
                     unsafe { [<$flname _set_text_size>](self.inner, sz as i32) }
                 }
 
@@ -652,6 +649,12 @@ macro_rules! impl_display_ext {
                     assert!(self.was_deleted());
                     unsafe {
                         std::mem::transmute([<$flname _secondary_selection_color>](self.inner))
+                    }
+                }
+                fn show_insert_position(&mut self) {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        [<$flname _show_insert_position>](self.inner);
                     }
                 }
             }

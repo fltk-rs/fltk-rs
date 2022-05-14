@@ -62,6 +62,12 @@ impl<T: 'static + Send + Sync> Sender<T> {
     pub fn send(&self, val: T) {
         SENDER.try_send(Box::new(val)).ok();
     }
+    /// Get the global sender
+    pub fn get() -> Self {
+        Sender {
+            data: marker::PhantomData,
+        }
+    }
 }
 
 /// Creates a receiver struct
@@ -90,6 +96,12 @@ impl<T: 'static + Send + Sync + Clone> Receiver<T> {
             msg.downcast_ref::<T>().map(|message| (*message).clone())
         } else {
             None
+        }
+    }
+    /// Get the global receiver
+    pub fn get() -> Self {
+        Receiver {
+            data: marker::PhantomData,
         }
     }
 }

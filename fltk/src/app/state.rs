@@ -6,20 +6,28 @@ lazy_static::lazy_static! {
 }
 
 /// Represents global state
-#[derive(Debug)]
-pub struct AppState<T> {
+#[derive(Debug, Copy)]
+pub struct GlobalState<T: Send + Sync> {
     marker: std::marker::PhantomData<T>,
 }
 
-impl<T: Sync + Send + 'static> AppState<T> {
+impl<T: Send + Sync> Clone for GlobalState<T> {
+    fn clone(&self) -> Self {
+        Self {
+            marker: std::marker::PhantomData,
+        }
+    }
+}
+
+impl<T: Sync + Send + 'static> GlobalState<T> {
     /// Creates a new global state
     pub fn new(val: T) -> Self {
         *STATE.lock().unwrap() = Box::new(val);
-        AppState { marker: std::marker::PhantomData }
+        GlobalState { marker: std::marker::PhantomData }
     }
     
-    /// Modifies the global state
-    pub fn modify<V: Clone, F: 'static + Fn(&mut T) -> V>(&self, cb: F) -> V {
+    /// Modifies the global state by acquiring a mutable reference
+    pub fn with<V: Clone, F: 'static + Fn(&mut T) -> V>(&self, cb: F) -> V {
         if let Some(val) = STATE.lock().unwrap().downcast_mut::<T>() {
             cb(val)
         } else {
@@ -29,6 +37,6 @@ impl<T: Sync + Send + 'static> AppState<T> {
 
     /// Gets the already initialized global state
     pub fn get() -> Self {
-        AppState { marker: std::marker::PhantomData }
+        GlobalState { marker: std::marker::PhantomData }
     }
 }

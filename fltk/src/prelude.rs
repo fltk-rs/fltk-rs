@@ -1003,6 +1003,8 @@ pub unsafe trait DisplayExt: WidgetExt {
     fn set_secondary_selection_color(&self, color: Color);
     /// Get the secondary selection color
     fn secondary_selection_color(&self) -> Color;
+    /// Scrolls the text buffer to show the current insert position
+    fn show_insert_position(&mut self);
 }
 
 /// Defines the methods implemented by all browser types
