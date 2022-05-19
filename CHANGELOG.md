@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.3.7] - Unreleased
+## [1.3.7] - 2022-05-19
 - Add app::GlobalState.
 - Add DisplayExt::show_insert_position by @degaart
 - Relax some DisplayExt method asserts checking for an existing buffer by @degaart.
