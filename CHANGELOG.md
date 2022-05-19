@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.3.7] - 2022-05-19
+- Add app::GlobalState.
+- Add DisplayExt::show_insert_position by @degaart
+- Relax some DisplayExt method asserts checking for an existing buffer by @degaart.
+- Pull fixes from FLTK.
+
+## [1.3.6] - 2022-04-23
+- Re-enable doc example scraping after upstream nightly rustdoc fix.
+
 ## [1.3.5] - 2022-04-17
 - Add BrowserExt::data(), set_data(), add_with_data() and insert_with_data() methods.
 - Fix SharedImage::from_image() refcount.

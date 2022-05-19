@@ -14,7 +14,6 @@ fn main() {
 
     let mut wind = Window::default()
         .with_size(160, 200)
-        .center_screen()
         .with_label("Counter");
     let mut frame = Frame::default()
         .with_size(100, 40)
@@ -29,7 +28,7 @@ fn main() {
         .size_of(&frame)
         .below_of(&frame, 0)
         .with_label("-");
-    wind.make_resizable(true);
+    // wind.make_resizable(true);
     wind.end();
     wind.show();
 

@@ -301,16 +301,10 @@ bitflags::bitflags! {
 impl Font {
     /// Returns a font by index, can be queried via the [`app::get_font_names()`](`crate::app::get_font_names()`)
     pub fn by_index(idx: usize) -> Font {
-        unsafe {
-            if let Some(f) = &FONTS {
-                if idx < (f.lock().unwrap()).len() {
-                    mem::transmute(idx as i32)
-                } else {
-                    Font::Helvetica
-                }
-            } else {
-                Font::Helvetica
-            }
+        if idx < (FONTS.lock().unwrap()).len() {
+            unsafe { mem::transmute(idx as i32) }
+        } else {
+            Font::Helvetica
         }
     }
 
