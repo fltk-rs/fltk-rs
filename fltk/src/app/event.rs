@@ -3,7 +3,6 @@ use crate::enums::{Event, Key, Shortcut};
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::fl::{self, Fl_open_display, Fl_open_callback};
-use std::intrinsics::transmute;
 use std::{
     cmp,
     ffi::{CStr, CString},
@@ -541,15 +540,22 @@ pub fn handle_main<I: Into<Event> + Copy + PartialEq + PartialOrd>(
     )
 }
 
-#[doc(hidden)]
+#[cfg(target_os = "macos")]
 /// Register a function called for each file dropped onto an application icon.
 /// This function is effective only on the Mac OS X platform. 
 /// cb will be called with a single Unix-style file name and path. 
 /// If multiple files were dropped, cb will be called multiple times.
-pub fn set_open_callback(cb: Option<fn(&str)>) {
+/// ```rust,no_run
+/// use fltk::{app, dialog};
+/// app::raw_open_callback(Some(|s| {
+///    let name = unsafe { std::ffi::CStr::from_ptr(s).to_string_lossy().to_string() };
+///    dialog::message_default(&format!("You dropped {}", name));
+/// }));
+/// ```
+pub fn raw_open_callback(cb: Option<fn(*const raw::c_char)>) {
     unsafe {
         if let Some(cb) = cb {
-            Fl_open_callback(Some(transmute(cb)))
+            Fl_open_callback(Some(mem::transmute(cb)))
         } else {
             Fl_open_callback(None)
         }
