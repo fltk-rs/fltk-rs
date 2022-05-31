@@ -22,3 +22,4 @@
 - Remove WidgetExt/ImageExt::width/height in favor of w/h methods.
 - WidgetExt::label() now returns an Option.
 - Relax mutability requirements for widgets.
+- Removed app::event_clicks_num(), now app::event_clicks() returns the number of clicks -1.
