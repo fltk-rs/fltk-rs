@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.3.8] - Unreleased
+- Add app::raw_open_callback.
+- Add WindowExt::icon_label and set_icon_label.
+- Pull fixes from FLTK.
+
 ## [1.3.7] - 2022-05-19
 - Add app::GlobalState.
 - Add DisplayExt::show_insert_position by @degaart
