@@ -493,6 +493,26 @@ macro_rules! impl_window_ext {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _override>](self.inner) != 0 }
                 }
+
+                fn set_icon_label(&mut self, label: &str) {
+                    assert!(!self.was_deleted());
+                    let label = CString::safe_new(label);
+                    unsafe { [<$flname _set_icon_label>](self.inner as _, label.as_ptr()) }
+                }
+                
+                fn icon_label(&self) -> Option<String> {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        let label_ptr = [<$flname _icon_label>](self.inner);
+                        if label_ptr.is_null() {
+                            None
+                        } else {
+                            Some(CStr::from_ptr(label_ptr as *mut std::os::raw::c_char)
+                            .to_string_lossy()
+                            .to_string())
+                        }
+                    }
+                }
             }
         }
     };

@@ -507,6 +507,12 @@ extern "C" {
     pub fn Fl_Window_override(arg1: *const Fl_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Window_icon_label(arg1: *const Fl_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Window_set_icon_label(arg1: *mut Fl_Window, arg2: *const ::std::os::raw::c_char);
+}
+extern "C" {
     pub fn Fl_Window_find_by_handle(handle: *mut ::std::os::raw::c_void) -> *mut Fl_Window;
 }
 extern "C" {
@@ -1093,6 +1099,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Single_Window_override(arg1: *const Fl_Single_Window) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Single_Window_icon_label(
+        arg1: *const Fl_Single_Window,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_icon_label(
+        arg1: *mut Fl_Single_Window,
+        arg2: *const ::std::os::raw::c_char,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {
@@ -1661,6 +1678,17 @@ extern "C" {
 extern "C" {
     pub fn Fl_Double_Window_override(arg1: *const Fl_Double_Window) -> ::std::os::raw::c_int;
 }
+extern "C" {
+    pub fn Fl_Double_Window_icon_label(
+        arg1: *const Fl_Double_Window,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_icon_label(
+        arg1: *mut Fl_Double_Window,
+        arg2: *const ::std::os::raw::c_char,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -2169,6 +2197,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_override(arg1: *const Fl_Menu_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_icon_label(arg1: *const Fl_Menu_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_icon_label(
+        arg1: *mut Fl_Menu_Window,
+        arg2: *const ::std::os::raw::c_char,
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2780,6 +2817,17 @@ extern "C" {
     pub fn Fl_Overlay_Window_override(arg1: *const Fl_Overlay_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Overlay_Window_icon_label(
+        arg1: *const Fl_Overlay_Window,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_set_icon_label(
+        arg1: *mut Fl_Overlay_Window,
+        arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
     pub fn Fl_gl_start();
 }
 extern "C" {
@@ -3271,6 +3319,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_override(arg1: *const Fl_Gl_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_icon_label(arg1: *const Fl_Gl_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_icon_label(
+        arg1: *mut Fl_Gl_Window,
+        arg2: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Gl_Window_flush(self_: *mut Fl_Gl_Window);
@@ -3847,6 +3904,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_override(arg1: *const Fl_Glut_Window) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_icon_label(arg1: *const Fl_Glut_Window) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_icon_label(
+        arg1: *mut Fl_Glut_Window,
+        arg2: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Glut_Window_flush(self_: *mut Fl_Glut_Window);

@@ -767,6 +767,10 @@ pub unsafe trait WindowExt: GroupExt {
     fn is_override(&self) -> bool;
     /// Forces the position of the window
     fn force_position(&mut self, flag: bool);
+    /// Set the icon label
+    fn set_icon_label(&mut self, label: &str);
+    /// Get the icon label
+    fn icon_label(&self) -> Option<String>;
 }
 
 /// Defines the methods implemented by all input and output widgets.
