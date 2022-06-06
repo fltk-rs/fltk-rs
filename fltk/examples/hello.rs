@@ -2,6 +2,7 @@ use fltk::{app, enums::FrameType, frame::Frame, image::SvgImage, prelude::*, win
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);
+
     let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 
     let mut frame = Frame::default().with_size(360, 260).center_of(&wind);
