@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.3.8] - Unreleased
+## [1.3.8] - 2022-06-06
 - Add app::raw_open_callback.
 - Add WindowExt::icon_label and set_icon_label.
 - Pull fixes from FLTK.
