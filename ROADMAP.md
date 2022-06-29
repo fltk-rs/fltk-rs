@@ -12,3 +12,4 @@
 - Rename no-pango feature to no-pango-cairo, to better reflect the linked libs.
 - app::screen_size() should return (i32, i32) since the implementation changed.
 - Refactor drawing code to use Coord and Rect.
+- Rust 1.63 constifies Mutex::new, so lazy_static can be removed.
