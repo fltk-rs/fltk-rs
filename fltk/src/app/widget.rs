@@ -125,6 +125,19 @@ pub fn next_window<W: WindowExt>(w: &W) -> Option<impl WindowExt> {
     }
 }
 
+/// Returns the last modal window of the application
+pub fn modal() -> Option<impl WindowExt> {
+    unsafe {
+        let x = fl::Fl_modal();
+        if x.is_null() {
+            None
+        } else {
+            let x = Window::from_widget_ptr(x as *mut fltk_sys::widget::Fl_Widget);
+            Some(x)
+        }
+    }
+}
+
 /// Deletes widgets and their children.
 pub fn delete_widget<Wid: WidgetBase>(wid: Wid) {
     assert!(!wid.was_deleted());

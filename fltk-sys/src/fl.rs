@@ -281,6 +281,9 @@ extern "C" {
     pub fn Fl_next_window(arg1: *const ::std::os::raw::c_void) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
+    pub fn Fl_modal() -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_should_program_quit() -> ::std::os::raw::c_int;
 }
 extern "C" {
