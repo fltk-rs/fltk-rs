@@ -61,6 +61,7 @@ impl<T: 'static + Send + Sync> Sender<T> {
     /// Sends a message
     pub fn send(&self, val: T) {
         SENDER.try_send(Box::new(val)).ok();
+        crate::app::awake();
     }
     /// Get the global sender
     pub fn get() -> Self {
@@ -88,12 +89,15 @@ impl<T: Send + Sync> Clone for Receiver<T> {
     }
 }
 
-impl<T: 'static + Send + Sync + Clone> Receiver<T> {
+impl<T: 'static + Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
-        // if let Some(r) = &*RECEIVER {
         if let Ok(msg) = RECEIVER.try_recv() {
-            msg.downcast_ref::<T>().map(|message| (*message).clone())
+            if let Ok(t) = msg.downcast::<T>() {
+                Some(*t)
+            } else {
+                None
+            }
         } else {
             None
         }
