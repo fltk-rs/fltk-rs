@@ -93,7 +93,7 @@ impl<T: 'static + Send + Sync> Receiver<T> {
     /// Receives a message
     pub fn recv(&self) -> Option<T> {
         if let Ok(msg) = RECEIVER.try_recv() {
-            if let Ok(t) = msg.downcast::<T>() {
+            if let Ok(t) = (msg as Box<dyn Any + 'static>).downcast::<T>() {
                 Some(*t)
             } else {
                 None
