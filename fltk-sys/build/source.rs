@@ -141,7 +141,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if target_triple.contains("unknown-linux-musl") {
             dst.define("CMAKE_C_COMPILER", "musl-gcc");
-            dst.define("CMAKE_CXX_COMPILER", "musl-gcc");
+            dst.define("CMAKE_CXX_COMPILER", "musl-g++");
             dst.define("HAVE_STRLCPY", "False");
             dst.define("HAVE_STRLCAT", "False");
         }
