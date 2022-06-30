@@ -3,6 +3,7 @@
 
 ## [1.3.10] - Unreleased
 - Fix Flex::clear.
+- Fix build using musl on Alpine Linux. 
 - Add app::modal().
 - Pull FLTK fixes.
 
