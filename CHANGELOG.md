@@ -1,6 +1,15 @@
 # Changelog
 
 
+## [1.3.10] - Unreleased
+- Fix Flex::clear.
+- Add app::modal().
+- Pull FLTK fixes.
+
+## [1.3.9] - 2022-06-23
+- Pull FLTK fixes.
+- Fix opacity issue on wayland.
+
 ## [1.3.8] - 2022-06-06
 - Add app::raw_open_callback.
 - Add WindowExt::icon_label and set_icon_label.
