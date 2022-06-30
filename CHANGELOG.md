@@ -1,10 +1,11 @@
 # Changelog
 
 
-## [1.3.10] - Unreleased
+## [1.3.10] - 2022-07-01
 - Fix Flex::clear.
 - Fix build using musl on Alpine Linux. 
 - Add app::modal().
+- Revert change where app::channel::recv() requires Clone.
 - Pull FLTK fixes.
 
 ## [1.3.9] - 2022-06-23
