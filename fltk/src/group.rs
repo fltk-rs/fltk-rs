@@ -463,6 +463,12 @@ impl Flex {
         self.recalc();
     }
 
+    /// Add a widget to the Flex box
+    pub fn insert<W: WidgetExt>(&mut self, widget: &W, idx: i32) {
+        <Self as GroupExt>::insert(self, widget, idx);
+        self.recalc();
+    }
+
     /// Set the size of the widget
     pub fn set_size<W: WidgetExt>(&mut self, w: &W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
@@ -488,6 +494,7 @@ impl Flex {
     /// Recalculate children's coords and sizes
     pub fn recalc(&self) {
         self.end();
+        Group::set_current(None::<&Group>);
     }
 
     /// Set the margin
