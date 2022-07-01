@@ -42,6 +42,17 @@ impl Group {
             }
         }
     }
+
+    /// Sets the current GroupExt widget which will take children
+    pub fn set_current(grp: Option<&impl GroupExt>) {
+        unsafe {
+            if let Some(grp) = grp {
+                Fl_Group_set_current(grp.as_widget_ptr() as _)
+            } else {
+                Fl_Group_set_current(std::ptr::null_mut())
+            }
+        }
+    }
 }
 
 /// Creates a widget pack
