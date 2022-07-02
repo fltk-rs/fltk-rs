@@ -493,8 +493,8 @@ impl Flex {
 
     /// Recalculate children's coords and sizes
     pub fn recalc(&self) {
-        self.end();
-        Group::set_current(None::<&Group>);
+        let mut s = self.clone();
+        s.resize(self.x(), self.y(), self.w(), self.h());
     }
 
     /// Set the margin
