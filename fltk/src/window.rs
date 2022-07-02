@@ -248,6 +248,20 @@ impl SingleWindow {
         let s = CString::safe_new(s);
         unsafe { Fl_Single_Window_set_default_xclass(s.as_ptr()) }
     }
+
+    /// Set the borderless window to be on top of the macos system menu bar
+    pub fn set_on_top(&self) {
+        #[cfg(target_os = "macos")]
+        {
+            extern "C" {
+                pub fn cfltk_setOnTop(handle: *mut raw::c_void);
+            }
+            assert!(self.border());
+            unsafe {
+                cfltk_setOnTop(self.raw_handle());
+            }
+        }
+    }
 }
 
 /// Creates a double (buffered) window widget
@@ -495,6 +509,18 @@ impl DoubleWindow {
     pub fn set_default_xclass(s: &str) {
         let s = CString::safe_new(s);
         unsafe { Fl_Double_Window_set_default_xclass(s.as_ptr()) }
+    }
+
+    #[cfg(target_os = "macos")]
+    /// Set the borderless window to be on top of the macos system menu bar
+    pub fn set_on_top(&mut self) {
+        assert!(!self.border());
+        extern "C" {
+            pub fn cfltk_setOnTop(handle: *mut raw::c_void);
+        }
+        unsafe {
+            cfltk_setOnTop(self.raw_handle());
+        }
     }
 }
 
