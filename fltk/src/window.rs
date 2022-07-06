@@ -94,6 +94,11 @@ pub enum WindowType {
     Double = 241,
 }
 
+impl WindowType {
+    /// An alias for WindowType::Normal
+    pub const Single: WindowType = WindowType::Normal;
+}
+
 crate::macros::widget::impl_widget_type!(WindowType);
 
 /// Creates a single (buffered) window widget
