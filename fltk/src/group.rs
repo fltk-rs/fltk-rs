@@ -472,7 +472,7 @@ impl Flex {
 
     /// Recalculate children's coords and sizes
     pub fn recalc(&self) {
-        let mut s = self.clone();
+        let s = self.clone();
         s.resize(self.x(), self.y(), self.w(), self.h());
     }
 
