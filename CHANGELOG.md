@@ -1,6 +1,24 @@
 # Changelog
 
 
+## [1.3.11] - 2022-07-10
+- Add WindowType::Single as alias to WindowType::Normal.
+- Add Window::set_on_top() which modifies the Window's level on macOS platforms to be NSMainMenuWindowLevel + 2.
+- Fix Flex::recalc to not change the current group.
+- Expose Group::set_current.
+- Pull FLTK fixes.
+
+## [1.3.10] - 2022-07-01
+- Fix Flex::clear.
+- Fix build using musl on Alpine Linux. 
+- Add app::modal().
+- Revert change where app::channel::recv() requires Clone.
+- Pull FLTK fixes.
+
+## [1.3.9] - 2022-06-23
+- Pull FLTK fixes.
+- Fix opacity issue on wayland.
+
 ## [1.3.8] - 2022-06-06
 - Add app::raw_open_callback.
 - Add WindowExt::icon_label and set_icon_label.
