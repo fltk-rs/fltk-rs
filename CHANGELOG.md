@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [1.3.10] - 2022-07-10
+- Add WindowType::Single as alias to WindowType::Normal.
+- Add Window::set_on_top() which modifies the Window's level on macOS platforms to be NSMainMenuWindowLevel + 2.
+- Fix Flex::recalc to not change the current group.
+- Expose Group::set_current.
+- Pull FLTK fixes.
+
 ## [1.3.10] - 2022-07-01
 - Fix Flex::clear.
 - Fix build using musl on Alpine Linux. 
