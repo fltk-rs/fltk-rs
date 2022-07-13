@@ -85,6 +85,7 @@ macro_rules! impl_group_ext {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(!widget.was_deleted());
+                        assert!(index >= 0);
                         [<$flname _insert>](
                             self.inner,
                             widget.as_widget_ptr() as *mut _,
