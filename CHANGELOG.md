@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.3.12] - Unreleased
+- Add index check with GroupExt::insert
+- Pull upstream FLTK fixes.
+
 ## [1.3.11] - 2022-07-10
 - Add WindowType::Single as alias to WindowType::Normal.
 - Add Window::set_on_top() which modifies the Window's level on macOS platforms to be NSMainMenuWindowLevel + 2.
