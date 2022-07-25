@@ -85,6 +85,11 @@ macro_rules! impl_group_ext {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(!widget.was_deleted());
+                        let index = if index < 0 {
+                            0
+                        } else {
+                            index
+                        };
                         [<$flname _insert>](
                             self.inner,
                             widget.as_widget_ptr() as *mut _,
