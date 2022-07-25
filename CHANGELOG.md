@@ -1,7 +1,8 @@
 # Changelog
 
 
-## [1.3.12] - Unreleased
+## [1.3.12] - 2022-07-26
+- Explicitly check darwin arch in fltk-sys' build script.
 - Add index check with GroupExt::insert
 - Pull upstream FLTK fixes.
 
