@@ -58,11 +58,11 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/src/cfl_vec.hpp");
     println!("cargo:rerun-if-changed=cfltk/fltk.patch");
 
-    // Command::new("git")
-    //     .args(&["submodule", "update", "--init", "--recursive"])
-    //     .current_dir(manifest_dir)
-    //     .status()
-    //     .expect("Git is needed to retrieve the fltk source files!");
+    Command::new("git")
+        .args(&["submodule", "update", "--init", "--recursive"])
+        .current_dir(manifest_dir)
+        .status()
+        .expect("Git is needed to retrieve the fltk source files!");
 
     if target_triple.contains("windows") {
         Command::new("git")
