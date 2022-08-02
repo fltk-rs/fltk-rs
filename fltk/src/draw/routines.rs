@@ -106,7 +106,6 @@ impl Offscreen {
 
     /// Checks the validity of the offscreen
     pub fn is_valid(&self) -> bool {
-        assert!(!self.inner.is_null());
         !self.inner.is_null()
     }
 

@@ -481,6 +481,9 @@ extern "C" {
         data: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Browser_hide_line(self_: *mut Fl_Browser, line: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Hold_Browser {
@@ -984,6 +987,9 @@ extern "C" {
         line: ::std::os::raw::c_int,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_hide_line(self_: *mut Fl_Hold_Browser, line: ::std::os::raw::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1550,6 +1556,9 @@ extern "C" {
         data: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Select_Browser_hide_line(self_: *mut Fl_Select_Browser, line: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Multi_Browser {
@@ -2085,6 +2094,9 @@ extern "C" {
         data: *mut ::std::os::raw::c_void,
     );
 }
+extern "C" {
+    pub fn Fl_Multi_Browser_hide_line(self_: *mut Fl_Multi_Browser, line: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_File_Browser {
@@ -2609,6 +2621,9 @@ extern "C" {
         line: ::std::os::raw::c_int,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_File_Browser_hide_line(self_: *mut Fl_File_Browser, line: ::std::os::raw::c_int);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
