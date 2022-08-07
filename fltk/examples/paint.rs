@@ -41,17 +41,15 @@ fn main() {
 
     frame.draw({
         let offs = offs.clone();
+        let mut scf = app::screen_scale(wind.screen_num());
         move |_| {
             let mut offs = offs.borrow_mut();
-            if offs.is_valid() {
+            let s =  app::screen_scale(wind.screen_num());
+            if s != scf {
                 offs.rescale();
-                offs.copy(5, 5, WIDTH - 10, HEIGHT - 10, 0, 0);
-            } else {
-                offs.begin();
-                draw_rect_fill(0, 0, WIDTH - 10, HEIGHT - 10, Color::White);
-                offs.copy(5, 5, WIDTH - 10, HEIGHT - 10, 0, 0);
-                offs.end();
+                scf = s;
             }
+            offs.copy(5, 5, WIDTH - 10, HEIGHT - 10, 0, 0);
         }
     });
 
