@@ -15,6 +15,8 @@ use std::rc::Rc;
 
 struct Canvas {
     frame: Frame,
+    #[allow(dead_code)]
+    surf: Rc<RefCell<ImageSurface>>,
 }
 
 impl Canvas {
@@ -24,7 +26,7 @@ impl Canvas {
             .center_of_parent();
         frame.set_color(Color::White);
         frame.set_frame(FrameType::DownBox);
-        
+
         let surf = ImageSurface::new(frame.width(), frame.height(), false);
         ImageSurface::push_current(&surf);
         draw_rect_fill(0, 0, w, h, Color::White);
@@ -44,6 +46,7 @@ impl Canvas {
         frame.handle({
             let mut x = 0;
             let mut y = 0;
+            let surf = surf.clone();
             move |f, ev| {
                 // println!("{}", ev);
                 // println!("coords {:?}", app::event_coords());
@@ -78,12 +81,14 @@ impl Canvas {
                 }
             }
         });
-        Self { frame }
+        Self { frame, surf }
     }
 }
 
 const WIDTH: i32 = 800;
 const HEIGHT: i32 = 600;
+
+fltk::widget_extends!(Canvas, Frame, frame);
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
