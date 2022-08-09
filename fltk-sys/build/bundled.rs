@@ -22,7 +22,8 @@ pub fn get(target_os: &str, target_triple: &str, out_dir: &Path) {
                 }
             }
 
-            let arch = match target_triple.split_once('-').unwrap().0 {
+            // should cover major desktop arches supported by fltk
+            let arch = match target_triple.split('-').next().unwrap() {
                 "aarch64" => "arm64",
                 "x86_64" => "x64",
                 "i686" | "i586" => "x86",
