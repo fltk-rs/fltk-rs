@@ -1,8 +1,9 @@
 # Changelog
 
 
-## [1.3.13] - Unreleased
+## [1.3.13] - 2022-08-09
 - Add BrowserExt::hide_line().
+- Replace lazy_static with once_cell.
 - Remove assert from Offscreen::is_valid().
 - Pull FLTK fixes.
 

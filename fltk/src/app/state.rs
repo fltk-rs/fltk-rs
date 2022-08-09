@@ -1,9 +1,8 @@
 use std::sync::Mutex;
 use std::any::Any;
+use once_cell::sync::OnceCell;
 
-lazy_static::lazy_static! {
-    static ref STATE: Mutex<Box<dyn Any + Send + Sync + 'static>> =  Mutex::new(Box::new(0));
-}
+static STATE: OnceCell<Mutex<Box<dyn Any + Send + Sync + 'static>>> =  OnceCell::new();
 
 /// Represents global state
 #[derive(Debug, Copy)]
@@ -22,13 +21,13 @@ impl<T: Send + Sync> Clone for GlobalState<T> {
 impl<T: Sync + Send + 'static> GlobalState<T> {
     /// Creates a new global state
     pub fn new(val: T) -> Self {
-        *STATE.lock().unwrap() = Box::new(val);
+        STATE.set(Mutex::new(Box::new(val))).unwrap();
         GlobalState { marker: std::marker::PhantomData }
     }
     
     /// Modifies the global state by acquiring a mutable reference
     pub fn with<V: Clone, F: 'static + Fn(&mut T) -> V>(&self, cb: F) -> V {
-        if let Some(val) = STATE.lock().unwrap().downcast_mut::<T>() {
+        if let Some(val) = STATE.get().unwrap().lock().unwrap().downcast_mut::<T>() {
             cb(val)
         } else {
             panic!("Wrong state type");
