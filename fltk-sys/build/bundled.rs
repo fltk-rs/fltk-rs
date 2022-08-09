@@ -4,7 +4,7 @@ use std::{
     process::Command,
 };
 
-pub fn get(target_os: &str, out_dir: &Path) {
+pub fn get(target_os: &str, target_triple: &str, out_dir: &Path) {
     let pkg_version = env::var("CARGO_PKG_VERSION").unwrap();
     if let Ok(cfltk_path) = env::var("CFLTK_BUNDLE_DIR") {
         println!("cargo:rustc-link-search=native={}", cfltk_path);
@@ -22,12 +22,21 @@ pub fn get(target_os: &str, out_dir: &Path) {
                 }
             }
 
+            // should cover major desktop arches supported by fltk
+            let arch = match target_triple.split('-').next().unwrap() {
+                "aarch64" => "arm64",
+                "x86_64" => "x64",
+                "i686" | "i586" => "x86",
+                _ => "x64",
+            };
+
             PathBuf::from(format!(
-                "{}/{}/lib_x64-{}.tar.gz",
+                "{}/{}/lib_{}-{}.tar.gz",
                 env::var("CFLTK_BUNDLE_URL_PREFIX").unwrap_or_else(|_| String::from(
                     "https://github.com/fltk-rs/fltk-rs/releases/download"
                 )),
                 pkg_version,
+                arch,
                 platform
             ))
         };

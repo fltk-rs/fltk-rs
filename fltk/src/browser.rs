@@ -225,7 +225,11 @@ impl CheckBrowser {
     /// Remove item at index, returns the number of current items
     pub fn remove(&mut self, item: usize) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_remove(self.inner, item as i32) }
+        if item > 0 && item <= self.size() {
+            unsafe { Fl_Check_Browser_remove(self.inner, item as i32) }
+        } else {
+            self.nitems() as _
+        }
     }
 
     /// Clear the browser
@@ -254,13 +258,19 @@ impl CheckBrowser {
     /// Returns whether an item is checked
     pub fn checked(&self, item: i32) -> bool {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_checked(self.inner, item) != 0 }
+        if item > 0 && item <= self.size() as i32 {
+            unsafe { Fl_Check_Browser_checked(self.inner, item) != 0 }
+        } else {
+            false
+        }
     }
 
     /// Check selected item
     pub fn set_checked(&mut self, item: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_set_checked(self.inner, item) }
+        if item > 0 && item <= self.size() as i32 {
+            unsafe { Fl_Check_Browser_set_checked(self.inner, item) }
+        }
     }
 
     /// Check all of the items

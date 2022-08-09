@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.3.13] - 2022-08-09
+- Add BrowserExt::hide_line().
+- Replace lazy_static with once_cell.
+- Remove assert from Offscreen::is_valid().
+- Pull FLTK fixes.
+
 ## [1.3.12] - 2022-07-26
 - Explicitly check darwin arch in fltk-sys' build script.
 - Add index check with GroupExt::insert
