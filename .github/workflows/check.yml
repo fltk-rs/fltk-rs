@@ -25,7 +25,7 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
-      - name: Cargo check
+      - name: git submodule update --init --recursive && Cargo check
         uses: actions-rs/cargo@v1
         with:
           command: check

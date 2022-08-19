@@ -29,7 +29,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: seanmiddleditch/gha-setup-ninja@master
     - name: Build
-      run: cd fltk && cargo build --release --features=use-ninja && cd ..
+      run: git submodule update --init --recursive && cd fltk && cargo build --release --features=use-ninja && cd ..
       shell: bash
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
