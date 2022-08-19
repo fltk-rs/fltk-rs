@@ -268,6 +268,7 @@ To build, just run:
 ```
 $ git clone https://github.com/fltk-rs/fltk-rs
 $ cd fltk-rs
+$ git submodule update --init --recursive
 $ cargo build
 ```
 

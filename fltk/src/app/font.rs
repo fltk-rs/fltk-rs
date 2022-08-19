@@ -109,18 +109,23 @@ pub fn fonts() -> Vec<String> {
 /// Load a font from a file
 pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
     unsafe {
-        let font_data = std::fs::read(path)?;
-        let face = match ttf_parser::Face::from_slice(&font_data, 0) {
-            Ok(f) => f,
-            Err(_) => {
-                return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
-            }
-        };
-        let family_name = face
-            .names()
-            .into_iter()
-            .find(|name| name.name_id == ttf_parser::name_id::FULL_NAME && name.is_unicode())
-            .and_then(|name| name.to_string());
+        #[allow(unused_mut)]
+        let mut family_name = Some(String::new());
+        #[cfg(feature = "ttf-parser")]
+        {
+            let font_data = std::fs::read(path)?;
+            let face = match ttf_parser::Face::from_slice(&font_data, 0) {
+                Ok(f) => f,
+                Err(_) => {
+                    return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
+                }
+            };
+            family_name = face
+                .names()
+                .into_iter()
+                .find(|name| name.name_id == ttf_parser::name_id::FULL_NAME && name.is_unicode())
+                .and_then(|name| name.to_string());
+        }
         let path = CString::new(path)?;
         let ret = fl::Fl_load_font(path.as_ptr());
         if let Some(family_name) = family_name {
