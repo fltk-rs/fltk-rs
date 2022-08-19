@@ -110,6 +110,7 @@ pub fn fonts() -> Vec<String> {
 pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
     unsafe {
         #[allow(unused_mut)]
+        #[allow(unused_assignments)]
         let mut family_name = Some(String::new());
         #[cfg(feature = "ttf-parser")]
         {

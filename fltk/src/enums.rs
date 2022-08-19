@@ -352,6 +352,7 @@ impl Font {
             }
             if let Some(p) = path.to_str() {
                 #[allow(unused_mut)]
+                #[allow(unused_assignments)]
                 let mut family_name = Some(String::new());
                 #[cfg(feature = "ttf-parser")]
                 {
