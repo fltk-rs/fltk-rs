@@ -5,6 +5,7 @@
 - impl std::default::Default for TextBuffer by @ConsoleC137.
 - Avoid calling git submodule update in build script.
 - Make ttf-parser an optional dependency.
+- Update raw-window-handle dep to 0.5.
 - Update FLTK.
 
 ## [1.3.13] - 2022-08-09
