@@ -128,8 +128,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         if target_triple.contains("linux") && !target_triple.contains("android") {
             if cfg!(feature = "no-pango") {
                 dst.define("OPTION_USE_PANGO", "OFF");
+                // dst.define("FLTK_USE_CAIROXLIB", "OFF");
             } else {
                 dst.define("OPTION_USE_PANGO", "ON");
+                // dst.define("FLTK_USE_CAIROXLIB", "ON");
             }
         }
 
