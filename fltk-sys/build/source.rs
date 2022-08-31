@@ -148,6 +148,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if cfg!(feature = "use-wayland") {
             dst.define("OPTION_USE_WAYLAND", "ON");
+            dst.define("OPTION_ALLOW_GTK_PLUGIN", "OFF");
         }
 
         if cfg!(feature = "single-threaded") {
