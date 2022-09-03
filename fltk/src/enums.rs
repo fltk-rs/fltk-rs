@@ -328,7 +328,8 @@ impl Font {
     }
 
     /**
-        Load font from file
+        Load font from file.
+        Requires enabling the ttf-parser feature to get a font name back from the method, otherwise you can pass the name directly to `enums::Font::set_font`.
         ```rust,no_run
         use fltk::enums::Font;
         let font = Font::load_font("font.ttf").unwrap();

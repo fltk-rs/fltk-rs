@@ -3,6 +3,7 @@ use std::sync::{
     atomic::{AtomicBool, AtomicI32, Ordering},
     Arc, Mutex,
 };
+use once_cell::sync::Lazy;
 
 /// Basically a check for global locking
 pub(crate) static IS_INIT: AtomicBool = AtomicBool::new(false);
@@ -16,28 +17,26 @@ pub(crate) static CURRENT_FONT: AtomicI32 = AtomicI32::new(0);
 /// The currently chosen frame type
 pub(crate) static CURRENT_FRAME: AtomicI32 = AtomicI32::new(2);
 
-lazy_static::lazy_static! {
-    /// The fonts associated with the application
-    pub(crate) static ref FONTS: Arc<Mutex<Vec<String>>> = Arc::from(Mutex::from(vec![
-        "Helvetica".to_owned(),
-        "HelveticaBold".to_owned(),
-        "HelveticaItalic".to_owned(),
-        "HelveticaBoldItalic".to_owned(),
-        "Courier".to_owned(),
-        "CourierBold".to_owned(),
-        "CourierItalic".to_owned(),
-        "CourierBoldItalic".to_owned(),
-        "Times".to_owned(),
-        "TimesBold".to_owned(),
-        "TimesItalic".to_owned(),
-        "TimesBoldItalic".to_owned(),
-        "Symbol".to_owned(),
-        "Screen".to_owned(),
-        "ScreenBold".to_owned(),
-        "Zapfdingbats".to_owned(),
-    ]));
-    static ref UI_THREAD: std::thread::ThreadId = std::thread::current().id();
-}
+/// The fonts associated with the application
+pub(crate) static FONTS: Lazy<Arc<Mutex<Vec<String>>>> = Lazy::new(|| Arc::from(Mutex::from(vec![
+    "Helvetica".to_owned(),
+    "HelveticaBold".to_owned(),
+    "HelveticaItalic".to_owned(),
+    "HelveticaBoldItalic".to_owned(),
+    "Courier".to_owned(),
+    "CourierBold".to_owned(),
+    "CourierItalic".to_owned(),
+    "CourierBoldItalic".to_owned(),
+    "Times".to_owned(),
+    "TimesBold".to_owned(),
+    "TimesItalic".to_owned(),
+    "TimesBoldItalic".to_owned(),
+    "Symbol".to_owned(),
+    "Screen".to_owned(),
+    "ScreenBold".to_owned(),
+    "Zapfdingbats".to_owned(),
+])));
+static UI_THREAD: Lazy<std::thread::ThreadId> = Lazy::new(|| std::thread::current().id());
 
 /// Registers all images supported by `SharedImage`
 pub(crate) fn register_images() {
@@ -79,4 +78,10 @@ pub fn is_ui_thread() -> bool {
 /// Check if fltk-rs was initialized
 pub fn is_initialized() -> bool {
     IS_INIT.load(Ordering::Relaxed)
+}
+
+/// Disables wayland when building with use-wayland.
+/// Needs to be called before showing the first window
+pub fn disable_wayland() {
+    unsafe { fl::Fl_disable_wayland() }
 }

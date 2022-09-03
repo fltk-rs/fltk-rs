@@ -1134,6 +1134,8 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// # Safety
     /// Type correctness is insured by the developer
     unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T>;
+    /// Hides a the specified line
+    fn hide_line(&mut self, line: i32);
 }
 
 /// Defines the methods implemented by table types.

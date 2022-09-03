@@ -25,4 +25,4 @@ jobs:
     - uses: seanmiddleditch/gha-setup-ninja@master
     - name: Build
       shell: bash
-      run: cargo build --examples --verbose --features=use-ninja
+      run: git submodule update --init --recursive && cargo build --examples --verbose --features=use-ninja

@@ -1,6 +1,24 @@
 # Changelog
 
 
+## [1.3.14] - Unreleased
+- impl std::default::Default for TextBuffer by @ConsoleC137.
+- Avoid calling git submodule update in build script.
+- Make ttf-parser an optional dependency.
+- Update raw-window-handle dep to 0.5.
+- Update FLTK.
+
+## [1.3.13] - 2022-08-09
+- Add BrowserExt::hide_line().
+- Replace lazy_static with once_cell.
+- Remove assert from Offscreen::is_valid().
+- Pull FLTK fixes.
+
+## [1.3.12] - 2022-07-26
+- Explicitly check darwin arch in fltk-sys' build script.
+- Add index check with GroupExt::insert
+- Pull upstream FLTK fixes.
+
 ## [1.3.11] - 2022-07-10
 - Add WindowType::Single as alias to WindowType::Normal.
 - Add Window::set_on_top() which modifies the Window's level on macOS platforms to be NSMainMenuWindowLevel + 2.

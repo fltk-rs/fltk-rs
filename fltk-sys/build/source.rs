@@ -58,12 +58,6 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/src/cfl_vec.hpp");
     println!("cargo:rerun-if-changed=cfltk/fltk.patch");
 
-    Command::new("git")
-        .args(&["submodule", "update", "--init", "--recursive"])
-        .current_dir(manifest_dir)
-        .status()
-        .expect("Git is needed to retrieve the fltk source files!");
-
     if target_triple.contains("windows") {
         Command::new("git")
             .args(&["apply", "../fltk.patch"])
@@ -134,8 +128,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
         if target_triple.contains("linux") && !target_triple.contains("android") {
             if cfg!(feature = "no-pango-cairo") {
                 dst.define("OPTION_USE_PANGO", "OFF");
+                // dst.define("FLTK_USE_CAIROXLIB", "OFF");
             } else {
                 dst.define("OPTION_USE_PANGO", "ON");
+                // dst.define("FLTK_USE_CAIROXLIB", "ON");
             }
         }
 
@@ -152,6 +148,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if cfg!(feature = "use-wayland") {
             dst.define("OPTION_USE_WAYLAND", "ON");
+            dst.define("OPTION_ALLOW_GTK_PLUGIN", "OFF");
         }
 
         if cfg!(feature = "single-threaded") {
@@ -172,6 +169,8 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
         if target_triple == "aarch64-apple-darwin" {
             dst.define("CMAKE_OSX_ARCHITECTURES", "arm64");
+        } else if target_triple == "x86_64-apple-darwin" {
+            dst.define("CMAKE_OSX_ARCHITECTURES", "x86_64");
         }
 
         let _dst = dst

@@ -70,8 +70,8 @@ pub fn set_fonts(name: &str) -> i32 {
 
 /// Gets the name of a font through its index
 pub fn font_name(idx: usize) -> Option<String> {
-        let f = FONTS.lock().unwrap();
-        Some(f[idx].clone())
+    let f = FONTS.lock().unwrap();
+    Some(f[idx].clone())
 }
 
 /// Returns a list of available fonts to the application
