@@ -1,9 +1,6 @@
 use fltk::{
     app,
-    draw::{
-        draw_line, draw_point, draw_rect_fill, set_draw_color, set_line_style,
-        LineStyle,
-    },
+    draw::{draw_line, draw_point, draw_rect_fill, set_draw_color, set_line_style, LineStyle},
     enums::{Color, Event, FrameType},
     frame::Frame,
     prelude::*,
@@ -21,13 +18,11 @@ struct Canvas {
 
 impl Canvas {
     pub fn new(w: i32, h: i32) -> Self {
-        let mut frame = Frame::default()
-            .with_size(w, h)
-            .center_of_parent();
+        let frame = Frame::default().with_size(w, h).center_of_parent();
         frame.set_color(Color::White);
         frame.set_frame(FrameType::DownBox);
 
-        let surf = ImageSurface::new(frame.width(), frame.height(), false);
+        let surf = ImageSurface::new(frame.w(), frame.h(), false);
         ImageSurface::push_current(&surf);
         draw_rect_fill(0, 0, w, h, Color::White);
         ImageSurface::pop_current();
@@ -38,7 +33,7 @@ impl Canvas {
             let surf = surf.clone();
             move |f| {
                 let surf = surf.borrow();
-                let mut img = surf.image().unwrap();
+                let img = surf.image().unwrap();
                 img.draw(f.x(), f.y(), f.w(), f.h());
             }
         });
@@ -70,7 +65,7 @@ impl Canvas {
                         set_draw_color(Color::Red);
                         set_line_style(LineStyle::Solid, 3);
                         let coords = app::event_coords();
-                        draw_line(x, y, coords.0, coords.1);
+                        draw_line((x, y).into(), (coords.0, coords.1).into());
                         x = coords.0;
                         y = coords.1;
                         ImageSurface::pop_current();
@@ -93,7 +88,7 @@ fltk::widget_extends!(Canvas, Frame, frame);
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
 
-    let mut wind = Window::default()
+    let wind = Window::default()
         .with_size(WIDTH, HEIGHT)
         .with_label("RustyPainter");
 

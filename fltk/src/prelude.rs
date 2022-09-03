@@ -1614,6 +1614,8 @@ macro_rules! widget_builder {
 #[macro_export]
 macro_rules! widget_extends {
     ($widget:ty, $base:ty, $member:tt) => {
+        pub use $crate::widget_builder; 
+
         widget_builder!($widget);
 
         impl std::ops::Deref for $widget {

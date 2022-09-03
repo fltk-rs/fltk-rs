@@ -66,9 +66,8 @@ unsafe extern "C" fn modify_callback_shim(
     }));
 }
 
-impl TextBuffer {
-    /// Initialized a default text buffer
-    pub fn default() -> TextBuffer {
+impl Default for TextBuffer {
+    fn default() -> Self {
         unsafe {
             let text_buffer = Fl_Text_Buffer_new();
             assert!(!text_buffer.is_null());
@@ -78,7 +77,9 @@ impl TextBuffer {
             }
         }
     }
+}
 
+impl TextBuffer {
     /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
