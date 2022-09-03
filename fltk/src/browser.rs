@@ -223,10 +223,10 @@ impl CheckBrowser {
     }
 
     /// Remove item at index, returns the number of current items
-    pub fn remove(&self, item: usize) -> i32 {
+    pub fn remove(&self, item: i32) -> i32 {
         assert!(!self.was_deleted());
         if item > 0 && item <= self.size() {
-            unsafe { Fl_Check_Browser_remove(self.inner, item as i32) }
+            unsafe { Fl_Check_Browser_remove(self.inner, item) }
         } else {
             self.nitems() as _
         }
@@ -239,20 +239,20 @@ impl CheckBrowser {
     }
 
     /// Return the number of items
-    pub fn nitems(&self) -> usize {
+    pub fn nitems(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_nitems(self.inner) as usize }
+        unsafe { Fl_Check_Browser_nitems(self.inner) }
     }
 
     /// Return the number of items
-    pub fn size(&self) -> usize {
+    pub fn size(&self) -> i32 {
         self.nitems()
     }
 
     /// Get the number of checked items
-    pub fn nchecked(&self) -> usize {
+    pub fn nchecked(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Check_Browser_nchecked(self.inner) as usize }
+        unsafe { Fl_Check_Browser_nchecked(self.inner) }
     }
 
     /// Returns whether an item is checked
