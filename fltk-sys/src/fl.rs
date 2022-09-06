@@ -684,3 +684,6 @@ extern "C" {
         cb: ::std::option::Option<unsafe extern "C" fn(arg1: *const ::std::os::raw::c_char)>,
     );
 }
+extern "C" {
+    pub fn Fl_disable_wayland();
+}

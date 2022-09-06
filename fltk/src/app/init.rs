@@ -80,3 +80,9 @@ pub fn is_ui_thread() -> bool {
 pub fn is_initialized() -> bool {
     IS_INIT.load(Ordering::Relaxed)
 }
+
+/// Disables wayland when building with use-wayland.
+/// Needs to be called before showing the first window
+pub fn disable_wayland() {
+    unsafe { fl::Fl_disable_wayland() }
+}

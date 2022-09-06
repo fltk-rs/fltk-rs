@@ -256,7 +256,7 @@ The following are the features offered by the crate:
 - system-libpng: Uses the system libpng
 - system-libjpeg: Uses the system libjpeg
 - system-zlib: Uses the system zlib
-- use-wayland: Uses FLTK's wayland backend. Requires libwayland-dev, wayland-protocols, libdbus-1-dev, libxkbcommon-dev, libgtk-3-dev (optional, for the GTK-style titlebar), in place of the X11 development packages. Sample [CI](https://github.com/MoAlyousef/test_wayland/blob/main/.github/workflows/rust.yml).
+- use-wayland: Uses FLTK's wayland hybrid backend (runs on wayland when present, and on X11 when not present). Requires libwayland-dev, wayland-protocols, libdbus-1-dev, libxkbcommon-dev, libgtk-3-dev (optional, for the GTK-style titlebar), in addition to the X11 development packages. Sample [CI](https://github.com/MoAlyousef/test_wayland/blob/main/.github/workflows/rust.yml).
 
 ## FAQ
 
@@ -268,6 +268,7 @@ To build, just run:
 ```
 $ git clone https://github.com/fltk-rs/fltk-rs
 $ cd fltk-rs
+$ git submodule update --init --recursive
 $ cargo build
 ```
 
