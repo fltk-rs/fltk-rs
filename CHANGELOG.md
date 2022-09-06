@@ -1,12 +1,13 @@
 # Changelog
 
 
-## [1.3.14] - Unreleased
+## [1.3.14] - 2022-09-06
 - impl std::default::Default for TextBuffer by @ConsoleC137.
 - Avoid calling git submodule update in build script.
 - Make ttf-parser an optional dependency.
 - Update raw-window-handle dep to 0.5.
-- Update FLTK.
+- Pull FLTK's hybrid wayland backend.
+- Pull FLTK fixes.
 
 ## [1.3.13] - 2022-08-09
 - Add BrowserExt::hide_line().
