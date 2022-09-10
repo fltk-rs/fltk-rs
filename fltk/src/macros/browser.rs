@@ -268,7 +268,7 @@ macro_rules! impl_browser_ext {
                         let v = v.into_boxed_slice();
                         [<$flname _set_column_widths>](self.inner, Box::into_raw(v) as _);
                         if !old.is_null() && *old.offset(0) != 0 {
-                            Box::from_raw(old as *mut i32);
+                            let _ = Box::from_raw(old as *mut i32);
                         }
                     }
                 }

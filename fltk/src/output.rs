@@ -5,7 +5,7 @@ use std::ffi::{CStr, CString};
 
 /// Sets the input widget's type
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum OutputType {
     /// Normal input
     Normal = 8,

@@ -69,7 +69,7 @@ crate::macros::group::impl_group_ext!(Pack, Fl_Pack);
 
 /// Defines pack types
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum PackType {
     /// Vertical layout pack
     Vertical = 0,
@@ -133,7 +133,7 @@ crate::macros::group::impl_group_ext!(Scroll, Fl_Scroll);
 
 /// Defines Scroll types
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum ScrollType {
     /// Never show bars
     None = 0,
@@ -417,7 +417,7 @@ crate::macros::widget::impl_widget_type!(FlexType);
 
 /// Defines Flex types
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum FlexType {
     /// row direction
     Row = 0,

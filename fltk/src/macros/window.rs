@@ -253,7 +253,7 @@ macro_rules! impl_window_ext {
                     }
 
 
-                    Fl_Window_set_raw_handle(self.inner as *mut Fl_Window, mem::transmute(&handle));
+                    Fl_Window_set_raw_handle(self.inner as *mut Fl_Window, &handle as *const _ as *mut _);
                 }
 
                 fn region(&self) -> $crate::draw::Region {

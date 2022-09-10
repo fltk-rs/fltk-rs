@@ -19,7 +19,7 @@ crate::macros::table::impl_table_ext!(Table, Fl_Table);
 
 /// Defines the `TableContext`
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum TableContext {
     /// No context
     None = 0,
@@ -41,7 +41,7 @@ pub enum TableContext {
 
 /// Defines the `TableResizeFlag`
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum TableResizeFlag {
     /// Non resizable
     None = 0,
@@ -70,7 +70,7 @@ crate::macros::table::impl_table_ext!(TableRow, Fl_Table_Row);
 
 /// Defines the table row select mode
 #[repr(i32)]
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TableRowSelectMode {
     /// Disable select
     None,
@@ -84,7 +84,7 @@ crate::macros::widget::impl_widget_type!(TableRowSelectMode);
 
 /// Defines the table row select flag
 #[repr(i32)]
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TableRowSelectFlag {
     /// Deselect on click
     Deselect,

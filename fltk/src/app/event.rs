@@ -56,7 +56,7 @@ pub fn event_button() -> i32 {
 
 /// Defines Mouse buttons
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum MouseButton {
     /// Left mouse button
@@ -103,7 +103,7 @@ pub fn event_y_root() -> i32 {
 }
 
 /// Event direction with Mousewheel event
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum MouseWheel {
     /// No movement
     None,

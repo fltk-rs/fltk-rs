@@ -11,7 +11,7 @@ use std::{
 
 /// Color modes to be used with the color chooser
 #[repr(u8)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum ColorMode {
     /// Rgb color mode
     Rgb = 0,
@@ -34,7 +34,7 @@ pub type NativeFileChooser = FileDialog;
 
 /// Defines the type of dialog, which can be changed dynamically using the `set_type()` method
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum FileDialogType {
     /// Browse file
     BrowseFile = 0,
@@ -57,7 +57,7 @@ pub type NativeFileChooserType = FileDialogType;
 
 /// Defines the File dialog options, which can be set using the `set_option()` method.
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum FileDialogOptions {
     /// No options
     NoOptions = 0,
@@ -543,7 +543,7 @@ impl Drop for HelpDialog {
 
 /// Defines the type of beep to be passed to the beep function
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum BeepType {
     /// Default beep
     Default = 0,

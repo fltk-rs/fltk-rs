@@ -21,7 +21,7 @@ crate::macros::input::impl_input_ext!(Input, Fl_Input);
 
 /// Sets the input widget's type
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum InputType {
     /// Normal input
     Normal = 0,

@@ -12,7 +12,7 @@ use std::{
 
 /// Defines the Tree sort order
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum TreeSort {
     /// Don't sort
     None = 0,
@@ -24,7 +24,7 @@ pub enum TreeSort {
 
 /// Defines the Tree's connector sort order
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum TreeConnectorStyle {
     /// No line
     None = 0,
@@ -36,7 +36,7 @@ pub enum TreeConnectorStyle {
 
 /// Defines the Tree select mode
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum TreeSelect {
     /// Select none
     None = 0,
@@ -50,7 +50,7 @@ pub enum TreeSelect {
 
 /// Defines the `TreeItem`'s select mode
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum TreeItemSelect {
     /// Deselect when clicked
     Deselect = 0,
@@ -62,7 +62,7 @@ pub enum TreeItemSelect {
 
 /// Defines the Tree's callback reason
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum TreeReason {
     /// No callback trigger
     None = 0,
@@ -82,7 +82,7 @@ pub enum TreeReason {
 
 /// Defines the `TreeItem`'s reselect mode
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum TreeItemReselectMode {
     /// Reselect once
     Once = 0,
@@ -92,7 +92,7 @@ pub enum TreeItemReselectMode {
 
 /// Defines the `TreeItem`'s draw mode
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum TreeItemDrawMode {
     /// Default draw mode
     Default = 0,

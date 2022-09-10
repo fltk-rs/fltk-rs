@@ -611,7 +611,7 @@ impl Pixmap {
 
 /// The scaling algorithm to use for RGB images
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum RgbScaling {
     /// Default RGB image scaling algorithm
     Nearest = 0,

@@ -9,7 +9,7 @@ use fltk::{
 };
 use std::ops::{Deref, DerefMut};
 
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 enum Ops {
     None,
     Add,
