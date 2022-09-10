@@ -2,6 +2,11 @@
 
 
 ## [1.3.14] - 2022-09-06
+- Support CFLTK_WAYLAND_ONLY env variable which allows building a wayland non-hybrid FLTK app.
+- Fix some clippy lints.
+- Pull FLTK's pure wayland backend.
+
+## [1.3.14] - 2022-09-06
 - impl std::default::Default for TextBuffer by @ConsoleC137.
 - Avoid calling git submodule update in build script.
 - Make ttf-parser an optional dependency.
