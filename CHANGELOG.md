@@ -1,7 +1,8 @@
 # Changelog
 
 
-## [1.3.14] - 2022-09-06
+## [1.3.15] - 2022-09-11
+- Revert breaking change with raw-window-handle's update.
 - Support CFLTK_WAYLAND_ONLY env variable which allows building a wayland non-hybrid FLTK app.
 - Fix some clippy lints.
 - Pull FLTK's pure wayland backend.

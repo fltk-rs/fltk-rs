@@ -8,7 +8,7 @@ macro_rules! impl_window_ext {
             fn raw_window_handle(&self) -> RawWindowHandle {
                 #[cfg(target_os = "windows")]
                 {
-                    let mut handle = Win32WindowHandle::empty();
+                    let mut handle = Win32Handle::empty();
                     handle.hwnd = self.raw_handle();
                     handle.hinstance = $crate::app::display();
                     return RawWindowHandle::Win32(handle);
@@ -21,7 +21,7 @@ macro_rules! impl_window_ext {
                         pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
                     }
                     let cv = unsafe { cfltk_getContentView(raw) };
-                    let mut handle = AppKitWindowHandle::empty();
+                    let mut handle = AppKitHandle::empty();
                     handle.ns_window = raw;
                     handle.ns_view = cv as _;
                     return RawWindowHandle::AppKit(handle);
@@ -29,7 +29,7 @@ macro_rules! impl_window_ext {
 
                 #[cfg(target_os = "android")]
                 {
-                    let mut handle = AndroidNdkWindowHandle::empty();
+                    let mut handle = AndroidNdkHandle::empty();
                     handle.a_native_window = self.raw_handle();
                     return RawWindowHandle::AndroidNdk(handle);
                 }
@@ -44,7 +44,7 @@ macro_rules! impl_window_ext {
                 {
                     #[cfg(not(feature = "use-wayland"))]
                     {
-                        let mut handle = XlibWindowHandle::empty();
+                        let mut handle = XlibHandle::empty();
                         handle.window = self.raw_handle();
                         return RawWindowHandle::Xlib(handle);
                     }
@@ -52,7 +52,7 @@ macro_rules! impl_window_ext {
 
                     #[cfg(feature = "use-wayland")]
                     {
-                        let mut handle = WaylandWindowHandle::empty();
+                        let mut handle = WaylandHandle::empty();
                         handle.surface = self.raw_handle();
                         return RawWindowHandle::Wayland(handle);
                     }
