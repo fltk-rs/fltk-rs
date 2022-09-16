@@ -44,3 +44,5 @@ Please only open a bug report if the repo/crate used to build and currently fail
  - `cargo build -vv`
  - `rustup toolchain list`
  - CMake error and log files
+
+Also remember if you're git cloning the fltk-rs repo, to run `git submodule update --init --recursive` since this repo uses git submodules. 
