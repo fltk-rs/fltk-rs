@@ -1,6 +1,11 @@
 # Changelog
 
 
+## [1.3.16] - Unreleased
+- Fix building with both features use-wayland and enable-glwindow while adding widgets to the glwindow.
+- Pull upstream support for adding widgets to GlWindow.
+- Pull upstream fixes.
+
 ## [1.3.15] - 2022-09-11
 - Revert breaking change with raw-window-handle's update.
 - Support CFLTK_WAYLAND_ONLY env variable which allows building a wayland non-hybrid FLTK app.
