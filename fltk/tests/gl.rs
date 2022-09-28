@@ -3,9 +3,8 @@
 fn main() {
     // let app = app::App::default();
     // let mut win = window::GlWindow::default().with_size(400, 300);
-    // win.set_mode(Mode::Opengl3 | Mode::MultiSample); // for antialiasing
+    // win.set_mode(Mode::MultiSample); // for antialiasing
     // win.set_frame(FrameType::FlatBox);
-    // win.set_color(Color::White);
     // win.begin();
     // let mut dial =
     //     valuator::LineDial::new(100, 50, 200, 200, "Load %");
