@@ -371,7 +371,7 @@ macro_rules! impl_browser_ext {
                         }
                     }
                 }
-            
+
                 unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T> {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() {

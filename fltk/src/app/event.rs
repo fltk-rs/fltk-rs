@@ -542,8 +542,8 @@ pub fn handle_main<I: Into<Event> + Copy + PartialEq + PartialOrd>(
 
 #[cfg(target_os = "macos")]
 /// Register a function called for each file dropped onto an application icon.
-/// This function is effective only on the Mac OS X platform. 
-/// cb will be called with a single Unix-style file name and path. 
+/// This function is effective only on the Mac OS X platform.
+/// cb will be called with a single Unix-style file name and path.
 /// If multiple files were dropped, cb will be called multiple times.
 /// ```rust,no_run
 /// use fltk::{app, dialog};

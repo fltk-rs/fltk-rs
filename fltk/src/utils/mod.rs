@@ -1,3 +1,5 @@
+pub(crate) mod oncelock;
+
 use fltk_sys::utils::*;
 use std::ffi::CString;
 use std::os::raw;

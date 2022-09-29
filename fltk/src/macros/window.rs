@@ -497,7 +497,7 @@ macro_rules! impl_window_ext {
                     let label = CString::safe_new(label);
                     unsafe { [<$flname _set_icon_label>](self.inner as _, label.as_ptr()) }
                 }
-                
+
                 fn icon_label(&self) -> Option<String> {
                     assert!(!self.was_deleted());
                     unsafe {

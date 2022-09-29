@@ -1,9 +1,6 @@
 use fltk::{
     app,
-    draw::{
-        draw_line, draw_point, draw_rect_fill, set_draw_color, set_line_style,
-        LineStyle,
-    },
+    draw::{draw_line, draw_point, draw_rect_fill, set_draw_color, set_line_style, LineStyle},
     enums::{Color, Event, FrameType},
     frame::Frame,
     prelude::*,
@@ -21,9 +18,7 @@ struct Canvas {
 
 impl Canvas {
     pub fn new(w: i32, h: i32) -> Self {
-        let mut frame = Frame::default()
-            .with_size(w, h)
-            .center_of_parent();
+        let mut frame = Frame::default().with_size(w, h).center_of_parent();
         frame.set_color(Color::White);
         frame.set_frame(FrameType::DownBox);
 

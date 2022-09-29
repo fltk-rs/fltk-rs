@@ -1,8 +1,8 @@
-use std::sync::Mutex;
+use crate::utils::oncelock::OnceCell;
 use std::any::Any;
-use once_cell::sync::OnceCell;
+use std::sync::Mutex;
 
-static STATE: OnceCell<Mutex<Box<dyn Any + Send + Sync + 'static>>> =  OnceCell::new();
+static STATE: OnceCell<Mutex<Box<dyn Any + Send + Sync + 'static>>> = OnceCell::new();
 
 /// Represents global state
 #[derive(Debug, Copy)]
@@ -22,9 +22,11 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
     /// Creates a new global state
     pub fn new(val: T) -> Self {
         STATE.set(Mutex::new(Box::new(val))).unwrap();
-        GlobalState { marker: std::marker::PhantomData }
+        GlobalState {
+            marker: std::marker::PhantomData,
+        }
     }
-    
+
     /// Modifies the global state by acquiring a mutable reference
     pub fn with<V: Clone, F: 'static + Fn(&mut T) -> V>(&self, cb: F) -> V {
         if let Some(val) = STATE.get().unwrap().lock().unwrap().downcast_mut::<T>() {
@@ -36,6 +38,8 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
 
     /// Gets the already initialized global state
     pub fn get() -> Self {
-        GlobalState { marker: std::marker::PhantomData }
+        GlobalState {
+            marker: std::marker::PhantomData,
+        }
     }
 }

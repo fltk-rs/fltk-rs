@@ -1,10 +1,4 @@
-use fltk::{
-    app,
-    button::Button,
-    frame::Frame,
-    prelude::*,
-    window::Window,
-};
+use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 trait App {
     fn run(self);
@@ -22,7 +16,7 @@ impl App for Counter {
         let (s, r) = app::channel();
         let mut wind = Window::default().with_size(160, 200).with_label("Counter");
         view(s);
-        wind.end(); 
+        wind.end();
         wind.show();
         while a.wait() {
             if let Some(msg) = r.recv() {
@@ -52,7 +46,7 @@ fn view(s: app::Sender<bool>) {
         .size_of(&frame)
         .below_of(&frame, 0)
         .with_label("-");
-    
+
     but_inc.set_callback(move |_| {
         state.with(|c| c.count += 1);
         s.send(true);

@@ -12,9 +12,7 @@ fn main() {
     app::background(0x62, 0x00, 0xee);
     app::set_visible_focus(false);
 
-    let mut wind = Window::default()
-        .with_size(160, 200)
-        .with_label("Counter");
+    let mut wind = Window::default().with_size(160, 200).with_label("Counter");
     let mut frame = Frame::default()
         .with_size(100, 40)
         .center_of(&wind)
