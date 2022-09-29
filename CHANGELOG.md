@@ -5,6 +5,8 @@
 - Fix building with both features use-wayland and enable-glwindow while adding widgets to the glwindow.
 - Pull upstream support for adding widgets to GlWindow.
 - Pull upstream fixes.
+- Remove once_cell.
+- Update ttf-parser to version 0.17.
 
 ## [1.3.15] - 2022-09-11
 - Revert breaking change with raw-window-handle's update.
