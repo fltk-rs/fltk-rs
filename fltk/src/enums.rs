@@ -353,7 +353,7 @@ impl Font {
             }
             if let Some(p) = path.to_str() {
                 let font_data = std::fs::read(path)?;
-                let face = match ttf_parser::Face::from_slice(&font_data, 0) {
+                let face = match ttf_parser::Face::parse(&font_data, 0) {
                     Ok(f) => f,
                     Err(_) => {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
