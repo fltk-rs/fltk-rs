@@ -11,7 +11,7 @@ use std::{
 
 /// Color modes to be used with the color chooser
 #[repr(u8)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum ColorMode {
     /// Rgb color mode
     Rgb = 0,

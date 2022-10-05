@@ -1,8 +1,6 @@
 use crate::enums::Mode;
 use crate::prelude::*;
-use std::{
-    path,
-};
+use std::path;
 
 mod channel;
 pub use channel::*;

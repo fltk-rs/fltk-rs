@@ -12,7 +12,7 @@ use std::{
 
 /// Defines the chart types supported by fltk
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum ChartType {
     /// Bar chart
     Bar = 0,
@@ -34,7 +34,7 @@ crate::macros::widget::impl_widget_type!(ChartType);
 
 /// Defines the clock types supported by fltk
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum ClockType {
     /// Square clock
     Square = 0,

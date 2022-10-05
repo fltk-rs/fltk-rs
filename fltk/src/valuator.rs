@@ -80,7 +80,7 @@ impl NiceSlider {
 
 /// Defines slider types
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum SliderType {
     /// Vertical slider
     Vertical = 0,
@@ -170,7 +170,7 @@ impl LineDial {
 
 /// Defines dial types
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum DialType {
     /// Normal dial
     Normal = 0,
@@ -196,7 +196,7 @@ crate::macros::valuator::impl_valuator_ext!(Counter, Fl_Counter);
 
 /// Defines counter types
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum CounterType {
     /// Normal counter
     Normal = 0,
@@ -242,7 +242,7 @@ impl Scrollbar {
 
 /// Defines scrollbar types
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum ScrollbarType {
     /// Vertical scrollbar
     Vertical = 0,

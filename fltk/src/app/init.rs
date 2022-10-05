@@ -1,9 +1,9 @@
+use crate::utils::oncelock::Lazy;
 use fltk_sys::fl;
 use std::sync::{
     atomic::{AtomicBool, AtomicI32, Ordering},
     Arc, Mutex,
 };
-use once_cell::sync::Lazy;
 
 /// Basically a check for global locking
 pub(crate) static IS_INIT: AtomicBool = AtomicBool::new(false);
@@ -18,24 +18,26 @@ pub(crate) static CURRENT_FONT: AtomicI32 = AtomicI32::new(0);
 pub(crate) static CURRENT_FRAME: AtomicI32 = AtomicI32::new(2);
 
 /// The fonts associated with the application
-pub(crate) static FONTS: Lazy<Arc<Mutex<Vec<String>>>> = Lazy::new(|| Arc::from(Mutex::from(vec![
-    "Helvetica".to_owned(),
-    "HelveticaBold".to_owned(),
-    "HelveticaItalic".to_owned(),
-    "HelveticaBoldItalic".to_owned(),
-    "Courier".to_owned(),
-    "CourierBold".to_owned(),
-    "CourierItalic".to_owned(),
-    "CourierBoldItalic".to_owned(),
-    "Times".to_owned(),
-    "TimesBold".to_owned(),
-    "TimesItalic".to_owned(),
-    "TimesBoldItalic".to_owned(),
-    "Symbol".to_owned(),
-    "Screen".to_owned(),
-    "ScreenBold".to_owned(),
-    "Zapfdingbats".to_owned(),
-])));
+pub(crate) static FONTS: Lazy<Arc<Mutex<Vec<String>>>> = Lazy::new(|| {
+    Arc::from(Mutex::from(vec![
+        "Helvetica".to_owned(),
+        "HelveticaBold".to_owned(),
+        "HelveticaItalic".to_owned(),
+        "HelveticaBoldItalic".to_owned(),
+        "Courier".to_owned(),
+        "CourierBold".to_owned(),
+        "CourierItalic".to_owned(),
+        "CourierBoldItalic".to_owned(),
+        "Times".to_owned(),
+        "TimesBold".to_owned(),
+        "TimesItalic".to_owned(),
+        "TimesBoldItalic".to_owned(),
+        "Symbol".to_owned(),
+        "Screen".to_owned(),
+        "ScreenBold".to_owned(),
+        "Zapfdingbats".to_owned(),
+    ]))
+});
 static UI_THREAD: Lazy<std::thread::ThreadId> = Lazy::new(|| std::thread::current().id());
 
 /// Registers all images supported by `SharedImage`

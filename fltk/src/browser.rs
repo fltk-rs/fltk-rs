@@ -47,7 +47,7 @@ crate::macros::browser::impl_browser_ext!(Browser, Fl_Browser);
 
 /// Defines the browser type
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum BrowserType {
     /// Normal browser
     Normal = 0,
@@ -63,7 +63,7 @@ crate::macros::widget::impl_widget_type!(BrowserType);
 
 /// Defines the type of Scrollbar associated with the browser
 #[repr(u8)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum BrowserScrollbar {
     /// Never show bars
     None = 0,

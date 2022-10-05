@@ -17,7 +17,7 @@ crate::macros::button::impl_button_ext!(Button, Fl_Button);
 
 /// Defines the button type, which can be changed dynamically using the `set_type()`.
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum ButtonType {
     /// Normal button
     Normal = 0,

@@ -34,7 +34,7 @@ crate::macros::menu::impl_menu_ext!(MenuButton, Fl_Menu_Button);
 
 /// Defines the menu button types, which can be changed dynamically using the `set_type()`.
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum MenuButtonType {
     /// pops up with the mouse 1st button.
     Popup1 = 1,
@@ -136,7 +136,7 @@ pub struct MenuItem {
 
 /// Defines the menu flag for any added menu items using the add() method
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum MenuFlag {
     /// Normal item
     Normal = 0,

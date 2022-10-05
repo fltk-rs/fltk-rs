@@ -268,7 +268,7 @@ macro_rules! impl_browser_ext {
                         let v = v.into_boxed_slice();
                         [<$flname _set_column_widths>](self.inner, Box::into_raw(v) as _);
                         if !old.is_null() && *old.offset(0) != 0 {
-                            _ = Box::from_raw(old as *mut i32);
+                            _ = Box::from_raw(old as *mut i32)
                         }
                     }
                 }
@@ -371,7 +371,7 @@ macro_rules! impl_browser_ext {
                         }
                     }
                 }
-            
+
                 unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T> {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() {

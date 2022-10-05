@@ -58,7 +58,7 @@ pub fn event_button() -> i32 {
 
 /// Defines Mouse buttons
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum MouseButton {
     /// Left mouse button
@@ -100,7 +100,7 @@ pub fn event_y_root() -> i32 {
 }
 
 /// Event direction with Mousewheel event
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum MouseWheel {
     /// No movement
     None,
@@ -539,8 +539,8 @@ pub fn handle_main<I: Into<Event> + Copy + PartialEq + PartialOrd>(
 
 #[cfg(target_os = "macos")]
 /// Register a function called for each file dropped onto an application icon.
-/// This function is effective only on the Mac OS X platform. 
-/// cb will be called with a single Unix-style file name and path. 
+/// This function is effective only on the Mac OS X platform.
+/// cb will be called with a single Unix-style file name and path.
 /// If multiple files were dropped, cb will be called multiple times.
 /// ```rust,no_run
 /// use fltk::{app, dialog};

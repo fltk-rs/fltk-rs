@@ -1,13 +1,18 @@
+use crate::utils::oncelock::Lazy;
 use fltk_sys::fl;
-use std::marker;
 use std::any::Any;
-use once_cell::sync::Lazy;
+use std::marker;
 
-type Chan = (crossbeam_channel::Sender<Box<dyn Any + Send + Sync>>, crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>>);
+type Chan = (
+    crossbeam_channel::Sender<Box<dyn Any + Send + Sync>>,
+    crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>>,
+);
 
-static CHANNEL: Lazy<Chan> = Lazy::new(|| crossbeam_channel::unbounded());
-static SENDER: Lazy<crossbeam_channel::Sender<Box<dyn Any + Send + Sync>>> = Lazy::new(|| CHANNEL.clone().0);
-static RECEIVER: Lazy<crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>>> = Lazy::new(|| CHANNEL.clone().1);
+static CHANNEL: Lazy<Chan> = Lazy::new(crossbeam_channel::unbounded);
+static SENDER: Lazy<crossbeam_channel::Sender<Box<dyn Any + Send + Sync>>> =
+    Lazy::new(|| CHANNEL.clone().0);
+static RECEIVER: Lazy<crossbeam_channel::Receiver<Box<dyn Any + Send + Sync>>> =
+    Lazy::new(|| CHANNEL.clone().1);
 
 #[doc(hidden)]
 /// Sends a custom message

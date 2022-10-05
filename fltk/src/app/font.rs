@@ -110,7 +110,7 @@ pub fn fonts() -> Vec<String> {
 pub(crate) fn load_font(path: &str) -> Result<String, FltkError> {
     unsafe {
         let font_data = std::fs::read(path)?;
-        let face = match ttf_parser::Face::from_slice(&font_data, 0) {
+        let face = match ttf_parser::Face::parse(&font_data, 0) {
             Ok(f) => f,
             Err(_) => {
                 return Err(FltkError::Internal(FltkErrorKind::FailedOperation));

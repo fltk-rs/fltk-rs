@@ -6,7 +6,7 @@ use fltk_sys::fl;
 use std::{ffi::CString, mem, os::raw, sync::atomic::Ordering};
 
 /// Set the app scheme
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum Scheme {
     /// Base fltk scheming
     Base,

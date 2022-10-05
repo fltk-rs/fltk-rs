@@ -9,7 +9,7 @@ use std::{
 
 /// Defines label types
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum LabelType {
     /// Normal
     Normal = 0,
@@ -25,7 +25,7 @@ pub enum LabelType {
 
 /// Defines the color depth for drawing and rgb images
 #[repr(u8)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum ColorDepth {
     /// Luminance/grayscale
     L8 = 1,
@@ -51,7 +51,7 @@ impl ColorDepth {
 
 /// Defines the frame types which can be set using the `set_frame()` and `set_down_frame()` methods
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum FrameType {
     /// No Box
     NoBox = 0,
@@ -349,7 +349,7 @@ impl Font {
             }
             if let Some(p) = path.to_str() {
                 let font_data = std::fs::read(path)?;
-                let face = match ttf_parser::Face::from_slice(&font_data, 0) {
+                let face = match ttf_parser::Face::parse(&font_data, 0) {
                     Ok(f) => f,
                     Err(_) => {
                         return Err(FltkError::Internal(FltkErrorKind::FailedOperation));
@@ -1003,7 +1003,7 @@ bitflags::bitflags! {
 
 /// Defines the cursor styles supported by fltk
 #[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum Cursor {
     /// Default
     Default = 0,

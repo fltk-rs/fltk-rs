@@ -25,7 +25,4 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
-      - name: Cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
+      - run: cargo check
