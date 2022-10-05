@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.3.16] - Unreleased
+## [1.3.16] - 2022-10-05
 - Fix building with both features use-wayland and enable-glwindow while adding widgets to the glwindow.
 - Pull upstream support for adding widgets to GlWindow.
 - Pull upstream fixes.
