@@ -1431,11 +1431,7 @@ macro_rules! widget_builder {
             }
 
             /// Initialize at bottom of another widget
-            pub fn below_of<W: $crate::prelude::WidgetExt>(
-                self,
-                wid: &W,
-                padding: i32,
-            ) -> Self {
+            pub fn below_of<W: $crate::prelude::WidgetExt>(self, wid: &W, padding: i32) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -1449,11 +1445,7 @@ macro_rules! widget_builder {
             }
 
             /// Initialize above of another widget
-            pub fn above_of<W: $crate::prelude::WidgetExt>(
-                self,
-                wid: &W,
-                padding: i32,
-            ) -> Self {
+            pub fn above_of<W: $crate::prelude::WidgetExt>(self, wid: &W, padding: i32) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -1467,11 +1459,7 @@ macro_rules! widget_builder {
             }
 
             /// Initialize right of another widget
-            pub fn right_of<W: $crate::prelude::WidgetExt>(
-                self,
-                wid: &W,
-                padding: i32,
-            ) -> Self {
+            pub fn right_of<W: $crate::prelude::WidgetExt>(self, wid: &W, padding: i32) -> Self {
                 assert!(!wid.was_deleted());
                 assert!(!self.was_deleted());
                 let w = self.w();
@@ -1614,7 +1602,7 @@ macro_rules! widget_builder {
 #[macro_export]
 macro_rules! widget_extends {
     ($widget:ty, $base:ty, $member:tt) => {
-        pub use $crate::widget_builder; 
+        pub use $crate::widget_builder;
 
         widget_builder!($widget);
 

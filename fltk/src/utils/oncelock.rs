@@ -40,7 +40,9 @@ impl<T> OnceCell<T> {
         if self.get().is_some() {
             Err(value)
         } else {
-            unsafe { *self.value.get() = Some(value); }
+            unsafe {
+                *self.value.get() = Some(value);
+            }
             Ok(())
         }
     }

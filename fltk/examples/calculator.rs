@@ -159,8 +159,7 @@ fn main() {
     app::set_focus(&*but1);
 
     let but_vec = vec![
-        &but1, &but2, &but3, &but4, &but5, &but6, &but7, &but8,
-        &but9, &but0,
+        &but1, &but2, &but3, &but4, &but5, &but6, &but7, &but8, &but9, &but0,
     ];
 
     let but_op_vec = vec![

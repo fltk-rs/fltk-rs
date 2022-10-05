@@ -433,11 +433,7 @@ impl MenuItem {
     }
 
     /// Use a sender to send a message during callback
-    pub fn emit<T: 'static + Clone + Send + Sync>(
-        &self,
-        sender: crate::app::Sender<T>,
-        msg: T,
-    ) {
+    pub fn emit<T: 'static + Clone + Send + Sync>(&self, sender: crate::app::Sender<T>, msg: T) {
         self.set_callback(move |_| sender.send(msg.clone()));
     }
 

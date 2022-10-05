@@ -15,8 +15,7 @@ impl MyDial {
         let main_wid = group::Group::new(x, y, w, h, None)
             .with_label(label)
             .with_align(Align::Top);
-        let value_frame =
-            frame::Frame::new(main_wid.x(), main_wid.y() + 80, main_wid.w(), 40, "0");
+        let value_frame = frame::Frame::new(main_wid.x(), main_wid.y() + 80, main_wid.w(), 40, "0");
         value_frame.set_label_size(26);
         main_wid.end();
         let value_c = value.clone();

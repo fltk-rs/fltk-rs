@@ -78,14 +78,7 @@ impl FlatButton {
             draw::set_draw_color(Color::White);
             draw::set_font(Font::Courier, 24);
             if let Some(label) = b.label() {
-                draw::draw_text2(
-                    &label,
-                    b.x(),
-                    b.y(),
-                    b.w(),
-                    b.h(),
-                    Align::Center,
-                );
+                draw::draw_text2(&label, b.x(), b.y(), b.w(), b.h(), Align::Center);
             }
         });
     }
@@ -132,8 +125,7 @@ impl PowerButton {
         frm.draw({
             // storing two almost identical images here, in a real application this could be optimized
             let on = Rc::clone(&on);
-            let on_svg =
-                SvgImage::from_data(&POWER.to_string().replace("red", "green")).unwrap();
+            let on_svg = SvgImage::from_data(&POWER.to_string().replace("red", "green")).unwrap();
             on_svg.scale(frm.w(), frm.h(), true, true);
             let off_svg = SvgImage::from_data(POWER).unwrap();
             off_svg.scale(frm.w(), frm.h(), true, true);
