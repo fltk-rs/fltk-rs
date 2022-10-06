@@ -902,6 +902,64 @@ pub unsafe fn draw_image2(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: i3
     Fl_draw_image(data.as_ptr(), x, y, w, h, depth, line_data);
 }
 
+/// Draws a rounded box
+pub fn draw_rbox(x: i32, y: i32, w: i32, h: i32, max_radius: i32, fill: bool, col: Color) {
+    let max_radius = if max_radius < 0 { 0 } else { max_radius };
+    let offset: [f64; 5] = [0.0, 0.07612, 0.29289, 0.61732, 1.0];
+    let mut rs = w * 2 / 5;
+    let rsy = h * 2 / 5;
+    if rs > rsy {
+        rs = rsy;
+    }
+    if rs > max_radius {
+        rs = max_radius;
+    }
+    if rs == 5 {
+        rs = 4;
+    }
+    if rs == 7 {
+        rs = 8;
+    }
+
+    let rs = rs as f64;
+    let x = x as f64;
+    let y = y as f64;
+    let w = w as f64;
+    let h = h as f64;
+    let old_col = get_color();
+    let len = offset.len();
+
+    set_draw_color(col);
+    if fill {
+        begin_polygon();
+    } else {
+        begin_loop();
+    }
+    unsafe {
+      for i in 0..len {
+        vertex(0.5 + x + offset.get_unchecked(len - i - 1) * rs, 0.5 + y + offset.get_unchecked(i) * rs);
+    }
+    for i in 0..len {
+        vertex(0.5 + x + offset.get_unchecked(i) * rs, 0.5 + y + h - 1.0 - offset.get_unchecked(len - i - 1) * rs);
+    }
+    for i in 0..len {
+        vertex(
+            0.5 + x + w - 1.0 - offset.get_unchecked(len - i - 1) * rs,
+            0.5 + y + h - 1.0 - offset.get_unchecked(i) * rs,
+        );
+    }
+    for i in 0..len {
+        vertex(0.5 + x + w - 1.0 - offset.get_unchecked(i) * rs, 0.5 + y + offset.get_unchecked(len - i - 1) * rs);
+    }
+    }
+    if fill {
+        end_polygon();
+    } else {
+        end_loop();
+    }
+    set_draw_color(old_col);
+}
+
 #[cfg(feature = "enable-glwindow")]
 /// Start drawing using OpenGL functions inside a widget's draw routine
 /// # Safety
