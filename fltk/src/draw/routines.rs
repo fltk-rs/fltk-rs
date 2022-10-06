@@ -1,4 +1,4 @@
-use super::types::{Coord, Coordf, Rect};
+use super::types::{Coord, Coordf};
 use crate::enums::{Align, Color, ColorDepth, Cursor, Font, FrameType, Shortcut};
 use crate::image::RgbImage;
 use crate::prelude::*;
@@ -140,9 +140,8 @@ pub fn get_color() -> Color {
 }
 
 /// Draws a line
-pub fn draw_line(pos1: Coord, pos2: Coord) {
+pub fn draw_line(x1: i32, y1: i32, x2: i32, y2: i32) {
     unsafe {
-        let ((x1, y1), (x2, y2)) = (pos1.into(), pos2.into());
         Fl_line(x1, y1, x2, y2);
     }
 }
@@ -173,14 +172,19 @@ pub fn draw_rect_with_color(x: i32, y: i32, w: i32, h: i32, color: Color) {
 }
 
 /// Draws a non-filled 3-sided polygon
-pub fn draw_loop(pos1: Coord, pos2: Coord, pos3: Coord) {
+pub fn draw_loop(x1: i32, y1: i32, x2: i32, y2: i32, x3: i32, y3: i32) {
     unsafe {
-        Fl_loop(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y);
+        Fl_loop(x1, y1, x2, y2, x3, y3);
     }
 }
 
+/// Draws a non-filled 3-sided polygon
+pub fn draw_loop2(pos1: Coord, pos2: Coord, pos3: Coord) {
+    unsafe { Fl_loop(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
+}
+
 /// Draws a non-filled 4-sided polygon
-pub fn draw_loop2(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
+pub fn draw_loop3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
     unsafe {
         Fl_loop2(
             pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
@@ -237,7 +241,7 @@ pub fn draw_arc(x: i32, y: i32, width: i32, height: i32, a: f64, b: f64) {
     }
 }
 
-/// Draws an arc as part of a complex polygon
+/// Draws an arc
 pub fn draw_arc2(x: f64, y: f64, r: f64, start: f64, end: f64) {
     unsafe { Fl_arc2(x, y, r, start, end) }
 }
@@ -341,17 +345,30 @@ pub fn draw_rectf(x: i32, y: i32, w: i32, h: i32) {
 }
 
 /// Draws a filled rectangle with specified RGB color
-pub fn draw_rectf_with_rgb(rect: Rect, color_r: u8, color_g: u8, color_b: u8) {
-    unsafe { Fl_rectf_with_rgb(rect.x, rect.y, rect.w, rect.h, color_r, color_g, color_b) }
+pub fn draw_rectf_with_rgb(
+    x: i32,
+    y: i32,
+    width: i32,
+    height: i32,
+    color_r: u8,
+    color_g: u8,
+    color_b: u8,
+) {
+    unsafe { Fl_rectf_with_rgb(x, y, width, height, color_r, color_g, color_b) }
 }
 
 /// Fills a 3-sided polygon. The polygon must be convex
-pub fn draw_polygon(pos1: Coord, pos2: Coord, pos3: Coord) {
+pub fn draw_polygon(x: i32, y: i32, x1: i32, y1: i32, x2: i32, y2: i32) {
+    unsafe { Fl_polygon(x, y, x1, y1, x2, y2) }
+}
+
+/// Fills a 3-sided polygon. The polygon must be convex
+pub fn draw_polygon2(pos1: Coord, pos2: Coord, pos3: Coord) {
     unsafe { Fl_polygon(pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y) }
 }
 
 /// Fills a 4-sided polygon. The polygon must be convex
-pub fn draw_polygon2(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
+pub fn draw_polygon3(pos1: Coord, pos2: Coord, pos3: Coord, pos4: Coord) {
     unsafe {
         Fl_polygon2(
             pos1.x, pos1.y, pos2.x, pos2.y, pos3.x, pos3.y, pos4.x, pos4.y,
@@ -731,13 +748,13 @@ pub fn reset_spot() {
     Example usage:
     ```rust,no_run
     use fltk::{prelude::*, *};
-    let win = window::Window::default();
-    let image = draw::capture_window(&win).unwrap();
+    let mut win = window::Window::default();
+    let image = draw::capture_window(&mut win).unwrap();
     ```
     # Errors
     The api can fail to capture the window as an image
 */
-pub fn capture_window<Win: WindowExt>(win: &Win) -> Result<RgbImage, FltkError> {
+pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkError> {
     assert!(!win.was_deleted());
     let cp = win.w() * win.h() * 3;
     win.show();
@@ -747,9 +764,100 @@ pub fn capture_window<Win: WindowExt>(win: &Win) -> Result<RgbImage, FltkError> 
             Err(FltkError::Internal(FltkErrorKind::FailedOperation))
         } else {
             let x = std::slice::from_raw_parts(x, cp as usize);
-            Ok(RgbImage::new(x, win.w(), win.h(), ColorDepth::Rgb8)?)
+            Ok(RgbImage::new(
+                x,
+                win.w(),
+                win.h(),
+                ColorDepth::Rgb8,
+            )?)
         }
     }
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Errors
+/// Errors on invalid or unsupported image formats
+pub fn draw_rgba<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
+    let width = wid.w();
+    let height = wid.h();
+    let img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgba8)?;
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.w();
+        let h = s.h();
+        img.scale(w, h, false, true);
+        img.draw(x, y, w, h);
+    });
+    Ok(())
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Safety
+/// The data passed should be valid and outlive the widget
+pub unsafe fn draw_rgba_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
+    let ptr = fb.as_ptr();
+    let len = fb.len();
+    let width = wid.w();
+    let height = wid.h();
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.w();
+        let h = s.h();
+        if let Ok(img) = crate::image::RgbImage::from_data(
+            std::slice::from_raw_parts(ptr, len),
+            width,
+            height,
+            ColorDepth::Rgba8,
+        ) {
+            img.scale(w, h, false, true);
+            img.draw(x, y, w, h);
+        }
+    });
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Errors
+/// Errors on invalid or unsupported image formats
+pub fn draw_rgb<'a, T: WidgetBase>(wid: &'a mut T, fb: &'a [u8]) -> Result<(), FltkError> {
+    let width = wid.w();
+    let height = wid.h();
+    let img = crate::image::RgbImage::new(fb, width, height, ColorDepth::Rgb8)?;
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.w();
+        let h = s.h();
+        img.scale(w, h, false, true);
+        img.draw(x, y, w, h);
+    });
+    Ok(())
+}
+
+/// Draw a framebuffer (rgba) into a widget
+/// # Safety
+/// The data passed should be valid and outlive the widget
+pub unsafe fn draw_rgb_nocopy<T: WidgetBase>(wid: &mut T, fb: &[u8]) {
+    let ptr = fb.as_ptr();
+    let len = fb.len();
+    let width = wid.w();
+    let height = wid.h();
+    wid.draw(move |s| {
+        let x = s.x();
+        let y = s.y();
+        let w = s.w();
+        let h = s.h();
+        if let Ok(img) = crate::image::RgbImage::from_data(
+            std::slice::from_raw_parts(ptr, len),
+            width,
+            height,
+            ColorDepth::Rgb8,
+        ) {
+            img.scale(w, h, false, true);
+            img.draw(x, y, w, h);
+        }
+    });
 }
 
 /// Draw an image into a widget.
@@ -792,6 +900,64 @@ pub fn draw_check(x: i32, y: i32, w: i32, h: i32, col: Color) {
 /// Passing wrong line data can read to over or underflow
 pub unsafe fn draw_image2(data: &[u8], x: i32, y: i32, w: i32, h: i32, depth: i32, line_data: i32) {
     Fl_draw_image(data.as_ptr(), x, y, w, h, depth, line_data);
+}
+
+/// Draws a rounded box
+pub fn draw_rbox(x: i32, y: i32, w: i32, h: i32, max_radius: i32, fill: bool, col: Color) {
+    let max_radius = if max_radius < 0 { 0 } else { max_radius };
+    let offset: [f64; 5] = [0.1, 0.17612, 0.29289, 0.61732, 1.0];
+    let mut rs = w * 2 / 5;
+    let rsy = h * 2 / 5;
+    if rs > rsy {
+        rs = rsy;
+    }
+    if rs > max_radius {
+        rs = max_radius;
+    }
+    if rs == 5 {
+        rs = 4;
+    }
+    if rs == 7 {
+        rs = 8;
+    }
+
+    let rs = rs as f64;
+    let x = x as f64;
+    let y = y as f64;
+    let w = w as f64;
+    let h = h as f64;
+    let old_col = get_color();
+    let len = offset.len();
+
+    set_draw_color(col);
+    if fill {
+        begin_polygon();
+    } else {
+        begin_loop();
+    }
+    unsafe {
+      for i in 0..len {
+        vertex(0.5 + x + offset.get_unchecked(len - i - 1) * rs, 0.5 + y + offset.get_unchecked(i) * rs);
+    }
+    for i in 0..len {
+        vertex(0.5 + x + offset.get_unchecked(i) * rs, 0.5 + y + h - 1.0 - offset.get_unchecked(len - i - 1) * rs);
+    }
+    for i in 0..len {
+        vertex(
+            0.5 + x + w - 1.0 - offset.get_unchecked(len - i - 1) * rs,
+            0.5 + y + h - 1.0 - offset.get_unchecked(i) * rs,
+        );
+    }
+    for i in 0..len {
+        vertex(0.5 + x + w - 1.0 - offset.get_unchecked(i) * rs, 0.5 + y + offset.get_unchecked(len - i - 1) * rs);
+    }
+    }
+    if fill {
+        end_polygon();
+    } else {
+        end_loop();
+    }
+    set_draw_color(old_col);
 }
 
 #[cfg(feature = "enable-glwindow")]
