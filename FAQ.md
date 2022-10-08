@@ -5,8 +5,8 @@
 ### Why does the build fails when I follow one of the tutorials?
 The first tutorial uses the fltk-bundled feature flag, which is only supported for certain platforms since these are built using the Github Actions CI, namely:
 - Windows 10 x64 (msvc and gnu).
-- MacOS 10.15 x64.
-- Ubuntu 18.04 or later, x64.
+- MacOS 12 x64 and aarch64.
+- Ubuntu 20.04 or later, x64 and aarch64.
 
 If you're not running one of the aforementioned platforms, you'll have to remove the fltk-bundled feature flag in your Cargo.toml file:
 ```toml
