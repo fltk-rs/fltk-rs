@@ -1,6 +1,12 @@
 # Changelog
 
 
+## [1.3.17] - Unreleased
+- Add draw::draw_rbox().
+- Add unsafe MenuButton::clear().
+- Update README and FAQ.
+- Pull FLTK fixes.
+
 ## [1.3.16] - 2022-10-05
 - Default to drawing with Cairo on Linux/BSD
 - Fix building with both features use-wayland and enable-glwindow while adding widgets to the glwindow.
