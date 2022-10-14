@@ -42,7 +42,13 @@ fn main() {
 
     but.set_callback(move |_| match tree2.get_selected_items() {
         None => println!("No items selected"),
-        Some(vals) => println!("{} items selected", vals.as_slice()[0].label().unwrap()),
+        Some(vals) => println!(
+            "In total {} items selected:\n{}",
+            vals.len(),
+            vals.iter()
+                .map(|i| i.label().unwrap() + "\n")
+                .collect::<String>()
+        ),
     });
 
     app.run().unwrap();
