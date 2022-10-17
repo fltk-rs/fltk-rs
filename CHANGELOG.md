@@ -2,7 +2,7 @@
 
 
 ## [1.3.17] - Unreleased
-- report all selected tree items in tree example, by @peter-scholtens. 
+- Several improvements to the tree example, by @peter-scholtens. 
 - Add draw::draw_rbox().
 - Add unsafe MenuButton::clear().
 - Update README and FAQ.
