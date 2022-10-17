@@ -16,6 +16,22 @@ enum State {
     Undefined,
 }
 
+fn verify_open_till_root(opt: &Option<fltk::tree::TreeItem>) -> bool {
+    let mut par = opt.clone();
+    loop {
+        match par.as_ref().unwrap().parent() {
+            Some(p) => {
+                if p.is_close() {
+                    return false;
+                } else {
+                    par = Some(p.clone());
+                }
+            }
+            None => return true,
+        }
+    }
+}
+
 struct TreeMouseFocus {
     t_widget: fltk::tree::Tree,
     previous_focus: Option<TreeItem>,
@@ -34,22 +50,47 @@ impl TreeMouseFocus {
                     match &pf {
                         Some(item) => {
                             let item_y = item.y();
-                            if mouse_y < item_y {
-                                pf = pf.as_ref().unwrap().prev();
-                                state = State::MovingUp;
-                                continue;
-                            };
-                            if mouse_y > item_y + item.h() {
-                                pf = pf.as_ref().unwrap().next();
-                                state = State::MovingDown;
-                                continue;
-                            };
-                            if state == State::Undefined {
-                                return true; // If in same range, don't update 'previous_focus'
-                            };
-                            break;
+                            match state {
+                                State::MovingUp => {
+                                    if verify_open_till_root(&pf) == true {
+                                        if mouse_y < item_y {
+                                            pf = pf.as_ref().unwrap().prev();
+                                            continue;
+                                        };
+                                        break;
+                                    } else {
+                                        pf = pf.as_ref().unwrap().prev();
+                                        continue;
+                                    }
+                                }
+                                State::MovingDown => {
+                                    if verify_open_till_root(&pf) == true {
+                                        if mouse_y > item_y + item.h() {
+                                            pf = pf.as_ref().unwrap().next();
+                                            continue;
+                                        };
+                                        break;
+                                    } else {
+                                        pf = pf.as_ref().unwrap().next();
+                                        continue;
+                                    }
+                                }
+                                State::Undefined => {
+                                    if mouse_y < item_y {
+                                        pf = pf.as_ref().unwrap().prev();
+                                        state = State::MovingUp;
+                                        continue;
+                                    };
+                                    if mouse_y > item_y + item.h() {
+                                        pf = pf.as_ref().unwrap().next();
+                                        state = State::MovingDown;
+                                        continue;
+                                    };
+                                    return true; // If in same range, don't update 'previous_focus'
+                                }
+                            }
                         }
-                        // En up here if y is outside tree boundaries, or no tree item is present
+                        // End up here if y is outside tree boundaries, or no tree item is present
                         None => match &state {
                             State::MovingUp | State::MovingDown => return true,
                             State::Undefined => {
@@ -62,24 +103,7 @@ impl TreeMouseFocus {
                         },
                     };
                 }
-                let mut open = true;
-                let mut pa = pf.clone();
-                loop {
-                    match &pa.as_ref().unwrap().parent() {
-                        Some(p) => {
-                            if p.is_close() {
-                                open = false;
-                                break;
-                            } else {
-                                pa = Some(p.clone());
-                            }
-                        }
-                        None => {
-                            break;
-                        }
-                    }
-                }
-                if open == true {
+                if verify_open_till_root(&pf) == true {
                     t.take_focus();
                     t.set_item_focus(&pf.as_ref().unwrap());
                     println!("Set focus to item: {:?}", pf.as_ref().unwrap().label());
