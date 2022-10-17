@@ -3,6 +3,7 @@
 
 ## [1.3.17] - Unreleased
 - Several improvements to the tree example, by @peter-scholtens. 
+- Add support for raw-window-handle version 0.5 under the rwh05 feature flag.
 - Add draw::draw_rbox().
 - Add unsafe MenuButton::clear().
 - Update README and FAQ.

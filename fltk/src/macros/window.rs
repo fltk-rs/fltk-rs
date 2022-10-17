@@ -3,12 +3,16 @@
 /// Implements WindowExt
 macro_rules! impl_window_ext {
     ($name: ident, $flname: ident) => {
-        #[cfg(feature = "raw-window-handle")]
+        #[cfg(any(feature = "raw-window-handle", feature = "rwh05"))]
         unsafe impl HasRawWindowHandle for $name {
             fn raw_window_handle(&self) -> RawWindowHandle {
                 #[cfg(target_os = "windows")]
                 {
-                    let mut handle = Win32Handle::empty();
+                    #[cfg(feature = "rwh05")]
+                    type Handle = Win32WindowHandle;
+                    #[cfg(feature = "raw-window-handle")]
+                    type Handle = Win32Handle::empty();
+                    let mut handle = Handle::empty();
                     handle.hwnd = self.raw_handle();
                     handle.hinstance = $crate::app::display();
                     return RawWindowHandle::Win32(handle);
@@ -21,7 +25,11 @@ macro_rules! impl_window_ext {
                         pub fn cfltk_getContentView(xid: *mut raw::c_void) -> *mut raw::c_void;
                     }
                     let cv = unsafe { cfltk_getContentView(raw) };
-                    let mut handle = AppKitHandle::empty();
+                    #[cfg(feature = "rwh05")]
+                    type Handle = AppKitWindowHandle;
+                    #[cfg(feature = "raw-window-handle")]
+                    type Handle = AppKitHandle;
+                    let mut handle = Handle::empty();
                     handle.ns_window = raw;
                     handle.ns_view = cv as _;
                     return RawWindowHandle::AppKit(handle);
@@ -29,7 +37,11 @@ macro_rules! impl_window_ext {
 
                 #[cfg(target_os = "android")]
                 {
-                    let mut handle = AndroidNdkHandle::empty();
+                    #[cfg(feature = "rwh05")]
+                    type Handle = AndroidNdkWindowHandle;
+                    #[cfg(feature = "raw-window-handle")]
+                    type Handle = AndroidNdkHandle;
+                    let mut handle = Handle::empty();
                     handle.a_native_window = self.raw_handle();
                     return RawWindowHandle::AndroidNdk(handle);
                 }
@@ -44,7 +56,11 @@ macro_rules! impl_window_ext {
                 {
                     #[cfg(not(feature = "use-wayland"))]
                     {
-                        let mut handle = XlibHandle::empty();
+                        #[cfg(feature = "rwh05")]
+                        type Handle = XlibWindowHandle;
+                        #[cfg(feature = "raw-window-handle")]
+                        type Handle = XlibHandle;
+                        let mut handle = Handle::empty();
                         handle.window = self.raw_handle();
                         return RawWindowHandle::Xlib(handle);
                     }
@@ -52,7 +68,11 @@ macro_rules! impl_window_ext {
 
                     #[cfg(feature = "use-wayland")]
                     {
-                        let mut handle = WaylandHandle::empty();
+                        #[cfg(feature = "rwh05")]
+                        type Handle = WaylandWindowHandle;
+                        #[cfg(feature = "raw-window-handle")]
+                        type Handle = WaylandHandle;
+                        let mut handle = Handle::empty();
                         handle.surface = self.raw_handle();
                         return RawWindowHandle::Wayland(handle);
                     }
