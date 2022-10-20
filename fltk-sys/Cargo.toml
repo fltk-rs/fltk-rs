@@ -18,7 +18,6 @@ path = "src/lib.rs"
 
 [build-dependencies]
 cmake = "0.1"
-fs_extra = "1.2"
 
 [features]
 default = []

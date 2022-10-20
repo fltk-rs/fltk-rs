@@ -1,8 +1,4 @@
-use std::{
-    env,
-    path::{Path, PathBuf},
-    process::Command,
-};
+use std::{env, path::Path, process::Command};
 
 pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-env-changed=CC");
@@ -207,17 +203,5 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
-    }
-
-    if let Ok(cfltk_path) = env::var("CFLTK_GENERATE_BUNDLE_DIR") {
-        let path = PathBuf::from(cfltk_path);
-        if path.exists() {
-            fs_extra::dir::copy(
-                out_dir.join("lib"),
-                path,
-                &fs_extra::dir::CopyOptions::new(),
-            )
-            .expect("An error occured when copying the artifacts!");
-        }
     }
 }
