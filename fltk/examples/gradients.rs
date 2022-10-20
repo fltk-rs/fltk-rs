@@ -50,11 +50,52 @@ fn create_horizontal_gradient_frame(
     frame
 }
 
+fn create_horizontal_svg_gradient_frame(
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    col1: Color,
+    col2: Color,
+) -> frame::Frame {
+    let mut frame = frame::Frame::new(x, y, w, h, "Svg");
+    frame.draw(move |f| {
+        let (r1, g1, b1) = Color::inactive(&col1).to_rgb();
+        let (r2, g2, b2) = Color::inactive(&col2).to_rgb();
+        let svg = format!(
+            "<svg viewBox='0 0 {} {}'>
+        <defs>
+        <linearGradient id='grad1' x1='0%' y1='0%' x2='0%' y2='100%'>
+        <stop offset='0%' style='stop-color:rgb({},{},{});stop-opacity:1' />
+        <stop offset='100%' style='stop-color:rgb({},{},{});stop-opacity:1' />
+        </linearGradient>
+        </defs>
+        <rect width='100%' height='100%' fill='url(#grad1)' />
+        </svg>",
+            f.w(),
+            f.h() + 1,
+            r1,
+            g1,
+            b1,
+            r2,
+            g2,
+            b2
+        );
+        let mut image = image::SvgImage::from_data(&svg).unwrap();
+        image.draw(f.x(), f.y(), f.w(), f.h());
+        set_draw_color(Color::Black);
+        set_font(Font::Helvetica, app::font_size());
+        draw_text2(&f.label(), f.x(), f.y(), f.w(), f.h(), f.align());
+    });
+    frame
+}
+
 fn main() {
     let a = app::App::default();
-    let mut win = window::Window::default().with_size(400, 300);
-    create_vertical_gradient_frame(0, 0, 200, 100, Color::Red, Color::Cyan);
-    create_horizontal_gradient_frame(200, 0, 200, 100, Color::Red, Color::Cyan);
+    let mut win = window::Window::default().with_size(300, 300);
+    create_vertical_gradient_frame(0, 0, 100, 100, Color::Red, Color::Cyan);
+    create_horizontal_gradient_frame(100, 0, 100, 100, Color::Red, Color::Cyan);
+    create_horizontal_svg_gradient_frame(200, 0, 100, 100, Color::Red, Color::Cyan);
     win.end();
     win.draw(|w| {
         // vertical gradient
