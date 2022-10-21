@@ -231,7 +231,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn clear(&mut self) {
+                fn clear(&self) {
                     if std::any::type_name::<Self>() != std::any::type_name::<$crate::menu::MenuButton>() {
                         unsafe {
                             assert!(!self.was_deleted());

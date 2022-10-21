@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use fltk::{
     app,
     button::Button,
@@ -39,7 +41,7 @@ struct TreeMouseFocus {
 
 impl TreeMouseFocus {
     fn new(x: i32, y: i32, width: i32, height: i32, title: &'static str) -> Self {
-        let mut t_widget = Tree::new(x, y, width, height, title);
+        let t_widget = Tree::new(x, y, width, height, title);
         let previous_focus: Option<TreeItem> = None;
         let mut pf = previous_focus.clone();
         t_widget.handle(move |t, e| match e {
@@ -104,7 +106,7 @@ impl TreeMouseFocus {
                     };
                 }
                 if verify_open_till_root(&pf) == true {
-                    t.take_focus();
+                    t.take_focus().ok();
                     t.set_item_focus(&pf.as_ref().unwrap());
                     println!("Set focus to item: {:?}", pf.as_ref().unwrap().label());
                 }
@@ -149,8 +151,8 @@ fn main() {
         .collect();
 
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
-    let mut wind = Window::default().with_size(400, 300);
-    let mut but = Button::new(260, 255, 80, 40, "Get Items");
+    let wind = Window::default().with_size(400, 300);
+    let but = Button::new(260, 255, 80, 40, "Get Items");
     let _frame = Frame::new(20, 255, 160, 40, "Focus follow mouse");
     let mut tree = TreeMouseFocus::new(5, 10, 190, 240, "");
     tree.add(&path);

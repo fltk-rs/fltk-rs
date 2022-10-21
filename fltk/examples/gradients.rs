@@ -58,7 +58,7 @@ fn create_horizontal_svg_gradient_frame(
     col1: Color,
     col2: Color,
 ) -> frame::Frame {
-    let mut frame = frame::Frame::new(x, y, w, h, "Svg");
+    let frame = frame::Frame::new(x, y, w, h, "Svg");
     frame.draw(move |f| {
         let (r1, g1, b1) = Color::inactive(&col1).to_rgb();
         let (r2, g2, b2) = Color::inactive(&col2).to_rgb();
@@ -81,18 +81,18 @@ fn create_horizontal_svg_gradient_frame(
             g2,
             b2
         );
-        let mut image = image::SvgImage::from_data(&svg).unwrap();
+        let image = image::SvgImage::from_data(&svg).unwrap();
         image.draw(f.x(), f.y(), f.w(), f.h());
         set_draw_color(Color::Black);
         set_font(Font::Helvetica, app::font_size());
-        draw_text2(&f.label(), f.x(), f.y(), f.w(), f.h(), f.align());
+        draw_text2(&f.label().unwrap(), f.x(), f.y(), f.w(), f.h(), f.align());
     });
     frame
 }
 
 fn main() {
     let a = app::App::default();
-    let mut win = window::Window::default().with_size(300, 300);
+    let win = window::Window::default().with_size(300, 300);
     create_vertical_gradient_frame(0, 0, 100, 100, Color::Red, Color::Cyan);
     create_horizontal_gradient_frame(100, 0, 100, 100, Color::Red, Color::Cyan);
     create_horizontal_svg_gradient_frame(200, 0, 100, 100, Color::Red, Color::Cyan);
