@@ -11,7 +11,7 @@ macro_rules! impl_window_ext {
                     #[cfg(feature = "rwh05")]
                     type Handle = Win32WindowHandle;
                     #[cfg(feature = "raw-window-handle")]
-                    type Handle = Win32Handle::empty();
+                    type Handle = Win32Handle;
                     let mut handle = Handle::empty();
                     handle.hwnd = self.raw_handle();
                     handle.hinstance = $crate::app::display();
