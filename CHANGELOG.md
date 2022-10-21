@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [1.3.17] - 2022-10-21
+- Several improvements to the tree example, by @peter-scholtens. 
+- Add support for raw-window-handle version 0.5 under the rwh05 feature flag.
+- Add draw::draw_rbox().
+- Add MenuButton::clear().
+- Update README and FAQ.
+- Pull FLTK fixes.
+
 ## [1.3.16] - 2022-10-05
 - Default to drawing with Cairo on Linux/BSD
 - Fix building with both features use-wayland and enable-glwindow while adding widgets to the glwindow.
@@ -18,7 +26,6 @@
 ## [1.3.14] - 2022-09-06
 - impl std::default::Default for TextBuffer by @ConsoleC137.
 - Avoid calling git submodule update in build script.
-- Make ttf-parser an optional dependency.
 - Update raw-window-handle dep to 0.5.
 - Pull FLTK's hybrid wayland backend.
 - Pull FLTK fixes.

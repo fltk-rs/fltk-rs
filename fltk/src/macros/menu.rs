@@ -231,10 +231,12 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn clear(&self) {
-                    unsafe {
-                        assert!(!self.was_deleted());
-                        [<$flname _clear>](self.inner);
+                fn clear(&mut self) {
+                    if std::any::type_name::<Self>() != std::any::type_name::<$crate::menu::MenuButton>() {
+                        unsafe {
+                            assert!(!self.was_deleted());
+                            [<$flname _clear>](self.inner);
+                        }
                     }
                 }
 

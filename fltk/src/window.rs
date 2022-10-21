@@ -22,6 +22,8 @@ use crate::widget::Widget;
 use fltk_sys::window::*;
 #[cfg(feature = "raw-window-handle")]
 use raw_window_handle::*;
+#[cfg(feature = "rwh05")]
+use rwh05::*;
 use std::{
     ffi::{CStr, CString},
     mem,
