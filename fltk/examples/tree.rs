@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use fltk::{
     app,
     button::Button,
@@ -104,7 +106,7 @@ impl TreeMouseFocus {
                     };
                 }
                 if verify_open_till_root(&pf) == true {
-                    t.take_focus();
+                    t.take_focus().ok();
                     t.set_item_focus(&pf.as_ref().unwrap());
                     println!("Set focus to item: {:?}", pf.as_ref().unwrap().label());
                 }
