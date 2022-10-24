@@ -9,7 +9,9 @@ use fltk::{
     tree::{Tree, TreeItem, TreeSelect},
     window::Window,
 };
+use std::cell::RefCell;
 use std::env;
+use std::rc::Rc;
 
 #[derive(PartialEq)]
 enum State {
@@ -36,55 +38,56 @@ fn verify_open_till_root(opt: &Option<fltk::tree::TreeItem>) -> bool {
 
 struct TreeMouseFocus {
     t_widget: fltk::tree::Tree,
-    previous_focus: Option<TreeItem>,
+    previous_focus: Rc<RefCell<Option<TreeItem>>>,
 }
 
 impl TreeMouseFocus {
     fn new(x: i32, y: i32, width: i32, height: i32, title: &'static str) -> Self {
         let mut t_widget = Tree::new(x, y, width, height, title);
-        let previous_focus: Option<TreeItem> = None;
-        let mut pf = previous_focus.clone();
+        let previous_focus = Rc::new(RefCell::new(None::<TreeItem>));
+        let pfr = Rc::clone(&previous_focus);
         t_widget.handle(move |t, e| match e {
             Event::Move => {
                 let (_, mouse_y) = app::event_coords();
                 let mut state = State::Undefined;
+                let mut pf = pfr.borrow_mut();
                 loop {
-                    match &pf {
+                    match &*pf {
                         Some(item) => {
                             let item_y = item.y();
                             match state {
                                 State::MovingUp => {
                                     if verify_open_till_root(&pf) == true {
                                         if mouse_y < item_y {
-                                            pf = pf.as_ref().unwrap().prev();
+                                            *pf = pf.as_ref().unwrap().prev();
                                             continue;
                                         };
                                         break;
                                     } else {
-                                        pf = pf.as_ref().unwrap().prev();
+                                        *pf = pf.as_ref().unwrap().prev();
                                         continue;
                                     }
                                 }
                                 State::MovingDown => {
                                     if verify_open_till_root(&pf) == true {
                                         if mouse_y > item_y + item.h() {
-                                            pf = pf.as_ref().unwrap().next();
+                                            *pf = pf.as_ref().unwrap().next();
                                             continue;
                                         };
                                         break;
                                     } else {
-                                        pf = pf.as_ref().unwrap().next();
+                                        *pf = pf.as_ref().unwrap().next();
                                         continue;
                                     }
                                 }
                                 State::Undefined => {
                                     if mouse_y < item_y {
-                                        pf = pf.as_ref().unwrap().prev();
+                                        *pf = pf.as_ref().unwrap().prev();
                                         state = State::MovingUp;
                                         continue;
                                     };
                                     if mouse_y > item_y + item.h() {
-                                        pf = pf.as_ref().unwrap().next();
+                                        *pf = pf.as_ref().unwrap().next();
                                         state = State::MovingDown;
                                         continue;
                                     };
@@ -96,7 +99,8 @@ impl TreeMouseFocus {
                         None => match &state {
                             State::MovingUp | State::MovingDown => return true,
                             State::Undefined => {
-                                pf = t.first();
+                                *pf = t.first();
+                                state = State::MovingDown;
                                 if pf.is_none() {
                                     return true;
                                 }
@@ -128,7 +132,7 @@ impl TreeMouseFocus {
     /// otherwise could try to refer to an already freed memory location,
     /// when this TreeItem is removed.
     fn remove(&mut self, item: &TreeItem) -> Result<(), FltkError> {
-        self.previous_focus = None;
+        *self.previous_focus.borrow_mut() = None;
         self.t_widget.remove(item)
     }
 
