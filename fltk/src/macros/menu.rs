@@ -297,6 +297,9 @@ macro_rules! impl_menu_ext {
 
                 fn text(&self, idx: i32) -> Option<String> {
                     assert!(!self.was_deleted());
+                    if idx >= self.size() || idx < 0 {
+                        return None;
+                    }
                     unsafe {
                         let text = [<$flname _text>](self.inner, idx as i32);
                         if text.is_null() {
