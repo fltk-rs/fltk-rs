@@ -16,7 +16,7 @@ jobs:
           - 1.46.0
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Install deps
         run: git submodule update --init --recursive && sudo apt-get update && sudo apt-get install -y libpango1.0-dev libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpng-dev libgl1-mesa-dev libglu1-mesa-dev
       - name: Install toolchain
