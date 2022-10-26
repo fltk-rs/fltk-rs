@@ -2,7 +2,8 @@
 
 
 ## [1.3.19] - Unreleased
-- Add bounds check in MenuExt::text() fixing a segfault on empty menus by @purrie.
+- Add check in MenuExt::text() for empty menus by @purrie.
+- Add other similar checks for other MenuExt methods.
 - Pull FLTK fixes.
 
 ## [1.3.18] - 2022-10-21
