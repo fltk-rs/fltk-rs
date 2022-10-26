@@ -1,6 +1,13 @@
 # Changelog
 
 
+## [1.3.19] - Unreleased
+- Add bounds check in MenuExt::text() fixing a segfault on empty menus by @purrie.
+- Pull FLTK fixes.
+
+## [1.3.18] - 2022-10-21
+- Fix build on Windows when enabling the raw-window-handle feature.
+
 ## [1.3.17] - 2022-10-21
 - Several improvements to the tree example, by @peter-scholtens. 
 - Add support for raw-window-handle version 0.5 under the rwh05 feature flag.
