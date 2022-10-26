@@ -59,6 +59,15 @@ macro_rules! impl_menu_ext {
                     cb: F,
                 ) -> i32 {
                     assert!(!self.was_deleted());
+                    let idx = if idx < self.size() && idx >= 0 {
+                        idx
+                    } else {
+                        if self.size() == 0 {
+                            0
+                        } else {
+                            self.size() - 1 
+                        }
+                    };
                     let temp = CString::safe_new(name);
                     unsafe {
                         unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
@@ -111,11 +120,7 @@ macro_rules! impl_menu_ext {
 
                 fn remove(&mut self, idx: i32) {
                     assert!(!self.was_deleted());
-                    let idx = if idx < self.size() {
-                        idx
-                    } else {
-                        self.size() - 1
-                    };
+                    assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe { [<$flname _remove>](self.inner, idx as i32) }
                 }
 
@@ -256,6 +261,7 @@ macro_rules! impl_menu_ext {
                 fn clear_submenu(&mut self, idx: i32) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
+                        assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                         match [<$flname _clear_submenu>](self.inner, idx as i32) {
                             0 => Ok(()),
                             _ => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
@@ -297,9 +303,7 @@ macro_rules! impl_menu_ext {
 
                 fn text(&self, idx: i32) -> Option<String> {
                     assert!(!self.was_deleted());
-                    if idx >= self.size() || idx < 0 {
-                        return None;
-                    }
+                    assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe {
                         let text = [<$flname _text>](self.inner, idx as i32);
                         if text.is_null() {
@@ -316,9 +320,7 @@ macro_rules! impl_menu_ext {
 
                 fn at(&self, idx: i32) -> Option<$crate::menu::MenuItem> {
                     assert!(!self.was_deleted());
-                    if idx >= self.size() || idx < 0 {
-                        return None;
-                    }
+                    assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe {
                         let ptr =
                             [<$flname _at>](self.inner, idx as i32) as *mut Fl_Menu_Item;
@@ -335,11 +337,13 @@ macro_rules! impl_menu_ext {
 
                 fn mode(&self, idx: i32) -> $crate::menu::MenuFlag {
                     assert!(!self.was_deleted());
+                    assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe { std::mem::transmute([<$flname _mode>](self.inner, idx as i32)) }
                 }
 
                 fn set_mode(&mut self, idx: i32, flag: $crate::menu::MenuFlag) {
                     assert!(!self.was_deleted());
+                    assert!(self.size() != 0 && idx >= 0 && idx < self.size());
                     unsafe { [<$flname _set_mode>](self.inner, idx as i32, flag as i32) }
                 }
 
