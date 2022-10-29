@@ -2,6 +2,7 @@
 
 
 ## [1.3.19] - Unreleased
+- Add ColorChooser::set_rgb().
 - Add check in MenuExt::text() for empty menus by @purrie.
 - Add other similar checks for other MenuExt methods.
 - Pull FLTK fixes.

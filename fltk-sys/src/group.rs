@@ -2577,6 +2577,14 @@ extern "C" {
     pub fn Fl_Color_Chooser_b(self_: *mut Fl_Color_Chooser) -> f64;
 }
 extern "C" {
+    pub fn Fl_Color_Chooser_set_rgb(
+        self_: *mut Fl_Color_Chooser,
+        r: f64,
+        g: f64,
+        b: f64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Color_Chooser_begin(self_: *mut Fl_Color_Chooser);
 }
 extern "C" {

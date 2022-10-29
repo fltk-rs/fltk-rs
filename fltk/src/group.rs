@@ -411,6 +411,19 @@ impl ColorChooser {
         let (r, g, b) = self.rgb_color();
         crate::utils::rgb2hex(r, g, b)
     }
+
+    /// Set the base color of the ColorChooser
+    pub fn set_rgb(&mut self, r: u8, g: u8, b: u8) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ret = Fl_Color_Chooser_set_rgb(self.inner, r as f64/ 255.0, g as f64/255.0, b as f64 / 255.0);
+            if ret == 1 {
+                Ok(())
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+            }
+        }
+    }
 }
 
 crate::macros::widget::impl_widget_type!(FlexType);
