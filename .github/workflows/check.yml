@@ -25,4 +25,6 @@ jobs:
           profile: minimal
           toolchain: ${{ matrix.rust }}
           override: true
-      - run: cargo check
+      - run: |
+          cargo update -p cmake --precise 0.1.48
+          cargo check
