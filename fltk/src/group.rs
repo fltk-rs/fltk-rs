@@ -412,7 +412,7 @@ impl ColorChooser {
         crate::utils::rgb2hex(r, g, b)
     }
 
-    /// Set the base color of the ColorChooser
+    /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
     pub fn set_rgb(&mut self, r: u8, g: u8, b: u8) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {

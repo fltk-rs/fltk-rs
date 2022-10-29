@@ -71,7 +71,10 @@ impl MenuButton {
             }
         }
     }
+    
     /// Clear the MenuButton
+    /// # Safety
+    /// Clearing a MenuButton when it's popped-up can cause string invalidation
     pub unsafe fn clear(&self) {
         Fl_Menu_Button_clear(self.inner);
     }
