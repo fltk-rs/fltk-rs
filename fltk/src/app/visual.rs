@@ -94,7 +94,7 @@ pub fn set_frame_type_cb(
     h: i32,
 ) {
     unsafe {
-        fl::Fl_set_box_type_cb(old_frame as i32, Some(std::mem::transmute(cb)), x, y, w, h);
+        fl::Fl_set_box_type_cb(old_frame as i32, Some(mem::transmute(cb)), x, y, w, h);
     }
 }
 
