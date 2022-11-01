@@ -2956,9 +2956,6 @@ extern "C" {
     pub fn Fl_Flex_set_size(self_: *mut Fl_Flex, w: *mut Fl_Widget, size: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_Flex_set_debug(val: ::std::os::raw::c_int);
-}
-extern "C" {
     pub fn Fl_Flex_set_margin(self_: *mut Fl_Flex, m: ::std::os::raw::c_int);
 }
 extern "C" {

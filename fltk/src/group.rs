@@ -1,12 +1,16 @@
 use crate::enums::Align;
 use crate::prelude::*;
+use crate::enums::{Color, FrameType};
 use crate::utils::FlString;
 use crate::widget::Widget;
 use fltk_sys::group::*;
 use std::{
     ffi::{CStr, CString},
     mem,
+    sync::atomic::{AtomicBool, Ordering},
 };
+
+static DEBUG: AtomicBool = AtomicBool::new(false);
 
 /// Creates a group widget
 #[derive(Debug)]
@@ -416,7 +420,12 @@ impl ColorChooser {
     pub fn set_rgb(&mut self, r: u8, g: u8, b: u8) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         unsafe {
-            let ret = Fl_Color_Chooser_set_rgb(self.inner, r as f64/ 255.0, g as f64/255.0, b as f64 / 255.0);
+            let ret = Fl_Color_Chooser_set_rgb(
+                self.inner,
+                r as f64 / 255.0,
+                g as f64 / 255.0,
+                b as f64 / 255.0,
+            );
             if ret == 1 {
                 Ok(())
             } else {
@@ -433,9 +442,9 @@ crate::macros::widget::impl_widget_type!(FlexType);
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum FlexType {
     /// row direction
-    Row = 0,
+    Column = 0,
     /// column direction
-    Column,
+    Row,
 }
 
 /**
@@ -470,6 +479,18 @@ crate::macros::widget::impl_widget_base!(Flex, Fl_Flex);
 crate::macros::group::impl_group_ext!(Flex, Fl_Flex);
 
 impl Flex {
+    /// Create a new Flex widget
+    fn new<T: Into<Option<&'static str>>>(
+        x: i32,
+        y: i32,
+        width: i32,
+        height: i32,
+        title: T,
+    ) -> Self {
+        let mut f = <Flex as WidgetBase>::new(x, y, width, height, title).row();
+        f.debug_();
+        f
+    }
     /// Add a widget to the Flex box
     pub fn add<W: WidgetExt>(&mut self, widget: &W) {
         <Self as GroupExt>::add(self, widget);
@@ -489,18 +510,29 @@ impl Flex {
 
     /// Debug the flex layout
     pub fn debug(flag: bool) {
-        unsafe { Fl_Flex_set_debug(flag as _) }
+        DEBUG.store(flag, Ordering::Release);
+    }
+
+    fn debug_(&mut self) {
+        self.set_frame(FrameType::BorderBox);
+        if self.get_type::<FlexType>() == FlexType::Row {
+            self.set_color(Color::from_rgb(200, 0, 0));
+        } else {
+            self.set_color(Color::from_rgb(0, 0, 200));
+        }
     }
 
     /// Set the type to be a column
     pub fn column(mut self) -> Self {
         self.set_type(FlexType::Column);
+        self.debug_();
         self
     }
 
     /// Set the type to a row
     pub fn row(mut self) -> Self {
         self.set_type(FlexType::Row);
+        self.debug_();
         self
     }
 
