@@ -488,6 +488,7 @@ impl Flex {
         title: T,
     ) -> Self {
         let mut f = <Flex as WidgetBase>::new(x, y, width, height, title).row();
+        f.set_pad(5);
         f.debug_();
         f
     }
