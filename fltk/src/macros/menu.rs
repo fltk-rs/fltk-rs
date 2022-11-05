@@ -237,9 +237,9 @@ macro_rules! impl_menu_ext {
                 }
 
                 fn clear(&mut self) {
-                    if std::any::type_name::<Self>() != std::any::type_name::<$crate::menu::MenuButton>() {
-                        unsafe {
-                            assert!(!self.was_deleted());
+                    unsafe {
+                        assert!(!self.was_deleted());
+                        if $crate::app::grab().is_none() {
                             [<$flname _clear>](self.inner);
                         }
                     }
