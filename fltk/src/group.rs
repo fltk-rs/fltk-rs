@@ -515,11 +515,13 @@ impl Flex {
     }
 
     fn debug_(&mut self) {
-        self.set_frame(FrameType::BorderBox);
-        if self.get_type::<FlexType>() == FlexType::Row {
-            self.set_color(Color::from_rgb(200, 0, 0));
-        } else {
-            self.set_color(Color::from_rgb(0, 0, 200));
+        if DEBUG.load(Ordering::Relaxed) {
+            self.set_frame(FrameType::BorderBox);
+            if self.get_type::<FlexType>() == FlexType::Row {
+                self.set_color(Color::from_rgb(200, 0, 0));
+            } else {
+                self.set_color(Color::from_rgb(0, 0, 200));
+            }
         }
     }
 
