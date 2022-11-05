@@ -479,7 +479,9 @@ crate::macros::widget::impl_widget_base!(Flex, Fl_Flex);
 crate::macros::group::impl_group_ext!(Flex, Fl_Flex);
 
 impl Flex {
-    /// Create a new Flex widget
+    /// Create a new Flex widget.
+    /// This code is here for backward compatibility with initial Fl_Flex code, which defaulted to Row instead of Column.
+    /// The behavior will be changed in fltk-rs version 2.
     fn new<T: Into<Option<&'static str>>>(
         x: i32,
         y: i32,

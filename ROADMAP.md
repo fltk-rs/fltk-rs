@@ -14,3 +14,4 @@
 - Refactor drawing code to use Coord and Rect.
 - Rust 1.63 constifies Mutex::new, so lazy_static can be removed.
 - Replace WindowType::Normal with WindowType::Single.
+- Default Flex to Column as is now the default in FLTK.
