@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.3.20] - Unreleased
+- Add ColorChooser::set_tuple_rgb by @ConsoleC137.
+- Use FLTK's own Flex widget.
+
 ## [1.3.19] - 2022-11-01
 - Add ColorChooser::set_rgb().
 - Add check in MenuExt::text() for empty menus by @purrie.
