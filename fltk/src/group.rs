@@ -433,6 +433,24 @@ impl ColorChooser {
             }
         }
     }
+    
+    /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
+    pub fn set_tuple_rgb(&mut self, (r, g, b): (u8, u8, u8)) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ret = Fl_Color_Chooser_set_rgb(
+                self.inner,
+                r as f64 / 255.0,
+                g as f64 / 255.0,
+                b as f64 / 255.0,
+            );
+            if ret == 1 {
+                Ok(())
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+            }
+        }
+    }
 }
 
 crate::macros::widget::impl_widget_type!(FlexType);
