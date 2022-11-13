@@ -1,9 +1,11 @@
 # Changelog
 
 
-## [1.3.20] - Unreleased
+## [1.3.20] - 2022-11-13
 - Add ColorChooser::set_tuple_rgb by @ConsoleC137.
-- Use FLTK's own Flex widget.
+- Add a grabbed() check for MenuButton::clear().
+- Use FLTK's own Flex widget (newly added to FLTK).
+- Update FLTK.
 
 ## [1.3.19] - 2022-11-01
 - Add ColorChooser::set_rgb().
