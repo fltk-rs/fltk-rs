@@ -80,6 +80,59 @@ macro_rules! impl_window_ext {
             }
         }
 
+        #[cfg(feature = "rwh05")]
+        unsafe impl HasRawDisplayHandle for $name {
+            fn raw_display_handle(&self) -> RawDisplayHandle {
+                #[cfg(target_os = "windows")]
+                {
+                    type Handle = WindowsDisplayHandle;
+                    let handle = Handle::empty();
+                    return RawDisplayHandle::Windows(handle);
+                }
+
+                #[cfg(target_os = "macos")]
+                {
+                    type Handle = AppKitDisplayHandle;
+                    let handle = Handle::empty();
+                    return RawDisplayHandle::AppKit(handle);
+                }
+
+                #[cfg(target_os = "android")]
+                {
+                    type Handle = AndroidDisplayHandle;
+                    let handle = Handle::empty();
+                    return RawDisplayHandle::Android(handle);
+                }
+
+                #[cfg(any(
+                    target_os = "linux",
+                    target_os = "dragonfly",
+                    target_os = "freebsd",
+                    target_os = "netbsd",
+                    target_os = "openbsd",
+                ))]
+                {
+                    #[cfg(not(feature = "use-wayland"))]
+                    {
+                        type Handle = XlibDisplayHandle;
+                        let mut handle = Handle::empty();
+                        handle.display = $crate::app::display();
+                        handle.screen = self.screen_num();
+                        return RawDisplayHandle::Xlib(handle);
+                    }
+
+
+                    #[cfg(feature = "use-wayland")]
+                    {
+                        type Handle = WaylandDisplayHandle;
+                        let mut handle = Handle::empty();
+                        handle.display = $crate::app::display();
+                        return RawDisplayHandle::Wayland(handle);
+                    }
+                }
+            }
+        }
+
         paste::paste! {
             unsafe impl WindowExt for $name {
                 fn center_screen(mut self) -> Self {
