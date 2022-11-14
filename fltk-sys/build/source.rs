@@ -185,6 +185,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .define("CFLTK_CARGO_BUILD", "ON")
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
+            .define("FLTK_BUILD_FLUID", "OFF")
             .define("OPTION_LARGE_FILE", "ON")
             .define("OPTION_USE_THREADS", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
