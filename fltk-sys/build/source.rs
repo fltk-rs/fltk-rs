@@ -55,9 +55,6 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/src/cfl_font.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_utils.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_nswindow.m");
-    println!("cargo:rerun-if-changed=cfltk/FL_FLex/FL_Flex.H");
-    println!("cargo:rerun-if-changed=cfltk/FL_FLex/FL_Flex.cpp");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_vec.hpp");
     println!("cargo:rerun-if-changed=cfltk/fltk.patch");
 
     if target_triple.contains("windows") {
@@ -188,6 +185,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .define("CFLTK_CARGO_BUILD", "ON")
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
+            .define("FLTK_BUILD_FLUID", "OFF")
             .define("OPTION_LARGE_FILE", "ON")
             .define("OPTION_USE_THREADS", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")

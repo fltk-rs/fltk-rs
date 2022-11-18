@@ -2577,6 +2577,14 @@ extern "C" {
     pub fn Fl_Color_Chooser_b(self_: *mut Fl_Color_Chooser) -> f64;
 }
 extern "C" {
+    pub fn Fl_Color_Chooser_set_rgb(
+        self_: *mut Fl_Color_Chooser,
+        r: f64,
+        g: f64,
+        b: f64,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
     pub fn Fl_Color_Chooser_begin(self_: *mut Fl_Color_Chooser);
 }
 extern "C" {
@@ -2946,9 +2954,6 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Flex_set_size(self_: *mut Fl_Flex, w: *mut Fl_Widget, size: ::std::os::raw::c_int);
-}
-extern "C" {
-    pub fn Fl_Flex_set_debug(val: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Flex_set_margin(self_: *mut Fl_Flex, m: ::std::os::raw::c_int);

@@ -71,10 +71,6 @@ impl MenuButton {
             }
         }
     }
-    /// Clear the MenuButton
-    pub unsafe fn clear(&self) {
-        Fl_Menu_Button_clear(self.inner);
-    }
 }
 
 /// Creates a menu choice

@@ -1,6 +1,25 @@
 # Changelog
 
 
+## [1.3.21] - Unreleased
+- Impl HasRawDisplayHandle for windows.
+
+## [1.3.20] - 2022-11-13
+- Add ColorChooser::set_tuple_rgb by @ConsoleC137.
+- Add a grabbed() check for MenuButton::clear().
+- Use FLTK's own Flex widget (newly added to FLTK).
+- Update FLTK.
+
+## [1.3.19] - 2022-11-01
+- Add ColorChooser::set_rgb().
+- Add check in MenuExt::text() for empty menus by @purrie.
+- Add other similar checks for other MenuExt methods.
+- Impl PartialEq, Eq and Default for StyleTableEntry and StyleTableEntryExt.
+- Pull FLTK fixes.
+
+## [1.3.18] - 2022-10-21
+- Fix build on Windows when enabling the raw-window-handle feature.
+
 ## [1.3.17] - 2022-10-21
 - Several improvements to the tree example, by @peter-scholtens. 
 - Add support for raw-window-handle version 0.5 under the rwh05 feature flag.

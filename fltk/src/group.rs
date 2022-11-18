@@ -1,12 +1,16 @@
 use crate::enums::Align;
 use crate::prelude::*;
+use crate::enums::{Color, FrameType};
 use crate::utils::FlString;
 use crate::widget::Widget;
 use fltk_sys::group::*;
 use std::{
     ffi::{CStr, CString},
     mem,
+    sync::atomic::{AtomicBool, Ordering},
 };
+
+static DEBUG: AtomicBool = AtomicBool::new(false);
 
 /// Creates a group widget
 #[derive(Debug)]
@@ -390,6 +394,42 @@ impl ColorChooser {
         let (r, g, b) = self.rgb_color();
         crate::utils::rgb2hex(r, g, b)
     }
+
+    /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
+    pub fn set_rgb(&mut self, r: u8, g: u8, b: u8) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ret = Fl_Color_Chooser_set_rgb(
+                self.inner,
+                r as f64 / 255.0,
+                g as f64 / 255.0,
+                b as f64 / 255.0,
+            );
+            if ret == 1 {
+                Ok(())
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+            }
+        }
+    }
+    
+    /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
+    pub fn set_tuple_rgb(&mut self, (r, g, b): (u8, u8, u8)) -> Result<(), FltkError> {
+        assert!(!self.was_deleted());
+        unsafe {
+            let ret = Fl_Color_Chooser_set_rgb(
+                self.inner,
+                r as f64 / 255.0,
+                g as f64 / 255.0,
+                b as f64 / 255.0,
+            );
+            if ret == 1 {
+                Ok(())
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+            }
+        }
+    }
 }
 
 crate::macros::widget::impl_widget_type!(FlexType);
@@ -399,9 +439,9 @@ crate::macros::widget::impl_widget_type!(FlexType);
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum FlexType {
     /// row direction
-    Row = 0,
+    Column = 0,
     /// column direction
-    Column,
+    Row,
 }
 
 /**
@@ -436,18 +476,6 @@ crate::macros::widget::impl_widget_base!(Flex, Fl_Flex);
 crate::macros::group::impl_group_ext!(Flex, Fl_Flex);
 
 impl Flex {
-    /// Add a widget to the Flex box
-    pub fn add<W: WidgetExt>(&self, widget: &W) {
-        <Self as GroupExt>::add(self, widget);
-        self.recalc();
-    }
-
-    /// Add a widget to the Flex box
-    pub fn insert<W: WidgetExt>(&mut self, widget: &W, idx: i32) {
-        <Self as GroupExt>::insert(self, widget, idx);
-        self.recalc();
-    }
-
     /// Set the size of the widget
     pub fn set_size<W: WidgetExt>(&self, w: &W, size: i32) {
         unsafe { Fl_Flex_set_size(self.inner, w.as_widget_ptr() as _, size) }
@@ -455,18 +483,31 @@ impl Flex {
 
     /// Debug the flex layout
     pub fn debug(flag: bool) {
-        unsafe { Fl_Flex_set_debug(flag as _) }
+        DEBUG.store(flag, Ordering::Release);
+    }
+
+    fn debug_(&self) {
+        if DEBUG.load(Ordering::Relaxed) {
+            self.set_frame(FrameType::BorderBox);
+            if self.get_type::<FlexType>() == FlexType::Row {
+                self.set_color(Color::from_rgb(200, 0, 0));
+            } else {
+                self.set_color(Color::from_rgb(0, 0, 200));
+            }
+        }
     }
 
     /// Set the type to be a column
     pub fn column(self) -> Self {
         self.set_type(FlexType::Column);
+        self.debug_();
         self
     }
 
     /// Set the type to a row
     pub fn row(self) -> Self {
         self.set_type(FlexType::Row);
+        self.debug_();
         self
     }
 
