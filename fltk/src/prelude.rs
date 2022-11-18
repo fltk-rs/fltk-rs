@@ -1588,6 +1588,8 @@ pub trait SurfaceDevice {
 /// Defines a set of convenience functions for constructing and anchoring custom widgets.
 /// Usage: fltk::widget_extends!(CustomWidget, BaseWidget, member);
 /// It basically implements Deref and DerefMut on the custom widget, and adds the aforementioned methods.
+/// This means you can call widget methods directly, for e.x. `custom_widget.set_color(enums::Color::Red)`.
+/// For your custom widget to be treated as a widget it would need dereferencing: `group.add(&*custom_widget);`
 #[macro_export]
 macro_rules! widget_extends {
     ($widget:ty, $base:ty, $member:tt) => {
