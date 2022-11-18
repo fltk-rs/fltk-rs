@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.3.21] - Unreleased
+- Impl HasRawDisplayHandle for windows.
+
 ## [1.3.20] - 2022-11-13
 - Add ColorChooser::set_tuple_rgb by @ConsoleC137.
 - Add a grabbed() check for MenuButton::clear().
