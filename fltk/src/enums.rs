@@ -333,7 +333,6 @@ impl Font {
 
     /**
         Load font from file.
-        Requires enabling the ttf-parser feature to get a font name back from the method, otherwise you can pass the name directly to `enums::Font::set_font`.
         ```rust,no_run
         use fltk::enums::Font;
         let font = Font::load_font("font.ttf").unwrap();
@@ -489,7 +488,7 @@ impl Color {
         c
     }
 
-    /// Create color from RGBA using alpha compositing
+    /// Create color from RGBA using alpha compositing. Works for non-group types.
     pub fn from_rgba_tuple(tup: (u8, u8, u8, u8)) -> Color {
         if tup.3 != 255 {
             let bg_col = if let Some(grp) = crate::group::Group::try_current() {
