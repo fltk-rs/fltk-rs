@@ -155,6 +155,8 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
                     dst.define("OPTION_WAYLAND_ONLY", "ON");
                 }
             }
+        } else {
+            dst.define("OPTION_USE_WAYLAND", "OFF");
         }
 
         if cfg!(feature = "single-threaded") {
