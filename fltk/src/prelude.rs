@@ -935,7 +935,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Adds a simple text option to the Choice and `MenuButton` widgets.
     /// The characters "&", "/", "\\", "|", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
-    fn add_choice(&mut self, text: &str);
+    fn add_choice(&mut self, text: &str) -> i32;
     /// Gets the user choice from the Choice and `MenuButton` widgets
     fn choice(&self) -> Option<String>;
     /// Get index into menu of the last item chosen, returns -1 if no item was chosen

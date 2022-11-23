@@ -414,7 +414,7 @@ impl MenuItem {
     }
 
     /// Set a callback for the menu item
-    pub fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
+    pub fn set_callback<F: FnMut(&mut Choice) + 'static>(&mut self, cb: F) {
         assert!(!self.was_deleted());
         unsafe {
             unsafe extern "C" fn shim(wid: *mut fltk_sys::menu::Fl_Widget, data: *mut raw::c_void) {
@@ -425,7 +425,7 @@ impl MenuItem {
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| f(&mut wid)));
             }
             let _old_data = self.user_data();
-            let a: *mut Box<dyn FnMut(&mut Self)> = Box::into_raw(Box::new(Box::new(cb)));
+            let a: *mut Box<dyn FnMut(&mut Choice)> = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: fltk_sys::menu::Fl_Callback = Some(shim);
             Fl_Menu_Item_set_callback(self.inner, callback, data);
@@ -619,6 +619,20 @@ impl MenuItem {
         self.insert(idx, label, shortcut, flag, move |_| {
             sender.send(msg.clone())
         })
+    }
+
+    /// Set the menu item's shortcut
+    pub fn set_shortcut(&mut self, shortcut: crate::enums::Shortcut) {
+        unsafe {
+            Fl_Menu_Item_set_shortcut(self.inner, shortcut.bits());
+        }
+    }
+
+    /// Set the menu item's shortcut
+    pub fn set_flag(&mut self, flag: MenuFlag) {
+        unsafe {
+            Fl_Menu_Item_set_flag(self.inner, flag as i32);
+        }
     }
 }
 

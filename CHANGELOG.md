@@ -3,6 +3,8 @@
 
 ## [1.3.21] - Unreleased
 - Impl HasRawDisplayHandle for windows.
+- Fix MenuItem::set_callback().
+- Add MenuItem::set_shortcut and set_flag.
 
 ## [1.3.20] - 2022-11-13
 - Add ColorChooser::set_tuple_rgb by @ConsoleC137.

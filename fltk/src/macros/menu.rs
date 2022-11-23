@@ -195,7 +195,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn add_choice(&mut self, text: &str) {
+                fn add_choice(&mut self, text: &str) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
                         let arg2 = CString::safe_new(text);
