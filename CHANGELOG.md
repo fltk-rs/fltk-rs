@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.3.21] - Unreleased
+## [1.3.21] - 2022-11-24
 - Impl HasRawDisplayHandle for windows.
 - Fix MenuItem::set_callback().
 - Add MenuItem::set_shortcut and set_flag.
