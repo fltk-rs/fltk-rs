@@ -134,30 +134,30 @@ pub struct MenuItem {
     size: i32,
 }
 
-/// Defines the menu flag for any added menu items using the add() method
-#[repr(i32)]
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub enum MenuFlag {
-    /// Normal item
-    Normal = 0,
-    /// Inactive item
-    Inactive = 1,
-    /// Item is a checkbox toggle (shows checkbox for on/off state)
-    Toggle = 2,
-    /// The on/off state for checkbox/radio buttons (if set, state is 'on')
-    Value = 4,
-    /// Item is a radio button
-    Radio = 8,
-    /// Invisible item
-    Invisible = 0x10,
-    /// Indicates user_data() is a pointer to another menu array (unused with Rust)
-    SubmenuPointer = 0x20,
-    /// Menu item is a submenu
-    Submenu = 0x40,
-    /// Menu divider
-    MenuDivider = 0x80,
-    /// Horizontal menu (actually reserved for future use)
-    MenuHorizontal = 0x100,
+bitflags::bitflags! {
+    /// Defines the menu flag for any added menu items using the add() method
+    pub struct MenuFlag: i32 {
+        /// Normal item
+        const Normal = 0;
+        /// Inactive item
+        const Inactive = 1;
+        /// Item is a checkbox toggle (shows checkbox for on/off state)
+        const Toggle = 2;
+        /// The on/off state for checkbox/radio buttons (if set, state is 'on')
+        const Value = 4;
+        /// Item is a radio button
+        const Radio = 8;
+        /// Invisible item
+        const Invisible = 0x10;
+        /// Indicates user_data() is a pointer to another menu array (unused with Rust)
+        const SubmenuPointer = 0x20;
+        /// Menu item is a submenu
+        const Submenu = 0x40;
+        /// Menu divider
+        const MenuDivider = 0x80;
+        /// Horizontal menu (actually reserved for future use)
+        const MenuHorizontal = 0x100;
+    }
 }
 
 impl MenuItem {
@@ -555,7 +555,7 @@ impl MenuItem {
                 shortcut.bits() as i32,
                 callback,
                 data,
-                flag as i32,
+                flag.bits(),
             )
         }
     }
@@ -589,7 +589,7 @@ impl MenuItem {
                 shortcut.bits() as i32,
                 callback,
                 data,
-                flag as i32,
+                flag.bits(),
             )
         }
     }
@@ -631,7 +631,7 @@ impl MenuItem {
     /// Set the menu item's shortcut
     pub fn set_flag(&mut self, flag: MenuFlag) {
         unsafe {
-            Fl_Menu_Item_set_flag(self.inner, flag as i32);
+            Fl_Menu_Item_set_flag(self.inner, flag.bits());
         }
     }
 }

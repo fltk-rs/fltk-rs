@@ -45,7 +45,7 @@ macro_rules! impl_menu_ext {
                             shortcut.bits() as i32,
                             callback,
                             data,
-                            flag as i32,
+                            flag.bits(),
                         )
                     }
                 }
@@ -88,7 +88,7 @@ macro_rules! impl_menu_ext {
                             shortcut.bits() as i32,
                             callback,
                             data,
-                            flag as i32,
+                            flag.bits(),
                         )
                     }
                 }
@@ -344,7 +344,7 @@ macro_rules! impl_menu_ext {
                 fn set_mode(&mut self, idx: i32, flag: $crate::menu::MenuFlag) {
                     assert!(!self.was_deleted());
                     assert!(self.size() != 0 && idx >= 0 && idx < self.size());
-                    unsafe { [<$flname _set_mode>](self.inner, idx as i32, flag as i32) }
+                    unsafe { [<$flname _set_mode>](self.inner, idx as i32, flag.bits()) }
                 }
 
                 fn end(&mut self) {
