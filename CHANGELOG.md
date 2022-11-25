@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.3.22] - Unreleased
+- Adds newly added Oxy scheme.
+- Pull FLTK fixes.
+
 ## [1.3.21] - 2022-11-24
 - Impl HasRawDisplayHandle for windows.
 - Fix MenuItem::set_callback().
