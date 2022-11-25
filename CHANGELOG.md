@@ -3,6 +3,7 @@
 
 ## [1.3.22] - Unreleased
 - Adds newly added Oxy scheme.
+- Add MenuExt::item_pathname.
 - Pull FLTK fixes.
 
 ## [1.3.21] - 2022-11-24
