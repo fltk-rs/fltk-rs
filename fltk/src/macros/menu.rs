@@ -385,6 +385,27 @@ macro_rules! impl_menu_ext {
                     assert!(!self.was_deleted());
                     [<$flname _set_menu>](self.inner, item.inner)
                 }
+
+                fn item_pathname(&self, item: Option<&crate::menu::MenuItem>) -> Result<String, FltkError> {
+                    assert!(!self.was_deleted());
+                    let item = if let Some(item) = item {
+                        item.inner
+                    } else {
+                        std::ptr::null_mut()
+                    };
+                    let mut temp = vec![0u8; 256];
+                    unsafe {
+                        let ret = [<$flname _item_pathname>](self.inner, temp.as_mut_ptr() as _, 256, item);
+                        if ret == 0 {
+                            if let Some(pos) = temp.iter().position(|x| *x == 0) {
+                                temp = temp.split_at(pos).0.to_vec();
+                            }
+                            Ok(String::from_utf8_lossy(&temp).to_string())
+                        } else {
+                            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+                        }
+                    }
+                }
             }
         }
     };

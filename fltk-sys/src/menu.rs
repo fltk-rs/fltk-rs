@@ -448,6 +448,14 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Bar_global(self_: *mut Fl_Menu_Bar);
 }
+extern "C" {
+    pub fn Fl_Menu_Bar_item_pathname(
+        self_: *const Fl_Menu_Bar,
+        pathname: *mut ::std::os::raw::c_char,
+        pathnamelen: ::std::os::raw::c_int,
+        item: *const Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Button {
@@ -894,6 +902,14 @@ extern "C" {
 extern "C" {
     pub fn Fl_Menu_Button_global(self_: *mut Fl_Menu_Button);
 }
+extern "C" {
+    pub fn Fl_Menu_Button_item_pathname(
+        self_: *const Fl_Menu_Button,
+        pathname: *mut ::std::os::raw::c_char,
+        pathnamelen: ::std::os::raw::c_int,
+        item: *const Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Choice {
@@ -1315,6 +1331,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_global(self_: *mut Fl_Choice);
+}
+extern "C" {
+    pub fn Fl_Choice_item_pathname(
+        self_: *const Fl_Choice,
+        pathname: *mut ::std::os::raw::c_char,
+        pathnamelen: ::std::os::raw::c_int,
+        item: *const Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1767,6 +1791,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_global(self_: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_item_pathname(
+        self_: *const Fl_Sys_Menu_Bar,
+        pathname: *mut ::std::os::raw::c_char,
+        pathnamelen: ::std::os::raw::c_int,
+        item: *const Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Item_new(
