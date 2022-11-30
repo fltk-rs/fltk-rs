@@ -65,7 +65,7 @@ macro_rules! impl_menu_ext {
                         if self.size() == 0 {
                             0
                         } else {
-                            self.size() - 1 
+                            self.size() - 1
                         }
                     };
                     let temp = CString::safe_new(name);

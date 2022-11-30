@@ -37,7 +37,7 @@ pub fn set_scheme(scheme: Scheme) {
 /// Gets the scheme of the application
 pub fn scheme() -> Scheme {
     unsafe {
-        use Scheme::{Base, Gleam, Gtk, Plastic, Oxy};
+        use Scheme::{Base, Gleam, Gtk, Oxy, Plastic};
         match fl::Fl_scheme() {
             0 => Base,
             1 => Gtk,

@@ -1,6 +1,6 @@
 use crate::enums::Align;
-use crate::prelude::*;
 use crate::enums::{Color, FrameType};
+use crate::prelude::*;
 use crate::utils::FlString;
 use crate::widget::Widget;
 use fltk_sys::group::*;
@@ -433,7 +433,7 @@ impl ColorChooser {
             }
         }
     }
-    
+
     /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
     pub fn set_tuple_rgb(&mut self, (r, g, b): (u8, u8, u8)) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
