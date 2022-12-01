@@ -1,4 +1,4 @@
-use fltk::{app::WidgetId, prelude::*, *};
+use fltk::{prelude::*, *};
 
 // So we can do `widget.on_trigger()` and get self back. Useful for chaining methods.
 trait OnTrigger<W>

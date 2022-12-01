@@ -1829,3 +1829,5 @@ macro_rules! widget_extends {
         }
     };
 }
+ 
+pub use crate::app::WidgetId;
