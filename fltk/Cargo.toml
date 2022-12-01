@@ -46,7 +46,7 @@ use-wayland = ["fltk-sys/use-wayland"] # Use FLTK's wayland backend on linux sys
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
-cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples=examples"]
+cargo-args = ["-Zunstable-options", "-Zrustdoc-scrape-examples"]
 
 [[test]]
 name = "app_handle"
