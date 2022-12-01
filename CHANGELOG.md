@@ -4,6 +4,7 @@
 ## [1.3.22] - Unreleased
 - Adds newly added Oxy scheme.
 - Add MenuExt::item_pathname.
+- Add draw_rounded_rect and draw_rounded_rectf.
 - Pull FLTK fixes.
 
 ## [1.3.21] - 2022-11-24

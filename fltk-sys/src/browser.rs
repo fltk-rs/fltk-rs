@@ -314,6 +314,15 @@ extern "C" {
     pub fn Fl_Browser_callback(self_: *const Fl_Browser) -> Fl_Callback;
 }
 extern "C" {
+    pub fn Fl_Browser_set_deletion_callback(
+        self_: *mut Fl_Browser,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Browser_value(arg1: *mut Fl_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -401,6 +410,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Browser_topline(self_: *mut Fl_Browser, line: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Browser_is_topline(self_: *mut Fl_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Browser_bottomline(self_: *mut Fl_Browser, line: ::std::os::raw::c_int);
@@ -807,6 +819,15 @@ extern "C" {
     pub fn Fl_Hold_Browser_callback(self_: *const Fl_Hold_Browser) -> Fl_Callback;
 }
 extern "C" {
+    pub fn Fl_Hold_Browser_set_deletion_callback(
+        self_: *mut Fl_Hold_Browser,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Hold_Browser_value(arg1: *mut Fl_Hold_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -897,6 +918,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_topline(self_: *mut Fl_Hold_Browser, line: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_is_topline(self_: *mut Fl_Hold_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Hold_Browser_bottomline(self_: *mut Fl_Hold_Browser, line: ::std::os::raw::c_int);
@@ -1347,6 +1371,15 @@ extern "C" {
     pub fn Fl_Select_Browser_callback(self_: *const Fl_Select_Browser) -> Fl_Callback;
 }
 extern "C" {
+    pub fn Fl_Select_Browser_set_deletion_callback(
+        self_: *mut Fl_Select_Browser,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Select_Browser_value(arg1: *mut Fl_Select_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -1440,6 +1473,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_topline(self_: *mut Fl_Select_Browser, line: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Select_Browser_is_topline(self_: *mut Fl_Select_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Select_Browser_bottomline(self_: *mut Fl_Select_Browser, line: ::std::os::raw::c_int);
@@ -1897,6 +1933,15 @@ extern "C" {
     pub fn Fl_Multi_Browser_callback(self_: *const Fl_Multi_Browser) -> Fl_Callback;
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_set_deletion_callback(
+        self_: *mut Fl_Multi_Browser,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Multi_Browser_value(arg1: *mut Fl_Multi_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -1990,6 +2035,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multi_Browser_topline(self_: *mut Fl_Multi_Browser, line: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Multi_Browser_is_topline(self_: *mut Fl_Multi_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Multi_Browser_bottomline(self_: *mut Fl_Multi_Browser, line: ::std::os::raw::c_int);
@@ -2420,6 +2468,15 @@ extern "C" {
     pub fn Fl_File_Browser_callback(self_: *const Fl_File_Browser) -> Fl_Callback;
 }
 extern "C" {
+    pub fn Fl_File_Browser_set_deletion_callback(
+        self_: *mut Fl_File_Browser,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_File_Browser_iconsize(self_: *const Fl_File_Browser) -> ::std::os::raw::c_uint;
 }
 extern "C" {
@@ -2531,6 +2588,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_topline(self_: *mut Fl_File_Browser, line: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Browser_is_topline(self_: *mut Fl_File_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_File_Browser_bottomline(self_: *mut Fl_File_Browser, line: ::std::os::raw::c_int);
@@ -2961,6 +3021,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Browser_callback(self_: *const Fl_Check_Browser) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_set_deletion_callback(
+        self_: *mut Fl_Check_Browser,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Check_Browser_add(

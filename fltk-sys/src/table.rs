@@ -314,6 +314,15 @@ extern "C" {
     pub fn Fl_Table_callback(self_: *const Fl_Table) -> Fl_Callback;
 }
 extern "C" {
+    pub fn Fl_Table_set_deletion_callback(
+        self_: *mut Fl_Table,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
     pub fn Fl_Table_begin(self_: *mut Fl_Table);
 }
 extern "C" {
@@ -923,6 +932,15 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_Row_callback(self_: *const Fl_Table_Row) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_deletion_callback(
+        self_: *mut Fl_Table_Row,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
 }
 extern "C" {
     pub fn Fl_Table_Row_begin(self_: *mut Fl_Table_Row);

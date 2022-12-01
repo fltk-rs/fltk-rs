@@ -984,3 +984,13 @@ pub unsafe fn gl_start() {
 pub unsafe fn gl_finish() {
     fltk_sys::window::Fl_gl_finish();
 }
+
+/// Draws a rounded rectangle
+pub fn draw_rounded_rect(x: i32, y: i32, w: i32, h: i32, r: i32) {
+    unsafe { Fl_rounded_rectf(x, y, w, h, r) }
+}
+
+/// Draws a filled rounded rectangle
+pub fn draw_rounded_rectf(x: i32, y: i32, w: i32, h: i32, r: i32) {
+    unsafe { Fl_rounded_rectf(x, y, w, h, r) }
+}

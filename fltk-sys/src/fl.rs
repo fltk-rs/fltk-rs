@@ -140,7 +140,7 @@ extern "C" {
     pub fn Fl_paste_image(widget: *mut Fl_Widget, src: ::std::os::raw::c_int);
 }
 extern "C" {
-    pub fn Fl_set_scheme(scheme: *const ::std::os::raw::c_char);
+    pub fn Fl_set_scheme(scheme: *const ::std::os::raw::c_char) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_scheme() -> ::std::os::raw::c_int;
@@ -198,6 +198,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_get_font_name(idx: ::std::os::raw::c_int) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_get_font_name2(
+        idx: ::std::os::raw::c_int,
+        attributes: *mut ::std::os::raw::c_int,
+    ) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
     pub fn Fl_get_font_sizes(
@@ -686,4 +692,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_disable_wayland();
+}
+extern "C" {
+    pub fn Fl_Widget_Tracker_widget(t: *mut Fl_Widget_Tracker) -> *mut Fl_Widget;
+}
+extern "C" {
+    pub fn Fl_Widget_Tracker_exists(t: *mut Fl_Widget_Tracker) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_get_color_rgb(
+        col: ::std::os::raw::c_uint,
+        r: *mut ::std::os::raw::c_uchar,
+        g: *mut ::std::os::raw::c_uchar,
+        b: *mut ::std::os::raw::c_uchar,
+    );
 }

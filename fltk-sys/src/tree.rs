@@ -313,6 +313,15 @@ extern "C" {
 extern "C" {
     pub fn Fl_Tree_callback(self_: *const Fl_Tree) -> Fl_Callback;
 }
+extern "C" {
+    pub fn Fl_Tree_set_deletion_callback(
+        self_: *mut Fl_Tree,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Tree_Item {
