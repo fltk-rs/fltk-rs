@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [1.3.22] - Unreleased
+## [1.3.22] - 2022-12-02
 - Adds newly added Oxy scheme.
 - Add MenuExt::item_pathname.
 - Add draw_rounded_rect and draw_rounded_rectf.
