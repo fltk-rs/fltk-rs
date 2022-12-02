@@ -1152,34 +1152,11 @@ impl Tree {
     }
 
     /// Get an item's pathname
-    #[deprecated(since = "1.3.24", note = "please use `item_pathname2` instead")]
     pub fn item_pathname(&self, item: &TreeItem) -> Result<String, FltkError> {
         assert!(!self.was_deleted());
         let mut temp = vec![0u8; 256];
         unsafe {
             let ret = Fl_Tree_item_pathname(self.inner, temp.as_mut_ptr() as _, 256, item.inner);
-            if ret == 0 {
-                if let Some(pos) = temp.iter().position(|x| *x == 0) {
-                    temp = temp.split_at(pos).0.to_vec();
-                }
-                Ok(String::from_utf8_lossy(&temp).to_string())
-            } else {
-                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
-            }
-        }
-    }
-
-    /// Get an item's pathname
-    pub fn item_pathname2(&self, item: Option<&TreeItem>) -> Result<String, FltkError> {
-        assert!(!self.was_deleted());
-        let item = if let Some(item) = item {
-            item.inner
-        } else {
-            std::ptr::null_mut()
-        };
-        let mut temp = vec![0u8; 256];
-        unsafe {
-            let ret = Fl_Tree_item_pathname(self.inner, temp.as_mut_ptr() as _, 256, item);
             if ret == 0 {
                 if let Some(pos) = temp.iter().position(|x| *x == 0) {
                     temp = temp.split_at(pos).0.to_vec();
