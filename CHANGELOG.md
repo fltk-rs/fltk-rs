@@ -1,6 +1,9 @@
 # Changelog
 
 
+## [1.3.23] - 2022-12-02
+- Fix docs.rs build!
+
 ## [1.3.22] - 2022-12-02
 - Adds newly added Oxy scheme.
 - Add MenuExt::item_pathname.
