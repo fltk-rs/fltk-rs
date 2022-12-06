@@ -32,7 +32,7 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
     /// Modifies the global state by acquiring a mutable reference
     /// # Panics
     /// Panics on state downcast errors
-    pub fn with<V: Clone, F: 'static + Fn(&mut T) -> V>(&self, cb: F) -> V {
+    pub fn with<V: Clone, F: 'static + FnMut(&mut T) -> V>(&self, mut cb: F) -> V {
         if let Some(val) = STATE.get().unwrap().lock().unwrap().downcast_mut::<T>() {
             cb(val)
         } else {
