@@ -910,3 +910,70 @@ impl RgbImage {
         unsafe { mem::transmute(Fl_Image_scaling_algorithm()) }
     }
 }
+
+
+/// Creates a struct holding a Windows icon (.ico) image
+#[derive(Debug)]
+pub struct IcoImage {
+    inner: *mut Fl_ICO_Image,
+    refcount: AtomicUsize,
+}
+
+crate::macros::image::impl_image_ext!(IcoImage, Fl_ICO_Image);
+
+impl IcoImage {
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<IcoImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+
+    fn load_(path: &std::path::Path) -> Result<IcoImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        unsafe {
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
+            let temp = CString::new(temp)?;
+            let image_ptr = Fl_ICO_Image_new(temp.as_ptr(), -1);
+            if image_ptr.is_null() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                if Fl_ICO_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(IcoImage {
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
+                })
+            }
+        }
+    }
+
+    /// Loads the image from data/memory
+    /// # Errors
+    /// Errors on invalid format
+    pub fn from_data(data: &[u8]) -> Result<IcoImage, FltkError> {
+        unsafe {
+            if data.is_empty() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                let x = Fl_ICO_Image_from_data(data.as_ptr(), data.len() as _, -1);
+                if x.is_null() {
+                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+                } else {
+                    if Fl_ICO_Image_fail(x) < 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                    }
+                    Ok(IcoImage {
+                        inner: x,
+                        refcount: AtomicUsize::new(1),
+                    })
+                }
+            }
+        }
+    }
+}

@@ -1013,6 +1013,89 @@ extern "C" {
         own_it: ::std::os::raw::c_int,
     ) -> *mut Fl_Shared_Image;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_ICO_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_ICO_Image_draw(
+        arg1: *mut Fl_ICO_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_ICO_Image_draw_ext(
+        arg1: *mut Fl_ICO_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+        cx: ::std::os::raw::c_int,
+        cy: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_ICO_Image_width(arg1: *mut Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_height(arg1: *mut Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_delete(arg1: *mut Fl_ICO_Image);
+}
+extern "C" {
+    pub fn Fl_ICO_Image_count(self_: *mut Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_data(self_: *mut Fl_ICO_Image) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_copy(self_: *mut Fl_ICO_Image) -> *mut Fl_ICO_Image;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_scale(
+        self_: *mut Fl_ICO_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_ICO_Image_fail(self_: *mut Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_data_w(self_: *const Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_data_h(self_: *const Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_d(self_: *const Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_ld(self_: *const Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_inactive(self_: *mut Fl_ICO_Image);
+}
+extern "C" {
+    pub fn Fl_ICO_Image_new(
+        filename: *const ::std::os::raw::c_char,
+        id: ::std::os::raw::c_int,
+    ) -> *mut Fl_ICO_Image;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_from_data(
+        bits: *const ::std::os::raw::c_uchar,
+        len: ::std::os::raw::c_ulong,
+        id: ::std::os::raw::c_int,
+    ) -> *mut Fl_ICO_Image;
+}
 extern "C" {
     pub fn Fl_register_images();
 }

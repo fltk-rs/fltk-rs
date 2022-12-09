@@ -1,6 +1,11 @@
 # Changelog
 
 
+### [1.3.24] - Unreleased
+- Add image::IcoImage.
+- Relax GlobalState callback. (Fn to FnMut)
+- Pull FLTK fixes.
+
 ## [1.3.23] - 2022-12-02
 - Fix docs.rs build!
 
