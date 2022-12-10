@@ -1097,5 +1097,11 @@ extern "C" {
     ) -> *mut Fl_ICO_Image;
 }
 extern "C" {
+    pub fn Fl_ICO_Image_icondirentry(
+        self_: *const Fl_ICO_Image,
+        size: *mut ::std::os::raw::c_ulong,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn Fl_register_images();
 }

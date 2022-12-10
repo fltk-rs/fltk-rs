@@ -386,7 +386,7 @@ macro_rules! impl_menu_ext {
                     [<$flname _set_menu>](self.inner, item.inner)
                 }
 
-                fn item_pathname(&self, item: Option<&crate::menu::MenuItem>) -> Result<String, FltkError> {
+                fn item_pathname(&self, item: Option<&$crate::menu::MenuItem>) -> Result<String, FltkError> {
                     assert!(!self.was_deleted());
                     let item = if let Some(item) = item {
                         item.inner

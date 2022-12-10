@@ -31,7 +31,9 @@ pub fn set_scheme(scheme: Scheme) {
         Scheme::Oxy => "oxy",
     };
     let name_str = CString::safe_new(name_str);
-    unsafe { fl::Fl_set_scheme(name_str.as_ptr()); }
+    unsafe {
+        fl::Fl_set_scheme(name_str.as_ptr());
+    }
 }
 
 /// Gets the scheme of the application

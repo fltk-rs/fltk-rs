@@ -911,7 +911,6 @@ impl RgbImage {
     }
 }
 
-
 /// Creates a struct holding a Windows icon (.ico) image
 #[derive(Debug)]
 pub struct IcoImage {
@@ -976,4 +975,37 @@ impl IcoImage {
             }
         }
     }
+
+    /// Get the icon directory entry
+    pub fn icon_dir_entry(&self) -> Vec<IconDirEntry> {
+        unsafe {
+            let mut size = 0;
+            let ret = Fl_ICO_Image_icondirentry(self.inner, &mut size) as *mut IconDirEntry;
+            std::slice::from_raw_parts(ret, size as _).to_owned()
+        }
+    }
+}
+
+use std::os::raw::c_int;
+
+/// Icon directory entry
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct IconDirEntry {
+    ///  Image width
+    b_width: c_int,
+    ///  Image height
+    b_height: c_int,
+    ///  Number of colors (0 if  ≥ 8bpp)
+    b_color_count: c_int,
+    ///  Reserved
+    b_reserve: c_int,
+    ///  Color Planes
+    w_planes: c_int,
+    ///  Bits per pixel
+    w_bit_count: c_int,
+    ///  Resource size in bytes
+    dw_bytes_in_res: c_int,
+    ///  Offset to the image
+    dw_image_offset: c_int,
 }

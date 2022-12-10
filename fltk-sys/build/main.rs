@@ -1,3 +1,4 @@
+#![allow(clippy::needless_borrow)]
 use std::{env, path::PathBuf};
 
 mod android;
