@@ -377,13 +377,20 @@ pub unsafe trait WidgetExt {
     /// # Safety
     /// Can return multiple mutable references to the `user_data`
     unsafe fn set_raw_user_data(&mut self, data: *mut std::os::raw::c_void);
-    /// Upcast a `WidgetExt` to a Widget
+    /// Upcast a `WidgetExt` to some widget type
     /// # Safety
     /// Allows for potentially unsafe casts between incompatible widget types
     #[allow(clippy::wrong_self_convention)]
     unsafe fn into_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
+    /// Upcast a `WidgetExt` to a Widget
+    fn as_base_widget(&self) -> crate::widget::Widget
+    where
+        Self: Sized,
+    {
+        unsafe { self.into_widget() }
+    }
     /// Returns whether a widget is visible
     fn visible(&self) -> bool;
     /// Returns whether a widget or any of its parents are visible (recursively)

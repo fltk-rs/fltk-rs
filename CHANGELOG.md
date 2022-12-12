@@ -4,6 +4,7 @@
 ### [1.3.24] - Unreleased
 - Add image::IcoImage.
 - Relax GlobalState callback. (Fn to FnMut)
+- Add WidgetExt::as_base_widget.
 - Pull FLTK fixes.
 
 ## [1.3.23] - 2022-12-02
