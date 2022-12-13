@@ -18,7 +18,7 @@ Why choose FLTK?
 - Single executable. No DLLs to deploy.
 - Supports old architectures.
 - FLTK's permissive license which allows static linking for closed-source applications.
-- Themeability (4 supported schemes: Base, GTK, Plastic and Gleam), and additional theming using [fltk-theme](https://crates.io/crates/fltk-theme).
+- Themeability (5 supported schemes: Base, GTK, Plastic, Gleam and Oxy), and additional theming using [fltk-theme](https://crates.io/crates/fltk-theme).
 - Provides around 80 customizable widgets.
 - Has inbuilt image support.
 
@@ -195,11 +195,12 @@ For an alternative event handling mechanism using `on_<event>` methods, check th
 
 ### Theming
 
-FLTK offers 4 application schemes:
+FLTK offers 5 application schemes:
 - Base
 - Gtk
 - Gleam
 - Plastic
+- Oxy
 
 (Additional theming can be found in the [fltk-theme](https://crates.io/crates/fltk-theme) crate)
 
