@@ -3,6 +3,7 @@
 
 ### [1.3.24] - Unreleased
 - Add image::IcoImage.
+- Use Fl_Widget::bind_image and bind_deimage internally.
 - Relax GlobalState callback. (Fn to FnMut)
 - Add WidgetExt::as_base_widget.
 - Pull FLTK fixes.
