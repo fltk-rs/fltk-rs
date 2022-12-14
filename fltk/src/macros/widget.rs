@@ -682,10 +682,9 @@ macro_rules! impl_widget_ext {
 
                 fn set_image<I: ImageExt>(&mut self, image: Option<I>) {
                     assert!(!self.was_deleted());
-                    if let Some(mut image) = image {
+                    if let Some(image) = image {
                         assert!(!image.was_deleted());
                         unsafe {
-                            image.increment_arc();
                             [<$flname _set_image>](
                                 self.inner,
                                 image.as_image_ptr() as *mut _,
@@ -740,10 +739,9 @@ macro_rules! impl_widget_ext {
 
                 fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                     assert!(!self.was_deleted());
-                    if let Some(mut image) = image {
+                    if let Some(image) = image {
                         assert!(!image.was_deleted());
                         unsafe {
-                            image.increment_arc();
                             [<$flname _set_deimage>](
                                 self.inner,
                                 image.as_image_ptr() as *mut _,
