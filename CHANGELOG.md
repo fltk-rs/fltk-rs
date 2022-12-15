@@ -1,7 +1,7 @@
 # Changelog
 
 
-### [1.3.24] - Unreleased
+### [1.3.24] - 2022-12-15
 - Add image::IcoImage.
 - Use Fl_Widget::bind_image and bind_deimage internally.
 - Relax GlobalState callback. (Fn to FnMut)
