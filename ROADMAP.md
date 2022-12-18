@@ -15,5 +15,4 @@
 - Rust 1.63 constifies Mutex::new, so lazy_static can be removed.
 - Replace WindowType::Normal with WindowType::Single.
 - Default Flex to Column as is now the default in FLTK.
-- Make WidgetExt::image CoW. 
 - Rename Flex::set_size to fixed. 

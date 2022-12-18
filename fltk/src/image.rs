@@ -22,6 +22,20 @@ pub struct SharedImage {
 
 crate::macros::image::impl_image_ext!(SharedImage, Fl_Shared_Image);
 
+impl Drop for SharedImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_Shared_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
+
 impl SharedImage {
     /// Loads a `SharedImage` from a path
     /// # Errors
@@ -84,6 +98,20 @@ pub struct JpegImage {
 }
 
 crate::macros::image::impl_image_ext!(JpegImage, Fl_JPEG_Image);
+
+impl Drop for JpegImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_JPEG_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
 
 impl JpegImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
@@ -151,6 +179,20 @@ pub struct PngImage {
 
 crate::macros::image::impl_image_ext!(PngImage, Fl_PNG_Image);
 
+impl Drop for PngImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_PNG_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
+
 impl PngImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -216,6 +258,20 @@ pub struct SvgImage {
 }
 
 crate::macros::image::impl_image_ext!(SvgImage, Fl_SVG_Image);
+
+impl Drop for SvgImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_SVG_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
 
 impl SvgImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
@@ -290,6 +346,20 @@ pub struct BmpImage {
 
 crate::macros::image::impl_image_ext!(BmpImage, Fl_BMP_Image);
 
+impl Drop for BmpImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_BMP_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
+
 impl BmpImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -355,6 +425,20 @@ pub struct GifImage {
 }
 
 crate::macros::image::impl_image_ext!(GifImage, Fl_GIF_Image);
+
+impl Drop for GifImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_GIF_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
 
 impl GifImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
@@ -422,6 +506,20 @@ pub struct XpmImage {
 
 crate::macros::image::impl_image_ext!(XpmImage, Fl_XPM_Image);
 
+impl Drop for XpmImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_XPM_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
+
 impl XpmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -463,6 +561,20 @@ pub struct XbmImage {
 }
 
 crate::macros::image::impl_image_ext!(XbmImage, Fl_XBM_Image);
+
+impl Drop for XbmImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_XBM_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
 
 impl XbmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
@@ -506,6 +618,20 @@ pub struct PnmImage {
 
 crate::macros::image::impl_image_ext!(PnmImage, Fl_PNM_Image);
 
+impl Drop for PnmImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_PNM_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
+
 impl PnmImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     /// # Errors
@@ -548,6 +674,20 @@ pub struct TiledImage {
 
 crate::macros::image::impl_image_ext!(TiledImage, Fl_Tiled_Image);
 
+impl Drop for TiledImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_Tiled_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
+
 impl TiledImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data
     pub fn new<Img: ImageExt>(mut img: Img, w: i32, h: i32) -> TiledImage {
@@ -572,6 +712,20 @@ pub struct Pixmap {
 }
 
 crate::macros::image::impl_image_ext!(Pixmap, Fl_Pixmap);
+
+impl Drop for Pixmap {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_Pixmap_delete(self.inner);
+                }
+            }
+        }
+    }
+}
 
 impl Pixmap {
     /// Creates a new Pixmap image
@@ -627,6 +781,20 @@ pub struct RgbImage {
 }
 
 crate::macros::image::impl_image_ext!(RgbImage, Fl_RGB_Image);
+
+impl Drop for RgbImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_RGB_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
 
 impl RgbImage {
     /// Initializes a new raw `RgbImage`, copies the data and handles its lifetime.
@@ -919,6 +1087,20 @@ pub struct IcoImage {
 }
 
 crate::macros::image::impl_image_ext!(IcoImage, Fl_ICO_Image);
+
+impl Drop for IcoImage {
+    fn drop(&mut self) {
+        if !self.was_deleted() {
+            self.refcount
+                .fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+            if *self.refcount.get_mut() < 1 {
+                unsafe {
+                    Fl_ICO_Image_delete(self.inner);
+                }
+            }
+        }
+    }
+}
 
 impl IcoImage {
     /// Loads the image from a filesystem path, doesn't check for the validity of the data

@@ -201,11 +201,12 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_highlight_data<B: Into<Option<$crate::text::TextBuffer>>>(
+                fn set_highlight_data<B: Into<Option<$crate::text::TextBuffer>>, E: Into<Vec<$crate::text::StyleTableEntry>>>(
                     &mut self,
                     style_buffer: B,
-                    entries: Vec<$crate::text::StyleTableEntry>,
+                    entries: E,
                 ) {
+                    let entries = entries.into();
                     assert!(!self.was_deleted());
                     assert!(entries.len() < 61);
                     let entries = if entries.len() == 0 {
@@ -262,11 +263,12 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_highlight_data_ext<B: Into<Option<$crate::text::TextBuffer>>>(
+                fn set_highlight_data_ext<B: Into<Option<$crate::text::TextBuffer>>, E: Into<Vec<$crate::text::StyleTableEntryExt>>>(
                     &mut self,
                     style_buffer: B,
-                    entries: Vec<$crate::text::StyleTableEntryExt>,
+                    entries: E,
                 ) {
+                    let entries = entries.into();
                     assert!(!self.was_deleted());
                     assert!(entries.len() < 61);
                     let entries = if entries.len() == 0 {

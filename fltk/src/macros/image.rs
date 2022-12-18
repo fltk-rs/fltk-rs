@@ -28,19 +28,6 @@ macro_rules! impl_image_ext {
         }
 
         paste::paste! {
-            impl Drop for $name {
-                fn drop(&mut self) {
-                    if !self.was_deleted() {
-                        self.refcount.fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
-                        if *self.refcount.get_mut() < 1 {
-                            unsafe {
-                                [<$flname _delete>](self.inner);
-                            }
-                        }
-                    }
-                }
-            }
-
             unsafe impl ImageExt for $name {
                 fn copy(&self) -> Self {
                     assert!(!self.was_deleted());

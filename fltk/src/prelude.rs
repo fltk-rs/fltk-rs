@@ -1096,16 +1096,22 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Shows/hides the cursor
     fn show_cursor(&mut self, val: bool);
     /// Sets the style of the text widget
-    fn set_highlight_data<B: Into<Option<crate::text::TextBuffer>>>(
+    fn set_highlight_data<
+        B: Into<Option<crate::text::TextBuffer>>,
+        E: Into<Vec<crate::text::StyleTableEntry>>,
+    >(
         &mut self,
         style_buffer: B,
-        entries: Vec<crate::text::StyleTableEntry>,
+        entries: E,
     );
     /// Sets the style of the text widget
-    fn set_highlight_data_ext<B: Into<Option<crate::text::TextBuffer>>>(
+    fn set_highlight_data_ext<
+        B: Into<Option<crate::text::TextBuffer>>,
+        E: Into<Vec<crate::text::StyleTableEntryExt>>,
+    >(
         &mut self,
         style_buffer: B,
-        entries: Vec<crate::text::StyleTableEntryExt>,
+        entries: E,
     );
     /// Unset the style of the text widget
     fn unset_highlight_data(&mut self, style_buffer: crate::text::TextBuffer);
