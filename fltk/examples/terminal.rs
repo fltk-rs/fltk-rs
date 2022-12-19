@@ -1,221 +1,234 @@
-use fltk::{
-    app,
-    enums::{Color, Event, Font, Key, Shortcut},
-    prelude::{DisplayExt, GroupExt, WidgetBase, WidgetExt},
-    text::{SimpleTerminal, StyleTableEntry, TextBuffer},
-    utils,
-    window::Window,
-};
-use std::io::{self, BufRead, BufReader};
-use std::path::Path;
-use std::process::{Command, Stdio};
+mod pipe {
+    use std::fs::File;
+    use std::process::{Stdio};
 
-const WIDTH: i32 = 640;
-const HEIGHT: i32 = 480;
+    #[cfg(unix)]
+    use std::os::unix::io::FromRawFd;
+    #[cfg(windows)]
+    use std::os::windows::io::FromRawHandle;
 
-pub trait TerminalFuncs {
-    fn append_txt(&mut self, txt: &str);
-    fn append_dir(&mut self, dir: &str);
-    fn append_error(&mut self, txt: &str);
-    fn run_command(&mut self, cmd: &str, cwd: &mut String, receiver: app::Receiver<bool>);
-    fn change_dir(&mut self, path: &Path, current: &mut String) -> io::Result<()>;
+    pub struct Pipe(i32, i32);
+
+    impl Pipe {
+        /// Safety:
+        /// Doesn't lock file descriptors. This is just for this demo!
+        pub unsafe fn new() -> Self {
+            use std::os::raw::*;
+            if cfg!(unix) {
+                let mut fds: [c_int; 2] = [0; 2];
+                extern "C" {
+                    fn pipe(arg: *mut i32) -> i32;
+                }
+                let res = pipe(fds.as_mut_ptr());
+                if res != 0 {
+                    panic!("Failed to create pipe!");
+                }
+                Self(fds[0], fds[1])
+            } else if cfg!(windows) {
+                extern "system" {
+                    fn CreatePipe(
+                        rp: *mut isize,
+                        wp: *mut isize,
+                        attrs: *mut (),
+                        sz: c_ulong,
+                    ) -> c_int;
+                }
+                let mut rp = -1isize;
+                let mut wp = -1isize;
+                let res = CreatePipe(&mut rp as _, &mut wp as _, std::ptr::null_mut(), 0);
+                if res == 0 {
+                    panic!("Failed to create pipe!");
+                }
+                Self(rp as i32, wp as i32)
+            } else {
+                panic!("Unknown platform!");
+            }
+        }
+
+        pub fn reader_stream(&self) -> Stdio {
+            #[cfg(unix)]
+            unsafe {
+                Stdio::from_raw_fd(self.1)
+            }
+            #[cfg(windows)]
+            unsafe {
+                Stdio::from_raw_handle(std::mem::transmute(self.1 as isize))
+            }
+        }
+
+        pub fn reader(&self) -> File {
+            #[cfg(unix)]
+            unsafe {
+                File::from_raw_fd(self.0)
+            }
+            #[cfg(windows)]
+            unsafe {
+                File::from_raw_handle(std::mem::transmute(self.0 as isize))
+            }
+        }
+    }
 }
 
-impl TerminalFuncs for SimpleTerminal {
-    fn append_txt(&mut self, txt: &str) {
-        self.append(txt);
-        self.style_buffer().unwrap().append(&"A".repeat(txt.len()));
+mod ansi_term {
+    use fltk::{enums::*, prelude::*, *};
+    use std::io::{Read, Write};
+    use std::process::{Command, Stdio};
+
+    pub struct AnsiTerm {
+        st: text::SimpleTerminal,
     }
 
-    fn append_dir(&mut self, dir: &str) {
-        self.append(dir);
-        self.style_buffer().unwrap().append(&"C".repeat(dir.len()));
-    }
-
-    fn append_error(&mut self, txt: &str) {
-        self.append(txt);
-        self.style_buffer().unwrap().append(&"B".repeat(txt.len()));
-    }
-
-    fn run_command(&mut self, cmd: &str, cwd: &mut String, receiver: app::Receiver<bool>) {
-        let args: Vec<String> = cmd.split_whitespace().map(|s| s.to_owned()).collect();
-
-        if !args.is_empty() {
-            let mut cmd_c = Command::new(&args[0]);
-            if args[0] == "cd" {
-                let path = &args[1];
-                match self.change_dir(Path::new(&path), cwd) {
-                    Ok(_) => self.append_dir(cwd),
-                    _ => {
-                        self.append_error("Path does not exist!");
-                        self.append_txt("\n");
-                        self.append_dir(cwd);
-                    }
-                }
-            } else {
-                let proc = cmd_c
-                    .args(&args[1..])
-                    .stderr(Stdio::piped())
-                    .stdout(Stdio::piped())
-                    .spawn();
-
-                if proc.is_err() {
-                    self.append_error("Command not found!");
-                    self.append_txt("\n");
-                    self.append_dir(cwd);
-                    return;
-                }
-
-                let reader = BufReader::new(proc.unwrap().stdout.unwrap());
-                let mut term = self.clone();
-                let cwd = cwd.clone();
-                std::thread::spawn(move || {
-                    reader
-                        .lines()
-                        .filter_map(|line| line.ok())
-                        .try_for_each(|line| {
-                            if let Some(msg) = receiver.recv() {
-                                match msg {
-                                    true => {
-                                        term.append_error("Received sigint signal!\n");
-                                        app::awake();
-                                        return None;
-                                    }
-                                    false => (),
-                                }
-                            }
-                            term.append_txt(&line);
-                            term.append_txt("\n");
-                            app::awake();
-                            Some(())
-                        });
-                    term.append_dir(&cwd);
-                });
-            }
-        } else {
-            self.append_dir(cwd);
+    impl Default for AnsiTerm {
+        fn default() -> Self {
+            AnsiTerm::new(0, 0, 0, 0, None)
         }
     }
 
-    fn change_dir(&mut self, path: &Path, current: &mut String) -> io::Result<()> {
-        std::env::set_current_dir(path)?;
-        let mut path = std::env::current_dir()?.to_string_lossy().to_string();
-        path.push_str("$ ");
-        *current = path;
-        Ok(())
-    }
-}
+    impl AnsiTerm {
+        pub fn new<L: Into<Option<&'static str>>>(
+            x: i32,
+            y: i32,
+            w: i32,
+            h: i32,
+            label: L,
+        ) -> Self {
+            let mut st = text::SimpleTerminal::new(x, y, w, h, label);
+            st.set_ansi(true);
 
-#[derive(Debug, Clone)]
-struct Term {
-    #[allow(dead_code)]
-    term: SimpleTerminal,
-}
+            let mut cmd = if cfg!(target_os = "windows") {
+                Command::new("cmd.exe")
+            } else {
+                let mut cmd = Command::new("/bin/bash");
+                cmd.args(&["-i"]);
+                cmd
+            };
 
-impl Term {
-    pub fn new() -> Term {
-        let mut cmd = String::new();
-
-        // Enable different colored text in TestDisplay
-        let styles: Vec<StyleTableEntry> = vec![
-            StyleTableEntry {
-                color: Color::Green,
-                font: Font::Courier,
-                size: 16,
-            },
-            StyleTableEntry {
-                color: Color::Red,
-                font: Font::Courier,
-                size: 16,
-            },
-            StyleTableEntry {
-                color: Color::from_u32(0x8000ff),
-                font: Font::Courier,
-                size: 16,
-            },
-        ];
-
-        let mut sbuf = TextBuffer::default();
-        let mut term = SimpleTerminal::new(5, 5, WIDTH - 10, HEIGHT - 10, "");
-
-        term.set_highlight_data(sbuf.clone(), styles);
-
-        let mut curr = std::env::current_dir()
-            .unwrap()
-            .to_string_lossy()
-            .to_string();
-        curr.push_str("$ ");
-
-        term.append_dir(&curr);
-
-        let (s, r) = app::channel();
-
-        term.handle(move |t, ev| {
-            // println!("{:?}", app::event());
-            // println!("{:?}", app::event_key());
-            // println!("{:?}", app::event_text());
-            match ev {
-                Event::KeyDown => match app::event_key() {
-                    Key::Enter => {
-                        t.append_txt("\n");
-                        t.run_command(&cmd, &mut curr, r);
-                        cmd.clear();
-                        true
-                    }
-                    Key::BackSpace => {
-                        if !cmd.is_empty() {
-                            let c = cmd.pop().unwrap();
-                            let len = if c.is_ascii() {
-                                1
-                            } else {
-                                utils::char_len(c) as i32
-                            };
-                            let text_len = t.text().len() as i32;
-                            t.buffer().unwrap().remove(text_len - len, text_len);
-                            sbuf.remove(text_len - len, text_len);
-                            true
-                        } else {
-                            false
+            let pipe = unsafe { crate::pipe::Pipe::new() };
+            let stdio = pipe.reader_stream();
+            let stderr = pipe.reader_stream();
+            let mut child = cmd
+                .stdout(stdio)
+                .stderr(stderr)
+                .stdin(Stdio::piped())
+                .spawn()
+                .unwrap();
+            let mut writer = child.stdin.take().unwrap();
+            let mut reader = pipe.reader();
+            std::thread::spawn({
+                let mut st = st.clone();
+                move || {
+                    while child.try_wait().is_ok() {
+                        let mut msg = [0u8; 1028];
+                        if let Ok(sz) = reader.read(&mut msg) {
+                            let msg = &msg[0..sz];
+                            format(msg, &mut st);
+                            app::awake();
                         }
+                        std::thread::sleep(std::time::Duration::from_millis(30));
                     }
-                    _ => {
-                        if let Some(ch) = app::event_text().chars().next() {
-                            if app::compose().is_some() {
-                                let temp = ch.to_string();
-                                cmd.push_str(&temp);
-                                t.append_txt(&temp);
+                }
+            });
+
+            let mut cmd = String::new();
+            st.handle(move |t, ev| {
+                let mut buf = t.buffer().unwrap();
+                let mut sbuf = t.style_buffer().unwrap();
+                match ev {
+                    Event::KeyDown => match app::event_key() {
+                        Key::Enter => {
+                            let len = cmd.len() as i32;
+                            let text_len = t.text().len() as i32;
+                            buf.remove(text_len - len, text_len);
+                            sbuf.remove(text_len - len, text_len);
+                            writer.write_all(cmd.as_bytes()).unwrap();
+                            writer.write_all(b"\n").unwrap();
+                            cmd.clear();
+                            true
+                        }
+                        Key::BackSpace => {
+                            if !cmd.is_empty() {
+                                let c = cmd.pop().unwrap();
+                                let len = if c.is_ascii() {
+                                    1
+                                } else {
+                                    utils::char_len(c) as i32
+                                };
+                                let text_len = t.text().len() as i32;
+                                buf.remove(text_len - len, text_len);
+                                sbuf.remove(text_len - len, text_len);
                                 true
                             } else {
                                 false
                             }
-                        } else {
-                            false
                         }
+                        Key::Escape => {
+                            // handle escape
+                            true
+                        },
+                        _ => {
+                            if let Some(ch) = app::event_text().chars().next() {
+                                if app::compose().is_some() {
+                                    let temp = ch.to_string();
+                                    cmd.push_str(&temp);
+                                    t.append(&temp);
+                                    true
+                                } else {
+                                    false
+                                }
+                            } else {
+                                false
+                            }
+                        }
+                    },
+                    Event::KeyUp => {
+                        if app::event_state() == Shortcut::Ctrl {
+                            let key = app::event_key();
+                            if key != Key::ControlL && key != Key::ControlR {
+                                if let Some(ch) = char::from_u32(key.bits() as u32 - 96) {
+                                    writer.write_all(&[ch as u8]).unwrap();
+                                }
+                            }
+                        }
+                        true
                     }
-                },
-                Event::KeyUp => {
-                    if app::event_state() == Shortcut::Ctrl
-                        && app::event_key() == Key::from_char('c')
-                    {
-                        s.send(true);
-                    }
-                    false
+                    _ => false,
                 }
-                _ => false,
-            }
-        });
+            });
+            Self { st }
+        }
+    }
 
-        Self { term }
+    fltk::widget_extends!(AnsiTerm, text::SimpleTerminal, st);
+
+    fn format(msg: &[u8], st: &mut text::SimpleTerminal) {
+        // handle sticky title with bell
+        if let Some(pos0) = msg.windows(4).position(|m| m == b"\x1b]0;") {
+            let mut pos1 = pos0;
+            while pos1 < msg.len() && msg[pos1] != b'[' {
+                pos1 += 1;
+            }
+            st.append2(&msg[0..pos0]);
+            st.append2(&msg[pos1 - 1..]);
+        } else {
+            st.append2(&msg);
+        }
     }
 }
 
+use fltk::{prelude::*, *};
+
+const WIDTH: i32 = 800;
+const HEIGHT: i32 = 600;
+
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Plastic);
-    let mut wind = Window::default()
+    let mut wind = window::Window::default()
         .with_size(WIDTH, HEIGHT)
-        .with_label("ColorTerminal");
+        .with_label("AnsiTerminal");
 
-    let _term = Term::new();
+    let _term = ansi_term::AnsiTerm::default()
+        .with_size(WIDTH - 4, HEIGHT - 4)
+        .center_of_parent();
 
     wind.make_resizable(true);
     wind.end();
