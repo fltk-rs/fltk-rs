@@ -1,17 +1,21 @@
-mod pipe {
+mod ansi_term {
+    use fltk::{enums::*, prelude::*, *};
     use std::fs::File;
-    use std::process::{Stdio};
-
+    use std::io::{Read, Write};
+    use std::process::{Command, Stdio};
+    
     #[cfg(unix)]
     use std::os::unix::io::FromRawFd;
     #[cfg(windows)]
     use std::os::windows::io::FromRawHandle;
-
+    
+    /// Rust's Command api doesn't support redirecting stderr to stdout
     pub struct Pipe(i32, i32);
 
     impl Pipe {
-        /// Safety:
-        /// Doesn't lock file descriptors. This is just for this demo!
+        /// # Safety
+        /// Doesn't lock file descriptors. This is loose just for this example!
+        /// Typically you would want to use fcntl for that. In addition to properly handling errors!
         pub unsafe fn new() -> Self {
             use std::os::raw::*;
             if cfg!(unix) {
@@ -67,12 +71,6 @@ mod pipe {
             }
         }
     }
-}
-
-mod ansi_term {
-    use fltk::{enums::*, prelude::*, *};
-    use std::io::{Read, Write};
-    use std::process::{Command, Stdio};
 
     pub struct AnsiTerm {
         st: text::SimpleTerminal,
@@ -103,7 +101,7 @@ mod ansi_term {
                 cmd
             };
 
-            let pipe = unsafe { crate::pipe::Pipe::new() };
+            let pipe = unsafe { Pipe::new() };
             let stdio = pipe.reader_stream();
             let stderr = pipe.reader_stream();
             let mut child = cmd
