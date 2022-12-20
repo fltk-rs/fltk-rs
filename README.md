@@ -330,10 +330,6 @@ Using custom theming and also FLTK provided default schemes like Gtk:
 
 - ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/editor.jpg)
 
-- [terminal](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/terminal.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/terminal.jpg)
-
 - [table](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/table.rs)
 
 - ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/table.jpg)
