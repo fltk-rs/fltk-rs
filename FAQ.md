@@ -99,7 +99,7 @@ codegen-units = 1
 panic = "abort"
 ```
 
-Furthermore, you can build Rust's stdlib optimized for size (it comes optimized for speed by default). More info on that [here](https://github.com/johnthagen/min-sized-rust)
+Furthermore, you can build Rust's stdlib (which is statically linked to your application) optimized for size (it comes optimized for speed by default). More info on that [here](https://github.com/johnthagen/min-sized-rust)
 
 ### Can I cross-compile my application to a mobile platform or WASM?
 FLTK currently doesn't support WASM nor iOS. It has experimental support for Android (YMMV). It is focused on desktop applications.
