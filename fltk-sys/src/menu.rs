@@ -207,7 +207,7 @@ extern "C" {
     pub fn Fl_Menu_Bar_when(arg1: *const Fl_Menu_Bar) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_image(arg1: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Bar_image(arg1: *const Fl_Menu_Bar) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_parent(self_: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
@@ -288,7 +288,7 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_deimage(arg1: *mut Fl_Menu_Bar, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_deimage(arg1: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Bar_deimage(arg1: *const Fl_Menu_Bar) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_callback(
@@ -326,6 +326,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Bar;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add(
@@ -655,7 +658,7 @@ extern "C" {
     pub fn Fl_Menu_Button_when(arg1: *const Fl_Menu_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_image(arg1: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Button_image(arg1: *const Fl_Menu_Button) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Button_parent(self_: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
@@ -748,7 +751,7 @@ extern "C" {
     pub fn Fl_Menu_Button_set_deimage(arg1: *mut Fl_Menu_Button, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_deimage(arg1: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Button_deimage(arg1: *const Fl_Menu_Button) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_callback(
@@ -786,6 +789,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Menu_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Button;
 }
 extern "C" {
     pub fn Fl_Menu_Button_popup(self_: *mut Fl_Menu_Button) -> *const Fl_Menu_Item;
@@ -1112,7 +1118,7 @@ extern "C" {
     pub fn Fl_Choice_when(arg1: *const Fl_Choice) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_image(arg1: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Choice_image(arg1: *const Fl_Choice) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Choice_parent(self_: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
@@ -1193,7 +1199,7 @@ extern "C" {
     pub fn Fl_Choice_set_deimage(arg1: *mut Fl_Choice, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Choice_deimage(arg1: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Choice_deimage(arg1: *const Fl_Choice) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Choice_set_callback(
@@ -1231,6 +1237,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Choice_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Choice;
 }
 extern "C" {
     pub fn Fl_Choice_add(
@@ -1560,7 +1569,7 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_when(arg1: *const Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_image(arg1: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Sys_Menu_Bar_image(arg1: *const Fl_Sys_Menu_Bar) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_parent(self_: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
@@ -1659,7 +1668,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_deimage(arg1: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Sys_Menu_Bar_deimage(arg1: *const Fl_Sys_Menu_Bar) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_callback(
@@ -1697,6 +1706,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Sys_Menu_Bar;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(

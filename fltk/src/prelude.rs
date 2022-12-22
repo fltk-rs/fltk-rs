@@ -439,6 +439,14 @@ pub unsafe trait WidgetExt {
     fn is_derived(&self) -> bool {
         unimplemented!();
     }
+    #[doc(hidden)]
+    /// Cast a type-erased widget back to its original widget
+    fn from_dyn_widget<W: WidgetExt>(_w: &W) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        None
+    }
 }
 
 /// Defines the extended methods implemented by all widgets

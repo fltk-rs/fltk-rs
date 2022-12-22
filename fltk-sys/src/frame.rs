@@ -202,7 +202,7 @@ extern "C" {
     pub fn Fl_Box_when(arg1: *const Fl_Box) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Box_image(arg1: *const Fl_Box) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Box_image(arg1: *const Fl_Box) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Box_parent(self_: *const Fl_Box) -> *mut ::std::os::raw::c_void;
@@ -283,7 +283,7 @@ extern "C" {
     pub fn Fl_Box_set_deimage(arg1: *mut Fl_Box, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Box_deimage(arg1: *const Fl_Box) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Box_deimage(arg1: *const Fl_Box) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Box_set_callback(
@@ -321,4 +321,7 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Box_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Box;
 }

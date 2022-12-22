@@ -878,6 +878,23 @@ macro_rules! impl_widget_ext {
                 fn is_derived(&self) -> bool {
                     self.is_derived
                 }
+
+                fn from_dyn_widget<W: WidgetExt>(w: &W) -> Option<Self> {
+                    let ptr = unsafe { [<$flname _from_dyn_ptr>](w.as_widget_ptr() as _) };
+                    if ptr.is_null() {
+                        None
+                    } else {
+                        let tracker = unsafe {
+                            fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget)
+                        };
+                        assert!(!tracker.is_null());
+                        Some(Self {
+                            inner: ptr as *mut $flname,
+                            tracker,
+                            is_derived: false,
+                        })
+                    }
+                }
             }
         }
     };

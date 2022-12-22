@@ -202,7 +202,7 @@ extern "C" {
     pub fn Fl_Input_when(arg1: *const Fl_Input) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Input_image(arg1: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_image(arg1: *const Fl_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Input_parent(self_: *const Fl_Input) -> *mut ::std::os::raw::c_void;
@@ -283,7 +283,7 @@ extern "C" {
     pub fn Fl_Input_set_deimage(arg1: *mut Fl_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Input_deimage(arg1: *const Fl_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Input_deimage(arg1: *const Fl_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Input_set_callback(
@@ -321,6 +321,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Input;
 }
 extern "C" {
     pub fn Fl_Input_set_value(
@@ -605,7 +608,7 @@ extern "C" {
     pub fn Fl_Int_Input_when(arg1: *const Fl_Int_Input) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Int_Input_image(arg1: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_image(arg1: *const Fl_Int_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Int_Input_parent(self_: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
@@ -689,7 +692,7 @@ extern "C" {
     pub fn Fl_Int_Input_set_deimage(arg1: *mut Fl_Int_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Int_Input_deimage(arg1: *const Fl_Int_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Int_Input_deimage(arg1: *const Fl_Int_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_callback(
@@ -727,6 +730,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Int_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Int_Input;
 }
 extern "C" {
     pub fn Fl_Int_Input_set_value(
@@ -1017,7 +1023,7 @@ extern "C" {
     pub fn Fl_Float_Input_when(arg1: *const Fl_Float_Input) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Float_Input_image(arg1: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_image(arg1: *const Fl_Float_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Float_Input_parent(self_: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
@@ -1110,7 +1116,7 @@ extern "C" {
     pub fn Fl_Float_Input_set_deimage(arg1: *mut Fl_Float_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Float_Input_deimage(arg1: *const Fl_Float_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Float_Input_deimage(arg1: *const Fl_Float_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_callback(
@@ -1148,6 +1154,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Float_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Float_Input;
 }
 extern "C" {
     pub fn Fl_Float_Input_set_value(
@@ -1462,8 +1471,9 @@ extern "C" {
     pub fn Fl_Multiline_Input_when(arg1: *const Fl_Multiline_Input) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Multiline_Input_image(arg1: *const Fl_Multiline_Input)
-        -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Multiline_Input_image(
+        arg1: *const Fl_Multiline_Input,
+    ) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_parent(
@@ -1589,7 +1599,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multiline_Input_deimage(
         arg1: *const Fl_Multiline_Input,
-    ) -> *mut ::std::os::raw::c_void;
+    ) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_callback(
@@ -1627,6 +1637,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Multiline_Input;
 }
 extern "C" {
     pub fn Fl_Multiline_Input_set_value(
@@ -1939,7 +1952,7 @@ extern "C" {
     pub fn Fl_Secret_Input_when(arg1: *const Fl_Secret_Input) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Secret_Input_image(arg1: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_image(arg1: *const Fl_Secret_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Secret_Input_parent(self_: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
@@ -2038,7 +2051,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Secret_Input_deimage(arg1: *const Fl_Secret_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Secret_Input_deimage(arg1: *const Fl_Secret_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Secret_Input_set_callback(
@@ -2076,6 +2089,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Secret_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Secret_Input;
 }
 extern "C" {
     pub fn Fl_Secret_Input_set_value(
@@ -2360,7 +2376,7 @@ extern "C" {
     pub fn Fl_File_Input_when(arg1: *const Fl_File_Input) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_File_Input_image(arg1: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_image(arg1: *const Fl_File_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_File_Input_parent(self_: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
@@ -2450,7 +2466,7 @@ extern "C" {
     pub fn Fl_File_Input_set_deimage(arg1: *mut Fl_File_Input, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_File_Input_deimage(arg1: *const Fl_File_Input) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_File_Input_deimage(arg1: *const Fl_File_Input) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_File_Input_set_callback(
@@ -2488,6 +2504,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_File_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_File_Input;
 }
 extern "C" {
     pub fn Fl_File_Input_set_down_box(self_: *mut Fl_File_Input, box_: ::std::os::raw::c_int);
@@ -2778,7 +2797,7 @@ extern "C" {
     pub fn Fl_Output_when(arg1: *const Fl_Output) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Output_image(arg1: *const Fl_Output) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Output_image(arg1: *const Fl_Output) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Output_parent(self_: *const Fl_Output) -> *mut ::std::os::raw::c_void;
@@ -2859,7 +2878,7 @@ extern "C" {
     pub fn Fl_Output_set_deimage(arg1: *mut Fl_Output, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Output_deimage(arg1: *const Fl_Output) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Output_deimage(arg1: *const Fl_Output) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Output_set_callback(
@@ -2897,6 +2916,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Output_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Output;
 }
 extern "C" {
     pub fn Fl_Output_set_value(
@@ -3222,7 +3244,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multiline_Output_image(
         arg1: *const Fl_Multiline_Output,
-    ) -> *mut ::std::os::raw::c_void;
+    ) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Multiline_Output_parent(
@@ -3350,7 +3372,7 @@ extern "C" {
 extern "C" {
     pub fn Fl_Multiline_Output_deimage(
         arg1: *const Fl_Multiline_Output,
-    ) -> *mut ::std::os::raw::c_void;
+    ) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_callback(
@@ -3391,6 +3413,9 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Multiline_Output;
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_value(

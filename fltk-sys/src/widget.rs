@@ -197,7 +197,7 @@ extern "C" {
     pub fn Fl_Widget_when(arg1: *const Fl_Widget) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_image(arg1: *const Fl_Widget) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Widget_parent(self_: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
@@ -278,7 +278,7 @@ extern "C" {
     pub fn Fl_Widget_set_deimage(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Widget_deimage(arg1: *const Fl_Widget) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Widget_set_callback(
@@ -316,4 +316,7 @@ extern "C" {
         >,
         data: *mut ::std::os::raw::c_void,
     );
+}
+extern "C" {
+    pub fn Fl_Widget_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Widget;
 }
