@@ -1,7 +1,7 @@
 use std::path::Path;
 use std::process::Command;
 
-pub fn link(target_os: &str, out_dir: &Path) {
+pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
     println!(
         "cargo:rustc-link-search=native={}",
         out_dir.join("build").display()
@@ -84,11 +84,16 @@ pub fn link(target_os: &str, out_dir: &Path) {
 
         match target_os {
             "macos" => {
+                println!("cargo:rustc-link-lib=c++");
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
             }
             "windows" => {
+                if target_triple.contains("gnu") {
+                    println!("cargo:rustc-link-lib=supc++");
+                    println!("cargo:rustc-link-lib=gcc");
+                }
                 println!("cargo:rustc-link-lib=dylib=ws2_32");
                 println!("cargo:rustc-link-lib=dylib=comctl32");
                 println!("cargo:rustc-link-lib=dylib=gdi32");
@@ -116,6 +121,7 @@ pub fn link(target_os: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=framework=UIKit");
             }
             _ => {
+                println!("cargo:rustc-link-lib=supc++");
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 if cfg!(feature = "use-wayland") {
                     if let Ok(lflags) = Command::new("pkg-config")
