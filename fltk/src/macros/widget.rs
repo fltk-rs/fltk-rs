@@ -736,7 +736,7 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn image_ref<'a>(&'a self) -> Option<&'a mut $crate::image::Image> {
+                fn image_ref(&self) -> Option<&mut $crate::image::Image> {
                     assert!(!self.was_deleted());
                     unsafe {
                         let image_ptr = [<$flname _image>](self.inner);
@@ -806,7 +806,7 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn deimage_ref<'a>(&'a self) -> Option<&'a mut $crate::image::Image> {
+                fn deimage_ref(&self) -> Option<&mut $crate::image::Image> {
                     assert!(!self.was_deleted());
                     unsafe {
                         let image_ptr = [<$flname _deimage>](self.inner);
@@ -1120,20 +1120,7 @@ macro_rules! impl_widget_base {
                 }
 
                 fn from_dyn_widget<W: WidgetExt>(w: &W) -> Option<Self> {
-                    let ptr = unsafe { [<$flname _from_dyn_ptr>](w.as_widget_ptr() as _) };
-                    if ptr.is_null() {
-                        None
-                    } else {
-                        let tracker = unsafe {
-                            fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget)
-                        };
-                        assert!(!tracker.is_null());
-                        Some(Self {
-                            inner: ptr as *mut $flname,
-                            tracker,
-                            is_derived: false,
-                        })
-                    }
+                    Self::from_dyn_widget_ptr(w.as_widget_ptr() as _)
                 }
 
                 fn from_dyn_widget_ptr(w: *mut fltk_sys::widget::Fl_Widget) -> Option<Self> {
@@ -1343,7 +1330,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.image()
             }
 
-            fn image_ref<'a>(&'a self) -> Option<&'a mut $crate::image::Image> {
+            fn image_ref(&self) -> Option<&mut $crate::image::Image> {
                 self.$member.image_ref()
             }
 
@@ -1359,7 +1346,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.deimage()
             }
 
-            fn deimage_ref<'a>(&'a self) -> Option<&'a mut $crate::image::Image> {
+            fn deimage_ref(&self) -> Option<&mut $crate::image::Image> {
                 self.$member.deimage_ref()
             }
 
