@@ -316,7 +316,7 @@ macro_rules! impl_widget_ext {
                     (x, y)
                 }
 
-                unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
+                fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
                     self.inner as *mut fltk_sys::widget::Fl_Widget
                 }
 
@@ -706,7 +706,6 @@ macro_rules! impl_widget_ext {
                         assert!(!image.was_deleted());
                         image.scale(self.w(), self.h(), false, true);
                         unsafe {
-                            image.increment_arc();
                             [<$flname _set_image>](
                                 self.inner,
                                 image.as_image_ptr() as *mut _,
@@ -729,9 +728,24 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
+                            let mut img =
+                                $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            img.increment_arc();
+                            Some(Box::new(img.copy()))
+                        }
+                    }
+                }
+
+                fn image_ref<'a>(&'a self) -> Option<&'a mut $crate::image::Image> {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        let image_ptr = [<$flname _image>](self.inner);
+                        if image_ptr.is_null() {
+                            None
+                        } else {
                             let img =
-                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                            Some(Box::new(img))
+                                $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            Some(Box::leak(Box::new(img)))
                         }
                     }
                 }
@@ -762,7 +776,6 @@ macro_rules! impl_widget_ext {
                         assert!(!image.was_deleted());
                         image.scale(self.w(), self.h(), false, true);
                         unsafe {
-                            image.increment_arc();
                             [<$flname _set_deimage>](
                                 self.inner,
                                 image.as_image_ptr() as *mut _,
@@ -785,9 +798,24 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
+                            let mut img =
+                                $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            img.increment_arc();
+                            Some(Box::new(img.copy()))
+                        }
+                    }
+                }
+
+                fn deimage_ref<'a>(&'a self) -> Option<&'a mut $crate::image::Image> {
+                    assert!(!self.was_deleted());
+                    unsafe {
+                        let image_ptr = [<$flname _deimage>](self.inner);
+                        if image_ptr.is_null() {
+                            None
+                        } else {
                             let img =
-                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                            Some(Box::new(img))
+                                $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            Some(Box::leak(Box::new(img)))
                         }
                     }
                 }
@@ -837,7 +865,7 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn is_same<W: WidgetExt>(&self, other: &W) -> bool {
-                    unsafe { self.as_widget_ptr() == other.as_widget_ptr() }
+                    self.as_widget_ptr() == other.as_widget_ptr()
                 }
 
                 fn active(&self) -> bool {
@@ -1270,7 +1298,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.measure_label()
             }
 
-            unsafe fn as_widget_ptr(&self) -> $crate::app::WidgetPtr {
+            fn as_widget_ptr(&self) -> $crate::app::WidgetPtr {
                 self.$member.as_widget_ptr()
             }
 
@@ -1298,6 +1326,10 @@ macro_rules! impl_widget_ext_via {
                 self.$member.image()
             }
 
+            fn image_ref<'a>(&'a self) -> Option<&'a mut $crate::image::Image> {
+                self.$member.image_ref()
+            }
+
             fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                 self.$member.set_deimage(image)
             }
@@ -1308,6 +1340,10 @@ macro_rules! impl_widget_ext_via {
 
             fn deimage(&self) -> Option<Box<dyn ImageExt>> {
                 self.$member.deimage()
+            }
+
+            fn deimage_ref<'a>(&'a self) -> Option<&'a mut $crate::image::Image> {
+                self.$member.deimage_ref()
             }
 
             fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, mut cb: F) {
@@ -1642,6 +1678,14 @@ macro_rules! impl_widget_base_via {
 
             unsafe fn assume_derived(&mut self) {
                 self.assume_derived()
+            }
+
+            fn from_dyn_widget<W: WidgetExt>(w: &W) -> Self {
+                let $member = <$base>::from_dyn_widget(ptr);
+                Self {
+                    $member,
+                    ..Default::default()
+                }
             }
         }
     };

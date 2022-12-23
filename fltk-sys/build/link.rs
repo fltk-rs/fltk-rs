@@ -84,16 +84,12 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
 
         match target_os {
             "macos" => {
-                println!("cargo:rustc-link-lib=c++");
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
+                println!("cargo:rustc-link-lib=c++");
             }
             "windows" => {
-                if target_triple.contains("gnu") {
-                    println!("cargo:rustc-link-lib=supc++");
-                    println!("cargo:rustc-link-lib=gcc");
-                }
                 println!("cargo:rustc-link-lib=dylib=ws2_32");
                 println!("cargo:rustc-link-lib=dylib=comctl32");
                 println!("cargo:rustc-link-lib=dylib=gdi32");
@@ -110,6 +106,10 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 if !cfg!(feature = "no-gdiplus") {
                     println!("cargo:rustc-link-lib=dylib=gdiplus");
                 }
+                if target_triple.contains("gnu") {
+                    println!("cargo:rustc-link-lib=supc++");
+                    println!("cargo:rustc-link-lib=gcc");
+                }
             }
             "android" => {
                 println!("cargo:rustc-link-lib=log");
@@ -121,7 +121,6 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=framework=UIKit");
             }
             _ => {
-                println!("cargo:rustc-link-lib=supc++");
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 if cfg!(feature = "use-wayland") {
                     if let Ok(lflags) = Command::new("pkg-config")
@@ -176,6 +175,11 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                     println!("cargo:rustc-link-lib=dylib=gobject-2.0");
                     println!("cargo:rustc-link-lib=dylib=cairo");
                     println!("cargo:rustc-link-lib=dylib=pangocairo-1.0");
+                }
+                if target_triple.contains("gnu") || target_triple.contains("musl") {
+                    println!("cargo:rustc-link-lib=supc++");
+                } else {
+                    println!("cargo:rustc-link-lib=c++");
                 }
             }
         }

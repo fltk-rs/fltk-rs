@@ -220,9 +220,7 @@ pub unsafe trait WidgetExt {
     /// Measures the label's width and height
     fn measure_label(&self) -> (i32, i32);
     /// transforms a widget to a base `Fl_Widget`, for internal use
-    /// # Safety
-    /// Can return multiple mutable pointers to the same widget
-    unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
+    fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
     /// Checks whether the self widget is inside another widget
     fn inside<W: WidgetExt>(&self, wid: &W) -> bool
     where
@@ -439,12 +437,19 @@ pub unsafe trait WidgetExt {
     fn is_derived(&self) -> bool {
         unimplemented!();
     }
-    #[doc(hidden)]
     /// Cast a type-erased widget back to its original widget
     fn from_dyn_widget<W: WidgetExt>(_w: &W) -> Option<Self>
     where
         Self: Sized,
     {
+        None
+    }
+    /// Get a reference type of the widget's image
+    fn image_ref<'a>(&'a self) -> Option<&'a mut crate::image::Image> {
+        None
+    }
+    /// Get a reference type of the widget's deactivated image
+    fn deimage_ref<'a>(&'a self) -> Option<&'a mut crate::image::Image> {
         None
     }
 }
@@ -1535,9 +1540,7 @@ pub unsafe trait ImageExt {
     /// Return the height of the image
     fn h(&self) -> i32;
     /// Returns a pointer of the image
-    /// # Safety
-    /// Can return multiple mutable pointers to the image
-    unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
+    fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
     /// Transforms a raw image pointer to an image
     /// # Safety
     /// The pointer must be valid
