@@ -87,7 +87,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=framework=Carbon");
                 println!("cargo:rustc-link-lib=framework=Cocoa");
                 println!("cargo:rustc-link-lib=framework=ApplicationServices");
-                println!("cargo:rustc-link-lib=c++");
+                println!("cargo:rustc-link-lib=c++abi");
             }
             "windows" => {
                 println!("cargo:rustc-link-lib=dylib=ws2_32");
@@ -179,7 +179,8 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 if target_triple.contains("gnu") || target_triple.contains("musl") {
                     println!("cargo:rustc-link-lib=supc++");
                 } else {
-                    println!("cargo:rustc-link-lib=c++");
+                    // assume libcxxrt is present!
+                    println!("cargo:rustc-link-lib=cxxrt");
                 }
             }
         }
