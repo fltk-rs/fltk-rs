@@ -46,6 +46,8 @@ impl TreeMouseFocus {
         let mut t_widget = Tree::new(x, y, width, height, title);
         let previous_focus = Rc::new(RefCell::new(None::<TreeItem>));
         let pfr = Rc::clone(&previous_focus);
+        t_widget.set_callback_reason(TreeReason::Selected);
+        t_widget.set_callback(|_t| println!("clicked an item"));
         t_widget.handle(move |t, e| match e {
             Event::Move => {
                 let (_, mouse_y) = app::event_coords();

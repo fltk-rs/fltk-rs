@@ -437,13 +437,6 @@ pub unsafe trait WidgetExt {
     fn is_derived(&self) -> bool {
         unimplemented!();
     }
-    /// Cast a type-erased widget back to its original widget
-    fn from_dyn_widget<W: WidgetExt>(_w: &W) -> Option<Self>
-    where
-        Self: Sized,
-    {
-        None
-    }
     /// Get a reference type of the widget's image
     fn image_ref<'a>(&'a self) -> Option<&'a mut crate::image::Image> {
         None
@@ -520,6 +513,20 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// Calling this on a non-derived widget can cause undefined behavior
     unsafe fn assume_derived(&mut self) {
         unimplemented!();
+    }
+    /// Cast a type-erased widget back to its original widget
+    fn from_dyn_widget<W: WidgetExt>(_w: &W) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        None
+    }
+    /// Cast a type-erased widget pointer back to its original widget
+    fn from_dyn_widget_ptr(_w: *mut fltk_sys::widget::Fl_Widget) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        None
     }
 }
 

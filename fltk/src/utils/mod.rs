@@ -131,12 +131,12 @@ pub fn content_view<W: crate::prelude::WindowExt>(w: &W) -> *const raw::c_void {
 }
 
 /// Check whether a widget is of a certain type
-pub fn is<W: crate::prelude::WidgetExt>(w: &impl crate::prelude::WidgetExt) -> bool {
+pub fn is<W: crate::prelude::WidgetBase>(w: &impl crate::prelude::WidgetBase) -> bool {
     W::from_dyn_widget(w).is_some()
 }
 
 /// Check whether a widget is of a certain type
-pub fn is_ptr_of<W: crate::prelude::WidgetExt>(w: *mut fltk_sys::widget::Fl_Widget) -> bool {
+pub fn is_ptr_of<W: crate::prelude::WidgetBase>(w: *mut fltk_sys::widget::Fl_Widget) -> bool {
     use crate::prelude::WidgetBase;
     W::from_dyn_widget(unsafe { &crate::widget::Widget::from_widget_ptr(w) }).is_some()
 }

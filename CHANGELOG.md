@@ -2,7 +2,7 @@
 
 
 ### [1.3.25] - Unreleased
-- Add `WidgetExt::from_dyn_widget()`.
+- Add `WidgetBase::from_dyn_widget() ad from_dyn_widget_ptr()`.
 - Add `utils::is<WidgetExt>(w) and is_ptr_of()`.
 - Add `WidgetExt::image_ref() and deimage_ref()`.
 - Mark `WidgetExt::as_widget_ptr() and ImageExt::as_image_ptr()` as safe.
