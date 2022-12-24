@@ -1604,6 +1604,16 @@ pub unsafe trait ImageExt {
     unsafe fn into_image<I: ImageExt>(self) -> I
     where
         Self: Sized;
+    #[doc(hidden)]
+    /// Cast an image back to its original type
+    fn from_dyn_image_ptr(_p: *mut fltk_sys::image::Fl_Image) -> Option<Self> where Self: Sized {
+        None
+    }
+    #[doc(hidden)]
+    /// Cast an image back to its original type
+    fn from_dyn_image<I: ImageExt>(_i: &I) -> Option<Self> where Self: Sized {
+        None
+    }
 }
 
 /// Defines the methods implemented by all surface types, currently `ImageSurface`

@@ -212,6 +212,24 @@ macro_rules! impl_image_ext {
                 unsafe fn into_image<I: ImageExt>(self) -> I {
                     I::from_image_ptr(self.inner as *mut _)
                 }
+
+                fn from_dyn_image_ptr(p: *mut fltk_sys::image::Fl_Image) -> Option<Self> {
+                    unsafe {
+                        let ptr = [<$flname _from_dyn_ptr>](p);
+                        if ptr.is_null() {
+                            None
+                        } else {
+                            Some($name {
+                                inner: ptr as *mut $flname,
+                                refcount: std::sync::atomic::AtomicUsize::new(1),
+                            })
+                        }
+                    }
+                }
+
+                fn from_dyn_image<I: ImageExt>(i: &I) -> Option<Self> {
+                    Self::from_dyn_image_ptr(i.as_image_ptr())
+                }
             }
         }
     };
