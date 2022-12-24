@@ -192,10 +192,10 @@ impl Scroll {
         unsafe { Fl_Scroll_yposition(self.inner) as i32 }
     }
 
-    /// Scrolls from `from` to `to`
-    pub fn scroll_to(&mut self, from: i32, to: i32) {
+    /// Scrolls to `x` and `y`
+    pub fn scroll_to(&mut self, x: i32, y: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scroll_to(self.inner, from as i32, to as i32) }
+        unsafe { Fl_Scroll_scroll_to(self.inner, x as i32, y as i32) }
     }
 
     /// Gets the scrollbar size
