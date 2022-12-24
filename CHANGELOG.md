@@ -4,7 +4,7 @@
 ### [1.3.25] - Unreleased
 - Add `WidgetBase::from_dyn_widget() ad from_dyn_widget_ptr()`.
 - Add `utils::is<WidgetExt>(w) and is_ptr_of()`.
-- Add `WidgetExt::image_ref() and deimage_ref()`.
+- Add `WidgetExt::image_mut() and deimage_mut()`.
 - Mark `WidgetExt::as_widget_ptr() and ImageExt::as_image_ptr()` as safe.
 - Pull FLTK fixes.
 

@@ -736,7 +736,7 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn image_ref(&self) -> Option<&mut $crate::image::Image> {
+                fn image_mut(&self) -> Option<&mut $crate::image::Image> {
                     assert!(!self.was_deleted());
                     unsafe {
                         let image_ptr = [<$flname _image>](self.inner);
@@ -806,7 +806,7 @@ macro_rules! impl_widget_ext {
                     }
                 }
 
-                fn deimage_ref(&self) -> Option<&mut $crate::image::Image> {
+                fn deimage_mut(&self) -> Option<&mut $crate::image::Image> {
                     assert!(!self.was_deleted());
                     unsafe {
                         let image_ptr = [<$flname _deimage>](self.inner);
@@ -1330,8 +1330,8 @@ macro_rules! impl_widget_ext_via {
                 self.$member.image()
             }
 
-            fn image_ref(&self) -> Option<&mut $crate::image::Image> {
-                self.$member.image_ref()
+            fn image_mut(&self) -> Option<&mut $crate::image::Image> {
+                self.$member.image_mut()
             }
 
             fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
@@ -1346,8 +1346,8 @@ macro_rules! impl_widget_ext_via {
                 self.$member.deimage()
             }
 
-            fn deimage_ref(&self) -> Option<&mut $crate::image::Image> {
-                self.$member.deimage_ref()
+            fn deimage_mut(&self) -> Option<&mut $crate::image::Image> {
+                self.$member.deimage_mut()
             }
 
             fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, mut cb: F) {
