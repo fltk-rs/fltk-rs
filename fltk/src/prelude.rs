@@ -438,11 +438,15 @@ pub unsafe trait WidgetExt {
         unimplemented!();
     }
     /// Get a reference type of the widget's image
-    fn image_mut(&self) -> Option<&mut crate::image::Image> {
+    /// # Safety
+    /// The widget needs to be still around when the image is accessed
+    unsafe fn image_mut(&self) -> Option<&mut crate::image::Image> {
         None
     }
     /// Get a reference type of the widget's deactivated image
-    fn deimage_mut(&self) -> Option<&mut crate::image::Image> {
+    /// # Safety
+    /// The widget needs to be still around when the image is accessed
+    unsafe fn deimage_mut(&self) -> Option<&mut crate::image::Image> {
         None
     }
 }

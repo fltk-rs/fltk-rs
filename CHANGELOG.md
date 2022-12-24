@@ -1,7 +1,7 @@
 # Changelog
 
 
-### [1.3.25] - Unreleased
+### [1.3.25] - 2022-12-25
 - Add `WidgetBase::from_dyn_widget() ad from_dyn_widget_ptr()`.
 - Add `utils::is<WidgetExt>(w) and is_ptr_of()`.
 - Add `WidgetExt::image_mut() and deimage_mut()`.

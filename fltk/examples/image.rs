@@ -14,6 +14,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // // To remove an image
     // frame.set_image(None::<SharedImage>);
 
+    wind.end();
     wind.make_resizable(true);
     wind.show();
 
