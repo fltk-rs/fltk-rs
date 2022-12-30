@@ -235,7 +235,7 @@ $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcur
 ```
 For RHEL-based GUI distributions, that means running:
 ```ignore
-$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel
+$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libstdc++-static
 ```
 For Arch-based GUI distributions, that means running:
 ```ignore
