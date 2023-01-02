@@ -1,8 +1,13 @@
 # Changelog
 
 
+### [1.3.26] - Unreleased
+- Fix building on macos when using the use-wayland feature flag.
+- Update FLTK.
+- Update ttf-parser to 0.18.
+
 ### [1.3.25] - 2022-12-25
-- Add `WidgetBase::from_dyn_widget() ad from_dyn_widget_ptr()`.
+- Add `WidgetBase::from_dyn_widget() and from_dyn_widget_ptr()`.
 - Add `utils::is<WidgetExt>(w) and is_ptr_of()`.
 - Add `WidgetExt::image_mut() and deimage_mut()`.
 - Mark `WidgetExt::as_widget_ptr() and ImageExt::as_image_ptr()` as safe.

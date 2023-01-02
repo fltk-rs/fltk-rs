@@ -134,6 +134,17 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
                 dst.define("OPTION_USE_CAIRO", "ON");
                 // dst.define("FLTK_USE_CAIROXLIB", "ON");
             }
+            if cfg!(feature = "use-wayland") {
+                dst.define("OPTION_USE_WAYLAND", "ON");
+                dst.define("OPTION_ALLOW_GTK_PLUGIN", "OFF");
+                if let Ok(wayland_only) = std::env::var("CFLTK_WAYLAND_ONLY") {
+                    if wayland_only == "1" {
+                        dst.define("OPTION_WAYLAND_ONLY", "ON");
+                    }
+                }
+            } else {
+                dst.define("OPTION_USE_WAYLAND", "OFF");
+            }
         }
 
         if target_triple.contains("unknown-linux-musl") {
@@ -143,20 +154,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("HAVE_STRLCAT", "False");
         }
 
-        if cfg!(feature = "no-gdiplus") {
-            dst.define("OPTION_USE_GDIPLUS", "OFF");
-        }
-
-        if cfg!(feature = "use-wayland") {
-            dst.define("OPTION_USE_WAYLAND", "ON");
-            dst.define("OPTION_ALLOW_GTK_PLUGIN", "OFF");
-            if let Ok(wayland_only) = std::env::var("CFLTK_WAYLAND_ONLY") {
-                if wayland_only == "1" {
-                    dst.define("OPTION_WAYLAND_ONLY", "ON");
-                }
+        if target_triple.contains("windows") {
+            if cfg!(feature = "no-gdiplus") {
+                dst.define("OPTION_USE_GDIPLUS", "OFF");
             }
-        } else {
-            dst.define("OPTION_USE_WAYLAND", "OFF");
         }
 
         if cfg!(feature = "single-threaded") {
