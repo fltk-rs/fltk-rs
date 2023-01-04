@@ -154,10 +154,8 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("HAVE_STRLCAT", "False");
         }
 
-        if target_triple.contains("windows") {
-            if cfg!(feature = "no-gdiplus") {
-                dst.define("OPTION_USE_GDIPLUS", "OFF");
-            }
+        if target_triple.contains("windows") && cfg!(feature = "no-gdiplus") {
+            dst.define("OPTION_USE_GDIPLUS", "OFF");
         }
 
         if cfg!(feature = "single-threaded") {

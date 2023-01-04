@@ -215,7 +215,7 @@ macro_rules! impl_image_ext {
 
                 fn from_dyn_image_ptr(p: *mut fltk_sys::image::Fl_Image) -> Option<Self> {
                     unsafe {
-                        let ptr = [<$flname _from_dyn_ptr>](p);
+                        let ptr = [<$flname _from_dyn_ptr>](p as _);
                         if ptr.is_null() {
                             None
                         } else {
