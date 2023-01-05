@@ -1,7 +1,7 @@
 # Changelog
 
 
-### [1.3.26] - Unreleased
+### [1.3.26] - 2022-01-05
 - Add newly-added CallbackTrigger::Closed.
 - Add app::callback_reason().
 - Add enums::CallbackReason.
