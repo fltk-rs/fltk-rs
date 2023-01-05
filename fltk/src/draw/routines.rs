@@ -994,3 +994,10 @@ pub fn draw_rounded_rect(x: i32, y: i32, w: i32, h: i32, r: i32) {
 pub fn draw_rounded_rectf(x: i32, y: i32, w: i32, h: i32, r: i32) {
     unsafe { Fl_rounded_rectf(x, y, w, h, r) }
 }
+
+/// Draws a filled circle
+pub fn draw_circle_fill(x: i32, y: i32, d: i32, c: Color) {
+    unsafe {
+        Fl_draw_circle(x, y, d, c.bits());
+    }
+}

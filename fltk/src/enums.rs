@@ -1010,7 +1010,40 @@ bitflags::bitflags! {
         const EnterKeyAlways = 10;
         /// Enter Key and Changed
         const EnterKeyChanged = 11;
+        /// A child widget is closed (in a Tabs widget)
+        const Closed = 16;
     }
+}
+
+/// Defines the callback reasons which can be queried using `app::callback_reason()`.
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub enum CallbackReason {
+    /// Unknown reason
+    Unknown,
+    /// Item was selected
+    Selected,
+    /// Item was deselected
+    Deselected,
+    /// Item was reselected
+    Reselected,
+    /// Item was opened
+    Opened,
+    /// Item was closed
+    Closed,
+    /// Item was dragged
+    Dragged,
+    /// Operation cancelled
+    Cancelled,
+    /// Item was changed
+    Changed,
+    /// Item got focus
+    GotFocus,
+    /// Item lost focus
+    LostFocus,
+    /// Item released
+    Released,
 }
 
 /// Defines the cursor styles supported by fltk

@@ -707,3 +707,6 @@ extern "C" {
         b: *mut ::std::os::raw::c_uchar,
     );
 }
+extern "C" {
+    pub fn Fl_callback_reason() -> ::std::os::raw::c_int;
+}

@@ -2,6 +2,10 @@
 
 
 ### [1.3.26] - Unreleased
+- Add newly-added CallbackTrigger::Closed.
+- Add app::callback_reason().
+- Add enums::CallbackReason.
+= Add draw::draw_circle_fill().
 - Fix building on macos when using the use-wayland feature flag.
 - Update FLTK.
 - Update ttf-parser to 0.18.

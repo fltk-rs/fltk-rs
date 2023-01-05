@@ -287,6 +287,14 @@ extern "C" {
     pub fn Fl_circle(x: f64, y: f64, r: f64);
 }
 extern "C" {
+    pub fn Fl_draw_circle(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        d: ::std::os::raw::c_int,
+        c: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
     pub fn Fl_end_points();
 }
 extern "C" {
