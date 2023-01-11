@@ -12,6 +12,11 @@ fn main() {
     let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
     let target_triple = env::var("TARGET").unwrap();
     let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap();
+    
+    // hack for recent build failure with cross-rs, as of 2023-01-12
+    if env::var("CROSS_SYSROOT").is_ok() {
+        env::remove_var("CROSS_SYSROOT");
+    }
 
     println!("cargo:rerun-if-changed=build/android.rs");
     println!("cargo:rerun-if-changed=build/bundled.rs");
