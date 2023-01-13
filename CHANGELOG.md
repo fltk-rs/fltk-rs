@@ -1,11 +1,11 @@
 # Changelog
 
 
-### [1.3.27] - Unreleased
+### [1.3.27] - 2023-01-14
 - Pull FLTK fixes.
 - Add hack to fix builds with cross-rs.
 
-### [1.3.26] - 2022-01-05
+### [1.3.26] - 2023-01-05
 - Add newly-added CallbackTrigger::Closed.
 - Add app::callback_reason().
 - Add enums::CallbackReason.
