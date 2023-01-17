@@ -481,6 +481,17 @@ impl Color {
         Color::from_rgbi(val)
     }
 
+    #[cfg(feature = "enable-glwindow")]
+    /// Returns a color from RGB
+    pub const fn from_rgba(r: u8, g: u8, b: u8, a: u8) -> Color {
+        let r = r as u32;
+        let g = g as u32;
+        let b = b as u32;
+        let a = a as u32;
+        let val: u32 = ((r & 0xff) << 24) + ((g & 0xff) << 16) + ((b & 0xff) << 8) + (a & 0xff);
+        Color::from_rgbi(val)
+    }
+
     /// Get a color from an RGBI value, the I stands for the Fltk colormap index.
     pub const fn from_rgbi(val: u32) -> Color {
         let mut c = Color::Black;
@@ -513,29 +524,53 @@ impl Color {
 
     /// Returns a color from hex or decimal
     pub const fn from_u32(val: u32) -> Color {
-        let (r, g, b) = utils::hex2rgb(val);
-        Color::from_rgb(r, g, b)
+        #[cfg(feature = "enable-glwindow")]
+        {
+            let (r, g, b, a) = utils::hex2rgba(val);
+            Color::from_rgba(r, g, b, a)
+        }
+        #[cfg(not(feature = "enable-glwindow"))]
+        {
+            let (r, g, b) = utils::hex2rgb(val);
+            Color::from_rgb(r, g, b)
+        }
     }
 
     /// Returns a color from hex or decimal
     pub const fn from_hex(val: u32) -> Color {
-        let (r, g, b) = utils::hex2rgb(val);
-        Color::from_rgb(r, g, b)
+        Color::from_u32(val)
     }
 
     /// Return a Color from a hex color format (`#xxxxxx`)
     pub fn from_hex_str(col: &str) -> Result<Color, FltkError> {
-        if !col.starts_with('#') || col.len() != 7 {
-            Err(FltkError::Internal(FltkErrorKind::InvalidColor))
-        } else {
-            Ok(Color::from_hex(u32::from_str_radix(&col[1..7], 16)?))
+        if !col.starts_with('#') || col.len() < 7 {
+            return Err(FltkError::Internal(FltkErrorKind::InvalidColor));
         }
+        let color: Color;
+        #[cfg(not(feature = "enable-glwindow"))]
+        {
+            color = Color::from_hex(u32::from_str_radix(&col[1..7], 16)?);
+        }
+
+        #[cfg(feature = "enable-glwindow")]
+        {
+            color = Color::from_hex(u32::from_str_radix(&col[1..9], 16)?);
+        }
+        Ok(color)
     }
 
     /// Returns the color in hex string format
     pub fn to_hex_str(&self) -> String {
-        let (r, g, b) = self.to_rgb();
-        format!("#{:02x}{:02x}{:02x}", r, g, b)
+        #[cfg(not(feature = "enable-glwindow"))]
+        {
+            let (r, g, b) = self.to_rgb();
+            format!("#{:02x}{:02x}{:02x}", r, g, b)
+        }
+        #[cfg(feature = "enable-glwindow")]
+        {
+            let (r, g, b, a) = self.to_rgba();
+            format!("#{:02x}{:02x}{:02x}{:02x}", r, g, b, a)
+        }
     }
 
     /// Returns a color by index of RGBI
@@ -601,6 +636,17 @@ impl Color {
                 (r, g, b)
             }
         }
+    }
+
+    #[cfg(feature = "enable-glwindow")]
+    /// Get the RGBA value of the color
+    pub fn to_rgba(&self) -> (u8, u8, u8, u8) {
+        let val = self.bits;
+        let r = ((val >> 24) & 0xff) as u8;
+        let g = ((val >> 16) & 0xff) as u8;
+        let b = ((val >> 8) & 0xff) as u8;
+        let a = (val & 0xff) as u8;
+        (r, g, b, a)
     }
 }
 

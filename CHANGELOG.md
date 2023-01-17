@@ -1,6 +1,10 @@
 # Changelog
 
 
+### [1.3.28] - Unreleased
+- Add Color::from_rgba and to_rgba with enable-glwindow feature.
+- Make Color::from_hex, from_hex_str, to_hex_str RGBA aware.
+
 ### [1.3.27] - 2023-01-14
 - Pull FLTK fixes.
 - Add hack to fix builds with cross-rs.
