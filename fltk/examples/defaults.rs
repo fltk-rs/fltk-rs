@@ -16,19 +16,17 @@ fn main() {
     // regular widget code
     let mut win = window::Window::default().with_size(400, 300);
     let frame = frame::Frame::new(0, 0, 400, 200, "Defaults");
-    let mut pack = group::Pack::default()
+    let flex = group::Flex::default()
         .with_size(400, 50)
         .below_of(&frame, 50);
-    pack.set_type(group::PackType::Horizontal);
-    pack.set_spacing(80);
     let mut but1 = button::Button::default().with_label("Button1");
     but1.set_color(enums::Color::Yellow);
     but1.set_down_frame(enums::FrameType::RFlatBox);
+    frame::Frame::default();
     let mut but2 = button::Button::default().with_label("Button2");
     but2.set_color(enums::Color::Yellow);
     but2.set_down_frame(enums::FrameType::RFlatBox);
-    pack.end();
-    pack.auto_layout();
+    flex.end();
 
     win.end();
     win.show();

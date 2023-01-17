@@ -310,6 +310,17 @@ impl Tabs {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tabs_tab_align(self.inner)) }
     }
+
+    /// Auto layout a tabs widget
+    pub fn auto_layout(&mut self) {
+        self.resize_callback(|t, x, y, w, h| {
+            for c in t.clone().into_iter() {
+                if let Some(mut c) = c.as_group() {
+                    c.resize(x, y + 30, w, h - 30);
+                }
+            }
+        });
+    }
 }
 
 /// Creates a tile which can contain widgets
@@ -818,7 +829,7 @@ impl HGrid {
 
 crate::widget_extends!(HGrid, Pack, hpack);
 
-/// A wrapper around a vertical pack, with `auto_layout`ing using the add method
+/// A wrapper around a Flex column
 #[derive(Debug, Clone)]
 pub struct Column {
     p: Flex,
@@ -857,7 +868,7 @@ impl Column {
 
 crate::widget_extends!(Column, Flex, p);
 
-/// A wrapper around a Horizontal pack, with `auto_layout`ing using the add method
+/// A wrapper around a Flex row
 #[derive(Debug, Clone)]
 pub struct Row {
     p: Flex,
@@ -895,8 +906,3 @@ impl Row {
 }
 
 crate::widget_extends!(Row, Flex, p);
-
-/// Experimental group widgets
-pub mod experimental {
-    // use super::*;
-}
