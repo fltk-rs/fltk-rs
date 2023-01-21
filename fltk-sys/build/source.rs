@@ -187,6 +187,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
             .define("FLTK_BUILD_FLUID", "OFF")
+            .define("FLTK_BUILD_FLTK_OPTIONS", "OFF")
             .define("OPTION_LARGE_FILE", "ON")
             .define("OPTION_USE_THREADS", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")
