@@ -1,4 +1,5 @@
-pub(crate) mod oncelock;
+/// A utility module containing a OnceCell and Lazy types
+pub mod oncelock;
 
 use fltk_sys::utils::*;
 use std::ffi::CString;

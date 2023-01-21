@@ -24,6 +24,7 @@ pub mod custom_popup;
 pub mod custom_widgets;
 pub mod defaults;
 pub mod editor;
+pub mod editor2;
 pub mod fb;
 pub mod flex;
 pub mod format_text;
