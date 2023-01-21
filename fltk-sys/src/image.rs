@@ -488,6 +488,131 @@ extern "C" {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct Fl_Anim_GIF_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_draw(
+        arg1: *mut Fl_Anim_GIF_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_draw_ext(
+        arg1: *mut Fl_Anim_GIF_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+        cx: ::std::os::raw::c_int,
+        cy: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_width(arg1: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_height(arg1: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_delete(arg1: *mut Fl_Anim_GIF_Image);
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_count(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_data(
+        self_: *mut Fl_Anim_GIF_Image,
+    ) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_copy(self_: *mut Fl_Anim_GIF_Image) -> *mut Fl_Anim_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_scale(
+        self_: *mut Fl_Anim_GIF_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_fail(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_data_w(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_data_h(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_d(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_ld(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_inactive(self_: *mut Fl_Anim_GIF_Image);
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_Anim_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_new(
+        filename: *const ::std::os::raw::c_char,
+        canvas: *mut ::std::os::raw::c_void,
+        flags: ::std::os::raw::c_ushort,
+    ) -> *mut Fl_Anim_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_from(
+        imagename: *const ::std::os::raw::c_char,
+        data: *const ::std::os::raw::c_uchar,
+        length: ::std::os::raw::c_ulong,
+        canvas: *mut ::std::os::raw::c_void,
+        flags: ::std::os::raw::c_ushort,
+    ) -> *mut Fl_Anim_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_delay(
+        self_: *const Fl_Anim_GIF_Image,
+        frame_: ::std::os::raw::c_int,
+    ) -> f64;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_set_delay(
+        self_: *mut Fl_Anim_GIF_Image,
+        frame: ::std::os::raw::c_int,
+        delay: f64,
+    );
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_is_animated(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_set_speed(self_: *mut Fl_Anim_GIF_Image, speed: f64);
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_speed(self_: *mut Fl_Anim_GIF_Image) -> f64;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_start(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_stop(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_next(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_playing(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct Fl_Pixmap {
     _unused: [u8; 0],
 }

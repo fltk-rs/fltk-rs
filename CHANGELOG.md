@@ -2,6 +2,7 @@
 
 
 ### [1.3.28] - Unreleased
+- Add image::AnimGifImage.
 - Add Color::from_rgba and to_rgba with enable-glwindow feature.
 - Make Color::from_hex, from_hex_str, to_hex_str RGBA aware.
 - Add Tabs::auto_layout().

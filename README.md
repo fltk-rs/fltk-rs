@@ -359,6 +359,7 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
 - BmpImage
 - JpegImage
 - GifImage
+- AnimGifImage
 - PngImage
 - SvgImage
 - Pixmap
