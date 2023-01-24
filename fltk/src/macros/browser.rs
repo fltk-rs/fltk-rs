@@ -27,10 +27,8 @@ macro_rules! impl_browser_ext {
 
                 fn insert(&mut self, line: i32, item: &str) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
                         let item = CString::safe_new(item);
                         unsafe { [<$flname _insert>](self.inner, line as i32, item.as_ptr()) }
-                    }
                 }
 
                 fn insert_with_data<T: Clone + 'static>(&mut self, line: i32, item: &str, data: T) {
