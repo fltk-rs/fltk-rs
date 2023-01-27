@@ -1001,3 +1001,14 @@ pub fn draw_circle_fill(x: i32, y: i32, d: i32, c: Color) {
         Fl_draw_circle(x, y, d, c.bits());
     }
 }
+
+/// Like draw_text, however uses FLTK's `fl_draw` which takes the length of the string, so it doesn't need to allocate
+pub fn draw_text_n(string: &str, x: i32, y: i32) {
+    let len = string.len();
+    if size() == -1 && len == 1 {
+        return;
+    }
+    unsafe {
+        Fl_draw3(string.as_ptr() as _, len as _, x, y)
+    }
+}
