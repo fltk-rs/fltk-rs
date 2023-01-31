@@ -3,6 +3,7 @@
 
 ### [1.3.29] - Unreleased
 - Remove redundant check in Browser::insert.
+- Update FLTK.
 
 ### [1.3.28] - 2023-01-23
 - Add image::AnimGifImage.
