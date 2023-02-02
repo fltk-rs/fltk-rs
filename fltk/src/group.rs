@@ -323,7 +323,8 @@ impl Tabs {
     }
 }
 
-/// Creates a tile which can contain widgets
+/// Creates a tile which can contain widgets. For the tiling to work correctly, the children of a Tile must cover the entire area of the widget, but not overlap. This means that all children must touch each other at their edges, and no gaps can be left inside the Tile.
+/// More info can be found [here](https://www.fltk.org/doc-1.4/classFl__Tile.html#details)
 #[derive(Debug)]
 pub struct Tile {
     inner: *mut Fl_Tile,
