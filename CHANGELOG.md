@@ -1,8 +1,9 @@
 # Changelog
 
 
-### [1.3.29] - Unreleased
+### [1.3.29] - 2023-02-03
 - Remove redundant check in Browser::insert.
+- Pull fix in BrowseMultiFile FileDialog: https://github.com/fltk-rs/fltk-rs/issues/1346.
 - Update FLTK.
 
 ### [1.3.28] - 2023-01-23
