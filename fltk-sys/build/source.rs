@@ -30,7 +30,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/include/cfl_utils.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_macros.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_lock.h");
-    println!("cargo:rerun-if-changed=cfltk/include/cfl_widget.hpp");
+    println!("cargo:rerun-if-changed=cfltk/src/cfl_widget.hpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_lock.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_new.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl.cpp");
@@ -134,6 +134,17 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
                 dst.define("OPTION_USE_CAIRO", "ON");
                 // dst.define("FLTK_USE_CAIROXLIB", "ON");
             }
+            if cfg!(feature = "use-wayland") {
+                dst.define("OPTION_USE_WAYLAND", "ON");
+                dst.define("OPTION_ALLOW_GTK_PLUGIN", "OFF");
+                if let Ok(wayland_only) = std::env::var("CFLTK_WAYLAND_ONLY") {
+                    if wayland_only == "1" {
+                        dst.define("OPTION_WAYLAND_ONLY", "ON");
+                    }
+                }
+            } else {
+                dst.define("OPTION_USE_WAYLAND", "OFF");
+            }
         }
 
         if target_triple.contains("unknown-linux-musl") {
@@ -143,18 +154,8 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             dst.define("HAVE_STRLCAT", "False");
         }
 
-        if cfg!(feature = "no-gdiplus") {
+        if target_triple.contains("windows") && cfg!(feature = "no-gdiplus") {
             dst.define("OPTION_USE_GDIPLUS", "OFF");
-        }
-
-        if cfg!(feature = "use-wayland") {
-            dst.define("OPTION_USE_WAYLAND", "ON");
-            dst.define("OPTION_ALLOW_GTK_PLUGIN", "OFF");
-            if let Ok(wayland_only) = std::env::var("CFLTK_WAYLAND_ONLY") {
-                if wayland_only == "1" {
-                    dst.define("OPTION_WAYLAND_ONLY", "ON");
-                }
-            }
         }
 
         if cfg!(feature = "single-threaded") {
@@ -186,6 +187,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
             .define("FLTK_BUILD_EXAMPLES", "OFF")
             .define("FLTK_BUILD_TEST", "OFF")
             .define("FLTK_BUILD_FLUID", "OFF")
+            .define("FLTK_BUILD_FLTK_OPTIONS", "OFF")
             .define("OPTION_LARGE_FILE", "ON")
             .define("OPTION_USE_THREADS", "ON")
             .define("OPTION_BUILD_HTML_DOCUMENTATION", "OFF")

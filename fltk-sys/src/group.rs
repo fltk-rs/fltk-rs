@@ -202,7 +202,7 @@ extern "C" {
     pub fn Fl_Group_when(arg1: *const Fl_Group) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Group_image(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Group_image(arg1: *const Fl_Group) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Group_parent(self_: *const Fl_Group) -> *mut ::std::os::raw::c_void;
@@ -283,7 +283,7 @@ extern "C" {
     pub fn Fl_Group_set_deimage(arg1: *mut Fl_Group, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Group_deimage(arg1: *const Fl_Group) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Group_deimage(arg1: *const Fl_Group) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Group_set_callback(
@@ -312,6 +312,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Group_callback(self_: *const Fl_Group) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Group_set_deletion_callback(
+        self_: *mut Fl_Group,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Group_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Group;
 }
 extern "C" {
     pub fn Fl_Group_current() -> *mut Fl_Group;
@@ -564,7 +576,7 @@ extern "C" {
     pub fn Fl_Pack_when(arg1: *const Fl_Pack) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Pack_image(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Pack_image(arg1: *const Fl_Pack) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Pack_parent(self_: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
@@ -645,7 +657,7 @@ extern "C" {
     pub fn Fl_Pack_set_deimage(arg1: *mut Fl_Pack, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Pack_deimage(arg1: *const Fl_Pack) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Pack_deimage(arg1: *const Fl_Pack) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Pack_set_callback(
@@ -674,6 +686,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pack_callback(self_: *const Fl_Pack) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Pack_set_deletion_callback(
+        self_: *mut Fl_Pack,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Pack_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Pack;
 }
 extern "C" {
     pub fn Fl_Pack_spacing(self_: *mut Fl_Pack) -> ::std::os::raw::c_int;
@@ -926,7 +950,7 @@ extern "C" {
     pub fn Fl_Scroll_when(arg1: *const Fl_Scroll) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Scroll_image(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Scroll_image(arg1: *const Fl_Scroll) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Scroll_parent(self_: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
@@ -1007,7 +1031,7 @@ extern "C" {
     pub fn Fl_Scroll_set_deimage(arg1: *mut Fl_Scroll, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Scroll_deimage(arg1: *const Fl_Scroll) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Scroll_deimage(arg1: *const Fl_Scroll) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Scroll_set_callback(
@@ -1036,6 +1060,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Scroll_callback(self_: *const Fl_Scroll) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Scroll_set_deletion_callback(
+        self_: *mut Fl_Scroll,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Scroll_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Scroll;
 }
 extern "C" {
     pub fn Fl_Scroll_scrollbar(self_: *mut Fl_Scroll) -> *mut ::std::os::raw::c_void;
@@ -1307,7 +1343,7 @@ extern "C" {
     pub fn Fl_Tabs_when(arg1: *const Fl_Tabs) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Tabs_image(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Tabs_image(arg1: *const Fl_Tabs) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Tabs_parent(self_: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
@@ -1388,7 +1424,7 @@ extern "C" {
     pub fn Fl_Tabs_set_deimage(arg1: *mut Fl_Tabs, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Tabs_deimage(arg1: *const Fl_Tabs) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Tabs_deimage(arg1: *const Fl_Tabs) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Tabs_set_callback(
@@ -1417,6 +1453,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tabs_callback(self_: *const Fl_Tabs) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Tabs_set_deletion_callback(
+        self_: *mut Fl_Tabs,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Tabs_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Tabs;
 }
 extern "C" {
     pub fn Fl_Tabs_value(self_: *mut Fl_Tabs) -> *mut Fl_Widget;
@@ -1690,7 +1738,7 @@ extern "C" {
     pub fn Fl_Tile_when(arg1: *const Fl_Tile) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Tile_image(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Tile_image(arg1: *const Fl_Tile) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Tile_parent(self_: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
@@ -1771,7 +1819,7 @@ extern "C" {
     pub fn Fl_Tile_set_deimage(arg1: *mut Fl_Tile, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Tile_deimage(arg1: *const Fl_Tile) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Tile_deimage(arg1: *const Fl_Tile) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Tile_set_callback(
@@ -1800,6 +1848,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tile_callback(self_: *const Fl_Tile) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Tile_set_deletion_callback(
+        self_: *mut Fl_Tile,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Tile_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Tile;
 }
 extern "C" {
     pub fn Fl_Tile_begin(self_: *mut Fl_Tile);
@@ -2046,7 +2106,7 @@ extern "C" {
     pub fn Fl_Wizard_when(arg1: *const Fl_Wizard) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Wizard_image(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Wizard_image(arg1: *const Fl_Wizard) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Wizard_parent(self_: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
@@ -2127,7 +2187,7 @@ extern "C" {
     pub fn Fl_Wizard_set_deimage(arg1: *mut Fl_Wizard, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Wizard_deimage(arg1: *const Fl_Wizard) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Wizard_deimage(arg1: *const Fl_Wizard) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Wizard_set_callback(
@@ -2156,6 +2216,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Wizard_callback(self_: *const Fl_Wizard) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Wizard_set_deletion_callback(
+        self_: *mut Fl_Wizard,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Wizard_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Wizard;
 }
 extern "C" {
     pub fn Fl_Wizard_next(arg1: *mut Fl_Wizard);
@@ -2432,7 +2504,7 @@ extern "C" {
     pub fn Fl_Color_Chooser_when(arg1: *const Fl_Color_Chooser) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Color_Chooser_image(arg1: *const Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Color_Chooser_image(arg1: *const Fl_Color_Chooser) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Color_Chooser_parent(self_: *const Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
@@ -2537,7 +2609,8 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Color_Chooser_deimage(arg1: *const Fl_Color_Chooser) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Color_Chooser_deimage(arg1: *const Fl_Color_Chooser)
+        -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Color_Chooser_set_callback(
@@ -2566,6 +2639,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Color_Chooser_callback(self_: *const Fl_Color_Chooser) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_set_deletion_callback(
+        self_: *mut Fl_Color_Chooser,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Color_Chooser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Color_Chooser;
 }
 extern "C" {
     pub fn Fl_Color_Chooser_r(self_: *mut Fl_Color_Chooser) -> f64;
@@ -2841,7 +2926,7 @@ extern "C" {
     pub fn Fl_Flex_when(arg1: *const Fl_Flex) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Flex_image(arg1: *const Fl_Flex) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Flex_image(arg1: *const Fl_Flex) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Flex_parent(self_: *const Fl_Flex) -> *mut ::std::os::raw::c_void;
@@ -2922,7 +3007,7 @@ extern "C" {
     pub fn Fl_Flex_set_deimage(arg1: *mut Fl_Flex, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Flex_deimage(arg1: *const Fl_Flex) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Flex_deimage(arg1: *const Fl_Flex) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Flex_set_callback(
@@ -2951,6 +3036,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Flex_callback(self_: *const Fl_Flex) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Flex_set_deletion_callback(
+        self_: *mut Fl_Flex,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Flex_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Flex;
 }
 extern "C" {
     pub fn Fl_Flex_set_size(self_: *mut Fl_Flex, w: *mut Fl_Widget, size: ::std::os::raw::c_int);

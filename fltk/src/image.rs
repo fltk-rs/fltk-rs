@@ -413,6 +413,176 @@ impl GifImage {
     }
 }
 
+bitflags::bitflags! {
+    /// Defines AnimGifImage flags
+    pub struct AnimGifImageFlags: u16 {
+        /// No Event
+        const None = 0;
+        /// This flag indicates to the loader that it should not start
+        /// the animation immediately after successful load, which is
+        /// the default.
+        /// It can be started later using the \ref start() method.
+        const DONT_START = 1;
+        /// This flag indicates to the loader that it should not
+        /// resize the canvas widget of the animation to the dimensions
+        /// of the animation, which is the default.
+        /// Needed for special use cases.
+        const DONT_RESIZE_CANVAS = 2;
+        /// This flag indicates to the loader that it should not
+        /// set the animation as \ref image() member of the canvas widget,
+        /// which is the default.
+        /// Needed for special use cases.
+        const DONT_SET_AS_IMAGE = 4;
+        /// Often frames change just a small area of the animation canvas.
+        /// This flag indicates to the loader to try using less memory
+        /// by storing frame data not as canvas-sized images but use the
+        /// sizes defined in the GIF file.
+        /// The drawbacks are higher cpu usage during playback and maybe
+        //// minor artefacts when resized.\
+        const OPTIMIZE_MEMORY = 8;
+        /// This flag can be used to print informations about the decoding process to the console.
+        const LOG_FLAG = 64;
+        /// This flag can be used to print even more informations about the decoding process to the console.
+        const DEBUG_FLAG = 128;
+    }
+}
+
+/// Creates a struct holding an animated GIF image
+#[derive(Debug)]
+pub struct AnimGifImage {
+    inner: *mut Fl_Anim_GIF_Image,
+    refcount: AtomicUsize,
+}
+
+crate::macros::image::impl_image_ext!(AnimGifImage, Fl_Anim_GIF_Image);
+
+impl AnimGifImage {
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
+    pub fn load<P: AsRef<std::path::Path>, W: WidgetExt>(
+        path: P,
+        w: &mut W,
+        flags: AnimGifImageFlags,
+    ) -> Result<AnimGifImage, FltkError> {
+        Self::load_(path.as_ref(), w, flags)
+    }
+
+    fn load_<W: WidgetExt>(
+        path: &std::path::Path,
+        w: &mut W,
+        flags: AnimGifImageFlags,
+    ) -> Result<AnimGifImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        unsafe {
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
+            let temp = CString::new(temp)?;
+            let image_ptr =
+                Fl_Anim_GIF_Image_new(temp.as_ptr(), w.as_widget_ptr() as _, flags.bits());
+            if image_ptr.is_null() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                if Fl_Anim_GIF_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(AnimGifImage {
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
+                })
+            }
+        }
+    }
+
+    /// Loads the image from data/memory
+    /// # Errors
+    /// Errors on invalid format
+    pub fn from_data<W: WidgetExt>(
+        data: &[u8],
+        w: &mut W,
+        flags: AnimGifImageFlags,
+    ) -> Result<AnimGifImage, FltkError> {
+        unsafe {
+            if data.is_empty() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                let x = Fl_Anim_GIF_Image_from(
+                    std::ptr::null(),
+                    data.as_ptr(),
+                    data.len() as _,
+                    w.as_widget_ptr() as _,
+                    flags.bits(),
+                );
+                if x.is_null() {
+                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+                } else {
+                    if Fl_Anim_GIF_Image_fail(x) < 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                    }
+                    Ok(AnimGifImage {
+                        inner: x,
+                        refcount: AtomicUsize::new(1),
+                    })
+                }
+            }
+        }
+    }
+
+    /// Returns the delay of the frame
+    pub fn delay(&self, frame: i32) -> f64 {
+        unsafe { Fl_Anim_GIF_Image_delay(self.inner, frame) }
+    }
+
+    /// Sets the delay of the frame
+    pub fn set_delay(&mut self, frame: i32, delay: f64) {
+        unsafe { Fl_Anim_GIF_Image_set_delay(self.inner, frame, delay) }
+    }
+
+    /// Returns whether the Gif is animated
+    pub fn is_animated(&self) -> bool {
+        unsafe { Fl_Anim_GIF_Image_is_animated(self.inner) != 0 }
+    }
+
+    /// Sets the animation speed
+    pub fn set_speed(&mut self, speed: f64) {
+        unsafe { Fl_Anim_GIF_Image_set_speed(self.inner, speed) }
+    }
+
+    /// Returns the animation speed
+    pub fn speed(&mut self) -> f64 {
+        unsafe { Fl_Anim_GIF_Image_speed(self.inner) }
+    }
+
+    /// Starts the animation
+    pub fn start(&mut self) -> bool {
+        unsafe { Fl_Anim_GIF_Image_start(self.inner) != 0 }
+    }
+
+    /// Stops the animation
+    pub fn stop(&mut self) -> bool {
+        unsafe { Fl_Anim_GIF_Image_stop(self.inner) != 0 }
+    }
+
+    /// Show the next frame if the animation is stopped. Errors if the Gif has no more frames
+    pub fn next(&mut self) -> Result<(), FltkError> {
+        unsafe {
+            if Fl_Anim_GIF_Image_next(self.inner) != 0 {
+                Ok(())
+            } else {
+                Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+            }
+        }
+    }
+
+    /// Returns whether the Gif is playing
+    pub fn playing(&self) -> bool {
+        unsafe { Fl_Anim_GIF_Image_playing(self.inner) != 0 }
+    }
+}
+
 /// Creates a struct holding a XPM image
 #[derive(Debug)]
 pub struct XpmImage {
@@ -909,4 +1079,103 @@ impl RgbImage {
     pub fn scaling_algorithm() -> RgbScaling {
         unsafe { mem::transmute(Fl_Image_scaling_algorithm()) }
     }
+}
+
+/// Creates a struct holding a Windows icon (.ico) image
+#[derive(Debug)]
+pub struct IcoImage {
+    inner: *mut Fl_ICO_Image,
+    refcount: AtomicUsize,
+}
+
+crate::macros::image::impl_image_ext!(IcoImage, Fl_ICO_Image);
+
+impl IcoImage {
+    /// Loads the image from a filesystem path, doesn't check for the validity of the data
+    /// # Errors
+    /// Errors on non-existent path or invalid format
+    pub fn load<P: AsRef<std::path::Path>>(path: P) -> Result<IcoImage, FltkError> {
+        Self::load_(path.as_ref())
+    }
+
+    fn load_(path: &std::path::Path) -> Result<IcoImage, FltkError> {
+        if !path.exists() {
+            return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
+        }
+        unsafe {
+            let temp = path.to_str().ok_or_else(|| {
+                FltkError::Unknown(String::from("Failed to convert path to string"))
+            })?;
+            let temp = CString::new(temp)?;
+            let image_ptr = Fl_ICO_Image_new(temp.as_ptr(), -1);
+            if image_ptr.is_null() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                if Fl_ICO_Image_fail(image_ptr) < 0 {
+                    return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                }
+                Ok(IcoImage {
+                    inner: image_ptr,
+                    refcount: AtomicUsize::new(1),
+                })
+            }
+        }
+    }
+
+    /// Loads the image from data/memory
+    /// # Errors
+    /// Errors on invalid format
+    pub fn from_data(data: &[u8]) -> Result<IcoImage, FltkError> {
+        unsafe {
+            if data.is_empty() {
+                Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+            } else {
+                let x = Fl_ICO_Image_from_data(data.as_ptr(), data.len() as _, -1);
+                if x.is_null() {
+                    Err(FltkError::Internal(FltkErrorKind::ResourceNotFound))
+                } else {
+                    if Fl_ICO_Image_fail(x) < 0 {
+                        return Err(FltkError::Internal(FltkErrorKind::ImageFormatError));
+                    }
+                    Ok(IcoImage {
+                        inner: x,
+                        refcount: AtomicUsize::new(1),
+                    })
+                }
+            }
+        }
+    }
+
+    /// Get the icon directory entry
+    pub fn icon_dir_entry(&self) -> Vec<IconDirEntry> {
+        unsafe {
+            let mut size = 0;
+            let ret = Fl_ICO_Image_icondirentry(self.inner, &mut size) as *mut IconDirEntry;
+            std::slice::from_raw_parts(ret, size as _).to_owned()
+        }
+    }
+}
+
+use std::os::raw::c_int;
+
+/// Icon directory entry
+#[repr(C)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+pub struct IconDirEntry {
+    ///  Image width
+    b_width: c_int,
+    ///  Image height
+    b_height: c_int,
+    ///  Number of colors (0 if  ≥ 8bpp)
+    b_color_count: c_int,
+    ///  Reserved
+    b_reserve: c_int,
+    ///  Color Planes
+    w_planes: c_int,
+    ///  Bits per pixel
+    w_bit_count: c_int,
+    ///  Resource size in bytes
+    dw_bytes_in_res: c_int,
+    ///  Offset to the image
+    dw_image_offset: c_int,
 }

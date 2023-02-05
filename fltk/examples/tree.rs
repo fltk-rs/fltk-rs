@@ -6,7 +6,7 @@ use fltk::{
     enums::Event,
     frame::Frame,
     prelude::*,
-    tree::{Tree, TreeItem, TreeSelect},
+    tree::{Tree, TreeItem, TreeReason, TreeSelect},
     window::Window,
 };
 use std::cell::RefCell;
@@ -46,6 +46,8 @@ impl TreeMouseFocus {
         let t_widget = Tree::new(x, y, width, height, title);
         let previous_focus = Rc::new(RefCell::new(None::<TreeItem>));
         let pfr = Rc::clone(&previous_focus);
+        t_widget.set_callback_reason(TreeReason::Selected);
+        t_widget.set_callback(|_t| println!("clicked an item"));
         t_widget.handle(move |t, e| match e {
             Event::Move => {
                 let (_, mouse_y) = app::event_coords();
@@ -172,18 +174,23 @@ fn main() {
     tree2.add("Second");
     tree2.add("Third");
 
+    tree2.set_trigger(fltk::enums::CallbackTrigger::ReleaseAlways);
+
     wind.make_resizable(true);
     wind.show();
 
-    but.set_callback(move |_| match tree2.get_selected_items() {
-        None => println!("No items selected"),
-        Some(vals) => print!(
-            "In total {} items selected:\n{}",
-            vals.len(),
-            vals.iter()
-                .map(|i| i.label().unwrap() + "\n")
-                .collect::<String>()
-        ),
+    but.set_callback({
+        let tree2 = tree2.clone();
+        move |_| match tree2.get_selected_items() {
+            None => println!("No items selected"),
+            Some(vals) => print!(
+                "In total {} items selected:\n{}",
+                vals.len(),
+                vals.iter()
+                    .map(|i| tree2.item_pathname(&i).unwrap() + "\n")
+                    .collect::<String>()
+            ),
+        }
     });
 
     app.run().unwrap();

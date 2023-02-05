@@ -116,7 +116,7 @@ macro_rules! impl_widget_ext {
                     (x, y)
                 }
 
-                unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
+                fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget {
                     self.inner as *mut fltk_sys::widget::Fl_Widget
                 }
 
@@ -528,14 +528,27 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let img =
-                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                            Some(Box::new(img))
+                            let mut img =
+                                $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            img.increment_arc();
+                            Some(Box::new(img.copy()))
                         }
                     }
                 }
 
-                fn set_deimage<I: ImageExt>(&self, image: Option<I>) {
+                unsafe fn image_mut(&self) -> Option<&mut $crate::image::Image> {
+                    assert!(!self.was_deleted());
+                    let image_ptr = [<$flname _image>](self.inner);
+                    if image_ptr.is_null() {
+                        None
+                    } else {
+                        let img =
+                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                        Some(Box::leak(Box::new(img)))
+                    }
+                }
+
+                fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                     assert!(!self.was_deleted());
                     if let Some(image) = image {
                         assert!(!image.was_deleted());
@@ -583,14 +596,27 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let img =
-                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                            Some(Box::new(img))
+                            let mut img =
+                                $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            img.increment_arc();
+                            Some(Box::new(img.copy()))
                         }
                     }
                 }
 
-                fn set_callback<F: FnMut(&mut Self) + 'static>(&self, cb: F) {
+                unsafe fn deimage_mut(&self) -> Option<&mut $crate::image::Image> {
+                    assert!(!self.was_deleted());
+                    let image_ptr = [<$flname _deimage>](self.inner);
+                    if image_ptr.is_null() {
+                        None
+                    } else {
+                        let img =
+                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                        Some(Box::leak(Box::new(img)))
+                    }
+                }
+
+                fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
                     assert!(!self.was_deleted());
                     unsafe {
                         unsafe extern "C" fn shim(wid: *mut Fl_Widget, data: *mut std::os::raw::c_void) {
@@ -635,7 +661,7 @@ macro_rules! impl_widget_ext {
                 }
 
                 fn is_same<W: WidgetExt>(&self, other: &W) -> bool {
-                    unsafe { self.as_widget_ptr() == other.as_widget_ptr() }
+                    self.as_widget_ptr() == other.as_widget_ptr()
                 }
 
                 fn active(&self) -> bool {
@@ -888,6 +914,27 @@ macro_rules! impl_widget_base {
                 unsafe fn assume_derived(&mut self) {
                     self.is_derived = true
                 }
+
+                fn from_dyn_widget<W: WidgetExt>(w: &W) -> Option<Self> {
+                    Self::from_dyn_widget_ptr(w.as_widget_ptr() as _)
+                }
+
+                fn from_dyn_widget_ptr(w: *mut fltk_sys::widget::Fl_Widget) -> Option<Self> {
+                    let ptr = unsafe { [<$flname _from_dyn_ptr>](w as _) };
+                    if ptr.is_null() {
+                        None
+                    } else {
+                        let tracker = unsafe {
+                            fltk_sys::fl::Fl_Widget_Tracker_new(ptr as *mut fltk_sys::fl::Fl_Widget)
+                        };
+                        assert!(!tracker.is_null());
+                        Some(Self {
+                            inner: ptr as *mut $flname,
+                            tracker,
+                            is_derived: false,
+                        })
+                    }
+                }
             }
         }
     };
@@ -970,7 +1017,7 @@ macro_rules! impl_widget_ext_via {
                 self.$member.measure_label()
             }
 
-            unsafe fn as_widget_ptr(&self) -> $crate::app::WidgetPtr {
+            fn as_widget_ptr(&self) -> $crate::app::WidgetPtr {
                 self.$member.as_widget_ptr()
             }
 
@@ -998,7 +1045,11 @@ macro_rules! impl_widget_ext_via {
                 self.$member.image()
             }
 
-            fn set_deimage<I: ImageExt>(&self, image: Option<I>) {
+            unsafe fn image_mut(&self) -> Option<&mut $crate::image::Image> {
+                self.$member.image_mut()
+            }
+
+            fn set_deimage<I: ImageExt>(&mut self, image: Option<I>) {
                 self.$member.set_deimage(image)
             }
 
@@ -1010,7 +1061,11 @@ macro_rules! impl_widget_ext_via {
                 self.$member.deimage()
             }
 
-            fn set_callback<F: FnMut(&mut Self) + 'static>(&self, mut cb: F) {
+            unsafe fn deimage_mut(&self) -> Option<&mut $crate::image::Image> {
+                self.$member.deimage_mut()
+            }
+
+            fn set_callback<F: FnMut(&mut Self) + 'static>(&mut self, mut cb: F) {
                 let mut widget = self.clone();
                 self.$member.set_callback(move |_| {
                     cb(&mut widget);
@@ -1342,6 +1397,22 @@ macro_rules! impl_widget_base_via {
 
             unsafe fn assume_derived(&mut self) {
                 self.assume_derived()
+            }
+
+            fn from_dyn_widget<W: WidgetExt>(w: &W) -> Self {
+                let $member = <$base>::from_dyn_widget(ptr);
+                Self {
+                    $member,
+                    ..Default::default()
+                }
+            }
+
+            fn from_dyn_widget_ptr(w: *mut fltk_sys::widget::Fl_Widget) -> Self {
+                let $member = <$base>::from_dyn_widget(ptr);
+                Self {
+                    $member,
+                    ..Default::default()
+                }
             }
         }
     };

@@ -71,6 +71,9 @@ extern "C" {
     pub fn Fl_Image_inactive(self_: *mut Fl_Image);
 }
 extern "C" {
+    pub fn Fl_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_Image;
+}
+extern "C" {
     pub fn Fl_Image_set_scaling_algorithm(algorithm: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -147,6 +150,9 @@ extern "C" {
     pub fn Fl_JPEG_Image_inactive(self_: *mut Fl_JPEG_Image);
 }
 extern "C" {
+    pub fn Fl_JPEG_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_JPEG_Image;
+}
+extern "C" {
     pub fn Fl_JPEG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_JPEG_Image;
 }
 extern "C" {
@@ -221,6 +227,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_PNG_Image_inactive(self_: *mut Fl_PNG_Image);
+}
+extern "C" {
+    pub fn Fl_PNG_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_PNG_Image;
 }
 extern "C" {
     pub fn Fl_PNG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_PNG_Image;
@@ -302,6 +311,9 @@ extern "C" {
     pub fn Fl_SVG_Image_inactive(self_: *mut Fl_SVG_Image);
 }
 extern "C" {
+    pub fn Fl_SVG_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_SVG_Image;
+}
+extern "C" {
     pub fn Fl_SVG_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_SVG_Image;
 }
 extern "C" {
@@ -379,6 +391,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_BMP_Image_inactive(self_: *mut Fl_BMP_Image);
+}
+extern "C" {
+    pub fn Fl_BMP_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_BMP_Image;
 }
 extern "C" {
     pub fn Fl_BMP_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_BMP_Image;
@@ -460,6 +475,9 @@ extern "C" {
     pub fn Fl_GIF_Image_inactive(self_: *mut Fl_GIF_Image);
 }
 extern "C" {
+    pub fn Fl_GIF_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_GIF_Image;
+}
+extern "C" {
     pub fn Fl_GIF_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_GIF_Image;
 }
 extern "C" {
@@ -467,6 +485,131 @@ extern "C" {
         data: *const ::std::os::raw::c_uchar,
         len: ::std::os::raw::c_ulong,
     ) -> *mut Fl_GIF_Image;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Anim_GIF_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_draw(
+        arg1: *mut Fl_Anim_GIF_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_draw_ext(
+        arg1: *mut Fl_Anim_GIF_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+        cx: ::std::os::raw::c_int,
+        cy: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_width(arg1: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_height(arg1: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_delete(arg1: *mut Fl_Anim_GIF_Image);
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_count(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_data(
+        self_: *mut Fl_Anim_GIF_Image,
+    ) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_copy(self_: *mut Fl_Anim_GIF_Image) -> *mut Fl_Anim_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_scale(
+        self_: *mut Fl_Anim_GIF_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_fail(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_data_w(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_data_h(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_d(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_ld(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_inactive(self_: *mut Fl_Anim_GIF_Image);
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_Anim_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_new(
+        filename: *const ::std::os::raw::c_char,
+        canvas: *mut ::std::os::raw::c_void,
+        flags: ::std::os::raw::c_ushort,
+    ) -> *mut Fl_Anim_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_from(
+        imagename: *const ::std::os::raw::c_char,
+        data: *const ::std::os::raw::c_uchar,
+        length: ::std::os::raw::c_ulong,
+        canvas: *mut ::std::os::raw::c_void,
+        flags: ::std::os::raw::c_ushort,
+    ) -> *mut Fl_Anim_GIF_Image;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_delay(
+        self_: *const Fl_Anim_GIF_Image,
+        frame_: ::std::os::raw::c_int,
+    ) -> f64;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_set_delay(
+        self_: *mut Fl_Anim_GIF_Image,
+        frame: ::std::os::raw::c_int,
+        delay: f64,
+    );
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_is_animated(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_set_speed(self_: *mut Fl_Anim_GIF_Image, speed: f64);
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_speed(self_: *mut Fl_Anim_GIF_Image) -> f64;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_start(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_stop(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_next(self_: *mut Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Anim_GIF_Image_playing(self_: *const Fl_Anim_GIF_Image) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -537,6 +680,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Pixmap_inactive(self_: *mut Fl_Pixmap);
+}
+extern "C" {
+    pub fn Fl_Pixmap_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_Pixmap;
 }
 extern "C" {
     pub fn Fl_Pixmap_new(D: *const *const ::std::os::raw::c_char) -> *mut Fl_Pixmap;
@@ -612,6 +758,9 @@ extern "C" {
     pub fn Fl_XPM_Image_inactive(self_: *mut Fl_XPM_Image);
 }
 extern "C" {
+    pub fn Fl_XPM_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_XPM_Image;
+}
+extern "C" {
     pub fn Fl_XPM_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_XPM_Image;
 }
 #[repr(C)]
@@ -683,6 +832,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_XBM_Image_inactive(self_: *mut Fl_XBM_Image);
+}
+extern "C" {
+    pub fn Fl_XBM_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_XBM_Image;
 }
 extern "C" {
     pub fn Fl_XBM_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_XBM_Image;
@@ -758,6 +910,9 @@ extern "C" {
     pub fn Fl_PNM_Image_inactive(self_: *mut Fl_PNM_Image);
 }
 extern "C" {
+    pub fn Fl_PNM_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_PNM_Image;
+}
+extern "C" {
     pub fn Fl_PNM_Image_new(filename: *const ::std::os::raw::c_char) -> *mut Fl_PNM_Image;
 }
 #[repr(C)]
@@ -829,6 +984,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tiled_Image_inactive(self_: *mut Fl_Tiled_Image);
+}
+extern "C" {
+    pub fn Fl_Tiled_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_Tiled_Image;
 }
 extern "C" {
     pub fn Fl_Tiled_Image_new(
@@ -906,6 +1064,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_RGB_Image_inactive(self_: *mut Fl_RGB_Image);
+}
+extern "C" {
+    pub fn Fl_RGB_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_RGB_Image;
 }
 extern "C" {
     pub fn Fl_RGB_Image_new(
@@ -1001,6 +1162,9 @@ extern "C" {
     pub fn Fl_Shared_Image_inactive(self_: *mut Fl_Shared_Image);
 }
 extern "C" {
+    pub fn Fl_Shared_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_Shared_Image;
+}
+extern "C" {
     pub fn Fl_Shared_Image_get(
         name: *const ::std::os::raw::c_char,
         W: ::std::os::raw::c_int,
@@ -1012,6 +1176,98 @@ extern "C" {
         rgb: *mut Fl_RGB_Image,
         own_it: ::std::os::raw::c_int,
     ) -> *mut Fl_Shared_Image;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_ICO_Image {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_ICO_Image_draw(
+        arg1: *mut Fl_ICO_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_ICO_Image_draw_ext(
+        arg1: *mut Fl_ICO_Image,
+        X: ::std::os::raw::c_int,
+        Y: ::std::os::raw::c_int,
+        W: ::std::os::raw::c_int,
+        H: ::std::os::raw::c_int,
+        cx: ::std::os::raw::c_int,
+        cy: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_ICO_Image_width(arg1: *mut Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_height(arg1: *mut Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_delete(arg1: *mut Fl_ICO_Image);
+}
+extern "C" {
+    pub fn Fl_ICO_Image_count(self_: *mut Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_data(self_: *mut Fl_ICO_Image) -> *const *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_copy(self_: *mut Fl_ICO_Image) -> *mut Fl_ICO_Image;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_scale(
+        self_: *mut Fl_ICO_Image,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        proportional: ::std::os::raw::c_int,
+        can_expand: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_ICO_Image_fail(self_: *mut Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_data_w(self_: *const Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_data_h(self_: *const Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_d(self_: *const Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_ld(self_: *const Fl_ICO_Image) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_inactive(self_: *mut Fl_ICO_Image);
+}
+extern "C" {
+    pub fn Fl_ICO_Image_from_dyn_ptr(other: *mut Fl_Image) -> *mut Fl_ICO_Image;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_new(
+        filename: *const ::std::os::raw::c_char,
+        id: ::std::os::raw::c_int,
+    ) -> *mut Fl_ICO_Image;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_from_data(
+        bits: *const ::std::os::raw::c_uchar,
+        len: ::std::os::raw::c_ulong,
+        id: ::std::os::raw::c_int,
+    ) -> *mut Fl_ICO_Image;
+}
+extern "C" {
+    pub fn Fl_ICO_Image_icondirentry(
+        self_: *const Fl_ICO_Image,
+        size: *mut ::std::os::raw::c_ulong,
+    ) -> *mut ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_register_images();

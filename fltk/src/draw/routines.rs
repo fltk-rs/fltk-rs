@@ -936,21 +936,30 @@ pub fn draw_rbox(x: i32, y: i32, w: i32, h: i32, max_radius: i32, fill: bool, co
         begin_loop();
     }
     unsafe {
-      for i in 0..len {
-        vertex(0.5 + x + offset.get_unchecked(len - i - 1) * rs, 0.5 + y + offset.get_unchecked(i) * rs);
-    }
-    for i in 0..len {
-        vertex(0.5 + x + offset.get_unchecked(i) * rs, 0.5 + y + h - 1.0 - offset.get_unchecked(len - i - 1) * rs);
-    }
-    for i in 0..len {
-        vertex(
-            0.5 + x + w - 1.0 - offset.get_unchecked(len - i - 1) * rs,
-            0.5 + y + h - 1.0 - offset.get_unchecked(i) * rs,
-        );
-    }
-    for i in 0..len {
-        vertex(0.5 + x + w - 1.0 - offset.get_unchecked(i) * rs, 0.5 + y + offset.get_unchecked(len - i - 1) * rs);
-    }
+        for i in 0..len {
+            vertex(
+                0.5 + x + offset.get_unchecked(len - i - 1) * rs,
+                0.5 + y + offset.get_unchecked(i) * rs,
+            );
+        }
+        for i in 0..len {
+            vertex(
+                0.5 + x + offset.get_unchecked(i) * rs,
+                0.5 + y + h - 1.0 - offset.get_unchecked(len - i - 1) * rs,
+            );
+        }
+        for i in 0..len {
+            vertex(
+                0.5 + x + w - 1.0 - offset.get_unchecked(len - i - 1) * rs,
+                0.5 + y + h - 1.0 - offset.get_unchecked(i) * rs,
+            );
+        }
+        for i in 0..len {
+            vertex(
+                0.5 + x + w - 1.0 - offset.get_unchecked(i) * rs,
+                0.5 + y + offset.get_unchecked(len - i - 1) * rs,
+            );
+        }
     }
     if fill {
         end_polygon();
@@ -974,4 +983,32 @@ pub unsafe fn gl_start() {
 /// Requires OpenGL support, Only works with SingleWindow
 pub unsafe fn gl_finish() {
     fltk_sys::window::Fl_gl_finish();
+}
+
+/// Draws a rounded rectangle
+pub fn draw_rounded_rect(x: i32, y: i32, w: i32, h: i32, r: i32) {
+    unsafe { Fl_rounded_rectf(x, y, w, h, r) }
+}
+
+/// Draws a filled rounded rectangle
+pub fn draw_rounded_rectf(x: i32, y: i32, w: i32, h: i32, r: i32) {
+    unsafe { Fl_rounded_rectf(x, y, w, h, r) }
+}
+
+/// Draws a filled circle
+pub fn draw_circle_fill(x: i32, y: i32, d: i32, c: Color) {
+    unsafe {
+        Fl_draw_circle(x, y, d, c.bits());
+    }
+}
+
+/// Like draw_text, however uses FLTK's `fl_draw` which takes the length of the string, so it doesn't need to allocate
+pub fn draw_text_n(string: &str, x: i32, y: i32) {
+    let len = string.len();
+    if size() == -1 && len == 1 {
+        return;
+    }
+    unsafe {
+        Fl_draw3(string.as_ptr() as _, len as _, x, y)
+    }
 }

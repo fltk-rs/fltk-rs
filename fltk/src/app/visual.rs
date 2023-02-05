@@ -7,6 +7,7 @@ use std::{ffi::CString, mem, os::raw, sync::atomic::Ordering};
 
 /// Set the app scheme
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[non_exhaustive]
 pub enum Scheme {
     /// Base fltk scheming
     Base,
@@ -16,6 +17,8 @@ pub enum Scheme {
     Gtk,
     /// inspired by the Clearlooks Glossy scheme
     Gleam,
+    /// Subset of Dmitrij K's oxy scheme
+    Oxy,
 }
 
 /// sets the scheme of the application
@@ -25,20 +28,24 @@ pub fn set_scheme(scheme: Scheme) {
         Scheme::Gtk => "gtk+",
         Scheme::Gleam => "gleam",
         Scheme::Plastic => "plastic",
+        Scheme::Oxy => "oxy",
     };
     let name_str = CString::safe_new(name_str);
-    unsafe { fl::Fl_set_scheme(name_str.as_ptr()) }
+    unsafe {
+        fl::Fl_set_scheme(name_str.as_ptr());
+    }
 }
 
 /// Gets the scheme of the application
 pub fn scheme() -> Scheme {
     unsafe {
-        use Scheme::{Base, Gleam, Gtk, Plastic};
+        use Scheme::{Base, Gleam, Gtk, Oxy, Plastic};
         match fl::Fl_scheme() {
             0 => Base,
             1 => Gtk,
             2 => Gleam,
             3 => Plastic,
+            4 => Oxy,
             _ => unreachable!(),
         }
     }

@@ -45,7 +45,7 @@ macro_rules! impl_menu_ext {
                             shortcut.bits() as i32,
                             callback,
                             data,
-                            flag as i32,
+                            flag.bits(),
                         )
                     }
                 }
@@ -65,7 +65,7 @@ macro_rules! impl_menu_ext {
                         if self.size() == 0 {
                             0
                         } else {
-                            self.size() - 1 
+                            self.size() - 1
                         }
                     };
                     let temp = CString::safe_new(name);
@@ -88,7 +88,7 @@ macro_rules! impl_menu_ext {
                             shortcut.bits() as i32,
                             callback,
                             data,
-                            flag as i32,
+                            flag.bits(),
                         )
                     }
                 }
@@ -195,7 +195,7 @@ macro_rules! impl_menu_ext {
                     }
                 }
 
-                fn add_choice(&self, text: &str) {
+                fn add_choice(&mut self, text: &str) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
                         let arg2 = CString::safe_new(text);
@@ -344,7 +344,7 @@ macro_rules! impl_menu_ext {
                 fn set_mode(&self, idx: i32, flag: $crate::menu::MenuFlag) {
                     assert!(!self.was_deleted());
                     assert!(self.size() != 0 && idx >= 0 && idx < self.size());
-                    unsafe { [<$flname _set_mode>](self.inner, idx as i32, flag as i32) }
+                    unsafe { [<$flname _set_mode>](self.inner, idx as i32, flag.bits()) }
                 }
 
                 fn end(&self) {
@@ -384,6 +384,27 @@ macro_rules! impl_menu_ext {
                 unsafe fn set_menu(&self, item: $crate::menu::MenuItem) {
                     assert!(!self.was_deleted());
                     [<$flname _set_menu>](self.inner, item.inner)
+                }
+
+                fn item_pathname(&self, item: Option<&$crate::menu::MenuItem>) -> Result<String, FltkError> {
+                    assert!(!self.was_deleted());
+                    let item = if let Some(item) = item {
+                        item.inner
+                    } else {
+                        std::ptr::null_mut()
+                    };
+                    let mut temp = vec![0u8; 256];
+                    unsafe {
+                        let ret = [<$flname _item_pathname>](self.inner, temp.as_mut_ptr() as _, 256, item);
+                        if ret == 0 {
+                            if let Some(pos) = temp.iter().position(|x| *x == 0) {
+                                temp = temp.split_at(pos).0.to_vec();
+                            }
+                            Ok(String::from_utf8_lossy(&temp).to_string())
+                        } else {
+                            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+                        }
+                    }
                 }
             }
         }

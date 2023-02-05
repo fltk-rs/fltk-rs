@@ -202,7 +202,7 @@ extern "C" {
     pub fn Fl_Table_when(arg1: *const Fl_Table) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_image(arg1: *const Fl_Table) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_image(arg1: *const Fl_Table) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Table_parent(self_: *const Fl_Table) -> *mut ::std::os::raw::c_void;
@@ -283,7 +283,7 @@ extern "C" {
     pub fn Fl_Table_set_deimage(arg1: *mut Fl_Table, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_deimage(arg1: *const Fl_Table) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_deimage(arg1: *const Fl_Table) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Table_set_callback(
@@ -312,6 +312,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_callback(self_: *const Fl_Table) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Table_set_deletion_callback(
+        self_: *mut Fl_Table,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Table;
 }
 extern "C" {
     pub fn Fl_Table_begin(self_: *mut Fl_Table);
@@ -810,7 +822,7 @@ extern "C" {
     pub fn Fl_Table_Row_when(arg1: *const Fl_Table_Row) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Table_Row_image(arg1: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_Row_image(arg1: *const Fl_Table_Row) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Table_Row_parent(self_: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
@@ -894,7 +906,7 @@ extern "C" {
     pub fn Fl_Table_Row_set_deimage(arg1: *mut Fl_Table_Row, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Table_Row_deimage(arg1: *const Fl_Table_Row) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Table_Row_deimage(arg1: *const Fl_Table_Row) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Table_Row_set_callback(
@@ -923,6 +935,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Table_Row_callback(self_: *const Fl_Table_Row) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Table_Row_set_deletion_callback(
+        self_: *mut Fl_Table_Row,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Table_Row_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Table_Row;
 }
 extern "C" {
     pub fn Fl_Table_Row_begin(self_: *mut Fl_Table_Row);

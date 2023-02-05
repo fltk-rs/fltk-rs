@@ -1,8 +1,66 @@
 # Changelog
 
 
-## [1.3.21] - Unreleased
+### [1.3.29] - Unreleased
+- Fix memory issue with WidgetExt::set_image and set_deimage caused in version 1.3.24.
+- Update Tile docs.
+- Add BrowserExt::selected_items().
+- Pull FLTK fixes.
+
+### [1.3.29] - 2023-02-03
+- Remove redundant check in Browser::insert.
+- Pull fix in BrowseMultiFile FileDialog: https://github.com/fltk-rs/fltk-rs/issues/1346.
+- Update FLTK.
+
+### [1.3.28] - 2023-01-23
+- Add image::AnimGifImage.
+- Add Tabs::auto_layout().
+- Add Color::from_rgba and to_rgba with enable-glwindow feature.
+- Make Color::from_hex, from_hex_str, to_hex_str RGBA aware.
+- Expose internal utils::oncelock module.
+
+### [1.3.27] - 2023-01-14
+- Pull FLTK fixes.
+- Add hack to fix builds with cross-rs.
+
+### [1.3.26] - 2023-01-05
+- Add newly-added CallbackTrigger::Closed.
+- Add app::callback_reason().
+- Add enums::CallbackReason.
+= Add draw::draw_circle_fill().
+- Fix building on macos when using the use-wayland feature flag.
+- Update FLTK.
+- Update ttf-parser to 0.18.
+
+### [1.3.25] - 2022-12-25
+- Add `WidgetBase::from_dyn_widget() and from_dyn_widget_ptr()`.
+- Add `utils::is<WidgetExt>(w) and is_ptr_of()`.
+- Add `WidgetExt::image_mut() and deimage_mut()`.
+- Mark `WidgetExt::as_widget_ptr() and ImageExt::as_image_ptr()` as safe.
+- Pull FLTK fixes.
+
+### [1.3.24] - 2022-12-15
+- Add image::IcoImage.
+- Use Fl_Widget::bind_image and bind_deimage internally.
+- Relax GlobalState callback. (Fn to FnMut)
+- Add WidgetExt::as_base_widget.
+- Pull FLTK fixes.
+
+## [1.3.23] - 2022-12-02
+- Fix docs.rs build!
+
+## [1.3.22] - 2022-12-02
+- Adds newly added Oxy scheme.
+- Add MenuExt::item_pathname.
+- Add draw_rounded_rect and draw_rounded_rectf.
+- Add app::WidgetId trait.
+- Pull FLTK fixes.
+
+## [1.3.21] - 2022-11-24
 - Impl HasRawDisplayHandle for windows.
+- Fix MenuItem::set_callback().
+- Add MenuItem::set_shortcut and set_flag.
+- Use bitflags for MenuFlag.
 
 ## [1.3.20] - 2022-11-13
 - Add ColorChooser::set_tuple_rgb by @ConsoleC137.

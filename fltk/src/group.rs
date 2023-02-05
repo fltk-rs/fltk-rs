@@ -1,6 +1,6 @@
 use crate::enums::Align;
-use crate::prelude::*;
 use crate::enums::{Color, FrameType};
+use crate::prelude::*;
 use crate::utils::FlString;
 use crate::widget::Widget;
 use fltk_sys::group::*;
@@ -182,10 +182,10 @@ impl Scroll {
         unsafe { Fl_Scroll_yposition(self.inner) as i32 }
     }
 
-    /// Scrolls from `from` to `to`
-    pub fn scroll_to(&self, from: i32, to: i32) {
+    /// Scrolls to `x` and `y`
+    pub fn scroll_to(&mut self, x: i32, y: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scroll_to(self.inner, from as i32, to as i32) }
+        unsafe { Fl_Scroll_scroll_to(self.inner, x as i32, y as i32) }
     }
 
     /// Gets the scrollbar size
@@ -300,9 +300,21 @@ impl Tabs {
         assert!(!self.was_deleted());
         unsafe { mem::transmute(Fl_Tabs_tab_align(self.inner)) }
     }
+
+    /// Auto layout a tabs widget
+    pub fn auto_layout(&mut self) {
+        self.resize_callback(|t, x, y, w, h| {
+            for c in t.clone().into_iter() {
+                if let Some(mut c) = c.as_group() {
+                    c.resize(x, y + 30, w, h - 30);
+                }
+            }
+        });
+    }
 }
 
-/// Creates a tile which can contain widgets
+/// Creates a tile which can contain widgets. For the tiling to work correctly, the children of a Tile must cover the entire area of the widget, but not overlap. This means that all children must touch each other at their edges, and no gaps can be left inside the Tile.
+/// More info can be found [here](https://www.fltk.org/doc-1.4/classFl__Tile.html#details)
 #[derive(Debug)]
 pub struct Tile {
     inner: *mut Fl_Tile,
@@ -412,7 +424,7 @@ impl ColorChooser {
             }
         }
     }
-    
+
     /// Set the base color of the ColorChooser. Returns an error on failure to change the color (wrong input)
     pub fn set_tuple_rgb(&mut self, (r, g, b): (u8, u8, u8)) -> Result<(), FltkError> {
         assert!(!self.was_deleted());

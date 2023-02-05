@@ -28,7 +28,7 @@ Why choose FLTK?
 - Single executable. No DLLs to deploy.
 - Supports old architectures. 
 - FLTK's permissive license which allows static linking for closed-source applications.
-- Themeability (4 supported schemes: Base, GTK, Plastic and Gleam), and additional theming using [fltk-theme](https://crates.io/crates/fltk-theme).
+- Themeability (5 supported schemes: Base, GTK, Plastic, Gleam and Oxy), and additional theming using [fltk-theme](https://crates.io/crates/fltk-theme).
 - Provides around 80 customizable widgets. 
 - Has inbuilt image support.
 
@@ -194,11 +194,12 @@ For an alternative event handling mechanism using `on_<event>` methods, check th
 
 ### Theming
 
-FLTK offers 4 application schemes:
+FLTK offers 5 application schemes:
 - Base
 - Gtk
 - Gleam
 - Plastic
+- Oxy
 
 (Additional theming can be found in the [fltk-theme](https://crates.io/crates/fltk-theme) crate)
 
@@ -232,7 +233,7 @@ $ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcur
 ```
 For RHEL-based GUI distributions, that means running:
 ```
-$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel
+$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libstdc++-static
 ```
 For Arch-based GUI distributions, that means running:
 ```
@@ -329,10 +330,6 @@ Using custom theming and also FLTK provided default schemes like Gtk:
 
 - ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/editor.jpg)
 
-- [terminal](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/terminal.rs)
-
-- ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/terminal.jpg)
-
 - [table](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/table.rs)
 
 - ![alt_test](https://github.com/fltk-rs/fltk-rs/raw/master/screenshots/table.jpg)
@@ -362,6 +359,7 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
 - BmpImage
 - JpegImage
 - GifImage
+- AnimGifImage
 - PngImage
 - SvgImage
 - Pixmap
@@ -496,6 +494,7 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
 - [FLTK Rust: Customizing your app and widgets](https://www.youtube.com/watch?v=uCZl0PuMVGo)
 - [FLTK Rust: fltk-table, a boilerplate-less table creating crate](https://www.youtube.com/watch?v=pVJ8Yq1kDGs)
 - [FLTK Rust: intro into the fltk-evented crate](https://www.youtube.com/watch?v=rAVHBl3W9W8)
+- [FLTK Rust: Latest FLUID, fl2rust and fltk-rs](https://www.youtube.com/watch?v=33NdaW08fP8)
 
 More videos in the playlist [here](https://www.youtube.com/playlist?list=PLHqrrowPLkDu9U-uk60sGM-YWLOJFfLoE).
 Some of the demo projects can be found [here](https://github.com/fltk-rs/demos).

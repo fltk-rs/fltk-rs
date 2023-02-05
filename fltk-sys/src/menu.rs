@@ -207,7 +207,7 @@ extern "C" {
     pub fn Fl_Menu_Bar_when(arg1: *const Fl_Menu_Bar) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_image(arg1: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Bar_image(arg1: *const Fl_Menu_Bar) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_parent(self_: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
@@ -288,7 +288,7 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_deimage(arg1: *mut Fl_Menu_Bar, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_deimage(arg1: *const Fl_Menu_Bar) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Bar_deimage(arg1: *const Fl_Menu_Bar) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_set_callback(
@@ -317,6 +317,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_callback(self_: *const Fl_Menu_Bar) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_set_deletion_callback(
+        self_: *mut Fl_Menu_Bar,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Bar;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_add(
@@ -370,7 +382,10 @@ extern "C" {
     pub fn Fl_Menu_Bar_set_text_color(arg1: *mut Fl_Menu_Bar, c: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Menu_Bar_add_choice(arg1: *mut Fl_Menu_Bar, arg2: *const ::std::os::raw::c_char);
+    pub fn Fl_Menu_Bar_add_choice(
+        arg1: *mut Fl_Menu_Bar,
+        arg2: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Bar_get_choice(arg1: *mut Fl_Menu_Bar) -> *const ::std::os::raw::c_char;
@@ -444,6 +459,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Bar_global(self_: *mut Fl_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Menu_Bar_item_pathname(
+        self_: *const Fl_Menu_Bar,
+        pathname: *mut ::std::os::raw::c_char,
+        pathnamelen: ::std::os::raw::c_int,
+        item: *const Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -635,7 +658,7 @@ extern "C" {
     pub fn Fl_Menu_Button_when(arg1: *const Fl_Menu_Button) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Button_image(arg1: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Button_image(arg1: *const Fl_Menu_Button) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Button_parent(self_: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
@@ -728,7 +751,7 @@ extern "C" {
     pub fn Fl_Menu_Button_set_deimage(arg1: *mut Fl_Menu_Button, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Button_deimage(arg1: *const Fl_Menu_Button) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Button_deimage(arg1: *const Fl_Menu_Button) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Button_set_callback(
@@ -757,6 +780,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Button_callback(self_: *const Fl_Menu_Button) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Menu_Button_set_deletion_callback(
+        self_: *mut Fl_Menu_Button,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Button;
 }
 extern "C" {
     pub fn Fl_Menu_Button_popup(self_: *mut Fl_Menu_Button) -> *const Fl_Menu_Item;
@@ -816,7 +851,7 @@ extern "C" {
     pub fn Fl_Menu_Button_add_choice(
         arg1: *mut Fl_Menu_Button,
         arg2: *const ::std::os::raw::c_char,
-    );
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Button_get_choice(arg1: *mut Fl_Menu_Button) -> *const ::std::os::raw::c_char;
@@ -890,6 +925,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Button_global(self_: *mut Fl_Menu_Button);
+}
+extern "C" {
+    pub fn Fl_Menu_Button_item_pathname(
+        self_: *const Fl_Menu_Button,
+        pathname: *mut ::std::os::raw::c_char,
+        pathnamelen: ::std::os::raw::c_int,
+        item: *const Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1075,7 +1118,7 @@ extern "C" {
     pub fn Fl_Choice_when(arg1: *const Fl_Choice) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Choice_image(arg1: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Choice_image(arg1: *const Fl_Choice) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Choice_parent(self_: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
@@ -1156,7 +1199,7 @@ extern "C" {
     pub fn Fl_Choice_set_deimage(arg1: *mut Fl_Choice, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Choice_deimage(arg1: *const Fl_Choice) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Choice_deimage(arg1: *const Fl_Choice) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Choice_set_callback(
@@ -1185,6 +1228,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_callback(self_: *const Fl_Choice) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Choice_set_deletion_callback(
+        self_: *mut Fl_Choice,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Choice_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Choice;
 }
 extern "C" {
     pub fn Fl_Choice_add(
@@ -1238,7 +1293,10 @@ extern "C" {
     pub fn Fl_Choice_set_text_color(arg1: *mut Fl_Choice, c: ::std::os::raw::c_uint);
 }
 extern "C" {
-    pub fn Fl_Choice_add_choice(arg1: *mut Fl_Choice, arg2: *const ::std::os::raw::c_char);
+    pub fn Fl_Choice_add_choice(
+        arg1: *mut Fl_Choice,
+        arg2: *const ::std::os::raw::c_char,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Choice_get_choice(arg1: *mut Fl_Choice) -> *const ::std::os::raw::c_char;
@@ -1309,6 +1367,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_global(self_: *mut Fl_Choice);
+}
+extern "C" {
+    pub fn Fl_Choice_item_pathname(
+        self_: *const Fl_Choice,
+        pathname: *mut ::std::os::raw::c_char,
+        pathnamelen: ::std::os::raw::c_int,
+        item: *const Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1503,7 +1569,7 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_when(arg1: *const Fl_Sys_Menu_Bar) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_image(arg1: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Sys_Menu_Bar_image(arg1: *const Fl_Sys_Menu_Bar) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_parent(self_: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
@@ -1602,7 +1668,7 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Sys_Menu_Bar_deimage(arg1: *const Fl_Sys_Menu_Bar) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Sys_Menu_Bar_deimage(arg1: *const Fl_Sys_Menu_Bar) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_set_callback(
@@ -1631,6 +1697,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_callback(self_: *const Fl_Sys_Menu_Bar) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_set_deletion_callback(
+        self_: *mut Fl_Sys_Menu_Bar,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Sys_Menu_Bar;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(
@@ -1687,7 +1765,7 @@ extern "C" {
     pub fn Fl_Sys_Menu_Bar_add_choice(
         arg1: *mut Fl_Sys_Menu_Bar,
         arg2: *const ::std::os::raw::c_char,
-    );
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_get_choice(arg1: *mut Fl_Sys_Menu_Bar) -> *const ::std::os::raw::c_char;
@@ -1761,6 +1839,14 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_global(self_: *mut Fl_Sys_Menu_Bar);
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_item_pathname(
+        self_: *const Fl_Sys_Menu_Bar,
+        pathname: *mut ::std::os::raw::c_char,
+        pathnamelen: ::std::os::raw::c_int,
+        item: *const Fl_Menu_Item,
+    ) -> ::std::os::raw::c_int;
 }
 extern "C" {
     pub fn Fl_Menu_Item_new(
@@ -1920,6 +2006,12 @@ extern "C" {
         data: *mut ::std::os::raw::c_void,
         flag: ::std::os::raw::c_int,
     ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Menu_Item_set_shortcut(self_: *mut Fl_Menu_Item, shortcut: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Menu_Item_set_flag(self_: *mut Fl_Menu_Item, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_mac_set_about(

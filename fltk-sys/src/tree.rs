@@ -202,7 +202,7 @@ extern "C" {
     pub fn Fl_Tree_when(arg1: *const Fl_Tree) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Tree_image(arg1: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Tree_image(arg1: *const Fl_Tree) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Tree_parent(self_: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
@@ -283,7 +283,7 @@ extern "C" {
     pub fn Fl_Tree_set_deimage(arg1: *mut Fl_Tree, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Tree_deimage(arg1: *const Fl_Tree) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Tree_deimage(arg1: *const Fl_Tree) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Tree_set_callback(
@@ -312,6 +312,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Tree_callback(self_: *const Fl_Tree) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Tree_set_deletion_callback(
+        self_: *mut Fl_Tree,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Tree_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Tree;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]

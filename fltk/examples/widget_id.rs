@@ -1,47 +1,4 @@
-#![feature(once_cell)]
-
-use std::sync::LazyLock;
 use fltk::{prelude::*, *};
-use std::any::Any;
-use std::collections::HashMap;
-use std::sync::Mutex;
-
-static WIDGET_MAP: LazyLock<Mutex<HashMap<&'static str, Box<dyn Any + Send + Sync + 'static>>>> =
-    LazyLock::new(|| Mutex::new(HashMap::default()));
-
-pub trait WidgetId<W>
-where
-    W: WidgetExt,
-{
-    fn set_id(&mut self, id: &'static str);
-    fn with_id(self, id: &'static str) -> Self
-    where
-        Self: Sized;
-}
-
-impl<W> WidgetId<W> for W
-where
-    W: WidgetExt + Send + Sync + Clone + 'static,
-{
-    fn set_id(&mut self, id: &'static str) {
-        WIDGET_MAP
-            .lock()
-            .unwrap()
-            .insert(id, Box::new(self.clone()));
-    }
-    fn with_id(mut self, id: &'static str) -> Self {
-        self.set_id(id);
-        self
-    }
-}
-
-pub fn from_id<T: 'static + Clone>(id: &'static str) -> Option<T> {
-    if let Some(w) = WIDGET_MAP.lock().unwrap().get(&id) {
-        w.downcast_ref::<T>().map(|w| (*w).clone())
-    } else {
-        None
-    }
-}
 
 // So we can do `widget.on_trigger()` and get self back. Useful for chaining methods.
 trait OnTrigger<W>
@@ -69,7 +26,7 @@ struct Counter {
 
 // For calls inside a closure
 fn increment_by(step: i32) {
-    let frame: frame::Frame = from_id("my_frame").unwrap();
+    let mut frame: frame::Frame = app::widget_from_id("my_frame").unwrap();
     let state = app::GlobalState::<Counter>::get();
     let count = state.with(move |c| {
         c.count += step;
@@ -80,7 +37,7 @@ fn increment_by(step: i32) {
 
 // To pass a function object directly!
 fn increment(_w: &mut impl WidgetExt) {
-    let frame: frame::Frame = from_id("my_frame").unwrap();
+    let mut frame: frame::Frame = app::widget_from_id("my_frame").unwrap();
     let state = app::GlobalState::<Counter>::get();
     let count = state.with(|c| {
         c.count += 1;
@@ -111,4 +68,3 @@ fn main() {
 
     app.run().unwrap();
 }
-

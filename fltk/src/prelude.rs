@@ -50,9 +50,7 @@ pub unsafe trait WidgetExt {
     /// Measures the label's width and height
     fn measure_label(&self) -> (i32, i32);
     /// transforms a widget to a base `Fl_Widget`, for internal use
-    /// # Safety
-    /// Can return multiple mutable pointers to the same widget
-    unsafe fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
+    fn as_widget_ptr(&self) -> *mut fltk_sys::widget::Fl_Widget;
     /// Checks whether the self widget is inside another widget
     fn inside<W: WidgetExt>(&self, wid: &W) -> bool
     where
@@ -206,13 +204,20 @@ pub unsafe trait WidgetExt {
     /// INTERNAL: Set the raw user data of the widget
     /// # Safety
     /// Can return multiple mutable references to the `user_data`
-    unsafe fn set_raw_user_data(&self, data: *mut std::os::raw::c_void);
-    /// Upcast a `WidgetExt` to a Widget
+    unsafe fn set_raw_user_data(&mut self, data: *mut std::os::raw::c_void);
+    /// Upcast a `WidgetExt` to some widget type
     /// # Safety
     /// Allows for potentially unsafe casts between incompatible widget types
     unsafe fn as_widget<W: WidgetBase>(&self) -> W
     where
         Self: Sized;
+    /// Upcast a `WidgetExt` to a Widget
+    fn as_base_widget(&self) -> crate::widget::Widget
+    where
+        Self: Sized,
+    {
+        unsafe { self.into_widget() }
+    }
     /// Returns whether a widget is visible
     fn visible(&self) -> bool;
     /// Returns whether a widget or any of its parents are visible (recursively)
@@ -259,6 +264,18 @@ pub unsafe trait WidgetExt {
     /// Check whether a widget is derived
     fn is_derived(&self) -> bool {
         unimplemented!();
+    }
+    /// Get a reference type of the widget's image
+    /// # Safety
+    /// The widget needs to be still around when the image is accessed
+    unsafe fn image_mut(&self) -> Option<&mut crate::image::Image> {
+        None
+    }
+    /// Get a reference type of the widget's deactivated image
+    /// # Safety
+    /// The widget needs to be still around when the image is accessed
+    unsafe fn deimage_mut(&self) -> Option<&mut crate::image::Image> {
+        None
     }
 }
 
@@ -328,6 +345,20 @@ pub unsafe trait WidgetBase: WidgetExt {
     /// Calling this on a non-derived widget can cause undefined behavior
     unsafe fn assume_derived(&mut self) {
         unimplemented!();
+    }
+    /// Cast a type-erased widget back to its original widget
+    fn from_dyn_widget<W: WidgetExt>(_w: &W) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        None
+    }
+    /// Cast a type-erased widget pointer back to its original widget
+    fn from_dyn_widget_ptr(_w: *mut fltk_sys::widget::Fl_Widget) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        None
     }
 }
 
@@ -757,7 +788,7 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Adds a simple text option to the Choice and `MenuButton` widgets.
     /// The characters "&", "/", "\\", "|", and "\_" (underscore) are treated as special characters in the label string. The "&" character specifies that the following character is an accelerator and will be underlined.
     /// The "\\" character is used to escape the next character in the string. Labels starting with the "\_" (underscore) character cause a divider to be placed after that menu item.
-    fn add_choice(&self, text: &str);
+    fn add_choice(&mut self, text: &str) -> i32;
     /// Gets the user choice from the Choice and `MenuButton` widgets
     fn choice(&self) -> Option<String>;
     /// Get index into menu of the last item chosen, returns -1 if no item was chosen
@@ -804,7 +835,9 @@ pub unsafe trait MenuExt: WidgetExt {
     /// Set the menu element
     /// # Safety
     /// The MenuItem must be in a format recognized by FLTK (Null termination after submenus)
-    unsafe fn set_menu(&self, item: crate::menu::MenuItem);
+    unsafe fn set_menu(&mut self, item: crate::menu::MenuItem);
+    /// Get an item's pathname
+    fn item_pathname(&self, item: Option<&crate::menu::MenuItem>) -> Result<String, FltkError>;
 }
 
 /// Defines the methods implemented by all valuator widgets
@@ -909,16 +942,22 @@ pub unsafe trait DisplayExt: WidgetExt {
     /// Shows/hides the cursor
     fn show_cursor(&self, val: bool);
     /// Sets the style of the text widget
-    fn set_highlight_data<B: Into<Option<crate::text::TextBuffer>>>(
-        &self,
+    fn set_highlight_data<
+        B: Into<Option<crate::text::TextBuffer>>,
+        E: Into<Vec<crate::text::StyleTableEntry>>,
+    >(
+        &mut self,
         style_buffer: B,
-        entries: Vec<crate::text::StyleTableEntry>,
+        entries: E,
     );
     /// Sets the style of the text widget
-    fn set_highlight_data_ext<B: Into<Option<crate::text::TextBuffer>>>(
-        &self,
+    fn set_highlight_data_ext<
+        B: Into<Option<crate::text::TextBuffer>>,
+        E: Into<Vec<crate::text::StyleTableEntryExt>>,
+    >(
+        &mut self,
         style_buffer: B,
-        entries: Vec<crate::text::StyleTableEntryExt>,
+        entries: E,
     );
     /// Unset the style of the text widget
     fn unset_highlight_data(&self, style_buffer: crate::text::TextBuffer);
@@ -1136,6 +1175,8 @@ pub unsafe trait BrowserExt: WidgetExt {
     unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T>;
     /// Hides a the specified line
     fn hide_line(&mut self, line: i32);
+    /// Gets the selected items
+    fn selected_items(&self) -> Vec<i32>;
 }
 
 /// Defines the methods implemented by table types.
@@ -1321,9 +1362,7 @@ pub unsafe trait ImageExt {
     /// Return the height of the image
     fn h(&self) -> i32;
     /// Returns a pointer of the image
-    /// # Safety
-    /// Can return multiple mutable pointers to the image
-    unsafe fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
+    fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image;
     /// Transforms a raw image pointer to an image
     /// # Safety
     /// The pointer must be valid
@@ -1370,6 +1409,16 @@ pub unsafe trait ImageExt {
     unsafe fn into_image<I: ImageExt>(self) -> I
     where
         Self: Sized;
+    #[doc(hidden)]
+    /// Cast an image back to its original type
+    fn from_dyn_image_ptr(_p: *mut fltk_sys::image::Fl_Image) -> Option<Self> where Self: Sized {
+        None
+    }
+    #[doc(hidden)]
+    /// Cast an image back to its original type
+    fn from_dyn_image<I: ImageExt>(_i: &I) -> Option<Self> where Self: Sized {
+        None
+    }
 }
 
 /// Defines the methods implemented by all surface types, currently `ImageSurface`
@@ -1625,3 +1674,5 @@ macro_rules! widget_extends {
         }
     };
 }
+
+pub use crate::app::WidgetId;

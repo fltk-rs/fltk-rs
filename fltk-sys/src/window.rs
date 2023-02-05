@@ -209,7 +209,7 @@ extern "C" {
     pub fn Fl_Window_when(arg1: *const Fl_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Window_image(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Window_image(arg1: *const Fl_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Window_parent(self_: *const Fl_Window) -> *mut ::std::os::raw::c_void;
@@ -290,7 +290,7 @@ extern "C" {
     pub fn Fl_Window_set_deimage(arg1: *mut Fl_Window, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Window_deimage(arg1: *const Fl_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Window_deimage(arg1: *const Fl_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Window_set_callback(
@@ -319,6 +319,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_callback(self_: *const Fl_Window) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Window_set_deletion_callback(
+        self_: *mut Fl_Window,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Window;
 }
 extern "C" {
     pub fn Fl_Window_begin(self_: *mut Fl_Window);
@@ -511,6 +523,13 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Window_set_icon_label(arg1: *mut Fl_Window, arg2: *const ::std::os::raw::c_char);
+}
+extern "C" {
+    pub fn Fl_Window_set_icons(
+        w: *mut Fl_Window,
+        images: *mut *const ::std::os::raw::c_void,
+        length: ::std::os::raw::c_int,
+    );
 }
 extern "C" {
     pub fn Fl_Window_find_by_handle(handle: *mut ::std::os::raw::c_void) -> *mut Fl_Window;
@@ -736,7 +755,7 @@ extern "C" {
     pub fn Fl_Single_Window_when(arg1: *const Fl_Single_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Single_Window_image(arg1: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Single_Window_image(arg1: *const Fl_Single_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Single_Window_parent(self_: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
@@ -841,7 +860,8 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Single_Window_deimage(arg1: *const Fl_Single_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Single_Window_deimage(arg1: *const Fl_Single_Window)
+        -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Single_Window_set_callback(
@@ -870,6 +890,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Single_Window_callback(self_: *const Fl_Single_Window) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Single_Window_set_deletion_callback(
+        self_: *mut Fl_Single_Window,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Single_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Single_Window;
 }
 extern "C" {
     pub fn Fl_Single_Window_begin(self_: *mut Fl_Single_Window);
@@ -1110,6 +1142,13 @@ extern "C" {
         arg2: *const ::std::os::raw::c_char,
     );
 }
+extern "C" {
+    pub fn Fl_Single_Window_set_icons(
+        w: *mut Fl_Single_Window,
+        images: *mut *const ::std::os::raw::c_void,
+        length: ::std::os::raw::c_int,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Double_Window {
@@ -1312,7 +1351,7 @@ extern "C" {
     pub fn Fl_Double_Window_when(arg1: *const Fl_Double_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Double_Window_image(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Double_Window_image(arg1: *const Fl_Double_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Double_Window_parent(self_: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
@@ -1417,7 +1456,8 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Double_Window_deimage(arg1: *const Fl_Double_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Double_Window_deimage(arg1: *const Fl_Double_Window)
+        -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Double_Window_set_callback(
@@ -1446,6 +1486,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Double_Window_callback(self_: *const Fl_Double_Window) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Double_Window_set_deletion_callback(
+        self_: *mut Fl_Double_Window,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Double_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Double_Window;
 }
 extern "C" {
     pub fn Fl_Double_Window_flush(w: *mut Fl_Double_Window);
@@ -1689,6 +1741,13 @@ extern "C" {
         arg2: *const ::std::os::raw::c_char,
     );
 }
+extern "C" {
+    pub fn Fl_Double_Window_set_icons(
+        w: *mut Fl_Double_Window,
+        images: *mut *const ::std::os::raw::c_void,
+        length: ::std::os::raw::c_int,
+    );
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Menu_Window {
@@ -1879,7 +1938,7 @@ extern "C" {
     pub fn Fl_Menu_Window_when(arg1: *const Fl_Menu_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Menu_Window_image(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Window_image(arg1: *const Fl_Menu_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Window_parent(self_: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
@@ -1972,7 +2031,7 @@ extern "C" {
     pub fn Fl_Menu_Window_set_deimage(arg1: *mut Fl_Menu_Window, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Menu_Window_deimage(arg1: *const Fl_Menu_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Menu_Window_deimage(arg1: *const Fl_Menu_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Menu_Window_set_callback(
@@ -2001,6 +2060,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Menu_Window_callback(self_: *const Fl_Menu_Window) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_deletion_callback(
+        self_: *mut Fl_Menu_Window,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Window;
 }
 extern "C" {
     pub fn Fl_Menu_Window_begin(self_: *mut Fl_Menu_Window);
@@ -2205,6 +2276,13 @@ extern "C" {
     pub fn Fl_Menu_Window_set_icon_label(
         arg1: *mut Fl_Menu_Window,
         arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Menu_Window_set_icons(
+        w: *mut Fl_Menu_Window,
+        images: *mut *const ::std::os::raw::c_void,
+        length: ::std::os::raw::c_int,
     );
 }
 #[repr(C)]
@@ -2416,7 +2494,8 @@ extern "C" {
     pub fn Fl_Overlay_Window_when(arg1: *const Fl_Overlay_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_image(arg1: *const Fl_Overlay_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Overlay_Window_image(arg1: *const Fl_Overlay_Window)
+        -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_parent(self_: *const Fl_Overlay_Window)
@@ -2531,8 +2610,9 @@ extern "C" {
     );
 }
 extern "C" {
-    pub fn Fl_Overlay_Window_deimage(arg1: *const Fl_Overlay_Window)
-        -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Overlay_Window_deimage(
+        arg1: *const Fl_Overlay_Window,
+    ) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_set_callback(
@@ -2561,6 +2641,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Overlay_Window_callback(self_: *const Fl_Overlay_Window) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_set_deletion_callback(
+        self_: *mut Fl_Overlay_Window,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Overlay_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Overlay_Window;
 }
 extern "C" {
     pub fn Fl_Overlay_Window_begin(self_: *mut Fl_Overlay_Window);
@@ -2828,6 +2920,13 @@ extern "C" {
     );
 }
 extern "C" {
+    pub fn Fl_Overlay_Window_set_icons(
+        w: *mut Fl_Overlay_Window,
+        images: *mut *const ::std::os::raw::c_void,
+        length: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
     pub fn Fl_gl_start();
 }
 extern "C" {
@@ -3017,7 +3116,7 @@ extern "C" {
     pub fn Fl_Gl_Window_when(arg1: *const Fl_Gl_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Gl_Window_image(arg1: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Gl_Window_image(arg1: *const Fl_Gl_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Gl_Window_parent(self_: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
@@ -3101,7 +3200,7 @@ extern "C" {
     pub fn Fl_Gl_Window_set_deimage(arg1: *mut Fl_Gl_Window, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Gl_Window_deimage(arg1: *const Fl_Gl_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Gl_Window_deimage(arg1: *const Fl_Gl_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Gl_Window_set_callback(
@@ -3130,6 +3229,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Gl_Window_callback(self_: *const Fl_Gl_Window) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_deletion_callback(
+        self_: *mut Fl_Gl_Window,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Gl_Window;
 }
 extern "C" {
     pub fn Fl_Gl_Window_begin(self_: *mut Fl_Gl_Window);
@@ -3327,6 +3438,13 @@ extern "C" {
     pub fn Fl_Gl_Window_set_icon_label(
         arg1: *mut Fl_Gl_Window,
         arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Gl_Window_set_icons(
+        w: *mut Fl_Gl_Window,
+        images: *mut *const ::std::os::raw::c_void,
+        length: ::std::os::raw::c_int,
     );
 }
 extern "C" {
@@ -3586,7 +3704,7 @@ extern "C" {
     pub fn Fl_Glut_Window_when(arg1: *const Fl_Glut_Window) -> ::std::os::raw::c_int;
 }
 extern "C" {
-    pub fn Fl_Glut_Window_image(arg1: *const Fl_Glut_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Glut_Window_image(arg1: *const Fl_Glut_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Glut_Window_parent(self_: *const Fl_Glut_Window) -> *mut ::std::os::raw::c_void;
@@ -3679,7 +3797,7 @@ extern "C" {
     pub fn Fl_Glut_Window_set_deimage(arg1: *mut Fl_Glut_Window, arg2: *mut ::std::os::raw::c_void);
 }
 extern "C" {
-    pub fn Fl_Glut_Window_deimage(arg1: *const Fl_Glut_Window) -> *mut ::std::os::raw::c_void;
+    pub fn Fl_Glut_Window_deimage(arg1: *const Fl_Glut_Window) -> *const ::std::os::raw::c_void;
 }
 extern "C" {
     pub fn Fl_Glut_Window_set_callback(
@@ -3708,6 +3826,18 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Glut_Window_callback(self_: *const Fl_Glut_Window) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_deletion_callback(
+        self_: *mut Fl_Glut_Window,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Glut_Window;
 }
 extern "C" {
     pub fn Fl_Glut_Window_begin(self_: *mut Fl_Glut_Window);
@@ -3912,6 +4042,13 @@ extern "C" {
     pub fn Fl_Glut_Window_set_icon_label(
         arg1: *mut Fl_Glut_Window,
         arg2: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Glut_Window_set_icons(
+        w: *mut Fl_Glut_Window,
+        images: *mut *const ::std::os::raw::c_void,
+        length: ::std::os::raw::c_int,
     );
 }
 extern "C" {

@@ -8,7 +8,7 @@ macro_rules! impl_browser_ext {
                 fn remove(&self, line: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        if line > 0 && line <= self.size() {
+                        if line > 0 && line <= self.size() + 1 {
                             [<$flname _remove>](self.inner, line as i32)
                         }
                     }
@@ -27,10 +27,8 @@ macro_rules! impl_browser_ext {
 
                 fn insert(&self, line: i32, item: &str) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
                         let item = CString::safe_new(item);
                         unsafe { [<$flname _insert>](self.inner, line as i32, item.as_ptr()) }
-                    }
                 }
 
                 fn insert_with_data<T: Clone + 'static>(&self, line: i32, item: &str, data: T) {
@@ -40,14 +38,14 @@ macro_rules! impl_browser_ext {
 
                 fn move_item(&self, to: i32, from: i32) {
                     assert!(!self.was_deleted());
-                    if to > 0 && to <= self.size() && from > 0 && from <= self.size() {
+                    if to > 0 && to <= self.size() + 1 && from > 0 && from <= self.size() + 1 {
                         unsafe { [<$flname _move>](self.inner, to as i32, from as i32) }
                     }
                 }
 
                 fn swap(&self, a: i32, b: i32) {
                     assert!(!self.was_deleted());
-                    if a > 0 && a <= self.size() && b > 0 && b <= self.size() {
+                    if a > 0 && a <= self.size() + 1 && b > 0 && b <= self.size() + 1 {
                         unsafe { [<$flname _swap>](self.inner, a as i32, b as i32) }
                     }
                 }
@@ -68,7 +66,7 @@ macro_rules! impl_browser_ext {
 
                 fn select(&self, line: i32) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe {
                             [<$flname _select>](self.inner, line as i32);
                         }
@@ -77,7 +75,7 @@ macro_rules! impl_browser_ext {
 
                 fn selected(&self, line: i32) -> bool {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _selected>](self.inner, line as i32) != 0 }
                     } else {
                         false
@@ -86,7 +84,7 @@ macro_rules! impl_browser_ext {
 
                 fn text(&self, line: i32) -> Option<String> {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe {
                             let text = [<$flname _text>](self.inner, line as i32);
                             if text.is_null() {
@@ -110,7 +108,7 @@ macro_rules! impl_browser_ext {
 
                 fn set_text(&self, line: i32, txt: &str) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         let txt = CString::safe_new(txt);
                         unsafe { [<$flname _set_text>](self.inner, line as i32, txt.as_ptr()) }
                     }
@@ -148,7 +146,7 @@ macro_rules! impl_browser_ext {
 
                 fn set_icon<Img: ImageExt>(&self, line: i32, image: Option<Img>) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         if let Some(image) = image {
                             assert!(!image.was_deleted());
                             unsafe {
@@ -173,7 +171,7 @@ macro_rules! impl_browser_ext {
                 fn icon(&self, line: i32) -> Option<Box<dyn ImageExt>> {
                     unsafe {
                         assert!(!self.was_deleted());
-                        if line > 0 && line <= self.size() {
+                        if line > 0 && line <= self.size() + 1 {
                             let image_ptr = [<$flname _icon>](self.inner, line as i32);
                             if image_ptr.is_null() {
                                 None
@@ -191,7 +189,7 @@ macro_rules! impl_browser_ext {
                 fn remove_icon(&self, line: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        if line > 0 && line <= self.size() {
+                        if line > 0 && line <= self.size() + 1 {
                             [<$flname _remove_icon>](self.inner, line as i32)
                         }
                     }
@@ -199,21 +197,21 @@ macro_rules! impl_browser_ext {
 
                 fn top_line(&self, line: i32) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _topline>](self.inner, line as i32) }
                     }
                 }
 
                 fn bottom_line(&self, line: i32) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _bottomline>](self.inner, line as i32) }
                     }
                 }
 
                 fn middle_line(&self, line: i32) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _middleline>](self.inner, line as i32) }
                     }
                 }
@@ -275,7 +273,7 @@ macro_rules! impl_browser_ext {
 
                 fn displayed(&self, line: i32) -> bool {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _displayed>](self.inner, line as i32) != 0 }
                     } else {
                         false
@@ -284,7 +282,7 @@ macro_rules! impl_browser_ext {
 
                 fn make_visible(&self, line: i32) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _make_visible>](self.inner, line as i32) }
                     }
                 }
@@ -365,7 +363,7 @@ macro_rules! impl_browser_ext {
 
                 fn set_data<T: Clone + 'static>(&self, line: i32, data: T) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe {
                             [<$flname _set_data>](self.inner, line, Box::into_raw(Box::from(data)) as _);
                         }
@@ -374,7 +372,7 @@ macro_rules! impl_browser_ext {
 
                 unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T> {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         let ptr = [<$flname _data>](self.inner, line);
                         if ptr.is_null() {
                             None
@@ -389,9 +387,21 @@ macro_rules! impl_browser_ext {
 
                 fn hide_line(&mut self, line: i32) {
                     assert!(!self.was_deleted());
-                    if line > 0 && line <= self.size() {
+                    if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _hide_line>](self.inner, line); }
                     }
+                }
+
+                fn selected_items(&self) -> Vec<i32> {
+                    let mut temp = vec![];
+                    if self.value() > 0 {
+                        for i in 1..self.size() + 1 {
+                            if self.selected(i) {
+                                temp.push(i);
+                            }
+                        }
+                    }
+                    temp
                 }
             }
         }

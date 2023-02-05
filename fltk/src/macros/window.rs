@@ -176,7 +176,7 @@ macro_rules! impl_window_ext {
                             None
                         } else {
                             let img =
-                            $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                                $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
                             Some(Box::new(img))
                         }
                     }
