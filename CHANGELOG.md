@@ -1,6 +1,12 @@
 # Changelog
 
 
+### [1.3.29] - Unreleased
+- Fix memory issue with WidgetExt::set_image and set_deimage caused in version 1.3.24.
+- Update Tile docs.
+- Add BrowserExt::selected_items().
+- Pull FLTK fixes.
+
 ### [1.3.29] - 2023-02-03
 - Remove redundant check in Browser::insert.
 - Pull fix in BrowseMultiFile FileDialog: https://github.com/fltk-rs/fltk-rs/issues/1346.
