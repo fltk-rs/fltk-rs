@@ -1354,7 +1354,7 @@ pub unsafe trait BrowserExt: WidgetExt {
     /// Hides a the specified line
     fn hide_line(&mut self, line: i32);
     /// Gets the selected items
-    fn selected_items(&self) -> Vec<(i32, Option<String>)>;
+    fn selected_items(&self) -> Vec<i32>;
 }
 
 /// Defines the methods implemented by table types.
