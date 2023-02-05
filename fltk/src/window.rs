@@ -160,7 +160,7 @@ impl SingleWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_env_args(&self) {
+    pub fn show_with_env_args(&mut self) {
         assert!(!self.was_deleted());
         unsafe {
             let args: Vec<String> = std::env::args().collect();
@@ -193,7 +193,7 @@ impl SingleWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_args(&self, args: &[&str]) {
+    pub fn show_with_args(&mut self, args: &[&str]) {
         assert!(!self.was_deleted());
         unsafe {
             let mut temp = vec![""];
@@ -328,7 +328,7 @@ impl DoubleWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_env_args(&self) {
+    pub fn show_with_env_args(&mut self) {
         assert!(!self.was_deleted());
         unsafe {
             let args: Vec<String> = std::env::args().collect();
@@ -361,7 +361,7 @@ impl DoubleWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_args(&self, args: &[&str]) {
+    pub fn show_with_args(&mut self, args: &[&str]) {
         assert!(!self.was_deleted());
         unsafe {
             let mut temp = vec![""];
@@ -378,7 +378,7 @@ impl DoubleWindow {
     }
 
     /// Forces the window to be drawn, this window is also made current and calls draw()
-    pub fn flush(&self) {
+    pub fn flush(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Double_Window_flush(self.inner) }
     }
@@ -413,7 +413,7 @@ impl DoubleWindow {
     }
 
     /// Show a window after it had been hidden. Works on Windows and X11 systems
-    pub fn platform_show(&self) {
+    pub fn platform_show(&mut self) {
         #[allow(unused_unsafe)]
         unsafe {
             #[cfg(target_os = "windows")]
@@ -452,7 +452,7 @@ impl DoubleWindow {
     }
 
     /// Hide a window using the platforms hide call. Works on Windows and X11 systems
-    pub fn platform_hide(&self) {
+    pub fn platform_hide(&mut self) {
         #[allow(unused_unsafe)]
         unsafe {
             #[cfg(target_os = "windows")]
@@ -609,7 +609,7 @@ impl OverlayWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_env_args(&self) {
+    pub fn show_with_env_args(&mut self) {
         assert!(!self.was_deleted());
         unsafe {
             let args: Vec<String> = std::env::args().collect();
@@ -642,7 +642,7 @@ impl OverlayWindow {
     /// - `-s[cheme] scheme`
     /// - `-ti[tle] windowtitle`
     /// - `-to[oltips]`
-    pub fn show_with_args(&self, args: &[&str]) {
+    pub fn show_with_args(&mut self, args: &[&str]) {
         assert!(!self.was_deleted());
         unsafe {
             let mut temp = vec![""];
@@ -659,13 +659,13 @@ impl OverlayWindow {
     }
 
     /// Forces the window to be drawn, this window is also made current and calls draw()
-    pub fn flush(&self) {
+    pub fn flush(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Double_Window_flush(self.inner as _) }
     }
 
     /// Draw overlay
-    pub fn draw_overlay<F: FnMut(&mut Self) + 'static>(&self, cb: F) {
+    pub fn draw_overlay<F: FnMut(&mut Self) + 'static>(&mut self, cb: F) {
         assert!(!self.was_deleted());
         assert!(self.is_derived);
         unsafe {
@@ -688,7 +688,7 @@ impl OverlayWindow {
     }
 
     /// Redraw overlay
-    pub fn redraw_overlay(&self) {
+    pub fn redraw_overlay(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Overlay_Window_redraw_overlay(self.inner) }
     }
@@ -746,7 +746,7 @@ impl GlutWindow {
     }
 
     /// Forces the window to be drawn, this window is also made current and calls draw()
-    pub fn flush(&self) {
+    pub fn flush(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_flush(self.inner) }
     }
@@ -796,14 +796,14 @@ impl GlutWindow {
     }
 
     /// Swaps the back and front buffers
-    pub fn swap_buffers(&self) {
+    pub fn swap_buffers(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_swap_buffers(self.inner) }
     }
 
     /// Sets the projection so 0,0 is in the lower left of the window
     /// and each pixel is 1 unit wide/tall.
-    pub fn ortho(&self) {
+    pub fn ortho(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_ortho(self.inner) }
     }
@@ -815,19 +815,19 @@ impl GlutWindow {
     }
 
     /// Redraws the overlay
-    pub fn redraw_overlay(&self) {
+    pub fn redraw_overlay(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_redraw_overlay(self.inner) }
     }
 
     /// Hides the overlay
-    pub fn hide_overlay(&self) {
+    pub fn hide_overlay(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_hide_overlay(self.inner) }
     }
 
     /// Makes the overlay current
-    pub fn make_overlay_current(&self) {
+    pub fn make_overlay_current(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_make_overlay_current(self.inner) }
     }
@@ -933,7 +933,7 @@ pub mod experimental {
         }
 
         /// Forces the window to be drawn, this window is also made current and calls draw()
-        pub fn flush(&self) {
+        pub fn flush(&mut self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_flush(self.inner) }
         }
@@ -983,14 +983,14 @@ pub mod experimental {
         }
 
         /// Swaps the back and front buffers
-        pub fn swap_buffers(&self) {
+        pub fn swap_buffers(&mut self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_swap_buffers(self.inner) }
         }
 
         /// Sets the projection so 0,0 is in the lower left of the window
         /// and each pixel is 1 unit wide/tall.
-        pub fn ortho(&self) {
+        pub fn ortho(&mut self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_ortho(self.inner) }
         }
@@ -1002,19 +1002,19 @@ pub mod experimental {
         }
 
         /// Redraws the overlay
-        pub fn redraw_overlay(&self) {
+        pub fn redraw_overlay(&mut self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_redraw_overlay(self.inner) }
         }
 
         /// Hides the overlay
-        pub fn hide_overlay(&self) {
+        pub fn hide_overlay(&mut self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_hide_overlay(self.inner) }
         }
 
         /// Makes the overlay current
-        pub fn make_overlay_current(&self) {
+        pub fn make_overlay_current(&mut self) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_make_overlay_current(self.inner) }
         }

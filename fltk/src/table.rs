@@ -123,7 +123,7 @@ impl TableRow {
     }
 
     /// Selects all rows
-    pub fn select_all_rows(&self, selection_flag: TableRowSelectFlag) {
+    pub fn select_all_rows(&mut self, selection_flag: TableRowSelectFlag) {
         assert!(!self.was_deleted());
         unsafe { Fl_Table_Row_select_all_rows(self.inner, selection_flag as i32) }
     }

@@ -45,7 +45,7 @@ impl Printer {
     /// Returns a tuple (frompage, topage) indicating the chosen pages by the user
     /// # Errors
     /// Errors on failure to print
-    pub fn begin_job(&self, pagecount: i32) -> Result<(Option<i32>, Option<i32>), FltkError> {
+    pub fn begin_job(&mut self, pagecount: i32) -> Result<(Option<i32>, Option<i32>), FltkError> {
         let mut frompage_ = 0;
         let mut topage_ = 0;
         unsafe {
@@ -77,7 +77,7 @@ impl Printer {
     /// End the print page
     /// # Errors
     /// Errors on failure to end the page
-    pub fn end_page(&self) -> Result<(), FltkError> {
+    pub fn end_page(&mut self) -> Result<(), FltkError> {
         unsafe {
             if Fl_Printer_end_page(self.inner) == 0 {
                 Ok(())
@@ -88,14 +88,14 @@ impl Printer {
     }
 
     /// Ends the print job
-    pub fn end_job(&self) {
+    pub fn end_job(&mut self) {
         unsafe { Fl_Printer_end_job(self.inner) }
     }
 
     /// Begins a print page
     /// # Errors
     /// Errors on failure to begin the page
-    pub fn begin_page(&self) -> Result<(), FltkError> {
+    pub fn begin_page(&mut self) -> Result<(), FltkError> {
         unsafe {
             if Fl_Printer_begin_page(self.inner) == 0 {
                 Ok(())
@@ -144,22 +144,22 @@ impl Printer {
     }
 
     /// Scale the printable rect
-    pub fn scale(&self, scale_x: f32, scale_y: f32) {
+    pub fn scale(&mut self, scale_x: f32, scale_y: f32) {
         unsafe { Fl_Printer_scale(self.inner, scale_x, scale_y) }
     }
 
     /// Rotate the printable rect
-    pub fn rotate(&self, angle: f32) {
+    pub fn rotate(&mut self, angle: f32) {
         unsafe { Fl_Printer_rotate(self.inner, angle) }
     }
 
     /// Translate the printable rect
-    pub fn translate(&self, x: i32, y: i32) {
+    pub fn translate(&mut self, x: i32, y: i32) {
         unsafe { Fl_Printer_translate(self.inner, x, y) }
     }
 
     /// Untranslate the printable rect
-    pub fn untranslate(&self) {
+    pub fn untranslate(&mut self) {
         unsafe { Fl_Printer_untranslate(self.inner) }
     }
 

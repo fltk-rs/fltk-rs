@@ -199,27 +199,27 @@ crate::macros::widget::impl_widget_base!(Chart, Fl_Chart);
 
 impl Chart {
     /// Clears the chart
-    pub fn clear(&self) {
+    pub fn clear(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_clear(self.inner) }
     }
 
     /// Adds an entry
-    pub fn add(&self, val: f64, txt: &str, col: Color) {
+    pub fn add(&mut self, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_add(self.inner, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Inserts an entry at an index
-    pub fn insert(&self, idx: i32, val: f64, txt: &str, col: Color) {
+    pub fn insert(&mut self, idx: i32, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_insert(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
     }
 
     /// Replaces an entry at an index
-    pub fn replace(&self, idx: i32, val: f64, txt: &str, col: Color) {
+    pub fn replace(&mut self, idx: i32, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
         unsafe { Fl_Chart_replace(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
@@ -294,7 +294,7 @@ impl Chart {
     }
 
     /// Sets the ability of the chart to be autosizable
-    pub fn make_autosize(&self, val: bool) {
+    pub fn make_autosize(&mut self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Chart_make_autosize(self.inner, val as i32) }
     }
@@ -537,14 +537,14 @@ impl InputChoice {
     }
 
     /// Add an element to the input choice
-    pub fn add(&self, s: &str) {
+    pub fn add(&mut self, s: &str) {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
         unsafe { Fl_Input_Choice_add(self.inner, s.as_ptr()) }
     }
 
     /// Clear the input choice widget
-    pub fn clear(&self) {
+    pub fn clear(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Input_Choice_clear(self.inner) }
     }
@@ -720,13 +720,13 @@ impl HelpView {
     }
 
     /// Clear selection
-    pub fn clear_selection(&self) {
+    pub fn clear_selection(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_clear_selection(self.inner) }
     }
 
     /// Select all
-    pub fn select_all(&self) {
+    pub fn select_all(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Help_View_select_all(self.inner) }
     }
@@ -813,7 +813,7 @@ impl HelpView {
     /// Load a view from a file or URI
     /// # Errors
     /// Errors on non-existent path
-    pub fn load(&self, f: &str) -> Result<(), FltkError> {
+    pub fn load(&mut self, f: &str) -> Result<(), FltkError> {
         assert!(!self.was_deleted());
         let f = CString::safe_new(f);
         unsafe {

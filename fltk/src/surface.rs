@@ -99,12 +99,12 @@ impl ImageSurface {
     }
 
     /// Rescale an image surface
-    pub fn rescale(&self) {
+    pub fn rescale(&mut self) {
         unsafe { Fl_Image_Surface_rescale(self.inner) }
     }
 
     /// Draw a widget on the image surface
-    pub fn draw<W: WidgetExt>(&self, widget: &W, delta_x: i32, delta_y: i32) {
+    pub fn draw<W: WidgetExt>(&mut self, widget: &W, delta_x: i32, delta_y: i32) {
         unsafe {
             Fl_Image_Surface_draw(
                 self.inner,
@@ -116,7 +116,7 @@ impl ImageSurface {
     }
 
     /// draw a decorated window
-    pub fn draw_decorated_window<W: WindowExt>(&self, win: &W, x_offset: i32, y_offset: i32) {
+    pub fn draw_decorated_window<W: WindowExt>(&mut self, win: &W, x_offset: i32, y_offset: i32) {
         unsafe {
             Fl_Image_Surface_draw_decorated_window(
                 self.inner,
@@ -218,7 +218,7 @@ impl SvgFileSurface {
 
     /// Draw a widget in an svg file surface.
     /// The .svg file is not complete until the destructor was run
-    pub fn draw<W: WidgetExt>(&self, widget: &W, delta_x: i32, delta_y: i32) {
+    pub fn draw<W: WidgetExt>(&mut self, widget: &W, delta_x: i32, delta_y: i32) {
         unsafe {
             Fl_SVG_File_Surface_draw(
                 self.inner,
@@ -230,7 +230,7 @@ impl SvgFileSurface {
     }
 
     /// draw a decorated window
-    pub fn draw_decorated_window<W: WindowExt>(&self, win: &W, x_offset: i32, y_offset: i32) {
+    pub fn draw_decorated_window<W: WindowExt>(&mut self, win: &W, x_offset: i32, y_offset: i32) {
         unsafe {
             Fl_SVG_File_Surface_draw_decorated_window(
                 self.inner,
