@@ -93,7 +93,7 @@ crate::macros::input::impl_input_ext!(FileInput, Fl_File_Input);
 
 impl FileInput {
     /// Set the `down_box` of the widget
-    pub fn set_down_frame(&self, f: FrameType) {
+    pub fn set_down_frame(&mut self, f: FrameType) {
         assert!(!self.was_deleted());
         unsafe { Fl_File_Input_set_down_box(self.inner, f as i32) }
     }

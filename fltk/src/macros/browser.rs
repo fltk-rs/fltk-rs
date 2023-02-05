@@ -5,7 +5,7 @@ macro_rules! impl_browser_ext {
     ($name:tt, $flname:tt) => {
         paste::paste! {
             unsafe impl BrowserExt for $name {
-                fn remove(&self, line: i32) {
+                fn remove(&mut self, line: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         if line > 0 && line <= self.size() + 1 {
@@ -14,43 +14,43 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn add(&self, item: &str) {
+                fn add(&mut self, item: &str) {
                     assert!(!self.was_deleted());
                     let item = CString::safe_new(item);
                     unsafe { [<$flname _add>](self.inner, item.as_ptr()) }
                 }
 
-                fn add_with_data<T: Clone + 'static>(&self, item: &str, data: T) {
+                fn add_with_data<T: Clone + 'static>(&mut self, item: &str, data: T) {
                     self.add(item);
                     self.set_data(self.size(), data);
                 }
 
-                fn insert(&self, line: i32, item: &str) {
+                fn insert(&mut self, line: i32, item: &str) {
                     assert!(!self.was_deleted());
                         let item = CString::safe_new(item);
                         unsafe { [<$flname _insert>](self.inner, line as i32, item.as_ptr()) }
                 }
 
-                fn insert_with_data<T: Clone + 'static>(&self, line: i32, item: &str, data: T) {
+                fn insert_with_data<T: Clone + 'static>(&mut self, line: i32, item: &str, data: T) {
                     self.insert(line, item);
                     self.set_data(line, data);
                 }
 
-                fn move_item(&self, to: i32, from: i32) {
+                fn move_item(&mut self, to: i32, from: i32) {
                     assert!(!self.was_deleted());
                     if to > 0 && to <= self.size() + 1 && from > 0 && from <= self.size() + 1 {
                         unsafe { [<$flname _move>](self.inner, to as i32, from as i32) }
                     }
                 }
 
-                fn swap(&self, a: i32, b: i32) {
+                fn swap(&mut self, a: i32, b: i32) {
                     assert!(!self.was_deleted());
                     if a > 0 && a <= self.size() + 1 && b > 0 && b <= self.size() + 1 {
                         unsafe { [<$flname _swap>](self.inner, a as i32, b as i32) }
                     }
                 }
 
-                fn clear(&self) {
+                fn clear(&mut self) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _clear>](self.inner)
@@ -64,7 +64,7 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn select(&self, line: i32) {
+                fn select(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() + 1 {
                         unsafe {
@@ -106,7 +106,7 @@ macro_rules! impl_browser_ext {
                     self.text(self.value())
                 }
 
-                fn set_text(&self, line: i32, txt: &str) {
+                fn set_text(&mut self, line: i32, txt: &str) {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() + 1 {
                         let txt = CString::safe_new(txt);
@@ -114,7 +114,7 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn load<P: AsRef<std::path::Path>>(&self, path: P) -> Result<(), FltkError> {
+                fn load<P: AsRef<std::path::Path>>(&mut self, path: P) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     if !path.as_ref().exists() {
                         return Err(FltkError::Internal(FltkErrorKind::ResourceNotFound));
@@ -137,14 +137,14 @@ macro_rules! impl_browser_ext {
                     unsafe { [<$flname _text_size>](self.inner) as i32 }
                 }
 
-                fn set_text_size(&self, c: i32) {
+                fn set_text_size(&mut self, c: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_size>](self.inner, c as i32)
                     }
                 }
 
-                fn set_icon<Img: ImageExt>(&self, line: i32, image: Option<Img>) {
+                fn set_icon<Img: ImageExt>(&mut self, line: i32, image: Option<Img>) {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() + 1 {
                         if let Some(image) = image {
@@ -186,7 +186,7 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn remove_icon(&self, line: i32) {
+                fn remove_icon(&mut self, line: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         if line > 0 && line <= self.size() + 1 {
@@ -195,21 +195,21 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn top_line(&self, line: i32) {
+                fn top_line(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _topline>](self.inner, line as i32) }
                     }
                 }
 
-                fn bottom_line(&self, line: i32) {
+                fn bottom_line(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _bottomline>](self.inner, line as i32) }
                     }
                 }
 
-                fn middle_line(&self, line: i32) {
+                fn middle_line(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _middleline>](self.inner, line as i32) }
@@ -221,7 +221,7 @@ macro_rules! impl_browser_ext {
                     unsafe { [<$flname _format_char>](self.inner) as u8 as char }
                 }
 
-                fn set_format_char(&self, c: char) {
+                fn set_format_char(&mut self, c: char) {
                     assert!(!self.was_deleted());
                     debug_assert!(c != 0 as char);
                     let c = if c as i32 > 128 { 128 as char } else { c };
@@ -233,7 +233,7 @@ macro_rules! impl_browser_ext {
                     unsafe { [<$flname _column_char>](self.inner) as u8 as char }
                 }
 
-                fn set_column_char(&self, c: char) {
+                fn set_column_char(&mut self, c: char) {
                     assert!(!self.was_deleted());
                     debug_assert!(c != 0 as char);
                     let c = if c as i32 > 128 { 128 as char } else { c };
@@ -256,7 +256,7 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn set_column_widths(&self, arr: &[i32]) {
+                fn set_column_widths(&mut self, arr: &[i32]) {
                     assert!(!self.was_deleted());
                     debug_assert!(!arr.contains(&0), "FLTK uses 0 as a sentinel value for the array/slice. To hide a column, use -1!");
                     unsafe {
@@ -280,19 +280,19 @@ macro_rules! impl_browser_ext {
                     }
                 }
 
-                fn make_visible(&self, line: i32) {
+                fn make_visible(&mut self, line: i32) {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() + 1 {
                         unsafe { [<$flname _make_visible>](self.inner, line as i32) }
                     }
                 }
 
-                fn position(&self) -> i32 {
+                fn vposition(&self) -> i32 {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _position>](self.inner) as i32 }
                 }
 
-                fn set_position(&self, pos: i32) {
+                fn set_vposition(&mut self, pos: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_position>](self.inner, pos as i32) }
                 }
@@ -302,7 +302,7 @@ macro_rules! impl_browser_ext {
                     unsafe { [<$flname _hposition>](self.inner) as i32 }
                 }
 
-                fn set_hposition(&self, pos: i32) {
+                fn set_hposition(&mut self, pos: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_hposition>](self.inner, pos as i32) }
                 }
@@ -312,7 +312,7 @@ macro_rules! impl_browser_ext {
                     unsafe { std::mem::transmute([<$flname _has_scrollbar>](self.inner)) }
                 }
 
-                fn set_has_scrollbar(&self, mode: $crate::browser::BrowserScrollbar) {
+                fn set_has_scrollbar(&mut self, mode: $crate::browser::BrowserScrollbar) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _set_has_scrollbar>](self.inner, mode as raw::c_uchar)
@@ -324,12 +324,12 @@ macro_rules! impl_browser_ext {
                     unsafe { [<$flname _scrollbar_size>](self.inner) as i32 }
                 }
 
-                fn set_scrollbar_size(&self, new_size: i32) {
+                fn set_scrollbar_size(&mut self, new_size: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_scrollbar_size>](self.inner, new_size as i32) }
                 }
 
-                fn sort(&self) {
+                fn sort(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _sort>](self.inner) }
                 }
@@ -361,7 +361,7 @@ macro_rules! impl_browser_ext {
                     unsafe { [<$flname _value>](self.inner) as i32 }
                 }
 
-                fn set_data<T: Clone + 'static>(&self, line: i32, data: T) {
+                fn set_data<T: Clone + 'static>(&mut self, line: i32, data: T) {
                     assert!(!self.was_deleted());
                     if line > 0 && line <= self.size() + 1 {
                         unsafe {

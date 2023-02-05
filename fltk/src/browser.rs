@@ -149,7 +149,7 @@ impl FileBrowser {
     }
 
     /// Sets the icon size
-    pub fn set_icon_size(&self, s: u32) {
+    pub fn set_icon_size(&mut self, s: u32) {
         assert!(!self.was_deleted());
         unsafe { Fl_File_Browser_set_iconsize(self.inner, s) }
     }
@@ -164,7 +164,7 @@ impl FileBrowser {
     /// `{X|Y|Z}` or `{X,Y,Z}` matches any one of the subexpressions literally.
     /// `\x` quotes the character `x` so it has no special meaning.
     /// `x` all other characters must be matched exactly.
-    pub fn set_filter(&self, pattern: &'static str) {
+    pub fn set_filter(&mut self, pattern: &'static str) {
         assert!(!self.was_deleted());
         let pattern = CString::safe_new(pattern);
         unsafe {
@@ -197,7 +197,7 @@ impl FileBrowser {
     }
 
     /// Sets the `FileType` of the `FileBrowser`
-    pub fn set_filetype(&self, t: FileType) {
+    pub fn set_filetype(&mut self, t: FileType) {
         assert!(!self.was_deleted());
         unsafe { Fl_File_Browser_set_filetype(self.inner, t as i32) }
     }
@@ -216,14 +216,14 @@ crate::macros::widget::impl_widget_base!(CheckBrowser, Fl_Check_Browser);
 
 impl CheckBrowser {
     /// Add an item, returns the number of current items
-    pub fn add(&self, s: &str, checked: bool) -> i32 {
+    pub fn add(&mut self, s: &str, checked: bool) -> i32 {
         assert!(!self.was_deleted());
         let s = CString::safe_new(s);
         unsafe { Fl_Check_Browser_add(self.inner, s.as_ptr(), checked as i32) }
     }
 
     /// Remove item at index, returns the number of current items
-    pub fn remove(&self, item: i32) -> i32 {
+    pub fn remove(&mut self, item: i32) -> i32 {
         assert!(!self.was_deleted());
         if item > 0 && item <= self.size() {
             unsafe { Fl_Check_Browser_remove(self.inner, item) }
@@ -233,7 +233,7 @@ impl CheckBrowser {
     }
 
     /// Clear the browser
-    pub fn clear(&self) {
+    pub fn clear(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_clear(self.inner) }
     }
@@ -266,7 +266,7 @@ impl CheckBrowser {
     }
 
     /// Check selected item
-    pub fn set_checked(&self, item: i32) {
+    pub fn set_checked(&mut self, item: i32) {
         assert!(!self.was_deleted());
         if item > 0 && item <= self.size() as i32 {
             unsafe { Fl_Check_Browser_set_checked(self.inner, item) }
@@ -274,13 +274,13 @@ impl CheckBrowser {
     }
 
     /// Check all of the items
-    pub fn check_all(&self) {
+    pub fn check_all(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_check_all(self.inner) }
     }
 
     /// Check none of the items
-    pub fn check_none(&self) {
+    pub fn check_none(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_check_none(self.inner) }
     }
@@ -311,7 +311,7 @@ impl CheckBrowser {
     }
 
     /// Sets the text font
-    pub fn set_text_font(&self, f: Font) {
+    pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -323,7 +323,7 @@ impl CheckBrowser {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&self, s: i32) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_text_size(self.inner, s as i32) }
     }
@@ -335,19 +335,19 @@ impl CheckBrowser {
     }
 
     /// Sets the text's color
-    pub fn set_text_color(&self, color: Color) {
+    pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_text_color(self.inner, color.bits() as u32) }
     }
 
     /// Gets the vertical scroll position of the list as a pixel position
-    pub fn position(&self) -> i32 {
+    pub fn vposition(&self) -> i32 {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_position(self.inner) as i32 }
     }
 
     /// Sets the vertical scroll position of the list as a pixel position
-    pub fn set_position(&self, pos: i32) {
+    pub fn set_vposition(&mut self, pos: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_position(self.inner, pos as i32) }
     }
@@ -359,7 +359,7 @@ impl CheckBrowser {
     }
 
     /// Sets the horizontal scroll position of the list as a pixel position
-    pub fn set_hposition(&self, pos: i32) {
+    pub fn set_hposition(&mut self, pos: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_hposition(self.inner, pos as i32) }
     }
@@ -371,7 +371,7 @@ impl CheckBrowser {
     }
 
     /// Sets the type of scrollbar associated with the browser
-    pub fn set_has_scrollbar(&self, mode: BrowserScrollbar) {
+    pub fn set_has_scrollbar(&mut self, mode: BrowserScrollbar) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_has_scrollbar(self.inner, mode as raw::c_uchar) }
     }
@@ -383,13 +383,13 @@ impl CheckBrowser {
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&self, new_size: i32) {
+    pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_set_scrollbar_size(self.inner, new_size as i32) }
     }
 
     /// Sort browser elements
-    pub fn sort(&self) {
+    pub fn sort(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_Check_Browser_sort(self.inner) }
     }

@@ -54,12 +54,12 @@ macro_rules! impl_image_ext {
                     }
                 }
 
-                fn draw(&self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
+                fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _draw>](self.inner, arg2, arg3, arg4, arg5) }
                 }
 
-                fn draw_ext(&self, arg2: i32, arg3: i32, arg4: i32, arg5: i32, cx: i32, cy: i32) {
+                fn draw_ext(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32, cx: i32, cy: i32) {
                     assert!(!self.was_deleted());
                     unsafe {
                         [<$flname _draw_ext>](self.inner, arg2, arg3, arg4, arg5, cx, cy)
@@ -112,7 +112,7 @@ macro_rules! impl_image_ext {
                         Err(FltkError::Internal(FltkErrorKind::ImageFormatError))
                     } else {
                         let data = self.to_rgb_data();
-                        let img = $crate::image::RgbImage::new(&data, self.data_w(), self.data_h(), self.depth())?;
+                        let mut img = $crate::image::RgbImage::new(&data, self.data_w(), self.data_h(), self.depth())?;
                         img.scale(self.w(), self.h(), false, true);
                         Ok(img)
                     }
@@ -122,7 +122,7 @@ macro_rules! impl_image_ext {
                     self.to_rgb()
                 }
 
-                fn scale(&self, width: i32, height: i32, proportional: bool, can_expand: bool) {
+                fn scale(&mut self, width: i32, height: i32, proportional: bool, can_expand: bool) {
                     assert!(!self.was_deleted());
                     let width = if width < 1 {
                         1
@@ -170,7 +170,7 @@ macro_rules! impl_image_ext {
                     unsafe { [<$flname _ld>](self.inner) }
                 }
 
-                fn inactive(&self) {
+                fn inactive(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _inactive>](self.inner) }
                 }

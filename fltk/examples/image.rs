@@ -3,10 +3,10 @@ use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);
-    let wind = Window::default().with_size(400, 300);
-    let frame = Frame::default().size_of(&wind);
+    let mut wind = Window::default().with_size(400, 300);
+    let mut frame = Frame::default().size_of(&wind);
 
-    let image = SharedImage::load("screenshots/calc.jpg")?;
+    let mut image = SharedImage::load("screenshots/calc.jpg")?;
     image.scale(200, 200, true, true);
 
     frame.set_image(Some(image));

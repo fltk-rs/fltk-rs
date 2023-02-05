@@ -275,7 +275,7 @@ impl SvgImage {
     }
 
     /// Rasterize an SvgImage
-    pub fn normalize(&self) {
+    pub fn normalize(&mut self) {
         assert!(!self.was_deleted());
         unsafe { Fl_SVG_Image_normalize(self.inner) }
     }

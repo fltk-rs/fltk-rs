@@ -94,7 +94,7 @@ impl ImageSurface {
     }
 
     /// Set the origin coordinates of an image surface
-    pub fn set_origin(&self, x: i32, y: i32) {
+    pub fn set_origin(&mut self, x: i32, y: i32) {
         unsafe { Fl_Image_Surface_set_origin(self.inner, x, y) }
     }
 
@@ -202,7 +202,7 @@ impl SvgFileSurface {
     }
 
     /// Sets the origin of the `SvgFileSurface`
-    pub fn set_origin(&self, x: i32, y: i32) {
+    pub fn set_origin(&mut self, x: i32, y: i32) {
         unsafe { Fl_SVG_File_Surface_origin(self.inner, x, y) }
     }
 

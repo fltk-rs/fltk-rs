@@ -169,7 +169,7 @@ impl Tree {
     }
 
     /// Sets the root label
-    pub fn set_root_label(&self, new_label: &str) {
+    pub fn set_root_label(&mut self, new_label: &str) {
         assert!(!self.was_deleted());
         let new_label = CString::safe_new(new_label);
         unsafe { Fl_Tree_root_label(self.inner, new_label.as_ptr()) }
@@ -182,7 +182,7 @@ impl Tree {
     }
 
     /// Sets the Tree's root
-    pub fn set_root(&self, new_item: Option<TreeItem>) {
+    pub fn set_root(&mut self, new_item: Option<TreeItem>) {
         assert!(!self.was_deleted());
         let ptr = match new_item {
             None => std::ptr::null_mut(),
@@ -642,7 +642,7 @@ impl Tree {
     }
 
     /// Set the item that currently should have keyboard focus
-    pub fn set_item_focus(&self, item: &TreeItem) {
+    pub fn set_item_focus(&mut self, item: &TreeItem) {
         assert!(!self.was_deleted());
         assert!(!item.inner.is_null());
         unsafe { Fl_Tree_set_item_focus(self.inner, item.inner) }
@@ -668,7 +668,7 @@ impl Tree {
     }
 
     /// Sets the items' label font
-    pub fn set_item_label_font(&self, val: Font) {
+    pub fn set_item_label_font(&mut self, val: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_labelfont(self.inner, val.bits() as i32) }
     }
@@ -680,7 +680,7 @@ impl Tree {
     }
 
     /// Sets the items' label size
-    pub fn set_item_label_size(&self, val: i32) {
+    pub fn set_item_label_size(&mut self, val: i32) {
         assert!(!self.was_deleted());
         let val = if val < 1 { 1 } else { val };
         unsafe { Fl_Tree_set_item_labelsize(self.inner, val as i32) }
@@ -693,7 +693,7 @@ impl Tree {
     }
 
     /// Sets the items' foreground color
-    pub fn set_item_label_fgcolor(&self, val: Color) {
+    pub fn set_item_label_fgcolor(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_labelfgcolor(self.inner, val.bits() as u32) }
     }
@@ -705,7 +705,7 @@ impl Tree {
     }
 
     /// Sets the items' foreground color
-    pub fn set_item_label_bgcolor(&self, val: Color) {
+    pub fn set_item_label_bgcolor(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_labelbgcolor(self.inner, val.bits() as u32) }
     }
@@ -717,7 +717,7 @@ impl Tree {
     }
 
     /// Sets the items' foreground color
-    pub fn set_connector_color(&self, val: Color) {
+    pub fn set_connector_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_connectorcolor(self.inner, val.bits() as u32) }
     }
@@ -729,7 +729,7 @@ impl Tree {
     }
 
     /// Sets the left margin
-    pub fn set_margin_left(&self, val: i32) {
+    pub fn set_margin_left(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_marginleft(self.inner, val as i32) }
     }
@@ -741,7 +741,7 @@ impl Tree {
     }
 
     /// Sets the top margin
-    pub fn set_margin_top(&self, val: i32) {
+    pub fn set_margin_top(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_margintop(self.inner, val as i32) }
     }
@@ -753,7 +753,7 @@ impl Tree {
     }
 
     /// Sets the bottom margin
-    pub fn set_margin_bottom(&self, val: i32) {
+    pub fn set_margin_bottom(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_marginbottom(self.inner, val as i32) }
     }
@@ -765,7 +765,7 @@ impl Tree {
     }
 
     /// Sets the line spacing
-    pub fn set_line_spacing(&self, val: i32) {
+    pub fn set_line_spacing(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_linespacing(self.inner, val as i32) }
     }
@@ -777,7 +777,7 @@ impl Tree {
     }
 
     /// Sets the open child bottom margin
-    pub fn set_open_child_margin_bottom(&self, val: i32) {
+    pub fn set_open_child_margin_bottom(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_openchild_marginbottom(self.inner, val as i32) }
     }
@@ -789,7 +789,7 @@ impl Tree {
     }
 
     /// Sets the user icon left margin
-    pub fn set_user_icon_margin_left(&self, val: i32) {
+    pub fn set_user_icon_margin_left(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_usericonmarginleft(self.inner, val as i32) }
     }
@@ -801,7 +801,7 @@ impl Tree {
     }
 
     /// Sets the label's left margin
-    pub fn set_label_margin_left(&self, val: i32) {
+    pub fn set_label_margin_left(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_labelmarginleft(self.inner, val as i32) }
     }
@@ -813,7 +813,7 @@ impl Tree {
     }
 
     /// Sets the widget's left margin
-    pub fn set_widget_margin_left(&self, val: i32) {
+    pub fn set_widget_margin_left(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_widgetmarginleft(self.inner, val as i32) }
     }
@@ -825,7 +825,7 @@ impl Tree {
     }
 
     /// Sets the connector's width
-    pub fn set_connector_width(&self, val: i32) {
+    pub fn set_connector_width(&mut self, val: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_connectorwidth(self.inner, val as i32) }
     }
@@ -846,7 +846,7 @@ impl Tree {
     }
 
     /// Sets the user icon
-    pub fn set_user_icon<Img: ImageExt>(&self, image: Option<Img>) {
+    pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
         if let Some(image) = image {
             assert!(!image.was_deleted());
@@ -872,7 +872,7 @@ impl Tree {
     }
 
     /// Sets the open icon
-    pub fn set_open_icon<Img: ImageExt>(&self, image: Option<Img>) {
+    pub fn set_open_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
         if let Some(image) = image {
             assert!(!image.was_deleted());
@@ -898,7 +898,7 @@ impl Tree {
     }
 
     /// Sets the close icon
-    pub fn set_close_icon<Img: ImageExt>(&self, image: Option<Img>) {
+    pub fn set_close_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
         if let Some(image) = image {
             assert!(!image.was_deleted());
@@ -915,7 +915,7 @@ impl Tree {
     }
 
     /// Sets whether the collapse icon is enabled
-    pub fn set_show_collapse(&self, flag: bool) {
+    pub fn set_show_collapse(&mut self, flag: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_showcollapse(self.inner, flag as i32) }
     }
@@ -927,7 +927,7 @@ impl Tree {
     }
 
     /// Sets whether the root is shown
-    pub fn set_show_root(&self, flag: bool) {
+    pub fn set_show_root(&mut self, flag: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_showroot(self.inner, flag as i32) }
     }
@@ -939,7 +939,7 @@ impl Tree {
     }
 
     /// Sets the connector style
-    pub fn set_connector_style(&self, val: TreeConnectorStyle) {
+    pub fn set_connector_style(&mut self, val: TreeConnectorStyle) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_connectorstyle(self.inner, val as i32) }
     }
@@ -951,7 +951,7 @@ impl Tree {
     }
 
     /// Sets the sort order
-    pub fn set_sort_order(&self, val: TreeSort) {
+    pub fn set_sort_order(&mut self, val: TreeSort) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_sortorder(self.inner, val as i32) }
     }
@@ -963,7 +963,7 @@ impl Tree {
     }
 
     /// Sets the select frame
-    pub fn set_select_frame(&self, val: FrameType) {
+    pub fn set_select_frame(&mut self, val: FrameType) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_selectbox(self.inner, val as i32) }
     }
@@ -975,7 +975,7 @@ impl Tree {
     }
 
     /// Sets the Tree select mode
-    pub fn set_select_mode(&self, val: TreeSelect) {
+    pub fn set_select_mode(&mut self, val: TreeSelect) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_selectmode(self.inner, val as i32) }
     }
@@ -987,7 +987,7 @@ impl Tree {
     }
 
     /// Sets the Tree item's reselect mode
-    pub fn set_item_reselect_mode(&self, mode: TreeItemReselectMode) {
+    pub fn set_item_reselect_mode(&mut self, mode: TreeItemReselectMode) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_reselect_mode(self.inner, mode as i32) }
     }
@@ -999,7 +999,7 @@ impl Tree {
     }
 
     /// Sets the Tree item's draw mode
-    pub fn set_item_draw_mode(&self, mode: TreeItemDrawMode) {
+    pub fn set_item_draw_mode(&mut self, mode: TreeItemDrawMode) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_item_draw_mode(self.inner, mode as i32) }
     }
@@ -1071,7 +1071,7 @@ impl Tree {
     }
 
     /// Sets the vertical position of the item
-    pub fn set_vposition(&self, pos: i32) {
+    pub fn set_vposition(&mut self, pos: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_vposition(self.inner, pos) }
     }
@@ -1083,7 +1083,7 @@ impl Tree {
     }
 
     /// Sets the horizontal position of the item
-    pub fn set_hposition(&self, pos: i32) {
+    pub fn set_hposition(&mut self, pos: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_hposition(self.inner, pos) }
     }
@@ -1102,7 +1102,7 @@ impl Tree {
     }
 
     /// Sets the scrollbar size
-    pub fn set_scrollbar_size(&self, sz: i32) {
+    pub fn set_scrollbar_size(&mut self, sz: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_scrollbar_size(self.inner, sz as i32) }
     }
@@ -1120,7 +1120,7 @@ impl Tree {
     }
 
     /// Set the callback item
-    pub fn set_callback_item(&self, item: &TreeItem) {
+    pub fn set_callback_item(&mut self, item: &TreeItem) {
         assert!(!self.was_deleted());
         assert!(!item.inner.is_null());
         unsafe { Fl_Tree_set_callback_item(self.inner, item.inner) }
@@ -1133,7 +1133,7 @@ impl Tree {
     }
 
     /// Set the callback reason
-    pub fn set_callback_reason(&self, reason: TreeReason) {
+    pub fn set_callback_reason(&mut self, reason: TreeReason) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_set_callback_reason(self.inner, reason as i32) }
     }
@@ -1290,7 +1290,7 @@ impl TreeItem {
     /// Set the internal data of the tree item
     /// # Warning
     /// This method doesn't store the type information of the passed data
-    pub fn set_user_data<T: Clone + 'static>(&self, data: T) {
+    pub fn set_user_data<T: Clone + 'static>(&mut self, data: T) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Tree_Item_set_user_data(self.inner, Box::into_raw(Box::from(data)) as _);
@@ -1367,7 +1367,7 @@ impl TreeItem {
     }
 
     /// Sets the label of the tree item
-    pub fn set_label(&self, val: &str) {
+    pub fn set_label(&mut self, val: &str) {
         assert!(!self.was_deleted());
         let val = CString::safe_new(val);
         unsafe { Fl_Tree_set_Item_label(self.inner, val.as_ptr() as *mut raw::c_char) }
@@ -1391,7 +1391,7 @@ impl TreeItem {
     }
 
     /// Sets the label's font
-    pub fn set_label_font(&self, val: Font) {
+    pub fn set_label_font(&mut self, val: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_labelfont(self.inner, val.bits() as i32) }
     }
@@ -1403,7 +1403,7 @@ impl TreeItem {
     }
 
     /// Sets the label's size
-    pub fn set_label_size(&self, sz: i32) {
+    pub fn set_label_size(&mut self, sz: i32) {
         assert!(!self.was_deleted());
         let sz = if sz < 1 { 1 } else { sz };
         unsafe { Fl_Tree_Item_set_labelsize(self.inner, sz) }
@@ -1416,7 +1416,7 @@ impl TreeItem {
     }
 
     /// Sets the label's foreground color
-    pub fn set_label_fgcolor(&self, val: Color) {
+    pub fn set_label_fgcolor(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_labelfgcolor(self.inner, val.bits() as u32) }
     }
@@ -1428,7 +1428,7 @@ impl TreeItem {
     }
 
     /// Sets the label's color
-    pub fn set_label_color(&self, val: Color) {
+    pub fn set_label_color(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_labelcolor(self.inner, val.bits() as u32) }
     }
@@ -1440,7 +1440,7 @@ impl TreeItem {
     }
 
     /// Sets the label's background color
-    pub fn set_label_bgcolor(&self, val: Color) {
+    pub fn set_label_bgcolor(&mut self, val: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_labelbgcolor(self.inner, val.bits() as u32) }
     }
@@ -1452,7 +1452,7 @@ impl TreeItem {
     }
 
     /// Sets the item's associated widget
-    pub fn set_widget<W: WidgetExt>(&self, val: &W) {
+    pub fn set_widget<W: WidgetExt>(&mut self, val: &W) {
         assert!(!val.was_deleted());
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_widget(self.inner, val.as_widget_ptr() as *mut Fl_Widget) }
@@ -1692,7 +1692,7 @@ impl TreeItem {
     }
 
     /// Set the parent of the item
-    pub fn set_parent(&self, val: &TreeItem) {
+    pub fn set_parent(&mut self, val: &TreeItem) {
         assert!(!self.was_deleted());
         unsafe { Fl_Tree_Item_set_parent(self.inner, val.inner) }
     }
@@ -1837,7 +1837,7 @@ impl TreeItem {
     }
 
     /// Sets the user icon
-    pub fn set_user_icon<Img: ImageExt>(&self, image: Option<Img>) {
+    pub fn set_user_icon<Img: ImageExt>(&mut self, image: Option<Img>) {
         assert!(!self.was_deleted());
         if let Some(image) = image {
             assert!(!image.was_deleted());

@@ -16,7 +16,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn set_value(&self, val: &str) {
+                fn set_value(&mut self, val: &str) {
                     assert!(!self.was_deleted());
                     let temp = CString::safe_new(val);
                     unsafe {
@@ -31,21 +31,21 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn set_maximum_size(&self, val: i32) {
+                fn set_maximum_size(&mut self, val: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_maximum_size>](self.inner, val as i32)
                     }
                 }
 
-                fn position(&self) -> i32 {
+                fn insert_position(&self) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _position>](self.inner) as i32
                     }
                 }
 
-                fn set_position(&self, val: i32) -> Result<(), FltkError> {
+                fn set_insert_position(&mut self, val: i32) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         let x = [<$flname _set_position>](self.inner, val as i32);
@@ -63,7 +63,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn set_mark(&self, val: i32) -> Result<(), FltkError> {
+                fn set_mark(&mut self, val: i32) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         let x = [<$flname _set_mark>](self.inner, val as i32);
@@ -74,7 +74,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn replace(&self, beg: i32, end: i32, val: &str) -> Result<(), FltkError> {
+                fn replace(&mut self, beg: i32, end: i32, val: &str) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     let val = CString::safe_new(val);
                     unsafe {
@@ -92,7 +92,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn insert(&self, txt: &str) -> Result<(), FltkError> {
+                fn insert(&mut self, txt: &str) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     let txt = CString::safe_new(txt);
                     unsafe {
@@ -104,7 +104,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn append(&self, txt: &str) -> Result<(), FltkError> {
+                fn append(&mut self, txt: &str) -> Result<(), FltkError> {
                     assert!(!self.was_deleted());
                     let txt = CString::safe_new(txt);
                     unsafe {
@@ -116,7 +116,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn copy(&self) -> Result<(), FltkError> {
+                fn copy(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         let x = [<$flname _copy>](self.inner, 1);
@@ -127,7 +127,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn undo(&self) -> Result<(), FltkError> {
+                fn undo(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         let x = [<$flname _undo>](self.inner);
@@ -138,7 +138,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn cut(&self) -> Result<(), FltkError> {
+                fn cut(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         let x = [<$flname _copy_cuts>](self.inner);
@@ -156,7 +156,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn set_text_font(&self, font: $crate::enums::Font) {
+                fn set_text_font(&mut self, font: $crate::enums::Font) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_font>](self.inner, font.bits() as i32)
@@ -170,7 +170,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn set_text_color(&self, color: $crate::enums::Color) {
+                fn set_text_color(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_color>](self.inner, color.bits() as u32)
@@ -184,7 +184,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn set_text_size(&self, sz: i32) {
+                fn set_text_size(&mut self, sz: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_text_size>](self.inner, sz as i32)
@@ -198,7 +198,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn set_readonly(&self, val: bool) {
+                fn set_readonly(&mut self, val: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_readonly>](self.inner, val as i32)
@@ -212,7 +212,7 @@ macro_rules! impl_input_ext {
                     }
                 }
 
-                fn set_wrap(&self, val: bool) {
+                fn set_wrap(&mut self, val: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_wrap>](self.inner, val as i32)

@@ -115,7 +115,7 @@ impl TextBuffer {
     }
 
     /// Sets the text of the buffer
-    pub fn set_text(&self, txt: &str) {
+    pub fn set_text(&mut self, txt: &str) {
         assert!(!self.inner.is_null());
         unsafe {
             let txt = CString::safe_new(txt);
@@ -290,7 +290,7 @@ impl TextBuffer {
     }
 
     /// Sets the tab distance
-    pub fn set_tab_distance(&self, tab_dist: i32) {
+    pub fn set_tab_distance(&mut self, tab_dist: i32) {
         assert!(!self.inner.is_null());
         unsafe { Fl_Text_Buffer_set_tab_distance(self.inner, tab_dist as i32) }
     }
@@ -816,7 +816,7 @@ impl TextEditor {
     pub const AnyState: crate::enums::Shortcut = crate::enums::Shortcut::from_i32(-1);
 
     /// Set to insert mode
-    pub fn set_insert_mode(&self, b: bool) {
+    pub fn set_insert_mode(&mut self, b: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Text_Editor_set_insert_mode(self.inner, b as i32) }
@@ -830,7 +830,7 @@ impl TextEditor {
     }
 
     /// Set tab navigation
-    pub fn set_tab_nav(&self, val: bool) {
+    pub fn set_tab_nav(&mut self, val: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Text_Editor_set_tab_nav(self.inner, val as i32) }
@@ -1097,7 +1097,7 @@ impl TextEditor {
 
 impl SimpleTerminal {
     /// Sets whether the terminal automatically stays at the bottom
-    pub fn set_stay_at_bottom(&self, arg1: bool) {
+    pub fn set_stay_at_bottom(&mut self, arg1: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_set_stay_at_bottom(self.inner, arg1 as i32) }
@@ -1111,7 +1111,7 @@ impl SimpleTerminal {
     }
 
     /// Sets the max lines allowed in history
-    pub fn set_history_lines(&self, arg1: i32) {
+    pub fn set_history_lines(&mut self, arg1: i32) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_set_history_lines(self.inner, arg1 as i32) }
@@ -1125,7 +1125,7 @@ impl SimpleTerminal {
     }
 
     /// Enables ANSI sequences within the text to control text colors
-    pub fn set_ansi(&self, val: bool) {
+    pub fn set_ansi(&mut self, val: bool) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         unsafe { Fl_Simple_Terminal_set_ansi(self.inner, val as i32) }
@@ -1155,7 +1155,7 @@ impl SimpleTerminal {
     }
 
     /// Sets the text of the terminal buffer
-    pub fn set_text(&self, s: &str) {
+    pub fn set_text(&mut self, s: &str) {
         assert!(!self.was_deleted());
         assert!(self.buffer().is_some());
         let s = CString::safe_new(s);

@@ -149,7 +149,7 @@ pub fn quit() {
         unload_font(loaded_font).unwrap_or(());
     }
     if let Some(wins) = windows() {
-        for i in wins {
+        for mut i in wins {
             if i.shown() {
                 i.hide();
             }

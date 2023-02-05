@@ -228,7 +228,7 @@ impl Screen {
     }
 
     /// Sets the value of the GUI scaling factor for the current screen
-    pub fn set_scale(&self, factor: f32) {
+    pub fn set_scale(&mut self, factor: f32) {
         unsafe { fl::Fl_set_screen_scale(self.n, factor) }
     }
 

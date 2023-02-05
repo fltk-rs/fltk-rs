@@ -139,7 +139,7 @@ impl Printer {
     }
 
     /// Set the origin coordinates of the printable rect
-    pub fn set_origin(&self, x: i32, y: i32) {
+    pub fn set_origin(&mut self, x: i32, y: i32) {
         unsafe { Fl_Printer_set_origin(self.inner, x, y) }
     }
 
@@ -169,7 +169,7 @@ impl Printer {
     }
 
     /// Set the printer to be the current printer
-    pub fn set_current(&self) {
+    pub fn set_current(&mut self) {
         unsafe { Fl_Printer_set_current(self.inner) }
     }
 

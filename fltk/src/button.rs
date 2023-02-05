@@ -54,7 +54,7 @@ impl RadioButton {
     }
 
     /// Sets whether the `RadioButton` is toggled or not
-    pub fn toggle(&self, val: bool) {
+    pub fn toggle(&mut self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Radio_Button_toggle(self.inner, val as i32) }
     }
@@ -168,7 +168,7 @@ impl CheckButton {
     }
 
     /// Set whether `CheckButton` is checked or not
-    pub fn set_checked(&self, checked: bool) {
+    pub fn set_checked(&mut self, checked: bool) {
         unsafe {
             assert!(!self.was_deleted());
             Fl_Check_Button_set_checked(self.inner, checked as i32);

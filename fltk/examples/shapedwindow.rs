@@ -63,7 +63,7 @@ impl ShapedWindow {
         });
         Self { wind }
     }
-    pub fn set_cursor(&self, img: image::RgbImage) {
+    pub fn set_cursor(&mut self, img: image::RgbImage) {
         self.wind.set_cursor_image(img, 0, 0);
     }
     pub fn show(&self) {

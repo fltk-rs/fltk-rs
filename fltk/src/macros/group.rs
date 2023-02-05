@@ -68,7 +68,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn add<W: WidgetExt>(&self, widget: &W) {
+                fn add<W: WidgetExt>(&mut self, widget: &W) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(!widget.was_deleted());
@@ -76,7 +76,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn insert<W: WidgetExt>(&self, widget: &W, index: i32) {
+                fn insert<W: WidgetExt>(&mut self, widget: &W, index: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(!widget.was_deleted());
@@ -93,7 +93,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn remove<W: WidgetExt>(&self, widget: &W) {
+                fn remove<W: WidgetExt>(&mut self, widget: &W) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(!widget.was_deleted());
@@ -101,7 +101,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn remove_by_index(&self, idx: i32) {
+                fn remove_by_index(&mut self, idx: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(idx < self.children());
@@ -109,7 +109,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn resizable<W: WidgetExt>(&self, widget: &W) {
+                fn resizable<W: WidgetExt>(&mut self, widget: &W) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(!widget.was_deleted());
@@ -117,7 +117,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn make_resizable(&self, val: bool) {
+                fn make_resizable(&mut self, val: bool) {
                     assert!(!self.was_deleted());
                     let ptr = if val {
                         self.inner
@@ -127,12 +127,12 @@ macro_rules! impl_group_ext {
                     unsafe { [<$flname _resizable>](self.inner, ptr as *mut _) }
                 }
 
-                fn add_resizable<W: WidgetExt>(&self, widget: &W) {
+                fn add_resizable<W: WidgetExt>(&mut self, widget: &W) {
                     self.resizable(widget);
                     self.add(widget);
                 }
 
-                fn set_clip_children(&self, flag: bool) {
+                fn set_clip_children(&mut self, flag: bool) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_clip_children>](self.inner, flag as i32) }
                 }
@@ -151,7 +151,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn update_child<W: WidgetExt>(&self, w: &mut W) {
+                fn update_child<W: WidgetExt>(&mut self, w: &mut W) {
                     assert!(!self.was_deleted());
                     assert!(!w.was_deleted());
                     unsafe {
@@ -172,7 +172,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn draw_children(&self) {
+                fn draw_children(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe {
                         $crate::app::open_display();
@@ -180,7 +180,7 @@ macro_rules! impl_group_ext {
                     }
                 }
 
-                fn init_sizes(&self) {
+                fn init_sizes(&mut self) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _init_sizes>](self.inner)
@@ -269,7 +269,7 @@ macro_rules! impl_group_ext_via {
                 self.$member.add_resizable(widget)
             }
 
-            fn set_clip_children(&self, flag: bool) {
+            fn set_clip_children(&mut self, flag: bool) {
                 self.$member.set_clip_children(flag)
             }
 

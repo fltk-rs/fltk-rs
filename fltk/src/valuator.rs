@@ -28,7 +28,7 @@ impl Slider {
     }
 
     /// Set the slider size as a fraction of the long axis
-    pub fn set_slider_size(&self, v: f32) {
+    pub fn set_slider_size(&mut self, v: f32) {
         unsafe { Fl_Slider_set_slider_size(self.inner, v) }
     }
 
@@ -38,7 +38,7 @@ impl Slider {
     }
 
     /// Set the frame type of the slider box
-    pub fn set_slider_frame(&self, c: FrameType) {
+    pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner, c as i32) }
     }
 }
@@ -63,7 +63,7 @@ impl NiceSlider {
     }
 
     /// Set the slider size as a fraction of the long axis
-    pub fn set_slider_size(&self, v: f32) {
+    pub fn set_slider_size(&mut self, v: f32) {
         unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
     }
 
@@ -73,7 +73,7 @@ impl NiceSlider {
     }
 
     /// Set the frame type of the slider box
-    pub fn set_slider_frame(&self, c: FrameType) {
+    pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
     }
 }
@@ -119,7 +119,7 @@ impl Dial {
     }
 
     /// Set the angles of the dial
-    pub fn set_angles(&self, angle1: i32, angle2: i32) {
+    pub fn set_angles(&mut self, angle1: i32, angle2: i32) {
         if angle1 <= 360 {
             unsafe {
                 Fl_Dial_set_angle1(self.inner, angle1 as _);
@@ -154,7 +154,7 @@ impl LineDial {
     }
 
     /// Set the angles of the dial
-    pub fn set_angles(&self, angle1: i32, angle2: i32) {
+    pub fn set_angles(&mut self, angle1: i32, angle2: i32) {
         if angle1 <= 360 {
             unsafe {
                 Fl_Dial_set_angle1(self.inner as _, angle1 as _);
@@ -225,7 +225,7 @@ impl Scrollbar {
     }
 
     /// Set the slider size as a fraction of the long axis
-    pub fn set_slider_size(&self, v: f32) {
+    pub fn set_slider_size(&mut self, v: f32) {
         unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
     }
 
@@ -235,7 +235,7 @@ impl Scrollbar {
     }
 
     /// Set the frame type of the slider box
-    pub fn set_slider_frame(&self, c: FrameType) {
+    pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
     }
 }
@@ -292,7 +292,7 @@ impl ValueSlider {
     }
 
     /// Sets the text font
-    pub fn set_text_font(&self, f: Font) {
+    pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -304,7 +304,7 @@ impl ValueSlider {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&self, s: i32) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_set_text_size(self.inner, s as i32) }
     }
@@ -316,7 +316,7 @@ impl ValueSlider {
     }
 
     /// Sets the text's color
-    pub fn set_text_color(&self, color: Color) {
+    pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Slider_set_text_color(self.inner, color.bits() as u32) }
     }
@@ -327,7 +327,7 @@ impl ValueSlider {
     }
 
     /// Set the slider size as a fraction of the long axis
-    pub fn set_slider_size(&self, v: f32) {
+    pub fn set_slider_size(&mut self, v: f32) {
         unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
     }
 
@@ -337,7 +337,7 @@ impl ValueSlider {
     }
 
     /// Set the frame type of the slider box
-    pub fn set_slider_frame(&self, c: FrameType) {
+    pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
     }
 }
@@ -375,7 +375,7 @@ impl ValueInput {
     }
 
     /// Sets the text font
-    pub fn set_text_font(&self, f: Font) {
+    pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -387,7 +387,7 @@ impl ValueInput {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&self, s: i32) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_text_size(self.inner, s as i32) }
     }
@@ -399,7 +399,7 @@ impl ValueInput {
     }
 
     /// Sets the text's color
-    pub fn set_text_color(&self, color: Color) {
+    pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_text_color(self.inner, color.bits() as u32) }
     }
@@ -412,7 +412,7 @@ impl ValueInput {
     }
 
     /// Set whether the user is allowed to drag the value outside the range
-    pub fn set_soft(&self, val: bool) {
+    pub fn set_soft(&mut self, val: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Input_set_soft(self.inner, val as raw::c_char) }
     }
@@ -438,7 +438,7 @@ impl ValueOutput {
     }
 
     /// Sets the text font
-    pub fn set_text_font(&self, f: Font) {
+    pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Output_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -450,7 +450,7 @@ impl ValueOutput {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&self, s: i32) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Output_set_text_size(self.inner, s as i32) }
     }
@@ -462,7 +462,7 @@ impl ValueOutput {
     }
 
     /// Sets the text's color
-    pub fn set_text_color(&self, color: Color) {
+    pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Value_Output_set_text_color(self.inner, color.bits() as u32) }
     }
@@ -501,7 +501,7 @@ impl FillDial {
     }
 
     /// Set the angles of the dial
-    pub fn set_angles(&self, angle1: i32, angle2: i32) {
+    pub fn set_angles(&mut self, angle1: i32, angle2: i32) {
         if angle1 <= 360 {
             unsafe {
                 Fl_Dial_set_angle1(self.inner as _, angle1 as _);
@@ -535,7 +535,7 @@ impl HorSlider {
     }
 
     /// Set the slider size as a fraction of the long axis
-    pub fn set_slider_size(&self, v: f32) {
+    pub fn set_slider_size(&mut self, v: f32) {
         unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
     }
 
@@ -545,7 +545,7 @@ impl HorSlider {
     }
 
     /// Set the frame type of the slider box
-    pub fn set_slider_frame(&self, c: FrameType) {
+    pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
     }
 }
@@ -570,7 +570,7 @@ impl HorFillSlider {
     }
 
     /// Set the slider size as a fraction of the long axis
-    pub fn set_slider_size(&self, v: f32) {
+    pub fn set_slider_size(&mut self, v: f32) {
         unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
     }
 
@@ -580,7 +580,7 @@ impl HorFillSlider {
     }
 
     /// Set the frame type of the slider box
-    pub fn set_slider_frame(&self, c: FrameType) {
+    pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
     }
 }
@@ -605,7 +605,7 @@ impl HorNiceSlider {
     }
 
     /// Set the slider size as a fraction of the long axis
-    pub fn set_slider_size(&self, v: f32) {
+    pub fn set_slider_size(&mut self, v: f32) {
         unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
     }
 
@@ -615,7 +615,7 @@ impl HorNiceSlider {
     }
 
     /// Set the frame type of the slider box
-    pub fn set_slider_frame(&self, c: FrameType) {
+    pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
     }
 }
@@ -640,7 +640,7 @@ impl HorValueSlider {
     }
 
     /// Sets the text font
-    pub fn set_text_font(&self, f: Font) {
+    pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_set_text_font(self.inner, f.bits() as i32) }
     }
@@ -652,7 +652,7 @@ impl HorValueSlider {
     }
 
     /// Sets the text size
-    pub fn set_text_size(&self, s: i32) {
+    pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_set_text_size(self.inner, s as i32) }
     }
@@ -664,7 +664,7 @@ impl HorValueSlider {
     }
 
     /// Sets the text's color
-    pub fn set_text_color(&self, color: Color) {
+    pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Hor_Value_Slider_set_text_color(self.inner, color.bits() as u32) }
     }
@@ -675,7 +675,7 @@ impl HorValueSlider {
     }
 
     /// Set the slider size as a fraction of the long axis
-    pub fn set_slider_size(&self, v: f32) {
+    pub fn set_slider_size(&mut self, v: f32) {
         unsafe { Fl_Slider_set_slider_size(self.inner as _, v) }
     }
 
@@ -685,7 +685,7 @@ impl HorValueSlider {
     }
 
     /// Set the frame type of the slider box
-    pub fn set_slider_frame(&self, c: FrameType) {
+    pub fn set_slider_frame(&mut self, c: FrameType) {
         unsafe { Fl_Slider_set_slider_box(self.inner as _, c as i32) }
     }
 }

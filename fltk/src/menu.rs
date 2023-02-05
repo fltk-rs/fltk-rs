@@ -56,7 +56,7 @@ crate::macros::widget::impl_widget_type!(MenuButtonType);
 
 impl MenuButton {
     /// Act exactly as though the user clicked the button or typed the shortcut key
-    pub fn popup(&self) -> Option<MenuItem> {
+    pub fn popup(&mut self) -> Option<MenuItem> {
         assert!(!self.was_deleted());
         unsafe {
             let ptr = Fl_Menu_Button_popup(self.inner);
@@ -180,7 +180,7 @@ impl MenuItem {
     }
 
     /// Creates a popup menu at the specified coordinates and returns its choice
-    pub fn popup(&self, x: i32, y: i32) -> Option<MenuItem> {
+    pub fn popup(&mut self, x: i32, y: i32) -> Option<MenuItem> {
         assert!(!self.was_deleted());
         unsafe {
             let item = Fl_Menu_Item_popup(self.inner, x, y);
@@ -213,7 +213,7 @@ impl MenuItem {
     }
 
     /// Sets the label of the menu item
-    pub fn set_label(&self, txt: &str) {
+    pub fn set_label(&mut self, txt: &str) {
         assert!(!self.was_deleted());
         unsafe {
             let txt = CString::safe_new(txt);
@@ -228,7 +228,7 @@ impl MenuItem {
     }
 
     /// Sets the label type of the menu item
-    pub fn set_label_type(&self, typ: LabelType) {
+    pub fn set_label_type(&mut self, typ: LabelType) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Menu_Item_set_label_type(self.inner, typ as i32);
@@ -242,7 +242,7 @@ impl MenuItem {
     }
 
     /// Sets the label color of the menu item
-    pub fn set_label_color(&self, color: Color) {
+    pub fn set_label_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_set_label_color(self.inner, color.bits() as u32) }
     }
@@ -254,7 +254,7 @@ impl MenuItem {
     }
 
     /// Sets the label font of the menu item
-    pub fn set_label_font(&self, font: Font) {
+    pub fn set_label_font(&mut self, font: Font) {
         assert!(!self.was_deleted());
         unsafe { Fl_Menu_Item_set_label_font(self.inner, font.bits() as i32) }
     }
@@ -266,7 +266,7 @@ impl MenuItem {
     }
 
     /// Sets the label size of the menu item
-    pub fn set_label_size(&self, sz: i32) {
+    pub fn set_label_size(&mut self, sz: i32) {
         assert!(!self.was_deleted());
         let sz = if sz < 1 { 1 } else { sz };
         unsafe { Fl_Menu_Item_set_label_size(self.inner, sz) }
@@ -433,7 +433,7 @@ impl MenuItem {
     }
 
     /// Use a sender to send a message during callback
-    pub fn emit<T: 'static + Clone + Send + Sync>(&self, sender: crate::app::Sender<T>, msg: T) {
+    pub fn emit<T: 'static + Clone + Send + Sync>(&mut self, sender: crate::app::Sender<T>, msg: T) {
         self.set_callback(move |_| sender.send(msg.clone()));
     }
 
@@ -444,7 +444,7 @@ impl MenuItem {
 
     /// Draw a box around the menu item.
     /// Requires the call to be made inside a MenuExt-implementing widget's own draw method
-    pub fn draw<M: MenuExt>(&self, x: i32, y: i32, w: i32, h: i32, menu: &M, selected: bool) {
+    pub fn draw<M: MenuExt>(&mut self, x: i32, y: i32, w: i32, h: i32, menu: &M, selected: bool) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Menu_Item_draw(
@@ -501,7 +501,7 @@ impl MenuItem {
         }
         ```
     */
-    pub fn add_image<I: ImageExt>(&self, image: Option<I>, on_left: bool) {
+    pub fn add_image<I: ImageExt>(&mut self, image: Option<I>, on_left: bool) {
         assert!(!self.was_deleted());
         unsafe {
             if let Some(image) = image {

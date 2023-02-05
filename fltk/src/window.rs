@@ -122,7 +122,7 @@ impl SingleWindow {
     /// Note: Only call this from the main thread.
     pub fn default() -> SingleWindow {
         assert!(crate::app::is_ui_thread());
-        let win = <SingleWindow as Default>::default();
+        let mut win = <SingleWindow as Default>::default();
         win.free_position();
         win
     }
@@ -257,7 +257,7 @@ impl SingleWindow {
     }
 
     /// Set the borderless window to be on top of the macos system menu bar
-    pub fn set_on_top(&self) {
+    pub fn set_on_top(&mut self) {
         #[cfg(target_os = "macos")]
         {
             extern "C" {
@@ -290,7 +290,7 @@ impl DoubleWindow {
     /// Note: Only call this from the main thread.
     pub fn default() -> DoubleWindow {
         assert!(crate::app::is_ui_thread());
-        let win = <DoubleWindow as Default>::default();
+        let mut win = <DoubleWindow as Default>::default();
         win.free_position();
         win
     }
@@ -548,7 +548,7 @@ impl MenuWindow {
     /// Creates a default initialized menu window
     pub fn default() -> MenuWindow {
         assert!(crate::app::is_ui_thread());
-        let win = <MenuWindow as Default>::default();
+        let mut win = <MenuWindow as Default>::default();
         win.free_position();
         win
     }
@@ -571,7 +571,7 @@ impl OverlayWindow {
     /// Creates a default initialized overlay window
     pub fn default() -> OverlayWindow {
         assert!(crate::app::is_ui_thread());
-        let win = <OverlayWindow as Default>::default();
+        let mut win = <OverlayWindow as Default>::default();
         win.free_position();
         win
     }
@@ -726,7 +726,7 @@ impl GlutWindow {
     /// Creates a default initialized glut window
     pub fn default() -> GlutWindow {
         assert!(crate::app::is_ui_thread());
-        let win = <GlutWindow as Default>::default();
+        let mut win = <GlutWindow as Default>::default();
         win.free_position();
         win
     }
@@ -758,7 +758,7 @@ impl GlutWindow {
     }
 
     /// Mark the OpeGL context as still valid
-    pub fn set_valid(&self, v: bool) {
+    pub fn set_valid(&mut self, v: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_set_valid(self.inner, v as raw::c_char) }
     }
@@ -770,7 +770,7 @@ impl GlutWindow {
     }
 
     /// Mark the context as valid upon creation
-    pub fn set_context_valid(&self, v: bool) {
+    pub fn set_context_valid(&mut self, v: bool) {
         assert!(!self.was_deleted());
         unsafe { Fl_Glut_Window_set_context_valid(self.inner, v as raw::c_char) }
     }
@@ -789,7 +789,7 @@ impl GlutWindow {
     }
 
     /// Sets the GlContext
-    pub fn set_context(&self, ctx: GlContext, destroy_flag: bool) {
+    pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
         assert!(!self.was_deleted());
         assert!(!ctx.is_null());
         unsafe { Fl_Glut_Window_set_context(self.inner, ctx, destroy_flag as i32) }
@@ -857,7 +857,7 @@ impl GlutWindow {
     }
 
     /// Set the Mode of the GlutWindow
-    pub fn set_mode(&self, mode: Mode) {
+    pub fn set_mode(&mut self, mode: Mode) {
         assert!(!self.was_deleted());
         unsafe {
             Fl_Glut_Window_set_mode(self.inner, mode.bits());
@@ -897,7 +897,7 @@ pub mod experimental {
         /// Creates a default initialized glut window
         pub fn default() -> GlWidgetWindow {
             assert!(crate::app::is_ui_thread());
-            let win = <GlWidgetWindow as Default>::default();
+            let mut win = <GlWidgetWindow as Default>::default();
             win.free_position();
             win.set_frame(FrameType::FlatBox);
             win.begin();
@@ -945,7 +945,7 @@ pub mod experimental {
         }
 
         /// Mark the OpeGL context as still valid
-        pub fn set_valid(&self, v: bool) {
+        pub fn set_valid(&mut self, v: bool) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_set_valid(self.inner, v as raw::c_char) }
         }
@@ -957,7 +957,7 @@ pub mod experimental {
         }
 
         /// Mark the context as valid upon creation
-        pub fn set_context_valid(&self, v: bool) {
+        pub fn set_context_valid(&mut self, v: bool) {
             assert!(!self.was_deleted());
             unsafe { Fl_Gl_Window_set_context_valid(self.inner, v as raw::c_char) }
         }
@@ -976,7 +976,7 @@ pub mod experimental {
         }
 
         /// Sets the GlContext
-        pub fn set_context(&self, ctx: GlContext, destroy_flag: bool) {
+        pub fn set_context(&mut self, ctx: GlContext, destroy_flag: bool) {
             assert!(!self.was_deleted());
             assert!(!ctx.is_null());
             unsafe { Fl_Gl_Window_set_context(self.inner, ctx, destroy_flag as i32) }
@@ -1044,7 +1044,7 @@ pub mod experimental {
         }
 
         /// Set the Mode of the GlutWindow
-        pub fn set_mode(&self, mode: Mode) {
+        pub fn set_mode(&mut self, mode: Mode) {
             assert!(!self.was_deleted());
             unsafe {
                 Fl_Gl_Window_set_mode(self.inner, mode.bits());

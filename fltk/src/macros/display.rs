@@ -18,7 +18,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_buffer<B: Into<Option<$crate::text::TextBuffer>>>(&self, buffer: B) {
+                fn set_buffer<B: Into<Option<$crate::text::TextBuffer>>>(&mut self, buffer: B) {
                     unsafe {
                         assert!(!self.was_deleted());
                         if let Some(buffer) = buffer.into() {
@@ -52,7 +52,7 @@ macro_rules! impl_display_ext {
                     unsafe { std::mem::transmute([<$flname _text_font>](self.inner)) }
                 }
 
-                fn set_text_font(&self, font: $crate::enums::Font) {
+                fn set_text_font(&mut self, font: $crate::enums::Font) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_text_font>](self.inner, font.bits() as i32) }
                 }
@@ -63,7 +63,7 @@ macro_rules! impl_display_ext {
                     unsafe { std::mem::transmute([<$flname _text_color>](self.inner)) }
                 }
 
-                fn set_text_color(&self, color: $crate::enums::Color) {
+                fn set_text_color(&mut self, color: $crate::enums::Color) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_text_color>](self.inner, color.bits() as u32) }
                 }
@@ -74,12 +74,12 @@ macro_rules! impl_display_ext {
                     unsafe { [<$flname _text_size>](self.inner) as i32 }
                 }
 
-                fn set_text_size(&self, sz: i32) {
+                fn set_text_size(&mut self, sz: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_text_size>](self.inner, sz as i32) }
                 }
 
-                fn scroll(&self, top_line_num: i32, h_offset: i32) {
+                fn scroll(&mut self, top_line_num: i32, h_offset: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
@@ -91,7 +91,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn insert(&self, text: &str) {
+                fn insert(&mut self, text: &str) {
                     let text = CString::safe_new(text);
                     unsafe {
                         assert!(!self.was_deleted());
@@ -100,7 +100,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_insert_position(&self, new_pos: i32) {
+                fn set_insert_position(&mut self, new_pos: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
@@ -142,7 +142,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn move_right(&self) -> Result<(), FltkError> {
+                fn move_right(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
@@ -155,7 +155,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn move_left(&self) -> Result<(), FltkError> {
+                fn move_left(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
@@ -168,7 +168,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn move_up(&self) -> Result<(), FltkError> {
+                fn move_up(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
@@ -181,7 +181,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn move_down(&self) -> Result<(), FltkError> {
+                fn move_down(&mut self) -> Result<(), FltkError> {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
@@ -194,7 +194,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn show_cursor(&self, val: bool) {
+                fn show_cursor(&mut self, val: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _show_cursor>](self.inner, val as i32);
@@ -348,28 +348,28 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_cursor_style(&self, style: $crate::text::Cursor) {
+                fn set_cursor_style(&mut self, style: $crate::text::Cursor) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_cursor_style>](self.inner, style as i32)
                     }
                 }
 
-                fn set_cursor_color(&self, color: $crate::enums::Color) {
+                fn set_cursor_color(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_cursor_color>](self.inner, color.bits() as u32)
                     }
                 }
 
-                fn set_scrollbar_size(&self, size: i32) {
+                fn set_scrollbar_size(&mut self, size: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_scrollbar_size>](self.inner, size as i32)
                     }
                 }
 
-                fn set_scrollbar_align(&self, align: $crate::enums::Align) {
+                fn set_scrollbar_align(&mut self, align: $crate::enums::Align) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_scrollbar_align>](self.inner, align.bits() as i32)
@@ -424,7 +424,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn skip_lines(&self, start_pos: i32, lines: i32, is_line_start: bool) -> i32 {
+                fn skip_lines(&mut self, start_pos: i32, lines: i32, is_line_start: bool) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
@@ -437,7 +437,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn rewind_lines(&self, start_pos: i32, lines: i32) -> i32 {
+                fn rewind_lines(&mut self, start_pos: i32, lines: i32) -> i32 {
                     unsafe {
                         assert!(!self.was_deleted());
                         assert!(self.buffer().is_some());
@@ -497,7 +497,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_linenumber_width(&self, w: i32) {
+                fn set_linenumber_width(&mut self, w: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_width>](self.inner, w)
@@ -511,7 +511,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_linenumber_font(&self, font: $crate::enums::Font) {
+                fn set_linenumber_font(&mut self, font: $crate::enums::Font) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_font>](self.inner, font.bits() as i32)
@@ -525,7 +525,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_linenumber_size(&self, size: i32) {
+                fn set_linenumber_size(&mut self, size: i32) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_size>](self.inner, size as i32)
@@ -539,7 +539,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_linenumber_fgcolor(&self, color: $crate::enums::Color) {
+                fn set_linenumber_fgcolor(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_fgcolor>](
@@ -556,7 +556,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_linenumber_bgcolor(&self, color: $crate::enums::Color) {
+                fn set_linenumber_bgcolor(&mut self, color: $crate::enums::Color) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_bgcolor>](
@@ -573,7 +573,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_linenumber_align(&self, align: $crate::enums::Align) {
+                fn set_linenumber_align(&mut self, align: $crate::enums::Align) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_linenumber_align>](self.inner, align.bits() as i32)
@@ -595,7 +595,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn wrap_mode(&self, wrap: $crate::text::WrapMode, wrap_margin: i32) {
+                fn wrap_mode(&mut self, wrap: $crate::text::WrapMode, wrap_margin: i32) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _wrap_mode>](self.inner, wrap as i32, wrap_margin) }
                 }
@@ -612,7 +612,7 @@ macro_rules! impl_display_ext {
                     unsafe { [<$flname _wrapped_row>](self.inner, row) }
                 }
 
-                fn set_grammar_underline_color(&self, color: $crate::enums::Color) {
+                fn set_grammar_underline_color(&mut self, color: $crate::enums::Color) {
                     assert!(self.was_deleted());
                     unsafe {
                         [<$flname _set_grammar_underline_color>](self.inner, color.bits() as u32)
@@ -626,7 +626,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_spelling_underline_color(&self, color: $crate::enums::Color) {
+                fn set_spelling_underline_color(&mut self, color: $crate::enums::Color) {
                     assert!(self.was_deleted());
                     unsafe {
                         [<$flname _set_spelling_underline_color>](self.inner, color.bits() as u32)
@@ -640,7 +640,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn set_secondary_selection_color(&self, color: $crate::enums::Color) {
+                fn set_secondary_selection_color(&mut self, color: $crate::enums::Color) {
                     assert!(self.was_deleted());
                     unsafe {
                         [<$flname _set_secondary_selection_color>](self.inner, color.bits() as u32)

@@ -12,14 +12,14 @@ macro_rules! impl_button_ext {
                     }
                 }
 
-                fn set_shortcut(&self, shortcut: $crate::enums::Shortcut) {
+                fn set_shortcut(&mut self, shortcut: $crate::enums::Shortcut) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_shortcut>](self.inner, shortcut.bits() as i32)
                     }
                 }
 
-                fn clear(&self) {
+                fn clear(&mut self) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _clear>](self.inner);
@@ -33,7 +33,7 @@ macro_rules! impl_button_ext {
                     }
                 }
 
-                fn set(&self, flag: bool) {
+                fn set(&mut self, flag: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_value>](self.inner, flag as i32)
@@ -47,14 +47,14 @@ macro_rules! impl_button_ext {
                     }
                 }
 
-                fn set_value(&self, flag: bool) {
+                fn set_value(&mut self, flag: bool) {
                     unsafe {
                         assert!(!self.was_deleted());
                         [<$flname _set_value>](self.inner, flag as i32)
                     }
                 }
 
-                fn set_down_frame(&self, f: $crate::enums::FrameType) {
+                fn set_down_frame(&mut self, f: $crate::enums::FrameType) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _set_down_box>](self.inner, f as i32) }
                 }
