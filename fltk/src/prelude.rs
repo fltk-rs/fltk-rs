@@ -1353,6 +1353,8 @@ pub unsafe trait BrowserExt: WidgetExt {
     unsafe fn data<T: Clone + 'static>(&self, line: i32) -> Option<T>;
     /// Hides a the specified line
     fn hide_line(&mut self, line: i32);
+    /// Gets the selected items
+    fn selected_items(&self) -> Vec<(i32, Option<String>)>;
 }
 
 /// Defines the methods implemented by table types.

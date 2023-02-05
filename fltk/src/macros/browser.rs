@@ -391,6 +391,18 @@ macro_rules! impl_browser_ext {
                         unsafe { [<$flname _hide_line>](self.inner, line); }
                     }
                 }
+
+                fn selected_items(&self) -> Vec<(i32, Option<String>)> {
+                    let mut temp = vec![];
+                    if self.value() > 0 {
+                        for i in 1..self.size() + 1 {
+                            if self.selected(i) {
+                                temp.push((i, self.text(i)));
+                            }
+                        }
+                    }
+                    temp
+                }
             }
         }
     };
