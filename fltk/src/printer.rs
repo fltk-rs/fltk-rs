@@ -8,7 +8,7 @@ use std::ffi::CString;
     Example usage:
     ```rust,no_run
     use fltk::{prelude::*, *};
-    let but = button::Button::default();
+    let mut but = button::Button::default();
     but.set_callback(|widget| {
         let mut printer = printer::Printer::default();
         if printer.begin_job(1).is_ok() {

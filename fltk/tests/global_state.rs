@@ -14,7 +14,7 @@ impl App for Counter {
         app::GlobalState::new(self);
         let a = app::App::default().with_scheme(app::Scheme::Gtk);
         let (s, r) = app::channel();
-        let wind = Window::default().with_size(160, 200).with_label("Counter");
+        let mut wind = Window::default().with_size(160, 200).with_label("Counter");
         view(s);
         wind.end();
         wind.show();
@@ -33,16 +33,16 @@ impl App for Counter {
 
 fn view(s: app::Sender<bool>) {
     let state = app::GlobalState::<Counter>::get();
-    let frame = Frame::default()
+    let mut frame = Frame::default()
         .with_size(100, 40)
         .center_of_parent()
         .with_label(&state.with(|c| c.count).to_string());
     frame.set_label_size(20);
-    let but_inc = Button::default()
+    let mut but_inc = Button::default()
         .size_of(&frame)
         .above_of(&frame, 0)
         .with_label("+");
-    let but_dec = Button::default()
+    let mut but_dec = Button::default()
         .size_of(&frame)
         .below_of(&frame, 0)
         .with_label("-");

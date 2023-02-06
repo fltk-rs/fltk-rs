@@ -2,12 +2,12 @@ use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 fn main() {
     let app = app::App::default();
-    let wind = Window::default()
+    let mut wind = Window::default()
         .with_size(400, 300)
         .center_screen()
         .with_label("handle");
-    let frame = Frame::new(0, 0, 400, 200, "");
-    let but = Button::new(160, 210, 80, 40, "Click me!");
+    let mut frame = Frame::new(0, 0, 400, 200, "");
+    let mut but = Button::new(160, 210, 80, 40, "Click me!");
 
     wind.show();
 

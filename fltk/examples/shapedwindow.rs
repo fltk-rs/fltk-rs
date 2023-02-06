@@ -33,9 +33,9 @@ impl ShapedWindow {
     pub fn default() -> Self {
         let shape = prep_shape();
 
-        let wind = window::Window::default().with_size(400, 400);
+        let mut wind = window::Window::default().with_size(400, 400);
         wind.set_color(enums::Color::White);
-        let but = button::Button::default()
+        let mut but = button::Button::default()
             .with_label("Button")
             .with_size(80, 80)
             .center_of_parent();
@@ -66,14 +66,14 @@ impl ShapedWindow {
     pub fn set_cursor(&mut self, img: image::RgbImage) {
         self.wind.set_cursor_image(img, 0, 0);
     }
-    pub fn show(&self) {
+    pub fn show(&mut self) {
         self.wind.show();
     }
 }
 
 fn main() {
     let app = app::App::default();
-    let win = ShapedWindow::default();
+    let mut win = ShapedWindow::default();
     win.show();
     // Called after showing the window
     win.set_cursor(prep_cursor());

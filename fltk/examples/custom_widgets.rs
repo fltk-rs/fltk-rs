@@ -86,7 +86,7 @@ impl FlatButton {
     // Overrides the handle function.
     // Notice the do_callback which allows the set_callback method to work
     fn handle(&mut self) {
-        let wid = self.wid.clone();
+        let mut wid = self.wid.clone();
         self.wid.handle(move |_, ev| match ev {
             Event::Push => {
                 wid.do_callback();
@@ -118,16 +118,16 @@ pub struct PowerButton {
 
 impl PowerButton {
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> Self {
-        let frm = Frame::new(x, y, w, h, "");
+        let mut frm = Frame::new(x, y, w, h, "");
         frm.set_frame(FrameType::FlatBox);
         frm.set_color(Color::Black);
         let on = Rc::from(RefCell::from(false));
         frm.draw({
             // storing two almost identical images here, in a real application this could be optimized
             let on = Rc::clone(&on);
-            let on_svg = SvgImage::from_data(&POWER.to_string().replace("red", "green")).unwrap();
+            let mut on_svg = SvgImage::from_data(&POWER.to_string().replace("red", "green")).unwrap();
             on_svg.scale(frm.w(), frm.h(), true, true);
-            let off_svg = SvgImage::from_data(POWER).unwrap();
+            let mut off_svg = SvgImage::from_data(POWER).unwrap();
             off_svg.scale(frm.w(), frm.h(), true, true);
             move |f| {
                 if *on.borrow() {
@@ -177,7 +177,7 @@ pub struct FancyHorSlider {
 
 impl FancyHorSlider {
     pub fn new(x: i32, y: i32, width: i32, height: i32) -> Self {
-        let s = Slider::new(x, y, width, height, "");
+        let mut s = Slider::new(x, y, width, height, "");
         s.set_type(SliderType::Horizontal);
         s.set_frame(FrameType::RFlatBox);
         s.set_color(Color::from_u32(0x868db1));
@@ -214,18 +214,18 @@ fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     // app::set_visible_focus(false);
 
-    let wind = Window::default()
+    let mut wind = Window::default()
         .with_size(800, 600)
         .with_label("Custom Widgets");
-    let but = FlatButton::new(350, 350, 160, 80, "Increment");
-    let power = PowerButton::new(600, 100, 100, 100);
-    let dial = FillDial::new(100, 100, 200, 200, "0");
-    let frame = Frame::default()
+    let mut but = FlatButton::new(350, 350, 160, 80, "Increment");
+    let mut power = PowerButton::new(600, 100, 100, 100);
+    let mut dial = FillDial::new(100, 100, 200, 200, "0");
+    let mut frame = Frame::default()
         .with_size(160, 80)
         .with_label("0")
         .above_of(&*but, 20);
-    let fancy_slider = FancyHorSlider::new(100, 550, 500, 10);
-    let toggle = button::ToggleButton::new(650, 400, 80, 35, "@+9circle")
+    let mut fancy_slider = FancyHorSlider::new(100, 550, 500, 10);
+    let mut toggle = button::ToggleButton::new(650, 400, 80, 35, "@+9circle")
         .with_align(Align::Left | Align::Inside);
     wind.end();
     wind.show();

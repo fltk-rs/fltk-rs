@@ -11,7 +11,7 @@ pub struct PopupButton {
 
 impl PopupButton {
     pub fn new(label: &str) -> Self {
-        let but = button::Button::default().with_label(label);
+        let mut but = button::Button::default().with_label(label);
         but.set_frame(FrameType::FlatBox);
         but.set_color(Color::White);
         but.handle(|b, ev| match ev {
@@ -55,17 +55,17 @@ impl MyPopup {
     pub fn new(choices: &[&str]) -> Self {
         let val = Rc::from(RefCell::from(String::from("")));
         let idx = RefCell::from(0);
-        let win = window::Window::default().with_size(120, choices.len() as i32 * 25);
+        let mut win = window::Window::default().with_size(120, choices.len() as i32 * 25);
         win.set_color(Color::White);
         win.set_frame(FrameType::BorderBox);
-        let pack = group::Pack::new(1, 1, win.w() - 2, win.h() - 2, None);
+        let mut pack = group::Pack::new(1, 1, win.w() - 2, win.h() - 2, None);
         win.set_border(false);
         win.end();
         for (i, choice) in choices.iter().enumerate() {
-            let but = PopupButton::new(choice);
+            let mut but = PopupButton::new(choice);
             but.clear_visible_focus();
             but.set_callback({
-                let win = win.clone();
+                let mut win = win.clone();
                 let val = val.clone();
                 let idx = idx.clone();
                 move |b| {
@@ -107,16 +107,16 @@ struct MyChoice {
 impl MyChoice {
     pub fn new<S: Into<Option<&'static str>>>(x: i32, y: i32, w: i32, h: i32, label: S) -> Self {
         let grp = group::Group::new(x, y, w, h, label).with_align(Align::Left);
-        let frame = frame::Frame::new(x, y, w - w / 4, h, None);
+        let mut frame = frame::Frame::new(x, y, w - w / 4, h, None);
         frame.set_frame(FrameType::DownBox);
         frame.set_color(Color::Background2);
-        let btn = button::Button::new(x + w - w / 4, y, w / 4, h, "@2>");
+        let mut btn = button::Button::new(x + w - w / 4, y, w / 4, h, "@2>");
         btn.clear_visible_focus();
         grp.end();
         let choices = Rc::from(RefCell::from(vec![]));
         btn.set_callback({
             let c = choices.clone();
-            let f = frame.clone();
+            let mut f = frame.clone();
             let btn_win = btn.window().unwrap();
             move |b| {
                 let mut menu = MyPopup::new(&*c.borrow());
@@ -168,7 +168,7 @@ impl MyChoice {
 
 fn main() {
     let app = app::App::default();
-    let win = window::Window::default().with_size(400, 300);
+    let mut win = window::Window::default().with_size(400, 300);
     let mut choice = MyChoice::new(160, 200, 100, 30, None);
     choice.add_choices(&["choice1", "choice2", "choice3"]);
     choice.set_current_choice(1);

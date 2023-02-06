@@ -92,7 +92,7 @@ impl MenuButton {
 ///fn main() {
 ///     let a = app::App::default();
 ///     app::set_frame_type_cb(FrameType::DownBox, my_down_box, 0, 0, 0, 0);
-///     let win = window::Window::new(100, 100, 400, 300, None);
+///     let mut win = window::Window::new(100, 100, 400, 300, None);
 ///     win.set_color(Color::from_rgb(211, 211, 211));
 ///     let mut inp = input::Input::new(50, 10, 100, 30, None); // would work for any widget which has a DownBox frame type
 ///     let mut choice = menu::Choice::new(50, 100, 100, 30, None);

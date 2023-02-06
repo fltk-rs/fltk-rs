@@ -18,7 +18,7 @@ struct Canvas {
 
 impl Canvas {
     pub fn new(w: i32, h: i32) -> Self {
-        let frame = Frame::default().with_size(w, h).center_of_parent();
+        let mut frame = Frame::default().with_size(w, h).center_of_parent();
         frame.set_color(Color::White);
         frame.set_frame(FrameType::DownBox);
 
@@ -33,7 +33,7 @@ impl Canvas {
             let surf = surf.clone();
             move |f| {
                 let surf = surf.borrow();
-                let img = surf.image().unwrap();
+                let mut img = surf.image().unwrap();
                 img.draw(f.x(), f.y(), f.w(), f.h());
             }
         });
@@ -88,7 +88,7 @@ fltk::widget_extends!(Canvas, Frame, frame);
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
 
-    let wind = Window::default()
+    let mut wind = Window::default()
         .with_size(WIDTH, HEIGHT)
         .with_label("RustyPainter");
 

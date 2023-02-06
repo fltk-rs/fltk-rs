@@ -6,7 +6,7 @@ struct MyFrame {
 
 impl MyFrame {
     pub fn new(idx: usize) -> MyFrame {
-        let f = MyFrame {
+        let mut f = MyFrame {
             f: frame::Frame::default().with_size(150, 75),
         };
         // Normally you would use the FrameType enum, for example:
@@ -22,49 +22,49 @@ impl MyFrame {
 
 fn main() {
     let app = app::App::default();
-    let win = window::Window::default()
+    let mut win = window::Window::default()
         .with_size(1000, 800)
         .with_label("Frames")
         .center_screen();
 
-    let hpack = group::Pack::new(20, 0, 1000, 800, "");
+    let mut hpack = group::Pack::new(20, 0, 1000, 800, "");
 
-    let pack = group::Pack::default().with_size(150, 800);
+    let mut pack = group::Pack::default().with_size(150, 800);
     for i in 0..9 {
         let _ = MyFrame::new(i);
     }
     pack.end();
     pack.set_spacing(10);
 
-    let pack = group::Pack::default().with_size(150, 800);
+    let mut pack = group::Pack::default().with_size(150, 800);
     for i in 9..18 {
         let _ = MyFrame::new(i);
     }
     pack.end();
     pack.set_spacing(10);
 
-    let pack = group::Pack::default().with_size(150, 800);
+    let mut pack = group::Pack::default().with_size(150, 800);
     for i in 18..27 {
         let _ = MyFrame::new(i);
     }
     pack.end();
     pack.set_spacing(10);
 
-    let pack = group::Pack::default().with_size(150, 800);
+    let mut pack = group::Pack::default().with_size(150, 800);
     for i in 27..36 {
         let _ = MyFrame::new(i);
     }
     pack.end();
     pack.set_spacing(10);
 
-    let pack = group::Pack::default().with_size(150, 800);
+    let mut pack = group::Pack::default().with_size(150, 800);
     for i in 36..45 {
         let _ = MyFrame::new(i);
     }
     pack.end();
     pack.set_spacing(10);
 
-    let pack = group::Pack::default().with_size(150, 800);
+    let mut pack = group::Pack::default().with_size(150, 800);
     for i in 45..54 {
         let _ = MyFrame::new(i);
     }

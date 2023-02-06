@@ -39,8 +39,8 @@ pub struct MyTable {
 }
 
 impl MyTable {
-    pub fn new(inp: input::Input) -> Self {
-        let table = table::Table::default()
+    pub fn new(mut inp: input::Input) -> Self {
+        let mut table = table::Table::default()
             .with_size(800 - 10, 600 - 10)
             .center_of_parent();
         let data = Rc::from(RefCell::from(vec![vec![String::from(""); 26]; 28]));
@@ -148,9 +148,9 @@ impl MyTable {
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
-    let wind = window::Window::default().with_size(800, 600);
+    let mut wind = window::Window::default().with_size(800, 600);
     // We need an input widget
-    let inp = input::Input::default();
+    let mut inp = input::Input::default();
     inp.hide();
 
     let mut table = MyTable::new(inp.clone());

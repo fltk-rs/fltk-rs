@@ -43,7 +43,7 @@ struct TreeMouseFocus {
 
 impl TreeMouseFocus {
     fn new(x: i32, y: i32, width: i32, height: i32, title: &'static str) -> Self {
-        let t_widget = Tree::new(x, y, width, height, title);
+        let mut t_widget = Tree::new(x, y, width, height, title);
         let previous_focus = Rc::new(RefCell::new(None::<TreeItem>));
         let pfr = Rc::clone(&previous_focus);
         t_widget.set_callback_reason(TreeReason::Selected);
@@ -157,8 +157,8 @@ fn main() {
         .collect();
 
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
-    let wind = Window::default().with_size(400, 300);
-    let but = Button::new(260, 255, 80, 40, "Get Items");
+    let mut wind = Window::default().with_size(400, 300);
+    let mut but = Button::new(260, 255, 80, 40, "Get Items");
     let _frame = Frame::new(20, 255, 160, 40, "Focus follow mouse");
     let mut tree = TreeMouseFocus::new(5, 10, 190, 240, "");
     tree.add(&path);
@@ -166,7 +166,7 @@ fn main() {
     let mut items = tree.get_items().unwrap();
     items.as_mut_slice()[0].set_label("/");
 
-    let tree2 = Tree::new(205, 10, 190, 240, "");
+    let mut tree2 = Tree::new(205, 10, 190, 240, "");
     tree2.set_select_mode(TreeSelect::Multi);
     tree2.add("First");
     tree2.add("First/1st");

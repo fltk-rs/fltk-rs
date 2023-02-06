@@ -12,20 +12,20 @@ const HEIGHT: i32 = 400;
 
 fn main() {
     let app = app::App::default();
-    let win = window::Window::default()
+    let mut win = window::Window::default()
         .with_size(WIDTH, HEIGHT)
         .with_label("Flutter-like!");
-    let bar =
+    let mut bar =
         frame::Frame::new(0, 0, WIDTH, 60, "  FLTK App!").with_align(Align::Left | Align::Inside);
-    let text = frame::Frame::default()
+    let mut text = frame::Frame::default()
         .with_size(100, 40)
         .center_of(&win)
         .with_label("You have pushed the button this many times:");
-    let count = frame::Frame::default()
+    let mut count = frame::Frame::default()
         .size_of(&text)
         .below_of(&text, 0)
         .with_label("0");
-    let but = button::Button::new(WIDTH - 100, HEIGHT - 100, 60, 60, "@+6plus");
+    let mut but = button::Button::new(WIDTH - 100, HEIGHT - 100, 60, 60, "@+6plus");
     win.end();
     win.make_resizable(true);
     win.show();

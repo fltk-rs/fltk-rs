@@ -533,7 +533,7 @@ pub fn beep(tp: BeepType) {
     use fltk::{prelude::*, *};
     fn main() {
         let app = app::App::default();
-        let win = window::Window::default().with_size(900, 300);
+        let mut win = window::Window::default().with_size(900, 300);
         let mut chooser = dialog::FileChooser::new(
             ".",                    // directory
             "*",                    // filter or pattern
@@ -1184,7 +1184,7 @@ fn dir_chooser_(message: &str, fname: &Path, relative: bool) -> Option<PathBuf> 
     use fltk::{prelude::*, *};
     fn main() {
         let app = app::App::default();
-        let win = window::Window::default().with_size(900, 300);
+        let mut win = window::Window::default().with_size(900, 300);
         let file = dialog::file_chooser("Choose File", "*.rs", ".", true).unwrap();
         println!("{:?}", file);
         win.end();

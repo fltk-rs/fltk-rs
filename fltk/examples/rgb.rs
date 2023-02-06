@@ -10,12 +10,12 @@ fn main() {
     }
 
     let app = app::App::default();
-    let wind = window::Window::default().with_size(400, 400);
-    let frame = frame::Frame::default().size_of(&wind);
+    let mut wind = window::Window::default().with_size(400, 400);
+    let mut frame = frame::Frame::default().size_of(&wind);
     wind.make_resizable(true);
     wind.end();
     wind.show();
-    let image = image::RgbImage::new(&fb, 128, 128, enums::ColorDepth::Rgb8).unwrap();
+    let mut image = image::RgbImage::new(&fb, 128, 128, enums::ColorDepth::Rgb8).unwrap();
     frame.draw(move |f| {
         image.scale(f.w(), f.h(), false, true);
         image.draw(f.x(), f.y(), f.w(), f.h());

@@ -17,8 +17,8 @@ fn menu_cb(m: &mut impl MenuExt) {
 
 fn main() {
     let a = app::App::default();
-    let win = window::Window::default().with_size(400, 300);
-    let menubar = menu::MenuBar::new(0, 0, 400, 40, "rew");
+    let mut win = window::Window::default().with_size(400, 300);
+    let mut menubar = menu::MenuBar::new(0, 0, 400, 40, "rew");
     menubar.add(
         "File/New\t",
         Shortcut::None,
@@ -55,9 +55,9 @@ fn main() {
         menu::MenuFlag::Normal,
         menu_cb,
     );
-    let btn1 = button::Button::new(160, 150, 80, 30, "Modify 1");
-    let btn2 = button::Button::new(160, 200, 80, 30, "Modify 2");
-    let clear = button::Button::new(160, 250, 80, 30, "Clear");
+    let mut btn1 = button::Button::new(160, 150, 80, 30, "Modify 1");
+    let mut btn2 = button::Button::new(160, 200, 80, 30, "Modify 2");
+    let mut clear = button::Button::new(160, 250, 80, 30, "Clear");
     win.end();
     win.show();
 
@@ -82,7 +82,7 @@ fn main() {
     });
 
     btn2.set_callback({
-        let menubar = menubar.clone();
+        let mut menubar = menubar.clone();
         move |_| {
             menubar.add(
                 "File/Recent/Fifth\t",

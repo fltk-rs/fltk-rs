@@ -15,7 +15,7 @@ use std::{
     use fltk::{prelude::*, *};
     fn main() {
         let app = app::App::default();
-        let win = window::Window::default().with_size(900, 300);
+        let mut win = window::Window::default().with_size(900, 300);
         let mut b = browser::Browser::new(10, 10, 900 - 20, 300 - 20, "");
         let widths = &[50, 50, 50, 70, 70, 40, 40, 70, 70, 50];
         b.set_column_widths(widths);

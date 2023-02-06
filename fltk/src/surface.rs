@@ -10,7 +10,7 @@ use std::path;
     ```rust,no_run
     use fltk::{prelude::*, *};
     let but = button::Button::new(0, 0, 80, 40, "Click");
-    let sur = surface::ImageSurface::new(but.w(), but.h(), false);
+    let mut sur = surface::ImageSurface::new(but.w(), but.h(), false);
     surface::ImageSurface::push_current(&sur);
     draw::set_draw_color(enums::Color::White);
     draw::draw_rectf(0, 0, but.w(), but.h());
@@ -142,7 +142,7 @@ impl Drop for ImageSurface {
     let but = button::Button::new(0, 0, 80, 40, "Click");
     // We need the destructor of SvgFileSurface to actually create the image
     {
-        let sur = surface::SvgFileSurface::new(but.w(), but.h(), "temp.svg");
+        let mut sur = surface::SvgFileSurface::new(but.w(), but.h(), "temp.svg");
         surface::SvgFileSurface::push_current(&sur);
         draw::set_draw_color(enums::Color::White);
         draw::draw_rectf(0, 0, but.w(), but.h());

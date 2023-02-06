@@ -463,7 +463,7 @@ pub enum FlexType {
     use fltk::{prelude::*, *};
     fn main() {
         let a = app::App::default();
-        let win = window::Window::default().with_size(400, 300);
+        let mut win = window::Window::default().with_size(400, 300);
         let mut col = group::Flex::default().size_of_parent();
         col.set_type(group::FlexType::Column);
         let expanding = button::Button::default().with_label("Expanding");

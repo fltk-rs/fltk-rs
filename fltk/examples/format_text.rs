@@ -39,9 +39,9 @@ impl Style {
         size: i32,
         color: Color,
         attr: TextAttr,
-        text_editor: &TextEditor,
+        text_editor: &mut TextEditor,
     ) {
-        let style_buffer = match text_editor.style_buffer() {
+        let mut style_buffer = match text_editor.style_buffer() {
             Some(sb) => sb,
             None => TextBuffer::default(),
         };
@@ -126,21 +126,21 @@ fn main() {
     let style = Rc::from(RefCell::from(Style::new()));
 
     let app = App::default().with_scheme(Scheme::Gleam);
-    let wind = Window::default()
+    let mut wind = Window::default()
         .with_size(500, 200)
         .with_label("Highlight");
-    let vpack = Pack::new(4, 4, 492, 192, "");
+    let mut vpack = Pack::new(4, 4, 492, 192, "");
     vpack.set_spacing(4);
-    let text_editor = TextEditor::default().with_size(492, 163);
+    let mut text_editor = TextEditor::default().with_size(492, 163);
 
-    let hpack = Pack::new(4, 4, 492, 25, "").with_type(PackType::Horizontal);
+    let mut hpack = Pack::new(4, 4, 492, 25, "").with_type(PackType::Horizontal);
     hpack.set_spacing(8);
-    let font = Choice::default().with_size(130, 25);
-    let choice = Choice::default().with_size(130, 25);
-    let size = Spinner::default().with_size(60, 25);
+    let mut font = Choice::default().with_size(130, 25);
+    let mut choice = Choice::default().with_size(130, 25);
+    let mut size = Spinner::default().with_size(60, 25);
 
-    let color = Choice::default().with_size(100, 25);
-    let btn_clear = Button::default().with_size(40, 25).with_label("X");
+    let mut color = Choice::default().with_size(100, 25);
+    let mut btn_clear = Button::default().with_size(40, 25).with_label("X");
     hpack.end();
 
     vpack.end();
@@ -170,7 +170,7 @@ fn main() {
     btn_clear.set_tooltip("Clear style");
 
     // set colors
-    for item in color.clone() {
+    for mut item in color.clone() {
         if let Some(lbl) = item.label() {
             item.set_label_color(Color::from_u32(
                 u32::from_str_radix(lbl.trim().strip_prefix('#').unwrap(), 16)
@@ -183,7 +183,7 @@ fn main() {
     let style_rc1 = Rc::clone(&style);
 
     text_editor.buffer().unwrap().add_modify_callback({
-        let text_editor1 = text_editor.clone();
+        let mut text_editor1 = text_editor.clone();
         let font1 = font.clone();
         let size1 = size.clone();
         let color1 = color.clone();
@@ -221,7 +221,7 @@ fn main() {
                     size1.value() as i32,
                     color,
                     attr,
-                    &text_editor1,
+                    &mut text_editor1,
                 );
             }
         }
@@ -231,7 +231,7 @@ fn main() {
         let size = size.clone();
         let font = font.clone();
         let choice = choice.clone();
-        let text_editor = text_editor.clone();
+        let mut text_editor = text_editor.clone();
         let style_rc1 = Rc::clone(&style);
         move |color| {
             let attr = match choice.value() {
@@ -266,7 +266,7 @@ fn main() {
                         size.value() as i32,
                         color,
                         attr,
-                        &text_editor,
+                        &mut text_editor,
                     );
                 }
             }
@@ -276,9 +276,9 @@ fn main() {
     // get the style from the current cursor position
     text_editor.handle({
         let style_rc1 = Rc::clone(&style);
-        let font1 = font.clone();
-        let size1 = size.clone();
-        let color1 = color.clone();
+        let mut font1 = font.clone();
+        let mut size1 = size.clone();
+        let mut color1 = color.clone();
         move |te, e| match e {
             Event::KeyUp | Event::Released => {
                 if let Some(buff) = te.style_buffer() {
@@ -311,17 +311,17 @@ fn main() {
     });
 
     choice.set_callback({
-        let color1 = color.clone();
+        let mut color1 = color.clone();
         move |_| color1.do_callback()
     });
 
     font.set_callback({
-        let color1 = color.clone();
+        let mut color1 = color.clone();
         move |_| color1.do_callback()
     });
 
     size.set_callback({
-        let color1 = color.clone();
+        let mut color1 = color.clone();
         move |_| color1.do_callback()
     });
 
@@ -352,7 +352,7 @@ fn main() {
                         16,
                         Color::Black,
                         TextAttr::None,
-                        &text_editor,
+                        &mut text_editor,
                     );
                 }
             };

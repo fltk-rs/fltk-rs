@@ -267,9 +267,9 @@ pub fn event_clipboard() -> Option<ClipboardEvent> {
     ```rust,no_run
     use fltk::{prelude::*, *};
     const CHANGE_FRAME: i32 = 100;
-    let wind = window::Window::default();
-    let but = button::Button::default();
-    let frame = frame::Frame::default();
+    let mut wind = window::Window::default();
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
     wind.end();
     wind.show();
     but.set_callback(move |_| {
@@ -471,9 +471,9 @@ pub fn add_handler(cb: fn(Event) -> bool) {
     ```rust,no_run
     use fltk::{prelude::*, *};
     const CHANGE_FRAME: i32 = 100;
-    let wind = window::Window::default();
-    let but = button::Button::default();
-    let frame = frame::Frame::default();
+    let mut wind = window::Window::default();
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
     but.set_callback(move |_| {
         let _ = app::handle(CHANGE_FRAME, &wind).unwrap();
     });
@@ -506,9 +506,9 @@ pub fn handle<I: Into<Event> + Copy + PartialEq + PartialOrd, W: WindowExt>(
     ```rust,no_run
     use fltk::{prelude::*, *};
     const CHANGE_FRAME: i32 = 100;
-    let wind = window::Window::default();
-    let but = button::Button::default();
-    let frame = frame::Frame::default();
+    let mut wind = window::Window::default();
+    let mut but = button::Button::default();
+    let mut frame = frame::Frame::default();
     but.set_callback(move |_| {
         let _ = app::handle_main(CHANGE_FRAME).unwrap();
     });

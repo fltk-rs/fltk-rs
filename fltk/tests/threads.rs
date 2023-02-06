@@ -3,12 +3,12 @@ use std::sync::{Arc, Mutex};
 
 fn main() {
     let app = app::App::default();
-    let wind = Window::default()
+    let mut wind = Window::default()
         .with_size(400, 300)
         .center_screen()
         .with_label("threads");
     let frame = Frame::new(0, 0, 400, 200, "");
-    let but = Button::new(160, 210, 80, 40, "Click me!");
+    let mut but = Button::new(160, 210, 80, 40, "Click me!");
 
     wind.show();
 
@@ -19,7 +19,7 @@ fn main() {
             for i in 0..1000 {
                 app::sleep(0.010);
                 app::awake();
-                let frame = frame.lock().unwrap();
+                let mut frame = frame.lock().unwrap();
                 frame.set_label(format!("Hello {}", i).as_str());
             }
         });

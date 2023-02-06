@@ -67,7 +67,7 @@ An example hello world application:
 use fltk::{app, prelude::*, window::Window};
 fn main() {
     let app = app::App::default();
-    let wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
     wind.end();
     wind.show();
     app.run().unwrap();
@@ -79,9 +79,9 @@ Another example showing the basic callback functionality:
 use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 fn main() {
     let app = app::App::default();
-    let wind = Window::new(100, 100, 400, 300, "Hello from rust");
-    let frame = Frame::new(0, 0, 400, 200, "");
-    let but = Button::new(160, 210, 80, 40, "Click me!");
+    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    let mut frame = Frame::new(0, 0, 400, 200, "");
+    let mut but = Button::new(160, 210, 80, 40, "Click me!");
     wind.end();
     wind.show();
     but.set_callback(move |_| frame.set_label("Hello World!")); // the closure capture is mutable borrow to our button
@@ -106,7 +106,7 @@ An example of a counter showing use of the builder pattern:
 use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 fn main() {
     let app = app::App::default();
-    let wind = Window::default()
+    let mut wind = Window::default()
         .with_size(160, 200)
         .center_screen()
         .with_label("Counter");
@@ -134,7 +134,7 @@ Alternatively, you can use Pack, Flex (for flexbox layouts) or [Grid](https://gi
 use fltk::{app, button::Button, frame::Frame, group::Flex, prelude::*, window::Window};
 fn main() {
     let app = app::App::default();
-    let wind = Window::default().with_size(160, 200).with_label("Counter");
+    let mut wind = Window::default().with_size(160, 200).with_label("Counter");
     let mut flex = Flex::default().with_size(120, 140).center_of_parent().column();
     let but_inc = Button::default().with_label("+");
     let frame = Frame::default().with_label("0");

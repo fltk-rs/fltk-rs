@@ -8,9 +8,9 @@ use fltk::{app, enums::FrameType, frame::Frame, image::SvgImage, prelude::*, win
 
 fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gleam);
-    let wind = Window::new(100, 100, 400, 300, "Hello from rust");
+    let mut wind = Window::new(100, 100, 400, 300, "Hello from rust");
 
-    let frame = Frame::default().with_size(360, 260).center_of(&wind);
+    let mut frame = Frame::default().with_size(360, 260).center_of(&wind);
     frame.set_frame(FrameType::EngravedBox);
     let mut image1 = SvgImage::load("screenshots/RustLogo.svg").unwrap();
     image1.scale(200, 200, true, true);

@@ -12,19 +12,19 @@ fn main() {
     app::background(0x62, 0x00, 0xee);
     app::set_visible_focus(false);
 
-    let wind = Window::default()
+    let mut wind = Window::default()
         .with_size(160, 200)
         .with_label("Counter");
-    let frame = Frame::default()
+    let mut frame = Frame::default()
         .with_size(100, 40)
         .center_of(&wind)
         .with_label("0");
     frame.set_label_size(20);
-    let but_inc = Button::default()
+    let mut but_inc = Button::default()
         .size_of(&frame)
         .above_of(&frame, 0)
         .with_label("+");
-    let but_dec = Button::default()
+    let mut but_dec = Button::default()
         .size_of(&frame)
         .below_of(&frame, 0)
         .with_label("-");
@@ -33,7 +33,7 @@ fn main() {
     wind.show();
 
     but_inc.set_callback({
-        let frame = frame.clone();
+        let mut frame = frame.clone();
         move |_| {
             let label = (frame.label().unwrap().parse::<i32>().unwrap() + 1).to_string();
             frame.set_label(&label);

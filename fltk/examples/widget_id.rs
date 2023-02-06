@@ -14,7 +14,7 @@ impl<W> OnTrigger<W> for W
 where
     W: WidgetExt,
 {
-    fn on_trigger<F: 'static + FnMut(&mut Self)>(self, mut cb: F) -> Self {
+    fn on_trigger<F: 'static + FnMut(&mut Self)>(mut self, mut cb: F) -> Self {
         self.set_callback(move |s| cb(s));
         self
     }
@@ -50,7 +50,7 @@ fn main() {
     let counter = Counter { count: 0 };
     let _state = app::GlobalState::new(counter);
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
-    let wind = window::Window::default()
+    let mut wind = window::Window::default()
         .with_size(160, 200)
         .with_label("Counter");
     let col = group::Flex::default_fill().column();

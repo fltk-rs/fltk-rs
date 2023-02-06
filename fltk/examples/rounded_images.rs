@@ -3,8 +3,8 @@ use fltk::{prelude::*, *};
 struct RoundImageBox;
 
 impl RoundImageBox {
-    pub fn new(radius: i32, image: image::RgbImage) -> Self {
-        let frame = frame::Frame::new(0, 0, radius * 2, radius * 2, None);
+    pub fn new(radius: i32, mut image: image::RgbImage) -> Self {
+        let mut frame = frame::Frame::new(0, 0, radius * 2, radius * 2, None);
         frame.set_frame(enums::FrameType::FlatBox);
         frame.draw(move |f| {
             image.scale(f.w(), f.h(), false, true);
@@ -36,7 +36,7 @@ impl RoundImageBox {
                 color.2,
                 f.w()
             );
-            let s = image::SvgImage::from_data(&s).unwrap();
+            let mut s = image::SvgImage::from_data(&s).unwrap();
             s.draw(f.x(), f.y(), f.w(), f.h());
         });
         Self
@@ -51,8 +51,8 @@ fn main() {
         .to_rgb()
         .unwrap();
 
-    let wind = window::Window::new(100, 100, 800, 400, "Hello from rust");
-    let pack = group::Pack::default()
+    let mut wind = window::Window::new(100, 100, 800, 400, "Hello from rust");
+    let mut pack = group::Pack::default()
         .with_size(800, 200)
         .center_of_parent();
     pack.set_type(group::PackType::Horizontal);

@@ -80,7 +80,7 @@ impl App {
         use fltk::{prelude::*, *};
         let app = app::App::default();
         let font = app.load_font("font.ttf").unwrap();
-        let frame = frame::Frame::new(0, 0, 400, 100, "Hello");
+        let mut frame = frame::Frame::new(0, 0, 400, 100, "Hello");
         frame.set_label_font(enums::Font::by_name(&font));
         ```
         # Errors

@@ -112,26 +112,29 @@ fn handle_drag_drop(editor: &mut text::TextEditor) {
             }
             Event::Paste => {
                 if dnd && released {
-                    let path = app::event_text();
-                    let path = path.trim();
-                    let path = path.replace("file://", "");
-                    let path = std::path::PathBuf::from(&path);
-                    if path.exists() {
-                        // we use a timeout to avoid pasting the path into the buffer
-                        app::add_timeout3(0.0, {
-                            let mut buf = buf.clone();
-                            move |_| match buf.load_file(&path) {
-                                Ok(_) => (),
-                                Err(e) => dialog::alert_default(&format!(
-                                    "An issue occured while loading the file: {}",
-                                    e
-                                )),
-                            }
-                        });
+                    if let Some(path) = app::event_text() {
+                        let path = path.trim();
+                        let path = path.replace("file://", "");
+                        let path = std::path::PathBuf::from(&path);
+                        if path.exists() {
+                            // we use a timeout to avoid pasting the path into the buffer
+                            app::add_timeout(0.0, {
+                                let mut buf = buf.clone();
+                                move |_| match buf.load_file(&path) {
+                                    Ok(_) => (),
+                                    Err(e) => dialog::alert_default(&format!(
+                                        "An issue occured while loading the file: {}",
+                                        e
+                                    )),
+                                }
+                            });
+                        }
+                        dnd = false;
+                        released = false;
+                        true
+                    } else {
+                        false
                     }
-                    dnd = false;
-                    released = false;
-                    true
                 } else {
                     false
                 }
@@ -148,12 +151,12 @@ fn handle_drag_drop(editor: &mut text::TextEditor) {
 
 fn menu_cb(m: &mut impl MenuExt) {
     if let Ok(mpath) = m.item_pathname(None) {
-        let ed: text::TextEditor = app::widget_from_id("ed").unwrap();
+        let mut ed: text::TextEditor = app::widget_from_id("ed").unwrap();
         match mpath.as_str() {
             "&File/New\t" => {
                 STATE.with(|s| {
                     if !s.buf.text().is_empty() {
-                        let c = dialog::choice2_default(
+                        let c = dialog::choice_default(
                             "Are you sure you want to clear the buffer?",
                             "Yes",
                             "No",
@@ -196,7 +199,7 @@ fn menu_cb(m: &mut impl MenuExt) {
                     if s.saved {
                         app::quit();
                     } else {
-                        let c = dialog::choice2_default(
+                        let c = dialog::choice_default(
                             "Are you sure you want to exit without saving?",
                             "Yes",
                             "No",

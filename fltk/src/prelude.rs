@@ -237,7 +237,7 @@ pub unsafe trait WidgetExt {
             use fltk::{prelude::*, *};
             fn main() {
                 let a = app::App::default();
-                let win = window::Window::default().with_size(400, 300);
+                let mut win = window::Window::default().with_size(400, 300);
                 let scroll = group::Scroll::default().size_of_parent();
                 let _btn = button::Button::new(160, 500, 80, 40, "click");
                 let mut scrollbar = scroll.scrollbar();
@@ -414,7 +414,7 @@ pub unsafe trait ButtonExt: WidgetExt {
 /// ```rust
 /// use fltk::{app, button::Button, window::Window, prelude::GroupExt};
 /// let a = app::App::default();
-/// let win = Window::default();
+/// let mut win = Window::default();
 /// win.end();
 /// let btn = Button::default();
 /// win.add(&btn);

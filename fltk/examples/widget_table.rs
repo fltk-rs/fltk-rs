@@ -4,8 +4,8 @@ use fltk::{prelude::*, *};
 
 fn main() {
     let a = app::App::default();
-    let win = window::Window::default().with_size(500, 400);
-    let table = table::Table::default()
+    let mut win = window::Window::default().with_size(500, 400);
+    let mut table = table::Table::default()
         .with_size(400, 130)
         .center_of_parent();
     table.set_frame(enums::FrameType::NoBox);

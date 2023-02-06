@@ -14,7 +14,7 @@ fn main() {
     app::set_visible_focus(false);
 
     // regular widget code
-    let win = window::Window::default().with_size(400, 300);
+    let mut win = window::Window::default().with_size(400, 300);
     let frame = frame::Frame::new(0, 0, 400, 200, "Defaults");
     let flex = group::Flex::default()
         .with_size(400, 50)

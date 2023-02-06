@@ -6,8 +6,8 @@ fn main() {
     let app = app::App::default().with_scheme(app::Scheme::Gtk);
     app::background(211, 211, 211);
 
-    let win = window::Window::default().with_size(900, 300);
-    let b = browser::HoldBrowser::default()
+    let mut win = window::Window::default().with_size(900, 300);
+    let mut b = browser::HoldBrowser::default()
         .with_size(900 - 10, 300 - 10)
         .center_of(&win);
     let widths = &[50, 50, 50, 70, 70, 40, 40, 70, 70, 50];
@@ -23,7 +23,7 @@ fn main() {
         "root\t13464\t0.0\t0.0\t1352\t0\ttty1\tSW\tAug30\t0:00\t@b@f/sbin/mingetty tty1 --noclear",
     );
 
-    let menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
+    let mut menu = menu::MenuItem::new(&["1st menu item\t", "2nd menu item\t", "3rd menu item\t"]);
 
     b.set_callback(move |_| {
         if app::event_mouse_button() == app::MouseButton::Right {
