@@ -528,8 +528,9 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let img =
+                            let mut img =
                                 $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            img.increment_arc();
                             Some(Box::new(img.copy()))
                         }
                     }
@@ -595,8 +596,9 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let img =
+                            let mut img =
                                 $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
+                            img.increment_arc();
                             Some(Box::new(img.copy()))
                         }
                     }

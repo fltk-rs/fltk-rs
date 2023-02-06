@@ -1403,6 +1403,16 @@ pub unsafe trait ImageExt {
         Self: Sized;
     /// Checks if the image was deleted
     fn was_deleted(&self) -> bool;
+    #[doc(hidden)]
+    /// INTERNAL: Manually increment the atomic refcount
+    /// # Safety
+    /// The underlying image pointer must be valid
+    unsafe fn increment_arc(&mut self);
+    #[doc(hidden)]
+    /// INTERNAL: Manually decrement the atomic refcount
+    /// # Safety
+    /// The underlying image pointer must be valid
+    unsafe fn decrement_arc(&mut self);
     /// Transforms an Image base into another Image
     /// # Safety
     /// Can be unsafe if used to downcast to an image of different format

@@ -185,6 +185,20 @@ macro_rules! impl_image_ext {
                     self.inner.is_null()
                 }
 
+                unsafe fn increment_arc(&mut self) {
+                    assert!(!self.was_deleted());
+                    self.refcount.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+                }
+
+                unsafe fn decrement_arc(&mut self) {
+                    assert!(!self.was_deleted());
+                    self.refcount.fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
+                    assert!(
+                        *self.refcount.get_mut() > 1,
+                        "The image should outlive the widget!"
+                    );
+                }
+
                 unsafe fn into_image<I: ImageExt>(self) -> I {
                     I::from_image_ptr(self.inner as *mut _)
                 }

@@ -217,11 +217,12 @@ macro_rules! impl_window_ext {
                         std::any::type_name::<T>() != std::any::type_name::<$crate::image::TiledImage>(),
                         "TiledImage icons are not supported!"
                     );
-                    if let Some(image) = image {
+                    if let Some(mut image) = image {
                         assert!(!image.was_deleted());
                         if std::any::type_name::<T>() == std::any::type_name::<$crate::image::SvgImage>()
                         {
                             unsafe {
+                                image.increment_arc();
                                 [<$flname _set_icon>](
                                     self.inner,
                                     image.as_image_ptr() as *mut _,
@@ -473,6 +474,7 @@ macro_rules! impl_window_ext {
                     }
                     unsafe {
                         assert!(!image.was_deleted());
+                        image.increment_arc();
                         [<$flname _set_cursor_image>](
                             self.inner,
                             image.as_image_ptr() as _,
