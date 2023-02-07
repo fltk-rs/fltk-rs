@@ -1,10 +1,11 @@
 # Changelog
 
 
-### [1.3.29] - Unreleased
+### [1.3.30] - 2023-02-07
 - Fix memory issue with WidgetExt::set_image and set_deimage caused in version 1.3.24.
-- Update Tile docs.
 - Add BrowserExt::selected_items().
+- Update Tile docs.
+- Add some draw graphics context checks in cfltk.
 - Pull FLTK fixes.
 
 ### [1.3.29] - 2023-02-03
