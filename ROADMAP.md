@@ -16,3 +16,5 @@
 - Replace WindowType::Normal with WindowType::Single.
 - Default Flex to Column as is now the default in FLTK.
 - Rename Flex::set_size to fixed. 
+- Rename InputExt::position to insert_position.
+- Rename Browser::position to vposition.
