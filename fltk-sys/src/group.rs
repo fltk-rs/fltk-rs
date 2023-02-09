@@ -1494,6 +1494,9 @@ extern "C" {
     pub fn Fl_Tabs_tab_align(self_: *const Fl_Tabs) -> ::std::os::raw::c_int;
 }
 extern "C" {
+    pub fn Fl_Tabs_handle_overflow(self_: *mut Fl_Tabs, ov: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Tabs_begin(self_: *mut Fl_Tabs);
 }
 extern "C" {

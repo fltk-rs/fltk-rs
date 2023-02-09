@@ -211,6 +211,20 @@ impl Scroll {
     }
 }
 
+/// Defines how Tabs handle overflow
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub enum TabsOverflow {
+    /// Compress tabs
+    Compress = 0,
+    /// Clip tabs
+    Clip,
+    /// Create a pulldown
+    Pulldown,
+    /// Drag tabs
+    Drag,
+}
+
 /// Creates a tab which can contain widgets
 #[derive(Debug)]
 pub struct Tabs {
@@ -320,6 +334,13 @@ impl Tabs {
                 }
             }
         });
+    }
+
+    /// Sets how the Tabs handles overflow
+    pub fn handle_overflow(&mut self, ov: TabsOverflow) {
+        unsafe {
+            Fl_Tabs_handle_overflow(self.inner, ov as i32)
+        }
     }
 }
 
