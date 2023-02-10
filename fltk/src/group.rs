@@ -327,6 +327,11 @@ impl Tabs {
 
     /// Auto layout a tabs widget
     pub fn auto_layout(&mut self) {
+        for c in self.clone().into_iter() {
+            if let Some(mut c) = c.as_group() {
+                c.resize(self.x(), self.y() + 30, self.w(), self.h() - 30);
+            }
+        }
         self.resize_callback(|t, x, y, w, h| {
             for c in t.clone().into_iter() {
                 if let Some(mut c) = c.as_group() {
