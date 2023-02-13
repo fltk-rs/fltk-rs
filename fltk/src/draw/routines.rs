@@ -16,23 +16,23 @@ bitflags::bitflags! {
         /// Dash
         const Dash = 1;
         /// Dot
-        const Dot =2;
+        const Dot = 2;
         /// Dash dot
         const DashDot = 3;
         /// Dash dot dot
-        const DashDotDot =4;
+        const DashDotDot = 4;
         /// Cap flat
-        const CapFlat = 100;
+        const CapFlat = 0x100;
         /// Cap round
-        const CapRound = 200;
+        const CapRound = 0x200;
         /// Cap square
-        const CapSquare = 300;
+        const CapSquare = 0x300;
         /// Join miter
-        const JoinMiter = 1000;
+        const JoinMiter = 0x1000;
         /// Join round
-        const JoinRound = 2000;
+        const JoinRound = 0x2000;
         /// Join bevel
-        const JoinBevel = 3000;
+        const JoinBevel = 0x3000;
     }
 }
 
