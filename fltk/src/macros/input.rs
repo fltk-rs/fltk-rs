@@ -218,6 +218,20 @@ macro_rules! impl_input_ext {
                         [<$flname _set_wrap>](self.inner, val as i32)
                     }
                 }
+
+                fn set_tab_nav(&mut self, val: bool) {
+                    unsafe {
+                        assert!(!self.was_deleted());
+                        [<$flname _set_tab_nav>](self.inner, val as i32)
+                    }
+                }
+
+                fn tab_nav(&self) -> bool {
+                    unsafe {
+                        assert!(!self.was_deleted());
+                        [<$flname _tab_nav>](self.inner) != 0
+                    }
+                }
             }
         }
     };

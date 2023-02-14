@@ -343,9 +343,7 @@ impl Tabs {
 
     /// Sets how the Tabs handles overflow
     pub fn handle_overflow(&mut self, ov: TabsOverflow) {
-        unsafe {
-            Fl_Tabs_handle_overflow(self.inner, ov as i32)
-        }
+        unsafe { Fl_Tabs_handle_overflow(self.inner, ov as i32) }
     }
 }
 

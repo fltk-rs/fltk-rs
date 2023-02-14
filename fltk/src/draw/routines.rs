@@ -1008,7 +1008,5 @@ pub fn draw_text_n(string: &str, x: i32, y: i32) {
     if size() == -1 && len == 1 {
         return;
     }
-    unsafe {
-        Fl_draw3(string.as_ptr() as _, len as _, x, y)
-    }
+    unsafe { Fl_draw3(string.as_ptr() as _, len as _, x, y) }
 }

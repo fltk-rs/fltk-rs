@@ -424,6 +424,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Input_set_wrap(arg1: *mut Fl_Input, boolean: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Input_set_tab_nav(arg1: *mut Fl_Input, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Input_tab_nav(arg1: *const Fl_Input) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Int_Input {
@@ -832,6 +838,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_set_wrap(arg1: *mut Fl_Int_Input, boolean: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Int_Input_set_tab_nav(arg1: *mut Fl_Int_Input, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Int_Input_tab_nav(arg1: *const Fl_Int_Input) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1256,6 +1268,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_set_wrap(arg1: *mut Fl_Float_Input, boolean: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Float_Input_set_tab_nav(arg1: *mut Fl_Float_Input, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Float_Input_tab_nav(arg1: *const Fl_Float_Input) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1759,6 +1777,15 @@ extern "C" {
         boolean: ::std::os::raw::c_int,
     );
 }
+extern "C" {
+    pub fn Fl_Multiline_Input_set_tab_nav(
+        arg1: *mut Fl_Multiline_Input,
+        flag: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Input_tab_nav(arg1: *const Fl_Multiline_Input) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Secret_Input {
@@ -2192,6 +2219,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_Secret_Input_set_wrap(arg1: *mut Fl_Secret_Input, boolean: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_Secret_Input_set_tab_nav(arg1: *mut Fl_Secret_Input, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Secret_Input_tab_nav(arg1: *const Fl_Secret_Input) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_File_Input {
@@ -2613,6 +2646,12 @@ extern "C" {
 extern "C" {
     pub fn Fl_File_Input_set_wrap(arg1: *mut Fl_File_Input, boolean: ::std::os::raw::c_int);
 }
+extern "C" {
+    pub fn Fl_File_Input_set_tab_nav(arg1: *mut Fl_File_Input, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_File_Input_tab_nav(arg1: *const Fl_File_Input) -> ::std::os::raw::c_int;
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Output {
@@ -3018,6 +3057,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Output_set_wrap(arg1: *mut Fl_Output, boolean: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Output_set_tab_nav(arg1: *mut Fl_Output, flag: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Output_tab_nav(arg1: *const Fl_Output) -> ::std::os::raw::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3538,4 +3583,13 @@ extern "C" {
         arg1: *mut Fl_Multiline_Output,
         boolean: ::std::os::raw::c_int,
     );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_set_tab_nav(
+        arg1: *mut Fl_Multiline_Output,
+        flag: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_tab_nav(arg1: *const Fl_Multiline_Output) -> ::std::os::raw::c_int;
 }

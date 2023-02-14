@@ -1,5 +1,5 @@
 use crate::app::widget::first_window;
-use crate::enums::{Event, Key, Shortcut, CallbackReason};
+use crate::enums::{CallbackReason, Event, Key, Shortcut};
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::fl;
@@ -564,7 +564,5 @@ pub fn raw_open_callback(cb: Option<fn(*const raw::c_char)>) {
 
 /// Get the callback reason
 pub fn callback_reason() -> CallbackReason {
-    unsafe {
-        mem::transmute(fl::Fl_callback_reason())
-    }
+    unsafe { mem::transmute(fl::Fl_callback_reason()) }
 }

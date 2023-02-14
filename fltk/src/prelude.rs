@@ -877,6 +877,10 @@ pub unsafe trait InputExt: WidgetExt {
     fn wrap(&self) -> bool;
     /// Set whether text is wrapped inside an input/output widget
     fn set_wrap(&mut self, val: bool);
+    /// Sets whether tab navigation is enabled, true by default
+    fn set_tab_nav(&mut self, val: bool);
+    /// Returns whether tab navigation is enabled
+    fn tab_nav(&self) -> bool;
 }
 
 /// Defines the methods implemented by all menu widgets
@@ -1612,12 +1616,18 @@ pub unsafe trait ImageExt {
         Self: Sized;
     #[doc(hidden)]
     /// Cast an image back to its original type
-    fn from_dyn_image_ptr(_p: *mut fltk_sys::image::Fl_Image) -> Option<Self> where Self: Sized {
+    fn from_dyn_image_ptr(_p: *mut fltk_sys::image::Fl_Image) -> Option<Self>
+    where
+        Self: Sized,
+    {
         None
     }
     #[doc(hidden)]
     /// Cast an image back to its original type
-    fn from_dyn_image<I: ImageExt>(_i: &I) -> Option<Self> where Self: Sized {
+    fn from_dyn_image<I: ImageExt>(_i: &I) -> Option<Self>
+    where
+        Self: Sized,
+    {
         None
     }
 }

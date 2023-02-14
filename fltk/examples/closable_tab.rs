@@ -1,4 +1,4 @@
-use fltk::{prelude::*, enums::*, *};
+use fltk::{enums::*, prelude::*, *};
 
 fn tab_close_cb(g: &mut impl GroupExt) {
     if app::callback_reason() == CallbackReason::Closed {
@@ -24,7 +24,7 @@ fn main() {
         col1.end();
     }
     // end first tab
-    
+
     // second tab
     {
         let mut col2 = group::Flex::default().with_label("\t\ttab2").column();
