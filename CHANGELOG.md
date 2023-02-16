@@ -1,6 +1,14 @@
 # Changelog
 
 
+## [1.3.31] - 2023-02-16
+- Correct draw::LineStyle values by @cpardotortosa
+- Improve Tooltip documentation by @mark-summerfield
+- Add InputExt::tab_nav setter/getter
+- Make Tabs::auto_layout also run when called
+- Add Tabs::handle_overflow
+- Update FLTK submodule
+
 ### [1.3.30] - 2023-02-07
 - Fix memory issue with WidgetExt::set_image and set_deimage caused in version 1.3.24.
 - Add BrowserExt::selected_items().
