@@ -201,7 +201,7 @@ impl FileDialog {
         unsafe { Fl_Native_File_Chooser_set_filter(self.inner, f.as_ptr()) }
     }
 
-    /// Sets the preset filter for the dialog
+    /// Sets the default filename for the dialog
     pub fn set_preset_file(&mut self, f: &str) {
         assert!(!self.inner.is_null());
         let f = CString::safe_new(f);
