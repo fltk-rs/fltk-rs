@@ -351,7 +351,7 @@ impl Progress {
     }
 }
 
-/// Controls tooltips on an application-wide basis
+/// Controls tooltips on an application-wide basis; use .set_tooltip() to add a tooltip to a particular widget
 #[derive(Clone, Debug)]
 pub struct Tooltip {}
 
