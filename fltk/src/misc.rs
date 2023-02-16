@@ -356,52 +356,52 @@ impl Progress {
 pub struct Tooltip {}
 
 impl Tooltip {
-    /// Gets the tooltip's delay
+    /// Gets the tooltips delay
     pub fn delay() -> f32 {
         unsafe { Fl_Tooltip_delay() }
     }
 
-    /// Sets the tooltip's delay
+    /// Sets the tooltips delay
     pub fn set_delay(f: f32) {
         unsafe { Fl_Tooltip_set_delay(f) }
     }
 
-    /// Gets the tooltip's hide delay
+    /// Gets the tooltips hide delay
     pub fn hidedelay() -> f32 {
         unsafe { Fl_Tooltip_hidedelay() }
     }
 
-    /// Sets the tooltip's hide delay
+    /// Sets the tooltips hide delay
     pub fn set_hidedelay(f: f32) {
         unsafe { Fl_Tooltip_set_hidedelay(f) }
     }
 
-    /// Gets the tooltip's hover delay
+    /// Gets the tooltips hover delay
     pub fn hoverdelay() -> f32 {
         unsafe { Fl_Tooltip_hoverdelay() }
     }
 
-    /// Sets the tooltip's hover delay
+    /// Sets the tooltips hover delay
     pub fn set_hoverdelay(f: f32) {
         unsafe { Fl_Tooltip_set_hoverdelay(f) }
     }
 
-    /// Returns whether the tooltip is enabled
+    /// Returns whether the tooltips are enabled
     pub fn enabled() -> bool {
         unsafe { Fl_Tooltip_enabled() != 0 }
     }
 
-    /// Sets whether the tooltip is enabled
+    /// Sets tooltips to be displayed if b is true; otherwise not to be displayed
     pub fn enable(b: bool) {
         unsafe { Fl_Tooltip_enable(b as i32) }
     }
 
-    /// Disables the tooltip
+    /// Disables the display of all tooltips
     pub fn disable() {
         unsafe { Fl_Tooltip_disable() }
     }
 
-    /// Defines the area of the tooltip
+    /// Used to customize a tooltip's size and position for a specific widget type
     pub fn enter_area<W: WidgetExt>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
         assert!(!widget.was_deleted());
         let tip = CString::safe_new(tip);
@@ -417,7 +417,7 @@ impl Tooltip {
         }
     }
 
-    /// Returns the current widget under the tooltip
+    /// Returns the current widget associated with the tooltip
     pub fn current_widget() -> impl WidgetExt {
         unsafe {
             let widget_ptr = Fl_Tooltip_current_widget();
@@ -432,77 +432,77 @@ impl Tooltip {
         unsafe { Fl_Tooltip_current(w.as_widget_ptr() as *mut Fl_Widget) }
     }
 
-    /// Gets the tooltip's font
+    /// Gets the tooltips font
     pub fn font() -> Font {
         unsafe { mem::transmute(Fl_Tooltip_font()) }
     }
 
-    /// Sets the tooltip's font
+    /// Sets the tooltips font
     pub fn set_font(font: Font) {
         unsafe { Fl_Tooltip_set_font(font.bits() as i32) }
     }
 
-    /// Gets the tooltip's font size
+    /// Gets the tooltips font size
     pub fn font_size() -> i32 {
         unsafe { Fl_Tooltip_font_size() as i32 }
     }
 
-    /// Sets the tooltip's font size
+    /// Sets the tooltips font size
     pub fn set_font_size(s: i32) {
         unsafe { Fl_Tooltip_set_font_size(s as i32) }
     }
 
-    /// Gets the tooltip's color
+    /// Gets the tooltips color
     pub fn color() -> Color {
         unsafe { mem::transmute(Fl_Tooltip_color()) }
     }
 
-    /// Sets the tooltip's color
+    /// Sets the tooltips color
     pub fn set_color(c: Color) {
         unsafe { Fl_Tooltip_set_color(c.bits() as u32) }
     }
 
-    /// Gets the tooltip's text color
+    /// Gets the tooltips text color
     pub fn text_color() -> Color {
         unsafe { mem::transmute(Fl_Tooltip_text_color()) }
     }
 
-    /// Sets the tooltip's text color
+    /// Sets the tooltips text color
     pub fn set_text_color(c: Color) {
         unsafe { Fl_Tooltip_set_text_color(c.bits() as u32) }
     }
 
-    /// Gets the margin width
+    /// Gets the tooltips margin width
     pub fn margin_width() -> i32 {
         unsafe { Fl_Tooltip_margin_width() as i32 }
     }
 
-    /// Sets the margin width
+    /// Sets the tooltips margin width
     pub fn set_margin_width(v: i32) {
         unsafe { Fl_Tooltip_set_margin_width(v as i32) }
     }
 
-    /// Gets the margin height
+    /// Gets the tooltips margin height
     pub fn margin_height() -> i32 {
         unsafe { Fl_Tooltip_margin_height() as i32 }
     }
 
-    /// Sets the margin height
+    /// Sets the tooltips margin height
     pub fn set_margin_height(v: i32) {
         unsafe { Fl_Tooltip_set_margin_height(v as i32) }
     }
 
-    /// Gets the wrap width
+    /// Gets the tooltips wrap width
     pub fn wrap_width() -> i32 {
         unsafe { Fl_Tooltip_wrap_width() as i32 }
     }
 
-    /// Sets the wrap width
+    /// Sets the tooltips wrap width
     pub fn set_wrap_width(v: i32) {
         unsafe { Fl_Tooltip_set_wrap_width(v as i32) }
     }
 
-    /// Returns the current window
+    /// Returns the window used for tooltips
     pub fn current_window() -> impl WindowExt {
         unsafe {
             let wind = Fl_Tooltip_current_window();
