@@ -3860,3 +3860,417 @@ extern "C" {
 extern "C" {
     pub fn Fl_Return_Button_down_box(self_: *const Fl_Return_Button) -> ::std::os::raw::c_int;
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct Fl_Shortcut_Button {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_new(
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+        title: *const ::std::os::raw::c_char,
+    ) -> *mut Fl_Shortcut_Button;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_x(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_y(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_width(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_height(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_label(arg1: *mut Fl_Shortcut_Button)
+        -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_label(
+        arg1: *mut Fl_Shortcut_Button,
+        title: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_redraw(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_show(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_hide(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_activate(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_deactivate(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_redraw_label(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_resize(
+        arg1: *mut Fl_Shortcut_Button,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_widget_resize(
+        arg1: *mut Fl_Shortcut_Button,
+        x: ::std::os::raw::c_int,
+        y: ::std::os::raw::c_int,
+        width: ::std::os::raw::c_int,
+        height: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_tooltip(
+        arg1: *mut Fl_Shortcut_Button,
+    ) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_tooltip(
+        arg1: *mut Fl_Shortcut_Button,
+        txt: *const ::std::os::raw::c_char,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_get_type(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_type(arg1: *mut Fl_Shortcut_Button, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_color(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_color(
+        arg1: *mut Fl_Shortcut_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_measure_label(
+        arg1: *const Fl_Shortcut_Button,
+        arg2: *mut ::std::os::raw::c_int,
+        arg3: *mut ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_label_color(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_label_color(
+        arg1: *mut Fl_Shortcut_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_label_font(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_label_font(
+        arg1: *mut Fl_Shortcut_Button,
+        font: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_label_size(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_label_size(
+        arg1: *mut Fl_Shortcut_Button,
+        sz: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_label_type(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_label_type(
+        arg1: *mut Fl_Shortcut_Button,
+        typ: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_box(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_box(arg1: *mut Fl_Shortcut_Button, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_changed(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_changed(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_clear_changed(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_align(arg1: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_align(arg1: *mut Fl_Shortcut_Button, typ: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_delete(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_image(
+        arg1: *mut Fl_Shortcut_Button,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_handle(
+        self_: *mut Fl_Shortcut_Button,
+        cb: custom_handler_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_handle_event(
+        self_: *mut Fl_Shortcut_Button,
+        event: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_draw(
+        self_: *mut Fl_Shortcut_Button,
+        cb: custom_draw_callback,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_resize_callback(
+        self_: *mut Fl_Shortcut_Button,
+        cb: ::std::option::Option<
+            unsafe extern "C" fn(
+                arg1: *mut Fl_Widget,
+                x: ::std::os::raw::c_int,
+                y: ::std::os::raw::c_int,
+                w: ::std::os::raw::c_int,
+                h: ::std::os::raw::c_int,
+                arg2: *mut ::std::os::raw::c_void,
+            ),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_when(arg1: *mut Fl_Shortcut_Button, arg2: ::std::os::raw::c_int);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_when(arg1: *const Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_image(
+        arg1: *const Fl_Shortcut_Button,
+    ) -> *const ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_parent(
+        self_: *const Fl_Shortcut_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_selection_color(
+        arg1: *mut Fl_Shortcut_Button,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_selection_color(
+        arg1: *mut Fl_Shortcut_Button,
+        color: ::std::os::raw::c_uint,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_do_callback(arg1: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_inside(
+        self_: *const Fl_Shortcut_Button,
+        arg1: *mut ::std::os::raw::c_void,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_window(
+        arg1: *const Fl_Shortcut_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_top_window(
+        arg1: *const Fl_Shortcut_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_takes_events(
+        arg1: *const Fl_Shortcut_Button,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_user_data(
+        arg1: *const Fl_Shortcut_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_take_focus(self_: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_visible_focus(self_: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_clear_visible_focus(self_: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_visible_focus(
+        self_: *mut Fl_Shortcut_Button,
+        v: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_has_visible_focus(
+        self_: *mut Fl_Shortcut_Button,
+    ) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_user_data(
+        arg1: *mut Fl_Shortcut_Button,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_draw_data(
+        self_: *const Fl_Shortcut_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_handle_data(
+        self_: *const Fl_Shortcut_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_draw_data(
+        self_: *mut Fl_Shortcut_Button,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_handle_data(
+        self_: *mut Fl_Shortcut_Button,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_damage(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_uchar;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_damage(
+        self_: *mut Fl_Shortcut_Button,
+        flag: ::std::os::raw::c_uchar,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_clear_damage(self_: *mut Fl_Shortcut_Button);
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_as_window(
+        self_: *mut Fl_Shortcut_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_as_group(
+        self_: *mut Fl_Shortcut_Button,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_deimage(
+        arg1: *mut Fl_Shortcut_Button,
+        arg2: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_deimage(
+        arg1: *const Fl_Shortcut_Button,
+    ) -> *const ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_callback(
+        arg1: *mut Fl_Shortcut_Button,
+        arg2: Fl_Callback,
+        arg3: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_deleter(
+        arg1: *mut Fl_Shortcut_Button,
+        arg2: ::std::option::Option<unsafe extern "C" fn(arg1: *mut ::std::os::raw::c_void)>,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_visible(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_visible_r(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_active(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_uint;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_active_r(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_callback(self_: *const Fl_Shortcut_Button) -> Fl_Callback;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_deletion_callback(
+        self_: *mut Fl_Shortcut_Button,
+        arg1: ::std::option::Option<
+            unsafe extern "C" fn(arg1: *mut Fl_Widget, arg2: *mut ::std::os::raw::c_void),
+        >,
+        data: *mut ::std::os::raw::c_void,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Shortcut_Button;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_shortcut(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_shortcut(
+        self_: *mut Fl_Shortcut_Button,
+        shortcut: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_clear(self_: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_value(self_: *mut Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_value(
+        self_: *mut Fl_Shortcut_Button,
+        flag: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_set_down_box(
+        self_: *mut Fl_Shortcut_Button,
+        arg1: ::std::os::raw::c_int,
+    );
+}
+extern "C" {
+    pub fn Fl_Shortcut_Button_down_box(self_: *const Fl_Shortcut_Button) -> ::std::os::raw::c_int;
+}

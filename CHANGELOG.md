@@ -4,6 +4,7 @@
 ## [1.3.31] - 2023-02-16
 - Correct draw::LineStyle values by @cpardotortosa
 - Improve Tooltip documentation by @mark-summerfield
+- Add ShortcutButton
 - Add InputExt::tab_nav setter/getter
 - Make Tabs::auto_layout also run when called
 - Add Tabs::handle_overflow
