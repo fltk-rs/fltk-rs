@@ -1,6 +1,10 @@
 # Changelog
 
 
+## [1.3.32] - Unreleased
+- Support crt-static with msvc toolchain.
+- Update FLTK submodule.
+
 ## [1.3.31] - 2023-02-16
 - Correct draw::LineStyle values by @cpardotortosa
 - Improve Tooltip documentation by @mark-summerfield

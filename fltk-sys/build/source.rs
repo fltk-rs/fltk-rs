@@ -68,6 +68,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     if !target_triple.contains("android") {
         let mut dst = cmake::Config::new("cfltk");
 
+        if cfg!(target_feature = "crt-static") && target_triple.contains("windows-msvc") {
+            dst.define("CFLTK_MSVC_CRT_STATIC", "ON");
+        }
+
         if cfg!(feature = "fltk-shared") {
             dst.define("CFLTK_BUILD_SHARED", "ON");
         }
