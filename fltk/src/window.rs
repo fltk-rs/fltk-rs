@@ -116,6 +116,15 @@ crate::macros::widget::impl_widget_base!(SingleWindow, Fl_Single_Window);
 crate::macros::group::impl_group_ext!(SingleWindow, Fl_Single_Window);
 crate::macros::window::impl_window_ext!(SingleWindow, Fl_Single_Window);
 
+impl Default for SingleWindow {
+    fn default() -> Self {
+        assert!(crate::app::is_ui_thread());
+        let mut win = <SingleWindow as Default>::default();
+        win.free_position();
+        win
+    }
+}
+
 impl SingleWindow {
     /// Creates a default initialized single window
     ///

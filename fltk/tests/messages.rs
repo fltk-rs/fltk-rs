@@ -24,7 +24,7 @@ fn main() {
 
     while app.wait() {
         if let Some(msg) = r.recv() {
-            frame.set_label(format!("Hello {}", msg).as_str());
+            frame.set_label(format!("Hello {msg}").as_str());
         }
     }
 }

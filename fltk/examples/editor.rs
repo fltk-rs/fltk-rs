@@ -212,7 +212,7 @@ impl MyApp {
                     dialog::alert(
                         center().0 - 200,
                         center().1 - 100,
-                        &format!("An issue occured while loading the file: {}", e),
+                        &format!("An issue occured while loading the file: {e}"),
                     );
                     None
                 }
@@ -251,7 +251,7 @@ impl MyApp {
                                     Err(e) => dialog::alert(
                                         center().0 - 200,
                                         center().1 - 100,
-                                        &format!("An issue occured while loading the file: {}", e),
+                                        &format!("An issue occured while loading the file: {e}"),
                                     ),
                                 }
                             });
@@ -312,7 +312,7 @@ impl MyApp {
                     Some(f) => f.to_string_lossy().to_string(),
                     None => "(Untitled)".to_string(),
                 };
-                self.main_win.set_label(&format!("{} - RustyEd", name));
+                self.main_win.set_label(&format!("{name} - RustyEd"));
                 Ok(true)
             }
             None => self.save_file_as(),
@@ -361,7 +361,7 @@ impl MyApp {
                                 Some(f) => f.to_string_lossy().to_string(),
                                 None => "(Untitled)".to_string(),
                             };
-                            self.main_win.set_label(&format!("* {} - RustyEd",name));
+                            self.main_win.set_label(&format!("* {name} - RustyEd"));
                         }
                     }
                     New => {
@@ -386,7 +386,7 @@ impl MyApp {
                             if filename.exists() {
                                 match self.buf.load_file(&filename) {
                                     Ok(_) => self.filename = Some(filename),
-                                    Err(e) => dialog::alert(center().0 - 200, center().1 - 100, &format!("An issue occured while loading the file: {}", e)),
+                                    Err(e) => dialog::alert(center().0 - 200, center().1 - 100, &format!("An issue occured while loading the file: {e}")),
                                 }
                             } else {
                                 dialog::alert(center().0 - 200, center().1 - 100, "File does not exist!")

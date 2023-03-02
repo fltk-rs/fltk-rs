@@ -150,7 +150,7 @@ pub fn event_is_click() -> bool {
 
 /// Returns the duration of an event
 pub fn event_length() -> i32 {
-    unsafe { fl::Fl_event_length() as i32 }
+    unsafe { fl::Fl_event_length() }
 }
 
 /// Returns the state of the event

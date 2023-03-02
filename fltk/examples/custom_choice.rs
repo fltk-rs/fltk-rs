@@ -119,7 +119,7 @@ impl MyChoice {
             let mut f = frame.clone();
             let btn_win = btn.window().unwrap();
             move |b| {
-                let mut menu = MyPopup::new(&*c.borrow());
+                let mut menu = MyPopup::new(&c.borrow());
                 let s = menu.popup(b.x() + btn_win.x() - f.w(), b.y() + btn_win.y() + b.h());
                 f.set_label(&s.0);
             }

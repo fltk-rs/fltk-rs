@@ -59,7 +59,7 @@ impl TreeMouseFocus {
                             let item_y = item.y();
                             match state {
                                 State::MovingUp => {
-                                    if verify_open_till_root(&pf) == true {
+                                    if verify_open_till_root(&pf) {
                                         if mouse_y < item_y {
                                             *pf = pf.as_ref().unwrap().prev();
                                             continue;
@@ -71,7 +71,7 @@ impl TreeMouseFocus {
                                     }
                                 }
                                 State::MovingDown => {
-                                    if verify_open_till_root(&pf) == true {
+                                    if verify_open_till_root(&pf) {
                                         if mouse_y > item_y + item.h() {
                                             *pf = pf.as_ref().unwrap().next();
                                             continue;
@@ -111,9 +111,9 @@ impl TreeMouseFocus {
                         },
                     };
                 }
-                if verify_open_till_root(&pf) == true {
+                if verify_open_till_root(&pf) {
                     t.take_focus().ok();
-                    t.set_item_focus(&pf.as_ref().unwrap());
+                    t.set_item_focus(pf.as_ref().unwrap());
                     println!("Set focus to item: {:?}", pf.as_ref().unwrap().label());
                 }
                 true
@@ -187,7 +187,7 @@ fn main() {
                 "In total {} items selected:\n{}",
                 vals.len(),
                 vals.iter()
-                    .map(|i| tree2.item_pathname(&i).unwrap() + "\n")
+                    .map(|i| tree2.item_pathname(i).unwrap() + "\n")
                     .collect::<String>()
             ),
         }

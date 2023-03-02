@@ -259,7 +259,7 @@ pub fn choice(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32
+        Fl_choice(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr())
     }
 }
 
@@ -271,7 +271,7 @@ pub fn choice2(x: i32, y: i32, txt: &str, b0: &str, b1: &str, b2: &str) -> Optio
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        let ret = Fl_choice_n(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32;
+        let ret = Fl_choice_n(x, y, txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr());
         if ret < 0 {
             None
         } else {
@@ -342,7 +342,7 @@ pub fn choice_default(txt: &str, b0: &str, b1: &str, b2: &str) -> i32 {
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32
+        Fl_choice2(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr())
     }
 }
 
@@ -355,7 +355,7 @@ pub fn choice2_default(txt: &str, b0: &str, b1: &str, b2: &str) -> Option<i32> {
         let b0 = CString::safe_new(b0);
         let b1 = CString::safe_new(b1);
         let b2 = CString::safe_new(b2);
-        let ret = Fl_choice2_n(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr()) as i32;
+        let ret = Fl_choice2_n(txt.as_ptr(), b0.as_ptr(), b1.as_ptr(), b2.as_ptr());
         if ret < 0 {
             None
         } else {
@@ -468,12 +468,12 @@ impl HelpDialog {
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
-        unsafe { Fl_Help_Dialog_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_Help_Dialog_set_text_size(self.inner, s) }
     }
 
     /// Returns the text size
     pub fn text_size(&self) -> i32 {
-        unsafe { Fl_Help_Dialog_text_size(self.inner) as i32 }
+        unsafe { Fl_Help_Dialog_text_size(self.inner) }
     }
 
     /// Sets the value of the help dialog
@@ -650,7 +650,7 @@ impl FileChooser {
             let ptr = Fl_File_Chooser_new(
                 dir.as_ptr(),
                 pattern.as_ptr(),
-                typ.bits as i32,
+                typ.bits,
                 title.into_raw(),
             );
             assert!(!ptr.is_null());
@@ -731,7 +731,7 @@ impl FileChooser {
     /// Sets the color of the `FileChooser`
     pub fn set_color(&mut self, c: Color) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_set_color(self.inner, c.bits() as u32) }
+        unsafe { Fl_File_Chooser_set_color(self.inner, c.bits()) }
     }
 
     /// Gets the color of the `FileChooser`
@@ -743,7 +743,7 @@ impl FileChooser {
     /// Gets the count of chosen items
     pub fn count(&self) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_count(self.inner) as i32 }
+        unsafe { Fl_File_Chooser_count(self.inner) }
     }
 
     /// Sets the directory of the `FileChooser`
@@ -807,13 +807,13 @@ impl FileChooser {
     /// Gets the current filename filter selection
     pub fn filter_value(&self) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_filter_value(self.inner) as i32 }
+        unsafe { Fl_File_Chooser_filter_value(self.inner) }
     }
 
     /// Sets the filter value using an index to the '\t'separated filters
     pub fn set_filter_value(&mut self, f: i32) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_set_filter_value(self.inner, f as i32) }
+        unsafe { Fl_File_Chooser_set_filter_value(self.inner, f) }
     }
 
     /// Hides the file chooser
@@ -918,7 +918,7 @@ impl FileChooser {
     /// Sets the text color of the file chooser
     pub fn set_text_color(&mut self, c: Color) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_set_text_color(self.inner, c.bits() as u32) }
+        unsafe { Fl_File_Chooser_set_text_color(self.inner, c.bits()) }
     }
 
     /// Gets the text color of the file chooser
@@ -930,7 +930,7 @@ impl FileChooser {
     /// Sets the text font of the file chooser
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_set_text_font(self.inner, f.bits() as i32) }
+        unsafe { Fl_File_Chooser_set_text_font(self.inner, f.bits()) }
     }
 
     /// Gets the text font of the file chooser
@@ -942,19 +942,19 @@ impl FileChooser {
     /// Sets the text size of the file chooser
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_File_Chooser_set_text_size(self.inner, s) }
     }
 
     /// Gets the text size of the file chooser
     pub fn text_size(&self) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_text_size(self.inner) as i32 }
+        unsafe { Fl_File_Chooser_text_size(self.inner) }
     }
 
     /// Sets the type of the `FileChooser`
     pub fn set_type(&mut self, t: FileChooserType) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_set_type(self.inner, t.bits as i32) }
+        unsafe { Fl_File_Chooser_set_type(self.inner, t.bits) }
     }
 
     /// Gets the type of the `FileChooser`
@@ -983,7 +983,7 @@ impl FileChooser {
         assert!(!self.inner.is_null());
         let f = if f == 0 { 1 } else { f };
         unsafe {
-            let ptr = Fl_File_Chooser_value(self.inner, f as i32);
+            let ptr = Fl_File_Chooser_value(self.inner, f);
             if ptr.is_null() {
                 None
             } else {

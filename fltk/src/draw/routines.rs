@@ -126,7 +126,7 @@ impl Drop for Offscreen {
 
 /// Shows a color map
 pub fn show_colormap(old_color: Color) -> Color {
-    unsafe { mem::transmute(Fl_show_colormap(old_color.bits() as u32)) }
+    unsafe { mem::transmute(Fl_show_colormap(old_color.bits())) }
 }
 
 /// Sets the color using rgb values
@@ -168,7 +168,7 @@ pub fn draw_rect(x: i32, y: i32, w: i32, h: i32) {
 
 /// Draws a rectangle with border color
 pub fn draw_rect_with_color(x: i32, y: i32, w: i32, h: i32, color: Color) {
-    unsafe { Fl_rect_with_color(x, y, w, h, color.bits() as u32) }
+    unsafe { Fl_rect_with_color(x, y, w, h, color.bits()) }
 }
 
 /// Draws a non-filled 3-sided polygon
@@ -194,7 +194,7 @@ pub fn draw_loop3(pos1: Coord<i32>, pos2: Coord<i32>, pos3: Coord<i32>, pos4: Co
 
 /// Draws a filled rectangle
 pub fn draw_rect_fill(x: i32, y: i32, w: i32, h: i32, color: Color) {
-    unsafe { Fl_rectf_with_color(x, y, w, h, color.bits() as u32) }
+    unsafe { Fl_rectf_with_color(x, y, w, h, color.bits()) }
 }
 
 /// Draws a focus rectangle
@@ -224,7 +224,7 @@ pub fn set_draw_color(color: Color) {
     unsafe {
         crate::app::open_display();
     }
-    unsafe { Fl_set_color_int(color.bits() as u32) }
+    unsafe { Fl_set_color_int(color.bits()) }
 }
 
 /// Draws a circle
@@ -514,7 +514,7 @@ pub fn end_complex_polygon() {
 
 /// Sets the current font, which is then used in various drawing routines
 pub fn set_font(face: Font, fsize: i32) {
-    unsafe { Fl_set_draw_font(face.bits() as i32, fsize as i32) }
+    unsafe { Fl_set_draw_font(face.bits(), fsize) }
 }
 
 /// Gets the current font, which is used in various drawing routines
@@ -524,18 +524,18 @@ pub fn font() -> Font {
 
 /// Gets the current font size, which is used in various drawing routines
 pub fn size() -> i32 {
-    unsafe { Fl_size() as i32 }
+    unsafe { Fl_size() }
 }
 
 /// Returns the recommended minimum line spacing for the current font
 pub fn height() -> i32 {
-    unsafe { Fl_height() as i32 }
+    unsafe { Fl_height() }
 }
 
 /// Sets the line spacing for the current font
 pub fn set_height(font: Font, size: i32) {
     unsafe {
-        Fl_set_height(font.bits() as i32, size as i32);
+        Fl_set_height(font.bits(), size);
     }
 }
 
@@ -634,7 +634,7 @@ pub fn draw_text2(string: &str, x: i32, y: i32, width: i32, height: i32, align: 
         return;
     }
     let s = CString::safe_new(string);
-    unsafe { Fl_draw_text2(s.as_ptr(), x, y, width, height, align.bits() as i32) }
+    unsafe { Fl_draw_text2(s.as_ptr(), x, y, width, height, align.bits()) }
 }
 
 /// Draws a string starting at the given x, y location, rotated to an angle
@@ -678,7 +678,7 @@ pub fn draw_frame2(string: &str, x: i32, y: i32, width: i32, height: i32) {
 
 /// Draws a box given the box type, size, position and color
 pub fn draw_box(box_type: FrameType, x: i32, y: i32, w: i32, h: i32, color: Color) {
-    unsafe { Fl_draw_box(box_type as i32, x, y, w, h, color.bits() as u32) }
+    unsafe { Fl_draw_box(box_type as i32, x, y, w, h, color.bits()) }
 }
 
 /// Checks whether platform supports true alpha blending for RGBA images
@@ -727,8 +727,8 @@ pub fn set_spot<Win: WindowExt>(font: Font, size: i32, x: i32, y: i32, w: i32, h
     unsafe {
         assert!(!win.was_deleted());
         Fl_set_spot(
-            font.bits() as i32,
-            size as i32,
+            font.bits(),
+            size,
             x,
             y,
             w,

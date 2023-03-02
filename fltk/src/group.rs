@@ -101,7 +101,7 @@ impl Pack {
     /// Layout the children of the pack automatically.
     /// Must be called on existing children
     pub fn auto_layout(&mut self) {
-        let children = self.children() as i32;
+        let children = self.children();
         if children == 0 {
             return;
         }
@@ -111,7 +111,7 @@ impl Pack {
         let h = (self.height() - spacing) / children;
 
         for i in 0..children {
-            let mut c = self.child(i as i32).unwrap();
+            let mut c = self.child(i).unwrap();
             let c_w = c.width();
             let c_h = c.height();
             if t == PackType::Vertical {
@@ -183,31 +183,31 @@ impl Scroll {
     /// Returns the x position
     pub fn xposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_xposition(self.inner) as i32 }
+        unsafe { Fl_Scroll_xposition(self.inner) }
     }
 
     /// Returns the y position
     pub fn yposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_yposition(self.inner) as i32 }
+        unsafe { Fl_Scroll_yposition(self.inner) }
     }
 
     /// Scrolls to `x` and `y`
     pub fn scroll_to(&mut self, x: i32, y: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scroll_to(self.inner, x as i32, y as i32) }
+        unsafe { Fl_Scroll_scroll_to(self.inner, x, y) }
     }
 
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scrollbar_size(self.inner) as i32 }
+        unsafe { Fl_Scroll_scrollbar_size(self.inner) }
     }
 
     /// Sets the scrollbar size
     pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_set_scrollbar_size(self.inner, new_size as i32) }
+        unsafe { Fl_Scroll_set_scrollbar_size(self.inner, new_size) }
     }
 }
 
@@ -316,7 +316,7 @@ impl Tabs {
     /// Sets the tab label alignment
     pub fn set_tab_align(&mut self, a: Align) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tabs_set_tab_align(self.inner, a.bits() as i32) }
+        unsafe { Fl_Tabs_set_tab_align(self.inner, a.bits()) }
     }
 
     /// Gets the tab label alignment.
@@ -699,7 +699,7 @@ impl VGrid {
         debug_assert!(self.current < self.rows * self.cols);
         let rem = (self.current - 1) / self.cols;
         if rem < self.rows {
-            let hpack = self.vpack.child(rem as i32).unwrap();
+            let hpack = self.vpack.child(rem).unwrap();
             let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
             hpack.end();
             hpack.add(w);
@@ -721,7 +721,7 @@ impl VGrid {
             v.push_back(c);
         }
         for i in 0..self.rows {
-            let hpack = self.vpack.child(i as i32).unwrap();
+            let hpack = self.vpack.child(i).unwrap();
             let mut hpack = unsafe { Pack::from_widget_ptr(hpack.as_widget_ptr()) };
             hpack.end();
             for _j in 0..self.cols {
@@ -815,7 +815,7 @@ impl HGrid {
         debug_assert!(self.current < self.rows * self.cols);
         let rem = (self.current - 1) / self.rows;
         if rem < self.cols {
-            let vpack = self.hpack.child(rem as i32).unwrap();
+            let vpack = self.hpack.child(rem).unwrap();
             let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
             vpack.end();
             vpack.add(w);
@@ -837,7 +837,7 @@ impl HGrid {
             v.push_back(c);
         }
         for i in 0..self.cols {
-            let vpack = self.hpack.child(i as i32).unwrap();
+            let vpack = self.hpack.child(i).unwrap();
             let mut vpack = unsafe { Pack::from_widget_ptr(vpack.as_widget_ptr()) };
             vpack.end();
             for _j in 0..self.rows {

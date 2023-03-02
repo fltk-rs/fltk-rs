@@ -295,7 +295,7 @@ fn main() {
                                     size1.set_value(style.size as f64);
                                     let (r, g, b) = style.color.to_rgb();
                                     if let Some(mn) = color1
-                                        .find_item(format!("{:02x}{:02x}{:02x}", r, g, b).as_str())
+                                        .find_item(format!("{r:02x}{g:02x}{b:02x}").as_str())
                                     {
                                         color1.set_item(&mn);
                                     }
