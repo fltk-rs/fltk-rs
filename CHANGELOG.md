@@ -1,8 +1,9 @@
 # Changelog
 
 
-## [1.3.32] - Unreleased
+## [1.3.32] - 2023-03-02
 - Support crt-static with msvc toolchain.
+- Internally use String for widget id.
 - Update FLTK submodule.
 
 ## [1.3.31] - 2023-02-16
