@@ -1,6 +1,11 @@
 # Changelog
 
 
+# [1.3.33] - 2023-03-08
+- Fix typo in draw routines for draw_rounded_rect: by @jkl1337.
+- Fix a break in fltk-flow from moving cfl_widget.hpp from cfltk/include: by @jkl1337.
+- Update FLTK submodule.
+
 ## [1.3.32] - 2023-03-02
 - Support crt-static with msvc toolchain.
 - Internally use String for widget id.
