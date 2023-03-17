@@ -1,6 +1,10 @@
 # Changelog
 
 
+# [1.3.34] - Unreleased
+- Fix CFLTK_WAYLAND_ONLY builds.
+- Update FLTK submodule.
+
 # [1.3.33] - 2023-03-08
 - Fix typo in draw routines for draw_rounded_rect: by @jkl1337.
 - Fix a break in fltk-flow from moving cfl_widget.hpp from cfltk/include: by @jkl1337.
