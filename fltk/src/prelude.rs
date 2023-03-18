@@ -350,6 +350,8 @@ pub unsafe trait WidgetExt {
     fn damage_type(&self) -> Damage;
     /// Signal the type of damage a widget received
     fn set_damage_type(&mut self, mask: Damage);
+    /// Signal damage for an area inside the widget
+    fn set_damage_area(&mut self, mask: Damage, x: i32, y: i32, w: i32, h: i32);
     /// Clear the damaged flag
     fn clear_damage(&mut self);
     /// Sets the default callback trigger for a widget, equivalent to `when()`
