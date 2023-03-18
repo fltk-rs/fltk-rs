@@ -535,7 +535,7 @@ pub unsafe trait WidgetBase: WidgetExt {
     #[doc(hidden)]
     /// Determine whether the base class's draw method is called
     fn super_draw(&mut self, flag: bool) {
-        _ = flag;
+        let _ = flag;
     }
 }
 
