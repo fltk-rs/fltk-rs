@@ -3,6 +3,8 @@
 
 # [1.3.34] - Unreleased
 - Fix CFLTK_WAYLAND_ONLY builds.
+- Add WidgetExt::set_damage_area() by @jkl1337.
+- Add WidgetBase::super_draw().
 - Update FLTK submodule.
 
 # [1.3.33] - 2023-03-08
