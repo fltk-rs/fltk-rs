@@ -626,6 +626,11 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _set_damage>](self.inner, mask.bits()) }
                 }
 
+                fn set_damage_area(&mut self, mask: $crate::enums::Damage, x: i32, y: i32, w: i32, h: i32) {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _set_damage_area>](self.inner, mask.bits(), x, y, w, h) }
+                }
+
                 fn clear_damage(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _clear_damage>](self.inner) }
@@ -1531,6 +1536,10 @@ macro_rules! impl_widget_ext_via {
 
             fn set_damage_type(&mut self, mask: $crate::enums::Damage) {
                 self.$member.set_damage_type(mask)
+            }
+
+            fn set_damage_area(&mut self, mask: $crate::enums::Damage, x: i32, y: i32, w: i32, h: i32) {
+                self.$member.set_damage_area(mask, x, y, w, h);
             }
 
             fn clear_damage(&mut self) {
