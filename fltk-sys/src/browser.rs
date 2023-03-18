@@ -326,6 +326,9 @@ extern "C" {
     pub fn Fl_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Browser;
 }
 extern "C" {
+    pub fn Fl_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Browser_value(arg1: *mut Fl_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -832,6 +835,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Hold_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Hold_Browser;
+}
+extern "C" {
+    pub fn Fl_Hold_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Hold_Browser_value(arg1: *mut Fl_Hold_Browser) -> ::std::os::raw::c_int;
@@ -1389,6 +1395,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Select_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Select_Browser;
+}
+extern "C" {
+    pub fn Fl_Select_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Select_Browser_value(arg1: *mut Fl_Select_Browser) -> ::std::os::raw::c_int;
@@ -1957,6 +1966,9 @@ extern "C" {
     pub fn Fl_Multi_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Multi_Browser;
 }
 extern "C" {
+    pub fn Fl_Multi_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Multi_Browser_value(arg1: *mut Fl_Multi_Browser) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -2493,6 +2505,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_File_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_File_Browser;
+}
+extern "C" {
+    pub fn Fl_File_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_File_Browser_iconsize(self_: *const Fl_File_Browser) -> ::std::os::raw::c_uint;
@@ -3052,6 +3067,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Check_Browser_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Check_Browser;
+}
+extern "C" {
+    pub fn Fl_Check_Browser_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Check_Browser_add(

@@ -325,3 +325,6 @@ extern "C" {
 extern "C" {
     pub fn Fl_Box_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Box;
 }
+extern "C" {
+    pub fn Fl_Box_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}

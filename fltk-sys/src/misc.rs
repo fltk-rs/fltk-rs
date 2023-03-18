@@ -326,6 +326,9 @@ extern "C" {
     pub fn Fl_Spinner_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Spinner;
 }
 extern "C" {
+    pub fn Fl_Spinner_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Spinner_minimum(arg1: *mut Fl_Spinner) -> f64;
 }
 extern "C" {
@@ -689,6 +692,9 @@ extern "C" {
 extern "C" {
     pub fn Fl_Clock_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Clock;
 }
+extern "C" {
+    pub fn Fl_Clock_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Fl_Chart {
@@ -995,6 +1001,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Chart_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Chart;
+}
+extern "C" {
+    pub fn Fl_Chart_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Chart_clear(self_: *mut Fl_Chart);
@@ -1370,6 +1379,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Progress_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Progress;
+}
+extern "C" {
+    pub fn Fl_Progress_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Progress_minimum(arg1: *mut Fl_Progress) -> f64;
@@ -1788,6 +1800,9 @@ extern "C" {
     pub fn Fl_Help_View_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Help_View;
 }
 extern "C" {
+    pub fn Fl_Help_View_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Help_View_directory(self_: *const Fl_Help_View) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
@@ -2193,6 +2208,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Input_Choice_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Input_Choice;
+}
+extern "C" {
+    pub fn Fl_Input_Choice_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Input_Choice_set_down_box(self_: *mut Fl_Input_Choice, box_: ::std::os::raw::c_int);

@@ -532,6 +532,11 @@ pub unsafe trait WidgetBase: WidgetExt {
     {
         None
     }
+    #[doc(hidden)]
+    /// Determine whether the base class's draw method is called
+    fn super_draw(&mut self, flag: bool) {
+        _ = flag;
+    }
 }
 
 /// Defines the methods implemented by all button widgets.

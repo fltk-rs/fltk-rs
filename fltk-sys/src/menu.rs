@@ -331,6 +331,9 @@ extern "C" {
     pub fn Fl_Menu_Bar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Bar;
 }
 extern "C" {
+    pub fn Fl_Menu_Bar_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Menu_Bar_add(
         arg1: *mut Fl_Menu_Bar,
         name: *const ::std::os::raw::c_char,
@@ -794,6 +797,9 @@ extern "C" {
     pub fn Fl_Menu_Button_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Menu_Button;
 }
 extern "C" {
+    pub fn Fl_Menu_Button_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Menu_Button_popup(self_: *mut Fl_Menu_Button) -> *const Fl_Menu_Item;
 }
 extern "C" {
@@ -1240,6 +1246,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Choice_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Choice;
+}
+extern "C" {
+    pub fn Fl_Choice_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Choice_add(
@@ -1709,6 +1718,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Sys_Menu_Bar;
+}
+extern "C" {
+    pub fn Fl_Sys_Menu_Bar_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Sys_Menu_Bar_add(

@@ -627,6 +627,9 @@ extern "C" {
     pub fn Fl_Text_Display_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Text_Display;
 }
 extern "C" {
+    pub fn Fl_Text_Display_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Text_Display_init(arg1: *mut Fl_Text_Display);
 }
 extern "C" {
@@ -928,6 +931,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Display_show_insert_position(self_: *mut Fl_Text_Display);
+}
+extern "C" {
+    pub fn Fl_Text_Display_overstrike(
+        self_: *mut Fl_Text_Display,
+        text: *const ::std::os::raw::c_char,
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1255,6 +1264,9 @@ extern "C" {
     pub fn Fl_Text_Editor_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Text_Editor;
 }
 extern "C" {
+    pub fn Fl_Text_Editor_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Text_Editor_init(arg1: *mut Fl_Text_Editor);
 }
 extern "C" {
@@ -1551,6 +1563,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Text_Editor_show_insert_position(self_: *mut Fl_Text_Editor);
+}
+extern "C" {
+    pub fn Fl_Text_Editor_overstrike(
+        self_: *mut Fl_Text_Editor,
+        text: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_Text_Editor_kf_copy(e: *mut Fl_Text_Editor) -> ::std::os::raw::c_int;
@@ -2068,6 +2086,9 @@ extern "C" {
     pub fn Fl_Simple_Terminal_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Simple_Terminal;
 }
 extern "C" {
+    pub fn Fl_Simple_Terminal_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Simple_Terminal_init(arg1: *mut Fl_Simple_Terminal);
 }
 extern "C" {
@@ -2462,6 +2483,12 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Simple_Terminal_show_insert_position(self_: *mut Fl_Simple_Terminal);
+}
+extern "C" {
+    pub fn Fl_Simple_Terminal_overstrike(
+        self_: *mut Fl_Simple_Terminal,
+        text: *const ::std::os::raw::c_char,
+    );
 }
 extern "C" {
     pub fn Fl_delete_stable(arg1: *mut ::std::os::raw::c_void);

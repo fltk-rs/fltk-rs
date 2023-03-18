@@ -1135,6 +1135,14 @@ macro_rules! impl_widget_base {
                         })
                     }
                 }
+
+                fn super_draw(&mut self, flag: bool) {
+                    assert!(!self.was_deleted());
+                    assert!(self.is_derived);
+                    unsafe {
+                        [<$flname _super_draw>](self.inner as _, flag as i32)
+                    }
+                }
             }
         }
     };

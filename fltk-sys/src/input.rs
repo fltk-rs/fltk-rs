@@ -326,6 +326,9 @@ extern "C" {
     pub fn Fl_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Input;
 }
 extern "C" {
+    pub fn Fl_Input_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Input_set_value(
         arg1: *mut Fl_Input,
         arg2: *const ::std::os::raw::c_char,
@@ -739,6 +742,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Int_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Int_Input;
+}
+extern "C" {
+    pub fn Fl_Int_Input_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Int_Input_set_value(
@@ -1169,6 +1175,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Float_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Float_Input;
+}
+extern "C" {
+    pub fn Fl_Float_Input_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Float_Input_set_value(
@@ -1660,6 +1669,9 @@ extern "C" {
     pub fn Fl_Multiline_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Multiline_Input;
 }
 extern "C" {
+    pub fn Fl_Multiline_Input_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Multiline_Input_set_value(
         arg1: *mut Fl_Multiline_Input,
         arg2: *const ::std::os::raw::c_char,
@@ -2121,6 +2133,9 @@ extern "C" {
     pub fn Fl_Secret_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Secret_Input;
 }
 extern "C" {
+    pub fn Fl_Secret_Input_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_Secret_Input_set_value(
         arg1: *mut Fl_Secret_Input,
         arg2: *const ::std::os::raw::c_char,
@@ -2542,6 +2557,9 @@ extern "C" {
     pub fn Fl_File_Input_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_File_Input;
 }
 extern "C" {
+    pub fn Fl_File_Input_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
+}
+extern "C" {
     pub fn Fl_File_Input_set_down_box(self_: *mut Fl_File_Input, box_: ::std::os::raw::c_int);
 }
 extern "C" {
@@ -2958,6 +2976,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Output_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Output;
+}
+extern "C" {
+    pub fn Fl_Output_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Output_set_value(
@@ -3461,6 +3482,9 @@ extern "C" {
 }
 extern "C" {
     pub fn Fl_Multiline_Output_from_dyn_ptr(ptr: *mut Fl_Widget) -> *mut Fl_Multiline_Output;
+}
+extern "C" {
+    pub fn Fl_Multiline_Output_super_draw(ptr: *mut Fl_Widget, flag: ::std::os::raw::c_int);
 }
 extern "C" {
     pub fn Fl_Multiline_Output_set_value(
