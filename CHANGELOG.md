@@ -1,7 +1,7 @@
 # Changelog
 
 
-# [1.3.34] - Unreleased
+# [1.3.34] - 2023-03-19
 - Fix CFLTK_WAYLAND_ONLY builds.
 - Add WidgetExt::set_damage_area() by @jkl1337.
 - Add WidgetBase::super_draw().
