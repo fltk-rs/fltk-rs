@@ -5,7 +5,7 @@ use fltk_sys::text::*;
 use std::{
     ffi::{CStr, CString},
     os::raw,
-    sync::atomic::{AtomicUsize, Ordering},
+    sync::Arc,
 };
 
 /// Defines the text cursor styles supported by fltk
@@ -29,8 +29,7 @@ pub enum Cursor {
 /// Wraps a text buffer, Cloning a text buffer invalidates the underlying pointer, thus the no derive(Clone)
 #[derive(Debug)]
 pub struct TextBuffer {
-    inner: *mut Fl_Text_Buffer,
-    refcount: AtomicUsize,
+    inner: Arc<*mut Fl_Text_Buffer>,
 }
 
 impl std::default::Default for TextBuffer {
@@ -40,8 +39,7 @@ impl std::default::Default for TextBuffer {
             let text_buffer = Fl_Text_Buffer_new();
             assert!(!text_buffer.is_null());
             TextBuffer {
-                inner: text_buffer,
-                refcount: AtomicUsize::new(2),
+                inner: Arc::new(text_buffer),
             }
         }
     }
@@ -51,17 +49,15 @@ impl TextBuffer {
     /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
-    pub unsafe fn delete(mut buf: Self) {
-        Fl_Text_Buffer_delete(buf.inner);
-        buf.inner = std::ptr::null_mut::<Fl_Text_Buffer>();
+    pub unsafe fn delete(buf: Self) {
+        Fl_Text_Buffer_delete(*buf.inner);
     }
 
     /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
-    pub unsafe fn delete_buffer(mut buf: TextBuffer) {
-        Fl_Text_Buffer_delete(buf.inner);
-        buf.inner = std::ptr::null_mut::<Fl_Text_Buffer>();
+    pub unsafe fn delete_buffer(buf: TextBuffer) {
+        Fl_Text_Buffer_delete(*buf.inner);
     }
 
     /// Initialized a text buffer from a pointer
@@ -70,8 +66,7 @@ impl TextBuffer {
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         assert!(!ptr.is_null());
         TextBuffer {
-            inner: ptr,
-            refcount: AtomicUsize::new(2),
+            inner: Arc::from(ptr),
         }
     }
 
@@ -79,7 +74,7 @@ impl TextBuffer {
     /// # Safety
     /// Can return multiple mutable pointers to the same buffer
     pub unsafe fn as_ptr(&self) -> *mut Fl_Text_Buffer {
-        self.inner
+        *self.inner
     }
 
     /// Sets the text of the buffer
@@ -87,7 +82,7 @@ impl TextBuffer {
         assert!(!self.inner.is_null());
         unsafe {
             let txt = CString::safe_new(txt);
-            Fl_Text_Buffer_set_text(self.inner, txt.as_ptr())
+            Fl_Text_Buffer_set_text(*self.inner, txt.as_ptr())
         }
     }
 
@@ -95,7 +90,7 @@ impl TextBuffer {
     pub fn text(&self) -> String {
         assert!(!self.inner.is_null());
         unsafe {
-            let text = Fl_Text_Buffer_text(self.inner);
+            let text = Fl_Text_Buffer_text(*self.inner);
             assert!(!text.is_null());
             CStr::from_ptr(text as *mut raw::c_char)
                 .to_string_lossy()
@@ -123,20 +118,20 @@ impl TextBuffer {
     pub fn append(&mut self, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
-        unsafe { Fl_Text_Buffer_append(self.inner, text.as_ptr()) }
+        unsafe { Fl_Text_Buffer_append(*self.inner, text.as_ptr()) }
     }
 
     /// Get the length of the buffer
     pub fn length(&self) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_length(self.inner) }
+        unsafe { Fl_Text_Buffer_length(*self.inner) }
     }
 
     /// Removes from the buffer
     pub fn remove(&mut self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
         unsafe {
-            Fl_Text_Buffer_remove(self.inner, start, end);
+            Fl_Text_Buffer_remove(*self.inner, start, end);
         }
     }
 
@@ -144,7 +139,7 @@ impl TextBuffer {
     pub fn text_range(&self, start: i32, end: i32) -> Option<String> {
         assert!(!self.inner.is_null());
         unsafe {
-            let x = Fl_Text_Buffer_text_range(self.inner, start, end);
+            let x = Fl_Text_Buffer_text_range(*self.inner, start, end);
             if x.is_null() {
                 None
             } else {
@@ -161,14 +156,14 @@ impl TextBuffer {
     pub fn insert(&mut self, pos: i32, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
-        unsafe { Fl_Text_Buffer_insert(self.inner, pos, text.as_ptr()) }
+        unsafe { Fl_Text_Buffer_insert(*self.inner, pos, text.as_ptr()) }
     }
 
     /// Replaces text from position `start` to `end`
     pub fn replace(&mut self, start: i32, end: i32, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
-        unsafe { Fl_Text_Buffer_replace(self.inner, start, end, text.as_ptr()) }
+        unsafe { Fl_Text_Buffer_replace(*self.inner, start, end, text.as_ptr()) }
     }
 
     /// Copies text from a source buffer into the current buffer
@@ -176,7 +171,7 @@ impl TextBuffer {
         assert!(!self.inner.is_null());
         unsafe {
             Fl_Text_Buffer_copy(
-                self.inner,
+                *self.inner,
                 source_buf.as_ptr(),
                 start,
                 end,
@@ -199,7 +194,7 @@ impl TextBuffer {
     pub fn undo(&mut self) -> Result<(), FltkError> {
         assert!(!self.inner.is_null());
         unsafe {
-            match Fl_Text_Buffer_undo(self.inner, std::ptr::null_mut()) {
+            match Fl_Text_Buffer_undo(*self.inner, std::ptr::null_mut()) {
                 0 => Err(FltkError::Unknown(String::from("Failed to undo"))),
                 _ => Ok(()),
             }
@@ -209,7 +204,7 @@ impl TextBuffer {
     /// Sets whether the buffer can undo
     pub fn can_undo(&mut self, flag: bool) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_canUndo(self.inner, flag as raw::c_char) }
+        unsafe { Fl_Text_Buffer_canUndo(*self.inner, flag as raw::c_char) }
     }
 
     /// Loads a file into the buffer
@@ -226,7 +221,7 @@ impl TextBuffer {
             .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let path = CString::new(path)?;
         unsafe {
-            match Fl_Text_Buffer_load_file(self.inner, path.as_ptr()) {
+            match Fl_Text_Buffer_load_file(*self.inner, path.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }
@@ -244,7 +239,7 @@ impl TextBuffer {
             .ok_or_else(|| FltkError::Unknown(String::from("Failed to convert path to string")))?;
         let path = CString::new(path)?;
         unsafe {
-            match Fl_Text_Buffer_save_file(self.inner, path.as_ptr()) {
+            match Fl_Text_Buffer_save_file(*self.inner, path.as_ptr()) {
                 0 => Ok(()),
                 _ => Err(FltkError::Internal(FltkErrorKind::ResourceNotFound)),
             }
@@ -254,31 +249,31 @@ impl TextBuffer {
     /// Returns the tab distance for the buffer
     pub fn tab_distance(&self) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_tab_distance(self.inner) }
+        unsafe { Fl_Text_Buffer_tab_distance(*self.inner) }
     }
 
     /// Sets the tab distance
     pub fn set_tab_distance(&mut self, tab_dist: i32) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_set_tab_distance(self.inner, tab_dist) }
+        unsafe { Fl_Text_Buffer_set_tab_distance(*self.inner, tab_dist) }
     }
 
     /// Selects the text from start to end
     pub fn select(&mut self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_select(self.inner, start, end) }
+        unsafe { Fl_Text_Buffer_select(*self.inner, start, end) }
     }
 
     /// Returns whether text is selected
     pub fn selected(&self) -> bool {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_selected(self.inner) != 0 }
+        unsafe { Fl_Text_Buffer_selected(*self.inner) != 0 }
     }
 
     /// Unselects text
     pub fn unselect(&mut self) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_unselect(self.inner) }
+        unsafe { Fl_Text_Buffer_unselect(*self.inner) }
     }
 
     /// Returns the selection position
@@ -287,7 +282,7 @@ impl TextBuffer {
         unsafe {
             let mut start = 0;
             let mut end = 0;
-            let ret = Fl_Text_Buffer_selection_position(self.inner, &mut start as _, &mut end as _);
+            let ret = Fl_Text_Buffer_selection_position(*self.inner, &mut start as _, &mut end as _);
             if ret == 0 {
                 None
             } else {
@@ -301,7 +296,7 @@ impl TextBuffer {
     pub fn selection_text(&self) -> String {
         assert!(!self.inner.is_null());
         unsafe {
-            let x = Fl_Text_Buffer_selection_text(self.inner);
+            let x = Fl_Text_Buffer_selection_text(*self.inner);
             assert!(!x.is_null());
             CStr::from_ptr(x as *mut raw::c_char)
                 .to_string_lossy()
@@ -312,32 +307,32 @@ impl TextBuffer {
     /// Removes the selection
     pub fn remove_selection(&mut self) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_remove_selection(self.inner) }
+        unsafe { Fl_Text_Buffer_remove_selection(*self.inner) }
     }
 
     /// Replaces selection
     pub fn replace_selection(&mut self, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
-        unsafe { Fl_Text_Buffer_replace_selection(self.inner, text.as_ptr()) }
+        unsafe { Fl_Text_Buffer_replace_selection(*self.inner, text.as_ptr()) }
     }
 
     /// Secondary selects the text from start to end
     pub fn secondary_select(&mut self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_secondary_select(self.inner, start, end) }
+        unsafe { Fl_Text_Buffer_secondary_select(*self.inner, start, end) }
     }
 
     /// Returns whether text is secondary selected
     pub fn secondary_selected(&self) -> bool {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_secondary_selected(self.inner) != 0 }
+        unsafe { Fl_Text_Buffer_secondary_selected(*self.inner) != 0 }
     }
 
     /// Unselects text (secondary selection)
     pub fn secondary_unselect(&mut self) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_secondary_unselect(self.inner) }
+        unsafe { Fl_Text_Buffer_secondary_unselect(*self.inner) }
     }
 
     /// Returns the secondary selection position
@@ -347,7 +342,7 @@ impl TextBuffer {
             let mut start = 0;
             let mut end = 0;
             let ret = Fl_Text_Buffer_secondary_selection_position(
-                self.inner,
+                *self.inner,
                 &mut start as _,
                 &mut end as _,
             );
@@ -364,7 +359,7 @@ impl TextBuffer {
     pub fn secondary_selection_text(&self) -> String {
         assert!(!self.inner.is_null());
         unsafe {
-            let x = Fl_Text_Buffer_secondary_selection_text(self.inner);
+            let x = Fl_Text_Buffer_secondary_selection_text(*self.inner);
             assert!(!x.is_null());
             CStr::from_ptr(x as *mut raw::c_char)
                 .to_string_lossy()
@@ -375,32 +370,32 @@ impl TextBuffer {
     /// Removes the secondary selection
     pub fn remove_secondary_selection(&mut self) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_remove_secondary_selection(self.inner) }
+        unsafe { Fl_Text_Buffer_remove_secondary_selection(*self.inner) }
     }
 
     /// Replaces the secondary selection
     pub fn replace_secondary_selection(&mut self, text: &str) {
         assert!(!self.inner.is_null());
         let text = CString::safe_new(text);
-        unsafe { Fl_Text_Buffer_replace_secondary_selection(self.inner, text.as_ptr()) }
+        unsafe { Fl_Text_Buffer_replace_secondary_selection(*self.inner, text.as_ptr()) }
     }
 
     /// Highlights selection
     pub fn highlight(&mut self, start: i32, end: i32) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_highlight(self.inner, start, end) }
+        unsafe { Fl_Text_Buffer_highlight(*self.inner, start, end) }
     }
 
     /// Returns whether text is highlighted
     pub fn is_highlighted(&self) -> bool {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_is_highlighted(self.inner) != 0 }
+        unsafe { Fl_Text_Buffer_is_highlighted(*self.inner) != 0 }
     }
 
     /// Unhighlights text
     pub fn unhighlight(&mut self) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_unhighlight(self.inner) }
+        unsafe { Fl_Text_Buffer_unhighlight(*self.inner) }
     }
 
     /// Returns the highlight position
@@ -409,7 +404,7 @@ impl TextBuffer {
         unsafe {
             let mut start = 0;
             let mut end = 0;
-            let ret = Fl_Text_Buffer_highlight_position(self.inner, &mut start as _, &mut end as _);
+            let ret = Fl_Text_Buffer_highlight_position(*self.inner, &mut start as _, &mut end as _);
             if ret == 0 {
                 None
             } else {
@@ -423,7 +418,7 @@ impl TextBuffer {
     pub fn highlight_text(&self) -> String {
         assert!(!self.inner.is_null());
         unsafe {
-            let x = Fl_Text_Buffer_highlight_text(self.inner);
+            let x = Fl_Text_Buffer_highlight_text(*self.inner);
             assert!(!x.is_null());
             CStr::from_ptr(x as *mut raw::c_char)
                 .to_string_lossy()
@@ -435,7 +430,7 @@ impl TextBuffer {
     pub fn line_text(&self, pos: i32) -> String {
         assert!(!self.inner.is_null());
         unsafe {
-            let x = Fl_Text_Buffer_line_text(self.inner, pos);
+            let x = Fl_Text_Buffer_line_text(*self.inner, pos);
             assert!(!x.is_null());
             CStr::from_ptr(x as *mut raw::c_char)
                 .to_string_lossy()
@@ -446,31 +441,31 @@ impl TextBuffer {
     /// Returns the index of the line's start position at pos
     pub fn line_start(&self, pos: i32) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_line_start(self.inner, pos) }
+        unsafe { Fl_Text_Buffer_line_start(*self.inner, pos) }
     }
 
     /// Returns the index of the first character of a word at pos
     pub fn word_start(&self, pos: i32) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_word_start(self.inner, pos) }
+        unsafe { Fl_Text_Buffer_word_start(*self.inner, pos) }
     }
 
     /// Returns the index of the last character of a word at pos
     pub fn word_end(&self, pos: i32) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_word_end(self.inner, pos) }
+        unsafe { Fl_Text_Buffer_word_end(*self.inner, pos) }
     }
 
     /// Counts the lines from start to end
     pub fn count_lines(&self, start: i32, end: i32) -> i32 {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_count_lines(self.inner, start, end) }
+        unsafe { Fl_Text_Buffer_count_lines(*self.inner, start, end) }
     }
 
     /// Calls the modify callbacks
     pub fn call_modify_callbacks(&mut self) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_Text_Buffer_call_modify_callbacks(self.inner) }
+        unsafe { Fl_Text_Buffer_call_modify_callbacks(*self.inner) }
     }
 
     /// Adds a modify callback.
@@ -509,7 +504,7 @@ impl TextBuffer {
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
-            Fl_Text_Buffer_add_modify_callback(self.inner, callback, data);
+            Fl_Text_Buffer_add_modify_callback(*self.inner, callback, data);
         }
     }
 
@@ -549,7 +544,7 @@ impl TextBuffer {
                 Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(shim);
-            Fl_Text_Buffer_remove_modify_callback(self.inner, callback, data);
+            Fl_Text_Buffer_remove_modify_callback(*self.inner, callback, data);
         }
     }
 
@@ -564,7 +559,7 @@ impl TextBuffer {
             let search_string = CString::safe_new(search_string);
             let mut found_pos = 0;
             let ret = Fl_Text_Buffer_search_forward(
-                self.inner,
+                *self.inner,
                 start_pos,
                 search_string.as_ptr() as _,
                 &mut found_pos as _,
@@ -589,7 +584,7 @@ impl TextBuffer {
             let search_string = CString::safe_new(search_string);
             let mut found_pos = 0;
             let ret = Fl_Text_Buffer_search_backward(
-                self.inner,
+                *self.inner,
                 start_pos,
                 search_string.as_ptr() as _,
                 &mut found_pos as _,
@@ -608,7 +603,7 @@ impl TextBuffer {
         unsafe {
             let mut found_pos = 0;
             let ret = Fl_Text_Buffer_findchar_forward(
-                self.inner,
+                *self.inner,
                 start_pos,
                 search_char as _,
                 &mut found_pos as _,
@@ -626,7 +621,7 @@ impl TextBuffer {
         unsafe {
             let mut found_pos = 0;
             let ret = Fl_Text_Buffer_findchar_backward(
-                self.inner,
+                *self.inner,
                 start_pos,
                 search_char as _,
                 &mut found_pos as _,
@@ -655,10 +650,8 @@ impl Eq for TextBuffer {}
 impl Clone for TextBuffer {
     fn clone(&self) -> TextBuffer {
         assert!(!self.inner.is_null());
-        let x = self.refcount.fetch_add(1, Ordering::Relaxed);
         TextBuffer {
-            inner: self.inner,
-            refcount: AtomicUsize::new(x),
+            inner: self.inner.clone(),
         }
     }
 }
@@ -666,12 +659,11 @@ impl Clone for TextBuffer {
 impl Drop for TextBuffer {
     fn drop(&mut self) {
         assert!(!self.inner.is_null());
-        self.refcount.fetch_sub(1, Ordering::Relaxed);
-        if *self.refcount.get_mut() < 1 {
+        if Arc::strong_count(&self.inner) == 0 {
             unsafe {
-                Fl_Text_Buffer_delete(self.inner);
+                Fl_Text_Buffer_delete(*self.inner);
             }
-            self.inner = std::ptr::null_mut();
+            // self.inner = std::ptr::null_mut();
         }
     }
 }
