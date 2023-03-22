@@ -735,7 +735,7 @@ macro_rules! impl_widget_ext {
                         } else {
                             let img =
                                 $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                            Some(Box::new(img.copy()))
+                            Some(Box::new(img))
                         }
                     }
                 }
@@ -802,7 +802,7 @@ macro_rules! impl_widget_ext {
                         } else {
                             let img =
                                 $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                            Some(Box::new(img.copy()))
+                            Some(Box::new(img))
                         }
                     }
                 }
