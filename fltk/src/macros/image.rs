@@ -19,10 +19,8 @@ macro_rules! impl_image_ext {
         impl Clone for $name {
             fn clone(&self) -> Self {
                 assert!(!self.was_deleted());
-                let x = self.refcount.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
                 $name {
-                    inner: self.inner,
-                    refcount: std::sync::atomic::AtomicUsize::new(x + 1),
+                    inner: self.inner.clone(),
                 }
             }
         }
@@ -31,10 +29,9 @@ macro_rules! impl_image_ext {
             impl Drop for $name {
                 fn drop(&mut self) {
                     if !self.was_deleted() {
-                        self.refcount.fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
-                        if *self.refcount.get_mut() < 1 {
+                        if Arc::strong_count(&self.inner) == 0 {
                             unsafe {
-                                [<$flname _delete>](self.inner);
+                                [<$flname _delete>](*self.inner);
                             }
                         }
                     }
@@ -45,64 +42,62 @@ macro_rules! impl_image_ext {
                 fn copy(&self) -> Self {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let img = [<$flname _copy>](self.inner);
+                        let img = [<$flname _copy>](*self.inner);
                         assert!(!img.is_null());
                         $name {
-                            inner: img,
-                            refcount: std::sync::atomic::AtomicUsize::new(1),
+                            inner: Arc::from(img),
                         }
                     }
                 }
 
                 fn draw(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _draw>](self.inner, arg2, arg3, arg4, arg5) }
+                    unsafe { [<$flname _draw>](*self.inner, arg2, arg3, arg4, arg5) }
                 }
 
                 fn draw_ext(&mut self, arg2: i32, arg3: i32, arg4: i32, arg5: i32, cx: i32, cy: i32) {
                     assert!(!self.was_deleted());
                     unsafe {
-                        [<$flname _draw_ext>](self.inner, arg2, arg3, arg4, arg5, cx, cy)
+                        [<$flname _draw_ext>](*self.inner, arg2, arg3, arg4, arg5, cx, cy)
                     }
                 }
 
                 fn width(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _width>](self.inner) }
+                    unsafe { [<$flname _width>](*self.inner) }
                 }
 
                 fn height(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _height>](self.inner) }
+                    unsafe { [<$flname _height>](*self.inner) }
                 }
 
                 fn w(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _width>](self.inner) }
+                    unsafe { [<$flname _width>](*self.inner) }
                 }
 
                 fn h(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _height>](self.inner) }
+                    unsafe { [<$flname _height>](*self.inner) }
                 }
 
                 fn as_image_ptr(&self) -> *mut fltk_sys::image::Fl_Image {
                     assert!(!self.was_deleted());
-                    self.inner as *mut fltk_sys::image::Fl_Image
+                    *self.inner as *mut fltk_sys::image::Fl_Image
                 }
 
                 unsafe fn from_image_ptr(ptr: *mut fltk_sys::image::Fl_Image) -> Self {
                     assert!(!ptr.is_null());
                     $name {
-                        inner: ptr as *mut $flname,
-                        refcount: std::sync::atomic::AtomicUsize::new(1),
+                        inner: Arc::from(ptr as *mut $flname),
                     }
                 }
 
                 fn to_rgb_data(&self) -> Vec<u8> {
                     assert!(!self.was_deleted());
                     unsafe {
-                        let ptr = [<$flname _data>](self.inner);
+                        let ptr = [<$flname _data>](*self.inner);
                         assert!(!ptr.is_null());
                         assert!(!(*ptr).is_null());
                         let cnt = self.data_w() * self.data_h() * self.depth() as i32;
@@ -113,7 +108,7 @@ macro_rules! impl_image_ext {
 
                 fn to_raw_data(&self) -> *const *const u8 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _data>](self.inner) as *const *const u8 }
+                    unsafe { [<$flname _data>](*self.inner) as *const *const u8 }
                 }
 
                 fn to_rgb(&self) -> Result<$crate::image::RgbImage, FltkError> {
@@ -146,7 +141,7 @@ macro_rules! impl_image_ext {
                     };
                     unsafe {
                         [<$flname _scale>](
-                            self.inner,
+                            *self.inner,
                             width,
                             height,
                             proportional as i32,
@@ -157,52 +152,37 @@ macro_rules! impl_image_ext {
 
                 fn count(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _count>](self.inner) }
+                    unsafe { [<$flname _count>](*self.inner) }
                 }
 
                 fn data_w(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _data_w>](self.inner) }
+                    unsafe { [<$flname _data_w>](*self.inner) }
                 }
 
                 fn data_h(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _data_h>](self.inner) }
+                    unsafe { [<$flname _data_h>](*self.inner) }
                 }
 
                 fn depth(&self) -> $crate::enums::ColorDepth {
                     assert!(!self.was_deleted());
-                    unsafe { std::mem::transmute([<$flname _d>](self.inner) as u8) }
+                    unsafe { std::mem::transmute([<$flname _d>](*self.inner) as u8) }
                 }
 
                 fn ld(&self) -> i32 {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _ld>](self.inner) }
+                    unsafe { [<$flname _ld>](*self.inner) }
                 }
 
                 fn inactive(&mut self) {
                     assert!(!self.was_deleted());
-                    unsafe { [<$flname _inactive>](self.inner) }
+                    unsafe { [<$flname _inactive>](*self.inner) }
                 }
 
-                unsafe fn delete(mut img: Self) {
+                unsafe fn delete(img: Self) {
                     assert!(!img.inner.is_null());
-                    [<$flname _delete>](img.inner);
-                    img.inner = std::ptr::null_mut() as *mut $flname;
-                }
-
-                unsafe fn increment_arc(&mut self) {
-                    assert!(!self.was_deleted());
-                    self.refcount.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
-                }
-
-                unsafe fn decrement_arc(&mut self) {
-                    assert!(!self.was_deleted());
-                    self.refcount.fetch_sub(1, std::sync::atomic::Ordering::Relaxed);
-                    assert!(
-                        *self.refcount.get_mut() > 1,
-                        "The image should outlive the widget!"
-                    );
+                    [<$flname _delete>](*img.inner);
                 }
 
                 fn was_deleted(&self) -> bool {
@@ -210,7 +190,7 @@ macro_rules! impl_image_ext {
                 }
 
                 unsafe fn into_image<I: ImageExt>(self) -> I {
-                    I::from_image_ptr(self.inner as *mut _)
+                    I::from_image_ptr(*self.inner as *mut _)
                 }
 
                 fn from_dyn_image_ptr(p: *mut fltk_sys::image::Fl_Image) -> Option<Self> {
@@ -220,8 +200,7 @@ macro_rules! impl_image_ext {
                             None
                         } else {
                             Some($name {
-                                inner: ptr as *mut $flname,
-                                refcount: std::sync::atomic::AtomicUsize::new(1),
+                                inner: Arc::from(ptr as *mut $flname),
                             })
                         }
                     }

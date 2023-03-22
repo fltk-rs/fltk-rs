@@ -9,6 +9,7 @@ use std::{
     mem,
     os::raw,
     panic,
+    sync::Arc,
 };
 
 /// Alias Window ptr
@@ -229,10 +230,8 @@ pub fn event_clipboard_image() -> Option<crate::image::RgbImage> {
         if image.is_null() {
             None
         } else {
-            use std::sync::atomic::AtomicUsize;
             Some(crate::image::RgbImage {
-                inner: image as _,
-                refcount: AtomicUsize::new(1),
+                inner: Arc::from(image as *mut fltk_sys::image::Fl_RGB_Image),
             })
         }
     }

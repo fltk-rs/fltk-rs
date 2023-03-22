@@ -76,3 +76,13 @@ harness = false
 name = "global_state"
 path = "tests/global_state.rs"
 harness = false
+
+[[test]]
+name = "image"
+path = "tests/image.rs"
+harness = false
+
+[[test]]
+name = "gl"
+path = "tests/gl.rs"
+harness = false

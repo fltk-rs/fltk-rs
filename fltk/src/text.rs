@@ -663,7 +663,6 @@ impl Drop for TextBuffer {
             unsafe {
                 Fl_Text_Buffer_delete(*self.inner);
             }
-            // self.inner = std::ptr::null_mut();
         }
     }
 }
