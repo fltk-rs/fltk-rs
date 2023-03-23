@@ -509,7 +509,7 @@ impl TextBuffer {
             let a: BoxedModifyCallbackHandle = Box::into_raw(Box::new(Box::new(cb)));
             let data: *mut raw::c_void = a as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(modify_callback_shim);
-            Fl_Text_Buffer_add_modify_callback(self.inner, callback, data);
+            Fl_Text_Buffer_add_modify_callback(*self.inner, callback, data);
             data as _
         }
     }
@@ -535,7 +535,7 @@ impl TextBuffer {
         unsafe {
             let data: *mut raw::c_void = cb as *mut std::ffi::c_void;
             let callback: Fl_Text_Modify_Cb = Some(modify_callback_shim);
-            Fl_Text_Buffer_remove_modify_callback(self.inner, callback, data);
+            Fl_Text_Buffer_remove_modify_callback(*self.inner, callback, data);
         }
     }
 

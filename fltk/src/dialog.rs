@@ -195,10 +195,8 @@ impl NativeFileChooser {
     /// Sets the default filename for the dialog
     pub fn set_preset_file(&mut self, f: &str) {
         assert!(!self.inner.is_null());
-        if let Some(f) = f.to_str() {
-            let f = CString::safe_new(f);
-            unsafe { Fl_Native_File_Chooser_set_preset_file(self.inner, f.as_ptr()) }
-        }
+        let f = CString::safe_new(f);
+        unsafe { Fl_Native_File_Chooser_set_preset_file(self.inner, f.as_ptr()) }
     }
 
     /// returns the error message from the file dialog

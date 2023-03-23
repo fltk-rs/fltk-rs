@@ -195,6 +195,10 @@ macro_rules! impl_image_ext {
                 fn from_dyn_image<I: ImageExt>(i: &I) -> Option<Self> {
                     Self::from_dyn_image_ptr(i.as_image_ptr())
                 }
+
+                fn was_deleted(&self) -> bool {
+                    self.inner.is_null()
+                }
             }
         }
     };
