@@ -52,7 +52,7 @@ fn main() {
         let label = format!("Button {}", i + 1);
         let mut but = MyButton::new(500, 100);
         but.set_label(&label);
-        but.set_callback(move |_| println!("{}", label));
+        but.set_callback(move |_| println!("{label}"));
     }
 
     pack.end();

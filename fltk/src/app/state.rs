@@ -48,7 +48,7 @@ impl<T: Sync + Send + 'static> GlobalState<T> {
     }
 }
 
-static WIDGET_MAP: Lazy<Mutex<HashMap<&'static str, Box<dyn Any + Send + Sync + 'static>>>> =
+static WIDGET_MAP: Lazy<Mutex<HashMap<String, Box<dyn Any + Send + Sync + 'static>>>> =
     Lazy::new(|| Mutex::new(HashMap::default()));
 
 /// Allows setting a an id to a widget
@@ -57,9 +57,9 @@ where
     W: WidgetExt,
 {
     /// Set the widget's Id
-    fn set_id(&mut self, id: &'static str);
+    fn set_id(&mut self, id: &str);
     /// Construct a widget with an Id
-    fn with_id(self, id: &'static str) -> Self
+    fn with_id(self, id: &str) -> Self
     where
         Self: Sized;
 }
@@ -68,21 +68,21 @@ impl<W> WidgetId<W> for W
 where
     W: WidgetExt + Send + Sync + Clone + 'static,
 {
-    fn set_id(&mut self, id: &'static str) {
+    fn set_id(&mut self, id: &str) {
         WIDGET_MAP
             .lock()
             .unwrap()
-            .insert(id, Box::new(self.clone()));
+            .insert(id.to_string(), Box::new(self.clone()));
     }
-    fn with_id(mut self, id: &'static str) -> Self {
+    fn with_id(mut self, id: &str) -> Self {
         self.set_id(id);
         self
     }
 }
 
 /// Get back the widget thru its id
-pub fn widget_from_id<T: 'static + Clone>(id: &'static str) -> Option<T> {
-    if let Some(w) = WIDGET_MAP.lock().unwrap().get(&id) {
+pub fn widget_from_id<T: 'static + Clone>(id: &str) -> Option<T> {
+    if let Some(w) = WIDGET_MAP.lock().unwrap().get(id) {
         w.downcast_ref::<T>().map(|w| (*w).clone())
     } else {
         None

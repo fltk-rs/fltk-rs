@@ -244,7 +244,7 @@ impl MenuItem {
     /// Sets the label color of the menu item
     pub fn set_label_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Menu_Item_set_label_color(self.inner, color.bits() as u32) }
+        unsafe { Fl_Menu_Item_set_label_color(self.inner, color.bits()) }
     }
 
     /// Returns the label font of the menu item
@@ -256,13 +256,13 @@ impl MenuItem {
     /// Sets the label font of the menu item
     pub fn set_label_font(&mut self, font: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Menu_Item_set_label_font(self.inner, font.bits() as i32) }
+        unsafe { Fl_Menu_Item_set_label_font(self.inner, font.bits()) }
     }
 
     /// Returns the label size of the menu item
     pub fn label_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Menu_Item_label_size(self.inner) as i32 }
+        unsafe { Fl_Menu_Item_label_size(self.inner) }
     }
 
     /// Sets the label size of the menu item
@@ -348,7 +348,7 @@ impl MenuItem {
     pub fn next(&self, idx: i32) -> Option<MenuItem> {
         assert!(!self.was_deleted());
         unsafe {
-            let ptr = Fl_Menu_Item_next(self.inner, idx as i32);
+            let ptr = Fl_Menu_Item_next(self.inner, idx);
             if ptr.is_null() {
                 return None;
             }
@@ -537,7 +537,7 @@ impl MenuItem {
             Fl_Menu_Item_add(
                 self.inner,
                 temp.as_ptr(),
-                shortcut.bits() as i32,
+                shortcut.bits(),
                 callback,
                 data,
                 flag.bits(),
@@ -569,9 +569,9 @@ impl MenuItem {
             let callback: Fl_Callback = Some(shim);
             Fl_Menu_Item_insert(
                 self.inner,
-                idx as i32,
+                idx,
                 temp.as_ptr(),
-                shortcut.bits() as i32,
+                shortcut.bits(),
                 callback,
                 data,
                 flag.bits(),

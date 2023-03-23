@@ -101,13 +101,13 @@ impl Spinner {
     /// Returns the maximum size supported by the spinner widget
     pub fn maximum_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_maxsize(self.inner) as i32 }
+        unsafe { Fl_Spinner_maxsize(self.inner) }
     }
 
     /// Sets the maximum size supported by the spinner widget
     pub fn set_maximum_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_maxsize(self.inner, s as i32) }
+        unsafe { Fl_Spinner_set_maxsize(self.inner, s) }
     }
 
     /// Gets the text font
@@ -119,19 +119,19 @@ impl Spinner {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_font(self.inner, f.bits() as i32) }
+        unsafe { Fl_Spinner_set_text_font(self.inner, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_text_size(self.inner) as i32 }
+        unsafe { Fl_Spinner_text_size(self.inner) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_Spinner_set_text_size(self.inner, s) }
     }
 
     /// Gets the text's color
@@ -143,7 +143,7 @@ impl Spinner {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Spinner_set_text_color(self.inner, color.bits() as u32) }
+        unsafe { Fl_Spinner_set_text_color(self.inner, color.bits()) }
     }
 
     /// Returns the value of the spinner
@@ -208,21 +208,21 @@ impl Chart {
     pub fn add(&mut self, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_add(self.inner, val, txt.as_ptr(), col.bits() as u32) }
+        unsafe { Fl_Chart_add(self.inner, val, txt.as_ptr(), col.bits()) }
     }
 
     /// Inserts an entry at an index
     pub fn insert(&mut self, idx: i32, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_insert(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
+        unsafe { Fl_Chart_insert(self.inner, idx, val, txt.as_ptr(), col.bits()) }
     }
 
     /// Replaces an entry at an index
     pub fn replace(&mut self, idx: i32, val: f64, txt: &str, col: Color) {
         assert!(!self.was_deleted());
         let txt = CString::safe_new(txt);
-        unsafe { Fl_Chart_replace(self.inner, idx as i32, val, txt.as_ptr(), col.bits() as u32) }
+        unsafe { Fl_Chart_replace(self.inner, idx, val, txt.as_ptr(), col.bits()) }
     }
 
     /// Sets the bounds of the chart
@@ -234,19 +234,19 @@ impl Chart {
     /// Returns the size of the chart
     pub fn size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_size(self.inner) as i32 }
+        unsafe { Fl_Chart_size(self.inner) }
     }
 
     /// Gets the maximum supported size of the chart
     pub fn maximum_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_maxsize(self.inner) as i32 }
+        unsafe { Fl_Chart_maxsize(self.inner) }
     }
 
     /// Sets the maximum supported size of the chart
     pub fn set_maximum_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_maxsize(self.inner, s as i32) }
+        unsafe { Fl_Chart_set_maxsize(self.inner, s) }
     }
 
     /// Gets the text font
@@ -258,19 +258,19 @@ impl Chart {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_font(self.inner, f.bits() as i32) }
+        unsafe { Fl_Chart_set_text_font(self.inner, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_text_size(self.inner) as i32 }
+        unsafe { Fl_Chart_text_size(self.inner) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_Chart_set_text_size(self.inner, s) }
     }
 
     /// Gets the text's color
@@ -282,7 +282,7 @@ impl Chart {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Chart_set_text_color(self.inner, color.bits() as u32) }
+        unsafe { Fl_Chart_set_text_color(self.inner, color.bits()) }
     }
 
     /// Returns whether the chart is autosizable
@@ -351,57 +351,57 @@ impl Progress {
     }
 }
 
-/// Shows a standalone tooltip
+/// Controls tooltips on an application-wide basis; use .set_tooltip() to add a tooltip to a particular widget
 #[derive(Clone, Debug)]
 pub struct Tooltip {}
 
 impl Tooltip {
-    /// Gets the tooltip's delay
+    /// Gets the tooltips delay
     pub fn delay() -> f32 {
         unsafe { Fl_Tooltip_delay() }
     }
 
-    /// Sets the tooltip's delay
+    /// Sets the tooltips delay
     pub fn set_delay(f: f32) {
         unsafe { Fl_Tooltip_set_delay(f) }
     }
 
-    /// Gets the tooltip's hide delay
+    /// Gets the tooltips hide delay
     pub fn hidedelay() -> f32 {
         unsafe { Fl_Tooltip_hidedelay() }
     }
 
-    /// Sets the tooltip's hide delay
+    /// Sets the tooltips hide delay
     pub fn set_hidedelay(f: f32) {
         unsafe { Fl_Tooltip_set_hidedelay(f) }
     }
 
-    /// Gets the tooltip's hover delay
+    /// Gets the tooltips hover delay
     pub fn hoverdelay() -> f32 {
         unsafe { Fl_Tooltip_hoverdelay() }
     }
 
-    /// Sets the tooltip's hover delay
+    /// Sets the tooltips hover delay
     pub fn set_hoverdelay(f: f32) {
         unsafe { Fl_Tooltip_set_hoverdelay(f) }
     }
 
-    /// Returns whether the tooltip is enabled
+    /// Returns whether the tooltips are enabled
     pub fn enabled() -> bool {
         unsafe { Fl_Tooltip_enabled() != 0 }
     }
 
-    /// Sets whether the tooltip is enabled
+    /// Sets tooltips to be displayed if b is true; otherwise not to be displayed
     pub fn enable(b: bool) {
         unsafe { Fl_Tooltip_enable(b as i32) }
     }
 
-    /// Disables the tooltip
+    /// Disables the display of all tooltips
     pub fn disable() {
         unsafe { Fl_Tooltip_disable() }
     }
 
-    /// Defines the area of the tooltip
+    /// Used to customize a tooltip's size and position for a specific widget type
     pub fn enter_area<W: WidgetExt>(widget: &W, x: i32, y: i32, w: i32, h: i32, tip: &str) {
         assert!(!widget.was_deleted());
         let tip = CString::safe_new(tip);
@@ -417,7 +417,7 @@ impl Tooltip {
         }
     }
 
-    /// Returns the current widget under the tooltip
+    /// Returns the current widget associated with the tooltip
     pub fn current_widget() -> impl WidgetExt {
         unsafe {
             let widget_ptr = Fl_Tooltip_current_widget();
@@ -432,77 +432,77 @@ impl Tooltip {
         unsafe { Fl_Tooltip_current(w.as_widget_ptr() as *mut Fl_Widget) }
     }
 
-    /// Gets the tooltip's font
+    /// Gets the tooltips font
     pub fn font() -> Font {
         unsafe { mem::transmute(Fl_Tooltip_font()) }
     }
 
-    /// Sets the tooltip's font
+    /// Sets the tooltips font
     pub fn set_font(font: Font) {
-        unsafe { Fl_Tooltip_set_font(font.bits() as i32) }
+        unsafe { Fl_Tooltip_set_font(font.bits()) }
     }
 
-    /// Gets the tooltip's font size
+    /// Gets the tooltips font size
     pub fn font_size() -> i32 {
-        unsafe { Fl_Tooltip_font_size() as i32 }
+        unsafe { Fl_Tooltip_font_size() }
     }
 
-    /// Sets the tooltip's font size
+    /// Sets the tooltips font size
     pub fn set_font_size(s: i32) {
-        unsafe { Fl_Tooltip_set_font_size(s as i32) }
+        unsafe { Fl_Tooltip_set_font_size(s) }
     }
 
-    /// Gets the tooltip's color
+    /// Gets the tooltips color
     pub fn color() -> Color {
         unsafe { mem::transmute(Fl_Tooltip_color()) }
     }
 
-    /// Sets the tooltip's color
+    /// Sets the tooltips color
     pub fn set_color(c: Color) {
-        unsafe { Fl_Tooltip_set_color(c.bits() as u32) }
+        unsafe { Fl_Tooltip_set_color(c.bits()) }
     }
 
-    /// Gets the tooltip's text color
+    /// Gets the tooltips text color
     pub fn text_color() -> Color {
         unsafe { mem::transmute(Fl_Tooltip_text_color()) }
     }
 
-    /// Sets the tooltip's text color
+    /// Sets the tooltips text color
     pub fn set_text_color(c: Color) {
-        unsafe { Fl_Tooltip_set_text_color(c.bits() as u32) }
+        unsafe { Fl_Tooltip_set_text_color(c.bits()) }
     }
 
-    /// Gets the margin width
+    /// Gets the tooltips margin width
     pub fn margin_width() -> i32 {
-        unsafe { Fl_Tooltip_margin_width() as i32 }
+        unsafe { Fl_Tooltip_margin_width() }
     }
 
-    /// Sets the margin width
+    /// Sets the tooltips margin width
     pub fn set_margin_width(v: i32) {
-        unsafe { Fl_Tooltip_set_margin_width(v as i32) }
+        unsafe { Fl_Tooltip_set_margin_width(v) }
     }
 
-    /// Gets the margin height
+    /// Gets the tooltips margin height
     pub fn margin_height() -> i32 {
-        unsafe { Fl_Tooltip_margin_height() as i32 }
+        unsafe { Fl_Tooltip_margin_height() }
     }
 
-    /// Sets the margin height
+    /// Sets the tooltips margin height
     pub fn set_margin_height(v: i32) {
-        unsafe { Fl_Tooltip_set_margin_height(v as i32) }
+        unsafe { Fl_Tooltip_set_margin_height(v) }
     }
 
-    /// Gets the wrap width
+    /// Gets the tooltips wrap width
     pub fn wrap_width() -> i32 {
-        unsafe { Fl_Tooltip_wrap_width() as i32 }
+        unsafe { Fl_Tooltip_wrap_width() }
     }
 
-    /// Sets the wrap width
+    /// Sets the tooltips wrap width
     pub fn set_wrap_width(v: i32) {
-        unsafe { Fl_Tooltip_set_wrap_width(v as i32) }
+        unsafe { Fl_Tooltip_set_wrap_width(v) }
     }
 
-    /// Returns the current window
+    /// Returns the window used for tooltips
     pub fn current_window() -> impl WindowExt {
         unsafe {
             let wind = Fl_Tooltip_current_window();
@@ -572,7 +572,7 @@ impl InputChoice {
     /// Set the value of the input choice to the element at `idx`
     pub fn set_value_index(&mut self, idx: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_value2(self.inner, idx as i32) }
+        unsafe { Fl_Input_Choice_set_value2(self.inner, idx) }
     }
 
     /// Get the associated input widget
@@ -604,19 +604,19 @@ impl InputChoice {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_text_font(self.inner, f.bits() as i32) }
+        unsafe { Fl_Input_Choice_set_text_font(self.inner, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_text_size(self.inner) as i32 }
+        unsafe { Fl_Input_Choice_text_size(self.inner) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_Input_Choice_set_text_size(self.inner, s) }
     }
 
     /// Gets the text's color
@@ -628,7 +628,7 @@ impl InputChoice {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Input_Choice_set_text_color(self.inner, color.bits() as u32) }
+        unsafe { Fl_Input_Choice_set_text_color(self.inner, color.bits()) }
     }
 }
 
@@ -691,7 +691,7 @@ impl HelpView {
         assert!(!self.was_deleted());
         unsafe {
             let s = CString::safe_new(s);
-            let ret = Fl_Help_View_find(self.inner, s.as_ptr(), start_from as i32);
+            let ret = Fl_Help_View_find(self.inner, s.as_ptr(), start_from);
             match ret {
                 -1 => None,
                 _ => Some(ret as usize),
@@ -771,19 +771,19 @@ impl HelpView {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_text_font(self.inner, f.bits() as i32) }
+        unsafe { Fl_Help_View_set_text_font(self.inner, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_text_size(self.inner) as i32 }
+        unsafe { Fl_Help_View_text_size(self.inner) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_Help_View_set_text_size(self.inner, s) }
     }
 
     /// Gets the text's color
@@ -795,19 +795,19 @@ impl HelpView {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_text_color(self.inner, color.bits() as u32) }
+        unsafe { Fl_Help_View_set_text_color(self.inner, color.bits()) }
     }
 
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_scrollbar_size(self.inner) as i32 }
+        unsafe { Fl_Help_View_scrollbar_size(self.inner) }
     }
 
     /// Sets the scrollbar size
     pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Help_View_set_scrollbar_size(self.inner, new_size as i32) }
+        unsafe { Fl_Help_View_set_scrollbar_size(self.inner, new_size) }
     }
 
     /// Load a view from a file or URI

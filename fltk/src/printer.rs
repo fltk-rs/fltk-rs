@@ -51,7 +51,7 @@ impl Printer {
         unsafe {
             if Fl_Printer_begin_job(
                 self.inner,
-                pagecount as i32,
+                pagecount,
                 &mut frompage_,
                 &mut topage_,
                 std::ptr::null_mut(),
@@ -60,12 +60,12 @@ impl Printer {
                 let from = if frompage_ == 0 {
                     None
                 } else {
-                    Some(frompage_ as i32)
+                    Some(frompage_)
                 };
                 let to = if topage_ == 0 {
                     None
                 } else {
-                    Some(topage_ as i32)
+                    Some(topage_)
                 };
                 Ok((from, to))
             } else {

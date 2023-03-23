@@ -380,6 +380,8 @@ Various advanced examples can also be found [here](https://github.com/wyhinton/F
     - RepeatButton
     - RadioLightButton
     - RadioRoundButton
+    - ReturnButton
+    - ShortcutButton
 - Dialogs
     - Native FileDialog
     - FileChooser

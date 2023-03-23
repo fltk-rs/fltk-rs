@@ -1,5 +1,5 @@
 use crate::app::widget::first_window;
-use crate::enums::{Event, Key, Shortcut, CallbackReason};
+use crate::enums::{CallbackReason, Event, Key, Shortcut};
 use crate::prelude::*;
 use crate::utils::FlString;
 use fltk_sys::fl;
@@ -9,6 +9,7 @@ use std::{
     mem,
     os::raw,
     panic,
+    sync::Arc,
 };
 
 /// Alias Window ptr
@@ -147,7 +148,7 @@ pub fn event_is_click() -> bool {
 
 /// Returns the duration of an event
 pub fn event_length() -> i32 {
-    unsafe { fl::Fl_event_length() as i32 }
+    unsafe { fl::Fl_event_length() }
 }
 
 /// Returns the state of the event
@@ -226,10 +227,8 @@ pub fn event_clipboard_image() -> Option<crate::image::RgbImage> {
         if image.is_null() {
             None
         } else {
-            use std::sync::atomic::AtomicUsize;
             Some(crate::image::RgbImage {
-                inner: image as _,
-                refcount: AtomicUsize::new(1),
+                inner: Arc::from(image as *mut fltk_sys::image::Fl_RGB_Image),
             })
         }
     }
@@ -561,7 +560,5 @@ pub fn raw_open_callback(cb: Option<fn(*const raw::c_char)>) {
 
 /// Get the callback reason
 pub fn callback_reason() -> CallbackReason {
-    unsafe {
-        mem::transmute(fl::Fl_callback_reason())
-    }
+    unsafe { mem::transmute(fl::Fl_callback_reason()) }
 }

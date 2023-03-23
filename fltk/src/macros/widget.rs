@@ -426,6 +426,11 @@ macro_rules! impl_widget_ext {
                     unsafe { [<$flname _set_damage>](self.inner, mask.bits()) }
                 }
 
+                fn set_damage_area(&mut self, mask: $crate::enums::Damage, x: i32, y: i32, w: i32, h: i32) {
+                    assert!(!self.was_deleted());
+                    unsafe { [<$flname _set_damage_area>](self.inner, mask.bits(), x, y, w, h) }
+                }
+
                 fn clear_damage(&mut self) {
                     assert!(!self.was_deleted());
                     unsafe { [<$flname _clear_damage>](self.inner) }
@@ -528,10 +533,9 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let mut img =
+                            let img =
                                 $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                            img.increment_arc();
-                            Some(Box::new(img.copy()))
+                            Some(Box::new(img))
                         }
                     }
                 }
@@ -596,10 +600,9 @@ macro_rules! impl_widget_ext {
                         if image_ptr.is_null() {
                             None
                         } else {
-                            let mut img =
+                            let img =
                                 $crate::image::Image::from_image_ptr(image_ptr as *mut fltk_sys::image::Fl_Image);
-                            img.increment_arc();
-                            Some(Box::new(img.copy()))
+                            Some(Box::new(img))
                         }
                     }
                 }
@@ -935,6 +938,14 @@ macro_rules! impl_widget_base {
                         })
                     }
                 }
+
+                fn super_draw(&mut self, flag: bool) {
+                    assert!(!self.was_deleted());
+                    assert!(self.is_derived);
+                    unsafe {
+                        [<$flname _super_draw>](self.inner as _, flag as i32)
+                    }
+                }
             }
         }
     };
@@ -1242,6 +1253,10 @@ macro_rules! impl_widget_ext_via {
 
             fn set_damage_type(&mut self, mask: $crate::enums::Damage) {
                 self.$member.set_damage_type(mask)
+            }
+
+            fn set_damage_area(&mut self, mask: $crate::enums::Damage, x: i32, y: i32, w: i32, h: i32) {
+                self.$member.set_damage_area(mask, x, y, w, h);
             }
 
             fn clear_damage(&mut self) {

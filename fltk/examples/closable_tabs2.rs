@@ -162,7 +162,7 @@ fn main() {
                 40,
                 None,
             )
-            .with_label(&format!("button {}", idx));
+            .with_label(&format!("button {idx}"));
         }
         grp.end();
         grp

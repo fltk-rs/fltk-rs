@@ -53,12 +53,12 @@ pub fn scheme() -> Scheme {
 
 /// Set the application's scrollbar size
 pub fn set_scrollbar_size(sz: i32) {
-    unsafe { fl::Fl_set_scrollbar_size(sz as i32) }
+    unsafe { fl::Fl_set_scrollbar_size(sz) }
 }
 
 /// Get the app's scrollbar size
 pub fn scrollbar_size() -> i32 {
-    unsafe { fl::Fl_scrollbar_size() as i32 }
+    unsafe { fl::Fl_scrollbar_size() }
 }
 
 /// Return whether visible focus is shown
@@ -187,7 +187,7 @@ pub fn set_inactive_color(r: u8, g: u8, b: u8) {
 
 /// Swap a color with a custom RGB value
 pub fn set_color(old: Color, r: u8, g: u8, b: u8) {
-    unsafe { fl::Fl_set_color(old.bits() as u32, r, g, b) }
+    unsafe { fl::Fl_set_color(old.bits(), r, g, b) }
 }
 
 #[cfg(feature = "enable-glwindow")]
@@ -226,7 +226,7 @@ pub fn set_menu_linespacing(val: i32) {
 /// Returns Err(FailedOperation) if FLTK failed to set the visual mode
 pub fn set_visual(mode: Mode) -> Result<(), FltkError> {
     unsafe {
-        match fl::Fl_visual(mode.bits() as i32) {
+        match fl::Fl_visual(mode.bits()) {
             0 => Err(FltkError::Internal(FltkErrorKind::FailedOperation)),
             _ => Ok(()),
         }

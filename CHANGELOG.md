@@ -1,6 +1,31 @@
 # Changelog
 
 
+# [1.3.34] - 2023-03-19
+- Fix CFLTK_WAYLAND_ONLY builds.
+- Add WidgetExt::set_damage_area() by @jkl1337.
+- Add WidgetBase::super_draw().
+- Update FLTK submodule.
+
+# [1.3.33] - 2023-03-08
+- Fix typo in draw routines for draw_rounded_rect: by @jkl1337.
+- Fix a break in fltk-flow from moving cfl_widget.hpp from cfltk/include: by @jkl1337.
+- Update FLTK submodule.
+
+## [1.3.32] - 2023-03-02
+- Support crt-static with msvc toolchain.
+- Internally use String for widget id.
+- Update FLTK submodule.
+
+## [1.3.31] - 2023-02-16
+- Correct draw::LineStyle values by @cpardotortosa
+- Improve Tooltip documentation by @mark-summerfield
+- Add ShortcutButton
+- Add InputExt::tab_nav setter/getter
+- Make Tabs::auto_layout also run when called
+- Add Tabs::handle_overflow
+- Update FLTK submodule
+
 ### [1.3.30] - 2023-02-07
 - Fix memory issue with WidgetExt::set_image and set_deimage caused in version 1.3.24.
 - Add BrowserExt::selected_items().

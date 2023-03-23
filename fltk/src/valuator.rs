@@ -294,19 +294,19 @@ impl ValueSlider {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_set_text_font(self.inner, f.bits() as i32) }
+        unsafe { Fl_Value_Slider_set_text_font(self.inner, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_text_size(self.inner) as i32 }
+        unsafe { Fl_Value_Slider_text_size(self.inner) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_Value_Slider_set_text_size(self.inner, s) }
     }
 
     /// Gets the text's color
@@ -318,7 +318,7 @@ impl ValueSlider {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Slider_set_text_color(self.inner, color.bits() as u32) }
+        unsafe { Fl_Value_Slider_set_text_color(self.inner, color.bits()) }
     }
 
     /// Get the slider size as a fraction of the long axis
@@ -377,19 +377,19 @@ impl ValueInput {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_set_text_font(self.inner, f.bits() as i32) }
+        unsafe { Fl_Value_Input_set_text_font(self.inner, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_text_size(self.inner) as i32 }
+        unsafe { Fl_Value_Input_text_size(self.inner) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_Value_Input_set_text_size(self.inner, s) }
     }
 
     /// Gets the text's color
@@ -401,7 +401,7 @@ impl ValueInput {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Input_set_text_color(self.inner, color.bits() as u32) }
+        unsafe { Fl_Value_Input_set_text_color(self.inner, color.bits()) }
     }
 
     /// Returns whether the user is allowed to drag the value outside the range.
@@ -440,19 +440,19 @@ impl ValueOutput {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_set_text_font(self.inner, f.bits() as i32) }
+        unsafe { Fl_Value_Output_set_text_font(self.inner, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_text_size(self.inner) as i32 }
+        unsafe { Fl_Value_Output_text_size(self.inner) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_Value_Output_set_text_size(self.inner, s) }
     }
 
     /// Gets the text's color
@@ -464,7 +464,7 @@ impl ValueOutput {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Value_Output_set_text_color(self.inner, color.bits() as u32) }
+        unsafe { Fl_Value_Output_set_text_color(self.inner, color.bits()) }
     }
 }
 
@@ -642,19 +642,19 @@ impl HorValueSlider {
     /// Sets the text font
     pub fn set_text_font(&mut self, f: Font) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_set_text_font(self.inner, f.bits() as i32) }
+        unsafe { Fl_Hor_Value_Slider_set_text_font(self.inner, f.bits()) }
     }
 
     /// Gets the text size
     pub fn text_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_text_size(self.inner) as i32 }
+        unsafe { Fl_Hor_Value_Slider_text_size(self.inner) }
     }
 
     /// Sets the text size
     pub fn set_text_size(&mut self, s: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_set_text_size(self.inner, s as i32) }
+        unsafe { Fl_Hor_Value_Slider_set_text_size(self.inner, s) }
     }
 
     /// Gets the text's color
@@ -666,7 +666,7 @@ impl HorValueSlider {
     /// Sets the text's color
     pub fn set_text_color(&mut self, color: Color) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Hor_Value_Slider_set_text_color(self.inner, color.bits() as u32) }
+        unsafe { Fl_Hor_Value_Slider_set_text_color(self.inner, color.bits()) }
     }
 
     /// Get the slider size as a fraction of the long axis

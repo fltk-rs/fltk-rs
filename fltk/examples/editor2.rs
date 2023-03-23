@@ -3,7 +3,7 @@ use std::path::PathBuf;
 
 const WIDTH: i32 = 800;
 const HEIGHT: i32 = 600;
-static STATE: Lazy<app::GlobalState<State>> = Lazy::new(|| app::GlobalState::<State>::get());
+static STATE: Lazy<app::GlobalState<State>> = Lazy::new(app::GlobalState::<State>::get);
 
 pub struct State {
     pub saved: bool,
@@ -99,7 +99,7 @@ fn handle_drag_drop(editor: &mut text::TextEditor) {
     editor.handle({
         let mut dnd = false;
         let mut released = false;
-        let buf = editor.buffer().unwrap().clone();
+        let buf = editor.buffer().unwrap();
         move |_, ev| match ev {
             Event::DndEnter => {
                 dnd = true;
@@ -182,14 +182,14 @@ fn menu_cb(m: &mut impl MenuExt) {
             "&File/Save\t" => {
                 STATE.with(|s| {
                     if !s.saved && s.current_file.exists() {
-                        std::fs::write(&s.current_file, &s.buf.text()).ok();
+                        std::fs::write(&s.current_file, s.buf.text()).ok();
                     }
                 });
             }
             "&File/Save as...\t" => {
                 let c = nfc_get_file(dialog::NativeFileChooserType::BrowseSaveFile);
                 STATE.with(move |s| {
-                    std::fs::write(&c, &s.buf.text()).ok();
+                    std::fs::write(&c, s.buf.text()).ok();
                     s.saved = true;
                     s.current_file = c.clone();
                 });

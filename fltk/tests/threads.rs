@@ -20,7 +20,7 @@ fn main() {
                 app::sleep(0.010);
                 app::awake();
                 let mut frame = frame.lock().unwrap();
-                frame.set_label(format!("Hello {}", i).as_str());
+                frame.set_label(format!("Hello {i}").as_str());
             }
         });
     });

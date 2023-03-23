@@ -255,3 +255,31 @@ pub struct ReturnButton {
 crate::macros::widget::impl_widget_ext!(ReturnButton, Fl_Return_Button);
 crate::macros::widget::impl_widget_base!(ReturnButton, Fl_Return_Button);
 crate::macros::button::impl_button_ext!(ReturnButton, Fl_Return_Button);
+
+/// Creates a Shortcut button
+#[derive(Debug)]
+pub struct ShortcutButton {
+    inner: *mut Fl_Shortcut_Button,
+    tracker: *mut fltk_sys::fl::Fl_Widget_Tracker,
+    is_derived: bool,
+}
+
+crate::macros::widget::impl_widget_ext!(ShortcutButton, Fl_Shortcut_Button);
+crate::macros::widget::impl_widget_base!(ShortcutButton, Fl_Shortcut_Button);
+crate::macros::button::impl_button_ext!(ShortcutButton, Fl_Shortcut_Button);
+
+impl ShortcutButton {
+    /// Gets the Shortcut button value
+    pub fn value(&self) -> crate::enums::Shortcut {
+        unsafe {
+            assert!(!self.was_deleted());
+            std::mem::transmute(Fl_Shortcut_Button_value(self.inner))
+        }
+    }
+
+    /// Sets the Shortcut button value
+    pub fn set_value(&mut self, val: crate::enums::Shortcut) {
+        assert!(!self.was_deleted());
+        unsafe { Fl_Shortcut_Button_set_value(self.inner, val.bits()) }
+    }
+}

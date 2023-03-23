@@ -13,7 +13,7 @@ use std::{
 /// Set the app's font
 pub fn set_font(new_font: Font) {
     unsafe {
-        let new_font = new_font.bits() as i32;
+        let new_font = new_font.bits();
         let f = CURRENT_FONT.load(Ordering::Relaxed);
         fl::Fl_set_font(15, f);
         fl::Fl_set_font(0, new_font);
@@ -35,7 +35,7 @@ pub fn font_size() -> i32 {
 /// Get the font's name
 pub fn get_font(font: Font) -> String {
     unsafe {
-        CStr::from_ptr(fl::Fl_get_font(font.bits() as i32))
+        CStr::from_ptr(fl::Fl_get_font(font.bits()))
             .to_string_lossy()
             .to_string()
     }
@@ -44,7 +44,7 @@ pub fn get_font(font: Font) -> String {
 /// Get the font's name
 pub fn get_font_name(font: Font) -> String {
     unsafe {
-        CStr::from_ptr(fl::Fl_get_font_name(font.bits() as i32))
+        CStr::from_ptr(fl::Fl_get_font_name(font.bits()))
             .to_string_lossy()
             .to_string()
     }
@@ -74,7 +74,7 @@ pub fn font_name(idx: usize) -> Option<String> {
     Some(f[idx].clone())
 }
 
-/// Returns a list of available fonts to the application
+/// Returns a list of fonts made available by the OS to the application. 
 pub fn get_font_names() -> Vec<String> {
     let mut vec: Vec<String> = vec![];
     let cnt = set_fonts("*") as usize;
@@ -101,7 +101,8 @@ pub fn font_count() -> usize {
     f.len()
 }
 
-/// Gets a Vector<String> of loaded fonts
+/// Gets a Vector<String> of loaded fonts, unless get_font_names() or load_system_fonts() is called, 
+/// this will return a Vec with a String representation of the default Fonts shipped by FLTK, which is the same as the `enums::Font`.
 pub fn fonts() -> Vec<String> {
     (FONTS.lock().unwrap()).clone()
 }

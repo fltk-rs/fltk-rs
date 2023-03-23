@@ -91,7 +91,7 @@ impl Pack {
     /// Layout the children of the pack automatically.
     /// Must be called on existing children
     pub fn auto_layout(&mut self) {
-        let children = self.children() as i32;
+        let children = self.children();
         if children == 0 {
             return;
         }
@@ -173,32 +173,46 @@ impl Scroll {
     /// Returns the x position
     pub fn xposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_xposition(self.inner) as i32 }
+        unsafe { Fl_Scroll_xposition(self.inner) }
     }
 
     /// Returns the y position
     pub fn yposition(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_yposition(self.inner) as i32 }
+        unsafe { Fl_Scroll_yposition(self.inner) }
     }
 
     /// Scrolls to `x` and `y`
     pub fn scroll_to(&mut self, x: i32, y: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scroll_to(self.inner, x as i32, y as i32) }
+        unsafe { Fl_Scroll_scroll_to(self.inner, x, y) }
     }
 
     /// Gets the scrollbar size
     pub fn scrollbar_size(&self) -> i32 {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_scrollbar_size(self.inner) as i32 }
+        unsafe { Fl_Scroll_scrollbar_size(self.inner) }
     }
 
     /// Sets the scrollbar size
     pub fn set_scrollbar_size(&mut self, new_size: i32) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Scroll_set_scrollbar_size(self.inner, new_size as i32) }
+        unsafe { Fl_Scroll_set_scrollbar_size(self.inner, new_size) }
     }
+}
+
+/// Defines how Tabs handle overflow
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub enum TabsOverflow {
+    /// Compress tabs
+    Compress = 0,
+    /// Clip tabs
+    Clip,
+    /// Create a pulldown
+    Pulldown,
+    /// Drag tabs
+    Drag,
 }
 
 /// Creates a tab which can contain widgets
@@ -292,7 +306,7 @@ impl Tabs {
     /// Sets the tab label alignment
     pub fn set_tab_align(&mut self, a: Align) {
         assert!(!self.was_deleted());
-        unsafe { Fl_Tabs_set_tab_align(self.inner, a.bits() as i32) }
+        unsafe { Fl_Tabs_set_tab_align(self.inner, a.bits()) }
     }
 
     /// Gets the tab label alignment.
@@ -303,6 +317,11 @@ impl Tabs {
 
     /// Auto layout a tabs widget
     pub fn auto_layout(&mut self) {
+        for c in self.clone().into_iter() {
+            if let Some(mut c) = c.as_group() {
+                c.resize(self.x(), self.y() + 30, self.w(), self.h() - 30);
+            }
+        }
         self.resize_callback(|t, x, y, w, h| {
             for c in t.clone().into_iter() {
                 if let Some(mut c) = c.as_group() {
@@ -310,6 +329,11 @@ impl Tabs {
                 }
             }
         });
+    }
+
+    /// Sets how the Tabs handles overflow
+    pub fn handle_overflow(&mut self, ov: TabsOverflow) {
+        unsafe { Fl_Tabs_handle_overflow(self.inner, ov as i32) }
     }
 }
 

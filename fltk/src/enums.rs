@@ -295,7 +295,8 @@ bitflags::bitflags! {
 }
 
 impl Font {
-    /// Returns a font by index, can be queried via the [`app::get_font_names()`](`crate::app::get_font_names()`)
+    /// Returns a font by index. This is the enum representation of the Font. If you change the default font for your app, 
+    /// which by default is Helvetica, `Font::by_index(0)` will still show Helvetica!
     pub fn by_index(idx: usize) -> Font {
         if idx < (FONTS.lock().unwrap()).len() {
             unsafe { mem::transmute(idx as i32) }
@@ -381,7 +382,7 @@ impl Font {
     /// Get the font's real name
     pub fn get_name(&self) -> String {
         unsafe {
-            CStr::from_ptr(fl::Fl_get_font_name(self.bits as i32))
+            CStr::from_ptr(fl::Fl_get_font_name(self.bits))
                 .to_string_lossy()
                 .to_string()
         }
@@ -1186,20 +1187,20 @@ bitflags::bitflags! {
 impl std::ops::BitOr<char> for Shortcut {
     type Output = Shortcut;
     fn bitor(self, other: char) -> Self::Output {
-        unsafe { mem::transmute(self.bits as i32 | other as i32) }
+        unsafe { mem::transmute(self.bits | other as i32) }
     }
 }
 
 impl std::ops::BitOr<Key> for Shortcut {
     type Output = Shortcut;
     fn bitor(self, other: Key) -> Self::Output {
-        unsafe { mem::transmute(self.bits as i32 | other.bits() as i32) }
+        unsafe { mem::transmute(self.bits | other.bits()) }
     }
 }
 
 impl std::ops::BitOr<i32> for Align {
     type Output = Align;
     fn bitor(self, rhs: i32) -> Self::Output {
-        unsafe { mem::transmute(self.bits | rhs as i32) }
+        unsafe { mem::transmute(self.bits | rhs) }
     }
 }

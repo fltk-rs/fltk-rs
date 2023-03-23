@@ -18,7 +18,7 @@ fn main() {
                 app::awake();
                 let ret = app::handle_main(i);
                 if let Ok(ret) = ret {
-                    println!("Handled? {}", ret);
+                    println!("Handled? {ret}");
                 }
             }
         });
@@ -26,7 +26,7 @@ fn main() {
 
     frame.handle(|f, ev| {
         if ev > 30.into() {
-            f.set_label(&format!("{}", ev));
+            f.set_label(&format!("{ev}"));
             true
         } else {
             false

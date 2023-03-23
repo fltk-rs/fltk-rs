@@ -30,7 +30,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
     println!("cargo:rerun-if-changed=cfltk/include/cfl_utils.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_macros.h");
     println!("cargo:rerun-if-changed=cfltk/include/cfl_lock.h");
-    println!("cargo:rerun-if-changed=cfltk/src/cfl_widget.hpp");
+    println!("cargo:rerun-if-changed=cfltk/include/cfl_widget.hpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_lock.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl_new.cpp");
     println!("cargo:rerun-if-changed=cfltk/src/cfl.cpp");
@@ -67,6 +67,10 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
     if !target_triple.contains("android") {
         let mut dst = cmake::Config::new("cfltk");
+
+        if cfg!(target_feature = "crt-static") && target_triple.contains("windows-msvc") {
+            dst.define("CFLTK_MSVC_CRT_STATIC", "ON");
+        }
 
         if cfg!(feature = "fltk-shared") {
             dst.define("CFLTK_BUILD_SHARED", "ON");

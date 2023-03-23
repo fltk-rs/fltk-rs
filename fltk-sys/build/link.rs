@@ -90,21 +90,26 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=c++abi");
             }
             "windows" => {
-                println!("cargo:rustc-link-lib=dylib=ws2_32");
-                println!("cargo:rustc-link-lib=dylib=comctl32");
-                println!("cargo:rustc-link-lib=dylib=gdi32");
-                println!("cargo:rustc-link-lib=dylib=oleaut32");
-                println!("cargo:rustc-link-lib=dylib=ole32");
-                println!("cargo:rustc-link-lib=dylib=uuid");
-                println!("cargo:rustc-link-lib=dylib=shell32");
-                println!("cargo:rustc-link-lib=dylib=advapi32");
-                println!("cargo:rustc-link-lib=dylib=comdlg32");
-                println!("cargo:rustc-link-lib=dylib=winspool");
-                println!("cargo:rustc-link-lib=dylib=user32");
-                println!("cargo:rustc-link-lib=dylib=kernel32");
-                println!("cargo:rustc-link-lib=dylib=odbc32");
+                let linkage = if cfg!(target_feature = "crt-static") {
+                    "="
+                } else {
+                    "=dylib="
+                };
+                println!("cargo:rustc-link-lib{}ws2_32", linkage);
+                println!("cargo:rustc-link-lib{}comctl32", linkage);
+                println!("cargo:rustc-link-lib{}gdi32", linkage);
+                println!("cargo:rustc-link-lib{}oleaut32", linkage);
+                println!("cargo:rustc-link-lib{}ole32", linkage);
+                println!("cargo:rustc-link-lib{}uuid", linkage);
+                println!("cargo:rustc-link-lib{}shell32", linkage);
+                println!("cargo:rustc-link-lib{}advapi32", linkage);
+                println!("cargo:rustc-link-lib{}comdlg32", linkage);
+                println!("cargo:rustc-link-lib{}winspool", linkage);
+                println!("cargo:rustc-link-lib{}user32", linkage);
+                println!("cargo:rustc-link-lib{}kernel32", linkage);
+                println!("cargo:rustc-link-lib{}odbc32", linkage);
                 if !cfg!(feature = "no-gdiplus") {
-                    println!("cargo:rustc-link-lib=dylib=gdiplus");
+                    println!("cargo:rustc-link-lib{}gdiplus", linkage);
                 }
                 if target_triple.contains("gnu") {
                     println!("cargo:rustc-link-lib=supc++");

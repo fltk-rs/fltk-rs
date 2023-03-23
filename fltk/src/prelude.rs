@@ -180,6 +180,8 @@ pub unsafe trait WidgetExt {
     fn damage_type(&self) -> Damage;
     /// Signal the type of damage a widget received
     fn set_damage_type(&mut self, mask: Damage);
+    /// Signal damage for an area inside the widget
+    fn set_damage_area(&mut self, mask: Damage, x: i32, y: i32, w: i32, h: i32);
     /// Clear the damaged flag
     fn clear_damage(&mut self);
     /// Sets the default callback trigger for a widget, equivalent to `when()`
@@ -359,6 +361,11 @@ pub unsafe trait WidgetBase: WidgetExt {
         Self: Sized,
     {
         None
+    }
+    #[doc(hidden)]
+    /// Determine whether the base class's draw method is called
+    fn super_draw(&mut self, flag: bool) {
+        let _ = flag;
     }
 }
 
@@ -699,6 +706,10 @@ pub unsafe trait InputExt: WidgetExt {
     fn wrap(&self) -> bool;
     /// Set whether text is wrapped inside an input/output widget
     fn set_wrap(&mut self, val: bool);
+    /// Sets whether tab navigation is enabled, true by default
+    fn set_tab_nav(&mut self, val: bool);
+    /// Returns whether tab navigation is enabled
+    fn tab_nav(&self) -> bool;
 }
 
 /// Defines the methods implemented by all menu widgets
@@ -1403,16 +1414,6 @@ pub unsafe trait ImageExt {
         Self: Sized;
     /// Checks if the image was deleted
     fn was_deleted(&self) -> bool;
-    #[doc(hidden)]
-    /// INTERNAL: Manually increment the atomic refcount
-    /// # Safety
-    /// The underlying image pointer must be valid
-    unsafe fn increment_arc(&mut self);
-    #[doc(hidden)]
-    /// INTERNAL: Manually decrement the atomic refcount
-    /// # Safety
-    /// The underlying image pointer must be valid
-    unsafe fn decrement_arc(&mut self);
     /// Transforms an Image base into another Image
     /// # Safety
     /// Can be unsafe if used to downcast to an image of different format
@@ -1421,12 +1422,18 @@ pub unsafe trait ImageExt {
         Self: Sized;
     #[doc(hidden)]
     /// Cast an image back to its original type
-    fn from_dyn_image_ptr(_p: *mut fltk_sys::image::Fl_Image) -> Option<Self> where Self: Sized {
+    fn from_dyn_image_ptr(_p: *mut fltk_sys::image::Fl_Image) -> Option<Self>
+    where
+        Self: Sized,
+    {
         None
     }
     #[doc(hidden)]
     /// Cast an image back to its original type
-    fn from_dyn_image<I: ImageExt>(_i: &I) -> Option<Self> where Self: Sized {
+    fn from_dyn_image<I: ImageExt>(_i: &I) -> Option<Self>
+    where
+        Self: Sized,
+    {
         None
     }
 }
