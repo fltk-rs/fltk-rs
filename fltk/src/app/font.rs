@@ -74,7 +74,7 @@ pub fn font_name(idx: usize) -> Option<String> {
     Some(f[idx].clone())
 }
 
-/// Returns a list of available fonts to the application
+/// Returns a list of fonts made available by the OS to the application. 
 pub fn get_font_names() -> Vec<String> {
     let mut vec: Vec<String> = vec![];
     let cnt = set_fonts("*") as usize;
@@ -101,7 +101,8 @@ pub fn font_count() -> usize {
     f.len()
 }
 
-/// Gets a Vector<String> of loaded fonts
+/// Gets a Vector<String> of loaded fonts, unless get_font_names() or load_system_fonts() is called, 
+/// this will return a Vec with a String representation of the default Fonts shipped by FLTK, which is the same as the `enums::Font`.
 pub fn fonts() -> Vec<String> {
     (FONTS.lock().unwrap()).clone()
 }

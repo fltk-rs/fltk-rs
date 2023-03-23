@@ -299,7 +299,8 @@ bitflags::bitflags! {
 }
 
 impl Font {
-    /// Returns a font by index, can be queried via the [`app::get_font_names()`](`crate::app::get_font_names()`)
+    /// Returns a font by index. This is the enum representation of the Font. If you change the default font for your app, 
+    /// which by default is Helvetica, `Font::by_index(0)` will still show Helvetica!
     pub fn by_index(idx: usize) -> Font {
         if idx < (FONTS.lock().unwrap()).len() {
             unsafe { mem::transmute(idx as i32) }
