@@ -20,7 +20,7 @@ macro_rules! impl_image_ext {
             fn clone(&self) -> Self {
                 assert!(!self.was_deleted());
                 $name {
-                    inner: self.inner.clone(),
+                    inner: Arc::clone(&self.inner),
                 }
             }
         }
@@ -28,10 +28,12 @@ macro_rules! impl_image_ext {
         paste::paste! {
             impl Drop for $name {
                 fn drop(&mut self) {
-                    if !self.was_deleted() {
-                        if Arc::strong_count(&self.inner) == 0 {
-                            unsafe {
-                                [<$flname _delete>](*self.inner);
+                    if std::any::type_name::<$name>() != std::any::type_name::<$crate::image::Image>() {
+                        if !self.was_deleted() {
+                            if Arc::strong_count(&self.inner) == 1 {
+                                unsafe {
+                                    [<$flname _delete>](*self.inner);
+                                }
                             }
                         }
                     }
