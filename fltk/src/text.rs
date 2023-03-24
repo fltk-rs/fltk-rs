@@ -659,7 +659,7 @@ impl Clone for TextBuffer {
 impl Drop for TextBuffer {
     fn drop(&mut self) {
         assert!(!self.inner.is_null());
-        if Arc::strong_count(&self.inner) == 1 {
+        if Arc::strong_count(&self.inner) == 0 {
             unsafe {
                 Fl_Text_Buffer_delete(*self.inner);
             }
