@@ -1,6 +1,12 @@
 # Changelog
 
 
+# [1.3.35] - Unreleased
+- Improve docs on font indexing ops.
+- Refactor images to use Arc.
+- Add MenuButton::popup check.
+- Update FLTK submodule
+
 # [1.3.34] - 2023-03-19
 - Fix CFLTK_WAYLAND_ONLY builds.
 - Add WidgetExt::set_damage_area() by @jkl1337.
