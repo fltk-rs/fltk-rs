@@ -58,6 +58,9 @@ impl MenuButton {
     /// Act exactly as though the user clicked the button or typed the shortcut key
     pub fn popup(&mut self) -> Option<MenuItem> {
         assert!(!self.was_deleted());
+        if self.size() == 0 {
+            return None;
+        }
         unsafe {
             let ptr = Fl_Menu_Button_popup(self.inner);
             if ptr.is_null() {
@@ -182,6 +185,9 @@ impl MenuItem {
     /// Creates a popup menu at the specified coordinates and returns its choice
     pub fn popup(&mut self, x: i32, y: i32) -> Option<MenuItem> {
         assert!(!self.was_deleted());
+        if self.size() == 0 {
+            return None;
+        }
         unsafe {
             let item = Fl_Menu_Item_popup(self.inner, x, y);
             if item.is_null() {
