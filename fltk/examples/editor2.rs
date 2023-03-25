@@ -85,10 +85,6 @@ fn nfc_get_file(mode: dialog::NativeFileChooserType) -> PathBuf {
     nfc.filename()
 }
 
-fn modify_cb(_: i32, _: i32, _: i32, _: i32, _: &str) {
-    STATE.with(|s| s.saved = false);
-}
-
 fn quit_cb() {
     STATE.with(|s| {
         if s.saved {
@@ -230,7 +226,6 @@ fn main() {
 
     let mut buf = text::TextBuffer::default();
     buf.set_tab_distance(4);
-    buf.add_modify_callback(modify_cb);
 
     let state = State::new(buf.clone());
     app::GlobalState::new(state);
