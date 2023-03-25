@@ -21,7 +21,7 @@ macro_rules! impl_display_ext {
                 fn set_buffer<B: Into<Option<$crate::text::TextBuffer>>>(&mut self, buffer: B) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        if let Some(buffer) = buffer.into() {
+                        if let Some(mut buffer) = buffer.into() {
                             let _old_buf = self.buffer();
                             [<$flname _set_buffer>](self.inner, buffer.as_ptr())
                         } else {
@@ -231,7 +231,7 @@ macro_rules! impl_display_ext {
                         bgcols.push(0);
                     }
                     let style_buffer = style_buffer.into();
-                    if let Some(style_buffer) = style_buffer {
+                    if let Some(mut style_buffer) = style_buffer {
                         let _old_buf = self.style_buffer();
                         unsafe {
                             [<$flname _set_highlight_data>](
@@ -246,7 +246,7 @@ macro_rules! impl_display_ext {
                             )
                         }
                     } else {
-                        if let Some(buf) = self.style_buffer() {
+                        if let Some(mut buf) = self.style_buffer() {
                             unsafe {
                                 [<$flname _set_highlight_data>](
                                     self.inner,
@@ -295,7 +295,7 @@ macro_rules! impl_display_ext {
                         bgcols.push(entry.bgcolor.bits() as u32);
                     }
                     let style_buffer = style_buffer.into();
-                    if let Some(style_buffer) = style_buffer {
+                    if let Some(mut style_buffer) = style_buffer {
                         let _old_buf = self.style_buffer();
                         unsafe {
                             [<$flname _set_highlight_data>](
@@ -310,7 +310,7 @@ macro_rules! impl_display_ext {
                             )
                         }
                     } else {
-                        if let Some(buf) = self.style_buffer() {
+                        if let Some(mut buf) = self.style_buffer() {
                             unsafe {
                                 [<$flname _set_highlight_data>](
                                     self.inner,
@@ -327,7 +327,7 @@ macro_rules! impl_display_ext {
                     }
                 }
 
-                fn unset_highlight_data(&self, style_buffer: $crate::text::TextBuffer) {
+                fn unset_highlight_data<B: Into<Option<$crate::text::TextBuffer>>>(&mut self, style_buffer: B) {
                     assert!(!self.was_deleted());
                     unsafe {
                         let mut colors = [$crate::enums::Color::Black.bits()];
@@ -335,16 +335,18 @@ macro_rules! impl_display_ext {
                         let mut sizes = [14];
                         let mut attrs = [0];
                         let mut bgcols = [0];
-                        [<$flname _set_highlight_data>](
-                            self.inner,
-                            style_buffer.as_ptr() as *mut raw::c_void,
-                            colors.as_mut_ptr(),
-                            fonts.as_mut_ptr(),
-                            sizes.as_mut_ptr(),
-                            attrs.as_mut_ptr(),
-                            bgcols.as_mut_ptr(),
-                            1,
-                        )
+                        if let Some(mut style_buffer) = style_buffer.into() {
+                            [<$flname _set_highlight_data>](
+                                self.inner,
+                                style_buffer.as_ptr() as *mut raw::c_void,
+                                colors.as_mut_ptr(),
+                                fonts.as_mut_ptr(),
+                                sizes.as_mut_ptr(),
+                                attrs.as_mut_ptr(),
+                                bgcols.as_mut_ptr(),
+                                1,
+                            )
+                        }
                     }
                 }
 

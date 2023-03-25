@@ -19,6 +19,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     while app.wait() {
       frame.set_image(Some(image.clone()));
       let _ = unsafe { frame.image_mut() };
+	  let _ = frame.image();
     }
     Ok(())
 }

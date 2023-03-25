@@ -971,7 +971,7 @@ pub unsafe trait DisplayExt: WidgetExt {
         entries: E,
     );
     /// Unset the style of the text widget
-    fn unset_highlight_data(&self, style_buffer: crate::text::TextBuffer);
+    fn unset_highlight_data<B: Into<Option<crate::text::TextBuffer>>>(&mut self, style_buffer: B);
     /// Sets the cursor style
     fn set_cursor_style(&mut self, style: crate::text::Cursor);
     /// Sets the cursor color
