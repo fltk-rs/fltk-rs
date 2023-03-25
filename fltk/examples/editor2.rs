@@ -90,7 +90,7 @@ fn quit_cb() {
         if s.saved {
             app::quit();
         } else {
-            let c = dialog::choice2_default(
+            let c = dialog::choice_default(
                 "Are you sure you want to exit without saving?",
                 "Yes",
                 "No",
