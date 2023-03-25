@@ -14,7 +14,7 @@ pub struct State {
 impl State {
     fn new(buf: text::TextBuffer) -> Self {
         State {
-            saved: false,
+            saved: true,
             buf,
             current_file: PathBuf::new(),
         }
@@ -43,7 +43,7 @@ fn init_menu(m: &mut menu::SysMenuBar) {
     m.add(
         "&File/Save as...\t",
         Shortcut::Ctrl | 'w',
-        menu::MenuFlag::Normal,
+        menu::MenuFlag::MenuDivider,
         menu_cb,
     );
     let idx = m.add(
@@ -85,9 +85,31 @@ fn nfc_get_file(mode: dialog::NativeFileChooserType) -> PathBuf {
     nfc.filename()
 }
 
-fn win_cb(w: &mut window::Window) {
+fn modify_cb(_: i32, _: i32, _: i32, _: i32, _: &str) {
+    STATE.with(|s| s.saved = false);
+}
+
+fn quit_cb() {
+    STATE.with(|s| {
+        if s.saved {
+            app::quit();
+        } else {
+            let c = dialog::choice2_default(
+                "Are you sure you want to exit without saving?",
+                "Yes",
+                "No",
+                "",
+            );
+            if c == Some(0) {
+                app::quit();
+            }
+        }
+    });
+}
+
+fn win_cb(_w: &mut window::Window) {
     if app::event() == Event::Close {
-        w.hide();
+        quit_cb();
     }
 }
 
@@ -190,23 +212,7 @@ fn menu_cb(m: &mut impl MenuExt) {
                     s.current_file = c.clone();
                 });
             }
-            "&File/Quit\t" => {
-                STATE.with(|s| {
-                    if s.saved {
-                        app::quit();
-                    } else {
-                        let c = dialog::choice2_default(
-                            "Are you sure you want to exit without saving?",
-                            "Yes",
-                            "No",
-                            "",
-                        );
-                        if c == Some(0) {
-                            app::quit();
-                        }
-                    }
-                });
-            }
+            "&File/Quit\t" => quit_cb(),
             "&Edit/Cut\t" => ed.cut(),
             "&Edit/Copy\t" => ed.copy(),
             "&Edit/Paste\t" => ed.paste(),
@@ -224,6 +230,7 @@ fn main() {
 
     let mut buf = text::TextBuffer::default();
     buf.set_tab_distance(4);
+    buf.add_modify_callback(modify_cb);
 
     let state = State::new(buf.clone());
     app::GlobalState::new(state);
