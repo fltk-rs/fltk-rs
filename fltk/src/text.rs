@@ -30,7 +30,6 @@ pub enum Cursor {
 #[derive(Debug)]
 pub struct TextBuffer {
     inner: Arc<*mut Fl_Text_Buffer>,
-    is_ref: bool,
 }
 
 impl std::default::Default for TextBuffer {
@@ -41,7 +40,6 @@ impl std::default::Default for TextBuffer {
             assert!(!text_buffer.is_null());
             TextBuffer {
                 inner: Arc::new(text_buffer),
-                is_ref: false,
             }
         }
     }
@@ -69,7 +67,6 @@ impl TextBuffer {
         assert!(!ptr.is_null());
         TextBuffer {
             inner: Arc::from(ptr),
-            is_ref: true,
         }
     }
 
@@ -77,7 +74,6 @@ impl TextBuffer {
     /// # Safety
     /// Can return multiple mutable pointers to the same buffer
     pub unsafe fn as_ptr(&mut self) -> *mut Fl_Text_Buffer {
-        self.is_ref = true;
         *self.inner
     }
 
@@ -656,7 +652,6 @@ impl Clone for TextBuffer {
         assert!(!self.inner.is_null());
         TextBuffer {
             inner: Arc::clone(&self.inner),
-            is_ref: self.is_ref,
         }
     }
 }
@@ -664,7 +659,7 @@ impl Clone for TextBuffer {
 impl Drop for TextBuffer {
     fn drop(&mut self) {
         assert!(!self.inner.is_null());
-        if Arc::strong_count(&self.inner) == 1 && !self.is_ref {
+        if Arc::strong_count(&self.inner) == 0 {
             unsafe {
                 Fl_Text_Buffer_delete(*self.inner);
             }
