@@ -9,7 +9,7 @@ fltk-sys = "1.4"
 ```
 
 Example code:
-```rust
+```rust,no_run
 use fltk_sys::*;
 use std::os::raw::*;
 
