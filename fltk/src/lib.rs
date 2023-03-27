@@ -4,7 +4,6 @@
 #![allow(clippy::needless_doctest_main)]
 #![warn(missing_docs)]
 #![allow(clippy::type_complexity)]
-#![allow(clippy::uninlined_format_args)]
 
 /// Application related methods and functions
 pub mod app;

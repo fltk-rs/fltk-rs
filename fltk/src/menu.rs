@@ -139,6 +139,7 @@ pub struct MenuItem {
 
 bitflags::bitflags! {
     /// Defines the menu flag for any added menu items using the add() method
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct MenuFlag: i32 {
         /// Normal item
         const Normal = 0;

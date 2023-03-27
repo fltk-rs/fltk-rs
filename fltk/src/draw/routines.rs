@@ -10,6 +10,7 @@ use std::os::raw;
 
 bitflags::bitflags! {
     /// Defines the line styles supported by fltk
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct LineStyle: i32 {
         /// Solid line
         const Solid = 0;

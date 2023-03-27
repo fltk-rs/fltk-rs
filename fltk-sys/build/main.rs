@@ -1,5 +1,5 @@
-#![allow(clippy::needless_borrow)]
 #![allow(clippy::uninlined_format_args)]
+
 use std::{env, path::PathBuf};
 
 mod android;

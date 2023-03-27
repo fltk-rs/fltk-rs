@@ -614,6 +614,7 @@ pub struct FileChooser {
 
 bitflags::bitflags! {
     /// The types of FileChooser
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct FileChooserType: i32 {
         /// Single file
         const Single = 0;
@@ -650,7 +651,7 @@ impl FileChooser {
             let ptr = Fl_File_Chooser_new(
                 dir.as_ptr(),
                 pattern.as_ptr(),
-                typ.bits,
+                typ.bits(),
                 title.into_raw(),
             );
             assert!(!ptr.is_null());
@@ -954,7 +955,7 @@ impl FileChooser {
     /// Sets the type of the `FileChooser`
     pub fn set_type(&mut self, t: FileChooserType) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_set_type(self.inner, t.bits) }
+        unsafe { Fl_File_Chooser_set_type(self.inner, t.bits()) }
     }
 
     /// Gets the type of the `FileChooser`

@@ -212,6 +212,7 @@ impl FrameType {
 
 bitflags::bitflags! {
     /// Defines alignment rules used by FLTK for labels
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Align: i32 {
         /// Center
         const Center = 0x0000;
@@ -262,6 +263,7 @@ bitflags::bitflags! {
 
 bitflags::bitflags! {
     /// Defines fonts used by FLTK
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Font: i32 {
         /// Helvetica
         const Helvetica = 0;
@@ -328,7 +330,7 @@ impl Font {
     pub fn set_font(old: Font, new: &str) {
         let new = CString::safe_new(new);
         unsafe {
-            fl::Fl_set_font2(old.bits, new.into_raw() as _);
+            fl::Fl_set_font2(old.bits(), new.into_raw() as _);
         }
     }
 
@@ -386,7 +388,7 @@ impl Font {
     /// Get the font's real name
     pub fn get_name(&self) -> String {
         unsafe {
-            CStr::from_ptr(fl::Fl_get_font_name(self.bits))
+            CStr::from_ptr(fl::Fl_get_font_name(self.bits()))
                 .to_string_lossy()
                 .to_string()
         }
@@ -404,6 +406,7 @@ bitflags::bitflags! {
     /// of which the final 00 indicates that it is not stored in this enum.
     /// For convenience, the fmt::Display trait is implemented so that the name of the Color is shown
     /// when there is one, otherwise the RGB value is given.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Color: u32 {
         /// ForeGround, label colors
         const ForeGround = 0;
@@ -495,9 +498,7 @@ impl Color {
 
     /// Get a color from an RGBI value, the I stands for the Fltk colormap index.
     pub const fn from_rgbi(val: u32) -> Color {
-        let mut c = Color::Black;
-        c.bits = val;
-        c
+        Color::from_bits_retain(val)
     }
 
     /// Create color from RGBA using alpha compositing. Works for non-group types.
@@ -581,17 +582,17 @@ impl Color {
 
     /// Returns an inactive form of the color
     pub fn inactive(&self) -> Color {
-        unsafe { mem::transmute(fl::Fl_inactive(self.bits)) }
+        unsafe { mem::transmute(fl::Fl_inactive(self.bits())) }
     }
 
     /// Returns an darker form of the color
     pub fn darker(&self) -> Color {
-        unsafe { mem::transmute(fl::Fl_darker(self.bits)) }
+        unsafe { mem::transmute(fl::Fl_darker(self.bits())) }
     }
 
     /// Returns an lighter form of the color
     pub fn lighter(&self) -> Color {
-        unsafe { mem::transmute(fl::Fl_lighter(self.bits)) }
+        unsafe { mem::transmute(fl::Fl_lighter(self.bits())) }
     }
 
     /// Returns a gray color value from black (i == 0) to white (i == FL_NUM_GRAY - 1)
@@ -601,12 +602,12 @@ impl Color {
 
     /// Returns a gray color value from black (i == 0) to white (i == FL_NUM_GRAY - 1)
     pub fn color_average(c1: Color, c2: Color, weight: f32) -> Color {
-        unsafe { mem::transmute(fl::Fl_color_average(c1.bits, c2.bits, weight)) }
+        unsafe { mem::transmute(fl::Fl_color_average(c1.bits(), c2.bits(), weight)) }
     }
 
     /// Returns a color that contrasts with the background color.
     pub fn contrast(fg: Color, bg: Color) -> Color {
-        unsafe { mem::transmute(fl::Fl_contrast(fg.bits, bg.bits)) }
+        unsafe { mem::transmute(fl::Fl_contrast(fg.bits(), bg.bits())) }
     }
 
     /// Returns the color closest to the passed grayscale value
@@ -622,7 +623,7 @@ impl Color {
     /// Get the RGB value of the color
     pub fn to_rgb(&self) -> (u8, u8, u8) {
         unsafe {
-            let val = self.bits;
+            let val = self.bits();
             let r = ((val >> 24) & 0xff) as u8;
             let g = ((val >> 16) & 0xff) as u8;
             let b = ((val >> 8) & 0xff) as u8;
@@ -642,7 +643,7 @@ impl Color {
     #[cfg(feature = "enable-glwindow")]
     /// Get the RGBA value of the color
     pub fn to_rgba(&self) -> (u8, u8, u8, u8) {
-        let val = self.bits;
+        let val = self.bits();
         let r = ((val >> 24) & 0xff) as u8;
         let g = ((val >> 16) & 0xff) as u8;
         let b = ((val >> 8) & 0xff) as u8;
@@ -686,7 +687,7 @@ impl std::fmt::Display for Color {
             Color::DarkCyan => write!(f, "Color::DarkCyan"),
             Color::White => write!(f, "Color::White"),
             _ => {
-                let temp = format!("{:08x}", self.bits);
+                let temp = format!("{:08x}", self.bits());
                 write!(f, "Color::from_hex(0x{})", &temp[0..6])
             }
         }
@@ -695,6 +696,7 @@ impl std::fmt::Display for Color {
 
 bitflags::bitflags! {
     /// Defines event types captured by FLTK
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Event: i32 {
         /// No Event
         const NoEvent = 0;
@@ -762,9 +764,7 @@ bitflags::bitflags! {
 impl Event {
     /// Creates an event from an i32 value
     pub const fn from_i32(val: i32) -> Event {
-        let mut ev = Event::NoEvent;
-        ev.bits = val;
-        ev
+        Event::from_bits_retain(val)
     }
 }
 
@@ -808,7 +808,7 @@ impl std::fmt::Display for Event {
             Event::ZoomEvent => write!(f, "Event::ZoomEvent"),
             Event::Resize => write!(f, "Event::Resize"),
             _ => {
-                write!(f, "Event::from_i32({})", self.bits)
+                write!(f, "Event::from_i32({})", self.bits())
             }
         }
     }
@@ -816,6 +816,7 @@ impl std::fmt::Display for Event {
 
 bitflags::bitflags! {
     /// Defines the inputted virtual keycode
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Key: i32 {
         /// None
         const None = 0;
@@ -927,21 +928,17 @@ bitflags::bitflags! {
 impl Key {
     /// Gets a Key from an i32
     pub const fn from_i32(val: i32) -> Key {
-        let mut k = Key::None;
-        k.bits = val;
-        k
+        Key::from_bits_retain(val)
     }
 
     /// Gets a Key from a char
     pub const fn from_char(val: char) -> Key {
-        let mut k = Key::None;
-        k.bits = val as i32;
-        k
+        Key::from_bits_retain(val as i32)
     }
 
     /// Get the char representation of a Key.
     pub const fn to_char(&self) -> Option<char> {
-        let bits = self.bits;
+        let bits = self.bits();
         if bits >= 0xD800 && bits <= 0xDFFF {
             None
         } else {
@@ -962,6 +959,7 @@ impl Key {
 
 bitflags::bitflags! {
     /// Defines the modifiers of virtual keycodes
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Shortcut: i32 {
         /// None
         const None = 0;
@@ -977,15 +975,15 @@ bitflags::bitflags! {
         const Meta = 0x0040_0000;
         /// Command (Meta for macOS, Ctrl for other systems)
         const Command = if cfg!(target_os = "macos") {
-            Shortcut::Meta.bits
+            Shortcut::Meta.bits()
         } else {
-            Shortcut::Ctrl.bits
+            Shortcut::Ctrl.bits()
         };
         /// Control (Ctrl for macOS, Meta for other systems)
         const Control = if cfg!(target_os = "macos") {
-            Shortcut::Ctrl.bits
+            Shortcut::Ctrl.bits()
         } else {
-            Shortcut::Meta.bits
+            Shortcut::Meta.bits()
         };
         /// Mouse button 1 is pushed
         const Button1 = 0x0100_0000;
@@ -1004,42 +1002,35 @@ pub type EventState = Shortcut;
 impl Shortcut {
     /// Create a shortcut from a char
     pub const fn from_char(c: char) -> Shortcut {
-        let mut s = Shortcut::None;
-        s.bits = c as _;
-        s
+        Shortcut::from_bits_retain(c as _)
     }
 
     /// Create a shortcut from a key
     pub const fn from_key(k: Key) -> Shortcut {
-        let mut s = Shortcut::None;
-        s.bits = k.bits();
-        s
+        Shortcut::from_bits_retain(k.bits())
     }
 
     /// Create a shortcut from an i32
     pub const fn from_i32(v: i32) -> Shortcut {
-        let mut s = Shortcut::None;
-        s.bits = v;
-        s
+        Shortcut::from_bits_retain(v)
     }
 
     /// get key mask
     pub const fn key(&self) -> Key {
-        let mut temp = self.bits;
+        let mut temp = self.bits();
         temp &= 0x0000_ffff;
         Key::from_i32(temp)
     }
 
     /// Get the button number
     pub const fn button(button_num: i32) -> Shortcut {
-        let mut s = Shortcut::None;
-        s.bits = 0x0080_0000 << button_num;
-        s
+        Shortcut::from_bits_retain(0x0080_0000 << button_num)
     }
 }
 
 bitflags::bitflags! {
     /// Defines the types of triggers for widget callback functions. Equivalent to FL_WHEN
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct CallbackTrigger: i32 {
         /// Never
         const Never = 0;
@@ -1145,6 +1136,7 @@ bitflags::bitflags! {
     /// Defines visual mode types (capabilities of the window).
     /// Rgb and Single have a value of zero, so they
     /// are "on" unless you give Index or Double.
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Mode: i32 {
         /// Rgb color (not indexed)
         const Rgb = 0;
@@ -1177,6 +1169,7 @@ bitflags::bitflags! {
 
 bitflags::bitflags! {
     /// Damage masks
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Damage: u8 {
         /// No damage
         const  None = 0x00;
@@ -1200,20 +1193,20 @@ bitflags::bitflags! {
 impl std::ops::BitOr<char> for Shortcut {
     type Output = Shortcut;
     fn bitor(self, other: char) -> Self::Output {
-        unsafe { mem::transmute(self.bits | other as i32) }
+        unsafe { mem::transmute(self.bits()| other as i32) }
     }
 }
 
 impl std::ops::BitOr<Key> for Shortcut {
     type Output = Shortcut;
     fn bitor(self, other: Key) -> Self::Output {
-        unsafe { mem::transmute(self.bits | other.bits()) }
+        unsafe { mem::transmute(self.bits()| other.bits()) }
     }
 }
 
 impl std::ops::BitOr<i32> for Align {
     type Output = Align;
     fn bitor(self, rhs: i32) -> Self::Output {
-        unsafe { mem::transmute(self.bits | rhs) }
+        unsafe { mem::transmute(self.bits()| rhs) }
     }
 }

@@ -396,6 +396,7 @@ impl GifImage {
 
 bitflags::bitflags! {
     /// Defines AnimGifImage flags
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct AnimGifImageFlags: u16 {
         /// No Event
         const None = 0;

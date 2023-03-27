@@ -92,7 +92,7 @@ pub fn build(out_dir: &Path, target_triple: &str) {
         .expect("CMake is needed for android builds!");
 
     Command::new("cmake")
-        .args(&["--build", &cmake_build_dir, "--target", "install"])
+        .args(["--build", &cmake_build_dir, "--target", "install"])
         .current_dir("cfltk")
         .status()
         .expect("CMake is needed for android builds!");

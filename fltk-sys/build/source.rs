@@ -59,7 +59,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
     if target_triple.contains("windows") {
         Command::new("git")
-            .args(&["apply", "../fltk.patch"])
+            .args(["apply", "../fltk.patch"])
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
             .expect("Git is needed to retrieve the fltk source files!");
@@ -203,7 +203,7 @@ pub fn build(manifest_dir: &Path, target_triple: &str, out_dir: &Path) {
 
     if target_triple.contains("android") || target_triple.contains("windows") {
         Command::new("git")
-            .args(&["reset", "--hard"])
+            .args(["reset", "--hard"])
             .current_dir(manifest_dir.join("cfltk").join("fltk"))
             .status()
             .expect("Git is needed to retrieve the fltk source files!");

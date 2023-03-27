@@ -5,7 +5,7 @@ Raw bindings for FLTK. These are generated using bindgen on the cfltk headers.
 ## Usage
 ```toml
 [dependencies]
-fltk-sys = "1.3"
+fltk-sys = "1.4"
 ```
 
 Example code:

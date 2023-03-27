@@ -42,7 +42,7 @@ pub fn get(target_os: &str, target_triple: &str, out_dir: &Path) {
         };
 
         let curl_status = Command::new("curl")
-            .args(&["-LOkf", url.to_str().unwrap()])
+            .args(["-LOkf", url.to_str().unwrap()])
             .current_dir(out_dir)
             .status()
             .expect("Curl is needed to download the bundled libraries!");
@@ -52,7 +52,7 @@ pub fn get(target_os: &str, target_triple: &str, out_dir: &Path) {
         }
 
         let tar_status = Command::new("tar")
-            .args(&["-xzvf", url.file_name().unwrap().to_str().unwrap()])
+            .args(["-xzvf", url.file_name().unwrap().to_str().unwrap()])
             .current_dir(out_dir)
             .status()
             .expect("Tar is needed to upack the bundled libraries!");
