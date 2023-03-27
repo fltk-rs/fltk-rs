@@ -43,18 +43,18 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^1.3"
+fltk = "^1.4"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1.3", git = "https://github.com/fltk-rs/fltk-rs" }
+fltk = { version = "^1.4", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 
 To use the bundled libs (available for x64 windows (msvc & gnu (msys2-mingw)), x64 & aarch64 linux & macos):
 ```toml
 [dependencies]
-fltk = { version = "^1.3", features = ["fltk-bundled"] }
+fltk = { version = "^1.4", features = ["fltk-bundled"] }
 ```
 
 The library is automatically built and statically linked to your binary.
@@ -219,7 +219,7 @@ For default application colors, fltk-rs provides `app::background()`, `app::back
 
 ## Dependencies
 
-Rust (version > 1.45), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected x86_64 and aarch64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
+Rust (version > 1.55), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected x86_64 and aarch64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: 
     - MSVC: Windows SDK

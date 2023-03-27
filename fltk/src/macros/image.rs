@@ -192,7 +192,10 @@ macro_rules! impl_image_ext {
                 }
 
                 unsafe fn into_image<I: ImageExt>(self) -> I {
-                    I::from_image_ptr(*self.inner as *mut _)
+                    let ptr = Arc::into_raw(Arc::clone(&self.inner));
+                    Arc::increment_strong_count(ptr);
+                    let image = Arc::from_raw(ptr);
+                    I::from_image_ptr(*image as *mut _)
                 }
 
                 fn from_dyn_image_ptr(p: *mut fltk_sys::image::Fl_Image) -> Option<Self> {
