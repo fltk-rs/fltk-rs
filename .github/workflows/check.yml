@@ -26,4 +26,5 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
       - run: |
+          cargo update -p cmake --precise 0.1.48
           cargo check
