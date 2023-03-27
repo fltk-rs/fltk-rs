@@ -12,4 +12,5 @@ pub struct Frame {
 }
 
 crate::macros::widget::impl_widget_base!(Frame, Fl_Box);
+crate::macros::widget::impl_widget_default!(Frame, Fl_Box);
 crate::macros::widget::impl_widget_ext!(Frame, Fl_Box);

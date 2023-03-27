@@ -396,6 +396,7 @@ impl GifImage {
 
 bitflags::bitflags! {
     /// Defines AnimGifImage flags
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct AnimGifImageFlags: u16 {
         /// No Event
         const None = 0;
@@ -545,7 +546,7 @@ impl AnimGifImage {
     }
 
     /// Show the next frame if the animation is stopped. Errors if the Gif has no more frames
-    pub fn next(&mut self) -> Result<(), FltkError> {
+    pub fn next(&self) -> Result<(), FltkError> {
         unsafe {
             if Fl_Anim_GIF_Image_next(*self.inner) != 0 {
                 Ok(())

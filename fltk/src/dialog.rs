@@ -375,16 +375,17 @@ pub struct HelpDialog {
     inner: *mut Fl_Help_Dialog,
 }
 
-impl HelpDialog {
-    /// Creates a default (size and location) help dialog
-    pub fn default() -> HelpDialog {
+impl Default for HelpDialog {
+    fn default() -> Self {
         unsafe {
             let help_dialog = Fl_Help_Dialog_new();
             assert!(!help_dialog.is_null());
             HelpDialog { inner: help_dialog }
         }
     }
+}
 
+impl HelpDialog {
     /// Creates a new Help dialog with position(x, y) and size(w, h)
     pub fn new(x: i32, y: i32, w: i32, h: i32) -> HelpDialog {
         let mut temp = HelpDialog::default();
@@ -570,6 +571,7 @@ pub struct FileChooser {
 
 bitflags::bitflags! {
     /// The types of FileChooser
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct FileChooserType: i32 {
         /// Single file
         const Single = 0;
@@ -603,12 +605,8 @@ impl FileChooser {
         let pattern = CString::safe_new(pattern);
         let title = CString::safe_new(title);
         unsafe {
-            let ptr = Fl_File_Chooser_new(
-                dir.as_ptr(),
-                pattern.as_ptr(),
-                typ.bits,
-                title.into_raw(),
-            );
+            let ptr =
+                Fl_File_Chooser_new(dir.as_ptr(), pattern.as_ptr(), typ.bits(), title.into_raw());
             assert!(!ptr.is_null());
             FileChooser { inner: ptr }
         }
@@ -918,7 +916,7 @@ impl FileChooser {
     /// Sets the type of the `FileChooser`
     pub fn set_type(&mut self, t: FileChooserType) {
         assert!(!self.inner.is_null());
-        unsafe { Fl_File_Chooser_set_type(self.inner, t.bits) }
+        unsafe { Fl_File_Chooser_set_type(self.inner, t.bits()) }
     }
 
     /// Gets the type of the `FileChooser`

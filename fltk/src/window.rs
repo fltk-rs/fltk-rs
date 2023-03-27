@@ -116,17 +116,16 @@ crate::macros::widget::impl_widget_base!(SingleWindow, Fl_Single_Window);
 crate::macros::group::impl_group_ext!(SingleWindow, Fl_Single_Window);
 crate::macros::window::impl_window_ext!(SingleWindow, Fl_Single_Window);
 
-impl SingleWindow {
-    /// Creates a default initialized single window
-    ///
-    /// Note: Only call this from the main thread.
-    pub fn default() -> SingleWindow {
+impl Default for SingleWindow {
+    fn default() -> Self {
         assert!(crate::app::is_ui_thread());
-        let mut win = <SingleWindow as Default>::default();
+        let mut win = SingleWindow::new(0, 0, 0, 0, None);
         win.free_position();
         win
     }
+}
 
+impl SingleWindow {
     /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
     /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
@@ -284,17 +283,16 @@ crate::macros::widget::impl_widget_base!(DoubleWindow, Fl_Double_Window);
 crate::macros::group::impl_group_ext!(DoubleWindow, Fl_Double_Window);
 crate::macros::window::impl_window_ext!(DoubleWindow, Fl_Double_Window);
 
-impl DoubleWindow {
-    /// Creates a default initialized double window
-    ///
-    /// Note: Only call this from the main thread.
-    pub fn default() -> DoubleWindow {
+impl Default for DoubleWindow {
+    fn default() -> Self {
         assert!(crate::app::is_ui_thread());
-        let mut win = <DoubleWindow as Default>::default();
+        let mut win = DoubleWindow::new(0, 0, 0, 0, None);
         win.free_position();
         win
     }
+}
 
+impl DoubleWindow {
     /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
     /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
@@ -544,11 +542,10 @@ crate::macros::widget::impl_widget_base!(MenuWindow, Fl_Menu_Window);
 crate::macros::group::impl_group_ext!(MenuWindow, Fl_Menu_Window);
 crate::macros::window::impl_window_ext!(MenuWindow, Fl_Menu_Window);
 
-impl MenuWindow {
-    /// Creates a default initialized menu window
-    pub fn default() -> MenuWindow {
+impl Default for MenuWindow {
+    fn default() -> Self {
         assert!(crate::app::is_ui_thread());
-        let mut win = <MenuWindow as Default>::default();
+        let mut win = MenuWindow::new(0, 0, 0, 0, None);
         win.free_position();
         win
     }
@@ -567,15 +564,16 @@ crate::macros::widget::impl_widget_base!(OverlayWindow, Fl_Overlay_Window);
 crate::macros::group::impl_group_ext!(OverlayWindow, Fl_Overlay_Window);
 crate::macros::window::impl_window_ext!(OverlayWindow, Fl_Overlay_Window);
 
-impl OverlayWindow {
-    /// Creates a default initialized overlay window
-    pub fn default() -> OverlayWindow {
+impl Default for OverlayWindow {
+    fn default() -> Self {
         assert!(crate::app::is_ui_thread());
-        let mut win = <OverlayWindow as Default>::default();
+        let mut win = OverlayWindow::new(0, 0, 0, 0, None);
         win.free_position();
         win
     }
+}
 
+impl OverlayWindow {
     /// Find an `Fl_Window` through a raw handle. The window must have been instantiated by the app.
     /// `void *` to: (Windows: `HWND`, X11: `Xid` (`u64`), macOS: `NSWindow`)
     /// # Safety
@@ -716,6 +714,8 @@ pub struct GlutWindow {
 crate::macros::widget::impl_widget_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
 crate::macros::widget::impl_widget_base!(GlutWindow, Fl_Glut_Window);
+#[cfg(feature = "enable-glwindow")]
+crate::macros::widget::impl_widget_default!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
 crate::macros::group::impl_group_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
@@ -888,6 +888,8 @@ pub mod experimental {
     #[cfg(feature = "enable-glwindow")]
     crate::macros::widget::impl_widget_base!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
+    crate::macros::widget::impl_widget_default!(GlWidgetWindow, Fl_Gl_Window);
+    #[cfg(feature = "enable-glwindow")]
     crate::macros::group::impl_group_ext!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
     crate::macros::window::impl_window_ext!(GlWidgetWindow, Fl_Gl_Window);
@@ -1052,3 +1054,21 @@ pub mod experimental {
         }
     }
 }
+
+/// An Android window
+pub struct AndroidWindow {
+    win: Window,
+}
+
+impl Default for AndroidWindow {
+    fn default() -> Self {
+        let (w, h) = screen_size();
+        let mut w = AndroidWindow {
+            win: Window::new(0, 30, w as i32, h as i32 - 30, ""),
+        };
+        w.win.set_color(Color::White);
+        w
+    }
+}
+
+crate::widget_extends!(AndroidWindow, Window, win);

@@ -1,11 +1,14 @@
 # Changelog
 
 
-# [1.3.35] - Unreleased
+# [1.4.0] - Unreleased
+- Use Rust version 2021.
 - Improve docs on font indexing ops.
 - Refactor images to use Arc.
 - Add MenuButton::popup check.
-- Update FLTK submodule
+- Update bitflags dependency.
+- Apply newer clippy lints.
+- Update FLTK submodule.
 
 # [1.3.34] - 2023-03-19
 - Fix CFLTK_WAYLAND_ONLY builds.

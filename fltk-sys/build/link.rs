@@ -129,7 +129,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=dylib=pthread");
                 if cfg!(feature = "use-wayland") {
                     if let Ok(lflags) = Command::new("pkg-config")
-                        .args(&["--libs", "gtk+-3.0"])
+                        .args(["--libs", "gtk+-3.0"])
                         .output()
                     {
                         let lflags = String::from_utf8_lossy(&lflags.stdout).to_string();

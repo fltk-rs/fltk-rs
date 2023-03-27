@@ -27,13 +27,14 @@ pub use widget::*;
 #[derive(Debug, Copy, Clone)]
 pub struct App {}
 
-impl App {
-    /// Instantiates an App type
-    pub fn default() -> App {
+impl Default for App {
+    fn default() -> Self {
         init_all();
         App {}
     }
+}
 
+impl App {
     /// Sets the scheme of the application
     pub fn set_scheme(&mut self, scheme: Scheme) {
         set_scheme(scheme);

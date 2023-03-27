@@ -30,16 +30,17 @@ pub struct Printer {
     inner: *mut Fl_Printer,
 }
 
-impl Printer {
-    /// Creates a printer object
-    pub fn default() -> Self {
+impl Default for Printer {
+    fn default() -> Self {
         unsafe {
             let ptr = Fl_Printer_new();
             assert!(!ptr.is_null());
             Printer { inner: ptr }
         }
     }
+}
 
+impl Printer {
     /// Begins a print job.
     /// `pagecount` The total number of pages to be created. Use 0 if this number is unknown
     /// Returns a tuple (frompage, topage) indicating the chosen pages by the user
@@ -62,11 +63,7 @@ impl Printer {
                 } else {
                     Some(frompage_)
                 };
-                let to = if topage_ == 0 {
-                    None
-                } else {
-                    Some(topage_)
-                };
+                let to = if topage_ == 0 { None } else { Some(topage_) };
                 Ok((from, to))
             } else {
                 Err(FltkError::Internal(FltkErrorKind::FailedToRun))

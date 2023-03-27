@@ -82,14 +82,14 @@ impl TextBuffer {
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
     pub unsafe fn delete(buf: Self) {
-        Fl_Text_Buffer_delete(*buf.inner);
+        drop(buf);
     }
 
     /// Deletes the `TextBuffer`
     /// # Safety
     /// The buffer shouldn't be deleted while the Display widget still needs it
     pub unsafe fn delete_buffer(buf: TextBuffer) {
-        Fl_Text_Buffer_delete(*buf.inner);
+        drop(buf);
     }
 
     /// Initialized a text buffer from a pointer
@@ -97,16 +97,21 @@ impl TextBuffer {
     /// The pointer must be valid
     pub unsafe fn from_ptr(ptr: *mut Fl_Text_Buffer) -> Self {
         assert!(!ptr.is_null());
-        TextBuffer {
-            inner: Arc::from(ptr),
-        }
+        let inner = Arc::from(ptr);
+        let ptr = Arc::into_raw(inner);
+        Arc::increment_strong_count(ptr);
+        let inner = Arc::from_raw(ptr);
+        TextBuffer { inner }
     }
 
     /// Returns the inner pointer from a text buffer
     /// # Safety
     /// Can return multiple mutable pointers to the same buffer
-    pub unsafe fn as_ptr(&mut self) -> *mut Fl_Text_Buffer {
-        *self.inner
+    pub unsafe fn as_ptr(&self) -> *mut Fl_Text_Buffer {
+        let ptr = Arc::into_raw(Arc::clone(&self.inner));
+        Arc::increment_strong_count(ptr);
+        let inner = Arc::from_raw(ptr);
+        *inner
     }
 
     /// Sets the text of the buffer
@@ -201,15 +206,7 @@ impl TextBuffer {
     /// Copies text from a source buffer into the current buffer
     pub fn copy_from(&mut self, source_buf: &TextBuffer, start: i32, end: i32, to: i32) {
         assert!(!self.inner.is_null());
-        unsafe {
-            Fl_Text_Buffer_copy(
-                *self.inner,
-                *source_buf.inner,
-                start,
-                end,
-                to,
-            )
-        }
+        unsafe { Fl_Text_Buffer_copy(*self.inner, *source_buf.inner, start, end, to) }
     }
 
     /// Copies whole text from a source buffer into a new buffer
@@ -314,7 +311,8 @@ impl TextBuffer {
         unsafe {
             let mut start = 0;
             let mut end = 0;
-            let ret = Fl_Text_Buffer_selection_position(*self.inner, &mut start as _, &mut end as _);
+            let ret =
+                Fl_Text_Buffer_selection_position(*self.inner, &mut start as _, &mut end as _);
             if ret == 0 {
                 None
             } else {
@@ -436,7 +434,8 @@ impl TextBuffer {
         unsafe {
             let mut start = 0;
             let mut end = 0;
-            let ret = Fl_Text_Buffer_highlight_position(*self.inner, &mut start as _, &mut end as _);
+            let ret =
+                Fl_Text_Buffer_highlight_position(*self.inner, &mut start as _, &mut end as _);
             if ret == 0 {
                 None
             } else {
@@ -650,7 +649,7 @@ impl Clone for TextBuffer {
 impl Drop for TextBuffer {
     fn drop(&mut self) {
         assert!(!self.inner.is_null());
-        if Arc::strong_count(&self.inner) == 0 {
+        if Arc::strong_count(&self.inner) == 1 {
             unsafe {
                 Fl_Text_Buffer_delete(*self.inner);
             }
@@ -698,6 +697,7 @@ pub struct TextDisplay {
 
 crate::macros::widget::impl_widget_ext!(TextDisplay, Fl_Text_Display);
 crate::macros::widget::impl_widget_base!(TextDisplay, Fl_Text_Display);
+crate::macros::widget::impl_widget_default!(TextDisplay, Fl_Text_Display);
 crate::macros::display::impl_display_ext!(TextDisplay, Fl_Text_Display);
 
 /// Creates an editable text display widget
@@ -710,6 +710,7 @@ pub struct TextEditor {
 
 crate::macros::widget::impl_widget_ext!(TextEditor, Fl_Text_Editor);
 crate::macros::widget::impl_widget_base!(TextEditor, Fl_Text_Editor);
+crate::macros::widget::impl_widget_default!(TextEditor, Fl_Text_Editor);
 crate::macros::display::impl_display_ext!(TextEditor, Fl_Text_Editor);
 
 /// Alias Fl_Text_Editor for use in `add_key_binding`
@@ -731,6 +732,7 @@ pub struct SimpleTerminal {
 
 crate::macros::widget::impl_widget_ext!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::widget::impl_widget_base!(SimpleTerminal, Fl_Simple_Terminal);
+crate::macros::widget::impl_widget_default!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::display::impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
 
 /// The attribute of the style entry

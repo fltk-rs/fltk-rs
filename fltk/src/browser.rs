@@ -43,6 +43,7 @@ pub struct Browser {
 
 crate::macros::widget::impl_widget_ext!(Browser, Fl_Browser);
 crate::macros::widget::impl_widget_base!(Browser, Fl_Browser);
+crate::macros::widget::impl_widget_default!(Browser, Fl_Browser);
 crate::macros::browser::impl_browser_ext!(Browser, Fl_Browser);
 
 /// Defines the browser type
@@ -93,6 +94,7 @@ pub struct SelectBrowser {
 
 crate::macros::widget::impl_widget_ext!(SelectBrowser, Fl_Select_Browser);
 crate::macros::widget::impl_widget_base!(SelectBrowser, Fl_Select_Browser);
+crate::macros::widget::impl_widget_default!(SelectBrowser, Fl_Select_Browser);
 crate::macros::browser::impl_browser_ext!(SelectBrowser, Fl_Select_Browser);
 
 /// Creates a multi-browser
@@ -105,6 +107,7 @@ pub struct MultiBrowser {
 
 crate::macros::widget::impl_widget_ext!(MultiBrowser, Fl_Multi_Browser);
 crate::macros::widget::impl_widget_base!(MultiBrowser, Fl_Multi_Browser);
+crate::macros::widget::impl_widget_default!(MultiBrowser, Fl_Multi_Browser);
 crate::macros::browser::impl_browser_ext!(MultiBrowser, Fl_Multi_Browser);
 
 /// Creates a hold browser
@@ -117,6 +120,7 @@ pub struct HoldBrowser {
 
 crate::macros::widget::impl_widget_ext!(HoldBrowser, Fl_Hold_Browser);
 crate::macros::widget::impl_widget_base!(HoldBrowser, Fl_Hold_Browser);
+crate::macros::widget::impl_widget_default!(HoldBrowser, Fl_Hold_Browser);
 crate::macros::browser::impl_browser_ext!(HoldBrowser, Fl_Hold_Browser);
 
 /// Creates a file browser
@@ -129,6 +133,7 @@ pub struct FileBrowser {
 
 crate::macros::widget::impl_widget_ext!(FileBrowser, Fl_File_Browser);
 crate::macros::widget::impl_widget_base!(FileBrowser, Fl_File_Browser);
+crate::macros::widget::impl_widget_default!(FileBrowser, Fl_File_Browser);
 crate::macros::browser::impl_browser_ext!(FileBrowser, Fl_File_Browser);
 
 /// File types for the `FileBrowser`
@@ -213,6 +218,7 @@ pub struct CheckBrowser {
 
 crate::macros::widget::impl_widget_ext!(CheckBrowser, Fl_Check_Browser);
 crate::macros::widget::impl_widget_base!(CheckBrowser, Fl_Check_Browser);
+crate::macros::widget::impl_widget_default!(CheckBrowser, Fl_Check_Browser);
 
 impl CheckBrowser {
     /// Add an item, returns the number of current items

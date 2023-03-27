@@ -43,25 +43,25 @@ Just add the following to your project's Cargo.toml file:
 
 ```toml
 [dependencies]
-fltk = "^1.3"
+fltk = "^1.4"
 ```
 To use the latest changes in the repo:
 ```toml
 [dependencies]
-fltk = { version = "^1.3", git = "https://github.com/fltk-rs/fltk-rs" }
+fltk = { version = "^1.4", git = "https://github.com/fltk-rs/fltk-rs" }
 ```
 
 To use the bundled libs (available for x64 windows (msvc & gnu (msys2-mingw)), x64 & aarch64 linux & macos):
 ```toml
 [dependencies]
-fltk = { version = "^1.3", features = ["fltk-bundled"] }
+fltk = { version = "^1.4", features = ["fltk-bundled"] }
 ```
 
 The library is automatically built and statically linked to your binary.
 
 An example hello world application:
 
-```rust
+```rust,no_run
 use fltk::{app, prelude::*, window::Window};
 
 fn main() {
@@ -74,7 +74,7 @@ fn main() {
 ```
 
 Another example showing the basic callback functionality:
-```rust
+```rust,no_run
 use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 
 fn main() {
@@ -91,7 +91,7 @@ fn main() {
 Please check the [examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples) directory for more examples.
 You will notice that all widgets are instantiated with a new() method, taking the x and y coordinates, the width and height of the widget, as well as a label which can be left blank if needed. Another way to initialize a widget is using the builder pattern: (The following buttons are equivalent)
 
-```rust
+```rust,no_run
 use fltk::{button::Button, prelude::*};
 let but1 = Button::new(10, 10, 80, 40, "Button 1");
 
@@ -102,7 +102,7 @@ let but2 = Button::default()
 ```
 
 An example of a counter showing use of the builder pattern:
-```rust
+```rust,no_run
 use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window};
 fn main() {
     let app = app::App::default();
@@ -131,7 +131,7 @@ fn main() {
 ```
 
 Alternatively, you can use Pack, Flex (for flexbox layouts) or [Grid](https://github.com/fltk-rs/fltk-grid):
-```rust
+```rust,no_run
 use fltk::{app, button::Button, frame::Frame, group::Flex, prelude::*, window::Window};
 fn main() {
     let app = app::App::default();
@@ -149,14 +149,14 @@ fn main() {
 
 ### Events
 Events can be handled using the `set_callback` method (as above) or the available `fltk::app::set_callback()` free function, which will handle the default trigger of each widget(like clicks for buttons):
-```rust
+```rust,ignore
     /* previous hello world code */
     but.set_callback(move |_| frame.set_label("Hello World!"));
     another_but.set_callback(|this_button| this_button.set_label("Works"));
     app.run().unwrap();
 ```
 Another way is to use message passing:
-```rust
+```rust,ignore
     /* previous counter code */
     let (s, r) = app::channel::<Message>();
 
@@ -176,7 +176,7 @@ Another way is to use message passing:
 For the remainder of the code, check the full example [here](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples/counter2.rs).
 
 For custom event handling, the handle() method can be used:
-```rust
+```rust,ignore
     some_widget.handle(move |widget, ev: Event| {
         match ev {
             Event::Push => {
@@ -204,11 +204,11 @@ FLTK offers 5 application schemes:
 (Additional theming can be found in the [fltk-theme](https://crates.io/crates/fltk-theme) crate)
 
 These can be set using the `App::with_scheme()` method.
-```rust
+```rust,ignore
 let app = app::App::default().with_scheme(app::Scheme::Gleam);
 ```
 Themes of individual widgets can be optionally modified using the provided methods in the `WidgetExt` trait, such as `set_color()`, `set_label_font()`, `set_frame()` etc:
-```rust
+```rust,ignore
     some_button.set_color(Color::Light1); // You can use one of the provided colors in the fltk enums
     some_button.set_color(Color::from_rgb(255, 0, 0)); // Or you can specify a color by rgb or hex/u32 value
     some_button.set_color(Color::from_u32(0xffebee));
@@ -219,7 +219,7 @@ For default application colors, fltk-rs provides `app::background()`, `app::back
 
 ## Dependencies
 
-Rust (version > 1.45), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected x86_64 and aarch64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
+Rust (version > 1.55), CMake (version > 3.11), Git and a C++11 compiler need to be installed and in your PATH for a cross-platform build from source. [Ninja](https://github.com/ninja-build/ninja) is recommended, but not required. This crate also offers a bundled form of fltk on selected x86_64 and aarch64 platforms (Windows (msvc and gnu), MacOS, Linux), this can be enabled using the fltk-bundled feature flag as mentioned in the usage section (this requires curl and tar to download and unpack the bundled libraries).
 
 - Windows: 
     - MSVC: Windows SDK
@@ -228,24 +228,24 @@ Rust (version > 1.45), CMake (version > 3.11), Git and a C++11 compiler need to 
 - Linux/BSD: X11 and OpenGL development headers need to be installed for development. The libraries themselves are normally available on linux/bsd distros with a graphical user interface.
 
 For Debian-based GUI distributions, that means running:
-```
-$ sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev
+```bash
+sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev
 ```
 For RHEL-based GUI distributions, that means running:
-```
-$ sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libstdc++-static
+```bash
+sudo yum groupinstall "X Software Development" && yum install pango-devel libXinerama-devel libstdc++-static
 ```
 For Arch-based GUI distributions, that means running:
-```
-$ sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango cairo libgl mesa --needed
+```bash
+sudo pacman -S libx11 libxext libxft libxinerama libxcursor libxrender libxfixes pango cairo libgl mesa --needed
 ```
 For Alpine linux:
-```
-$ apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev mesa-gl
+```bash
+apk add pango-dev fontconfig-dev libxinerama-dev libxfixes-dev libxcursor-dev mesa-gl
 ```
 For NixOS (Linux distribution) this `nix-shell` environment can be used:
-```
-$ nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libcerf pango cairo libGL mesa pkg-config
+```bash
+nix-shell --packages rustc cmake git gcc xorg.libXext xorg.libXft xorg.libXinerama xorg.libXcursor xorg.libXrender xorg.libXfixes libcerf pango cairo libGL mesa pkg-config
 ```
 
 ## Features
@@ -267,28 +267,27 @@ please check the [FAQ](FAQ.md) page for frequently asked questions, encountered 
 ## Building
 
 To build, just run:
-```
-$ git clone https://github.com/fltk-rs/fltk-rs
-$ cd fltk-rs
-$ git submodule update --init --recursive
-$ cargo build
+```bash
+git clone https://github.com/fltk-rs/fltk-rs --recurse-submodules
+cd fltk-rs
+cargo build
 ```
 
 ## Examples
 
 To run the [examples](https://github.com/fltk-rs/fltk-rs/tree/master/fltk/examples): 
-```
-$ cargo run --example editor
-$ cargo run --example calculator
-$ cargo run --example calculator2
-$ cargo run --example terminal
-$ cargo run --example counter
-$ cargo run --example hello
-$ cargo run --example hello_button
-$ cargo run --example fb
-$ cargo run --example pong
-$ cargo run --example custom_widgets
-$ cargo run --example custom_dial
+```bash
+cargo run --example editor
+cargo run --example calculator
+cargo run --example calculator2
+cargo run --example terminal
+cargo run --example counter
+cargo run --example hello
+cargo run --example hello_button
+cargo run --example fb
+cargo run --example pong
+cargo run --example custom_widgets
+cargo run --example custom_dial
 ...
 ```
 

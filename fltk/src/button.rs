@@ -13,6 +13,7 @@ pub struct Button {
 
 crate::macros::widget::impl_widget_ext!(Button, Fl_Button);
 crate::macros::widget::impl_widget_base!(Button, Fl_Button);
+crate::macros::widget::impl_widget_default!(Button, Fl_Button);
 crate::macros::button::impl_button_ext!(Button, Fl_Button);
 
 /// Defines the button type, which can be changed dynamically using the `set_type()`.
@@ -42,6 +43,7 @@ pub struct RadioButton {
 
 crate::macros::widget::impl_widget_ext!(RadioButton, Fl_Radio_Button);
 crate::macros::widget::impl_widget_base!(RadioButton, Fl_Radio_Button);
+crate::macros::widget::impl_widget_default!(RadioButton, Fl_Radio_Button);
 crate::macros::button::impl_button_ext!(RadioButton, Fl_Radio_Button);
 
 impl RadioButton {
@@ -71,6 +73,7 @@ pub struct RadioRoundButton {
 
 crate::macros::widget::impl_widget_ext!(RadioRoundButton, Fl_Radio_Round_Button);
 crate::macros::widget::impl_widget_base!(RadioRoundButton, Fl_Radio_Round_Button);
+crate::macros::widget::impl_widget_default!(RadioRoundButton, Fl_Radio_Round_Button);
 crate::macros::button::impl_button_ext!(RadioRoundButton, Fl_Radio_Round_Button);
 
 impl RadioRoundButton {
@@ -100,6 +103,7 @@ pub struct RadioLightButton {
 
 crate::macros::widget::impl_widget_ext!(RadioLightButton, Fl_Radio_Light_Button);
 crate::macros::widget::impl_widget_base!(RadioLightButton, Fl_Radio_Light_Button);
+crate::macros::widget::impl_widget_default!(RadioLightButton, Fl_Radio_Light_Button);
 crate::macros::button::impl_button_ext!(RadioLightButton, Fl_Radio_Light_Button);
 
 impl RadioLightButton {
@@ -128,6 +132,7 @@ pub struct RoundButton {
 
 crate::macros::widget::impl_widget_ext!(RoundButton, Fl_Round_Button);
 crate::macros::widget::impl_widget_base!(RoundButton, Fl_Round_Button);
+crate::macros::widget::impl_widget_default!(RoundButton, Fl_Round_Button);
 crate::macros::button::impl_button_ext!(RoundButton, Fl_Round_Button);
 
 impl RoundButton {
@@ -156,6 +161,7 @@ pub struct CheckButton {
 
 crate::macros::widget::impl_widget_ext!(CheckButton, Fl_Check_Button);
 crate::macros::widget::impl_widget_base!(CheckButton, Fl_Check_Button);
+crate::macros::widget::impl_widget_default!(CheckButton, Fl_Check_Button);
 crate::macros::button::impl_button_ext!(CheckButton, Fl_Check_Button);
 
 impl CheckButton {
@@ -186,6 +192,7 @@ pub struct ToggleButton {
 
 crate::macros::widget::impl_widget_ext!(ToggleButton, Fl_Toggle_Button);
 crate::macros::widget::impl_widget_base!(ToggleButton, Fl_Toggle_Button);
+crate::macros::widget::impl_widget_default!(ToggleButton, Fl_Toggle_Button);
 crate::macros::button::impl_button_ext!(ToggleButton, Fl_Toggle_Button);
 
 impl ToggleButton {
@@ -214,6 +221,7 @@ pub struct LightButton {
 
 crate::macros::widget::impl_widget_ext!(LightButton, Fl_Light_Button);
 crate::macros::widget::impl_widget_base!(LightButton, Fl_Light_Button);
+crate::macros::widget::impl_widget_default!(LightButton, Fl_Light_Button);
 crate::macros::button::impl_button_ext!(LightButton, Fl_Light_Button);
 
 impl LightButton {
@@ -242,6 +250,7 @@ pub struct RepeatButton {
 
 crate::macros::widget::impl_widget_ext!(RepeatButton, Fl_Repeat_Button);
 crate::macros::widget::impl_widget_base!(RepeatButton, Fl_Repeat_Button);
+crate::macros::widget::impl_widget_default!(RepeatButton, Fl_Repeat_Button);
 crate::macros::button::impl_button_ext!(RepeatButton, Fl_Repeat_Button);
 
 /// Creates a return button
@@ -254,6 +263,7 @@ pub struct ReturnButton {
 
 crate::macros::widget::impl_widget_ext!(ReturnButton, Fl_Return_Button);
 crate::macros::widget::impl_widget_base!(ReturnButton, Fl_Return_Button);
+crate::macros::widget::impl_widget_default!(ReturnButton, Fl_Return_Button);
 crate::macros::button::impl_button_ext!(ReturnButton, Fl_Return_Button);
 
 /// Creates a Shortcut button
@@ -266,6 +276,7 @@ pub struct ShortcutButton {
 
 crate::macros::widget::impl_widget_ext!(ShortcutButton, Fl_Shortcut_Button);
 crate::macros::widget::impl_widget_base!(ShortcutButton, Fl_Shortcut_Button);
+crate::macros::widget::impl_widget_default!(ShortcutButton, Fl_Shortcut_Button);
 crate::macros::button::impl_button_ext!(ShortcutButton, Fl_Shortcut_Button);
 
 impl ShortcutButton {

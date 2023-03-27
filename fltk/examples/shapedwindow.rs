@@ -30,10 +30,10 @@ pub struct ShapedWindow {
 }
 
 impl ShapedWindow {
-    pub fn default() -> Self {
-        let shape = prep_shape();
+    pub fn new(w: i32, h: i32) -> Self {
+        let shape = prep_shape(w, h);
 
-        let mut wind = window::Window::default().with_size(400, 400);
+        let mut wind = window::Window::default().with_size(w, h);
         wind.set_color(enums::Color::White);
         let mut but = button::Button::default()
             .with_label("Button")
@@ -73,20 +73,20 @@ impl ShapedWindow {
 
 fn main() {
     let app = app::App::default();
-    let mut win = ShapedWindow::default();
+    let mut win = ShapedWindow::new(400, 400);
     win.show();
     // Called after showing the window
     win.set_cursor(prep_cursor());
     app.run().unwrap();
 }
 
-fn prep_shape() -> image::RgbImage {
-    let surf = surface::ImageSurface::new(400, 400, false);
+fn prep_shape(w: i32, h: i32) -> image::RgbImage {
+    let surf = surface::ImageSurface::new(w, h, false);
     surface::ImageSurface::push_current(&surf);
     draw::set_draw_color(enums::Color::Black);
-    draw::draw_rectf(-1, -1, 402, 402);
+    draw::draw_rectf(-1, -1, w + 2, h + 2);
     draw::set_draw_color(enums::Color::White);
-    draw::draw_pie(0, 0, 400, 400, 0., 360.);
+    draw::draw_pie(0, 0, w, h, 0., 360.);
     let img = surf.image().unwrap();
     surface::ImageSurface::pop_current();
     img
