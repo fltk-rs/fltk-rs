@@ -69,9 +69,7 @@ impl TextBuffer {
         let ptr = Arc::into_raw(inner);
         Arc::increment_strong_count(ptr);
         let inner = Arc::from_raw(ptr);
-        TextBuffer {
-            inner,
-        }
+        TextBuffer { inner }
     }
 
     /// Returns the inner pointer from a text buffer
@@ -176,15 +174,7 @@ impl TextBuffer {
     /// Copies text from a source buffer into the current buffer
     pub fn copy_from(&mut self, source_buf: &TextBuffer, start: i32, end: i32, to: i32) {
         assert!(!self.inner.is_null());
-        unsafe {
-            Fl_Text_Buffer_copy(
-                *self.inner,
-                *source_buf.inner,
-                start,
-                end,
-                to,
-            )
-        }
+        unsafe { Fl_Text_Buffer_copy(*self.inner, *source_buf.inner, start, end, to) }
     }
 
     /// Copies whole text from a source buffer into a new buffer
@@ -289,7 +279,8 @@ impl TextBuffer {
         unsafe {
             let mut start = 0;
             let mut end = 0;
-            let ret = Fl_Text_Buffer_selection_position(*self.inner, &mut start as _, &mut end as _);
+            let ret =
+                Fl_Text_Buffer_selection_position(*self.inner, &mut start as _, &mut end as _);
             if ret == 0 {
                 None
             } else {
@@ -411,7 +402,8 @@ impl TextBuffer {
         unsafe {
             let mut start = 0;
             let mut end = 0;
-            let ret = Fl_Text_Buffer_highlight_position(*self.inner, &mut start as _, &mut end as _);
+            let ret =
+                Fl_Text_Buffer_highlight_position(*self.inner, &mut start as _, &mut end as _);
             if ret == 0 {
                 None
             } else {
@@ -498,13 +490,7 @@ impl TextBuffer {
                     data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
                 let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                    f(
-                        pos,
-                        inserted,
-                        deleted,
-                        restyled,
-                        &temp,
-                    )
+                    f(pos, inserted, deleted, restyled, &temp)
                 }));
             }
             let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
@@ -538,13 +524,7 @@ impl TextBuffer {
                     data as *mut Box<dyn for<'r> FnMut(i32, i32, i32, i32, &'r str)>;
                 let f: &mut (dyn FnMut(i32, i32, i32, i32, &str)) = &mut **a;
                 let _ = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                    f(
-                        pos,
-                        inserted,
-                        deleted,
-                        restyled,
-                        &temp,
-                    )
+                    f(pos, inserted, deleted, restyled, &temp)
                 }));
             }
             let a: *mut Box<dyn FnMut(i32, i32, i32, i32, &str)> =
@@ -714,6 +694,7 @@ pub struct TextDisplay {
 
 crate::macros::widget::impl_widget_ext!(TextDisplay, Fl_Text_Display);
 crate::macros::widget::impl_widget_base!(TextDisplay, Fl_Text_Display);
+crate::macros::widget::impl_widget_default!(TextDisplay, Fl_Text_Display);
 crate::macros::display::impl_display_ext!(TextDisplay, Fl_Text_Display);
 
 /// Creates an editable text display widget
@@ -726,6 +707,7 @@ pub struct TextEditor {
 
 crate::macros::widget::impl_widget_ext!(TextEditor, Fl_Text_Editor);
 crate::macros::widget::impl_widget_base!(TextEditor, Fl_Text_Editor);
+crate::macros::widget::impl_widget_default!(TextEditor, Fl_Text_Editor);
 crate::macros::display::impl_display_ext!(TextEditor, Fl_Text_Editor);
 
 /// Alias Fl_Text_Editor for use in `add_key_binding`
@@ -747,6 +729,7 @@ pub struct SimpleTerminal {
 
 crate::macros::widget::impl_widget_ext!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::widget::impl_widget_base!(SimpleTerminal, Fl_Simple_Terminal);
+crate::macros::widget::impl_widget_default!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::display::impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
 
 /// The attribute of the style entry

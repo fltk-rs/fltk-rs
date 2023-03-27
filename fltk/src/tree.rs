@@ -112,6 +112,7 @@ pub struct Tree {
 
 crate::macros::widget::impl_widget_ext!(Tree, Fl_Tree);
 crate::macros::widget::impl_widget_base!(Tree, Fl_Tree);
+crate::macros::widget::impl_widget_default!(Tree, Fl_Tree);
 
 /// Defines a tree item
 #[derive(Debug, Clone)]
@@ -1515,9 +1516,7 @@ impl TreeItem {
             return None;
         }
         assert!(!self.was_deleted());
-        unsafe {
-            TreeItem::from_raw(Fl_Tree_Item_child(self.inner, idx) as *mut Fl_Tree_Item)
-        }
+        unsafe { TreeItem::from_raw(Fl_Tree_Item_child(self.inner, idx) as *mut Fl_Tree_Item) }
     }
 
     /// Returns whether the item has children

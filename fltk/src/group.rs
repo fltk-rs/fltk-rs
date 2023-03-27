@@ -22,6 +22,7 @@ pub struct Group {
 
 crate::macros::widget::impl_widget_ext!(Group, Fl_Group);
 crate::macros::widget::impl_widget_base!(Group, Fl_Group);
+crate::macros::widget::impl_widget_default!(Group, Fl_Group);
 crate::macros::group::impl_group_ext!(Group, Fl_Group);
 
 impl Group {
@@ -69,6 +70,7 @@ pub struct Pack {
 
 crate::macros::widget::impl_widget_ext!(Pack, Fl_Pack);
 crate::macros::widget::impl_widget_base!(Pack, Fl_Pack);
+crate::macros::widget::impl_widget_default!(Pack, Fl_Pack);
 crate::macros::group::impl_group_ext!(Pack, Fl_Pack);
 
 /// Defines pack types
@@ -133,6 +135,7 @@ pub struct Scroll {
 
 crate::macros::widget::impl_widget_ext!(Scroll, Fl_Scroll);
 crate::macros::widget::impl_widget_base!(Scroll, Fl_Scroll);
+crate::macros::widget::impl_widget_default!(Scroll, Fl_Scroll);
 crate::macros::group::impl_group_ext!(Scroll, Fl_Scroll);
 
 /// Defines Scroll types
@@ -235,6 +238,7 @@ pub struct Tabs {
 
 crate::macros::widget::impl_widget_ext!(Tabs, Fl_Tabs);
 crate::macros::widget::impl_widget_base!(Tabs, Fl_Tabs);
+crate::macros::widget::impl_widget_default!(Tabs, Fl_Tabs);
 crate::macros::group::impl_group_ext!(Tabs, Fl_Tabs);
 
 impl Tabs {
@@ -358,6 +362,7 @@ pub struct Tile {
 
 crate::macros::widget::impl_widget_ext!(Tile, Fl_Tile);
 crate::macros::widget::impl_widget_base!(Tile, Fl_Tile);
+crate::macros::widget::impl_widget_default!(Tile, Fl_Tile);
 crate::macros::group::impl_group_ext!(Tile, Fl_Tile);
 
 /// Creates a wizard widget
@@ -370,6 +375,7 @@ pub struct Wizard {
 
 crate::macros::widget::impl_widget_ext!(Wizard, Fl_Wizard);
 crate::macros::widget::impl_widget_base!(Wizard, Fl_Wizard);
+crate::macros::widget::impl_widget_default!(Wizard, Fl_Wizard);
 crate::macros::group::impl_group_ext!(Wizard, Fl_Wizard);
 
 impl Wizard {
@@ -431,6 +437,7 @@ pub struct ColorChooser {
 
 crate::macros::widget::impl_widget_ext!(ColorChooser, Fl_Color_Chooser);
 crate::macros::widget::impl_widget_base!(ColorChooser, Fl_Color_Chooser);
+crate::macros::widget::impl_widget_default!(ColorChooser, Fl_Color_Chooser);
 crate::macros::group::impl_group_ext!(ColorChooser, Fl_Color_Chooser);
 
 impl ColorChooser {
@@ -530,6 +537,7 @@ pub struct Flex {
 
 crate::macros::widget::impl_widget_ext!(Flex, Fl_Flex);
 crate::macros::widget::impl_widget_base!(Flex, Fl_Flex);
+crate::macros::widget::impl_widget_default!(Flex, Fl_Flex);
 crate::macros::group::impl_group_ext!(Flex, Fl_Flex);
 
 impl Flex {

@@ -301,7 +301,7 @@ bitflags::bitflags! {
 }
 
 impl Font {
-    /// Returns a font by index. This is the enum representation of the Font. If you change the default font for your app, 
+    /// Returns a font by index. This is the enum representation of the Font. If you change the default font for your app,
     /// which by default is Helvetica, `Font::by_index(0)` will still show Helvetica!
     pub fn by_index(idx: usize) -> Font {
         if idx < (FONTS.lock().unwrap()).len() {
@@ -1193,20 +1193,20 @@ bitflags::bitflags! {
 impl std::ops::BitOr<char> for Shortcut {
     type Output = Shortcut;
     fn bitor(self, other: char) -> Self::Output {
-        unsafe { mem::transmute(self.bits()| other as i32) }
+        unsafe { mem::transmute(self.bits() | other as i32) }
     }
 }
 
 impl std::ops::BitOr<Key> for Shortcut {
     type Output = Shortcut;
     fn bitor(self, other: Key) -> Self::Output {
-        unsafe { mem::transmute(self.bits()| other.bits()) }
+        unsafe { mem::transmute(self.bits() | other.bits()) }
     }
 }
 
 impl std::ops::BitOr<i32> for Align {
     type Output = Align;
     fn bitor(self, rhs: i32) -> Self::Output {
-        unsafe { mem::transmute(self.bits()| rhs) }
+        unsafe { mem::transmute(self.bits() | rhs) }
     }
 }

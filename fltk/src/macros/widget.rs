@@ -915,12 +915,6 @@ macro_rules! impl_widget_ext {
 /// Implements WidgetBase
 macro_rules! impl_widget_base {
     ($name: ident, $flname: ident) => {
-        impl Default for $name {
-            fn default() -> Self {
-                Self::new(0, 0, 0, 0, None)
-            }
-        }
-
         paste::paste! {
             unsafe impl WidgetBase for $name {
                 fn new<T: Into<Option<&'static str>>>(
@@ -1153,6 +1147,18 @@ macro_rules! impl_widget_base {
 
 #[doc(hidden)]
 #[macro_export]
+macro_rules! impl_widget_default {
+    ($name: ident, $flname: ident) => {
+        impl Default for $name {
+            fn default() -> Self {
+                Self::new(0, 0, 0, 0, None)
+            }
+        }
+    };
+}
+
+#[doc(hidden)]
+#[macro_export]
 /// Implements WidgetType
 macro_rules! impl_widget_type {
     ($name: ident) => {
@@ -1169,6 +1175,7 @@ macro_rules! impl_widget_type {
 }
 
 pub use impl_widget_base;
+pub use impl_widget_default;
 pub use impl_widget_ext;
 pub use impl_widget_type;
 
@@ -1536,7 +1543,14 @@ macro_rules! impl_widget_ext_via {
                 self.$member.set_damage_type(mask)
             }
 
-            fn set_damage_area(&mut self, mask: $crate::enums::Damage, x: i32, y: i32, w: i32, h: i32) {
+            fn set_damage_area(
+                &mut self,
+                mask: $crate::enums::Damage,
+                x: i32,
+                y: i32,
+                w: i32,
+                h: i32,
+            ) {
                 self.$member.set_damage_area(mask, x, y, w, h);
             }
 

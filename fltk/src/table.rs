@@ -14,6 +14,7 @@ pub struct Table {
 
 crate::macros::widget::impl_widget_ext!(Table, Fl_Table);
 crate::macros::widget::impl_widget_base!(Table, Fl_Table);
+crate::macros::widget::impl_widget_default!(Table, Fl_Table);
 crate::macros::group::impl_group_ext!(Table, Fl_Table);
 crate::macros::table::impl_table_ext!(Table, Fl_Table);
 
@@ -65,6 +66,7 @@ pub struct TableRow {
 
 crate::macros::widget::impl_widget_ext!(TableRow, Fl_Table_Row);
 crate::macros::widget::impl_widget_base!(TableRow, Fl_Table_Row);
+crate::macros::widget::impl_widget_default!(TableRow, Fl_Table_Row);
 crate::macros::group::impl_group_ext!(TableRow, Fl_Table_Row);
 crate::macros::table::impl_table_ext!(TableRow, Fl_Table_Row);
 
