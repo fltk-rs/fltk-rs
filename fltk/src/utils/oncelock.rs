@@ -6,8 +6,8 @@ pub struct OnceCell<T> {
     value: UnsafeCell<Option<T>>,
 }
 
-unsafe impl<T: Send + Sync> Send for OnceCell<T> {}
-unsafe impl<T: Send + Sync> Sync for OnceCell<T> {}
+unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}
+unsafe impl<T: Send> Send for OnceCell<T> {}
 
 impl<T> OnceCell<T> {
     /// Create a new OnceCell
