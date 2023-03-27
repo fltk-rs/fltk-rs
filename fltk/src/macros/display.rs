@@ -21,7 +21,7 @@ macro_rules! impl_display_ext {
                 fn set_buffer<B: Into<Option<$crate::text::TextBuffer>>>(&mut self, buffer: B) {
                     unsafe {
                         assert!(!self.was_deleted());
-                        if let Some(mut buffer) = buffer.into() {
+                        if let Some(buffer) = buffer.into() {
                             let _old_buf = self.buffer();
                             [<$flname _set_buffer>](self.inner, buffer.as_ptr())
                         } else {
@@ -231,7 +231,7 @@ macro_rules! impl_display_ext {
                         bgcols.push(0);
                     }
                     let style_buffer = style_buffer.into();
-                    if let Some(mut style_buffer) = style_buffer {
+                    if let Some(style_buffer) = style_buffer {
                         let _old_buf = self.style_buffer();
                         unsafe {
                             [<$flname _set_highlight_data>](
@@ -246,7 +246,7 @@ macro_rules! impl_display_ext {
                             )
                         }
                     } else {
-                        if let Some(mut buf) = self.style_buffer() {
+                        if let Some(buf) = self.style_buffer() {
                             unsafe {
                                 [<$flname _set_highlight_data>](
                                     self.inner,
@@ -295,7 +295,7 @@ macro_rules! impl_display_ext {
                         bgcols.push(entry.bgcolor.bits() as u32);
                     }
                     let style_buffer = style_buffer.into();
-                    if let Some(mut style_buffer) = style_buffer {
+                    if let Some(style_buffer) = style_buffer {
                         let _old_buf = self.style_buffer();
                         unsafe {
                             [<$flname _set_highlight_data>](
@@ -310,7 +310,7 @@ macro_rules! impl_display_ext {
                             )
                         }
                     } else {
-                        if let Some(mut buf) = self.style_buffer() {
+                        if let Some(buf) = self.style_buffer() {
                             unsafe {
                                 [<$flname _set_highlight_data>](
                                     self.inner,
@@ -335,7 +335,7 @@ macro_rules! impl_display_ext {
                         let mut sizes = [14];
                         let mut attrs = [0];
                         let mut bgcols = [0];
-                        if let Some(mut style_buffer) = style_buffer.into() {
+                        if let Some(style_buffer) = style_buffer.into() {
                             [<$flname _set_highlight_data>](
                                 self.inner,
                                 style_buffer.as_ptr() as *mut raw::c_void,
