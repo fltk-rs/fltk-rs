@@ -190,7 +190,7 @@ For custom event handling, the handle() method can be used:
 ```
 Handled or ignored events using the handle method should return true, unhandled events should return false. More examples are available in the fltk/examples directory.
 
-For an alternative event handling mechanism using `on_<event>` methods, check the [fltk-evented crate](https://crates.io/crates/fltk-evented).
+For an alternative event handling mechanism using an immediate-mode approach, check the [fltk-evented crate](https://crates.io/crates/fltk-evented).
 
 ### Theming
 
