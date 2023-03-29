@@ -7,3 +7,7 @@ pub fn has_program(prog: &str) -> bool {
         }
     }
 }
+
+pub fn use_static_msvcrt() -> bool {
+    cfg!(target_feature = "crt-static") || cfg!(feature = "static-msvcrt")
+}

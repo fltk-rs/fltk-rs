@@ -44,6 +44,7 @@ no-images = ["fltk-sys/no-images"] # (Experimental) You can use this feature if 
 legacy-opengl = ["fltk-sys/legacy-opengl"] # (Experimental) Support of Lagacy OpenGL
 single-threaded = ["fltk-sys/single-threaded"] # (Experimental) Disable multithreading support when linking X11 libs non-mt x11 libs.
 use-wayland = ["fltk-sys/use-wayland"] # Use FLTK's wayland backend on linux systems.
+static-msvcrt = ["fltk-sys/static-msvcrt"] # Ensure MSVCRT is linked statically even if cargo does not pass the flag to the build script.
 
 [package.metadata.docs.rs]
 features = ["enable-glwindow"]
