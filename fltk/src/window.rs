@@ -471,29 +471,31 @@ impl DoubleWindow {
                 target_os = "macos",
                 target_os = "android",
                 target_os = "windows",
-                feature = "use-wayland"
             )))]
             {
-                enum Display {}
-                extern "C" {
-                    fn XUnmapWindow(display: *mut Display, win: u64);
+                #[cfg(not(feature = "use-wayland"))]
+                {
+                    enum Display {}
+                    extern "C" {
+                        fn XUnmapWindow(display: *mut Display, win: u64);
+                    }
+                    XUnmapWindow(crate::app::display() as _, self.raw_handle() as _);
+                    crate::app::flush();
                 }
-                XUnmapWindow(crate::app::display() as _, self.raw_handle() as _);
-                crate::app::flush();
-            }
-            #[cfg(feature = "use-wayland")]
-            {
-                extern "C" {
-                    fn wl_proxy_marshal(proxy: *mut raw::c_void, opcode: u32, ...);
+                #[cfg(feature = "use-wayland")]
+                {
+                    extern "C" {
+                        fn wl_proxy_marshal(proxy: *mut raw::c_void, opcode: u32, ...);
+                    }
+                    wl_proxy_marshal(
+                        self.raw_handle() as _,
+                        1,
+                        std::ptr::null_mut() as *mut raw::c_void,
+                        0,
+                        0,
+                    ); // attach
+                    wl_proxy_marshal(self.raw_handle() as _, 6); // commit
                 }
-                wl_proxy_marshal(
-                    self.raw_handle() as _,
-                    1,
-                    std::ptr::null_mut() as *mut raw::c_void,
-                    0,
-                    0,
-                ); // attach
-                wl_proxy_marshal(self.raw_handle() as _, 6); // commit
             }
         }
     }

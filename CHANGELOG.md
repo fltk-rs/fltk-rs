@@ -1,8 +1,9 @@
 # Changelog
 
 
-# [1.4.0] - Unreleased
+# [1.4.0] - 2023-04-01
 - Use Rust version 2021 and require rustc 1.56.
+- Add explicit static-msvcrt feature for when cargo doesn't auto-propagate crt-static, by @vstojkovic.
 - Improve docs on font indexing ops.
 - Refactor images to use Arc.
 - Add MenuButton::popup check.
