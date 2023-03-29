@@ -2,7 +2,7 @@
 
 
 # [1.4.0] - Unreleased
-- Use Rust version 2021.
+- Use Rust version 2021 and require rustc 1.56.
 - Improve docs on font indexing ops.
 - Refactor images to use Arc.
 - Add MenuButton::popup check.
