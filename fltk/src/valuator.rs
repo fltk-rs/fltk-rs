@@ -18,7 +18,7 @@ pub struct Slider {
 
 crate::macros::widget::impl_widget_ext!(Slider, Fl_Slider);
 crate::macros::widget::impl_widget_base!(Slider, Fl_Slider);
-crate::macros::widget::impl_widget_default!(Slider, Fl_Slider);
+crate::macros::widget::impl_widget_default!(Slider);
 crate::macros::valuator::impl_valuator_ext!(Slider, Fl_Slider);
 
 /// Slider implementation
@@ -54,7 +54,7 @@ pub struct NiceSlider {
 
 crate::macros::widget::impl_widget_ext!(NiceSlider, Fl_Nice_Slider);
 crate::macros::widget::impl_widget_base!(NiceSlider, Fl_Nice_Slider);
-crate::macros::widget::impl_widget_default!(NiceSlider, Fl_Nice_Slider);
+crate::macros::widget::impl_widget_default!(NiceSlider);
 crate::macros::valuator::impl_valuator_ext!(NiceSlider, Fl_Nice_Slider);
 
 /// Slider implementation
@@ -110,7 +110,7 @@ pub struct Dial {
 
 crate::macros::widget::impl_widget_ext!(Dial, Fl_Dial);
 crate::macros::widget::impl_widget_base!(Dial, Fl_Dial);
-crate::macros::widget::impl_widget_default!(Dial, Fl_Dial);
+crate::macros::widget::impl_widget_default!(Dial);
 crate::macros::valuator::impl_valuator_ext!(Dial, Fl_Dial);
 
 impl Dial {
@@ -146,7 +146,7 @@ pub struct LineDial {
 
 crate::macros::widget::impl_widget_ext!(LineDial, Fl_Line_Dial);
 crate::macros::widget::impl_widget_base!(LineDial, Fl_Line_Dial);
-crate::macros::widget::impl_widget_default!(LineDial, Fl_Line_Dial);
+crate::macros::widget::impl_widget_default!(LineDial);
 crate::macros::valuator::impl_valuator_ext!(LineDial, Fl_Line_Dial);
 
 impl LineDial {
@@ -196,7 +196,7 @@ pub struct Counter {
 
 crate::macros::widget::impl_widget_ext!(Counter, Fl_Counter);
 crate::macros::widget::impl_widget_base!(Counter, Fl_Counter);
-crate::macros::widget::impl_widget_default!(Counter, Fl_Counter);
+crate::macros::widget::impl_widget_default!(Counter);
 crate::macros::valuator::impl_valuator_ext!(Counter, Fl_Counter);
 
 /// Defines counter types
@@ -221,7 +221,7 @@ pub struct Scrollbar {
 
 crate::macros::widget::impl_widget_ext!(Scrollbar, Fl_Scrollbar);
 crate::macros::widget::impl_widget_base!(Scrollbar, Fl_Scrollbar);
-crate::macros::widget::impl_widget_default!(Scrollbar, Fl_Scrollbar);
+crate::macros::widget::impl_widget_default!(Scrollbar);
 crate::macros::valuator::impl_valuator_ext!(Scrollbar, Fl_Scrollbar);
 
 impl Scrollbar {
@@ -276,7 +276,7 @@ pub struct Roller {
 
 crate::macros::widget::impl_widget_ext!(Roller, Fl_Roller);
 crate::macros::widget::impl_widget_base!(Roller, Fl_Roller);
-crate::macros::widget::impl_widget_default!(Roller, Fl_Roller);
+crate::macros::widget::impl_widget_default!(Roller);
 crate::macros::valuator::impl_valuator_ext!(Roller, Fl_Roller);
 
 /// Creates a value slider widget
@@ -289,7 +289,7 @@ pub struct ValueSlider {
 
 crate::macros::widget::impl_widget_ext!(ValueSlider, Fl_Value_Slider);
 crate::macros::widget::impl_widget_base!(ValueSlider, Fl_Value_Slider);
-crate::macros::widget::impl_widget_default!(ValueSlider, Fl_Value_Slider);
+crate::macros::widget::impl_widget_default!(ValueSlider);
 crate::macros::valuator::impl_valuator_ext!(ValueSlider, Fl_Value_Slider);
 
 impl ValueSlider {
@@ -360,7 +360,7 @@ pub struct Adjuster {
 
 crate::macros::widget::impl_widget_ext!(Adjuster, Fl_Adjuster);
 crate::macros::widget::impl_widget_base!(Adjuster, Fl_Adjuster);
-crate::macros::widget::impl_widget_default!(Adjuster, Fl_Adjuster);
+crate::macros::widget::impl_widget_default!(Adjuster);
 crate::macros::valuator::impl_valuator_ext!(Adjuster, Fl_Adjuster);
 
 /// Creates an value input widget, which takes a numeric value.
@@ -374,7 +374,7 @@ pub struct ValueInput {
 
 crate::macros::widget::impl_widget_ext!(ValueInput, Fl_Value_Input);
 crate::macros::widget::impl_widget_base!(ValueInput, Fl_Value_Input);
-crate::macros::widget::impl_widget_default!(ValueInput, Fl_Value_Input);
+crate::macros::widget::impl_widget_default!(ValueInput);
 crate::macros::valuator::impl_valuator_ext!(ValueInput, Fl_Value_Input);
 
 impl ValueInput {
@@ -438,7 +438,7 @@ pub struct ValueOutput {
 
 crate::macros::widget::impl_widget_ext!(ValueOutput, Fl_Value_Output);
 crate::macros::widget::impl_widget_base!(ValueOutput, Fl_Value_Output);
-crate::macros::widget::impl_widget_default!(ValueOutput, Fl_Value_Output);
+crate::macros::widget::impl_widget_default!(ValueOutput);
 crate::macros::valuator::impl_valuator_ext!(ValueOutput, Fl_Value_Output);
 
 impl ValueOutput {
@@ -489,7 +489,7 @@ pub struct FillSlider {
 
 crate::macros::widget::impl_widget_ext!(FillSlider, Fl_Fill_Slider);
 crate::macros::widget::impl_widget_base!(FillSlider, Fl_Fill_Slider);
-crate::macros::widget::impl_widget_default!(FillSlider, Fl_Fill_Slider);
+crate::macros::widget::impl_widget_default!(FillSlider);
 crate::macros::valuator::impl_valuator_ext!(FillSlider, Fl_Fill_Slider);
 
 /// Creates a fill dial
@@ -502,7 +502,7 @@ pub struct FillDial {
 
 crate::macros::widget::impl_widget_ext!(FillDial, Fl_Fill_Dial);
 crate::macros::widget::impl_widget_base!(FillDial, Fl_Fill_Dial);
-crate::macros::widget::impl_widget_default!(FillDial, Fl_Fill_Dial);
+crate::macros::widget::impl_widget_default!(FillDial);
 crate::macros::valuator::impl_valuator_ext!(FillDial, Fl_Fill_Dial);
 
 impl FillDial {
@@ -538,7 +538,7 @@ pub struct HorSlider {
 
 crate::macros::widget::impl_widget_ext!(HorSlider, Fl_Hor_Slider);
 crate::macros::widget::impl_widget_base!(HorSlider, Fl_Hor_Slider);
-crate::macros::widget::impl_widget_default!(HorSlider, Fl_Hor_Slider);
+crate::macros::widget::impl_widget_default!(HorSlider);
 crate::macros::valuator::impl_valuator_ext!(HorSlider, Fl_Hor_Slider);
 
 /// Slider implementation
@@ -574,7 +574,7 @@ pub struct HorFillSlider {
 
 crate::macros::widget::impl_widget_ext!(HorFillSlider, Fl_Hor_Fill_Slider);
 crate::macros::widget::impl_widget_base!(HorFillSlider, Fl_Hor_Fill_Slider);
-crate::macros::widget::impl_widget_default!(HorFillSlider, Fl_Hor_Fill_Slider);
+crate::macros::widget::impl_widget_default!(HorFillSlider);
 crate::macros::valuator::impl_valuator_ext!(HorFillSlider, Fl_Hor_Fill_Slider);
 
 /// Slider implementation
@@ -610,7 +610,7 @@ pub struct HorNiceSlider {
 
 crate::macros::widget::impl_widget_ext!(HorNiceSlider, Fl_Hor_Nice_Slider);
 crate::macros::widget::impl_widget_base!(HorNiceSlider, Fl_Hor_Nice_Slider);
-crate::macros::widget::impl_widget_default!(HorNiceSlider, Fl_Hor_Nice_Slider);
+crate::macros::widget::impl_widget_default!(HorNiceSlider);
 crate::macros::valuator::impl_valuator_ext!(HorNiceSlider, Fl_Hor_Nice_Slider);
 
 /// Slider implementation
@@ -646,7 +646,7 @@ pub struct HorValueSlider {
 
 crate::macros::widget::impl_widget_ext!(HorValueSlider, Fl_Hor_Value_Slider);
 crate::macros::widget::impl_widget_base!(HorValueSlider, Fl_Hor_Value_Slider);
-crate::macros::widget::impl_widget_default!(HorValueSlider, Fl_Hor_Value_Slider);
+crate::macros::widget::impl_widget_default!(HorValueSlider);
 crate::macros::valuator::impl_valuator_ext!(HorValueSlider, Fl_Hor_Value_Slider);
 
 impl HorValueSlider {
