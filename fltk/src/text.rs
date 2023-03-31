@@ -697,7 +697,7 @@ pub struct TextDisplay {
 
 crate::macros::widget::impl_widget_ext!(TextDisplay, Fl_Text_Display);
 crate::macros::widget::impl_widget_base!(TextDisplay, Fl_Text_Display);
-crate::macros::widget::impl_widget_default!(TextDisplay, Fl_Text_Display);
+crate::macros::widget::impl_widget_default!(TextDisplay);
 crate::macros::display::impl_display_ext!(TextDisplay, Fl_Text_Display);
 
 /// Creates an editable text display widget
@@ -710,7 +710,7 @@ pub struct TextEditor {
 
 crate::macros::widget::impl_widget_ext!(TextEditor, Fl_Text_Editor);
 crate::macros::widget::impl_widget_base!(TextEditor, Fl_Text_Editor);
-crate::macros::widget::impl_widget_default!(TextEditor, Fl_Text_Editor);
+crate::macros::widget::impl_widget_default!(TextEditor);
 crate::macros::display::impl_display_ext!(TextEditor, Fl_Text_Editor);
 
 /// Alias Fl_Text_Editor for use in `add_key_binding`
@@ -732,7 +732,7 @@ pub struct SimpleTerminal {
 
 crate::macros::widget::impl_widget_ext!(SimpleTerminal, Fl_Simple_Terminal);
 crate::macros::widget::impl_widget_base!(SimpleTerminal, Fl_Simple_Terminal);
-crate::macros::widget::impl_widget_default!(SimpleTerminal, Fl_Simple_Terminal);
+crate::macros::widget::impl_widget_default!(SimpleTerminal);
 crate::macros::display::impl_display_ext!(SimpleTerminal, Fl_Simple_Terminal);
 
 /// The attribute of the style entry

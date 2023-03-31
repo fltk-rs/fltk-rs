@@ -25,7 +25,7 @@ pub struct Output {
 
 crate::macros::widget::impl_widget_ext!(Output, Fl_Output);
 crate::macros::widget::impl_widget_base!(Output, Fl_Output);
-crate::macros::widget::impl_widget_default!(Output, Fl_Output);
+crate::macros::widget::impl_widget_default!(Output);
 crate::macros::input::impl_input_ext!(Output, Fl_Output);
 
 /// Creates a multiline-output widget
@@ -38,5 +38,5 @@ pub struct MultilineOutput {
 
 crate::macros::widget::impl_widget_ext!(MultilineOutput, Fl_Multiline_Output);
 crate::macros::widget::impl_widget_base!(MultilineOutput, Fl_Multiline_Output);
-crate::macros::widget::impl_widget_default!(MultilineOutput, Fl_Multiline_Output);
+crate::macros::widget::impl_widget_default!(MultilineOutput);
 crate::macros::input::impl_input_ext!(MultilineOutput, Fl_Multiline_Output);

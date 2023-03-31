@@ -54,7 +54,7 @@ pub struct Spinner {
 
 crate::macros::widget::impl_widget_ext!(Spinner, Fl_Spinner);
 crate::macros::widget::impl_widget_base!(Spinner, Fl_Spinner);
-crate::macros::widget::impl_widget_default!(Spinner, Fl_Spinner);
+crate::macros::widget::impl_widget_default!(Spinner);
 
 impl Spinner {
     /// Returns the minimum value of the spinner widget
@@ -186,7 +186,7 @@ pub struct Clock {
 
 crate::macros::widget::impl_widget_ext!(Clock, Fl_Clock);
 crate::macros::widget::impl_widget_base!(Clock, Fl_Clock);
-crate::macros::widget::impl_widget_default!(Clock, Fl_Clock);
+crate::macros::widget::impl_widget_default!(Clock);
 
 /// Creates a chart widget
 #[derive(Debug)]
@@ -198,7 +198,7 @@ pub struct Chart {
 
 crate::macros::widget::impl_widget_ext!(Chart, Fl_Chart);
 crate::macros::widget::impl_widget_base!(Chart, Fl_Chart);
-crate::macros::widget::impl_widget_default!(Chart, Fl_Chart);
+crate::macros::widget::impl_widget_default!(Chart);
 
 impl Chart {
     /// Clears the chart
@@ -313,7 +313,7 @@ pub struct Progress {
 
 crate::macros::widget::impl_widget_ext!(Progress, Fl_Progress);
 crate::macros::widget::impl_widget_base!(Progress, Fl_Progress);
-crate::macros::widget::impl_widget_default!(Progress, Fl_Progress);
+crate::macros::widget::impl_widget_default!(Progress);
 
 impl Progress {
     /// Returns the minimum value of the progress bar
@@ -526,7 +526,7 @@ pub struct InputChoice {
 
 crate::macros::widget::impl_widget_ext!(InputChoice, Fl_Input_Choice);
 crate::macros::widget::impl_widget_base!(InputChoice, Fl_Input_Choice);
-crate::macros::widget::impl_widget_default!(InputChoice, Fl_Input_Choice);
+crate::macros::widget::impl_widget_default!(InputChoice);
 
 impl InputChoice {
     /// Set the `down_box` of the widget
@@ -655,7 +655,7 @@ pub struct HelpView {
 
 crate::macros::widget::impl_widget_ext!(HelpView, Fl_Help_View);
 crate::macros::widget::impl_widget_base!(HelpView, Fl_Help_View);
-crate::macros::widget::impl_widget_default!(HelpView, Fl_Help_View);
+crate::macros::widget::impl_widget_default!(HelpView);
 
 impl HelpView {
     /// Return the directory

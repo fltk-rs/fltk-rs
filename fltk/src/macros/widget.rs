@@ -948,7 +948,7 @@ macro_rules! impl_widget_base {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! impl_widget_default {
-    ($name: ident, $flname: ident) => {
+    ($name: ident) => {
         impl Default for $name {
             fn default() -> Self {
                 Self::new(0, 0, 0, 0, None)

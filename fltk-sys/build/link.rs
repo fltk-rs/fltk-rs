@@ -90,7 +90,7 @@ pub fn link(target_os: &str, target_triple: &str, out_dir: &Path) {
                 println!("cargo:rustc-link-lib=c++abi");
             }
             "windows" => {
-                let linkage = if cfg!(target_feature = "crt-static") {
+                let linkage = if crate::utils::use_static_msvcrt() {
                     "="
                 } else {
                     "=dylib="

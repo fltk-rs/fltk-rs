@@ -471,29 +471,31 @@ impl DoubleWindow {
                 target_os = "macos",
                 target_os = "android",
                 target_os = "windows",
-                feature = "use-wayland"
             )))]
             {
-                enum Display {}
-                extern "C" {
-                    fn XUnmapWindow(display: *mut Display, win: u64);
+                #[cfg(not(feature = "use-wayland"))]
+                {
+                    enum Display {}
+                    extern "C" {
+                        fn XUnmapWindow(display: *mut Display, win: u64);
+                    }
+                    XUnmapWindow(crate::app::display() as _, self.raw_handle() as _);
+                    crate::app::flush();
                 }
-                XUnmapWindow(crate::app::display() as _, self.raw_handle() as _);
-                crate::app::flush();
-            }
-            #[cfg(feature = "use-wayland")]
-            {
-                extern "C" {
-                    fn wl_proxy_marshal(proxy: *mut raw::c_void, opcode: u32, ...);
+                #[cfg(feature = "use-wayland")]
+                {
+                    extern "C" {
+                        fn wl_proxy_marshal(proxy: *mut raw::c_void, opcode: u32, ...);
+                    }
+                    wl_proxy_marshal(
+                        self.raw_handle() as _,
+                        1,
+                        std::ptr::null_mut() as *mut raw::c_void,
+                        0,
+                        0,
+                    ); // attach
+                    wl_proxy_marshal(self.raw_handle() as _, 6); // commit
                 }
-                wl_proxy_marshal(
-                    self.raw_handle() as _,
-                    1,
-                    std::ptr::null_mut() as *mut raw::c_void,
-                    0,
-                    0,
-                ); // attach
-                wl_proxy_marshal(self.raw_handle() as _, 6); // commit
             }
         }
     }
@@ -715,7 +717,7 @@ crate::macros::widget::impl_widget_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
 crate::macros::widget::impl_widget_base!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
-crate::macros::widget::impl_widget_default!(GlutWindow, Fl_Glut_Window);
+crate::macros::widget::impl_widget_default!(GlutWindow);
 #[cfg(feature = "enable-glwindow")]
 crate::macros::group::impl_group_ext!(GlutWindow, Fl_Glut_Window);
 #[cfg(feature = "enable-glwindow")]
@@ -888,7 +890,7 @@ pub mod experimental {
     #[cfg(feature = "enable-glwindow")]
     crate::macros::widget::impl_widget_base!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
-    crate::macros::widget::impl_widget_default!(GlWidgetWindow, Fl_Gl_Window);
+    crate::macros::widget::impl_widget_default!(GlWidgetWindow);
     #[cfg(feature = "enable-glwindow")]
     crate::macros::group::impl_group_ext!(GlWidgetWindow, Fl_Gl_Window);
     #[cfg(feature = "enable-glwindow")]
