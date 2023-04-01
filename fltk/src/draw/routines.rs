@@ -2,6 +2,7 @@ use super::types::Coord;
 use crate::enums::{Align, Color, ColorDepth, Cursor, Font, FrameType, Shortcut};
 use crate::image::RgbImage;
 use crate::prelude::*;
+use crate::surface::ImageSurface;
 use crate::utils::FlString;
 use fltk_sys::draw::*;
 use std::ffi::{CStr, CString};
@@ -769,6 +770,68 @@ pub fn capture_window<Win: WindowExt>(win: &mut Win) -> Result<RgbImage, FltkErr
                 x,
                 win.width(),
                 win.height(),
+                ColorDepth::Rgb8,
+            )?)
+        }
+    }
+}
+
+/**
+    Captures the offscreen and returns raw data.
+    Example usage:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    let mut offs = draw::Offscreen::new(100, 100);
+    let image = draw::capture_offscreen(&mut offs, 100, 100).unwrap();
+    ```
+    # Errors
+    The api can fail to capture the offscreen object as an image
+*/
+pub fn capture_offscreen(offs: &mut Offscreen, w: i32, h: i32) -> Result<RgbImage, FltkError> {
+    let cp = w * h * 3;
+    unsafe {
+        offs.begin();
+        let x = Fl_read_image(std::ptr::null_mut(), 0, 0, w, h, 0);
+        offs.end();
+        if x.is_null() {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+        } else {
+            let x = std::slice::from_raw_parts(x, cp as usize);
+            Ok(RgbImage::new(
+                x,
+                w,
+                h,
+                ColorDepth::Rgb8,
+            )?)
+        }
+    }
+}
+
+/**
+    Captures the image surface object and returns raw data.
+    Example usage:
+    ```rust,no_run
+    use fltk::{prelude::*, *};
+    let mut surface = surface::ImageSurface::new(100, 100, false);
+    let image = draw::capture_surface(&mut surface, 100, 100).unwrap();
+    ```
+    # Errors
+    The api can fail to capture the image surface as an image
+*/
+pub fn capture_surface(surface: &ImageSurface, w: i32, h: i32) -> Result<RgbImage, FltkError> {
+    let cp = w * h * 3;
+    unsafe {
+        ImageSurface::push_current(&surface);
+        let x = Fl_read_image(std::ptr::null_mut(), 0, 0, w, h, 0);
+        ImageSurface::pop_current();
+        if x.is_null() {
+            Err(FltkError::Internal(FltkErrorKind::FailedOperation))
+        } else {
+            let x = std::slice::from_raw_parts(x, cp as usize);
+            Ok(RgbImage::new(
+                x,
+                w,
+                h,
                 ColorDepth::Rgb8,
             )?)
         }
